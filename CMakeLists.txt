@@ -34,8 +34,16 @@ include_directories( SYSTEM ${Boost_INCLUDE_DIR} )
 link_directories   (        ${Boost_LIBRARYDIR}  )
 
 # Add handling of includes and library links for bioplib
-include_directories( $ENV{BUILDROOT}                 )
-link_directories   ( "$ENV{BUILDROOT}/bioplib/trunk" )
+add_custom_target(
+	built_bioplib_libraries
+	COMMAND make
+	# In CMake v3.2, the BYPRODUCTS field allows specifiecation of the expected resulting files - these can be used by Ninja to avoid calling this step every time
+	#BYPRODUCTS ${CMAKE_CURRENT_LIST_DIR}/bioplib/src/libgen.a ${CMAKE_CURRENT_LIST_DIR}/bioplib/src/libbiop.a
+	COMMENT Attempting to build bioplib
+	WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bioplib/src
+)
+
+link_directories( ${CMAKE_CURRENT_LIST_DIR}/bioplib/src )
 
 set( CMAKE_INCLUDE_CURRENT_DIR      ON )
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY .. )

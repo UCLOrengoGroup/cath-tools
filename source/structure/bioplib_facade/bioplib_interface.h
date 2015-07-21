@@ -48,7 +48,7 @@ extern "C" {
 	///       This problem's rather tricky. The include of the `throw ()` version
 	///       needn't happen in within the include tree of pdb.h for the problem to occur.
 	///       For now, just use bioplib <= v2.1.2
-	#include "bioplib/trunk/pdb.h"
+	#include "bioplib/pdb.h"
 }
 
 #include <vector>

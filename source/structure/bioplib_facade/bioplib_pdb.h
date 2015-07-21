@@ -35,7 +35,7 @@ extern "C" {
 	///       needn't happen in within the include tree of pdb.h for the problem to occur.
 	///       For now, just use bioplib <= v2.1.2
 	#include <unistd.h>
-	#include "bioplib/trunk/pdb.h"
+	#include "bioplib/pdb.h"
 }
 
 #include <vector>

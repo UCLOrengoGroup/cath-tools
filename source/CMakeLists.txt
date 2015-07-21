@@ -1,4 +1,3 @@
-include_directories( $ENV{BUILDROOT} )
 include_directories( ${Boost_INCLUDE_DIR} )
 
 ##### BEGINNING OF AUTO-GENERATED #####
@@ -1677,9 +1676,18 @@ target_link_libraries( cath-score-align  normsources_cath_score_align           
 target_link_libraries( cath-ssap                                                     std_normsources biop gen pthread ${Boost_LIBRARIES} )
 target_link_libraries( cath-superpose    normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} )
 
+add_dependencies( build-test        built_bioplib_libraries )
+add_dependencies( cath-refine-align built_bioplib_libraries )
+add_dependencies( cath-score-align  built_bioplib_libraries )
+add_dependencies( cath-ssap         built_bioplib_libraries )
+add_dependencies( cath-superpose    built_bioplib_libraries )
+
 if ( DEFINED ENV{BUILD_EXTRA_CATH_BINARIES} )
 	target_link_libraries( snap-judgement    normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} )
 	target_link_libraries( check-pdb                                                     std_normsources biop gen pthread ${Boost_LIBRARIES} )
+
+	add_dependencies( snap-judgement built_bioplib_libraries )
+	add_dependencies( check-pdb      built_bioplib_libraries )
 endif ( DEFINED ENV{BUILD_EXTRA_CATH_BINARIES} )
 
 #####################################################################

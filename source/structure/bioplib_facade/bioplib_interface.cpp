@@ -28,7 +28,7 @@
 #include "structure/geometry/rotation.h"
 
 extern "C" {
-	#include "bioplib/trunk/fit.h"
+	#include "bioplib/fit.h"
 }
 
 using namespace cath;
