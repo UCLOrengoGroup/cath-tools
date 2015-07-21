@@ -5,15 +5,17 @@ compiler:
  - clang
  - gcc
 
-install:
- - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+#install:
+# - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
  
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
     - boost-latest
+    - llvm-toolchain-precise-3.6
+    - ubuntu-toolchain-r-test
     packages:
+    - clang-3.6
     - cmake
     - gcc-4.9
     - g++-4.9
