@@ -1,0 +1,136 @@
+
+
+
+                               Bioplib
+                               =======
+
+                    (c) 1990-2003 SciTech Software
+      Dr. Andrew C.R. Martin, UCL and The University of Reading
+
+                   EMail: andrew@bioinf.org.uk
+
+
+
+Bioplib is a library of routines for the manipulation of protein
+structure and sequence using the C programming language. In addition,
+the term `Bioplib' refers to routines for more general C programming
+purposes. 
+
+
+This library is copyright (c) 1990-2003 by Dr. Andrew C.R. Martin and
+was almost entirely written while self-employed. Some enhancements
+and additional routines written while at UCL and The University
+of Reading. For conditions of use, see the file COPYING.DOC.
+
+
+
+N.B.
+====
+Not everything is 100% functional yet. In particular, the curses
+windowing routines aren't completely working; everything else is just
+about OK. A few general purpose routines are specific for the
+Commodore Amiga, but this doesn't affect anything else.
+
+In the V2.0 release, most of these functions have been dropped from
+the release version.
+
+
+
+
+INSTALLATION INSTRUCTIONS
+=========================
+
+1. Create sub-directories of your main directory called include and lib: 
+
+   mkdir ~/include
+   mkdir ~/include/bioplib
+   mkdir ~/lib
+
+2. Unpack the tar file:
+
+   zcat BiopLibV2.0.tar.gz | tar -xvf -
+-or-
+   gunzip BiopLibV2.0.tar.gz
+   tar -xvf BiopLibV2.0.tar
+-or- (if you have Gnu tar)
+   tar -zxvf BiopLibV2.0.tar.gz
+
+3. This will create a directory called BiopLibV2.0.  Enter this
+directory and then go into the src sub-directory:
+
+   cd BiopLibV2.0/src
+
+Modify the Makefile as required for your system. If you are using the
+GNU C compiler and have followed the directions above, no changes
+should be needed. If you have chosen alternative locations for the
+include and library directories then you will need to change LIBDEST
+to be the library directory you have created and INCDEST to the
+include directory you have created (N.B. the complete path is
+required, you can't do ~/lib).
+
+4. To build the libraries, type:
+
+   make 
+
+The compilation should complete with no errors or warning except for
+implicit declarations of popen() in ReadODB.c and ReadWholePDB.c
+This is because popen() is not an ANSI C function and the -ansi
+flag causes this to be a warning.
+
+5. To install the libraries and the include files, type:
+
+   make install
+
+6. To remove the object files and local copies of the libraries, type:
+
+   make clean
+
+7. If you are using a shell which supports aliases, set up an alias
+for the cc command to add the include directory to the include search
+path and the lib directory to the lib search path. Using the BASH
+shell and assuming you have installed the libraries and include
+files in the default location, the following will work:
+
+   alias cc '/bin/cc -I$HOME/include -L$HOME/lib'
+
+If you have chosen an alternative location to install the libraries
+and include files, you will need to change the paths for include and
+lib. 
+
+You can then compile a program using the command:
+
+   cc -o foo foo.c -lbiop -lgen -lm
+
+Note that -lbiop must appear before -lgen
+
+It is good practice to add flags to enforce the strict ANSI C
+standard at the same time (-Wall -ansi -pedantic for GCC or 
+-ansi -fullwarn on an SGI).
+
+8. If building a project using a Makefile, then you will need to
+include -I$HOME/include -L$HOME/lib in your CFLAGS and remember
+to include the libraries (-lbiop -lgen and maybe -lm) at the
+end of your link command.
+
+9. To access the C library functions you will need to include
+appropriate header files. For example:
+
+#include "bioplib/pdb.h"
+
+
+DISTRIBUTION AS PART OF ANOTHER PROGRAM
+=======================================
+
+When distributing software that relies on Bioplib, you MUST
+acknowledge Bioplib. If you are only distributing executables,
+you need do nothing more (unless you are distributing for 
+money - in which case, see the full licence agreement).
+
+If you are distributing source code, you may include only the 
+source files from the library that you require or the complete 
+library. In either case, you must:
+1. Place all Bioplib source files in a seaparate identifiable
+   directory from the rest of your source code
+2. Include the files COPYING.DOC and 00PART_DISTRIB_README
+   in that directory.
+

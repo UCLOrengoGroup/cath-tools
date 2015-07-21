@@ -1,0 +1,170 @@
+                               Bioplib
+                               =======
+
+                 (c)1990-1996, Dr. Andrew C.R. Martin
+
+                           SciTech Software
+             23 Stag Leys, Ashtead, Surrey, KT21 2TD, UK.
+
+                                 and
+
+                      University College London
+       BSM Unit, Department of Biochemistry & Molecular Biology
+                           Darwin Building
+                             Gower Street
+                           London WC1E 6BT
+
+                 EMail:   andrew@stagleys.demon.co.uk
+                          martin@biochem.ucl.ac.uk
+                   Fax:   +44 (0) 1372 813069
+
+
+
+
+   Bioplib is a library of routines for the manipulation of protein
+structure and sequence using the C programming language.
+
+
+
+
+In these conditions, the term `Bioplib' refers to link libraries, and
+to the source code and object code which comprises these
+libraries. Should the organisation of the code into libraries change
+in the future, the term `Bioplib' will refer to any such link
+libraries (and associated source and object code) which comprise the
+future release of a package described by the author as `Bioplib'.
+
+The term `compiling' is used to describe the process of compiling and
+linking software on a computer to form an executable program.
+
+Bioplib was written by and is copyright (c)1990-1996, Dr. Andrew
+C. R. Martin and was mostly written while self-employed. A number of
+enhancements and additions have been made since working at University
+College London. All copyright and other intellectual property rights
+remain with the author. Bioplib may not be used for any purposes other
+than as described in the following terms and conditions.
+
+
+
+
+
+
+If you have received the Bioplib package directly from the author for
+the purposes of compiling your own software, see Section 1 of these
+conditions.
+
+If you have received Bioplib as part of another software package, see
+Section 2 of these conditions.
+
+
+
+
+
+
+
+Section 1
+=========
+If you have received the Bioplib package directly from the author:
+------------------------------------------------------------------
+
+   If you (the LICENSEE) received Bioplib from the author (Dr. Andrew
+C.R. Martin, hereinafter called the LICENSOR) for the purposes of
+developing your own software, then you will have signed a licence
+agreement. The conditions to which you have agreed are repeated here.
+
+1 Bioplib may only be used by the LICENSEE and members of the
+  LICENSEE's laboratory for compiling software provided by the
+  LICENSOR and for compiling software developed in the LICENSEE's
+  laboratory for research carried out there.  Bioplib will be used
+  only by those members of the LICENSEE's laboratory to whom it must
+  reasonably be communicated to enable research to be undertaken and
+  who agree to be bound by the same conditions.  The LICENSEE shall
+  procure and enforce such agreement from members of the LICENSEE's
+  laboratory for the benefit of the LICENSOR.
+
+2 The publication of research using software depending on Bioplib 
+  must reference the Bioplib library and the LICENSOR. This agreement
+  may be taken as permission for citation as a `Personal
+  Communication' from the LICENSOR.
+
+3 All software compiled with Bioplib must include reference to Bioplib 
+  and the LICENSOR in any copyright messages.
+
+4 All forms of Bioplib will be kept in a reasonably secure place to
+  prevent unauthorised access.
+
+5 Bioplib may not be copied for distribution to any third party except
+  as expressly described below.
+
+6 The complete Bioplib library may be distributed to third parties,
+  unmodified, solely for the purpose of compiling software developed
+  by the LICENSEE. The LICENSEE must make clear to the third party in
+  the documentation accompanying the LICENSEE's software, that the
+  Bioplib library has been supplied by the LICENSOR and that the third
+  party may only use Bioplib for the purposes of compiling the
+  LICENSEE's software. The third party may not redistribute Bioplib in
+  any circumstances except as part of the LICENSEE's software. Third
+  parties wishing to use Bioplib as part of their own software should
+  contact the LICENSOR.  A file describing these conditions to third
+  parties is included with Bioplib.
+
+7 Any modifications or changes made to Bioplib should be sent to
+  the LICENSOR for possible inclusion in future versions of
+  Bioplib. Any such changes which are incorporated into Bioplib will
+  be acknowledged, but become the property of the LICENSOR.
+
+8 Bioplib shall be used exclusively for academic teaching and
+  research. Bioplib will not be used for any commercial research or
+  research associated with an industrial company unless a separate 
+  agreement is made with the LICENSOR.
+
+9 Bioplib may not be used as part of any software which is sold for
+  more than a nominal sum to cover copying and distribution
+  costs. Should the LICENSEE wish to sell for profit software which
+  relies on Bioplib, or any part thereof, then a separate agreement
+  must be made with the LICENSOR.
+
+
+
+
+
+
+
+Section 2
+=========
+If you have received Bioplib as part of another software package:
+-----------------------------------------------------------------
+
+   The following conditions apply whether you have received Bioplib
+from the author (Dr. Andrew C.R. Martin, hereinafter called the
+LICENSOR), or from another source.
+
+   If you have received Bioplib for the purposes of compiling some
+other software package (hereinafter called the SOFTWARE PACKAGE) then
+you may only use Bioplib in order to compile and link the SOFTWARE
+PACKAGE. Bioplib has been provided by the LICENSOR solely for this
+purpose.
+
+   You may not use Bioplib to develop your own software and may not
+redistribute Bioplib except as part of the SOFTWARE PACKAGE.
+
+   Whether or not, under the conditions of redistribution of the
+SOFTWARE PACKAGE, you are permitted to redistribute modifications to
+the said SOFTWARE PACKAGE, you are not allowed to redistribute any
+modifications or changes to Bioplib. If you do make modifications or
+changes to Bioplib as part of a modification you make to the SOFTWARE
+PACKAGE for your own purposes, you should send the changes to the
+LICENSOR for possible inclusion in a future version of Bioplib. Any
+such changes which are incorporated into Bioplib will be acknowledged,
+but become the property of the LICENSOR.
+
+   If, under the conditions of redistribution of the SOFTWARE PACKAGE,
+you are permitted to redistribute modifications to the said SOFTWARE
+PACKAGE, then you must not remove, or modify, any copyright messages
+relating to Bioplib.
+
+   If you wish to use Bioplib for the development of your own
+software, you should contact the LICENSOR in order to obtain a full
+licence agreement.
+
+

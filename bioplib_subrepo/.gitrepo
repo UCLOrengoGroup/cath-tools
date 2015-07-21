@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/ACRMGroup/bioplib.git
+	branch = V2.1.2
+	commit = 2a451bc653f5bb2c6a4f206a5a96ebd1a8272ef6
+	parent = a6fa489cc4d8df78c67e5b1a6189aea23082e82d
+	cmdver = 0.2.1
