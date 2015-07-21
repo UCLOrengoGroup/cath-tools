@@ -1,0 +1,39 @@
+Release Notes
+=============
+
+Changelog
+---------
+
+| Date       | Version | Type    | Changelog comment |
+|------------|---------|---------|-------------------|
+| 2015-01-19 | v0.12.4 | change  | Add cath-score-align; tidy up namespaces; generally improve |
+| 2015-01-12 | v0.12.3 | change  | Take better advantage of C++11/C++14 features |
+| 2015-01-08 | v0.12.2 | change  | Take better advantage of C++11/C++14 features |
+| 2015-01-08 | v0.12.1 | change  | Take better advantage of C++11/C++14 features |
+| 2015-01-06 | v0.12.0 | change  | Major: Switch to C++11/C++14, no (non-trivial) changes to functionality |
+| 2014-12-22 | v0.11.0 | change  | Extensive changes, mostly exploring potential new functionality |
+| 2014-07-29 | v0.10.1 | defect  | Since viewer name-cleaning turns spaces to underscores, stop it removing underscores |
+| 2014-07-23 | v0.10.0 | feature | Setting dash_width to more reasonable value of 0.7 |
+| 2014-07-23 | v0.9.0  | feature | Add --id option to cath-superpose that allows the structure's IDs to be specified |
+| 2014-07-23 | v0.8.0  | feature | Add commands to set seq_view_label_mode and ribbon_width in PyMOL scripts for better viewing |
+| 2014-07-17 | v0.7.0  | feature | Add commands to set line_width, dash_width, dash_radius in PyMOL scripts for better backbone+alignment viewing |
+| 2014-07-15 | v0.6.0  | feature | Add "set label_size, -0.6" to PyMOL scripts so that labels get bigger on zooming in |
+| 2014-07-11 | v0.5.2  | defect  | Fix unintelligible error message on using --pdbs-from-stdin with empty stdin |
+| 2014-07-11 | v0.5.1  | defect  | Fix v0.5.0 error that breaks --gradient-colour-alignment for single entry alignments by scoring them with all zeroes |
+| 2014-07-11 | v0.5.0  | change  | Add first attempt at superposition weighting for --res-name-align (ie Genome3D) and make --gradient-colour-alignment use scores |
+| 2014-07-03 | v0.4.0  | change  | Remove the PyMOL distance objects for pairwise alignments | 
+| 2014-07-02 | v0.3.1  | defect  | Correct crash in --gradient-colour-alignment when using --ssap-scores-infile for single structure |
+| 2014-06-24 | v0.3.0  | feature | Make alignment colouring heed number of aligned residues; decouple colouring code from viewer code |
+| 2014-06-19 | v0.2.2  | defect  | Correct viewer alignment links - spanning tree was based on distance between *unsuperposed* structures |
+| 2014-06-18 | v0.2.1  | defect  | Correct permutation used at end of gluing multiple pairwise alignments together |
+
+Change Type Key
+---------------
+
+ * change  : backwards-incompatible change
+ * feature : backwards-compatible addition to functionality
+ * defect  : backwards-compatible bug fix
+
+The change types correspond to MAJOR, MINOR and PATCH in Semantic Versioning (http://semver.org/).
+
+Below v1.0.0, "change"/"MAJOR" is only used to increment the MINOR (ie middle) number in the version identifier. 
