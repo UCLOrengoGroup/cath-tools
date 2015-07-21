@@ -7,8 +7,6 @@ If you use this software in your work, please cite the following in any related 
     Journal of Molecular Biology 208, 1-22
     PMID: 2769748
 
-
-
 Acknowledgements
 ----------------
 
