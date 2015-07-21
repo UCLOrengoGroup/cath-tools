@@ -10,7 +10,7 @@ ELSE()
 	set( Boost_USE_STATIC_LIBS ON )
 ENDIF()
 
-find_package(Boost 1.57 REQUIRED filesystem iostreams log_setup log program_options serialization system thread unit_test_framework)
+find_package(Boost 1.55 REQUIRED filesystem iostreams log_setup log program_options serialization system thread unit_test_framework)
 
 # Default flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -W -Wall -Werror -Wextra -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftabstop=2")
