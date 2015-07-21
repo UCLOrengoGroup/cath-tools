@@ -1,7 +1,16 @@
 README
 ======
 
-<!-- In Markdown format -->
+Cloning the cath-tools GitHub Repo
+---
+
+This project includes [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage") as a submodule. To ensure the bioplib directory gets populated, clone with:
+
+    git clone --recursive https://github.com/UCLOrengoGroup/cath-tools.git
+
+...or if you've already cloned, then use:
+
+    git submodule update --init --recursive
 
 Building
 ========
