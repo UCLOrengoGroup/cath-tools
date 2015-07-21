@@ -1,12 +1,18 @@
 language: cpp
 
+sudo: false
+
 compiler:
  - clang
  - gcc
+ 
+addons:
+  apt:
+    packages:
+     - libboost-dev
+     - cmake
 
 before_script:
- - sudo apt-get update -qq
- - sudo apt-get install libboost-dev
  - mkdir release_build
  - cd release_build
  - cmake -DCMAKE_BUILD_TYPE=RELEASE ..
