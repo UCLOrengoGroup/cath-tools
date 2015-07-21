@@ -1,15 +1,21 @@
 language: cpp
 
-sudo: false
-
 compiler:
  - clang
  - gcc
- 
+
+before_install:
+    - sudo apt-get -q update
+    - sudo add-apt-repository --yes  ppa:boost-latest/ppa 
+    
+install:
+    - sudo apt-get install -q libboost1.55-dev
+    - sudo apt-get install -q clang-3.7
+    - sudo apt-get install -q gcc-4.9
+
 addons:
   apt:
     packages:
-     - libboost-dev
      - cmake
 
 before_script:
