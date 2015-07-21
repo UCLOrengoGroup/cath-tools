@@ -1,4 +1,0 @@
-bioplib
-=======
-
-The bioplib library
