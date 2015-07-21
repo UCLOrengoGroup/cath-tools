@@ -1,22 +1,23 @@
+sudo: false
 language: cpp
 
 compiler:
  - clang
  - gcc
 
-before_install:
-    - sudo apt-get -q update
-    - sudo add-apt-repository --yes  ppa:boost-latest/ppa 
-    
 install:
-    - sudo apt-get install -q clang-3.7
-    - sudo apt-get install -q gcc-4.9
-    - sudo apt-get install -q libboost1.55-dev
-
+ - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+ 
 addons:
   apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    - boost-latest
     packages:
-     - cmake
+    - cmake
+    - gcc-4.9
+    - g++-4.9
+    - libboost1.55-all-dev
 
 before_script:
  - mkdir release_build
