@@ -28,4 +28,4 @@ before_script:
  - cd release_build
  - cmake -DCMAKE_BUILD_TYPE=RELEASE ..
 
-script: make && ../build-test
+script: make -k && ../build-test
