@@ -5,8 +5,9 @@ compiler:
  - clang
  - gcc
 
-#install:
-# - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+install:
+ - if [ "$CXX" == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9" ; fi
+ - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.6"              ; fi
  
 addons:
   apt:
@@ -27,4 +28,4 @@ before_script:
  - cd release_build
  - cmake -DCMAKE_BUILD_TYPE=RELEASE ..
 
-script: make && ../build-test
+script: cmake --version && make && ../build-test
