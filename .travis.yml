@@ -9,9 +9,9 @@ before_install:
     - sudo add-apt-repository --yes  ppa:boost-latest/ppa 
     
 install:
-    - sudo apt-get install -q libboost1.55-dev
     - sudo apt-get install -q clang-3.7
     - sudo apt-get install -q gcc-4.9
+    - sudo apt-get install -q libboost1.55-dev
 
 addons:
   apt:
