@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.8)
+cmake_minimum_required (VERSION 2.8.7)
 
 # For useful information on getting CMake to work with Boost, type the following command: cmake --help-module FindBoost
 
