@@ -12,6 +12,7 @@ addons:
   apt:
     sources:
     - boost-latest
+    - kalakris-cmake
     - llvm-toolchain-precise-3.6
     - ubuntu-toolchain-r-test
     packages:
