@@ -20,63 +20,15 @@ Compiling from Source
 
 You'll need a fairly good (ie recent) C++ compiler (eg on Ubuntu: sudo apt-get install g++). The code's currently being developed against GCC v4.8.2 / v4.9.2 and Clang v3.6.0.
 
-cath_binaries is compiled using the CMake build system.
-
-There are 3 dependencies/prerequisites:
+This project currently uses the superposition routine from [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage"), which is included as a Git submodule. There are 2 other dependencies/prerequisites:
 
  * **CMake** (&ge; v2.8.8  ) : Used to build the software
  * **Boost** (&ge; v1.57.0?) : Used heavily the Boost libraries (both headers and libraries) must be installed on the build machine.
- * **bioplib**             : Currently used for its superposition routine.
-   The location is specified with the environment variable BUILDROOT, which must point to a directory that
-   contains a directory bioplib/trunk that in turn contains the headers and the two compiled libraries, libbiop.a and libgen.a.
 
 ### Boost
 
     [Ubuntu]
     $ sudo apt-get install libboost-all-dev
-
-### bioplib (external users)
-
-At present, there's an issue that stops us using bioplib &ge; v3.0.
-For now, we recommend using v2.1.2.
-
-Download the compressed archive from [v2.1.2 on GitHub](https://github.com/ACRMGroup/bioplib/archive/V2.1.2.tar.gz)
-via [the project page](http://www.bioinf.org.uk/software/bioplib/), decompress the archive and cd into the new directory.
-
-Then:
-
-    $ tar -zxvf bioplib-2.1.2.tar.gz
-    $ cd bioplib-2.1.2/src
-    $ make
-    $ mkdir bioplib
-    $ ln -s .. bioplib/trunk
-    $ setenv BUILDROOT $PWD
-
-If attempting to use &ge; v3.0, be sure to comment out the line in the Makefile that switches on use of libxml2:
-
-    # Include libxml2
-    # Note: xml2-config is installed with libxml2
-    #       Link to libxml2 with -lxml2
-    COPT := $(COPT) -D XML_SUPPORT $(shell xml2-config --cflags)
-
-Otherwise the build against the bioplib libraries will be broken by unresolved dependencies to libxml2.
-
-### bioplib (internal users)
-
-Get a local checkout of the bioplib library and build it
-
-    $ svn co svn://orengosvn/bioplib ~/svn/bioplib
-    $ cd ~/svn/bioplib
-    $ make
-
-Make this visible to the build by adding the `BUILDROOT` to your environment
-
-    # ~/.bashrc
-    $ export BUILDROOT=~/svn
-
-    # ~/.cshrc
-    $ setenv BUILDROOT ~/svn
-
 
 ### CMake (internal users)
 
@@ -192,3 +144,20 @@ You will need to tell it where to find the PDB, wolf and sec files. We recommend
     CATH_BINARIES_PDB_PATH  .:/global/data/directories/pdb
     CATH_BINARIES_DSSP_PATH .:/global/data/directories/dssp
     CATH_BINARIES_SEC_PATH  .:/global/data/directories/sec
+
+Extra Bioplib Notes
+-------------------
+
+At present, there's an issue that stops us using [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage") &ge; v3.0 so the Git submodule is v2.1.2.
+
+Download the compressed archive from [v2.1.2 on GitHub](https://github.com/ACRMGroup/bioplib/archive/V2.1.2.tar.gz)
+via [the project page](http://www.bioinf.org.uk/software/bioplib/), decompress the archive and cd into the new directory.
+
+If you attempt to use &ge; v3.0, be sure to comment out the line in the Makefile that switches on use of libxml2:
+
+    # Include libxml2
+    # Note: xml2-config is installed with libxml2
+    #       Link to libxml2 with -lxml2
+    COPT := $(COPT) -D XML_SUPPORT $(shell xml2-config --cflags)
+
+Otherwise the build against the bioplib libraries will be broken by unresolved dependencies to libxml2.
