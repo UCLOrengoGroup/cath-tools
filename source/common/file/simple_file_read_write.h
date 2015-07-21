@@ -23,7 +23,7 @@
 
 #include <boost/concept/assert.hpp>
 #include <boost/concept_archetype.hpp>
-#include <boost/core/ignore_unused.hpp>
+#include "boost_1_56_0/core/ignore_unused.hpp"
 #include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range.hpp>

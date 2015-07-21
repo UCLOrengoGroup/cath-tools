@@ -21,7 +21,7 @@
 #ifndef PROTEIN_H_INCLUDED
 #define PROTEIN_H_INCLUDED
 
-//#include <boost/core/ignore_unused.hpp>
+//#include "boost_1_56_0/core/ignore_unused.hpp"
 #include <boost/lexical_cast.hpp>
 //#include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/sub_range.hpp>

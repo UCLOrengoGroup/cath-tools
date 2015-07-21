@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/core/ignore_unused.hpp>
+#include "boost_1_56_0/core/ignore_unused.hpp"
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>

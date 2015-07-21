@@ -21,7 +21,7 @@
 #ifndef CHECK_UPTR_CLONE_AGAINST_THIS_H_INCLUDED
 #define CHECK_UPTR_CLONE_AGAINST_THIS_H_INCLUDED
 
-#include <boost/core/ignore_unused.hpp>
+#include "boost_1_56_0/core/ignore_unused.hpp"
 
 #include <cassert>
 #include <memory>

@@ -22,7 +22,7 @@
 #define IS_EQUAL_WITH_SAME_DYNAMIC_TYPE_COMPARABLE_H_INCLUDED
 
 #include <boost/concept_check.hpp>
-#include <boost/core/ignore_unused.hpp>
+#include "boost_1_56_0/core/ignore_unused.hpp"
 
 namespace cath {
 	namespace common {
