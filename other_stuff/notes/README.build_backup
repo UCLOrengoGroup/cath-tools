@@ -1,0 +1,14 @@
+# If you're developing, it's a good idea to use a debug build (change release -> debug and RELEASE -> DEBUG)
+# but this won't work unless you can find a debug version of the Boost program_options library
+# (eg /usr/lib/libboost_program_options-mt-d.a)
+
+cd release
+# You may wish to remove everything in this directory first (CAREFUL!)
+cmake .. -DCMAKE_BUILD_TYPE=RELEASE
+
+cd ..
+
+make -C release
+# make -C release VERBOSE=1  - to see the compiler commands being used
+# make -C release -j 4       - to use four threads in parallel
+# make -C release -k         - to continue compiling other files after failures

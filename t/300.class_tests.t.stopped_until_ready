@@ -1,0 +1,20 @@
+use Test::Class::Load qw(t/lib);
+
+use strict;
+use warnings;
+
+use Ssap::TestEnv;
+
+my $version = 'latest_release';
+
+my $BASE_DIR = "/cath/data";
+
+$ENV{WOLFDIR} = "$BASE_DIR/$version/wolf";
+$ENV{SECDIR}  = "$BASE_DIR/$version/sec";
+
+$ENV{CATH_BINARIES_DSSP_PATH} = "$BASE_DIR/$version/dssp";
+$ENV{CATH_BINARIES_PDB_PATH}  = "$BASE_DIR/$version/pdb";
+$ENV{CATH_BINARIES_WOLF_PATH} = "$BASE_DIR/$version/wolf";
+$ENV{CATH_BINARIES_SEC_PATH}  = "$BASE_DIR/$version/sec";
+
+Test::Class->runtests();

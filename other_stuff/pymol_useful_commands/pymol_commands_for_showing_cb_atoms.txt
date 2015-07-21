@@ -1,0 +1,15 @@
+hide all
+show lines,(name ca or name c or name n or name cb)
+set ribbon_width, 1.5
+show ribbon
+show spheres, (name cb)
+
+# (CAs are typically about 3.8A apart and setting sphere_scale to 1.15 makes CA spheres just about touch,
+#  that suggeests the radius of 1.9A needs to be divided by 1.65217391304 to get 1.15/
+#  The maximum considered SSAP distance is sqrt(40) ~= 6.325 so this should be halved and divided by 1.6 number).
+#set sphere_scale, 1.91401016274
+set sphere_scale, 0.25
+
+set sphere_transparency, 0.35
+
+

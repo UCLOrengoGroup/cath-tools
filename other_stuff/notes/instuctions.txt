@@ -1,0 +1,2 @@
+debug/cath_superpose --aln-infile 1fi2A001j58A01.list --pdb-infile /cath/data/current/pdb/1fi2A00 --pdb-infile /cath/data/current/pdb/1j58A01 --sup-to-pymol
+debug/cath_superpose --aln-infile 1fi2A001j58A01.list --pdb-infile /cath/data/current/pdb/1fi2A00 --pdb-infile /cath/data/current/pdb/1j58A01 --sup-to-stdout > 1fi2A001j58A01.new_sup

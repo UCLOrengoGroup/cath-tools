@@ -1,0 +1,3 @@
+ffmpeg -sameq -aspect 1.64700098328 -i 3.10.100.10.movie.%4d.png 3.10.100.10.movie.avi
+1675x1017 scale to 1779x1080 then resize to 1960x1080
+ls -1 *.png | xargs -I VAR mogrify -background black -extent 1920x1080 -gravity center VAR

@@ -1,0 +1,85 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Carp             qw/ confess        /;
+use Cwd;
+use Data::Dumper;
+use Digest::MD5      qw/ md5_hex        /;
+use English          qw/ -no_match_vars /;
+use feature          qw/ say            /;
+use IPC::Run3;
+use List::MoreUtils  qw/ uniq           /;
+use Path::Class      qw/ dir file       /;
+
+my $SSAP_ALIGNMENT_SUFFIX = ".list";
+my $SSAP_SCORES_SUFFIX    = ".scores";
+
+# Check the script's arguments
+if ( scalar(@ARGV) < 4 ) {
+	confess "Usage: $PROGRAM_NAME temp_dir struc_id1 struc_id2 struc_id3 ...\n\t";
+}
+my ( $temp_dir_name, @struc_ids ) = @ARGV;
+@struc_ids = uniq( sort( @struc_ids ) ) ;
+
+# Check the directory exists
+my $temp_dir = dir($temp_dir_name)->absolute();
+if ( ! -d $temp_dir ) {
+	$temp_dir->mkpath()
+		or confess "Directory \"$temp_dir\" doesn't not exist and unable to make it : $OS_ERROR";
+}
+
+# Temporarily change to that temporary directory for performing any SSAPs
+my $orig_dir = cwd();
+chdir $temp_dir
+	or confess "Couldn't chdir back to \"$temp_dir\"";
+
+# Loop over the struc pairs
+# (only the half matrix is required so only consider pairs where $struc_id1 lt $struc_id2)
+my @scores_lines;
+foreach my $struc_id1 ( @struc_ids ) {
+	foreach my $struc_id2 ( @struc_ids ) {
+		if ( $struc_id1 lt $struc_id2 ) {
+			my $alignment_file = $temp_dir->file( $struc_id1.$struc_id2.$SSAP_ALIGNMENT_SUFFIX );
+			my $scores_file    = $temp_dir->file( $struc_id1.$struc_id2.$SSAP_SCORES_SUFFIX    );
+			
+			# If both files already exist then say so
+			if ( -s $alignment_file && -s $scores_file ) {
+				warn localtime(time())." : SSAP files already exist for $struc_id1 vs $struc_id2\n";
+			}
+			# Otherwise perform the SSAP and write the scores to a file
+			else {
+				warn localtime(time())." : Performing SSAP for $struc_id1 vs $struc_id2\n";
+				my ($ssap_stdout, $ssap_stderr);
+				run3( [ 'SSAP', $struc_id1, $struc_id2 ], undef, \$ssap_stdout, \$ssap_stderr);
+				if ($CHILD_ERROR) {
+					confess "Error when running SSAP for $struc_id1 vs $struc_id2 (stdout: \"$ssap_stdout\"; stderr: \"$ssap_stderr\")";
+				}
+				$scores_file->spew($ssap_stdout);
+			}
+			
+			# Either way, add the scores line to back of @scores_lines
+			push @scores_lines, $scores_file->slurp();
+		}
+	}
+}
+
+# Remove trailing newlines from @scores_lines
+while(chomp(@scores_lines)) {}
+
+# Chdir back to the original directory
+chdir $orig_dir
+	or confess "Couldn't chdir back to \"$orig_dir\"";
+
+# Write all the scores to a single scores file
+my $md5_of_ids = md5_hex(join('_', @struc_ids));
+my $scores_file = $temp_dir->file( "ssap_scores.$md5_of_ids" );
+$scores_file->spew( join( "\n", @scores_lines )."\n" );
+
+# Print some suggestion commands
+say "";
+say "Now, try running command like: ";
+say "  cath-superpose --ssap-scores-infile $scores_file --pdb-infile \$PDBDIR/".join( " --pdb-infile \$PDBDIR/", @struc_ids )." --sup-to-pymol-file $md5_of_ids.pml";
+say "  pymol $md5_of_ids.pml";
+

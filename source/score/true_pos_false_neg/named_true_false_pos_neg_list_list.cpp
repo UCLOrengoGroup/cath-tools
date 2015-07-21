@@ -1,0 +1,92 @@
+/// \file
+/// \brief The named_true_false_pos_neg_list_list class definitions
+
+/// \copyright
+/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// Copyright (C) 2011, Orengo Group, University College London
+///
+/// This program is free software: you can redistribute it and/or modify
+/// it under the terms of the GNU General Public License as published by
+/// the Free Software Foundation, either version 3 of the License, or
+/// (at your option) any later version.
+///
+/// This program is distributed in the hope that it will be useful,
+/// but WITHOUT ANY WARRANTY; without even the implied warranty of
+/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+/// GNU General Public License for more details.
+///
+/// You should have received a copy of the GNU General Public License
+/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#include "named_true_false_pos_neg_list_list.h"
+
+#include "common/algorithm/transform_build.h"
+#include "common/c++14/cbegin_cend.h"
+#include "score/true_pos_false_neg/classn_stat_pair_series.h"
+#include "score/true_pos_false_neg/classn_stat_pair_series_list.h"
+#include "score/true_pos_false_neg/named_true_false_pos_neg_list.h"
+#include "score/true_pos_false_neg/true_false_pos_neg.h"
+
+using namespace cath;
+using namespace cath::common;
+using namespace cath::score;
+// using namespace std;
+
+/// \brief TODOCUMENT
+named_true_false_pos_neg_list_list::named_true_false_pos_neg_list_list(const named_true_false_pos_neg_list_vec &arg_named_true_false_pos_neg_list_vec ///< TODOCUMENT
+                                                                       ) : named_true_false_pos_neg_lists( arg_named_true_false_pos_neg_list_vec ) {
+
+}
+
+/// \brief TODOCUMENT
+bool named_true_false_pos_neg_list_list::empty() const {
+	return named_true_false_pos_neg_lists.empty();
+}
+
+/// \brief TODOCUMENT
+size_t named_true_false_pos_neg_list_list::size() const {
+	return named_true_false_pos_neg_lists.size();
+}
+
+/// \brief TODOCUMENT
+const named_true_false_pos_neg_list & named_true_false_pos_neg_list_list::operator[](const size_t &arg_index ///< TODOCUMENT
+                                                                                     ) const {
+	return named_true_false_pos_neg_lists[ arg_index ];
+}
+
+/// \brief TODOCUMENT
+named_true_false_pos_neg_list_list::const_iterator named_true_false_pos_neg_list_list::begin() const {
+	return cath::common::cbegin( named_true_false_pos_neg_lists );
+}
+
+/// \brief TODOCUMENT
+named_true_false_pos_neg_list_list::const_iterator named_true_false_pos_neg_list_list::end() const {
+	return cath::common::cend( named_true_false_pos_neg_lists );
+}
+
+/// \brief TODOCUMENT
+classn_stat_pair_series_list cath::score::make_classn_stat_pair_series_list(const named_true_false_pos_neg_list_list &arg_named_true_false_pos_neg_list_list, ///< TODOCUMENT
+                                                                            const classn_stat                        &arg_classn_stat_a,                      ///< TODOCUMENT
+                                                                            const classn_stat                        &arg_classn_stat_b                       ///< TODOCUMENT
+                                                                            ) {
+	return {
+		transform_build<classn_stat_pair_series_vec>(
+			arg_named_true_false_pos_neg_list_list,
+			[&] (const named_true_false_pos_neg_list &x) {
+				return get_classn_stat_pair_series( x, arg_classn_stat_a, arg_classn_stat_b );
+			}
+		)
+	};
+}
+
+/// \brief TODOCUMENT
+str_doub_pair_vec cath::score::areas_under_roc_curves(const named_true_false_pos_neg_list_list &arg_named_true_false_pos_neg_list_list
+                                                      ) {
+	return transform_build<str_doub_pair_vec>(
+		arg_named_true_false_pos_neg_list_list,
+		[] (const named_true_false_pos_neg_list &x) {
+			return make_pair( x.get_name(), area_under_roc_curve( x ) );
+		}
+	);
+}
+

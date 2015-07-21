@@ -1,0 +1,87 @@
+
+SSAP - pairwise structural alignment program
+
+Synopsis
+
+SSAP [options] <inputfile> <outputfile>
+
+Description
+
+SSAP performs a pairwise structural alignment using double dynamic programming.
+SSAP requires wolf (modified DSSP) and sec (secondary structure data) files. Within CATH these
+files are pregenerated and are found at the location defined by the environment variables
+SECDB and WOLFDB.
+
+
+Options
+
+	-h    	Print brief help, including version number and summary of all options
+	
+ -o <file>    	Direct the pairwise score output to a file named <file>.
+ 		(Within CATH this is usually called the "matches.ssap" file) 
+ 		By default, output would go to stdout
+ 
+ -a <align>	Direct the alignment output to a file named <align>. 
+		By default, the output is written to a file called prot1prot2.list
+		in the working directory
+ 
+ -F <format>  	Reformat the output alignment into a different format.
+ 	      	Default is SSAP format, other options are fasta, cora....
+	      
+	-q	Quiet option. Suppress all output except the pairwise scores themselves.
+		Useful for piping or redirecting the output
+
+
+Expert Options
+
+--foldssap	Input file contains a single column list of domains.
+		Pairwise alignment occurs for all pairs in the file (half matrix only)
+		
+--pairssap	Input file contains two columns of domains.
+		Each pair of proteins is aligned
+
+--onepair <prot1> <prot2>		
+
+		By default, the output is written to a file called prot1prot2.list
+		in the working directory
+
+--aligndir <dir>
+
+		Set the directory to write alignment files to.
+		
+--paramfile <paramfile>
+
+		Use a SSAP parameter file in the working directory.
+		By default the program uses internal parameter settings.
+		
+--rmsd		Run profit Andrew Martins rigid body superposition program to calculate
+		the rmsd between the two proteins. The rmsd value is written to the last 
+		column of the pairwise score file (by default this column is 99.99)
+
+--localpdb	Use local (working directory) pdb files.
+		This option invokes programs to automatically generate wolf and sec files.
+
+--localwolf	Use local (working directory) wolf and sec files.
+		By default these are found in the directories set in WOLFDB and SECDB.
+
+--slow		Force the program to use the slow and rigorous algorithm only.
+
+--fast		Force the program to use the faster vector based algorithm only
+		
+--best		Use both slow and fast algorithms but only report the scores from the
+		best alignment.
+		
+Environment Variables
+
+	WOLFDB	Location of the wolf files for structural domains defined in the CATH database.
+		The filename convention is 1xxxA0.wolf
+		Wolf files are modified
+
+		Example:
+		> setenv WOLFDB /nfs/cathdata/wolf/<cathcode>.wolf
+
+	SECDB	Location of the sec files for structural domains defined in the CATH database.
+		The filename convention is 1xxxA0.sec
+
+		Example:
+		> setenv SECDB /data/sec/<cathcode>.sec 

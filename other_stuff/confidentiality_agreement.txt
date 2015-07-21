@@ -1,0 +1,114 @@
+
+
+              SSAP - Sequential Structure Alignment program
+              ---------------------------------------------
+
+
+			CONFIDENTIALITY AGREEMENT
+			-------------------------
+
+
+
+In regard to the SSAP , specified in the Appendix herewith 
+(the Software) supplied to us, the copyright and other
+intellectual property rights to which belong to the authors, we
+
+
+    __________________________________________________________________
+
+undertake to the authors that we shall be bound by the following terms 
+and conditions:-
+
+1. We will receive the Software and any related documentation in 
+confidence and will not use the same except for the purpose of the
+department's own research. The Software will be used only by such of 
+our officers or employees to whom it must reasonably be communicated 
+to enable us to undertake our research and who agree to be bound by 
+the same confidence.  The department shall procure and enforce such
+agreement from its staff for the benefit of the authors.
+
+2. The publication of research using the Software must reference
+"Taylor W R, Orengo C A (1989). Protein Structure Alignment
+J. Mol. Biol. 208:1-22."
+
+3. Research shall take place solely at the department's premises at
+
+
+    __________________________________________________________________
+
+4. All forms of the Software will be kept in a reasonably secure place
+ to prevent unauthorised access.
+
+5. Each copy of the Software or, if not practicable then, any package
+associated therewith shall be suitably marked (and such marking 
+maintained) with the following copyright notice: " Copyright 1989
+W R Taylor & C A Orengo  All Rights Reserved".
+
+6. The Software may be modified but any changes made shall be made
+available to the authors.
+
+7. The Software shall be used exclusively for academic teaching and
+research. The Software will not be used for any commercial research or
+research associated with an industrial company.
+
+8. The confidentiality obligation in paragraph one shall not apply:
+
+   (i)  to information and data known to the department at the time of
+	receipt hereunder (as evidenced by its written records);
+
+  (ii)	to information and data which was at the time of receipt in the 
+	public domain or thereafter becomes so through no wrongful act of
+	the department;
+
+ (iii)	to information and data which the department receives from a third
+	party not in breach of any obligation of confidentiality owed to
+	the authors.
+
+Please sign this Undertaking and return a copy of it to indicate that you 
+have read, understood and accepted the above terms.
+
+
+
+		      For and on behalf of _____________________________
+
+		      _________________________________________________
+		     
+		      ..................................................
+
+		      Dated ............................................
+
+
+
+e-mail address ___________________________
+
+
+
+Please complete the above form, sign it, and then send it, or fax it, to:-
+
+
+Christine Orengo
+Biomolecular Structure and Modelling Unit
+Dept. of Biochemistry
+University College
+Gower Street
+London  WC1E 6BT
+ENGLAND
+
+Tel:-  +44 (0)171 419 3284
+Fax:-  +44 (0)171 380 7193
+
+
+If you have any problems either installing the software or running it,
+please e-mail your problems to:-
+
+     orengo@bsm.bioc.ucl.ac.uk
+
+
+-----------------------------------------------------------------------
+                    
+
+
+
+
+
+

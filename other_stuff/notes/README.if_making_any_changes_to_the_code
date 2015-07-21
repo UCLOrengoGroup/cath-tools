@@ -1,0 +1,8 @@
+== Before committing any changes ==
+
+Ensure that the Perl tests run through without any problems.
+
+== Running the Perl tests ==
+ * If necessary, put symlinks in the project's root directory to the executables you want to test.
+ * Ensure that . is included in your PATH, so that the Perl tests find your binaries.
+ * Use `prove -l -v t` so that the output of tests is verbose (and hence includes TODO messages.

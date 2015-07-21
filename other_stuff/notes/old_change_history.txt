@@ -1,0 +1,312 @@
+===========================================================================
+
+   SSAPc  - Ollie Redfern v1.20 (14.03.04)
+
+   SSAP with command line options
+   (SSAP: W.R. TAYLOR & C.A.ORENGO)
+
+   NOTE FROM JAMES BRAY (28.02.2000 - v1.01):
+   Although I have added command line options to this program
+   and concatenated all the SSAP functions into one file, I have not
+   rigorously debugged the original SSAP code, working on the principle of
+   "if it's not broken, don't fix it". So, enjoy the new functionality
+   and don't blame me for any historical bugs.. ;)
+
+   NOTE FROM JAMES BRAY (31.01.2002 - v1.06):
+   I have incorporated the coding improvements made by Andrew Martin
+   to get SSAPc running under linux. Mostly changes to prototypes,
+   some variables have been made static and redundant variable names removed.
+   Comments on code changes from Andrew are included below.
+   Command line option parsing by GetOpt has been retained.
+
+   Modifications:
+   v1.01 (28.02.2000) James Bray - added GetOpt()
+   				   concatenated all SSAP functions into one big file
+
+   v1.02 (21.06.2000) James Bray - made independent of data directories [wolf & sec]
+   				   ie can be read from WOLFDIR & SECDIR environment variables
+				   paramfile is optional
+				   output file option [default file = ssap.out]
+
+   v1.03 (16.10.2000) James Bray - changed command line defaults;
+   				   alignment files are written to current directory unless
+				   '--aligndir' specifies another directory
+				   using 'getenv' to read environment variables
+				   minor variable name changes:
+				   'select' to 'selected', 'index' to 'indexed'
+
+   v1.04 (10.11.2000) James Bray - added option to output sup files '--supdir'
+   				   changed output format to standard spacing
+
+   v1.05 (16.04.2001) James Bray - changed score_run1 and score_run2 from ints
+                                   to floats to properly compare run1 and run2
+
+   v1.06 (31.01.2002) James Bray - incorporated Andrew Martin's modifications
+                                   to allow SSAP to run under linux. Continue
+				   to use GetOpt instead of Andrew's checkcommandline
+				   functions
+
+   v1.07 (28.03.2002) James Bray - minor change to 'print_ssap_scores' to output to file
+                                   instead of to stdout.
+
+   v1.08 (08.05.2002) James Bray - renamed files SSAPc.c and SSAPc.h
+                                   prints output all together rather than two separate
+				   print statements
+
+   v1.09 (09.05.2002) James Bray - added more detailed usage instructions
+
+   v1.10 (12.09.2002) James Bray - changed default wolf and sec data directories
+
+   v1.11 (12.09.2002) James Bray - score_run1 and score_run2 now work properly (moved to print_aln)
+                                   added DEBUG switch and statements
+
+   v1.12 (12.09.2002) James Bray - rewrote function 'alnseq' to separate FAST SSAP and SLOW SSAP
+                                   does not run FAST SSAP for proteins with only one secondary structure
+                                   retained old version of 'alnseq' for reference
+
+   v1.13 (18.09.2002) James Bray - minor format change for zero matches.ssap files
+
+   v1.14 (19.09.2002) James Bray - added '--allscores' option
+                                   = prints out results for fast ssap AND slow ssap
+                                   by default ONLY prints out results for the highest ssap score run
+
+   v1.15 (19.09.2002) James Bray - added '--slowssap' option
+                                   = forces program to ONLY use slow ssap
+
+   v1.16 (14.03.2004) Ollie Redfern  - 	Increased protein title to hold 100 characters.
+   				   	Removed chain dependence of wolf file reader.
+				   	Removed Andrew Martin's error check for protein name.
+				   	Changed default WOLF and SEC directories.
+
+   v1.20 (14.04.2004) Ollie Redfern  -  Added Superpose, CalcRmsd, CofGeo,
+   					TransOrigin, RotCoor and TransCoor functions.
+
+   v1.30 (19.11.2004) Ollie Redfern  -  .sup file now genuinely contains a superposed
+   					pair of structures. The source of the dompdb files
+					can be set using the environment variable DOMDIR.
+					FreePDB has been added and
+					Superpose has been modified to read and superpose
+					PDB structures, using bioplib. Structure 1 is now
+					chain A and structure 2 is chain B in this file.
+					Added --script option to write a rasmol script too.
+   v2.0 (08.12.2004) Ollie Redfern  -   Have integrated the --clique option from Harry's
+   					version of SSAPClique. There is now only one
+					version of SSAP. There are still millions of
+					memory leaks and errors from the orginal SSAP code,
+					according to valgrind, and they need to be dealt with
+					at some point for ultimate stability.
+
+   GetOpt is an independent module and never needs to be changed.
+   Change command line options in SSAPc.c
+
+===========================================================================
+
+ ===========================================================================
+
+ NOTES from Andrew Martin (29.10.2001)
+ -------------------------------------
+
+ Bug fixes and tidying up of SSAP
+ Each source file is the latest version used by me based on a version
+ of SSAP sent to me by CAO dated 13.09.2000.
+
+ 1. Changed all function definitions to ANSI style including specifying
+ return types explicitly for all functions. (This fixes a bug in
+ utils.c/fmin() and fmax() which returned int instead of float!)
+
+ 2. Created prototypes from all files and placed them into protos.h
+ Prototypes for reframe(), cross(), vunit() and vlength() were moved
+ into frame.h instead.
+
+ protos.h is included by:
+    cathread.c
+
+ 3. Modified Makefile to use -Wall -strict -ansi
+
+ 4. Grabbed the versions of frame.h and select.c which I had already
+
+ 5. Carried out the following changes to files
+
+ general.def
+ -----------
+ Removed definition of NULL
+ Changed MIN to MIN_INT and MAX to MAX_INT
+
+ frame.h
+ -------
+ Removed pseudo-prototypes
+ Added full prototypes for reframe(), cross(), vunit() and vlength()
+    void reframe (vectorT one, vectorT two, vectorT *frame);
+    void cross (vectorT A, vectorT B, vectorT C);
+    void vunit (vectorT A);
+    double vlength (vectorT V);
+
+
+ cathread.c
+ ----------
+ Removed pseudo-prototypes
+ Added #include "protos.h"
+ Removed all unused variables
+ Added #include <stdlib.h>
+ In read_res(), corrected:
+         sscanf(buffer,"%d %s", &number, &residue);
+ to:
+         sscanf(buffer,"%d %s", &number, residue);
+
+ cathssapc.c
+ -----------
+ Removed pseudo-prototypes
+ Removed all unused variables
+ Added #include "protos.h"
+ added return value to main()
+ Changed index to idx
+ Changed select[] to select_arr[]
+
+ normalise.c
+ -----------
+ Removed pseudo-prototypes
+ Removed all unused variables
+ Added #include "protos.h"
+ In log_score(), corrected:
+         if (segset = 1) segset = 0;
+ to
+         if (segset == 1) segset = 0;
+ NOTE! This may have a major effect on the method as the previous
+         version *always* evaluated to true
+ Added {} to ambiguous else's in print_sup(), print_ras(),
+         print_aln() and print_asm()
+
+ print.c
+ -------
+ Removed pseudo-prototypes
+ Removed all unused variables
+ Added #include "protos.h"
+
+ score.c
+ -------
+ Removed pseudo-prototypes
+ Removed all unused variables
+ Added #include "protos.h"
+ Added {} to ambiguous else's in score_matrix() and compare_upper()
+ In score_matrix(), corrected:
+         if ( upper_matrix && !trace_back ) return;
+ to
+         if ( upper_matrix && !trace_back ) return(0);
+ Changed index to idx
+ Changed select[] to select_arr[]
+
+ select.c
+ --------
+ Removed pseudo-prototypes
+ Removed all unused variables
+ Added #include "protos.h"
+ Added {} to ambiguous else's in set_lmat() and select_pairs()
+ Changed index to idx
+ Changed select[] to select_arr[]
+
+ utils.c
+ -------
+ Split min(), max(), fmin(), fmax() onto separate lines
+
+ ssap.h
+ ------
+ Removed pseudo-prototypes
+ Changed select[] to select_arr[]
+
+ ssap_sec.h
+ ----------
+ Changed index to idx
+
+ 6. At this stage, SSAP compiles cleanly!
+
+ 7. Further fixes to files
+
+ cathread.c
+ ----------
+ Modified read_sec() to look first in local subdirectory (was already
+         doing this but after the /data directory)
+ Modified read_res() to look in local subdirectory and
+         then in /nfs/cathdata/wolf
+
+ cathssapc.c
+ -----------
+ In alnseq(), corrected:
+         if ( supaln == 1 ) fclose( out );
+ to:
+         if ( (supaln == 1 ) && (out != NULL)) fclose( out );
+
+ In compare(), added checks on array boundaries before initialization
+
+ In compare(), corrected:
+         for ( k = 0; k <= MAXALNLEN; k++)
+ to
+         for ( k = 0; k < MAXALNLEN; k++)
+
+ normalise.c
+ -----------
+ In log_score():
+         Made secmat[][] and burmat[][] static to get them off the stack
+
+ score.c
+ -------
+ In score_matrix():
+         Made maxrows[] toprows[] mat[][] and pat[][] static to get
+         them off the stack
+
+ select.c
+ --------
+ In set_lmat()
+         Added checks on array boundaries.
+
+
+ 8. SSAP now runs properly under Linux
+
+ 9. Now added a couple of command line switches to control printing
+
+ -a Prints alignments/dom1dom2.list
+ -s Creates sup files
+ -c Only print alignments if the score is better than 70
+
+ cathssapc.c
+ -----------
+ In alnseq()
+         Uncommented the block which creates outname for the alignments
+         subdir and opens the file as 'out'
+         Changed:
+             if( supaln == 1 )
+ to
+             if(( supaln == 1 ) && (gPrintAlign))
+
+ In plot_aln()
+         Changed:
+
+             if( supaln == 1)
+             {
+                 if (score_run2 == 0 ||
+                     score_run2 > score_run1)
+                     print_aln( seqa, seqb );
+                 print_sup( seqa, seqb );
+             }
+
+ to:
+             if( (supaln == 1) && gPrintAlign )
+             {
+                if((!gCutScore) || (score_run1 >= 70) || (score_run2 >= 70))
+                   print_alnh(seqa, seqb, score, pass);
+             }
+
+             if ((score_run2 == 0) || (score_run2 > score_run1))
+                print_aln( seqa, seqb );
+
+             if(gPrintSup)
+                print_sup( seqa, seqb );
+
+
+ Added function checkcommandline() called from main() to set the global
+ variables gPrintAlign, gCutScore and gPrintSup if -a, -c and -s are
+ set.
+
+ Added #include <string.h>
+
+ ===========================================================================
+

@@ -1,0 +1,16 @@
+Add option to read new dssp files
+ * Subtasks:
+   * Add regression tests for the reading of current wolf+sec files
+   * Sort out code reading current wolf+sec files
+   * Add tests to test reading from new dssp (perhaps find examples with the same results as for wolf+sec?)
+   * Add code to read the data from the new dssp files
+   * Add a program option for reading new dssp files
+
+Important note: dssp doesn't include the carbon-beta coordinates which are needed by SSAP.
+
+Would need to look carefully at:
+ * What those extra fields WOLF adds to DSSP [see void read_res(protein &) - it looks like carbon beta coordinates and "frames of reference"]
+ * How those fields are used [see void distance_sec(const protein &) and int context_res(const protein &, const protein &, ...)].
+ * Whether enough of the required data can be reconstructed from what's present in the DSSP file (TCO, kappa, alpha, phi, psi).
+
+Otherwise, could change WOLF into wrapper that explicitly calls a dssp executable and adds the necessary data (and make this code available in SSAP so that it can do the whole thing automatically from the PDB?).

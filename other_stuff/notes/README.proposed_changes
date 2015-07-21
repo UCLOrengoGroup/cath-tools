@@ -1,0 +1,230 @@
+Use semantic versioning (http://en.wikipedia.org/wiki/Software_versioning#Semantic_versioning http://semver.org/)
+
+ * Add new measures with which to score an alignment.
+   * These should be added as concrete instantiations of some ABC, say alignment_scorer.
+   * Note that some measures require a superposition to score an alignment (eg RMSD) but others don't (eg dRMSD). To adhere to the LSP, it would be best that the superposition-generating policy is injected into such methods on construction, so that they are able to perform the ABC's method of scoring an alignment with no other arguments. This may be best implemented via some intermediate superposition_dependent_alignment_scorer, that stores the superposition acquirer.
+   * This should share align_based_superposition_acquirer code with the cath-superpose code, which may require a bit of refactoring.
+   * If there is an optimisation requirement, it would be possible to permit an align_based_superposition_acquirer that stores a static pre-generated superposition. It would be up to the user to handle the consequences that this would not dynamically re-superpose for each new alignment argument.
+   * It may be useful to automatically generate multiple scores based on a global/local alignment and (where appropriate) a global/local superposition.
+   * Possible measures:
+     *       pre_globalised__logged__ssap_score (current default)
+     *      post_globalised__logged__ssap_score
+     *  post_comparedalised__logged__ssap_score
+     *   pre_comparedalised__logged__ssap_score
+     *                local__logged__ssap_score
+     *         globalised__unlogged__ssap_score
+     *          middlised__unlogged__ssap_score
+     *              local__unlogged__ssap_score
+     * Maximum number residues pairs in alignment that can be superposed with RMSD <= 3.0 A [requested by Christine in SCOP/CATH mapping workshop on 5th February 2013]
+     * Add the ability to calculate SAS, SI, MI, SSM score [Possibly useful references: http://topofit.ilyinlab.org/topofit/Help.php + http://www.ncbi.nlm.nih.gov/pubmed/15572779 ]
+     * Add dRMSD (RMS of difference between equivalent intra-structure distances) [Possibly useful reference http://pubs.acs.org/doi/abs/10.1021/ct3003145]
+     * Add GDT (global distance test) and LCS (Longest Continuous Segment) [http://en.wikipedia.org/wiki/Global_distance_test http://predictioncenter.org/casp/casp7/public/doc/LCS_GDT.README http://onlinelibrary.wiley.com/doi/10.1002/prot.21761/full]
+     * Any other interesting scores from http://www.sciencedirect.com/science/article/pii/S0959440X09000621
+     * lDDT (http://bioinformatics.oxfordjournals.org/content/early/2013/09/13/bioinformatics.btt473.full)
+     * DRID (http://pubs.acs.org/doi/abs/10.1021/ct3003145)
+     * TM-Score http://en.wikipedia.org/wiki/Template_modeling_score
+     * Structal score: sum_over_pairs_of_corresponding_atoms( 20 / ( 1 + ( d / 2.24 ) ^2 ) ) - 10 n_g, where: d = distance between corresponding atoms; n_g = number of gaps
+
+ * Benchmark measures (with stuff Su Datt has done, with http://raptorx.uchicago.edu/DeepAlign/submit/ etc)
+ * Allow cath-superpose to read an alignment from a FASTA alignment file
+ * Accept that there are three different types of alignment_position_scores according to what scores are present in each position: single, spanning-tree, or all-vs-all. These are quite different and should only be made members of the same inheritance family if there is a clear case for it. That said, there should be conversions between each of these that just calculate the averages.
+ * For cath_ssap and cath-superpose, allow the user to specify a domain within each PDB and only use that for aligning/superposing. Default to only showing those domains in any superposition but allow the user to specify that the whole PDB should be shown.
+ * Potentially a chain mode (with an option to specify which chain within the query PDB), which potentially finds multiple hits for the same match in query?
+ * Enable superpositions to process HETATM residues and possibly to include headers in any PDB output.
+
+If there is a reason that it becomes important to start handling position-unscored alignments (and it isn't good enough to just demand that the position-scores are recalculated), then itmay be worth differentiating between those common_coord_selection_policys/align_based_superposition_acquirers/alignment_scorers that require position-scores in the alignments and those that don't. Note that by LSP principles, the one that doesn't require scores should be a specialisation of the one that does, not the other way around. This can be implemented by the specialisation passing zero scores to the new virtual method it adds. It would take some thought in the case of alignment_scorers, because there is a danger of specialising in two orthogonal directions: needs position scores or not; needs an align_based_superposition_acquirer or not - (and the align_based_superposition_acquirer may or require position scores).
+
+
+ * WOLF (and hence secmake and hence SSAP) currently silently concatenate chains if asked to process a whole PDB. Hence:
+   * Add this as a potential explanation in the warning message when an alignment loading fails because of mismatch with PDBs.
+   * Ensure that any new alignment format includes the PDB codes
+   * Ensure that any attempt to process multiple chains at least causes a warning
+
+General examples
+ * 2hx1A01 vs 3gygC01 - they match quite well but have widely diverging N-terminals.
+ * 1c1dA01 vs 1bgvA02 (similar, ~median length domains (135/136 whereas median CATH domain length is 136 residues in cathdb_current as of 8th August 2013))
+ * 1n3lA01 vs 1r6xA02 - The first two s-reps of the HUPs (3.40.50.620); around 210 residues (209 and 213);invoke a slowssap:
+
+Genome3D examples:
+ * A6NHX0: nice example of a long structure straddling smaller structures with res-name-align
+ * A6NGR9: nice example of how rainbow colouring the alignment would be better than PyMOL's "Colour" -> "By Chain" -> "Chainbow" (also E9PB15 - not quite as good)
+ * P0A9A6: may well look quite a bit tighter after superposing based on a SSAP-scored alignment.
+
+Genome3D work:
+ * Handle superposing a single structure
+ * Ensure IDS are given basic cleaning before they're passed to any viewer
+ * Ensure it's possible to write to stdout and PyMOL in a single run
+ * Allow specifying IDs
+ * Allow specifying colours to be used in viewers
+ * Making changes needed by Ian as part of his work to render static images
+ * Fix the problem Ioannis highlighted with some of the superpositions (by making it score alignment so I can do what I do with the other superpositions)
+ * Colouring superpositions along the length of the alignment as requested by Mike Sternberg in the recent SAB meeting
+ * Add jmol script output to better integrate the superpositions into the pages
+ * Consolidating existing Genome3D superposition code
+   * Putting it into our build
+   * Documenting the code to make it maintainable
+   * Adding tests to check Genome3D usage to prevent it breaking in the future
+
+
+Potential benefits:
+
+ * SSAP source code that we can proudly distribute
+ * A SSAP that runs from DSSP (which is now available to all) rather than WOLF (see README.moving_from_wolf_to_dssp)
+ * A SSAP that runs without the need for sec files?
+ * A SSAP that runs slowssap directly from PDB files?
+ * A SSAP that keeps Mark Swindells happy
+ * Possible speed improvements (I have some ideas in this area)?
+ * Fixes to various known problems (crashes etc), which waste human time and potentially kill farm machines
+ * An investigation of possible errors that are causing errors in CATHEDRAL choppings (to be presented in a CATH meeting)
+ * A fix to the problem of WOLF/SSAP dropping residues
+ * More scores (eg SAS score, dRMSD, num_residues_superposable_within_X_anstgroms etc), which we could later put into Sayoni's machine learning
+ * Code that makes it easy to superpose multiple chains based on domains (so that, eg, Ali can superpose TPP chains herself in the future)
+ * Robust code to continue generating the superfamily superpositions in the future [currently just proof-of-concept code]
+ * Robust code to identify superfamilies' conserved cores (and to use that for colouring superpositions or FASTA alignments) [currently just proof-of-concept code]
+ * Any extensions relating to Rachel Kolodny (eg add option to output more local alignment for better RMSD/SAS)?
+ * Numerous Genome3D superposition improvements (see above)
+ * Ability to superpose based on FASTA alignments (useful to Ian and possibly Nick)
+ * Support for Natalie's use of the code in her work on catalytic residues?
+ * A new XML/JSON output alignment format that includes scores, files etc and can be plugged directly web tools
+
+ * Also, Ian and I both love the idea of using these improvements to make a short YouTube video tutorial that explains the principles of SSAP.
+
+
+
+
+
+Means of getting SSAPs with a range of SSAP scores:
+
+psql cathdb_v3_5_0
+\a \t \f ' '
+SELECT DISTINCT ON (ROUND(ssap_score))
+  query_id,
+  match_id,
+  ssap_score
+FROM
+  domain_ssap_result
+ORDER BY
+  ROUND(ssap_score) DESC,
+  ssap_score DESC,
+  query_id,
+  match_id;
+
+1my7A00 1my5A00 99.10
+2qjyB02 2qjpB02 98.31
+2pw9A02 2pw9C02 97.23
+2c4jA01 1b4pA01 96.45
+2fmpA04 2vanA03 95.49
+1okiA01 1ytqA01 94.46
+1b06A01 1ma1B01 93.49
+1a7sA02 2xw9A02 92.49
+1avyB00 1avyA00 91.49
+1m2tA02 1hwmA02 90.49
+1d0cA01 1m7vA01 89.49
+1a1hA01 2j7jA03 88.49
+1a04A02 1fseB00 87.49
+1fcyA00 1pzlA00 86.49
+1avcA07 1dk5B01 85.49
+1bd8A00 1s70B01 84.49
+1atgA01 1pc3A01 83.49
+1a2oA01 2ayzA00 82.49
+1au7A02 1rr7A02 81.49
+1arbA01 1si5H01 80.49
+1a04A02 1ufmA00 79.49
+1a9xB02 2nv0A00 78.49
+1aepA00 1h6gA02 77.49
+1a4iB01 1sc6A01 76.49
+1a4iB01 2y1eA01 75.49
+1a04A02 1cf7B00 74.49
+1a32A00 1go3F02 73.49
+1a04A02 3broD00 72.49
+1a04A02 1tnsA00 71.49
+1a2oA01 2xblD00 70.49
+1a3qA01 1g4mA01 69.49
+1a04A01 2wjwA01 68.49
+156b000 1rqgA04 67.49
+1a02F00 1mslA02 66.49
+1a34A00 1yewA01 65.49
+1a34A00 1uwwA00 64.49
+1a8dA01 1od3A00 63.49
+156b000 1yarO01 62.49
+1a2pA00 2a4dA00 61.49
+1a4iB01 1g8kA02 60.49
+1a62A02 1mhwC00 59.49
+1a0cA00 2o55A00 58.49
+1a0iA02 2jn4A00 57.49
+156b000 2vpzC00 56.49
+1a5tA01 3iauB01 55.49
+1a5tA01 1p9oA00 54.49
+1a2oA01 3ljkA01 53.49
+1a7jA00 1u7lA01 52.49
+1a0cA00 1kk1A01 51.49
+1a2xB00 2bs2C00 50.49
+1a0iA03 2oq1A02 49.49
+1avwB00 2fe5A00 48.49
+1a76A01 2o2cC01 47.49
+1ac5A00 1mo9A01 46.49
+1ac0A00 2rh0A01 45.49
+1aa0A00 2iy5A00 44.49
+1b9mB02 3gixA00 43.49
+1a6cA01 1qfoC00 42.49
+1afpA00 1t6lA00 41.49
+1a0cA00 3o2zH00 40.49
+1a9xA04 2vglB00 39.49
+1bboA02 3im9A01 38.49
+1cf7B00 1pbgA00 37.49
+1b25A01 1kyqA02 36.49
+1bboA02 1ryp100 35.49
+1hykA00 2cz9A02 34.49
+1h4aX01 1ifcA00 33.49
+1a9xA08 3bixA00 32.49
+1i7wD00 1devB00 31.49
+1a6bB00 3p4tA03 30.49
+1szbA02 1hp1A02 29.49
+1be3I00 2ieeA01 28.49
+2h7cB00 1qo0D02 27.49
+1f8vE00 3f94A02 26.49
+1h59B00 1vyrA00 25.49
+1f8vE00 3g02B00 24.49
+1cw5A00 2h7cB00 23.49
+1hfeL02 3fuyA00 22.49
+1g3jD00 1uqtA01 21.49
+1bg5A03 2ob5A00 20.48
+2ij2B00 2odkA00 19.47
+1nn6A01 3laeA00 18.49
+1w6gA03 2uzyB02 17.49
+2g3aA01 1m32A02 16.49
+1ncqD00 3cjwA00 15.49
+1cptA00 2odkA00 14.48
+1bx7A00 3cb2B01 13.49
+1ncqD00 1rrkA02 12.49
+1gpzA02 2w15A00 11.48
+2mev400 3oaeA00 10.47
+1h6wA02 2i7dA01 9.49
+2r1fA01 1wkqB00 8.49
+1devB00 2v3iA00 7.49
+2e6iA00 1ojjA00 6.45
+2o01N01 1mtyB00 5.47
+2mev400 1giqA01 4.45
+1bg5A03 3nwnA00 3.49
+1i7wD00 3qzbA00 2.36
+1gpzA02 1j0hA02 1.28
+1n7dA02 1x6mA00 0.43
+1kyiS02 1ukcB00 -0.77
+1h6wA02 1fmjA00 -1.72
+1cl4A00 3kvnA01 -2.75
+1h6wA02 1y8qB01 -3.53
+1p3cA02 1gpzA02 -5.00
+1aooA00 1r6vA03 -7.46
+1n7dA02 3c2uA01 -7.74
+1gpzA02 3bmvA01 -10.45
+1gpzA02 3d64A01 -10.70
+1gpzA02 2ph1A00 -12.01
+1m9oA00 1zodA02 -13.21
+2o01N01 1vsgA01 -13.55
+1wfqA01 1ifcA00 -14.56
+3i07B01 1sqjB02 -16.78
+1b8xA03 2qcvA01 -19.47
+2gy5A03 2dlkA02 -19.65
+1sl6A00 3arcO02 -23.85
+1i4oC00 2grjA00 -24.63
+1bg5A03 1xksA00 -32.58

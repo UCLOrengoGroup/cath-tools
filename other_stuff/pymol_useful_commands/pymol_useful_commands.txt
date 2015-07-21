@@ -1,0 +1,67 @@
+cartoon skip, ss h
+cartoon skip, ss l+
+cartoon skip, ss s
+
+color red, ss h
+color yellow, ss s
+color green, ss l+''
+
+set cartoon_rect_length  = 0.090
+set cartoon_rect_width   = 0.024
+set cartoon_oval_length  = 0.081
+set cartoon_oval_width   = 0.015
+set cartoon_loop_radius  = 0.036
+set cartoon_helix_radius = 0.120
+
+set cartoon_cylindrical_helices, 1
+
+
+set cartoon_cylindrical_helices, 1
+set cartoon_transparency, 0.2
+
+bg_color white
+set fog_start, 0.3
+set cartoon_smooth_loops, 1
+color black
+color density, ss s
+color rutherfordium, ss h
+set antialias,2
+
+
+set field_of_view, 45
+
+
+
+
+draw 1618,1000
+png /export/spare/lewis/3.40.50.1820.small_draw.png
+ray 1618,1000
+png /export/spare/lewis/3.40.50.1820.small.png
+ray 4045,2500
+png /export/spare/lewis/3.40.50.1820.med.png
+ray 8090,5000
+png /export/spare/lewis/3.40.50.1820.big.png
+ray 16180,10000
+png /export/spare/lewis/3.40.50.1820.really_big.png
+
+
+
+hide everything
+show cartoon
+set field_of_view, 30
+reset
+orient
+set ribbon_width, 0.0000001
+select 1cukA01, residue 1-66
+select 1cukA02, residue 67-142
+select 1cukA03, residue 156-203
+deselect
+colour blue,  1cukA01
+colour red,   1cukA02
+colour green, 1cukA03
+hide cartoon, 1cukA01
+show ribbon,  1cukA01
+hide cartoon, 1cukA03
+show ribbon,  1cukA03
+
+#delete selction sele

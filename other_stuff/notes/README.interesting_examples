@@ -1,0 +1,9 @@
+2v0nA 1w25B - a nice illustration of very similar structures but with very different orientations between domains
+1iphB 1iphC - for some sets of residues these can run into superposition problems because one is a perfect 180 degree rotation of the other
+1grlB 1grlB - extremely similar structures but they both have stretches of CA-only residues that get dropped from alignment
+1bvs        - DSSP silently drops last residue of chain A (silent unless verbose is requested)
+
+
+3.30.1370.60 - Supuperfamily superposition built from pairwise SSAP-based superpositions has mis-aligned residues (not just absent possible alignments) because the alignment of 1wtjA02 vs 1z2iA02 is a bit messed up by the differences in unobserved regions ( see http://www.cathdb.info/version/v4_0_0/superfamily/3.30.1370.60/superposition around the green in the rainbow version ). This gets fixed in a proper superfamily alignment version.
+
+1b8xA03 versus 1nw1A02; 1cruA00 versus 1mhwC00; 1jo6A00 versus 2py5A06 - cath-ssap produces an alignment from WOLF+SEC but not from DSSP+SEC
