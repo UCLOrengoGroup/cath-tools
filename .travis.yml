@@ -31,7 +31,7 @@ addons:
       #- libboost1.55-all-dev
 
 before_script:
-  - sudo add-apt-repository ppa:ppa:kzemek/boost -y
+  - sudo add-apt-repository ppa:kzemek/boost -y
   - sudo apt-get update -q
   - sudo apt-get install boost1.58
   - mkdir release_build
