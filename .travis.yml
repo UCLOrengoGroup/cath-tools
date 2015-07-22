@@ -41,8 +41,8 @@ before_script:
   - sudo add-apt-repository ppa:afrank/boost -y
   - sudo apt-get update -q
   - sudo apt-get install libboost1.57-all libboost1.57-all-dev
-  - mkdir release_build
-  - cd release_build
+  - mkdir release_build && cd release_build
   - cmake -DCMAKE_BUILD_TYPE=RELEASE ..
+  - cd $TRAVIS_BUILD_DIR
 
-script: make -k && ../build-test
+script: make -k -C release_build && release_build/build-test
