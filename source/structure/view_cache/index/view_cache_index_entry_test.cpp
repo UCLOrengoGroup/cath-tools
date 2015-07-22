@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/numeric/conversion/cast.hpp>
-#include "boost_1_56_0/core/ignore_unused.hpp"
+#include <boost/core/ignore_unused.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/combine.hpp>
 #include <boost/range/numeric.hpp>
