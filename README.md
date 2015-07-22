@@ -1,5 +1,4 @@
-README
-======
+# CATH Tools [![Build Status](https://travis-ci.org/UCLOrengoGroup/cath-tools.svg?branch=master)](https://travis-ci.org/UCLOrengoGroup/cath-tools)
 
 Cloning the cath-tools GitHub Repo
 ---
