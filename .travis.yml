@@ -31,9 +31,9 @@ addons:
       #- libboost1.55-all-dev
 
 before_script:
-  - sudo add-apt-repository ppa:kzemek/boost -y
+  - sudo add-apt-repository ppa:afrank/boost -y
   - sudo apt-get update -q
-  - sudo apt-get install boost1.58
+  - sudo apt-get install libboost1.57-all
   - mkdir release_build
   - cd release_build
   - cmake -DCMAKE_BUILD_TYPE=RELEASE ..
