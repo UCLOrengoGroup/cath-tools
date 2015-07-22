@@ -57,7 +57,7 @@ namespace cath {
 			///
 			/// These are just EXAMPLE_A_PDB_STEMNAME(), EXAMPLE_B_PDB_STEMNAME() and TEST_SOURCE_DATA_DIR()
 			/// from global_test_constants 
-			const path   &the_dir = "build_verification_test_data";
+			const path   &the_dir = "build-test-data";
 //			const string &name_a  = "1c0pA01";
 //			const string &name_b  = "1hdoA00";
 			const string &name_a  = "1n3lA01";

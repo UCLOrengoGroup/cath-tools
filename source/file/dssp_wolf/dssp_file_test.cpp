@@ -119,7 +119,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_phi_psi_from_wolf_agai
 	}
 
 //	// To update file, uncomment this, run all tests, then execute:
-//	//    mv build_verification_test_data/residue_names/id.new_got_wolf_phi_psi build_verification_test_data/residue_names/id.expected_wolf_phi_psi
+//	//    mv build-test-data/residue_names/id.new_got_wolf_phi_psi build-test-data/residue_names/id.expected_wolf_phi_psi
 //	write_file(
 //		TEST_RESIDUE_NAMES_DATA_DIR() / ( arg_example_id + ".new_got_wolf_phi_psi"),
 //		got_wolf_phi_psi_values

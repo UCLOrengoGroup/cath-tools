@@ -100,7 +100,7 @@ const path & global_test_constants::TEST_RESIDUE_NAMES_DATA_DIR() {
 
 /// \brief TODOCUMENT
 const path & global_test_constants::TEST_SOURCE_DATA_DIR() {
-	static const path test_source_data_dir          ( "build_verification_test_data"             );
+	static const path test_source_data_dir          ( "build-test-data"             );
 	return test_source_data_dir;
 }
 

@@ -159,7 +159,7 @@ void cath::test::ssap_pair_fixture<ID1, ID2>::check_residues_have_similar_area_a
 	}
 
 //	// To update file, uncomment this, run all tests, then execute:
-//	//    mv build_verification_test_data/ssap_regression/id1_id2.new_got_residues_similar build_verification_test_data/ssap_regression/id1_id2.expected_residues_similar
+//	//    mv build-test-data/ssap_regression/id1_id2.new_got_residues_similar build-test-data/ssap_regression/id1_id2.expected_residues_similar
 //	write_file(
 //		TEST_SSAP_REGRESSION_DATA_DIR() / ( id1 + "_" + id2 + ".new_got_residues_similar"),
 //		got_residues_similar
