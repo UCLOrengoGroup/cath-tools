@@ -36,13 +36,14 @@ addons:
       - cmake
       - gcc-4.9
       - g++-4.9
+      - ninja-build
 
 before_script:
   - sudo add-apt-repository ppa:afrank/boost -y
   - sudo apt-get update -q
   - sudo apt-get install libboost1.57-all libboost1.57-all-dev
   - mkdir release_build && cd release_build
-  - cmake -DCMAKE_BUILD_TYPE=RELEASE ..
+  - cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE ..
   - cd $TRAVIS_BUILD_DIR
 
-script: make -j 2 -k -C release_build && release_build/build-test
+script: ninja -j 2 -k 0 -C release_build && release_build/build-test
