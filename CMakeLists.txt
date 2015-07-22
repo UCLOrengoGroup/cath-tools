@@ -10,6 +10,8 @@ ELSE()
 	set( Boost_USE_STATIC_LIBS ON )
 ENDIF()
 
+find_library( RT_LIBRARY rt )
+
 find_package(Boost 1.55 REQUIRED filesystem iostreams log_setup log program_options serialization system thread unit_test_framework)
 
 # Default flags
