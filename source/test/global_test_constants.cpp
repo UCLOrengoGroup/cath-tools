@@ -35,7 +35,13 @@ using namespace std;
 void global_test_constants::check_required_files_exist() {
 	for (const path &required_file : REQUIRED_PREEXISTING_FILES() ) {
 		if ( ! exists( required_file ) ) {
-			BOOST_THROW_EXCEPTION(runtime_error_exception(""));
+			BOOST_THROW_EXCEPTION(runtime_error_exception(
+				"Unable to find required test file \""
+				+ required_file.string()
+				+ "\" (current directory is \""
+				+ current_path().string()
+				+ "\")"
+			));
 		}
 	}
 }
