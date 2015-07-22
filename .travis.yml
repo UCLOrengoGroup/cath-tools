@@ -1,27 +1,39 @@
-sudo: false
+#sudo: false
 language: cpp
 
+notifications:
+  slack: cathupdate:9wDvWdLmrVhxI4JcsOFlkxir
+  email:
+    recipients:
+      - i.sillitoe@ucl.ac.uk
+      - t.lewis@ucl.ac.uk
+
 compiler:
- - clang
- - gcc
+  - clang
+  - gcc
 
 install:
- - if [ "$CXX" == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9" ; fi
- - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.6"              ; fi
- 
+  - if [ "$CXX" == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9" ; fi
+  - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.6"              ; fi
+
+before_script:
+  - sudo add-apt-repository ppa:ppa:kzemek/boost -y
+  - sudo apt-get update -q
+  - sudo apt-get install boost1.58
+
 addons:
   apt:
     sources:
-    - boost-latest
-    - kalakris-cmake
-    - llvm-toolchain-precise-3.6
-    - ubuntu-toolchain-r-test
+      #- boost-latest
+      - kalakris-cmake
+      - llvm-toolchain-precise-3.6
+      - ubuntu-toolchain-r-test
     packages:
-    - clang-3.6
-    - cmake
-    - gcc-4.9
-    - g++-4.9
-    - libboost1.55-all-dev
+      - clang-3.6
+      - cmake
+      - gcc-4.9
+      - g++-4.9
+      #- libboost1.55-all-dev
 
 before_script:
  - mkdir release_build
