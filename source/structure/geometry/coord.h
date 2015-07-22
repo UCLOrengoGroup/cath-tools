@@ -83,9 +83,12 @@ namespace cath {
 			coord & operator*=(const double &);
 			coord & operator/=(const double &);
 
+			/// \brief TODOCUMENT
+			///
+			/// \todo Come Boost 1.58.0 (or C++17, if Herb Sutter has gotten his way (n4029)), just use braced list here
 			template <typename T>
 			operator boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian>() const {
-				return {
+				return boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian>{
 					boost::numeric_cast<T>( get_x() ),
 					boost::numeric_cast<T>( get_y() ),
 					boost::numeric_cast<T>( get_z() )
