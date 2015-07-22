@@ -16,11 +16,6 @@ install:
   - if [ "$CXX" == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9" ; fi
   - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.6"              ; fi
 
-before_script:
-  - sudo add-apt-repository ppa:ppa:kzemek/boost -y
-  - sudo apt-get update -q
-  - sudo apt-get install boost1.58
-
 addons:
   apt:
     sources:
@@ -36,8 +31,11 @@ addons:
       #- libboost1.55-all-dev
 
 before_script:
- - mkdir release_build
- - cd release_build
- - cmake -DCMAKE_BUILD_TYPE=RELEASE ..
+  - sudo add-apt-repository ppa:ppa:kzemek/boost -y
+  - sudo apt-get update -q
+  - sudo apt-get install boost1.58
+  - mkdir release_build
+  - cd release_build
+  - cmake -DCMAKE_BUILD_TYPE=RELEASE ..
 
 script: make -k && ../build-test
