@@ -33,7 +33,7 @@ addons:
 before_script:
   - sudo add-apt-repository ppa:afrank/boost -y
   - sudo apt-get update -q
-  - sudo apt-get install libboost1.57-all
+  - sudo apt-get install libboost1.57-all libboost1.57-all-dev
   - mkdir release_build
   - cd release_build
   - cmake -DCMAKE_BUILD_TYPE=RELEASE ..
