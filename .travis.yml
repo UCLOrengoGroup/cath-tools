@@ -45,4 +45,4 @@ before_script:
   - cmake -DCMAKE_BUILD_TYPE=RELEASE ..
   - cd $TRAVIS_BUILD_DIR
 
-script: make -k -C release_build && release_build/build-test
+script: make -j 2 -k -C release_build && release_build/build-test
