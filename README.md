@@ -1,9 +1,11 @@
-# CATH Tools [![Build Status](https://travis-ci.org/UCLOrengoGroup/cath-tools.svg?branch=master)](https://travis-ci.org/UCLOrengoGroup/cath-tools)
+# CATH Tools [![Build Status](https://travis-ci.org/UCLOrengoGroup/cath-tools.svg?branch=master)](https://travis-ci.org/UCLOrengoGroup/cath-tools) [![Documentation Status](https://readthedocs.org/projects/cath-tools/badge/?version=latest)](https://readthedocs.org/projects/cath-tools/?badge=latest)
+
+**User documentation**: at [Read the Docs](http://cath-tools.readthedocs.org/en/latest "The CATH Tools user documentation at Read the Docs") 
 
 Cloning the cath-tools GitHub Repo
 ---
 
-This project includes [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage") as a submodule. To ensure the bioplib directory gets populated, clone with:
+This project includes [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub homepage") as a submodule. To ensure the bioplib directory gets populated, clone with:
 
     git clone --recursive https://github.com/UCLOrengoGroup/cath-tools.git
 
