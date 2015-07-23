@@ -159,93 +159,94 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(mid_point_is_halfway, quat_rot_type, all_quat_rot_
 //
 // - closest_neighbour_b is in candidates for a but isn't in closest_neighbours_a
 
-/// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE_TEMPLATE(gubbins, quat_rot_type, all_quat_rot_types) {
-////	// ERROR SET 1 for c48u1.quat
-//	const auto radius = make_angle_from_degrees<quat_rot_type>( 20.571917 );
-//	const quat_rot_impl<quat_rot_type> A {  1.000000f,  0.000000f, 0.000000f,  0.000000f };
-//	const quat_rot_impl<quat_rot_type> B {  0.707107f,  0.000000f, 0.707107f,  0.000000f };
-//	const quat_rot_impl<quat_rot_type> a {  0.930342f, -0.198706f, 0.197123f, -0.236900f };
-//	const quat_rot_impl<quat_rot_type> b {  0.875164f, -0.230578f, 0.363707f, -0.220543f };
+///// \brief TODOCUMENT
+//BOOST_AUTO_TEST_CASE_TEMPLATE(gubbins, quat_rot_type, all_quat_rot_types) {
+//////	// ERROR SET 1 for c48u1.quat
+////	const auto radius = make_angle_from_degrees<quat_rot_type>( 20.571917 );
+////	const quat_rot_impl<quat_rot_type> A {  1.000000f,  0.000000f, 0.000000f,  0.000000f };
+////	const quat_rot_impl<quat_rot_type> B {  0.707107f,  0.000000f, 0.707107f,  0.000000f };
+////	const quat_rot_impl<quat_rot_type> a {  0.930342f, -0.198706f, 0.197123f, -0.236900f };
+////	const quat_rot_impl<quat_rot_type> b {  0.875164f, -0.230578f, 0.363707f, -0.220543f };
+//
+////	// ERROR SET 2 for c48u1.quat
+////	const auto radius = make_angle_from_degrees<quat_rot_type>( 45.937460 );
+////	const quat_rot_impl<quat_rot_type> A {  0.0000000f,  0.707107f,  0.707107f,  0.000000f };
+////	const quat_rot_impl<quat_rot_type> B {  0.5000000f, -0.500000f, -0.500000f,  0.500000f };
+////	const quat_rot_impl<quat_rot_type> a { -0.2015070f, -0.609419f, -0.744985f,  0.181660f };
+////	const quat_rot_impl<quat_rot_type> b {  0.0380258f, -0.590544f, -0.645591f,  0.482726f };
+//
+//	// ERROR SET 3 for c600v.quat
+//	const auto radius = make_angle_from_degrees<quat_rot_type>( 21.268267 );
+//	const quat_rot_impl<quat_rot_type> A {  0.500000f,  0.809017f, 0.309017f,  0.000000f };
+//	const quat_rot_impl<quat_rot_type> B {  0.809017f,  0.309017f, 0.500000f,  0.000000f };
+//	const quat_rot_impl<quat_rot_type> a {  0.478242f,  0.699823f, 0.510871f, -0.143330f };
+//	const quat_rot_impl<quat_rot_type> b {  0.576349f,  0.565181f, 0.581116f, -0.103421f };
+//
+//	const quat_rot_impl<quat_rot_type> p1               = from_first_toward_second_at_angle(  a,  B, radius );
+//	const quat_rot_impl<quat_rot_type> A_to_B_by_r      = from_first_toward_second_at_angle(  A,  B, radius );
+//	const quat_rot_impl<quat_rot_type> dirn_A_to_b_by_r = rotation_between_rotations( A, from_first_toward_second_at_angle(  A,  B, radius ) );
+//	const quat_rot_impl<quat_rot_type> apply_to_A       = dirn_A_to_b_by_r * A;
+//	const quat_rot_impl<quat_rot_type> p2               = dirn_A_to_b_by_r * a;
+//
+//	cerr << "#################################" << "\n";
+//	cerr << "A                   is " << A                                 << "\n";
+//	cerr << "B                   is " << B                                 << "\n";
+//	cerr << "a                   is " << a                                 << "\n";
+//	cerr << "b                   is " << b                                 << "\n";
+//	cerr << "A_to_B_by_r         is " << A_to_B_by_r                       << "\n";
+//	cerr << "dirn_A_to_b_by_r    is " << dirn_A_to_b_by_r                  << "\n";
+//	cerr << "apply_to_A          is " << apply_to_A                        << "\n";
+//	cerr << "p2                  is " << p2                                << "\n";
+//	cerr << "#################################" << "\n";
+//	cerr << "angle from  A to  B is " << angle_between_quat_rots(  A,  B ) << "\n";
+//	cerr << "angle from  a to  b is " << angle_between_quat_rots(  a,  b ) << "\n";
+//	cerr << "angle from  a to  A is " << angle_between_quat_rots(  a,  A ) << "\n";
+//	cerr << "angle from  a to  B is " << angle_between_quat_rots(  a,  B ) << "\n";
+//	cerr << "angle from  b to  A is " << angle_between_quat_rots(  b,  A ) << "\n";
+//	cerr << "angle from  b to  B is " << angle_between_quat_rots(  b,  B ) << "\n";
+//	cerr << "#################################" << "\n";
+//	cerr << "angle from  a to p1 is " << angle_between_quat_rots(  a, p1 ) << "\n";
+//	cerr << "angle from p1 to  A is " << angle_between_quat_rots( p1,  A ) << "\n";
+//	cerr << "angle from p1 to  B is " << angle_between_quat_rots( p1,  B ) << "\n";
+//	cerr << "#################################" << "\n";
+//	cerr << "angle from  a to p2 is " << angle_between_quat_rots(  a, p2 ) << "\n";
+//	cerr << "angle from p2 to  A is " << angle_between_quat_rots( p2,  A ) << "\n";
+//	cerr << "angle from p2 to  B is " << angle_between_quat_rots( p2,  B ) << "\n";
+//	cerr << "#################################" << "\n";
+//}
 
-//	// ERROR SET 2 for c48u1.quat
-//	const auto radius = make_angle_from_degrees<quat_rot_type>( 45.937460 );
-//	const quat_rot_impl<quat_rot_type> A {  0.0000000f,  0.707107f,  0.707107f,  0.000000f };
-//	const quat_rot_impl<quat_rot_type> B {  0.5000000f, -0.500000f, -0.500000f,  0.500000f };
-//	const quat_rot_impl<quat_rot_type> a { -0.2015070f, -0.609419f, -0.744985f,  0.181660f };
-//	const quat_rot_impl<quat_rot_type> b {  0.0380258f, -0.590544f, -0.645591f,  0.482726f };
+///// \brief TODOCUMENT
+//BOOST_AUTO_TEST_CASE_TEMPLATE(neighbours, quat_rot_type, all_quat_rot_types) {
+//	const orientation_covering_impl<quat_rot_type> the_covering;
+////	constexpr size_t num_repeats = 400;
+////	constexpr size_t num_repeats = 2000;
+//	constexpr size_t num_repeats = 50000;
+//
+//	default_random_engine the_rng{ random_device{}() };
+////	default_random_engine the_rng{};
+//
+//	size_t repeat_ctr = 0;
+//	while ( repeat_ctr < num_repeats ) {
+////	for (const auto &repeat_ctr : irange( 0_z, num_repeats ) ) {
+////		ignore_unused( repeat_ctr );
+//		const auto quat_rot_1 = make_random_quat_rot<quat_rot_type>( the_rng );
+//		const auto quat_rot_2 = make_random_quat_rot<quat_rot_type>( the_rng );
+//		const auto the_angle  = angle_between_quat_rots( quat_rot_1, quat_rot_2 );
+//		if ( the_angle > make_angle_from_degrees<quat_rot_type>( 21.5 ) && the_angle < make_angle_from_degrees<quat_rot_type>( 23.5 ) ) {
+//			if ( repeat_ctr % 100 == 0 ) {
+//				cerr << "repeat_ctr : " << repeat_ctr << "\n";
+//			}
+////			cerr << quat_rot_1 << ", " << quat_rot_2 << "\n";
+//			check_closest_neighbours_covers( the_covering, quat_rot_1, quat_rot_2 );
+//			++repeat_ctr;
+//		}
+//	}
+//
+////	const auto the_neighbours = calc_neighbours( the_covering, make_angle_from_degrees<quat_rot_type>( 22.5 ) );
+//
+////size_vec_vec calc_neighbours(const orientation_covering_impl<T> &arg_orientations, ///< TODOCUMENT
+////		                             const geom::angle<A>               &arg_search_radius ///< TODOCUMENT
+////		                             ) {
+//}
 
-	// ERROR SET 3 for c600v.quat
-	const auto radius = make_angle_from_degrees<quat_rot_type>( 21.268267 );
-	const quat_rot_impl<quat_rot_type> A {  0.500000f,  0.809017f, 0.309017f,  0.000000f };
-	const quat_rot_impl<quat_rot_type> B {  0.809017f,  0.309017f, 0.500000f,  0.000000f };
-	const quat_rot_impl<quat_rot_type> a {  0.478242f,  0.699823f, 0.510871f, -0.143330f };
-	const quat_rot_impl<quat_rot_type> b {  0.576349f,  0.565181f, 0.581116f, -0.103421f };
-
-	const quat_rot_impl<quat_rot_type> p1               = from_first_toward_second_at_angle(  a,  B, radius );
-	const quat_rot_impl<quat_rot_type> A_to_B_by_r      = from_first_toward_second_at_angle(  A,  B, radius );
-	const quat_rot_impl<quat_rot_type> dirn_A_to_b_by_r = rotation_between_rotations( A, from_first_toward_second_at_angle(  A,  B, radius ) );
-	const quat_rot_impl<quat_rot_type> apply_to_A       = dirn_A_to_b_by_r * A;
-	const quat_rot_impl<quat_rot_type> p2               = dirn_A_to_b_by_r * a;
-
-	cerr << "#################################" << "\n";
-	cerr << "A                   is " << A                                 << "\n";
-	cerr << "B                   is " << B                                 << "\n";
-	cerr << "a                   is " << a                                 << "\n";
-	cerr << "b                   is " << b                                 << "\n";
-	cerr << "A_to_B_by_r         is " << A_to_B_by_r                       << "\n";
-	cerr << "dirn_A_to_b_by_r    is " << dirn_A_to_b_by_r                  << "\n";
-	cerr << "apply_to_A          is " << apply_to_A                        << "\n";
-	cerr << "p2                  is " << p2                                << "\n";
-	cerr << "#################################" << "\n";
-	cerr << "angle from  A to  B is " << angle_between_quat_rots(  A,  B ) << "\n";
-	cerr << "angle from  a to  b is " << angle_between_quat_rots(  a,  b ) << "\n";
-	cerr << "angle from  a to  A is " << angle_between_quat_rots(  a,  A ) << "\n";
-	cerr << "angle from  a to  B is " << angle_between_quat_rots(  a,  B ) << "\n";
-	cerr << "angle from  b to  A is " << angle_between_quat_rots(  b,  A ) << "\n";
-	cerr << "angle from  b to  B is " << angle_between_quat_rots(  b,  B ) << "\n";
-	cerr << "#################################" << "\n";
-	cerr << "angle from  a to p1 is " << angle_between_quat_rots(  a, p1 ) << "\n";
-	cerr << "angle from p1 to  A is " << angle_between_quat_rots( p1,  A ) << "\n";
-	cerr << "angle from p1 to  B is " << angle_between_quat_rots( p1,  B ) << "\n";
-	cerr << "#################################" << "\n";
-	cerr << "angle from  a to p2 is " << angle_between_quat_rots(  a, p2 ) << "\n";
-	cerr << "angle from p2 to  A is " << angle_between_quat_rots( p2,  A ) << "\n";
-	cerr << "angle from p2 to  B is " << angle_between_quat_rots( p2,  B ) << "\n";
-	cerr << "#################################" << "\n";
-}
-
-/// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE_TEMPLATE(neighbours, quat_rot_type, all_quat_rot_types) {
-	const orientation_covering_impl<quat_rot_type> the_covering;
-//	constexpr size_t num_repeats = 400;
-//	constexpr size_t num_repeats = 2000;
-	constexpr size_t num_repeats = 50000;
-
-	default_random_engine the_rng{ random_device{}() };
-//	default_random_engine the_rng{};
-
-	size_t repeat_ctr = 0;
-	while ( repeat_ctr < num_repeats ) {
-//	for (const auto &repeat_ctr : irange( 0_z, num_repeats ) ) {
-//		ignore_unused( repeat_ctr );
-		const auto quat_rot_1 = make_random_quat_rot<quat_rot_type>( the_rng );
-		const auto quat_rot_2 = make_random_quat_rot<quat_rot_type>( the_rng );
-		const auto the_angle  = angle_between_quat_rots( quat_rot_1, quat_rot_2 );
-		if ( the_angle > make_angle_from_degrees<quat_rot_type>( 21.5 ) && the_angle < make_angle_from_degrees<quat_rot_type>( 23.5 ) ) {
-			if ( repeat_ctr % 100 == 0 ) {
-				cerr << "repeat_ctr : " << repeat_ctr << "\n";
-			}
-//			cerr << quat_rot_1 << ", " << quat_rot_2 << "\n";
-			check_closest_neighbours_covers( the_covering, quat_rot_1, quat_rot_2 );
-			++repeat_ctr;
-		}
-	}
-
-//	const auto the_neighbours = calc_neighbours( the_covering, make_angle_from_degrees<quat_rot_type>( 22.5 ) );
-
-//size_vec_vec calc_neighbours(const orientation_covering_impl<T> &arg_orientations, ///< TODOCUMENT
-//		                             const geom::angle<A>               &arg_search_radius ///< TODOCUMENT
-//		                             ) {
-}
 BOOST_AUTO_TEST_SUITE_END()
