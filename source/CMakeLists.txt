@@ -1633,7 +1633,7 @@ add_library(
 add_executable(
 	build-test
 		$<TARGET_OBJECTS:std_testsources>
-		${TESTSOURCES_EXECUTABLES_CATH_TOOLS_BUILD_TEST}
+		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
 )
 
 add_executable(
