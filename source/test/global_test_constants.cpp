@@ -111,6 +111,12 @@ const path & global_test_constants::TEST_SOURCE_DATA_DIR() {
 }
 
 /// \brief TODOCUMENT
+const path & global_test_constants::TEST_EXAMPLE_PDBS_DATA_DIR() {
+	static const path test_example_pdbs_data_dir   ( TEST_SOURCE_DATA_DIR() / "example_pdbs" );
+	return test_example_pdbs_data_dir;
+}
+
+/// \brief TODOCUMENT
 const path & global_test_constants::TEST_SSAP_REGRESSION_DATA_DIR() {
 	static const path test_ssap_regression_data_dir   ( TEST_SOURCE_DATA_DIR() / "ssap_regression" );
 	return test_ssap_regression_data_dir;

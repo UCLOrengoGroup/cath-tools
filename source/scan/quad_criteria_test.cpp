@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(make_default_works) {
 	BOOST_CHECK_EQUAL( default_quad_criteria.get_index_direction_criterion(),      res_pair_index_dirn_criterion::MUST_MATCH        );
 	BOOST_CHECK_EQUAL( default_quad_criteria.get_minimum_index_distance(),         11_z                                             );
 	BOOST_CHECK_EQUAL( default_quad_criteria.get_maximum_squared_distance(),       40.0                                             );
-	BOOST_CHECK_EQUAL( default_quad_criteria.get_maximum_frame_angle_difference(), make_angle_from_degrees<angle_base_type>( 22.5 ) );
+	BOOST_CHECK_EQUAL( default_quad_criteria.get_maximum_frame_angle_difference(), make_angle_from_degrees<angle_base_type>( 35.0 ) );
 	BOOST_CHECK_EQUAL( default_quad_criteria.get_maximum_phi_angle_difference(),   make_angle_from_degrees<angle_base_type>( 67.5 ) );
 	BOOST_CHECK_EQUAL( default_quad_criteria.get_maximum_psi_angle_difference(),   make_angle_from_degrees<angle_base_type>( 67.5 ) );
 }
