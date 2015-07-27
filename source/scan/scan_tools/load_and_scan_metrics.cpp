@@ -21,12 +21,10 @@
 #include "load_and_scan_metrics.h"
 
 #include <boost/algorithm/string/join.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/max_element.hpp>
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/information/byte.hpp>
-#include <boost/units/io.hpp>
 
 #include "common/chrono/duration_to_seconds_string.h"
 #include "common/file/open_fstream.h"
@@ -39,13 +37,12 @@ using namespace cath;
 using namespace cath::common;
 using namespace cath::scan;
 using namespace cath::scan::detail;
-//using namespace std;
 
 using boost::algorithm::join;
 using boost::adaptors::transformed;
-using boost::lexical_cast;
 using boost::range::max_element;
 using std::ofstream;
+using std::to_string;
 using std::string;
 
 /// \brief TODOCUMENT
@@ -138,15 +135,15 @@ string cath::scan::to_markdown_string(const load_and_scan_metrics &arg_load_and_
 	                                  + index_index_size;
 
 	const auto property_fields = str_str_str_str_tpl_vec{ {
-		str_str_str_str_tpl{ "Task",                       "Duration",                                  "Rate",                                              "Memory Required"                         },
-		str_str_str_str_tpl{ "Load files",                 durn_to_seconds_string( load_files_durn   ), durn_to_rate_per_second_string( load_files_durn   ), ""                                        },
-		str_str_str_str_tpl{ "Build query structure data", durn_to_seconds_string( query_strucs_durn ), durn_to_rate_per_second_string( query_strucs_durn ), lexical_cast<string>( query_strucs_size ) },
-		str_str_str_str_tpl{ "Build query index store",    durn_to_seconds_string( query_index_durn  ), durn_to_rate_per_second_string( query_index_durn  ), lexical_cast<string>( query_index_size  ) },
-		str_str_str_str_tpl{ "Build match structure data", durn_to_seconds_string( index_strucs_durn ), durn_to_rate_per_second_string( index_strucs_durn ), lexical_cast<string>( index_strucs_size ) },
-		str_str_str_str_tpl{ "Build match index store",    durn_to_seconds_string( index_index_durn  ), durn_to_rate_per_second_string( index_index_durn  ), lexical_cast<string>( index_index_size  ) },
-		str_str_str_str_tpl{ "Build scan_duration",        durn_to_seconds_string( scan_durn         ), durn_to_rate_per_second_string( scan_durn         ), ""                                        },
-		str_str_str_str_tpl{ "",                           "",                                          "",                                                  ""                                        },
-		str_str_str_str_tpl{ "**Everything**",             durn_to_seconds_string( total_durn        ), durn_to_rate_per_second_string( total_durn        ), lexical_cast<string>( total_size        ) }
+		str_str_str_str_tpl{ "Task",                       "Duration",                                  "Rate",                                              "Memory Required"                            },
+		str_str_str_str_tpl{ "Load files",                 durn_to_seconds_string( load_files_durn   ), durn_to_rate_per_second_string( load_files_durn   ), ""                                           },
+		str_str_str_str_tpl{ "Build query structure data", durn_to_seconds_string( query_strucs_durn ), durn_to_rate_per_second_string( query_strucs_durn ), to_string( query_strucs_size.value() ) + "b" },
+		str_str_str_str_tpl{ "Build query index store",    durn_to_seconds_string( query_index_durn  ), durn_to_rate_per_second_string( query_index_durn  ), to_string( query_index_size.value()  ) + "b" },
+		str_str_str_str_tpl{ "Build match structure data", durn_to_seconds_string( index_strucs_durn ), durn_to_rate_per_second_string( index_strucs_durn ), to_string( index_strucs_size.value() ) + "b" },
+		str_str_str_str_tpl{ "Build match index store",    durn_to_seconds_string( index_index_durn  ), durn_to_rate_per_second_string( index_index_durn  ), to_string( index_index_size.value()  ) + "b" },
+		str_str_str_str_tpl{ "Build scan_duration",        durn_to_seconds_string( scan_durn         ), durn_to_rate_per_second_string( scan_durn         ), ""                                           },
+		str_str_str_str_tpl{ "",                           "",                                          "",                                                  ""                                           },
+		str_str_str_str_tpl{ "**Everything**",             durn_to_seconds_string( total_durn        ), durn_to_rate_per_second_string( total_durn        ), to_string( total_size.value()        ) + "b" }
 	} };
 
 
