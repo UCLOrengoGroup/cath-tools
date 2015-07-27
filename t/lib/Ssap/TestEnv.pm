@@ -5,7 +5,7 @@ use File::Temp qw/ tempdir /;
 use Ssap::Types qw/ AbsoluteFile HashRef Dir /;
 
 BEGIN {
-  my $bin_dir = defined $ENV{CATH_BINARIES_BIN_DIR} ? $ENV{CATH_BINARIES_BIN_DIR} : undef;
+  my $bin_dir = defined $ENV{ CATH_TOOLS_BIN_DIR } ? $ENV{ CATH_TOOLS_BIN_DIR } : undef;
 
   if ($bin_dir) {
     warn "Prepending $bin_dir to PATH for testing...\n";

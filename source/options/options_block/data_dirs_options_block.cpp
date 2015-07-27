@@ -2,7 +2,7 @@
 /// \brief The data_dirs_options_block class definitions
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -171,7 +171,7 @@ void data_dirs_options_block::do_add_visible_options_to_description(options_desc
 void data_dirs_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
                                                                    ) {
 	arg_desc.add_options()
-		( PO_CATH_ROOT_DIR.c_str(), value<path>( &cath_root_dir ), "A root directory from which CATH binaries programs can find sub-directories of standard names (\"pdb\", \"dssp\", \"wolf\", \"sec\")" );
+		( PO_CATH_ROOT_DIR.c_str(), value<path>( &cath_root_dir ), "A root directory from which CATH Tools programs can find sub-directories of standard names (\"pdb\", \"dssp\", \"wolf\", \"sec\")" );
 }
 
 /// \brief Identify any conflicts that make the currently stored options invalid

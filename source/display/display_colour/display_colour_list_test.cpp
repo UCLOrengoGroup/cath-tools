@@ -2,7 +2,7 @@
 /// \brief The display_colour_list_test test suite
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -54,12 +54,12 @@ BOOST_AUTO_TEST_CASE(default_colour_string_produces_list_with_sensible_propertie
 	BOOST_CHECK_EQUAL( list.colour_of_index(  0 ), colour_of_mod_index( list, 23 ) );
 	BOOST_CHECK_EQUAL( list.colour_of_index(  1 ), colour_of_mod_index( list, 24 ) );
 
-//	BOOST_CHECK_EQUAL( "cath_binaries_defined_colour_0",  name_of_colour_of_mod_index(list,  0) );
-//	BOOST_CHECK_EQUAL( "cath_binaries_defined_colour_1",  name_of_colour_of_mod_index(list,  1) );
-//	BOOST_CHECK_EQUAL( "cath_binaries_defined_colour_21", name_of_colour_of_mod_index(list, 21) );
-//	BOOST_CHECK_EQUAL( "cath_binaries_defined_colour_22", name_of_colour_of_mod_index(list, 22) );
-//	BOOST_CHECK_EQUAL( "cath_binaries_defined_colour_0",  name_of_colour_of_mod_index(list, 23) );
-//	BOOST_CHECK_EQUAL( "cath_binaries_defined_colour_1",  name_of_colour_of_mod_index(list, 24) );
+//	BOOST_CHECK_EQUAL( "cath_tools_defined_colour_0",  name_of_colour_of_mod_index(list,  0) );
+//	BOOST_CHECK_EQUAL( "cath_tools_defined_colour_1",  name_of_colour_of_mod_index(list,  1) );
+//	BOOST_CHECK_EQUAL( "cath_tools_defined_colour_21", name_of_colour_of_mod_index(list, 21) );
+//	BOOST_CHECK_EQUAL( "cath_tools_defined_colour_22", name_of_colour_of_mod_index(list, 22) );
+//	BOOST_CHECK_EQUAL( "cath_tools_defined_colour_0",  name_of_colour_of_mod_index(list, 23) );
+//	BOOST_CHECK_EQUAL( "cath_tools_defined_colour_1",  name_of_colour_of_mod_index(list, 24) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

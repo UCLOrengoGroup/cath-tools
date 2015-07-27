@@ -2,7 +2,7 @@
 /// \brief The misc_help_version_options_block class header
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -62,8 +62,8 @@ namespace cath {
 			std::string get_version_string(const std::string &,
 			                               const std::string &) const;
 
-			static const std::string CATH_BINARIES_VERSION;
-			static const std::string CATH_BINARIES_VERSION_DATE;
+			static const std::string CATH_TOOLS_VERSION;
+			static const std::string CATH_TOOLS_VERSION_DATE;
 
 			static const std::string PO_HELP;
 			static const std::string PO_VERSION;

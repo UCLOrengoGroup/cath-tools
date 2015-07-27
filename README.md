@@ -130,7 +130,7 @@ Once you've built the binaries, run the build tests to sanity check the build. F
 (if you mistakenly run build-test from elsewhere, you'll get lots of `check_required_files_exist` errors).
 
 If your machine has Perl, you can also try running the Perl tests (which includes a run of `build-test` as one of the tests):
- * Set the environment variable CATH_BINARIES_BIN_DIR to the location of the built binaries
+ * Set the environment variable CATH_TOOLS_BIN_DIR to the location of the built binaries
  * From the root directory of the project, run `prove -l -v t`
 
 Quickstart: Running SSAP
@@ -142,9 +142,9 @@ Most external users will want to use the `--protein_source_files PDB_DSSP_SEC` o
 
 You will need to tell it where to find the PDB, wolf and sec files. We recommend you use the path options to manage your list of directories to search. This can be done with command line options, but it may be easier to add suitable environment variables to your profile:
 
-    CATH_BINARIES_PDB_PATH  .:/global/data/directories/pdb
-    CATH_BINARIES_DSSP_PATH .:/global/data/directories/dssp
-    CATH_BINARIES_SEC_PATH  .:/global/data/directories/sec
+    CATH_TOOLS_PDB_PATH  .:/global/data/directories/pdb
+    CATH_TOOLS_DSSP_PATH .:/global/data/directories/dssp
+    CATH_TOOLS_SEC_PATH  .:/global/data/directories/sec
 
 Extra Bioplib Notes
 -------------------

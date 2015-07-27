@@ -2,7 +2,7 @@
 /// \brief The misc_help_version_options_block class definitions
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -41,10 +41,10 @@ using boost::algorithm::join;
 using boost::none;
 
 /// The program's current version
-const string misc_help_version_options_block::CATH_BINARIES_VERSION      ( "v0.12.4"            );
+const string misc_help_version_options_block::CATH_TOOLS_VERSION      ( "v0.12.4"            );
 
 /// The program's most recent update date
-const string misc_help_version_options_block::CATH_BINARIES_VERSION_DATE ( "19th January 2015"    );
+const string misc_help_version_options_block::CATH_TOOLS_VERSION_DATE ( "19th January 2015"    );
 
 /// \brief The option name for the help option
 const string misc_help_version_options_block::PO_HELP   ( "help"    );
@@ -120,8 +120,8 @@ string misc_help_version_options_block::get_version_string(const string &arg_pro
 	version_ss << "Overview"                                                                                 << endl;
 	version_ss << "--------"                                                                                 << endl;
 	version_ss << "   Name                  : " << arg_program_name                                          << endl;
-	version_ss << "   Version               : " << CATH_BINARIES_VERSION                                     << endl;
-	version_ss << "   Version date          : " << CATH_BINARIES_VERSION_DATE                                << endl;
+	version_ss << "   Version               : " << CATH_TOOLS_VERSION                                     << endl;
+	version_ss << "   Version date          : " << CATH_TOOLS_VERSION_DATE                                << endl;
 	version_ss << endl;
 	version_ss << "Build details"                                                                            << endl;
 	version_ss << "-------------"                                                                            << endl;

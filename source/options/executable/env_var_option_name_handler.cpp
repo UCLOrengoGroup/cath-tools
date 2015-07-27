@@ -2,7 +2,7 @@
 /// \brief The env_var_option_name_handler class definitions
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ using boost::algorithm::replace_all_copy;
 using boost::algorithm::starts_with;
 
 /// \brief Ctor for env_var_option_name_handler
-env_var_option_name_handler::env_var_option_name_handler(const string              &arg_prefix,        ///< The prefix string to strip off all environment variable names(eg "CATH_BINARIES_"
+env_var_option_name_handler::env_var_option_name_handler(const string              &arg_prefix,        ///< The prefix string to strip off all environment variable names(eg "CATH_TOOLS_"
                                                          const bool                &arg_allow_unknown, ///< Whether to allow unrecognised options (by not passing them back to parse_environment(), which would complain)
                                                          const options_description &arg_options        ///< The options_description containing the options that should be accepted (can be left to default empty value if arg_allow_unknown is false)
                                                          ) : prefix(arg_prefix),
@@ -79,8 +79,8 @@ string env_var_option_name_handler::operator()(const string &arg_environment_var
 ///  - replacing underscores with hyphens.
 ///
 /// For example:
-///  - the environment variable "CATH_BINARIES_DSSP_PATH" and the prefix "CATH_BINARIES_" would produce "dssp-path"
-///  - the environment variable "SOME_OTHER_ENVIRONMENT_VARIABLE" and the prefix "CATH_BINARIES_" would produce ""
+///  - the environment variable "CATH_TOOLS_DSSP_PATH" and the prefix "CATH_TOOLS_" would produce "dssp-path"
+///  - the environment variable "SOME_OTHER_ENVIRONMENT_VARIABLE" and the prefix "CATH_TOOLS_" would produce ""
 ///
 /// \relates env_var_option_name_handler
 string cath::opts::option_of_environment_variable_and_prefix(const string &arg_env_variable_name, ///< The environment variable name

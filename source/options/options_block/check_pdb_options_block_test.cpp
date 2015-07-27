@@ -2,7 +2,7 @@
 /// \brief The check_pdb_options_block test suite
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(handles_permit_atoms) {
 
 /// \brief Check that if an existent PDB file is requested then that is handled correctly
 BOOST_AUTO_TEST_CASE(handles_existent_pdb_file) {
-	const temp_file temp_file("cath_binaries_test_temp_file.check_pdb_options_block.%%%%");
+	const temp_file temp_file("cath_tools_test_temp_file.check_pdb_options_block.%%%%");
 	const path      temp_file_filename = get_filename( temp_file );
 	parse_into_options_block(
 		the_options_block,

@@ -1146,13 +1146,13 @@ set(
 )
 
 set(
-	TESTSOURCES_EXECUTABLES_CATH_BINARIES_BUILD_TEST
-		executables/cath_binaries_build_test/cath_binaries_build_test.cpp
+	TESTSOURCES_EXECUTABLES_BUILD_TEST
+		executables/build_test/build_test.cpp
 )
 
 set(
 	TESTSOURCES_EXECUTABLES
-		${TESTSOURCES_EXECUTABLES_CATH_BINARIES_BUILD_TEST}
+		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
 )
 
 set(
@@ -1633,7 +1633,7 @@ add_library(
 add_executable(
 	build-test
 		$<TARGET_OBJECTS:std_testsources>
-		${TESTSOURCES_EXECUTABLES_CATH_BINARIES_BUILD_TEST}
+		${TESTSOURCES_EXECUTABLES_CATH_TOOLS_BUILD_TEST}
 )
 
 add_executable(
@@ -1656,7 +1656,7 @@ add_executable(
 		${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}
 )
 
-if ( DEFINED ENV{BUILD_EXTRA_CATH_BINARIES} )
+if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 	add_executable(
 		snap-judgement
 			${NORMSOURCES_EXECUTABLES_SNAP_JUDGEMENT}
@@ -1666,7 +1666,7 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_BINARIES} )
 		check-pdb
 			${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
 	)
-endif ( DEFINED ENV{BUILD_EXTRA_CATH_BINARIES} )
+endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 
 #####################################################################
 
@@ -1682,13 +1682,13 @@ add_dependencies( cath-score-align  built_bioplib_libraries )
 add_dependencies( cath-ssap         built_bioplib_libraries )
 add_dependencies( cath-superpose    built_bioplib_libraries )
 
-if ( DEFINED ENV{BUILD_EXTRA_CATH_BINARIES} )
+if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 	target_link_libraries( snap-judgement    normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 	target_link_libraries( check-pdb                                                     std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 
 	add_dependencies( snap-judgement built_bioplib_libraries )
 	add_dependencies( check-pdb      built_bioplib_libraries )
-endif ( DEFINED ENV{BUILD_EXTRA_CATH_BINARIES} )
+endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 
 #####################################################################
 

@@ -2,7 +2,7 @@
 /// \brief The temp_file class definitions
 
 /// \copyright
-/// Tony Lewis's Common C++ Library Code (here imported into the CATH Binaries project and then tweaked, eg namespaced in cath)
+/// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
 /// Copyright (C) 2007, Tony Lewis
 ///
 /// This program is free software: you can redistribute it and/or modify

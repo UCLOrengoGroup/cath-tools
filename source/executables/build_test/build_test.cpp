@@ -1,8 +1,8 @@
 /// \file
-/// \brief The main test file that defines the test module "Cath Binaries Master Test Suite"
+/// \brief The main test file that defines the test module "Cath Tools Master Test Suite"
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#define BOOST_TEST_MODULE Cath Binaries Master Test Suite
+#define BOOST_TEST_MODULE Cath Tools Master Test Suite
 #define BOOST_AUTO_TEST_MAIN
 
 #include <boost/exception/diagnostic_information.hpp>

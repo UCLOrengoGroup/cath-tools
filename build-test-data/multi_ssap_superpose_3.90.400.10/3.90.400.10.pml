@@ -2441,14 +2441,14 @@ set cartoon_loop_radius  = 0.182988
 set cartoon_helix_radius = 1.51546
 bg_color white
 color    black
-set_color cath_binaries_defined_colour_0, [0,0,1]
-set_color cath_binaries_defined_colour_1, [0,1,0]
-set_color cath_binaries_defined_colour_2, [1,0,0]
-set_color cath_binaries_defined_colour_3, [1,1,0]
-colour cath_binaries_defined_colour_0, 1g5aA03
-colour cath_binaries_defined_colour_1, 1wzaA02
-colour cath_binaries_defined_colour_2, 1r7aA02
-colour cath_binaries_defined_colour_3, 1zjaA02
+set_color cath_tools_defined_colour_0, [0,0,1]
+set_color cath_tools_defined_colour_1, [0,1,0]
+set_color cath_tools_defined_colour_2, [1,0,0]
+set_color cath_tools_defined_colour_3, [1,1,0]
+colour cath_tools_defined_colour_0, 1g5aA03
+colour cath_tools_defined_colour_1, 1wzaA02
+colour cath_tools_defined_colour_2, 1r7aA02
+colour cath_tools_defined_colour_3, 1zjaA02
 distance alignment, /1g5aA03///187/CA/, /1r7aA02///88/CA/
 distance alignment, /1g5aA03///188/CA/, /1r7aA02///89/CA/
 distance alignment, /1wzaA02///135/CA/, /1zjaA02///106/CA/

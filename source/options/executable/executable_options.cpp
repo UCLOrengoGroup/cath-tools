@@ -2,7 +2,7 @@
 /// \brief The executable_options class definitions
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -51,15 +51,15 @@ const size_t executable_options::DEFAULT_PROG_OPS_LINE_LENGTH             (200);
 /// \brief The prefix for "global" environment variables to be respected by all executables using this code.
 ///
 /// These "global" environment variables are overridden by command line options but override the configuration file.
-const string       executable_options::CATH_BINARIES_ENVIRONMENT_VARIABLE_PREFIX("CATH_BINARIES_");
+const string       executable_options::CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX("CATH_TOOLS_");
 
 /// \brief The name of the "global" configuration file to be respected by all executables using this code.
 ///
 /// This "global" file is overridden by environment variables or command line options
-const path         executable_options::CATH_BINARIES_CONF_FILE                  ("cath-binaries.conf");
+const path         executable_options::CATH_TOOLS_CONF_FILE                  ("cath-tools.conf");
 
 /// \brief The path through which to search for the "global" configuration file.
-const path_vec executable_options::CATH_BINARIES_CONF_FILE_SEARCH_PATH = { ".", "~/.cath" };
+const path_vec executable_options::CATH_TOOLS_CONF_FILE_SEARCH_PATH = { ".", "~/.cath" };
 
 /// \brief Default implementation of get_positional_options() that doesn't set any positional options
 ///
@@ -181,15 +181,15 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 			vm
 		);
 
-		// Parse any environment variables prefixed with "CATH_BINARIES_"
+		// Parse any environment variables prefixed with "CATH_TOOLS_"
 		// and just silently ignore any unknown options
-		parsing_approach = "from global environment variables with prefix " + CATH_BINARIES_ENVIRONMENT_VARIABLE_PREFIX;
+		parsing_approach = "from global environment variables with prefix " + CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX;
 		//! [Using env_var_option_name_handler]
 		store(
 			parse_environment(
 				full_po_desc,
 				env_var_option_name_handler(
-					CATH_BINARIES_ENVIRONMENT_VARIABLE_PREFIX,
+					CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX,
 					true,
 					full_po_desc
 				)
@@ -198,13 +198,13 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 		);
 		//! [Using env_var_option_name_handler]
 
-		// Parse any configuration file called cath_binaries.conf
-		const path located_cath_binaries_conf_file = find_file(CATH_BINARIES_CONF_FILE_SEARCH_PATH, CATH_BINARIES_CONF_FILE.string());
-		if (!located_cath_binaries_conf_file.empty()) {
-//			cerr << "Parsing configuration from file " << CATH_BINARIES_CONF_FILE << endl;
-			parsing_approach = "from the global configuration file " + located_cath_binaries_conf_file.string();
+		// Parse any configuration file called cath_tools.conf
+		const path located_cath_tools_conf_file = find_file(CATH_TOOLS_CONF_FILE_SEARCH_PATH, CATH_TOOLS_CONF_FILE.string());
+		if (!located_cath_tools_conf_file.empty()) {
+//			cerr << "Parsing configuration from file " << CATH_TOOLS_CONF_FILE << endl;
+			parsing_approach = "from the global configuration file " + located_cath_tools_conf_file.string();
 			ifstream config_file_stream;
-			open_ifstream(config_file_stream, CATH_BINARIES_CONF_FILE);
+			open_ifstream(config_file_stream, CATH_TOOLS_CONF_FILE);
 			store(parse_config_file(config_file_stream, full_po_desc, true), vm);
 			config_file_stream.close();
 		}

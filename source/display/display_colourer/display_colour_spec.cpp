@@ -2,7 +2,7 @@
 /// \brief The display_colour_spec class definitions
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -203,7 +203,7 @@ str_vec cath::generate_colour_names(const size_t &arg_num_colours
 	colour_names.reserve( arg_num_colours );
 	for (size_t colour_ctr = 0; colour_ctr < arg_num_colours; ++colour_ctr) {
 		ostringstream colour_name_ss;
-		colour_name_ss << "cath_binaries_defined_colour_";
+		colour_name_ss << "cath_tools_defined_colour_";
 		colour_name_ss << setw( numeric_cast<int>( num_width ) ) << setfill( '0' );
 		colour_name_ss << colour_ctr;
 		colour_names.push_back( colour_name_ss.str() );

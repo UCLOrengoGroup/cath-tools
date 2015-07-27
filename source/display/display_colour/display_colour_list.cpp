@@ -2,7 +2,7 @@
 /// \brief The display_colour_list class definitions
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -103,7 +103,7 @@ const display_colour & cath::colour_of_mod_index(const display_colour_list &arg_
 //                                         const display_colour_list::size_type &arg_index                ///< TODOCUMENT
 //                                         ) {
 //	const display_colour_list::size_type num_colours = arg_display_colour_list.size();
-//	return "cath_binaries_defined_colour_" + lexical_cast<string>(arg_index % num_colours);
+//	return "cath_tools_defined_colour_" + lexical_cast<string>(arg_index % num_colours);
 //}
 
 /// \brief TODOCUMENT

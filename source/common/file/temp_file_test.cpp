@@ -2,7 +2,7 @@
 /// \brief The temp_file test suite
 
 /// \copyright
-/// Tony Lewis's Common C++ Library Code (here imported into the CATH Binaries project and then tweaked, eg namespaced in cath)
+/// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
 /// Copyright (C) 2007, Tony Lewis
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(construct_empty) {
 BOOST_AUTO_TEST_CASE(basic) {
 	path filename;
 	{
-		const temp_file basic_temp_file("cath_binaries_test_temp_file_%%%%");
+		const temp_file basic_temp_file("cath_tools_test_temp_file_%%%%");
 		BOOST_CHECK_EQUAL( true, has_filename( basic_temp_file ) );
 		filename = get_filename( basic_temp_file );
 		BOOST_CHECK( !filename.empty() );

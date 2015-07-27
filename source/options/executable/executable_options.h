@@ -2,7 +2,7 @@
 /// \brief The executable_options class header
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -50,14 +50,14 @@ namespace cath {
 		///
 		/// Current (descending) order of precedence:
 		///  - Command line options
-		///  - Global environment variables (eg var  : "CATH_BINARIES_PDB_PATH" )
-		///  - Global configuration file    (   file : "cath-binaries.conf"     )
+		///  - Global environment variables (eg var  : "CATH_TOOLS_PDB_PATH" )
+		///  - Global configuration file    (   file : "cath-tools.conf"     )
 		class executable_options {
 		private:
 			static const size_t                  DEFAULT_PROG_OPS_LINE_LENGTH;
-			static const std::string             CATH_BINARIES_ENVIRONMENT_VARIABLE_PREFIX;
-			static const boost::filesystem::path CATH_BINARIES_CONF_FILE;
-			static const path_vec                CATH_BINARIES_CONF_FILE_SEARCH_PATH;
+			static const std::string             CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX;
+			static const boost::filesystem::path CATH_TOOLS_CONF_FILE;
+			static const path_vec                CATH_TOOLS_CONF_FILE_SEARCH_PATH;
 
 			/// \brief A list of pointers to the options blocks to be processed during parsing
 			std::vector<options_block *> all_options_blocks;

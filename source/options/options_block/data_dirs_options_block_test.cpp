@@ -2,7 +2,7 @@
 /// \brief The data_dirs_options_block test suite
 
 /// \copyright
-/// CATH Binaries - Protein structure comparison tools such as SSAP and SNAP
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(split_path_into_directories_works) {
 ///        cannot find the requested file in the specified list of directories
 BOOST_AUTO_TEST_CASE(find_file_works) {
 	// Create a temporary file with some text in it
-	const temp_file temp_file("cath_binaries_test_temp_file.data_dirs_options_block.%%%%");
+	const temp_file temp_file("cath_tools_test_temp_file.data_dirs_options_block.%%%%");
 	const path      temp_file_filename = get_filename( temp_file );
 	ofstream temp_file_stream;
 	open_ofstream(temp_file_stream, temp_file_filename);

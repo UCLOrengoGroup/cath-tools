@@ -4,7 +4,7 @@ use inc::Module::Install;
 use Module::Install::External;
 use 5.008;
 
-name 'cath_binaries';
+name 'cath-tools';
 perl_version '5.008';
 # all_from 'lib/Cath.pm';
 license 'perl';
