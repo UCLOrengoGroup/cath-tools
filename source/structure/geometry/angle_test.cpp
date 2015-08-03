@@ -132,8 +132,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(difference_and_wrapped_difference, T, angle_value_
 
 	BOOST_CHECK_EQUAL(                           difference( seven_eighths_turn,    one_eighth_turn ),                     three_quarters_turn                          );
 	BOOST_CHECK_EQUAL(                           difference(    one_eighth_turn, seven_eighths_turn ),                     three_quarters_turn                          );
-	BOOST_CHECK_CLOSE( angle_in_degrees( wrapped_difference( seven_eighths_turn,    one_eighth_turn ) ), angle_in_degrees(    one_quarter_turn ), ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( angle_in_degrees( wrapped_difference(    one_eighth_turn, seven_eighths_turn ) ), angle_in_degrees(    one_quarter_turn ), ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( angle_in_degrees( wrapped_difference( seven_eighths_turn,    one_eighth_turn ) ), angle_in_degrees(    one_quarter_turn ), LOOSER_ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( angle_in_degrees( wrapped_difference(    one_eighth_turn, seven_eighths_turn ) ), angle_in_degrees(    one_quarter_turn ), LOOSER_ACCURACY_PERCENTAGE() );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
