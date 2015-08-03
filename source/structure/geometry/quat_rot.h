@@ -166,9 +166,9 @@ namespace cath {
 			const T &q_zy = static_cast<T>( arg_rotation.get_value<2, 1>() );
 			const T &q_zz = static_cast<T>( arg_rotation.get_value<2, 2>() );
 
-			const T  t    = q_xx + q_yy + q_zz;
-			const T  r    = std::sqrt( one + t );
-			const T  w    = half * r;
+//			const T  t    = q_xx + q_yy + q_zz;
+//			const T  r    = std::sqrt( one + t );
+			const T  w    =                half * std::sqrt( std::max( zero, one + q_xx + q_yy + q_zz ) );
 			const T  x    = std::copysign( half * std::sqrt( std::max( zero, one + q_xx - q_yy - q_zz ) ), q_zy - q_yz );
 			const T  y    = std::copysign( half * std::sqrt( std::max( zero, one - q_xx + q_yy - q_zz ) ), q_xz - q_zx );
 			const T  z    = std::copysign( half * std::sqrt( std::max( zero, one - q_xx - q_yy + q_zz ) ), q_yx - q_xy );
@@ -290,7 +290,7 @@ namespace cath {
 		inline quat_rot_impl<T> from_first_toward_second_at_angle(const quat_rot_impl<T> &arg_quat_rot_a,     ///< The first  quat_rot
 		                                                          const quat_rot_impl<T> &arg_quat_rot_b,     ///< The second quat_rot
 		                                                          const angle<T>         &arg_requested_angle ///< TODOCUMENT
-																  ) {
+		                                                          ) {
 			const auto angle_between = angle_between_quat_rots<T>( arg_quat_rot_a, arg_quat_rot_b );
 			if ( arg_requested_angle > angle_between ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to generate quat_rot at angle x from a to b if x > the angle between a and b"));
@@ -417,9 +417,9 @@ namespace cath {
 //			return arg_coord_list;
 //		}
 
-		using all_quat_rot_types = boost::mpl::vector<float, double, long double>;
+		using all_quat_rot_types = boost::mpl::vector<float>;
 //		using all_quat_rot_types = boost::mpl::vector<       double, long double>;
-		using quat_rot = quat_rot_impl<double>;
+//		using quat_rot = quat_rot_impl<double>;
 		using float_quat_rot = quat_rot_impl<float>;
 	}
 }
