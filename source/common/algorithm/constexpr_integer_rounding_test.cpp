@@ -56,6 +56,8 @@ BOOST_AUTO_TEST_CASE(basic) {
 	static_assert( round_up_mod  (  5   ,  3   ) ==  6  , "" );
 	static_assert( round_up_mod  (  6_z ,  3_z ) ==  6_z, "" );
 	static_assert( round_up_mod  (  6   ,  3   ) ==  6  , "" );
+
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

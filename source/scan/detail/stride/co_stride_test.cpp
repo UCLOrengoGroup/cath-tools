@@ -84,6 +84,7 @@ BOOST_AUTO_TEST_CASE(co_stride_works) {
 	static_assert( co_stride( 5_z, 3_z ) == 11, "co_stride( 5, 3 ) should be equal to 11" );
 	static_assert( co_stride( 5_z, 4_z ) == 29, "co_stride( 5, 4 ) should be equal to 29" );
 	static_assert( co_stride( 5_z, 5_z ) ==  5, "co_stride( 5, 5 ) should be equal to  5" );
+	BOOST_CHECK( true );
 }
 
 /// \brief TODOCUMENT
@@ -98,6 +99,7 @@ BOOST_AUTO_TEST_CASE(num_stride_neighbour_range_works) {
 	static_assert( num_in_stride_neighbour_range( 7_z ) ==  8, "num_in_stride_neighbour_range( 7 ) should be equal to  8" );
 	static_assert( num_in_stride_neighbour_range( 8_z ) ==  9, "num_in_stride_neighbour_range( 8 ) should be equal to  9" );
 	static_assert( num_in_stride_neighbour_range( 9_z ) == 10, "num_in_stride_neighbour_range( 9 ) should be equal to 10" );
+	BOOST_CHECK( true );
 }
 
 /// \brief TODOCUMENT
@@ -112,6 +114,7 @@ BOOST_AUTO_TEST_CASE(stride_neighbours_index_of_centre_works) {
 	static_assert( stride_neighbour_index_of_centre( 7_z ) == 3, "stride_neighbour_index_of_centre( 7 ) should be equal to 3" );
 	static_assert( stride_neighbour_index_of_centre( 8_z ) == 4, "stride_neighbour_index_of_centre( 8 ) should be equal to 4" );
 	static_assert( stride_neighbour_index_of_centre( 9_z ) == 4, "stride_neighbour_index_of_centre( 9 ) should be equal to 4" );
+	BOOST_CHECK( true );
 }
 
 /// \brief TODOCUMENT
@@ -166,6 +169,7 @@ BOOST_AUTO_TEST_CASE(entry_index_of_stride_neighbour_index_works) {
 	static_assert( entry_index_of_stride_neighbour_index_impl( 2_z,  4_z, 10_z, 11_z ) == make_pair(  true, 10_z ), "entry_index_of_stride_neighbour_index( 2_z,  4_z, 10_z,  9_z ) should be equal to   10" );
 	static_assert( entry_index_of_stride_neighbour_index_impl( 3_z,  4_z, 10_z, 11_z ) == make_pair( false,  0_z ), "entry_index_of_stride_neighbour_index( 3_z,  4_z, 10_z,  9_z ) should be equal to none" );
 	static_assert( entry_index_of_stride_neighbour_index_impl( 4_z,  4_z, 10_z, 11_z ) == make_pair( false,  0_z ), "entry_index_of_stride_neighbour_index( 4_z,  4_z, 10_z,  9_z ) should be equal to none" );
+	BOOST_CHECK( true );
 }
 
 /// \brief TODOCUMENT
@@ -209,6 +213,7 @@ BOOST_AUTO_TEST_CASE(entry_index_of_stride_rep_works) {
 	static_assert( entry_index_of_stride_rep(  8_z, 4_z ) == 10_z, "entry_index_of_stride_rep(  8_z, 4_z ) should be equal to 10" );
 	static_assert( entry_index_of_stride_rep(  9_z, 4_z ) == 10_z, "entry_index_of_stride_rep(  9_z, 4_z ) should be equal to 10" );
 	static_assert( entry_index_of_stride_rep( 10_z, 4_z ) == 10_z, "entry_index_of_stride_rep( 10_z, 4_z ) should be equal to 10" );
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

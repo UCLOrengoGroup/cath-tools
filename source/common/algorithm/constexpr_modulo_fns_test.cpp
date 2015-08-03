@@ -126,6 +126,7 @@ BOOST_AUTO_TEST_CASE(constexpr_lcm_works) {
 	static_assert( constexpr_lcm( 6_z, 4_z ) == 12, "constexpr_lcm( 6, 4 ) should be equal to 12" );
 	static_assert( constexpr_lcm( 6_z, 5_z ) == 30, "constexpr_lcm( 6, 5 ) should be equal to 30" );
 	static_assert( constexpr_lcm( 6_z, 6_z ) ==  6, "constexpr_lcm( 6, 6 ) should be equal to  6" );
+	BOOST_CHECK( true );
 }
 
 
@@ -167,6 +168,7 @@ BOOST_AUTO_TEST_CASE(constexpr_gcd_works) {
 	static_assert( constexpr_gcd( 5_z, 3_z ) == 1, "constexpr_gcd( 5, 3 ) should be equal to 1" );
 	static_assert( constexpr_gcd( 5_z, 4_z ) == 1, "constexpr_gcd( 5, 4 ) should be equal to 1" );
 	static_assert( constexpr_gcd( 5_z, 5_z ) == 5, "constexpr_gcd( 5, 5 ) should be equal to 5" );
+	BOOST_CHECK( true );
 }
 
 /// \brief TODOCUMENT

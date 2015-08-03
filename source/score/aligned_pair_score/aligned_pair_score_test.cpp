@@ -353,16 +353,19 @@ BOOST_AUTO_TEST_CASE(tm_score_1c55A_1c56A) {
 /// \brief Check the TM-score for 1c55A/1wt7A is correct
 BOOST_AUTO_TEST_CASE(tm_score_1c55A_1wt7A) {
 	BOOST_WARN_CLOSE( tm_score().calculate  ( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 0.58304,            ACCURACY_PERCENTAGE() );
+	BOOST_CHECK( true );
 }
 
 /// \brief Check the TM-score for 1c55A/1wmtA is correct
 BOOST_AUTO_TEST_CASE(tm_score_1c55A_1wmtA) {
 	BOOST_WARN_CLOSE( tm_score().calculate  ( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ), 0.54228,            ACCURACY_PERCENTAGE() );
+	BOOST_CHECK( true );
 }
 
 /// \brief Check the TM-score for 1c55A/1hykA is correct
 BOOST_AUTO_TEST_CASE(tm_score_1c55A_1hykA) {
 	BOOST_WARN_CLOSE( tm_score().calculate  ( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ), 0.34689,            ACCURACY_PERCENTAGE() );
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
