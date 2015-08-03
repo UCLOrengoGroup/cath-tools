@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 //	print_highlight_rep_pymol_commands( cerr, the_scofa, prot_1ufmA00, roled_scan_stride{ scan_role::QUERY, the_scan_stride } );
 //	print_highlight_rep_pymol_commands( cerr, the_scofa, prot_1cf7B00, roled_scan_stride{ scan_role::INDEX, the_scan_stride } );
 
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -43,7 +43,7 @@ BOOST_FIXTURE_TEST_SUITE(chain_label_test_suite, cath::test::chain_label_test_su
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_SUITE(rep_strider_test_suite, cath::test::rep_strider_test_su
 
 /// \brief Test the ctor and getter with static_asserts
 BOOST_AUTO_TEST_CASE(ctor_and_getter) {
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 	static_assert( rep_strider(   ).get_stride() == 0, "Check the ctor and getter work for default construction" );
 	static_assert( rep_strider( 0 ).get_stride() == 0, "Check the ctor and getter work for construction from 0" );
 	static_assert( rep_strider( 1 ).get_stride() == 1, "Check the ctor and getter work for construction from 1" );
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE(ctor_and_getter) {
 
 /// \brief Test get_num_reps_of_num_residues_works() with static_asserts
 BOOST_AUTO_TEST_CASE(get_num_reps_of_num_residues_works) {
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 	static_assert( get_num_reps_of_num_residues( rep_strider( 0 ), 0 ) == 0, "Check get_num_reps_of_num_residues_works() works for stride 0 and 0 residue"  );
 	static_assert( get_num_reps_of_num_residues( rep_strider( 0 ), 1 ) == 1, "Check get_num_reps_of_num_residues_works() works for stride 0 and 1 residues" );
 	static_assert( get_num_reps_of_num_residues( rep_strider( 0 ), 2 ) == 2, "Check get_num_reps_of_num_residues_works() works for stride 0 and 2 residue"  );
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(get_num_reps_of_num_residues_works) {
 
 /// \brief Test get_index_of_rep_index() with static_asserts
 BOOST_AUTO_TEST_CASE(get_index_of_rep_index_works) {
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 
 	static_assert( get_index_of_rep_index( rep_strider( 0 ), 0 ) ==  0, "Check get_index_of_rep_index() works for stride 0 and rep 0" );
 	static_assert( get_index_of_rep_index( rep_strider( 0 ), 1 ) ==  1, "Check get_index_of_rep_index() works for stride 0 and rep 1" );

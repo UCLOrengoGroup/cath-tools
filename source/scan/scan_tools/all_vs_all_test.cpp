@@ -207,7 +207,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 //
 //	// 1a04A02  1fseB00   80   70  87.49   67   83   30   4.77
 //	// 1n3lA01  1h3fA01  209  195  84.91  186   88   26   2.68
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

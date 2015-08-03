@@ -46,7 +46,7 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_list_name_less_test_suite, cath::tes
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

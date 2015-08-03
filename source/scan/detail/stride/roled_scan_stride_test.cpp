@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_SUITE(roled_scan_stride_test_suite, cath::test::roled_scan_st
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(ctor_and_getters_work) {
-	BOOST_CHECK_EQUAL( 0, 0 );
+	BOOST_CHECK( true );
 	static_assert( get_this_from_stride ( roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } ) == 1, "roled_scan_stride's ctor and getter should return the relevant value back" );
 	static_assert( get_this_to_stride   ( roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } ) == 2, "roled_scan_stride's ctor and getter should return the relevant value back" );
 	static_assert( get_other_from_stride( roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } ) == 3, "roled_scan_stride's ctor and getter should return the relevant value back" );
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(ctor_and_getters_work) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(equality_comparison_works) {
-	BOOST_CHECK_EQUAL( 0, 0 );
+	BOOST_CHECK( true );
 	static_assert(     roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } == roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } },   "scan_stride's operator== should work" );
 	static_assert(     roled_scan_stride{ scan_role::INDEX, { 1, 2, 3, 4 } } == roled_scan_stride{ scan_role::INDEX, { 1, 2, 3, 4 } },   "scan_stride's operator== should work" );
 

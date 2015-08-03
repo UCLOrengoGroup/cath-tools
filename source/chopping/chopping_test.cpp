@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 //	new_to_string '1hvcA01' '1hvc D1B-99B[A]'
 //	simple        '1hvcA01' '1hvc 1(B)-99(B)[A]'
 
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(prot_only_get_length_does_not_throw, length_getter
 
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(static__length_getter_type_checks) {
-//	BOOST_CHECK_EQUAL( 0, 0 );
+//	BOOST_CHECK( true );
 //	constexpr_for_n<cath::test::length_getter_enum_tester, num_length_getter_enums>();
 //}
 

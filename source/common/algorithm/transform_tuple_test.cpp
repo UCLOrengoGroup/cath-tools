@@ -68,7 +68,7 @@ BOOST_FIXTURE_TEST_SUITE(transform_tuple_test_suite, cath::test::transform_tuple
 
 /// \brief Check const transform_tuple() works
 BOOST_AUTO_TEST_CASE(const_transform_tuple_works) {
-	BOOST_CHECK_EQUAL( 0, 0 );
+	BOOST_CHECK( true );
 	static_assert( transform_tuple( three_two_tuple, cath::test::tripler_copy() ) == nine_six_tuple, "Tuple tripling didn't work" );
 }
 

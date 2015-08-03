@@ -46,7 +46,7 @@ BOOST_FIXTURE_TEST_SUITE(html_align_outputter_test_suite, cath::test::html_align
 BOOST_AUTO_TEST_CASE(html_align_outputter_on_aln_a_b) {
 //	ostringstream got_ss;
 //	got_ss << html_align_outputter( aln_a_b );
-	BOOST_CHECK_EQUAL( 0, 0);
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

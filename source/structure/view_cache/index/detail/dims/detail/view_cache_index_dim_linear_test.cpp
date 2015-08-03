@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 	static_assert( search_cell_ranges( 20.0, 2, 10,  0.0, 1000.0 ) == make_tuple( 0, 10, 0, 0 ), "This will not work yet" );
 	// static_assert( search_cell_ranges( 20.0, 0, 10, 78.0, 122.0 ) == make_tuple( 1, 2, 0, 0 ), "This will not work yet" );
 	// static_assert( search_cell_ranges( 20.0, 0, 10, 78.0, 122.0 ) == make_tuple( 1, 2, 0, 0 ), "This will not work yet" );
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

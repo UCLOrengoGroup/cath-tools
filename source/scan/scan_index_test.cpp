@@ -70,7 +70,7 @@ BOOST_FIXTURE_TEST_SUITE(scan_index_test_suite, cath::test::scan_index_test_suit
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 //	ostringstream parse_ss;
 //
 //	// 1fseB00 has 70 residues so the best possible score should be something like 70*70*2

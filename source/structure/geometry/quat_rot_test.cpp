@@ -408,7 +408,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotate_point_by_quat_rots, quat_rot_type, all_quat
 
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(speed_test) {
-//	BOOST_CHECK_EQUAL( 0, 0 );
+//	BOOST_CHECK( true );
 //	const auto        cutoff_angle = make_angle_from_degrees<double>( 67.5 );
 //	const float       dist_1_float = distance_1_of_angle< float       >( cutoff_angle );
 //	const double      dist_1_doubl = distance_1_of_angle< double      >( cutoff_angle );

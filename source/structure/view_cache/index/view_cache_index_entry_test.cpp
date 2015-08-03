@@ -255,7 +255,7 @@ BOOST_FIXTURE_TEST_SUITE(view_cache_index_entry_test_suite, cath::test::view_cac
 //		cerr << "Rate per second for " << NUM_ENTRIES << " is " << fixed << x << endl;
 //	}
 //	cerr << "Mean rate per second is " << mean_rate << endl;
-//	BOOST_CHECK_EQUAL(0, 0);
+//	BOOST_CHECK( true );
 //}
 
 BOOST_AUTO_TEST_SUITE_END()

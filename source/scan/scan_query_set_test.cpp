@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_SUITE(scan_query_set_test_suite, cath::test::scan_query_set_t
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(0, 0);
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

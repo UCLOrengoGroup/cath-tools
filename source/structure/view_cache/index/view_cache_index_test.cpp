@@ -159,7 +159,7 @@ BOOST_FIXTURE_TEST_SUITE(view_cache_index_test_suite, cath::test::view_cache_ind
 //
 ////    187 H 0 V   91  V 0 H   43
 //
-//    BOOST_CHECK_EQUAL(0, 0);
+//    BOOST_CHECK( true );
 //}
 
 BOOST_AUTO_TEST_SUITE_END()

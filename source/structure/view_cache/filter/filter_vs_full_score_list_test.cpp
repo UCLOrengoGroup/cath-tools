@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 //	gnuplot_classsn_stat_for_recall( grath_data, path( "grath_filter_false_positives_for_99_recall" ), false_positive_stat(), grath_sensitivity_cutoff );
 
 
-	BOOST_CHECK_EQUAL( 0, 0 );
+	BOOST_CHECK( true );
 }
 
 //	cerr << "result is   : " << result << endl;

@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE(set_chain_label) {
 BOOST_AUTO_TEST_CASE(rotate) {
 	bioplib_pdb my_pdb;
 	my_pdb.read_file(EXAMPLE_A_PDB_FILENAME().string());
-	BOOST_CHECK_EQUAL( 0, 0 );
+	BOOST_CHECK( true );
 }
 
 /// \brief Check that bioplib_pdb's operator+() correctly rotates the coordinates
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE(translate) {
 	my_pdb += coord_123;
 	my_pdb += coord_123;
 	my_pdb -= coord_123;
-	BOOST_CHECK_EQUAL( 0, 0 );
+	BOOST_CHECK( true );
 }
 
 /// \brief Check that the copy ctor does not throw (and can copy-construct a const from a const)

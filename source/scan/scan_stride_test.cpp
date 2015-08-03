@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_SUITE(scan_stride_test_suite, cath::test::scan_stride_test_su
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(ctor_and_getters_work) {
-	BOOST_CHECK_EQUAL( 0, 0 );
+	BOOST_CHECK( true );
 	static_assert( get_query_from_stride( scan_stride{ 1, 2, 3, 4 } ) == 1, "scan_stride's ctor and getter should return the relevant value back" );
 	static_assert( get_query_to_stride  ( scan_stride{ 1, 2, 3, 4 } ) == 2, "scan_stride's ctor and getter should return the relevant value back" );
 	static_assert( get_index_from_stride( scan_stride{ 1, 2, 3, 4 } ) == 3, "scan_stride's ctor and getter should return the relevant value back" );
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(ctor_and_getters_work) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(equality_comparison_works) {
-	BOOST_CHECK_EQUAL( 0, 0 );
+	BOOST_CHECK( true );
 	static_assert(     scan_stride{ 1, 2, 3, 4 } == scan_stride{ 1, 2, 3, 4 },   "scan_stride's operator== should work" );
 
 	static_assert( ! ( scan_stride{ 2, 1, 1, 1 } == scan_stride{ 1, 1, 1, 1 } ), "scan_stride's operator== should work" );
