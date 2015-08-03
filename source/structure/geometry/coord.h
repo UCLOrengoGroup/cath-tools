@@ -62,6 +62,15 @@ namespace cath {
 			static const coord  ORIGIN_COORD;
 
 			/// \brief TODOCUMENT
+			static const coord  UNIT_X;
+
+			/// \brief TODOCUMENT
+			static const coord  UNIT_Y;
+
+			/// \brief TODOCUMENT
+			static const coord  UNIT_Z;
+
+			/// \brief TODOCUMENT
 			static const size_t NUM_DIMS;
 
 			/// \brief TODOCUMENT
