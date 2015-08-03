@@ -17,9 +17,19 @@ notifications:
       - i.sillitoe@ucl.ac.uk
       - t.lewis@ucl.ac.uk
 
+# GCC is commented out for now because it doesn't seem to successfully link against
+# the Boost libraries (it gives messages like:
+#     `.text._ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED2Ev'
+#     referenced in section
+#     `.text._ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED1Ev[_ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED1Ev]'
+#     of /usr/lib/gcc/x86_64-linux-gnu/4.9/../../../../lib/libboost_log.a(default_sink.o):
+#     defined in discarded section
+#     `.text._ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED2Ev[_ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED5Ev]'
+#     of /usr/lib/gcc/x86_64-linux-gnu/4.9/../../../../lib/libboost_log.a(default_sink.o)
+# )
 compiler:
   - clang
-  - gcc
+#  - gcc
 
 install:
   - if [ "$CXX" == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9"   ; fi
