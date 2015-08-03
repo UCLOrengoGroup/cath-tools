@@ -64,103 +64,103 @@ namespace cath {
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(view_cache_index_test_suite, cath::test::view_cache_index_test_suite_fixture)
 
-/// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(basic) {
-	ostringstream parse_ss;
-	// const double cell_width = 0.5 * sqrt( 40.0 );
-	const double cell_width =       sqrt( 40.0 );
-//	const double cell_width = 2.0 * sqrt( 40.0 );
-
-//	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1a04A02", parse_ss );
-//	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1fseB00", parse_ss );
-////    const alignment correct_alignment = read_alignment_from_fasta_file(
-////    	TEST_SOURCE_DATA_DIR() / "1a04A02_1fseB00.fa",
-////		make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1a04A02" ),
-////		                 read_pdb_file( TEST_SOURCE_DATA_DIR() / "1fseB00" ) } ),
-////		cerr
-////	);
-
-//	//	1n3lA01  1h3fA01  209  195  84.91  186   88   26   2.68
+///// \brief TODOCUMENT
+//BOOST_AUTO_TEST_CASE(basic) {
+//	ostringstream parse_ss;
+//	// const double cell_width = 0.5 * sqrt( 40.0 );
+//	const double cell_width =       sqrt( 40.0 );
+////	const double cell_width = 2.0 * sqrt( 40.0 );
+//
+////	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1a04A02", parse_ss );
+////	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1fseB00", parse_ss );
+//////    const alignment correct_alignment = read_alignment_from_fasta_file(
+//////    	TEST_SOURCE_DATA_DIR() / "1a04A02_1fseB00.fa",
+//////		make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1a04A02" ),
+//////		                 read_pdb_file( TEST_SOURCE_DATA_DIR() / "1fseB00" ) } ),
+//////		cerr
+//////	);
+//
+////	//	1n3lA01  1h3fA01  209  195  84.91  186   88   26   2.68
+////	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01", parse_ss );
+////	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1h3fA01", parse_ss );
+//////    const alignment correct_alignment = read_alignment_from_fasta_file(
+//////    	TEST_SOURCE_DATA_DIR() / "1n3lA01_1h3fA01.fa",
+//////		make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1n3lA01" ),
+//////		                 read_pdb_file( TEST_SOURCE_DATA_DIR() / "1h3fA01" ) } ),
+//////		cerr
+//////	);
+//
+//	//	1n3lA01  1r6xA02  209  213  69.28  129   60    5   6.02
 //	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01", parse_ss );
-//	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1h3fA01", parse_ss );
+//	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1r6xA02", parse_ss );
 ////    const alignment correct_alignment = read_alignment_from_fasta_file(
-////    	TEST_SOURCE_DATA_DIR() / "1n3lA01_1h3fA01.fa",
+////    	TEST_SOURCE_DATA_DIR() / "1n3lA01_1r6xA02.fa",
 ////		make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1n3lA01" ),
-////		                 read_pdb_file( TEST_SOURCE_DATA_DIR() / "1h3fA01" ) } ),
+////		                 read_pdb_file( TEST_SOURCE_DATA_DIR() / "1r6xA02" ) } ),
 ////		cerr
 ////	);
-
-	//	1n3lA01  1r6xA02  209  213  69.28  129   60    5   6.02
-	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01", parse_ss );
-	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1r6xA02", parse_ss );
-//    const alignment correct_alignment = read_alignment_from_fasta_file(
-//    	TEST_SOURCE_DATA_DIR() / "1n3lA01_1r6xA02.fa",
-//		make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1n3lA01" ),
-//		                 read_pdb_file( TEST_SOURCE_DATA_DIR() / "1r6xA02" ) } ),
-//		cerr
+//
+////    34 and 35 vs 18 to 19
+//
+////	view_cache_index new_view_cache_index( cell_width );
+////	const view_cache_index view_cache_index_a = build_view_cache_index( cell_width, protein_a );
+////	const view_cache_index view_cache_index_b = build_view_cache_index( cell_width, protein_b );
+//
+//	const auto the_criteria = make_default_vcie_match_criteria();
+//
+////	const size_t num_repeats =  500;
+////	const size_t num_repeats = 20;
+//	const size_t num_repeats = 1;
+//	using durn_vec = vector<high_resolution_clock::duration>;
+//	durn_vec durations;
+//	for (size_t repeat_ctr = 0; repeat_ctr < num_repeats; ++repeat_ctr) {
+//		quad_find_action_check indexed_action( protein_a, protein_b, the_criteria );
+//		durations.push_back( process_quads_indexed(
+//			protein_a,
+//			protein_b,
+//			cell_width,
+//			// make_angle_from_degrees<angle_base_type>( 67.5 / 2.0 ),
+//			// make_angle_from_degrees<angle_base_type>( 67.5 / 2.0 ),
+//			make_angle_from_degrees<angle_base_type>( 67.5 ),
+//			make_angle_from_degrees<angle_base_type>( 67.5 ),
+//			the_criteria,
+//			indexed_action
+//		) );
+//		cerr << "The indexed score is    : " << indexed_action.get_total_score() << endl;
+//		cerr << "The indexed scan takes  : " << numeric_cast<double>( duration_cast<nanoseconds>( durations.back() ).count() ) / 1000000.0 << "ms" << endl;
+//	}
+//
+//	quad_find_action complete_action( protein_a, protein_b );
+//	const auto complete_duration = process_quads_complete(
+//		protein_a,
+//		protein_b,
+//		cell_width,
+//		the_criteria,
+//		complete_action
 //	);
-
-//    34 and 35 vs 18 to 19
-
-//	view_cache_index new_view_cache_index( cell_width );
-//	const view_cache_index view_cache_index_a = build_view_cache_index( cell_width, protein_a );
-//	const view_cache_index view_cache_index_b = build_view_cache_index( cell_width, protein_b );
-
-	const auto the_criteria = make_default_vcie_match_criteria();
-
-//	const size_t num_repeats =  500;
-//	const size_t num_repeats = 20;
-	const size_t num_repeats = 1;
-	using durn_vec = vector<high_resolution_clock::duration>;
-	durn_vec durations;
-	for (size_t repeat_ctr = 0; repeat_ctr < num_repeats; ++repeat_ctr) {
-		quad_find_action_check indexed_action( protein_a, protein_b, the_criteria );
-		durations.push_back( process_quads_indexed(
-			protein_a,
-			protein_b,
-			cell_width,
-			// make_angle_from_degrees<angle_base_type>( 67.5 / 2.0 ),
-			// make_angle_from_degrees<angle_base_type>( 67.5 / 2.0 ),
-			make_angle_from_degrees<angle_base_type>( 67.5 ),
-			make_angle_from_degrees<angle_base_type>( 67.5 ),
-			the_criteria,
-			indexed_action
-		) );
-		cerr << "The indexed score is    : " << indexed_action.get_total_score() << endl;
-		cerr << "The indexed scan takes  : " << numeric_cast<double>( duration_cast<nanoseconds>( durations.back() ).count() ) / 1000000.0 << "ms" << endl;
-	}
-
-	quad_find_action complete_action( protein_a, protein_b );
-	const auto complete_duration = process_quads_complete(
-		protein_a,
-		protein_b,
-		cell_width,
-		the_criteria,
-		complete_action
-	);
-	cerr << "The complete score is   : " << complete_action.get_total_score() << endl;
-	cerr << "The complete scan takes : " << numeric_cast<double>( duration_cast<nanoseconds>( complete_duration ).count() ) / 1000000.0 << "ms" << endl;
-
-//    const duration total_duration = accumulate(
-//    	durations,
-//		duration( 0, 0, 0, 0 )
-//    );
-//    const duration average_duration   = total_duration / num_repeats;
-//    const double        avg_num_per_second = ( 1000000.0 / numeric_cast<double>( duration_cast<microseconds>( average_duration.total_microseconds() ).count() ) );
-//    cerr << "Durations : " << endl;
-//    for (const duration &the_durn : durations) {
-//    	cerr << "  duration : " << the_durn.total_microseconds() << " microseconds" << endl;
-//    }
-//    cerr << "Average duration was " << average_duration.total_microseconds() << " microseconds";
-//    cerr << ", (which equates to "  << avg_num_per_second                    << " per second)";
-//    cerr << endl;
-
-//    protein_a
-
-//    187 H 0 V   91  V 0 H   43
-
-    BOOST_CHECK_EQUAL(0, 0);
-}
+//	cerr << "The complete score is   : " << complete_action.get_total_score() << endl;
+//	cerr << "The complete scan takes : " << numeric_cast<double>( duration_cast<nanoseconds>( complete_duration ).count() ) / 1000000.0 << "ms" << endl;
+//
+////    const duration total_duration = accumulate(
+////    	durations,
+////		duration( 0, 0, 0, 0 )
+////    );
+////    const duration average_duration   = total_duration / num_repeats;
+////    const double        avg_num_per_second = ( 1000000.0 / numeric_cast<double>( duration_cast<microseconds>( average_duration.total_microseconds() ).count() ) );
+////    cerr << "Durations : " << endl;
+////    for (const duration &the_durn : durations) {
+////    	cerr << "  duration : " << the_durn.total_microseconds() << " microseconds" << endl;
+////    }
+////    cerr << "Average duration was " << average_duration.total_microseconds() << " microseconds";
+////    cerr << ", (which equates to "  << avg_num_per_second                    << " per second)";
+////    cerr << endl;
+//
+////    protein_a
+//
+////    187 H 0 V   91  V 0 H   43
+//
+//    BOOST_CHECK_EQUAL(0, 0);
+//}
 
 BOOST_AUTO_TEST_SUITE_END()
 
