@@ -73,12 +73,11 @@ addons:
     - ninja-build
 
 before_script:
-  - echo a "${CMAKE_CXX_FLAGS}" b "$CMAKE_CXX_FLAGS" c '${CMAKE_CXX_FLAGS}' d '$CMAKE_CXX_FLAGS' e ${CMAKE_CXX_FLAGS} f $CMAKE_CXX_FLAGS g
   - sudo add-apt-repository ppa:afrank/boost -y
   - sudo apt-get update -q
   - sudo apt-get install libboost1.57-all libboost1.57-all-dev
   - mkdir release_build && cd release_build
-  - cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} ..
+  - cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" ..
   - cd $TRAVIS_BUILD_DIR
 
 script: ninja -j 2 -k 0 -C release_build && release_build/cath-superpose --version && release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
