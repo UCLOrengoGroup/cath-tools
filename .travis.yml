@@ -73,6 +73,7 @@ addons:
     - ninja-build
 
 before_script:
+  - echo a "${CMAKE_CXX_FLAGS}" b "$CMAKE_CXX_FLAGS" c '${CMAKE_CXX_FLAGS}' d '$CMAKE_CXX_FLAGS' e ${CMAKE_CXX_FLAGS} f $CMAKE_CXX_FLAGS g
   - sudo add-apt-repository ppa:afrank/boost -y
   - sudo apt-get update -q
   - sudo apt-get install libboost1.57-all libboost1.57-all-dev
