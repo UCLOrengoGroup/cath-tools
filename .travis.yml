@@ -54,9 +54,9 @@ matrix:
 install:
   - if [ "$CXX"   == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9"   ; fi
   - if [ "$CXX"   == "clang++" ]; then export CXX="clang++-3.6" CC="clang-3.6" ; fi
-  - if [ "$TOOLS" == "ASAN"    ]; then export CXX_FLAGS="${CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer"; fi
-  - if [ "$TOOLS" == "MSAN"    ]; then export CXX_FLAGS="${CXX_FLAGS} -fsanitize=memory  -fno-omit-frame-pointer"; fi
-  - if [ "$TOOLS" == "UBSAN"   ]; then export CXX_FLAGS="${CXX_FLAGS} -fsanitize=undefined                      "; fi
+  - if [ "$TOOLS" == "ASAN"    ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer"; fi
+  - if [ "$TOOLS" == "MSAN"    ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=memory  -fno-omit-frame-pointer"; fi
+  - if [ "$TOOLS" == "UBSAN"   ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=undefined                      "; fi
 #  - if [ "$TOOLS" == "ANALYZE" ]; then export WRAPPER="scan_build-3.6 " ; fi else export WRAPPER=" "; fi
 
 addons:
