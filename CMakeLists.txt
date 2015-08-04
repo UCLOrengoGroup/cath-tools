@@ -30,6 +30,8 @@ if ( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_GENERATOR STREQUAL "Ninja"
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics" )
 endif()
 
+MESSAGE( STATUS "Using CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS} )
+
 # Add handling of includes and library links for Boost
 # 'SYSTEM' tells the compiler it's a system include directory so warnings should be suppressed
 include_directories( SYSTEM ${Boost_INCLUDE_DIR} )
