@@ -42,12 +42,9 @@ matrix:
   allow_failures:
     - compiler: gcc
   exclude:
-    - compiler: gcc
-      env: TOOLS=ASAN
+    # ATM, GCC doesn't implement the memory sanitizer
     - compiler: gcc
       env: TOOLS=MSAN
-    - compiler: gcc
-      env: TOOLS=UBSAN
 #    - compiler: gcc
 #      env: TOOLS="ANALYZE"
 
