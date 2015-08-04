@@ -22,23 +22,13 @@ compiler:
   - gcc
 
 env:
- - TOOLS="OFF"
- - TOOLS="ASAN"    # Address sanitizer
- - TOOLS="MSAN"    # Memory sanitizer
- - TOOLS="UBSAN"   # Undefined-behaviour sanitizer
+ - TOOLS=OFF
+ - TOOLS=ASAN    # Address sanitizer
+ - TOOLS=MSAN    # Memory sanitizer
+ - TOOLS=UBSAN   # Undefined-behaviour sanitizer
 # - TOOLS="ANALYZE" # Use scan_build, which builds with Clang's static analyzer
 
 matrix:
-  exclude:
-    - compiler: gcc
-        env: TOOLS="ASAN"
-    - compiler: gcc
-        env: TOOLS="MSAN"
-    - compiler: gcc
-        env: TOOLS="UBSAN"
-#    - compiler: gcc
-#        env: TOOLS="ANALYZE"
-
 # GCC is expected to fail for now because it doesn't successfully link against
 # the Boost libraries (it gives messages like:
 #     `.text._ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED2Ev'
@@ -49,9 +39,17 @@ matrix:
 #     `.text._ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED2Ev[_ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED5Ev]'
 #     of /usr/lib/gcc/x86_64-linux-gnu/4.9/../../../../lib/libboost_log.a(default_sink.o)
 # )
-matrix:
   allow_failures:
     - compiler: gcc
+  exclude:
+    - compiler: gcc
+      env: TOOLS=ASAN
+    - compiler: gcc
+      env: TOOLS=MSAN
+    - compiler: gcc
+      env: TOOLS=UBSAN
+#    - compiler: gcc
+#      env: TOOLS="ANALYZE"
 
 install:
   - if [ "$CXX"   == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9"   ; fi
@@ -64,15 +62,15 @@ install:
 addons:
   apt:
     sources:
-      - kalakris-cmake
-      - llvm-toolchain-precise-3.6
-      - ubuntu-toolchain-r-test
+    - kalakris-cmake
+    - llvm-toolchain-precise-3.6
+    - ubuntu-toolchain-r-test
     packages:
-      - clang-3.6
-      - cmake
-      - gcc-4.9
-      - g++-4.9
-      - ninja-build
+    - clang-3.6
+    - cmake
+    - gcc-4.9
+    - g++-4.9
+    - ninja-build
 
 before_script:
   - sudo add-apt-repository ppa:afrank/boost -y
