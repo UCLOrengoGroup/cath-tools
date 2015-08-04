@@ -17,7 +17,29 @@ notifications:
       - i.sillitoe@ucl.ac.uk
       - t.lewis@ucl.ac.uk
 
-# GCC is commented out for now because it doesn't seem to successfully link against
+compiler:
+  - clang
+  - gcc
+
+env:
+ - TOOLS="OFF"
+ - TOOLS="ASAN"    # Address sanitizer
+ - TOOLS="MSAN"    # Memory sanitizer
+ - TOOLS="UBSAN"   # Undefined-behaviour sanitizer
+# - TOOLS="ANALYZE" # Use scan_build, which builds with Clang's static analyzer
+
+matrix:
+  exclude:
+    - compiler: gcc
+        env: TOOLS="ASAN"
+    - compiler: gcc
+        env: TOOLS="MSAN"
+    - compiler: gcc
+        env: TOOLS="UBSAN"
+#    - compiler: gcc
+#        env: TOOLS="ANALYZE"
+
+# GCC is expected to fail for now because it doesn't successfully link against
 # the Boost libraries (it gives messages like:
 #     `.text._ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED2Ev'
 #     referenced in section
@@ -27,13 +49,17 @@ notifications:
 #     `.text._ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED2Ev[_ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED5Ev]'
 #     of /usr/lib/gcc/x86_64-linux-gnu/4.9/../../../../lib/libboost_log.a(default_sink.o)
 # )
-compiler:
-  - clang
-#  - gcc
+matrix:
+  allow_failures:
+    - compiler: gcc
 
 install:
-  - if [ "$CXX" == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9"   ; fi
-  - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.6" CC="clang-3.6" ; fi
+  - if [ "$CXX"   == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9"   ; fi
+  - if [ "$CXX"   == "clang++" ]; then export CXX="clang++-3.6" CC="clang-3.6" ; fi
+  - if [ "$TOOLS" == "ASAN"    ]; then export CXX_FLAGS="${CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer"; fi
+  - if [ "$TOOLS" == "MSAN"    ]; then export CXX_FLAGS="${CXX_FLAGS} -fsanitize=memory  -fno-omit-frame-pointer"; fi
+  - if [ "$TOOLS" == "UBSAN"   ]; then export CXX_FLAGS="${CXX_FLAGS} -fsanitize=undefined                      "; fi
+#  - if [ "$TOOLS" == "ANALYZE" ]; then export WRAPPER="scan_build-3.6 " ; fi else export WRAPPER=" "; fi
 
 addons:
   apt:
@@ -56,4 +82,4 @@ before_script:
   - cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE ..
   - cd $TRAVIS_BUILD_DIR
 
-script: ninja -j 2 -k 0 -C release_build && release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
+script: ninja -j 2 -k 0 -C release_build && release_build/cath-superpose --version && release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
