@@ -46,6 +46,8 @@
 #include "structure/protein/residue.h"
 #include "structure/protein/protein.h"
 #include "structure/protein/protein_list.h"
+#include "structure/protein/sec_struc.h"
+#include "structure/protein/sec_struc_planar_angles.h"
 
 #include <fstream>
 #include <iostream>
@@ -923,4 +925,42 @@ ostream & cath::align::write_alignment_as_fasta_alignment(ostream            &ar
 	// Return a non-const reference to the ostream
 	// (to make this interface a bit like a standard insertion operator)
 	return arg_os;
+}
+
+/// \brief Output an alignment in FASTA format
+///
+/// \relates alignment
+ostream & cath::align::write_alignment_as_fasta_alignment(ostream         &arg_os,        ///< TODOCUMENT
+                                                          const alignment &arg_alignment, ///< TODOCUMENT
+                                                          const pdb_list  &arg_pdbs,      ///< TODOCUMENT
+                                                          const str_vec   &arg_names      ///< TODOCUMENT
+                                                          ) {
+	return write_alignment_as_fasta_alignment(
+		arg_os,
+		arg_alignment,
+		build_protein_list_of_pdb_list_and_names( arg_pdbs, arg_names )
+	);
+}
+
+/// \brief Output an alignment in FASTA format
+///
+/// \relates alignment
+string cath::align::alignment_as_fasta_string(const alignment    &arg_alignment, ///< TODOCUMENT
+                                              const protein_list &arg_proteins   ///< TODOCUMENT
+                                              ) {
+	ostringstream the_out_ss;
+	write_alignment_as_fasta_alignment( the_out_ss, arg_alignment, arg_proteins);
+	return the_out_ss.str();
+}
+
+/// \brief Output an alignment in FASTA format
+///
+/// \relates alignment
+string cath::align::alignment_as_fasta_string(const alignment &arg_alignment, ///< TODOCUMENT
+                                              const pdb_list  &arg_pdbs,      ///< TODOCUMENT
+                                              const str_vec   &arg_names      ///< TODOCUMENT
+                                              ) {
+	ostringstream the_out_ss;
+	write_alignment_as_fasta_alignment( the_out_ss, arg_alignment, arg_pdbs, arg_names);
+	return the_out_ss.str();
 }

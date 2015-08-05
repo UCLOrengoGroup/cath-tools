@@ -132,6 +132,18 @@ namespace cath {
 		std::ostream & write_alignment_as_fasta_alignment(std::ostream &,
 		                                                  const alignment &,
 		                                                  const protein_list &);
+
+		std::ostream & write_alignment_as_fasta_alignment(std::ostream &,
+		                                                  const alignment &,
+		                                                  const file::pdb_list &,
+		                                                  const str_vec &);
+
+		std::string alignment_as_fasta_string(const alignment &,
+		                                      const protein_list &);
+
+		std::string alignment_as_fasta_string(const alignment &,
+		                                      const file::pdb_list &,
+		                                      const str_vec &);
 	}
 }
 
