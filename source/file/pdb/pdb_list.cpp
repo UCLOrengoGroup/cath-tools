@@ -20,6 +20,9 @@
 
 #include "pdb_list.h"
 
+#include <boost/filesystem/path.hpp>
+
+#include "common/algorithm/transform_build.h"
 #include "common/c++14/cbegin_cend.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
@@ -34,6 +37,8 @@ using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
 using namespace std;
+
+using boost::filesystem::path;
 
 /// \brief TODOCUMENT
 void pdb_list::push_back(const pdb &arg_pdb ///< TODOCUMENT
@@ -84,6 +89,19 @@ pdb_list::const_iterator pdb_list::begin() const {
 /// \brief TODOCUMENT
 pdb_list::const_iterator pdb_list::end() const {
 	return common::cend( pdbs );
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates pdb_list
+pdb_list cath::file::read_pdb_files(const path_vec &arg_paths ///< TODOCUMENT
+                                    ) {
+	return make_pdb_list(
+		transform_build<pdb_vec>(
+			arg_paths,
+			[] (const path &x) { return read_pdb_file( x ); }
+		)
+	);
 }
 
 /// \brief TODOCUMENT

@@ -62,6 +62,8 @@ namespace cath {
 			const_iterator end() const;
 		};
 
+		pdb_list read_pdb_files(const path_vec &);
+
 		pdb_list make_pdb_list(const pdb_vec &);
 
 		pdb_list pdb_list_of_backbone_complete_subset_pdbs(const pdb_list &,
