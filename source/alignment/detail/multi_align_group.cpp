@@ -73,8 +73,8 @@ multi_align_group::multi_align_group(const size_t &arg_index ///< The index of t
 multi_align_group::multi_align_group(const alignment &arg_pair_alignment, ///< The pair-alignment joining the first and second entry (the indices of which are given below)
                                      const size_t    &arg_entry_a,        ///< The index of the first  entry in this multi_align_group
                                      const size_t    &arg_entry_b         ///< The index of the second entry in this multi_align_group
-                                     ) : the_alignment{ arg_pair_alignment },
-                                         entries      { arg_entry_a, arg_entry_b} {
+                                     ) : the_alignment{ arg_pair_alignment       },
+                                         entries      { arg_entry_a, arg_entry_b } {
 	check_alignment_is_a_pair( the_alignment );
 }
 
