@@ -173,7 +173,7 @@ BOOST_FIXTURE_TEST_SUITE(alignment_test_suite, cath::test::alignment_test_suite_
 
 /// \brief Just test a trivially true equality to ensure that all the fixture's setup works OK
 BOOST_AUTO_TEST_CASE(fixture_constructions_work) {
-	BOOST_CHECK_EQUAL(1, 1);
+	BOOST_CHECK( true );
 }
 
 /// \brief Check that the list constructor throws if passed lists of differing lengths

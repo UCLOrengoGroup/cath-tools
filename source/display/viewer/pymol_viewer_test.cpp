@@ -36,7 +36,7 @@ BOOST_FIXTURE_TEST_SUITE(pymol_viewer_test_suite, cath::test::pymol_viewer_test_
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(1, 1);
+	BOOST_CHECK( true );
 }
 BOOST_AUTO_TEST_SUITE_END()
 

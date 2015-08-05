@@ -36,7 +36,7 @@ BOOST_FIXTURE_TEST_SUITE(file_list_pdbs_acquirer_test_suite, cath::test::file_li
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(1, 1);
+	BOOST_CHECK( true );
 }
 BOOST_AUTO_TEST_SUITE_END()
 

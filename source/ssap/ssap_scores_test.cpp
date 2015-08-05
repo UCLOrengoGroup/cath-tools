@@ -36,7 +36,7 @@ BOOST_FIXTURE_TEST_SUITE(ssap_scores_test_suite, cath::test::ssap_scores_test_su
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(1, 1);
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

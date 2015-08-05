@@ -36,7 +36,7 @@ BOOST_FIXTURE_TEST_SUITE(protein_list_test_suite, cath::test::protein_list_test_
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(1, 1);
+	BOOST_CHECK( true );
 }
 BOOST_AUTO_TEST_SUITE_END()
 

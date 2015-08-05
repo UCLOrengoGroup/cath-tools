@@ -36,7 +36,7 @@ BOOST_FIXTURE_TEST_SUITE(pymol_view_superposition_outputter_test_suite, cath::te
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(1, 1);
+	BOOST_CHECK( true );
 }
 BOOST_AUTO_TEST_SUITE_END()
 

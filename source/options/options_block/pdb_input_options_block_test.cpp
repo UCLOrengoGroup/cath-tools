@@ -36,7 +36,7 @@ BOOST_FIXTURE_TEST_SUITE(pdb_input_options_block_test_suite, cath::test::pdb_inp
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(1, 1);
+	BOOST_CHECK( true );
 }
 BOOST_AUTO_TEST_SUITE_END()
 
