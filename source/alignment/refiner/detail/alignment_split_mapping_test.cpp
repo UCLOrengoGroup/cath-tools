@@ -22,7 +22,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "alignment/align_type_aliases.h"
-#include "alignment/alignment_refiner/detail/alignment_split_mapping.h"
+#include "alignment/refiner/detail/alignment_split_mapping.h"
 #include "common/boost_check_no_throw_diag.h"
 #include "common/size_t_literal.h"
 #include "exception/invalid_argument_exception.h"

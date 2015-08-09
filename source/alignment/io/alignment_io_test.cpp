@@ -20,7 +20,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/alignment_io.h"
+#include "alignment/io/alignment_io.h"
 #include "common/boost_addenda/test/boost_check_equal_ranges.h"
 #include "common/file/open_fstream.h"
 #include "common/pair_insertion_operator.h"

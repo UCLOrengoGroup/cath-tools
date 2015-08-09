@@ -21,11 +21,11 @@
 #include "ssap_aln_file_alignment_acquirer.h"
 
 #include "alignment/alignment.h"
-#include "alignment/alignment_io.h"
+#include "alignment/io/alignment_io.h"
 #include "alignment/residue_score/residue_scorer.h" // ***** TEMPORARY *****
 #include "common/clone/make_uptr_clone.h"
-#include "common/logger.h"
 #include "common/file/open_fstream.h"
+#include "common/logger.h"
 #include "exception/runtime_error_exception.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"

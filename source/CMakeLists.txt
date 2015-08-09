@@ -2,25 +2,6 @@ include_directories( ${Boost_INCLUDE_DIR} )
 
 ##### BEGINNING OF AUTO-GENERATED #####
 set(
-	NORMSOURCES_ALIGNMENT_ALIGNMENT_OUTPUTTER
-		alignment/alignment_outputter/horiz_align_outputter.cpp
-		alignment/alignment_outputter/html_align_outputter.cpp
-)
-
-set(
-	NORMSOURCES_ALIGNMENT_ALIGNMENT_REFINER_DETAIL
-		alignment/alignment_refiner/detail/alignment_split.cpp
-		alignment/alignment_refiner/detail/alignment_split_list.cpp
-		alignment/alignment_refiner/detail/alignment_split_mapping.cpp
-)
-
-set(
-	NORMSOURCES_ALIGNMENT_ALIGNMENT_REFINER
-		alignment/alignment_refiner/alignment_refiner.cpp
-		${NORMSOURCES_ALIGNMENT_ALIGNMENT_REFINER_DETAIL}
-)
-
-set(
 	NORMSOURCES_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY
 		alignment/common_atom_selection_policy/common_atom_select_ca_policy.cpp
 		alignment/common_atom_selection_policy/common_atom_select_cb_policy.cpp
@@ -90,6 +71,32 @@ set(
 )
 
 set(
+	NORMSOURCES_ALIGNMENT_IO_OUTPUTTER
+		alignment/io/outputter/horiz_align_outputter.cpp
+		alignment/io/outputter/html_align_outputter.cpp
+)
+
+set(
+	NORMSOURCES_ALIGNMENT_IO
+		alignment/io/align_scaffold.cpp
+		alignment/io/alignment_io.cpp
+		${NORMSOURCES_ALIGNMENT_IO_OUTPUTTER}
+)
+
+set(
+	NORMSOURCES_ALIGNMENT_REFINER_DETAIL
+		alignment/refiner/detail/alignment_split.cpp
+		alignment/refiner/detail/alignment_split_list.cpp
+		alignment/refiner/detail/alignment_split_mapping.cpp
+)
+
+set(
+	NORMSOURCES_ALIGNMENT_REFINER
+		alignment/refiner/alignment_refiner.cpp
+		${NORMSOURCES_ALIGNMENT_REFINER_DETAIL}
+)
+
+set(
 	NORMSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN_DETAIL
 		alignment/residue_name_align/detail/residue_name_align_map.cpp
 )
@@ -112,16 +119,15 @@ set(
 		alignment/alignment_action.cpp
 		alignment/alignment_context.cpp
 		alignment/alignment_coord_extractor.cpp
-		alignment/alignment_io.cpp
-		${NORMSOURCES_ALIGNMENT_ALIGNMENT_OUTPUTTER}
-		${NORMSOURCES_ALIGNMENT_ALIGNMENT_REFINER}
 		alignment/alignment_row.cpp
 		${NORMSOURCES_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY}
 		${NORMSOURCES_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY}
 		${NORMSOURCES_ALIGNMENT_DETAIL}
 		${NORMSOURCES_ALIGNMENT_DYN_PROG_ALIGN}
 		${NORMSOURCES_ALIGNMENT_GAP}
+		${NORMSOURCES_ALIGNMENT_IO}
 		alignment/pair_alignment.cpp
+		${NORMSOURCES_ALIGNMENT_REFINER}
 		${NORMSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN}
 		${NORMSOURCES_ALIGNMENT_RESIDUE_SCORE}
 )
@@ -902,25 +908,6 @@ set(
 )
 
 set(
-	TESTSOURCES_ALIGNMENT_ALIGNMENT_OUTPUTTER
-		alignment/alignment_outputter/horiz_align_outputter_test.cpp
-		alignment/alignment_outputter/html_align_outputter_test.cpp
-)
-
-set(
-	TESTSOURCES_ALIGNMENT_ALIGNMENT_REFINER_DETAIL
-		alignment/alignment_refiner/detail/alignment_split_list_test.cpp
-		alignment/alignment_refiner/detail/alignment_split_mapping_test.cpp
-		alignment/alignment_refiner/detail/alignment_split_test.cpp
-)
-
-set(
-	TESTSOURCES_ALIGNMENT_ALIGNMENT_REFINER
-		alignment/alignment_refiner/alignment_refiner_test.cpp
-		${TESTSOURCES_ALIGNMENT_ALIGNMENT_REFINER_DETAIL}
-)
-
-set(
 	TESTSOURCES_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY
 		alignment/common_residue_selection_policy/common_residue_selection_policy_test.cpp
 )
@@ -962,6 +949,32 @@ set(
 )
 
 set(
+	TESTSOURCES_ALIGNMENT_IO_OUTPUTTER
+		alignment/io/outputter/horiz_align_outputter_test.cpp
+		alignment/io/outputter/html_align_outputter_test.cpp
+)
+
+set(
+	TESTSOURCES_ALIGNMENT_IO
+		alignment/io/align_scaffold_test.cpp
+		alignment/io/alignment_io_test.cpp
+		${TESTSOURCES_ALIGNMENT_IO_OUTPUTTER}
+)
+
+set(
+	TESTSOURCES_ALIGNMENT_REFINER_DETAIL
+		alignment/refiner/detail/alignment_split_list_test.cpp
+		alignment/refiner/detail/alignment_split_mapping_test.cpp
+		alignment/refiner/detail/alignment_split_test.cpp
+)
+
+set(
+	TESTSOURCES_ALIGNMENT_REFINER
+		alignment/refiner/alignment_refiner_test.cpp
+		${TESTSOURCES_ALIGNMENT_REFINER_DETAIL}
+)
+
+set(
 	TESTSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN_DETAIL
 		alignment/residue_name_align/detail/residue_name_align_map_test.cpp
 )
@@ -983,14 +996,13 @@ set(
 		alignment/alignment_action_test.cpp
 		alignment/alignment_context_test.cpp
 		alignment/alignment_coord_extractor_test.cpp
-		alignment/alignment_io_test.cpp
-		${TESTSOURCES_ALIGNMENT_ALIGNMENT_OUTPUTTER}
-		${TESTSOURCES_ALIGNMENT_ALIGNMENT_REFINER}
 		alignment/alignment_row_test.cpp
 		alignment/alignment_test.cpp
 		${TESTSOURCES_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY}
 		${TESTSOURCES_ALIGNMENT_DYN_PROG_ALIGN}
 		${TESTSOURCES_ALIGNMENT_GAP}
+		${TESTSOURCES_ALIGNMENT_IO}
+		${TESTSOURCES_ALIGNMENT_REFINER}
 		${TESTSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN}
 		${TESTSOURCES_ALIGNMENT_RESIDUE_SCORE}
 )
@@ -1656,18 +1668,6 @@ add_executable(
 		${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}
 )
 
-if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
-	add_executable(
-		snap-judgement
-			${NORMSOURCES_EXECUTABLES_SNAP_JUDGEMENT}
-	)
-
-	add_executable(
-		check-pdb
-			${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
-	)
-endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
-
 #####################################################################
 
 target_link_libraries( build-test        normsources_cath_superpose normsources_test std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
@@ -1682,40 +1682,49 @@ add_dependencies( cath-score-align  built_bioplib_libraries )
 add_dependencies( cath-ssap         built_bioplib_libraries )
 add_dependencies( cath-superpose    built_bioplib_libraries )
 
-if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
-	target_link_libraries( snap-judgement    normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-	target_link_libraries( check-pdb                                                     std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-
-	add_dependencies( snap-judgement built_bioplib_libraries )
-	add_dependencies( check-pdb      built_bioplib_libraries )
-endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
-
 #####################################################################
 
+if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
+	
+	add_executable(
+		snap-judgement
+			${NORMSOURCES_EXECUTABLES_SNAP_JUDGEMENT}
+	)
 
+	add_executable(
+		check-pdb
+			${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
+	)
 
+	add_executable(
+		develtest
+			executables/develtest/develtest.cpp
+			
+			alignment/io/align_scaffold_test.cpp
+			alignment/alignment.cpp
+			alignment/alignment_row.cpp
+			alignment/io/align_scaffold.cpp
+			alignment/residue_score/alignment_residue_scores.cpp
+			exception/invalid_argument_exception.cpp
+			test/alignment_fixture.cpp
+			
+			# common/boost_addenda/range/adaptor/adaptor_test.cpp
+			# exception/invalid_argument_exception.cpp
+			
+			# common/file/open_fstream.cpp
+			# exception/invalid_argument_exception.cpp
+			# exception/runtime_error_exception.cpp
+			# structure/geometry/orientation_covering.cpp
+			# structure/geometry/orientation_covering_test.cpp
+			# structure/geometry/quat_rot.cpp
+	)
+	
+	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+	target_link_libraries( check-pdb                                 std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+	target_link_libraries( develtest                                                          pthread ${Boost_LIBRARIES}               )
+	
+	add_dependencies( snap-judgement built_bioplib_libraries )
+	add_dependencies( check-pdb      built_bioplib_libraries )
 
-
-
-
-
-
-# add_executable(
-# 	develtest
-# 		${NORMSOURCES_EXECUTABLES_DEVELTEST}
-# 
-# 		#common/boost_addenda/range/adaptor/adaptor_test.cpp
-# 		#exception/invalid_argument_exception.cpp
-# 
-# 		common/file/open_fstream.cpp
-# 		exception/invalid_argument_exception.cpp
-# 		exception/runtime_error_exception.cpp
-# 		structure/geometry/orientation_covering.cpp
-# 		structure/geometry/orientation_covering_test.cpp
-# 		structure/geometry/quat_rot.cpp
-# )
-#SET_TARGET_PROPERTIES( develtest PROPERTIES LINK_FLAGS "-Wl,--unresolved-symbols=ignore-in-object-files" )
-# target_link_libraries( develtest                pthread ${Boost_LIBRARIES} )
-
-
+endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 

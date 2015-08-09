@@ -20,12 +20,12 @@
 
 #include "fasta_ostream_alignment_outputter.h"
 
+#include "alignment/alignment_context.h"
+#include "alignment/io/alignment_io.h"
+#include "common/clone/make_uptr_clone.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"
-#include "alignment/alignment_context.h"
-#include "alignment/alignment_io.h"
-#include "common/clone/make_uptr_clone.h"
 #include "structure/protein/protein.h"
 #include "structure/protein/protein_list.h"
 #include "structure/protein/residue.h"

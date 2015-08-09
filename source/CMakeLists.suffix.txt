@@ -95,18 +95,6 @@ add_executable(
 		${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}
 )
 
-if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
-	add_executable(
-		snap-judgement
-			${NORMSOURCES_EXECUTABLES_SNAP_JUDGEMENT}
-	)
-
-	add_executable(
-		check-pdb
-			${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
-	)
-endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
-
 #####################################################################
 
 target_link_libraries( build-test        normsources_cath_superpose normsources_test std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
@@ -121,39 +109,48 @@ add_dependencies( cath-score-align  built_bioplib_libraries )
 add_dependencies( cath-ssap         built_bioplib_libraries )
 add_dependencies( cath-superpose    built_bioplib_libraries )
 
-if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
-	target_link_libraries( snap-judgement    normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-	target_link_libraries( check-pdb                                                     std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-
-	add_dependencies( snap-judgement built_bioplib_libraries )
-	add_dependencies( check-pdb      built_bioplib_libraries )
-endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
-
 #####################################################################
 
+if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
+	
+	add_executable(
+		snap-judgement
+			${NORMSOURCES_EXECUTABLES_SNAP_JUDGEMENT}
+	)
 
+	add_executable(
+		check-pdb
+			${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
+	)
 
+	add_executable(
+		develtest
+			executables/develtest/develtest.cpp
+			
+			alignment/io/align_scaffold_test.cpp
+			alignment/alignment.cpp
+			alignment/alignment_row.cpp
+			alignment/io/align_scaffold.cpp
+			alignment/residue_score/alignment_residue_scores.cpp
+			exception/invalid_argument_exception.cpp
+			test/alignment_fixture.cpp
+			
+			# common/boost_addenda/range/adaptor/adaptor_test.cpp
+			# exception/invalid_argument_exception.cpp
+			
+			# common/file/open_fstream.cpp
+			# exception/invalid_argument_exception.cpp
+			# exception/runtime_error_exception.cpp
+			# structure/geometry/orientation_covering.cpp
+			# structure/geometry/orientation_covering_test.cpp
+			# structure/geometry/quat_rot.cpp
+	)
+	
+	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+	target_link_libraries( check-pdb                                 std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+	target_link_libraries( develtest                                                          pthread ${Boost_LIBRARIES}               )
+	
+	add_dependencies( snap-judgement built_bioplib_libraries )
+	add_dependencies( check-pdb      built_bioplib_libraries )
 
-
-
-
-
-
-# add_executable(
-# 	develtest
-# 		${NORMSOURCES_EXECUTABLES_DEVELTEST}
-# 
-# 		#common/boost_addenda/range/adaptor/adaptor_test.cpp
-# 		#exception/invalid_argument_exception.cpp
-# 
-# 		common/file/open_fstream.cpp
-# 		exception/invalid_argument_exception.cpp
-# 		exception/runtime_error_exception.cpp
-# 		structure/geometry/orientation_covering.cpp
-# 		structure/geometry/orientation_covering_test.cpp
-# 		structure/geometry/quat_rot.cpp
-# )
-#SET_TARGET_PROPERTIES( develtest PROPERTIES LINK_FLAGS "-Wl,--unresolved-symbols=ignore-in-object-files" )
-# target_link_libraries( develtest                pthread ${Boost_LIBRARIES} )
-
-
+endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )

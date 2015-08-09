@@ -1,5 +1,5 @@
 /// \file
-/// \brief The alignment_io class header
+/// \brief The alignment io class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP

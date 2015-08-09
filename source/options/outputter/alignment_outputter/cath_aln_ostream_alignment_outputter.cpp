@@ -20,14 +20,14 @@
 
 #include "cath_aln_ostream_alignment_outputter.h"
 
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
 #include "alignment/alignment_context.h"
-#include "alignment/alignment_io.h"
+#include "alignment/io/alignment_io.h"
 #include "alignment/pair_alignment.h"
 #include "alignment/residue_score/residue_scorer.h"
 #include "common/clone/make_uptr_clone.h"
+#include "file/pdb/pdb.h"
+#include "file/pdb/pdb_atom.h"
+#include "file/pdb/pdb_residue.h"
 #include "score/aligned_pair_score_list/aligned_pair_score_list_factory.h"
 #include "score/aligned_pair_score_list/aligned_pair_score_value_list.h"
 #include "score/aligned_pair_score_list/score_value_list_outputter/score_value_list_json_outputter.h"

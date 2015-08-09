@@ -26,12 +26,12 @@
 #include <boost/test/unit_test.hpp>
 
 #include "alignment/alignment.h"
-#include "alignment/alignment_io.h"
 #include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.h"
 #include "alignment/common_atom_selection_policy/common_atom_select_cb_policy.h"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.h"
 #include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.h"
+#include "alignment/io/alignment_io.h"
 #include "alignment/residue_score/residue_scorer.h"
 #include "common/size_t_literal.h"
 #include "common/test_tools.h"
@@ -42,8 +42,8 @@
 #include "options/options_block/data_dirs_options_block.h"
 #include "score/aligned_pair_score/drmsd_score.h"
 #include "score/aligned_pair_score/gsas_score.h"
-#include "score/aligned_pair_score/length_score.h"
 #include "score/aligned_pair_score/lddt_score.h"
+#include "score/aligned_pair_score/length_score.h"
 #include "score/aligned_pair_score/mi_score.h"
 #include "score/aligned_pair_score/overlap_score.h"
 #include "score/aligned_pair_score/rmsd_score.h"
@@ -56,7 +56,6 @@
 #include "score/aligned_pair_score/tm_score.h"
 #include "score/aligned_pair_score_list/aligned_pair_score_list.h"
 #include "score/aligned_pair_score_list/aligned_pair_score_list_factory.h"
-//#include "score/length_getter/geometric_mean_length_getter.h" // ***** TEMPORARY? *****
 #include "score/length_getter/length_of_first_getter.h"
 #include "score/length_getter/length_of_longer_getter.h"
 #include "score/length_getter/length_of_second_getter.h"
@@ -71,8 +70,8 @@
 #include "structure/protein/residue.h"
 #include "structure/protein/sec_struc.h"
 #include "structure/protein/sec_struc_planar_angles.h"
-#include "test/log_to_ostream_guard.h"
 #include "test/global_test_constants.h"
+#include "test/log_to_ostream_guard.h"
 
 #include <iterator>
 #include <iostream>

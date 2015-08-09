@@ -25,14 +25,14 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "alignment/alignment.h"
-#include "alignment/alignment_io.h"
-#include "alignment/alignment_refiner/alignment_refiner.h"
 #include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.h"
 #include "alignment/dyn_prog_align/detail/matrix_plotter/matrix_plot.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.h"
-#include "alignment/gap/gap_penalty.h"
 #include "alignment/dyn_prog_align/std_dyn_prog_aligner.h"
+#include "alignment/gap/gap_penalty.h"
+#include "alignment/io/alignment_io.h"
 #include "alignment/pair_alignment.h"
+#include "alignment/refiner/alignment_refiner.h"
 #include "common/difference.h"
 #include "common/file/simple_file_read_write.h"
 #include "ssap/context_res.h"

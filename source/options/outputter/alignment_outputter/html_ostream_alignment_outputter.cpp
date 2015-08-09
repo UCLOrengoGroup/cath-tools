@@ -22,8 +22,8 @@
 #include "html_ostream_alignment_outputter.h"
 
 #include "alignment/alignment_context.h"
-#include "alignment/alignment_io.h"
-#include "alignment/alignment_outputter/html_align_outputter.h"
+#include "alignment/io/alignment_io.h"
+#include "alignment/io/outputter/html_align_outputter.h"
 #include "common/clone/make_uptr_clone.h"
 #include "display/display_colour/display_colour.h"
 #include "display/display_spec/display_spec.h"

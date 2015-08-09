@@ -21,7 +21,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 // #include "alignment/alignment.h"
-// #include "alignment/alignment_io.h"
+// #include "alignment/io/alignment_io.h"
 // #include "file/pdb/pdb.h"
 // #include "file/pdb/pdb_atom.h"
 // #include "file/pdb/pdb_list.h"

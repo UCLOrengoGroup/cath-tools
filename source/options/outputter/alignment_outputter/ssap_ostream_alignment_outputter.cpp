@@ -20,10 +20,10 @@
 
 #include "ssap_ostream_alignment_outputter.h"
 
-#include "common/clone/make_uptr_clone.h"
 #include "alignment/alignment_context.h"
-#include "alignment/alignment_io.h"
+#include "alignment/io/alignment_io.h"
 #include "alignment/pair_alignment.h"
+#include "common/clone/make_uptr_clone.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"

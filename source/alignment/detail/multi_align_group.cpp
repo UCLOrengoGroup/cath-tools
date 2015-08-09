@@ -27,8 +27,8 @@
 #include <boost/range/algorithm_ext/push_back.hpp>
 
 #include "alignment/alignment_action.h"
-#include "alignment/alignment_io.h"
-#include "alignment/alignment_outputter/horiz_align_outputter.h"
+#include "alignment/io/alignment_io.h"
+#include "alignment/io/outputter/horiz_align_outputter.h"
 #include "alignment/pair_alignment.h"
 #include "common/c++14/cbegin_cend.h"
 #include "exception/invalid_argument_exception.h"

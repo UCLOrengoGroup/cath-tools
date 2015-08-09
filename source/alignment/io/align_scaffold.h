@@ -1,5 +1,5 @@
 /// \file
-/// \brief The alignment_refiner test suite
+/// \brief The alignment_scaffold header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,30 +18,31 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/auto_unit_test.hpp>
+#ifndef ALIGNMENT_SCAFFOLD_H_INCLUDED
+#define ALIGNMENT_SCAFFOLD_H_INCLUDED
 
-#include "alignment/alignment_refiner/alignment_refiner.h"
+#include "alignment/align_type_aliases.h"
+#include "common/type_aliases.h"
 
-using namespace cath::align;
+#include <iosfwd>
+
+namespace cath { namespace align { class alignment; } }
 
 namespace cath {
-	namespace test {
+	namespace align {
+		namespace detail {
 
-		/// \brief The alignment_refiner_test_suite_fixture to assist in testing alignment_refiner
-		struct alignment_refiner_test_suite_fixture {
-		protected:
-			~alignment_refiner_test_suite_fixture() noexcept = default;
-		};
+			opt_aln_posn_vec alignment_entry_of_scaffold_string(const std::string &);
+			std::string scaffold_line_of_alignment_entry(const alignment &,
+			                                             const size_t &);
 
+		}
+
+		alignment alignment_of_scaffold_lines(const str_vec &);
+		alignment alignment_of_scaffold(const std::string &);
+		str_vec scaffold_lines_of_alignment(const alignment &);
+		std::string scaffold_of_alignment(const alignment &);
 	}
 }
 
-/// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(alignment_refiner_test_suite, cath::test::alignment_refiner_test_suite_fixture)
-
-/// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(basic){
-	BOOST_CHECK( true );
-}
-
-BOOST_AUTO_TEST_SUITE_END()
+#endif

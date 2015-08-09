@@ -24,8 +24,8 @@
 
 #include "alignment/alignment.h"
 #include "alignment/alignment_action.h"
-#include "alignment/alignment_io.h"
-#include "alignment/alignment_outputter/horiz_align_outputter.h" /// *** TEMPORARY? ***
+#include "alignment/io/alignment_io.h"
+#include "alignment/io/outputter/horiz_align_outputter.h" /// *** TEMPORARY? ***
 #include "alignment/residue_score/residue_scorer.h"
 #include "common/boost_addenda/range/front.h"
 #include "common/clone/make_uptr_clone.h"
