@@ -57,12 +57,11 @@ BOOST_FIXTURE_TEST_SUITE(ssap_scores_file_alignment_acquirer_test_suite, cath::t
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	const path gluing_dir = "build-test-data/ssap_scores_alignment_gluing";
-	const ssap_scores_file_alignment_acquirer the_acquirer( gluing_dir / "1o7iB00_3uljB00_4gs3A00.ssap_scores" );
+	const ssap_scores_file_alignment_acquirer the_acquirer( TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR() / "1o7iB00_3uljB00_4gs3A00.ssap_scores" );
 	const pdb_list the_pdbs = read_pdb_files( {
-		gluing_dir / "1o7iB00",
-		gluing_dir / "3uljB00",
-		gluing_dir / "4gs3A00",
+		TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR() / "1o7iB00",
+		TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR() / "3uljB00",
+		TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR() / "4gs3A00",
 	} );
 
 	// Use a lambda to enclose the log_to_ostream_guard whilst allowing the result to be passed back out

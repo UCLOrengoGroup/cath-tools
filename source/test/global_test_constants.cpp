@@ -123,6 +123,12 @@ const path & global_test_constants::TEST_SSAP_REGRESSION_DATA_DIR() {
 }
 
 /// \brief TODOCUMENT
+const path & global_test_constants::TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR() {
+	static const path test_ssap_alignment_gluing_data_dir   ( TEST_SOURCE_DATA_DIR() / "ssap_scores_alignment_gluing" );
+	return test_ssap_alignment_gluing_data_dir;
+}
+
+/// \brief TODOCUMENT
 const path & global_test_constants::TEST_OUTPUT_DIRECTORY() {
 	static const path test_output_directory( temp_directory_path() );
 	return test_output_directory;
