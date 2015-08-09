@@ -25,9 +25,8 @@
 #include "exception/invalid_argument_exception.h"
 #include "test/alignment_fixture.h"
 
-using cath::common::invalid_argument_exception;
-
 using namespace cath::align;
+using namespace cath::common;
 
 namespace cath {
 	namespace test {
