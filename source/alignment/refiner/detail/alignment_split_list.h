@@ -21,7 +21,7 @@
 #ifndef ALIGNMENT_SPLIT_LIST_H_INCLUDED
 #define ALIGNMENT_SPLIT_LIST_H_INCLUDED
 
-#include "alignment/alignment_refiner/detail/alignment_split.h"
+#include "alignment/refiner/detail/alignment_split.h"
 
 #include <set>
 

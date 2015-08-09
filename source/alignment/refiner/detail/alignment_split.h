@@ -23,7 +23,7 @@
 
 #include <boost/operators.hpp>
 
-#include "alignment/alignment_refiner/detail/alignment_split_half.h"
+#include "alignment/refiner/detail/alignment_split_half.h"
 #include "common/type_aliases.h"
 
 #include <cstddef>

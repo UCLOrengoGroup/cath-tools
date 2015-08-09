@@ -25,7 +25,7 @@
 #include <boost/range/numeric.hpp>
 
 #include "alignment/alignment_context.h"
-#include "alignment/alignment_outputter/horiz_align_outputter.h"
+#include "alignment/io/outputter/horiz_align_outputter.h"
 #include "common/clone/make_uptr_clone.h"
 #include "display/display_colour/display_colour.h"
 #include "display/display_colourer/display_colour_spec.h"

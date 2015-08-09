@@ -22,8 +22,8 @@
 #define MULTI_ALIGN_BUILDER_H_INCLUDED
 
 #include "alignment/align_type_aliases.h"
-#include "alignment/alignment_refiner/alignment_refiner.h"
 #include "alignment/detail/multi_align_group.h"
+#include "alignment/refiner/alignment_refiner.h"
 
 #include <vector>
 

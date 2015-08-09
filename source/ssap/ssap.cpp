@@ -118,14 +118,14 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/stable_sort.hpp>
 
-#include "alignment/alignment_io.h"
 #include "alignment/alignment_coord_extractor.h"
 #include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/entry_querier_dyn_prog_score_source.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/mask_dyn_prog_score_source.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/old_matrix_dyn_prog_score_source.h"
-#include "alignment/gap/gap_penalty.h"
 #include "alignment/dyn_prog_align/ssap_code_dyn_prog_aligner.h"
+#include "alignment/gap/gap_penalty.h"
+#include "alignment/io/alignment_io.h"
 #include "alignment/pair_alignment.h"
 #include "common/difference.h"
 #include "common/file/open_fstream.h"
@@ -141,18 +141,18 @@
 #include "ssap/selected_pair.h"
 #include "ssap/ssap_scores.h"
 #include "ssap/windowed_matrix.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/coord_list.h"
-#include "superposition/superposition.h"
-#include "superposition/superposition_io.h"
 #include "structure/entry_querier/residue_querier.h"
 #include "structure/entry_querier/sec_struc_querier.h"
+#include "structure/geometry/coord.h"
+#include "structure/geometry/coord_list.h"
 #include "structure/protein/protein.h"
 #include "structure/protein/protein_io.h"
 #include "structure/protein/protein_source_file_set/protein_source_file_set.h"
 #include "structure/protein/residue.h"
 #include "structure/protein/sec_struc.h"
 #include "structure/protein/sec_struc_planar_angles.h"
+#include "superposition/superposition.h"
+#include "superposition/superposition_io.h"
 
 #include <algorithm>
 #include <cassert>

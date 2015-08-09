@@ -22,7 +22,7 @@
 #define MULTI_ALIGN_GROUP_H_INCLUDED
 
 #include "alignment/alignment.h"
-#include "alignment/alignment_refiner/alignment_refiner.h"
+#include "alignment/refiner/alignment_refiner.h"
 
 namespace cath { namespace file { class pdb_list; } }
 

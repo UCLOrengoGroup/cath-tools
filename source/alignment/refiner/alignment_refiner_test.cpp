@@ -1,5 +1,5 @@
 /// \file
-/// \brief The alignment_split test suite
+/// \brief The alignment_refiner test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -20,32 +20,28 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/alignment_refiner/detail/alignment_split.h"
+#include "alignment/refiner/alignment_refiner.h"
 
-#include "test/global_test_constants.h"
-
-using namespace cath;
-using namespace cath::align::detail;
+using namespace cath::align;
 
 namespace cath {
 	namespace test {
 
-		/// \brief The alignment_split_test_suite_fixture to assist in testing alignment_split
-		struct alignment_split_test_suite_fixture : protected global_test_constants {
+		/// \brief The alignment_refiner_test_suite_fixture to assist in testing alignment_refiner
+		struct alignment_refiner_test_suite_fixture {
 		protected:
-			~alignment_split_test_suite_fixture() noexcept = default;
+			~alignment_refiner_test_suite_fixture() noexcept = default;
 		};
 
 	}
 }
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(alignment_split_test_suite, cath::test::alignment_split_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(alignment_refiner_test_suite, cath::test::alignment_refiner_test_suite_fixture)
 
 /// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(basic) {
+BOOST_AUTO_TEST_CASE(basic){
 	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-

@@ -43,9 +43,9 @@
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_list.h"
 #include "file/pdb/pdb_residue.h"
-#include "structure/protein/residue.h"
 #include "structure/protein/protein.h"
 #include "structure/protein/protein_list.h"
+#include "structure/protein/residue.h"
 #include "structure/protein/sec_struc.h"
 #include "structure/protein/sec_struc_planar_angles.h"
 

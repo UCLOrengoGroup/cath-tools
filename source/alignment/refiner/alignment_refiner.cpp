@@ -25,16 +25,16 @@
 #include <boost/type_traits/is_same.hpp>
 
 #include "alignment/alignment.h"
-#include "alignment/alignment_io.h"
-#include "alignment/alignment_refiner/detail/alignment_split.h"
-#include "alignment/alignment_refiner/detail/alignment_split_list.h"
-#include "alignment/alignment_refiner/detail/alignment_split_mapping.h"
-#include "alignment/dyn_prog_align/detail/matrix_plotter/matrix_plot.h"
 #include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.h"
+#include "alignment/dyn_prog_align/detail/matrix_plotter/matrix_plot.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.h"
 #include "alignment/dyn_prog_align/ssap_code_dyn_prog_aligner.h" // ***** TEMPORARY *****
 #include "alignment/dyn_prog_align/std_dyn_prog_aligner.h"
+#include "alignment/io/alignment_io.h"
 #include "alignment/pair_alignment.h"
+#include "alignment/refiner/detail/alignment_split.h"
+#include "alignment/refiner/detail/alignment_split_list.h"
+#include "alignment/refiner/detail/alignment_split_mapping.h"
 #include "alignment/residue_score/residue_scorer.h"
 #include "common/file/open_fstream.h"
 #include "exception/not_implemented_exception.h"

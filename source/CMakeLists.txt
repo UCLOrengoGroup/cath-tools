@@ -2,25 +2,6 @@ include_directories( ${Boost_INCLUDE_DIR} )
 
 ##### BEGINNING OF AUTO-GENERATED #####
 set(
-	NORMSOURCES_ALIGNMENT_ALIGNMENT_OUTPUTTER
-		alignment/alignment_outputter/horiz_align_outputter.cpp
-		alignment/alignment_outputter/html_align_outputter.cpp
-)
-
-set(
-	NORMSOURCES_ALIGNMENT_ALIGNMENT_REFINER_DETAIL
-		alignment/alignment_refiner/detail/alignment_split.cpp
-		alignment/alignment_refiner/detail/alignment_split_list.cpp
-		alignment/alignment_refiner/detail/alignment_split_mapping.cpp
-)
-
-set(
-	NORMSOURCES_ALIGNMENT_ALIGNMENT_REFINER
-		alignment/alignment_refiner/alignment_refiner.cpp
-		${NORMSOURCES_ALIGNMENT_ALIGNMENT_REFINER_DETAIL}
-)
-
-set(
 	NORMSOURCES_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY
 		alignment/common_atom_selection_policy/common_atom_select_ca_policy.cpp
 		alignment/common_atom_selection_policy/common_atom_select_cb_policy.cpp
@@ -90,6 +71,31 @@ set(
 )
 
 set(
+	NORMSOURCES_ALIGNMENT_IO_OUTPUTTER
+		alignment/io/outputter/horiz_align_outputter.cpp
+		alignment/io/outputter/html_align_outputter.cpp
+)
+
+set(
+	NORMSOURCES_ALIGNMENT_IO
+		alignment/io/alignment_io.cpp
+		${NORMSOURCES_ALIGNMENT_IO_OUTPUTTER}
+)
+
+set(
+	NORMSOURCES_ALIGNMENT_REFINER_DETAIL
+		alignment/refiner/detail/alignment_split.cpp
+		alignment/refiner/detail/alignment_split_list.cpp
+		alignment/refiner/detail/alignment_split_mapping.cpp
+)
+
+set(
+	NORMSOURCES_ALIGNMENT_REFINER
+		alignment/refiner/alignment_refiner.cpp
+		${NORMSOURCES_ALIGNMENT_REFINER_DETAIL}
+)
+
+set(
 	NORMSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN_DETAIL
 		alignment/residue_name_align/detail/residue_name_align_map.cpp
 )
@@ -112,16 +118,15 @@ set(
 		alignment/alignment_action.cpp
 		alignment/alignment_context.cpp
 		alignment/alignment_coord_extractor.cpp
-		alignment/alignment_io.cpp
-		${NORMSOURCES_ALIGNMENT_ALIGNMENT_OUTPUTTER}
-		${NORMSOURCES_ALIGNMENT_ALIGNMENT_REFINER}
 		alignment/alignment_row.cpp
 		${NORMSOURCES_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY}
 		${NORMSOURCES_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY}
 		${NORMSOURCES_ALIGNMENT_DETAIL}
 		${NORMSOURCES_ALIGNMENT_DYN_PROG_ALIGN}
 		${NORMSOURCES_ALIGNMENT_GAP}
+		${NORMSOURCES_ALIGNMENT_IO}
 		alignment/pair_alignment.cpp
+		${NORMSOURCES_ALIGNMENT_REFINER}
 		${NORMSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN}
 		${NORMSOURCES_ALIGNMENT_RESIDUE_SCORE}
 )
@@ -902,25 +907,6 @@ set(
 )
 
 set(
-	TESTSOURCES_ALIGNMENT_ALIGNMENT_OUTPUTTER
-		alignment/alignment_outputter/horiz_align_outputter_test.cpp
-		alignment/alignment_outputter/html_align_outputter_test.cpp
-)
-
-set(
-	TESTSOURCES_ALIGNMENT_ALIGNMENT_REFINER_DETAIL
-		alignment/alignment_refiner/detail/alignment_split_list_test.cpp
-		alignment/alignment_refiner/detail/alignment_split_mapping_test.cpp
-		alignment/alignment_refiner/detail/alignment_split_test.cpp
-)
-
-set(
-	TESTSOURCES_ALIGNMENT_ALIGNMENT_REFINER
-		alignment/alignment_refiner/alignment_refiner_test.cpp
-		${TESTSOURCES_ALIGNMENT_ALIGNMENT_REFINER_DETAIL}
-)
-
-set(
 	TESTSOURCES_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY
 		alignment/common_residue_selection_policy/common_residue_selection_policy_test.cpp
 )
@@ -962,6 +948,31 @@ set(
 )
 
 set(
+	TESTSOURCES_ALIGNMENT_IO_OUTPUTTER
+		alignment/io/outputter/horiz_align_outputter_test.cpp
+		alignment/io/outputter/html_align_outputter_test.cpp
+)
+
+set(
+	TESTSOURCES_ALIGNMENT_IO
+		alignment/io/alignment_io_test.cpp
+		${TESTSOURCES_ALIGNMENT_IO_OUTPUTTER}
+)
+
+set(
+	TESTSOURCES_ALIGNMENT_REFINER_DETAIL
+		alignment/refiner/detail/alignment_split_list_test.cpp
+		alignment/refiner/detail/alignment_split_mapping_test.cpp
+		alignment/refiner/detail/alignment_split_test.cpp
+)
+
+set(
+	TESTSOURCES_ALIGNMENT_REFINER
+		alignment/refiner/alignment_refiner_test.cpp
+		${TESTSOURCES_ALIGNMENT_REFINER_DETAIL}
+)
+
+set(
 	TESTSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN_DETAIL
 		alignment/residue_name_align/detail/residue_name_align_map_test.cpp
 )
@@ -983,14 +994,13 @@ set(
 		alignment/alignment_action_test.cpp
 		alignment/alignment_context_test.cpp
 		alignment/alignment_coord_extractor_test.cpp
-		alignment/alignment_io_test.cpp
-		${TESTSOURCES_ALIGNMENT_ALIGNMENT_OUTPUTTER}
-		${TESTSOURCES_ALIGNMENT_ALIGNMENT_REFINER}
 		alignment/alignment_row_test.cpp
 		alignment/alignment_test.cpp
 		${TESTSOURCES_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY}
 		${TESTSOURCES_ALIGNMENT_DYN_PROG_ALIGN}
 		${TESTSOURCES_ALIGNMENT_GAP}
+		${TESTSOURCES_ALIGNMENT_IO}
+		${TESTSOURCES_ALIGNMENT_REFINER}
 		${TESTSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN}
 		${TESTSOURCES_ALIGNMENT_RESIDUE_SCORE}
 )

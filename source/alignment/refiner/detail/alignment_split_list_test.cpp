@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/alignment_refiner/detail/alignment_split_list.h"
+#include "alignment/refiner/detail/alignment_split_list.h"
 
 #include "test/global_test_constants.h"
 

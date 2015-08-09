@@ -21,9 +21,8 @@
 #ifndef ALIGNMENT_SPLIT_MAPPING_H_INCLUDED
 #define ALIGNMENT_SPLIT_MAPPING_H_INCLUDED
 
-
 #include "alignment/alignment.h"
-#include "alignment/alignment_refiner/detail/alignment_split_half.h"
+#include "alignment/refiner/detail/alignment_split_half.h"
 #include "exception/invalid_argument_exception.h"
 
 #include <iostream>

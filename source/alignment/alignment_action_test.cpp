@@ -23,7 +23,7 @@
 #include "alignment/alignment_action.h"
 
 #include "alignment/alignment.h"
-#include "alignment/alignment_io.h"
+#include "alignment/io/alignment_io.h"
 #include "common/test_predicate/istream_and_file_equal.h"
 #include "structure/protein/protein.h"
 #include "structure/protein/protein_io.h"

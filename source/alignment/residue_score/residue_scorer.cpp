@@ -24,8 +24,7 @@
 #include <boost/range/algorithm/set_algorithm.hpp>
 
 #include "alignment/alignment.h"
-#include "alignment/alignment_io.h"
-//#include "alignment/alignment_outputter/horiz_align_outputter.h" // ***** TEMPORARY *****
+#include "alignment/io/alignment_io.h"
 #include "alignment/residue_score/alignment_residue_scores.h"
 #include "ssap/context_res.h"
 #include "ssap/ssap.h"
