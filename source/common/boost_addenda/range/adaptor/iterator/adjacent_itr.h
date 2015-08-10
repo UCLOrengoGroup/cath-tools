@@ -96,6 +96,7 @@ namespace cath {
 			adjacent_itr(const base_iterator_type &,
 			             const base_iterator_type &);
 			adjacent_itr(RNG &);
+			adjacent_itr() = default;
 		};
 
 		template <class RNG>
@@ -108,7 +109,7 @@ namespace cath {
 		template <class RNG>
 		void adjacent_itr<RNG>::advance_to_end_if_one_off() {
 			if ( ! is_at_end() ) {
-				if ( next( this->base() ) == end_itr ) {
+				if ( std::next( this->base() ) == end_itr ) {
 					++( *this );
 				}
 			}
