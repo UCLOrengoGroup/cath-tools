@@ -114,6 +114,11 @@ set(
 )
 
 set(
+	NORMSOURCES_ALIGNMENT_TOOLS
+		alignment/tools/alignment_breaks.cpp
+)
+
+set(
 	NORMSOURCES_ALIGNMENT
 		alignment/alignment.cpp
 		alignment/alignment_action.cpp
@@ -130,6 +135,7 @@ set(
 		${NORMSOURCES_ALIGNMENT_REFINER}
 		${NORMSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN}
 		${NORMSOURCES_ALIGNMENT_RESIDUE_SCORE}
+		${NORMSOURCES_ALIGNMENT_TOOLS}
 )
 
 set(
@@ -992,6 +998,11 @@ set(
 )
 
 set(
+	TESTSOURCES_ALIGNMENT_TOOLS
+		alignment/tools/alignment_breaks_test.cpp
+)
+
+set(
 	TESTSOURCES_ALIGNMENT
 		alignment/alignment_action_test.cpp
 		alignment/alignment_context_test.cpp
@@ -1005,6 +1016,7 @@ set(
 		${TESTSOURCES_ALIGNMENT_REFINER}
 		${TESTSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN}
 		${TESTSOURCES_ALIGNMENT_RESIDUE_SCORE}
+		${TESTSOURCES_ALIGNMENT_TOOLS}
 )
 
 set(
@@ -1695,18 +1707,28 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 		check-pdb
 			${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
 	)
+	
+	set(
+		DEVELTEST_ALIGNMENT_SOURCES
+			alignment/alignment.cpp
+			alignment/alignment_row.cpp
+			alignment/residue_score/alignment_residue_scores.cpp
+			exception/invalid_argument_exception.cpp
+)
 
 	add_executable(
 		develtest
 			executables/develtest/develtest.cpp
 			
-			alignment/io/align_scaffold_test.cpp
-			alignment/alignment.cpp
-			alignment/alignment_row.cpp
+			alignment/tools/alignment_breaks_test.cpp
+			alignment/tools/alignment_breaks.cpp
 			alignment/io/align_scaffold.cpp
-			alignment/residue_score/alignment_residue_scores.cpp
-			exception/invalid_argument_exception.cpp
-			test/alignment_fixture.cpp
+			${DEVELTEST_ALIGNMENT_SOURCES}
+			
+			# alignment/io/align_scaffold_test.cpp
+			alignment/io/align_scaffold.cpp
+			# test/alignment_fixture.cpp
+			# ${DEVELTEST_ALIGNMENT_SOURCES}
 			
 			# common/boost_addenda/range/adaptor/adaptor_test.cpp
 			# exception/invalid_argument_exception.cpp
