@@ -21,17 +21,35 @@
 #ifndef ALIGNMENT_BREAKS_H_INCLUDED
 #define ALIGNMENT_BREAKS_H_INCLUDED
 
-//#include "alignment/align_type_aliases.h"
 #include "common/type_aliases.h"
-
-//#include <iosfwd>
 
 namespace cath { namespace align { class alignment; } }
 
 namespace cath {
 	namespace align {
+		namespace detail {
+			/// \brief TODOCUMENT
+			enum class break_pair_validity {
+				GOOD,
+				BAD
+			};
+
+			/// \brief TODOCUMENT
+			enum class break_pair_future {
+				NEVER_AGAIN,
+				MAYBE_LATER
+			};
+
+			/// \brief TODOCUMENT
+			using break_pair_validity_and_future = std::pair<break_pair_validity, break_pair_future>;
+
+			break_pair_validity_and_future check_pair(const alignment &,
+			                                          const size_t &,
+			                                          const size_t &);
+		}
 
 		size_vec get_alignment_breaks(const alignment &);
+		size_size_pair_vec get_alignment_break_pairs(const alignment &);
 
 	}
 }
