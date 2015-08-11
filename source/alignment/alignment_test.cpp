@@ -334,6 +334,9 @@ BOOST_AUTO_TEST_CASE(has_positions_of_entry_in_index_range_works) {
 		"XX  XX"
 	} );
 
+	BOOST_CHECK_THROW( has_positions_of_entry_in_index_range( the_aln, 0, 1, 0 ), invalid_argument_exception );
+	BOOST_CHECK_THROW( has_positions_of_entry_in_index_range( the_aln, 1, 5, 4 ), invalid_argument_exception );
+
 	BOOST_CHECK_EQUAL( has_positions_of_entry_in_index_range( the_aln, 0, 0, 0 ), false );
 	BOOST_CHECK_EQUAL( has_positions_of_entry_in_index_range( the_aln, 1, 1, 1 ), false );
 
@@ -350,6 +353,9 @@ BOOST_AUTO_TEST_CASE(entries_present_in_index_range_works) {
 		"  XXXX",
 		"XX  XX"
 	} );
+
+	BOOST_CHECK_THROW( entries_present_in_index_range( the_aln, 1, 0 ), invalid_argument_exception );
+	BOOST_CHECK_THROW( entries_present_in_index_range( the_aln, 5, 4 ), invalid_argument_exception );
 
 	BOOST_CHECK_EQUAL_RANGES( entries_present_in_index_range( the_aln, 0, 0 ), size_vec{      } );
 	BOOST_CHECK_EQUAL_RANGES( entries_present_in_index_range( the_aln, 0, 2 ), size_vec{    1 } );
