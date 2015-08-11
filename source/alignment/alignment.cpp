@@ -21,16 +21,20 @@
 #include "alignment.h"
 
 #include <boost/algorithm/cxx11/all_of.hpp>
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 #include <boost/range/algorithm/max_element.hpp>
+#include <boost/range/irange.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 #include <boost/throw_exception.hpp>
 
 #include "alignment/alignment_row.h"
+#include "common/algorithm/copy_build.h"
 #include "common/size_t_literal.h"
 #include "common/temp_check_offset_1.h"
 #include "exception/invalid_argument_exception.h"
@@ -46,8 +50,10 @@ using namespace cath::align;
 using namespace cath::common;
 using namespace std;
 
+using boost::adaptors::filtered;
 using boost::adaptors::transformed;
 using boost::algorithm::all_of;
+using boost::algorithm::any_of;
 using boost::accumulate;
 using boost::irange;
 using boost::lexical_cast;
@@ -349,6 +355,26 @@ aln_posn_type cath::align::get_position_of_entry_of_index(const alignment &arg_a
 	return *position;
 }
 
+/// \brief Whether there are any present positions in the specified range of consecutive indices in
+///        the specified entry in the specified alignment
+///
+/// \relates alignment
+bool cath::align::has_positions_of_entry_in_index_range(const alignment &arg_alignment,   ///< The alignment to be inspected
+                                                        const size_t    &arg_entry,       ///< The entry to be inspected
+                                                        const size_t    &arg_begin_index, ///< Begin index of the range to be inspected
+                                                        const size_t    &arg_end_index    ///< One-past-end index of the range to be inspected
+                                                        ) {
+	if ( arg_begin_index > arg_end_index ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot query an invalid range with begin > end"));
+	}
+	return any_of(
+		irange( arg_begin_index, arg_end_index ),
+		[&] (const size_t &x) {
+			return has_position_of_entry_of_index( arg_alignment, arg_entry, x );
+		}
+	);
+}
+
 /// \brief Non-member equality operator for the alignment class
 ///
 /// This does not current compare (the existence of scores) so this may return true for
@@ -419,6 +445,23 @@ size_vec cath::align::present_positions_of_index(const alignment            &arg
 		}
 	}
 	return present_positions;
+}
+
+/// \brief Return the entries that have present positions within the specified range in the specified alignment
+///
+/// \relates alignment
+size_vec cath::align::entries_present_in_index_range(const alignment &arg_alignment,   ///< The alignment to be inspected
+                                                     const size_t    &arg_begin_index, ///< Begin index of the range to be inspected
+                                                     const size_t    &arg_end_index    ///< One-past-end index of the range to be inspected
+                                                     ) {
+	return copy_build<size_vec>(
+		irange( 0_z, arg_alignment.num_entries() )
+			| filtered(
+				[&] (const size_t &x) {
+					return has_positions_of_entry_in_index_range( arg_alignment, x, arg_begin_index, arg_end_index );
+				}
+			)
+	);
 }
 
 /// \brief TODOCUMENT

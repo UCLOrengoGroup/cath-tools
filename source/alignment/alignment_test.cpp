@@ -24,17 +24,21 @@
 #include <boost/optional/optional_io.hpp>
 #include <boost/test/output_test_stream.hpp>
 
+#include "alignment/io/align_scaffold.h"
 #include "alignment/pair_alignment.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.h"
 #include "common/boost_check_no_throw_diag.h"
 #include "common/pair_insertion_operator.h"
 #include "common/size_t_literal.h"
 #include "common/test_tools.h"
+#include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
 #include "test/alignment_fixture.h"
 
 #include <utility>
 
 using namespace boost::test_tools;
+using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::common::test;
@@ -321,5 +325,41 @@ BOOST_AUTO_TEST_CASE( first_non_consecutive_entry_positions ) {
 		make_pair( 0_z, 0_z )
 	);
 }
+
+BOOST_AUTO_TEST_SUITE(alignment_functions_test_suite)
+
+BOOST_AUTO_TEST_CASE(has_positions_of_entry_in_index_range_works) {
+	const auto the_aln = alignment_of_scaffold_lines( {
+		"  XXXX",
+		"XX  XX"
+	} );
+
+	BOOST_CHECK_EQUAL( has_positions_of_entry_in_index_range( the_aln, 0, 0, 0 ), false );
+	BOOST_CHECK_EQUAL( has_positions_of_entry_in_index_range( the_aln, 1, 1, 1 ), false );
+
+	BOOST_CHECK_EQUAL( has_positions_of_entry_in_index_range( the_aln, 0, 0, 2 ), false );
+	BOOST_CHECK_EQUAL( has_positions_of_entry_in_index_range( the_aln, 0, 0, 3 ), true  );
+
+	BOOST_CHECK_EQUAL( has_positions_of_entry_in_index_range( the_aln, 1, 1, 4 ), true  );
+	BOOST_CHECK_EQUAL( has_positions_of_entry_in_index_range( the_aln, 1, 2, 4 ), false );
+	BOOST_CHECK_EQUAL( has_positions_of_entry_in_index_range( the_aln, 1, 2, 5 ), true  );
+}
+
+BOOST_AUTO_TEST_CASE(entries_present_in_index_range_works) {
+	const auto the_aln = alignment_of_scaffold_lines( {
+		"  XXXX",
+		"XX  XX"
+	} );
+
+	BOOST_CHECK_EQUAL_RANGES( entries_present_in_index_range( the_aln, 0, 0 ), size_vec{      } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_in_index_range( the_aln, 0, 2 ), size_vec{    1 } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_in_index_range( the_aln, 0, 3 ), size_vec{ 0, 1 } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_in_index_range( the_aln, 1, 1 ), size_vec{      } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_in_index_range( the_aln, 1, 4 ), size_vec{ 0, 1 } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_in_index_range( the_aln, 2, 4 ), size_vec{ 0    } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_in_index_range( the_aln, 2, 5 ), size_vec{ 0, 1 } );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()

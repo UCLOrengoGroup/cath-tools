@@ -133,6 +133,11 @@ namespace cath {
 		                                             const size_t &,
 		                                             const size_t &);
 
+		bool has_positions_of_entry_in_index_range(const alignment &,
+		                                           const size_t &,
+		                                           const size_t &,
+		                                           const size_t &);
+
 		/// \brief TODOCUMENT
 		using opt_aln_size = boost::optional<alignment::size_type>;
 
@@ -144,6 +149,10 @@ namespace cath {
 
 		size_vec present_positions_of_index(const alignment &,
 		                                    const alignment::size_type &);
+
+		size_vec entries_present_in_index_range(const alignment &,
+		                                        const size_t &,
+		                                        const size_t &);
 
 		size_t num_present_positions_of_index(const alignment &,
 		                                      const alignment::size_type &);

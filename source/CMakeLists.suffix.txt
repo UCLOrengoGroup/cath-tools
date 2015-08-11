@@ -135,13 +135,19 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 		develtest
 			executables/develtest/develtest.cpp
 			
-			alignment/tools/alignment_breaks_test.cpp
-			alignment/tools/alignment_breaks.cpp
+			alignment/alignment_test.cpp
 			alignment/io/align_scaffold.cpp
+			alignment/pair_alignment.cpp
+			test/alignment_fixture.cpp
 			${DEVELTEST_ALIGNMENT_SOURCES}
 			
+			# alignment/tools/alignment_breaks_test.cpp
+			# alignment/tools/alignment_breaks.cpp
+			# alignment/io/align_scaffold.cpp
+			# ${DEVELTEST_ALIGNMENT_SOURCES}
+			
 			# alignment/io/align_scaffold_test.cpp
-			alignment/io/align_scaffold.cpp
+			# alignment/io/align_scaffold.cpp
 			# test/alignment_fixture.cpp
 			# ${DEVELTEST_ALIGNMENT_SOURCES}
 			
