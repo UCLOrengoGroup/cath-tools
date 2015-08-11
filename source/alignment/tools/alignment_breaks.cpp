@@ -55,8 +55,8 @@ size_vec cath::align::get_alignment_breaks(const alignment &arg_alignment ///< T
 					// Return whether the set of present entries for the previous index
 					// is disjoint with the set of present entries for this index
 					return sets_are_disjoint(
-						present_positions_of_index( arg_alignment, curr_idx - 1 ),
-						present_positions_of_index( arg_alignment, curr_idx     )
+						entries_present_at_index( arg_alignment, curr_idx - 1 ),
+						entries_present_at_index( arg_alignment, curr_idx     )
 					);
 				}
 			)

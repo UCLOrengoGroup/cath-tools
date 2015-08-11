@@ -434,17 +434,17 @@ ostream & cath::align::operator<<(ostream         &arg_ostream,  ///< The stream
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-size_vec cath::align::present_positions_of_index(const alignment            &arg_alignment, ///< TODOCUMENT
-                                                 const alignment::size_type &arg_index      ///< TODOCUMENT
-                                                 ) {
-	const alignment::size_type num_entries = arg_alignment.num_entries();
-	size_vec present_positions;
-	for (alignment::size_type entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
-		if ( has_position_of_entry_of_index( arg_alignment, entry_ctr, arg_index ) ) {
-			present_positions.push_back( entry_ctr );
-		}
-	}
-	return present_positions;
+size_vec cath::align::entries_present_at_index(const alignment            &arg_alignment, ///< TODOCUMENT
+                                               const alignment::size_type &arg_index      ///< TODOCUMENT
+                                               ) {
+	return copy_build<size_vec>(
+		irange( 0_z, arg_alignment.num_entries() )
+			| filtered(
+				[&] (const size_t &x) {
+					return has_position_of_entry_of_index( arg_alignment, x, arg_index );
+				}
+			)
+	);
 }
 
 /// \brief Return the entries that have present positions within the specified range in the specified alignment
@@ -470,7 +470,7 @@ size_vec cath::align::entries_present_in_index_range(const alignment &arg_alignm
 size_t cath::align::num_present_positions_of_index(const alignment            &arg_alignment, ///< TODOCUMENT
                                                    const alignment::size_type &arg_index      ///< TODOCUMENT
                                                    ) {
-	return present_positions_of_index( arg_alignment, arg_index ).size();
+	return entries_present_at_index( arg_alignment, arg_index ).size();
 }
 
 /// \brief TODOCUMENT
@@ -708,7 +708,7 @@ float_score_type cath::align::get_total_score_of_index(const alignment &arg_alig
                                                        const size_t    &arg_index      ///< TODOCUMENT
                                                        ) {
 	const alignment_residue_scores &scores = arg_alignment.get_alignment_residue_scores();
-	const size_vec  present_entries        = present_positions_of_index( arg_alignment, arg_index );
+	const size_vec  present_entries        = entries_present_at_index( arg_alignment, arg_index );
 	float_score_vec scores_of_index;
 	scores_of_index.reserve( present_entries.size() );
 	for (const size_t &present_entry : present_entries) {

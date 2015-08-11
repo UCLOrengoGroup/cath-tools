@@ -62,13 +62,13 @@ alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alig
 
 	/// Loop down the length of the alignment
 	for (size_t from_index = 0; from_index < length; ++from_index) {
-		const size_vec from_entries = present_positions_of_index( arg_alignment, from_index );
+		const size_vec from_entries = entries_present_at_index( arg_alignment, from_index );
 		if ( from_entries.size() <= 1 ) {
 			continue;
 		}
 
 		for (size_t to_index = 0; to_index < length; ++to_index) {
-			const size_vec to_entries = present_positions_of_index( arg_alignment, to_index );
+			const size_vec to_entries = entries_present_at_index( arg_alignment, to_index );
 			if ( to_entries.size() <= 1 ) {
 				continue;
 			}

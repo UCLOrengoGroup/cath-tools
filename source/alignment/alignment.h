@@ -147,7 +147,7 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const alignment &);
 
-		size_vec present_positions_of_index(const alignment &,
+		size_vec entries_present_at_index(const alignment &,
 		                                    const alignment::size_type &);
 
 		size_vec entries_present_in_index_range(const alignment &,

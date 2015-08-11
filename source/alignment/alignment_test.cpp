@@ -348,6 +348,20 @@ BOOST_AUTO_TEST_CASE(has_positions_of_entry_in_index_range_works) {
 	BOOST_CHECK_EQUAL( has_positions_of_entry_in_index_range( the_aln, 1, 2, 5 ), true  );
 }
 
+BOOST_AUTO_TEST_CASE(entries_present_at_index_works) {
+	const auto the_aln = alignment_of_scaffold_lines( {
+		"  XXXX",
+		"XX  XX"
+	} );
+
+	BOOST_CHECK_EQUAL_RANGES( entries_present_at_index( the_aln, 0 ), size_vec{    1 } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_at_index( the_aln, 1 ), size_vec{    1 } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_at_index( the_aln, 2 ), size_vec{ 0    } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_at_index( the_aln, 3 ), size_vec{ 0    } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_at_index( the_aln, 4 ), size_vec{ 0, 1 } );
+	BOOST_CHECK_EQUAL_RANGES( entries_present_at_index( the_aln, 5 ), size_vec{ 0, 1 } );
+}
+
 BOOST_AUTO_TEST_CASE(entries_present_in_index_range_works) {
 	const auto the_aln = alignment_of_scaffold_lines( {
 		"  XXXX",
