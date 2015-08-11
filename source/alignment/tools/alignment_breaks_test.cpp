@@ -43,7 +43,7 @@ namespace cath {
 
 			/// \brief An example alignment for testing alignment breaks code
 			const alignment the_alignment = alignment_of_scaffold_lines( {
-				//  0        1          < These two lines count up from 01 to 17 (one less than the alignment length)
+				// 0         1          < These two lines count up from 01 to 17 (one less than the alignment length)
 				//  12345678901234567   <
 				//   //     /    ////   < This line connects the between-index breaks (think: fence posts between fences) with their corresponding indices
 				  "XX   XXXX  XXX   X",
