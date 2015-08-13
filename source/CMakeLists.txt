@@ -1720,6 +1720,8 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 		develtest
 			executables/develtest/develtest.cpp
 			
+			# superposition/superposition_test.cpp // requires complex spider of stuff
+
 			# alignment/alignment_test.cpp
 			# alignment/io/align_scaffold.cpp
 			# alignment/pair_alignment.cpp
