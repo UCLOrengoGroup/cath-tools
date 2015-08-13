@@ -22,7 +22,7 @@
 
 #include "common/clone/make_uptr_clone.h"
 #include "superposition/superposition_context.h"
-#include "superposition/superposition_io.h"
+#include "superposition/io/superposition_io.h"
 
 using namespace boost::filesystem;
 using namespace cath::common;

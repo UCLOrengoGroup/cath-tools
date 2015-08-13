@@ -897,12 +897,17 @@ set(
 )
 
 set(
+	NORMSOURCES_SUPERPOSITION_IO
+		superposition/io/superposition_io.cpp
+)
+
+set(
 	NORMSOURCES_SUPERPOSITION
 		${NORMSOURCES_SUPERPOSITION_DETAIL}
+		${NORMSOURCES_SUPERPOSITION_IO}
 		superposition/superpose_orderer.cpp
 		superposition/superposition.cpp
 		superposition/superposition_context.cpp
-		superposition/superposition_io.cpp
 )
 
 set(
@@ -1576,10 +1581,15 @@ set(
 )
 
 set(
+	TESTSOURCES_SUPERPOSITION_IO
+		superposition/io/superposition_io_test.cpp
+)
+
+set(
 	TESTSOURCES_SUPERPOSITION
+		${TESTSOURCES_SUPERPOSITION_IO}
 		superposition/superpose_orderer_test.cpp
 		superposition/superposition_context_test.cpp
-		superposition/superposition_io_test.cpp
 		superposition/superposition_test.cpp
 )
 ##### END OF AUTO-GENERATED #####

@@ -152,7 +152,7 @@
 #include "structure/protein/sec_struc.h"
 #include "structure/protein/sec_struc_planar_angles.h"
 #include "superposition/superposition.h"
-#include "superposition/superposition_io.h"
+#include "superposition/io/superposition_io.h"
 
 #include <algorithm>
 #include <cassert>

@@ -28,7 +28,7 @@
 #include "structure/geometry/coord_list.h"
 #include "structure/structure_type_aliases.h"
 #include "superposition/superposition.h"
-#include "superposition/superposition_io.h"
+#include "superposition/io/superposition_io.h"
 
 //#include <iostream> // *** TEMPORARY ***
 #include <vector>

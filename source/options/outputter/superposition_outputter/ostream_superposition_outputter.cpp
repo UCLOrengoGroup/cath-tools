@@ -25,7 +25,7 @@
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"
 #include "superposition/superposition_context.h"
-#include "superposition/superposition_io.h"
+#include "superposition/io/superposition_io.h"
 
 using namespace cath::common;
 using namespace cath::opts;

@@ -37,7 +37,7 @@
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_list.h"
 #include "file/pdb/pdb_residue.h"
-#include "superposition/superposition_io.h"
+#include "superposition/io/superposition_io.h"
 #include "superposition/superposition_context.h"
 
 #include <algorithm>
