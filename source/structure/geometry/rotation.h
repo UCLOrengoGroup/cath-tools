@@ -418,8 +418,8 @@ namespace cath {
 		                          const double &arg_tolerance
 		                          ) : tolerance( arg_tolerance ) {
 			init_from_values_with_rotation_checks(val_00, val_01, val_02,
-	                                              val_10, val_11, val_12,
-	                                              val_20, val_21, val_22 );
+			                                      val_10, val_11, val_12,
+			                                      val_20, val_21, val_22 );
 		}
 
 		/// \brief Constructor from row-major order vector
