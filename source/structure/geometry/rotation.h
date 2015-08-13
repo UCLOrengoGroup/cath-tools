@@ -26,6 +26,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/operators.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
 
 #include "common/difference.h"
 #include "common/type_aliases.h"
@@ -168,6 +169,20 @@ namespace cath {
 		void rotate(const rotation &, coord &);
 		coord_list rotate_copy(const rotation &, const coord_list &);
 		coord      rotate_copy(const rotation &, const coord &);
+
+		namespace detail {
+			boost::property_tree::ptree make_ptree_of_row_and_col(const rotation &,
+			                                                      const size_t &,
+			                                                      const size_t &);
+
+			boost::property_tree::ptree make_ptree_of_row(const rotation &,
+			                                              const size_t &);
+		}
+
+		void save_to_ptree(boost::property_tree::ptree &,
+		                   const rotation &);
+
+		boost::property_tree::ptree make_ptree_of(const rotation &);
 
 		/// \brief Generate some rotation that has the specified angle of rotation
 		///

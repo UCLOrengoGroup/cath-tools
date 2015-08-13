@@ -26,6 +26,7 @@
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/operators.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
 
 #include "exception/invalid_argument_exception.h"
 
@@ -235,6 +236,11 @@ namespace cath {
 		                                            const coord &);
 		std::ostream & operator<<(std::ostream &,
 		                          const coord &);
+
+		void save_to_ptree(boost::property_tree::ptree &,
+		                   const coord &);
+
+		boost::property_tree::ptree make_ptree_of(const coord &);
 
 		/// \brief TODOCUMENT
 		///

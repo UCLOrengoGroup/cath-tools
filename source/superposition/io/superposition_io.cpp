@@ -18,9 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #include "superposition_io.h"
 
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/range/irange.hpp>
+
 #include "common/file/open_fstream.h"
+#include "common/size_t_literal.h"
 #include "exception/invalid_argument_exception.h"
 #include "exception/not_implemented_exception.h"
 #include "exception/runtime_error_exception.h"
@@ -38,6 +44,10 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::sup;
 using namespace std;
+
+using boost::irange;
+using boost::property_tree::json_parser::write_json;
+using boost::property_tree::ptree;
 
 /// \brief TODOCUMENT
 ///
@@ -350,4 +360,45 @@ void cath::sup::write_superposed_pdb_from_files(const superposition &arg_superpo
 	}
 
 	write_superposed_pdb_to_file( arg_superposition, arg_filename, pdbs, arg_write_script, arg_relabel_chain );
+}
+
+/// \brief Save the specified superposition to the specified Boost Property Tree ptree
+///
+/// \relates superposition
+void cath::sup::save_to_ptree(ptree               &arg_ptree,        ///< The ptree to which the superposition should be saved
+                              const superposition &arg_superposition ///< The superposition to save to the ptree
+                              ) {
+	const auto transformations_key = string( "transformations" );
+	arg_ptree.put_child( transformations_key, ptree{} );
+	auto &transformations_ptree = arg_ptree.get_child( transformations_key );
+
+	for (const size_t &index : irange( 0_z, arg_superposition.get_num_entries() ) ) {
+		ptree transformation_ptree;
+		transformation_ptree.put_child( "translation", make_ptree_of( arg_superposition.get_translation_of_index( index ) ) );
+		transformation_ptree.put_child( "rotation",    make_ptree_of( arg_superposition.get_rotation_of_index   ( index ) ) );
+		transformations_ptree.push_back( make_pair( "", transformation_ptree ) );
+	}
+}
+
+/// \brief Make a new Boost Property Tree ptree representing the specified superposition
+///
+/// \relates superposition
+ptree cath::sup::make_ptree_of(const superposition &arg_superposition ///< The superposition that the new ptree should represent
+                               ) {
+	ptree new_ptree;
+	save_to_ptree( new_ptree, arg_superposition );
+	return new_ptree;
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates superposition
+string cath::sup::to_json_string(const superposition &arg_superposition, ///< TODOCUMENT
+                                 const bool          &arg_pretty_print   ///< TODOCUMENT
+                                 ) {
+	ostringstream json_ss;
+	ptree temp_ptree;
+	save_to_ptree( temp_ptree, arg_superposition );
+	write_json( json_ss, temp_ptree, arg_pretty_print );
+	return json_ss.str();
 }

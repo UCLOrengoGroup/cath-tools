@@ -22,6 +22,7 @@
 
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
 #include "exception/invalid_argument_exception.h"
@@ -39,6 +40,7 @@ using namespace cath::geom;
 using namespace std;
 
 using boost::lexical_cast;
+using boost::property_tree::ptree;
 
 /// \brief The identity rotation
 const rotation & rotation::IDENTITY_ROTATION() {
@@ -224,5 +226,51 @@ rotation cath::geom::tidy_copy(const rotation &arg_rotation, ///< The rotation m
 	);
 }
 
+/// \brief Make a new Boost Property Tree ptree containing a single anonymous entry for the specified rotation's
+///        value at the specified row and column
+///
+/// \relates rotation
+ptree cath::geom::detail::make_ptree_of_row_and_col(const rotation &arg_rotation, ///< The rotation containing the entry to be saved
+                                                    const size_t   &arg_row,      ///< The row index of the entry to be saved within the specified rotation
+                                                    const size_t   &arg_column    ///< The column index of the entry to be saved within the specified rotation
+                                                    ) {
+	ptree new_ptree;
+	new_ptree.put( "", arg_rotation.get_value( arg_row, arg_column ) );
+	return new_ptree;
+}
 
+/// \brief Make a new Boost Property Tree ptree containing an anonymous array of anonymous entries for the specified rotation's
+///        values in the specified row
+///
+/// \relates rotation
+ptree cath::geom::detail::make_ptree_of_row(const rotation &arg_rotation, ///< The rotation containing the row to be saved
+                                            const size_t   &arg_row       ///< The row index of the specified rotation to be saved
+                                            ) {
+	ptree new_ptree;
+	new_ptree.push_back( make_pair( "", make_ptree_of_row_and_col( arg_rotation, arg_row, 0 ) ) );
+	new_ptree.push_back( make_pair( "", make_ptree_of_row_and_col( arg_rotation, arg_row, 1 ) ) );
+	new_ptree.push_back( make_pair( "", make_ptree_of_row_and_col( arg_rotation, arg_row, 2 ) ) );
+	return new_ptree;
+}
+
+/// \brief Save the specified rotation to the specified Boost Property Tree ptree
+///
+/// \relates rotation
+void cath::geom::save_to_ptree(ptree          &arg_ptree,   ///< The ptree to which the rotation should be saved
+                               const rotation &arg_rotation ///< The rotation to be saved
+                               ) {
+	arg_ptree.push_back( make_pair( "", detail::make_ptree_of_row( arg_rotation, 0 ) ) );
+	arg_ptree.push_back( make_pair( "", detail::make_ptree_of_row( arg_rotation, 1 ) ) );
+	arg_ptree.push_back( make_pair( "", detail::make_ptree_of_row( arg_rotation, 2 ) ) );
+}
+
+/// \brief Make a new Boost Property Tree ptree representing the specified rotation
+///
+/// \relates rotation
+ptree cath::geom::make_ptree_of(const rotation &arg_rotation ///< The rotation that the new ptree should represent
+                                ) {
+	ptree new_ptree;
+	save_to_ptree( new_ptree, arg_rotation );
+	return new_ptree;
+}
 

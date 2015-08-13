@@ -23,6 +23,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
 #include "exception/invalid_argument_exception.h"
@@ -34,6 +35,7 @@ using namespace cath::geom;
 using namespace std;
 
 using boost::lexical_cast;
+using boost::property_tree::ptree;
 
 //const double LENGTH_CHECK_PRECISION_PERCENTAGE_TOLERANCE( 1E-10 );
 
@@ -171,4 +173,26 @@ ostream & cath::geom::operator<<(ostream     &arg_os,   ///< TODOCUMENT
 	arg_os << "]";
 //	arg_os << output_ss.str();
 	return arg_os;
+}
+
+/// \brief Save the specified coord to the specified Boost Property Tree ptree
+///
+/// \relates coord
+void cath::geom::save_to_ptree(ptree       &arg_ptree, ///< The ptree to which the coord should be saved
+                               const coord &arg_coord  ///< The coord to be saved
+                               ) {
+	arg_ptree.put( "x", arg_coord.get_x() );
+	arg_ptree.put( "y", arg_coord.get_y() );
+	arg_ptree.put( "z", arg_coord.get_z() );
+}
+
+
+/// \brief Make a new ptree representing the specified coord
+///
+/// \relates coord
+ptree cath::geom::make_ptree_of(const coord &arg_coord ///< The coord that the new ptree should represent
+                                ) {
+	ptree new_ptree;
+	save_to_ptree( new_ptree, arg_coord );
+	return new_ptree;
 }
