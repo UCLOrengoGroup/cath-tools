@@ -23,6 +23,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
 #include <boost/property_tree/ptree.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
@@ -35,6 +37,7 @@ using namespace cath::geom;
 using namespace std;
 
 using boost::lexical_cast;
+using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;
 
 //const double LENGTH_CHECK_PRECISION_PERCENTAGE_TOLERANCE( 1E-10 );
@@ -195,4 +198,17 @@ ptree cath::geom::make_ptree_of(const coord &arg_coord ///< The coord that the n
 	ptree new_ptree;
 	save_to_ptree( new_ptree, arg_coord );
 	return new_ptree;
+}
+
+/// \brief Create a JSON string to represent the specified coord
+///
+/// \relates coord
+string cath::geom::to_json_string(const coord &arg_coord,       ///< The coord to represent in the JSON string
+                                  const bool  &arg_pretty_print ///< Whether to use whitespace (including line breaks) in the JSON to make it more human-readable
+                                  ) {
+	ostringstream json_ss;
+	ptree temp_ptree;
+	save_to_ptree( temp_ptree, arg_coord );
+	write_json( json_ss, temp_ptree, arg_pretty_print );
+	return json_ss.str();
 }

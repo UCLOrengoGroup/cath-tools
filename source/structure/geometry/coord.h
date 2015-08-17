@@ -242,6 +242,9 @@ namespace cath {
 
 		boost::property_tree::ptree make_ptree_of(const coord &);
 
+		std::string to_json_string(const coord &,
+		                           const bool &arg_pretty_print = true);
+
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
