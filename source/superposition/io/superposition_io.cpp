@@ -390,11 +390,11 @@ ptree cath::sup::make_ptree_of(const superposition &arg_superposition ///< The s
 	return new_ptree;
 }
 
-/// \brief TODOCUMENT
+/// \brief Create a JSON string to represent the specified superposition
 ///
 /// \relates superposition
-string cath::sup::to_json_string(const superposition &arg_superposition, ///< TODOCUMENT
-                                 const bool          &arg_pretty_print   ///< TODOCUMENT
+string cath::sup::to_json_string(const superposition &arg_superposition, ///< The superposition to represent in the JSON string
+                                 const bool          &arg_pretty_print   ///< Whether to use whitespace (including line breaks) in the JSON to make it more human-readable
                                  ) {
 	ostringstream json_ss;
 	ptree temp_ptree;
