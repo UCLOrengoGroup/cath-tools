@@ -78,7 +78,7 @@ namespace cath {
 		boost::property_tree::ptree make_ptree_of(const superposition &);
 
 		std::string to_json_string(const superposition &,
-		                           const bool &arg_pretty_pring = true);
+		                           const bool &arg_pretty_print = true);
 	}
 }
 
