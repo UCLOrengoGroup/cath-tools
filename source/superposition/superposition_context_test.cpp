@@ -28,7 +28,7 @@ namespace cath {
 		protected:
 			~superposition_context_test_suite_fixture() noexcept = default;
 		};
-		
+
 	}
 }
 
@@ -38,5 +38,6 @@ BOOST_FIXTURE_TEST_SUITE(superposition_context_test_suite, cath::test::superposi
 BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK( true );
 }
+
 BOOST_AUTO_TEST_SUITE_END()
 
