@@ -40,6 +40,12 @@ using namespace std;
 
 using boost::filesystem::path;
 
+
+/// \brief Ctor from a vector<pdb>
+pdb_list::pdb_list(const pdb_vec &arg_pdbs ///< The pdbs from which this pdb_list should be constructed
+                   ) : pdbs( arg_pdbs ) {
+}
+
 /// \brief TODOCUMENT
 void pdb_list::push_back(const pdb &arg_pdb ///< TODOCUMENT
                          ) {
