@@ -65,6 +65,14 @@ namespace cath {
 		};
 
 		align::alignment_context make_alignment_context(const superposition_context &);
+
+		void save_to_ptree(boost::property_tree::ptree &,
+		                   const superposition_context &);
+
+		boost::property_tree::ptree make_ptree_of(const superposition_context &);
+
+		std::string to_json_string(const superposition_context &,
+		                           const bool &arg_pretty_print = true);
 	}
 }
 

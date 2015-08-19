@@ -20,11 +20,17 @@
 
 #include "superposition_context.h"
 
+#include <boost/log/trivial.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/range/algorithm_ext/for_each.hpp>
+
 #include "alignment/alignment_context.h"
 #include "exception/invalid_argument_exception.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"
+#include "superposition/io/superposition_io.h"
 
 using namespace cath;
 using namespace cath::align;
@@ -32,6 +38,11 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::sup;
 using namespace std;
+
+using boost::log::trivial::severity_level;
+using boost::property_tree::json_parser::write_json;
+using boost::property_tree::ptree;
+using boost::range::for_each;
 
 /// \brief TODOCUMENT
 superposition_context::superposition_context(const pdb_list      &arg_pdbs,         ///< TODOCUMENT
@@ -98,4 +109,67 @@ alignment_context cath::sup::make_alignment_context(const superposition_context 
 		arg_superposition_context.get_names_cref(),
 		arg_superposition_context.get_alignment_cref()
 	);
+}
+
+/// \brief TODOCUMENT
+///
+/// At present, this stores the names and the superposition but does nothing
+/// with the alignment or the PDBs
+///
+/// \relates superposition_context
+void cath::sup::save_to_ptree(ptree                       &arg_ptree,      ///< TODOCUMENT
+                              const superposition_context &arg_sup_context ///< TODOCUMENT
+                              ) {
+	if ( arg_sup_context.has_alignment() ) {
+		BOOST_LOG_TRIVIAL( warning ) << "Whilst converting a superposition_context to JSON, its alignment will be ignored because that is not currently supported";
+	}
+
+	/// \todo DRY
+	const auto transformations_key = string( "transformations" );
+	const auto supn_ptree          = make_ptree_of( arg_sup_context.get_superposition_cref() );
+	const auto trans_ptrees        = supn_ptree.get_child( transformations_key );
+
+	const auto entries_key = "entries";
+	arg_ptree.put_child( entries_key, ptree{} );
+	auto &entries_ptree = arg_ptree.get_child( entries_key );
+
+	for_each(
+		arg_sup_context.get_names_cref(),
+		trans_ptrees,
+		[&] (const string &name, const pair<string, ptree> &trans_ptree) {
+			ptree entry_ptree;
+			entry_ptree.put      ( "name",           name               );
+			entry_ptree.put_child( "transformation", trans_ptree.second );
+			entries_ptree.push_back( make_pair( "", entry_ptree ) );
+		}
+	);
+}
+
+/// \brief TODOCUMENT
+///
+/// At present, this stores the names and the superposition but does nothing
+/// with the alignment or the PDBs
+///
+/// \relates superposition_context
+ptree cath::sup::make_ptree_of(const superposition_context &arg_sup_context ///< TODOCUMENT
+                               ) {
+	ptree new_ptree;
+	save_to_ptree( new_ptree, arg_sup_context );
+	return new_ptree;
+}
+
+/// \brief Create a JSON string to represent the specified superposition
+///
+/// At present, this stores the names and the superposition but does nothing
+/// with the alignment or the PDBs
+///
+/// \relates superposition_context
+string cath::sup::to_json_string(const superposition_context &arg_sup_context, ///< The superposition_context to represent in the JSON string
+                                 const bool                  &arg_pretty_print ///< Whether to use whitespace (including line breaks) in the JSON to make it more human-readable
+                                 ) {
+	ostringstream json_ss;
+	ptree temp_ptree;
+	save_to_ptree( temp_ptree, arg_sup_context );
+	write_json( json_ss, temp_ptree, arg_pretty_print );
+	return json_ss.str();
 }
