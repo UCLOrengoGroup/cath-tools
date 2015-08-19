@@ -150,26 +150,5 @@ BOOST_AUTO_TEST_CASE(rmsd) {
 	);
 }
 
-BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup) {
-	BOOST_CHECK_EQUAL(
-		to_json_string( create_pairwise_superposition( coord_list_1, coord_list_2 ), false ),
-		R"({"transformations":[{"translation":)"
-		R"({"x":"0","y":"0","z":"0"},)"
-		R"("rotation":)"
-		R"([["1","0","0"],)"
-		R"(["0","1","0"],)"
-		R"(["0","0","1"])"
-		R"(]},{"translation":)"
-		R"({"x":"104.47726177086807","y":"20.66883749985081","z":"41.523834652502032"},)"
-		R"("rotation":)"
-		R"([["0.20769400083047135","-0.9111116114406772","0.35600397963647046"],)"
-		R"(["0.96878664188870112","0.24194236224656662","0.0540031096194028"],)"
-		R"(["-0.13533530403056787","0.33367577803689003","0.93292273561878114"])"
-		R"(]}]})"
-		"\n"
-	);
-}
-
-
 BOOST_AUTO_TEST_SUITE_END()
 
