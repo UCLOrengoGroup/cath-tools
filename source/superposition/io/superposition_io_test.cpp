@@ -40,7 +40,7 @@ BOOST_FIXTURE_TEST_SUITE(superposition_io_test_suite, superposition_io_test_suit
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup) {
 	BOOST_CHECK_EQUAL(
-		to_json_string( create_pairwise_superposition( coord_list_1, coord_list_2 ), false ),
+		to_json_string( the_sup, false ),
 		R"({"transformations":[{"translation":)"
 		R"({"x":"0","y":"0","z":"0"},)"
 		R"("rotation":)"
