@@ -237,11 +237,13 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const coord &);
 
+		coord coord_from_ptree(const boost::property_tree::ptree &);
 		void save_to_ptree(boost::property_tree::ptree &,
 		                   const coord &);
 
 		boost::property_tree::ptree make_ptree_of(const coord &);
 
+		coord coord_from_json_string(const std::string &);
 		std::string to_json_string(const coord &,
 		                           const bool &arg_pretty_print = true);
 

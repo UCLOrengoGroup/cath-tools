@@ -178,6 +178,18 @@ ostream & cath::geom::operator<<(ostream     &arg_os,   ///< TODOCUMENT
 	return arg_os;
 }
 
+/// \brief Build a coord from a coord-populated ptree
+///
+/// \relates coord
+coord cath::geom::coord_from_ptree(const ptree &arg_ptree ///< The ptree from which the coord should be read
+                                   ) {
+	return {
+		arg_ptree.get<double>( "x" ),
+		arg_ptree.get<double>( "y" ),
+		arg_ptree.get<double>( "z" )
+	};
+}
+
 /// \brief Save the specified coord to the specified Boost Property Tree ptree
 ///
 /// \relates coord
@@ -198,6 +210,17 @@ ptree cath::geom::make_ptree_of(const coord &arg_coord ///< The coord that the n
 	ptree new_ptree;
 	save_to_ptree( new_ptree, arg_coord );
 	return new_ptree;
+}
+
+/// \brief Build a coord from a JSON string (via a ptree)
+///
+/// \relates coord
+coord cath::geom::coord_from_json_string(const string &arg_json_string ///< The JSON string from which the coord should be read
+                                         ) {
+	ptree tree;
+	istringstream in_ss( arg_json_string );
+	read_json( in_ss, tree);
+	return coord_from_ptree( tree );
 }
 
 /// \brief Create a JSON string to represent the specified coord
