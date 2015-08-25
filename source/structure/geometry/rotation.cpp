@@ -22,6 +22,8 @@
 
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
 #include <boost/property_tree/ptree.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
@@ -274,3 +276,15 @@ ptree cath::geom::make_ptree_of(const rotation &arg_rotation ///< The rotation t
 	return new_ptree;
 }
 
+/// \brief Create a JSON string to represent the specified rotation
+///
+/// \relates rotation
+string cath::geom::to_json_string(const rotation &arg_rotation,    ///< The rotation to represent in the JSON string
+                                  const bool     &arg_pretty_print ///< Whether to use whitespace (including line breaks) in the JSON to make it more human-readable
+                                  ) {
+	ostringstream json_ss;
+	ptree temp_ptree;
+	save_to_ptree( temp_ptree, arg_rotation );
+	write_json( json_ss, temp_ptree, arg_pretty_print );
+	return json_ss.str();
+}

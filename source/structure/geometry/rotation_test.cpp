@@ -141,5 +141,21 @@ BOOST_AUTO_TEST_CASE(rotation_of_angle_works) {
 	}
 }
 
+BOOST_AUTO_TEST_SUITE(json)
+
+BOOST_AUTO_TEST_CASE(to_json_string_works_for_identity) {
+	BOOST_CHECK_EQUAL( to_json_string( rotation::IDENTITY_ROTATION(),       false ), R"({"":["1","0","0"],"":["0","1","0"],"":["0","0","1"]})" "\n" );
+}
+
+BOOST_AUTO_TEST_CASE(to_json_string_works_for_x_to_y_to_z_to_x) {
+	BOOST_CHECK_EQUAL( to_json_string( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), false ), R"({"":["0","0","1"],"":["1","0","0"],"":["0","1","0"]})" "\n" );
+}
+
+BOOST_AUTO_TEST_CASE(to_json_string_works_for_x_to_z_to_y_to_x) {
+	BOOST_CHECK_EQUAL( to_json_string( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), false ), R"({"":["0","1","0"],"":["0","0","1"],"":["1","0","0"]})" "\n" );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 BOOST_AUTO_TEST_SUITE_END()
 
