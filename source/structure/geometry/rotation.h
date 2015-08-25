@@ -179,10 +179,14 @@ namespace cath {
 			                                              const size_t &);
 		}
 
+		rotation rotation_from_ptree(const boost::property_tree::ptree &);
+
 		void save_to_ptree(boost::property_tree::ptree &,
 		                   const rotation &);
 
 		boost::property_tree::ptree make_ptree_of(const rotation &);
+
+		rotation rotation_from_json_string(const std::string &);
 
 		std::string to_json_string(const rotation &,
 		                           const bool &arg_pretty_print = true);

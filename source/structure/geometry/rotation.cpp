@@ -20,6 +20,7 @@
 
 #include "rotation.h"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -41,7 +42,9 @@ using namespace cath::common;
 using namespace cath::geom;
 using namespace std;
 
+using boost::algorithm::any_of;
 using boost::lexical_cast;
+using boost::property_tree::json_parser::read_json;
 using boost::property_tree::ptree;
 
 /// \brief The identity rotation
@@ -255,6 +258,27 @@ ptree cath::geom::detail::make_ptree_of_row(const rotation &arg_rotation, ///< T
 	return new_ptree;
 }
 
+/// \brief Build a rotation from a rotation-populated ptree
+///
+/// \relates rotation
+rotation cath::geom::rotation_from_ptree(const ptree &arg_ptree ///< The ptree from which the rotation should be read
+                                         ) {
+	if ( arg_ptree.size() != coord::NUM_DIMS || arg_ptree.count( "" ) != coord::NUM_DIMS ) {
+		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse rotation from property_tree that doesn't have three anonymous entries for the three rows"));
+	}
+	if ( any_of( arg_ptree, [&] (const pair<const string, ptree> &x) { return ( x.second.size() != coord::NUM_DIMS || x.second.count( "" ) != coord::NUM_DIMS ); } ) ) {
+		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse rotation from property_tree with a row that doesn't contain three anonymous entries"));
+	}
+	doub_vec values;
+	values.reserve( coord::NUM_DIMS * coord::NUM_DIMS );
+	for (const auto &row : arg_ptree) {
+		for (const auto &row_col : row.second ) {
+			values.push_back( row_col.second.get<double>( "" ) );
+		}
+	}
+	return { values };
+}
+
 /// \brief Save the specified rotation to the specified Boost Property Tree ptree
 ///
 /// \relates rotation
@@ -274,6 +298,17 @@ ptree cath::geom::make_ptree_of(const rotation &arg_rotation ///< The rotation t
 	ptree new_ptree;
 	save_to_ptree( new_ptree, arg_rotation );
 	return new_ptree;
+}
+
+/// \brief Build a rotation from a JSON string (via a ptree)
+///
+/// \relates rotation
+rotation cath::geom::rotation_from_json_string(const string &arg_json_string ///< The JSON string from which the rotation should be read
+                                               ) {
+	ptree tree;
+	istringstream in_ss( arg_json_string );
+	read_json( in_ss, tree);
+	return rotation_from_ptree( tree );
 }
 
 /// \brief Create a JSON string to represent the specified rotation
