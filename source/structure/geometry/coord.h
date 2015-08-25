@@ -72,10 +72,10 @@ namespace cath {
 			static const coord  UNIT_Z;
 
 			/// \brief TODOCUMENT
-			static const size_t NUM_DIMS;
+			static constexpr size_t NUM_DIMS = 3;
 
 			/// \brief TODOCUMENT
-			static const double TOLERANCE_FOR_COORD_CLOSENESS_CHECKS;
+			static constexpr double TOLERANCE_FOR_COORD_CLOSENESS_CHECKS = 0.00001;
 
 			coord(const double &,
 			      const double &,
