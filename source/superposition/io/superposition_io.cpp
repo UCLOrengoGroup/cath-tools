@@ -43,11 +43,20 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::sup;
+using namespace cath::sup::detail;
 using namespace std;
 
+using boost::algorithm::any_of;
 using boost::irange;
 using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;
+
+const string superposition_io_consts::ENTRIES_KEY         = "entries";
+const string superposition_io_consts::NAME_KEY            = "name";
+const string superposition_io_consts::ROTATION_KEY        = "rotation";
+const string superposition_io_consts::TRANSFORMATION_KEY  = "transformation";
+const string superposition_io_consts::TRANSFORMATIONS_KEY = "transformations";
+const string superposition_io_consts::TRANSLATION_KEY     = "translation";
 
 /// \brief TODOCUMENT
 ///
@@ -368,14 +377,14 @@ void cath::sup::write_superposed_pdb_from_files(const superposition &arg_superpo
 void cath::sup::save_to_ptree(ptree               &arg_ptree,        ///< The ptree to which the superposition should be saved
                               const superposition &arg_superposition ///< The superposition to save to the ptree
                               ) {
-	const auto transformations_key = string( "transformations" );
+	const auto transformations_key = string( superposition_io_consts::TRANSFORMATIONS_KEY );
 	arg_ptree.put_child( transformations_key, ptree{} );
 	auto &transformations_ptree = arg_ptree.get_child( transformations_key );
 
 	for (const size_t &index : irange( 0_z, arg_superposition.get_num_entries() ) ) {
 		ptree transformation_ptree;
-		transformation_ptree.put_child( "translation", make_ptree_of( arg_superposition.get_translation_of_index( index ) ) );
-		transformation_ptree.put_child( "rotation",    make_ptree_of( arg_superposition.get_rotation_of_index   ( index ) ) );
+		transformation_ptree.put_child( superposition_io_consts::TRANSLATION_KEY, make_ptree_of( arg_superposition.get_translation_of_index( index ) ) );
+		transformation_ptree.put_child( superposition_io_consts::ROTATION_KEY,    make_ptree_of( arg_superposition.get_rotation_of_index   ( index ) ) );
 		transformations_ptree.push_back( make_pair( "", transformation_ptree ) );
 	}
 }

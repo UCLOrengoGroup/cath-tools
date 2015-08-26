@@ -33,6 +33,19 @@ namespace cath { namespace file { class pdb_list; } }
 
 namespace cath {
 	namespace sup {
+		namespace detail {
+
+			/// \brief Store constants to be used in superposition I/O code
+			struct superposition_io_consts final {
+				static const std::string ENTRIES_KEY;
+				static const std::string NAME_KEY;
+				static const std::string ROTATION_KEY;
+				static const std::string TRANSFORMATION_KEY;
+				static const std::string TRANSFORMATIONS_KEY;
+				static const std::string TRANSLATION_KEY;
+			};
+
+		}
 
 		void write_xml_sup(std::ostream &,
 		                   const superposition &,

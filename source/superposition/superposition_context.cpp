@@ -37,6 +37,7 @@ using namespace cath::align;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::sup;
+using namespace cath::sup::detail;
 using namespace std;
 
 using boost::log::trivial::severity_level;
@@ -124,12 +125,10 @@ void cath::sup::save_to_ptree(ptree                       &arg_ptree,      ///< 
 		BOOST_LOG_TRIVIAL( warning ) << "Whilst converting a superposition_context to JSON, its alignment will be ignored because that is not currently supported";
 	}
 
-	/// \todo DRY
-	const auto transformations_key = string( "transformations" );
 	const auto supn_ptree          = make_ptree_of( arg_sup_context.get_superposition_cref() );
-	const auto trans_ptrees        = supn_ptree.get_child( transformations_key );
+	const auto trans_ptrees        = supn_ptree.get_child( superposition_io_consts::TRANSFORMATIONS_KEY );
 
-	const auto entries_key = "entries";
+	const auto entries_key = superposition_io_consts::ENTRIES_KEY;
 	arg_ptree.put_child( entries_key, ptree{} );
 	auto &entries_ptree = arg_ptree.get_child( entries_key );
 
@@ -138,8 +137,8 @@ void cath::sup::save_to_ptree(ptree                       &arg_ptree,      ///< 
 		trans_ptrees,
 		[&] (const string &name, const pair<string, ptree> &trans_ptree) {
 			ptree entry_ptree;
-			entry_ptree.put      ( "name",           name               );
-			entry_ptree.put_child( "transformation", trans_ptree.second );
+			entry_ptree.put      ( superposition_io_consts::NAME_KEY,           name               );
+			entry_ptree.put_child( superposition_io_consts::TRANSFORMATION_KEY, trans_ptree.second );
 			entries_ptree.push_back( make_pair( "", entry_ptree ) );
 		}
 	);
