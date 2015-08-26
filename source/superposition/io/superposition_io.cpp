@@ -21,10 +21,12 @@
 
 #include "superposition_io.h"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/range/irange.hpp>
 
+#include "common/algorithm/transform_build.h"
 #include "common/file/open_fstream.h"
 #include "common/size_t_literal.h"
 #include "exception/invalid_argument_exception.h"
@@ -34,6 +36,7 @@
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_list.h"
 #include "file/pdb/pdb_residue.h"
+#include "structure/structure_type_aliases.h"
 #include "superposition/superposition.h"
 
 #include <fstream>
@@ -371,6 +374,48 @@ void cath::sup::write_superposed_pdb_from_files(const superposition &arg_superpo
 	write_superposed_pdb_to_file( arg_superposition, arg_filename, pdbs, arg_write_script, arg_relabel_chain );
 }
 
+/// \brief Build a superposition from a superposition-populated ptree
+///
+/// \relates superposition
+superposition cath::sup::superposition_from_ptree(const ptree &arg_ptree ///< The ptree from which the superposition should be read
+                                                  ) {
+	// Sanity check the ptree
+	const auto tranformations      = arg_ptree.get_child( superposition_io_consts::TRANSFORMATIONS_KEY );
+	const auto num_transformations = tranformations.size();
+	if ( num_transformations != tranformations.count( "" ) ) {
+		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse superposition from property_tree with any unrecognised transformations fields"));
+	}
+	const auto transformation_entry_is_invalid = [] (const pair<const string, ptree> &x) {
+		return (
+			   x.second.size ()                                           != 2
+			|| x.second.count( superposition_io_consts::TRANSLATION_KEY ) != 1
+			|| x.second.count( superposition_io_consts::ROTATION_KEY    ) != 1
+		);
+	};
+	if ( any_of( tranformations, transformation_entry_is_invalid ) ) {
+		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse superposition from property_tree with invalid transformation entry"));
+	}
+
+	// Read the translations
+	const auto translations = transform_build<coord_vec>(
+		tranformations,
+		[] (const pair<const string, ptree> &x) {
+			return coord_from_ptree( x.second.get_child( superposition_io_consts::TRANSLATION_KEY ) );
+		}
+	);
+
+	// Parse the rotations
+	const auto rotations = transform_build<rotation_vec>(
+		tranformations,
+		[] (const pair<const string, ptree> &x) {
+			return rotation_from_ptree( x.second.get_child( superposition_io_consts::ROTATION_KEY ) );
+		}
+	);
+
+	// Return a superposition of these translations and rotations
+	return { translations, rotations };
+}
+
 /// \brief Save the specified superposition to the specified Boost Property Tree ptree
 ///
 /// \relates superposition
@@ -397,6 +442,17 @@ ptree cath::sup::make_ptree_of(const superposition &arg_superposition ///< The s
 	ptree new_ptree;
 	save_to_ptree( new_ptree, arg_superposition );
 	return new_ptree;
+}
+
+/// \brief Build a superposition from a JSON string (via a ptree)
+///
+/// \relates superposition
+superposition cath::sup::superposition_from_json_string(const string &arg_json_string ///< The JSON string from which the superposition should be read
+                                                        ) {
+	ptree tree;
+	istringstream in_ss( arg_json_string );
+	read_json( in_ss, tree);
+	return superposition_from_ptree( tree );
 }
 
 /// \brief Create a JSON string to represent the specified superposition

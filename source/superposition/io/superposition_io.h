@@ -85,10 +85,14 @@ namespace cath {
 		                                     const bool &,
 		                                     const bool &arg_relabel_chain = false);
 
+		superposition superposition_from_ptree(const boost::property_tree::ptree &);
+
 		void save_to_ptree(boost::property_tree::ptree &,
 		                   const superposition &);
 
 		boost::property_tree::ptree make_ptree_of(const superposition &);
+
+		superposition superposition_from_json_string(const std::string &);
 
 		std::string to_json_string(const superposition &,
 		                           const bool &arg_pretty_print = true);
