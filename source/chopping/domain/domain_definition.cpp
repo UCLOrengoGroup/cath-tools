@@ -22,6 +22,7 @@
 
 #include <boost/filesystem/path.hpp>
 
+#include "file/data_file.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"

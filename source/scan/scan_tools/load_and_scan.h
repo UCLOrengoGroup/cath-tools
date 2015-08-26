@@ -21,6 +21,8 @@
 #ifndef LOAD_AND_SCAN_H_INCLUDED
 #define LOAD_AND_SCAN_H_INCLUDED
 
+#include <boost/optional.hpp>
+
 #include "common/clone/clone_ptr.h"
 #include "scan/detail/scan_type_aliases.h"
 #include "scan/scan_tools/scan_metrics.h"

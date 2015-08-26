@@ -39,7 +39,6 @@
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_list.h"
 #include "file/pdb/pdb_residue.h"
-#include "options/options_block/data_dirs_options_block.h"
 #include "score/aligned_pair_score/drmsd_score.h"
 #include "score/aligned_pair_score/gsas_score.h"
 #include "score/aligned_pair_score/lddt_score.h"

@@ -25,6 +25,7 @@
 #include "common/boost_addenda/test/boost_check_equal_ranges.h"
 #include "common/file/open_fstream.h"
 #include "common/file/temp_file.h"
+#include "common/type_aliases.h"
 #include "options/options_block/data_dirs_options_block.h"
 
 #include <fstream>

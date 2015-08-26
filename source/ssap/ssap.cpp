@@ -167,6 +167,7 @@ using namespace cath;
 using namespace cath::align;
 using namespace cath::align::gap;
 using namespace cath::common;
+using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::sup;
 using namespace cath::opts;

@@ -23,6 +23,7 @@
 #include <boost/filesystem/path.hpp>
 
 #include "common/clone/make_uptr_clone.h"
+#include "file/data_file.h"
 #include "structure/protein/protein.h"
 #include "structure/protein/protein_io.h"
 #include "structure/protein/protein_source_file_set/protein_file_combn.h"
@@ -33,7 +34,7 @@
 using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
-using namespace cath::opts;
+using namespace cath::file;
 using namespace std;
 
 /// \brief A standard do_clone method.

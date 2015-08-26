@@ -26,7 +26,6 @@
 // #include "file/pdb/pdb_atom.h"
 // #include "file/pdb/pdb_list.h"
 // #include "file/pdb/pdb_residue.h"
-// #include "options/options_block/data_dirs_options_block.h"
 // #include "ssap/ssap.h"
 // #include "structure/geometry/angle.h"
 // #include "structure/protein/protein.h"

@@ -23,9 +23,11 @@
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
-#include "options/options_block/data_dirs_options_block.h"
+#include "file/file_type_aliases.h"
 #include "structure/protein/protein_list.h"
 #include "structure/protein/protein_source_file_set/protein_file_combn.h"
+
+namespace cath { namespace opts { class data_dirs_options_block; } }
 
 namespace cath {
 
@@ -42,14 +44,14 @@ namespace cath {
 		virtual std::unique_ptr<protein_source_file_set> do_clone() const = 0;
 
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the list of files it reads
-		virtual opts::data_file_vec do_get_file_set() const = 0;
+		virtual file::data_file_vec do_get_file_set() const = 0;
 
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the equivalent protein_file_combn value
 		virtual protein_file_combn do_get_protein_file_combn() const = 0;
 
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the behaviour to read the specified files
 		///        from a data_file_path_map that is pre-populated with the file types the concrete protein_source_file_set requires
-		virtual protein do_read_files(const opts::data_file_path_map &,
+		virtual protein do_read_files(const file::data_file_path_map &,
 		                              const std::string &,
 		                              std::ostream &) const = 0;
 
@@ -57,7 +59,7 @@ namespace cath {
 		virtual ~protein_source_file_set() noexcept = default;
 		std::unique_ptr<protein_source_file_set> clone() const;
 
-		opts::data_file_vec get_file_set() const;
+		file::data_file_vec get_file_set() const;
 		protein_file_combn get_protein_file_combn() const;
 		protein read_files(const opts::data_dirs_options_block &,
 		                   const std::string &,
@@ -74,7 +76,7 @@ namespace cath {
 	                                      const str_vec &,
 	                                      std::ostream &);
 
-	opts::data_file_path_map get_filename_of_data_file(const protein_source_file_set &,
+	file::data_file_path_map get_filename_of_data_file(const protein_source_file_set &,
 	                                                   const opts::data_dirs_options_block &,
 	                                                   const std::string &);
 

@@ -36,12 +36,15 @@
 #include "common/clone/make_uptr_clone.h"
 #include "exception/invalid_argument_exception.h"
 #include "exception/runtime_error_exception.h"
+#include "file/data_file.h"
 
 using namespace boost::algorithm;
 using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
+using namespace cath::file;
+using namespace cath::file::detail;
 using namespace cath::opts::detail;
 using namespace cath::opts;
 using namespace std;
@@ -54,12 +57,6 @@ using boost::algorithm::token_compress_on;
 using boost::lexical_cast;
 using boost::none;
 using boost::range::max_element;
-
-/// \brief A local set of all the data_file values
-const set<data_file> ALL_DATA_FILE_TYPES = { data_file::PDB,
-                                             data_file::DSSP,
-                                             data_file::WOLF,
-                                             data_file::SEC  };
 
 /// \brief Default values of each of the options (path, prefix, suffix) for each of the file types
 const data_dirs_options_block::file_option_str_map_map data_dirs_options_block::DATA_FILE_TYPE_OPTION_DEFAULTS = {
@@ -285,7 +282,7 @@ data_dirs_options_block cath::opts::build_data_dirs_options_block_of_path(const 
                                                                           ) {
 	const string arg_path_string = join_directories_into_path(arg_path);
 	data_dirs_options_block new_data_dirs;
-	for (const data_file &the_data_file : ALL_DATA_FILE_TYPES) {
+	for (const data_file &the_data_file : all_data_file_types) {
 		new_data_dirs.set_path_of_data_file( the_data_file, arg_path_string );
 	}
 	return new_data_dirs;
@@ -403,36 +400,3 @@ string cath::opts::join_directories_into_path(const path_vec &arg_dirs ///< The 
 	);
 }
 
-/// \brief Simple insertion operator for data_file
-///
-/// \relates data_file
-ostream & cath::opts::operator<<(ostream         &arg_os,       ///< The ostream to which to output the data_file
-                                 const data_file &arg_data_file ///< The data_file to output
-                                 ) {
-	switch (arg_data_file) {
-		case ( data_file::PDB  ) : { arg_os << "data_file::PDB"  ; break; }
-		case ( data_file::DSSP ) : { arg_os << "data_file::DSSP" ; break; }
-		case ( data_file::WOLF ) : { arg_os << "data_file::WOLF" ; break; }
-		case ( data_file::SEC  ) : { arg_os << "data_file::SEC"  ; break; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of data_file not recognised whilst inserting into an ostream"));
-			break; // Superfluous, post-throw break statement to appease Eclipse's syntax highlighter
-		}
-	}
-	return arg_os;
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates data_file
-size_t cath::opts::str_length_of_data_file(const data_file &arg_data_file ///< TODOCUMENT
-                                           ) {
-	return lexical_cast<string>( arg_data_file ).length();
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates data_file
-size_t cath::opts::max_data_file_str_length() {
-	return *max_element( ALL_DATA_FILE_TYPES | transformed( &str_length_of_data_file ) );
-}

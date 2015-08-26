@@ -26,6 +26,7 @@
 #include <utility>
 #include <vector>
 
+namespace cath { namespace file { enum class data_file : unsigned int; } }
 namespace cath { namespace file { class pdb; } }
 namespace cath { namespace file { class pdb_atom; } }
 namespace cath { namespace file { class pdb_list; } }
@@ -45,6 +46,19 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		using pdb_vec = std::vector<pdb>;
+
+
+		/// \brief Type alias for vector of data_files
+		using data_file_vec = std::vector<data_file>;
+
+		/// \brief Type alias for set of data_files
+		using data_file_set = std::set<data_file>;
+
+		/// \brief Type alias for pair of data_file and path
+		using data_file_path_pair = std::pair<data_file, boost::filesystem::path>;
+
+		/// \brief Type alias for map from data_file to path
+		using data_file_path_map = std::map<data_file, boost::filesystem::path>;
 	}
 }
 
