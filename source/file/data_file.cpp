@@ -20,40 +20,18 @@
 
 #include "data_file.h"
 
-//#include <boost/algorithm/string/case_conv.hpp>
-//#include <boost/algorithm/string/classification.hpp>
-//#include <boost/algorithm/string/join.hpp>
-//#include <boost/algorithm/string/replace.hpp>
-//#include <boost/algorithm/string/split.hpp>
 #include <boost/lexical_cast.hpp>
-//#include <boost/optional.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/max_element.hpp>
 
-//#include "common/algorithm/contains.h"
-//#include "common/boost_addenda/string_algorithm/split_build.h"
-//#include "common/c++14/make_unique.h"
-//#include "common/clone/make_uptr_clone.h"
 #include "exception/invalid_argument_exception.h"
-//#include "exception/runtime_error_exception.h"
 
-//using namespace boost::algorithm;
-//using namespace boost::filesystem;
-//using namespace boost::program_options;
-//using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
-//using namespace cath::opts::detail;
-//using namespace cath::opts;
 using namespace std;
 
 using boost::adaptors::transformed;
-//using boost::algorithm::is_any_of;
-//using boost::algorithm::join;
-//using boost::algorithm::replace_all_copy;
-//using boost::algorithm::token_compress_on;
 using boost::lexical_cast;
-//using boost::none;
 using boost::range::max_element;
 
 /// \brief TODOCUMENT
@@ -92,15 +70,15 @@ ostream & cath::file::operator<<(ostream         &arg_os,       ///< The ostream
 	return arg_os;
 }
 
-/// \brief TODOCUMENT
+/// \brief The length of the string representing the specified data_file
 ///
 /// \relates data_file
-size_t cath::file::str_length_of_data_file(const data_file &arg_data_file ///< TODOCUMENT
+size_t cath::file::str_length_of_data_file(const data_file &arg_data_file ///< The data_file whose string length should be returned
                                            ) {
 	return to_string( arg_data_file ).length();
 }
 
-/// \brief TODOCUMENT
+/// \brief The maximum length of the string representation of all data_file values
 ///
 /// \relates data_file
 size_t cath::file::max_data_file_str_length() {

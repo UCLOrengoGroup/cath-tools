@@ -28,7 +28,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/optional.hpp>
 #include <boost/range/adaptor/transformed.hpp>
-#include <boost/range/algorithm/max_element.hpp>
 
 #include "common/algorithm/contains.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
@@ -56,7 +55,6 @@ using boost::algorithm::replace_all_copy;
 using boost::algorithm::token_compress_on;
 using boost::lexical_cast;
 using boost::none;
-using boost::range::max_element;
 
 /// \brief Default values of each of the options (path, prefix, suffix) for each of the file types
 const data_dirs_options_block::file_option_str_map_map data_dirs_options_block::DATA_FILE_TYPE_OPTION_DEFAULTS = {
