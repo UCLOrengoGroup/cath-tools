@@ -129,7 +129,7 @@ namespace cath {
 		data_dirs_options_block build_data_dirs_options_block_of_dir(const boost::filesystem::path &);
 
 		path_vec get_path_of_data_file(const data_dirs_options_block &,
-		                                                           const data_file &);
+		                               const data_file &);
 
 		boost::filesystem::path find_file(const data_dirs_options_block &,
 		                                  const data_file &,
