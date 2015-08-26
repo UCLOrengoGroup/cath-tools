@@ -29,6 +29,7 @@
 #include "superposition/superposition.h"
 
 namespace cath { namespace align { class alignment_context; } }
+namespace cath { namespace opts { class data_dirs_options_block; } }
 
 namespace cath {
 	namespace sup {
@@ -65,7 +66,17 @@ namespace cath {
 			const superposition &    get_superposition_cref() const;
 			bool has_alignment() const;
 			const align::alignment & get_alignment_cref() const;
+
+			void set_pdbs(const file::pdb_list &);
 		};
+
+		size_t get_num_entries(const superposition_context &);
+
+		void load_pdbs_from_names(superposition_context &,
+		                          const opts::data_dirs_options_block &);
+
+		superposition_context load_pdbs_from_names_copy(superposition_context,
+		                                                const opts::data_dirs_options_block &);
 
 		align::alignment_context make_alignment_context(const superposition_context &);
 

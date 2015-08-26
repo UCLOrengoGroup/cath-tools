@@ -20,26 +20,31 @@
 
 #include "superposition_context.h"
 
+#include <boost/filesystem/path.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/range/algorithm_ext/for_each.hpp>
 
 #include "alignment/alignment_context.h"
+#include "common/algorithm/transform_build.h"
 #include "exception/invalid_argument_exception.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"
+#include "options/options_block/data_dirs_options_block.h"
 #include "superposition/io/superposition_io.h"
 
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::file;
+using namespace cath::opts;
 using namespace cath::sup;
 using namespace cath::sup::detail;
 using namespace std;
 
+using boost::filesystem::path;
 using boost::log::trivial::severity_level;
 using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;
@@ -93,6 +98,55 @@ const alignment & superposition_context::get_alignment_cref() const {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to get alignment from superposition_context that doesn't contain one"));
 	}
 	return *any_alignment;
+}
+
+/// \brief Setter for the PDBs
+///
+/// \pre arg_pdbs.size() == get_num_entries( *this ) else this throws an invalid_argument_exception
+void superposition_context::set_pdbs(const pdb_list &arg_pdbs ///< The PDBs to set
+                                     ) {
+	if ( arg_pdbs.size() != get_num_entries( *this ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception(
+			"Unable to load "                                           + to_string( arg_pdbs.size()          )
+			+ " pdbs into superposition context of superposition with " + to_string( get_num_entries( *this ) )
+			+ " entries"
+		));
+	}
+	pdbs = arg_pdbs;
+}
+
+/// \brief Get the number of entries in the specified superposition_context
+///
+/// \relates superposition_context
+size_t cath::sup::get_num_entries(const superposition_context &arg_superposition_context ///< The superposition_context to query
+                                  ) {
+	return arg_superposition_context.get_superposition_cref().get_num_entries();
+}
+
+/// \brief Load the specified superposition_context's PDBs using its names and the specified data_dirs_options_block
+///
+/// \relates superposition_context
+void cath::sup::load_pdbs_from_names(superposition_context         &arg_supn_context, ///< The superposition_context for which the PDBs should be loaded based on its names
+                                     const data_dirs_options_block &arg_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
+                                     ) {
+	arg_supn_context.set_pdbs(
+		transform_build<pdb_vec>(
+			arg_supn_context.get_names_cref(),
+			[&] (const string &name) {
+				return read_pdb_file( find_file( arg_data_dirs, data_file::PDB, name ) );
+			}
+		)
+	);
+}
+
+/// \brief Return a copy of the specified superposition_context with the PDBs loaded using its names and the specified data_dirs_options_block
+///
+/// \relates superposition_context
+superposition_context cath::sup::load_pdbs_from_names_copy(superposition_context          arg_supn_context, ///< The superposition_context from which the copy should be taken with the PDBs loaded based on its names
+                                                           const data_dirs_options_block &arg_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
+                                                           ) {
+	load_pdbs_from_names( arg_supn_context, arg_data_dirs );
+	return arg_supn_context;
 }
 
 /// \brief TODOCUMENT

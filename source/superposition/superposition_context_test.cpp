@@ -24,27 +24,30 @@
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_list.h"
 #include "file/pdb/pdb_residue.h"
+#include "options/options_block/data_dirs_options_block.h"
 #include "structure/geometry/coord_list.h"
 #include "superposition/superposition_context.h"
+#include "test/global_test_constants.h"
 
 using namespace cath::file;
 using namespace cath::geom;
+using namespace cath::opts;
 using namespace cath::sup;
 
 namespace cath {
 	namespace test {
 
 		/// \brief The superposition_context_test_suite_fixture to assist in testing superposition_context
-		struct superposition_context_test_suite_fixture {
+		struct superposition_context_test_suite_fixture : protected global_test_constants {
 		protected:
 			~superposition_context_test_suite_fixture() noexcept = default;
 
-			coord_list coord_list_1{ { coord{  1.0,  0.0,  0.0 }, coord{  2.0,   0.0,   0.0 } } };
-			coord_list coord_list_2{ { coord{  0.0, -1.0,  0.0 }, coord{  0.0,  -2.0,   0.0 } } };
-			superposition the_sup = create_pairwise_superposition( coord_list_1, coord_list_2 );
-			superposition_context the_sup_con{
+			const coord_list            coord_list_1{ { coord{  1.0,  0.0,  0.0 }, coord{  2.0,   0.0,   0.0 } } };
+			const coord_list            coord_list_2{ { coord{  0.0, -1.0,  0.0 }, coord{  0.0,  -2.0,   0.0 } } };
+			const superposition         the_sup = create_pairwise_superposition( coord_list_1, coord_list_2 );
+			const superposition_context the_sup_con {
 				pdb_list{ pdb_vec{ 2, pdb{} } },
-				str_vec { "name_a", "name_b" },
+				str_vec { "1c0pA01", "1hdoA00" },
 				the_sup
 			};
 		};
@@ -54,16 +57,30 @@ namespace cath {
 
 BOOST_FIXTURE_TEST_SUITE(superposition_context_test_suite, cath::test::superposition_context_test_suite_fixture)
 
+BOOST_AUTO_TEST_CASE(load_pdbs_from_names_copy_leaves_orig_empty_pdbs) {
+	const auto loaded_sup_con = load_pdbs_from_names_copy( the_sup_con, build_data_dirs_options_block_of_dir( TEST_SOURCE_DATA_DIR() ) );
+	BOOST_REQUIRE_EQUAL( the_sup_con.get_pdbs_cref().size(), 2 );
+	BOOST_CHECK_EQUAL  ( the_sup_con.get_pdbs_cref()[ 0 ].get_num_residues(), 0 );
+	BOOST_CHECK_EQUAL  ( the_sup_con.get_pdbs_cref()[ 1 ].get_num_residues(), 0 );
+}
+
+BOOST_AUTO_TEST_CASE(load_pdbs_from_names_copy_sets_two_pdbs_with_199_and_205_residues) {
+	const auto loaded_sup_con = load_pdbs_from_names_copy( the_sup_con, build_data_dirs_options_block_of_dir( TEST_SOURCE_DATA_DIR() ) );
+	BOOST_REQUIRE_EQUAL( loaded_sup_con.get_pdbs_cref().size(), 2 );
+	BOOST_CHECK_EQUAL  ( loaded_sup_con.get_pdbs_cref()[ 0 ].get_num_residues(), 199 );
+	BOOST_CHECK_EQUAL  ( loaded_sup_con.get_pdbs_cref()[ 1 ].get_num_residues(), 205 );
+}
+
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup_con) {
 	BOOST_CHECK_EQUAL(
 		to_json_string( the_sup_con, false ),
-		R"({"entries":[{"name":"name_a","transformation":{"translation":)"
+		R"({"entries":[{"name":"1c0pA01","transformation":{"translation":)"
 		R"({"x":"0","y":"0","z":"0"},)"
 		R"("rotation":)"
 		R"([["1","0","0"],)"
 		R"(["0","1","0"],)"
 		R"(["0","0","1"])"
-		R"(]}},{"name":"name_b","transformation":{"translation":)"
+		R"(]}},{"name":"1hdoA00","transformation":{"translation":)"
 		R"({"x":"0","y":"0","z":"0"},)"
 		R"("rotation":)"
 		R"([["0","-1","0"],)"
