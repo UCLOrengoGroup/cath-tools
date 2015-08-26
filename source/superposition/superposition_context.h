@@ -39,9 +39,16 @@ namespace cath {
 		/// of optionally storing an alignment
 		class superposition_context final {
 		private:
+			/// \brief The PDBs for the entries being superposed
 			file::pdb_list pdbs;
+
+			/// \brief The names of the entries to which the superposition refers
 			str_vec        names;
+
+			/// \brief The superposition itself
 			superposition  the_superposition;
+
+			/// \brief An optional alignment corresponding to the superposition
 			boost::optional<align::alignment> any_alignment;
 
 		public:
