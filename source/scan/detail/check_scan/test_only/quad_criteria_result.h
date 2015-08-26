@@ -30,7 +30,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			///
 			/// This includes whether the quad in quest
-			enum class quad_criteria_result : size_t {
+			enum class quad_criteria_result : unsigned int {
 				PASS,                      ///< TODOCUMENT
 				QUERY_FAILS_SINGLE_CHECKS, ///< TODOCUMENT
 				INDEX_FAILS_SINGLE_CHECKS, ///< TODOCUMENT

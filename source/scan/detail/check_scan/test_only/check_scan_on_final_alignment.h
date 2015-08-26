@@ -35,7 +35,7 @@ namespace cath { namespace scan { class scan_stride; } }
 namespace cath { namespace scan { namespace detail { class alignment_scan_comparison; } } }
 namespace cath { namespace scan { namespace detail { class multi_struc_res_rep_pair; } } }
 namespace cath { namespace scan { namespace detail { class quad_and_rep_criteria_result; } } }
-namespace cath { namespace scan { namespace detail { enum class quad_criteria_result : size_t; } } }
+namespace cath { namespace scan { namespace detail { enum class quad_criteria_result : unsigned int; } } }
 namespace cath { namespace scan { namespace detail { class roled_scan_stride; } } }
 namespace cath { namespace scan { namespace detail { class single_struc_res_pair; } } }
 
