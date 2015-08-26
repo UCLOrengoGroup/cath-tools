@@ -28,11 +28,7 @@
 #include "file/pdb/pdb_list.h"
 #include "superposition/superposition.h"
 
-namespace cath {
-	namespace align {
-		class alignment_context;
-	}
-}
+namespace cath { namespace align { class alignment_context; } }
 
 namespace cath {
 	namespace sup {
