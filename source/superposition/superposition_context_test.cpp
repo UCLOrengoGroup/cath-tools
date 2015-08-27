@@ -34,6 +34,8 @@ using namespace cath::geom;
 using namespace cath::opts;
 using namespace cath::sup;
 
+using namespace std;
+
 namespace cath {
 	namespace test {
 
@@ -50,6 +52,19 @@ namespace cath {
 				str_vec { "1c0pA01", "1hdoA00" },
 				the_sup
 			};
+			const string                json_string = R"({"entries":[{"name":"1c0pA01","transformation":{"translation":)"
+				R"({"x":"0","y":"0","z":"0"},)"
+				R"("rotation":)"
+				R"([["1","0","0"],)"
+				R"(["0","1","0"],)"
+				R"(["0","0","1"])"
+				R"(]}},{"name":"1hdoA00","transformation":{"translation":)"
+				R"({"x":"0","y":"0","z":"0"},)"
+				R"("rotation":)"
+				R"([["0","-1","0"],)"
+				R"(["0","0","-1"],)"
+				R"(["1","0","0"])"
+				R"(]}}]})" "\n";
 		};
 
 	}
@@ -71,24 +86,16 @@ BOOST_AUTO_TEST_CASE(load_pdbs_from_names_copy_sets_two_pdbs_with_199_and_205_re
 	BOOST_CHECK_EQUAL  ( loaded_sup_con.get_pdbs_cref()[ 1 ].get_num_residues(), 205 );
 }
 
+BOOST_AUTO_TEST_SUITE(json)
+
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup_con) {
 	BOOST_CHECK_EQUAL(
 		to_json_string( the_sup_con, false ),
-		R"({"entries":[{"name":"1c0pA01","transformation":{"translation":)"
-		R"({"x":"0","y":"0","z":"0"},)"
-		R"("rotation":)"
-		R"([["1","0","0"],)"
-		R"(["0","1","0"],)"
-		R"(["0","0","1"])"
-		R"(]}},{"name":"1hdoA00","transformation":{"translation":)"
-		R"({"x":"0","y":"0","z":"0"},)"
-		R"("rotation":)"
-		R"([["0","-1","0"],)"
-		R"(["0","0","-1"],)"
-		R"(["1","0","0"])"
-		R"(]}}]})" "\n"
+		json_string
 	);
 }
+
+BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()
 
