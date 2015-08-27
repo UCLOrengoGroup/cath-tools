@@ -61,25 +61,25 @@ str_vec options_block_tester::prepend_dummy_program_name_copy(const str_vec &arg
 void options_block_tester::parse_into_options_block(options_block &the_options_block, ///< The options_block to have options parsed into it
                                                     const str_vec &arg_options        ///< A vector of options strings to parse into the options_block (without the program name at the start - a dummy program name will be added)
 	                                                ) {
-		const str_vec opts_with_dummy_progname = prepend_dummy_program_name_copy(arg_options);
-		options_description  po_desc           = the_options_block.get_visible_options_description(100);
-		argc_argv_faker      faked_arguments( opts_with_dummy_progname );
+	const str_vec opts_with_dummy_progname = prepend_dummy_program_name_copy( arg_options );
+	options_description  po_desc           = the_options_block.get_visible_options_description( 100 );
+	argc_argv_faker      faked_arguments( opts_with_dummy_progname );
 
-//		cerr << "Parsing from options : " << faked_arguments << endl;
+	// cerr << "Parsing from options : " << faked_arguments << endl;
 
-		variables_map vm;
-		store(
-			command_line_parser(
-				faked_arguments.get_argc(),
-				faked_arguments.get_argv()
-			).options(
-				po_desc
-//			).positional(
-//				positionals
-			).run(),
-			vm
-		);
+	variables_map vm;
+	store(
+		command_line_parser(
+			faked_arguments.get_argc(),
+			faked_arguments.get_argv()
+		).options(
+			po_desc
+		// ).positional(
+		// 	positionals
+		).run(),
+		vm
+	);
 
-		// All parsing is complete so call notify, which will trigger any post-parsing hooks to get called
-		notify( vm );
-	}
+	// All parsing is complete so call notify, which will trigger any post-parsing hooks to get called
+	notify( vm );
+}
