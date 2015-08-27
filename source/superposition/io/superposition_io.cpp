@@ -21,6 +21,7 @@
 
 #include "superposition_io.h"
 
+#include <boost/range/adaptor/map.hpp>
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
@@ -49,6 +50,7 @@ using namespace cath::sup;
 using namespace cath::sup::detail;
 using namespace std;
 
+using boost::adaptors::map_values;
 using boost::algorithm::any_of;
 using boost::irange;
 using boost::property_tree::json_parser::write_json;
@@ -385,30 +387,30 @@ superposition cath::sup::superposition_from_ptree(const ptree &arg_ptree ///< Th
 	if ( num_transformations != tranformations.count( "" ) ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse superposition from property_tree with any unrecognised transformations fields"));
 	}
-	const auto transformation_entry_is_invalid = [] (const pair<const string, ptree> &x) {
+	const auto transformation_entry_is_invalid = [] (const ptree &x) {
 		return (
-			   x.second.size ()                                           != 2
-			|| x.second.count( superposition_io_consts::TRANSLATION_KEY ) != 1
-			|| x.second.count( superposition_io_consts::ROTATION_KEY    ) != 1
+			   x.size ()                                           != 2
+			|| x.count( superposition_io_consts::TRANSLATION_KEY ) != 1
+			|| x.count( superposition_io_consts::ROTATION_KEY    ) != 1
 		);
 	};
-	if ( any_of( tranformations, transformation_entry_is_invalid ) ) {
+	if ( any_of( tranformations | map_values, transformation_entry_is_invalid ) ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse superposition from property_tree with invalid transformation entry"));
 	}
 
 	// Read the translations
 	const auto translations = transform_build<coord_vec>(
-		tranformations,
-		[] (const pair<const string, ptree> &x) {
-			return coord_from_ptree( x.second.get_child( superposition_io_consts::TRANSLATION_KEY ) );
+		tranformations | map_values,
+		[] (const ptree &x) {
+			return coord_from_ptree( x.get_child( superposition_io_consts::TRANSLATION_KEY ) );
 		}
 	);
 
 	// Parse the rotations
 	const auto rotations = transform_build<rotation_vec>(
-		tranformations,
-		[] (const pair<const string, ptree> &x) {
-			return rotation_from_ptree( x.second.get_child( superposition_io_consts::ROTATION_KEY ) );
+		tranformations | map_values,
+		[] (const ptree &x) {
+			return rotation_from_ptree( x.get_child( superposition_io_consts::ROTATION_KEY ) );
 		}
 	);
 
