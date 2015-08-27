@@ -96,7 +96,6 @@ BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup_con) {
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works) {
-	cerr << to_json_string( the_sup_con, true ) << "\n";
 	const auto from_json_string = superposition_context_from_json_string( json_string );
 	BOOST_REQUIRE_EQUAL     ( from_json_string.get_pdbs_cref().size(),   2       );
 	BOOST_CHECK_EQUAL       ( from_json_string.get_pdbs_cref()[ 0 ].get_num_residues(), 0 );
