@@ -41,14 +41,14 @@ using namespace std;
 
 using boost::none;
 
-const string superposition_output_options_block::PO_SUP_FILE(          "sup-to-pdb-file"      );
-const string superposition_output_options_block::PO_SUP_FILES_DIR(     "sup-to-pdb-files-dir" );
-const string superposition_output_options_block::PO_SUP_TO_STDOUT(     "sup-to-stdout"        );
-const string superposition_output_options_block::PO_SUP_TO_PYMOL(      "sup-to-pymol"         );
-const string superposition_output_options_block::PO_PYMOL_PROGRAM(     "pymol-program"        );
+const string superposition_output_options_block::PO_SUP_FILE         ( "sup-to-pdb-file"      );
+const string superposition_output_options_block::PO_SUP_FILES_DIR    ( "sup-to-pdb-files-dir" );
+const string superposition_output_options_block::PO_SUP_TO_STDOUT    ( "sup-to-stdout"        );
+const string superposition_output_options_block::PO_SUP_TO_PYMOL     ( "sup-to-pymol"         );
+const string superposition_output_options_block::PO_PYMOL_PROGRAM    ( "pymol-program"        );
 const string superposition_output_options_block::PO_SUP_TO_PYMOL_FILE( "sup-to-pymol-file"    );
 
-const string superposition_output_options_block::DEFAULT_PYMOL_PROGRAM("pymol");
+const string superposition_output_options_block::DEFAULT_PYMOL_PROGRAM( "pymol" );
 
 /// \brief A standard do_clone method.
 unique_ptr<options_block> superposition_output_options_block::do_clone() const {
