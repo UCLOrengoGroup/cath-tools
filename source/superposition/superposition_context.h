@@ -21,6 +21,7 @@
 #ifndef SUPERPOSITION_CONTEXT_H_INCLUDED
 #define SUPERPOSITION_CONTEXT_H_INCLUDED
 
+#include <boost/operators.hpp>
 #include <boost/optional.hpp>
 
 #include "alignment/alignment.h"
@@ -38,7 +39,7 @@ namespace cath {
 		///
 		/// ATM, this is little more than a tuple<pdb_list, str_vec, superposition> with nice names and extra functionality
 		/// of optionally storing an alignment
-		class superposition_context final {
+		class superposition_context final : private boost::equality_comparable<superposition_context> {
 		private:
 			/// \brief The PDBs for the entries being superposed
 			file::pdb_list pdbs;
@@ -70,6 +71,12 @@ namespace cath {
 			void set_pdbs(const file::pdb_list &);
 		};
 
+//		bool operator==(const superposition_context &,
+//		                const superposition_context &);
+
+//		std::ostream & operator<<(std::ostream &,
+//		                          const superposition_context &);
+
 		size_t get_num_entries(const superposition_context &);
 
 		void load_pdbs_from_names(superposition_context &,
@@ -80,10 +87,14 @@ namespace cath {
 
 		align::alignment_context make_alignment_context(const superposition_context &);
 
+		superposition_context superposition_context_from_ptree(const boost::property_tree::ptree &);
+
 		void save_to_ptree(boost::property_tree::ptree &,
 		                   const superposition_context &);
 
 		boost::property_tree::ptree make_ptree_of(const superposition_context &);
+
+		superposition_context superposition_context_from_json_string(const std::string &);
 
 		std::string to_json_string(const superposition_context &,
 		                           const bool &arg_pretty_print = true);

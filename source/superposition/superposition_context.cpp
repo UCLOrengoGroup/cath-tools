@@ -20,10 +20,13 @@
 
 #include "superposition_context.h"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/range/adaptor/map.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm_ext/for_each.hpp>
 
 #include "alignment/alignment_context.h"
@@ -33,17 +36,22 @@
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"
 #include "options/options_block/data_dirs_options_block.h"
+#include "structure/structure_type_aliases.h"
 #include "superposition/io/superposition_io.h"
 
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::file;
+using namespace cath::geom;
 using namespace cath::opts;
 using namespace cath::sup;
 using namespace cath::sup::detail;
 using namespace std;
 
+using boost::adaptors::map_values;
+using boost::adaptors::transformed;
+using boost::algorithm::any_of;
 using boost::filesystem::path;
 using boost::log::trivial::severity_level;
 using boost::property_tree::json_parser::write_json;
@@ -115,6 +123,22 @@ void superposition_context::set_pdbs(const pdb_list &arg_pdbs ///< The PDBs to s
 	pdbs = arg_pdbs;
 }
 
+///// \brief TODOCUMENT
+/////
+///// \relates superposition_context
+//bool cath::sup::operator==(const superposition_context &arg_sup_con_a, ///< TODOCUMENT
+//                           const superposition_context &arg_sup_con_b  ///< TODOCUMENT
+//                           ) {
+//}
+
+///// \brief TODOCUMENT
+/////
+///// \relates superposition_context
+//ostream & cath::sup::operator<<(ostream                     &arg_os,     ///< TODOCUMENT
+//                                const superposition_context &arg_sup_con ///< TODOCUMENT
+//                                ) {
+//}
+
 /// \brief Get the number of entries in the specified superposition_context
 ///
 /// \relates superposition_context
@@ -166,6 +190,71 @@ alignment_context cath::sup::make_alignment_context(const superposition_context 
 	);
 }
 
+/// \brief  Build a coord from a superposition_context-populated ptree
+///
+/// \relates superposition_context
+superposition_context cath::sup::superposition_context_from_ptree(const ptree &arg_ptree ///< The ptree from which the superposition_context should be read
+                                                                  ) {
+	// Define a lambda for checking whether an entry ptree is invalid
+	const auto entry_is_invalid = [] (const ptree &x) {
+		return ( x.size() != 2
+			  || x.count( superposition_io_consts::NAME_KEY           ) != 1
+			  || x.count( superposition_io_consts::TRANSFORMATION_KEY ) != 1 );
+	};
+
+	// Define a lambda for returning an entry ptree's transformation ptree child
+	const auto get_transformation_child = [] (const ptree &x) {
+		return x.get_child( superposition_io_consts::TRANSFORMATION_KEY );
+	};
+
+	// Sanity check the ptree [ Step 1: check there's one key, which is entries ]
+	if ( arg_ptree.size() != 1 || arg_ptree.count( superposition_io_consts::ENTRIES_KEY ) != 1 ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
+	}
+	const auto entries = arg_ptree.get_child( superposition_io_consts::ENTRIES_KEY );
+
+	// Sanity check the ptree [ Step 2: check that all entries have empty keys ]
+	if ( entries.size() != entries.count( "" ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
+	}
+
+	// Sanity check the ptree [ Step 3: check that all values contain exactly two keys, name and transformation ]
+	if ( any_of( entries | map_values, entry_is_invalid ) ) {
+		BOOST_THROW_EXCEPTION(runtime_error_exception(""));
+	}
+
+	// Read the names
+	const auto names = transform_build<str_vec>(
+		entries | map_values,
+		[] (const ptree &x) {
+			return x.get<string>( superposition_io_consts::NAME_KEY );
+		}
+	);
+
+	// Read the translations
+	const auto translations = transform_build<coord_vec>(
+		entries | map_values | transformed( get_transformation_child ),
+		[] (const ptree &x) {
+			return coord_from_ptree( x.get_child( superposition_io_consts::TRANSLATION_KEY ) );
+		}
+	);
+
+	// Parse the rotations
+	const auto rotations = transform_build<rotation_vec>(
+		entries | map_values | transformed( get_transformation_child ),
+		[] (const ptree &x) {
+			return rotation_from_ptree( x.get_child( superposition_io_consts::ROTATION_KEY ) );
+		}
+	);
+
+	// Return a superposition_context built from the parsed data
+	return {
+		pdb_list{ pdb_vec{ names.size() } },
+		names,
+		superposition{ translations, rotations }
+	};
+}
+
 /// \brief TODOCUMENT
 ///
 /// At present, this stores the names and the superposition but does nothing
@@ -182,9 +271,8 @@ void cath::sup::save_to_ptree(ptree                       &arg_ptree,      ///< 
 	const auto supn_ptree          = make_ptree_of( arg_sup_context.get_superposition_cref() );
 	const auto trans_ptrees        = supn_ptree.get_child( superposition_io_consts::TRANSFORMATIONS_KEY );
 
-	const auto entries_key = superposition_io_consts::ENTRIES_KEY;
-	arg_ptree.put_child( entries_key, ptree{} );
-	auto &entries_ptree = arg_ptree.get_child( entries_key );
+	arg_ptree.put_child( superposition_io_consts::ENTRIES_KEY, ptree{} );
+	auto &entries_ptree = arg_ptree.get_child( superposition_io_consts::ENTRIES_KEY );
 
 	for_each(
 		arg_sup_context.get_names_cref(),
@@ -209,6 +297,17 @@ ptree cath::sup::make_ptree_of(const superposition_context &arg_sup_context ///<
 	ptree new_ptree;
 	save_to_ptree( new_ptree, arg_sup_context );
 	return new_ptree;
+}
+
+/// \brief Build a superposition_context from a JSON string (via a ptree)
+///
+/// \relates superposition_context
+superposition_context cath::sup::superposition_context_from_json_string(const string &arg_json_string ///< The JSON string from which the superposition_context should be read
+                                                                        ) {
+	ptree tree;
+	istringstream in_ss( arg_json_string );
+	read_json( in_ss, tree);
+	return superposition_context_from_ptree( tree );
 }
 
 /// \brief Create a JSON string to represent the specified superposition
