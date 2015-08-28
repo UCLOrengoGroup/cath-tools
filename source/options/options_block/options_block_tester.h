@@ -44,6 +44,10 @@ namespace cath {
 			static void parse_into_options_block(cath::opts::options_block &,
 			                                     const str_vec &);
 
+			template <typename OB>
+			static OB parse_into_options_block_copy(OB,
+			                                        const str_vec &);
+
 			static const std::string          UNKNOWN_OPT;
 			static const std::string          TEST_OPTION_1;
 			static const std::string          TEST_OPTION_2;
@@ -51,6 +55,16 @@ namespace cath {
 			static const std::string          TEST_HELP_2;
 			static const str_str_str_pair_map TEST_DESC_AND_HELP_OF_OPTION_NAME;
 		};
+
+		/// \brief For a concrete options_block, parse the specified options into a copy of the specified block
+		template <typename OB>
+		OB options_block_tester::parse_into_options_block_copy(OB             arg_options_block, ///< The options_block from which a copy should be taken that then has the options parsed into it
+		                                                       const str_vec &arg_options        ///< A vector of options strings to parse into the options_block (without the program name at the start - a dummy program name will be added)
+		                                                       ) {
+			parse_into_options_block( arg_options_block, arg_options );
+			return arg_options_block;
+		}
+
 	}
 }
 

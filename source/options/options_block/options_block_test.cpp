@@ -117,9 +117,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(invalid_string_works, options_block_type, all_opti
 
 /// \brief Check that the parsing throws on an unrecognised option
 BOOST_AUTO_TEST_CASE_TEMPLATE(throws_on_unrecognised_option, options_block_type, all_options_block_types) {
-	options_block_type the_options_block(construct_options_block_for_testing<options_block_type>());
 	BOOST_CHECK_THROW(
-		parse_into_options_block(the_options_block, str_vec(1, UNKNOWN_OPT)),
+		parse_into_options_block_copy( construct_options_block_for_testing<options_block_type>(), { UNKNOWN_OPT } ),
 		unknown_option
 	);
 }
