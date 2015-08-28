@@ -20,11 +20,24 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "display/display_spec/display_spec.h"
+#include "exception/not_implemented_exception.h"
+#include "options/options_block/options_block_tester.h"
+#include "options/options_block/superposition_output_options_block.h"
+#include "options/outputter/superposition_outputter/superposition_outputter.h"
+#include "options/outputter/superposition_outputter/superposition_outputter_list.h"
+
+using namespace cath;
+using namespace cath::common;
+using namespace cath::opts;
+
+using boost::filesystem::path;
+
 namespace cath {
 	namespace test {
 
 		/// \brief The superposition_output_options_block_test_suite_fixture to assist in testing superposition_output_options_block
-		struct superposition_output_options_block_test_suite_fixture {
+		struct superposition_output_options_block_test_suite_fixture : protected options_block_tester {
 		protected:
 			~superposition_output_options_block_test_suite_fixture() noexcept = default;
 		};
@@ -34,9 +47,26 @@ namespace cath {
 
 BOOST_FIXTURE_TEST_SUITE(superposition_output_options_block_test_suite, cath::test::superposition_output_options_block_test_suite_fixture)
 
-/// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK( true );
+BOOST_AUTO_TEST_CASE(unparsed_has_no_json_file) {
+	BOOST_CHECK( superposition_output_options_block{}.get_json_file().empty() );
 }
+
+BOOST_AUTO_TEST_CASE(parses_option_for_to_json_file) {
+	const auto parsed_block = parse_into_options_block_copy(
+		superposition_output_options_block{},
+		{ "--sup-to-json-file", "the_filename" }
+	);
+	BOOST_CHECK_EQUAL( parsed_block.get_json_file(), path( "the_filename" ) );
+}
+
+BOOST_AUTO_TEST_CASE(option_for_to_json_file_not_yet_implemented_outputter) {
+	const auto parsed_block = parse_into_options_block_copy(
+		superposition_output_options_block{},
+		{ "--sup-to-json-file", "the_filename" }
+	);
+	BOOST_REQUIRE_THROW( parsed_block.get_superposition_outputters( display_spec{ "", false, false, false, false } ), not_implemented_exception );
+	BOOST_WARN_MESSAGE( false, "Currently testing for not_implemented_exception on attempt to use JSON superposition outputter" );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 

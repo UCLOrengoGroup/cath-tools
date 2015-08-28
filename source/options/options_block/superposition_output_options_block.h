@@ -31,12 +31,18 @@ namespace cath { namespace opts { class superposition_outputter; } }
 namespace cath { namespace opts { class superposition_outputter_list; } }
 namespace cath { class display_spec; }
 
+namespace superposition_output_options_block_test_suite { struct parses_option_for_to_json_file; }
+namespace superposition_output_options_block_test_suite { struct unparsed_has_no_json_file; }
+
 namespace cath {
 	namespace opts {
 
 		/// \brief TODOCUMENT
 		class superposition_output_options_block final : public options_block {
 		private:
+			friend struct superposition_output_options_block_test_suite::parses_option_for_to_json_file;
+			friend struct superposition_output_options_block_test_suite::unparsed_has_no_json_file;
+
 			using super = options_block;
 
 			static const std::string PO_SUP_FILE;
@@ -45,6 +51,7 @@ namespace cath {
 			static const std::string PO_SUP_TO_PYMOL;
 			static const std::string PO_PYMOL_PROGRAM;
 			static const std::string PO_SUP_TO_PYMOL_FILE;
+			static const std::string PO_SUP_TO_JSON_FILE;
 
 			static const std::string DEFAULT_PYMOL_PROGRAM;
 
@@ -54,6 +61,7 @@ namespace cath {
 			bool sup_to_pymol;
 			boost::filesystem::path sup_to_pymol_file;
 			boost::filesystem::path pymol_program;
+			boost::filesystem::path json_file;
 
 			virtual std::unique_ptr<options_block> do_clone() const override final;
 			virtual std::string do_get_block_name() const override final;
@@ -66,10 +74,13 @@ namespace cath {
 			bool get_sup_to_pymol() const;
 			boost::filesystem::path get_pymol_program() const;
 			boost::filesystem::path get_sup_to_pymol_file() const;
+			boost::filesystem::path get_json_file() const;
 
 		public:
 			virtual ~superposition_output_options_block() noexcept = default;
 
+			/// \todo Consider adding a sister get_superposition_outputters() for getting non-display outputters
+			///       without having to specify a display_spec
 			superposition_outputter_list get_superposition_outputters(const display_spec &) const;
 			bool outputs_to_stdout() const;
 		};

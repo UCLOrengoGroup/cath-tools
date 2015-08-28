@@ -23,6 +23,7 @@
 #include <boost/optional.hpp>
 
 #include "common/clone/make_uptr_clone.h"
+#include "exception/not_implemented_exception.h"
 #include "options/outputter/superposition_outputter/ostream_superposition_outputter.h"
 #include "options/outputter/superposition_outputter/pdb_file_superposition_outputter.h"
 #include "options/outputter/superposition_outputter/pdb_files_superposition_outputter.h"
@@ -47,6 +48,7 @@ const string superposition_output_options_block::PO_SUP_TO_STDOUT    ( "sup-to-s
 const string superposition_output_options_block::PO_SUP_TO_PYMOL     ( "sup-to-pymol"         );
 const string superposition_output_options_block::PO_PYMOL_PROGRAM    ( "pymol-program"        );
 const string superposition_output_options_block::PO_SUP_TO_PYMOL_FILE( "sup-to-pymol-file"    );
+const string superposition_output_options_block::PO_SUP_TO_JSON_FILE ( "sup-to-json-file"     );
 
 const string superposition_output_options_block::DEFAULT_PYMOL_PROGRAM( "pymol" );
 
@@ -69,7 +71,8 @@ void superposition_output_options_block::do_add_visible_options_to_description(o
 		(PO_SUP_TO_STDOUT.c_str(),     bool_switch(&sup_to_stdout)->default_value(false),                 "Print the superposed structures to stdout, separated using faked chain codes"                 )
 		(PO_SUP_TO_PYMOL.c_str(),      bool_switch(&sup_to_pymol )->default_value(false),                 "Start up PyMOL for viewing the superposition"                                                 )
 		(PO_PYMOL_PROGRAM.c_str(),     value<path>(&pymol_program)->default_value(DEFAULT_PYMOL_PROGRAM), "Use arg as the PyMOL executable for viewing; may optionally include the full path"            )
-		(PO_SUP_TO_PYMOL_FILE.c_str(), value<path>(&sup_to_pymol_file),                                   "Write the superposition to a PyMOL script arg\n(Recommended filename extension: .pml)"        );
+		(PO_SUP_TO_PYMOL_FILE.c_str(), value<path>(&sup_to_pymol_file),                                   "Write the superposition to a PyMOL script arg\n(Recommended filename extension: .pml)"        )
+		(PO_SUP_TO_JSON_FILE.c_str(),  value<path>(&json_file),                                           "Write the superposition to JSON superposition file\n(Recommended filename extension: .sup_json)"        );
 }
 
 opt_str superposition_output_options_block::do_invalid_string() const {
@@ -87,6 +90,9 @@ opt_str superposition_output_options_block::do_invalid_string() const {
 	}
 	if (!get_sup_to_pymol_file().empty() && !is_acceptable_output_file(get_sup_to_pymol_file())) {
 		return "Not a valid superposition PyMOL output file:\"" + get_sup_to_pymol_file().string() + "\"";
+	}
+	if (!get_json_file().empty() && !is_acceptable_output_file(get_json_file())) {
+		return "Not a valid superposition JSON output file:\"" + get_json_file().string() + "\"";
 	}
 
 	return none;
@@ -122,6 +128,11 @@ path superposition_output_options_block::get_sup_to_pymol_file() const {
 	return sup_to_pymol_file;
 }
 
+/// TODOCUMENT
+path superposition_output_options_block::get_json_file() const {
+	return json_file;
+}
+
 superposition_outputter_list superposition_output_options_block::get_superposition_outputters(const display_spec &arg_display_spec ///< TODOCUMENT
                                                                                               ) const {
 	superposition_outputter_list superposition_outputters;
@@ -139,6 +150,9 @@ superposition_outputter_list superposition_output_options_block::get_superpositi
 	}
 	if ( ! get_sup_to_pymol_file().empty() ) {
 		superposition_outputters.push_back( pymol_file_superposition_outputter( get_sup_to_pymol_file(), arg_display_spec ) );
+	}
+	if ( ! get_json_file().empty() ) {
+		BOOST_THROW_EXCEPTION(not_implemented_exception("Not yet implemented a JSON superposition outputter"));
 	}
 
 	return superposition_outputters;
