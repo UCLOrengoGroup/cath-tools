@@ -407,6 +407,7 @@ set(
 
 set(
 	NORMSOURCES_FILE_SSAP_SCORES_FILE
+		file/ssap_scores_file/ssap_scores_entry.cpp
 		file/ssap_scores_file/ssap_scores_file.cpp
 )
 
@@ -1207,6 +1208,7 @@ set(
 
 set(
 	TESTSOURCES_FILE_SSAP_SCORES_FILE
+		file/ssap_scores_file/ssap_scores_entry_test.cpp
 		file/ssap_scores_file/ssap_scores_file_test.cpp
 )
 

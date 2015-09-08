@@ -31,6 +31,7 @@ namespace cath { namespace file { class pdb; } }
 namespace cath { namespace file { class pdb_atom; } }
 namespace cath { namespace file { class pdb_list; } }
 namespace cath { namespace file { class pdb_residue; } }
+namespace cath { namespace file { class ssap_scores_entry; } }
 
 namespace cath {
 	namespace file {
@@ -59,6 +60,10 @@ namespace cath {
 
 		/// \brief Type alias for map from data_file to path
 		using data_file_path_map = std::map<data_file, boost::filesystem::path>;
+
+
+		/// \brief Type alias for a vector of ssap_scores_entry objects
+		using ssap_scores_entry_vec = std::vector<ssap_scores_entry>;
 	}
 }
 

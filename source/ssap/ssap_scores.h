@@ -26,6 +26,8 @@
 namespace cath {
 
 	/// \brief TODOCUMENT (Complex score measures)
+	///
+	/// \todo Eradicate the substantial redundancy between this and cath::file::ssap_scores_entry.
 	class ssap_scores final {
 	private:
 		/// \brief TODOCUMENT
