@@ -18,25 +18,30 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/range/algorithm_ext/insert.hpp>
 #include <boost/algorithm/string/join.hpp> // ***** TEMPORARY *****
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
 #include <boost/range/algorithm_ext/insert.hpp>
+#include <boost/range/algorithm_ext/insert.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/algorithm/contains.h"
 #include "common/algorithm/sort_uniq_copy.h"
+#include "common/algorithm/transform_build.h"
 #include "common/file/simple_file_read_write.h"
-#include "score_classn_value_results_set.h"
+#include "file/ssap_scores_file/ssap_scores_entry.h"
+#include "file/ssap_scores_file/ssap_scores_entry_to_score_classn_value.h"
+#include "file/ssap_scores_file/ssap_scores_file.h"
 #include "score/pair_scatter_plotter/pair_scatter_plotter.h"
+#include "score/score_classification/label_pair_is_positive/label_pair_is_positive.h"
 #include "score/true_pos_false_neg/classn_rate_stat.h"
 #include "score/true_pos_false_neg/classn_stat_pair_series.h"
 #include "score/true_pos_false_neg/classn_stat_plotter/classn_stat_plotter.h"
 #include "score/true_pos_false_neg/classn_stat_plotter/classn_stat_plotter_spec.h"
 #include "score/true_pos_false_neg/named_true_false_pos_neg_list.h"
 #include "score/true_pos_false_neg/named_true_false_pos_neg_list_list.h"
+#include "score_classn_value_results_set.h"
 
 using namespace cath;
 using namespace cath::common;
@@ -49,6 +54,8 @@ using boost::filesystem::path;
 using boost::none;
 using boost::optional;
 using boost::range::insert;
+using cath::file::ssap_scores_entry;
+using cath::file::ssap_scores_file;
 
 namespace cath {
 	namespace test {
@@ -72,7 +79,7 @@ namespace cath {
 			const score_classn_value_results_set & get_som2_scores() const {
 				static score_classn_value_results_set some2_scores;
 				if ( some2_scores.empty() ) {
-					some2_scores = read_from_dir( path( "/export/spare/ucbctnl/som2_scores" ), select_file() );
+					some2_scores = read_from_dir( path( "/export/people/ucbctnl/som2_scores" ), select_file() );
 				}
 				return some2_scores;
 			}
@@ -81,7 +88,7 @@ namespace cath {
 			const score_classn_value_results_set & get_refined_som2_scores() const {
 				static score_classn_value_results_set refined_som2_scores;
 				if ( refined_som2_scores.empty() ) {
-					refined_som2_scores = read_from_dir( path( "/export/spare/ucbctnl/refined_som2_scores" ), select_file() );
+					refined_som2_scores = read_from_dir( path( "/export/people/ucbctnl/refined_som2_scores" ), select_file() );
 				}
 				return refined_som2_scores;
 			}
@@ -105,54 +112,121 @@ namespace cath {
 				);
 			}
 
-
-
 			/// \brief TODOCUMENT
 			class select_file {
 			public:
 				optional<pair<bool, string>> operator()(const path &arg_file) const {
 //					optional<pair<bool, string>> select_file(const path &arg_file) {
-						using opt_bool_str_pair = optional<pair<bool, string>>;
-						if ( file_size( arg_file ) < 100
-								|| icontains( arg_file.string(), "stderr" )
-								|| icontains( arg_file.string(), "svmlight_data" ) ) {
-							return opt_bool_str_pair( none );
-						}
-
-						const auto file_stem = arg_file.stem().string();
-						return opt_bool_str_pair{ make_pair(
-							score_classn_value_results_set_test_suite_fixture::is_positive( file_stem ),
-							file_stem
-						) };
+					using opt_bool_str_pair = optional<pair<bool, string>>;
+					if ( file_size( arg_file ) < 100
+							|| icontains( arg_file.string(), "stderr" )
+							|| icontains( arg_file.string(), "svmlight_data" ) ) {
+						return opt_bool_str_pair( none );
 					}
+
+					const auto file_stem = arg_file.stem().string();
+					return opt_bool_str_pair{ make_pair(
+						score_classn_value_results_set_test_suite_fixture::is_positive( file_stem ),
+						file_stem
+					) };
+				}
 			};
+		};
+
+		/// \brief TODOCUMENT
+		struct ticket_913_fixture : protected score_classn_value_results_set_test_suite_fixture {
+			const path root_dir                 = path( "/cath/homes2/ucbctnl/svm_gubbins_files" );
+//			const path random_pairs_subset_file = root_dir / "random_pairs_subset.txt";
+
+			const path labelled_pair_list       = root_dir / "pair_list.labelled";
+
+			const path hmmscan_results_file     = root_dir / "results.hmmscan";
+			const path hmmsearch_results_file   = root_dir / "results.hmmsearch";
+			const path comp_prc_results_dir     = root_dir / "results.prc";
+			const path ssap_results_file        = root_dir / "results.ssap";
+
+
+
+			// grep -PR '\d+\s+cath\|' . -H | awk '{print $1 " " $4 " " $2}' | tr '|' ' ' | tr ':' ' ' | tr '/' ' ' | sed 's/\.out//g' | awk '{print $2 " " $7 " " $4}' | grep -Fwf $ESU/svm/svm_data/random_pairs_subset.txt > $ESU/svm/svm_data/hhsearch_comp_results/hhsearch_comp_full_results.txt
+			//
+			// ls prc_results_with_duplicates_removed/* | xargs awk '{print $1 " " $6 " BREAK " $0}' | grep -Fwf random_pairs_subset.txt | sort | cut -d ' ' -f 4- > prc_results_with_duplicates_removed/prc_results_with_duplicates_removed.txt
+			// awk '{print $1 " " $2 " BREAK " $0}' ssap_results/ssap_results | grep -Fwf random_pairs_subset.txt | sort | cut -d ' ' -f 4- > ssap_results.sorted.txt
+			//
+			// cd /cath/godzilla-data1/people/ucbctnl/hhsuite_pairwise_v4_0_0_benchmark/johannes_results/
+			// grep -PR '\d+\s+cath\|' . -H | sed 's/^\.\///g' | sed 's/\.out:/ /g' | perl -n -e 'my $line = $_; chomp($line); if ( $line =~ /^\b(\d\w{3}\S\d{2})\b.*\b(\d\w{3}\S\d{2})\b/ ) { print "$1 $2 BREAK $line\n"; } else { die $line }' | grep -Fwf /export/people/ucbctnl/svm/svm_data/random_pairs_subset.sorted.txt | sort | cut -d ' ' -f 4- > /export/people/ucbctnl/svm/svm_data/jo
+			//
+			// sort hmmscan_results/hmmscan_results.txt     > hmmscan_results/hmmscan_results.sorted.txt
+			// sort hmmsearch_results/hmmsearch_results.txt > hmmsearch_results/hmmsearch_results.sorted.txt
+
+			// Prefer hmmscan over hmmsearch
+
+			// Build magic function from SSAP and PRC
+			// SSAP score alone
+			// SSAP score plus gubbins
 		};
 
 	}
 }
 
+
+
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::score_classn_value_results_set_test_suite_fixture)
 
+
+
+
+BOOST_FIXTURE_TEST_SUITE(ticket_913, cath::test::ticket_913_fixture)
+
+/// \brief TODOCUMENT
+BOOST_AUTO_TEST_CASE(ssap) {
+	const auto ssap_data = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file );
+	BOOST_REQUIRE_EQUAL( ssap_data.size(), 21576 );
+
+//	const auto is_pos = make_label_pair_is_positive( labelled_pair_list );
+//
+//	const score_classn_value_list_vec the_results = {
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_ssap_score, true,  "SSAP score" ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_rmsd,       false, "RMSD"       )
+//	};
+//
+//	plot_both(
+//		the_results,
+//		"/tmp/saxophone_right_here",
+//		{
+//			{ "SSAP score", opt_str{ R"( linetype 1 linecolor rgb "black" linewidth 3 )" } },
+//			{ "RMSD",       opt_str{ R"( linetype 1 linecolor rgb "red"   linewidth 3 )" } }
+//		}
+//	);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+
+
+
+//BOOST_AUTO_TEST_SUITE(score_classn_value_results_set_test_suite)
+//
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(ssap) {
 //	auto som2_results = make_score_classn_value_list_vec( get_som2_scores() );
 //	plot_both(
 //		som2_results,
-//		"/export/spare/ucbctnl/sab_graphs/1.ssap",
+//		"/export/people/ucbctnl/sab_graphs/1.ssap",
 //		{ { "ssap", opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } } }
 //	);
 //
 ////	plot_roc(
 ////		classn_stat_plotter(),
-////		"/export/spare/ucbctnl/sab_graphs/1.ssap.roc",
+////		"/export/people/ucbctnl/sab_graphs/1.ssap.roc",
 ////		som2_results,
 ////		make_standard_score_roc_plotter_spec( { { "ssap", opt_str{ R"( linetype 1 linecolor rgb "#000000" )" } } } )
 ////	);
 ////
 ////	plot_precision_recall(
 ////		classn_stat_plotter(),
-////		"/export/spare/ucbctnl/sab_graphs/1.ssap.precision_recall",
+////		"/export/people/ucbctnl/sab_graphs/1.ssap.precision_recall",
 ////		som2_results,
 ////		make_standard_score_precision_recall_plotter_spec( { { "ssap", opt_str{ R"( linetype 1 linecolor rgb "#000000" )" } } } )
 ////	);
@@ -164,7 +238,7 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //
 //	plot_both(
 //		som2_results,
-//		"/export/spare/ucbctnl/sab_graphs/2.ssap_plus_naives",
+//		"/export/people/ucbctnl/sab_graphs/2.ssap_plus_naives",
 //		{
 //			{ "ssap",                                                 opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
 //			{ "shorter_protein_length",                               opt_str{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
@@ -182,7 +256,7 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //
 //	plot_both(
 //		som2_results,
-//		"/export/spare/ucbctnl/sab_graphs/3.ssap_plus_basics",
+//		"/export/people/ucbctnl/sab_graphs/3.ssap_plus_basics",
 //		{
 //			{ "ssap",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
 //			{ "GSAS",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
@@ -215,7 +289,7 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //	auto som2_results = make_score_classn_value_list_vec( get_som2_scores() );
 //
 //	const score_classn_value_list native_tm_align_results = read_score_classn_value_list(
-//		"/export/spare/ucbctnl/tm_align_data.txt",
+//		"/export/people/ucbctnl/tm_align_data.txt",
 //		true,
 //		"Native TM-align",
 //		[&] (const str_vec &x) { return is_positive( x.front() ); }
@@ -225,7 +299,7 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //
 //	plot_both(
 //		som2_results,
-//		"/export/spare/ucbctnl/sab_graphs/4.ssap_plus_natives_and_non_natives",
+//		"/export/people/ucbctnl/sab_graphs/4.ssap_plus_natives_and_non_natives",
 //		{
 //			{ "ssap",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
 ////			{ "GSAS",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
@@ -261,7 +335,7 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //	auto som2_results = make_score_classn_value_list_vec( orig_results );
 //
 //	const score_classn_value_list native_tm_align_results = read_score_classn_value_list(
-//		"/export/spare/ucbctnl/tm_align_data.txt",
+//		"/export/people/ucbctnl/tm_align_data.txt",
 //		true,
 //		"Native TM-align",
 //		[&] (const str_vec &x) { return is_positive( x.front() ); }
@@ -271,7 +345,7 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //
 //	plot_both(
 //		som2_results,
-//		"/export/spare/ucbctnl/sab_graphs/5.ssap_plus_natives_and_non_natives_on_refined",
+//		"/export/people/ucbctnl/sab_graphs/5.ssap_plus_natives_and_non_natives_on_refined",
 //		{
 //			{ "ssap",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
 ////			{ "GSAS",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
@@ -306,7 +380,7 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //
 //	plot_both(
 //		som2_results,
-//		"/export/spare/ucbctnl/sab_graphs/6.ssap_plus_basics_plus_extras",
+//		"/export/people/ucbctnl/sab_graphs/6.ssap_plus_basics_plus_extras",
 //		{
 //			{ "ssap.cb_atoms.high_accuracy.num_excluded_on_sides:10.distance_score_formula_simplified", opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
 //			{ "GSAS.select_best_score_percent[70].cb_atoms",                                            opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
@@ -364,23 +438,23 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //	auto som2_results = make_score_classn_value_list_vec( get_som2_scores() );
 //
 //	const auto svm_light_play = read_svmlight_predictions_files( { {
-//		{  path(  "/export/spare/ucbctnl/som2_scores/some_svmlight_data.1.test_predictions"  ),  "SVM01"  },
-//		{  path(  "/export/spare/ucbctnl/som2_scores/some_svmlight_data.2.test_predictions"  ),  "SVM02"  },
-//		{  path(  "/export/spare/ucbctnl/som2_scores/some_svmlight_data.3.test_predictions"  ),  "SVM03"  },
-//		{  path(  "/export/spare/ucbctnl/som2_scores/some_svmlight_data.4.test_predictions"  ),  "SVM04"  },
-//		{  path(  "/export/spare/ucbctnl/som2_scores/some_svmlight_data.5.test_predictions"  ),  "SVM05"  },
-//		{  path(  "/export/spare/ucbctnl/som2_scores/some_svmlight_data.6.test_predictions"  ),  "SVM06"  },
-//		{  path(  "/export/spare/ucbctnl/som2_scores/some_svmlight_data.7.test_predictions"  ),  "SVM07"  },
-//		{  path(  "/export/spare/ucbctnl/som2_scores/some_svmlight_data.8.test_predictions"  ),  "SVM08"  },
-//		{  path(  "/export/spare/ucbctnl/som2_scores/some_svmlight_data.9.test_predictions"  ),  "SVM09"  },
-//		{  path(  "/export/spare/ucbctnl/som2_scores/some_svmlight_data.10.test_predictions" ),  "SVM10"  }
+//		{  path(  "/export/people/ucbctnl/som2_scores/some_svmlight_data.1.test_predictions"  ),  "SVM01"  },
+//		{  path(  "/export/people/ucbctnl/som2_scores/some_svmlight_data.2.test_predictions"  ),  "SVM02"  },
+//		{  path(  "/export/people/ucbctnl/som2_scores/some_svmlight_data.3.test_predictions"  ),  "SVM03"  },
+//		{  path(  "/export/people/ucbctnl/som2_scores/some_svmlight_data.4.test_predictions"  ),  "SVM04"  },
+//		{  path(  "/export/people/ucbctnl/som2_scores/some_svmlight_data.5.test_predictions"  ),  "SVM05"  },
+//		{  path(  "/export/people/ucbctnl/som2_scores/some_svmlight_data.6.test_predictions"  ),  "SVM06"  },
+//		{  path(  "/export/people/ucbctnl/som2_scores/some_svmlight_data.7.test_predictions"  ),  "SVM07"  },
+//		{  path(  "/export/people/ucbctnl/som2_scores/some_svmlight_data.8.test_predictions"  ),  "SVM08"  },
+//		{  path(  "/export/people/ucbctnl/som2_scores/some_svmlight_data.9.test_predictions"  ),  "SVM09"  },
+//		{  path(  "/export/people/ucbctnl/som2_scores/some_svmlight_data.10.test_predictions" ),  "SVM10"  }
 //	} } );
 //
 //	insert( som2_results, end( som2_results ), svm_light_play );
 //
 //	plot_both(
 //		som2_results,
-//		"/export/spare/ucbctnl/sab_graphs/7.ssap_plus_basics_plus_extras_plus_svm",
+//		"/export/people/ucbctnl/sab_graphs/7.ssap_plus_basics_plus_extras_plus_svm",
 //		{
 //			{ "SVM01",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
 //			{ "SVM02",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
@@ -451,23 +525,23 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //	auto som2_results = make_score_classn_value_list_vec( orig_results );
 //
 //	const auto svm_light_play = read_svmlight_predictions_files( { {
-//		{  path(  "/export/spare/ucbctnl/refined_som2_scores/svmlight_data.1.test_predictions"  ),  "SVM01"  },
-//		{  path(  "/export/spare/ucbctnl/refined_som2_scores/svmlight_data.2.test_predictions"  ),  "SVM02"  },
-//		{  path(  "/export/spare/ucbctnl/refined_som2_scores/svmlight_data.3.test_predictions"  ),  "SVM03"  },
-//		{  path(  "/export/spare/ucbctnl/refined_som2_scores/svmlight_data.4.test_predictions"  ),  "SVM04"  },
-//		{  path(  "/export/spare/ucbctnl/refined_som2_scores/svmlight_data.5.test_predictions"  ),  "SVM05"  },
-//		{  path(  "/export/spare/ucbctnl/refined_som2_scores/svmlight_data.6.test_predictions"  ),  "SVM06"  },
-//		{  path(  "/export/spare/ucbctnl/refined_som2_scores/svmlight_data.7.test_predictions"  ),  "SVM07"  },
-//		{  path(  "/export/spare/ucbctnl/refined_som2_scores/svmlight_data.8.test_predictions"  ),  "SVM08"  },
-//		{  path(  "/export/spare/ucbctnl/refined_som2_scores/svmlight_data.9.test_predictions"  ),  "SVM09"  },
-//		{  path(  "/export/spare/ucbctnl/refined_som2_scores/svmlight_data.10.test_predictions" ),  "SVM10"  }
+//		{  path(  "/export/people/ucbctnl/refined_som2_scores/svmlight_data.1.test_predictions"  ),  "SVM01"  },
+//		{  path(  "/export/people/ucbctnl/refined_som2_scores/svmlight_data.2.test_predictions"  ),  "SVM02"  },
+//		{  path(  "/export/people/ucbctnl/refined_som2_scores/svmlight_data.3.test_predictions"  ),  "SVM03"  },
+//		{  path(  "/export/people/ucbctnl/refined_som2_scores/svmlight_data.4.test_predictions"  ),  "SVM04"  },
+//		{  path(  "/export/people/ucbctnl/refined_som2_scores/svmlight_data.5.test_predictions"  ),  "SVM05"  },
+//		{  path(  "/export/people/ucbctnl/refined_som2_scores/svmlight_data.6.test_predictions"  ),  "SVM06"  },
+//		{  path(  "/export/people/ucbctnl/refined_som2_scores/svmlight_data.7.test_predictions"  ),  "SVM07"  },
+//		{  path(  "/export/people/ucbctnl/refined_som2_scores/svmlight_data.8.test_predictions"  ),  "SVM08"  },
+//		{  path(  "/export/people/ucbctnl/refined_som2_scores/svmlight_data.9.test_predictions"  ),  "SVM09"  },
+//		{  path(  "/export/people/ucbctnl/refined_som2_scores/svmlight_data.10.test_predictions" ),  "SVM10"  }
 //	} } );
 ////
 //	insert( som2_results, end( som2_results ), svm_light_play );
 //
 //	plot_both(
 //		som2_results,
-//		"/export/spare/ucbctnl/sab_graphs/8.ssap_plus_basics_plus_extras_plus_svm_on_refined",
+//		"/export/people/ucbctnl/sab_graphs/8.ssap_plus_basics_plus_extras_plus_svm_on_refined",
 //		{
 //			{ "SVM01",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
 //			{ "SVM02",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
@@ -532,7 +606,7 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //	);
 //
 ////	mt19937 rng{ random_device{}() };
-////	write_to_svm_light_data_files( orig_results, "/export/spare/ucbctnl/refined_som2_scores/svmlight_data", 10, rng, 0.5 );
+////	write_to_svm_light_data_files( orig_results, "/export/people/ucbctnl/refined_som2_scores/svmlight_data", 10, rng, 0.5 );
 //}
 
 
@@ -639,9 +713,9 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //
 ////	auto lovely_results = read_from_dir(
 //////		path( "/cath/homes2/ucbctnl/ssap_invest_over_subset_data/many_scores" ),
-//////		path( "/export/spare/ucbctnl/many_scores" ),
-//////		path( "/export/spare/ucbctnl/full_scores" ),
-////		path( "/export/spare/ucbctnl/som2_scores" ),
+//////		path( "/export/people/ucbctnl/many_scores" ),
+//////		path( "/export/people/ucbctnl/full_scores" ),
+////		path( "/export/people/ucbctnl/som2_scores" ),
 ////		[&] (const path &arg_file) {
 ////			using opt_bool_str_pair = optional<pair<bool, string>>;
 ////			if ( file_size( arg_file ) < 100 || icontains( arg_file.string(), "stderr" ) ) {
@@ -685,139 +759,139 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //
 //
 //	const auto svm_light_play = read_svmlight_predictions_files( { {
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.0001_c0.0001220703125.test_predictions"     ),  "RBF  [gamma:  0.0001;  c:  c0.0001220703125"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.0001_c0.015625.test_predictions"            ),  "RBF  [gamma:  0.0001;  c:  c0.015625"             },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.0001_c0.25.test_predictions"                ),  "RBF  [gamma:  0.0001;  c:  c0.25"                 },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.0001_c32.test_predictions"                  ),  "RBF  [gamma:  0.0001;  c:  c32"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.001_c0.000244140625.test_predictions"       ),  "RBF  [gamma:  0.001;   c:  c0.000244140625"       },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.001_c0.00048828125.test_predictions"        ),  "RBF  [gamma:  0.001;   c:  c0.00048828125"        },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.001_c0.015625.test_predictions"             ),  "RBF  [gamma:  0.001;   c:  c0.015625"             },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.001_c7.62939453125e-06.test_predictions"    ),  "RBF  [gamma:  0.001;   c:  c7.62939453125e-06"    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.01_c0.000244140625.test_predictions"        ),  "RBF  [gamma:  0.01;    c:  c0.000244140625"       },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.01_c0.0009765625.test_predictions"          ),  "RBF  [gamma:  0.01;    c:  c0.0009765625"         },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.01_c0.00390625.test_predictions"            ),  "RBF  [gamma:  0.01;    c:  c0.00390625"           },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.01_c0.125.test_predictions"                 ),  "RBF  [gamma:  0.01;    c:  c0.125"                },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.01_c7.62939453125e-06.test_predictions"     ),  "RBF  [gamma:  0.01;    c:  c7.62939453125e-06"    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.1_c0.0001220703125.test_predictions"        ),  "RBF  [gamma:  0.1;     c:  c0.0001220703125"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.1_c0.000244140625.test_predictions"         ),  "RBF  [gamma:  0.1;     c:  c0.000244140625"       },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.1_c0.0078125.test_predictions"              ),  "RBF  [gamma:  0.1;     c:  c0.0078125"            },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.1_c0.03125.test_predictions"                ),  "RBF  [gamma:  0.1;     c:  c0.03125"              },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.1_c0.5.test_predictions"                    ),  "RBF  [gamma:  0.1;     c:  c0.5"                  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c0.0001220703125.test_predictions"     ),  "RBF  [gamma:  100000;  c:  c0.0001220703125"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c0.0078125.test_predictions"           ),  "RBF  [gamma:  100000;  c:  c0.0078125"            },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c0.0625.test_predictions"              ),  "RBF  [gamma:  100000;  c:  c0.0625"               },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c16.test_predictions"                  ),  "RBF  [gamma:  100000;  c:  c16"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c32.test_predictions"                  ),  "RBF  [gamma:  100000;  c:  c32"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c8.test_predictions"                   ),  "RBF  [gamma:  100000;  c:  c8"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c0.0001220703125.test_predictions"      ),  "RBF  [gamma:  10000;   c:  c0.0001220703125"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c0.0009765625.test_predictions"         ),  "RBF  [gamma:  10000;   c:  c0.0009765625"         },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c1.52587890625e-05.test_predictions"    ),  "RBF  [gamma:  10000;   c:  c1.52587890625e-05"    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c3.0517578125e-05.test_predictions"     ),  "RBF  [gamma:  10000;   c:  c3.0517578125e-05"     },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c6.103515625e-05.test_predictions"      ),  "RBF  [gamma:  10000;   c:  c6.103515625e-05"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c8.test_predictions"                    ),  "RBF  [gamma:  10000;   c:  c8"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1000_c0.0009765625.test_predictions"          ),  "RBF  [gamma:  1000;    c:  c0.0009765625"         },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1000_c0.03125.test_predictions"               ),  "RBF  [gamma:  1000;    c:  c0.03125"              },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1000_c3.814697265625e-06.test_predictions"    ),  "RBF  [gamma:  1000;    c:  c3.814697265625e-06"   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1000_c6.103515625e-05.test_predictions"       ),  "RBF  [gamma:  1000;    c:  c6.103515625e-05"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1000_c7.62939453125e-06.test_predictions"     ),  "RBF  [gamma:  1000;    c:  c7.62939453125e-06"    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100_c0.001953125.test_predictions"            ),  "RBF  [gamma:  100;     c:  c0.001953125"          },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100_c0.00390625.test_predictions"             ),  "RBF  [gamma:  100;     c:  c0.00390625"           },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100_c0.0625.test_predictions"                 ),  "RBF  [gamma:  100;     c:  c0.0625"               },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c0.0001220703125.test_predictions"         ),  "RBF  [gamma:  10;      c:  c0.0001220703125"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c0.0009765625.test_predictions"            ),  "RBF  [gamma:  10;      c:  c0.0009765625"         },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c0.00390625.test_predictions"              ),  "RBF  [gamma:  10;      c:  c0.00390625"           },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c0.0625.test_predictions"                  ),  "RBF  [gamma:  10;      c:  c0.0625"               },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c0.125.test_predictions"                   ),  "RBF  [gamma:  10;      c:  c0.125"                },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c1.9073486328125e-06.test_predictions"     ),  "RBF  [gamma:  10;      c:  c1.9073486328125e-06"  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c6.103515625e-05.test_predictions"         ),  "RBF  [gamma:  10;      c:  c6.103515625e-05"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c7.62939453125e-06.test_predictions"       ),  "RBF  [gamma:  10;      c:  c7.62939453125e-06"    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1_c0.0078125.test_predictions"                ),  "RBF  [gamma:  1;       c:  c0.0078125"            },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1_c0.03125.test_predictions"                  ),  "RBF  [gamma:  1;       c:  c0.03125"              },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1_c0.5.test_predictions"                      ),  "RBF  [gamma:  1;       c:  c0.5"                  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c0.000244140625.test_predictions"       ),  "RBF  [gamma:  1e-05;   c:  c0.000244140625"       },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c0.03125.test_predictions"              ),  "RBF  [gamma:  1e-05;   c:  c0.03125"              },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-05;   c:  c0.125"                },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c0.25.test_predictions"                 ),  "RBF  [gamma:  1e-05;   c:  c0.25"                 },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-05;   c:  c0.5"                  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c1.test_predictions"                    ),  "RBF  [gamma:  1e-05;   c:  c1"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c8.test_predictions"                    ),  "RBF  [gamma:  1e-05;   c:  c8"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-06_c1.9073486328125e-06.test_predictions"  ),  "RBF  [gamma:  1e-06;   c:  c1.9073486328125e-06"  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-07_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-07;   c:  c0.125"                },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-07_c4.test_predictions"                    ),  "RBF  [gamma:  1e-07;   c:  c4"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c0.0001220703125.test_predictions"      ),  "RBF  [gamma:  1e-08;   c:  c0.0001220703125"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c0.00390625.test_predictions"           ),  "RBF  [gamma:  1e-08;   c:  c0.00390625"           },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c0.03125.test_predictions"              ),  "RBF  [gamma:  1e-08;   c:  c0.03125"              },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c0.0625.test_predictions"               ),  "RBF  [gamma:  1e-08;   c:  c0.0625"               },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-08;   c:  c0.125"                },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c1.52587890625e-05.test_predictions"    ),  "RBF  [gamma:  1e-08;   c:  c1.52587890625e-05"    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c1.9073486328125e-06.test_predictions"  ),  "RBF  [gamma:  1e-08;   c:  c1.9073486328125e-06"  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c4.test_predictions"                    ),  "RBF  [gamma:  1e-08;   c:  c4"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-09_c0.00390625.test_predictions"           ),  "RBF  [gamma:  1e-09;   c:  c0.00390625"           },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-09_c0.0625.test_predictions"               ),  "RBF  [gamma:  1e-09;   c:  c0.0625"               },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c0.000244140625.test_predictions"       ),  "RBF  [gamma:  1e-10;   c:  c0.000244140625"       },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c0.25.test_predictions"                 ),  "RBF  [gamma:  1e-10;   c:  c0.25"                 },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-10;   c:  c0.5"                  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c16.test_predictions"                   ),  "RBF  [gamma:  1e-10;   c:  c16"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c4.test_predictions"                    ),  "RBF  [gamma:  1e-10;   c:  c4"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c9.5367431640625e-07.test_predictions"  ),  "RBF  [gamma:  1e-10;   c:  c9.5367431640625e-07"  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c0.0001220703125.test_predictions"      ),  "RBF  [gamma:  1e-11;   c:  c0.0001220703125"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c0.001953125.test_predictions"          ),  "RBF  [gamma:  1e-11;   c:  c0.001953125"          },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c0.00390625.test_predictions"           ),  "RBF  [gamma:  1e-11;   c:  c0.00390625"           },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c0.015625.test_predictions"             ),  "RBF  [gamma:  1e-11;   c:  c0.015625"             },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-11;   c:  c0.125"                },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c1.9073486328125e-06.test_predictions"  ),  "RBF  [gamma:  1e-11;   c:  c1.9073486328125e-06"  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c3.0517578125e-05.test_predictions"     ),  "RBF  [gamma:  1e-11;   c:  c3.0517578125e-05"     },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c0.0001220703125.test_predictions"      ),  "RBF  [gamma:  1e-12;   c:  c0.0001220703125"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c0.0078125.test_predictions"            ),  "RBF  [gamma:  1e-12;   c:  c0.0078125"            },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c0.015625.test_predictions"             ),  "RBF  [gamma:  1e-12;   c:  c0.015625"             },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-12;   c:  c0.125"                },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-12;   c:  c0.5"                  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c16.test_predictions"                   ),  "RBF  [gamma:  1e-12;   c:  c16"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c3.0517578125e-05.test_predictions"     ),  "RBF  [gamma:  1e-12;   c:  c3.0517578125e-05"     },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-13_c0.00390625.test_predictions"           ),  "RBF  [gamma:  1e-13;   c:  c0.00390625"           },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-13_c0.0625.test_predictions"               ),  "RBF  [gamma:  1e-13;   c:  c0.0625"               },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-13_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-13;   c:  c0.5"                  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-13_c1.9073486328125e-06.test_predictions"  ),  "RBF  [gamma:  1e-13;   c:  c1.9073486328125e-06"  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-13_c6.103515625e-05.test_predictions"      ),  "RBF  [gamma:  1e-13;   c:  c6.103515625e-05"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-14;   c:  c0.5"                  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c16.test_predictions"                   ),  "RBF  [gamma:  1e-14;   c:  c16"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c32.test_predictions"                   ),  "RBF  [gamma:  1e-14;   c:  c32"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c4.test_predictions"                    ),  "RBF  [gamma:  1e-14;   c:  c4"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c6.103515625e-05.test_predictions"      ),  "RBF  [gamma:  1e-14;   c:  c6.103515625e-05"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c8.test_predictions"                    ),  "RBF  [gamma:  1e-14;   c:  c8"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c9.5367431640625e-07.test_predictions"  ),  "RBF  [gamma:  1e-14;   c:  c9.5367431640625e-07"  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c0.000244140625.test_predictions"       ),  "RBF  [gamma:  1e-15;   c:  c0.000244140625"       },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c0.0009765625.test_predictions"         ),  "RBF  [gamma:  1e-15;   c:  c0.0009765625"         },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c0.001953125.test_predictions"          ),  "RBF  [gamma:  1e-15;   c:  c0.001953125"          },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c0.015625.test_predictions"             ),  "RBF  [gamma:  1e-15;   c:  c0.015625"             },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c0.0625.test_predictions"               ),  "RBF  [gamma:  1e-15;   c:  c0.0625"               },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c1.test_predictions"                    ),  "RBF  [gamma:  1e-15;   c:  c1"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c2.test_predictions"                    ),  "RBF  [gamma:  1e-15;   c:  c2"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c32.test_predictions"                   ),  "RBF  [gamma:  1e-15;   c:  c32"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-16_c0.001953125.test_predictions"          ),  "RBF  [gamma:  1e-16;   c:  c0.001953125"          },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-16_c0.03125.test_predictions"              ),  "RBF  [gamma:  1e-16;   c:  c0.03125"              },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-16_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-16;   c:  c0.5"                  },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-17_c0.0078125.test_predictions"            ),  "RBF  [gamma:  1e-17;   c:  c0.0078125"            },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-17_c0.03125.test_predictions"              ),  "RBF  [gamma:  1e-17;   c:  c0.03125"              },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-17_c3.814697265625e-06.test_predictions"   ),  "RBF  [gamma:  1e-17;   c:  c3.814697265625e-06"   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-17_c6.103515625e-05.test_predictions"      ),  "RBF  [gamma:  1e-17;   c:  c6.103515625e-05"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c0.0001220703125.test_predictions"      ),  "RBF  [gamma:  1e-18;   c:  c0.0001220703125"      },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c0.03125.test_predictions"              ),  "RBF  [gamma:  1e-18;   c:  c0.03125"              },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c0.0625.test_predictions"               ),  "RBF  [gamma:  1e-18;   c:  c0.0625"               },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c0.25.test_predictions"                 ),  "RBF  [gamma:  1e-18;   c:  c0.25"                 },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c16.test_predictions"                   ),  "RBF  [gamma:  1e-18;   c:  c16"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c7.62939453125e-06.test_predictions"    ),  "RBF  [gamma:  1e-18;   c:  c7.62939453125e-06"    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c8.test_predictions"                    ),  "RBF  [gamma:  1e-18;   c:  c8"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c0.00048828125.test_predictions"        ),  "RBF  [gamma:  1e-19;   c:  c0.00048828125"        },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c0.0009765625.test_predictions"         ),  "RBF  [gamma:  1e-19;   c:  c0.0009765625"         },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-19;   c:  c0.125"                },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c16.test_predictions"                   ),  "RBF  [gamma:  1e-19;   c:  c16"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c1.test_predictions"                    ),  "RBF  [gamma:  1e-19;   c:  c1"                    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c7.62939453125e-06.test_predictions"    ),  "RBF  [gamma:  1e-19;   c:  c7.62939453125e-06"    },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-20_c0.0009765625.test_predictions"         ),  "RBF  [gamma:  1e-20;   c:  c0.0009765625"         },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-20_c0.00390625.test_predictions"           ),  "RBF  [gamma:  1e-20;   c:  c0.00390625"           },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-20_c16.test_predictions"                   ),  "RBF  [gamma:  1e-20;   c:  c16"                   },
-////		{  path(  "/export/spare/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-20_c1.9073486328125e-06.test_predictions"  ),  "RBF  [gamma:  1e-20;   c:  c1.9073486328125e-06"  }
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.0001_c0.0001220703125.test_predictions"     ),  "RBF  [gamma:  0.0001;  c:  c0.0001220703125"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.0001_c0.015625.test_predictions"            ),  "RBF  [gamma:  0.0001;  c:  c0.015625"             },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.0001_c0.25.test_predictions"                ),  "RBF  [gamma:  0.0001;  c:  c0.25"                 },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.0001_c32.test_predictions"                  ),  "RBF  [gamma:  0.0001;  c:  c32"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.001_c0.000244140625.test_predictions"       ),  "RBF  [gamma:  0.001;   c:  c0.000244140625"       },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.001_c0.00048828125.test_predictions"        ),  "RBF  [gamma:  0.001;   c:  c0.00048828125"        },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.001_c0.015625.test_predictions"             ),  "RBF  [gamma:  0.001;   c:  c0.015625"             },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.001_c7.62939453125e-06.test_predictions"    ),  "RBF  [gamma:  0.001;   c:  c7.62939453125e-06"    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.01_c0.000244140625.test_predictions"        ),  "RBF  [gamma:  0.01;    c:  c0.000244140625"       },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.01_c0.0009765625.test_predictions"          ),  "RBF  [gamma:  0.01;    c:  c0.0009765625"         },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.01_c0.00390625.test_predictions"            ),  "RBF  [gamma:  0.01;    c:  c0.00390625"           },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.01_c0.125.test_predictions"                 ),  "RBF  [gamma:  0.01;    c:  c0.125"                },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.01_c7.62939453125e-06.test_predictions"     ),  "RBF  [gamma:  0.01;    c:  c7.62939453125e-06"    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.1_c0.0001220703125.test_predictions"        ),  "RBF  [gamma:  0.1;     c:  c0.0001220703125"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.1_c0.000244140625.test_predictions"         ),  "RBF  [gamma:  0.1;     c:  c0.000244140625"       },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.1_c0.0078125.test_predictions"              ),  "RBF  [gamma:  0.1;     c:  c0.0078125"            },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.1_c0.03125.test_predictions"                ),  "RBF  [gamma:  0.1;     c:  c0.03125"              },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_0.1_c0.5.test_predictions"                    ),  "RBF  [gamma:  0.1;     c:  c0.5"                  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c0.0001220703125.test_predictions"     ),  "RBF  [gamma:  100000;  c:  c0.0001220703125"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c0.0078125.test_predictions"           ),  "RBF  [gamma:  100000;  c:  c0.0078125"            },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c0.0625.test_predictions"              ),  "RBF  [gamma:  100000;  c:  c0.0625"               },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c16.test_predictions"                  ),  "RBF  [gamma:  100000;  c:  c16"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c32.test_predictions"                  ),  "RBF  [gamma:  100000;  c:  c32"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100000_c8.test_predictions"                   ),  "RBF  [gamma:  100000;  c:  c8"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c0.0001220703125.test_predictions"      ),  "RBF  [gamma:  10000;   c:  c0.0001220703125"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c0.0009765625.test_predictions"         ),  "RBF  [gamma:  10000;   c:  c0.0009765625"         },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c1.52587890625e-05.test_predictions"    ),  "RBF  [gamma:  10000;   c:  c1.52587890625e-05"    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c3.0517578125e-05.test_predictions"     ),  "RBF  [gamma:  10000;   c:  c3.0517578125e-05"     },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c6.103515625e-05.test_predictions"      ),  "RBF  [gamma:  10000;   c:  c6.103515625e-05"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10000_c8.test_predictions"                    ),  "RBF  [gamma:  10000;   c:  c8"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1000_c0.0009765625.test_predictions"          ),  "RBF  [gamma:  1000;    c:  c0.0009765625"         },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1000_c0.03125.test_predictions"               ),  "RBF  [gamma:  1000;    c:  c0.03125"              },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1000_c3.814697265625e-06.test_predictions"    ),  "RBF  [gamma:  1000;    c:  c3.814697265625e-06"   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1000_c6.103515625e-05.test_predictions"       ),  "RBF  [gamma:  1000;    c:  c6.103515625e-05"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1000_c7.62939453125e-06.test_predictions"     ),  "RBF  [gamma:  1000;    c:  c7.62939453125e-06"    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100_c0.001953125.test_predictions"            ),  "RBF  [gamma:  100;     c:  c0.001953125"          },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100_c0.00390625.test_predictions"             ),  "RBF  [gamma:  100;     c:  c0.00390625"           },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_100_c0.0625.test_predictions"                 ),  "RBF  [gamma:  100;     c:  c0.0625"               },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c0.0001220703125.test_predictions"         ),  "RBF  [gamma:  10;      c:  c0.0001220703125"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c0.0009765625.test_predictions"            ),  "RBF  [gamma:  10;      c:  c0.0009765625"         },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c0.00390625.test_predictions"              ),  "RBF  [gamma:  10;      c:  c0.00390625"           },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c0.0625.test_predictions"                  ),  "RBF  [gamma:  10;      c:  c0.0625"               },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c0.125.test_predictions"                   ),  "RBF  [gamma:  10;      c:  c0.125"                },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c1.9073486328125e-06.test_predictions"     ),  "RBF  [gamma:  10;      c:  c1.9073486328125e-06"  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c6.103515625e-05.test_predictions"         ),  "RBF  [gamma:  10;      c:  c6.103515625e-05"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_10_c7.62939453125e-06.test_predictions"       ),  "RBF  [gamma:  10;      c:  c7.62939453125e-06"    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1_c0.0078125.test_predictions"                ),  "RBF  [gamma:  1;       c:  c0.0078125"            },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1_c0.03125.test_predictions"                  ),  "RBF  [gamma:  1;       c:  c0.03125"              },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1_c0.5.test_predictions"                      ),  "RBF  [gamma:  1;       c:  c0.5"                  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c0.000244140625.test_predictions"       ),  "RBF  [gamma:  1e-05;   c:  c0.000244140625"       },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c0.03125.test_predictions"              ),  "RBF  [gamma:  1e-05;   c:  c0.03125"              },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-05;   c:  c0.125"                },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c0.25.test_predictions"                 ),  "RBF  [gamma:  1e-05;   c:  c0.25"                 },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-05;   c:  c0.5"                  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c1.test_predictions"                    ),  "RBF  [gamma:  1e-05;   c:  c1"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-05_c8.test_predictions"                    ),  "RBF  [gamma:  1e-05;   c:  c8"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-06_c1.9073486328125e-06.test_predictions"  ),  "RBF  [gamma:  1e-06;   c:  c1.9073486328125e-06"  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-07_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-07;   c:  c0.125"                },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-07_c4.test_predictions"                    ),  "RBF  [gamma:  1e-07;   c:  c4"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c0.0001220703125.test_predictions"      ),  "RBF  [gamma:  1e-08;   c:  c0.0001220703125"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c0.00390625.test_predictions"           ),  "RBF  [gamma:  1e-08;   c:  c0.00390625"           },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c0.03125.test_predictions"              ),  "RBF  [gamma:  1e-08;   c:  c0.03125"              },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c0.0625.test_predictions"               ),  "RBF  [gamma:  1e-08;   c:  c0.0625"               },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-08;   c:  c0.125"                },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c1.52587890625e-05.test_predictions"    ),  "RBF  [gamma:  1e-08;   c:  c1.52587890625e-05"    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c1.9073486328125e-06.test_predictions"  ),  "RBF  [gamma:  1e-08;   c:  c1.9073486328125e-06"  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-08_c4.test_predictions"                    ),  "RBF  [gamma:  1e-08;   c:  c4"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-09_c0.00390625.test_predictions"           ),  "RBF  [gamma:  1e-09;   c:  c0.00390625"           },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-09_c0.0625.test_predictions"               ),  "RBF  [gamma:  1e-09;   c:  c0.0625"               },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c0.000244140625.test_predictions"       ),  "RBF  [gamma:  1e-10;   c:  c0.000244140625"       },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c0.25.test_predictions"                 ),  "RBF  [gamma:  1e-10;   c:  c0.25"                 },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-10;   c:  c0.5"                  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c16.test_predictions"                   ),  "RBF  [gamma:  1e-10;   c:  c16"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c4.test_predictions"                    ),  "RBF  [gamma:  1e-10;   c:  c4"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-10_c9.5367431640625e-07.test_predictions"  ),  "RBF  [gamma:  1e-10;   c:  c9.5367431640625e-07"  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c0.0001220703125.test_predictions"      ),  "RBF  [gamma:  1e-11;   c:  c0.0001220703125"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c0.001953125.test_predictions"          ),  "RBF  [gamma:  1e-11;   c:  c0.001953125"          },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c0.00390625.test_predictions"           ),  "RBF  [gamma:  1e-11;   c:  c0.00390625"           },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c0.015625.test_predictions"             ),  "RBF  [gamma:  1e-11;   c:  c0.015625"             },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-11;   c:  c0.125"                },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c1.9073486328125e-06.test_predictions"  ),  "RBF  [gamma:  1e-11;   c:  c1.9073486328125e-06"  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-11_c3.0517578125e-05.test_predictions"     ),  "RBF  [gamma:  1e-11;   c:  c3.0517578125e-05"     },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c0.0001220703125.test_predictions"      ),  "RBF  [gamma:  1e-12;   c:  c0.0001220703125"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c0.0078125.test_predictions"            ),  "RBF  [gamma:  1e-12;   c:  c0.0078125"            },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c0.015625.test_predictions"             ),  "RBF  [gamma:  1e-12;   c:  c0.015625"             },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-12;   c:  c0.125"                },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-12;   c:  c0.5"                  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c16.test_predictions"                   ),  "RBF  [gamma:  1e-12;   c:  c16"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-12_c3.0517578125e-05.test_predictions"     ),  "RBF  [gamma:  1e-12;   c:  c3.0517578125e-05"     },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-13_c0.00390625.test_predictions"           ),  "RBF  [gamma:  1e-13;   c:  c0.00390625"           },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-13_c0.0625.test_predictions"               ),  "RBF  [gamma:  1e-13;   c:  c0.0625"               },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-13_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-13;   c:  c0.5"                  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-13_c1.9073486328125e-06.test_predictions"  ),  "RBF  [gamma:  1e-13;   c:  c1.9073486328125e-06"  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-13_c6.103515625e-05.test_predictions"      ),  "RBF  [gamma:  1e-13;   c:  c6.103515625e-05"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-14;   c:  c0.5"                  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c16.test_predictions"                   ),  "RBF  [gamma:  1e-14;   c:  c16"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c32.test_predictions"                   ),  "RBF  [gamma:  1e-14;   c:  c32"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c4.test_predictions"                    ),  "RBF  [gamma:  1e-14;   c:  c4"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c6.103515625e-05.test_predictions"      ),  "RBF  [gamma:  1e-14;   c:  c6.103515625e-05"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c8.test_predictions"                    ),  "RBF  [gamma:  1e-14;   c:  c8"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-14_c9.5367431640625e-07.test_predictions"  ),  "RBF  [gamma:  1e-14;   c:  c9.5367431640625e-07"  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c0.000244140625.test_predictions"       ),  "RBF  [gamma:  1e-15;   c:  c0.000244140625"       },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c0.0009765625.test_predictions"         ),  "RBF  [gamma:  1e-15;   c:  c0.0009765625"         },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c0.001953125.test_predictions"          ),  "RBF  [gamma:  1e-15;   c:  c0.001953125"          },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c0.015625.test_predictions"             ),  "RBF  [gamma:  1e-15;   c:  c0.015625"             },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c0.0625.test_predictions"               ),  "RBF  [gamma:  1e-15;   c:  c0.0625"               },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c1.test_predictions"                    ),  "RBF  [gamma:  1e-15;   c:  c1"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c2.test_predictions"                    ),  "RBF  [gamma:  1e-15;   c:  c2"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-15_c32.test_predictions"                   ),  "RBF  [gamma:  1e-15;   c:  c32"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-16_c0.001953125.test_predictions"          ),  "RBF  [gamma:  1e-16;   c:  c0.001953125"          },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-16_c0.03125.test_predictions"              ),  "RBF  [gamma:  1e-16;   c:  c0.03125"              },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-16_c0.5.test_predictions"                  ),  "RBF  [gamma:  1e-16;   c:  c0.5"                  },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-17_c0.0078125.test_predictions"            ),  "RBF  [gamma:  1e-17;   c:  c0.0078125"            },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-17_c0.03125.test_predictions"              ),  "RBF  [gamma:  1e-17;   c:  c0.03125"              },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-17_c3.814697265625e-06.test_predictions"   ),  "RBF  [gamma:  1e-17;   c:  c3.814697265625e-06"   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-17_c6.103515625e-05.test_predictions"      ),  "RBF  [gamma:  1e-17;   c:  c6.103515625e-05"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c0.0001220703125.test_predictions"      ),  "RBF  [gamma:  1e-18;   c:  c0.0001220703125"      },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c0.03125.test_predictions"              ),  "RBF  [gamma:  1e-18;   c:  c0.03125"              },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c0.0625.test_predictions"               ),  "RBF  [gamma:  1e-18;   c:  c0.0625"               },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c0.25.test_predictions"                 ),  "RBF  [gamma:  1e-18;   c:  c0.25"                 },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c16.test_predictions"                   ),  "RBF  [gamma:  1e-18;   c:  c16"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c7.62939453125e-06.test_predictions"    ),  "RBF  [gamma:  1e-18;   c:  c7.62939453125e-06"    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-18_c8.test_predictions"                    ),  "RBF  [gamma:  1e-18;   c:  c8"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c0.00048828125.test_predictions"        ),  "RBF  [gamma:  1e-19;   c:  c0.00048828125"        },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c0.0009765625.test_predictions"         ),  "RBF  [gamma:  1e-19;   c:  c0.0009765625"         },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c0.125.test_predictions"                ),  "RBF  [gamma:  1e-19;   c:  c0.125"                },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c16.test_predictions"                   ),  "RBF  [gamma:  1e-19;   c:  c16"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c1.test_predictions"                    ),  "RBF  [gamma:  1e-19;   c:  c1"                    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-19_c7.62939453125e-06.test_predictions"    ),  "RBF  [gamma:  1e-19;   c:  c7.62939453125e-06"    },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-20_c0.0009765625.test_predictions"         ),  "RBF  [gamma:  1e-20;   c:  c0.0009765625"         },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-20_c0.00390625.test_predictions"           ),  "RBF  [gamma:  1e-20;   c:  c0.00390625"           },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-20_c16.test_predictions"                   ),  "RBF  [gamma:  1e-20;   c:  c16"                   },
+////		{  path(  "/export/people/ucbctnl/some_svmlight/some_svmlight_data.2.rbf_gamma_1e-20_c1.9073486328125e-06.test_predictions"  ),  "RBF  [gamma:  1e-20;   c:  c1.9073486328125e-06"  }
 //
 //		{  path(  "/tmp/some_svmlight_data.1.test_predictions"  ),  "SVM [RBF;gamma:1;c:5]"  },
 //		{  path(  "/tmp/some_svmlight_data.2.test_predictions"  ),  "SVM [RBF;gamma:1;c:5]"  },
@@ -870,6 +944,12 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 ////		{}
 ////	);
 //}
+//
+//BOOST_AUTO_TEST_SUITE_END()
+
+
+
+
 
 //AUC :   0.546841 overlap.num_aligned_residues.shorter_protein_length
 //AUC :   0.605014 longer_protein_length
@@ -918,7 +998,6 @@ BOOST_FIXTURE_TEST_SUITE(score_classn_value_results_set_test_suite, cath::test::
 //AUC :   0.814712 ssap
 //AUC :    0.81486 GSAS.select_best_score_percent[70].cb_atoms
 //AUC :   0.822689 ssap.cb_atoms.high_accuracy.num_excluded_on_sides:10.distance_score_formula_simplified
-
 
 BOOST_AUTO_TEST_SUITE_END()
 
