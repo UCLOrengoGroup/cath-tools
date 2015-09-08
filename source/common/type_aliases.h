@@ -88,6 +88,9 @@ namespace cath {
 	using str_str_pair_doub_map         = std::map  <str_str_pair, double>;
 	using str_str_pair_doub_pair        = std::pair <str_str_pair, double>;
 
+	using str_str_pair_bool_map         = std::map  <str_str_pair, bool>;
+	using str_str_pair_bool_pair        = std::pair <str_str_pair, bool>;
+
 	using str_str_str_pair_map          = std::map<std::string, str_str_pair>;
 
 	using size_size_pair                = std::pair<size_t, size_t>;
