@@ -46,6 +46,8 @@ namespace cath {
 			static std::pair<str_vec, size_size_pair_doub_map> parse_ssap_scores_file(const boost::filesystem::path &);
 		};
 
+		str_str_pair_bool_map make_arbitrary_is_positive_data(const ssap_scores_entry_vec &);
+
 	}
 }
 

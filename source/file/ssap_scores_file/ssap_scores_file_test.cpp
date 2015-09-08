@@ -26,11 +26,13 @@
 #include "common/type_aliases.h"
 #include "file/ssap_scores_file/ssap_scores_file.h"
 #include "file/ssap_scores_file/ssap_scores_entry.h"
+#include "file/ssap_scores_file/ssap_scores_entry_to_score_classn_value.h"
+#include "score/score_classification/label_pair_is_positive/label_pair_is_positive.h"
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
+using namespace cath::score;
 using namespace std;
 
 using boost::algorithm::join;
@@ -106,4 +108,14 @@ BOOST_AUTO_TEST_CASE(basic) {
 	const size_size_pair zero_and_one = make_pair( 0_z, 1_z );
 	BOOST_CHECK_EQUAL( 81.01, got_scores.find( zero_and_one )->second );
 }
+
+BOOST_AUTO_TEST_CASE(score_classn_value_list__from__ssap_scores_entry_vec) {
+	const auto the_entries = ssap_scores_file::parse_ssap_scores_file_simple( ssap_scores_iss );
+	const auto is_pos = label_pair_is_positive{ make_arbitrary_is_positive_data( the_entries ) };
+
+	const auto rmsd_val_list = make_val_list_of_ssap_scores_entries( the_entries, is_pos, &ssap_scores_entry::get_rmsd, false, "rmsd" );
+	BOOST_CHECK_EQUAL( best_score ( rmsd_val_list ), 1.53 );
+	BOOST_CHECK_EQUAL( worst_score( rmsd_val_list ), 6.52 );
+}
+
 BOOST_AUTO_TEST_SUITE_END()

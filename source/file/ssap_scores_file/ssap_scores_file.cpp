@@ -25,10 +25,13 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/irange.hpp>
 
 #include "common/algorithm/contains.h"
+#include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/file/open_fstream.h"
+#include "common/size_t_literal.h"
 #include "exception/invalid_argument_exception.h"
 #include "file/ssap_scores_file/ssap_scores_entry.h"
 
@@ -44,10 +47,11 @@ using namespace std;
 
 using boost::algorithm::is_any_of;
 using boost::algorithm::token_compress_on;
+using boost::irange;
 using boost::lexical_cast;
 
-/// \brief TODOCUMENT
-ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(istream &arg_ssap_scores_is ///< TODOCUMENT
+/// \brief Parse a vector of ssap_scores_entry objects from the specified istream
+ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(istream &arg_ssap_scores_is ///< The istream of SSAP scores data from which to parse the ssap_scores_entry objects
                                                                       ) {
 	string                line_string;
 	ssap_scores_entry_vec results;
@@ -62,8 +66,8 @@ ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(istream &a
 	return results;
 }
 
-/// \brief TODOCUMENT
-ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(const path &arg_ssap_scores_file ///< TODOCUMENT
+/// \brief Parse a vector of ssap_scores_entry objects from the specified filessap_scores_entry
+ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(const path &arg_ssap_scores_file ///< The SSAP scores file from which to parse the ssap_scores_entry objects
                                                                       ) {
 	ifstream ssap_scores_ifstream;
 	open_ifstream( ssap_scores_ifstream, arg_ssap_scores_file );
@@ -137,4 +141,21 @@ pair<str_vec, size_size_pair_doub_map> ssap_scores_file::parse_ssap_scores_file(
 	const pair<str_vec, size_size_pair_doub_map> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file(ssap_scores_ifstream);
 	ssap_scores_ifstream.close();
 	return ssap_scores_data;
+}
+
+/// \brief Create arbitrary positive/negative values for all pair in the specified ssap_scores_entries for testing purposes
+///
+/// This alternates negative and positive
+str_str_pair_bool_map cath::file::make_arbitrary_is_positive_data(const ssap_scores_entry_vec &arg_ssap_scores_entries ///< The arg_ssap_scores_entries from which to extract pairs to be made negative or positive
+                                                      ) {
+	return transform_build<str_str_pair_bool_map>(
+		irange( 0_z, arg_ssap_scores_entries.size() ),
+		[&] (const size_t &x) {
+			const auto &the_ssap_scores_entry = arg_ssap_scores_entries[ x ];
+			return make_pair(
+				make_pair( the_ssap_scores_entry.get_name_1(), the_ssap_scores_entry.get_name_2() ),
+				( x % 2 == 0 )
+			);
+		}
+	);
 }
