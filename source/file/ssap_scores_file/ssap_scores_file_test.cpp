@@ -85,6 +85,17 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(ssap_scores_file_test_suite, cath::test::ssap_scores_file_test_suite_fixture)
 
 /// \brief TODOCUMENT
+BOOST_AUTO_TEST_CASE(parse_into_ssap_scores_entries) {
+	const auto the_entries = ssap_scores_file::parse_ssap_scores_file_simple( ssap_scores_iss );
+	BOOST_REQUIRE    ( ! the_entries.empty() );
+	BOOST_CHECK_EQUAL( the_entries.size(), 28 );
+	BOOST_CHECK_EQUAL( the_entries.front().get_name_1(), "1n0hA01" );
+	BOOST_CHECK_EQUAL( the_entries.front().get_name_2(), "1ni4B01" );
+	BOOST_CHECK_EQUAL( the_entries.back().get_name_1(),  "2ihtA01" );
+	BOOST_CHECK_EQUAL( the_entries.back().get_name_2(),  "2o1xA02" );
+}
+
+/// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
 	const pair<str_vec, size_size_pair_doub_map> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file(ssap_scores_iss);
 	const str_vec                 got_ids    = ssap_scores_data.first;

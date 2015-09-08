@@ -24,6 +24,7 @@
 #include <boost/filesystem/path.hpp>
 
 #include "common/type_aliases.h"
+#include "file/file_type_aliases.h"
 
 #include <iosfwd>
 
@@ -36,6 +37,10 @@ namespace cath {
 			ssap_scores_file() = delete;
 
 		public:
+			static ssap_scores_entry_vec parse_ssap_scores_file_simple(std::istream &);
+
+			static ssap_scores_entry_vec parse_ssap_scores_file_simple(const boost::filesystem::path &);
+
 			static std::pair<str_vec, size_size_pair_doub_map> parse_ssap_scores_file(std::istream &);
 
 			static std::pair<str_vec, size_size_pair_doub_map> parse_ssap_scores_file(const boost::filesystem::path &);

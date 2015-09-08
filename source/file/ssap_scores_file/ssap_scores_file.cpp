@@ -30,6 +30,7 @@
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/file/open_fstream.h"
 #include "exception/invalid_argument_exception.h"
+#include "file/ssap_scores_file/ssap_scores_entry.h"
 
 #include <fstream>
 #include <map>
@@ -46,35 +47,49 @@ using boost::algorithm::token_compress_on;
 using boost::lexical_cast;
 
 /// \brief TODOCUMENT
+ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(istream &arg_ssap_scores_is ///< TODOCUMENT
+                                                                      ) {
+	string                line_string;
+	ssap_scores_entry_vec results;
+	while ( getline( arg_ssap_scores_is, line_string ) ) {
+
+		// If this line is neither empty nor a comment line (a comment line is a line with a '#' character as the first non-whitespace character)
+		trim_left( line_string );
+		if ( ! line_string.empty() && line_string.front() != '#' ) {
+			results.push_back( ssap_scores_entry_from_line( line_string ) );
+		}
+	}
+	return results;
+}
+
+/// \brief TODOCUMENT
+ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(const path &arg_ssap_scores_file ///< TODOCUMENT
+                                                                      ) {
+	ifstream ssap_scores_ifstream;
+	open_ifstream( ssap_scores_ifstream, arg_ssap_scores_file );
+	const auto ssap_scores_data = ssap_scores_file::parse_ssap_scores_file_simple( ssap_scores_ifstream );
+	ssap_scores_ifstream.close();
+	return ssap_scores_data;
+}
+
+/// \brief TODOCUMENT
 pair<str_vec, size_size_pair_doub_map> ssap_scores_file::parse_ssap_scores_file(istream &arg_ssap_scores_is ///< TODOCUMENT
                                                                                 ) {
 	using str_str_pair = pair<string, string>;
 	using str_str_pair_doub_map = map<str_str_pair, double>;
 
-	string                line_string;
+	const auto entries = parse_ssap_scores_file_simple( arg_ssap_scores_is );
+
 	str_vec               id1s;
 	str_vec               id2s;
 	str_str_pair_doub_map score_of_ids;
-	while (getline(arg_ssap_scores_is, line_string)) {
-
-		// If this line is neither empty nor a comment line (a comment line is a line with a '#' character as the first non-whitespace character)
-		trim_left(line_string);
-		if ( ! line_string.empty() && line_string.front() != '#' ) {
-
-			// Split the line into parts
-			const str_vec line_parts = split_build<str_vec>( line_string, is_any_of( " " ), token_compress_on );
-			if ( line_parts.size() < 5 ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("SSAP scores line contains fewer than five entries but the SSAP score should be the fifth entry"));
-			}
-
-			// Grab the two ids and the SSAP score and store them
-			const string id1        = line_parts[ 0 ];
-			const string id2        = line_parts[ 1 ];
-			const double ssap_score = stod( line_parts[ 4 ] );
-			id1s.push_back( id1 );
-			id2s.push_back( id2 );
-			score_of_ids[ make_pair( id1, id2 ) ] = ssap_score;
-		}
+	for (const auto &entry : entries) {
+		// Grab the two IDs and the SSAP score and store them
+		const auto &id1 = entry.get_name_1();
+		const auto &id2 = entry.get_name_2();
+		id1s.push_back( id1 );
+		id2s.push_back( id2 );
+		score_of_ids[ make_pair( id1, id2 ) ] = entry.get_ssap_score();
 	}
 
 	// Form a list of unique IDs ordered like the id1s and then the id2s
