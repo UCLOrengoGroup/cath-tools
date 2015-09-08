@@ -18,15 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/auto_unit_test.hpp>
-
 #include <boost/algorithm/string/join.hpp>
+#include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/test/boost_check_equal_ranges.h"
 #include "common/size_t_literal.h"
 #include "common/type_aliases.h"
 #include "file/ssap_scores_file/ssap_scores_file.h"
-#include "ssap_scores_file.h"
+#include "file/ssap_scores_file/ssap_scores_entry.h"
 
 using namespace boost::algorithm;
 using namespace cath;
