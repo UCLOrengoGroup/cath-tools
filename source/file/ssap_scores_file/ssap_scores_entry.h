@@ -17,16 +17,16 @@ namespace cath {
 		class ssap_scores_entry final : private boost::equality_comparable<ssap_scores_entry> {
 		private:
 			/// \brief Name of protein 1
-			std::string prot1;
+			std::string name_1;
 
 			/// \brief Name of protein 2
-			std::string prot2;
+			std::string name_2;
 
 			/// \brief Length of protein 1
-			size_t      length1;
+			size_t      length_1;
 
 			/// \brief Length of protein 2
-			size_t      length2;
+			size_t      length_2;
 
 			/// \brief SSAP score for structural comparison
 			double      ssap_score;
@@ -54,10 +54,10 @@ namespace cath {
 			                  const double &,
 			                  const double &);
 
-			const std::string & get_prot1() const;
-			const std::string & get_prot2() const;
-			const size_t & get_length1() const;
-			const size_t & get_length2() const;
+			const std::string & get_name_1() const;
+			const std::string & get_name_2() const;
+			const size_t & get_length_1() const;
+			const size_t & get_length_2() const;
 			const double & get_ssap_score() const;
 			const size_t & get_num_equivs() const;
 			const double & get_overlap_pc() const;

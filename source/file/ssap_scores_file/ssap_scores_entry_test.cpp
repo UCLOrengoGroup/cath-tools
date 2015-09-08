@@ -53,10 +53,10 @@ BOOST_AUTO_TEST_CASE(to_string_works) {
 }
 
 BOOST_AUTO_TEST_CASE(parses_from_line) {
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_prot1(),      "1cukA03" );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_prot2(),      "1hjpA03" );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_length1(),    48        );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_length2(),    44        );
+    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_name_1(),     "1cukA03" );
+    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_name_2(),     "1hjpA03" );
+    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_length_1(),   48        );
+    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_length_2(),   44        );
     BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_ssap_score(), 94.92     );
     BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_num_equivs(), 44        );
     BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_overlap_pc(), 91        );

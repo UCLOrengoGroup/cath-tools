@@ -29,10 +29,10 @@ ssap_scores_entry::ssap_scores_entry(const string &arg_prot1,      ///< Name of 
                                      const double &arg_overlap_pc, ///< Percentage overlap  (100% x overlap /length of largest)
                                      const double &arg_seq_id_pc,  ///< Percentage identity (100% x identity/length of smallest)
                                      const double &arg_rmsd        ///< RMSD of superposed structures
-                                     ) : prot1      ( arg_prot1      ),
-                                         prot2      ( arg_prot2      ),
-                                         length1    ( arg_length1    ),
-                                         length2    ( arg_length2    ),
+                                     ) : name_1      ( arg_prot1      ),
+                                         name_2      ( arg_prot2      ),
+                                         length_1    ( arg_length1    ),
+                                         length_2    ( arg_length2    ),
                                          ssap_score ( arg_ssap_score ),
                                          num_equivs ( arg_num_equivs ),
                                          overlap_pc ( arg_overlap_pc ),
@@ -41,23 +41,23 @@ ssap_scores_entry::ssap_scores_entry(const string &arg_prot1,      ///< Name of 
 }
 
 /// \brief Getter for the name of protein 1
-const string & ssap_scores_entry::get_prot1() const {
-	return prot1;
+const string & ssap_scores_entry::get_name_1() const {
+	return name_1;
 }
 
 /// \brief Getter for the name of protein 2
-const string & ssap_scores_entry::get_prot2() const {
-	return prot2;
+const string & ssap_scores_entry::get_name_2() const {
+	return name_2;
 }
 
 /// \brief Getter for the length of protein 1
-const size_t & ssap_scores_entry::get_length1() const {
-	return length1;
+const size_t & ssap_scores_entry::get_length_1() const {
+	return length_1;
 }
 
 /// \brief Getter for the length of protein 2
-const size_t & ssap_scores_entry::get_length2() const {
-	return length2;
+const size_t & ssap_scores_entry::get_length_2() const {
+	return length_2;
 }
 
 /// \brief Getter for the SSAP score for structural comparison
@@ -92,13 +92,13 @@ bool cath::file::operator==(const ssap_scores_entry &arg_entry_a, ///< The first
                             const ssap_scores_entry &arg_entry_b  ///< The second ssap_scores_entry to compare
                             ) {
 	return (
-		arg_entry_a.get_prot1()      == arg_entry_b.get_prot1()
+		arg_entry_a.get_name_1()     == arg_entry_b.get_name_1()
 		&&
-		arg_entry_a.get_prot2()      == arg_entry_b.get_prot2()
+		arg_entry_a.get_name_2()     == arg_entry_b.get_name_2()
 		&&
-		arg_entry_a.get_length1()    == arg_entry_b.get_length1()
+		arg_entry_a.get_length_1()   == arg_entry_b.get_length_1()
 		&&
-		arg_entry_a.get_length2()    == arg_entry_b.get_length2()
+		arg_entry_a.get_length_2()   == arg_entry_b.get_length_2()
 		&&
 		arg_entry_a.get_ssap_score() == arg_entry_b.get_ssap_score()
 		&&
@@ -144,10 +144,10 @@ ssap_scores_entry cath::file::ssap_scores_entry_from_line(const string &arg_ssap
 /// \relate ssap_scores_entry
 string cath::file::to_string(const ssap_scores_entry &arg_ssap_scores_entry ///< The ssap_scores_entry to be output as a string
                              ) {
-	return "ssap_scores_entry[" +                   arg_ssap_scores_entry.get_prot1()
-	     + ", "                 +                   arg_ssap_scores_entry.get_prot2()
-	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_length1()    )
-	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_length2()    )
+	return "ssap_scores_entry[" +                   arg_ssap_scores_entry.get_name_1()
+	     + ", "                 +                   arg_ssap_scores_entry.get_name_2()
+	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_length_1()    )
+	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_length_2()    )
 	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_ssap_score() )
 	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_num_equivs() )
 	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_overlap_pc() )
