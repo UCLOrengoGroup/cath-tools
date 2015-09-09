@@ -149,11 +149,13 @@ namespace cath {
 				if ( line_parts.size() < 2 ) {
 					BOOST_THROW_EXCEPTION(common::runtime_error_exception("Unable to read score_classn_value_list entry from line that doesn't have at least two parts"));
 				}
-				const std::string &id          = line_parts[ 0 ];
-				const double       score       = std::stod( line_parts[ 1 ] );
+				// This used to
+				const std::string &id1         = line_parts[ 0 ];
+				const std::string &id2         = line_parts[ 1 ];
+				const double       score       = std::stod( line_parts[ 2 ] );
 				const bool         is_positive = arg_is_positive_fn( line_parts );
 
-				score_classn_values.emplace_back( score, is_positive, id );
+				score_classn_values.emplace_back( score, is_positive, id1 + " " + id2 );
 
 //				std::istringstream line_ss( line_string );
 //				line_ss >> std::boolalpha;

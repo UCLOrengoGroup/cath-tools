@@ -18,8 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #include "score_classn_value_list.h"
 
+//#include <boost/algorithm/string/join.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -55,6 +57,7 @@ using namespace std;
 
 using boost::adaptors::reversed;
 using boost::adaptors::transformed;
+//using boost::algorithm::join;
 using boost::const_rend;
 using boost::filesystem::path;
 using boost::irange;
@@ -400,7 +403,8 @@ score_classn_value_list cath::score::read_svmlight_predictions_file(const path  
 		arg_path,
 		higher_is_better,
 		arg_name,
-		[] (const str_vec &x) { return ( stod( x.at( 2 ) ) >= 0.0 ); }
+//		[] (const str_vec &x) { cerr << join( x, ", ") << "\n"; return ( stod( x.at( 3 ) ) >= 0.0 ); }
+		[] (const str_vec &x) { return ( stod( x.at( 3 ) ) >= 0.0 ); }
 	);
 }
 
