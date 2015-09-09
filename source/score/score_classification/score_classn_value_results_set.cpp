@@ -158,11 +158,22 @@ score_classn_value_results_set::const_iterator score_classn_value_results_set::e
 /// \brief TODOCUMENT
 void score_classn_value_results_set::add_score_classn_value_list(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
                                                                  ) {
+
+
 	// If there are already entries, confirm that the new entry's list of instances matches the
 	// list of instances in one of the existing entries
 	if ( ! score_classn_value_lists.empty() ) {
 		if ( ! instance_labels_match( arg_score_classn_value_list, score_classn_value_lists.front() ) ) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
+			if ( score_classn_value_lists.front().empty() || arg_score_classn_value_list.empty() ) {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot add score_classn_value_list with instance labels that don't match those already present in this score_classn_value_results_set (note: one has no labels at all)"));
+			}
+			BOOST_THROW_EXCEPTION(invalid_argument_exception(
+				"Cannot add score_classn_value_list with instance labels that don't match those already present in this score_classn_value_results_set (example label present: \""
+				+ front( score_classn_value_lists.front() ).get_instance_label()
+				+ "\"; example label from score_classn_value_list to add: \""
+				+ front( arg_score_classn_value_list ).get_instance_label()
+				+ "\")"
+			));
 		}
 	}
 
