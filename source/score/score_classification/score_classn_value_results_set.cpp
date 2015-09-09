@@ -243,6 +243,18 @@ void score_classn_value_results_set::add_aligned_pair_score_value_list(const ali
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_results_set
+score_classn_value_results_set cath::score::make_score_classn_value_results_set(const score_classn_value_list_vec &arg_score_classn_value_lists ///< TODOCUMENT
+                                                                                ) {
+	score_classn_value_results_set new_set;
+	for (const auto &scv_list : arg_score_classn_value_lists) {
+		new_set.add_score_classn_value_list( scv_list);
+	}
+	return new_set;
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates score_classn_value_results_set
 score_classn_value_list_vec cath::score::make_score_classn_value_list_vec(const score_classn_value_results_set &arg_results_set ///< TODOCUMENT
                                                                           ) {
 	return copy_build<score_classn_value_list_vec>( arg_results_set );

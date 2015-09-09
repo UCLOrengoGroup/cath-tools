@@ -102,6 +102,8 @@ namespace cath {
 			                                       const std::string &);
 		};
 
+		score_classn_value_results_set make_score_classn_value_results_set(const score_classn_value_list_vec &);
+
 		score_classn_value_list_vec make_score_classn_value_list_vec(const score_classn_value_results_set &);
 
 		value_list_scaling_vec get_value_list_scalings(const score_classn_value_results_set &);
