@@ -135,7 +135,8 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		struct ticket_913_fixture : protected score_classn_value_results_set_test_suite_fixture {
-			const path root_dir                 = path( "/cath/homes2/ucbctnl/svm_gubbins_files" );
+//			const path root_dir                 = path( "/cath/homes2/ucbctnl/svm_gubbins_files" );
+			const path root_dir                 = path( "/home/lewis/svm_gubbins_files" );
 //			const path random_pairs_subset_file = root_dir / "random_pairs_subset.txt";
 
 			const path labelled_pair_list       = root_dir / "pair_list.labelled";
@@ -183,23 +184,118 @@ BOOST_AUTO_TEST_CASE(ssap) {
 	BOOST_CHECK( true );
 //	const auto ssap_data = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file );
 //	BOOST_REQUIRE_EQUAL( ssap_data.size(), 21576 );
-
+//
 //	const auto is_pos = make_label_pair_is_positive( labelled_pair_list );
 //
-//	const score_classn_value_list_vec the_results = {
-//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_ssap_score, true,  "SSAP score" ),
-//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_rmsd,       false, "RMSD"       )
+//	const score_classn_value_list_vec plot_results = {
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_length_1,   true,  "ssap.length1"    ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_length_2,   true,  "ssap.length2"    ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_ssap_score, true,  "ssap.ssap_score" ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_num_equivs, true,  "ssap.num_equivs" ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_overlap_pc, true,  "ssap.overlap_pc" ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_seq_id_pc,  true,  "ssap.seq_id_pc"  ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_rmsd,       false, "ssap.rmsd"       ),
+//
+//		read_svmlight_predictions_file( "/tmp/svm_malarkey/ssap_rmsd.1.rbf_gamma_1_c_5.preds", "svm1" ),
+//		read_svmlight_predictions_file( "/tmp/svm_malarkey/ssap_rmsd.2.rbf_gamma_1_c_5.preds", "svm2" ),
+//		read_svmlight_predictions_file( "/tmp/svm_malarkey/ssap_rmsd.3.rbf_gamma_1_c_5.preds", "svm3" ),
+//		read_svmlight_predictions_file( "/tmp/svm_malarkey/ssap_rmsd.4.rbf_gamma_1_c_5.preds", "svm4" ),
+//		read_svmlight_predictions_file( "/tmp/svm_malarkey/ssap_rmsd.5.rbf_gamma_1_c_5.preds", "svm5" )
 //	};
 //
 //	plot_both(
-//		the_results,
+//		plot_results,
 //		"/tmp/saxophone_right_here",
 //		{
-//			{ "SSAP score", opt_str{ R"( linetype 1 linecolor rgb "black" linewidth 3 )" } },
-//			{ "RMSD",       opt_str{ R"( linetype 1 linecolor rgb "red"   linewidth 3 )" } }
+//			{ "ssap.length1",    opt_str{ R"( linetype 1 linecolor rgb "black"               )" } },
+//			{ "ssap.length2",    opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
+//			{ "ssap.ssap_score", opt_str{ R"( linetype 1 linecolor rgb "#0000ff" linewidth 3 )" } },
+//			{ "ssap.num_equivs", opt_str{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
+//			{ "ssap.overlap_pc", opt_str{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
+//			{ "ssap.seq_id_pc",  opt_str{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
+//			{ "ssap.rmsd",       opt_str{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
+//
+//			{ "svm1", opt_str{ R"( linetype 1 linecolor rgb "#FFCC00"  linewidth 3 notitle )" } },
+//			{ "svm2", opt_str{ R"( linetype 1 linecolor rgb "#FFCC00"  linewidth 3 notitle )" } },
+//			{ "svm3", opt_str{ R"( linetype 1 linecolor rgb "#FFCC00"  linewidth 3 notitle )" } },
+//			{ "svm4", opt_str{ R"( linetype 1 linecolor rgb "#FFCC00"  linewidth 3 notitle )" } },
+//			{ "svm5", opt_str{ R"( linetype 1 linecolor rgb "#FFCC00"  linewidth 3 notitle )" } }
 //		}
 //	);
+//
+//	const score_classn_value_list_vec full_results = {
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_length_1,   true,  "ssap.length1"    ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_length_2,   true,  "ssap.length2"    ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_ssap_score, true,  "ssap.ssap_score" ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_num_equivs, true,  "ssap.num_equivs" ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_overlap_pc, true,  "ssap.overlap_pc" ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_seq_id_pc,  true,  "ssap.seq_id_pc"  ),
+//		make_val_list_of_ssap_scores_entries( ssap_data, is_pos, &ssap_scores_entry::get_rmsd,       false, "ssap.rmsd"       )
+//	};
+//
+//	const auto the_set = make_score_classn_value_results_set( full_results );
+//	auto rng = mt19937{ random_device{}() };
+//	write_to_svm_light_data_files(
+//		the_set,
+//		"/tmp/svm_malarkey/ssap_rmsd",
+//		5,
+//		rng,
+//		0.5
+//	);
 }
+
+// "black"   linewidth 3
+// "#00ff00"
+// "#0000ff"
+// "#ff0000"
+// "#01fffe"
+// "#ffa6fe"
+// "#ffdb66"
+// "#006401"
+// "#010067"
+// "#95003a"
+// "#007db5"
+// "#ff00f6"
+// "#774d00"
+// "#90fb92"
+// "#0076ff"
+// "#d5ff00"
+// "#ff937e"
+// "#6a826c"
+// "#ff029d"
+// "#fe8900"
+// "#7a4782"
+// "#7e2dd2"
+
+// ssap.ssap_score
+// ssap.num_equivs
+// ssap.overlap_pc
+// ssap.seq_id_pc
+// ssap.rmsd
+// ssap.length1
+// ssap.length2
+// prc.simple
+// prc.reverse
+// prc.evalue
+
+// cd /tmp
+// wget "http://download.joachims.org/svm_light/current/svm_light.tar.gz"
+// mkdir svm_light
+// tar --directory svm_light -zxvf svm_light.tar.gz
+// cd svm_light
+// chmod -x *
+// make -j 3
+//
+// # Default: -t 2 -g 1 -c 5
+// # Explore: -g varying over  {  2^-20,  2^-19,  2^-18,... ,  2^5 }
+// # Explore: -c varying over  { 10^-20, 10^-19, 10^-18,... , 10^5 }
+//
+//
+// seq 5 | xargs -P 4 -I VAR ./svm_learn -t 2 -g 1 -c 5       /tmp/svm_malarkey/ssap_rmsd.VAR.train /tmp/svm_malarkey/ssap_rmsd.VAR.rbf_gamma_1_c_5.model
+// seq 5 | xargs -P 4 -I VAR ./svm_classify                   /tmp/svm_malarkey/ssap_rmsd.VAR.test  /tmp/svm_malarkey/ssap_rmsd.VAR.rbf_gamma_1_c_5.model                                                      /tmp/svm_malarkey/ssap_rmsd.VAR.rbf_gamma_1_c_5.preds.raw
+// seq 5 | xargs      -I VAR /bin/tcsh -c "paste -d ' '       /tmp/svm_malarkey/ssap_rmsd.VAR.test  /tmp/svm_malarkey/ssap_rmsd.VAR.rbf_gamma_1_c_5.preds.raw > /tmp/svm_malarkey/ssap_rmsd.VAR.rbf_gamma_1_c_5.preds.raw.paste"
+// echo '{print $(NF-2)" "$(NF-1)" "$(NF)" "$1}' > /tmp/ap
+// seq 5 | xargs      -I VAR /bin/tcsh -c "awk --file /tmp/ap /tmp/svm_malarkey/ssap_rmsd.VAR.rbf_gamma_1_c_5.preds.raw.paste > /tmp/svm_malarkey/ssap_rmsd.VAR.rbf_gamma_1_c_5.preds"
 
 BOOST_AUTO_TEST_SUITE_END()
 
