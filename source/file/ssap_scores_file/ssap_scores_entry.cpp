@@ -29,10 +29,10 @@ ssap_scores_entry::ssap_scores_entry(const string &arg_prot1,      ///< Name of 
                                      const double &arg_overlap_pc, ///< Percentage overlap  (100% x overlap /length of largest)
                                      const double &arg_seq_id_pc,  ///< Percentage identity (100% x identity/length of smallest)
                                      const double &arg_rmsd        ///< RMSD of superposed structures
-                                     ) : name_1      ( arg_prot1      ),
-                                         name_2      ( arg_prot2      ),
-                                         length_1    ( arg_length1    ),
-                                         length_2    ( arg_length2    ),
+                                     ) : name_1     ( arg_prot1      ),
+                                         name_2     ( arg_prot2      ),
+                                         length_1   ( arg_length1    ),
+                                         length_2   ( arg_length2    ),
                                          ssap_score ( arg_ssap_score ),
                                          num_equivs ( arg_num_equivs ),
                                          overlap_pc ( arg_overlap_pc ),
