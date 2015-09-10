@@ -14,17 +14,17 @@ using namespace cath::file;
 using namespace std;
 
 namespace cath {
-    namespace test {
+	namespace test {
 
-        /// \brief The ssap_scores_entry_test_suite_fixture to assist in testing ssap_scores_entry
-        struct ssap_scores_entry_test_suite_fixture {
-        protected:
-            ~ssap_scores_entry_test_suite_fixture() noexcept = default;
+		/// \brief The ssap_scores_entry_test_suite_fixture to assist in testing ssap_scores_entry
+		struct ssap_scores_entry_test_suite_fixture {
+		protected:
+			~ssap_scores_entry_test_suite_fixture() noexcept = default;
 
-            const ssap_scores_entry eg_entry{ "1cukA03", "1hjpA03", 48, 44, 94.92, 44, 91, 97, 0.71 };
-        };
+			const ssap_scores_entry eg_entry{ "1cukA03", "1hjpA03", 48, 44, 94.92, 44, 91, 97, 0.71 };
+		};
 
-    }
+	}
 }
 
 BOOST_FIXTURE_TEST_SUITE(ssap_scores_entry_test_suite, cath::test::ssap_scores_entry_test_suite_fixture)
@@ -53,15 +53,19 @@ BOOST_AUTO_TEST_CASE(to_string_works) {
 }
 
 BOOST_AUTO_TEST_CASE(parses_from_line) {
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_name_1(),     "1cukA03" );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_name_2(),     "1hjpA03" );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_length_1(),   48        );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_length_2(),   44        );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_ssap_score(), 94.92     );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_num_equivs(), 44        );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_overlap_pc(), 91        );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_seq_id_pc(),  97        );
-    BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ).get_rmsd(),       0.71      );
+	BOOST_CHECK_EQUAL( ssap_scores_entry_from_line( "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71" ), eg_entry );
+}
+
+BOOST_AUTO_TEST_CASE(getters) {
+	BOOST_CHECK_EQUAL( eg_entry.get_name_1(),     "1cukA03" );
+	BOOST_CHECK_EQUAL( eg_entry.get_name_2(),     "1hjpA03" );
+	BOOST_CHECK_EQUAL( eg_entry.get_length_1(),   48        );
+	BOOST_CHECK_EQUAL( eg_entry.get_length_2(),   44        );
+	BOOST_CHECK_EQUAL( eg_entry.get_ssap_score(), 94.92     );
+	BOOST_CHECK_EQUAL( eg_entry.get_num_equivs(), 44        );
+	BOOST_CHECK_EQUAL( eg_entry.get_overlap_pc(), 91        );
+	BOOST_CHECK_EQUAL( eg_entry.get_seq_id_pc(),  97        );
+	BOOST_CHECK_EQUAL( eg_entry.get_rmsd(),       0.71      );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
