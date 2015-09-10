@@ -471,7 +471,7 @@ void cath::score::add_score_classn_value_list_and_add_missing(score_classn_value
 str_set cath::score::get_sorted_instance_labels(const score_classn_value_results_set &arg_results_set ///< TODOCUMENT
                                                 ) {
 	if ( arg_results_set.empty() ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get sorted instance labels of an empty score_classn_value_results_set"));
 	}
 	return get_sorted_instance_labels( front( arg_results_set ) );
 }
