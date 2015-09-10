@@ -130,8 +130,7 @@ namespace cath {
 		template <typename T>
 		inline angle<T>::angle(const angle_type &arg_angle_value ///< TODOCUMENT
 		                       ) : angle_value( arg_angle_value ) {
-			using boost::math::isfinite;
-			if ( ! isfinite( arg_angle_value ) ) {
+			if ( ! ::boost::math::isfinite( arg_angle_value ) ) {
 				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Angle value must be finite"));
 			}
 		}
