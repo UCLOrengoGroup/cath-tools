@@ -333,14 +333,14 @@ void cath::score::detail::write_to_svm_light_data_files_impl(const score_classn_
 	for (const size_t &index : arg_indices) {
 
 		// Check for any mismatching entries wrt their instance label/is_positive value
-		const bool mistmatching_instances = contains_adjacent_match(
+		const bool mismatching_instances = contains_adjacent_match(
 			arg_results,
 			[&] (const score_classn_value_vec &x, const score_classn_value_vec &y) {
 				return (    ( x[ index ].get_instance_is_positive() != y[ index ].get_instance_is_positive() )
 						 || ( x[ index ].get_instance_label()       != y[ index ].get_instance_label()       ) );
 			}
 		);
-		if ( mistmatching_instances ) {
+		if ( mismatching_instances ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("When attempting to write SVM data, detected mismatching entries wrt their instance label/is_positive value"));
 		}
 
