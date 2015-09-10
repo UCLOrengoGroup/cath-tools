@@ -87,7 +87,7 @@ const double & ssap_scores_entry::get_rmsd() const {
 
 /// \brief Non-member equality operator for ssap_scores_entry
 ///
-/// \relate ssap_scores_entry
+/// \relates ssap_scores_entry
 bool cath::file::operator==(const ssap_scores_entry &arg_entry_a, ///< The first  ssap_scores_entry to compare
                             const ssap_scores_entry &arg_entry_b  ///< The second ssap_scores_entry to compare
                             ) {
@@ -118,7 +118,7 @@ bool cath::file::operator==(const ssap_scores_entry &arg_entry_a, ///< The first
 ///
 ///     1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71
 ///
-/// \relate ssap_scores_entry
+/// \relates ssap_scores_entry
 ssap_scores_entry cath::file::ssap_scores_entry_from_line(const string &arg_ssap_line_entry ///< The line from which to parse the data
                                                           ) {
 	const auto line_parts = split_build<str_vec>( arg_ssap_line_entry, is_space(), token_compress_on );
@@ -141,7 +141,7 @@ ssap_scores_entry cath::file::ssap_scores_entry_from_line(const string &arg_ssap
 
 /// \brief Simple to_string() overload for ssap_scores_entry
 ///
-/// \relate ssap_scores_entry
+/// \relates ssap_scores_entry
 string cath::file::to_string(const ssap_scores_entry &arg_ssap_scores_entry ///< The ssap_scores_entry to be output as a string
                              ) {
 	return "ssap_scores_entry[" +                   arg_ssap_scores_entry.get_name_1()
@@ -158,7 +158,7 @@ string cath::file::to_string(const ssap_scores_entry &arg_ssap_scores_entry ///<
 
 /// \brief Simple insertion operator for ssap_scores_entry
 ///
-/// \relate ssap_scores_entry
+/// \relates ssap_scores_entry
 ostream & cath::file::operator<<(ostream                 &arg_os,               ///< The ostream to which the ssap_scores_entry should be output
                                  const ssap_scores_entry &arg_ssap_scores_entry ///< The ssap_scores_entry to output
                                  ) {
