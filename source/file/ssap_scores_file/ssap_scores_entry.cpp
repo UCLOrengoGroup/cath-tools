@@ -125,7 +125,6 @@ ssap_scores_entry cath::file::ssap_scores_entry_from_line(const string &arg_ssap
 	if ( line_parts.size() != 9 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse ssap_scores_entry from line that doesn't contain 9 parts"));
 	}
-	line_parts[ 0 ];
 	return ssap_scores_entry{
 		       line_parts[ 0 ],
 		       line_parts[ 1 ],
