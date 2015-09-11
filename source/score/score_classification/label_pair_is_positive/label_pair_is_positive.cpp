@@ -40,7 +40,13 @@ bool label_pair_is_positive::is_positive(const string &arg_label_a, ///< The fir
                                          ) const {
 	const auto find_itr = all_pairs.find( make_pair( arg_label_a, arg_label_b ) );
 	if ( find_itr == common::cend( all_pairs ) ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find label pair in label_pair_is_positive"));
+		BOOST_THROW_EXCEPTION(invalid_argument_exception(
+			"Unable to find label pair \""
+			+ arg_label_a
+			+ "\", \""
+			+ arg_label_b
+			+ "\" in label_pair_is_positive"
+		));
 	}
 	return find_itr->second;
 }
