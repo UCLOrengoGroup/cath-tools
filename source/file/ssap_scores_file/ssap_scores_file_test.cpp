@@ -113,7 +113,14 @@ BOOST_AUTO_TEST_CASE(score_classn_value_list__from__ssap_scores_entry_vec) {
 	const auto the_entries = ssap_scores_file::parse_ssap_scores_file_simple( ssap_scores_iss );
 	const auto is_pos = label_pair_is_positive{ make_arbitrary_is_positive_data( the_entries ) };
 
-	const auto rmsd_val_list = make_val_list_of_ssap_scores_entries( the_entries, is_pos, &ssap_scores_entry::get_rmsd, false, "rmsd" );
+	const auto rmsd_val_list = make_val_list_of_scores_entries(
+		the_entries,
+		is_pos,
+		false,
+		"rmsd",
+		[] (const ssap_scores_entry &x) { return x.get_rmsd(); },
+		[] (const ssap_scores_entry &x) { return make_pair( x.get_name_1(), x.get_name_2() ); }
+	);
 	BOOST_CHECK_EQUAL( best_score ( rmsd_val_list ), 1.53 );
 	BOOST_CHECK_EQUAL( worst_score( rmsd_val_list ), 6.52 );
 }
