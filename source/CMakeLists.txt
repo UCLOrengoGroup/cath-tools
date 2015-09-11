@@ -399,6 +399,12 @@ set(
 )
 
 set(
+	NORMSOURCES_FILE_PRC_SCORES_FILE
+		file/prc_scores_file/prc_scores_entry.cpp
+		file/prc_scores_file/prc_scores_file.cpp
+)
+
+set(
 	NORMSOURCES_FILE_SEC
 		file/sec/sec_file.cpp
 		file/sec/sec_file_io.cpp
@@ -417,6 +423,7 @@ set(
 		${NORMSOURCES_FILE_DOMAIN_DEFINITION_LIST}
 		${NORMSOURCES_FILE_DSSP_WOLF}
 		${NORMSOURCES_FILE_PDB}
+		${NORMSOURCES_FILE_PRC_SCORES_FILE}
 		${NORMSOURCES_FILE_SEC}
 		${NORMSOURCES_FILE_SSAP_SCORES_FILE}
 )
@@ -525,6 +532,7 @@ set(
 
 set(
 	NORMSOURCES_OPTIONS_OUTPUTTER_SUPERPOSITION_OUTPUTTER
+		options/outputter/superposition_outputter/json_file_superposition_outputter.cpp
 		options/outputter/superposition_outputter/ostream_superposition_outputter.cpp
 		options/outputter/superposition_outputter/pdb_file_superposition_outputter.cpp
 		options/outputter/superposition_outputter/pdb_files_superposition_outputter.cpp
@@ -1208,6 +1216,12 @@ set(
 )
 
 set(
+	TESTSOURCES_FILE_PRC_SCORES_FILE
+		file/prc_scores_file/prc_scores_entry_test.cpp
+		file/prc_scores_file/prc_scores_file_test.cpp
+)
+
+set(
 	TESTSOURCES_FILE_SEC
 		file/sec/sec_file_test.cpp
 )
@@ -1222,6 +1236,7 @@ set(
 	TESTSOURCES_FILE
 		${TESTSOURCES_FILE_DSSP_WOLF}
 		${TESTSOURCES_FILE_PDB}
+		${TESTSOURCES_FILE_PRC_SCORES_FILE}
 		${TESTSOURCES_FILE_SEC}
 		${TESTSOURCES_FILE_SSAP_SCORES_FILE}
 )
