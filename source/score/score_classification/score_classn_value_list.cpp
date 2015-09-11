@@ -146,7 +146,15 @@ double cath::score::worst_score(const score_classn_value_list &arg_score_classn_
 	if ( arg_score_classn_value_list.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to retrieve worst score from empty score_classn_value_list"));
 	}
-	return back( arg_score_classn_value_list ).get_score_value();
+	const auto find_itr = find_if(
+		arg_score_classn_value_list | reversed,
+		[&] (const score_classn_value &x) { return ( x.get_score_value() != worst_possible_score( arg_score_classn_value_list ) ); }
+	);
+	if ( find_itr == common::cend( arg_score_classn_value_list | reversed ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find a worst_score that isn't the worst possible score"));
+		// Could consider returning worst_possible_score( arg_score_classn_value_list ) in this case
+	}
+	return find_itr->get_score_value();
 }
 
 /// \brief Get scaling to normalise the score_classn_value_list
