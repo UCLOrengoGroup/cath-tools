@@ -20,8 +20,10 @@
 
 #include "value_list_scaling.h"
 
+#include <limits>
+
 using namespace cath::score;
-// using namespace std;
+using namespace std;
 
 /// \brief TODOCUMENT
 value_list_scaling::value_list_scaling(const double &arg_multiplier, ///< TODOCUMENT
@@ -44,7 +46,16 @@ const double & value_list_scaling::get_constant() const {
 void cath::score::scale_value(const value_list_scaling &arg_scaling, ///< TODOCUMENT
                               double                   &arg_value    ///< TODOCUMENT
                               ) {
-	arg_value *= arg_scaling.get_multiplier();
+	const auto &multiplier = arg_scaling.get_multiplier();
+
+	// If the value is the worst_possible_value, then leave it as is
+	if ( multiplier < 0.0 && arg_value == numeric_limits<double>::max() ) {
+		return;
+	}
+	if ( multiplier > 0.0 && arg_value == numeric_limits<double>::lowest() ) {
+		return;
+	}
+	arg_value *= multiplier;
 	arg_value += arg_scaling.get_constant();
 }
 
