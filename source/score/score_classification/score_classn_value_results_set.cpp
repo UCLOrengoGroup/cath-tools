@@ -258,7 +258,7 @@ score_classn_value_results_set cath::score::make_score_classn_value_results_set(
                                                                                 ) {
 	score_classn_value_results_set new_set;
 	for (const auto &scv_list : arg_score_classn_value_lists) {
-		new_set.add_score_classn_value_list( scv_list);
+		add_score_classn_value_list_and_add_missing( new_set, scv_list, worst_possible_score( scv_list ) );
 	}
 	return new_set;
 }
@@ -418,6 +418,12 @@ void cath::score::add_score_classn_value_list_and_add_missing(score_classn_value
                                                               const double                   &arg_score_for_missing,       ///< TODOCUMENT
                                                               const bool                     &arg_warn_on_missing          ///< TODOCUMENT
                                                               ) {
+	// If the score_classn_value_results_set is empty, just do a normal add and then return
+	if ( arg_results_set.empty() ) {
+		arg_results_set.add_score_classn_value_list( arg_score_classn_value_list );
+		return;
+	}
+
 	// Grab sorted lists of the instance labels in the results_set and value_list
 	const auto results_set_instance_labels = get_sorted_instance_labels( arg_results_set             );
 	const auto value_list_labels           = get_sorted_instance_labels( arg_score_classn_value_list );
