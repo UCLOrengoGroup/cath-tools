@@ -68,7 +68,7 @@ addons:
     - gcc-4.9
     - g++-4.9
     - ninja-build
-  artifacts: true
+  artifacts:
     paths:
     - release_build/cath-refine-align
     - release_build/cath-ssap
