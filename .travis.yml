@@ -78,3 +78,11 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
 
 script: ninja -j 2 -k 0 -C release_build && release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes && release_build/cath-superpose --version
+
+addons:
+  artifacts: true
+  s3_region: "Ireland"
+  paths:
+    - release_build/cath-refine-align
+    - release_build/cath-ssap
+    - release_build/cath-superpose
