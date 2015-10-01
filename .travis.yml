@@ -73,7 +73,7 @@ addons:
     - release_build/cath-refine-align
     - release_build/cath-ssap
     - release_build/cath-superpose
-  s3_region: "Ireland"
+  s3_region: "eu-west-1"
 
 
 before_script:
