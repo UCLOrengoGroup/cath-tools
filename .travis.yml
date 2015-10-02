@@ -73,9 +73,6 @@ addons:
     - release_build/cath-refine-align
     - release_build/cath-ssap
     - release_build/cath-superpose
-  s3_region: "eu-west-1"
-  endpoint: "cath-tools.s3-website-eu-west-1.amazonaws.com"
-
 
 before_script:
   - sudo add-apt-repository ppa:afrank/boost -y
