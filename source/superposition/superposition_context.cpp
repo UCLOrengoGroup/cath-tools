@@ -209,18 +209,18 @@ superposition_context cath::sup::superposition_context_from_ptree(const ptree &a
 
 	// Sanity check the ptree [ Step 1: check there's one key, which is entries ]
 	if ( arg_ptree.size() != 1 || arg_ptree.count( superposition_io_consts::ENTRIES_KEY ) != 1 ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse a superposition_context from ptree data that doesn't have one entries key and no other keys"));
 	}
 	const auto entries = arg_ptree.get_child( superposition_io_consts::ENTRIES_KEY );
 
 	// Sanity check the ptree [ Step 2: check that all entries have empty keys ]
 	if ( entries.size() != entries.count( "" ) ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse a superposition_context from ptree data whose entries have non-empty"));
 	}
 
 	// Sanity check the ptree [ Step 3: check that all values contain exactly two keys, name and transformation ]
 	if ( any_of( entries | map_values, entry_is_invalid ) ) {
-		BOOST_THROW_EXCEPTION(runtime_error_exception(""));
+		BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot parse a superposition_context from ptree data whose entries don't contain exactly two entries: name and transformation"));
 	}
 
 	// Read the names
