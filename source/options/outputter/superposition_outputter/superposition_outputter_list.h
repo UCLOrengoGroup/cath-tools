@@ -38,6 +38,7 @@ namespace cath {
 
 		public:
 			void push_back(const superposition_outputter &);
+			size_t size() const;
 			bool empty() const;
 
 			// Provide iterators

@@ -34,6 +34,11 @@ void superposition_outputter_list::push_back(const superposition_outputter &arg_
 	cath::common::push_back( outputters, arg_outputter.clone() );
 }
 
+/// \brief Return the number of outputters currently in the list
+size_t superposition_outputter_list::size() const {
+	return outputters.size();
+}
+
 /// \brief TODOCUMENT
 bool superposition_outputter_list::empty() const {
 	return outputters.empty();
