@@ -133,6 +133,7 @@ path superposition_output_options_block::get_json_file() const {
 	return json_file;
 }
 
+/// Get a list of superposition_outputter_list that will perform the outputs specified in this options_block
 superposition_outputter_list superposition_output_options_block::get_superposition_outputters(const display_spec &arg_display_spec ///< TODOCUMENT
                                                                                               ) const {
 	superposition_outputter_list superposition_outputters;
