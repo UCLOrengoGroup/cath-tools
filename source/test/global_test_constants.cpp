@@ -128,6 +128,12 @@ const path & global_test_constants::TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR() {
 	return test_ssap_alignment_gluing_data_dir;
 }
 
+/// \brief Getter for directory of materials for testing superposition JSON
+const path & global_test_constants::TEST_SUP_JSON_DIR() {
+	static const path test_sup_json_data_dir{ TEST_SOURCE_DATA_DIR() / "superposition_json" };
+	return test_sup_json_data_dir;
+}
+
 /// \brief TODOCUMENT
 const path & global_test_constants::TEST_OUTPUT_DIRECTORY() {
 	static const path test_output_directory( temp_directory_path() );
