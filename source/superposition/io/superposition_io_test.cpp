@@ -20,36 +20,17 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "superposition/superposition.h"
 #include "superposition/io/superposition_io.h"
+#include "test/superposition_fixture.h"
 
 using namespace cath::geom;
 using namespace cath::sup;
 using namespace std;
 
 /// \brief The superposition_io_test_suite_fixture to assist in testing superposition I/O
-struct superposition_io_test_suite_fixture {
+struct superposition_io_test_suite_fixture : protected superposition_fixture{
 protected:
 	~superposition_io_test_suite_fixture() noexcept = default;
-
-	coord_list coord_list_1{ { coord{  1.0,  0.0,  0.0 }, coord{  2.0,   0.0,   0.0 } } };
-	coord_list coord_list_2{ { coord{  0.0, -1.0,  0.0 }, coord{  0.0,  -2.0,   0.0 } } };
-	superposition the_sup = create_pairwise_superposition( coord_list_1, coord_list_2 );
-
-	const string json_string = R"({"transformations":[{"translation":)"
-		R"({"x":"0","y":"0","z":"0"},)"
-		R"("rotation":)"
-		R"([["1","0","0"],)"
-		R"(["0","1","0"],)"
-		R"(["0","0","1"])"
-		R"(]},{"translation":)"
-		R"({"x":"0","y":"0","z":"0"},)"
-		R"("rotation":)"
-		R"([["0","-1","0"],)"
-		R"(["0","0","-1"],)"
-		R"(["1","0","0"])"
-		R"(]}]})"
-		"\n";
 };
 
 BOOST_FIXTURE_TEST_SUITE(superposition_io_test_suite, superposition_io_test_suite_fixture)
@@ -59,7 +40,7 @@ BOOST_AUTO_TEST_SUITE(json)
 BOOST_AUTO_TEST_SUITE(write)
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup) {
-	BOOST_CHECK_EQUAL( to_json_string( the_sup, false ), json_string );
+	BOOST_CHECK_EQUAL( to_json_string( the_sup, false ), sup_json_str );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -67,7 +48,7 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(write)
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_identity) {
-	BOOST_CHECK_EQUAL( superposition_from_json_string( json_string ), the_sup );
+	BOOST_CHECK_EQUAL( superposition_from_json_string( sup_json_str ), the_sup );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

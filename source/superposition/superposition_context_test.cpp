@@ -21,52 +21,22 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
 #include "options/options_block/data_dirs_options_block.h"
-#include "structure/geometry/coord_list.h"
-#include "superposition/superposition_context.h"
-#include "test/global_test_constants.h"
+#include "test/superposition_fixture.h"
 
 using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
 using namespace cath::opts;
 using namespace cath::sup;
-
 using namespace std;
 
 namespace cath {
 	namespace test {
 
 		/// \brief The superposition_context_test_suite_fixture to assist in testing superposition_context
-		struct superposition_context_test_suite_fixture : protected global_test_constants {
+		struct superposition_context_test_suite_fixture : protected superposition_fixture {
 		protected:
 			~superposition_context_test_suite_fixture() noexcept = default;
-
-			const coord_list            coord_list_1{ { coord{  1.0,  0.0,  0.0 }, coord{  2.0,   0.0,   0.0 } } };
-			const coord_list            coord_list_2{ { coord{  0.0, -1.0,  0.0 }, coord{  0.0,  -2.0,   0.0 } } };
-			const pdb_list              pdbs{ pdb_vec{ 2, pdb{} } };
-			const str_vec               names{ "1c0pA01", "1hdoA00" };
-			const superposition         the_sup{ create_pairwise_superposition( coord_list_1, coord_list_2 ) };
-			const superposition_context the_sup_con{ pdbs, names, the_sup };
-			const string                json_string = R"({"entries":[{"name":"1c0pA01","transformation":{"translation":)"
-				R"({"x":"0","y":"0","z":"0"},)"
-				R"("rotation":)"
-				R"([["1","0","0"],)"
-				R"(["0","1","0"],)"
-				R"(["0","0","1"])"
-				R"(]}},{"name":"1hdoA00","transformation":{"translation":)"
-				R"({"x":"0","y":"0","z":"0"},)"
-				R"("rotation":)"
-				R"([["0","-1","0"],)"
-				R"(["0","0","-1"],)"
-				R"(["1","0","0"])"
-				R"(]}}]})" "\n";
 		};
-
 	}
 }
 
@@ -91,12 +61,12 @@ BOOST_AUTO_TEST_SUITE(json)
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup_con) {
 	BOOST_CHECK_EQUAL(
 		to_json_string( the_sup_con, false ),
-		json_string
+		sup_context_json_str
 	);
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works) {
-	const auto from_json_string = superposition_context_from_json_string( json_string );
+	const auto from_json_string = superposition_context_from_json_string( sup_context_json_str );
 	BOOST_REQUIRE_EQUAL     ( from_json_string.get_pdbs_cref().size(),   2       );
 	BOOST_CHECK_EQUAL       ( from_json_string.get_pdbs_cref()[ 0 ].get_num_residues(), 0 );
 	BOOST_CHECK_EQUAL       ( from_json_string.get_pdbs_cref()[ 1 ].get_num_residues(), 0 );
