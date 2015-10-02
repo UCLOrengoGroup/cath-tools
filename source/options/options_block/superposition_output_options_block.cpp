@@ -24,6 +24,7 @@
 
 #include "common/clone/make_uptr_clone.h"
 #include "exception/not_implemented_exception.h"
+#include "options/outputter/superposition_outputter/json_file_superposition_outputter.h"
 #include "options/outputter/superposition_outputter/ostream_superposition_outputter.h"
 #include "options/outputter/superposition_outputter/pdb_file_superposition_outputter.h"
 #include "options/outputter/superposition_outputter/pdb_files_superposition_outputter.h"
@@ -153,7 +154,7 @@ superposition_outputter_list superposition_output_options_block::get_superpositi
 		superposition_outputters.push_back( pymol_file_superposition_outputter( get_sup_to_pymol_file(), arg_display_spec ) );
 	}
 	if ( ! get_json_file().empty() ) {
-		BOOST_THROW_EXCEPTION(not_implemented_exception("Not yet implemented a JSON superposition outputter"));
+		superposition_outputters.push_back( json_file_superposition_outputter( get_json_file() ) );
 	}
 
 	return superposition_outputters;

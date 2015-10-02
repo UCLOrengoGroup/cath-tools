@@ -532,6 +532,7 @@ set(
 
 set(
 	NORMSOURCES_OPTIONS_OUTPUTTER_SUPERPOSITION_OUTPUTTER
+		options/outputter/superposition_outputter/json_file_superposition_outputter.cpp
 		options/outputter/superposition_outputter/ostream_superposition_outputter.cpp
 		options/outputter/superposition_outputter/pdb_file_superposition_outputter.cpp
 		options/outputter/superposition_outputter/pdb_files_superposition_outputter.cpp
@@ -1328,6 +1329,7 @@ set(
 
 set(
 	TESTSOURCES_OPTIONS_OUTPUTTER_SUPERPOSITION_OUTPUTTER
+		options/outputter/superposition_outputter/json_file_superposition_outputter_test.cpp
 		options/outputter/superposition_outputter/ostream_superposition_outputter_test.cpp
 		options/outputter/superposition_outputter/pdb_file_superposition_outputter_test.cpp
 		options/outputter/superposition_outputter/pdb_files_superposition_outputter_test.cpp
