@@ -17,6 +17,7 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #include <boost/test/auto_unit_test.hpp>
 
 #include "cath_superpose/cath_superposer.h"
@@ -32,7 +33,6 @@
 #include <sstream>
 
 using namespace boost::filesystem;
-using namespace cath;
 using namespace cath::common;
 using namespace std;
 

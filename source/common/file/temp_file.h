@@ -29,35 +29,37 @@
 #include <string>
 
 namespace cath {
+	namespace common {
 
-	/// \brief A simple wrapper for creating a temporary file and then automatically cleaning it up on destruction
-	///
-	/// This can be constructed with an empty string, in which case has_filename() will return false,
-	/// get_filename() will return an empty path and the destructor will do nothing.
-	class temp_file final {
-	private:
-		opt_path filename;
-
-		static boost::filesystem::path temp_filename_of_basename_pattern(const std::string &);
-
-	public:
-		explicit temp_file(const std::string &);
-		~temp_file() noexcept;
-
-		/// \brief Specify that the copy-ctor shouldn't be used
+		/// \brief A simple wrapper for creating a temporary file and then automatically cleaning it up on destruction
 		///
-		/// \todo Consider implementing a move-ctor that ensures the source filename gets wiped
-		temp_file(const temp_file &) = delete;
-		/// \brief Specify that the copy-assign shouldn't be used
-		///
-		/// \todo Consider implementing a move-assign that ensures the source filename gets wiped
-		temp_file & operator=(const temp_file &) = delete;
+		/// This can be constructed with an empty string, in which case has_filename() will return false,
+		/// get_filename() will return an empty path and the destructor will do nothing.
+		class temp_file final {
+		private:
+			opt_path filename;
 
-		const opt_path & get_opt_filename() const;
-	};
+			static boost::filesystem::path temp_filename_of_basename_pattern(const std::string &);
 
-	bool has_filename(const temp_file &);
-	boost::filesystem::path get_filename(const temp_file &);
+		public:
+			explicit temp_file(const std::string &);
+			~temp_file() noexcept;
+
+			/// \brief Specify that the copy-ctor shouldn't be used
+			///
+			/// \todo Consider implementing a move-ctor that ensures the source filename gets wiped
+			temp_file(const temp_file &) = delete;
+			/// \brief Specify that the copy-assign shouldn't be used
+			///
+			/// \todo Consider implementing a move-assign that ensures the source filename gets wiped
+			temp_file & operator=(const temp_file &) = delete;
+
+			const opt_path & get_opt_filename() const;
+		};
+
+		bool has_filename(const temp_file &);
+		boost::filesystem::path get_filename(const temp_file &);
+	}
 }
 
 #endif

@@ -27,7 +27,6 @@
 #include <fstream>
 
 using namespace boost::filesystem;
-using namespace cath;
 using namespace cath::common;
 using namespace std;
 

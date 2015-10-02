@@ -29,7 +29,7 @@
 
 using namespace boost::filesystem;
 using namespace boost::program_options;
-using namespace cath;
+using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 

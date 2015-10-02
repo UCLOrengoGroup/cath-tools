@@ -68,12 +68,12 @@ const opt_path & temp_file::get_opt_filename() const {
 }
 
 /// \brief TODOCUMENT
-bool cath::has_filename(const temp_file &arg_temp_file ///< TODOCUMENT
-                        ) {
+bool cath::common::has_filename(const temp_file &arg_temp_file ///< TODOCUMENT
+                                ) {
 	return static_cast<bool>( arg_temp_file.get_opt_filename() );
 }
 /// \brief TODOCUMENT
-path cath::get_filename(const temp_file &arg_temp_file ///< TODOCUMENT
-                        ) {
+path cath::common::get_filename(const temp_file &arg_temp_file ///< TODOCUMENT
+                                ) {
 	return *arg_temp_file.get_opt_filename();
 }

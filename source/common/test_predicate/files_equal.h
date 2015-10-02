@@ -49,12 +49,12 @@ namespace cath {
 	};
 }
 
-#define BOOST_WARN_FILES_EQUAL(                 S1, S2 )   BOOST_WARN(    ( files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )
-#define BOOST_CHECK_FILES_EQUAL(                S1, S2 )   BOOST_CHECK(   ( files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )
-#define BOOST_REQUIRE_FILES_EQUAL(              S1, S2 )   BOOST_REQUIRE( ( files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )
+#define BOOST_WARN_FILES_EQUAL(                 S1, S2 )   BOOST_WARN(    ( cath::files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )
+#define BOOST_CHECK_FILES_EQUAL(                S1, S2 )   BOOST_CHECK(   ( cath::files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )
+#define BOOST_REQUIRE_FILES_EQUAL(              S1, S2 )   BOOST_REQUIRE( ( cath::files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )
 
-#define BOOST_WARN_FILES_EQUAL_OR_OVERWRITE(    S1, S2 )   BOOST_WARN(    ( files_equal( true ) ( ( (S1) ), ( (S2) ) ) ) )
-#define BOOST_CHECK_FILES_EQUAL_OR_OVERWRITE(   S1, S2 )   BOOST_CHECK(   ( files_equal( true ) ( ( (S1) ), ( (S2) ) ) ) )
-#define BOOST_REQUIRE_FILES_EQUAL_OR_OVERWRITE( S1, S2 )   BOOST_REQUIRE( ( files_equal( true ) ( ( (S1) ), ( (S2) ) ) ) )
+#define BOOST_WARN_FILES_EQUAL_OR_OVERWRITE(    S1, S2 )   BOOST_WARN(    ( cath::files_equal( true ) ( ( (S1) ), ( (S2) ) ) ) )
+#define BOOST_CHECK_FILES_EQUAL_OR_OVERWRITE(   S1, S2 )   BOOST_CHECK(   ( cath::files_equal( true ) ( ( (S1) ), ( (S2) ) ) ) )
+#define BOOST_REQUIRE_FILES_EQUAL_OR_OVERWRITE( S1, S2 )   BOOST_REQUIRE( ( cath::files_equal( true ) ( ( (S1) ), ( (S2) ) ) ) )
 
 #endif

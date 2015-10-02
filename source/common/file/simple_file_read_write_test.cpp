@@ -30,7 +30,6 @@
 #include "test/global_test_constants.h"
 
 using namespace boost::filesystem;
-using namespace cath;
 using namespace cath::common;
 using namespace std;
 
