@@ -33,38 +33,10 @@ using namespace std;
 
 using boost::numeric_cast;
 
-/// \brief The value a used in the SSAP paper (for secondary structures)
-///
-/// Note that this scaled by INTEGER_SCALING^2 ( = 10 * 10 = 100), which matches
-/// the result of the distance being scaled by INTEGER_SCALING
-const size_t sec_struc_querier::SEC_STRUC_A_VALUE          = 800 * entry_querier::INTEGER_SCALING * entry_querier::INTEGER_SCALING;
-
-/// \brief The value b used in the SSAP paper (for secondary structures)
-///
-/// Note that this scaled by INTEGER_SCALING^2 ( = 10 * 10 = 100), which matches
-/// the result of the distance being scaled by INTEGER_SCALING
-const size_t sec_struc_querier::SEC_STRUC_B_VALUE          =   6 * entry_querier::INTEGER_SCALING * entry_querier::INTEGER_SCALING;
-
-/// \brief The minimum score that the algorithm will consider for secondary structures
-///        (often referred to as c)
-///
-/// Note that this does not need scaling
-const size_t sec_struc_querier::SEC_STRUC_MIN_SCORE_CUTOFF =  10;
-
-/// \brief The maximum squared-distance value that the algorithm will consider (for secondary structures)
-///
-/// This is calculated as \f$ \frac{a}{c} - b\f$,
-/// which comes from solving \f$ c = \frac{a}{ d^2 + b} \f$ for \f$ s^2 \f$ )
-///
-/// NOTE: This has an implied scaling ( * INTEGER_SCALING * INTEGER_SCALING) built into it.
-///       This line will not need changing as long as A, B and the distances have their scaling
-///       removed simultaneously.
-///
-/// With current (unscaled) values of a=800, b=6 and c=10, this gives a maximum (unscaled) value
-/// of 74 for d^2, which implies a maximum value for d of sqrt(74) ~= 8.6A
-const size_t sec_struc_querier::SEC_STRUC_MAX_DIST_SQ_CUTOFF(
-	sec_struc_querier::SEC_STRUC_A_VALUE / sec_struc_querier::SEC_STRUC_MIN_SCORE_CUTOFF - sec_struc_querier::SEC_STRUC_B_VALUE
-);
+constexpr size_t sec_struc_querier::SEC_STRUC_A_VALUE;
+constexpr size_t sec_struc_querier::SEC_STRUC_B_VALUE;
+constexpr size_t sec_struc_querier::SEC_STRUC_MIN_SCORE_CUTOFF;
+constexpr size_t sec_struc_querier::SEC_STRUC_MAX_DIST_SQ_CUTOFF;
 
 /// \brief TODOCUMENT
 size_t sec_struc_querier::do_get_length(const protein &arg_protein ///< TODOCUMENT

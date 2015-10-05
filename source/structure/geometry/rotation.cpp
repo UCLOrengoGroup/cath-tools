@@ -71,10 +71,7 @@ const rotation & rotation::ROTATE_X_TO_Z_TO_Y_TO_X() {
 	return rotate_x_to_z_to_y_to_x;
 }
 
-const double & rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS() {
-	static const double default_tolerance_for_rotation_closeness_checks(0.000001);
-	return default_tolerance_for_rotation_closeness_checks;
-}
+constexpr double rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS;
 
 /// \brief Non-member equality operator for the rotation class
 ///
@@ -84,7 +81,7 @@ bool cath::geom::operator==(const rotation &arg_rot_a, ///< TODOCUMENT
                             ) {
 	for (size_t new_row_ctr = 0; new_row_ctr < coord::NUM_DIMS; ++new_row_ctr) {
 		for (size_t new_col_ctr = 0; new_col_ctr < coord::NUM_DIMS; ++new_col_ctr) {
-			if ( difference( arg_rot_a.get_value( new_row_ctr, new_col_ctr ), arg_rot_b.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS() ) {
+			if ( difference( arg_rot_a.get_value( new_row_ctr, new_col_ctr ), arg_rot_b.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS ) {
 				return false;
 			}
 		}
@@ -121,7 +118,7 @@ bool cath::geom::are_close(const rotation &arg_rotn_1, ///< TODOCUMENT
                            ) {
 	for (size_t new_row_ctr = 0; new_row_ctr < coord::NUM_DIMS; ++new_row_ctr) {
 		for (size_t new_col_ctr = 0; new_col_ctr < coord::NUM_DIMS; ++new_col_ctr) {
-			if ( difference( arg_rotn_1.get_value( new_row_ctr, new_col_ctr ), arg_rotn_2.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS() ) {
+			if ( difference( arg_rotn_1.get_value( new_row_ctr, new_col_ctr ), arg_rotn_2.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS ) {
 				return false;
 			}
 		}

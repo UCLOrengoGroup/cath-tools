@@ -61,12 +61,12 @@ BOOST_AUTO_TEST_CASE(rotation_to_x_axis_and_x_y_plane_works) {
 	const coord    rotated_b     = rotate_copy(test_rotation, b);
 
 	// Check that a's length has been preserved and that it has been rotated onto the x axis
-	BOOST_CHECK_CLOSE( length(a), length(rotated_a),                             100.0 * rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS() );
-	BOOST_CHECK_CLOSE( length(a), dot_product( coord(1.0, 0.0, 0.0), rotated_a), 100.0 * rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS() );
+	BOOST_CHECK_CLOSE( length(a), length(rotated_a),                             100.0 * rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS );
+	BOOST_CHECK_CLOSE( length(a), dot_product( coord(1.0, 0.0, 0.0), rotated_a), 100.0 * rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS );
 
 	// Check that b's length has been preserved and that it has been rotated onto the x-y plane
 	BOOST_CHECK_EQUAL( length(b), length(rotated_b) );
-	BOOST_CHECK_LE   ( dot_product( coord(0.0, 0.0, 1.0), rotated_b), rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS() );
+	BOOST_CHECK_LE   ( dot_product( coord(0.0, 0.0, 1.0), rotated_b), rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS );
 }
 
 /// \brief Check that this example (1c0pA01, residue 999) can be used to produce a similar but more accurate rotation

@@ -41,10 +41,15 @@ namespace cath {
 		public:
 			explicit common_residue_select_best_score_percent_policy(const double &arg_best_score_percentage = DEFAULT_BEST_SCORE_PERCENTAGE);
 			virtual ~common_residue_select_best_score_percent_policy() noexcept = default;
+			
+			/// \brief TODOCUMENT
+			static constexpr double MIN_BEST_SCORE_PERCENTAGE     =   0.0;
 
-			static const double MIN_BEST_SCORE_PERCENTAGE;
-			static const double MAX_BEST_SCORE_PERCENTAGE;
-			static const double DEFAULT_BEST_SCORE_PERCENTAGE;
+			/// \brief TODOCUMENT
+			static constexpr double MAX_BEST_SCORE_PERCENTAGE     = 100.0;
+
+			/// \brief TODOCUMENT
+			static constexpr double DEFAULT_BEST_SCORE_PERCENTAGE =  70.0;
 		};
 	}
 }

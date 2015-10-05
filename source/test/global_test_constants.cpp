@@ -30,6 +30,13 @@ using namespace cath;
 using namespace cath::common;
 using namespace std;
 
+constexpr double global_test_constants::DOUBLE_INFINITY;
+constexpr double global_test_constants::DOUBLE_QUIET_NAN;
+constexpr double global_test_constants::DOUBLE_SIGNALING_NAN;
+constexpr double global_test_constants::DOUBLE_DENORM_MIN;
+constexpr double global_test_constants::DOUBLE_MIN;
+constexpr double global_test_constants::DOUBLE_MAX;
+
 /// \brief TODOCUMENT
 void global_test_constants::check_required_files_exist() {
 	for (const path &required_file : REQUIRED_PREEXISTING_FILES() ) {
@@ -253,86 +260,51 @@ const double & global_test_constants::ACCURACY_PERCENTAGE() {
 /// \brief TODOCUMENT
 template <>
 const float & global_test_constants::LOOSER_ACCURACY_PERCENTAGE_TMPL<float>() {
-	static const float looser_accuracy_percentage_float = static_cast<float>( 1.0 );
+	static constexpr float looser_accuracy_percentage_float = static_cast<float>( 1.0 );
 	return looser_accuracy_percentage_float;
 }
 
 /// \brief TODOCUMENT
 template <>
 const double & global_test_constants::LOOSER_ACCURACY_PERCENTAGE_TMPL<double>() {
-	static const double looser_accuracy_percentage_double ( 0.0001 );
+	static constexpr double looser_accuracy_percentage_double ( 0.0001 );
 	return looser_accuracy_percentage_double;
 }
 
 /// \brief TODOCUMENT
 template <>
 const long double & global_test_constants::LOOSER_ACCURACY_PERCENTAGE_TMPL<long double>() {
-	static const long double looser_accuracy_percentage_long_double ( 0.00001 );
+	static constexpr long double looser_accuracy_percentage_long_double ( 0.00001 );
 	return looser_accuracy_percentage_long_double;
 }
 
 /// \brief TODOCUMENT
 template <>
 const float & global_test_constants::ACCURACY_PERCENTAGE_TMPL<float>() {
-	static const float accuracy_percentage = static_cast<float>( 0.0000001 );
+	static constexpr float accuracy_percentage = static_cast<float>( 0.0000001 );
 	return accuracy_percentage;
 }
 
 /// \brief TODOCUMENT
 template <>
 const double & global_test_constants::ACCURACY_PERCENTAGE_TMPL<double>() {
-	static const double accuracy_percentage  ( 0.000000001                             );
+	static constexpr double accuracy_percentage  ( 0.000000001                             );
 	return accuracy_percentage;
 }
 
 /// \brief TODOCUMENT
 template <>
 const long double & global_test_constants::ACCURACY_PERCENTAGE_TMPL<long double>() {
-	static const long double accuracy_percentage  ( 0.00000000001                             );
+	static constexpr long double accuracy_percentage  ( 0.00000000001                             );
 	return accuracy_percentage;
 }
 
 /// \brief TODOCUMENT
-const double & global_test_constants::DOUBLE_INFINITY() {
-	static const double double_infinity      ( numeric_limits<double>::infinity()      );
-	return double_infinity;
-}
-
-/// \brief TODOCUMENT
-const double & global_test_constants::DOUBLE_QUIET_NAN() {
-	static const double double_quiet_nan     ( numeric_limits<double>::quiet_NaN()     );
-	return double_quiet_nan;
-}
-
-/// \brief TODOCUMENT
-const double & global_test_constants::DOUBLE_SIGNALING_NAN() {
-	static const double double_signaling_nan ( numeric_limits<double>::signaling_NaN() );
-	return double_signaling_nan;
-}
-
-/// \brief TODOCUMENT
-const double & global_test_constants::DOUBLE_DENORM_MIN() {
-	static const double double_denorm_min    ( numeric_limits<double>::denorm_min()    );
-	return double_denorm_min;
-}
-
-/// \brief TODOCUMENT
-const double & global_test_constants::DOUBLE_MIN() {
-	static const double double_min           ( numeric_limits<double>::min()           );
-	return double_min;
-}
-
-/// \brief TODOCUMENT
-const double & global_test_constants::DOUBLE_MAX() {
-	static const double double_max           ( numeric_limits<double>::max()           );
-	return double_max;
-}
-/// \brief TODOCUMENT
 const doub_vec & global_test_constants::INVALID_DOUBLES() {
 	static const doub_vec invalid_doubles = {
-		DOUBLE_INFINITY(),
-		DOUBLE_QUIET_NAN(),
-		DOUBLE_SIGNALING_NAN()
+		DOUBLE_INFINITY,
+		DOUBLE_QUIET_NAN,
+		DOUBLE_SIGNALING_NAN
 	};
 	return invalid_doubles;
 }

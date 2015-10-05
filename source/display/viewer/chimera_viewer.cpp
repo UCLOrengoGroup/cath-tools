@@ -64,8 +64,7 @@ using boost::property;
 using boost::undirectedS;
 using boost::vecS;
 
-/// \brief TODOCUMENT
-const size_t chimera_viewer::RESIDUE_BATCH_SIZE( 200 );
+constexpr size_t chimera_viewer::RESIDUE_BATCH_SIZE;
 
 /// \brief TODOCUMENT
 ///

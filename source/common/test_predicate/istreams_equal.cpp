@@ -33,8 +33,7 @@ using namespace cath;
 using namespace cath::common;
 using namespace std;
 
-/// \brief The default half-width used when displaying any differences
-const str_size_type istreams_equal::DEFAULT_DIFF_HALF_WIDTH(50);
+constexpr str_size_type istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
 
 /// \brief TODOCUMENT
 str_size_type istreams_equal::index_of_first_difference(const string &arg_string1, ///< TODOCUMENT

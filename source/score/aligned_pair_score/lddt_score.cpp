@@ -65,6 +65,8 @@ using boost::range::join;
 
 BOOST_CLASS_EXPORT(lddt_score)
 
+constexpr double lddt_score::THRESHOLD_FOR_ALL;
+
 /// \brief A standard do_clone method.
 unique_ptr<aligned_pair_score> lddt_score::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -84,7 +86,7 @@ score_value lddt_score::do_calculate(const alignment &arg_alignment, ///< The pa
 	const score_value R_0 = 15.0;
 
 	// A threshold value that will ensure everything gets considered
-	const double      THRESHOLD_FOR_ALL = numeric_limits<double>::max();
+	
 
 	// Extract the common coordinates to be chosen
 	const pair<coord_list_vec, coord_list_vec> common_coords_by_residue = the_coord_handler.get_common_coords_by_residue(

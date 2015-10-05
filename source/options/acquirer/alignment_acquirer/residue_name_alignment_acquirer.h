@@ -31,7 +31,8 @@ namespace cath {
 		private:
 			using super = alignment_acquirer;
 
-			static const double       RES_ALIGN_SCORE_CONSTANT;
+			/// \brief TODOCUMENT
+			static constexpr double RES_ALIGN_SCORE_CONSTANT = 10.0;
 
 			virtual std::unique_ptr<alignment_acquirer> do_clone() const override final;
 			virtual std::pair<align::alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const override final;

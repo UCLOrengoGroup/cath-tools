@@ -32,45 +32,10 @@ using namespace std;
 
 using boost::numeric_cast;
 
-/// As in the SSAP paper(s), the a and b values values are used to convert the distance into a score
-/// for dynamic programming. The inherited code (this is being written in August 2013), which
-/// appears to use the square of the distance between residues rather than the distance as indicated
-/// in the SSAP paper. Otherwise, the formula for the score s the same: \f$ s = \frac{a}{b + d^2} \f$
-
-/// \brief The value a used in the SSAP paper (for residues)
-/////
-///// Note that this scaled by INTEGER_SCALING^2 ( = 10 * 10 = 100), which matches
-///// the result of the distance being scaled by INTEGER_SCALING
-//const size_t residue_querier::RESIDUE_A_VALUE          = 500 * entry_querier::INTEGER_SCALING * entry_querier::INTEGER_SCALING;
-const float_score_type residue_querier::RESIDUE_A_VALUE          = 500.0;
-
-/// \brief The value b used in the SSAP paper (for residues)
-/////
-///// Note that this scaled by INTEGER_SCALING^2 ( = 10 * 10 = 100), which matches
-///// the result of the distance being scaled by INTEGER_SCALING
-//const size_t residue_querier::RESIDUE_B_VALUE          =  10 * entry_querier::INTEGER_SCALING * entry_querier::INTEGER_SCALING;
-const float_score_type residue_querier::RESIDUE_B_VALUE          =  10.0;
-
-/// \brief The minimum score that the algorithm will consider for residues
-///        (often referred to as c)
-///
-/// Note that this does not need scaling
-const float_score_type residue_querier::RESIDUE_MIN_SCORE_CUTOFF =  10.0;
-
-/// \brief The maximum squared-distance value that the algorithm will consider (for residues)
-///
-/// This is calculated as \f$ \frac{a}{c} - b\f$,
-/// which comes from solving \f$ c = \frac{a}{ d^2 + b} \f$ for \f$ s^2 \f$ )
-///
-/// NOTE: This has an implied scaling ( * INTEGER_SCALING * INTEGER_SCALING) built into it.
-///       This line will not need changing as long as A, B and the distances have their scaling
-///       removed simultaneously.
-///
-/// With current (unscaled) values of a=500, b=10 and c=10, this gives a maximum (unscaled) value
-/// of 40 for d^2, which implies a maximum value for d of sqrt(40) ~= 6.3A
-const float_score_type residue_querier::RESIDUE_MAX_DIST_SQ_CUTOFF(
-	residue_querier::RESIDUE_A_VALUE / residue_querier::RESIDUE_MIN_SCORE_CUTOFF - residue_querier::RESIDUE_B_VALUE
-);
+constexpr float_score_type residue_querier::RESIDUE_A_VALUE;
+constexpr float_score_type residue_querier::RESIDUE_B_VALUE;
+constexpr float_score_type residue_querier::RESIDUE_MIN_SCORE_CUTOFF;
+constexpr float_score_type residue_querier::RESIDUE_MAX_DIST_SQ_CUTOFF;
 
 /// \brief TODOCUMENT
 size_t residue_querier::do_get_length(const protein &arg_protein ///< TODOCUMENT

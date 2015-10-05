@@ -91,12 +91,12 @@ namespace cath {
 		template <typename T>
 		static const T                                    & ACCURACY_PERCENTAGE_TMPL();
 
-		static const double                               & DOUBLE_INFINITY();
-		static const double                               & DOUBLE_QUIET_NAN();
-		static const double                               & DOUBLE_SIGNALING_NAN();
-		static const double                               & DOUBLE_DENORM_MIN();
-		static const double                               & DOUBLE_MIN();
-		static const double                               & DOUBLE_MAX();
+		static constexpr double                             DOUBLE_INFINITY      = std::numeric_limits<double>::infinity();
+		static constexpr double                             DOUBLE_QUIET_NAN     = std::numeric_limits<double>::quiet_NaN();
+		static constexpr double                             DOUBLE_SIGNALING_NAN = std::numeric_limits<double>::signaling_NaN();
+		static constexpr double                             DOUBLE_DENORM_MIN    = std::numeric_limits<double>::denorm_min();
+		static constexpr double                             DOUBLE_MIN           = std::numeric_limits<double>::min();
+		static constexpr double                             DOUBLE_MAX           = std::numeric_limits<double>::max();
 
 		static const doub_vec                             & INVALID_DOUBLES();
 

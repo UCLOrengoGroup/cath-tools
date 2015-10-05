@@ -42,7 +42,7 @@ using namespace cath::opts;
 using namespace cath::sup;
 using namespace std;
 
-const double superposition_acquirer::PERCENT_TOLERANCE_FOR_EQUAL_RMSDS(0.0001);
+constexpr double superposition_acquirer::PERCENT_TOLERANCE_FOR_EQUAL_RMSDS;
 
 /// \brief TODOCUMENT
 superposition_context superposition_acquirer::get_superposition(ostream &arg_stderr ///< TODOCUMENT

@@ -58,8 +58,8 @@ namespace cath {
 			/// \brief The threshold values over which the results should be averaged
 			doub_vec threshold_values;
 
-			/// \brief TODOCUMENT
-			static const double THRESHOLD_FOR_ALL;
+			// A threshold value that will ensure everything gets considered
+			static constexpr double THRESHOLD_FOR_ALL = std::numeric_limits<double>::max();
 
 			virtual std::unique_ptr<aligned_pair_score> do_clone() const override final;
 

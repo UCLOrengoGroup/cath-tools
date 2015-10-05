@@ -54,10 +54,15 @@ namespace cath {
 		///  - Global configuration file    (   file : "cath-tools.conf"     )
 		class executable_options {
 		private:
-			static const size_t                  DEFAULT_PROG_OPS_LINE_LENGTH;
-			static const std::string             CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX;
-			static const boost::filesystem::path CATH_TOOLS_CONF_FILE;
-			static const path_vec                CATH_TOOLS_CONF_FILE_SEARCH_PATH;
+			/// \brief This affects the way Boost Program Options formats the outputting of the options description
+			///
+			/// Its behaviour isn't 100% clear but setting this value to roughly the character-width of a
+			/// modern terminal prevents it prematurely wrapping and making a very long, narrow output.
+			static constexpr size_t                  DEFAULT_PROG_OPS_LINE_LENGTH = 200;
+
+			static const     std::string             CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX;
+			static const     boost::filesystem::path CATH_TOOLS_CONF_FILE;
+			static const     path_vec                CATH_TOOLS_CONF_FILE_SEARCH_PATH;
 
 			/// \brief A list of pointers to the options blocks to be processed during parsing
 			std::vector<options_block *> all_options_blocks;

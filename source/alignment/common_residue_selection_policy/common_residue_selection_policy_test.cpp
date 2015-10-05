@@ -137,21 +137,21 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(handles_an_empty_alignment, common_residue_selecti
 }
 
 BOOST_AUTO_TEST_CASE(best_score_percent_ctor_throws_with_invalid_args) {
-	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol(  -0.001                ), invalid_argument_exception );
-	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol( 100.001                ), invalid_argument_exception );
-	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol( DOUBLE_INFINITY()      ), invalid_argument_exception );
-	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol( DOUBLE_QUIET_NAN ()    ), invalid_argument_exception );
-	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol( DOUBLE_SIGNALING_NAN() ), invalid_argument_exception );
-	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol( DOUBLE_MAX()           ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol(  -0.001              ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol( 100.001              ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol( DOUBLE_INFINITY      ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol( DOUBLE_QUIET_NAN     ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol( DOUBLE_SIGNALING_NAN ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_best_score_percent_policy pol( DOUBLE_MAX           ), invalid_argument_exception );
 }
 
 BOOST_AUTO_TEST_CASE(min_score_ctor_throws_with_invalid_args) {
-	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol(  -0.5                  ), invalid_argument_exception );
-	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol( 100.001                ), invalid_argument_exception );
-	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol( DOUBLE_INFINITY()      ), invalid_argument_exception );
-	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol( DOUBLE_QUIET_NAN()     ), invalid_argument_exception );
-	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol( DOUBLE_SIGNALING_NAN() ), invalid_argument_exception );
-	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol( DOUBLE_MAX()           ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol(  -0.5                ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol( 100.001              ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol( DOUBLE_INFINITY      ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol( DOUBLE_QUIET_NAN     ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol( DOUBLE_SIGNALING_NAN ), invalid_argument_exception );
+	BOOST_CHECK_THROW( common_residue_select_min_score_policy pol( DOUBLE_MAX           ), invalid_argument_exception );
 }
 
 /// \brief TODOCUMENT

@@ -52,7 +52,7 @@ namespace cath {
 			///       so that it can be used in the error message when trying to construct the tree?
 			///       Would it be better for the residue_name_alignment_acquirer to identify if it has failed to make a tree
 			///       for this reason and then let the alignment_acquirer give a more generic message?
-			static const size_t MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR;
+			static constexpr size_t MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR = 10;
 
 		public:
 			std::unique_ptr<alignment_acquirer> clone() const;

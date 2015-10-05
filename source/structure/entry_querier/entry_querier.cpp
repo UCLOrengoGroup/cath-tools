@@ -28,9 +28,7 @@
 using namespace cath;
 using namespace std;
 
-/// \brief This appears to be used to multiply up int values to achieve one decimal place
-///        for score calculations
-const size_t entry_querier::INTEGER_SCALING = 10;
+constexpr size_t entry_querier::INTEGER_SCALING;
 
 /// \brief TODOCUMENT
 size_t entry_querier::get_length(const protein &arg_protein ///< TODOCUMENT

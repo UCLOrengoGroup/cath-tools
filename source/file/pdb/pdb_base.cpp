@@ -32,10 +32,7 @@ using namespace std;
 
 const string pdb_base::PDB_RECORD_STRING_TER ( "TER   " );
 
-/// \brief Specify how long a line can be before it will be rejected.
-///
-/// This is set to 160, twice the standard 80, to avoid rejecting lines that have just got some extra stuff at the end
-const size_t pdb_base::MAX_NUM_PDB_COLS( 2 * 80 );
+constexpr size_t pdb_base::MAX_NUM_PDB_COLS;
 
 /// \brief An NVI pass-through to the virtual do_rotate()
 void pdb_base::read_file(const path &arg_filename ///< TODOCUMENT

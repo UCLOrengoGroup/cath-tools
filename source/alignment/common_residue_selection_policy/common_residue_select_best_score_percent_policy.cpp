@@ -53,14 +53,9 @@ using boost::range::sort;
 using boost::range::stable_sort;
 using boost::sub_range;
 
-/// \brief TODOCUMENT
-const double common_residue_select_best_score_percent_policy::MIN_BEST_SCORE_PERCENTAGE     = {   0.0 };
-
-/// \brief TODOCUMENT
-const double common_residue_select_best_score_percent_policy::MAX_BEST_SCORE_PERCENTAGE     = { 100.0 };
-
-/// \brief TODOCUMENT
-const double common_residue_select_best_score_percent_policy::DEFAULT_BEST_SCORE_PERCENTAGE = {  70.0 };
+constexpr double common_residue_select_best_score_percent_policy::MIN_BEST_SCORE_PERCENTAGE;
+constexpr double common_residue_select_best_score_percent_policy::MAX_BEST_SCORE_PERCENTAGE;
+constexpr double common_residue_select_best_score_percent_policy::DEFAULT_BEST_SCORE_PERCENTAGE;
 
 /// \brief TODOCUMENT
 size_vec common_residue_select_best_score_percent_policy::do_select_common_residues_with_scores(const doub_doub_pair_vec &arg_scores ///< TODOCUMENT

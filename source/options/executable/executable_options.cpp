@@ -42,11 +42,7 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 
-/// \brief This affects the way Boost Program Options formats the outputting of the options description
-///
-/// Its behaviour isn't 100% clear but setting this value to roughly the character-width of a
-/// modern terminal prevents it prematurely wrapping and making a very long, narrow output.
-const size_t executable_options::DEFAULT_PROG_OPS_LINE_LENGTH             (200);
+constexpr size_t executable_options::DEFAULT_PROG_OPS_LINE_LENGTH;
 
 /// \brief The prefix for "global" environment variables to be respected by all executables using this code.
 ///

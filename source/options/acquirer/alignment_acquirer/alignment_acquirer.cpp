@@ -43,7 +43,7 @@ using namespace std;
 
 using boost::lexical_cast;
 
-const size_t alignment_acquirer::MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR(10);
+constexpr size_t alignment_acquirer::MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR;
 
 /// \brief Standard approach to achieving a virtual copy-ctor
 unique_ptr<alignment_acquirer> alignment_acquirer::clone() const {

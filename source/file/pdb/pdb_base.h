@@ -87,7 +87,11 @@ namespace cath {
 			void operator-=(const geom::coord &);
 
 			static const std::string PDB_RECORD_STRING_TER;
-			static const size_t      MAX_NUM_PDB_COLS;
+
+			/// \brief Specify how long a line can be before it will be rejected.
+			///
+			/// This is set to 160, twice the standard 80, to avoid rejecting lines that have just got some extra stuff at the end
+			static constexpr size_t MAX_NUM_PDB_COLS =  2 * 80;
 		};
 	}
 }

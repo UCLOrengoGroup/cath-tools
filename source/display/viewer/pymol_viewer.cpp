@@ -68,8 +68,7 @@ using boost::vecS;
 // using boost::kruskal_minimum_spanning_tree;
 // using boost::lexical_cast;
 
-/// \brief TODOCUMENT
-const size_t pymol_viewer::RESIDUE_BATCH_SIZE( 200 );
+constexpr size_t pymol_viewer::RESIDUE_BATCH_SIZE;
 
 /// \brief TODOCUMENT
 ///

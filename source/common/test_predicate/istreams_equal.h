@@ -47,7 +47,8 @@ namespace cath {
 		                                               std::istream &,
 		                                               const std::string &) const;
 
-		static const str_size_type DEFAULT_DIFF_HALF_WIDTH;
+		/// \brief The default half-width used when displaying any differences
+		static constexpr str_size_type DEFAULT_DIFF_HALF_WIDTH = 50;
 	};
 }
 

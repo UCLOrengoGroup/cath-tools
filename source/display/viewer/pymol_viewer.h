@@ -63,7 +63,8 @@ namespace cath {
 		static std::string parse_residue_name_for_pymol(const residue_name &);
 		static str_vec parse_residue_names_for_pymol(const residue_name_vec &);
 
-		static const size_t RESIDUE_BATCH_SIZE;
+		/// \brief TODOCUMENT
+		static constexpr size_t RESIDUE_BATCH_SIZE = 200;
 	};
 
 

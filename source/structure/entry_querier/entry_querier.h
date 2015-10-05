@@ -28,9 +28,7 @@
 namespace cath {
 	class protein;
 
-	/// \brief TODOCUMENT.
-	///
-	///
+	/// \brief TODOCUMENT
 	class entry_querier {
 	private:
 		virtual size_t       do_get_length(const cath::protein &) const = 0;
@@ -82,7 +80,9 @@ namespace cath {
 		                                   const size_t &) const;
 		bool         temp_hacky_is_residue() const;
 
-		static const size_t INTEGER_SCALING;
+		/// \brief This appears to be used to multiply up int values to achieve one decimal place
+		///        for score calculations
+		static constexpr size_t INTEGER_SCALING = 10;
 	};
 
 	std::string get_plural_name(const entry_querier &);
