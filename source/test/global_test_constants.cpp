@@ -23,7 +23,6 @@
 #include "exception/runtime_error_exception.h"
 #include "ssap/ssap.h" // **** For reset_ssap_global_variables() ****
 
-//#include <iostream> // *** TEMPORARY ***
 #include <limits>
 
 using namespace boost::filesystem;
