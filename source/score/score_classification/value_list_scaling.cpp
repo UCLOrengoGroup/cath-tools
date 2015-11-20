@@ -20,7 +20,9 @@
 
 #include "value_list_scaling.h"
 
+#include <iostream>
 #include <limits>
+#include <string>
 
 using namespace cath::score;
 using namespace std;
@@ -40,6 +42,28 @@ const double & value_list_scaling::get_multiplier() const {
 /// \brief TODOCUMENT
 const double & value_list_scaling::get_constant() const {
 	return constant;
+}
+
+/// \brief Simple to_string() overload for value_list_scaling
+///
+/// \relates value_list_scaling
+string cath::score::to_string(const value_list_scaling &arg_scaling ///< The value_list_scaling to be output as a string
+                              ) {
+	return "value_list_scaling[ ( "
+		+ ::std::to_string( arg_scaling.get_multiplier() )
+		+ " * x ) + "
+		+ ::std::to_string( arg_scaling.get_constant() )
+		+ " ]";
+}
+
+/// \brief Simple insertion operator for value_list_scaling
+///
+/// \relates value_list_scaling
+ostream & cath::score::operator<<(ostream                  &arg_os,     ///< The ostream to which the value_list_scaling should be output
+                                  const value_list_scaling &arg_scaling ///< The value_list_scaling to output
+                                  ) {
+	arg_os << to_string( arg_scaling );
+	return arg_os;
 }
 
 /// \brief TODOCUMENT

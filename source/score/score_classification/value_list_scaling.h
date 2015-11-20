@@ -21,6 +21,8 @@
 #ifndef VALUE_LIST_SCALING_H_INCLUDED
 #define VALUE_LIST_SCALING_H_INCLUDED
 
+#include <iosfwd>
+
 namespace cath {
 	namespace score {
 
@@ -40,6 +42,11 @@ namespace cath {
 			const double & get_multiplier() const;
 			const double & get_constant() const;
 		};
+
+		std::string to_string(const value_list_scaling &);
+
+		std::ostream & operator<<(std::ostream &,
+		                          const value_list_scaling &);
 
 		void scale_value(const value_list_scaling &,
 		                 double &);
