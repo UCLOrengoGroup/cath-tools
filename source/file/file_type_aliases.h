@@ -27,6 +27,7 @@
 #include <vector>
 
 namespace cath { namespace file { enum class data_file : unsigned int; } }
+namespace cath { namespace file { class hmmer_scores_entry; } }
 namespace cath { namespace file { class pdb; } }
 namespace cath { namespace file { class pdb_atom; } }
 namespace cath { namespace file { class pdb_list; } }
@@ -68,6 +69,9 @@ namespace cath {
 
 		/// \brief Type alias for a vector of prc_scores_entry objects
 		using prc_scores_entry_vec = std::vector<prc_scores_entry>;
+
+		/// \brief Type alias for a vector of hmmer_scores_entry objects
+		using hmmer_scores_entry_vec = std::vector<hmmer_scores_entry>;
 	}
 }
 

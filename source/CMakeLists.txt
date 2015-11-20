@@ -389,6 +389,12 @@ set(
 )
 
 set(
+	NORMSOURCES_FILE_HMMER_SCORES_FILE
+		file/hmmer_scores_file/hmmer_scores_entry.cpp
+		file/hmmer_scores_file/hmmer_scores_file.cpp
+)
+
+set(
 	NORMSOURCES_FILE_PDB
 		file/pdb/pdb.cpp
 		file/pdb/pdb_atom.cpp
@@ -422,6 +428,7 @@ set(
 		file/data_file.cpp
 		${NORMSOURCES_FILE_DOMAIN_DEFINITION_LIST}
 		${NORMSOURCES_FILE_DSSP_WOLF}
+		${NORMSOURCES_FILE_HMMER_SCORES_FILE}
 		${NORMSOURCES_FILE_PDB}
 		${NORMSOURCES_FILE_PRC_SCORES_FILE}
 		${NORMSOURCES_FILE_SEC}
@@ -1207,6 +1214,12 @@ set(
 )
 
 set(
+	TESTSOURCES_FILE_HMMER_SCORES_FILE
+		file/hmmer_scores_file/hmmer_scores_entry_test.cpp
+		file/hmmer_scores_file/hmmer_scores_file_test.cpp
+)
+
+set(
 	TESTSOURCES_FILE_PDB
 		file/pdb/pdb_atom_test.cpp
 		file/pdb/pdb_base_test.cpp
@@ -1235,6 +1248,7 @@ set(
 set(
 	TESTSOURCES_FILE
 		${TESTSOURCES_FILE_DSSP_WOLF}
+		${TESTSOURCES_FILE_HMMER_SCORES_FILE}
 		${TESTSOURCES_FILE_PDB}
 		${TESTSOURCES_FILE_PRC_SCORES_FILE}
 		${TESTSOURCES_FILE_SEC}
