@@ -2,13 +2,12 @@ cmake_minimum_required (VERSION 2.8.8)
 
 # For useful information on getting CMake to work with Boost, type the following command: cmake --help-module FindBoost
 
-IF(${BUILD_SHARED_LIBS} MATCHES "ON")
-	set( Boost_USE_STATIC_LIBS OFF )
+if( BUILD_SHARED_LIBS )
 	add_definitions( -DBOOST_ALL_DYN_LINK )
 	add_definitions( -DBOOST_LOG_DYN_LINK )
-ELSE()
+else()
 	set( Boost_USE_STATIC_LIBS ON )
-ENDIF()
+endif()
 
 find_library( RT_LIBRARY rt )
 
