@@ -27,6 +27,8 @@
 using namespace cath::score;
 using namespace std;
 
+constexpr double value_list_scaling::BAD_SCALED_VALUE;
+
 /// \brief TODOCUMENT
 value_list_scaling::value_list_scaling(const double &arg_multiplier, ///< TODOCUMENT
                                        const double &arg_constant    ///< TODOCUMENT
@@ -67,23 +69,29 @@ ostream & cath::score::operator<<(ostream                  &arg_os,     ///< The
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates value_list_scaling
 void cath::score::scale_value(const value_list_scaling &arg_scaling, ///< TODOCUMENT
                               double                   &arg_value    ///< TODOCUMENT
                               ) {
 	const auto &multiplier = arg_scaling.get_multiplier();
 
-	// If the value is the worst_possible_value, then leave it as is
-	if ( multiplier < 0.0 && arg_value == numeric_limits<double>::max() ) {
-		return;
+	// If the value is the worst_possible_value, then set it to BAD_SCALED_VALUE
+	if ( ( multiplier < 0.0 && arg_value == numeric_limits<double>::max()    )
+	     ||
+	     ( multiplier > 0.0 && arg_value == numeric_limits<double>::lowest() ) ) {
+		arg_value = value_list_scaling::BAD_SCALED_VALUE;
 	}
-	if ( multiplier > 0.0 && arg_value == numeric_limits<double>::lowest() ) {
-		return;
+	// Otherwise, perform the normal scaling
+	else {
+		arg_value *= multiplier;
+		arg_value += arg_scaling.get_constant();
 	}
-	arg_value *= multiplier;
-	arg_value += arg_scaling.get_constant();
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates value_list_scaling
 double cath::score::scale_value_copy(const value_list_scaling &arg_scaling, ///< TODOCUMENT
                                      double                    arg_value    ///< TODOCUMENT
                                      ) {

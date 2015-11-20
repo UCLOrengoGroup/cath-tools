@@ -41,6 +41,9 @@ namespace cath {
 
 			const double & get_multiplier() const;
 			const double & get_constant() const;
+
+			/// \brief The value to assign to bad (probably absent) entries after scaling
+			static constexpr double BAD_SCALED_VALUE = -999.0;
 		};
 
 		std::string to_string(const value_list_scaling &);
