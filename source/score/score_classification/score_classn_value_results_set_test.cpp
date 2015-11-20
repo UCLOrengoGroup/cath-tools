@@ -18,16 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/range/algorithm/copy.hpp>
 #include <boost/algorithm/string/join.hpp> // ***** TEMPORARY *****
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/optional.hpp>
+#include <boost/optional.hpp>
 #include <boost/range/adaptor/map.hpp>
+#include <boost/range/algorithm/copy.hpp>
 #include <boost/range/algorithm/copy.hpp>
 #include <boost/range/algorithm_ext/insert.hpp>
 #include <boost/range/combine.hpp>
+#include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/algorithm/contains.h"
@@ -36,6 +38,8 @@
 #include "common/algorithm/sort_uniq_copy.h"
 #include "common/algorithm/transform_build.h"
 #include "common/file/simple_file_read_write.h"
+#include "file/hmmer_scores_file/hmmer_scores_entry.h"
+#include "file/hmmer_scores_file/hmmer_scores_file.h"
 #include "file/prc_scores_file/prc_scores_entry.h"
 #include "file/prc_scores_file/prc_scores_file.h"
 #include "file/ssap_scores_file/ssap_scores_entry.h"
@@ -43,6 +47,7 @@
 #include "file/ssap_scores_file/ssap_scores_file.h"
 #include "score/pair_scatter_plotter/pair_scatter_plotter.h"
 #include "score/score_classification/label_pair_is_positive/label_pair_is_positive.h"
+#include "score/score_classification/value_list_scaling.h"
 #include "score/true_pos_false_neg/classn_rate_stat.h"
 #include "score/true_pos_false_neg/classn_stat_pair_series.h"
 #include "score/true_pos_false_neg/classn_stat_plotter/classn_stat_plotter.h"
@@ -64,11 +69,16 @@ using boost::adaptors::map_keys;
 using boost::algorithm::icontains;
 using boost::algorithm::join; // ***** TEMPORARY *****
 using boost::filesystem::path;
+using boost::irange;
+using boost::is_space;
+using boost::make_optional;
 using boost::none;
+using boost::numeric_cast;
 using boost::optional;
 using boost::range::combine;
 using boost::range::copy;
 using boost::range::insert;
+using boost::token_compress_on;
 
 namespace cath {
 	namespace test {
@@ -79,7 +89,7 @@ namespace cath {
 			~score_classn_value_results_set_test_suite_fixture() noexcept = default;
 
 			/// \brief TODOCUMENT
-			static bool is_positive(const string &arg_string
+			static bool is_positive(const string &arg_string ///< TODOCUMENT
 			                        ) {
 				static str_vec positives;
 				if ( positives.empty() ) {
@@ -148,9 +158,11 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		struct ticket_913_fixture : protected score_classn_value_results_set_test_suite_fixture {
-//			const path root_dir                 = path( "/cath/homes2/ucbctnl/svm_gubbins_files" );
-			const path root_dir                 = path( "/home/lewis/svm_gubbins_files" );
+			const path root_dir                 = path( "/cath/homes2/ucbctnl/svm_gubbins_files" );
+//			const path root_dir                 = path( "/home/lewis/svm_gubbins_files" );
 			const path random_pairs_subset_file = root_dir / "random_pairs_subset.txt";
+
+			const path svm_data_dir             = root_dir / "svm_experiments_data";
 
 			const path graphs_dir               = root_dir / "graphs";
 
@@ -158,13 +170,46 @@ namespace cath {
 
 			const path hmmscan_results_file     = root_dir / "results.hmmscan";
 			const path hmmsearch_results_file   = root_dir / "results.hmmsearch";
-			const path comp_prc_results_dir     = root_dir / "results.prc";
+			const path comp_prc_results_file    = root_dir / "results.prc";
 			const path ssap_results_file        = root_dir / "results.ssap";
+			const path multi_struc_results_file = root_dir / "results.multi_struc_scores";
+
+			const path ssap_svm_data_dir                = svm_data_dir / "ssap";
+			const path prc_svm_data_dir                 = svm_data_dir / "prc";
+			const path hmmer_svm_data_dir               = svm_data_dir / "hmmer";
+			const path ssap_and_prc_svm_data_dir        = svm_data_dir / "ssap_and_prc";
+			const path ssap_and_hmmer_svm_data_dir        = svm_data_dir / "ssap_and_hmmer";
+			const path ssap_prc_and_hmmer_svm_data_dir  = svm_data_dir / "ssap_prc_and_hmmer";
+			const path ssap_prc_and_multi_svm_data_dir  = svm_data_dir / "ssap_prc_and_multi";
+
+			const path ssap_svm_data_stem               = ssap_svm_data_dir               / "svm_data";
+			const path prc_svm_data_stem                = prc_svm_data_dir                / "svm_data";
+			const path hmmer_svm_data_stem              = hmmer_svm_data_dir              / "svm_data";
+			const path ssap_and_prc_svm_data_stem       = ssap_and_prc_svm_data_dir       / "svm_data";
+			const path ssap_and_hmmer_svm_data_stem     = ssap_and_hmmer_svm_data_dir     / "svm_data";
+			const path ssap_prc_and_hmmer_svm_data_stem = ssap_prc_and_hmmer_svm_data_dir / "svm_data";
+			const path ssap_prc_and_multi_svm_data_stem = ssap_prc_and_multi_svm_data_dir / "svm_data";
 
 			static auto normal_label_getter() {
 				return [] (const auto &x) {
 					return make_pair( x.get_name_1(), x.get_name_2() );
 				};
+			}
+
+			/// \brief TODOCUMENT
+			static str_vec_vec parse_multi_struc_scores(const path &arg_filename ///< TODOCUMENT
+			                                            ) {
+				ifstream input_stream;
+				common::open_ifstream( input_stream, arg_filename );
+				string line_string;
+				str_vec_vec results;
+				while ( getline( input_stream, line_string ) ) {
+					results.push_back(
+						split_build<str_vec>( line_string, is_space(), token_compress_on )
+					);
+				}
+				input_stream.close();
+				return results;
 			}
 
 			/// \brief TODOCUMENT
@@ -181,24 +226,29 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			///
-			/// \todo Ideally, make this a variadic template
+			template <typename... Ts>
 			static score_classn_value_list_vec join_value_lists(const score_classn_value_list_vec &arg_list_a, ///< TODOCUMENT
 			                                                    const score_classn_value_list_vec &arg_list_b, ///< TODOCUMENT
-			                                                    const score_classn_value_list_vec &arg_list_c  ///< TODOCUMENT
+			                                                    const Ts &...                      arg_lists   ///< TODOCUMENT
 			                                                    ) {
-				return join_value_lists( join_value_lists( arg_list_a, arg_list_b ), arg_list_c );
+				return join_value_lists( join_value_lists( arg_list_a, arg_list_b ), arg_lists... );
 			}
 
 			/// \brief TODOCUMENT
-			///
-			/// \todo Ideally, make this a variadic template
-			static score_classn_value_list_vec join_value_lists(const score_classn_value_list_vec &arg_list_a, ///< TODOCUMENT
-			                                                    const score_classn_value_list_vec &arg_list_b, ///< TODOCUMENT
-			                                                    const score_classn_value_list_vec &arg_list_c, ///< TODOCUMENT
-			                                                    const score_classn_value_list_vec &arg_list_d  ///< TODOCUMENT
-			                                                    ) {
-				return join_value_lists( join_value_lists( join_value_lists( arg_list_a, arg_list_b ), arg_list_c ), arg_list_d );
+			static score_classn_value_list_vec get_multi_ssap_data(const ssap_scores_entry_vec  &arg_ssap_data, ///< TODOCUMENT
+			                                                       const label_pair_is_positive &arg_is_pos     ///< TODOCUMENT
+			                                                       ) {
+//				const auto name_getter = [] (const ssap_scores_entry &x) { return make_pair( x.get_name_1(), x.get_name_2() ); };
+				const auto name_getter = normal_label_getter();
+				return {
+					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.length1"    , [] (const ssap_scores_entry  &x) { return x.get_length_1  ();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.length2"    , [] (const ssap_scores_entry  &x) { return x.get_length_2  ();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.ssap_score" , [] (const ssap_scores_entry  &x) { return x.get_ssap_score();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.num_equivs" , [] (const ssap_scores_entry  &x) { return x.get_num_equivs();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.overlap_pc" , [] (const ssap_scores_entry  &x) { return x.get_overlap_pc();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.seq_id_pc"  , [] (const ssap_scores_entry  &x) { return x.get_seq_id_pc ();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, false, "ssap.rmsd"       , [] (const ssap_scores_entry  &x) { return x.get_rmsd      ();      }, name_getter )
+				};
 			}
 
 			/// \brief TODOCUMENT
@@ -208,13 +258,13 @@ namespace cath {
 //				const auto name_getter = [] (const ssap_scores_entry &x) { return make_pair( x.get_name_1(), x.get_name_2() ); };
 				const auto name_getter = normal_label_getter();
 				return {
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.length1"    , [] (const ssap_scores_entry &x) { return x.get_length_1  ();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.length2"    , [] (const ssap_scores_entry &x) { return x.get_length_2  ();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.ssap_score" , [] (const ssap_scores_entry &x) { return x.get_ssap_score();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.num_equivs" , [] (const ssap_scores_entry &x) { return x.get_num_equivs();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.overlap_pc" , [] (const ssap_scores_entry &x) { return x.get_overlap_pc();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.seq_id_pc"  , [] (const ssap_scores_entry &x) { return x.get_seq_id_pc ();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, false, "ssap.rmsd"       , [] (const ssap_scores_entry &x) { return x.get_rmsd      ();      }, name_getter )
+//					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.length1"    , [] (const ssap_scores_entry  &x) { return x.get_length_1  ();      }, name_getter ),
+//					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.length2"    , [] (const ssap_scores_entry  &x) { return x.get_length_2  ();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.ssap_score" , [] (const ssap_scores_entry  &x) { return x.get_ssap_score();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.num_equivs" , [] (const ssap_scores_entry  &x) { return x.get_num_equivs();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.overlap_pc" , [] (const ssap_scores_entry  &x) { return x.get_overlap_pc();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.seq_id_pc"  , [] (const ssap_scores_entry  &x) { return x.get_seq_id_pc ();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, false, "ssap.rmsd"       , [] (const ssap_scores_entry  &x) { return x.get_rmsd      ();      }, name_getter )
 				};
 			}
 
@@ -225,12 +275,55 @@ namespace cath {
 //				const auto name_getter = [] (const prc_scores_entry &x) { return make_pair( x.get_name_1(), x.get_name_2() ); };
 				const auto name_getter = normal_label_getter();
 				return {
-					make_val_list_of_scores_entries( arg_prc_data,  arg_is_pos, false, "prc.evalue"      , [] (const prc_scores_entry  &x) { return log10( x.get_evalue() ); }, name_getter ),
-					make_val_list_of_scores_entries( arg_prc_data,  arg_is_pos, true,  "prc.simple"      , [] (const prc_scores_entry  &x) { return        x.get_simple();   }, name_getter ),
-					make_val_list_of_scores_entries( arg_prc_data,  arg_is_pos, true,  "prc.reverse"     , [] (const prc_scores_entry  &x) { return        x.get_reverse();  }, name_getter ),
-					make_val_list_of_scores_entries( arg_prc_data,  arg_is_pos, true,  "prc.length1"     , [] (const prc_scores_entry  &x) { return        x.get_length_1(); }, name_getter ),
-					make_val_list_of_scores_entries( arg_prc_data,  arg_is_pos, true,  "prc.length2"     , [] (const prc_scores_entry  &x) { return        x.get_length_2(); }, name_getter )
+//					make_val_list_of_scores_entries( arg_prc_data,   arg_is_pos, true,  "prc.length1"     , [] (const prc_scores_entry   &x) { return        x.get_length_1(); }, name_getter ),
+//					make_val_list_of_scores_entries( arg_prc_data,   arg_is_pos, true,  "prc.length2"     , [] (const prc_scores_entry   &x) { return        x.get_length_2(); }, name_getter ),
+					make_val_list_of_scores_entries( arg_prc_data,   arg_is_pos, false, "prc.evalue"      , [] (const prc_scores_entry   &x) { return log10( x.get_evalue() ); }, name_getter ),
+					make_val_list_of_scores_entries( arg_prc_data,   arg_is_pos, true,  "prc.simple"      , [] (const prc_scores_entry   &x) { return        x.get_simple();   }, name_getter ),
+					make_val_list_of_scores_entries( arg_prc_data,   arg_is_pos, true,  "prc.reverse"     , [] (const prc_scores_entry   &x) { return        x.get_reverse();  }, name_getter )
+
 				};
+			}
+
+			/// \brief TODOCUMENT
+			static score_classn_value_list_vec value_lists_of_hmmer_data(const hmmer_scores_entry_vec &arg_hmmer_data, ///< TODOCUMENT
+			                                                             const label_pair_is_positive &arg_is_pos      ///< TODOCUMENT
+			                                                             ) {
+				const auto name_getter = normal_label_getter();
+				return {
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, false, "hmmer.full_sequence_evalue", [] (const hmmer_scores_entry &x) { return log10( x.get_full_sequence_evalue() ); }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.full_sequence_score",  [] (const hmmer_scores_entry &x) { return        x.get_full_sequence_score();    }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.full_sequence_bias",   [] (const hmmer_scores_entry &x) { return        x.get_full_sequence_bias();     }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, false, "hmmer.best_1_domain_evalue", [] (const hmmer_scores_entry &x) { return log10( x.get_best_1_domain_evalue() ); }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.best_1_domain_score",  [] (const hmmer_scores_entry &x) { return        x.get_best_1_domain_score();    }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.best_1_domain_bias",   [] (const hmmer_scores_entry &x) { return        x.get_best_1_domain_bias();     }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.expected_num_doms",    [] (const hmmer_scores_entry &x) { return        x.get_expected_num_doms();      }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.reg",                  [] (const hmmer_scores_entry &x) { return        x.get_reg();                    }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.clu",                  [] (const hmmer_scores_entry &x) { return        x.get_clu();                    }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.ov",                   [] (const hmmer_scores_entry &x) { return        x.get_ov();                     }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.env",                  [] (const hmmer_scores_entry &x) { return        x.get_env();                    }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.dom",                  [] (const hmmer_scores_entry &x) { return        x.get_dom();                    }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.rep",                  [] (const hmmer_scores_entry &x) { return        x.get_rep();                    }, name_getter ),
+					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.inc",                  [] (const hmmer_scores_entry &x) { return        x.get_inc();                    }, name_getter )
+				};
+			}
+
+			/// \brief TODOCUMENT
+			static score_classn_value_list_vec value_lists_of_multi_data(const str_vec_vec            &arg_multi_data, ///< TODOCUMENT
+																	     const label_pair_is_positive &arg_is_pos      ///< TODOCUMENT
+																	     ) {
+				return transform_build<score_classn_value_list_vec>(
+					irange( 2_z, arg_multi_data.front().size() ), // Start from 2 to skip the two IDs
+					[&] (const size_t &idx) {
+						return make_val_list_of_scores_entries(
+							arg_multi_data,
+							arg_is_pos,
+							true,
+							"multi_struc_score_" + to_string( idx - 1 ),
+							[&] (const str_vec &row) { return stod( row[ idx ] ); },
+							[&] (const str_vec &row) { return make_pair( row[ 0 ], row[ 1 ] ); }
+						);
+					}
+				);
 			}
 
 			/// \brief TODOCUMENT
@@ -271,7 +364,7 @@ namespace cath {
 						const double &ssap_score = ssaps_by_label.at( x ).get().get_ssap_score();
 						const auto    prc_itr    = prcs_by_label.find( x );
 						if ( prc_itr == common::cend( prcs_by_label ) ) {
-							return numeric_limits<double>::max();
+							return numeric_limits<double>::lowest();
 						};
 						const double &prc_score = prc_itr->second.get().get_evalue();
 						return ssap_score - log10( prc_score );
@@ -298,25 +391,34 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			///
-			/// \todo Ideally, make this a variadic template
+			template <typename... Ts>
 			static vector<pair<string, opt_str>> join_series_lists(const vector<pair<string, opt_str>> &arg_list_a, ///< TODOCUMENT
 			                                                       const vector<pair<string, opt_str>> &arg_list_b, ///< TODOCUMENT
-			                                                       const vector<pair<string, opt_str>> &arg_list_c  ///< TODOCUMENT
+			                                                       const Ts &...                        arg_lists   ///< TODOCUMENT
 			                                                       ) {
-				return join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_list_c );
+				return join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_lists... );
 			}
 
-			/// \brief TODOCUMENT
-			///
-			/// \todo Ideally, make this a variadic template
-			static vector<pair<string, opt_str>> join_series_lists(const vector<pair<string, opt_str>> &arg_list_a, ///< TODOCUMENT
-			                                                       const vector<pair<string, opt_str>> &arg_list_b, ///< TODOCUMENT
-			                                                       const vector<pair<string, opt_str>> &arg_list_c, ///< TODOCUMENT
-			                                                       const vector<pair<string, opt_str>> &arg_list_d  ///< TODOCUMENT
-			                                                       ) {
-				return join_series_lists( join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_list_c ), arg_list_d );
-			}
+//			/// \brief TODOCUMENT
+//			///
+//			/// \todo Ideally, make this a variadic template
+//			static vector<pair<string, opt_str>> join_series_lists(const vector<pair<string, opt_str>> &arg_list_a, ///< TODOCUMENT
+//			                                                       const vector<pair<string, opt_str>> &arg_list_b, ///< TODOCUMENT
+//			                                                       const vector<pair<string, opt_str>> &arg_list_c  ///< TODOCUMENT
+//			                                                       ) {
+//				return join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_list_c );
+//			}
+//
+//			/// \brief TODOCUMENT
+//			///
+//			/// \todo Ideally, make this a variadic template
+//			static vector<pair<string, opt_str>> join_series_lists(const vector<pair<string, opt_str>> &arg_list_a, ///< TODOCUMENT
+//			                                                       const vector<pair<string, opt_str>> &arg_list_b, ///< TODOCUMENT
+//			                                                       const vector<pair<string, opt_str>> &arg_list_c, ///< TODOCUMENT
+//			                                                       const vector<pair<string, opt_str>> &arg_list_d  ///< TODOCUMENT
+//			                                                       ) {
+//				return join_series_lists( join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_list_c ), arg_list_d );
+//			}
 
 			// "black"   linewidth 3
 			// "#00ff00"
@@ -344,8 +446,8 @@ namespace cath {
 			/// \brief TODOCUMENT
 			static vector<pair<string, opt_str>> ssap_series_list() {
 				return {
-					{ "ssap.length1",    opt_str{ R"( linetype 1 linecolor rgb "black"               )" } },
-					{ "ssap.length2",    opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
+//					{ "ssap.length1",    opt_str{ R"( linetype 1 linecolor rgb "black"               )" } },
+//					{ "ssap.length2",    opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
 					{ "ssap.ssap_score", opt_str{ R"( linetype 1 linecolor rgb "#0000ff" linewidth 3 )" } },
 					{ "ssap.num_equivs", opt_str{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
 					{ "ssap.overlap_pc", opt_str{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
@@ -357,11 +459,31 @@ namespace cath {
 			/// \brief TODOCUMENT
 			static vector<pair<string, opt_str>> prc_series_list() {
 				return {
-					{ "prc.length1", opt_str{ R"( linetype 1 linecolor rgb "#006401"             )" } },
-					{ "prc.length2", opt_str{ R"( linetype 1 linecolor rgb "#010067"             )" } },
+//					{ "prc.length1", opt_str{ R"( linetype 1 linecolor rgb "#006401"             )" } },
+//					{ "prc.length2", opt_str{ R"( linetype 1 linecolor rgb "#010067"             )" } },
 					{ "prc.evalue",  opt_str{ R"( linetype 1 linecolor rgb "#95003a" linewidth 3 )" } },
 					{ "prc.simple",  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
 					{ "prc.reverse", opt_str{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } }
+				};
+			}
+
+			/// \brief TODOCUMENT
+			static vector<pair<string, opt_str>> hmmer_series_list() {
+				return {
+					{ "hmmer.full_sequence_evalue", opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.full_sequence_score",  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.full_sequence_bias",   opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.best_1_domain_evalue", opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.best_1_domain_score",  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.best_1_domain_bias",   opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.expected_num_doms",    opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.reg",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.clu",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.ov",                   opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.env",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.dom",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.rep",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.inc",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } }
 				};
 			}
 
@@ -374,17 +496,64 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> svm_series_list() {
-				return {
-					{ "svm1", opt_str{ R"( linetype 1 linecolor rgb "#FFCC00"  linewidth 3 notitle )" } },
-					{ "svm2", opt_str{ R"( linetype 1 linecolor rgb "#FFCC00"  linewidth 3 notitle )" } },
-					{ "svm3", opt_str{ R"( linetype 1 linecolor rgb "#FFCC00"  linewidth 3 notitle )" } },
-					{ "svm4", opt_str{ R"( linetype 1 linecolor rgb "#FFCC00"  linewidth 3 notitle )" } },
-					{ "svm5", opt_str{ R"( linetype 1 linecolor rgb "#FFCC00"  linewidth 3 notitle )" } }
-				};
+			static vector<pair<string, opt_str>> make_svm_series_list(const string &arg_name_stem,   ///< TODOCUMENT
+			                                                          const string &arg_spec_string, ///< TODOCUMENT
+			                                                          const size_t &arg_num          ///< TODOCUMENT
+			                                                          ) {
+				return transform_build<vector<pair<string, opt_str>>>(
+					irange( 0_z, arg_num ),
+					[&] (const size_t &x) {
+						const string title_string = x == 0 ? string{ ""          }
+						                                   : string{ " notitle " };
+						return make_pair(
+							arg_name_stem + to_string( x + 1 ),
+							make_optional( R"( linetype 1 linewidth 1 )" + arg_spec_string + title_string )
+						);
+					}
+				);
 			}
 
+			/// \brief TODOCUMENT
+			static vector<pair<string, opt_str>> svm__prc_alone_series_list() {
+				return make_svm_series_list( "svm__prc_alone", R"( linecolor rgb "#FFCC00" )", 5 );
+			}
 
+			/// \brief TODOCUMENT
+			static vector<pair<string, opt_str>> svm__ssap_alone_series_list() {
+				return make_svm_series_list( "svm__ssap_alone", R"( linecolor rgb "#FF029D" )", 5 );
+			}
+
+			/// \brief TODOCUMENT
+			static vector<pair<string, opt_str>> svm__hmmer_alone_series_list() {
+				return make_svm_series_list( "svm__hmmer_alone", R"( linecolor rgb "#FE8900" )", 5 );
+			}
+
+			/// \brief TODOCUMENT
+			static vector<pair<string, opt_str>> svm__ssap_prc_series_list() {
+				return make_svm_series_list( "svm__ssap_prc", R"( linecolor rgb "#22FF22" )", 5 );
+			}
+
+			/// \brief TODOCUMENT
+			static vector<pair<string, opt_str>> svm__ssap_hmmer_series_list() {
+				return make_svm_series_list( "svm__ssap_hmmer", R"( linecolor rgb "#01fffe" )", 5 );
+			}
+
+			/// \brief TODOCUMENT
+			static vector<pair<string, opt_str>> svm__ssap_prc_hmmer_series_list() {
+				return make_svm_series_list( "svm__ssap_prc_hmmer", R"( linecolor rgb "#2222FF" )", 5 );
+			}
+
+			/// \brief TODOCUMENT
+			static vector<pair<string, opt_str>> svm__ssap_prc_multi_series_list() {
+				return make_svm_series_list( "svm__ssap_prc_multi", R"( linecolor rgb "#FF7F00" )", 5 );
+			}
+
+			/// \brief TODOCUMENT
+			static vector<pair<string, opt_str>> svm__full_series_list() {
+				return {
+					{ "svm__full", opt_str{ R"( linetype 1 linewidth 4 linecolor rgb "#000000" )" } }
+				};
+			}
 
 			// grep -PR '\d+\s+cath\|' . -H | awk '{print $1 " " $4 " " $2}' | tr '|' ' ' | tr ':' ' ' | tr '/' ' ' | sed 's/\.out//g' | awk '{print $2 " " $7 " " $4}' | grep -Fwf $ESU/svm/svm_data/random_pairs_subset.txt > $ESU/svm/svm_data/hhsearch_comp_results/hhsearch_comp_full_results.txt
 			//
@@ -418,57 +587,149 @@ BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK( true );
 }
 
-// BOOST_AUTO_TEST_CASE(make_data_from_ssap) {
-// 	const auto ssap_data    = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file );
-// 	const auto is_pos       = make_label_pair_is_positive( labelled_pair_list );
-// 	const auto full_results = value_lists_of_ssap_data   ( ssap_data, is_pos  );
-// 	const auto the_set      = make_score_classn_value_results_set( full_results );
+//BOOST_AUTO_TEST_CASE(make_data_from_ssap) {
+//	const auto ssap_data    = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file );
+//	const auto is_pos       = make_label_pair_is_positive( labelled_pair_list );
+//	const auto full_results = value_lists_of_ssap_data   ( ssap_data, is_pos  );
+//	const auto the_set      = make_score_classn_value_results_set( full_results );
+//
+//	auto rng = mt19937{ random_device{}() };
+//	write_to_svm_light_data_files(
+//		the_set,
+//		ssap_svm_data_stem,
+//		5,
+//		rng,
+//		0.5
+//	);
+//}
 
-// 	auto rng = mt19937{ random_device{}() };
-// 	write_to_svm_light_data_files(
-// 		the_set,
-// 		"/tmp/svm_malarkey/ssap_rmsd",
-// 		5,
-// 		rng,
-// 		0.5
-// 	);
-// }
+//BOOST_AUTO_TEST_CASE(make_data_from_prc) {
+//	const auto prc_data     = prc_scores_file::parse_prc_scores_file_fancy( comp_prc_results_file );
+//	const auto is_pos       = make_label_pair_is_positive( labelled_pair_list );
+//	const auto full_results = value_lists_of_prc_data( prc_data, is_pos );
+//	const auto the_set      = make_score_classn_value_results_set( full_results );
+//
+//	BOOST_LOG_TRIVIAL( warning ) << "The PRC results don't cover all pairs and the code doesn't yet handle that";
+//
+//	auto rng = mt19937{ random_device{}() };
+//	write_to_svm_light_data_files(
+//		the_set,
+//		prc_svm_data_stem,
+//		5,
+//		rng,
+//		0.5
+//	);
+//}
 
-// BOOST_AUTO_TEST_CASE(make_data_from_prc) {
-// 	const auto prc_data     = prc_scores_file::parse_prc_scores_file_fancy( comp_prc_results_dir );
-// 	const auto is_pos       = make_label_pair_is_positive( labelled_pair_list );
-// 	const auto full_results = value_lists_of_prc_data( prc_data, is_pos );
-// 	const auto the_set      = make_score_classn_value_results_set( full_results );
+//BOOST_AUTO_TEST_CASE(make_data_from_hmmer) {
+//	const auto hmmer_data   = hmmer_scores_file::parse_hmmer_scores_file( hmmsearch_results_file );
+//	const auto is_pos       = make_label_pair_is_positive( labelled_pair_list );
+//	const auto full_results = value_lists_of_hmmer_data( hmmer_data, is_pos );
+//	const auto the_set      = make_score_classn_value_results_set( full_results );
+//
+//	BOOST_LOG_TRIVIAL( warning ) << "The HMMER results don't cover all pairs and the code doesn't yet handle that";
+//
+//	auto rng = mt19937{ random_device{}() };
+//	write_to_svm_light_data_files(
+//		the_set,
+//		hmmer_svm_data_stem,
+//		5,
+//		rng,
+//		0.5
+//	);
+//}
 
-// 	BOOST_LOG_TRIVIAL( warning ) << "The PRC results don't cover all pairs and the code doesn't yet handle that";
+//BOOST_AUTO_TEST_CASE(make_data_from_ssap_and_prc) {
+//	const auto ssap_data         = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file     );
+//	const auto prc_data          = prc_scores_file::parse_prc_scores_file_fancy   ( comp_prc_results_file );
+//	const auto is_pos            = make_label_pair_is_positive( labelled_pair_list );
+//	const auto plot_results_ssap = value_lists_of_ssap_data( ssap_data, is_pos );
+//	const auto plot_results_prc  = value_lists_of_prc_data ( prc_data,  is_pos );
+//	const auto full_results      = join_value_lists( plot_results_ssap, plot_results_prc );
+//	const auto the_set           = make_score_classn_value_results_set( full_results );
+//	auto rng = mt19937{ random_device{}() };
+//
+////	const auto scalings = get_value_list_scalings( the_set );
+////	for (const auto &data_gubbins : the_set) {
+////		cerr << "Series is  : " << data_gubbins.get_name() << endl;
+////	}
+////	for (const auto &scaling : scalings) {
+////		cerr << "Scaling is : " << scaling << endl;
+////	}
+//
+//	write_to_svm_light_data_files(
+//		the_set,
+//		ssap_and_prc_svm_data_stem,
+//		5,
+//		rng,
+//		0.5
+//	);
+//}
 
-// 	auto rng = mt19937{ random_device{}() };
-// 	write_to_svm_light_data_files(
-// 		the_set,
-// 		"/tmp/svm_malarkey/prc_rmsd",
-// 		5,
-// 		rng,
-// 		0.5
-// 	);
-// }
+//BOOST_AUTO_TEST_CASE(make_data_from_ssap_and_hmmer) {
+//	const auto ssap_data          = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file      );
+//	const auto hmmer_data         = hmmer_scores_file::parse_hmmer_scores_file     ( hmmsearch_results_file );
+//	const auto is_pos             = make_label_pair_is_positive( labelled_pair_list );
+//	const auto plot_results_ssap  = value_lists_of_ssap_data ( ssap_data,  is_pos );
+//	const auto plot_results_hmmer = value_lists_of_hmmer_data( hmmer_data, is_pos );
+//	const auto full_results       = join_value_lists( plot_results_ssap, plot_results_hmmer );
+//	const auto the_set            = make_score_classn_value_results_set( full_results );
+//	auto rng = mt19937{ random_device{}() };
+//
+//	write_to_svm_light_data_files(
+//		the_set,
+//		ssap_and_hmmer_svm_data_stem,
+//		5,
+//		rng,
+//		0.5
+//	);
+//}
 
-// BOOST_AUTO_TEST_CASE(make_data_from_ssap_and_prc) {
-// 	const auto ssap_data         = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file    );
-// 	const auto prc_data          = prc_scores_file::parse_prc_scores_file_fancy   ( comp_prc_results_dir );
-// 	const auto is_pos            = make_label_pair_is_positive( labelled_pair_list );
-// 	const auto plot_results_ssap = value_lists_of_ssap_data( ssap_data, is_pos );
-// 	const auto plot_results_prc  = value_lists_of_prc_data ( prc_data,  is_pos );
-// 	const auto full_results      = join_value_lists( plot_results_ssap, plot_results_prc );
-// 	const auto the_set           = make_score_classn_value_results_set( full_results );
-// 	auto rng = mt19937{ random_device{}() };
-// 	write_to_svm_light_data_files(
-// 		the_set,
-// 		"/tmp/svm_malarkey/ssap_and_prc_rmsd",
-// 		5,
-// 		rng,
-// 		0.5
-// 	);
-// }
+//BOOST_AUTO_TEST_CASE(make_data_from_ssap_prc_and_multi) {
+//	const auto ssap_data         = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file        );
+//	const auto prc_data          = prc_scores_file::parse_prc_scores_file_fancy   ( comp_prc_results_file    );
+//	const auto multi_struc_data  = parse_multi_struc_scores                       ( multi_struc_results_file );
+//
+//	const auto is_pos            = make_label_pair_is_positive( labelled_pair_list );
+//
+//	const auto plot_results_ssap  = value_lists_of_ssap_data ( ssap_data,        is_pos );
+//	const auto plot_results_prc   = value_lists_of_prc_data  ( prc_data,         is_pos );
+//	const auto plot_results_multi = value_lists_of_multi_data( multi_struc_data, is_pos );
+//
+//	const auto full_results      = join_value_lists( plot_results_ssap, plot_results_prc, plot_results_multi );
+//
+//	const auto the_set           = make_score_classn_value_results_set( full_results );
+//	auto rng = mt19937{ random_device{}() };
+//	write_to_svm_light_data_files(
+//		the_set,
+//		ssap_prc_and_multi_svm_data_stem,
+//		5,
+//		rng,
+//		0.5
+//	);
+//}
+
+//BOOST_AUTO_TEST_CASE(make_data_from_ssap_prc_and_hmmer) {
+//	const auto ssap_data          = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file      );
+//	const auto prc_data           = prc_scores_file::parse_prc_scores_file_fancy   ( comp_prc_results_file  );
+//	const auto hmmer_data         = hmmer_scores_file::parse_hmmer_scores_file     ( hmmsearch_results_file );
+//	const auto is_pos             = make_label_pair_is_positive( labelled_pair_list );
+//	const auto plot_results_ssap  = value_lists_of_ssap_data ( ssap_data, is_pos );
+//	const auto plot_results_prc   = value_lists_of_prc_data  ( prc_data,  is_pos );
+//	const auto plot_results_hmmer = value_lists_of_hmmer_data( hmmer_data, is_pos );
+//	const auto full_results       = join_value_lists( plot_results_ssap, plot_results_prc, plot_results_hmmer );
+//	const auto the_set            = make_score_classn_value_results_set( full_results );
+//	auto rng = mt19937{ random_device{}() };
+//	write_to_svm_light_data_files(
+//		the_set,
+//		ssap_prc_and_hmmer_svm_data_stem,
+//		5,
+//		rng,
+//		0.5
+//	);
+//}
+
+//
 
 // BOOST_AUTO_TEST_CASE(plot_svm_from_ssap) {
 // 	const auto ssap_data         = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file );
@@ -490,7 +751,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 // }
 
 // BOOST_AUTO_TEST_CASE(plot_svm_from_prc) {
-// 	const auto prc_data         = prc_scores_file::parse_prc_scores_file_fancy( comp_prc_results_dir );
+// 	const auto prc_data         = prc_scores_file::parse_prc_scores_file_fancy( comp_prc_results_file );
 // 	const auto is_pos           = make_label_pair_is_positive( labelled_pair_list );
 // 	const auto plot_results_prc = value_lists_of_prc_data( prc_data, is_pos );
 // 	const auto plot_results_svm = score_classn_value_list_vec{
@@ -508,27 +769,97 @@ BOOST_AUTO_TEST_CASE(basic) {
 // 	);
 // }
 
-// BOOST_AUTO_TEST_CASE(plot_svm_from_ssap_and_prc) {
-// 	const auto ssap_data          = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file    );
-// 	const auto prc_data           = prc_scores_file::parse_prc_scores_file_fancy   ( comp_prc_results_dir );
-// 	const auto is_pos             = make_label_pair_is_positive( labelled_pair_list );
-// 	const auto plot_results_ssap  = value_lists_of_ssap_data( ssap_data,           is_pos );
-// 	const auto plot_results_prc   = value_lists_of_prc_data ( prc_data,            is_pos );
-// 	const auto plot_results_magic = magic_function_data     ( ssap_data, prc_data, is_pos );
-// 	const auto plot_results_svm   = score_classn_value_list_vec{
-// 		read_svmlight_predictions_file( "/tmp/svm_malarkey/ssap_and_prc_rmsd.1.rbf_gamma_1_c_5.preds", "svm1" ),
-// 		read_svmlight_predictions_file( "/tmp/svm_malarkey/ssap_and_prc_rmsd.2.rbf_gamma_1_c_5.preds", "svm2" ),
-// 		read_svmlight_predictions_file( "/tmp/svm_malarkey/ssap_and_prc_rmsd.3.rbf_gamma_1_c_5.preds", "svm3" ),
-// 		read_svmlight_predictions_file( "/tmp/svm_malarkey/ssap_and_prc_rmsd.4.rbf_gamma_1_c_5.preds", "svm4" ),
-// 		read_svmlight_predictions_file( "/tmp/svm_malarkey/ssap_and_prc_rmsd.5.rbf_gamma_1_c_5.preds", "svm5" )
-// 	};
 
-// 	plot_both(
-// 		join_value_lists ( plot_results_ssap, plot_results_prc, plot_results_magic, plot_results_svm ),
-// 		( graphs_dir / "ssap_and_prc_plus_svm" ).string(),
-// 		join_series_lists( ssap_series_list(), prc_series_list(), magic_series_list(), svm_series_list() )
-// 	);
-// }
+//BOOST_AUTO_TEST_CASE(plot_svm_from_hmmer) {
+////	const auto hmmer_scan_data    = hmmer_scores_file::parse_hmmer_scores_file( hmmscan_results_file );
+//	const auto hmmer_scearch_data = hmmer_scores_file::parse_hmmer_scores_file( hmmsearch_results_file );
+//	const auto is_pos             = make_label_pair_is_positive( labelled_pair_list );
+////	const auto plot_results_hmmer_scan   = value_lists_of_hmmer_data( hmmer_scan_data,    is_pos );
+//	const auto plot_results_hmmer_search = value_lists_of_hmmer_data( hmmer_scearch_data, is_pos );
+//
+//	plot_both(
+////		plot_results_hmmer_scan,
+//		plot_results_hmmer_search,
+////		( graphs_dir / "hmmer_scan" ).string(),
+//		( graphs_dir / "hmmer_search" ).string(),
+//		hmmer_series_list()
+//	);
+//}
+
+//BOOST_AUTO_TEST_CASE(plot_svm_from_ssap_and_prc) {
+//	const auto ssap_data          = ssap_scores_file::parse_ssap_scores_file_simple( ssap_results_file     );
+//	const auto prc_data           = prc_scores_file::parse_prc_scores_file_fancy   ( comp_prc_results_file );
+//	const auto is_pos             = make_label_pair_is_positive( labelled_pair_list );
+//	const auto plot_results_ssap  = value_lists_of_ssap_data( ssap_data,           is_pos );
+//	const auto plot_results_prc   = value_lists_of_prc_data ( prc_data,            is_pos );
+//	const auto plot_results_magic = magic_function_data     ( ssap_data, prc_data, is_pos );
+//
+//	const auto plot_results_svm__prc_alone = score_classn_value_list_vec{
+//		read_svmlight_predictions_file( prc_svm_data_dir                / "svm_data.1.rbf_gamma_1_c_5.preds", "svm__prc_alone1" ),
+//		read_svmlight_predictions_file( prc_svm_data_dir                / "svm_data.2.rbf_gamma_1_c_5.preds", "svm__prc_alone2" ),
+//		read_svmlight_predictions_file( prc_svm_data_dir                / "svm_data.3.rbf_gamma_1_c_5.preds", "svm__prc_alone3" ),
+//		read_svmlight_predictions_file( prc_svm_data_dir                / "svm_data.4.rbf_gamma_1_c_5.preds", "svm__prc_alone4" ),
+//		read_svmlight_predictions_file( prc_svm_data_dir                / "svm_data.5.rbf_gamma_1_c_5.preds", "svm__prc_alone5" )
+//	};
+//
+//	const auto plot_results_svm__ssap_alone = score_classn_value_list_vec{
+//		read_svmlight_predictions_file( ssap_svm_data_dir               / "svm_data.1.rbf_gamma_1_c_5.preds", "svm__ssap_alone1" ),
+//		read_svmlight_predictions_file( ssap_svm_data_dir               / "svm_data.2.rbf_gamma_1_c_5.preds", "svm__ssap_alone2" ),
+//		read_svmlight_predictions_file( ssap_svm_data_dir               / "svm_data.3.rbf_gamma_1_c_5.preds", "svm__ssap_alone3" ),
+//		read_svmlight_predictions_file( ssap_svm_data_dir               / "svm_data.4.rbf_gamma_1_c_5.preds", "svm__ssap_alone4" ),
+//		read_svmlight_predictions_file( ssap_svm_data_dir               / "svm_data.5.rbf_gamma_1_c_5.preds", "svm__ssap_alone5" )
+//	};
+//
+//	const auto plot_results_svm__hmmer_alone_prc = score_classn_value_list_vec{
+//		read_svmlight_predictions_file( hmmer_svm_data_dir              / "svm_data.1.rbf_gamma_1_c_5.preds", "svm__hmmer_alone1" ),
+//		read_svmlight_predictions_file( hmmer_svm_data_dir              / "svm_data.2.rbf_gamma_1_c_5.preds", "svm__hmmer_alone2" ),
+//		read_svmlight_predictions_file( hmmer_svm_data_dir              / "svm_data.3.rbf_gamma_1_c_5.preds", "svm__hmmer_alone3" ),
+//		read_svmlight_predictions_file( hmmer_svm_data_dir              / "svm_data.4.rbf_gamma_1_c_5.preds", "svm__hmmer_alone4" ),
+//		read_svmlight_predictions_file( hmmer_svm_data_dir              / "svm_data.5.rbf_gamma_1_c_5.preds", "svm__hmmer_alone5" )
+//	};
+//
+//	const auto plot_results_svm__ssap_prc   = score_classn_value_list_vec{
+//		read_svmlight_predictions_file( ssap_and_prc_svm_data_dir       / "svm_data.1.rbf_gamma_1_c_5.preds", "svm__ssap_prc1" ),
+//		read_svmlight_predictions_file( ssap_and_prc_svm_data_dir       / "svm_data.2.rbf_gamma_1_c_5.preds", "svm__ssap_prc2" ),
+//		read_svmlight_predictions_file( ssap_and_prc_svm_data_dir       / "svm_data.3.rbf_gamma_1_c_5.preds", "svm__ssap_prc3" ),
+//		read_svmlight_predictions_file( ssap_and_prc_svm_data_dir       / "svm_data.4.rbf_gamma_1_c_5.preds", "svm__ssap_prc4" ),
+//		read_svmlight_predictions_file( ssap_and_prc_svm_data_dir       / "svm_data.5.rbf_gamma_1_c_5.preds", "svm__ssap_prc5" )
+//	};
+//
+//	const auto plot_results_svm__ssap_hmmer   = score_classn_value_list_vec{
+//		read_svmlight_predictions_file( ssap_and_hmmer_svm_data_dir     / "svm_data.1.rbf_gamma_1_c_5.preds", "svm__ssap_hmmer1" ),
+//		read_svmlight_predictions_file( ssap_and_hmmer_svm_data_dir     / "svm_data.2.rbf_gamma_1_c_5.preds", "svm__ssap_hmmer2" ),
+//		read_svmlight_predictions_file( ssap_and_hmmer_svm_data_dir     / "svm_data.3.rbf_gamma_1_c_5.preds", "svm__ssap_hmmer3" ),
+//		read_svmlight_predictions_file( ssap_and_hmmer_svm_data_dir     / "svm_data.4.rbf_gamma_1_c_5.preds", "svm__ssap_hmmer4" ),
+//		read_svmlight_predictions_file( ssap_and_hmmer_svm_data_dir     / "svm_data.5.rbf_gamma_1_c_5.preds", "svm__ssap_hmmer5" )
+//	};
+//
+//	const auto plot_results_svm__ssap_prc_hmmer = score_classn_value_list_vec{
+//		read_svmlight_predictions_file( ssap_prc_and_hmmer_svm_data_dir / "svm_data.1.rbf_gamma_1_c_5.preds", "svm__ssap_prc_hmmer1" ),
+//		read_svmlight_predictions_file( ssap_prc_and_hmmer_svm_data_dir / "svm_data.2.rbf_gamma_1_c_5.preds", "svm__ssap_prc_hmmer2" ),
+//		read_svmlight_predictions_file( ssap_prc_and_hmmer_svm_data_dir / "svm_data.3.rbf_gamma_1_c_5.preds", "svm__ssap_prc_hmmer3" ),
+//		read_svmlight_predictions_file( ssap_prc_and_hmmer_svm_data_dir / "svm_data.4.rbf_gamma_1_c_5.preds", "svm__ssap_prc_hmmer4" ),
+//		read_svmlight_predictions_file( ssap_prc_and_hmmer_svm_data_dir / "svm_data.5.rbf_gamma_1_c_5.preds", "svm__ssap_prc_hmmer5" )
+//	};
+//
+//	const auto plot_results_svm__ssap_prc_multi = score_classn_value_list_vec{
+//		read_svmlight_predictions_file( ssap_prc_and_multi_svm_data_dir / "svm_data.1.rbf_gamma_1_c_5.preds", "svm__ssap_prc_multi1" ),
+//		read_svmlight_predictions_file( ssap_prc_and_multi_svm_data_dir / "svm_data.2.rbf_gamma_1_c_5.preds", "svm__ssap_prc_multi2" ),
+//		read_svmlight_predictions_file( ssap_prc_and_multi_svm_data_dir / "svm_data.3.rbf_gamma_1_c_5.preds", "svm__ssap_prc_multi3" ),
+//		read_svmlight_predictions_file( ssap_prc_and_multi_svm_data_dir / "svm_data.4.rbf_gamma_1_c_5.preds", "svm__ssap_prc_multi4" ),
+//		read_svmlight_predictions_file( ssap_prc_and_multi_svm_data_dir / "svm_data.5.rbf_gamma_1_c_5.preds", "svm__ssap_prc_multi5" )
+//	};
+//
+//	const auto plot_results_svm__full = score_classn_value_list_vec{
+//		read_svmlight_predictions_file( ssap_and_prc_svm_data_dir       / "svm_data.full.rbf_gamma_1_c_5.preds", "svm__full" )
+//	};
+//
+//	plot_both(
+//		join_value_lists ( plot_results_ssap,  plot_results_prc,  plot_results_magic,  plot_results_svm__hmmer_alone_prc, plot_results_svm__prc_alone,  plot_results_svm__ssap_alone,  plot_results_svm__ssap_prc_hmmer, plot_results_svm__ssap_prc_multi,  plot_results_svm__ssap_hmmer,  plot_results_svm__ssap_prc,  plot_results_svm__full  ),
+//		( graphs_dir / "ssap_and_prc_plus_svm" ).string(),
+//		join_series_lists( ssap_series_list(), prc_series_list(), magic_series_list(), svm__hmmer_alone_series_list(),    svm__prc_alone_series_list(), svm__ssap_alone_series_list(), svm__ssap_prc_hmmer_series_list(),svm__ssap_prc_multi_series_list(), svm__ssap_hmmer_series_list(), svm__ssap_prc_series_list(), svm__full_series_list() )
+//	);
+//}
 
 // cd /tmp
 // wget "http://download.joachims.org/svm_light/current/svm_light.tar.gz"
