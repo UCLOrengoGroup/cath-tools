@@ -1,23 +1,23 @@
 /// \file
 /// \brief The prc_scores_file test suite
 
-#include <boost/algorithm/string/predicate.hpp> /// ***** TEMPORARY *****
-#include <boost/filesystem.hpp> /// ***** TEMPORARY *****
-#include <boost/log/trivial.hpp> /// ***** TEMPORARY *****
+//#include <boost/algorithm/string/predicate.hpp> /// ***** TEMPORARY *****
+//#include <boost/filesystem.hpp> /// ***** TEMPORARY *****
+//#include <boost/log/trivial.hpp> /// ***** TEMPORARY *****
 #include <boost/test/auto_unit_test.hpp>
 
 #include "file/prc_scores_file/prc_scores_entry.h"
 #include "file/prc_scores_file/prc_scores_file.h"
 
-#include <iomanip> /// ***** TEMPORARY *****
-#include <iostream> /// ***** TEMPORARY *****
+//#include <iomanip> /// ***** TEMPORARY *****
+//#include <iostream> /// ***** TEMPORARY *****
 
 using namespace cath::file;
 using namespace std;
 
-using boost::algorithm::ends_with; /// ***** TEMPORARY *****
-using boost::filesystem::directory_iterator; /// ***** TEMPORARY *****
-using boost::filesystem::path; /// ***** TEMPORARY *****
+//using boost::algorithm::ends_with; /// ***** TEMPORARY *****
+//using boost::filesystem::directory_iterator; /// ***** TEMPORARY *****
+//using boost::filesystem::path; /// ***** TEMPORARY *****
 
 namespace cath {
     namespace test {
