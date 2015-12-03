@@ -154,7 +154,7 @@ pair<str_vec, size_size_pair_doub_map> ssap_scores_file::parse_ssap_scores_file(
 ///
 /// This alternates negative and positive
 str_str_pair_bool_map cath::file::make_arbitrary_is_positive_data(const ssap_scores_entry_vec &arg_ssap_scores_entries ///< The arg_ssap_scores_entries from which to extract pairs to be made negative or positive
-                                                      ) {
+                                                                  ) {
 	return transform_build<str_str_pair_bool_map>(
 		irange( 0_z, arg_ssap_scores_entries.size() ),
 		[&] (const size_t &x) {
