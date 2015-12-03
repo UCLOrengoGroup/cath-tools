@@ -329,6 +329,11 @@ set(
 )
 
 set(
+	NORMSOURCES_EXECUTABLES_CATH_ASSIGN_DOMAINS
+		executables/cath_assign_domains/cath_assign_domains.cpp
+)
+
+set(
 	NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB
 		executables/cath_check_pdb/cath_check_pdb.cpp
 )
@@ -365,6 +370,7 @@ set(
 
 set(
 	NORMSOURCES_EXECUTABLES
+		${NORMSOURCES_EXECUTABLES_CATH_ASSIGN_DOMAINS}
 		${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
 		${NORMSOURCES_EXECUTABLES_CATH_REFINE_ALIGN}
 		${NORMSOURCES_EXECUTABLES_CATH_SCORE_ALIGN}
@@ -1692,6 +1698,11 @@ set(
 
 #####################################################################
 
+# add_library(
+# 	normsources_cath_assign_domains
+# 		${NORMSOURCES_CATH_ASSIGN_DOMAINS}
+# )
+
 add_library(
 	normsources_cath_refine_align
 		${NORMSOURCES_CATH_REFINE_ALIGN}
@@ -1732,6 +1743,11 @@ add_executable(
 )
 
 add_executable(
+	cath-assign-domains
+		${NORMSOURCES_EXECUTABLES_CATH_ASSIGN_DOMAINS}
+)
+
+add_executable(
 	cath-refine-align
 		${NORMSOURCES_EXECUTABLES_CATH_REFINE_ALIGN}
 )
@@ -1753,17 +1769,20 @@ add_executable(
 
 #####################################################################
 
-target_link_libraries( build-test        normsources_cath_superpose normsources_test std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-refine-align normsources_cath_refine_align               std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-score-align  normsources_cath_score_align                std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-ssap                                                     std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-superpose    normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( build-test          normsources_cath_superpose normsources_test std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-assign-domains                                             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+# target_link_libraries( cath-assign-domains normsources_cath_assign-domains             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-refine-align   normsources_cath_refine_align               std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-score-align    normsources_cath_score_align                std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-ssap                                                       std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-superpose      normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 
-add_dependencies( build-test        built_bioplib_libraries )
-add_dependencies( cath-refine-align built_bioplib_libraries )
-add_dependencies( cath-score-align  built_bioplib_libraries )
-add_dependencies( cath-ssap         built_bioplib_libraries )
-add_dependencies( cath-superpose    built_bioplib_libraries )
+add_dependencies( build-test          built_bioplib_libraries )
+add_dependencies( cath-assign-domains built_bioplib_libraries )
+add_dependencies( cath-refine-align   built_bioplib_libraries )
+add_dependencies( cath-score-align    built_bioplib_libraries )
+add_dependencies( cath-ssap           built_bioplib_libraries )
+add_dependencies( cath-superpose      built_bioplib_libraries )
 
 #####################################################################
 
