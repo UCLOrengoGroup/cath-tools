@@ -39,6 +39,8 @@ namespace cath {
 		public:
 			static ssap_scores_entry_vec parse_ssap_scores_file_simple(std::istream &);
 
+			static ssap_scores_entry_vec parse_ssap_scores_file_simple(const std::string &);
+
 			static ssap_scores_entry_vec parse_ssap_scores_file_simple(const boost::filesystem::path &);
 
 			static std::pair<str_vec, size_size_pair_doub_map> parse_ssap_scores_file(std::istream &);

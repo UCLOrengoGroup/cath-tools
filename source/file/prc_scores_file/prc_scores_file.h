@@ -21,9 +21,13 @@ namespace cath {
 
 			static prc_scores_entry_vec parse_prc_scores_file(std::istream &);
 
+			static prc_scores_entry_vec parse_prc_scores_file(const std::string &);
+
 			static prc_scores_entry_vec parse_prc_scores_file(const boost::filesystem::path &);
 
 			static prc_scores_entry_vec parse_prc_scores_file_fancy(std::istream &);
+
+			static prc_scores_entry_vec parse_prc_scores_file_fancy(const std::string &);
 
 			static prc_scores_entry_vec parse_prc_scores_file_fancy(const boost::filesystem::path &);
 		};

@@ -726,6 +726,13 @@ set(
 )
 
 set(
+	NORMSOURCES_SCORE_HOMCHECK_TOOLS
+		score/homcheck_tools/ssap_and_prc.cpp
+		score/homcheck_tools/ssaps_and_prcs_of_query.cpp
+		score/homcheck_tools/superfamily_of_domain.cpp
+)
+
+set(
 	NORMSOURCES_SCORE_LENGTH_GETTER
 		score/length_getter/geometric_mean_length_getter.cpp
 		score/length_getter/length_getter.cpp
@@ -790,6 +797,7 @@ set(
 		${NORMSOURCES_SCORE_ALIGNED_PAIR_SCORE}
 		${NORMSOURCES_SCORE_ALIGNED_PAIR_SCORE_LIST}
 		${NORMSOURCES_SCORE_DETAIL}
+		${NORMSOURCES_SCORE_HOMCHECK_TOOLS}
 		${NORMSOURCES_SCORE_LENGTH_GETTER}
 		${NORMSOURCES_SCORE_PAIR_SCATTER_PLOTTER}
 		${NORMSOURCES_SCORE_SCORE_CLASSIFICATION}
@@ -1471,6 +1479,13 @@ set(
 )
 
 set(
+	TESTSOURCES_SCORE_HOMCHECK_TOOLS
+		score/homcheck_tools/ssap_and_prc_test.cpp
+		score/homcheck_tools/ssaps_and_prcs_of_query_test.cpp
+		score/homcheck_tools/superfamily_of_domain_test.cpp
+)
+
+set(
 	TESTSOURCES_SCORE_LENGTH_GETTER
 		score/length_getter/length_getter_test.cpp
 )
@@ -1516,6 +1531,7 @@ set(
 	TESTSOURCES_SCORE
 		${TESTSOURCES_SCORE_ALIGNED_PAIR_SCORE}
 		${TESTSOURCES_SCORE_ALIGNED_PAIR_SCORE_LIST}
+		${TESTSOURCES_SCORE_HOMCHECK_TOOLS}
 		${TESTSOURCES_SCORE_LENGTH_GETTER}
 		${TESTSOURCES_SCORE_SCORE_CLASSIFICATION}
 		${TESTSOURCES_SCORE_TRUE_POS_FALSE_NEG}

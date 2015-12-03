@@ -94,6 +94,13 @@ prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(istream &arg_prc_sco
 	return results;
 }
 
+/// \brief Parse a vector of prc_scores_entry objects from the specified string
+prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(const string &arg_prc_scores_str ///< The string of prc scores data from which to parse the prc_scores_entry objects
+                                                            ) {
+	istringstream input_ss{ arg_prc_scores_str };
+	return parse_prc_scores_file( input_ss );
+}
+
 /// \brief TODOCUMENT
 prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(const path &arg_prc_scores_file ///< TODOCUMENT
                                                             ) {
@@ -109,6 +116,13 @@ prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(const path &arg_prc_
 prc_scores_entry_vec prc_scores_file::parse_prc_scores_file_fancy(istream &arg_prc_scores_is ///< The istream of prc scores data from which to parse the prc_scores_entry objects
                                                                   ) {
 	return remove_duplicates( parse_prc_scores_file( arg_prc_scores_is ) );
+}
+
+/// \brief Parse a vector of prc_scores_entry objects from the specified string
+prc_scores_entry_vec prc_scores_file::parse_prc_scores_file_fancy(const string &arg_prc_scores_str ///< The string of prc scores data from which to parse the prc_scores_entry objects
+                                                                  ) {
+	istringstream input_ss{ arg_prc_scores_str };
+	return parse_prc_scores_file_fancy( input_ss );
 }
 
 /// \brief TODOCUMENT

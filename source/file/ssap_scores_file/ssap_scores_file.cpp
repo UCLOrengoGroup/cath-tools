@@ -66,6 +66,13 @@ ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(istream &a
 	return results;
 }
 
+/// \brief Parse a vector of ssap_scores_entry objects from the specified string
+ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(const string &arg_ssap_scores_string ///< TODOCUMENT
+                                                                      ) {
+	istringstream input_ss{ arg_ssap_scores_string };
+	return parse_ssap_scores_file_simple( input_ss );
+}
+
 /// \brief Parse a vector of ssap_scores_entry objects from the specified filessap_scores_entry
 ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(const path &arg_ssap_scores_file ///< The SSAP scores file from which to parse the ssap_scores_entry objects
                                                                       ) {

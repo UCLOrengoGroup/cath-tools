@@ -26,6 +26,7 @@
 #include <cstddef>
 #include <vector>
 
+namespace cath { namespace homcheck { class ssap_and_prc; } }
 namespace cath { namespace score { class aligned_pair_score; } }
 namespace cath { namespace score { class classn_stat_pair_series; } }
 namespace cath { namespace score { class named_true_false_pos_neg_list; } }
@@ -34,6 +35,13 @@ namespace cath { namespace score { class score_classn_value_list; } }
 namespace cath { namespace score { class substitution_matrix; } }
 namespace cath { namespace score { class true_false_pos_neg; } }
 namespace cath { namespace score { class value_list_scaling; } }
+
+namespace cath {
+	namespace homcheck {
+		/// \brief Type alias for a vector of ssap_and_prc objects
+		using ssap_and_prc_vec = std::vector<ssap_and_prc>;
+	}
+}
 
 namespace cath {
 	namespace score {
