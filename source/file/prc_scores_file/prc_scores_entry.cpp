@@ -44,62 +44,62 @@ prc_scores_entry::prc_scores_entry(const string &arg_name_1,   ///< Name of prot
 }
 
 /// \brief Getter for the name of protein 1
-string prc_scores_entry::get_name_1() const {
+const string & prc_scores_entry::get_name_1() const {
 	return name_1;
 }
 
 /// \brief Start on protein 1
-size_t prc_scores_entry::get_start_1() const {
+const size_t & prc_scores_entry::get_start_1() const {
 	return start_1;
 }
 
 /// \brief End on protein 1
-size_t prc_scores_entry::get_end_1() const {
+const size_t & prc_scores_entry::get_end_1() const {
 	return end_1;
 }
 
 /// \brief Length of protein 1
-size_t prc_scores_entry::get_length_1() const {
+const size_t & prc_scores_entry::get_length_1() const {
 	return length_1;
 }
 
 /// \brief Number of this particular hit
-size_t prc_scores_entry::get_hit_num() const {
+const size_t & prc_scores_entry::get_hit_num() const {
 	return hit_num;
 }
 
 /// \brief Name of protein 2
-string prc_scores_entry::get_name_2() const {
+const string & prc_scores_entry::get_name_2() const {
 	return name_2;
 }
 
 /// \brief Start on protein 2
-size_t prc_scores_entry::get_start_2() const {
+const size_t & prc_scores_entry::get_start_2() const {
 	return start_2;
 }
 
 /// \brief End on protein 2
-size_t prc_scores_entry::get_end_2() const {
+const size_t & prc_scores_entry::get_end_2() const {
 	return end_2;
 }
 
 /// \brief Length of protein 2
-size_t prc_scores_entry::get_length_2() const {
+const size_t & prc_scores_entry::get_length_2() const {
 	return length_2;
 }
 
 /// \brief Simple score
-double prc_scores_entry::get_simple() const {
+const double & prc_scores_entry::get_simple() const {
 	return simple;
 }
 
 /// \brief Reverse score
-double prc_scores_entry::get_reverse() const {
+const double & prc_scores_entry::get_reverse() const {
 	return reverse;
 }
 
 /// \brief E-value
-double prc_scores_entry::get_evalue() const {
+const double & prc_scores_entry::get_evalue() const {
 	return evalue;
 }
 
