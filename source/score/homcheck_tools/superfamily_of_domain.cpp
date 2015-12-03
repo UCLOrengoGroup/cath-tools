@@ -7,6 +7,7 @@
 #include <boost/algorithm/string/classification.hpp>
 
 #include "common/boost_addenda/string_algorithm/split_build.h"
+#include "common/c++14/cbegin_cend.h"
 #include "common/file/open_fstream.h"
 #include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
@@ -42,7 +43,7 @@ string cath::homcheck::detail::fold_of_superfamily_id(const string &arg_superfam
 
 /// \brief Ctor from a vector<pair<string, string>> where each pair contains domain ID and the corresponding superfamily ID
 superfamily_of_domain::superfamily_of_domain(const str_str_pair_vec &sf_of_dom ///< The domain ID -> superfamily ID data from which this superfamily_of_domain should be constructed
-                                             ) : sf_of_dom( std::begin( sf_of_dom ), std::cend( sf_of_dom ) ) {
+                                             ) : sf_of_dom( common::cbegin( sf_of_dom ), common::cend( sf_of_dom ) ) {
 	for (const auto &x: sf_of_dom) {
 		if (! detail::is_valid_superfamily_id( x.second ) ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to construct superfamily_of_domain with invalid superfamily ID "+ x.second));
@@ -67,7 +68,7 @@ bool superfamily_of_domain::has_superfamily_of_domain(const string &arg_domain_i
 const string & superfamily_of_domain::get_superfamily_of_domain(const string &arg_domain_id ///< The domain ID to query
                                                                 ) const {
 	const auto find_itr = sf_of_dom.find( arg_domain_id );
-	if ( find_itr == std::cend( sf_of_dom ) ) {
+	if ( find_itr == common::cend( sf_of_dom ) ) {
 		BOOST_THROW_EXCEPTION(
 			invalid_argument_exception("Unable to find any entry in superfamily_of_domain for domain ID \""
 			+ arg_domain_id

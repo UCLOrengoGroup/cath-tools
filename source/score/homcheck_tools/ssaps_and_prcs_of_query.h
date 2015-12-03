@@ -10,6 +10,7 @@
 #include <boost/optional.hpp>
 
 #include "common/algorithm/copy_build.h"
+#include "common/c++14/cbegin_cend.h"
 #include "common/size_t_literal.h"
 #include "common/type_aliases.h"
 #include "score/homcheck_tools/ssap_and_prc.h"
@@ -74,8 +75,8 @@ namespace cath {
 					return arg_pred( arg_ssaps_and_prcs[ x ] );
 				}
 			);
-			return ( find_itr != std::cend( indices ) ) ? boost::make_optional( std::cref( arg_ssaps_and_prcs[ *find_itr ] ) )
-			                                            : boost::none;
+			return ( find_itr != common::cend( indices ) ) ? boost::make_optional( std::cref( arg_ssaps_and_prcs[ *find_itr ] ) )
+			                                               : boost::none;
 		}
 
 		ssaps_and_prcs_of_query make_ssaps_and_prcs_of_query(const file::ssap_scores_entry_vec &,

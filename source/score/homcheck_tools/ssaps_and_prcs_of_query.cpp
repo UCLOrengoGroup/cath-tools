@@ -89,12 +89,12 @@ const ssap_and_prc & ssaps_and_prcs_of_query::operator[](const size_t &arg_index
 
 /// \brief Standard begin() function to make this into a const range
 auto ssaps_and_prcs_of_query::begin() const -> const_iterator {
-	return std::cbegin( ssap_and_prc_entries );
+	return common::cbegin( ssap_and_prc_entries );
 }
 
 /// \brief Standard end() function to make this into a const range
 auto ssaps_and_prcs_of_query::end() const -> const_iterator{
-	return std::cend( ssap_and_prc_entries );
+	return common::cend( ssap_and_prc_entries );
 }
 
 /// \brief TODOCUMENT
@@ -106,8 +106,8 @@ optional<reference_wrapper<const ssap_and_prc>> cath::homcheck::best_magic_funct
 			return x.get_magic_function_score() < y.get_magic_function_score();
 		}
 	);
-	return ( max_itr != std::cend( arg_ssaps_and_prcs ) ) ? make_optional( cref( *max_itr ) )
-	                                                      : none;
+	return ( max_itr != common::cend( arg_ssaps_and_prcs ) ) ? make_optional( cref( *max_itr ) )
+	                                                         : none;
 }
 
 /// \brief Build a ssaps_and_prcs_of_query from the specified ssap_scores_entries and prc_scores_entries
@@ -170,7 +170,7 @@ ssaps_and_prcs_of_query cath::homcheck::make_ssaps_and_prcs_of_query(const ssap_
 		const string &match_id = the_ssap.get_name_2();
 
 		const auto prc_index_itr = prc_index_of_ids.find( make_pair( query_id, match_id ) );
-		if ( prc_index_itr != std::cend( prc_index_of_ids ) ) {
+		if ( prc_index_itr != common::cend( prc_index_of_ids ) ) {
 			ssap_and_prc_entries.emplace_back(
 				the_ssap,
 				arg_prcs[ prc_index_itr->second ]
