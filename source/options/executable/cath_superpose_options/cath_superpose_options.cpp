@@ -237,7 +237,7 @@ superposition_context cath_superpose_options::get_superposition_context(istream 
 	const path ssap_scores_file(the_alignment_input_options_block.get_ssap_scores_file());
 	if ( ! ssap_scores_file.empty() ) {
 		return superposition_context(
-			pdbs,
+			raw_pdbs, ///< This should be raw_pdbs, not pdbs, so that superpositions include stripped residues (eg HETATM only residues). /// \todo Consider adding fast, simple test that ssap_scores_file superposition output includes HETATMs.
 			names,
 			hacky_multi_ssap_fuction(
 				pdbs,
