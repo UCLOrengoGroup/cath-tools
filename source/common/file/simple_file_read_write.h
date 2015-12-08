@@ -39,7 +39,7 @@ namespace cath {
 	namespace common {
 		namespace detail {
 
-			/// \brief Stream parts from the ctor-specified istream to the specifed argument references
+			/// \brief Stream parts from the ctor-specified istream to the specified argument references
 			///        in the correct order
 			///
 			/// Motivation: to be used in transform_tuple() for populating a tuple from an istream.
@@ -76,7 +76,7 @@ namespace cath {
 				}
 			};
 
-			/// \brief Explicit specialisiation of istream_part for bool that uses boolalpha for
+			/// \brief Explicit specialisation of istream_part for bool that uses boolalpha for
 			///        the single element
 			template <>
 			inline void tuple_parts_istreamer::istream_part<bool>(bool &arg_value ///< The bool value to be populated from the_istream
@@ -104,7 +104,7 @@ namespace cath {
 			/// \tparam std::tuple<Ts...> must be default constructible
 			///         (which presumably requires all Ts... are default constructible)
 			///
-			/// Unlike pair<> (below) this is not currenty able to handle any of the Ts
+			/// Unlike pair<> (below) this is not currently able to handle any of the Ts
 			/// being complex (pair, tuple) types themselves.
 			///
 			/// \todo If there's need, consider attempting to achieve that recursion
