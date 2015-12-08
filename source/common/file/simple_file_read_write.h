@@ -32,6 +32,7 @@
 #include "common/algorithm/transform_tuple.h"
 #include "common/c++14/cbegin_cend.h"
 #include "common/file/open_fstream.h"
+#include "exception/out_of_range_exception.h"
 
 #include <fstream>
 
@@ -94,8 +95,10 @@ namespace cath {
 				static T read_line(std::istream &arg_is ///< The istream containing the line to be read
 				                   ) {
 					T value;
-					arg_is >> value;
-					return value;
+					if ( arg_is >> value ) {
+						return value;
+					}
+					BOOST_THROW_EXCEPTION(out_of_range_exception("Unable to parse value from input stream"));
 				}
 			};
 
@@ -147,9 +150,11 @@ namespace cath {
 				/// \brief TODOCUMENT
 				static bool read_line(std::istream &arg_is ///< The istream containing the line to be read
 				                      ) {
-					bool the_value;
-					arg_is >> std::boolalpha >> the_value >> std::noboolalpha;
-					return the_value;
+					bool value;
+					if ( arg_is >> std::boolalpha >> value >> std::noboolalpha ) {
+						return value;
+					}
+					BOOST_THROW_EXCEPTION(out_of_range_exception("Unable to parse bool value from input stream"));
 				}
 			};
 
