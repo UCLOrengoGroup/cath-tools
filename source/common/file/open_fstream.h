@@ -48,8 +48,10 @@ namespace cath {
 			                       const std::ios_base::openmode &arg_mode,        ///< TODOCUMENT
 			                       const fstream_type            &arg_fstream_type ///< TODOCUMENT
 			                       ) {
-				const std::string reading_or_writing_str = (arg_fstream_type == fstream_type::READING) ? "reading" : "writing";
-				arg_fstream.exceptions(std::ios::failbit | std::ios::badbit);
+				const std::string r_or_w_str              = (arg_fstream_type == fstream_type::READING) ? "reading" : "writing";
+				const std::ios_base::iostate r_or_w_state = (arg_fstream_type == fstream_type::READING) ? (                     std::ios::badbit )
+				                                                                                        : ( std::ios::failbit | std::ios::badbit );
+				arg_fstream.exceptions( r_or_w_state );
 				try {
 					arg_fstream.open(arg_filename.string().c_str(), arg_mode);
 				}
@@ -60,7 +62,7 @@ namespace cath {
 						"Cannot open file \""
 						+ arg_filename.string()
 						+ "\" for "
-						+ reading_or_writing_str
+						+ r_or_w_str
 						+ " ["
 						+ ex.what()
 						+ "] "
