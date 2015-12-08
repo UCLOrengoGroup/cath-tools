@@ -14,9 +14,11 @@
 
 #include <fstream>
 #include <regex>
+#include <unordered_set>
 
 using namespace cath::common;
 using namespace cath::homcheck;
+using namespace cath::homcheck::detail;
 using namespace std;
 
 using boost::algorithm::any_of;
@@ -24,14 +26,11 @@ using boost::algorithm::is_space;
 using boost::filesystem::path;
 using boost::token_compress_on;
 
+/// \brief The regular expression used to determine whether a string is a valid CATH superfamily ID
+const regex is_valid_superfamily_id::SUPERFAMILY_ID_REGEX{ R"(^\d+\.\d+\.\d+\.\d+$)" };
+
 /// \brief The string to use in between the fold of a new superfamily and the ID of the domain for which it's being created
 const string superfamily_of_domain::NEW_SF_CORE_STRING = ".new_sf_in_fold_of_";
-
-/// \brief Simple predicate to return whether a string is a valid superfamily_id
-bool cath::homcheck::detail::is_valid_superfamily_id(const string &arg_superfamily_id_string ///< The string to check
-                                                     ) {
-    return regex_search( arg_superfamily_id_string, regex{ R"(^\d+\.\d+\.\d+\.\d+$)" } );
-}
 
 /// \brief Extract the fold from the specified superfamily ID string
 ///
@@ -44,8 +43,9 @@ string cath::homcheck::detail::fold_of_superfamily_id(const string &arg_superfam
 /// \brief Ctor from a vector<pair<string, string>> where each pair contains domain ID and the corresponding superfamily ID
 superfamily_of_domain::superfamily_of_domain(const str_str_pair_vec &sf_of_dom ///< The domain ID -> superfamily ID data from which this superfamily_of_domain should be constructed
                                              ) : sf_of_dom( common::cbegin( sf_of_dom ), common::cend( sf_of_dom ) ) {
+	const is_valid_superfamily_id is_valid_sf_pred{};
 	for (const auto &x: sf_of_dom) {
-		if (! detail::is_valid_superfamily_id( x.second ) ) {
+		if ( ! is_valid_sf_pred( x.second ) ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to construct superfamily_of_domain with invalid superfamily ID "+ x.second));
 		}
 	}
@@ -103,6 +103,8 @@ void superfamily_of_domain::add_domain_in_new_sf_in_fold_of_domain(const string 
 /// \relates superfamily_of_domain
 superfamily_of_domain cath::homcheck::parse_superfamily_of_domain(istream &arg_sf_of_dom_istream ///< The istream from which the superfamily_of_domain information should be parsed
                                                                   ) {
+	const is_valid_superfamily_id is_valid_sf_pred{};
+	unordered_set<string> prev_seen_domain_ids;
 	str_str_pair_vec line_string_pairs;
 	string line_string;
 	while ( getline( arg_sf_of_dom_istream, line_string ) ) {
@@ -118,20 +120,21 @@ superfamily_of_domain cath::homcheck::parse_superfamily_of_domain(istream &arg_s
 			const string &domain_id      = line_parts[ 0 ];
 			const string &superfamily_id = line_parts[ 1 ];
 
-			if ( ! detail::is_valid_superfamily_id( superfamily_id ) ) {
+			if ( ! is_valid_sf_pred( superfamily_id ) ) {
 				BOOST_THROW_EXCEPTION(runtime_error_exception(
 					"Second entry in parsed line from superfamily_of_domain data is \""
 					+ superfamily_id
 					+ "\", which isn't a valid superfamily ID"
 				));
 			}
-			if ( any_of( line_string_pairs, [&] (const str_str_pair &x) { return ( x.first == domain_id ); } ) ) {
+			if ( prev_seen_domain_ids.count( domain_id ) > 0 ) {
 				BOOST_THROW_EXCEPTION(runtime_error_exception(
 					"Duplicated domain_id \""
 					+ domain_id
 					+ "\" in superfamily_of_domain data"
 				));
 			}
+			prev_seen_domain_ids.insert( domain_id );
 
 			line_string_pairs.emplace_back( domain_id, superfamily_id );
 		}
