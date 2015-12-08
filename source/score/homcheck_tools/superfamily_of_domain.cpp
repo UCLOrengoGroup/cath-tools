@@ -149,7 +149,7 @@ superfamily_of_domain cath::homcheck::parse_superfamily_of_domain(const path &ar
                                                                   ) {
 	ifstream input_ifstream;
 	open_ifstream( input_ifstream, arg_sf_of_dom_file );
-	const auto sf_of_dom = parse_superfamily_of_domain( arg_sf_of_dom_file );
+	const auto sf_of_dom = parse_superfamily_of_domain( input_ifstream );
 	input_ifstream.close();
 	return sf_of_dom;
 }
