@@ -41,9 +41,9 @@ namespace cath {
 			/// New superfamily IDs are built from pre-existing ones and look like: 2.60.40.new_sf_in_fold_of_1cukA01
 			std::unordered_map<std::string, std::string> sf_of_dom;
 
+		public:
 			static const std::string NEW_SF_CORE_STRING;
 
-		public:
 			superfamily_of_domain() = default;
 			superfamily_of_domain(const str_str_pair_vec &);
 
