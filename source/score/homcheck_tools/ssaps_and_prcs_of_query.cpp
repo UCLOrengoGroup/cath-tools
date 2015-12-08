@@ -65,6 +65,11 @@ ssaps_and_prcs_of_query::ssaps_and_prcs_of_query(const ssap_and_prc_vec &arg_ssa
 	sanity_check();
 }
 
+/// \brief Get the whether this ssaps_and_prcs_of_query is empty (ie has no ssap_and_prc objects)
+bool ssaps_and_prcs_of_query::empty() const {
+	return ssap_and_prc_entries.empty();
+}
+
 /// \brief Get the size of this ssaps_and_prcs_of_query (ie the number of ssap_and_prc objects)
 size_t ssaps_and_prcs_of_query::size() const {
 	return ssap_and_prc_entries.size();
@@ -84,6 +89,17 @@ auto ssaps_and_prcs_of_query::begin() const -> const_iterator {
 /// \brief Standard end() function to make this into a const range
 auto ssaps_and_prcs_of_query::end() const -> const_iterator{
 	return common::cend( ssap_and_prc_entries );
+}
+
+/// \brief Get the query ID from the specified SSAP and PRC results
+///
+/// \relates ssaps_and_prcs_of_query
+const string & cath::homcheck::get_query_id(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs /// The SSAP and PRC results to query
+                                            ) {
+	if ( arg_ssaps_and_prcs.empty() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Can't get query of empty ssaps_and_prcs_of_query object"));
+	}
+	return front( arg_ssaps_and_prcs ).get_query_id();
 }
 
 /// \brief Return the best by magic-function hit to a domain in CATH of the specified results
