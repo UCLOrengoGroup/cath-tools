@@ -10,6 +10,7 @@
 
 #include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/range/adaptor/adjacented.h"
+#include "common/hash/pair_hash.h"
 #include "common/size_t_literal.h"
 #include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
@@ -32,21 +33,6 @@ using boost::make_optional;
 using boost::none;
 using boost::optional;
 using boost::range::max_element;
-
-/// \brief Hashing for pairs of elements
-///
-/// This is a general class and should be moved out
-/// of this file if it can also be helpful elsewhere
-struct pair_hash {
-public:
-	/// \brief Generic function operator for hashing a pair by
-	///        combining the results of a standard hash of each value
-	template <typename T, typename U>
-	size_t operator()(const pair<T, U> &arg_pair ///< The
-	                  ) const {
-		return hash<T>()( arg_pair.first ) ^ std::hash<U>()( arg_pair.second );
-	}
-};
 
 /// \brief Check that the class invariants hold
 ///

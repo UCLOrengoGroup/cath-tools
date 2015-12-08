@@ -1,20 +1,12 @@
 /// \file
 /// \brief The prc_scores_entry class definitions
 
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/finder.hpp>
-
-#include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/type_aliases.h"
-#include "exception/runtime_error_exception.h"
+#include "file/prc_scores_file/detail/prc_scores_line_parser.h"
 #include "file/prc_scores_file/prc_scores_entry.h"
 
-using namespace cath::common;
 using namespace cath::file;
 using namespace std;
-
-using boost::algorithm::is_space;
-using boost::token_compress_on;
 
 /// \brief Ctor from all of the required pieces of information
 prc_scores_entry::prc_scores_entry(const string &arg_name_1,   ///< Name of protein 1
@@ -145,26 +137,7 @@ bool cath::file::operator==(const prc_scores_entry &arg_entry_a, ///< The first 
 /// \relates prc_scores_entry
 prc_scores_entry cath::file::prc_scores_entry_from_line(const string &arg_prc_line ///< The line from which to parse the data
                                                         ) {
-	const auto line_parts = split_build<str_vec>( arg_prc_line, is_space(), token_compress_on );
-	if ( line_parts.size() != 12 ) {
-		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse prc_scores_entry from line that doesn't contain 12 parts"));
-	}
-
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
-	return prc_scores_entry{
-		       line_parts[  0 ],
-		stoul( line_parts[  1 ] ),
-		stoul( line_parts[  2 ] ),
-		stoul( line_parts[  3 ] ),
-		stoul( line_parts[  4 ] ),
-		       line_parts[  5 ],
-		stoul( line_parts[  6 ] ),
-		stoul( line_parts[  7 ] ),
-		stoul( line_parts[  8 ] ),
-		stod ( line_parts[  9 ] ),
-		stod ( line_parts[ 10 ] ),
-		stod ( line_parts[ 11 ] )
-	};
+	return prc_scores_line_parser{}.parse_line( arg_prc_line );
 }
 
 /// \brief Simple to_string() overload for prc_scores_entry

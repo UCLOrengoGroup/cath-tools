@@ -11,14 +11,18 @@
 
 #include "common/algorithm/contains.h"
 #include "common/algorithm/transform_build.h"
+#include "common/c++14/cbegin_cend.h"
 #include "common/file/open_fstream.h"
+#include "common/hash/pair_hash.h"
 #include "common/size_t_literal.h"
 #include "exception/invalid_argument_exception.h"
+#include "file/prc_scores_file/detail/prc_scores_line_parser.h"
 #include "file/prc_scores_file/prc_scores_entry.h"
 
 #include <fstream>
 #include <iostream> // ***** TEMPORARY *****
 #include <string>
+#include <unordered_map>
 
 using namespace cath::common;
 using namespace cath::file;
@@ -34,7 +38,7 @@ prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_v
                                                         ) {
 	prc_scores_entry_vec  results;
 
-	str_str_pair_size_map index_of_previously_seen;
+	unordered_map<str_str_pair, size_t, pair_hash> index_of_previously_seen;
 
 	return transform_build<prc_scores_entry_vec>(
 		irange( 0_z, arg_prc_scores_entries.size() )
@@ -46,12 +50,14 @@ prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_v
 					const auto &evalue    = entry.get_evalue();
 					const auto  name_pair = make_pair( id1, id2 );
 
-					if ( ! contains( index_of_previously_seen, name_pair ) ) {
+					const auto find_itr = index_of_previously_seen.find( name_pair );
+
+					if ( find_itr == common::cend( index_of_previously_seen ) ) {
 						index_of_previously_seen.emplace( name_pair, x );
 						return true;
 					}
 
-					const auto prev_entry = arg_prc_scores_entries[ index_of_previously_seen.at( name_pair ) ];
+					const auto prev_entry = arg_prc_scores_entries[ find_itr->second ];
 //					if ( entry.get_hit_num() <= prev_entry.get_hit_num() ) {
 //						BOOST_THROW_EXCEPTION(invalid_argument_exception(
 //							"When parsing PRC results, found hit between " + id1 + " and " + id2 + " with hit number that isn't higher than for previous result"
@@ -81,14 +87,15 @@ prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_v
 /// \brief Parse a vector of prc_scores_entry objects from the specified istream
 prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(istream &arg_prc_scores_is ///< The istream of prc scores data from which to parse the prc_scores_entry objects
                                                             ) {
-	string               line_string;
-	prc_scores_entry_vec results;
+	string                 line_string;
+	prc_scores_entry_vec   results;
+	prc_scores_line_parser parser;
 	while ( getline( arg_prc_scores_is, line_string ) ) {
 
 		// If this line is neither empty nor a comment line (a comment line is a line with a '#' character as the first non-whitespace character)
 		trim_left( line_string );
 		if ( ! line_string.empty() && line_string.front() != '#' ) {
-			results.push_back( prc_scores_entry_from_line( line_string ) );
+			results.push_back( parser.parse_line( line_string ) );
 		}
 	}
 	return results;
