@@ -108,6 +108,25 @@ Building against Clang's C++ library (libc++) rather than GCC's (libstdc++) requ
 
     $ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
 
+Clang Static Analzyer [For developers]
+---------------------------------
+
+Want to search for bugs in the code? These instructions aim to help you run Clang-based static analysis. (TODO: Get this running on a CI server, such as Travis-CI.)
+
+Ensure you have clang installed. Find the analyzer programs `ccc-analyzer` and `c++-analyzer`. For example, on Ubuntu you can do something like:
+
+    dpkg -l | grep clang | awk '{print $2}' | xargs dpkg -L | grep analyzer
+
+Then substitute their locations into the following commands and then run the commands, starting in the root of the cath-tools project (with bioplib already built if you don't want errors from static analysis of bioplib):
+
+    mkdir build-analyze && cd build-analyze
+    setenv CCC_CC  clang
+    setenv CCC_CXX clang++
+    /usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.6/ccc-analyzer" -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.6/c++-analyzer" -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+    scan-build make
+
+To get parallel compilation, you can append ` -j #` to the `scan-build make` (where `#` is the number of threads).
+
 Running the Build Tests
 =======================
 
