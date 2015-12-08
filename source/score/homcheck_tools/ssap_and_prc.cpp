@@ -3,6 +3,8 @@
 
 #include "ssap_and_prc.h"
 
+#include <boost/lexical_cast.hpp>
+
 #include "exception/invalid_argument_exception.h"
 #include "file/prc_scores_file/prc_scores_entry.h"
 #include "file/ssap_scores_file/ssap_scores_entry.h"
@@ -14,6 +16,8 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::homcheck;
 using namespace std;
+
+using boost::lexical_cast;
 
 /// \brief Ctor from a ssap_scores_entry and a prc_scores_entry
 ///
@@ -213,10 +217,16 @@ const double & cath::homcheck::get_prc_evalue(const ssap_and_prc &arg_ssap_and_p
 /// \relates ssap_and_prc
 string cath::homcheck::to_string(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc to be output as a string
                                  ) {
-	return "ssap_and_prc[ssap_score:"
+	ostringstream evalue_ss;
+	evalue_ss << get_prc_evalue( arg_ssap_and_prc );
+	return "ssap_and_prc[query_id:"
+		+ arg_ssap_and_prc.get_query_id()
+		+ "; match_id:"
+		+ arg_ssap_and_prc.get_match_id()
+		+ "; ssap_score:"
 		+ std::to_string( get_ssap_score( arg_ssap_and_prc ) )
 		+ "; prc_evalue:"
-		+ std::to_string( get_ssap_score( arg_ssap_and_prc ) )
+		+ evalue_ss.str()
 		+ "; magic_function:"
 		+ std::to_string( arg_ssap_and_prc.get_magic_function_score() )
 		+ "]";
