@@ -12,6 +12,7 @@
 #include "file/prc_scores_file/prc_scores_file.h"
 #include "file/ssap_scores_file/ssap_scores_entry.h"
 #include "file/ssap_scores_file/ssap_scores_file.h"
+#include "score/homcheck_tools/first_result_if.h"
 #include "score/homcheck_tools/ssap_and_prc.h"
 #include "score/homcheck_tools/ssaps_and_prcs_of_query.h"
 #include "test/log_to_ostream_guard.h"
@@ -131,7 +132,14 @@ BOOST_AUTO_TEST_CASE(best_magic_function_works) {
 		ssap_scores,
 		prc_scores
 	);
-	const auto result = best_magic_function(the_ssaps_and_prcs);
+	const auto result = first_result_if(
+		the_ssaps_and_prcs,
+		[] (const ssap_and_prc &x, const ssap_and_prc &y) {
+			// Reverse inequality to put the highest magic_function values to the start
+			return x.get_magic_function_score() > y.get_magic_function_score();
+		},
+		[] (const ssap_and_prc &) { return true; }
+	);
 	BOOST_REQUIRE( result );
 	BOOST_CHECK_EQUAL( result->get().get_match_id(), "1pauB00" );
 }
@@ -141,8 +149,12 @@ BOOST_AUTO_TEST_CASE(best_magic_function_if_works) {
 		ssap_scores,
 		prc_scores
 	);
-	const auto result = best_magic_function_if(
+	const auto result = first_result_if(
 		the_ssaps_and_prcs,
+		[] (const ssap_and_prc &x, const ssap_and_prc &y) {
+			// Reverse inequality to put the highest magic_function values to the start
+			return x.get_magic_function_score() > y.get_magic_function_score();
+		},
 		[] (const ssap_and_prc &x) { return x.get_match_id() == "1iceB00"; }
 	);
 	BOOST_REQUIRE( result );

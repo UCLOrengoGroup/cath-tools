@@ -21,6 +21,7 @@
 #ifndef SCORE_TYPE_ALIASES_H_INCLUDED
 #define SCORE_TYPE_ALIASES_H_INCLUDED
 
+#include <boost/optional/optional_fwd.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 
 #include <cstddef>
@@ -39,7 +40,13 @@ namespace cath { namespace score { class value_list_scaling; } }
 namespace cath {
 	namespace homcheck {
 		/// \brief Type alias for a vector of ssap_and_prc objects
-		using ssap_and_prc_vec = std::vector<ssap_and_prc>;
+		using ssap_and_prc_vec      = std::vector<ssap_and_prc>;
+
+		/// \brief Type alias for a reference_wrapper to a const ssap_and_prc
+		using ssap_and_prc_cref     = std::reference_wrapper<const ssap_and_prc>;
+
+		/// \brief Type alias for an optional reference_wrapper to a const ssap_and_prc
+		using ssap_and_prc_cref_opt = boost::optional<ssap_and_prc_cref>;
 	}
 }
 

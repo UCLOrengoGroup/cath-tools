@@ -29,6 +29,7 @@
 #include "exception/program_exception_wrapper.h"
 #include "file/prc_scores_file/prc_scores_file.h"
 #include "file/ssap_scores_file/ssap_scores_file.h"
+#include "score/homcheck_tools/first_result_if.h"
 #include "score/homcheck_tools/ssaps_and_prcs_of_query.h"
 #include "score/homcheck_tools/superfamily_of_domain.h"
 
@@ -92,7 +93,14 @@ namespace cath {
 					ssap_scores_file::parse_ssap_scores_file_simple( ssap_file ),
 					prc_scores_file::parse_prc_scores_file_fancy   ( prc_file  )
 				);
-				const auto best_result = best_magic_function( the_ssaps_and_prcs );
+				const auto best_result = first_result_if(
+					the_ssaps_and_prcs,
+					[] (const ssap_and_prc &x, const ssap_and_prc &y) {
+						// Reverse inequality to put the highest magic_function values to the start
+						return x.get_magic_function_score() > y.get_magic_function_score();
+					},
+					[] (const ssap_and_prc &) { return true; }
+				);
 				if ( best_result ) {
 					cerr << "best result is : " << best_result->get() << "\n";
 				}

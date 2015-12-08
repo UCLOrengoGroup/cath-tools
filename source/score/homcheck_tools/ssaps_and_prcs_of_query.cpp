@@ -10,13 +10,16 @@
 
 #include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/range/adaptor/adjacented.h"
+#include "common/boost_addenda/range/front.h"
 #include "common/hash/pair_hash.h"
 #include "common/size_t_literal.h"
 #include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
 #include "file/prc_scores_file/prc_scores_entry.h"
 #include "file/ssap_scores_file/ssap_scores_entry.h"
+#include "score/homcheck_tools/first_result_if.h"
 #include "score/homcheck_tools/ssap_and_prc.h"
+#include "score/homcheck_tools/superfamily_of_domain.h"
 
 //#include <iostream> // ***** TEMPORARY? *****
 #include <string>
@@ -83,17 +86,52 @@ auto ssaps_and_prcs_of_query::end() const -> const_iterator{
 	return common::cend( ssap_and_prc_entries );
 }
 
-/// \brief TODOCUMENT
-optional<reference_wrapper<const ssap_and_prc>> cath::homcheck::best_magic_function(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs ///< TODOCUMENT
-                                                                                    ) {
-	const auto max_itr = max_element(
+/// \brief Return the best by magic-function hit to a domain in CATH of the specified results
+///
+/// \relates ssaps_and_prcs_of_query
+ssap_and_prc_cref_opt cath::homcheck::best_magic_function_assignable(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs,       ///< The SSAP and PRC results for the query domain
+                                                                     const superfamily_of_domain   &arg_superfamily_of_domain ///< The superfamily_of_domain for finding which matches are assigned
+                                                                     ) {
+	return first_result_if(
 		arg_ssaps_and_prcs,
-		[&] (const ssap_and_prc &x, const ssap_and_prc &y) {
-			return x.get_magic_function_score() < y.get_magic_function_score();
+		[] (const ssap_and_prc &x, const ssap_and_prc &y) {
+			// Reverse inequality to put the highest magic_function values to the start
+			return x.get_magic_function_score() > y.get_magic_function_score();
+		},
+		[&] (const ssap_and_prc &x) {
+			return (
+				x.get_magic_function_score() >= 79.7779328254
+				&&
+				arg_superfamily_of_domain.has_superfamily_of_domain( x.get_match_id() )
+			);
 		}
 	);
-	return ( max_itr != common::cend( arg_ssaps_and_prcs ) ) ? make_optional( cref( *max_itr ) )
-	                                                         : none;
+}
+
+/// \brief The best fold-level match to a domain in CATH from the specified SSAP results
+///
+/// This uses Christine's criteria for a fold level match (SSAP score >= 70.0 && SSAP overlap >= 60.0)
+///
+/// \relates ssaps_and_prcs_of_query
+ssap_scores_entry_cref_opt cath::homcheck::best_fold_level_match(const ssap_scores_entry_vec &arg_ssaps,                ///< The SSAP results for the query domain
+                                                                 const superfamily_of_domain &arg_superfamily_of_domain ///< The superfamily_of_domain for finding which matches are assigned
+                                                                 ) {
+	return first_result_if(
+		arg_ssaps,
+		[] (const ssap_scores_entry &x, const ssap_scores_entry &y) {
+			// Reverse inequality to put the highest SSAP scores to the start
+			return x.get_ssap_score() > y.get_ssap_score();
+		},
+		[&] (const ssap_scores_entry &x) {
+			return (
+				x.get_ssap_score() >= 70.0
+				&&
+				x.get_overlap_pc() >= 60.0
+				&&
+				arg_superfamily_of_domain.has_superfamily_of_domain( x.get_name_2() )
+			);
+		}
+	);
 }
 
 /// \brief Build a ssaps_and_prcs_of_query from the specified ssap_scores_entries and prc_scores_entries

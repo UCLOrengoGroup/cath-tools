@@ -13,6 +13,7 @@
 #include "common/c++14/cbegin_cend.h"
 #include "common/size_t_literal.h"
 #include "common/type_aliases.h"
+#include "file/file_type_aliases.h"
 #include "score/homcheck_tools/ssap_and_prc.h"
 #include "score/score_type_aliases.h"
 
@@ -20,10 +21,11 @@
 #include <vector>
 
 namespace cath { namespace file { class prc_scores_entry; } }
-namespace cath { namespace file { using prc_scores_entry_vec = std::vector<prc_scores_entry>; } }
 namespace cath { namespace file { class ssap_scores_entry; } }
+namespace cath { namespace file { using prc_scores_entry_vec = std::vector<prc_scores_entry>; } }
 namespace cath { namespace file { using ssap_scores_entry_vec = std::vector<ssap_scores_entry>; } }
 namespace cath { namespace homcheck { class ssap_and_prc; } }
+namespace cath { namespace homcheck { class superfamily_of_domain; } }
 
 using namespace cath::common::literals;
 
@@ -54,30 +56,11 @@ namespace cath {
 			const_iterator end() const;
 		};
 
-		boost::optional<std::reference_wrapper<const ssap_and_prc>> best_magic_function(const ssaps_and_prcs_of_query &);
+		ssap_and_prc_cref_opt best_magic_function_assignable(const ssaps_and_prcs_of_query &,
+		                                                     const superfamily_of_domain &);
 
-		/// \brief TODOCUMENT
-		template <typename FN>
-		boost::optional<std::reference_wrapper<const ssap_and_prc>> best_magic_function_if(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs, ///< TODOCUMENT
-		                                                                                   FN                             arg_pred            ///< TODOCUMENT
-		                                                                                   ) {
-			auto indices = common::copy_build<size_vec>( boost::irange( 0_z, arg_ssaps_and_prcs.size() ) );
-			boost::range::sort(
-				indices,
-				[&] (const size_t &x, const size_t &y) {
-					// Reverse inequality to put the highest magic_function values to the start
-					return arg_ssaps_and_prcs[ x ].get_magic_function_score() > arg_ssaps_and_prcs[ y ].get_magic_function_score();
-				}
-			);
-			const auto find_itr = boost::range::find_if(
-				indices,
-				[&] (const size_t &x) {
-					return arg_pred( arg_ssaps_and_prcs[ x ] );
-				}
-			);
-			return ( find_itr != common::cend( indices ) ) ? boost::make_optional( std::cref( arg_ssaps_and_prcs[ *find_itr ] ) )
-			                                               : boost::none;
-		}
+		file::ssap_scores_entry_cref_opt best_fold_level_match(const file::ssap_scores_entry_vec &,
+		                                                       const superfamily_of_domain &);
 
 		ssaps_and_prcs_of_query make_ssaps_and_prcs_of_query(const file::ssap_scores_entry_vec &,
 		                                                     const file::prc_scores_entry_vec &);

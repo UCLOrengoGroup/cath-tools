@@ -72,6 +72,13 @@ namespace cath {
 
 		/// \brief Type alias for a vector of hmmer_scores_entry objects
 		using hmmer_scores_entry_vec = std::vector<hmmer_scores_entry>;
+
+
+		/// \brief Type alias for a reference_wrapper of a const ssap_scores_entry>
+		using ssap_scores_entry_cref     = std::reference_wrapper<const ssap_scores_entry>;
+
+		/// \brief Type alias for an optional reference_wrapper of a const ssap_scores_entry>
+		using ssap_scores_entry_cref_opt = boost::optional<ssap_scores_entry_cref>;
 	}
 }
 
