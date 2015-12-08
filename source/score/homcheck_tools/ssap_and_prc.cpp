@@ -23,7 +23,7 @@ ssap_and_prc::ssap_and_prc(const ssap_scores_entry &arg_ssap, ///< The SSAP scor
                            const prc_scores_entry  &arg_prc   ///< The PRC scores from which this should be constructed
                            ) : the_ssap            ( arg_ssap ),
                                the_prc             ( arg_prc  ),
-							   magic_function_score( magic_function( the_ssap, the_prc ) ) {
+                               magic_function_score( magic_function( the_ssap, the_prc ) ) {
 	if (
 		( the_ssap.get_name_1() != the_prc.get_name_1() )
 		||
