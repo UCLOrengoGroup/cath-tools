@@ -150,7 +150,7 @@ namespace cath {
 				/// \brief TODOCUMENT
 				static bool read_line(std::istream &arg_is ///< The istream containing the line to be read
 				                      ) {
-					bool value;
+					bool value = false;
 					if ( arg_is >> std::boolalpha >> value >> std::noboolalpha ) {
 						return value;
 					}
