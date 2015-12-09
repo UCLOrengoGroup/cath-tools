@@ -39,8 +39,6 @@ namespace cath {
 			const double & get_magic_function_score() const;
 		};
 
-
-
 		double magic_function(const file::ssap_scores_entry &,
 		                      const file::prc_scores_entry &);
 

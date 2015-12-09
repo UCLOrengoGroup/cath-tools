@@ -200,7 +200,7 @@ namespace cath {
 		/// \brief Parse the options and then pass them to cath_assign_domainsr::superpose()
 		virtual void do_run_program(int /*argc*/, char * /*argv*/[]) override final {
 			boost::log::core::get()->set_filter(
-					severity >= info
+				severity >= info
 			);
 
 			const path data_data_file = "/data1/people/ucbctnl/ticket_914_data/data_data.txt";
