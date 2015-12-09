@@ -29,23 +29,6 @@ using namespace std;
 
 constexpr double value_list_scaling::BAD_SCALED_VALUE;
 
-/// \brief TODOCUMENT
-value_list_scaling::value_list_scaling(const double &arg_multiplier, ///< TODOCUMENT
-                                       const double &arg_constant    ///< TODOCUMENT
-                                       ) : multiplier ( arg_multiplier ),
-                                           constant   ( arg_constant   ) {
-}
-
-/// \brief TODOCUMENT
-const double & value_list_scaling::get_multiplier() const {
-	return multiplier;
-}
-
-/// \brief TODOCUMENT
-const double & value_list_scaling::get_constant() const {
-	return constant;
-}
-
 /// \brief Simple to_string() overload for value_list_scaling
 ///
 /// \relates value_list_scaling

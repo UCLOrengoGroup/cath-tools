@@ -36,15 +36,32 @@ namespace cath {
 			double constant = 0.0;
 
 		public:
-			value_list_scaling(const double &,
-			                   const double &);
+			constexpr value_list_scaling(const double &,
+			                             const double &);
 
-			const double & get_multiplier() const;
-			const double & get_constant() const;
+			constexpr const double & get_multiplier() const;
+			constexpr const double & get_constant() const;
 
 			/// \brief The value to assign to bad (probably absent) entries after scaling
 			static constexpr double BAD_SCALED_VALUE = -999.0;
 		};
+
+		/// \brief Ctor from the multiplier (m) and constant (c)
+		inline constexpr value_list_scaling::value_list_scaling(const double &arg_multiplier, ///< The multiplier by which values should be multiplied
+		                                                        const double &arg_constant    ///< The constant by which the multiplied values should be increased
+		                                                        ) : multiplier ( arg_multiplier ),
+		                                                            constant   ( arg_constant   ) {
+		}
+
+		/// \brief Getter for the multiplier
+		inline constexpr const double & value_list_scaling::get_multiplier() const {
+			return multiplier;
+		}
+
+		/// \brief Getter for the constant
+		inline constexpr const double & value_list_scaling::get_constant() const {
+			return constant;
+		}
 
 		std::string to_string(const value_list_scaling &);
 
