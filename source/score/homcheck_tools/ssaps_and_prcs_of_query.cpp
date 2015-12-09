@@ -21,7 +21,6 @@
 #include "score/homcheck_tools/ssap_and_prc.h"
 #include "score/homcheck_tools/superfamily_of_domain.h"
 
-//#include <iostream> // ***** TEMPORARY? *****
 #include <string>
 #include <unordered_map>
 
