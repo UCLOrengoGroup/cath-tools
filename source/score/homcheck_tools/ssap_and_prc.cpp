@@ -72,7 +72,7 @@ const double & ssap_and_prc::get_magic_function_score() const {
 /// The magic function is defined as: `ssap_score - log10( prc_evalue )`
 double cath::homcheck::magic_function(const ssap_scores_entry &arg_ssap, ///< The SSAP result with which the magic function should be computed
                                       const prc_scores_entry  &arg_prc   ///< The PRC  result with which the magic function should be computed
-					                  ) {
+                                      ) {
 	return arg_ssap.get_ssap_score() - std::log10( arg_prc.get_evalue() );
 }
 
