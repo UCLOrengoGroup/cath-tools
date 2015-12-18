@@ -771,6 +771,7 @@ set(
 	NORMSOURCES_SCORE_SCORE_CLASSIFICATION
 		${NORMSOURCES_SCORE_SCORE_CLASSIFICATION_DETAIL}
 		${NORMSOURCES_SCORE_SCORE_CLASSIFICATION_LABEL_PAIR_IS_POSITIVE}
+		score/score_classification/rbf_model.cpp
 		score/score_classification/score_classn_value.cpp
 		score/score_classification/score_classn_value_better_value.cpp
 		score/score_classification/score_classn_value_list.cpp
@@ -1510,6 +1511,7 @@ set(
 	TESTSOURCES_SCORE_SCORE_CLASSIFICATION
 		${TESTSOURCES_SCORE_SCORE_CLASSIFICATION_DETAIL}
 		${TESTSOURCES_SCORE_SCORE_CLASSIFICATION_LABEL_PAIR_IS_POSITIVE}
+		score/score_classification/rbf_model_test.cpp
 		score/score_classification/score_classn_value_better_value_test.cpp
 		score/score_classification/score_classn_value_list_test.cpp
 		score/score_classification/score_classn_value_results_set_test.cpp
