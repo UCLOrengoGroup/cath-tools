@@ -87,7 +87,7 @@ namespace cath {
 
 	/// \brief The query length extracted from either SSAP or PRC results, whichever is non-empty
 	///        or boost::none if both are empty
-	opt_size query_legnth_of_either(const ssap_scores_entry_vec &arg_ssaps, ///< The possibly-empty SSAP results
+	opt_size query_length_of_either(const ssap_scores_entry_vec &arg_ssaps, ///< The possibly-empty SSAP results
 	                                const prc_scores_entry_vec  &arg_prcs   ///< The possibly-empty PRC  results
 	                                ) {
 		return ( ! arg_prcs.empty()                   ) ? make_optional( arg_prcs.front().get_length_1()  ) :
@@ -142,7 +142,7 @@ namespace cath {
 	                                   ) {
 		constexpr size_t NUM_BEST_HITS = 6;
 		const auto query_id     = query_id_of_either    ( arg_ssaps, arg_prcs );
-		const auto query_length = query_legnth_of_either( arg_ssaps, arg_prcs );
+		const auto query_length = query_length_of_either( arg_ssaps, arg_prcs );
 		if ( ! query_id || ! query_length ) {
 			return "|| COMPLETELY EMPTY RESULTS FOR " + arg_ssap_file.string() + " and " + arg_prc_file.string() + "||";
 		}
