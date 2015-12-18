@@ -141,6 +141,12 @@ const path & global_test_constants::TEST_SUP_JSON_DIR() {
 }
 
 /// \brief TODOCUMENT
+const path & global_test_constants::TEST_SVM_DIR() {
+	static const path test_svm_dir{ TEST_SOURCE_DATA_DIR() / "svm" };
+	return test_svm_dir;
+}
+
+/// \brief TODOCUMENT
 const path & global_test_constants::TEST_OUTPUT_DIRECTORY() {
 	static const path test_output_directory( temp_directory_path() );
 	return test_output_directory;

@@ -55,6 +55,7 @@ namespace cath {
 		static const boost::filesystem::path              & TEST_SSAP_REGRESSION_DATA_DIR();
 		static const boost::filesystem::path              & TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR();
 		static const boost::filesystem::path              & TEST_SUP_JSON_DIR();
+		static const boost::filesystem::path              & TEST_SVM_DIR();
 		static const boost::filesystem::path              & TEST_OUTPUT_DIRECTORY();
 
 		static const boost::filesystem::path              & NONEXISTENT_FILE();

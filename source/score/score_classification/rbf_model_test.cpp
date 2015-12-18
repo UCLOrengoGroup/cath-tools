@@ -45,7 +45,7 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(rbf_model_test_suite, cath::test::rbf_model_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(parsed_model_calculates_correct_score) {
-	const auto the_model = parse_rbf_model( "/cath/homes2/ucbctnl/svm_gubbins_files/svm_experiments_data/ssap_and_prc/svm_data.full.rbf_gamma_1_c_5.model" );
+	const auto the_model = parse_rbf_model( TEST_SVM_DIR() / "cath_svm.rbf_gamma_1_c_5.model" );
 
 	const auto the_prc_scores_entry  = prc_scores_entry_from_line ( "1by5A02     2       554     554     1       1xkhA02 7       543     543      223.8   215.5  3.1e-185" );
 	const auto the_ssap_scores_entry = ssap_scores_entry_from_line( "1by5A02 1xkhA02 554 535 79.16 511 92 17 3.11" );
