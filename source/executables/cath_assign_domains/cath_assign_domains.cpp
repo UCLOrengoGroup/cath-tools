@@ -18,6 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/finder.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -34,27 +35,35 @@
 #include "exception/program_exception_wrapper.h"
 #include "file/prc_scores_file/prc_scores_file.h"
 #include "file/ssap_scores_file/ssap_scores_file.h"
+#include "options/executable/cath_assign_domains_options/cath_assign_domains_options.h"
 #include "score/homcheck_tools/first_result_if.h"
 #include "score/homcheck_tools/ssaps_and_prcs_of_query.h"
 #include "score/homcheck_tools/superfamily_of_domain.h"
+#include "score/score_classification/rbf_model.h"
 
 #include <fstream>
 
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::homcheck;
+using namespace cath::opts;
+using namespace cath::score;
 using namespace std;
 
-using boost::algorithm::contains;
+using boost::algorithm::any_of;
 using boost::algorithm::is_space;
 using boost::algorithm::join;
+using boost::algorithm::starts_with;
 using boost::algorithm::token_compress_on;
+using boost::is_any_of;
 using boost::filesystem::path;
 using boost::is_space;
 using boost::lexical_cast;
 using boost::log::trivial::info;
 using boost::log::trivial::severity;
 using boost::make_optional;
+
+// \todo Substantially tidy up the code in this file
 
 namespace cath {
 
@@ -131,6 +140,18 @@ namespace cath {
 		);
 	}
 
+	/// \brief Return whether the specified CATH node is (in) one of the specified list of forbidden CATH nodes
+	bool node_is_forbidden(const string  &arg_query_node,     ///< The CATH node to query
+	                       const str_vec &arg_forbidden_nodes ///< The list of CATH nodes to which assignment is forbidden
+						   ) {
+		return any_of(
+			arg_forbidden_nodes,
+			[&] (const string &x) {
+				return starts_with( arg_query_node, x );
+			}
+		);
+	}
+
 	/// \brief Generate Trac Wiki string describing a new fold result
 	///
 	/// ||=  Query Domain  =||=  Query Length  =||=  Best SSAP Hits  =||=  Best PRC Hits  =||
@@ -151,12 +172,15 @@ namespace cath {
 		const auto best_ssap_strings = transform_build<str_vec>(
 			best_n_ssap_hits( arg_ssaps, arg_sf_of_dom, NUM_BEST_HITS ),
 			[&] (const ssap_scores_entry &x) {
-				return x.get_name_2()
+				const string &match_id   = x.get_name_2();
+				const string  match_sf   = arg_sf_of_dom.get_superfamily_of_domain( match_id );
+				const bool    created_sf = arg_sf_of_dom.is_in_created_sf         ( match_id );
+				return match_id
 					+ "; SSAP:**" + ( boost::format( "%g") % x.get_ssap_score() ).str()
 					+ "**; O/L:**"  + ( boost::format( "%g") % x.get_overlap_pc() ).str()
 					+ "**; RMSD:**" + ( boost::format( "%g") % x.get_rmsd()       ).str()
-					+ "**; S/F:**"  + arg_sf_of_dom.get_superfamily_of_domain( x.get_name_2() )
-					+ "**";
+					+ "**; **" + ( created_sf ? "" : "cathid:" ) + match_sf
+					+ "** ";
 			}
 		);
 
@@ -164,10 +188,13 @@ namespace cath {
 		const auto best_prc_strings = transform_build<str_vec>(
 			best_n_prc_hits( arg_prcs, arg_sf_of_dom, NUM_BEST_HITS ),
 			[&] (const prc_scores_entry &x) {
+				const string &match_id   = x.get_name_2();
+				const string  match_sf   = arg_sf_of_dom.get_superfamily_of_domain( match_id );
+				const bool    created_sf = arg_sf_of_dom.is_in_created_sf( match_id );
 				return x.get_name_2()
 					+ "; PRC:**"  + ( boost::format( "%g") % x.get_evalue() ).str()
-					+ "**; S/F:**"  + arg_sf_of_dom.get_superfamily_of_domain( x.get_name_2() )
-					+ "**";
+					+ "**; **" + ( created_sf ? "" : "cathid:" ) + match_sf
+					+ "** ";
 			}
 		);
 
@@ -198,18 +225,39 @@ namespace cath {
 		}
 
 		/// \brief Parse the options and then pass them to cath_assign_domainsr::superpose()
-		virtual void do_run_program(int /*argc*/, char * /*argv*/[]) override final {
+		virtual void do_run_program(int argc, char * argv[]) override final {
+//			./cath-assign-domains --svmlight-rbf-file /usr/local/svn/source/update/trunk/utilities/cath_svm.rbf_gamma_1_c_5.model --filelist-file ./data_files.txt --sf-of-domain-file ./superfamily_of_domain.txt
+//			const path   default_rbf_svm_file    = "/cath/homes2/ucbctnl/svm_gubbins_files/svm_experiments_data/ssap_and_prc/svm_data.full.rbf_gamma_1_c_5.model";
+//			const path   default_data_data_file  = "/data1/people/ucbctnl/ticket_914_data/data_data.txt";
+//			const path   default_sf_of_dom_file  = "/data1/people/ucbctnl/ticket_914_data/superfamily_of_domain.txt";
+//			const string default_forbidden_nodes = "2.105:2.110:2.115:2.120:2.130:2.140";
+
 			boost::log::core::get()->set_filter(
 				severity >= info
 			);
 
-			const path data_data_file = "/data1/people/ucbctnl/ticket_914_data/data_data.txt";
-			const path sf_of_dom_file = "/data1/people/ucbctnl/ticket_914_data/superfamily_of_domain.txt";
+			cath_assign_domains_options the_cath_assign_domains_options;
+			the_cath_assign_domains_options.parse_options( argc, argv );
 
-			BOOST_LOG_TRIVIAL( info ) << "About to parse superfamily_of_domain data";
-			auto sf_of_dom = parse_superfamily_of_domain  ( sf_of_dom_file );
+			// If the options are invalid or specify to do_nothing, then just return
+			const string error_or_help_string = the_cath_assign_domains_options.get_error_or_help_string();
+			if ( ! error_or_help_string.empty() ) {
+				cerr << error_or_help_string << "\n";
+				return;
+			}
 
-			BOOST_LOG_TRIVIAL( info ) << "About to parse ssap_and_prc_files data";
+			const path    rbf_svm_file    = the_cath_assign_domains_options.get_rbf_svm_file();
+			const path    data_data_file  = the_cath_assign_domains_options.get_data_data_file();
+			const path    sf_of_dom_file  = the_cath_assign_domains_options.get_sf_of_dom_file();
+			const str_vec forbidden_nodes = the_cath_assign_domains_options.get_forbidden_nodes();
+
+			BOOST_LOG_TRIVIAL( info ) << "About to parse SVM-light RBF model " << rbf_svm_file;
+			const rbf_model the_svm       = parse_rbf_model( rbf_svm_file );
+
+			BOOST_LOG_TRIVIAL( info ) << "About to parse superfamily_of_domain data " << sf_of_dom_file;
+			auto sf_of_dom                = parse_superfamily_of_domain  ( sf_of_dom_file );
+
+			BOOST_LOG_TRIVIAL( info ) << "About to parse ssap_and_prc_files data " << data_data_file;
 			const auto ssap_and_prc_files = parse_ssap_and_prc_files_data( data_data_file );
 
 			str_vec new_fold_strings;
@@ -218,37 +266,101 @@ namespace cath {
 				const path &prc_file           = ssap_and_prc_file_pair.second;
 				const auto the_ssaps           = ssap_scores_file::parse_ssap_scores_file_simple( ssap_file );
 				const auto the_prcs            = prc_scores_file::parse_prc_scores_file_fancy   ( prc_file  );
-				const auto the_ssaps_and_prcs  = make_ssaps_and_prcs_of_query  ( the_ssaps, the_prcs );
-				const auto best_result_ref_opt = best_magic_function_assignable( the_ssaps_and_prcs, sf_of_dom );
-				if ( best_result_ref_opt ) {
-					const auto &best_result    = best_result_ref_opt->get();
+				const auto the_ssaps_and_prcs  = calculate_all_svm_scores_copy(
+					make_ssaps_and_prcs_of_query( the_ssaps, the_prcs ),
+					the_svm
+				);
+
+				const auto best_svm_ref_opt = best_svm_assignable           ( the_ssaps_and_prcs, sf_of_dom );
+				const auto best_mag_ref_opt = best_magic_function_assignable( the_ssaps_and_prcs, sf_of_dom );
+
+				if ( best_svm_ref_opt || best_mag_ref_opt ) {
+					const string &query_id = best_svm_ref_opt ? best_svm_ref_opt->get().get_query_id()
+					                                          : best_mag_ref_opt->get().get_query_id();
+					if ( ! best_svm_ref_opt ) {
+						const string mag_match_id = best_mag_ref_opt->get().get_match_id();
+						const string mag_match_sf = sf_of_dom.get_superfamily_of_domain( mag_match_id );
+						BOOST_LOG_TRIVIAL( warning )
+							<< "Under CMF, would have assigned "
+							<< query_id
+							<< " to superfamily "
+							<< mag_match_sf
+							<< " (based on "
+							<< mag_match_id
+							<< ") but it will not be assigned under SVM";
+					}
+					else {
+						const string svm_match_id = best_svm_ref_opt->get().get_match_id();
+						const string svm_match_sf = sf_of_dom.get_superfamily_of_domain( svm_match_id );
+						if ( ! best_mag_ref_opt ) {
+							BOOST_LOG_TRIVIAL( warning )
+								<< "Under CMF, would not have assigned "
+								<< query_id
+								<< " but under SVM it will be assigned to superfamily "
+								<< svm_match_sf
+								<< " (based on "
+								<< svm_match_id
+								<< ")";
+						}
+						else {
+							const string mag_match_id = best_mag_ref_opt->get().get_match_id();
+							const string mag_match_sf = sf_of_dom.get_superfamily_of_domain( mag_match_id );
+							if ( svm_match_sf != mag_match_sf ) {
+								BOOST_LOG_TRIVIAL( warning )
+									<< "Under CMF, would have assigned "
+									<< query_id
+									<< " to superfamily "
+									<< mag_match_sf
+									<< " (based on "
+									<< mag_match_id
+									<< ") but under SVM it will be assigned to superfamily "
+									<< svm_match_sf
+									<< " (based on "
+									<< svm_match_id
+									<< ")";
+							}
+						}
+					}
+				}
+				if ( best_svm_ref_opt ) {
+					const auto &best_result    = best_svm_ref_opt->get();
 					const string &query_id     = best_result.get_query_id();
 					const string &match_id     = best_result.get_match_id();
 					const string &match_sf     = sf_of_dom.get_superfamily_of_domain( match_id );
 					const string  match_fold   = homcheck::detail::fold_of_superfamily_id( match_sf );
-					const bool    created_sf   = contains( match_sf, superfamily_of_domain::NEW_SF_CORE_STRING );
+					const bool    created_sf   = sf_of_dom.is_in_created_sf( match_id );
 					const string  action       = created_sf ? "ASSIGN_TO_RECENT_SUPERFAMILY"
 					                                        : "ASSIGN_TO_EXISTG_SUPERFAMILY";
 					const string  match_node   = created_sf ? match_fold
-					                                      : match_sf;
+					                                        : match_sf;
 					const double &ssap_score   = get_ssap_score     ( best_result );
 					const double &ssap_overlap = get_ssap_overlap_pc( best_result );
 					const double &ssap_rmsd    = get_ssap_rmsd      ( best_result );
 					const double &prc_evalue   = get_prc_evalue     ( best_result );
+					const double &svm_score    = get_svm_score      ( best_result );
 					const double &magic_fn     = best_result.get_magic_function_score();
 
-					cout << query_id     << " "
-					     << action       << " "
-					     << match_id     << " "
-					     << match_node   << " \"Assigning "
-					     << query_id     << " to "
-					     << match_node   << " based on strong match with "
-					     << match_id     << " (SSAP score: "
-					     << ssap_score   << "; SSAP overlap: "
-					     << ssap_overlap << "; SSAP RMSD: "
-					     << ssap_rmsd    << "; PRC evalue: "
-					     << prc_evalue   << "; CMF: "
-					     << magic_fn     << ")\"\n";
+					if ( node_is_forbidden( match_node, forbidden_nodes ) ) {
+						BOOST_LOG_TRIVIAL( warning ) << "Won't assign " << query_id
+						                             << " (based on "   << match_id
+						                             << ") to "         << match_node
+						                             << " because that's in one of the forbidden nodes";
+					}
+					else {
+						cout << query_id     << " "
+						     << action       << " "
+						     << match_id     << " "
+						     << match_node   << " \"Assigning "
+						     << query_id     << " to "
+						     << match_node   << " based on strong match with "
+						     << match_id     << " (SSAP score: "
+						     << ssap_score   << "; SSAP overlap: "
+						     << ssap_overlap << "; SSAP RMSD: "
+						     << ssap_rmsd    << "; PRC evalue: "
+						     << prc_evalue   << "; SVM: "
+						     << svm_score    << "; CMF: "
+						     << magic_fn     << ")\"\n";
+					}
 				}
 				else {
 					const auto fold_match_ref_opt = best_fold_level_match( the_ssaps, sf_of_dom );
@@ -263,18 +375,30 @@ namespace cath {
 						const double &ssap_overlap = fold_match.get_overlap_pc();
 						const double &ssap_rmsd    = fold_match.get_rmsd();
 
-						cout << query_id     << " "
-						     << action       << " "
-						     << match_id     << " "
-						     << match_node   << " \"Assigning "
-						     << query_id     << " to new superfamily in "
-						     << match_node   << " based on moderate SSAP match with "
-						     << match_id     << " (SSAP score: "
-						     << ssap_score   << "; SSAP overlap: "
-						     << ssap_overlap << "; SSAP RMSD: "
-						     << ssap_rmsd    << ")\"\n";
+						if ( node_is_forbidden( match_node, forbidden_nodes ) ) {
+							BOOST_LOG_TRIVIAL( warning ) << "Won't assign " << query_id
+							                             << " (based on "   << match_id
+							                             << ") to "         << match_node
+							                             << " because that's in one of the forbidden nodes";
+						}
+						else {
+							cout << query_id     << " "
+							     << action       << " "
+							     << match_id     << " "
+							     << match_node   << " \"Assigning "
+							     << query_id     << " to new superfamily in "
+							     << match_node   << " based on moderate SSAP match with "
+							     << match_id     << " (SSAP score: "
+							     << ssap_score   << "; SSAP overlap: "
+							     << ssap_overlap << "; SSAP RMSD: "
+							     << ssap_rmsd    << ")\"\n";
+						}
 
 						sf_of_dom.add_domain_in_new_sf_in_fold_of_domain( query_id, match_id );
+					}
+					else {
+//						// Output Trac-wiki-formatted information on this query domain that can't be confidently assigned to an existing superfamily/fold
+//						cout << string_for_new_fold_strings( ssap_file, prc_file, the_ssaps, the_prcs, sf_of_dom ) << "\n";
 					}
 				}
 			}

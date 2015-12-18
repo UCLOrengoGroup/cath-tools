@@ -479,6 +479,11 @@ set(
 )
 
 set(
+	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_ASSIGN_DOMAINS_OPTIONS
+		options/executable/cath_assign_domains_options/cath_assign_domains_options.cpp
+)
+
+set(
 	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS
 		options/executable/cath_check_pdb_options/cath_check_pdb_options.cpp
 )
@@ -505,6 +510,7 @@ set(
 
 set(
 	NORMSOURCES_OPTIONS_EXECUTABLE
+		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_ASSIGN_DOMAINS_OPTIONS}
 		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS}
 		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_REFINE_ALIGN_OPTIONS}
 		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_SCORE_ALIGN_OPTIONS}
@@ -518,6 +524,7 @@ set(
 	NORMSOURCES_OPTIONS_OPTIONS_BLOCK
 		options/options_block/alignment_input_options_block.cpp
 		options/options_block/alignment_output_options_block.cpp
+		options/options_block/cath_assign_domains_options_block.cpp
 		options/options_block/check_pdb_options_block.cpp
 		options/options_block/data_dirs_options_block.cpp
 		options/options_block/data_option.cpp
@@ -1307,6 +1314,11 @@ set(
 )
 
 set(
+	TESTSOURCES_OPTIONS_EXECUTABLE_CATH_ASSIGN_DOMAINS_OPTIONS
+		options/executable/cath_assign_domains_options/cath_assign_domains_options_test.cpp
+)
+
+set(
 	TESTSOURCES_OPTIONS_EXECUTABLE_CATH_REFINE_ALIGN_OPTIONS
 		options/executable/cath_refine_align_options/cath_refine_align_options_test.cpp
 )
@@ -1328,6 +1340,7 @@ set(
 
 set(
 	TESTSOURCES_OPTIONS_EXECUTABLE
+		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_ASSIGN_DOMAINS_OPTIONS}
 		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_REFINE_ALIGN_OPTIONS}
 		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_SCORE_ALIGN_OPTIONS}
 		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_SSAP_OPTIONS}
