@@ -5,6 +5,7 @@
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/c++14/cbegin_cend.h"
@@ -22,6 +23,7 @@ using namespace cath::homcheck::detail;
 using namespace std;
 
 using boost::algorithm::any_of;
+using boost::algorithm::contains;
 using boost::algorithm::is_space;
 using boost::filesystem::path;
 using boost::token_compress_on;
@@ -41,6 +43,12 @@ const string superfamily_of_domain::NEW_SF_CORE_STRING = ".new_sf_in_fold_of_";
 string cath::homcheck::detail::fold_of_superfamily_id(const string &arg_superfamily_id ///< The superfamily ID from which the fold should be extracted
                                                       ) {
 	return regex_replace( arg_superfamily_id, regex{ R"(\.[^\.]+$)" }, "" );
+}
+
+/// \brief Return whether the specified superfamily is a new superfamily created in this run (rather than a real, original superfamily)
+bool superfamily_of_domain::is_created_sf(const string &arg_superfamily ///< The superfamily to query
+                                          ) {
+	return contains( arg_superfamily, superfamily_of_domain::NEW_SF_CORE_STRING );
 }
 
 /// \brief Ctor from a vector<pair<string, string>> where each pair contains domain ID and the corresponding superfamily ID
@@ -79,6 +87,14 @@ const string & superfamily_of_domain::get_superfamily_of_domain(const string &ar
 		));
 	}
 	return find_itr->second;
+}
+
+/// \brief Return whether the specified domain is in a new superfamily created in this run (rather than a real, original superfamily)
+///
+/// \pre `this->has_superfamily_of_domain( arg_domain_id )`, else and invalid_argument_exception will be thrown
+bool superfamily_of_domain::is_in_created_sf(const string &arg_domain_id ///< The domain ID to query
+                                             ) const {
+	return is_created_sf( get_superfamily_of_domain( arg_domain_id ) );
 }
 
 /// \brief Add a new entry representing a new superfamily for the specified domain in the same fold as the second specified domain

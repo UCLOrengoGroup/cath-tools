@@ -52,6 +52,8 @@ namespace cath {
 			/// New superfamily IDs are built from pre-existing ones and look like: 2.60.40.new_sf_in_fold_of_1cukA01
 			std::unordered_map<std::string, std::string> sf_of_dom;
 
+			static bool is_created_sf(const std::string &);
+
 		public:
 			static const std::string NEW_SF_CORE_STRING;
 
@@ -63,6 +65,7 @@ namespace cath {
 			bool is_in_new_superfamily(const std::string &) const;
 			bool has_superfamily_of_domain(const std::string &) const;
 			const std::string & get_superfamily_of_domain(const std::string &) const;
+			bool is_in_created_sf(const std::string &) const;
 
 			void add_domain_in_new_sf_in_fold_of_domain(const std::string &,
 			                                            const std::string &);
