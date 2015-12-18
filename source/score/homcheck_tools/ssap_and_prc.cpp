@@ -8,6 +8,7 @@
 #include "exception/invalid_argument_exception.h"
 #include "file/prc_scores_file/prc_scores_entry.h"
 #include "file/ssap_scores_file/ssap_scores_entry.h"
+#include "score/score_classification/rbf_model.h"
 
 #include <cmath>
 #include <string>
@@ -18,6 +19,8 @@ using namespace cath::homcheck;
 using namespace std;
 
 using boost::lexical_cast;
+using boost::optional;
+using cath::score::rbf_model;
 
 /// \brief Ctor from a ssap_scores_entry and a prc_scores_entry
 ///
@@ -35,6 +38,12 @@ ssap_and_prc::ssap_and_prc(const ssap_scores_entry &arg_ssap, ///< The SSAP scor
 		) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot construct a ssap_and_prc from a ssap_scores_entry and prc_scores_entry with mismatching names"));
 	}
+}
+
+/// \brief Calculate and store the SVM score using the specified SVM RBF model
+void ssap_and_prc::calculate_svm_score(const rbf_model &arg_svm ///< The SVM RBF model with which to calculate the score
+                                       ) {
+	svm_score = get_score( arg_svm, *this );
 }
 
 /// \brief Getter for the query_id (name_1) shared by the SSAP and PRC results
@@ -64,6 +73,11 @@ const double & ssap_and_prc::get_magic_function_score() const {
 	return magic_function_score;
 }
 
+/// \brief Getter for the possibly-set SVM score
+const optional<double> & ssap_and_prc::get_svm_score_opt() const {
+	return svm_score;
+}
+
 /// \brief Calculate the magic function associated with the specified SSAP and PRC results
 ///        (working on the assumption that their results reflect the same comparison)
 ///
@@ -74,6 +88,27 @@ double cath::homcheck::magic_function(const ssap_scores_entry &arg_ssap, ///< Th
                                       const prc_scores_entry  &arg_prc   ///< The PRC  result with which the magic function should be computed
                                       ) {
 	return arg_ssap.get_ssap_score() - std::log10( arg_prc.get_evalue() );
+}
+
+/// \brief Return whether this ssap_and_prc result has an SVM score set
+///
+/// \relates ssap_and_prc
+bool cath::homcheck::has_svm_score(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc to query
+                                   ) {
+	return static_cast<bool>( arg_ssap_and_prc.get_svm_score_opt() );
+}
+
+/// \brief Return the SVM score set in the specified ssap_and_prc
+///
+/// \pre `has_svm_score( arg_ssap_and_prc )` else an invalid_argument_exception is thrown
+///
+/// \relates ssap_and_prc
+const double & cath::homcheck::get_svm_score(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc to query
+                                             ) {
+	if ( ! has_svm_score( arg_ssap_and_prc ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot retrieve a ssap_and_prc result's SVM score if it hasn't been set"));
+	}
+	return *arg_ssap_and_prc.get_svm_score_opt();
 }
 
 /// \brief Getter for the SSAP length_1 of the specified ssap_and_prc object
@@ -227,6 +262,7 @@ string cath::homcheck::to_string(const ssap_and_prc &arg_ssap_and_prc ///< The s
 		+ std::to_string( get_ssap_score( arg_ssap_and_prc ) )
 		+ "; prc_evalue:"
 		+ evalue_ss.str()
+		+ ( has_svm_score( arg_ssap_and_prc ) ? ( "; SVM:" + ::std::to_string( get_svm_score( arg_ssap_and_prc ) ) ) : "" )
 		+ "; magic_function:"
 		+ std::to_string( arg_ssap_and_prc.get_magic_function_score() )
 		+ "]";

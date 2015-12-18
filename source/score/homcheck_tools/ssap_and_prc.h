@@ -4,11 +4,14 @@
 #ifndef SSAP_AND_PRC_H_INCLUDED
 #define SSAP_AND_PRC_H_INCLUDED
 
+#include <boost/optional.hpp>
+
 #include "file/prc_scores_file/prc_scores_entry.h"
 #include "file/ssap_scores_file/ssap_scores_entry.h"
 
 namespace cath { namespace file { class prc_scores_entry; } }
 namespace cath { namespace file { class ssap_scores_entry; } }
+namespace cath { namespace score { class rbf_model; } }
 
 namespace cath {
 	namespace homcheck {
@@ -27,9 +30,14 @@ namespace cath {
 			/// This gets populated by the ctor
 			double magic_function_score;
 
+			/// \brief The SVM score for this SSAP and PRC pair which may or may not get populated
+			boost::optional<double> svm_score;
+
 		public:
 			ssap_and_prc(const file::ssap_scores_entry &,
 			             const file::prc_scores_entry &);
+
+			void calculate_svm_score(const score::rbf_model &);
 
 			const std::string & get_query_id() const;
 			const std::string & get_match_id() const;
@@ -37,10 +45,15 @@ namespace cath {
 			const file::ssap_scores_entry & get_ssap() const;
 			const file::prc_scores_entry & get_prc() const;
 			const double & get_magic_function_score() const;
+
+			const boost::optional<double> & get_svm_score_opt() const;
 		};
 
 		double magic_function(const file::ssap_scores_entry &,
 		                      const file::prc_scores_entry &);
+
+		bool has_svm_score(const ssap_and_prc &);
+		const double & get_svm_score(const ssap_and_prc &);
 
 		const size_t & get_ssap_length_1(const ssap_and_prc &);
 		const size_t & get_ssap_length_2(const ssap_and_prc &);

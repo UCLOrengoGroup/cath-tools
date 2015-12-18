@@ -26,6 +26,7 @@ namespace cath { namespace file { using prc_scores_entry_vec = std::vector<prc_s
 namespace cath { namespace file { using ssap_scores_entry_vec = std::vector<ssap_scores_entry>; } }
 namespace cath { namespace homcheck { class ssap_and_prc; } }
 namespace cath { namespace homcheck { class superfamily_of_domain; } }
+namespace cath { namespace score { class rbf_model; } }
 
 using namespace cath::common::literals;
 
@@ -48,6 +49,8 @@ namespace cath {
 			ssaps_and_prcs_of_query() = default;
 			ssaps_and_prcs_of_query(const ssap_and_prc_vec &);
 
+			void calculate_all_svm_scores(const score::rbf_model &);
+
 			bool empty() const;
 			size_t size() const;
 
@@ -57,7 +60,13 @@ namespace cath {
 			const_iterator end() const;
 		};
 
+		ssaps_and_prcs_of_query calculate_all_svm_scores_copy(ssaps_and_prcs_of_query,
+		                                                      const score::rbf_model &);
+
 		const std::string & get_query_id(const ssaps_and_prcs_of_query &);
+
+		ssap_and_prc_cref_opt best_svm_assignable(const ssaps_and_prcs_of_query &,
+		                                          const superfamily_of_domain &);
 
 		ssap_and_prc_cref_opt best_magic_function_assignable(const ssaps_and_prcs_of_query &,
 		                                                     const superfamily_of_domain &);

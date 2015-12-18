@@ -1,10 +1,12 @@
 /// \file
 /// \brief The ssaps_and_prcs_of_query class definitions
 
+
 #include "ssaps_and_prcs_of_query.h"
 
 #include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/log/trivial.hpp>
+#include <boost/range/algorithm/for_each.hpp>
 #include <boost/range/algorithm/max_element.hpp>
 #include <boost/range/irange.hpp>
 
@@ -20,6 +22,7 @@
 #include "score/homcheck_tools/first_result_if.h"
 #include "score/homcheck_tools/ssap_and_prc.h"
 #include "score/homcheck_tools/superfamily_of_domain.h"
+#include "score/score_classification/rbf_model.h"
 
 #include <string>
 #include <unordered_map>
@@ -27,6 +30,7 @@
 using namespace cath::common;
 using namespace cath::homcheck;
 using namespace cath::file;
+using namespace cath::score;
 using namespace std;
 
 using boost::algorithm::all_of;
@@ -34,6 +38,7 @@ using boost::irange;
 using boost::make_optional;
 using boost::none;
 using boost::optional;
+using boost::range::for_each;
 using boost::range::max_element;
 
 /// \brief Check that the class invariants hold
@@ -64,6 +69,15 @@ ssaps_and_prcs_of_query::ssaps_and_prcs_of_query(const ssap_and_prc_vec &arg_ssa
 	sanity_check();
 }
 
+/// \brief Calculate the SVM scores for all the results using the specified SVM RBF model
+void ssaps_and_prcs_of_query::calculate_all_svm_scores(const rbf_model &arg_svm /// \brief The SVM RBF model with which to calculate the scores
+                                                       ) {
+	for_each(
+		ssap_and_prc_entries,
+		[&] (ssap_and_prc &x) { x.calculate_svm_score( arg_svm ); }
+	);
+}
+
 /// \brief Get the whether this ssaps_and_prcs_of_query is empty (ie has no ssap_and_prc objects)
 bool ssaps_and_prcs_of_query::empty() const {
 	return ssap_and_prc_entries.empty();
@@ -90,6 +104,14 @@ auto ssaps_and_prcs_of_query::end() const -> const_iterator{
 	return common::cend( ssap_and_prc_entries );
 }
 
+/// \brief Calculate the SVM scores for all the results in a copy of the specified ssaps_and_prcs_of_query and return that copy
+ssaps_and_prcs_of_query cath::homcheck::calculate_all_svm_scores_copy(ssaps_and_prcs_of_query  arg_ssaps_and_prcs, ///< The ssaps_and_prcs_of_query from which a copy should be taken, updated and returned
+                                                                      const rbf_model         &arg_svm             ///< The SVM RBF model with which to calculate the scores
+                                                                      ) {
+	arg_ssaps_and_prcs.calculate_all_svm_scores( arg_svm );
+	return arg_ssaps_and_prcs;
+}
+
 /// \brief Get the query ID from the specified SSAP and PRC results
 ///
 /// \relates ssaps_and_prcs_of_query
@@ -99,6 +121,28 @@ const string & cath::homcheck::get_query_id(const ssaps_and_prcs_of_query &arg_s
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Can't get query of empty ssaps_and_prcs_of_query object"));
 	}
 	return front( arg_ssaps_and_prcs ).get_query_id();
+}
+
+/// \brief Return the best by SVM hit to a domain in CATH of the specified results
+///
+/// \relates ssaps_and_prcs_of_query
+ssap_and_prc_cref_opt cath::homcheck::best_svm_assignable(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs,       ///< The SSAP and PRC results for the query domain
+                                                          const superfamily_of_domain   &arg_superfamily_of_domain ///< The superfamily_of_domain for finding which matches are assigned
+                                                          ) {
+	return first_result_if(
+		arg_ssaps_and_prcs,
+		[&] (const ssap_and_prc &x, const ssap_and_prc &y) {
+			// Reverse inequality to put the highest magic_function values to the start
+			return get_svm_score( x ) > get_svm_score( y );
+		},
+		[&] (const ssap_and_prc &x) {
+			return (
+				get_svm_score( x ) >= 3.47554072714
+				&&
+				arg_superfamily_of_domain.has_superfamily_of_domain( x.get_match_id() )
+			);
+		}
+	);
 }
 
 /// \brief Return the best by magic-function hit to a domain in CATH of the specified results
