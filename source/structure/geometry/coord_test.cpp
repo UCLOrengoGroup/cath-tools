@@ -33,7 +33,7 @@ using namespace std;
 namespace cath {
 	namespace test {
 
-		struct coord_test_suite_fixture : public global_test_constants {
+		struct coord_test_suite_fixture : protected global_test_constants {
 		protected:
 			~coord_test_suite_fixture() noexcept = default;
 

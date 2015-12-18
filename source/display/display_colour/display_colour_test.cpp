@@ -39,7 +39,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief The display_colour_test_suite_fixture to assist in testing display_colour_test
-		struct display_colour_test_suite_fixture : public global_test_constants {
+		struct display_colour_test_suite_fixture : protected global_test_constants {
 		private:
 			doub_vec get_invalid_component_values() const {
 				// The standard invalid doubles

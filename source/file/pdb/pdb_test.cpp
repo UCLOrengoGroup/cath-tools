@@ -45,7 +45,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief The pdb_test_suite_fixture to assist in testing pdb
-		struct pdb_test_suite_fixture : public global_test_constants {
+		struct pdb_test_suite_fixture : protected global_test_constants {
 		protected:
 			~pdb_test_suite_fixture() noexcept = default;
 

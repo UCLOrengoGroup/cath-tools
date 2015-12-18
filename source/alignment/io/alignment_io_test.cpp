@@ -60,7 +60,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief The alignment_io_test_suite_fixture to assist in testing alignment_io
-		struct alignment_io_test_suite_fixture : public global_test_constants {
+		struct alignment_io_test_suite_fixture : protected global_test_constants {
 		protected:
 			~alignment_io_test_suite_fixture() noexcept = default;
 

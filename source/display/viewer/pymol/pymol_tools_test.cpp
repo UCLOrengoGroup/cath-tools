@@ -31,7 +31,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief The pymol_tools_test_suite_fixture to assist in testing pymol_tools
-		struct pymol_tools_test_suite_fixture : public global_test_constants {
+		struct pymol_tools_test_suite_fixture : protected global_test_constants {
 		protected:
 			~pymol_tools_test_suite_fixture() noexcept = default;
 

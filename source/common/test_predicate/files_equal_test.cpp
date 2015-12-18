@@ -34,7 +34,7 @@ namespace cath {
 		//       and make it also test istream_and_file_equal
 
 		/// \brief The files_equal_test_suite_fixture to assist in testing files_equal
-		struct files_equal_test_suite_fixture : public global_test_constants {
+		struct files_equal_test_suite_fixture : protected global_test_constants {
 		protected:
 			~files_equal_test_suite_fixture() noexcept = default;
 

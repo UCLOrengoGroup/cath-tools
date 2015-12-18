@@ -46,7 +46,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief The common_residue_selection_policy_test_suite_fixture to assist in testing common_residue_selection_policy
-		struct common_residue_selection_policy_test_suite_fixture : public global_test_constants {
+		struct common_residue_selection_policy_test_suite_fixture : protected global_test_constants {
 		protected:
 			~common_residue_selection_policy_test_suite_fixture() noexcept = default;
 

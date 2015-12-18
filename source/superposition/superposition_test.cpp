@@ -44,7 +44,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief The superposition_test_suite_fixture to assist in testing superposition
-		struct superposition_test_suite_fixture : public global_test_constants {
+		struct superposition_test_suite_fixture : protected global_test_constants {
 		protected:
 			~superposition_test_suite_fixture() noexcept = default;
 

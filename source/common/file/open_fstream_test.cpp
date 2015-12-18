@@ -36,7 +36,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief The open_fstream_test_suite_fixture to assist in testing open_fstream
-		struct open_fstream_test_suite_fixture : public global_test_constants {
+		struct open_fstream_test_suite_fixture : protected global_test_constants {
 		protected:
 			~open_fstream_test_suite_fixture() noexcept = default;
 

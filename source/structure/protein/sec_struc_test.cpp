@@ -41,7 +41,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief The sec_struc_test_suite_fixture to assist in testing sec_struc
-		struct sec_struc_test_suite_fixture : public global_test_constants {
+		struct sec_struc_test_suite_fixture : protected global_test_constants {
 		protected:
 			~sec_struc_test_suite_fixture() noexcept = default;
 		};

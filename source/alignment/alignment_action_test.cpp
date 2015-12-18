@@ -42,7 +42,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief The alignment_action_test_suite_fixture to assist in testing alignment_action
-		struct alignment_action_test_suite_fixture : public global_test_constants {
+		struct alignment_action_test_suite_fixture : protected global_test_constants {
 		private:
 			ostringstream test_stderr;
 

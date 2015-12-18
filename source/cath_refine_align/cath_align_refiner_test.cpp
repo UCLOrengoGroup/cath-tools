@@ -40,7 +40,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief The cath_align_refiner_test_suite_fixture to assist in testing cath_align_refiner
-		struct cath_align_refiner_test_suite_fixture : public global_test_constants {
+		struct cath_align_refiner_test_suite_fixture : protected global_test_constants {
 		protected:
 			~cath_align_refiner_test_suite_fixture() noexcept = default;
 
