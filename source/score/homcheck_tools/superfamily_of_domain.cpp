@@ -29,6 +29,9 @@ using boost::token_compress_on;
 /// \brief The regular expression used to determine whether a string is a valid CATH superfamily ID
 const regex is_valid_superfamily_id::SUPERFAMILY_ID_REGEX{ R"(^\d+\.\d+\.\d+\.\d+$)" };
 
+/// \brief The regular expression used to determine whether a string is a valid CATH superfamily ID
+const regex is_valid_cath_node_id::NODE_ID_REGEX{ R"(^\d+(\.\d+){0,3}$)" };
+
 /// \brief The string to use in between the fold of a new superfamily and the ID of the domain for which it's being created
 const string superfamily_of_domain::NEW_SF_CORE_STRING = ".new_sf_in_fold_of_";
 

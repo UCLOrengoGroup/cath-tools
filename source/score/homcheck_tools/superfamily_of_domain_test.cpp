@@ -10,6 +10,7 @@
 
 using namespace cath::common;
 using namespace cath::homcheck;
+using namespace cath::homcheck::detail;
 using namespace std;
 
 namespace cath {
@@ -52,6 +53,21 @@ namespace cath {
 
 BOOST_FIXTURE_TEST_SUITE(superfamily_of_domain_test_suite, cath::test::superfamily_of_domain_test_suite_fixture)
 
+BOOST_AUTO_TEST_CASE(is_valid_cath_node_id_works) {
+	BOOST_CHECK_EQUAL( is_valid_cath_node_id{}( "1"           ), true );
+	BOOST_CHECK_EQUAL( is_valid_cath_node_id{}( "1.10"        ), true );
+	BOOST_CHECK_EQUAL( is_valid_cath_node_id{}( "1.10.8"      ), true );
+	BOOST_CHECK_EQUAL( is_valid_cath_node_id{}( "1.10.8.10"   ), true );
+
+	// Currently rejects S, O, L, I or D
+	BOOST_CHECK_EQUAL( is_valid_cath_node_id{}( "1.10.8.10.1" ), false );
+
+	BOOST_CHECK_EQUAL( is_valid_cath_node_id{}( "1.1a0.8"     ), false );
+
+	BOOST_CHECK_EQUAL( is_valid_cath_node_id{}( "1a"          ), false );
+	BOOST_CHECK_EQUAL( is_valid_cath_node_id{}( "a1"          ), false );
+	BOOST_CHECK_EQUAL( is_valid_cath_node_id{}( "a"           ), false );
+}
 
 // this should probably be split up a bit
 BOOST_AUTO_TEST_CASE(parses_correctly) {
