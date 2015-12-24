@@ -83,10 +83,10 @@ void cath_assign_domains_options_block::do_add_visible_options_to_description(po
                                                                     ) {
 	const string default_forbidden_nodes_str = join( DEFAULT_FORBIDDEN_NODES, ", " );
 	arg_desc.add_options()
-		( PO_SVMLIGHT_RBF_FILE.c_str(), po::value<path   >( &rbf_svm_file    ),                                                                        "rbf svm file )," )
-		( PO_FILELIST_FILE.c_str(),     po::value<path   >( &data_data_file  ),                                                                        "data data file " )
-		( PO_SF_OF_DOMAIN_FILE.c_str(), po::value<path   >( &sf_of_dom_file  ),                                                                        "sf of dom file " )
-		( PO_FORBIDDEN_NODES.c_str(),   po::value<str_vec>( &forbidden_nodes )->default_value( DEFAULT_FORBIDDEN_NODES, default_forbidden_nodes_str ), "forbidden nodes" )
+		( PO_SVMLIGHT_RBF_FILE.c_str(), po::value<path   >( &rbf_svm_file    ),                                                                        "File containing SVM-light RBF model for CATH assignment" )
+		( PO_FILELIST_FILE.c_str(),     po::value<path   >( &data_data_file  ),                                                                        "File of data files (one line per query domain containing: ssap_results_file prc_results_file)" )
+		( PO_SF_OF_DOMAIN_FILE.c_str(), po::value<path   >( &sf_of_dom_file  ),                                                                        "File containing up-to-date assignments (one line per domain containing: domain_id superfamily_id)" )
+		( PO_FORBIDDEN_NODES.c_str(),   po::value<str_vec>( &forbidden_nodes )->default_value( DEFAULT_FORBIDDEN_NODES, default_forbidden_nodes_str ), "List of nodes to which automatic assignment is forbidden; specify option multiple times for multiple nodes\nRECOMMENDED: do not specify this option so that the default list of propeller architectures is used." )
 		;
 }
 
