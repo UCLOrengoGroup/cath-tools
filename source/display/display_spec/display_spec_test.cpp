@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_SUITE(display_spec_test_suite, cath::test::display_spec_fixtu
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
 	const display_spec a_display_spec{};
-	BOOST_CHECK_NO_THROW_DIAG( a_display_spec.get_display_colourer() );
+	BOOST_CHECK_NO_THROW_DIAG( get_display_colourer( a_display_spec ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

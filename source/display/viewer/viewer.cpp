@@ -197,7 +197,7 @@ void cath::output_superposition_to_viewer(ostream                     &arg_ostre
 	);
 
 	// Apply the colour
-	const unique_ptr<const display_colourer> display_colourer_ptr = arg_display_spec.get_display_colourer();
+	const unique_ptr<const display_colourer> display_colourer_ptr = get_display_colourer( arg_display_spec );
 
 //	colour_alignment(
 //		*display_colourer_ptr,

@@ -30,18 +30,13 @@
 
 namespace cath { class display_colour_list; }
 namespace cath { class display_colourer; }
-namespace cath { namespace opts { class display_options_block; } }
 namespace display_spec_test_suite { struct basic; }
 
 namespace cath {
 
 	/// \brief TODOCUMENT
-	///
-	/// This makes display_options_block into a friend and is a specification that
-	/// gives display_options_block special access to configure it.
 	class display_spec final {
 	private:
-		friend class opts::display_options_block;
 		friend struct display_spec_test_suite::basic;
 
 		static const std::string COLOURS_UNSPECIFIED;
@@ -61,19 +56,16 @@ namespace cath {
 		/// \brief TODOCUMENT
 		bool normalise_scores = false;
 
+	public:
 		display_spec() = default;
-
-		const std::string & get_display_colours_string_ref() const;
-		std::string & get_display_colours_string_ref();
-		bool & get_gradient_colour_alignment_ref();
-		bool & get_show_scores_if_present_ref();
-		bool & get_scores_to_equivs_ref();
-		bool & get_normalise_scores_ref();
+		display_spec(const std::string &,
+		             const bool &,
+		             const bool &,
+		             const bool &,
+		             const bool &);
 
 		bool has_display_colours_string() const;
 		const std::string & get_display_colours_string_or_default() const;
-
-		opt_str invalid_string() const;
 
 		display_colour_list get_colour_list() const;
 		bool get_gradient_colour_alignment() const;
@@ -81,15 +73,17 @@ namespace cath {
 		bool get_scores_to_equivs() const;
 		bool get_normalise_scores() const;
 
-	public:
-		display_spec(const std::string &,
-		             const bool &,
-		             const bool &,
-		             const bool &,
-		             const bool &);
-
-		std::unique_ptr<const display_colourer> get_display_colourer(const display_colour_gradient &arg_colour_gradient = make_default_colour_gradient() ) const;
+		void set_display_colours_string(const std::string &);
+		void set_gradient_colour_alignment(const bool &);
+		void set_show_scores_if_present(const bool &);
+		void set_scores_to_equivs(const bool &);
+		void set_normalise_scores(const bool &);
 	};
+
+	std::unique_ptr<const display_colourer> get_display_colourer(const display_spec &,
+	                                                             const display_colour_gradient &arg_colour_gradient = make_default_colour_gradient() );
+
+	opt_str invalid_string(const display_spec &);
 
 }
 #endif

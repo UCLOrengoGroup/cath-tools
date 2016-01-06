@@ -71,5 +71,5 @@ html_ostream_alignment_outputter::html_ostream_alignment_outputter(const display
 /// \brief TODOCUMENT
 html_ostream_alignment_outputter cath::opts::make_html_ostream_alignment_outputter(const display_spec &arg_display_spec ///< TODOCUMENT
                                                                                    ) {
-	return html_ostream_alignment_outputter( *arg_display_spec.get_display_colourer( make_default_light_colour_gradient() ) );
+	return html_ostream_alignment_outputter( *get_display_colourer( arg_display_spec, make_default_light_colour_gradient() ) );
 }

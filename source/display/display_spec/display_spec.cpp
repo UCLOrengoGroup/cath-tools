@@ -46,60 +46,28 @@ using boost::none;
 /// unspecified can easily be distinguished from specified as empty.
 const string display_spec::COLOURS_UNSPECIFIED = "this string is used internally to indicate the colours haven't been specified";
 
-/// \brief Private, const-reference getter of display_colours_string (as part of the interface to friend display_options_block)
-const string & display_spec::get_display_colours_string_ref() const {
-	return display_colours_string;
-}
-
-/// \brief Private, non-const-reference getter of display_colours_string (as part of the interface to friend display_options_block)
-string & display_spec::get_display_colours_string_ref() {
-	return display_colours_string;
-}
-
-/// \brief TODOCUMENT
-bool & display_spec::get_gradient_colour_alignment_ref() {
-	return gradient_colour_alignment;
-}
-
-/// \brief TODOCUMENT
-bool & display_spec::get_show_scores_if_present_ref() {
-	return show_scores_if_present;
-}
-
-/// \brief TODOCUMENT
-bool & display_spec::get_scores_to_equivs_ref() {
-	return scores_to_equivs;
-}
-
-/// \brief TODOCUMENT
-bool & display_spec::get_normalise_scores_ref() {
-	return normalise_scores;
+/// \brief Ctor for display_spec
+display_spec::display_spec(const string &arg_display_colours_string,    ///< TODOCUMENT
+                           const bool   &arg_gradient_colour_alignment, ///< TODOCUMENT
+                           const bool   &arg_show_scores_if_present,    ///< TODOCUMENT
+                           const bool   &arg_scores_to_equivs,          ///< TODOCUMENT
+                           const bool   &arg_normalise_scores           ///< TODOCUMENT
+                           ) : display_colours_string    ( arg_display_colours_string    ),
+                               gradient_colour_alignment ( arg_gradient_colour_alignment ),
+                               show_scores_if_present    ( arg_show_scores_if_present    ),
+                               scores_to_equivs          ( arg_scores_to_equivs          ),
+                               normalise_scores          ( arg_normalise_scores          ) {
 }
 
 /// \brief Private getter of whether a display_colours_string has been set
 bool display_spec::has_display_colours_string() const {
-	return get_display_colours_string_ref() != COLOURS_UNSPECIFIED;
+	return display_colours_string != COLOURS_UNSPECIFIED;
 }
 
 /// \brief Private getter of display_colours_string or default value if none has been specified
 const string & display_spec::get_display_colours_string_or_default() const {
-	return has_display_colours_string() ? get_display_colours_string_ref()
+	return has_display_colours_string() ? display_colours_string
 	                                    : display_colour_list::DEFAULT_COLOURS_STRING;
-}
-
-/// \brief String describing any problems, or "" if none (as part of the interface to friend display_options_block)
-opt_str display_spec::invalid_string() const {
-	try {
-		get_colour_list();
-	}
-	catch (const boost::exception &e) {
-		return "Colour list could not be parsed from \"" + get_display_colours_string_or_default()
-			+ "\". Specific error was: "                 + diagnostic_information(e);
-	}
-	catch (...) {
-		return "Colour list could not be parsed from \"" + get_display_colours_string_or_default() + "\"";
-	}
-	return none;
 }
 
 /// \brief TODOCUMENT
@@ -129,28 +97,66 @@ bool display_spec::get_normalise_scores() const {
 	return normalise_scores;
 }
 
-/// \brief Ctor for display_spec
-display_spec::display_spec(const string &arg_display_colours_string,    ///< TODOCUMENT
-                           const bool   &arg_gradient_colour_alignment, ///< TODOCUMENT
-                           const bool   &arg_show_scores_if_present,    ///< TODOCUMENT
-                           const bool   &arg_scores_to_equivs,          ///< TODOCUMENT
-                           const bool   &arg_normalise_scores           ///< TODOCUMENT
-                           ) : display_colours_string    ( arg_display_colours_string           ),
-                               gradient_colour_alignment ( arg_gradient_colour_alignment        ),
-                               show_scores_if_present    ( arg_show_scores_if_present           ),
-                               scores_to_equivs          ( arg_scores_to_equivs                 ),
-                               normalise_scores          ( arg_normalise_scores                 ) {
+/// \brief TODOCUMENT
+void display_spec::set_display_colours_string(const string &arg_display_colours_string ///< TODOCUMENT
+                                              ) {
+	display_colours_string = arg_display_colours_string;
 }
 
 /// \brief TODOCUMENT
-unique_ptr<const display_colourer> display_spec::get_display_colourer(const display_colour_gradient &arg_colour_gradient ///< TODOCUMENT
-                                                                      ) const {
-	const score_colour_handler colour_handler( show_scores_if_present, scores_to_equivs, normalise_scores );
-	if ( get_gradient_colour_alignment() ) {
-		return { common::make_unique< display_colourer_alignment   >( colour_handler, arg_colour_gradient ) };
+void display_spec::set_gradient_colour_alignment(const bool &arg_gradient_colour_alignment ///< TODOCUMENT
+                                                 ) {
+	gradient_colour_alignment = arg_gradient_colour_alignment;
+}
+
+/// \brief TODOCUMENT
+void display_spec::set_show_scores_if_present(const bool &arg_show_scores_if_present ///< TODOCUMENT
+                                              ) {
+	show_scores_if_present = arg_show_scores_if_present;
+}
+
+/// \brief TODOCUMENT
+void display_spec::set_scores_to_equivs(const bool &arg_scores_to_equivs ///< TODOCUMENT
+                                        ) {
+	scores_to_equivs = arg_scores_to_equivs;
+}
+
+/// \brief TODOCUMENT
+void display_spec::set_normalise_scores(const bool &arg_normalise_scores ///< TODOCUMENT
+                                        ) {
+	normalise_scores = arg_normalise_scores;
+}
+
+/// \brief TODOCUMENT
+unique_ptr<const display_colourer> cath::get_display_colourer(const display_spec            &arg_display_spec,   ///< TODOCUMENT
+                                                              const display_colour_gradient &arg_colour_gradient ///< TODOCUMENT
+                                                              ) {
+	const score_colour_handler colour_handler{
+		arg_display_spec.get_show_scores_if_present(),
+		arg_display_spec.get_scores_to_equivs(),
+		arg_display_spec.get_normalise_scores()
+	};
+	if ( arg_display_spec.get_gradient_colour_alignment() ) {
+		return { common::make_unique< display_colourer_alignment   >( colour_handler, arg_colour_gradient                ) };
 	}
 	else {
-		return { common::make_unique< display_colourer_consecutive >( colour_handler, get_colour_list()   ) };
+		return { common::make_unique< display_colourer_consecutive >( colour_handler, arg_display_spec.get_colour_list() ) };
 	}
 }
 
+
+/// \brief String describing any problems, or "" if none (as part of the interface to friend display_options_block)
+opt_str cath::invalid_string(const display_spec &arg_display_spec ///< TODOCUMENT
+                             ) {
+	try {
+		arg_display_spec.get_colour_list();
+	}
+	catch (const boost::exception &e) {
+		return "Colour list could not be parsed from \"" + arg_display_spec.get_display_colours_string_or_default()
+			+ "\". Specific error was: "                 + diagnostic_information(e);
+	}
+	catch (...) {
+		return "Colour list could not be parsed from \"" + arg_display_spec.get_display_colours_string_or_default() + "\"";
+	}
+	return none;
+}

@@ -37,9 +37,6 @@ namespace cath {
 		///
 		/// Unlike some other options_blocks, this one has been split so that the responsibility
 		/// for holding/validating the options is passed to display_spec.
-		///
-		/// This class is a friend of display_spec so that it can use its non-const reference
-		/// getters to initialise the members of the class.
 		class display_options_block final : public cath::opts::options_block {
 		private:
 			static const std::string PO_VIEWER_COLOURS;

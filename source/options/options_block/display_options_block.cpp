@@ -58,23 +58,22 @@ string display_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 void display_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
                                                                  ) {
-	string &display_colours_string = get_display_spec_ref().get_display_colours_string_ref();
-	bool   &colour_alignment       = get_display_spec_ref().get_gradient_colour_alignment_ref();
-	bool   &show_scores_if_present = get_display_spec_ref().get_show_scores_if_present_ref();
-	bool   &scores_to_equivs       = get_display_spec_ref().get_scores_to_equivs_ref();
-	bool   &normalise_scores       = get_display_spec_ref().get_normalise_scores_ref();
-
+	const auto display_colours_string_notifier    = [&] (const string &x) { the_display_spec.set_display_colours_string   ( x ); };
+	const auto gradient_colour_alignment_notifier = [&] (const bool   &x) { the_display_spec.set_gradient_colour_alignment( x ); };
+	const auto show_scores_if_present_notifier    = [&] (const bool   &x) { the_display_spec.set_show_scores_if_present   ( x ); };
+	const auto scores_to_equivs_notifier          = [&] (const bool   &x) { the_display_spec.set_scores_to_equivs         ( x ); };
+	const auto normalise_scores_notifier          = [&] (const bool   &x) { the_display_spec.set_normalise_scores         ( x ); };
 	arg_desc.add_options()
-		( PO_VIEWER_COLOURS.c_str(),            value<string>( &display_colours_string ),                       "Use arg to colour successive entries in the viewer\n(format: colon-separated list of comma-separated triples of RGB values between 0 and 1)\n(will wrap-around when it runs out of colours)" )
-		( PO_GRADIENT_COLOUR_ALIGNMENT.c_str(), bool_switch( &colour_alignment       )->default_value( false ), "Colour the length of the alignment with a rainbow gradient (blue -> red)" )
-		( PO_SHOW_SCORES_IF_PRESENT.c_str(),    bool_switch( &show_scores_if_present )->default_value( false ), ( "Show the alignment scores\n(use with " + PO_GRADIENT_COLOUR_ALIGNMENT + ")" ).c_str() )
-		( PO_SCORES_TO_EQUIVS.c_str(),          bool_switch( &scores_to_equivs       )->default_value( false ), ( "Show the alignment scores to equivalent positions, which increases relative scores where few entries are aligned\n(use with --" + PO_GRADIENT_COLOUR_ALIGNMENT + " and --" + PO_SHOW_SCORES_IF_PRESENT + ")" ).c_str() )
-		( PO_NORMALISE_SCORES.c_str(),          bool_switch( &normalise_scores       )->default_value( false ), ( "When showing scores, normalise them to the highest score in the alignment\n(use with --" + PO_GRADIENT_COLOUR_ALIGNMENT + " and --" + PO_SHOW_SCORES_IF_PRESENT + ")" ).c_str() );
+		( PO_VIEWER_COLOURS.c_str(),            value<string>()->notifier( display_colours_string_notifier    ),                         "Use arg to colour successive entries in the viewer\n(format: colon-separated list of comma-separated triples of RGB values between 0 and 1)\n(will wrap-around when it runs out of colours)" )
+		( PO_GRADIENT_COLOUR_ALIGNMENT.c_str(), bool_switch  ()->notifier( gradient_colour_alignment_notifier )->default_value( false ), "Colour the length of the alignment with a rainbow gradient (blue -> red)" )
+		( PO_SHOW_SCORES_IF_PRESENT.c_str(),    bool_switch  ()->notifier( show_scores_if_present_notifier    )->default_value( false ), ( "Show the alignment scores\n(use with " + PO_GRADIENT_COLOUR_ALIGNMENT + ")" ).c_str() )
+		( PO_SCORES_TO_EQUIVS.c_str(),          bool_switch  ()->notifier( scores_to_equivs_notifier          )->default_value( false ), ( "Show the alignment scores to equivalent positions, which increases relative scores where few entries are aligned\n(use with --" + PO_GRADIENT_COLOUR_ALIGNMENT + " and --" + PO_SHOW_SCORES_IF_PRESENT + ")" ).c_str() )
+		( PO_NORMALISE_SCORES.c_str(),          bool_switch  ()->notifier( normalise_scores_notifier          )->default_value( false ), ( "When showing scores, normalise them to the highest score in the alignment\n(use with --" + PO_GRADIENT_COLOUR_ALIGNMENT + " and --" + PO_SHOW_SCORES_IF_PRESENT + ")" ).c_str() );
 }
 
 /// \brief TODOCUMENT
 opt_str display_options_block::do_invalid_string() const {
-	return get_display_spec_ref().invalid_string();
+	return ::cath::invalid_string( get_display_spec_ref() );
 }
 
 /// \brief Private, non-const-reference getter for the_display_spec
