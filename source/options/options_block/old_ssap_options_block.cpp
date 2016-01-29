@@ -66,7 +66,7 @@ const string old_ssap_options_block::PO_SLOW_SSAP_ONLY       = { "slow-ssap-only
 
 const string old_ssap_options_block::PO_LOC_SSAP_SCORE       = { "local-ssap-score"        }; ///< The option name for the use_local_ssap_score option
 const string old_ssap_options_block::PO_ALL_SCORES           = { "all-scores"              }; ///< The option name for the write_all_scores option
-const string old_ssap_options_block::PO_PROTEIN_SOURCE_FILES = { "protein_source_files"    }; ///< The option name for the protein_source_files option
+const string old_ssap_options_block::PO_PROTEIN_SOURCE_FILES = { "prot-src-files"          }; ///< The option name for the protein_source_files option
 
 const string old_ssap_options_block::PO_SUPN_DIR             = { "supdir"                  }; ///< The option name for the superposition_dir option
 const string old_ssap_options_block::PO_ALIGN_DIR            = { "aligndir"                }; ///< The option name for the alignment_dir option
@@ -96,26 +96,26 @@ void old_ssap_options_block::do_add_visible_options_to_description(options_descr
                                                                    ) {
 	const string protein_file_combns_str = join( get_all_protein_file_combn_strings(), ", " );
 	arg_desc.add_options()
-		( PO_DEBUG.c_str(),                bool_switch              ( &debug                       )->default_value(DEF_BOOL      ),   "Output debugging information"                                                                                          )
-		((PO_OUT_FILE+",o").c_str(),       value<path>              ( &output_filename             ),                                  "[DEPRECATED] Output scores to file arg rather than to stdout"                                                          )
+		( PO_DEBUG.c_str(),                bool_switch              ( &debug                                       )->default_value(DEF_BOOL      ),   "Output debugging information"                                                                                          )
+		((PO_OUT_FILE+",o").c_str(),       value<path>              ( &output_filename                             ),                                  "[DEPRECATED] Output scores to file arg rather than to stdout"                                                          )
 
-		( PO_CLIQUE_FILE.c_str(),          value<path>              ( &clique_file                 ),                                  "Read clique from file arg"                                                                                             )
-		( PO_DOMIN_FILE.c_str(),           value<path>              ( &domin_file                  ),                                  "Read domin from file arg"                                                                                              )
+		( PO_CLIQUE_FILE.c_str(),          value<path>              ( &clique_file                                 ),                                  "Read clique from file arg"                                                                                             )
+		( PO_DOMIN_FILE.c_str(),           value<path>              ( &domin_file                                  ),                                  "Read domin from file arg"                                                                                              )
 
-		( PO_MAX_SCORE_TO_REFAST.c_str(),  value<double>            ( &max_score_to_fast_ssap_rerun)->default_value(DEF_REFAST    ),   "Run a second fast SSAP with looser cutoffs if the first fast SSAP's score falls below arg"                             )
-		( PO_MAX_SCORE_TO_RESLOW.c_str(),  value<double>            ( &max_score_to_slow_ssap_rerun)->default_value(DEF_RESLOW    ),   "Perform a slow SSAP if the (best) fast SSAP score falls below arg"                                                     )
-		( PO_SLOW_SSAP_ONLY.c_str(),       bool_switch              ( &slow_ssap_only              )->default_value(DEF_BOOL      ),   "Don't try any fast SSAPs; only use slow SSAP"                                                                          )
+		( PO_MAX_SCORE_TO_REFAST.c_str(),  value<double>            ( &max_score_to_fast_ssap_rerun                )->default_value(DEF_REFAST    ),   "Run a second fast SSAP with looser cutoffs if the first fast SSAP's score falls below arg"                             )
+		( PO_MAX_SCORE_TO_RESLOW.c_str(),  value<double>            ( &max_score_to_slow_ssap_rerun                )->default_value(DEF_RESLOW    ),   "Perform a slow SSAP if the (best) fast SSAP score falls below arg"                                                     )
+		( PO_SLOW_SSAP_ONLY.c_str(),       bool_switch              ( &slow_ssap_only                              )->default_value(DEF_BOOL      ),   "Don't try any fast SSAPs; only use slow SSAP"                                                                          )
 
-		( PO_LOC_SSAP_SCORE.c_str(),       bool_switch              ( &use_local_ssap_score        )->default_value(DEF_BOOL      ),   "[DEPRECATED] Normalise the SSAP score over the length of the smallest domain rather than the largest"                  )
-		( PO_ALL_SCORES.c_str(),           bool_switch              ( &write_all_scores            )->default_value(DEF_BOOL      ),   "[DEPRECATED] Output all SSAP scores from fast and slow runs, not just the highest"                                     )
-		( PO_PROTEIN_SOURCE_FILES.c_str(), value<protein_file_combn>( &protein_source_files        )->default_value(DEF_PROT_SRCS ), ( "The set of files from which to read the protein data (valid options: " + protein_file_combns_str + ")" ).c_str() )
+		( PO_LOC_SSAP_SCORE.c_str(),       bool_switch              ( &use_local_ssap_score                        )->default_value(DEF_BOOL      ),   "[DEPRECATED] Normalise the SSAP score over the length of the smallest domain rather than the largest"                  )
+		( PO_ALL_SCORES.c_str(),           bool_switch              ( &write_all_scores                            )->default_value(DEF_BOOL      ),   "[DEPRECATED] Output all SSAP scores from fast and slow runs, not just the highest"                                     )
+		( PO_PROTEIN_SOURCE_FILES.c_str(), value<protein_file_combn>( &protein_source_files )->value_name( "<set>" )->default_value(DEF_PROT_SRCS ), ( "Read the protein data from the set of files <set>, of available sets:\n" + protein_file_combns_str ).c_str() )
 
-		( PO_SUPN_DIR.c_str(),             value<path>              ( &superposition_dir           ),                                  "[DEPRECATED] Output a superposition to directory arg"                                                                  )
-		( PO_ALIGN_DIR.c_str(),            value<path>              ( &alignment_dir               )->default_value( path(".")    ),   "Write alignment to directory arg"                                                                                      )
-		( PO_MIN_OUT_SCORE.c_str(),        value<double>            ( &min_score_for_writing_files )->default_value(DEF_FILE_SC   ),   "Only output alignment/superposition files if the SSAP score exceeds arg"                                               )
-		( PO_MIN_SUP_SCORE.c_str(),        value<double>            ( &min_score_for_superposition )->default_value(DEF_SUP       ),   "[DEPRECATED] Calculate superposition based on the residue-pairs with scores greater than arg"                          )
-		( PO_RASMOL_SCRIPT.c_str(),        bool_switch              ( &write_rasmol_script         )->default_value(DEF_BOOL      ),   "[DEPRECATED] Write a rasmol superposition script to load and colour the superposed structures"                         )
-		( PO_XML_SUP.c_str(),              bool_switch              ( &write_xml_sup               )->default_value(DEF_BOOL      ),   "[DEPRECATED] Write a small xml superposition file, from which a larger superposition file can be reconstructed"        );
+		( PO_SUPN_DIR.c_str(),             value<path>              ( &superposition_dir                           ),                                  "[DEPRECATED] Output a superposition to directory arg"                                                                  )
+		( PO_ALIGN_DIR.c_str(),            value<path>              ( &alignment_dir                               )->default_value( path(".")    ),   "Write alignment to directory arg"                                                                                      )
+		( PO_MIN_OUT_SCORE.c_str(),        value<double>            ( &min_score_for_writing_files                 )->default_value(DEF_FILE_SC   ),   "Only output alignment/superposition files if the SSAP score exceeds arg"                                               )
+		( PO_MIN_SUP_SCORE.c_str(),        value<double>            ( &min_score_for_superposition                 )->default_value(DEF_SUP       ),   "[DEPRECATED] Calculate superposition based on the residue-pairs with scores greater than arg"                          )
+		( PO_RASMOL_SCRIPT.c_str(),        bool_switch              ( &write_rasmol_script                         )->default_value(DEF_BOOL      ),   "[DEPRECATED] Write a rasmol superposition script to load and colour the superposed structures"                         )
+		( PO_XML_SUP.c_str(),              bool_switch              ( &write_xml_sup                               )->default_value(DEF_BOOL      ),   "[DEPRECATED] Write a small xml superposition file, from which a larger superposition file can be reconstructed"        );
 }
 
 /// \brief Add any hidden options to the provided options_description
