@@ -24,7 +24,7 @@
 #include "chopping/domain/domain.h"
 
 namespace cath { namespace file { class pdb; } }
-namespace cath { namespace opts { class data_dirs_options_block; } }
+namespace cath { namespace opts { class data_dirs_spec; } }
 
 namespace cath {
 	namespace chop {
@@ -47,7 +47,7 @@ namespace cath {
 		};
 
 		file::pdb read_domain_from_pdb(const domain_definition &,
-		                               const opts::data_dirs_options_block &);
+		                               const opts::data_dirs_spec &);
 
 	}
 }

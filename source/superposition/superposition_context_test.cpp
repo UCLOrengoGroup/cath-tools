@@ -43,14 +43,14 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(superposition_context_test_suite, cath::test::superposition_context_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(load_pdbs_from_names_copy_leaves_orig_empty_pdbs) {
-	const auto loaded_sup_con = load_pdbs_from_names_copy( the_sup_con, build_data_dirs_options_block_of_dir( TEST_SOURCE_DATA_DIR() ) );
+	const auto loaded_sup_con = load_pdbs_from_names_copy( the_sup_con, build_data_dirs_spec_of_dir( TEST_SOURCE_DATA_DIR() ) );
 	BOOST_REQUIRE_EQUAL( the_sup_con.get_pdbs_cref().size(), 2 );
 	BOOST_CHECK_EQUAL  ( the_sup_con.get_pdbs_cref()[ 0 ].get_num_residues(), 0 );
 	BOOST_CHECK_EQUAL  ( the_sup_con.get_pdbs_cref()[ 1 ].get_num_residues(), 0 );
 }
 
 BOOST_AUTO_TEST_CASE(load_pdbs_from_names_copy_sets_two_pdbs_with_199_and_205_residues) {
-	const auto loaded_sup_con = load_pdbs_from_names_copy( the_sup_con, build_data_dirs_options_block_of_dir( TEST_SOURCE_DATA_DIR() ) );
+	const auto loaded_sup_con = load_pdbs_from_names_copy( the_sup_con, build_data_dirs_spec_of_dir( TEST_SOURCE_DATA_DIR() ) );
 	BOOST_REQUIRE_EQUAL( loaded_sup_con.get_pdbs_cref().size(), 2 );
 	BOOST_CHECK_EQUAL  ( loaded_sup_con.get_pdbs_cref()[ 0 ].get_num_residues(), 199 );
 	BOOST_CHECK_EQUAL  ( loaded_sup_con.get_pdbs_cref()[ 1 ].get_num_residues(), 205 );

@@ -26,7 +26,7 @@
 #include "chopping/chopping_type_aliases.h"
 #include "file/file_type_aliases.h"
 
-namespace cath { namespace opts { class data_dirs_options_block; } }
+namespace cath { namespace opts { class data_dirs_spec; } }
 
 namespace cath {
 	namespace file {
@@ -52,7 +52,7 @@ namespace cath {
 		domain_definition_list parse_domain_definition_file(std::istream &);
 
 		pdb_list_str_vec_pair read_domains_from_pdbs(const domain_definition_list &,
-		                                             const opts::data_dirs_options_block &);
+		                                             const opts::data_dirs_spec &);
 
 	}
 }

@@ -27,7 +27,7 @@
 #include "structure/protein/protein_list.h"
 #include "structure/protein/protein_source_file_set/protein_file_combn.h"
 
-namespace cath { namespace opts { class data_dirs_options_block; } }
+namespace cath { namespace opts { class data_dirs_spec; } }
 
 namespace cath {
 
@@ -61,7 +61,7 @@ namespace cath {
 
 		file::data_file_vec get_file_set() const;
 		protein_file_combn get_protein_file_combn() const;
-		protein read_files(const opts::data_dirs_options_block &,
+		protein read_files(const opts::data_dirs_spec &,
 		                   const std::string &,
 		                   std::ostream &) const;
 	};
@@ -77,7 +77,7 @@ namespace cath {
 	                                      std::ostream &);
 
 	file::data_file_path_map get_filename_of_data_file(const protein_source_file_set &,
-	                                                   const opts::data_dirs_options_block &,
+	                                                   const opts::data_dirs_spec &,
 	                                                   const std::string &);
 
 	using protein_source_file_set_pvec = boost::ptr_vector<protein_source_file_set>;

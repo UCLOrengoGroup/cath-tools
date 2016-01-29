@@ -89,8 +89,8 @@ namespace cath {
 			log_to_ostream_guard log_output_guard = { log_output_ss };
 			const string id1 = { *ID1 };
 			const string id2 = { *ID2 };
-			const data_dirs_options_block data_dirs = { build_data_dirs_options_block_of_dir( TEST_SSAP_REGRESSION_DATA_DIR() ) };
-			const prot_prot_pair parsed_proteins = { read_protein_pair( id1, id2, data_dirs, protein_source_from_wolf_and_sec(), none ) };
+			const data_dirs_spec data_dirs       = build_data_dirs_spec_of_dir( TEST_SSAP_REGRESSION_DATA_DIR() );
+			const prot_prot_pair parsed_proteins = read_protein_pair( id1, id2, data_dirs, protein_source_from_wolf_and_sec(), none );
 			const protein &prot1 = parsed_proteins.first;
 			const protein &prot2 = parsed_proteins.second;
 			

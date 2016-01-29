@@ -64,9 +64,9 @@ protein_file_combn protein_source_file_set::get_protein_file_combn() const {
 }
 
 /// \brief An NVI pass-through method to read the files that have been specified
-protein protein_source_file_set::read_files(const data_dirs_options_block &arg_data_dirs,    ///< The data_dirs_options_block to specify how things should be done
-                                            const string                  &arg_protein_name, ///< The name of the protein that is to be read from files
-                                            ostream                       &arg_stderr        ///< The ostream to which any warnings/errors should be written
+protein protein_source_file_set::read_files(const data_dirs_spec &arg_data_dirs,    ///< The data_dirs_options_block to specify how things should be done
+                                            const string         &arg_protein_name, ///< The name of the protein that is to be read from files
+                                            ostream              &arg_stderr        ///< The ostream to which any warnings/errors should be written
                                             ) const {
 	const data_file_path_map filename_of_data_file = get_filename_of_data_file(
 		*this,
@@ -85,7 +85,7 @@ protein cath::read_protein_from_files(const protein_source_file_set &arg_source_
                                       ostream                       &arg_stderr           ///< The ostream to which any warnings/errors should be written
                                       ) {
 	return arg_source_file_set.read_files(
-		build_data_dirs_options_block_of_dir( arg_data_dir ),
+		build_data_dirs_spec_of_dir( arg_data_dir ),
 		arg_protein_name,
 		arg_stderr
 	);
@@ -109,13 +109,13 @@ protein_list cath::read_proteins_from_files(const protein_source_file_set &arg_s
 }
 
 /// \brief For each file type required by the specified protein_source_file_set, get the filenames associated with
-///        the specified protein name in the specified data_dirs_options_block
+///        the specified protein name in the specified data_dirs_spec
 ///
 /// \returns A map of data_file to the filename selected for that file type
 ///
 /// \relates protein_source_file_set
 data_file_path_map cath::get_filename_of_data_file(const protein_source_file_set &arg_protein_source_file_set, ///< The protein_source_file_set which specifies the file types it requires for reading a protein
-                                                   const data_dirs_options_block &arg_data_dirs,               ///< The data_dirs_options_block specifying how to map a file type and a name to a filename
+                                                   const data_dirs_spec          &arg_data_dirs,               ///< The data_dirs_spec specifying how to map a file type and a name to a filename
                                                    const string                  &arg_protein_name             ///< The name of the protein that is to be read from files
                                                    ) {
 	const auto file_set = arg_protein_source_file_set.get_file_set();

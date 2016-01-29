@@ -125,11 +125,12 @@ string cath_ssap_options::do_update_error_or_help_string(const options_descripti
 	const auto    required_file_types = copy_build<data_file_set>( join( protein_file_types, supn_file_type ) );
 	const str_vec protein_names       = { the_ssap_options_block.get_protein_name_a(),
 	                                      the_ssap_options_block.get_protein_name_b() };
+	const auto    &the_data_dirs_spec = get_data_dirs_spec();
 	path_vec required_input_files;
 	try {
 		for (const data_file &required_file_type : required_file_types) {
 			for (const string &protein_name : protein_names) {
-				required_input_files.push_back( find_file( the_data_dirs_options_block, required_file_type, protein_name ) );
+				required_input_files.push_back( find_file( the_data_dirs_spec, required_file_type, protein_name ) );
 			}
 		}
 	}
@@ -206,13 +207,13 @@ cath_ssap_options::cath_ssap_options() : the_detail_help_options_block(DETAIL_HE
 }
 
 /// \brief A getter for the old_ssap_options_block
-const old_ssap_options_block cath_ssap_options::get_old_ssap_options() const {
+const old_ssap_options_block & cath_ssap_options::get_old_ssap_options() const {
 	return the_ssap_options_block;
 }
 
 /// \brief A getter for the data_dirs_options_block
-const data_dirs_options_block cath_ssap_options::get_data_dirs_options() const {
-	return the_data_dirs_options_block;
+const data_dirs_spec & cath_ssap_options::get_data_dirs_spec() const {
+	return the_data_dirs_options_block.get_data_dirs_spec();
 }
 
 /// \brief Return the string containing help on the SSAP matches format

@@ -320,25 +320,25 @@ ptrdiff_t cath::temp_get_global_run_counter() {
 prot_prot_pair cath::read_protein_pair(const cath_ssap_options &arg_cath_ssap_options, ///< The cath_ssap options
                                        ostream                 &arg_stderr             ///< TODOCUMENT
                                        ) {
-	const old_ssap_options_block                  the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
-	const data_dirs_options_block                 the_data_dirs    = arg_cath_ssap_options.get_data_dirs_options();
-	const string                                  protein_name_a   = the_ssap_options.get_protein_name_a();
-	const string                                  protein_name_b   = the_ssap_options.get_protein_name_b();
-	const unique_ptr<const protein_source_file_set> protein_sources  = the_ssap_options.get_protein_source_files();
-	const opt_path                                domin_file       = the_ssap_options.get_opt_domin_file();
-	return read_protein_pair( protein_name_a, protein_name_b, the_data_dirs, *protein_sources, domin_file, arg_stderr );
+	const old_ssap_options_block the_ssap_options     = arg_cath_ssap_options.get_old_ssap_options();
+	const data_dirs_spec         the_data_dirs        = arg_cath_ssap_options.get_data_dirs_spec();
+	const string                 protein_name_a       = the_ssap_options.get_protein_name_a();
+	const string                 protein_name_b       = the_ssap_options.get_protein_name_b();
+	const auto                   protein_sources_ptr  = the_ssap_options.get_protein_source_files();
+	const opt_path               domin_file           = the_ssap_options.get_opt_domin_file();
+	return read_protein_pair( protein_name_a, protein_name_b, the_data_dirs, *protein_sources_ptr, domin_file, arg_stderr );
 }
 
 /// \brief Read a pair of proteins following the specification in arg_ssap_options
 prot_prot_pair cath::read_protein_pair(const string                  &arg_protein_name_a,          ///< TODOCUMENT
                                        const string                  &arg_protein_name_b,          ///< TODOCUMENT
-                                       const data_dirs_options_block &arg_data_dirs_options,       ///< TODOCUMENT
+                                       const data_dirs_spec          &arg_data_dirs_spec,          ///< TODOCUMENT
                                        const protein_source_file_set &arg_protein_source_file_set, ///< TODOCUMENT
                                        const opt_path                &arg_domin_file,              ///< TODOCUMENT
                                        ostream                       &arg_stderr                   ///< TODOCUMENT
                                        ) {
-	const protein protein_a      = read_protein_data_from_ssap_options_files(arg_data_dirs_options, arg_protein_name_a, arg_protein_source_file_set, arg_domin_file, arg_stderr );
-	const protein protein_b      = read_protein_data_from_ssap_options_files(arg_data_dirs_options, arg_protein_name_b, arg_protein_source_file_set, none,           arg_stderr );
+	const protein protein_a      = read_protein_data_from_ssap_options_files(arg_data_dirs_spec, arg_protein_name_a, arg_protein_source_file_set, arg_domin_file, arg_stderr );
+	const protein protein_b      = read_protein_data_from_ssap_options_files(arg_data_dirs_spec, arg_protein_name_b, arg_protein_source_file_set, none,           arg_stderr );
 	return make_pair(protein_a, protein_b);
 }
 
@@ -431,11 +431,11 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 //		}
 //	}
 
-    const old_ssap_options_block  the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
-    const data_dirs_options_block the_data_dirs    = arg_cath_ssap_options.get_data_dirs_options();
+	const old_ssap_options_block the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
+	const data_dirs_spec         the_data_dirs    = arg_cath_ssap_options.get_data_dirs_spec();
 
-    // Run SSAP
-	align_proteins(proteins.first, proteins.second, the_ssap_options, the_data_dirs);
+	// Run SSAP
+	align_proteins( proteins.first, proteins.second, the_ssap_options, the_data_dirs );
 
 	// Choose the stream to which to output the results
 	//
@@ -472,7 +472,7 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 void cath::align_proteins(const protein                 &arg_protein_a,    ///< The first protein
                           const protein                 &arg_protein_b,    ///< The second protein
                           const old_ssap_options_block  &arg_ssap_options, ///< The old_ssap_options_block to specify how things should be done
-                          const data_dirs_options_block &arg_data_dirs     ///< The data directories from which data should be read
+                          const data_dirs_spec          &arg_data_dirs     ///< The data directories from which data should be read
                           ) {
 	BOOST_LOG_TRIVIAL( info ) << "Function: alnseq";
 
@@ -589,7 +589,7 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 ssap_scores cath::fast_ssap(const protein                 &arg_protein_a,    ///< The first protein
                             const protein                 &arg_protein_b,    ///< The second protein
                             const old_ssap_options_block  &arg_ssap_options, ///< The old_ssap_options_block to specify how things should be done
-                            const data_dirs_options_block &arg_data_dirs     ///< The data directories from which data should be read
+                            const data_dirs_spec          &arg_data_dirs     ///< The data directories from which data should be read
                             ) {
 	ssap_scores new_ssap_scores;
 
@@ -635,7 +635,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
                                            const size_t                  &arg_pass_ctr,             ///< The pass of this comparison (where the second typically refines the alignment generated by the first)
                                            const entry_querier           &arg_entry_querier,        ///< The entry_querier to query either residues or secondary structures
                                            const old_ssap_options_block  &arg_ssap_options,         ///< The old_ssap_options_block to specify how things should be done
-                                           const data_dirs_options_block &arg_data_dirs,            ///< The data directories from which data should be read
+                                           const data_dirs_spec          &arg_data_dirs,            ///< The data directories from which data should be read
                                            const opt_alignment           &arg_previous_ss_alignment ///< An optional parameter specifying a previous secondary structure alignment
                                            ) {
 	const bool   res_not_ss__hacky = arg_entry_querier.temp_hacky_is_residue();
@@ -763,7 +763,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 }
 
 /// \brief Read data for a protein based on its name and a old_ssap_options_block object
-protein cath::read_protein_data_from_ssap_options_files(const data_dirs_options_block &arg_data_dirs,               ///< The old_ssap_options_block to specify how things should be done
+protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec          &arg_data_dirs,               ///< The old_ssap_options_block to specify how things should be done
                                                         const string                  &arg_protein_name,            ///< The name of the protein that is to be read from files
                                                         const protein_source_file_set &arg_protein_source_file_set, ///< TODOCUMENT
                                                         const opt_path                &arg_domin_file,              ///< Optional domin file
@@ -1662,7 +1662,7 @@ bool cath::save_ssap_scores(const alignment               &arg_alignment,    ///
                             const protein                 &arg_protein_b,    ///< The second protein
                             const ssap_scores             &arg_ssap_scores,  ///< The scores to be output
                             const old_ssap_options_block  &arg_ssap_options, ///< The old_ssap_options_block to specify how things should be done
-                            const data_dirs_options_block &arg_data_dirs     ///< The data directories from which data should be read
+                            const data_dirs_spec          &arg_data_dirs     ///< The data directories from which data should be read
                             ) {
 	BOOST_LOG_TRIVIAL( info ) << "Function: save_ssap_scores";
 	
@@ -1824,7 +1824,7 @@ size_doub_pair cath::superpose(const protein                 &arg_protein_a,    
                                const protein                 &arg_protein_b,           ///< Coordinates for second structure
                                const alignment               &arg_alignment,           ///< The alignment to determine which residues should be as close as possible to which
                                const old_ssap_options_block  &arg_ssap_options,        ///< The old_ssap_options_block to specify how things should be done
-                               const data_dirs_options_block &arg_data_dirs,           ///< The data directories from which data should be read
+                               const data_dirs_spec          &arg_data_dirs,           ///< The data directories from which data should be read
                                const bool                    &arg_score_is_high_enough ///< Whether the score is high enough to justify outputting files
                                ) {
 	const auto common_coords = alignment_coord_extractor::get_common_coords(
@@ -1882,7 +1882,7 @@ ssap_scores cath::plot_aln(const protein                 &arg_protein_a,     ///
                            const entry_querier           &arg_entry_querier, ///< The entry_querier to query either residues or secondary structures
                            const alignment               &arg_alignment,     ///< The alignment to plot
                            const old_ssap_options_block  &arg_ssap_options,  ///< The old_ssap_options_block to specify how things should be done
-                           const data_dirs_options_block &arg_data_dirs      ///< The data directories from which data should be read
+                           const data_dirs_spec          &arg_data_dirs      ///< The data directories from which data should be read
                            ) {
 	const bool res_not_ss__hacky = arg_entry_querier.temp_hacky_is_residue();
 	if (res_not_ss__hacky && arg_pass != 2) {

@@ -150,8 +150,8 @@ size_t cath::sup::get_num_entries(const superposition_context &arg_superposition
 /// \brief Load the specified superposition_context's PDBs using its names and the specified data_dirs_options_block
 ///
 /// \relates superposition_context
-void cath::sup::load_pdbs_from_names(superposition_context         &arg_supn_context, ///< The superposition_context for which the PDBs should be loaded based on its names
-                                     const data_dirs_options_block &arg_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
+void cath::sup::load_pdbs_from_names(superposition_context &arg_supn_context, ///< The superposition_context for which the PDBs should be loaded based on its names
+                                     const data_dirs_spec  &arg_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
                                      ) {
 	arg_supn_context.set_pdbs(
 		transform_build<pdb_vec>(
@@ -166,8 +166,8 @@ void cath::sup::load_pdbs_from_names(superposition_context         &arg_supn_con
 /// \brief Return a copy of the specified superposition_context with the PDBs loaded using its names and the specified data_dirs_options_block
 ///
 /// \relates superposition_context
-superposition_context cath::sup::load_pdbs_from_names_copy(superposition_context          arg_supn_context, ///< The superposition_context from which the copy should be taken with the PDBs loaded based on its names
-                                                           const data_dirs_options_block &arg_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
+superposition_context cath::sup::load_pdbs_from_names_copy(superposition_context  arg_supn_context, ///< The superposition_context from which the copy should be taken with the PDBs loaded based on its names
+                                                           const data_dirs_spec  &arg_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
                                                            ) {
 	load_pdbs_from_names( arg_supn_context, arg_data_dirs );
 	return arg_supn_context;

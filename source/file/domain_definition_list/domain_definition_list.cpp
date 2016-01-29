@@ -101,8 +101,8 @@ domain_definition_list cath::file::parse_domain_definition_file(istream &arg_dom
 }
 
 /// \brief TODOCUMENT
-pdb_list_str_vec_pair cath::file::read_domains_from_pdbs(const domain_definition_list  &arg_domain_definition_list, ///< TODOCUMENT
-                                                         const data_dirs_options_block &arg_data_dirs_options_block ///< TODOCUMENT
+pdb_list_str_vec_pair cath::file::read_domains_from_pdbs(const domain_definition_list &arg_domain_definition_list, ///< TODOCUMENT
+                                                         const data_dirs_spec         &arg_data_dirs_spec          ///< TODOCUMENT
                                                          ) {
 	const size_t num_domain_definitions = arg_domain_definition_list.size();
 	pdb_list pdbs;
@@ -116,7 +116,7 @@ pdb_list_str_vec_pair cath::file::read_domains_from_pdbs(const domain_definition
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Domain definitions to be read from PDBs do not have domain IDs"));
 		}
 		names.push_back( get_domain_id( the_domain ) );
-		pdbs.push_back ( read_domain_from_pdb( domain_defn, arg_data_dirs_options_block ) );
+		pdbs.push_back ( read_domain_from_pdb( domain_defn, arg_data_dirs_spec ) );
 	}
 	return make_pair( pdbs, names );
 }

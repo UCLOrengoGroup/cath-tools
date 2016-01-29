@@ -29,7 +29,7 @@
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_list.h"
 #include "file/pdb/pdb_residue.h"
-#include "options/options_block/data_dirs_options_block.h"
+#include "options/options_block/data_dirs_spec.h"
 
 using namespace boost::filesystem;
 using namespace boost::log;
@@ -49,7 +49,7 @@ pdb_list_str_vec_pair domain_defn_pdbs_acquirer::do_get_pdbs_and_names(istream &
                                                                        ) const {
 	const domain_definition_list the_dom_defns = parse_domain_definition_file( domain_defn_file );
 	BOOST_LOG_TRIVIAL( warning ) << "Currently using a hard-coded domain PDB directory : /cath/data/current/pdb";
-	return read_domains_from_pdbs( the_dom_defns, build_data_dirs_options_block_of_dir( "/cath/data/current/pdb" ) );
+	return read_domains_from_pdbs( the_dom_defns, build_data_dirs_spec_of_dir( "/cath/data/current/pdb" ) );
 }
 
 /// \brief Ctor for domain_defn_pdbs_acquirer

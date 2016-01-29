@@ -40,7 +40,7 @@ namespace cath { class selected_pair;           }
 namespace cath { class ssap_scores;             }
 namespace cath { namespace geom { class coord; } }
 namespace cath { namespace opts { class cath_ssap_options; } }
-namespace cath { namespace opts { class data_dirs_options_block; } }
+namespace cath { namespace opts { class data_dirs_spec; } }
 namespace cath { namespace opts { class old_ssap_options_block; } }
 
 namespace cath {
@@ -55,7 +55,7 @@ namespace cath {
 
 	prot_prot_pair read_protein_pair(const std::string &,
 	                                 const std::string &,
-	                                 const opts::data_dirs_options_block &,
+	                                 const opts::data_dirs_spec &,
 	                                 const protein_source_file_set &,
 	                                 const opt_path &,
 	                                 std::ostream &arg_stderr = std::cerr);
@@ -67,22 +67,22 @@ namespace cath {
 	void align_proteins(const protein &,
 	                    const protein &,
 	                    const opts::old_ssap_options_block &,
-	                    const opts::data_dirs_options_block &);
+	                    const opts::data_dirs_spec &);
 
 	ssap_scores fast_ssap(const protein &,
 	                      const protein &,
 	                      const opts::old_ssap_options_block &,
-	                      const opts::data_dirs_options_block &);
+	                      const opts::data_dirs_spec &);
 
 	std::pair<ssap_scores, align::alignment> compare(const protein &,
 	                                                 const protein &,
 	                                                 const size_t &,
 	                                                 const entry_querier &,
 	                                                 const opts::old_ssap_options_block &,
-	                                                 const opts::data_dirs_options_block &,
+	                                                 const opts::data_dirs_spec &,
 	                                                 const align::opt_alignment &);
 
-	protein read_protein_data_from_ssap_options_files(const opts::data_dirs_options_block &,
+	protein read_protein_data_from_ssap_options_files(const opts::data_dirs_spec &,
 	                                                  const std::string &,
 	                                                  const protein_source_file_set &,
 	                                                  const opt_path &,
@@ -141,7 +141,7 @@ namespace cath {
 	                      const protein &,
 	                      const ssap_scores &,
 	                      const opts::old_ssap_options_block &,
-	                      const opts::data_dirs_options_block &);
+	                      const opts::data_dirs_spec &);
 
 	void save_zero_scores(const protein &,
 	                      const protein &);
@@ -158,7 +158,7 @@ namespace cath {
 	                         const protein &,
 	                         const align::alignment &,
 	                         const opts::old_ssap_options_block &,
-	                         const opts::data_dirs_options_block &,
+	                         const opts::data_dirs_spec &,
 	                         const bool &);
 
 	ssap_scores plot_aln(const protein &,
@@ -167,7 +167,7 @@ namespace cath {
 	                     const entry_querier &,
 	                     const align::alignment &,
 	                     const opts::old_ssap_options_block &,
-	                     const opts::data_dirs_options_block &);
+	                     const opts::data_dirs_spec &);
 
 	boost::filesystem::path look_for_file_globally_then_locally(const std::string &,
 	                                                            const std::string &,

@@ -527,6 +527,7 @@ set(
 		options/options_block/cath_assign_domains_options_block.cpp
 		options/options_block/check_pdb_options_block.cpp
 		options/options_block/data_dirs_options_block.cpp
+		options/options_block/data_dirs_spec.cpp
 		options/options_block/data_option.cpp
 		options/options_block/detail_help_options_block.cpp
 		options/options_block/display_options_block.cpp
@@ -1355,6 +1356,7 @@ set(
 		options/options_block/alignment_output_options_block_test.cpp
 		options/options_block/check_pdb_options_block_test.cpp
 		options/options_block/data_dirs_options_block_test.cpp
+		options/options_block/data_dirs_spec_test.cpp
 		options/options_block/detail_help_options_block_test.cpp
 		options/options_block/display_options_block_test.cpp
 		options/options_block/misc_help_version_options_block_test.cpp

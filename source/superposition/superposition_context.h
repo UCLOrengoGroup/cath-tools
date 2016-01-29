@@ -30,7 +30,7 @@
 #include "superposition/superposition.h"
 
 namespace cath { namespace align { class alignment_context; } }
-namespace cath { namespace opts { class data_dirs_options_block; } }
+namespace cath { namespace opts { class data_dirs_spec; } }
 
 namespace cath {
 	namespace sup {
@@ -80,10 +80,10 @@ namespace cath {
 		size_t get_num_entries(const superposition_context &);
 
 		void load_pdbs_from_names(superposition_context &,
-		                          const opts::data_dirs_options_block &);
+		                          const opts::data_dirs_spec &);
 
 		superposition_context load_pdbs_from_names_copy(superposition_context,
-		                                                const opts::data_dirs_options_block &);
+		                                                const opts::data_dirs_spec &);
 
 		align::alignment_context make_alignment_context(const superposition_context &);
 

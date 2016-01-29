@@ -53,11 +53,11 @@ const string & domain_definition::get_pdb_name() const {
 }
 
 /// \brief TODOCUMENT
-pdb cath::chop::read_domain_from_pdb(const domain_definition       &arg_domain_definition,      ///< TODOCUMENT
-                                     const data_dirs_options_block &arg_data_dirs_options_block ///< TODOCUMENT
+pdb cath::chop::read_domain_from_pdb(const domain_definition &arg_domain_definition, ///< TODOCUMENT
+                                     const data_dirs_spec    &arg_data_dirs_spec     ///< TODOCUMENT
                                      ) {
 	const path pdb_file = find_file(
-		arg_data_dirs_options_block,
+		arg_data_dirs_spec,
 		data_file::PDB,
 		arg_domain_definition.get_pdb_name()
 	);
