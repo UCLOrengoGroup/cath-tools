@@ -31,6 +31,7 @@
 #include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/file/open_fstream.h"
+#include "common/file/simple_file_read_write.h"
 #include "common/type_aliases.h"
 #include "exception/program_exception_wrapper.h"
 #include "file/prc_scores_file/prc_scores_file.h"
@@ -397,11 +398,13 @@ namespace cath {
 						sf_of_dom.add_domain_in_new_sf_in_fold_of_domain( query_id, match_id );
 					}
 					else {
-//						// Output Trac-wiki-formatted information on this query domain that can't be confidently assigned to an existing superfamily/fold
-//						cout << string_for_new_fold_strings( ssap_file, prc_file, the_ssaps, the_prcs, sf_of_dom ) << "\n";
+						// Output Trac-wiki-formatted information on this query domain that can't be confidently assigned to an existing superfamily/fold
+						new_fold_strings.push_back( string_for_new_fold_strings( ssap_file, prc_file, the_ssaps, the_prcs, sf_of_dom ) );
 					}
 				}
 			}
+
+			write_file( "new_fold_info.trac_wiki", new_fold_strings );
 		}
 	};
 }
