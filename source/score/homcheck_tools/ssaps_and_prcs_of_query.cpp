@@ -126,8 +126,9 @@ const string & cath::homcheck::get_query_id(const ssaps_and_prcs_of_query &arg_s
 /// \brief Return the best by SVM hit to a domain in CATH of the specified results
 ///
 /// \relates ssaps_and_prcs_of_query
-ssap_and_prc_cref_opt cath::homcheck::best_svm_assignable(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs,       ///< The SSAP and PRC results for the query domain
-                                                          const superfamily_of_domain   &arg_superfamily_of_domain ///< The superfamily_of_domain for finding which matches are assigned
+ssap_and_prc_cref_opt cath::homcheck::best_svm_assignable(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs,        ///< The SSAP and PRC results for the query domain
+                                                          const superfamily_of_domain   &arg_superfamily_of_domain, ///< The superfamily_of_domain for finding which matches are assigned
+                                                          const double                  &arg_minimum_ssap_overlap   ///< TODOCUMENT
                                                           ) {
 	return first_result_if(
 		arg_ssaps_and_prcs,
@@ -139,6 +140,8 @@ ssap_and_prc_cref_opt cath::homcheck::best_svm_assignable(const ssaps_and_prcs_o
 			return (
 				get_svm_score( x ) >= 3.47554072714
 				&&
+				get_ssap_overlap_pc( x ) >= arg_minimum_ssap_overlap
+				&&
 				arg_superfamily_of_domain.has_superfamily_of_domain( x.get_match_id() )
 			);
 		}
@@ -148,8 +151,9 @@ ssap_and_prc_cref_opt cath::homcheck::best_svm_assignable(const ssaps_and_prcs_o
 /// \brief Return the best by magic-function hit to a domain in CATH of the specified results
 ///
 /// \relates ssaps_and_prcs_of_query
-ssap_and_prc_cref_opt cath::homcheck::best_magic_function_assignable(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs,       ///< The SSAP and PRC results for the query domain
-                                                                     const superfamily_of_domain   &arg_superfamily_of_domain ///< The superfamily_of_domain for finding which matches are assigned
+ssap_and_prc_cref_opt cath::homcheck::best_magic_function_assignable(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs,        ///< The SSAP and PRC results for the query domain
+                                                                     const superfamily_of_domain   &arg_superfamily_of_domain, ///< The superfamily_of_domain for finding which matches are assigned
+                                                                     const double                  &arg_minimum_ssap_overlap   ///< TODOCUMENT
                                                                      ) {
 	return first_result_if(
 		arg_ssaps_and_prcs,
@@ -160,6 +164,8 @@ ssap_and_prc_cref_opt cath::homcheck::best_magic_function_assignable(const ssaps
 		[&] (const ssap_and_prc &x) {
 			return (
 				x.get_magic_function_score() >= 79.7779328254
+				&&
+				get_ssap_overlap_pc( x ) >= arg_minimum_ssap_overlap
 				&&
 				arg_superfamily_of_domain.has_superfamily_of_domain( x.get_match_id() )
 			);

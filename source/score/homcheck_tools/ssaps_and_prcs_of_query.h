@@ -66,10 +66,12 @@ namespace cath {
 		const std::string & get_query_id(const ssaps_and_prcs_of_query &);
 
 		ssap_and_prc_cref_opt best_svm_assignable(const ssaps_and_prcs_of_query &,
-		                                          const superfamily_of_domain &);
+		                                          const superfamily_of_domain &,
+		                                          const double & = -0.1);
 
 		ssap_and_prc_cref_opt best_magic_function_assignable(const ssaps_and_prcs_of_query &,
-		                                                     const superfamily_of_domain &);
+		                                                     const superfamily_of_domain &,
+		                                                     const double & = -0.1);
 
 		file::ssap_scores_entry_cref_opt best_fold_level_match(const file::ssap_scores_entry_vec &,
 		                                                       const superfamily_of_domain &);

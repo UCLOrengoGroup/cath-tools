@@ -272,8 +272,10 @@ namespace cath {
 					the_svm
 				);
 
-				const auto best_svm_ref_opt = best_svm_assignable           ( the_ssaps_and_prcs, sf_of_dom );
-				const auto best_mag_ref_opt = best_magic_function_assignable( the_ssaps_and_prcs, sf_of_dom );
+				constexpr double svm_ssap_overlap_cutoff = 70;
+
+				const auto best_svm_ref_opt = best_svm_assignable           ( the_ssaps_and_prcs, sf_of_dom, svm_ssap_overlap_cutoff );
+				const auto best_mag_ref_opt = best_magic_function_assignable( the_ssaps_and_prcs, sf_of_dom                          );
 
 				if ( best_svm_ref_opt || best_mag_ref_opt ) {
 					const string &query_id = best_svm_ref_opt ? best_svm_ref_opt->get().get_query_id()
