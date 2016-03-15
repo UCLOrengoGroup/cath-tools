@@ -135,5 +135,6 @@ Once you've built the binaries, run the build tests to sanity check the build. F
 (if you mistakenly run build-test from elsewhere, you'll get lots of `check_required_files_exist` errors).
 
 If your machine has Perl, you can also try running the Perl tests (which includes a run of `build-test` as one of the tests):
+
  * Set the environment variable CATH_TOOLS_BIN_DIR to the location of the built binaries
  * From the root directory of the project, run `prove -l -v t`
