@@ -20,11 +20,11 @@
 
 #include "coord.h"
 
+#include <boost/algorithm/clamp.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/property_tree/json_parser.hpp>
-
 #include <boost/property_tree/ptree.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
@@ -36,6 +36,7 @@ using namespace cath::common;
 using namespace cath::geom;
 using namespace std;
 
+using boost::algorithm::clamp;
 using boost::lexical_cast;
 using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;
@@ -122,7 +123,16 @@ doub_angle cath::geom::angle_between_two_vectors(const coord &arg_vector_1, ///<
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("AngleBetweenZeroLengthVectorsRequested"));
 	}
 #endif
-	return make_angle_from_radians<double>( acos( dot_product( normalise_copy( arg_vector_1 ), normalise_copy( arg_vector_2 ) ) ) );
+	return make_angle_from_radians<double>( acos(
+		clamp(
+			dot_product(
+				normalise_copy( arg_vector_1 ),
+				normalise_copy( arg_vector_2 )
+			),
+			-1.0,
+			 1.0
+		)
+	) );
 }
 
 /// \brief Compute the angle (in radians) determined by three points

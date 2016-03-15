@@ -164,6 +164,34 @@ BOOST_AUTO_TEST_CASE(dihedral_angle_between_four_points_works) {
 	);
 }
 
+/// \brief Check that the dihedral angle gives the expected answer for a known tricky case
+///
+/// This example was flagged up by Natalie because one of her cath-ssaps was failing.
+/// Trying to calculate the phi/psi angles of the PDB 1cn1, involves trying to calculate
+/// the dihedral angle between these four atoms in residues 25 and 26 on chain A :
+///
+///     ATOM    184  N   ILE A  25      25.000  39.500   7.100  1.00 28.30
+///     ATOM    185  CA  ILE A  25      24.100  38.300   7.300  1.00 28.30
+///     ATOM    186  C   ILE A  25      24.900  37.100   7.500  1.00 28.30
+///     ATOM    192  N   GLY A  26      24.300  35.900   7.700  1.00 18.50
+///
+/// The correct answer is ±180° but float rounding errors were leading to a dot-product value of:
+///  -1.0000000000000002220446049250313080847263336181641
+/// ...which was then passed to acos which then returned an angle of NaN.
+///
+/// Now, the dot-produt result gets clamped in [-1, 1] before the call to acos.
+BOOST_AUTO_TEST_CASE(dihedral_angle_between_four_points_handles_float_difficulties) {
+	BOOST_CHECK_EQUAL(
+		angle_in_degrees( dihedral_angle_between_four_points(
+			coord{ 25.0, 39.5, 7.1 },
+			coord{ 24.1, 38.3, 7.3 },
+			coord{ 24.9, 37.1, 7.5 },
+			coord{ 24.3, 35.9, 7.7 }
+		) ),
+		-180.0
+	);
+}
+
 BOOST_AUTO_TEST_SUITE(json)
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_origin) {
