@@ -7,7 +7,19 @@
 
 **User documentation**: at [Read the Docs](http://cath-tools.readthedocs.org/en/latest/ "The CATH Tools user documentation at Read the Docs")
 
-**Code**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools "The CATH Tools GitHub respository") 
+**Code**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools "The CATH Tools GitHub respository")
 
-**Builds**: at [Travis-CI](https://travis-ci.org/UCLOrengoGroup/cath-tools "The CATH Tools Travis-CI builds") 
+**Builds**: at [Travis-CI](https://travis-ci.org/UCLOrengoGroup/cath-tools "The CATH Tools Travis-CI builds")
 
+About
+-----
+
+Protein structure tools such as SSAP, as used by the [Orengo Group](https://www.ucl.ac.uk/orengo-group "Orengo Group website") in curating [CATH](http://www.cathdb.info/ "CATH website").
+
+SSAP algorithm (`cath-ssap`) devised by Christine A Orengo and William R Taylor. Please cite: *Protein Structure Alignment*, Taylor and Orengo, Journal of Molecular Biology 208, 1-22, PMID: 2769748.
+
+Since then, many people have contributed to this code, most notably:
+  * Tony E Lewis               (2011  - ....)
+  * Oliver C Redfern           (~2003 - 2011)
+  * James E Bray, Ian Sillitoe (~2000 - 2003)
+  * Andrew C R Martin          (considerable edits around 2001)
