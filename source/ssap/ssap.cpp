@@ -1131,8 +1131,14 @@ bool cath::residues_have_similar_area_angle_props(const residue &arg_residue_i, 
 	const int    buried_i                   = get_accessi_of_residue( arg_residue_i );
 	const int    buried_j                   = get_accessi_of_residue( arg_residue_j );
 	const size_t buried_difference          = numeric_cast<size_t>( difference( buried_i, buried_j ) );
-	const size_t phi_angle_diff_in_degrees  = numeric_cast<size_t>( round( difference( angle_in_degrees( arg_residue_i.get_phi_angle() ), angle_in_degrees( arg_residue_j.get_phi_angle() ) ) ) );
-	const size_t psi_angle_diff_in_degrees  = numeric_cast<size_t>( round( difference( angle_in_degrees( arg_residue_i.get_psi_angle() ), angle_in_degrees( arg_residue_j.get_psi_angle() ) ) ) );
+	const size_t phi_angle_diff_in_degrees  = numeric_cast<size_t>( round( difference(
+		angle_in_degrees( arg_residue_i.get_phi_angle() ),
+		angle_in_degrees( arg_residue_j.get_phi_angle() )
+	) ) );
+	const size_t psi_angle_diff_in_degrees  = numeric_cast<size_t>( round( difference(
+		angle_in_degrees( arg_residue_i.get_psi_angle() ),
+		angle_in_degrees( arg_residue_j.get_psi_angle() )
+	) ) );
 
 	const size_t mean_angle_diff_in_degrees = ( phi_angle_diff_in_degrees + psi_angle_diff_in_degrees ) / 2;
 	const size_t accessibility_sum          = arg_residue_i.get_access() + arg_residue_j.get_access();
@@ -1152,13 +1158,8 @@ bool cath::residues_have_similar_area_angle_props(const residue &arg_residue_i, 
 //	cerr << "Buried difference          : " << buried_difference                           << endl;
 
 	// Combined areas and angles
-	if (buried_difference + accessibility_sum        + mean_angle_diff_in_degrees < global_res_sim_cutoff) {
-//	if (buried_difference + accessibility_difference + mean_angle_diff_in_degrees < global_res_sim_cutoff) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return ( buried_difference + accessibility_sum        + mean_angle_diff_in_degrees < global_res_sim_cutoff );
+//	return ( buried_difference + accessibility_difference + mean_angle_diff_in_degrees < global_res_sim_cutoff );
 }
 
 /// \brief Populate the scores for the upper (ie major, whole) matrix
