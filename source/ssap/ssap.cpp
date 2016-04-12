@@ -1116,9 +1116,12 @@ void cath::update_best_pair_selections(deque<selected_pair> &arg_selected_pairs,
 /// Current globals used:
 ///  - global_residue_similarity_cutoff
 ///
-/// \todo Consider two potential problems in this code:
+/// \todo Consider potential problems in this code:
 ///       -# the code checks the sum of accessibilities rather than the difference which makes little sense
 ///          (although the difference is implied in buried_difference)
+///       -# Natalie has identified a pair of very similar structures for which cath-ssap gives all zeroes
+///          that are handled correctly if the difference is used here rather than the sum.
+///          See: https://github.com/UCLOrengoGroup/cath-tools/issues/8
 ///       -# the code doesn't allow for wrapping of phi and psi angles
 ///       -# the code doesn't do anything to handle undetermined phi/psi angles at breaks in the chain
 ///          (which, at present, get set to 360.0)
