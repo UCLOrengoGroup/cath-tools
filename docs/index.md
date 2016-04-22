@@ -9,6 +9,8 @@
 
 **Code**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools "The CATH Tools GitHub respository")
 
+**Supplementary Materials**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools-supplementary "The CATH Tools Supplementary GitHub respository")
+
 **Builds**: at [Travis-CI](https://travis-ci.org/UCLOrengoGroup/cath-tools "The CATH Tools Travis-CI builds")
 
 About
