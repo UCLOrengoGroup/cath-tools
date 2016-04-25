@@ -180,37 +180,37 @@ using boost::numeric_cast;
 /// \brief The maximum permitted length for windows
 ///
 /// \todo Switch everything to vectors and eradicate the need for this
-const size_t       MAX_WINDOW_LENGTH       =                      5000;
+constexpr size_t    MAX_WINDOW_LENGTH       =                      5000;
 
 /// \brief The maximum sequence length that the statically allocated arrays will permit
 ///
 /// \todo Switch everything to vectors and eradicate the need for this
-const size_t       MAX_PROTEIN_LENGTH       =                     3000;
+constexpr size_t    MAX_PROTEIN_LENGTH       =                     3000;
 
 /// \brief The maximum alignment length that the statically allocated arrays will permit
 ///
 /// \todo Switch everything to vectors and eradicate the need for this
-const size_t       MAX_ALIGNMENT_LENGTH    = MAX_PROTEIN_LENGTH +  500;
+constexpr size_t    MAX_ALIGNMENT_LENGTH    = MAX_PROTEIN_LENGTH +  500;
 
 /// \brief The number of top-scoring residue pairs to select
-const size_t       NUM_SELECTIONS_TO_SAVE   =  20;
+constexpr size_t    NUM_SELECTIONS_TO_SAVE   =  20;
 
 /// \brief The fixed length of the string into which SSAP output lines are written
 ///
 /// \todo Make those output lines strings and hence eradicate the need for this
-const size_t       SSAP_LINE_LENGTH         = 200;
+constexpr size_t    SSAP_LINE_LENGTH         = 200;
 
 /// \brief The minimum score that a lower matrix dynamic programming must achieve before its resulting alignment's scores
 ///        get added to the upper matrix
 ///
 /// Note: It is not yet quite clear why the normalisation factor (that's used to normalise the total alignment score)
 ///       is as it is.
-const ptrdiff_t    MIN_LOWER_MAT_RES_SCORE  =  10;
+constexpr ptrdiff_t MIN_LOWER_MAT_RES_SCORE  =  10;
 
-const size_t       SEC_STRUC_PLANAR_W_ANGLE =  10;
-const size_t       SEC_STRUC_PLANAR_A_ANGLE =  60;
-const size_t       SEC_STRUC_PLANAR_B_ANGLE =   6;
-const size_t       SEC_STRUC_PLANAR_C_ANGLE =  10;
+constexpr size_t    SEC_STRUC_PLANAR_W_ANGLE =  10;
+constexpr size_t    SEC_STRUC_PLANAR_A_ANGLE =  60;
+constexpr size_t    SEC_STRUC_PLANAR_B_ANGLE =   6;
+constexpr size_t    SEC_STRUC_PLANAR_C_ANGLE =  10;
 
 // \todo Put these matrices in classes. This will help with:
 //        - decent memory management
