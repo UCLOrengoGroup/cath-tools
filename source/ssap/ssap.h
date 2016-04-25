@@ -26,6 +26,7 @@
 #include "alignment/align_type_aliases.h"
 #include "common/path_type_aliases.h"
 #include "common/type_aliases.h"
+#include "ssap/compare_upper_cell_result.h"
 
 #include <iostream>
 #include <string>
@@ -112,12 +113,12 @@ namespace cath {
 	                                 const entry_querier &,
 	                                 const bool &);
 
-	void compare_upper_cell(const protein &,
-	                        const protein &,
-	                        const size_t &,
-	                        const size_t &,
-	                        const entry_querier &,
-	                        const double &);
+	compare_upper_cell_result compare_upper_cell(const protein &,
+	                                             const protein &,
+	                                             const size_t &,
+	                                             const size_t &,
+	                                             const entry_querier &,
+	                                             const double &);
 
 	score_type context_sec(const protein &,
 	                       const protein &,

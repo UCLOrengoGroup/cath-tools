@@ -753,6 +753,12 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 			global_res_score = true;
 		}
 		else {
+			// BOOST_LOG_TRIVIAL( warning ) << "Saving zero scores after an attempted alignment."
+			//                                 " This likely indicates a problem. If you think it does"
+			//                                 " and none of the previous messages has referenced an existing GitHub Issue"
+			//                                 " (or if you think there isn't any problem and this message is spurious)"
+			//                                 " please consider raising a new issue at https://github.com/UCLOrengoGroup/cath-tools/issues";
+
 			// v1.14 JEB - Save zero scores
 			save_zero_scores(arg_protein_a, arg_protein_b);
 			global_res_score = false;
@@ -1198,7 +1204,7 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 	// If this is a later, alignment-refining pass of residue this use the selected
 	// set of top-scoring residue pairs
 	const bool res_not_ss__hacky = arg_entry_querier.temp_hacky_is_residue();
-	const bool using_selections         = (res_not_ss__hacky && arg_align_pass);
+	const bool using_selections  = (res_not_ss__hacky && arg_align_pass);
 
 	// Set number of elements in protein A and B to compare
 
@@ -1217,6 +1223,8 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 
 	size_t num_potential_upper_cell_comps = 0;
 	size_t num_actual_upper_cell_comps    = 0;
+	bool   found_non_zero_cell            = false;
+	bool   found_threshold_cell           = false;
 
 	// Reverse-iterate over the elements in arg_protein_b
 	// (or over the selections if using them)
@@ -1251,32 +1259,70 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 			++num_potential_upper_cell_comps;
 			if ( should_compare_pair ) {
 				++num_actual_upper_cell_comps;
-				compare_upper_cell( arg_protein_a, arg_protein_b, ctr_a, jval, arg_entry_querier, normalisation );
+				const auto compare_result = compare_upper_cell(
+					arg_protein_a,
+					arg_protein_b,
+					ctr_a,
+					jval,
+					arg_entry_querier,
+					normalisation
+				);
+				found_non_zero_cell  = found_non_zero_cell  || ( compare_result != compare_upper_cell_result::ZERO   );
+				found_threshold_cell = found_threshold_cell || ( compare_result == compare_upper_cell_result::SCORED );
 			}
 		}
 	}
 
-	BOOST_LOG_TRIVIAL( debug ) << "When populating upper_score_matrix, ("
-	                           << arg_entry_querier.get_entry_name()
-	                           << ", pass "
-	                           << arg_align_pass
-	                           << ") compared "
+
+	const string msg_context_prfx = "When populating upper_score_matrix ("
+	                                + arg_entry_querier.get_entry_name()
+	                                + "; pass "
+	                                + ::std::to_string( arg_align_pass )
+	                                + "), ";
+	BOOST_LOG_TRIVIAL( debug ) << msg_context_prfx
+	                           << "compared "
 	                           << num_actual_upper_cell_comps
 	                           << " residue pairs out of a possible "
 	                           << num_potential_upper_cell_comps;
+	if ( res_not_ss__hacky && ! arg_align_pass ) {
+		if ( num_actual_upper_cell_comps == 0 ) {
+			BOOST_LOG_TRIVIAL( warning ) << msg_context_prfx
+			                             << "chose no residue pairs out of a possible "
+			                             << num_potential_upper_cell_comps
+			                             << " to compare."
+			                                " This may relate to https://github.com/UCLOrengoGroup/cath-tools/issues/8"
+			                                " - please see that issue for more information and please add a comment"
+			                                " if it's causing you problems (or open a new issue if this message is spurious).";
+		}
+		else if ( ! found_threshold_cell ) {
+			if ( found_non_zero_cell ) {
+				BOOST_LOG_TRIVIAL( warning ) << msg_context_prfx
+				                             << "attempted alignment for "
+				                             << num_potential_upper_cell_comps
+				                             << " cells in the upper matrix and though some achieved non-zero scores,"
+				                                " none of them reached the threshold after their normalisation";
+			}
+			else {
+				BOOST_LOG_TRIVIAL( warning ) << msg_context_prfx
+				                             << "attempted alignment for "
+				                             << num_potential_upper_cell_comps
+				                             << " cells in the upper matrix but none of them achieved non-zero scores";
+			}
+		}
+	}
 }
 
 /// \brief Compares residue environments in lower level matrix, if score above threshold,
 ///        adds alignment path to upper level matrix
 ///
 /// \todo Figure out what's going on
-void cath::compare_upper_cell(const protein       &arg_protein_a,                   ///< The first  protein
-                              const protein       &arg_protein_b,                   ///< The second protein
-                              const size_t        &arg_a_view_from_index__offset_1, ///< The index of the residue/secondary-structure in the first  protein on which this should be performed
-                              const size_t        &arg_b_view_from_index__offset_1, ///< The index of the residue/secondary-structure in the second protein on which this should be performed
-                              const entry_querier &arg_entry_querier,               ///< The entry_querier to query either residues or secondary structures
-                              const double        &arg_normalisation                ///< The value that should be used to normalise the score for residues before comparison against MIN_LOWER_MAT_RES_SCORE
-                              ) {
+compare_upper_cell_result cath::compare_upper_cell(const protein       &arg_protein_a,                   ///< The first  protein
+                                                   const protein       &arg_protein_b,                   ///< The second protein
+                                                   const size_t        &arg_a_view_from_index__offset_1, ///< The index of the residue/secondary-structure in the first  protein on which this should be performed
+                                                   const size_t        &arg_b_view_from_index__offset_1, ///< The index of the residue/secondary-structure in the second protein on which this should be performed
+                                                   const entry_querier &arg_entry_querier,               ///< The entry_querier to query either residues or secondary structures
+                                                   const double        &arg_normalisation                ///< The value that should be used to normalise the score for residues before comparison against MIN_LOWER_MAT_RES_SCORE
+                                                   ) {
 	const bool   res_not_ss__hacky = arg_entry_querier.temp_hacky_is_residue();
 	const size_t length_a          = arg_entry_querier.get_length(arg_protein_a);
 	const size_t length_b          = arg_entry_querier.get_length(arg_protein_b);
@@ -1326,8 +1372,11 @@ void cath::compare_upper_cell(const protein       &arg_protein_a,               
 		}
 	}
 
-	if (( res_not_ss__hacky && score < MIN_LOWER_MAT_RES_SCORE ) || score == 0) {
-		return;
+	if ( score == 0 ) {
+		return compare_upper_cell_result::ZERO;
+	}
+	if ( res_not_ss__hacky && score < MIN_LOWER_MAT_RES_SCORE ) {
+		return compare_upper_cell_result::NON_ZERO_BELOW_THRESHOLD;
 	}
 
 	// If yes, trace distance (lower) level alignment path, onto residue (upper) level matrix
@@ -1351,6 +1400,7 @@ void cath::compare_upper_cell(const protein       &arg_protein_a,               
 //			cerr <<"\t["   << get_plural_name(arg_entry_querier) << "]" << endl;
 		}
 	}
+	return compare_upper_cell_result::SCORED;
 }
 
 
