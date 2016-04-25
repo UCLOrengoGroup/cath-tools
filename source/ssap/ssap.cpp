@@ -151,8 +151,8 @@
 #include "structure/protein/residue.h"
 #include "structure/protein/sec_struc.h"
 #include "structure/protein/sec_struc_planar_angles.h"
-#include "superposition/superposition.h"
 #include "superposition/io/superposition_io.h"
+#include "superposition/superposition.h"
 
 #include <algorithm>
 #include <cassert>
