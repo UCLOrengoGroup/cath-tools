@@ -5,7 +5,7 @@
 **Additional Binaries**:
 [secmake](http://github.com/UCLOrengoGroup/secmake) (makes the sec files that cath-ssap uses)
 
-**User documentation**: at [Read the Docs](http://cath-tools.readthedocs.org/en/latest/ "The CATH Tools user documentation at Read the Docs")
+**User documentation**: at [Read the Docs](http://cath-tools.readthedocs.io/en/latest/ "The CATH Tools user documentation at Read the Docs")
 
 **Code**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools "The CATH Tools GitHub respository")
 
