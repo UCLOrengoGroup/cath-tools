@@ -72,6 +72,7 @@ addons:
     paths:
     - release_build/cath-assign-domains
     - release_build/cath-refine-align
+    - release_build/cath-resolve-hits
     - release_build/cath-ssap
     - release_build/cath-superpose
 
