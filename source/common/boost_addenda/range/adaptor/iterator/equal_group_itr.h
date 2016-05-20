@@ -127,7 +127,7 @@ namespace cath {
 				arg_unequal_function
 			);
 			return ( next_itr == arg_end_itr ) ? arg_end_itr
-			                                   : next( next_itr );
+			                                   : std::next( next_itr );
 		}
 
 		/// \brief TODOCUMENT
