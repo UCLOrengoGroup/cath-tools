@@ -23,9 +23,6 @@
 
 #include <memory>
 
-namespace cath { namespace score { class protein_only_length_getter; } }
-namespace cath { namespace score { class sym_protein_only_length_getter; } }
-
 namespace cath {
 	namespace common {
 		namespace detail {
@@ -39,12 +36,6 @@ namespace cath {
 			                              ) {
 				return arg_value.clone();
 			}
-
-			template <>
-			std::unique_ptr<score::protein_only_length_getter> make_clone(const score::protein_only_length_getter &);
-
-			template <>
-			std::unique_ptr<score::sym_protein_only_length_getter> make_clone(const score::sym_protein_only_length_getter &);
 		}
 	}
 }

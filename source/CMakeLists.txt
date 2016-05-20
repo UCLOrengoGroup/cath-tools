@@ -770,6 +770,7 @@ set(
 	NORMSOURCES_SCORE_LENGTH_GETTER
 		score/length_getter/geometric_mean_length_getter.cpp
 		score/length_getter/length_getter.cpp
+		score/length_getter/length_getter_make_clone.cpp
 		score/length_getter/length_of_first_getter.cpp
 		score/length_getter/length_of_longer_getter.cpp
 		score/length_getter/length_of_second_getter.cpp

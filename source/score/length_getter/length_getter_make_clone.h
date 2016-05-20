@@ -1,5 +1,5 @@
 /// \file
-/// \brief The make_clone definitions
+/// \brief The make_clone header
 
 /// \copyright
 /// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
@@ -18,4 +18,25 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "make_clone.h"
+#ifndef LENGTH_GETTER_MAKE_CLONE_H_INCLUDED
+#define LENGTH_GETTER_MAKE_CLONE_H_INCLUDED
+
+#include "common/clone/detail/make_clone.h"
+
+namespace cath { namespace score { class protein_only_length_getter; } }
+namespace cath { namespace score { class sym_protein_only_length_getter; } }
+
+namespace cath {
+	namespace common {
+		namespace detail {
+			
+			template <>
+			std::unique_ptr<score::protein_only_length_getter> make_clone(const score::protein_only_length_getter &);
+
+			template <>
+			std::unique_ptr<score::sym_protein_only_length_getter> make_clone(const score::sym_protein_only_length_getter &);
+		}
+	}
+}
+
+#endif

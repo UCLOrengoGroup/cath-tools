@@ -27,6 +27,7 @@
 #include "score/aligned_pair_score/detail/score_common_coord_handler.h"
 #include "score/aligned_pair_score/ssap_score/ssap_score_accuracy.h"
 #include "score/aligned_pair_score/ssap_score/ssap_score_post_processing.h"
+#include "score/length_getter/length_getter_make_clone.h"
 #include "score/length_getter/length_of_longer_getter.h"
 #include "ssap/distance_score_formula.h"
 

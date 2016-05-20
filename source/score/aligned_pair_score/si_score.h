@@ -25,6 +25,7 @@
 #include "common/clone/clone_ptr.h"
 #include "score/aligned_pair_score/aligned_pair_score.h"
 #include "score/aligned_pair_score/rmsd_score.h"
+#include "score/length_getter/length_getter_make_clone.h"
 #include "score/length_getter/length_of_shorter_getter.h"
 #include "score/length_getter/num_aligned_length_getter.h"
 

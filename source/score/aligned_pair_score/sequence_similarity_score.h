@@ -26,6 +26,7 @@
 #include "score/aligned_pair_score/aligned_pair_score.h"
 #include "score/aligned_pair_score/substitution_matrix/identity_substitution_matrix.h"
 #include "score/aligned_pair_score/substitution_matrix/substitution_matrix.h"
+#include "score/length_getter/length_getter_make_clone.h"
 #include "score/length_getter/length_of_longer_getter.h"
 #include "structure/structure_type_aliases.h"
 
