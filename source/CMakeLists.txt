@@ -344,6 +344,11 @@ set(
 )
 
 set(
+	NORMSOURCES_EXECUTABLES_CATH_RESOLVE_HITS
+		executables/cath_resolve_hits/cath_resolve_hits.cpp
+)
+
+set(
 	NORMSOURCES_EXECUTABLES_CATH_SCORE_ALIGN
 		executables/cath_score_align/cath_score_align.cpp
 )
@@ -373,6 +378,7 @@ set(
 		${NORMSOURCES_EXECUTABLES_CATH_ASSIGN_DOMAINS}
 		${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
 		${NORMSOURCES_EXECUTABLES_CATH_REFINE_ALIGN}
+		${NORMSOURCES_EXECUTABLES_CATH_RESOLVE_HITS}
 		${NORMSOURCES_EXECUTABLES_CATH_SCORE_ALIGN}
 		${NORMSOURCES_EXECUTABLES_CATH_SSAP}
 		${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}
@@ -575,6 +581,20 @@ set(
 		${NORMSOURCES_OPTIONS_EXECUTABLE}
 		${NORMSOURCES_OPTIONS_OPTIONS_BLOCK}
 		${NORMSOURCES_OPTIONS_OUTPUTTER}
+)
+
+set(
+	NORMSOURCES_RESOLVE_HITS
+		resolve_hits/hit.cpp
+		resolve_hits/hit_arch.cpp
+		resolve_hits/hit_list.cpp
+		resolve_hits/hit_resolver.cpp
+		resolve_hits/hit_seg.cpp
+		resolve_hits/masked_bests_cache.cpp
+		resolve_hits/masked_bests_cacher.cpp
+		resolve_hits/res_arrow.cpp
+		resolve_hits/scored_arch_proxy.cpp
+		resolve_hits/scored_hit_arch.cpp
 )
 
 set(
@@ -1398,6 +1418,13 @@ set(
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS
+		resolve_hits/hit_list_test.cpp
+		resolve_hits/hit_seg_test.cpp
+		resolve_hits/hit_test.cpp
+)
+
+set(
 	TESTSOURCES_SCAN_DETAIL_CHECK_SCAN_TEST_ONLY
 		scan/detail/check_scan/test_only/check_scan_on_final_alignment_test.cpp
 )
@@ -1689,6 +1716,7 @@ set(
 		${NORMSOURCES_EXCEPTION}
 		${NORMSOURCES_FILE}
 		${NORMSOURCES_OPTIONS}
+		 ${NORMSOURCES_RESOLVE_HITS}
 		${NORMSOURCES_SCAN}
 		${NORMSOURCES_SCORE}
 		${NORMSOURCES_SSAP}
@@ -1706,6 +1734,7 @@ set(
 		${TESTSOURCES_EXCEPTION}
 		${TESTSOURCES_FILE}
 		${TESTSOURCES_OPTIONS}
+		 ${TESTSOURCES_RESOLVE_HITS}
 		${TESTSOURCES_SCAN}
 		${TESTSOURCES_SCORE}
 		${TESTSOURCES_SSAP}
@@ -1733,6 +1762,11 @@ add_library(
 add_library(
 	normsources_cath_superpose
 		${NORMSOURCES_CATH_SUPERPOSE}
+)
+
+add_library(
+	normsources_resolve_hits
+		${NORMSOURCES_RESOLVE_HITS}
 )
 
 add_library(
@@ -1770,6 +1804,13 @@ add_executable(
 )
 
 add_executable(
+	cath-resolve-hits
+		${NORMSOURCES_EXECUTABLES_CATH_RESOLVE_HITS}
+		${NORMSOURCES_COMMON}
+		${NORMSOURCES_EXCEPTION}
+)
+
+add_executable(
 	cath-score-align
 		${NORMSOURCES_EXECUTABLES_CATH_SCORE_ALIGN}
 )
@@ -1790,6 +1831,8 @@ target_link_libraries( build-test          normsources_cath_superpose normsource
 target_link_libraries( cath-assign-domains                                             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 # target_link_libraries( cath-assign-domains normsources_cath_assign-domains             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-refine-align   normsources_cath_refine_align               std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+# target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                    biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+  target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                     ${Boost_LIBRARIES}               )
 target_link_libraries( cath-score-align    normsources_cath_score_align                std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-ssap                                                       std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-superpose      normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
