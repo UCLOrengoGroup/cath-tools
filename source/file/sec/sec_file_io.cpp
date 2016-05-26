@@ -229,6 +229,9 @@ sec_struc_planar_angles_vec cath::file::parse_sec_angles_line(const string &arg_
 			line_parts.pop_front();
 			const double planar_angle_z       = stod( line_parts.front() );
 			line_parts.pop_front();
+			if ( ! isfinite( planar_angle_x ) || ! isfinite( planar_angle_minus_y ) || ! isfinite( planar_angle_z ) ) {
+				BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to get a finite number from a column whilst parsing a planar angles value from a sec file, which probably means the line has an infinite or 'nan' (not-a-number) value.\nRecord was \"" + arg_sec_line_string + "\""));
+			}
 			planar_angles.push_back(sec_struc_planar_angles(
 				planar_angle_x,
 				planar_angle_minus_y,
