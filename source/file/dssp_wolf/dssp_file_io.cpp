@@ -24,6 +24,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/log/trivial.hpp>
 
 #include "common/file/open_fstream.h"
 #include "common/size_t_literal.h"
@@ -104,14 +105,31 @@ dssp_file cath::file::read_dssp(istream &arg_istream ///< The istream from which
 //		cerr << "Parse residue " << residue_ctr << " from \"" << dssp_residue_line << "\"" << endl;
 		const size_chain_residue_tuple  residue_details      = parse_dssp_residue_line( dssp_residue_line );
 		const size_t                   &parsed_residue_index = get<0>( residue_details );
-//		const chain_label              &the_chain_label      = get<1>( residue_details );
+		const chain_label              &the_chain_label      = get<1>( residue_details );
 		const residue                  &parsed_residue       = get<2>( residue_details );
 
 		if ( ! dssp_entry_is_null && parsed_residue_index != residue_ctr ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Error in DSSP sequential residue numbers"));
 		}
 //		cerr << "Chain " << the_chain_label << " : " << parsed_residue << endl;
-		new_residues.push_back( parsed_residue );
+
+		// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.
+		// Though that's a bit rubbish, it shouldn't break the whole comparison
+		// so if that's detected, just warn and move on (without appending to new_residues).
+		if ( ! dssp_entry_is_null && ! new_residues.empty() && new_residues.back().get_pdb_residue_name() == parsed_residue.get_pdb_residue_name() ) {
+			BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing DSSP file, found conflicting consecutive entries for residue \""
+				<< parsed_residue.get_pdb_residue_name()
+				<< "\" on chain '"
+				<< the_chain_label
+				<< "' (with amino acids \""
+				<< new_residues.back().get_amino_acid().get_code()
+				<< "\" and then \""
+				<< parsed_residue.get_amino_acid().get_code()
+				<< "\") - ignoring latter entry";
+		}
+		else {
+			new_residues.push_back( parsed_residue );
+		}
 		++residue_ctr;
 	}
 

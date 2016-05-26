@@ -304,6 +304,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 	string          prev_amino_acid_3_char_code;
 	residue_name    prev_res_name;
 	pdb_atom_vec    prev_atoms;
+	bool            prev_warned_conflict = false;
 
 	// Loop over the lines of the file
 	//
@@ -337,27 +338,33 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 					)
 				);
 				prev_atoms.clear();
+				prev_warned_conflict = false;
 			}
 
-			// If previous atoms have been seen in this residue but the amino_acids doesn't
-			// match then throw an exception
+			// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.
+			// Though that's a bit rubbish, it shouldn't break the whole comparison
+			// so if that's detected, just warn and move on (without appending to new_residues).
 			if ( ! prev_atoms.empty() && amino_acid_3_char_code != prev_amino_acid_3_char_code ) {
-				BOOST_LOG_TRIVIAL( warning ) << "Amino acid \""
-				                             << amino_acid_3_char_code
-				                             << "\" for residue \""
-				                             << res_name
-				                             << "\" on chain '"
-				                             << chain
-				                             << "' conflicts with previous amino acid \""
-				                             << prev_amino_acid_3_char_code
-				                             << "\"";
+				if ( ! prev_warned_conflict ) {
+					BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing PDB file, found conflicting consecutive entries for residue \""
+					                             << res_name
+					                             << "\" on chain '"
+					                             << chain
+					                             << "' (with amino acids \""
+					                             << prev_amino_acid_3_char_code
+					                             << "\" and then \""
+					                             << amino_acid_3_char_code
+					                             << "\") - ignoring latter entry (and any further entries)";
+					prev_warned_conflict = true;
+				}
 			}
-
-			// Update the records of previously seen atoms
-			prev_chain                  = chain;
-			prev_amino_acid_3_char_code = amino_acid_3_char_code;
-			prev_res_name               = res_name;
-			prev_atoms.push_back( atom );
+			// Otherwise update the records of previously seen atoms
+			else {
+				prev_chain                  = chain;
+				prev_amino_acid_3_char_code = amino_acid_3_char_code;
+				prev_res_name               = res_name;
+				prev_atoms.push_back( atom );
+			}
 		}
 	};
 
