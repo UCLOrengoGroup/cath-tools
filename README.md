@@ -16,7 +16,7 @@
 About
 -----
 
-Protein structure tools such as SSAP, as used by the [Orengo Group](https://www.ucl.ac.uk/orengo-group "Orengo Group website") in curating [CATH](http://www.cathdb.info/ "CATH website").
+Protein structure tools such as SSAP, as used by the [Orengo Group](https://www.ucl.ac.uk/orengo-group "Orengo Group website") in the curation of [CATH](http://www.cathdb.info/ "CATH website").
 
 SSAP algorithm (`cath-ssap`) devised by Christine A Orengo and William R Taylor. Please cite: *Protein Structure Alignment*, Taylor and Orengo, Journal of Molecular Biology 208, 1-22, PMID: 2769748.
 
