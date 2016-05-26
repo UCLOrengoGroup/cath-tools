@@ -21,6 +21,7 @@
 #include "residue.h"
 
 #include <boost/lexical_cast.hpp>
+#include <boost/log/trivial.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/throw_exception.hpp>
@@ -408,22 +409,41 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue &arg_dssp_residue
 	const amino_acid dssp_amino_acid = arg_dssp_residue.get_amino_acid();
 	const amino_acid pdb_amino_acid  = arg_pdb_residue.get_amino_acid();
 	if ( dssp_amino_acid != pdb_amino_acid ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception(
-			"Amino acid \""
-			+ dssp_amino_acid.get_code()
-			+ "\" parsed from DSSP for residue \""
-			+ lexical_cast<string>( pdb_residue_name )
-			+ "\" does not match amino acid \""
-			+ pdb_amino_acid.get_code()
-			+ "\" parsed from PDB"
-		));
+		// If DSSP is UNK/X and PDB is either PYL/O or SEC/U, then just accept it
+		// (and go with the PDB decision)
+		//
+		// \todo Should this also handle ASX/B, GLX/Z & XLE/J in the same way?
+		const bool dssp_is_unk = ( dssp_amino_acid == amino_acid{ 'X' } );
+		const bool pdb_is_pyl  = ( pdb_amino_acid  == amino_acid{ 'O' } );
+		const bool pdb_is_sec  = ( pdb_amino_acid  == amino_acid{ 'U' } );
+		if ( dssp_is_unk && ( pdb_is_pyl || pdb_is_sec ) ) {
+			BOOST_LOG_TRIVIAL( warning ) << "The amino acid \""
+				<< pdb_amino_acid.get_code()
+				<< "\" parsed from a PDB for residue \""
+				<< lexical_cast<string>( pdb_residue_name )
+				<< "\" does not match amino acid \""
+				<< dssp_amino_acid.get_code()
+				<< "\" parsed from a DSSP - continuing because it looks "
+				<< "like nothing worse than DSSP not recognising a non-standard amino-acid code";
+		}
+		else {
+			BOOST_THROW_EXCEPTION(invalid_argument_exception(
+				"Amino acid \""
+				+ dssp_amino_acid.get_code()
+				+ "\" parsed from DSSP for residue \""
+				+ lexical_cast<string>( pdb_residue_name )
+				+ "\" does not match amino acid \""
+				+ pdb_amino_acid.get_code()
+				+ "\" parsed from PDB"
+			));
+		}
 	}
 
 	// Return a new residue that takes the accessibility and secondary struct from the DSSP residue
 	// and everything else from the PDB residue
 	const residue new_residue(
 		pdb_residue_name,
-		arg_pdb_residue.get_amino_acid(),
+		arg_pdb_residue.get_amino_acid(), //< Use the PDB's AA (see notes about PYL/SEC above)
 		arg_pdb_residue.get_carbon_alpha_coord(),
 		arg_pdb_residue.get_carbon_beta_coord(),
 		arg_dssp_residue.get_sec_struc_number(),
