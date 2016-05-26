@@ -154,7 +154,15 @@ size_size_pair_vec cath::file::tally_residue_names(const residue_name_vec &arg_p
 		// If these two residue names don't match then throw a wobbly
 		const residue_name &pdb_res_name = arg_pdb_residue_names[ pdb_residue_ctr ];
 		if ( pdb_res_name != dssp_or_wolf_res_name ) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot match PDB residue " + lexical_cast<string>( pdb_res_name ) + " with DSSP/WOLF residue " + lexical_cast<string>( dssp_or_wolf_res_name )));
+			BOOST_THROW_EXCEPTION(invalid_argument_exception(
+				"Cannot match PDB residue "
+				+ lexical_cast<string>( pdb_res_name )
+				+ " with DSSP/WOLF residue "
+				+ lexical_cast<string>( dssp_or_wolf_res_name )
+				+ " - it may be worth double-checking the DSSP/WOLF file is generated from"
+				  " this version of the PDB file and, if you're using DSSP files, it may be"
+				  " worth ensuring you're using an up-to-date DSSP binary"
+			));
 		}
 
 		// Add this pair of residues to the alignment
