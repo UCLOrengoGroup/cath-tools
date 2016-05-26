@@ -275,7 +275,7 @@ void cath::label_residues_with_sec_strucs(protein &arg_protein,   ///< The prote
 			                             << " for protein " << arg_protein.get_title()
 			                             << " (this is probably because the secondary structure has been read from a sec file"
 			                             << ", which refers to residues by their sequential order"
-			                             << ", whereas the residues have been read from a wolf file"
+			                             << ", whereas the residues have been read from a dssp or wolf file"
 			                             << ", which drops some residues"
 			                             << ", due to atom records removed by splitchains and for other reasons)";
 		}
