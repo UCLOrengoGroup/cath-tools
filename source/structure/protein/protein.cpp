@@ -303,12 +303,13 @@ void cath::label_residues_with_sec_strucs(protein &arg_protein,   ///< The prote
 		}
 
 		// If there is an overlap with the previous, then start updating from the from the first residue after the end of the previous
-		const size_t update_start = there_is_a_preceding_ss ? max( prev_stop + 1, sec_struc_start ) : sec_struc_start;
-		const size_t update_stop  = min( sec_struc_stop, num_residues );
+		const size_t update_start__os1_uncapped = there_is_a_preceding_ss ? max( prev_stop + 1, sec_struc_start ) : sec_struc_start;
+		const size_t update_start__os1          = min( num_residues + 1, update_start__os1_uncapped );
+		const size_t update_stop__os1           = min( num_residues + 1, sec_struc_stop + 1         );
 
 		// Loop over the residues that are covered by this secondary structure, labelling each
-		for (const size_t &residue_ctr : irange( update_start, update_stop + 1 ) ) {
-			residue &my_residue = get_residue_ref_of_index__offset_1( arg_protein, residue_ctr );
+		for (const size_t &residue_ctr__os1 : irange( update_start__os1, update_stop__os1 ) ) {
+			residue &my_residue = get_residue_ref_of_index__offset_1( arg_protein, residue_ctr__os1 );
 			my_residue.set_residue_sec_struc_number( sec_struc_ctr + 1       );
 			my_residue.set_sec_struc_type          ( my_sec_struc.get_type() );
 		}
