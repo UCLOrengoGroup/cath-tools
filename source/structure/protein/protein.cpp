@@ -296,10 +296,9 @@ void cath::label_residues_with_sec_strucs(protein &arg_protein,   ///< The prote
 		}
 		if ( there_is_a_preceding_ss && sec_struc_start <= prev_stop ) {
 			BOOST_LOG_TRIVIAL( warning ) << "Secondary structure starts at residue number " << lexical_cast<string>(sec_struc_start)
-				                           << ", which overlaps with the end of the previous secondary structure at residue number " << lexical_cast<string>(prev_stop)
-				                           << " for protein " << arg_protein.get_title()
-				                           << " - will use the previous secondary structure to label residue(s) within overlapping region.";
-
+			                             << ", which overlaps with the end of the previous secondary structure at residue number " << lexical_cast<string>(prev_stop)
+			                             << " for protein " << arg_protein.get_title()
+			                             << " - will use the previous secondary structure to label residue(s) within overlapping region.";
 		}
 
 		// If there is an overlap with the previous, then start updating from the from the first residue after the end of the previous
