@@ -65,8 +65,8 @@ size_size_pair_vec cath::file::tally_residue_names(const residue_name_vec &arg_p
                                                    ) {
 	BOOST_LOG_TRIVIAL( trace ) << "Tallying PDB residue names: "
 	                           << join( arg_pdb_residue_names          | lexical_casted<string>(), "," )
-							   << " with DSSP/WOLF residue names: "
-							   << join( arg_dssp_or_wolf_residue_names | lexical_casted<string>(), "," );
+	                           << " with DSSP/WOLF residue names: "
+	                           << join( arg_dssp_or_wolf_residue_names | lexical_casted<string>(), "," );
 
 	// Sanity check the inputs
 	//

@@ -83,7 +83,7 @@ dssp_file cath::file::read_dssp(istream &arg_istream ///< The istream from which
 	// Read residues
 	size_t residue_ctr = 1;
 	residue_vec new_residues;
-	while (!arg_istream.eof()) {
+	while ( ! arg_istream.eof()) {
 		string dssp_residue_line;
 		getline(arg_istream, dssp_residue_line);
 
