@@ -126,7 +126,7 @@ target_link_libraries( cath-assign-domains                                      
 # target_link_libraries( cath-assign-domains normsources_cath_assign-domains             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-refine-align   normsources_cath_refine_align               std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 # target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                    biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-  target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                     ${Boost_LIBRARIES} ${RT_LIBRARY} )
+  target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                             pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-score-align    normsources_cath_score_align                std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-ssap                                                       std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-superpose      normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
