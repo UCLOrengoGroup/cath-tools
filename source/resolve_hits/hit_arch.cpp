@@ -26,6 +26,7 @@
 #include "common/boost_addenda/range/adaptor/lexical_casted.h"
 
 #include <string>
+#include <type_traits>
 
 using namespace cath::common;
 using namespace cath::rslv;
@@ -35,7 +36,8 @@ using boost::algorithm::join;
 using std::ostream;
 using std::string;
 
-static_assert( std::is_nothrow_move_assignable   <hit_arch>::value, "" );
+// Come GCC >= 5.0, reinstate this static_assert that should be passing
+//static_assert( std::is_nothrow_move_assignable   <hit_arch>::value, "" );
 static_assert( std::is_nothrow_move_constructible<hit_arch>::value, "" );
 
 /// \brief TODOCUMENT
