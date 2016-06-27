@@ -1618,9 +1618,15 @@ set(
 )
 
 set(
+	TESTSOURCES_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET
+		structure/protein/protein_source_file_set/protein_source_file_set_test.cpp
+)
+
+set(
 	TESTSOURCES_STRUCTURE_PROTEIN
 		structure/protein/amino_acid_test.cpp
 		structure/protein/protein_list_test.cpp
+		${TESTSOURCES_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET}
 		structure/protein/protein_test.cpp
 		structure/protein/residue_test.cpp
 		structure/protein/sec_struc_planar_angles_test.cpp
