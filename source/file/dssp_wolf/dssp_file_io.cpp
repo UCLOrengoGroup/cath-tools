@@ -116,7 +116,10 @@ dssp_file cath::file::read_dssp(istream &arg_istream ///< The istream from which
 		// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.
 		// Though that's a bit rubbish, it shouldn't break the whole comparison
 		// so if that's detected, just warn and move on (without appending to new_residues).
-		if ( ! dssp_entry_is_null && ! new_residues.empty() && new_residues.back().get_pdb_residue_name() == parsed_residue.get_pdb_residue_name() ) {
+		const bool this_is_not_null = ! dssp_entry_is_null;
+		const bool has_prev         = ! new_residues.empty();
+		const bool prev_is_not_null = ( has_prev && ! is_null_residue( new_residues.back() ) );
+		if ( this_is_not_null && prev_is_not_null && new_residues.back().get_pdb_residue_name() == parsed_residue.get_pdb_residue_name() ) {
 			BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing DSSP file, found conflicting consecutive entries for residue \""
 				<< parsed_residue.get_pdb_residue_name()
 				<< "\" on chain '"
