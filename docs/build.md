@@ -5,12 +5,12 @@ Building
 Compiling from Source
 ---------------------
 
-You'll need a fairly good (ie recent) C++ compiler (eg on Ubuntu: sudo apt-get install g++). The code's currently being developed against GCC v4.8.2 / v4.9.2 and Clang v3.6.0.
+You'll need a fairly good (ie recent) C++ compiler (eg on Ubuntu: sudo apt-get install g++). The code's currently being developed against GCC v4.9.2 and Clang v3.6.0.
 
 This project currently uses the superposition routine from [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage"), which is included as a Git submodule. There are 2 other dependencies/prerequisites:
 
  * **CMake** (&ge; v2.8.8  ) : Used to build the software
- * **Boost** (&ge; v1.57.0?) : Used heavily the Boost libraries (both headers and libraries) must be installed on the build machine.
+ * **Boost** (&ge; v1.58.0 ) : Used heavily the Boost libraries (both headers and libraries) must be installed on the build machine.
 
 ### Boost
 
@@ -138,3 +138,49 @@ If your machine has Perl, you can also try running the Perl tests (which include
 
  * Set the environment variable CATH_TOOLS_BIN_DIR to the location of the built binaries
  * From the root directory of the project, run `prove -l -v t`
+
+Building on CentOS v6 (or v7?) Machines
+=======================================
+
+Find a CentOS 6 machine and then install some packages as root:
+
+~~~~~
+yum install bzip2-devel cmake git
+yum install centos-release-scl-rh
+yum install devtoolset-3-gcc devtoolset-3-gcc-c++
+~~~~~
+
+Then ssh to the build machine as yourself, find some working directory with at least a few Gb of free space, and then substitute it in for `WHATEVER_YOU_HAVE_CHOSEN_AS_YOUR_BUILD_ROOT_DIRECTORY` in these commands:
+
+Setup:
+~~~~~
+scl enable devtoolset-3 bash
+export BUILD_ROOT_DIR=WHATEVER_YOU_HAVE_CHOSEN_AS_YOUR_BUILD_ROOT_DIRECTORY
+~~~~~
+
+Build Boost:
+
+~~~~~
+mkdir -p ${BUILD_ROOT_DIR}/boost_1_58_0_build/{include,lib}
+cd ${BUILD_ROOT_DIR}/
+wget "http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz"
+tar -zxvf boost_1_58_0.tar.gz
+cd ${BUILD_ROOT_DIR}/boost_1_58_0/
+./bootstrap.sh --prefix=${BUILD_ROOT_DIR}/boost_1_58_0_build
+./b2 -j2         --layout=tagged variant=release
+./b2 -j2 install --layout=tagged variant=release
+~~~~~
+
+Build cath-tools:
+~~~~~
+cd ${BUILD_ROOT_DIR}/
+git clone --recursive https://github.com/UCLOrengoGroup/cath-tools.git
+
+mkdir -p ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
+cd       ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=${BUILD_ROOT_DIR}/boost_1_58_0_build ..
+cd       ${BUILD_ROOT_DIR}/cath-tools/
+make -C gcc_relwithdebinfo -k -j2
+ls -l ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
+~~~~~
+
