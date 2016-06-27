@@ -39,7 +39,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			res_arrow stop;
 
-			constexpr void sanity_check() const;
+			//constexpr void sanity_check() const;
 
 		public:
 			constexpr hit_seg(const res_arrow &,
@@ -48,8 +48,8 @@ namespace cath {
 			constexpr const res_arrow & get_start_arrow() const;
 			constexpr const res_arrow & get_stop_arrow() const;
 
-			constexpr hit_seg & set_start_arrow(const res_arrow &);
-			constexpr hit_seg & set_stop_arrow(const res_arrow &);
+			hit_seg & set_start_arrow(const res_arrow &);
+			hit_seg & set_stop_arrow(const res_arrow &);
 
 			static auto get_hit_seg_start_less() {
 				return [] (const hit_seg &x, const hit_seg &y) {
@@ -62,19 +62,22 @@ namespace cath {
 		template <typename... Ts>
 		constexpr void constexpr_ignore_unused(Ts &&...) {}
 
-		/// \brief TODOCUMENT
-		constexpr void hit_seg::sanity_check() const {
-			const int dummy_var = ( start < stop ) ? 0
-			                                       : throw std::invalid_argument( "Cannot create hit_seg with start residue before the stop residue" );
-			constexpr_ignore_unused( dummy_var );
-		}
+		/// \todo Come GCC >= 5 (with relaxed constexpr), add this constexpr sanity_check()
+		//
+		///// \brief TODOCUMENT
+		//constexpr void hit_seg::sanity_check() const {
+		//	const int dummy_var = ( start < stop ) ? 0
+		//	                                       : throw std::invalid_argument( "Cannot create hit_seg with start residue before the stop residue" );
+		//	constexpr_ignore_unused( dummy_var );
+		//}
 
 		/// \brief TODOCUMENT
 		constexpr hit_seg::hit_seg(const res_arrow &arg_start, ///< TODOCUMENT
 		                           const res_arrow &arg_stop   ///< TODOCUMENT
 		                           ) : start( arg_start ),
 		                               stop ( arg_stop  ) {
-			sanity_check();
+			/// \todo GCC >= 5 (with relaxed constexpr), add this call to the constexpr sanity_check()
+			//sanity_check();
 		}
 
 		/// \brief TODOCUMENT
@@ -88,15 +91,19 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		constexpr hit_seg & hit_seg::set_start_arrow(const res_arrow &arg_start ///< TODOCUMENT
-		                                             ) {
+		///
+		/// \todo GCC >= 5 (with relaxed constexpr), make this constexpr (and remove inline)
+		inline hit_seg & hit_seg::set_start_arrow(const res_arrow &arg_start ///< TODOCUMENT
+		                                          ) {
 			start = arg_start;
 			return *this;
 		}
 
 		/// \brief TODOCUMENT
-		constexpr hit_seg & hit_seg::set_stop_arrow(const res_arrow &arg_stop ///< TODOCUMENT
-		                                            ) {
+		///
+		/// \todo GCC >= 5 (with relaxed constexpr), make this constexpr (and remove inline)
+		inline hit_seg & hit_seg::set_stop_arrow(const res_arrow &arg_stop ///< TODOCUMENT
+		                                         ) {
 			stop = arg_stop;
 			return *this;
 		}

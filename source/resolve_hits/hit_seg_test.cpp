@@ -53,8 +53,8 @@ BOOST_AUTO_TEST_CASE(basic) {
 	static_assert( get_start_res_index( hit_seg_of_res_idcs(    0,    0 ) ) ==    0, "" );
 	static_assert( get_stop_res_index ( hit_seg_of_res_idcs(    0,    0 ) ) ==    0, "" );
 
-	BOOST_CHECK_THROW( hit_seg_of_res_idcs( 1, 0 ), invalid_argument );
-	// constexpr auto should_fail_to_compile = hit_seg_of_res_idcs( 1, 0 );
+	/// \todo GCC >= 5 (with relaxed constexpr), reinstate the hit_seg::sanity_check() and then reinstate this test
+	//BOOST_CHECK_THROW( hit_seg_of_res_idcs( 1, 0 ), invalid_argument );
 }
 
 BOOST_AUTO_TEST_CASE(to_string_works) {
