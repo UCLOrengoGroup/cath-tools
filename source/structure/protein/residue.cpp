@@ -409,14 +409,16 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue &arg_dssp_residue
 	const amino_acid dssp_amino_acid = arg_dssp_residue.get_amino_acid();
 	const amino_acid pdb_amino_acid  = arg_pdb_residue.get_amino_acid();
 	if ( dssp_amino_acid != pdb_amino_acid ) {
-		// If DSSP is UNK/X and PDB is either PYL/O or SEC/U, then just accept it
+		// If DSSP is UNK/X and PDB is ASX/B, GLX/Z, PYL/O or SEC/U, then just accept it
 		// (and go with the PDB decision)
 		//
-		// \todo Should this also handle ASX/B, GLX/Z & XLE/J in the same way?
+		// \todo Should this also handle XLE/J in the same way?
 		const bool dssp_is_unk = ( dssp_amino_acid == amino_acid{ 'X' } );
+		const bool pdb_is_asx  = ( pdb_amino_acid  == amino_acid{ 'B' } );
+		const bool pdb_is_glx  = ( pdb_amino_acid  == amino_acid{ 'Z' } );
 		const bool pdb_is_pyl  = ( pdb_amino_acid  == amino_acid{ 'O' } );
 		const bool pdb_is_sec  = ( pdb_amino_acid  == amino_acid{ 'U' } );
-		if ( dssp_is_unk && ( pdb_is_pyl || pdb_is_sec ) ) {
+		if ( dssp_is_unk && ( pdb_is_pyl || pdb_is_sec || pdb_is_asx || pdb_is_glx ) ) {
 			BOOST_LOG_TRIVIAL( warning ) << "The amino acid \""
 				<< pdb_amino_acid.get_code()
 				<< "\" parsed from a PDB for residue \""
