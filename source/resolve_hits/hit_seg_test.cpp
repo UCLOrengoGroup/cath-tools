@@ -54,7 +54,9 @@ BOOST_AUTO_TEST_CASE(basic) {
 	static_assert( get_stop_res_index ( hit_seg_of_res_idcs(    0,    0 ) ) ==    0, "" );
 
 	/// \todo GCC >= 5 (with relaxed constexpr), reinstate the hit_seg::sanity_check() and then reinstate this test
+	///       and remove the dummy `BOOST_CHECK( true )`
 	//BOOST_CHECK_THROW( hit_seg_of_res_idcs( 1, 0 ), invalid_argument );
+	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_CASE(to_string_works) {
