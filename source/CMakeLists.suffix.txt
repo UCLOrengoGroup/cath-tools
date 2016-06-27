@@ -195,7 +195,7 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 	
 	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 	target_link_libraries( check-pdb                                 std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-	target_link_libraries( develtest                                                          pthread ${Boost_LIBRARIES}               )
+	target_link_libraries( develtest                                                          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 	
 	add_dependencies( snap-judgement built_bioplib_libraries )
 	add_dependencies( check-pdb      built_bioplib_libraries )
