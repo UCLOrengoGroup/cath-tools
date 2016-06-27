@@ -129,28 +129,31 @@ const path & data_dirs_spec::get_cath_root_dir() const {
 }
 
 /// \brief TODOCUMENT
-void data_dirs_spec::set_value_of_option_and_data_file(const data_option &arg_option_type, ///< TODOCUMENT
-                                                       const data_file   &arg_data_file,   ///< TODOCUMENT
-                                                       const string      &arg_value        ///< TODOCUMENT
-                                                       ) {
+data_dirs_spec & data_dirs_spec::set_value_of_option_and_data_file(const data_option &arg_option_type, ///< TODOCUMENT
+                                                                   const data_file   &arg_data_file,   ///< TODOCUMENT
+                                                                   const string      &arg_value        ///< TODOCUMENT
+                                                                   ) {
 	values[ arg_data_file ][ arg_option_type ] = arg_value;
+	return *this;
 }
 
 /// \brief TODOCUMENT
-void data_dirs_spec::set_path_of_data_file(const data_file &arg_data_file, ///< TODOCUMENT
-                                           const string    &arg_path       ///< TODOCUMENT
-                                           ) {
+data_dirs_spec & data_dirs_spec::set_path_of_data_file(const data_file &arg_data_file, ///< TODOCUMENT
+                                                       const string    &arg_path       ///< TODOCUMENT
+                                                       ) {
 	set_value_of_option_and_data_file(
 		data_option::PATH,
 		arg_data_file,
 		arg_path
 	);
+	return *this;
 }
 
 /// \brief Setter for cath_root_dir
-void data_dirs_spec::set_cath_root_dir(const path &arg_cath_root_dir ///< The cath_root_dir value to set
-                                       ) {
+data_dirs_spec & data_dirs_spec::set_cath_root_dir(const path &arg_cath_root_dir ///< The cath_root_dir value to set
+                                                   ) {
 	cath_root_dir = arg_cath_root_dir;
+	return *this;
 }
 
 /// \brief Getter for the path value of a given data type

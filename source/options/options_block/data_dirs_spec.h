@@ -76,14 +76,14 @@ namespace cath {
 
 
 
-			void set_value_of_option_and_data_file(const detail::data_option &,
-			                                       const file::data_file &,
+			data_dirs_spec & set_value_of_option_and_data_file(const detail::data_option &,
+			                                                   const file::data_file &,
+			                                                   const std::string &);
+
+			data_dirs_spec & set_path_of_data_file(const file::data_file &,
 			                                       const std::string &);
 
-			void set_path_of_data_file(const file::data_file &,
-			                           const std::string &);
-
-			void set_cath_root_dir(const boost::filesystem::path &);
+			data_dirs_spec & set_cath_root_dir(const boost::filesystem::path &);
 
 
 
