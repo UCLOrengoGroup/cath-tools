@@ -23,6 +23,7 @@
 
 #include <boost/tuple/tuple.hpp>
 
+#include "file/pdb/pdb_atom_parse_status.h"
 #include "file/pdb/pdb_record.h"
 #include "structure/chain_label.h"
 #include "structure/geometry/coord.h"
@@ -30,7 +31,6 @@
 #include "structure/residue_name.h"
 
 #include <iosfwd>
-
 namespace cath { namespace geom { class rotation; } }
 
 namespace cath {
@@ -105,7 +105,13 @@ namespace cath {
 		std::string get_amino_acid_name(const pdb_atom &);
 		bool is_pdb_record_of_type(const std::string &,
 		                           const pdb_record &);
-		std::string pdb_record_parse_problem(const std::string &);
+
+		amino_acid get_amino_acid_of_string_and_record(const std::string &,
+		                                               const pdb_record &);
+
+		amino_acid parse_amino_acid_from_pdb_atom_record(const std::string &);
+
+		std::pair<pdb_atom_parse_status, std::string> pdb_record_parse_problem(const std::string &);
 
 		using chain_resname_atom_tuple = std::tuple<chain_label, residue_name, pdb_atom>;
 

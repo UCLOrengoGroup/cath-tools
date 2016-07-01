@@ -25,6 +25,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 
+#include "common/algorithm/contains.h"
 #include "common/string/sub_string_parser.h"
 #include "exception/invalid_argument_exception.h"
 #include "structure/geometry/rotation.h"
@@ -183,30 +184,81 @@ bool cath::file::is_pdb_record_of_type(const string     &arg_pdb_record_string, 
 	}
 }
 
+/// \brief Convert the specified three-letter string and pdb_record to an amino_acid
+///
+/// This is less strict than the amino_acid ctor because it allows certain combinations
+/// to be accepted for decay to UNK/X. See function body for the accepted combinations.
+///
+/// \relates pdb_atom
+amino_acid cath::file::get_amino_acid_of_string_and_record(const string     &arg_aa_string,  ///< The three-letter amino acid string (eg "SER")
+                                                           const pdb_record &arg_record_type ///< Whether this is an ATOM or HETATM record
+                                                           ) {
+	if ( arg_aa_string.length() != 3 ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Amino acid string must contain three characters"));
+	}
+	try {
+		return { arg_aa_string, arg_record_type };
+	}
+	catch (...) {
+		const set<pair<string, pdb_record>> pdb_aa_entries_allowed_to_decay_to_unk = {
+			{ "MLY", pdb_record::HETATM },
+			{ "MSE", pdb_record::ATOM   },
+			{ "MSE", pdb_record::HETATM },
+		};
+		if ( contains( pdb_aa_entries_allowed_to_decay_to_unk, make_pair( arg_aa_string, arg_record_type ) ) ) {
+			return { "UNK", arg_record_type };
+		}
+		throw;
+	}
+}
+
+/// \brief Parse the amino_acid from the specified PDB atom record string using the
+///        looser pdb_atom criteria that allow a few extra amino acids, which decay to UNK/X.
+///
+/// See the body of get_amino_acid_of_string_and_record() for the accepted combinations.
+///
+/// \relates pdb_atom
+amino_acid cath::file::parse_amino_acid_from_pdb_atom_record(const string &arg_pdb_atom_record_string ///< TODOCUMENT
+                                                             ) {
+	sub_string_parser p;
+	const pdb_record       record_type = str_to_pdb_rec( p.substr_as_str_ref( arg_pdb_atom_record_string,         0, 6  )); //  1 -  6        Record name   "ATOM  "
+	const string           the_a_a     =                                      arg_pdb_atom_record_string.substr( 17, 3  ) ; // 18 - 20        Residue name  resName      Residue name.
+	return get_amino_acid_of_string_and_record(
+		the_a_a,
+		record_type
+	);
+}
+
 /// \brief Return a string containing the parse problem with a PDB ATOM/HETATM record string or "" if no problem
 ///
 /// \relates pdb_atom
 ///
 /// Note: This does NOT check whether the line is a valid record.
 ///       Use atom_record_parse_problem() for that.
-string cath::file::pdb_record_parse_problem(const string &arg_pdb_atom_record_string ///< The string to check
-                                            ) {
+std::pair<pdb_atom_parse_status, std::string> cath::file::pdb_record_parse_problem(const string &arg_pdb_atom_record_string ///< The string to check
+                                                                                   ) {
 	if ( ! is_pdb_record_of_type( arg_pdb_atom_record_string, pdb_record::ATOM ) && ! is_pdb_record_of_type( arg_pdb_atom_record_string, pdb_record::HETATM ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot check for atom record parse problems because string is not an ATOM record"));
 	}
 	if ( arg_pdb_atom_record_string.length() > pdb_base::MAX_NUM_PDB_COLS ) {
-		return "Is too long";
+		return { pdb_atom_parse_status::ABORT, "Is too long" };
 	}
 	if ( arg_pdb_atom_record_string.at( 11 ) != ' '   ) {
-		return "Does not contain a space at column 12";
+		return { pdb_atom_parse_status::ABORT, "Does not contain a space at column 12" };
 	}
 	if ( arg_pdb_atom_record_string.at( 20 ) != ' '   ) {
-		return "Does not contain a space at column 21";
+		return { pdb_atom_parse_status::ABORT, "Does not contain a space at column 21" };
 	}
 	if ( arg_pdb_atom_record_string.at( 27 ) != ' ' || arg_pdb_atom_record_string.at( 28 ) != ' ' || arg_pdb_atom_record_string.at( 29 ) != ' ' ) {
-		return "Does not contain spaces at columns 28-30";
+		return { pdb_atom_parse_status::ABORT, "Does not contain spaces at columns 28-30" };
 	}
-	return "";
+	try {
+		parse_amino_acid_from_pdb_atom_record( arg_pdb_atom_record_string );
+	}
+	catch (...) {
+		return { pdb_atom_parse_status::SKIP, "Do not recognise amino acid entry: " + arg_pdb_atom_record_string.substr( 17, 3 ) };
+	}
+	return { pdb_atom_parse_status::OK, "" };
 }
 
 /// \brief TODOCUMENT
@@ -214,10 +266,11 @@ string cath::file::pdb_record_parse_problem(const string &arg_pdb_atom_record_st
 /// \relates pdb_atom
 chain_resname_atom_tuple cath::file::parse_pdb_atom_record(string arg_pdb_atom_record_string ///< TODOCUMENT
                                                            ) {
-	if ( pdb_record_parse_problem( arg_pdb_atom_record_string ) != "" ) {
+	if ( pdb_record_parse_problem( arg_pdb_atom_record_string ).first != pdb_atom_parse_status::OK ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse string - is not a valid PDB ATOM/HETATM record"));
 	}
-//	trim_right( arg_pdb_atom_record_string );
+
+	const amino_acid the_amino_acid = parse_amino_acid_from_pdb_atom_record( arg_pdb_atom_record_string );
 
 	sub_string_parser p;
 
@@ -232,7 +285,7 @@ chain_resname_atom_tuple cath::file::parse_pdb_atom_record(string arg_pdb_atom_r
 		const size_t           serial      =                  p.substr_as_size_t( arg_pdb_atom_record_string,         6, 5  ) ; //  7 - 11        Integer       serial       Atom  serial number.
 		const string           element     =                                      arg_pdb_atom_record_string.substr( 12, 4  ) ; // 13 - 16        Atom          name         Atom name.
 		const char            &alt_locn    =                                      arg_pdb_atom_record_string.at(     16     ) ; // 17             Character     altLoc       Alternate location indicator.
-		const string           the_a_a     =                                      arg_pdb_atom_record_string.substr( 17, 3  ) ; // 18 - 20        Residue name  resName      Residue name.
+//		const string           the_a_a     =                                      arg_pdb_atom_record_string.substr( 17, 3  ) ; // 18 - 20        Residue name  resName      Residue name.
 		const char            &chain_char  =                                      arg_pdb_atom_record_string.at(     21     ) ; // 22             Character     chainID      Chain identifier.
 		const int              res_num     =                     p.substr_as_int( arg_pdb_atom_record_string,        22, 4  ) ; // 23 - 26        Integer       resSeq       Residue sequence number.
 		const char            &insert_code =                                      arg_pdb_atom_record_string.at    ( 26     ) ; // 27             AChar         iCode        Code for insertion of residues.
@@ -244,8 +297,6 @@ chain_resname_atom_tuple cath::file::parse_pdb_atom_record(string arg_pdb_atom_r
 //		const string           element     =                           trim_copy( arg_pdb_atom_record_string.substr( 76, 3 ));  // 77 - 78        LString(2)    element      Element symbol, right-justified.
 //		const string           charge      =                           trim_copy( arg_pdb_atom_record_string.substr( 78, 2 ));  // 79 - 80        LString(2)    charge       Charge  on the atom.
 
-//		the_amino_acid( arg_amino_acid,  arg_record_type );
-
 		return make_tuple(
 			chain_label( chain_char ),
 			make_residue_name_with_non_insert_char( res_num, insert_code, ' ' ),
@@ -254,7 +305,7 @@ chain_resname_atom_tuple cath::file::parse_pdb_atom_record(string arg_pdb_atom_r
 				serial,
 				element,
 				alt_locn,
-				amino_acid( the_a_a, record_type ),
+				the_amino_acid,
 				coord( coord_x, coord_y, coord_z ),
 				occupancy,
 				temp_factor
@@ -271,6 +322,7 @@ chain_resname_atom_tuple cath::file::parse_pdb_atom_record(string arg_pdb_atom_r
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Casted column out of range whilst parsing a PDB ATOM record, which probably means it's malformed.\nRecord was \"" + arg_pdb_atom_record_string + "\""));
 	}
 }
+
 
 /// \brief TODOCUMENT
 ///

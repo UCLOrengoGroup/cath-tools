@@ -20,6 +20,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include <boost/algorithm/string/join.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 
 #include "common/boost_addenda/test/boost_check_equal_ranges.h"
 #include "common/boost_check_no_throw_diag.h"
@@ -30,6 +31,7 @@
 #include "file/pdb/pdb_list.h"
 #include "file/pdb/pdb_residue.h"
 #include "test/global_test_constants.h"
+#include "test/log_to_ostream_guard.h"
 
 #include <vector>
 
@@ -39,6 +41,7 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace std;
 
+using boost::algorithm::icontains;
 using boost::algorithm::join;
 
 namespace cath {
@@ -96,4 +99,55 @@ BOOST_AUTO_TEST_CASE(check_parsing_of_end_separators) {
 	}
 }
 
+BOOST_AUTO_TEST_CASE(parses_mse_resiude_as_unk_x) {
+	// Example is from chain B of 4c9a
+	const string input_string = R"(ATOM   1861  N   THR B 138     -33.417  42.721 103.639  1.00142.96           N  
+ATOM   1862  CA  THR B 138     -33.726  41.382 103.094  1.00124.05           C  
+ATOM   1863  C   THR B 138     -34.247  41.593 101.682  1.00122.85           C  
+ATOM   1864  O   THR B 138     -34.642  42.709 101.356  1.00126.34           O  
+ATOM   1865  CB  THR B 138     -34.816  40.679 103.927  1.00108.88           C  
+ATOM   1866  N   MSE B 139     -34.243  40.568 100.830  1.00114.60           N  
+ATOM   1867  CA  MSE B 139     -34.924  40.699  99.523  1.00114.24           C  
+ATOM   1868  C   MSE B 139     -36.170  39.811  99.512  1.00107.49           C  
+ATOM   1869  O   MSE B 139     -36.514  39.225  98.475  1.00116.82           O  
+ATOM   1870  CB  MSE B 139     -33.991  40.377  98.339  1.00105.83           C  
+ATOM   1871  N   VAL B 140     -36.867  39.765 100.654  1.00 94.64           N  
+ATOM   1872  CA  VAL B 140     -37.904  38.745 100.917  1.00101.80           C  
+ATOM   1873  C   VAL B 140     -39.124  39.279 101.672  1.00100.30           C  
+ATOM   1874  O   VAL B 140     -39.041  40.306 102.330  1.00 97.38           O  
+ATOM   1875  CB  VAL B 140     -37.331  37.579 101.757  1.00 93.10           C)";
+	istringstream input_ss{ input_string };
+	const pdb the_pdb = read_pdb_file( input_ss );
+	BOOST_REQUIRE_EQUAL( the_pdb.get_num_residues(), 3 );
+	BOOST_CHECK_EQUAL( get_amino_acid( the_pdb.get_residue_cref_of_index__backbone_unchecked( 1 ) ).get_code(), "UNK");
+	// \todo: Create a better way to refer to check for UNK in code/tests without a string literal
+}
+
+
+BOOST_AUTO_TEST_CASE(skips_and_warns_on_silly_amino_acid) {
+	// Example is a modified version of chain B of 4c9a
+	const string input_string = R"(ATOM   1861  N   THR B 138     -33.417  42.721 103.639  1.00142.96           N  
+ATOM   1862  CA  THR B 138     -33.726  41.382 103.094  1.00124.05           C  
+ATOM   1863  C   THR B 138     -34.247  41.593 101.682  1.00122.85           C  
+ATOM   1864  O   THR B 138     -34.642  42.709 101.356  1.00126.34           O  
+ATOM   1865  CB  THR B 138     -34.816  40.679 103.927  1.00108.88           C  
+ATOM   1866  N   FOO B 139     -34.243  40.568 100.830  1.00114.60           N  
+ATOM   1867  CA  FOO B 139     -34.924  40.699  99.523  1.00114.24           C  
+ATOM   1868  C   FOO B 139     -36.170  39.811  99.512  1.00107.49           C  
+ATOM   1869  O   FOO B 139     -36.514  39.225  98.475  1.00116.82           O  
+ATOM   1870  CB  FOO B 139     -33.991  40.377  98.339  1.00105.83           C  
+ATOM   1871  N   VAL B 140     -36.867  39.765 100.654  1.00 94.64           N  
+ATOM   1872  CA  VAL B 140     -37.904  38.745 100.917  1.00101.80           C  
+ATOM   1873  C   VAL B 140     -39.124  39.279 101.672  1.00100.30           C  
+ATOM   1874  O   VAL B 140     -39.041  40.306 102.330  1.00 97.38           O  
+ATOM   1875  CB  VAL B 140     -37.331  37.579 101.757  1.00 93.10           C)";
+	ostringstream test_ss;
+	istringstream input_ss{ input_string };
+	const log_to_ostream_guard the_guard{ test_ss };
+
+	const pdb the_pdb = read_pdb_file( input_ss );
+
+	BOOST_REQUIRE_EQUAL( the_pdb.get_num_residues(), 2 );
+	BOOST_CHECK( icontains( test_ss.str(), "skip" ) );
+}
 BOOST_AUTO_TEST_SUITE_END()

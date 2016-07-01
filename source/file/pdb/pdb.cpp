@@ -315,9 +315,22 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 	while ( getline( input_stream, line_string ) ) {
 		// If this line is an ATOM or HETATM record
 		if ( is_pdb_record_of_type( line_string, pdb_record::ATOM ) || is_pdb_record_of_type( line_string, pdb_record::HETATM ) ) {
-			const string parse_problem = pdb_record_parse_problem( line_string );
-			if ( parse_problem != "" ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("ATOM record is malformed : " + parse_problem + "\nRecord was \"" + line_string.substr(0, pdb_base::MAX_NUM_PDB_COLS) + "\""));
+			const auto parse_status_and_str = pdb_record_parse_problem( line_string );
+			const auto &parse_status = parse_status_and_str.first;
+			const auto &parse_string = parse_status_and_str.second;
+			if ( parse_status == pdb_atom_parse_status::ABORT ) {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception(
+					"ATOM record is malformed : " + parse_string
+					+ "\nRecord was \"" + line_string.substr(0, pdb_base::MAX_NUM_PDB_COLS)
+					+ "\""
+				));
+			}
+			else if ( parse_status == pdb_atom_parse_status::SKIP ) {
+				BOOST_LOG_TRIVIAL( warning ) << "Skipping PDB atom record \""
+					<< line_string
+					<< "\" with message: "
+					<< parse_string;
+				continue;
 			}
 
 			// Grab the details from parsing this ATOM record

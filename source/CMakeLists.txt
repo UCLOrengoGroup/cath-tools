@@ -410,6 +410,7 @@ set(
 	NORMSOURCES_FILE_PDB
 		file/pdb/pdb.cpp
 		file/pdb/pdb_atom.cpp
+		file/pdb/pdb_atom_parse_status.cpp
 		file/pdb/pdb_base.cpp
 		file/pdb/pdb_list.cpp
 		file/pdb/pdb_record.cpp
