@@ -252,9 +252,9 @@ std::pair<pdb_atom_parse_status, std::string> cath::file::pdb_record_parse_probl
 	if ( arg_pdb_atom_record_string.at( 27 ) != ' ' || arg_pdb_atom_record_string.at( 28 ) != ' ' || arg_pdb_atom_record_string.at( 29 ) != ' ' ) {
 		return { pdb_atom_parse_status::ABORT, "Does not contain spaces at columns 28-30" };
 	}
-	if ( arg_pdb_atom_record_string.at( 16 ) != ' ' && arg_pdb_atom_record_string.at( 16 ) != 'A' ) {
-		return { pdb_atom_parse_status::SKIP, "Has alternate location indicator other than 'A' or' '" };
-	}
+//	if ( arg_pdb_atom_record_string.at( 16 ) != ' ' && arg_pdb_atom_record_string.at( 16 ) != 'A' ) {
+//		return { pdb_atom_parse_status::SKIP, "Has alternate location indicator other than 'A' or' '" };
+//	}
 	try {
 		parse_amino_acid_from_pdb_atom_record( arg_pdb_atom_record_string );
 	}
