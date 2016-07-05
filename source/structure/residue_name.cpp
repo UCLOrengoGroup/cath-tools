@@ -143,7 +143,7 @@ ostream & cath::operator<<(ostream            &arg_os,          ///< The ostream
 /// \relates residue_name
 istream & cath::operator>>(istream      &arg_istream,     ///< TODOCUMENT
                            residue_name &arg_residue_name ///< TODOCUMENT
-						   ) {
+                           ) {
 	string input_string;
 	arg_istream >> input_string;
 	arg_residue_name = make_residue_name( input_string );
