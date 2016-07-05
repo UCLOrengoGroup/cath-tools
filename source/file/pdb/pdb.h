@@ -69,7 +69,7 @@ namespace cath {
 
 			const pdb_residue & get_residue_cref_of_backbone_complete_index(const size_t &) const;
 			geom::coord get_residue_ca_coord_of_backbone_complete_index(const size_t &) const;
-			residue_name_vec get_backbone_complete_residue_names_of_first_chain(const bool &arg_complete_backbone_only = true) const;
+			residue_name_vec get_backbone_complete_residue_names_of_first_chain(const bool & = true) const;
 
 			/// \brief TODOCUMENT
 			using const_iterator = pdb_residue_vec::const_iterator;
@@ -101,14 +101,14 @@ namespace cath {
 		geom::doub_angle_doub_angle_pair_vec get_phi_and_psi_angles(const pdb &);
 
 		pdb backbone_complete_subset_of_pdb(const pdb &,
-		                                    std::ostream &arg_ostream = std::cerr);
+		                                    std::ostream & = std::cerr);
 
 		protein build_protein_of_pdb(const pdb &,
-		                             std::ostream &arg_ostream = std::cerr);
+		                             std::ostream & = std::cerr);
 
 		protein build_protein_of_pdb_and_name(const pdb &,
 		                                      const std::string &,
-		                                      std::ostream &arg_ostream = std::cerr);
+		                                      std::ostream & = std::cerr);
 	}
 }
 

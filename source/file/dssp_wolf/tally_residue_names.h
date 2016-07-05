@@ -30,12 +30,12 @@ namespace cath {
 		size_size_pair_vec tally_residue_names(const residue_name_vec &,
 		                                       const residue_name_vec &,
 		                                       const bool &,
-		                                       const bool &arg_permit_tail_break_without_null_residue = true);
+		                                       const bool & = true);
 
 		size_size_pair_vec tally_residue_names_str(const residue_name_vec &,
 		                                           const str_vec &,
 		                                           const bool &,
-		                                           const bool &arg_permit_tail_break_without_null_residue = true);
+		                                           const bool & = true);
 	}
 }
 
