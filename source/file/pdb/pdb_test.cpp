@@ -151,8 +151,12 @@ ATOM   1875  CB  VAL B 140     -37.331  37.579 101.757  1.00 93.10           C)"
 	BOOST_CHECK( icontains( test_ss.str(), "skip" ) );
 }
 
-
-BOOST_AUTO_TEST_CASE(skips_and_warns_on_alt_loc_other_than_space_or_a) {
+// Note: this test was originally written to check that such residues would be dropped
+//       but we switched to a better system instead...
+//
+//       Now: If some residue has all alternative locations other than space or 'a', that increases tolerance
+//       of that residue being absent in a corresponding DSSP file
+BOOST_AUTO_TEST_CASE(allows_alt_loc_other_than_space_or_a) {
 	// Example is from chain A of 3nir
 	const string input_string = R"(ATOM    421  N  APRO A  22      -3.223 -12.679   4.864  0.70  1.90           N  
 ATOM    422  CA APRO A  22      -2.719 -13.510   5.958  0.66  1.95           C  
@@ -201,7 +205,6 @@ ATOM    461  HE2 GLU A  23       1.108 -11.273  13.151  1.00  9.48           H)"
 
 	const pdb the_pdb = read_pdb_file( input_ss );
 
-	BOOST_WARN_EQUAL( the_pdb.get_num_residues(), 2 );
-	BOOST_WARN( icontains( test_ss.str(), "skip" ) );
+	BOOST_CHECK_EQUAL( the_pdb.get_num_residues(), 3 );
 }
 BOOST_AUTO_TEST_SUITE_END()
