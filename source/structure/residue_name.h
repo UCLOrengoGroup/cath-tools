@@ -55,6 +55,7 @@ namespace cath {
 	bool operator==(const residue_name &,
 	                const residue_name &);
 
+	std::string to_string(const residue_name &);
 	std::ostream & operator<<(std::ostream &,
 	                          const residue_name &);
 

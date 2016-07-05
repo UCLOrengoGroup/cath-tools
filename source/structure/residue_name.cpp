@@ -113,21 +113,28 @@ bool cath::operator==(const residue_name &arg_residue_name_a, ///< TODOCUMENT
 	return true;
 }
 
+
+/// \brief Simple to_string() overload for residue_name
+///
+/// \relates residue_name
+string cath::to_string(const residue_name &arg_residue_name ///< The residue_name to be output as a string
+                       ) {
+	if ( arg_residue_name.get_is_null_residue_name() ) {
+		return "null_res";
+	}
+	const string insert_code_string = has_insert_code( arg_residue_name )
+	                                  ? string{ 1, get_insert_code( arg_residue_name ) }
+	                                  : string{};
+	return ::std::to_string( arg_residue_name.get_residue_number() ) + insert_code_string;
+}
+
 /// \brief Simple insertion operator for residue_name
 ///
 /// \relates residue_name
 ostream & cath::operator<<(ostream            &arg_os,          ///< The ostream to which the residue_name should be output
                            const residue_name &arg_residue_name ///< The residue_name to output
                            ) {
-	if ( arg_residue_name.get_is_null_residue_name() ) {
-		arg_os << "null_res";
-	}
-	else {
-		arg_os << arg_residue_name.get_residue_number();
-		if ( has_insert_code( arg_residue_name ) ) {
-			arg_os << get_insert_code( arg_residue_name );
-		}
-	}
+	arg_os << to_string( arg_residue_name );
 	return arg_os;
 }
 

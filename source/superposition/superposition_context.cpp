@@ -115,8 +115,8 @@ void superposition_context::set_pdbs(const pdb_list &arg_pdbs ///< The PDBs to s
                                      ) {
 	if ( arg_pdbs.size() != get_num_entries( *this ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
-			"Unable to load "                                           + to_string( arg_pdbs.size()          )
-			+ " pdbs into superposition context of superposition with " + to_string( get_num_entries( *this ) )
+			"Unable to load "                                           + ::std::to_string( arg_pdbs.size()          )
+			+ " pdbs into superposition context of superposition with " + ::std::to_string( get_num_entries( *this ) )
 			+ " entries"
 		));
 	}
