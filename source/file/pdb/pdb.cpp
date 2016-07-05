@@ -25,7 +25,9 @@
 #include <boost/log/trivial.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/range/algorithm/count_if.hpp>
+#include <boost/range/irange.hpp>
 
+#include "common/algorithm/transform_build.h"
 #include "common/c++14/cbegin_cend.h"
 #include "common/file/open_fstream.h"
 #include "common/size_t_literal.h"
@@ -57,6 +59,7 @@ using namespace std;
 using boost::algorithm::all;
 using boost::algorithm::is_space;
 using boost::algorithm::starts_with;
+using boost::irange;
 using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::count_if;
@@ -579,31 +582,26 @@ pdb cath::file::backbone_complete_subset_of_pdb(const pdb &arg_pdb,        ///< 
 protein cath::file::build_protein_of_pdb(const pdb &arg_pdb,    ///< TODOCUMENT
                                          ostream   &arg_ostream ///< TODOCUMENT
                                          ) {
-	const pdb backbone_complete_pdb_subset = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream );
-	const size_t DEFAULT_ACCESSIBILITY = 0;
-	const size_t num_residues          = backbone_complete_pdb_subset.get_num_residues();
+	constexpr size_t DEFAULT_ACCESSIBILITY = 0;
 
-	const auto phi_and_psi_angles = get_phi_and_psi_angles( backbone_complete_pdb_subset );
+	const pdb    backbone_complete_pdb_subset = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream );
+	const size_t num_residues                 = backbone_complete_pdb_subset.get_num_residues();
+	const auto   phi_and_psi_angles           = get_phi_and_psi_angles( backbone_complete_pdb_subset );
 
-	residue_vec new_residues;
-	new_residues.reserve(num_residues);
-
-	for (size_t residue_ctr = 0; residue_ctr < num_residues; ++residue_ctr) {
-		const pdb_residue &the_residue = backbone_complete_pdb_subset.get_residue_cref_of_index__backbone_unchecked( residue_ctr );
-		const auto        &phi         = phi_and_psi_angles[residue_ctr].first;
-		const auto        &psi         = phi_and_psi_angles[residue_ctr].second;
-
-		new_residues.push_back(
-			build_residue_of_pdb_residue(
+	return build_protein( transform_build<residue_vec>(
+		irange( 0_z, num_residues ),
+		[&] (const size_t &x) {
+			const pdb_residue &the_residue = backbone_complete_pdb_subset.get_residue_cref_of_index__backbone_unchecked( x );
+			const auto        &phi         = phi_and_psi_angles[ x ].first;
+			const auto        &psi         = phi_and_psi_angles[ x ].second;
+			return build_residue_of_pdb_residue(
 				the_residue,
 				phi,
 				psi,
 				DEFAULT_ACCESSIBILITY
-			)
-		);
-	}
-
-	return build_protein( new_residues );
+			);
+		}
+	) );
 }
 
 /// \brief TODOCUMENT
