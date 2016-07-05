@@ -221,7 +221,7 @@ char cath::get_amino_acid_letter_of_index(const protein &arg_protein,      ///< 
 
 /// \brief Retrieve a list of all the PDB residue names of the residues in the specified protein
 ///
-//// \relates protein
+/// \relates protein
 residue_name_vec cath::get_residue_names(const protein &arg_protein ///< The protein containing the residues whose names should be returned
                                          ) {
 	return transform_build<residue_name_vec>(
