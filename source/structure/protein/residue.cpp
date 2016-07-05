@@ -26,6 +26,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/throw_exception.hpp>
 
+#include "common/difference.h"
 #include "exception/invalid_argument_exception.h"
 #include "structure/protein/sec_struc_type.h"
 
@@ -33,18 +34,26 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include <tuple>
 #include <utility>
-
 
 using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::geom;
-using namespace std;
 
 using boost::lexical_cast;
 using boost::math::isnormal;
 using boost::numeric_cast;
+using std::get;
+using std::map;
+using std::ostream;
+using std::ostringstream;
+using std::right;
+using std::round;
+using std::setw;
+using std::string;
+using std::tuple;
 
 /// \brief TODOCUMENT
 ///
@@ -437,6 +446,72 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue &arg_dssp_residue
 				+ "\" does not match amino acid \""
 				+ pdb_amino_acid.get_code()
 				+ "\" parsed from PDB"
+			));
+		}
+	}
+
+	// Check that the PDB and DSSP give PHI/PSI angles within 1 degree of each other
+	//
+	// \todo Simplify this code by creating an enum class that represents PHI/PSI
+	//       and that can be used as a get_phi_or_psi_angle() function on a residue
+	//       and then just loop over those two enum class values.
+	using str_ang_ang_tpl = tuple<string, doub_angle, doub_angle>;
+	const auto phi_psi_data = {
+		str_ang_ang_tpl{ "phi", arg_pdb_residue.get_phi_angle(), arg_dssp_residue.get_phi_angle() },
+		str_ang_ang_tpl{ "psi", arg_pdb_residue.get_psi_angle(), arg_dssp_residue.get_psi_angle() },
+	};
+	for (const auto &phi_psi_entry : phi_psi_data) {
+		const string     &angle_name = get<0>( phi_psi_entry );
+		const doub_angle &pdb_angle  = get<1>( phi_psi_entry );
+		const doub_angle &dssp_angle = get<2>( phi_psi_entry );
+		if ( angle_in_degrees( wrapped_difference( pdb_angle, dssp_angle ) ) > 1.0 ) {
+			if ( angle_in_degrees( dssp_angle ) == 360.0 ) {
+				BOOST_LOG_TRIVIAL( info ) << "The "
+					<< angle_name
+					<< " angle calculated for residue "
+					<< pdb_residue_name
+					<< " ("
+					<< pdb_angle
+					<< ") from the PDB conflicts with the DSSP angle of 360.0"
+					<< ", which is typically used by DSSP where it detects a"
+					<< " break in the chain (perhaps because it has rejected a neighbouring residue)";
+			}
+			else {
+				BOOST_LOG_TRIVIAL( warning ) << "Whilst combining PDB and DSSP files, at residue "
+					<< pdb_residue_name
+					<< " detected conflicting "
+					<< angle_name
+					<< " angles: "
+					<< pdb_angle
+					<< " and "
+					<< dssp_angle;
+			}
+		}
+	}
+
+	// Check that the PDB and DSSP give x/y/z coordinate values within 0.5001 of each other
+	using char_doub_doub_tpl = tuple<char, double, double>;
+	const auto &pdb_ca_coord  = arg_pdb_residue.get_carbon_alpha_coord();
+	const auto &dssp_ca_coord = arg_dssp_residue.get_carbon_alpha_coord();
+	const auto coord_data = {
+		char_doub_doub_tpl{ 'x', pdb_ca_coord.get_x(), dssp_ca_coord.get_x() },
+		char_doub_doub_tpl{ 'y', pdb_ca_coord.get_y(), dssp_ca_coord.get_y() },
+		char_doub_doub_tpl{ 'z', pdb_ca_coord.get_z(), dssp_ca_coord.get_z() },
+	};
+	for (const auto &x_y_z_entry : coord_data) {
+		const char   &dim        = get<0>( x_y_z_entry );
+		const double &pdb_value  = get<1>( x_y_z_entry );
+		const double &dssp_value = get<2>( x_y_z_entry );
+		if ( difference( pdb_value, dssp_value ) > 0.05001 ) {
+			BOOST_THROW_EXCEPTION(out_of_range_exception(
+				"Whilst combining PDB and DSSP files, at residue "
+				+ to_string( pdb_residue_name )
+				+ " detected conflicting "
+				+ string{ 1, dim }
+				+ " coordinate: "
+				+ ::std::to_string( pdb_value )
+				+ " and "
+				+ ::std::to_string( dssp_value )
 			));
 		}
 	}

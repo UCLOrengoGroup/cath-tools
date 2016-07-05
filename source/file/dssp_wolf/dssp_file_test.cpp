@@ -43,6 +43,7 @@
 #include "structure/protein/sec_struc.h"
 #include "structure/protein/sec_struc_planar_angles.h"
 #include "test/global_test_constants.h"
+#include "test/log_to_ostream_guard.h"
 
 using namespace boost::filesystem;
 using namespace boost::math;
@@ -190,6 +191,9 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 	const auto pdb_prot                   = build_protein_of_pdb( the_pdb_file      );
 	const auto num_non_null_dssp_residues = get_num_non_null_residues( the_dssp_file );
 	const auto num_pdb_residues           = pdb_prot.get_length();
+
+	ostringstream test_ss;
+	const log_to_ostream_guard the_guard{ test_ss };
 
 	const protein      combi_prot_with_all_pdb_residues   = protein_from_dssp_and_pdb(the_dssp_file, the_pdb_file, false );
 	const protein      combi_prot_with_dssp_only_residues = protein_from_dssp_and_pdb(the_dssp_file, the_pdb_file, true  );
