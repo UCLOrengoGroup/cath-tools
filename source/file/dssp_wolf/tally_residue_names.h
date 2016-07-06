@@ -30,7 +30,8 @@ namespace cath {
 		size_size_pair_vec tally_residue_names(const residue_name_vec &,
 		                                       const residue_name_vec &,
 		                                       const bool &,
-		                                       const bool & = true);
+		                                       const bool & = true,
+		                                       const size_set & = size_set{} );
 
 		size_size_pair_vec tally_residue_names_str(const residue_name_vec &,
 		                                           const str_vec &,

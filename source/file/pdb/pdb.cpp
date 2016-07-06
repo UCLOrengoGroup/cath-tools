@@ -20,13 +20,16 @@
 
 #include "pdb.h"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/math/constants/constants.hpp>
+#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 #include <boost/range/irange.hpp>
 
+#include "common/algorithm/copy_build.h"
 #include "common/algorithm/transform_build.h"
 #include "common/c++14/cbegin_cend.h"
 #include "common/file/open_fstream.h"
@@ -56,7 +59,9 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace std;
 
+using boost::adaptors::filtered;
 using boost::algorithm::all;
+using boost::algorithm::any_of;
 using boost::algorithm::is_space;
 using boost::algorithm::starts_with;
 using boost::irange;
@@ -621,3 +626,30 @@ protein cath::file::build_protein_of_pdb_and_name(const pdb    &arg_pdb,    ///<
 	new_protein.set_title( arg_name );
 	return new_protein;
 }
+
+/// \brief Generate a list of protein residue indices (corresponding to those returned by build_protein_of_pdb())
+///        that DSSP might be expected to skip
+///
+/// \relates pdb
+size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb &arg_pdb,    ///< The PDB to query
+                                                                  ostream   &arg_ostream ///< An ostream to which any status messages might be sent
+                                                                  ) {
+	const pdb    backbone_complete_pdb_subset = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream );
+	const size_t num_residues                 = backbone_complete_pdb_subset.get_num_residues();
+
+	// Return the indices corresponding to residues with any atoms with non-standard alt_locn values
+	return copy_build<size_set>(
+		irange( 0_z, num_residues )
+			| filtered( [&] (const size_t &x) {
+				const pdb_residue &the_residue = backbone_complete_pdb_subset.get_residue_cref_of_index__backbone_unchecked( x );
+				// Can't require that all_of() are non-standard because then the initial residues of 3f9sB fail
+				return any_of(
+					the_residue,
+					[] (const pdb_atom &y) {
+						return ( y.get_alt_locn() != ' ' && y.get_alt_locn() != 'A' );
+					}
+				);
+			} )
+	);
+}
+

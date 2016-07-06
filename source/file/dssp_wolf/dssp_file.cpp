@@ -88,6 +88,7 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file &arg_dssp_file,   
 	                                          ) {
 	// Build a rough protein object from the pdb object
 	const auto pdb_protein       = build_protein_of_pdb( arg_pdb_file );
+	const auto pdb_skip_indices  = get_protein_res_indices_that_dssp_might_skip( arg_pdb_file );
 
 	// Grab the number of residues in the protein and dssp_file objects
 	const auto num_dssp_residues = arg_dssp_file.get_num_residues();
@@ -96,7 +97,13 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file &arg_dssp_file,   
 	// Grab the residues names from the DSSP and PDB and then tally them up
 	const auto pdb_res_names     = get_residue_names  ( pdb_protein );
 	const auto dssp_res_names    = get_residue_names  ( arg_dssp_file, false );
-	const auto alignment         = tally_residue_names( pdb_res_names, dssp_res_names, false );
+	const auto alignment         = tally_residue_names(
+		pdb_res_names,
+		dssp_res_names,
+		false,
+		true,
+		pdb_skip_indices
+	);
 
 	// Prepare a list of new residue to populate
 	residue_vec new_residues;

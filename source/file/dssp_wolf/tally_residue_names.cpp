@@ -58,10 +58,11 @@ using boost::range::adjacent_find;
 /// current PDB residue name.
 ///
 /// \returns A list of pairs of equivalent indices (offset 0) between residues in the PDB and DSSP/WOLF
-size_size_pair_vec cath::file::tally_residue_names(const residue_name_vec &arg_pdb_residue_names,                          ///< A list of residue_names parsed from the PDB file
-                                                   const residue_name_vec &arg_dssp_or_wolf_residue_names,                 ///< A list of residue_names parsed from the DSSP/WOLF file (with a null residue represented with an empty string)
-                                                   const bool             &arg_permit_breaks_without_null_residues,        ///< (true for WOLF files and false for DSSP files (at least >= v2.0)
-                                                   const bool             &arg_permit_head_tail_break_without_null_residue ///< (true even for DSSP v2.0.4: file for chain A of 1bvs stops with neither residue 203 or null residue (verbose message: "ignoring incomplete residue ARG  (203)")
+size_size_pair_vec cath::file::tally_residue_names(const residue_name_vec &arg_pdb_residue_names,                           ///< A list of residue_names parsed from the PDB file
+                                                   const residue_name_vec &arg_dssp_or_wolf_residue_names,                  ///< A list of residue_names parsed from the DSSP/WOLF file (with a null residue represented with an empty string)
+                                                   const bool             &arg_permit_breaks_without_null_residues,         ///< (true for WOLF files and false for DSSP files (at least >= v2.0)
+                                                   const bool             &arg_permit_head_tail_break_without_null_residue, ///< (true even for DSSP v2.0.4: file for chain A of 1bvs stops with neither residue 203 or null residue (verbose message: "ignoring incomplete residue ARG  (203)")
+                                                   const size_set         &arg_skippable_pdb_indices                        ///< A list of the indices of PDB residue names that should always be considered for being skipped over to find a match to the next DSSP/WOLF residue
                                                    ) {
 	BOOST_LOG_TRIVIAL( trace ) << "Tallying PDB residue names: "
 	                           << join( arg_pdb_residue_names          | lexical_casted<string>(), "," )
@@ -113,13 +114,29 @@ size_size_pair_vec cath::file::tally_residue_names(const residue_name_vec &arg_p
 			}
 		}
 
-		// If:
-		//  * this DSSP/WOLF residue entry is a null entry or
-		//  * breaks are permitted without DSSP/WOLF nulls and this DSSP/WOLF doesn't match this PDB or
-		//  * ???
-		const bool permitted_break      = ( arg_permit_breaks_without_null_residues         && arg_pdb_residue_names[ pdb_residue_ctr ] != dssp_or_wolf_res_name );
-		const bool permitted_head_break = ( arg_permit_head_tail_break_without_null_residue && arg_pdb_residue_names[ pdb_residue_ctr ] != dssp_or_wolf_res_name && pdb_residue_ctr == 0 );
-		if ( dssp_or_wolf_res_is_null || permitted_break || permitted_head_break ) {
+		// Record whether this is a permitted head break region
+		const bool permitted_head_break = ( arg_permit_head_tail_break_without_null_residue && pdb_residue_ctr == 0 );
+
+		// Create a lambda function to calculate whether the specified PDB residue counter should/can be advanced
+		// to find a match with the specified DSSP/WOLF residue name target
+		const auto should_advance_pdb_res_ctr_for_target_fn = [&] (const size_t       &arg_pdb_res_ctr,
+		                                                           const residue_name &arg_target
+																   ) {
+			const bool mismatches          = ( arg_pdb_residue_names[ arg_pdb_res_ctr ] != arg_target );
+			const bool reason_for_mismatch = (
+				dssp_or_wolf_res_is_null
+				||
+				arg_permit_breaks_without_null_residues
+				||
+				permitted_head_break
+				||
+				contains( arg_skippable_pdb_indices, arg_pdb_res_ctr )
+			);
+			return ( mismatches && reason_for_mismatch );
+		};
+
+		// If should advance...
+		if ( should_advance_pdb_res_ctr_for_target_fn( pdb_residue_ctr, dssp_or_wolf_res_name ) ) {
 
 			// If is a null residue at the end of the DSSP/WOLF, then set pdb_residue_ctr to the end of the PDB
 			if ( dssp_or_wolf_res_is_null && dssp_residue_ctr + 1 >= num_dssp_or_wolf_residues) {
@@ -135,7 +152,7 @@ size_size_pair_vec cath::file::tally_residue_names(const residue_name_vec &arg_p
 				                                                                             : arg_dssp_or_wolf_residue_names[ dssp_residue_ctr     ];
 
 				// Scan through the PDB residues to find a match
-				while ( pdb_residue_ctr < num_pdb_residues && dssp_or_wolf_res_name_to_find != arg_pdb_residue_names[ pdb_residue_ctr ] ) {
+				while ( pdb_residue_ctr < num_pdb_residues && should_advance_pdb_res_ctr_for_target_fn( pdb_residue_ctr, dssp_or_wolf_res_name_to_find ) ) {
 					++pdb_residue_ctr;
 				}
 

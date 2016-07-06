@@ -109,6 +109,9 @@ namespace cath {
 		protein build_protein_of_pdb_and_name(const pdb &,
 		                                      const std::string &,
 		                                      std::ostream & = std::cerr);
+
+		size_set get_protein_res_indices_that_dssp_might_skip(const pdb &,
+		                                                      std::ostream & = std::cerr);
 	}
 }
 
