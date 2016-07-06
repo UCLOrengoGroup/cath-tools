@@ -503,16 +503,14 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue &arg_dssp_residue
 		const double &pdb_value  = get<1>( x_y_z_entry );
 		const double &dssp_value = get<2>( x_y_z_entry );
 		if ( difference( pdb_value, dssp_value ) > 0.05001 ) {
-			BOOST_THROW_EXCEPTION(out_of_range_exception(
-				"Whilst combining PDB and DSSP files, at residue "
-				+ to_string( pdb_residue_name )
-				+ " detected conflicting "
-				+ string{ 1, dim }
-				+ " coordinate: "
-				+ ::std::to_string( pdb_value )
-				+ " and "
-				+ ::std::to_string( dssp_value )
-			));
+			BOOST_LOG_TRIVIAL( warning ) << "Whilst combining PDB and DSSP files, at residue "
+				<< pdb_residue_name
+				<< " detected conflicting "
+				<< dim
+				<< " coordinate: "
+				<< pdb_value
+				<< " and "
+				<< dssp_value;
 		}
 	}
 
