@@ -51,7 +51,8 @@ BOOST_AUTO_TEST_CASE(basic) {
 //	const str_vec ids           = read_file<string>( list_file );
 //	const auto    the_data_dirs = data_dirs_spec{}.set_cath_root_dir( root_dir );
 //	for (const string id : ids) {
-//		if ( id == "2br0A" || id == "2c28A" || id == "3nirA" || id == "4c9aB" || id == "4c9aD" ) {
+//		// 1geo0 : Whilst combining PDB and DSSP files, at residue 149 detected conflicting psi angles: 322.016901 and 313.000000
+//		if ( id == "1geo0" ) {
 //			continue;
 //		}
 ////		std::mt19937 rng{ std::random_device{}() };
