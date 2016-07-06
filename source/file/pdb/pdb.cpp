@@ -510,7 +510,11 @@ ostream & cath::file::operator<<(ostream   &arg_os,         ///< TODOCUMENT
 /// \relates protein
 doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb &arg_pdb ///< TODOCUMENT
                                                                   ) {
-	const double INTER_CA_DIST_FOR_NEIGHBOURS = (3.8 + 2 * 2.9) / 2; // Half way between a typical trans ca-ca distance and two times a typical cis ca-ca distance
+	// The gap between consecutive residues' carbon-alpha atoms, above which the residues are not treated as neighbours
+	//
+	// To replicate DSSP's behaviour, this must be at least >= 5.01602 so that residues 161 and 162 on chain A of 139l are treated as connected
+	// To replicate DSSP's behaviour, this must be at least >= 6.60324 so that residues  63 and  64 on chain A of 1c8c are treated as connected
+	const double INTER_CA_DIST_FOR_NEIGHBOURS = 6.625; //< 6 + 5/8
 	const auto   DEFAULT_PHI_PSI              = residue::DEFAULT_PHI_PSI();
 	const auto   DEFAULT_PHI_PSI_PAIR         = make_pair( DEFAULT_PHI_PSI, DEFAULT_PHI_PSI );
 
