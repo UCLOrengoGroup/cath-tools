@@ -66,6 +66,7 @@ namespace cath {
 				// Read the hits from stdin and print the resolved hits to cout
 				read_and_resolve_mgr the_read_and_resolve_mgr{ cout };
 				read_hit_list_from_istream( the_read_and_resolve_mgr, cin );
+				return;
 			}
 
 			// Grab the filename and check the file exists
