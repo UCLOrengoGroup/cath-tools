@@ -76,8 +76,8 @@ integer_range<size_t> discont_hits_index_by_start::get_index_indices_of_disconts
 	const auto begin_itr = lower_bound( disconts, arg_start, [] (const res_arr_idx_pair &p, const res_arrow &a) { return p.first < a; } );
 	const auto end_itr   = upper_bound( disconts, arg_stop,  [] (const res_arrow &a, const res_arr_idx_pair &p) { return a < p.first; } );
 	return irange(
-		numeric_cast<size_t>( distance( std::cbegin( disconts ), begin_itr ) ),
-		numeric_cast<size_t>( distance( std::cbegin( disconts ), end_itr   ) )
+		numeric_cast<size_t>( distance( common::cbegin( disconts ), begin_itr ) ),
+		numeric_cast<size_t>( distance( common::cbegin( disconts ), end_itr   ) )
 	);
 }
 

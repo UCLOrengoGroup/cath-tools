@@ -117,8 +117,8 @@ void cath::rslv::read_hit_list_from_istream(read_and_resolve_mgr &arg_read_and_r
 	const auto bounds_pusher = [&] (const residx_t &x) { bounds.push_back( x ); };
 
 	while ( getline( arg_istream, line ) ) {
-		const auto line_begin_itr        = ::std::cbegin( line );
-		const auto line_end_itr          = ::std::cend  ( line );
+		const auto line_begin_itr        = common::cbegin( line );
+		const auto line_end_itr          = common::cend  ( line );
 
 		const auto end_of_query_id_itr   = find_space    ( line_begin_itr,        line_end_itr );
 		const auto begin_of_match_id_itr = find_non_space( end_of_query_id_itr,   line_end_itr );
