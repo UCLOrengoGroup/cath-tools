@@ -26,14 +26,20 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/algorithm/equal.hpp>
+#include <boost/range/algorithm/lower_bound.hpp>
 #include <boost/range/algorithm/max_element.hpp>
+#include <boost/range/algorithm/upper_bound.hpp>
 #include <boost/range/sub_range.hpp>
+#include <boost/spirit/include/qi.hpp>
 
 #include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/file/open_fstream.h"
 #include "common/type_aliases.h"
+#include "resolve_hits/read_and_resolve_mgr.h"
 
+#include <chrono>
 #include <chrono>
 #include <fstream>
 #include <string>
@@ -48,152 +54,158 @@ using boost::filesystem::path;
 using boost::integer_range;
 using boost::irange;
 using boost::numeric_cast;
+using boost::range::equal;
+using boost::range::lower_bound;
 using boost::range::max_element;
+using boost::range::upper_bound;
+using boost::spirit::qi::double_;
+using boost::spirit::qi::omit;
+using boost::spirit::qi::parse;
+using boost::spirit::uint_;
 using boost::sub_range;
 using boost::token_compress_on;
 using std::distance;
+using std::find_if;
 using std::ifstream;
+using std::istream;
 using std::make_pair;
 using std::ostream;
 using std::string;
 using std::vector;
 
-/// \brief TODOCUMENT
+
+/// \brief Read a hit_list from the specified file
 ///
 /// \relates hit_list
-hit_list cath::rslv::read_hit_list_from_file(const path &arg_file ///< TODOCUMENT
-                                             ) {
-	// cerr << "Starting\n" << std::flush;
-	// const auto parse_start_time = std::chrono::high_resolution_clock::now();
-
-	// const path the_file{ "/cath-tools/other_stuff/jon_dom_finder_gubbins/uniref100_sub_4135.faa.jon" };
-	// const path the_file{ "/dev/shm/uniref100_sub_4135.faa.jon" };
+void cath::rslv::read_hit_list_from_file(read_and_resolve_mgr &arg_read_and_resolve_mgr, ///< The read_and_resolve_mgr to which each hit should be sent when it's read
+                                         const path           &arg_file                  ///< The file from which to read the hits data
+                                         ) {
 
 	ifstream the_ifstream;
 	open_ifstream( the_ifstream, arg_file );
-	
-//	size_t num_multi_segs_skipped = 0;
 
-	vector<hit> the_hits;
+	read_hit_list_from_istream( arg_read_and_resolve_mgr, the_ifstream );
 
-// 	string line_string;
-// 	while ( getline( the_ifstream, line_string ) ) {
-// 		const auto line_parts = split_build<str_vec>( line_string, is_space(), token_compress_on );
-// 		if ( line_parts.size() != 3 ) {
-// 			BOOST_THROW_EXCEPTION(runtime_error_exception("Line doesn't contain three parts"));
-// 		}
-// 		const auto &label   = line_parts[ 0 ];
-// 		const auto  score   = stof( line_parts[ 1 ] );
-// 		const auto &seg_str = line_parts[ 2 ];
-// //		if ( contains( seg_str, "," ) ) {
-// //			++num_multi_segs_skipped;
-// //			continue;
-// //		}
+	the_ifstream.close();
+}
 
-// 		const auto seg_parts = split_build<str_vec>( seg_str, is_any_of( ",-" ) );
-// 		if ( seg_parts.size() % 2 != 0 ) {
-// 			BOOST_THROW_EXCEPTION(runtime_error_exception(
-// 				"Segments str "
-// 				+ seg_str
-// 				+ " doesn't contain two parts"
-// 			));
-// 		}
-// 		// if ( seg_parts.size() == 2 ) {
-// //			the_hits.emplace_back(
-// //				numeric_cast<residx_t>( stol( seg_parts[ 0 ] ) ),
-// //				numeric_cast<residx_t>( stol( seg_parts[ 1 ] ) ),
-// //				score,
-// //				label
-// //			);
-// //		}
-// //		else {
-// 			the_hits.emplace_back(
-// 				transform_build<hit_seg_vec>(
-// 					irange( 0_z, seg_parts.size(), 2 ),
-// 					[&] (const size_t &x) {
-// 						return hit_seg{
-// 							arrow_before_res( numeric_cast<residx_t>( stol( seg_parts[ x     ] ) ) ),
-// 							arrow_after_res ( numeric_cast<residx_t>( stol( seg_parts[ x + 1 ] ) ) )
-// 						};
-// 					}
-// 				),
-// 				score,
-// 				label
-// 			);
-// 		// }
-// 	}
+/// \brief Read a hit_list from the specified istream
+///
+/// \relates hit_list
+void cath::rslv::read_hit_list_from_istream(read_and_resolve_mgr &arg_read_and_resolve_mgr, ///< The read_and_resolve_mgr to which each hit should be sent when it's read
+                                            istream              &arg_istream               ///< The istream from which to read the hits data
+                                            ) {
+	if ( arg_read_and_resolve_mgr.is_active() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot read_hit_list_from_file() with a read_and_resolve_mgr that's already active"));
+	}
 
-	string      label;
-	resscr_t    score;
-	string      parts_string;
-	hit_seg_vec segments;
-	while ( ! the_ifstream.eof() ) {
+	const auto is_space_char     = [ ] (const auto &x) { return ( ( x == ' ' ) || ( x == '\t' ) ); };
+	const auto is_non_space_char = [ ] (const auto &x) { return ( ( x != ' ' ) && ( x != '\t' ) ); };
+	const auto find_space        = [&] (const auto &b, const auto &e) {
+		return find_if( b, e, is_space_char     );
+	};
+	const auto find_non_space    = [&] (const auto &b, const auto &e ) {
+		return find_if( b, e, is_non_space_char );
+	};
 
-		the_ifstream >> label;
-		the_ifstream >> score;
-		the_ifstream >> parts_string;
+	resscr_t         score;
+	hit_seg_vec      fragments;
+	vector<residx_t> bounds;
+	string           line;
+	string           query_id;
 
-		segments.clear();
-		residx_t start;
-		residx_t stop;
-		auto str_ptr = &parts_string.front();
-		int num_read = 0;
-		while ( sscanf( str_ptr, "%u-%u%n", &start, &stop, &num_read ) != EOF ) {
-			str_ptr += num_read;
-			segments.emplace_back(
-				arrow_before_res( start ),
-				arrow_after_res ( stop  )
-			);
-			if ( *str_ptr != ',' ) {
-				break;
-			}
-			++str_ptr;
+	const auto bounds_pusher = [&] (const residx_t &x) { bounds.push_back( x ); };
+
+	while ( getline( arg_istream, line ) ) {
+		const auto line_begin_itr        = ::std::cbegin( line );
+		const auto line_end_itr          = ::std::cend  ( line );
+
+		const auto end_of_query_id_itr   = find_space    ( line_begin_itr,        line_end_itr );
+		const auto begin_of_match_id_itr = find_non_space( end_of_query_id_itr,   line_end_itr );
+		const auto end_of_match_id_itr   = find_space    ( begin_of_match_id_itr, line_end_itr );
+		const auto begin_of_score_itr    = find_non_space( end_of_match_id_itr,   line_end_itr );
+
+		if ( ! arg_read_and_resolve_mgr.is_active() || ! boost::range::equal( arg_read_and_resolve_mgr.get_query_id(), sub_range<const string>{ line_begin_itr, end_of_query_id_itr } ) ) {
+			complete_if_active( arg_read_and_resolve_mgr );
+			arg_read_and_resolve_mgr.set_query_id( string{ line_begin_itr, end_of_query_id_itr } );
 		}
 
-		the_hits.emplace_back(
-			segments,
+		bounds.clear();
+		auto parse_itr = begin_of_score_itr;
+		const bool ok = parse(
+			parse_itr,
+			line_end_itr,
+			   double_
+			>> omit[ +boost::spirit::qi::space ]
+			>> uint_[ bounds_pusher ]
+			>> omit[ '-' ] //
+			>> uint_[ bounds_pusher ]
+			>> *(
+				','
+				>> uint_[ bounds_pusher ]
+				>> omit[ "-" ] //
+				>> uint_[ bounds_pusher ]
+			),
+			score
+		);
+
+		if ( ! ok || parse_itr != line_end_itr ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception( "Error on attempt to parse line : " + line ));
+		}
+		if ( bounds.empty() ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception( "No bounds" ));
+		}
+		if ( bounds.size() % 2 != 0 ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception( "Odd number of bounds" ));
+		}
+
+		// *** SHOULD CHECK THAT BOUNDS IS STRICTLY ASCENDING ****
+
+		fragments.clear();
+		for (const size_t &bound_ctr : irange( 1_z, bounds.size() - 1, 2_z ) ) {
+			fragments.emplace_back(
+				arrow_after_res ( bounds[ bound_ctr     ] ),
+				arrow_before_res( bounds[ bound_ctr + 1 ]  )
+			);
+		}
+
+		arg_read_and_resolve_mgr.add_hit(
+			arrow_before_res( bounds.front() ),
+			arrow_after_res ( bounds.back () ),
+			fragments,
 			score,
-			label
+			string{ begin_of_match_id_itr, end_of_match_id_itr }
 		);
 	}
 
-
-	// BOOST_LOG_TRIVIAL( warning ) << "Parsed  " << the_hits.size()        << " single-segment hits";
-//	BOOST_LOG_TRIVIAL( warning ) << "Skipped " << num_multi_segs_skipped << " multi-segment hits";
-	// BOOST_LOG_TRIVIAL( warning )
-	// 	<< "Took Parsing "
-	// 	<< the_hits.size()
-	// 	<< " hits took "
-	// 	<< durn_to_seconds_string( std::chrono::high_resolution_clock::now() - parse_start_time );
-
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
-	return hit_list{ move( the_hits ) };
+	complete_if_active( arg_read_and_resolve_mgr );
+	arg_read_and_resolve_mgr.final_wait();
 }
 
-/// \brief TODOCUMENT
+/// \brief Generate a string describing the specified hit_list
 ///
 /// \relates hit_list
-string cath::rslv::to_string(const hit_list &arg_hit_list ///< TODOCUMENT
+string cath::rslv::to_string(const hit_list &arg_hit_list ///< The hit_list to describe
                              ) {
 	return "hit_list["
 		+ ::std::to_string( arg_hit_list.size() )
 		+ "hits]";
 }
 
-/// \brief TODOCUMENT
+/// \brief Insert a description of the specified hit_list into the specified ostream
 ///
 /// \relates hit_list
-ostream & cath::rslv::operator<<(ostream   &arg_ostream,      ///< TODOCUMENT
-                                 const hit_list &arg_hit_list ///< TODOCUMENT
+ostream & cath::rslv::operator<<(ostream        &arg_ostream, ///< The ostream into which the description should be inserted
+                                 const hit_list &arg_hit_list ///< The hit_list to describe
                                  ) {
 	arg_ostream << to_string( arg_hit_list );
 	return arg_ostream;
 }
 
-/// \brief TODOCUMENT
+/// \brief Get the maximum stop residue of all the hits in the specified hit_list
 ///
 /// \relates hit_list
-residx_t cath::rslv::get_max_stop(const hit_list &arg_hit_list ///< TODOCUMENT
+residx_t cath::rslv::get_max_stop(const hit_list &arg_hit_list ///< The hit_list to query
                                   ) {
 	return get_stop_res_index( *max_element(
 		arg_hit_list,
@@ -202,13 +214,13 @@ residx_t cath::rslv::get_max_stop(const hit_list &arg_hit_list ///< TODOCUMENT
 	} ) );
 }
 
-/// \brief TODOCUMENT
+/// \brief Find the first hit in the specified hit_list that stops at or after the specified residue boundary
 ///
 /// Note: may return one-after-end iterator
 ///
 /// \relates hit_list
-hit_list::const_iterator cath::rslv::find_first_hit_stopping_at_or_after(const hit_list  &arg_hit_list, ///< TODOCUMENT
-                                                                         const res_arrow &arg_res_arrow ///< TODOCUMENT
+hit_list::const_iterator cath::rslv::find_first_hit_stopping_at_or_after(const hit_list  &arg_hit_list, ///< The hit_list to query
+                                                                         const res_arrow &arg_res_arrow ///< The boundary that the hit must stop at or after
                                                                          ) {
 	return lower_bound(
 		arg_hit_list,
@@ -219,13 +231,13 @@ hit_list::const_iterator cath::rslv::find_first_hit_stopping_at_or_after(const h
 	);
 }
 
-/// \brief TODOCUMENT
+/// \brief Find the first hit in the specified hit_list that stops after the specified residue boundary
 ///
 /// Note: may return one-after-end iterator
 ///
 /// \relates hit_list
-hit_list::const_iterator cath::rslv::find_first_hit_stopping_after(const hit_list  &arg_hit_list, ///< TODOCUMENT
-                                                                   const res_arrow &arg_res_arrow ///< TODOCUMENT
+hit_list::const_iterator cath::rslv::find_first_hit_stopping_after(const hit_list  &arg_hit_list, ///< The hit_list to query
+                                                                   const res_arrow &arg_res_arrow ///< The boundary that the hit must stop after
                                                                    ) {
 	return upper_bound(
 		arg_hit_list,
@@ -236,15 +248,15 @@ hit_list::const_iterator cath::rslv::find_first_hit_stopping_after(const hit_lis
 	);
 }
 
-/// \brief TODOCUMENT
+/// \brief Get a range of indices corresponding to those hits in the specified hit_list that stop in
+///        the specified range
 ///
-/// The range is inclusive (returned range may include hits that
-/// stop at arg_start_arrow or arg_stop_arrow)
+/// The range is inclusive at the end (ie the returned range may include hits that stop at arg_stop_arrow)
 ///
 /// \relates hit_list
-integer_range<hitidx_t> cath::rslv::indices_of_hits_that_stop_in_range(const hit_list  &arg_hit_list,    ///< TODOCUMENT
-                                                                       const res_arrow &arg_start_arrow, ///< TODOCUMENT
-                                                                       const res_arrow &arg_stop_arrow   ///< TODOCUMENT
+integer_range<hitidx_t> cath::rslv::indices_of_hits_that_stop_in_range(const hit_list  &arg_hit_list,    ///< The hit_list to query
+                                                                       const res_arrow &arg_start_arrow, ///< The start arrow that the hits corresponding to the returned indices must stop after
+                                                                       const res_arrow &arg_stop_arrow   ///< The stop  arrow that the hits corresponding to the returned indices must stop before or at
                                                                        ) {
 	return {
 		numeric_cast<hitidx_t>( distance( cbegin( arg_hit_list ), find_first_hit_stopping_after( arg_hit_list, arg_start_arrow ) ) ),

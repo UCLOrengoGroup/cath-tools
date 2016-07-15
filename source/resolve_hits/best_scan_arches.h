@@ -35,14 +35,23 @@
 namespace cath {
 	namespace rslv {
 
-		/// \brief TODOCUMENT
+		/// \brief The best architectures (and their scores) that have been seen in a straight
+		///        scan over various res_arrows
+		///
+		/// This is the key part of a single layer of dynamic-programming scanning
+		///
+		/// This works by storing the unique best architectures seen (as a vector of scored_arch_proxy)
+		/// along with a lookup table from boundary indices to the index of the corresponding best architecture
+		///
+		/// This design means that little work is required for extending an architecture's region of best-ness
+		/// and that lookup is very quick
 		class best_scan_arches final {
 		private:
-			/// \brief TODOCUMENT
-			std::vector<resarw_t> bests;
-
-			/// \brief TODOCUMENT
+			/// \brief The best architectures seen up to each of the points
 			scored_arch_proxy_vec best_arches;
+
+			/// \brief The index (in best_arches) of the best architecture seen for all residue positions
+			std::vector<resarw_t> bests;
 
 		public:
 			explicit best_scan_arches(const residx_t &);
@@ -64,16 +73,19 @@ namespace cath {
 		inline const resscr_t & get_best_score_so_far(const best_scan_arches &);
 		inline const hit_arch & get_best_arch_so_far(const best_scan_arches &);
 
-		/// \brief TODOCUMENT
-		inline best_scan_arches::best_scan_arches(const residx_t &arg_num_residues ///< TODOCUMENT
+		/// \brief Ctor from the number of residues expected
+		inline best_scan_arches::best_scan_arches(const residx_t &arg_num_residues ///< The number of residues expected
 		                                          ) {
 			bests.reserve( arg_num_residues + 1 ); // 1 more arrow than there are residues they surround
-			bests.emplace_back( 0 );
+
+			// Initialise that the best we have seen up to now, is an empty architecture with zero score up to the start
+
 			best_arches.emplace_back();
+			bests.emplace_back( 0 );
 		}
 
-		/// \brief TODOCUMENT
-		inline const scored_arch_proxy & best_scan_arches::get_best_scored_arch_up_to_arrow(const res_arrow &arg_arrow ///< TODOCUMENT
+		/// \brief Get the best architecture (scored_arch_proxy) seen so far up to and including the specified arrow
+		inline const scored_arch_proxy & best_scan_arches::get_best_scored_arch_up_to_arrow(const res_arrow &arg_arrow ///< The point at which we want to know the optimum solution
 		                                                                                    ) const {
 			const auto &index = arg_arrow.get_index();
 #ifndef NDEBUG
@@ -85,13 +97,13 @@ namespace cath {
 			return best_arches[ bests[ index ] ];
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Get the best seen architecture so far
 		inline const scored_arch_proxy & best_scan_arches::get_best_scored_arch_so_far() const {
 			return best_arches[ bests.back() ];
 		}
 
-		/// \brief TODOCUMENT
-		inline resscr_t best_scan_arches::extend_up_to_arrow(const res_arrow &arg_arrow ///< TODOCUMENT
+		/// \brief Extend the previous best seen architecture as the best up to the specified arrow
+		inline resscr_t best_scan_arches::extend_up_to_arrow(const res_arrow &arg_arrow ///< The point up to which the previous best seen architecture is now known to still be the best
 		                                                     ) {
 			const auto &index = arg_arrow.get_index();
 #ifndef NDEBUG
@@ -110,11 +122,16 @@ namespace cath {
 			return get_best_score_so_far( *this );
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Add the specified architecture as the best seen architecture up to the specified boundary
+		///
+		/// Be sure to have previously extended the previous architecture up to the boundary before
+		///
+		/// \pre arg_arrow must be one greater than the most recent addition / extension
+		///      (else, in a debug build, an exception will be thrown)
 		///
 		/// \relates best_scan_arches
-		inline void best_scan_arches::add_best_up_to_arrow(const res_arrow         &arg_arrow,      ///< TODOCUMENT
-		                                                   const scored_arch_proxy &arg_scored_arch ///< TODOCUMENT
+		inline void best_scan_arches::add_best_up_to_arrow(const res_arrow         &arg_arrow,      ///< The boundary associated with the new best
+		                                                   const scored_arch_proxy &arg_scored_arch ///< The new best architecture
 		                                                   ) {
 #ifndef NDEBUG
 			if ( arg_arrow.get_index() != bests.size() ) {
@@ -133,54 +150,13 @@ namespace cath {
 			bests.emplace_back( best_arches.size() - 1 );
 		}
 
-		// /// \brief TODOCUMENT
-		// inline const resscr_t & get_best_score_up_to_arrow(const best_scan_arches &arg_best_scan_arches, ///< TODOCUMENT
-		//                                                    const res_arrow        &arg_arrow             ///< TODOCUMENT
-		//                                                    ) {
-		// 	return arg_best_scan_arches.get_best_scored_arch_up_to_arrow( arg_arrow ).get_score();
-		// }
-
-		// /// \brief TODOCUMENT
-		// ///
-		// /// \relates best_scan_arches
-		// inline const hit_arch & get_best_arch_up_to_arrow(const best_scan_arches &arg_best_scan_arches, ///< TODOCUMENT
-		//                                                   const res_arrow        &arg_arrow             ///< TODOCUMENT
-		//                                                   ) {
-		// 	return arg_best_scan_arches.get_best_scored_arch_up_to_arrow( arg_arrow ).get_arch();
-		// }
-
-		/// \brief TODOCUMENT
+		/// \brief Get the best score seen so far
 		///
 		/// \relates best_scan_arches
-		inline const resscr_t & get_best_score_so_far(const best_scan_arches &arg_best_scan_arches ///< TODOCUMENT
+		inline const resscr_t & get_best_score_so_far(const best_scan_arches &arg_best_scan_arches ///< The best_scan_arches to query
 		                                              ) {
 			return arg_best_scan_arches.get_best_scored_arch_so_far().get_score();
 		}
-
-		// /// \brief TODOCUMENT
-		// ///
-		// /// \relates best_scan_arches
-		// inline const hit_arch & get_best_arch_so_far(const best_scan_arches &arg_best_scan_arches ///< TODOCUMENT
-		//                                              ) {
-		// 	return arg_best_scan_arches.get_best_scored_arch_so_far().get_arch();
-		// }
-
-		// /// \brief TODOCUMENT
-		// ///
-		// /// \relates best_scan_arches
-		// inline void add_best_up_to_arrow(best_scan_arches &arg_best_scan_arches, ///< TODOCUMENT
-		//                                  const res_arrow  &arg_arrow,      ///< TODOCUMENT
-		//                                  const resscr_t   &arg_best_score, ///< TODOCUMENT
-		//                                  const hit_arch   &arg_arch        ///< TODOCUMENT
-		//                                  ) {
-		// 	return arg_best_scan_arches.add_best_up_to_arrow(
-		// 		arg_arrow,
-		// 		scored_arch_proxy{
-		// 			arg_best_score,
-		// 			arg_arch
-		// 		}
-		// 	);
-		// }
 
 	}
 }

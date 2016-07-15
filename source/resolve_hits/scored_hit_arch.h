@@ -29,13 +29,13 @@ namespace cath { namespace rslv { class hit_list; } }
 namespace cath {
 	namespace rslv {
 
-		/// \brief TODOCUMENT
+		/// \brief A hit architecture (ie hit_arch) along with the score associated with it
 		class scored_hit_arch final {
 		private:
-			/// \brief TODOCUMENT
+			/// \brief The score associated with the architecture
 			resscr_t the_score = INIT_SCORE;
 
-			/// \brief TODOCUMENT
+			/// \brief The architecture
 			hit_arch the_arch;
 
 		public:
@@ -53,25 +53,25 @@ namespace cath {
 			scored_hit_arch & operator-=(const hit_vec &);
 		};
 
-		/// \brief TODOCUMENT
-		inline scored_hit_arch::scored_hit_arch(const resscr_t &arg_score, ///< TODOCUMENT
-		                                        const hit_arch &arg_arch   ///< TODOCUMENT
+		/// \brief Ctor
+		inline scored_hit_arch::scored_hit_arch(const resscr_t &arg_score, ///< The score associated with the architecture
+		                                        const hit_arch &arg_arch   ///< The architecture
 		                                        ) : the_score ( arg_score ),
 		                                            the_arch  ( arg_arch  ) {
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Getter for the score
 		inline const resscr_t & scored_hit_arch::get_score() const noexcept {
 			return the_score;
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Getter for the architecture
 		inline const hit_arch & scored_hit_arch::get_arch() const noexcept {
 			return the_arch;
 		}
 
-		/// \brief TODOCUMENT
-		inline scored_hit_arch & scored_hit_arch::operator+=(const hit &arg_hit ///< TODOCUMENT
+		/// \brief Add the specified hit Iincluding its score) to this scored_hit_arch
+		inline scored_hit_arch & scored_hit_arch::operator+=(const hit &arg_hit ///< The hit to add
 		                                                     ) {
 			// Do score second so that this can propagate any hit_arch::operator+=(const hit &) exception guarantee 
 			the_arch  += arg_hit;
@@ -79,8 +79,8 @@ namespace cath {
 			return *this;
 		}
 
-		/// \brief TODOCUMENT
-		inline scored_hit_arch & scored_hit_arch::operator+=(const scored_hit_arch &arg_scored_hit_arch ///< TODOCUMENT
+		/// \brief Add the specified scored_hit_arch (including its score) to this scored_hit_arch
+		inline scored_hit_arch & scored_hit_arch::operator+=(const scored_hit_arch &arg_scored_hit_arch ///< The scored_hit_arch to add
 		                                                     ) {
 			// Do score second so that this can propagate any hit_arch::operator+=(const hit_arch &) exception guarantee 
 			the_arch  += arg_scored_hit_arch.get_arch();
@@ -88,8 +88,8 @@ namespace cath {
 			return *this;
 		}
 
-		/// \brief TODOCUMENT
-		inline scored_hit_arch & scored_hit_arch::operator-=(const hit &arg_hit ///< TODOCUMENT
+		/// \brief Remove the specified hit (including its score) from this scored_hit_arch
+		inline scored_hit_arch & scored_hit_arch::operator-=(const hit &arg_hit ///< The hit to remove
 		                                                     ) {
 			if ( the_arch.remove( arg_hit ) ) {
 				the_score -= arg_hit.get_score();
@@ -97,8 +97,8 @@ namespace cath {
 			return *this;
 		}
 
-		/// \brief TODOCUMENT
-		inline scored_hit_arch & scored_hit_arch::operator-=(const hit_vec &arg_hit_vec ///< TODOCUMENT
+		/// \brief Remove the specified list of hits (including their scores) from this scored_hit_arch
+		inline scored_hit_arch & scored_hit_arch::operator-=(const hit_vec &arg_hit_vec ///< The hits to remove
 		                                                     ) {
 			for (const hit &the_hit : arg_hit_vec) {
 				(*this) -= the_hit;
@@ -106,65 +106,58 @@ namespace cath {
 			return *this;
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Add the specified hit (including its score) to a copy of the specified scored_hit_arch
 		///
 		/// \relates scored_hit_arch
-		inline scored_hit_arch operator+(scored_hit_arch  arg_scored_hit_arch, ///< TODOCUMENT
-		                                 const hit       &arg_hit              ///< TODOCUMENT
+		inline scored_hit_arch operator+(scored_hit_arch  arg_scored_hit_arch, ///< The scored_hit_arch to copy and then add the specified hit
+		                                 const hit       &arg_hit              ///< The hit to add
 		                                 ) {
 			arg_scored_hit_arch += arg_hit;
 			return arg_scored_hit_arch;
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Add the specified hit (including its score) to a copy of the specified scored_hit_arch
 		///
 		/// \relates scored_hit_arch
-		inline scored_hit_arch operator+(const hit       &arg_hit,            ///< TODOCUMENT
-		                                 scored_hit_arch  arg_scored_hit_arch ///< TODOCUMENT
+		inline scored_hit_arch operator+(const hit       &arg_hit,            ///< The hit to add
+		                                 scored_hit_arch  arg_scored_hit_arch ///< The scored_hit_arch to copy and then add the specified hit
 		                                 ) {
 			arg_scored_hit_arch += arg_hit;
 			return arg_scored_hit_arch;
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Add the second specified scored_hit_arch (including its scores) to a copy of the first
 		///
 		/// \relates scored_hit_arch
-		inline scored_hit_arch operator+(scored_hit_arch        arg_scored_hit_arch_lhs, ///< TODOCUMENT
-		                                 const scored_hit_arch &arg_scored_hit_arch_rhs  ///< TODOCUMENT
+		inline scored_hit_arch operator+(scored_hit_arch        arg_scored_hit_arch_lhs, ///< The scored_hit_arch to copy and then add the specified scored_hit_arch
+		                                 const scored_hit_arch &arg_scored_hit_arch_rhs  ///< The scored_hit_arch to add
 		                                 ) {
 			arg_scored_hit_arch_lhs += arg_scored_hit_arch_rhs;
 			return arg_scored_hit_arch_lhs;
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Remove the specified hit (including its score) from a copy of the specified scored_hit_arch
 		///
 		/// \relates scored_hit_arch
-		inline scored_hit_arch operator-(scored_hit_arch  arg_scored_hit_arch, ///< TODOCUMENT
-		                                 const hit       &arg_hit              ///< TODOCUMENT
+		inline scored_hit_arch operator-(scored_hit_arch  arg_scored_hit_arch, ///< The scored_hit_arch to copy and then remove the specified hit
+		                                 const hit       &arg_hit              ///< The hit to remove
 		                                 ) {
 			arg_scored_hit_arch -= arg_hit;
 			return arg_scored_hit_arch;
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Remove the specified list of hits (including their scores) from a copy of the specified scored_hit_arch
 		///
 		/// \relates scored_hit_arch
-		inline scored_hit_arch operator-(scored_hit_arch  arg_scored_hit_arch, ///< TODOCUMENT
-		                                 const hit_vec   &arg_hit_vec          ///< TODOCUMENT
+		inline scored_hit_arch operator-(scored_hit_arch  arg_scored_hit_arch, ///< The scored_hit_arch to copy and then remove the specified hits
+		                                 const hit_vec   &arg_hit_vec          ///< The hits to remove
 		                                 ) {
 			arg_scored_hit_arch -= arg_hit_vec;
 			return arg_scored_hit_arch;
 		}
 
-		/// \brief TODOCUMENT
-		///
-		/// \relates scored_hit_arch
 		scored_hit_arch make_scored_hit_arch(const scored_arch_proxy &,
 		                                     const hit_list &);
-
-		// std::string to_string(const scored_hit_arch &);
-		// std::ostream & operator<<(std::ostream &,
-		//                           const scored_hit_arch &);
 
 	}
 }

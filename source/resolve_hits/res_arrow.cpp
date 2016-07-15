@@ -38,15 +38,19 @@ static_assert( arrow_after_res ( 0 ).res_after () == 1, "" );
 
 static_assert( start_arrow().res_after() == 0, "" );
 
-/// \brief TODOCUMENT
-string cath::rslv::to_string(const res_arrow &arg_res_arrow
+/// \brief Generate a string describing the specified res_arrow
+///
+/// \relates res_arrow
+string cath::rslv::to_string(const res_arrow &arg_res_arrow ///< THe res_arrow to describe
                              ) {
 	return "res_arrow[before residue " + std::to_string( arg_res_arrow.res_after() ) + "]";
 }
 
-/// \brief TODOCUMENT
-ostream & cath::rslv::operator<<(ostream         &arg_os,       ///< TODOCUMENT
-                                 const res_arrow &arg_res_arrow ///< TODOCUMENT
+/// \brief Insert a description of the specified res_arrow into the specified ostream
+///
+/// \relates res_arrow
+ostream & cath::rslv::operator<<(ostream         &arg_os,       ///< The ostream into which the description should be inserted
+                                 const res_arrow &arg_res_arrow ///< The res_arrow to describe
                                  ) {
 	arg_os << to_string( arg_res_arrow );
 	return arg_os;

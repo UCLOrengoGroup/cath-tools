@@ -31,23 +31,39 @@
 
 #include <tuple>
 
+namespace cath { namespace rslv { class read_and_resolve_mgr; } }
+
 namespace cath {
 	namespace rslv {
 
-		/// \brief TODOCUMENT
+		/// \brief Represent a list of hits (which can then be resolved)
+		///
+		/// \invariant The hits kept sorted by get_less_than_fn() (roughly, by stop, then start, then score)
 		class hit_list final {
 		private:
-			/// \brief TODOCUMENT
+			/// \brief The list of hits
 			hit_vec the_hits;
 
-			static void sort_hit_vec(hit_vec &);
+			/// \brief The list of corresponding labels
+			///
+			/// Note that the list of labels may not be in the same order as the
+			/// list of hits; each hit has an index that indicates which is its corresponding label
+			str_vec hit_labels;
+
+			static void sort_hit_vec(hit_vec &,
+			                         const str_vec &);
 
 		public:
+			/// \brief A const_iterator type alias as part of making this a range over hits
 			using iterator       = hit_vec::iterator;
+
+			/// \brief A const_iterator type alias as part of making this a range over hits
 			using const_iterator = hit_vec::const_iterator;
 
-			static auto get_less_than_fn() {
-				return [] (const hit &x, const hit &y) {
+			/// \brief Less-than fuction as used for keeping the hits sorted in the hit_list
+			static auto get_less_than_fn(const str_vec &arg_hit_labels ///< The list of corresponding labels for the hits
+			                             ) {
+				return [&] (const hit &x, const hit &y) {
 					const auto lhs_tie = std::tie( x.get_stop_arrow(), x.get_start_arrow(), x.get_score() );
 					const auto rhs_tie = std::tie( y.get_stop_arrow(), y.get_start_arrow(), y.get_score() );
 					if ( lhs_tie < rhs_tie) {
@@ -60,32 +76,24 @@ namespace cath {
 					const auto lhs_segs_str = get_segments_string( x );
 					const auto rhs_segs_str = get_segments_string( y );
 					return (
-						std::tie( lhs_segs_str, x.get_label() )
+						std::tie( lhs_segs_str, x.get_label( arg_hit_labels ) )
 						<
-						std::tie( rhs_segs_str, y.get_label() )
+						std::tie( rhs_segs_str, y.get_label( arg_hit_labels ) )
 					);
-
-//					// Not using tie() trick because sorting on (unsigned) stop descending and start ascending
-//					const auto &x_stop = x.get_stop();
-//					const auto &y_stop = y.get_stop();
-//					if      ( x_stop > y_stop ) {
-//						return true;
-//					}
-//					else if ( x_stop < y_stop ) {
-//						return false;
-//					}
-//					else {
-//						return x.get_start() < y.get_start();
-//					}
 				};
 			}
 
-			explicit hit_list(const hit_vec &);
+			explicit hit_list(const hit_vec &,
+			                  const str_vec &);
+			explicit hit_list(hit_vec &&,
+			                  str_vec &&);
 
 			size_t size() const;
 			bool empty() const;
 
 			const hit & operator[](const size_t &) const;
+
+			const str_vec & get_labels() const;
 
 			iterator begin();
 			iterator end();
@@ -93,7 +101,10 @@ namespace cath {
 			const_iterator end() const;
 		};
 
-		hit_list read_hit_list_from_file(const boost::filesystem::path &);
+		void read_hit_list_from_file(read_and_resolve_mgr &,
+		                             const boost::filesystem::path &);
+		void read_hit_list_from_istream(read_and_resolve_mgr &,
+		                                std::istream &);
 		std::string to_string(const hit_list &);
 		std::ostream & operator<<(std::ostream &,
 		                          const hit_list &);
@@ -106,55 +117,69 @@ namespace cath {
 		                                                                  const res_arrow &,
 		                                                                  const res_arrow &);
 
-		/// \brief TODOCUMENT
-		inline void hit_list::sort_hit_vec(hit_vec &arg_hit_vec ///< TODOCUMENT
+		/// \brief Private-static method for in-place sorting hits using get_less_than_fn()
+		inline void hit_list::sort_hit_vec(hit_vec       &arg_hit_vec,   ///< The hits to in-place sort
+		                                   const str_vec &arg_hit_labels ///< The labels corresponding to the hits (but not necessarily in the same order)
 		                                   ) {
-			// const auto sort_start_time = std::chrono::high_resolution_clock::now();
 			boost::range::sort(
 				arg_hit_vec,
-				get_less_than_fn()
+				get_less_than_fn( arg_hit_labels )
 			);
-			// BOOST_LOG_TRIVIAL( warning ) << "Sorting takes   : " << common::durn_to_seconds_string( std::chrono::high_resolution_clock::now() - sort_start_time ) << "\n";
 		}
 
-		/// \brief TODOCUMENT
-		inline hit_list::hit_list(const hit_vec &arg_hit_list ///< TODOCUMENT
-		                          ) : the_hits( arg_hit_list ) {
-			sort_hit_vec( the_hits );
+		/// \brief Ctor from lvalues
+		inline hit_list::hit_list(const hit_vec &arg_hit_list,  ///< The hits
+		                          const str_vec &arg_hit_labels ///< The labels corresponding to the hits (but not necessarily in the same order)
+		                          ) : the_hits   ( arg_hit_list   ),
+		                              hit_labels ( arg_hit_labels ) {
+			sort_hit_vec( the_hits, hit_labels );
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Ctor from rvalues
+		inline hit_list::hit_list(hit_vec &&arg_hit_list,  ///< The hits
+		                          str_vec &&arg_hit_labels ///< The labels corresponding to the hits (but not necessarily in the same order)
+		                          ) : the_hits   ( std::move( arg_hit_list   ) ),
+		                              hit_labels ( std::move( arg_hit_labels ) ) {
+			sort_hit_vec( the_hits, hit_labels );
+		}
+
+		/// \brief Return the number of hits
 		inline size_t hit_list::size() const {
 			return the_hits.size();
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Return whether there are zero hits
 		inline bool hit_list::empty() const {
 			return the_hits.empty();
 		}
 
-		/// \brief TODOCUMENT
-		inline const hit & hit_list::operator[](const size_t &arg_index ///< TODOCUMENT
+		/// \brief Return the hit stored at the specified index
+		inline const hit & hit_list::operator[](const size_t &arg_index ///< The index of the hit to return
 		                                        ) const {
 			return the_hits[ arg_index ];
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Get the list of labels corresponding to the hits (but not necessarily in the same order)
+		inline const str_vec & hit_list::get_labels() const {
+			return hit_labels;
+		}
+
+		/// \brief Standard non-const begin() method, as part of making this into a range over the hits
 		inline auto hit_list::begin() -> iterator {
 			return std::begin( the_hits );
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Standard non-const end() method, as part of making this into a range over the hits
 		inline auto hit_list::end() -> iterator {
 			return std::end( the_hits );
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Standard const begin() method, as part of making this into a range over the hits
 		inline auto hit_list::begin() const -> const_iterator {
 			return common::cbegin( the_hits );
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Standard const end() method, as part of making this into a range over the hits
 		inline auto hit_list::end() const -> const_iterator {
 			return common::cend( the_hits );
 		}

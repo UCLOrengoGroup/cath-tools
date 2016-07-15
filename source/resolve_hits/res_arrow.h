@@ -30,14 +30,24 @@
 namespace cath {
 	namespace rslv {
 
-		/// \brief TODOCUMENT
+		/// \brief Represent the break-point between two neighouring residues
+		///
+		/// This makes many calculations a bit simpler to reason about than
+		/// using raw residue indices.
+		///
+		/// All conversions between residx_t (unsigned int) and res_arrow,
+		/// should be done through the explicit functions:
+		///  * `arrow_before_res(const residx_t &)`
+		///  * `arrow_after_res (const residx_t &)`
+		///  * `res_arrow::res_before()`
+		///  * `res_arrow::res_after ()`
 		class res_arrow final : private boost::totally_ordered<res_arrow,
 		                                boost::additive<res_arrow, resarw_t> > {
 		private:
 			friend constexpr res_arrow arrow_before_res(const residx_t &);
 			friend constexpr res_arrow arrow_after_res (const residx_t &);
 
-			/// \brief TODOCUMENT
+			/// \brief The number used to represent the arrow's position (where 0 means "before the first residue")
 			resarw_t arrow;
 
 			explicit constexpr res_arrow(const resarw_t &);
@@ -52,14 +62,20 @@ namespace cath {
 			res_arrow & operator-=(const resarw_t &);
 		};
 
-		constexpr bool operator<(const res_arrow &arg_arrow_a, ///< TODOCUMENT
-		                         const res_arrow &arg_arrow_b  ///< TODOCUMENT
+		/// \brief Return whether the first specified arrow appears earlier in the sequence than the second
+		///
+		/// \relates res_arrow
+		constexpr bool operator<(const res_arrow &arg_arrow_a, ///< The first  res_arrow to compare
+		                         const res_arrow &arg_arrow_b  ///< The second res_arrow to compare
 		                         ) {
 			return arg_arrow_a.get_index() < arg_arrow_b.get_index();
 		}
 
-		constexpr bool operator==(const res_arrow &arg_arrow_a, ///< TODOCUMENT
-		                          const res_arrow &arg_arrow_b  ///< TODOCUMENT
+		/// \brief Return whether the two specified arrows are identical
+		///
+		/// \relates res_arrow
+		constexpr bool operator==(const res_arrow &arg_arrow_a, ///< The first  res_arrow to compare
+		                          const res_arrow &arg_arrow_b  ///< The second res_arrow to compare
 		                          ) {
 			return arg_arrow_a.get_index() == arg_arrow_b.get_index();
 		}
@@ -72,12 +88,15 @@ namespace cath {
 		constexpr res_arrow arrow_after_res (const residx_t &);
 		constexpr res_arrow start_arrow();
 
-		/// \brief TODOCUMENT
-		inline constexpr res_arrow::res_arrow(const resarw_t &arg_res_arrow_index ///< TODOCUMENT
+		/// \brief Ctor from a resarw_t index
+		///
+		/// This is private and should only be called by
+		/// `arrow_before_res(const residx_t &)` and `arrow_after_res (const residx_t &)`
+		inline constexpr res_arrow::res_arrow(const resarw_t &arg_res_arrow_index ///< The index of the arrow
 		                                      ) : arrow ( arg_res_arrow_index ) {
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Get the index of the residue immediately before the arrow
 		inline constexpr residx_t res_arrow::res_before() const {
 #ifndef NDEBUG
 			return ( arrow > 0 ) ? ( arrow - 1 ) : throw( "Cannot return a residue before an arrow that precedes the first residue" );
@@ -86,45 +105,53 @@ namespace cath {
 #endif
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Get the index of the residue immediately after the arrow
 		inline constexpr const residx_t & res_arrow::res_after () const {
 			return arrow;
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Getter for the interal index representation
+		///
+		/// You probably don't want to call this. Consider res_before() and res_after() instead.
 		inline constexpr const resarw_t & res_arrow::get_index() const {
 			return arrow;
 		}
 
-		/// \brief TODOCUMENT
-		inline res_arrow & res_arrow::operator+=(const resarw_t &arg_offset ///< TODOCUMENT
+		/// \brief Increment the arrow by the specified offset
+		inline res_arrow & res_arrow::operator+=(const resarw_t &arg_offset ///< The offset by which to increment the res_arrow
 		                                         ) {
 			arrow += arg_offset;
 			return *this;
 		}
 
-		/// \brief TODOCUMENT
-		inline res_arrow & res_arrow::operator-=(const resarw_t &arg_offset ///< TODOCUMENT
+		/// \brief Decrement the arrow by the specified offset
+		inline res_arrow & res_arrow::operator-=(const resarw_t &arg_offset ///< The offset by which to decrement the res_arrow
 		                                         ) {
 			arrow -= arg_offset;
 			return *this;
 		}
 
-		/// \brief TODOCUMENT
-		inline constexpr res_arrow arrow_before_res(const residx_t &arg_res_index ///< TODOCUMENT
+		/// \brief Get the arrow immedately before the residue with the specified index
+		///
+		/// \relates res_arrow
+		inline constexpr res_arrow arrow_before_res(const residx_t &arg_res_index ///< The index of the residue immediately after the arrow to return
 		                                            ) {
 			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 			return res_arrow{ arg_res_index     };
 		}
 
-		/// \brief TODOCUMENT
-		inline constexpr res_arrow arrow_after_res(const residx_t &arg_res_index ///< TODOCUMENT
+		/// \brief Get the arrow immediately after the residue with the specified index
+		///
+		/// \relates res_arrow
+		inline constexpr res_arrow arrow_after_res(const residx_t &arg_res_index ///< The index of the residue immediately before the arrow to return
 		                                           ) {
 			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 			return res_arrow{ arg_res_index + 1 };
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief Get the start arrow (ie the arrow before the residue with index 0)
+		///
+		/// \relates res_arrow
 		inline constexpr res_arrow start_arrow() {
 			return arrow_before_res( 0 );
 		}

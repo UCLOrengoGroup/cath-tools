@@ -20,49 +20,17 @@
 
 #include "scored_hit_arch.h"
 
-// #include <boost/algorithm/string/join.hpp>
-
 #include "common/algorithm/transform_build.h"
 #include "resolve_hits/hit_list.h"
-// #include "common/boost_addenda/range/adaptor/lexical_casted.h"
-
-// #include <string>
 
 using namespace cath::common;
 using namespace cath::rslv;
 
-// using boost::algorithm::join;
-// using std::ostream;
-// using std::string;
-
-// /// \brief TODOCUMENT
-// ///
-// /// \relates scored_hit_arch
-// string cath::rslv::to_string(const scored_hit_arch &arg_scored_hit_arch ///< TODOCUMENT
-//                              ) {
-// 	return "scored_hit_arch[\n\t"
-// 		+ join(
-// 			arg_scored_hit_arch | lexical_casted<string>(),
-// 			"\n\t"
-// 		)
-// 		+ "\n]";
-// }
-
-// /// \brief TODOCUMENT
-// ///
-// /// \relates scored_hit_arch
-// ostream & cath::rslv::operator<<(ostream   &arg_ostream,      ///< TODOCUMENT
-//                                  const scored_hit_arch &arg_scored_hit_arch ///< TODOCUMENT
-//                                  ) {
-// 	arg_ostream << to_string( arg_scored_hit_arch );
-// 	return arg_ostream;
-// }
-
-/// \brief TODOCUMENT
+/// \brief Make a scored_hit_arch from a scored_arch_proxy and hit_list
 ///
 /// \relates scored_hit_arch
-scored_hit_arch cath::rslv::make_scored_hit_arch(const scored_arch_proxy &arg_scored_arch_proxy, ///< TODOCUMENT
-                                                 const hit_list          &arg_hit_list           ///< TODOCUMENT
+scored_hit_arch cath::rslv::make_scored_hit_arch(const scored_arch_proxy &arg_scored_arch_proxy, ///< The scored_arch_proxy which the scored_hit_arch should copy
+                                                 const hit_list          &arg_hit_list           ///< The hit_list to which the scored_arch_proxy refers
                                                  ) {
 	return {
 		arg_scored_arch_proxy.get_score(),

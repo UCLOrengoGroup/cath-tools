@@ -40,11 +40,13 @@ using std::string;
 //static_assert( std::is_nothrow_move_assignable   <hit_arch>::value, "" );
 static_assert( std::is_nothrow_move_constructible<hit_arch>::value, "" );
 
-/// \brief TODOCUMENT
+/// \brief Generate a string describing the specified hit_arch in the specified format
 ///
 /// \relates hit_arch
-string cath::rslv::to_string(const hit_arch          &arg_hit_arch, ///< TODOCUMENT
-                             const hit_output_format &arg_format    ///< TODOCUMENT
+string cath::rslv::to_string(const hit_arch          &arg_hit_arch, ///< The hit_arch to describe
+                             const str_vec           &arg_names,    ///< The list of labels correspding to the hit
+                             const hit_output_format &arg_format,   ///< The format in which the hit_arch should be described
+                             const string            &arg_prefix    ///< Any prefix that should come before the hit in hit_output_format::JON
                              ) {
 	const bool is_jon = ( arg_format == hit_output_format::JON );
 	const string prefix    = is_jon ? ""   : "hit_arch[\n\t";
@@ -53,18 +55,9 @@ string cath::rslv::to_string(const hit_arch          &arg_hit_arch, ///< TODOCUM
 	return prefix
 		+ join(
 			arg_hit_arch
-				| transformed( [&] (const hit &x) { return to_string( x, arg_format ); } ),
+				| transformed( [&] (const hit &x) { return to_string( x, arg_names, arg_format, arg_prefix ); } ),
 			separator
 		)
 		+ suffix;
 }
 
-/// \brief TODOCUMENT
-///
-/// \relates hit_arch
-ostream & cath::rslv::operator<<(ostream        &arg_ostream, ///< TODOCUMENT
-                                 const hit_arch &arg_hit_arch ///< TODOCUMENT
-                                 ) {
-	arg_ostream << to_string( arg_hit_arch );
-	return arg_ostream;
-}

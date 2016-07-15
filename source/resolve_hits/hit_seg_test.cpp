@@ -29,19 +29,7 @@ using boost::lexical_cast;
 using std::invalid_argument;
 using std::string;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The hit_seg_test_suite_fixture to assist in testing hit_seg
-		struct hit_seg_test_suite_fixture {
-		protected:
-			~hit_seg_test_suite_fixture() noexcept = default;
-		};
-
-	}
-}
-
-BOOST_FIXTURE_TEST_SUITE(hit_seg_test_suite, cath::test::hit_seg_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(hit_seg_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	static_assert( get_start_res_index( hit_seg_of_res_idcs( 1272, 1363 ) ) == 1272, "" );

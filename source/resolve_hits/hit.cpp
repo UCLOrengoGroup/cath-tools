@@ -28,6 +28,7 @@
 
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace std::literals::string_literals;
 
 using boost::adaptors::transformed;
 using boost::algorithm::join;
@@ -35,10 +36,20 @@ using boost::irange;
 using std::ostream;
 using std::string;
 
-/// \brief TODOCUMENT
+// template <size_t T> class SD;
+// SD< sizeof( hit         ) > sizeof_hit;
+// SD< sizeof( res_arrow   ) > sizeof_res_arrow;
+// SD< sizeof( resscr_t    ) > sizeof_resscr_t;
+// SD< sizeof( hitidx_t    ) > sizeof_hitidx_t;
+// SD< sizeof( hit_seg_vec ) > sizeof_hit_seg_vec;
+
+/// \brief Generate a string describing the segements of the specified string
+///
+/// This is the numbers of the start/stop residues, separated by a '-' between the start and stop
+/// and by a ',' between segments.
 ///
 /// \relates hit
-string cath::rslv::get_segments_string(const hit &arg_hit ///< TODOCUMENT
+string cath::rslv::get_segments_string(const hit &arg_hit ///< The hit whose segments should be described
                                        ) {
 	return join(
 		boost::irange( 0_z, arg_hit.get_num_segments() )
@@ -51,53 +62,56 @@ string cath::rslv::get_segments_string(const hit &arg_hit ///< TODOCUMENT
 	);
 }
 
-/// \brief TODOCUMENT
+/// \brief Generate a string describing the specified hit
 ///
 /// \relates hit
-string cath::rslv::to_string(const hit               &arg_hit,   ///< TODOCUMENT
-                             const hit_output_format &arg_format ///< TODOCUMENT
+string cath::rslv::to_string(const hit               &arg_hit,        ///< The hit to describe
+                             const str_vec           &arg_hit_labels, ///< The list of labels correspding to the hit
+                             const hit_output_format &arg_format,     ///< The format in which to generate the output
+                             const string            &arg_prefix      ///< Any prefix that should come before the hit in hit_output_format::JON
                              ) {
-	if ( arg_format == hit_output_format::JON ) {
-		return arg_hit.get_label()
-			+ " "
-			+ ::std::to_string( arg_hit.get_score() )
-			+ " "
-			+ get_segments_string( arg_hit );
+	if ( arg_format != hit_output_format::JON && ! arg_prefix.empty() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot specify prefix for any hit format other than JON"));
 	}
-	else {
-		return "hit["
-			+ get_segments_string( arg_hit )
-			+ "; score: "
-			+ ::std::to_string( arg_hit.get_score() )
-			+ "; label: \""
-			+ arg_hit.get_label()
-			+ "\"]";
+
+	switch ( arg_format ) {
+		case( hit_output_format::JON ) : {
+			return arg_prefix
+				+ ( arg_prefix.empty() ? ""s : " "s )
+				+ arg_hit.get_label( arg_hit_labels )
+				+ " "
+				+ ::std::to_string( arg_hit.get_score() )
+				+ " "
+				+ get_segments_string( arg_hit );
+		}
+		case( hit_output_format::CLASS ) : {
+			return "hit["
+				+ get_segments_string( arg_hit )
+				+ "; score: "
+				+ ::std::to_string( arg_hit.get_score() )
+				+ "; label: \""
+				+ arg_hit.get_label( arg_hit_labels )
+				+ "\"]";
+		}
+		default : {
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of hit_output_format not recognised in to_string() for hit"));
+			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
+		}
 	}
 }
 
-/// \brief TODOCUMENT
+/// \brief Return whether the two specified hits are identical
 ///
 /// \relates hit
-ostream & cath::rslv::operator<<(ostream   &arg_ostream, ///< TODOCUMENT
-                                 const hit &arg_hit      ///< TODOCUMENT
-                                 ) {
-	arg_ostream << to_string( arg_hit );
-	return arg_ostream;
-}
-
-
-/// \brief TODOCUMENT
-///
-/// \relates hit
-bool cath::rslv::operator==(const hit &arg_lhs, ///< TODOCUMENT
-                            const hit &arg_rhs  ///< TODOCUMENT
+bool cath::rslv::operator==(const hit &arg_lhs, ///< The first  hit to compare
+                            const hit &arg_rhs  ///< The second hit to compare
                             ) {
 	const bool similar = (
 		arg_lhs.get_num_segments() == arg_rhs.get_num_segments()
 		&&
 		arg_lhs.get_score()        == arg_rhs.get_score()
 		&&
-		arg_lhs.get_label()        == arg_rhs.get_label()
+		arg_lhs.get_label_idx()    == arg_rhs.get_label_idx()
 	);
 	if ( ! similar ) {
 		return false;

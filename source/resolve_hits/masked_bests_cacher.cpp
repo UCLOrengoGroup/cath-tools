@@ -26,8 +26,10 @@
 #include <boost/range/algorithm/max_element.hpp>
 #include <boost/range/algorithm/upper_bound.hpp>
 
+#include "exception/out_of_range_exception.h"
 #include "common/algorithm/copy_build.h"
 #include "common/algorithm/sort_uniq_copy.h"
+#include "resolve_hits/discont_hits_index_by_start.h"
 #include "resolve_hits/hit_list.h"
 
 using namespace cath::common;
@@ -41,78 +43,74 @@ using boost::range::max_element;
 using boost::range::upper_bound;
 using boost::sub_range;
 
-/// \brief TODOCUMENT
-masked_bests_cacher cath::rslv::detail::make_masked_bests_cacher(masked_bests_cache &arg_masked_bests_cache, ///< TODOCUMENT
-                                                                 const hit_vec      &arg_masks,              ///< TODOCUMENT
-                                                                 const hit_list     &arg_hits,               ///< TODOCUMENT
-                                                                 const res_arrow    &arg_start_arrow         ///< TODOCUMENT
+/// \brief Build a masked_bests_cacher to handle the caching of best results in the specified masked_bests_cache
+///        whilst scaning from the specified start position with the specified hits and mask
+///
+/// \relates masked_bests_cacher
+masked_bests_cacher cath::rslv::detail::make_masked_bests_cacher(masked_bests_cache                &arg_masked_bests_cache, ///< The cache to which the masked_bests_cacher should store best architectures
+                                                                 const hit_vec                     &arg_masks,              ///< The currently-active masks that will define the unmasked-region signatures
+                                                                 const discont_hits_index_by_start &arg_dhibs,              ///< A discont_hits_index_by_start that allows us to quickly find the discontiguous domains that start within a specified region
+                                                                 const res_arrow                   &arg_start_arrow         ///< The start arrow of the region that will be scanned
                                                                  ) {
 	return {
 		arg_masked_bests_cache,
 		arg_masks,
 		get_arrows_before_starts_of_doms_right_interspersed_with_all_of(
 			arg_masks,
-			arg_hits,
+			arg_dhibs,
 			arg_start_arrow
 		)
 	};
 }
 
-//
-// cath|current|3gbnL02/124-195-i5_12,0.042 489.20028051289 3344-3374,3480-3491
-// cath|current|1mfaH01/251-347-i5_10,0.013 1057.85904164469 3424-3471,3540-3580
-
-/// \brief TODOCUMENT
+/// \brief Calculate the start boundaries of any discontiguous hits that are right interspersed with
+///        all of the hits in the mask
 ///
-/// This can be made more efficient by just searching through a separate list of
-/// just the discontiguous hits.
-///
-/// \todo Remove #includes of all_of, filtered and max_element if not used here
-// get_arrows_before_starts_of_discontigs_that_fit_with_all_of_and_right_intersperse_with_any_of
-res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_interspersed_with_all_of(const hit_vec   &arg_masks,      ///< TODOCUMENT
-                                                                                                  const hit_list  &arg_hits,       ///< TODOCUMENT
-                                                                                                  const res_arrow &arg_start_arrow ///< TODOCUMENT
+/// \relates masked_bests_cacher
+res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_interspersed_with_all_of(const hit_vec                     &arg_masks,      ///< The mask domains, all of which should be right-interspersed by the domains we're looking for
+                                                                                                  const discont_hits_index_by_start &arg_dhibs,      ///< A discont_hits_index_by_start that allows us to quickly find the discontiguous domains that start within a specified region
+                                                                                                  const res_arrow                   &arg_start_arrow ///< The start arrow that must precede all of the returned arrows
                                                                                                   ) {
 	// If no masks, just return an empty vector
 	if ( arg_masks.empty() ) {
 		return {};
 	}
 
-	// Otherwise, get the max last stop arrow of any of arg_masks
-	const res_arrow &max_stop_arrow = max_element(
+#ifndef NDEBUG
+	// If in debug mode, check all hits in the mask are discontiguous, or throw otherwise
+	if ( ! all_of( arg_masks, [] (const hit &x) { return x.is_discontig(); } ) ) {
+		BOOST_THROW_EXCEPTION(out_of_range_exception("Mask should only contain discontiguous domains"));
+	}
+#endif
+
+	// Grab the latest start point of the mask's hits' interiors
+	const res_arrow &max_first_seg_stop = get_stop_of_first_segment( *max_element(
 		arg_masks,
-		hit::get_hit_stop_less()
-	)->get_stop_arrow();
+		hit::get_hit_first_seg_stop_less()
+	));
 
-	// Find the start of the hits that stop beyond max_stop
-	const auto upper_bound_itr = upper_bound(
-		arg_hits,
-		max_stop_arrow,
-		[] (const res_arrow &a, const hit &h) {
-			return a < h.get_stop_arrow();
-		}
+	// Grab the earliest stop point of the mask's hits' interiors
+	const res_arrow &min_last_seg_start = get_start_of_last_segment( *max_element(
+		arg_masks,
+		hit::get_hit_last_seg_start_less()
+	));
+
+#ifndef NDEBUG
+	// If in debug mode, check that the latest gap start is strictly before the earliest gap stop, or throw otherwise
+	if ( max_first_seg_stop >= min_last_seg_start ) {
+		BOOST_THROW_EXCEPTION(out_of_range_exception("Mask's hits' interiors should have a non-empty common region"));
+	}
+#endif
+
+	// Use the discont_hits_index_by_start to find the discontiguous domains that start
+	// in this region - ask it to return the relevant indices in its own index
+	const auto index_indices_of_disconts_in_range = arg_dhibs.get_index_indices_of_disconts_in_range(
+		max_first_seg_stop,
+		min_last_seg_start
 	);
-
-	// const bool is_the_one = ( get_start_res_index( arg_masks.front() ) == 3344 && get_stop_res_index( arg_masks.front() ) == 3491 );
-	// if ( is_the_one ) {
-	// 	std::cerr << "searching for store arrows for :";
-	// 	for (const auto &x : arg_masks ) {
-	// 		std::cerr << " " << to_string( x );
-	// 	}
-	// 	std::cerr << "\n";
-	// }
 
 	// Prepare a predicate function that checks whether a hit right intersperses all of arg_masks
 	const auto hit_right_intersperses_all_arg_masks = [&] (const hit &x) {
-		// if ( is_the_one && x.is_discontig() ) {
-			
-		// 	const bool answer = (
-		// 		x.is_discontig()
-		// 		&&
-		// 		all_of( arg_masks, [&] (const hit &y) { return second_right_intersperses_first( y, x ); } )
-		// 	);
-		// 	std::cerr << "\tConsider " << x << " : " << std::boolalpha << answer << "\n";
-		// }
 		return (
 			x.is_discontig()
 			&&
@@ -122,7 +120,8 @@ res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_intersp
 
 	// Return a sorted-uniqued vector of the res_arrows at the start of the hits
 	return sort_uniq_copy( copy_build<res_arrow_vec>(
-		sub_range<const hit_list>( upper_bound_itr, common::cend( arg_hits ) )
+		index_indices_of_disconts_in_range
+			| transformed( [&] (const size_t    &x) { return arg_dhibs.get_discont_hit_of_index_index( x ); } )
 			| filtered   ( hit_right_intersperses_all_arg_masks                     )
 			| transformed( [ ] (const hit       &x) { return x.get_start_arrow(); } )
 			| filtered   ( [&] (const res_arrow &x) { return x>= arg_start_arrow; } )

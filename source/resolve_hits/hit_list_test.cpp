@@ -45,14 +45,24 @@ namespace cath {
 			/// \brief Make an example hit_list for testing
 			hit_list make_eg_hit_list() {
 				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
-				return hit_list{ {
-					make_hit_from_res_indices( { { 1266,                 1344 }, }, 1.0, "label_a" ),
-					make_hit_from_res_indices( { { 1273, 1321 }, { 1399, 1438 }, }, 1.0, "label_b" ),
-					make_hit_from_res_indices( { { 1101,                 1319 }, }, 1.0, "label_c" ),
-					make_hit_from_res_indices( { { 1301,                 1321 }, }, 1.0, "label_d" ),
-					make_hit_from_res_indices( { { 1438,                 1439 }, }, 1.0, "label_e" ),
-					make_hit_from_res_indices( { { 1272, 1320 }, { 1398, 1437 }, }, 1.0, "label_f" ),
-				} };
+				return hit_list{
+					{
+						make_hit_from_res_indices( { { 1266,                 1344 }, }, 1.0, 0 ),
+						make_hit_from_res_indices( { { 1273, 1321 }, { 1399, 1438 }, }, 1.0, 1 ),
+						make_hit_from_res_indices( { { 1101,                 1319 }, }, 1.0, 2 ),
+						make_hit_from_res_indices( { { 1301,                 1321 }, }, 1.0, 3 ),
+						make_hit_from_res_indices( { { 1438,                 1439 }, }, 1.0, 4 ),
+						make_hit_from_res_indices( { { 1272, 1320 }, { 1398, 1437 }, }, 1.0, 5 ),
+					},
+					{
+						"label_a",
+						"label_b",
+						"label_c",
+						"label_d",
+						"label_e",
+						"label_f"
+					}
+				};
 			}
 
 			const hit_list eg_hit_list = make_eg_hit_list();

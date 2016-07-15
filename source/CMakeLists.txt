@@ -586,15 +586,15 @@ set(
 
 set(
 	NORMSOURCES_RESOLVE_HITS
+		resolve_hits/discont_hits_index_by_start.cpp
 		resolve_hits/hit.cpp
 		resolve_hits/hit_arch.cpp
 		resolve_hits/hit_list.cpp
 		resolve_hits/hit_resolver.cpp
 		resolve_hits/hit_seg.cpp
-		resolve_hits/masked_bests_cache.cpp
 		resolve_hits/masked_bests_cacher.cpp
+		resolve_hits/read_and_resolve_mgr.cpp
 		resolve_hits/res_arrow.cpp
-		resolve_hits/scored_arch_proxy.cpp
 		resolve_hits/scored_hit_arch.cpp
 )
 
@@ -1422,8 +1422,10 @@ set(
 set(
 	TESTSOURCES_RESOLVE_HITS
 		resolve_hits/hit_list_test.cpp
+		resolve_hits/hit_resolver_test.cpp
 		resolve_hits/hit_seg_test.cpp
 		resolve_hits/hit_test.cpp
+		resolve_hits/masked_bests_cache_test.cpp
 )
 
 set(

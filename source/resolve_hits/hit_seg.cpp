@@ -38,31 +38,19 @@ using std::ostream;
 using std::pair;
 using std::string;
 
-/// \brief TODOCUMENT
-void cath::rslv::start_sort_hit_segs(hit_seg_vec &arg_hit_segs ///< TODOCUMENT
-                                     ) {
-	sort(
-		arg_hit_segs,
-		hit_seg::get_hit_seg_start_less()
-	);
-}
-
-/// \brief TODOCUMENT
-hit_seg_vec cath::rslv::start_sort_hit_segs_copy(hit_seg_vec arg_hit_segs ///< TODOCUMENT
-                                                 ) {
-	start_sort_hit_segs( arg_hit_segs );
-	return arg_hit_segs;
-}
-
-/// \brief TODOCUMENT
-hit_seg_vec cath::rslv::make_fragments_of_segments(hit_seg_vec arg_segments ///< TODOCUMENT
+/// \brief Make the (sorted) fragments between the specified segments
+///
+/// \relates hit_seg
+hit_seg_vec cath::rslv::make_fragments_of_segments(hit_seg_vec arg_segments ///< The segments from which the fragments should be made
                                                    ) {
 	start_sort_hit_segs( arg_segments );
 	return make_fragments_of_start_sorted_segments( arg_segments );
 }
 
-/// \brief TODOCUMENT
-bool cath::rslv::segments_are_start_sorted_and_non_overlapping(const hit_seg_vec &arg_segments ///< TODOCUMENT
+/// \brief Return whether the specified segments are sorted by their starts and non-overlapping
+///
+/// \relates hit_seg
+bool cath::rslv::segments_are_start_sorted_and_non_overlapping(const hit_seg_vec &arg_segments ///< The segments to query
                                                                ) {
 	const auto seg_pair_are_invalid = [] (const hit_seg &x, const hit_seg &y) {
 		return ( y.get_start_arrow() < x.get_stop_arrow() );
@@ -70,8 +58,12 @@ bool cath::rslv::segments_are_start_sorted_and_non_overlapping(const hit_seg_vec
 	return ( adjacent_find( arg_segments, seg_pair_are_invalid ) == common::cend( arg_segments ) );
 }
 
-/// \brief TODOCUMENT
-hit_seg_vec cath::rslv::make_fragments_of_start_sorted_segments(const hit_seg_vec &arg_segments ///< TODOCUMENT
+/// \brief Make the fragments between the specified segments
+///
+/// \pre The segments must be pre-sorted by their starts
+///
+/// \relates hit_seg
+hit_seg_vec cath::rslv::make_fragments_of_start_sorted_segments(const hit_seg_vec &arg_segments ///< The segments from which the fragments must be made, pre-sorted by their starts
                                                                 ) {
 	if ( arg_segments.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot make fragments from empty vector of segments"));
@@ -94,10 +86,10 @@ hit_seg_vec cath::rslv::make_fragments_of_start_sorted_segments(const hit_seg_ve
 	);
 }
 
-/// \brief TODOCUMENT
+/// \brief Generate a string describing the specified hit_seg
 ///
 /// \relates hit_seg
-string cath::rslv::to_string(const hit_seg &arg_hit_seg ///< TODOCUMENT
+string cath::rslv::to_string(const hit_seg &arg_hit_seg ///< The hit_seg to describe
                              ) {
 	return "hit_seg["
 		+ ::std::to_string( get_start_res_index( arg_hit_seg ) )
@@ -106,78 +98,13 @@ string cath::rslv::to_string(const hit_seg &arg_hit_seg ///< TODOCUMENT
 		+ "]";
 }
 
-/// \brief TODOCUMENT
+/// \brief Insert a description of the specified hit_seg into the specified ostream
 ///
 /// \relates hit_seg
-ostream & cath::rslv::operator<<(ostream       &arg_ostream, ///< TODOCUMENT
-                                 const hit_seg &arg_hit_seg  ///< TODOCUMENT
+ostream & cath::rslv::operator<<(ostream       &arg_ostream, ///< The ostream into which the description of the hit_seg should be inserted
+                                 const hit_seg &arg_hit_seg  ///< The hit_seg to describe
                                  ) {
 	arg_ostream << to_string( arg_hit_seg );
 	return arg_ostream;
 }
 
-
-// /// \brief TODOCUMENT
-// res_arrow_res_arrow_pair_vec get_hit_segs(const hit_vec &arg_hits ///< TODOCUMENT
-//                                           ) {
-// 	res_arrow_res_arrow_pair_vec segments;
-// 	for (const hit &the_hit : arg_hits) {
-// 		for (const auto &x : irange( 0_z, the_hit.get_num_segments() ) ) {
-// 			hit_segs.emplace_back(
-// 				the_hit.get_start_arrow_of_segment( seg_ctr ),
-// 				the_hit.get_stop_arrow_of_segment ( seg_ctr )
-// 			)
-// 		}
-// 	}
-// 	return segments;
-// }
-
-// /// \brief TODOCUMENT
-// res_arrow_res_arrow_pair_vec get_start_sorted_hit_segs(const hit_vec &arg_hits ///< TODOCUMENT
-//                                                        ) {
-// 	auto segments = get_hit_segs( arg_hits );
-// 	sort( segments, [] (const res_arrow_res_arrow_pair_vec &x, const res_arrow_res_arrow_pair_vec &y) { return ( x.first < y.first); } );
-// 	return segments;
-// }
-
-// /// \brief TODOCUMENT
-// residx_residx_pair_vec get_start_sorted_segments_of_hits(const hit_vec &arg_hits ///< TODOCUMENT
-//                                                          ) {
-// 	residx_residx_pair_vec segments;
-// 	for (const hit &the_hit : arg_hits) {
-// 		for (const auto &seg_ctr : irange( 0_z, the_hit.get_num_segments() ) ) {
-// 			segments.emplace_back(
-// 				the_hit.get_start_of_segment( seg_ctr ),
-// 				the_hit.get_stop_of_segment( seg_ctr )
-// 			);
-// 		}
-// 	}
-// 	sort( segments, [] (const residx_residx_pair &x, const residx_residx_pair &y) { return ( x.first < y.first); } );
-// 	return segments;
-// }
-
-
-// {  }
-// res_before( )
-
-// { { 30, 35 } }
-// res_before( )
-
-// { { 30, 35 }, { 40, 45 } }
-// res_before( )
-
-
-// /// \brief TODOCUMENT
-// res_arrow_res_arrow_pair_vec get_free_space_of_fitting_hits_in_region(const hit_vec   &arg_hits,         ///< TODOCUMENT
-//                                                                       const res_arrow &arg_region_start, ///< TODOCUMENT
-//                                                                       const res_arrow &arg_region_stop   ///< TODOCUMENT
-//                                                                       ) {
-// 	const auto arg_region_start = 
-// 	if ( ! arg_hits.empty() ) {
-// 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Arghh"));
-// 	}
-// 	return { { arg_region_start, arg_region_stop } };
-// 	// }
-// 	// el
-// 	// const auto start_sorted_hit_segs = get_start_sorted_hit_segs( arg_hits );
-// }
