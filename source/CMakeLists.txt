@@ -1169,6 +1169,7 @@ set(
 
 set(
 	TESTSOURCES_COMMON_STRING
+		common/string/string_parse_tools_test.cpp
 		common/string/sub_string_parser_test.cpp
 )
 
