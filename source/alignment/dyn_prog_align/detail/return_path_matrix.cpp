@@ -20,6 +20,7 @@
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/adaptor/map.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/max_element.hpp>
 
@@ -38,6 +39,7 @@ using namespace cath::align::gap;
 using namespace cath::common;
 using namespace std;
 
+using boost::adaptors::map_values;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::numeric_cast;
@@ -356,9 +358,7 @@ ostream & cath::align::detail::operator<<(ostream                  &arg_os,     
 /// \relates path_step
 score_type cath::align::detail::max_path_step_score(const path_step_score_map &arg_score_of_path_step ///< TODOCUMENT
                                                     ) {
-	const auto scores = transform_build<score_vec>(
-		arg_score_of_path_step,
-		[] (const path_step_score_pair &x) { return x.second;}
+	return *max_element(
+		arg_score_of_path_step | map_values
 	);
-	return *max_element( scores );
 }
