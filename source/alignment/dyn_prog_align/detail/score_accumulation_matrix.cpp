@@ -109,17 +109,17 @@ void score_accumulation_matrix::reset(const size_type &arg_length_a,    ///< TOD
 }
 
 /// \brief TODOCUMENT
-score_accumulation_matrix::size_type score_accumulation_matrix::get_length_a() const {
+auto score_accumulation_matrix::get_length_a() const -> size_type {
 	return scores.size();
 }
 
 /// \brief TODOCUMENT
-score_accumulation_matrix::size_type score_accumulation_matrix::get_length_b() const {
+auto score_accumulation_matrix::get_length_b() const -> size_type {
 	return scores.front().size();
 }
 
 /// \brief TODOCUMENT
-score_accumulation_matrix::size_type score_accumulation_matrix::get_window_width() const {
+auto score_accumulation_matrix::get_window_width() const -> size_type {
 	return window_width;
 }
 
