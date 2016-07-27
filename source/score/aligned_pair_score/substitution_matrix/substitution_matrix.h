@@ -84,7 +84,7 @@ namespace cath {
 			                                   const diff_vec_vec &);
 
 			static bool has_lower_highest_score(const diff_vec &,
-                                                const diff_vec &);
+			                                    const diff_vec &);
 			static ptrdiff_t highest_score_of_scores(const diff_vec &);
 
 			void check_is_symmetric() const;

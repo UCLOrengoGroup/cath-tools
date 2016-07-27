@@ -77,8 +77,8 @@ void score_accumulation_matrix::initialise(const size_type &arg_length_a,    ///
                                            const size_type &arg_length_b,    ///< TODOCUMENT
                                            const size_type &arg_window_width ///< TODOCUMENT
                                            ) {
-	check_length(arg_length_a);
-	check_length(arg_length_b);
+	check_length( arg_length_a );
+	check_length( arg_length_b );
 	check_lengths_and_window_size_are_valid(
 		arg_length_a,
 		arg_length_b,
@@ -97,7 +97,7 @@ score_accumulation_matrix::score_accumulation_matrix(const size_type &arg_length
                                                      const size_type &arg_length_b,    ///< TODOCUMENT
                                                      const size_type &arg_window_width ///< TODOCUMENT
                                                      ) {
-	initialise(arg_length_a, arg_length_b, arg_window_width);
+	initialise( arg_length_a, arg_length_b, arg_window_width );
 }
 
 /// \brief TODOCUMENT

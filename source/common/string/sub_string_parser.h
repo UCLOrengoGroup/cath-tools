@@ -73,9 +73,9 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		inline int sub_string_parser::substr_as_int(const std::string &arg_source_string, ///< TODOCUMENT
-		                                          const size_t      &arg_from_pos,      ///< TODOCUMENT
-		                                          const size_t      &arg_count          ///< TODOCUMENT
-		                                          ) {
+		                                            const size_t      &arg_from_pos,      ///< TODOCUMENT
+		                                            const size_t      &arg_count          ///< TODOCUMENT
+		                                            ) {
 			the_substring.assign( arg_source_string, arg_from_pos, arg_count );
 			return std::stoi( the_substring );
 		}

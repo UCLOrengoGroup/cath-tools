@@ -69,7 +69,7 @@ const ptrdiff_t & substitution_matrix::get_score_for_two_unknown_aas() const {
 /// \todo Tidied up this code
 size_vec substitution_matrix::order_permutation(const amino_acid_vec &arg_orig_aa_ordering, ///< The original amino acid ordering
                                                 const amino_acid_vec &arg_new_aa_ordering   ///< The new amino acid ordering
-												) {
+                                                ) {
 	// Grab the number of amino acids and check it's consistent
 	const size_t num_amino_acids = arg_orig_aa_ordering.size();
 	if ( num_amino_acids != arg_new_aa_ordering.size() ) {
@@ -131,7 +131,7 @@ diff_vec_vec substitution_matrix::reorder_scores(const amino_acid_vec &arg_orig_
 /// \brief Return whether one row/column has a lower highest score than the next
 bool substitution_matrix::has_lower_highest_score(const diff_vec &arg_scores_a, ///< The first row/column of scores to compare
                                                   const diff_vec &arg_scores_b  ///< The second row/column of scores to compare
-							                      ) {
+                                                  ) {
 	return ( highest_score_of_scores( arg_scores_a ) < highest_score_of_scores( arg_scores_b ) );
 }
 
@@ -161,13 +161,13 @@ void substitution_matrix::check_is_symmetric() const {
 substitution_matrix::substitution_matrix(const amino_acid_vec &arg_amino_acids,               ///< The list of amino acids
                                          const diff_vec_vec   &arg_scores,                    ///< The all-against-all scores corresponding to the list of amino acids
                                          const ptrdiff_t      &arg_score_for_one_unknown_aa,  ///< The score that's returned if one of the query amino acids is unrecognised
-										 const ptrdiff_t      &arg_score_for_two_unknown_aas, ///< The score that's returned if both query amino acids are unrecognised
-										 const string         &arg_name                       ///< A name for the substitution matrix
-										 ) : amino_acids              ( sort_copy( arg_amino_acids )  ),
+                                         const ptrdiff_t      &arg_score_for_two_unknown_aas, ///< The score that's returned if both query amino acids are unrecognised
+                                         const string         &arg_name                       ///< A name for the substitution matrix
+                                         ) : amino_acids              ( sort_copy( arg_amino_acids )  ),
                                              scores                   ( reorder_scores( arg_amino_acids, amino_acids, arg_scores ) ),
-											 score_for_one_unknown_aa ( arg_score_for_one_unknown_aa  ),
-											 score_for_two_unknown_aas( arg_score_for_two_unknown_aas ),
-											 name                     ( arg_name                      ) {
+                                             score_for_one_unknown_aa ( arg_score_for_one_unknown_aa  ),
+                                             score_for_two_unknown_aas( arg_score_for_two_unknown_aas ),
+                                             name                     ( arg_name                      ) {
 	// Check that the generated matrix is symmetric
 	check_is_symmetric();
 
@@ -226,7 +226,7 @@ ptrdiff_t substitution_matrix::get_score(const amino_acid &arg_amino_acid_a, ///
 /// \relates substitution_matrix
 bool cath::score::operator<(const substitution_matrix &arg_substitution_matrix_a, ///< TODOCUMENT
                             const substitution_matrix &arg_substitution_matrix_b  ///< TODOCUMENT
-							) {
+                            ) {
 	auto the_helper = make_less_than_helper( arg_substitution_matrix_a, arg_substitution_matrix_b );
 
 	the_helper.register_comparison_field( &substitution_matrix::get_name                      );
