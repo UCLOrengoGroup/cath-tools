@@ -200,10 +200,6 @@ bool_aln_pair alignment_refiner::iterate_step_for_alignment_split(const alignmen
 		}
 	}
 
-	// When this static assertion fails, remove this now pointless code that converts a float_score_vec_vec to a score_vec_vec
-	using value_types_are_same = std::is_same<float_score_type, score_type>;
-	static_assert( ! value_types_are_same::value, "Remove redundant code that coverts between identical types" );
-
 	float_score_vec_vec avg_scores( full_length_a, float_score_vec( full_length_b, 0 ) );
 	for (size_t ctr_a = 0; ctr_a < full_length_a; ++ctr_a) {
 		for (size_t ctr_b = 0; ctr_b < full_length_b; ++ctr_b) {
