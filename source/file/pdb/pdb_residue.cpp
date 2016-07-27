@@ -50,8 +50,7 @@ pdb_residue::pdb_residue(const chain_label  &arg_chain_label,  ///< TODOCUMENT
                          const pdb_atom_vec &arg_atoms         ///< TODOCUMENT
                          ) : the_chain_label ( arg_chain_label  ),
                              the_residue_name( arg_residue_name ),
-                             atoms           ( arg_atoms        )
-                             {
+                             atoms           ( arg_atoms        ) {
 }
 
 /// \brief TODOCUMENT
