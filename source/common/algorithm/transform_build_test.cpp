@@ -29,10 +29,6 @@ using namespace cath;
 using namespace cath::common;
 using namespace std;
 
-/// \todo Move these into common/type_aliases.h
-using size_deq      = deque<size_t>;
-using size_size_map = map<size_t, size_t>;
-
 namespace cath {
 	namespace test {
 

@@ -140,6 +140,10 @@ namespace cath {
 
 	using size_vec_size_vec_pair        = std::pair<size_vec, size_vec>;
 
+	using size_deq                      = std::deque<size_t>;
+	
+	using size_size_map                 = std::map<size_t, size_t>;
+
 	using opt_char                      = boost::optional<char>;
 
 	using int_vec                       = std::vector<int>;
