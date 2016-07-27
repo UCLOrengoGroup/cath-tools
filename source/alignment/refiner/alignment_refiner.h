@@ -37,7 +37,10 @@ namespace cath {
 		/// \brief TODOCUMENT
 		class alignment_refiner final {
 		private:
+			/// \brief TODOCUMENT
 			float_score_vec_vec from_alignment_scores;
+
+			/// \brief TODOCUMENT
 			float_score_vec_vec to_alignment_scores;
 
 			detail::bool_aln_pair iterate_step(const alignment &,
