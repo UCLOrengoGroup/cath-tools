@@ -22,6 +22,7 @@
 #define MASK_DYN_PROG_SCORE_SOURCE_H_INCLUDED
 
 #include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.h"
+#include "common/container/vector_of_vector.h"
 
 namespace cath {
 	namespace align {
@@ -30,7 +31,7 @@ namespace cath {
 		class mask_dyn_prog_score_source final : public dyn_prog_score_source {
 		private:
 			/// \brief TODOCUMENT
-			const bool_vec_vec          &mask_matrix;
+			const bool_vec_of_vec &mask_matrix;
 
 			/// \brief TODOCUMENT
 			const dyn_prog_score_source &masked_score_source;
@@ -41,7 +42,7 @@ namespace cath {
 			                                const size_t &) const override final;
 
 		public:
-			mask_dyn_prog_score_source(const bool_vec_vec &,
+			mask_dyn_prog_score_source(const bool_vec_of_vec &,
 			                           const dyn_prog_score_source &);
 			virtual ~mask_dyn_prog_score_source() noexcept = default;
 		};

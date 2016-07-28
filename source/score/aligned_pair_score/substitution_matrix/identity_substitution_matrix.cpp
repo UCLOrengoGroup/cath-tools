@@ -30,7 +30,7 @@ using namespace cath::score;
 ///
 /// \relates substitution_matrix
 substitution_matrix cath::score::make_subs_matrix_identity() {
-	const diff_vec_vec scores = {
+	const score_vec_vec scores = {
 		{   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 },
 		{   0,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 },
 		{   0,   0,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 },

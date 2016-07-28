@@ -44,14 +44,14 @@ score_type old_matrix_dyn_prog_score_source::do_get_score(const size_t &arg_inde
                                                           const size_t &arg_index_b  ///< The index of the element of interest in the second sequence
                                                           ) const {
 	const int a_matrix_idx = get_window_matrix_a_index__offset_1(length_a, length_b, window, arg_index_a + 1, arg_index_b + 1 );
-	return matrix[ arg_index_b + 1 ][ numeric_cast<size_t>( a_matrix_idx ) ];
+	return matrix.get().get( arg_index_b + 1, numeric_cast<size_t>( a_matrix_idx ) );
 }
 
 /// \brief Ctor for old_matrix_dyn_prog_score_source
-old_matrix_dyn_prog_score_source::old_matrix_dyn_prog_score_source(const score_vec_vec &arg_matrix,   ///< TODOCUMENT
-                                                                   const size_t        &arg_length_a, ///< TODOCUMENT
-                                                                   const size_t        &arg_length_b, ///< TODOCUMENT
-                                                                   const size_t        &arg_window    ///< TODOCUMENT
+old_matrix_dyn_prog_score_source::old_matrix_dyn_prog_score_source(const score_vec_of_vec &arg_matrix,   ///< TODOCUMENT
+                                                                   const size_t           &arg_length_a, ///< TODOCUMENT
+                                                                   const size_t           &arg_length_b, ///< TODOCUMENT
+                                                                   const size_t           &arg_window    ///< TODOCUMENT
                                                                    ) : matrix   ( arg_matrix   ),
                                                                        length_a ( arg_length_a ),
                                                                        length_b ( arg_length_b ),

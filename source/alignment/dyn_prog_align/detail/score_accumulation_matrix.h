@@ -22,6 +22,7 @@
 #define SCORE_ACCUMULATION_MATRIX_H_INCLUDED
 
 #include "alignment/align_type_aliases.h"
+#include "common/container/vector_of_vector.h"
 
 #include <vector>
 
@@ -37,14 +38,14 @@ namespace cath {
 			class score_accumulation_matrix final {
 			public:
 				/// \brief TODOCUMENT
-				using size_type = score_vec_vec::size_type;
+				using size_type = score_vec_of_vec::size_type;
 
 			private:
 				/// \brief TODOCUMENT
-				score_vec_vec scores;
+				score_vec_of_vec scores;
 
 				/// \brief TODOCUMENT
-				size_type     window_width;
+				size_type        window_width;
 
 				static void check_length(const size_type &);
 

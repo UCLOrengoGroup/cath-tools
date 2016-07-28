@@ -71,7 +71,7 @@ score_value sequence_similarity_score::do_calculate(const alignment &arg_alignme
                                                     ) const {
 	const size_t length = arg_alignment.length();
 
-	ptrdiff_t score( 0 );
+	score_type score( 0 );
 	for (size_t index = 0; index < length; ++index) {
 		if ( has_both_positions_of_index( arg_alignment, index ) ) {
 			const aln_posn_type a_posn  = get_a_position_of_index( arg_alignment, index  );

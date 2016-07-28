@@ -84,11 +84,7 @@ void score_accumulation_matrix::initialise(const size_type &arg_length_a,    ///
 		arg_length_b,
 		arg_window_width
 	);
-
-	scores.resize(arg_length_a);
-	for (score_vec &scores_line : scores) {
-		scores_line.assign(arg_length_b, 0);
-	}
+	scores.assign( arg_length_a, arg_length_b, 0);
 	window_width = arg_window_width;
 }
 
@@ -110,12 +106,12 @@ void score_accumulation_matrix::reset(const size_type &arg_length_a,    ///< TOD
 
 /// \brief TODOCUMENT
 auto score_accumulation_matrix::get_length_a() const -> size_type {
-	return scores.size();
+	return scores.get_length_a();
 }
 
 /// \brief TODOCUMENT
 auto score_accumulation_matrix::get_length_b() const -> size_type {
-	return scores.front().size();
+	return scores.get_length_b();
 }
 
 /// \brief TODOCUMENT
@@ -128,8 +124,8 @@ void score_accumulation_matrix::set_score_towards_end_at_point(const size_type  
                                                                const size_type  &arg_index_b, ///< TODOCUMENT
                                                                const score_type &arg_score    ///< TODOCUMENT
                                                                ) {
-	check_indices(arg_index_a, arg_index_b);
-	scores[arg_index_a][arg_index_b] = arg_score;
+	check_indices( arg_index_a, arg_index_b );
+	scores.set( arg_index_a, arg_index_b, arg_score );
 }
 
 /// \brief TODOCUMENT
@@ -142,7 +138,7 @@ score_type score_accumulation_matrix::get_score_towards_end_at_point(const size_
 
 	// TODOCUMENT
 	if ( arg_index_a < length_a && arg_index_b < length_b ) {
-		return scores[arg_index_a][arg_index_b];
+		return scores.get( arg_index_a, arg_index_b );
 	}
 	else {
 		return 0;

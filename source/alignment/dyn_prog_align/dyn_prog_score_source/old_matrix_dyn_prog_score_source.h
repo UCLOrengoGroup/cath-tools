@@ -22,6 +22,7 @@
 #define OLD_MATRIX_DYN_PROG_SCORE_SOURCE_H_INCLUDED
 
 #include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.h"
+#include "common/container/vector_of_vector.h"
 
 #include <vector>
 
@@ -33,7 +34,7 @@ namespace cath {
 		class old_matrix_dyn_prog_score_source final : public dyn_prog_score_source {
 		private:
 			/// \brief TODOCUMENT
-			const score_vec_vec &matrix;
+			std::reference_wrapper<const score_vec_of_vec> matrix;
 
 			/// \brief TODOCUMENT
 			const size_t         length_a;
@@ -50,7 +51,7 @@ namespace cath {
 			                                const size_t &) const override final;
 
 		public:
-			old_matrix_dyn_prog_score_source(const score_vec_vec &,
+			old_matrix_dyn_prog_score_source(const score_vec_of_vec &,
 			                                 const size_t &,
 			                                 const size_t &,
 			                                 const size_t &);

@@ -127,6 +127,7 @@
 #include "alignment/gap/gap_penalty.h"
 #include "alignment/io/alignment_io.h"
 #include "alignment/pair_alignment.h"
+#include "common/container/vector_of_vector.h"
 #include "common/difference.h"
 #include "common/file/open_fstream.h"
 #include "common/size_t_literal.h"
@@ -173,44 +174,30 @@ using namespace cath::sup;
 using namespace cath::opts;
 using namespace std;
 
+using boost::irange;
 using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
 
-/// \brief The maximum permitted length for windows
-///
-/// \todo Switch everything to vectors and eradicate the need for this
-constexpr size_t    MAX_WINDOW_LENGTH       =                      5000;
-
-/// \brief The maximum sequence length that the statically allocated arrays will permit
-///
-/// \todo Switch everything to vectors and eradicate the need for this
-constexpr size_t    MAX_PROTEIN_LENGTH       =                     3000;
-
-/// \brief The maximum alignment length that the statically allocated arrays will permit
-///
-/// \todo Switch everything to vectors and eradicate the need for this
-constexpr size_t    MAX_ALIGNMENT_LENGTH    = MAX_PROTEIN_LENGTH +  500;
-
 /// \brief The number of top-scoring residue pairs to select
-constexpr size_t    NUM_SELECTIONS_TO_SAVE   =  20;
+constexpr size_t     NUM_SELECTIONS_TO_SAVE   =  20;
 
 /// \brief The fixed length of the string into which SSAP output lines are written
 ///
 /// \todo Make those output lines strings and hence eradicate the need for this
-constexpr size_t    SSAP_LINE_LENGTH         = 200;
+constexpr size_t     SSAP_LINE_LENGTH         = 200;
 
 /// \brief The minimum score that a lower matrix dynamic programming must achieve before its resulting alignment's scores
 ///        get added to the upper matrix
 ///
 /// Note: It is not yet quite clear why the normalisation factor (that's used to normalise the total alignment score)
 ///       is as it is.
-constexpr ptrdiff_t MIN_LOWER_MAT_RES_SCORE  =  10;
+constexpr score_type MIN_LOWER_MAT_RES_SCORE  =  10;
 
-constexpr size_t    SEC_STRUC_PLANAR_W_ANGLE =  10;
-constexpr size_t    SEC_STRUC_PLANAR_A_ANGLE =  60;
-constexpr size_t    SEC_STRUC_PLANAR_B_ANGLE =   6;
-constexpr size_t    SEC_STRUC_PLANAR_C_ANGLE =  10;
+constexpr size_t     SEC_STRUC_PLANAR_W_ANGLE =  10;
+constexpr size_t     SEC_STRUC_PLANAR_A_ANGLE =  60;
+constexpr size_t     SEC_STRUC_PLANAR_B_ANGLE =   6;
+constexpr size_t     SEC_STRUC_PLANAR_C_ANGLE =  10;
 
 // \todo Put these matrices in classes. This will help with:
 //        - decent memory management
@@ -220,16 +207,16 @@ constexpr size_t    SEC_STRUC_PLANAR_C_ANGLE =  10;
 //       which should be encapsulated.
 
 /// \brief Matrix of upper scores
-score_vec_vec      global_upper_score_matrix   (MAX_WINDOW_LENGTH, score_vec(MAX_WINDOW_LENGTH, 0    ) );
+score_vec_of_vec global_upper_score_matrix;
 
 /// \brief Matrix to mask out comparisons that should be skipped whilst performing upper-matrix residue comparisons
-bool_vec_vec       global_upper_res_mask_matrix(MAX_WINDOW_LENGTH, bool_vec (MAX_WINDOW_LENGTH, false) );
+bool_vec_of_vec  global_upper_res_mask_matrix;
 
 /// \brief Matrix to mask out comparisons that should be skipped whilst performing upper-matrix, secondary-structure comparisons
-bool_vec_vec       global_upper_ss_mask_matrix (MAX_WINDOW_LENGTH, bool_vec (MAX_WINDOW_LENGTH, false) );
+bool_vec_of_vec  global_upper_ss_mask_matrix;
 
 /// \brief Matrix to mask out comparisons that should be skipped whilst performing lower-matrix (residue or secondary structure) comparisons
-bool_vec_vec       global_lower_mask_matrix    (MAX_WINDOW_LENGTH, bool_vec (MAX_WINDOW_LENGTH, false) );
+bool_vec_of_vec  global_lower_mask_matrix;
 
 size_size_pair_vec global_selections;              ///< Selected region within matrix
 
@@ -268,14 +255,10 @@ char               global_ssap_line2[SSAP_LINE_LENGTH]; ///<
 /// For now, this is just called in the constructor of global_test_constants so test suites wishing to test
 /// behaviour of code that uses these globals should ensure that its test suite fixture inherits from global_test_constants.
 void cath::reset_ssap_global_variables() {
-	for (size_t matrix_cell_ctr_a = 0; matrix_cell_ctr_a < SSAP_LINE_LENGTH; ++matrix_cell_ctr_a) {
-		for (size_t matrix_cell_ctr_b = 0; matrix_cell_ctr_b < SSAP_LINE_LENGTH; ++matrix_cell_ctr_b) {
-			global_upper_score_matrix    [ matrix_cell_ctr_a ] [ matrix_cell_ctr_b ] = 0;
-			global_upper_res_mask_matrix [ matrix_cell_ctr_a ] [ matrix_cell_ctr_b ] = false;
-			global_upper_ss_mask_matrix  [ matrix_cell_ctr_a ] [ matrix_cell_ctr_b ] = false;
-			global_lower_mask_matrix     [ matrix_cell_ctr_a ] [ matrix_cell_ctr_b ] = false;
-		}
-	}
+	global_upper_score_matrix.assign   ( 0, 0, 0     );
+	global_upper_res_mask_matrix.assign( 0, 0, false );
+	global_upper_ss_mask_matrix.assign ( 0, 0, false );
+	global_lower_mask_matrix.assign    ( 0, 0, false );
 	global_selections.clear();
 	global_num_selections  =     0;
 	global_window          =     0;
@@ -644,32 +627,27 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	const size_t length_a = arg_entry_querier.get_length(arg_protein_a);
 	const size_t length_b = arg_entry_querier.get_length(arg_protein_b);
 
+	// Each of these matrices is currently indexed with offset-1
+	//
+	// \todo Shift each of these matrices to not use offset-1 and remove the extra " + 1"
+	//       from these lines
+	global_upper_score_matrix.resize   ( length_b + 1, length_a + global_window + 1, 0     );
+	global_upper_res_mask_matrix.resize( length_b + 1, length_a + global_window + 1, false );
+	global_upper_ss_mask_matrix.resize ( length_b + 1, length_a + global_window + 1, false );
+	global_lower_mask_matrix.resize    ( length_b + 1, length_a + global_window + 1, false );
+
 	BOOST_LOG_TRIVIAL( info ) << "Function: compare";
 	BOOST_LOG_TRIVIAL( info ) << "Function: compare: [aligning " << entry_plural_name << "]";
 	BOOST_LOG_TRIVIAL( info ) << "Function: compare: pass=" << arg_pass_ctr;
 
-	// Check lengths
-	if ( (global_window + length_a + 1 >= MAX_WINDOW_LENGTH) || (length_b + 1 >= MAX_ALIGNMENT_LENGTH) ) {
-		BOOST_THROW_EXCEPTION(not_implemented_exception(
-			"Sequence of "
-			+ entry_plural_name
-			+ " has exceeded the code's current static length limitations of MAX_WINDOW_LENGTH : "
-			+ lexical_cast<string>(MAX_WINDOW_LENGTH)
-			+ " and MAX_ALIGNMENT_LENGTH : "
-			+ lexical_cast<string>(MAX_ALIGNMENT_LENGTH)
-		));
-	}
-
 	if ( ! res_not_ss__hacky || arg_pass_ctr == 1 ) {
 		BOOST_LOG_TRIVIAL( info ) << "Function: compare: [aligning " << entry_plural_name << "] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix";
-
-		// Initialise lower and upper, secondary-structure matrices
-		for (size_t ctr_b = 0; ctr_b <= length_b; ++ctr_b) {
-			for (size_t ctr_a = 0; ctr_a <= length_a + global_window; ++ctr_a) {
-				global_lower_mask_matrix   [ctr_b][ctr_a] = false;
-				global_upper_ss_mask_matrix[ctr_b][ctr_a] = false;
-			}
-		}
+		// Each of these matrices is currently indexed with offset-1
+		//
+		// \todo Shift each of these matrices to not use offset-1 and remove the extra " + 1"
+		//       from these lines
+		global_upper_ss_mask_matrix.assign( length_b + 1, length_a + global_window + 1, false );
+		global_lower_mask_matrix.assign   ( length_b + 1, length_a + global_window + 1, false );
 	}
 
 	// Select allowed pairs
@@ -686,13 +664,14 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	select_pairs(arg_protein_a, arg_protein_b, arg_pass_ctr, arg_entry_querier);
 
 	// Initialise score matrix to zeros
+	//
+	// Each of these matrices is currently indexed with offset-1
+	//
+	// \todo Shift each of these matrices to not use offset-1 and remove the extra " + 1"
+	//       from these lines
 	BOOST_LOG_TRIVIAL( info ) << "Function: compare: [aligning " << entry_plural_name << "] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix";
-
-	for (size_t ctr_b = 0; ctr_b <= length_b; ++ctr_b) {
-		for (size_t ctr_a = 0; ctr_a <= length_a + global_window; ++ctr_a) {
-			global_upper_score_matrix[ctr_b][ctr_a] = 0;
-		}
-	}
+	global_upper_score_matrix.assign   ( length_b + 1, length_a + global_window + 1, 0     );
+	// global_upper_res_mask_matrix.assign( length_b + 1, length_a + global_window + 1, false );
 
 	BOOST_LOG_TRIVIAL( info ) << "Function: compare: [aligning " << entry_plural_name << "] score_matrix twice";
 
@@ -725,7 +704,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 			const aln_posn_type a_position   = get_a_offset_1_position_of_index( new_alignment, alignment_ctr );
 			const aln_posn_type b_position   = get_b_offset_1_position_of_index( new_alignment, alignment_ctr );
 			const int           a_matrix_idx = get_window_matrix_a_index__offset_1(length_a, length_b, global_window, a_position, b_position);
-			const double        score        = numeric_cast<double>( global_upper_score_matrix[ b_position ][ numeric_cast<size_t>( a_matrix_idx ) ] );
+			const double        score        = numeric_cast<double>( global_upper_score_matrix.get( b_position, numeric_cast<size_t>( a_matrix_idx ) ) );
 			scores.push_back( score / 10.0 + 0.5 );
 //			cerr << "Retrieved score:\t" << score << ",\twhich normalises to: " << ( score / 10.0 + 0.5 ) << endl;
 		}
@@ -861,17 +840,12 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 	const size_t length_a = arg_protein_a.get_length();
 	const size_t length_b = arg_protein_b.get_length();
 
-	if ( ( length_b + 1 >= MAX_ALIGNMENT_LENGTH ) || ( length_a + 1 >= MAX_WINDOW_LENGTH ) ) {
-		BOOST_LOG_TRIVIAL( error ) << "Alignment length too long; increase MAX_ALIGNMENT_LENGTH and MAX_WINDOW_LENGTH";
-		exit( 1 );
-	}
-
 	// Initialise arrays
 	for (size_t residue_ctr_b = 0; residue_ctr_b <= length_b; ++residue_ctr_b ) {
 		for (size_t residue_ctr_a = 0; residue_ctr_a <= length_a; ++residue_ctr_a ) {
-			global_upper_res_mask_matrix[residue_ctr_b][residue_ctr_a] = false;
-			global_upper_ss_mask_matrix [residue_ctr_b][residue_ctr_a] = false;
-			global_lower_mask_matrix    [residue_ctr_b][residue_ctr_a] = false;
+			global_upper_res_mask_matrix.set( residue_ctr_b, residue_ctr_a, false );
+			global_upper_ss_mask_matrix.set ( residue_ctr_b, residue_ctr_a, false );
+			global_lower_mask_matrix.set    ( residue_ctr_b, residue_ctr_a, false );
 		}
 	}
 
@@ -900,7 +874,7 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 					if (get_pdb_name_number( residue_a )           && get_pdb_name_number( residue_b )         &&
 						get_pdb_name_number( residue_b ) >= bstart && get_pdb_name_number( residue_b ) <= bend &&
 						get_pdb_name_number( residue_a ) >= astart && get_pdb_name_number( residue_a ) <= aend) {
-						global_lower_mask_matrix[ ctr_b ][ ctr_a ] = true;
+						global_lower_mask_matrix.set( ctr_b, ctr_a, true );
 						break;
 					}
 				}
@@ -915,7 +889,7 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 					if (get_pdb_name_number( residue_a )          && get_pdb_name_number( residue_b )        &&
 						get_pdb_name_number( residue_b ) < bstart && get_pdb_name_number( residue_b ) > bend &&
 						get_pdb_name_number( residue_a ) < astart && get_pdb_name_number( residue_a ) > aend) {
-						global_lower_mask_matrix[ ctr_b ][ ctr_a ] = true;
+						global_lower_mask_matrix.set( ctr_b, ctr_a, true );
 						break;
 					}
 				}
@@ -936,11 +910,11 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 
 				// Tail end of alignment
 				if ( get_pdb_name_number( residue_a ) > lasta  && get_pdb_name_number( residue_b ) > lastb ) {
-					global_lower_mask_matrix[ctr_b][ctr_a] = true;
+					global_lower_mask_matrix.set( ctr_b, ctr_a, true );
 				}
 				// Start of alignment
 				if ( get_pdb_name_number( residue_a ) < firsta && get_pdb_name_number( residue_b ) < firstb ) {
-					global_lower_mask_matrix[ctr_b][ctr_a] = true;
+					global_lower_mask_matrix.set( ctr_b, ctr_a, true );
 				}
 			}
 		}
@@ -952,15 +926,25 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 	// the mistake of specialising vector<bool> to be a bitset-style class that can't
 	// return actually a reference to a bool. However none of that matters here, so
 	// it's OK to use vector<bool>
-	vector<vector<bool> > sec_struc_match_matrix( MAX_PROTEIN_LENGTH, vector<bool>( MAX_PROTEIN_LENGTH, false ) );
+	bool_vec_of_vec sec_struc_match_matrix;
 	if ( arg_opt_ss_alignment ) {
-		BOOST_LOG_TRIVIAL( debug ) << "Setting secondary structure alignment : " << *arg_opt_ss_alignment;;
-		for (size_t alignment_ctr = 0; alignment_ctr < arg_opt_ss_alignment->length(); ++alignment_ctr) {
-			const bool has_both_posns = has_both_positions_of_index( *arg_opt_ss_alignment, alignment_ctr );
-			if ( has_both_posns ) {
-				const aln_posn_type sec_struc_posn_a = get_a_offset_1_position_of_index( *arg_opt_ss_alignment, alignment_ctr );
-				const aln_posn_type sec_struc_posn_b = get_b_offset_1_position_of_index( *arg_opt_ss_alignment, alignment_ctr );
-				sec_struc_match_matrix[ sec_struc_posn_b ][ sec_struc_posn_a ] = true;
+		const auto last_present_a_opt = get_last_present_a_position( *arg_opt_ss_alignment );
+		const auto last_present_b_opt = get_last_present_b_position( *arg_opt_ss_alignment );
+		if ( last_present_a_opt && last_present_b_opt ) {
+			sec_struc_match_matrix.assign(
+				*last_present_b_opt + 2, // ( + 1 to go from position to size and +1 because it will be indexed offset_1)
+				*last_present_a_opt + 2, // ( + 1 to go from position to size and +1 because it will be indexed offset_1)
+				false
+			);
+			BOOST_LOG_TRIVIAL( debug ) << "Setting secondary structure alignment : " << *arg_opt_ss_alignment;;
+			for (const size_t &alignment_ctr : irange( 0_z, arg_opt_ss_alignment->length() ) ) {
+				if ( has_both_positions_of_index( *arg_opt_ss_alignment, alignment_ctr ) ) {
+					sec_struc_match_matrix.set(
+						get_b_offset_1_position_of_index( *arg_opt_ss_alignment, alignment_ctr ),
+						get_a_offset_1_position_of_index( *arg_opt_ss_alignment, alignment_ctr ),
+						true
+					);
+				}
 			}
 		}
 	}
@@ -983,24 +967,25 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 			if ( global_doing_fast_ssap ) {
 				// Use clique method
 				if ( arg_clique_file ) {
-					if (global_lower_mask_matrix[residue_ctr_b][residue_ctr_a] && residues_have_similar_area_angle_props(residue_a, residue_b)) {
+					if ( global_lower_mask_matrix.get( residue_ctr_b, residue_ctr_a ) && residues_have_similar_area_angle_props( residue_a, residue_b ) ) {
 						++num_residues_selected;
-						global_upper_res_mask_matrix[ residue_ctr_b ][ numeric_cast<size_t>( a_matrix_idx ) ] = true;
+						global_upper_res_mask_matrix.set( residue_ctr_b, numeric_cast<size_t>( a_matrix_idx ), true );
 					}
 				}
 				// If no clique data is present, use built-in secondary structure method
 				else if (residue_a.get_sec_struc_number()
 				         && residue_b.get_sec_struc_number()
-				         && sec_struc_match_matrix[residue_b.get_sec_struc_number()][residue_a.get_sec_struc_number()]
+				         && arg_opt_ss_alignment
+				         && sec_struc_match_matrix.get( residue_b.get_sec_struc_number(), residue_a.get_sec_struc_number() )
 				         && residues_have_similar_area_angle_props(residue_a, residue_b) ) {
 					++num_residues_selected;
-					global_upper_res_mask_matrix[residue_ctr_b][ numeric_cast<size_t>( a_matrix_idx ) ] = true;
+					global_upper_res_mask_matrix.set( residue_ctr_b, numeric_cast<size_t>( a_matrix_idx ), true );
 				}
 			}
 			else {
 				if (residues_have_similar_area_angle_props(residue_a, residue_b)) {
 					++num_residues_selected;
-					global_upper_res_mask_matrix[residue_ctr_b][ numeric_cast<size_t>( a_matrix_idx ) ] = true;
+					global_upper_res_mask_matrix.set( residue_ctr_b, numeric_cast<size_t>( a_matrix_idx ), true );
 				}
 			}
 		}
@@ -1041,18 +1026,18 @@ void cath::select_pairs(const protein       &arg_protein_a,    ///< The first pr
 			if ( arg_pass == 1 ) {
 				if ( arg_entry_querier.are_similar__offset_1(arg_protein_a, arg_protein_b, ctr_a, ctr_b) ) {
 					++num_entries_selected;
-					global_lower_mask_matrix   [ctr_b][ctr_a] = true;
-					global_upper_ss_mask_matrix[ctr_b][ctr_a] = true;
+					global_lower_mask_matrix.set   ( ctr_b, ctr_a, true );
+					global_upper_ss_mask_matrix.set( ctr_b, ctr_a, true );
 				}
 				else {
-					global_lower_mask_matrix   [ctr_b][ctr_a] = false;
-					global_upper_ss_mask_matrix[ctr_b][ctr_a] = false;
+					global_lower_mask_matrix.set   ( ctr_b, ctr_a, false );
+					global_upper_ss_mask_matrix.set( ctr_b, ctr_a, false );
 				}
 			}
 			// Subsequent passes (must be residues):
 			//   select 20 highest scoring residue pairs from first pass
 			else {
-				const score_type score = global_upper_score_matrix[ctr_b][ numeric_cast<size_t>( a_matrix_idx ) ];
+				const score_type score = global_upper_score_matrix.get( ctr_b, numeric_cast<size_t>( a_matrix_idx ) );
 				update_best_pair_selections( selected_pairs, selected_pair(ctr_a, ctr_b, score), NUM_SELECTIONS_TO_SAVE );
 			}
 		}
@@ -1092,7 +1077,7 @@ void cath::update_best_pair_selections(deque<selected_pair> &arg_selected_pairs,
                                        ) {
 	const size_t index_a = arg_potential_pair.get_index_a();
 	const size_t index_b = arg_potential_pair.get_index_b();
-	global_lower_mask_matrix[index_b][index_a] = false;
+	global_lower_mask_matrix.set( index_b, index_a, false );
 
 	// If arg_selected_pairs isn't yet full or if the new score is better than the lowest score
 	// (which comes first because arg_selected_pairs is sorted) then...
@@ -1107,12 +1092,12 @@ void cath::update_best_pair_selections(deque<selected_pair> &arg_selected_pairs,
 		if (full) {
 			const size_t first_index_a = arg_selected_pairs.front().get_index_a();
 			const size_t first_index_b = arg_selected_pairs.front().get_index_b();
-			global_lower_mask_matrix[ first_index_b ][ first_index_a ] = false;
+			global_lower_mask_matrix.set( first_index_b, first_index_a, false );
 
 			arg_selected_pairs.pop_front();
 		}
 
-		global_lower_mask_matrix[ index_b ][ index_a ] = true;
+		global_lower_mask_matrix.set( index_b, index_a, true );
 	}
 }
 
@@ -1248,10 +1233,10 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 			if ( ! using_selections ) {
 				if ( res_not_ss__hacky ) {
 					const int a_matrix_idx = get_window_matrix_a_index__offset_1( length_a, length_b, global_window, ctr_a, ctr_b );
-					should_compare_pair = global_upper_res_mask_matrix[ ctr_b ][ numeric_cast<size_t>( a_matrix_idx ) ];
+					should_compare_pair = global_upper_res_mask_matrix.get( ctr_b, numeric_cast<size_t>( a_matrix_idx ) );
 				}
 				else {
-					should_compare_pair = global_upper_ss_mask_matrix[ ctr_b ][ ctr_a ];
+					should_compare_pair = global_upper_ss_mask_matrix.get( ctr_b, ctr_a );
 				}
 			}
 
@@ -1390,7 +1375,7 @@ compare_upper_cell_result cath::compare_upper_cell(const protein       &arg_prot
 				arg_a_view_from_index__offset_1, arg_b_view_from_index__offset_1,
 				a_dest_to_index__offset_1,       b_dest_to_index__offset_1
 			);
-			global_upper_score_matrix[b_dest_to_index__offset_1][ numeric_cast<size_t>( a_matrix_idx ) ] += score_addend;
+			global_upper_score_matrix.get( b_dest_to_index__offset_1, numeric_cast<size_t>( a_matrix_idx ) ) += score_addend;
 //			cerr << "At\t" << ( arg_a_view_from_index__offset_1 - 1 );
 //			cerr << "\t"   << ( arg_b_view_from_index__offset_1 - 1 );
 //			cerr << "\t"   << ( a_dest_to_index__offset_1       - 1 );

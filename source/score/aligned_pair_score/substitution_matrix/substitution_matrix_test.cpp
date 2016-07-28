@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(identity) {
 		BOOST_CHECK_EQUAL( identity_matrix.get_score( amino_acid_a, amino_acid_x ), 0 );
 		BOOST_CHECK_EQUAL( identity_matrix.get_score( amino_acid_x, amino_acid_a ), 0 );
 		for (const amino_acid &amino_acid_b : normal_amino_acids) {
-			const ptrdiff_t correct_score = ( amino_acid_a == amino_acid_b ) ? 1 : 0;
+			const score_type correct_score = ( amino_acid_a == amino_acid_b ) ? 1 : 0;
 			BOOST_CHECK_EQUAL( identity_matrix.get_score( amino_acid_a, amino_acid_b ), correct_score );
 			BOOST_CHECK_EQUAL( identity_matrix.get_score( amino_acid_b, amino_acid_a ), correct_score );
 		}

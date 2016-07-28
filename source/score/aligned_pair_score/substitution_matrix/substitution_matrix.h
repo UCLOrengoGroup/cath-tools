@@ -60,48 +60,48 @@ namespace cath {
 			amino_acid_vec amino_acids;
 
 			/// \brief The all-against-all scores, with both dimensions sorted in the same order as the sorted amino_acids list
-			diff_vec_vec scores;
+			score_vec_vec scores;
 
 			/// \brief The score that's returned if one of the query amino acids is unrecognised
-			ptrdiff_t score_for_one_unknown_aa;
+			score_type score_for_one_unknown_aa;
 
 			/// \brief The score that's returned if both query amino acids are unrecognised
-			ptrdiff_t score_for_two_unknown_aas;
+			score_type score_for_two_unknown_aas;
 
 			/// \brief A name for the substitution matrix
 			std::string name;
 
 			const amino_acid_vec & get_amino_acids() const;
-			const diff_vec_vec & get_scores() const;
-			const ptrdiff_t & get_score_for_one_unknown_aa() const;
-			const ptrdiff_t & get_score_for_two_unknown_aas() const;
+			const score_vec_vec & get_scores() const;
+			const score_type & get_score_for_one_unknown_aa() const;
+			const score_type & get_score_for_two_unknown_aas() const;
 
 			static size_vec order_permutation(const amino_acid_vec &,
 			                                  const amino_acid_vec &);
 
-			static diff_vec_vec reorder_scores(const amino_acid_vec &,
-			                                   const amino_acid_vec &,
-			                                   const diff_vec_vec &);
+			static score_vec_vec reorder_scores(const amino_acid_vec &,
+			                                    const amino_acid_vec &,
+			                                    const score_vec_vec &);
 
-			static bool has_lower_highest_score(const diff_vec &,
-			                                    const diff_vec &);
-			static ptrdiff_t highest_score_of_scores(const diff_vec &);
+			static bool has_lower_highest_score(const score_vec &,
+			                                    const score_vec &);
+			static score_type highest_score_of_scores(const score_vec &);
 
 			void check_is_symmetric() const;
 
 		public:
 			substitution_matrix(const amino_acid_vec &,
-			                    const diff_vec_vec &,
-			                    const ptrdiff_t &,
-			                    const ptrdiff_t &,
+			                    const score_vec_vec &,
+			                    const score_type &,
+			                    const score_type &,
 			                    const std::string &);
 
 			const std::string & get_name() const;
 
-			ptrdiff_t get_highest_score() const;
+			score_type get_highest_score() const;
 
-			ptrdiff_t get_score(const amino_acid &,
-			                    const amino_acid &) const;
+			score_type get_score(const amino_acid &,
+			                     const amino_acid &) const;
 		};
 
 		bool operator<(const substitution_matrix &,

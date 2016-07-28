@@ -33,7 +33,7 @@ using namespace cath::score;
 ///
 /// \relates substitution_matrix
 substitution_matrix cath::score::make_subs_matrix_blosum62() {
-	const diff_vec_vec scores = {
+	const score_vec_vec scores = {
 		{   4,  -2,   0,  -2,  -1,  -2,   0,  -2,  -1,  -1,  -1,  -1,  -2,  -1,  -1,  -1,   1,   0,   0,  -3,   0,  -2,  -1 },
 		{  -2,   4,  -3,   4,   1,  -3,  -1,   0,  -3,   0,  -4,  -3,   3,  -2,   0,  -1,   0,  -1,  -3,  -4,  -1,  -3,   1 },
 		{   0,  -3,   9,  -3,  -4,  -2,  -3,  -3,  -1,  -3,  -1,  -1,  -3,  -3,  -3,  -3,  -1,  -1,  -1,  -2,  -2,  -2,  -3 },

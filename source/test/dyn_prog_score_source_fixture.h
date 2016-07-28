@@ -28,6 +28,7 @@
 #include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/old_matrix_dyn_prog_score_source.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.h"
+#include "common/container/vector_of_vector.h"
 #include "test/global_test_constants.h"
 
 namespace cath {
@@ -44,9 +45,9 @@ namespace cath {
 
 			static const std::string         sequence_string_a;
 			static const std::string         sequence_string_b;
-			static const score_vec_vec       example_old_score_matrix;
+			static const score_vec_of_vec    example_old_score_matrix;
 			static const float_score_vec_vec example_new_score_matrix;
-			static const bool_vec_vec        example_mask_matrix;
+			static const bool_vec_of_vec     example_mask_matrix;
 
 		public:
 			template <typename DPSS>

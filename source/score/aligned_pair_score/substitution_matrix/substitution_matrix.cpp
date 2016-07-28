@@ -50,17 +50,17 @@ const amino_acid_vec & substitution_matrix::get_amino_acids() const {
 }
 
 /// \brief TODOCUMENT
-const diff_vec_vec & substitution_matrix::get_scores() const {
+const score_vec_vec & substitution_matrix::get_scores() const {
 	return scores;
 }
 
 /// \brief TODOCUMENT
-const ptrdiff_t & substitution_matrix::get_score_for_one_unknown_aa() const {
+const score_type & substitution_matrix::get_score_for_one_unknown_aa() const {
 	return score_for_one_unknown_aa;
 }
 
 /// \brief TODOCUMENT
-const ptrdiff_t & substitution_matrix::get_score_for_two_unknown_aas() const {
+const score_type & substitution_matrix::get_score_for_two_unknown_aas() const {
 	return score_for_two_unknown_aas;
 }
 
@@ -102,10 +102,10 @@ size_vec substitution_matrix::order_permutation(const amino_acid_vec &arg_orig_a
 }
 
 /// \brief Reorder the scores corresponding to the first amino acid ordering to the second amino acid ordering
-diff_vec_vec substitution_matrix::reorder_scores(const amino_acid_vec &arg_orig_aa_ordering, ///< The original amino acid ordering
-                                                 const amino_acid_vec &arg_new_aa_ordering,  ///< The required, new amino acid ordering
-                                                 const diff_vec_vec   &arg_scores            ///< Scores corresponding to the original amino acid ordering
-                                                 ) {
+score_vec_vec substitution_matrix::reorder_scores(const amino_acid_vec &arg_orig_aa_ordering, ///< The original amino acid ordering
+                                                  const amino_acid_vec &arg_new_aa_ordering,  ///< The required, new amino acid ordering
+                                                  const score_vec_vec  &arg_scores            ///< Scores corresponding to the original amino acid ordering
+                                                  ) {
 	// Get the permutation required to get from the new ordering back to the old one
 	const size_vec back_permutation = invert_permutation(
 		order_permutation( arg_orig_aa_ordering, arg_new_aa_ordering )
@@ -113,7 +113,7 @@ diff_vec_vec substitution_matrix::reorder_scores(const amino_acid_vec &arg_orig_
 
 	// Construct a matrix to hold the new scores
 	const size_t num_amino_acids = back_permutation.size();
-	diff_vec_vec scores( num_amino_acids, diff_vec( num_amino_acids, 0 ) );
+	score_vec_vec scores( num_amino_acids, score_vec( num_amino_acids, 0 ) );
 
 	// Loop over the new matrix, populating its scores from the old matrix
 	for (size_t new_aa_index_a = 0; new_aa_index_a < num_amino_acids; ++new_aa_index_a) {
@@ -129,15 +129,15 @@ diff_vec_vec substitution_matrix::reorder_scores(const amino_acid_vec &arg_orig_
 }
 
 /// \brief Return whether one row/column has a lower highest score than the next
-bool substitution_matrix::has_lower_highest_score(const diff_vec &arg_scores_a, ///< The first row/column of scores to compare
-                                                  const diff_vec &arg_scores_b  ///< The second row/column of scores to compare
+bool substitution_matrix::has_lower_highest_score(const score_vec &arg_scores_a, ///< The first row/column of scores to compare
+                                                  const score_vec &arg_scores_b  ///< The second row/column of scores to compare
                                                   ) {
 	return ( highest_score_of_scores( arg_scores_a ) < highest_score_of_scores( arg_scores_b ) );
 }
 
 /// \brief Return the highest score to be found in the specified row/column
-ptrdiff_t substitution_matrix::highest_score_of_scores(const diff_vec &arg_scores ///< The row/column of scores to examine
-                                                       ) {
+score_type substitution_matrix::highest_score_of_scores(const score_vec &arg_scores ///< The row/column of scores to examine
+                                                        ) {
 	return *max_element( arg_scores );
 }
 
@@ -159,9 +159,9 @@ void substitution_matrix::check_is_symmetric() const {
 ///
 /// arg_amino_acids needn't necessarily be sorted
 substitution_matrix::substitution_matrix(const amino_acid_vec &arg_amino_acids,               ///< The list of amino acids
-                                         const diff_vec_vec   &arg_scores,                    ///< The all-against-all scores corresponding to the list of amino acids
-                                         const ptrdiff_t      &arg_score_for_one_unknown_aa,  ///< The score that's returned if one of the query amino acids is unrecognised
-                                         const ptrdiff_t      &arg_score_for_two_unknown_aas, ///< The score that's returned if both query amino acids are unrecognised
+                                         const score_vec_vec  &arg_scores,                    ///< The all-against-all scores corresponding to the list of amino acids
+                                         const score_type     &arg_score_for_one_unknown_aa,  ///< The score that's returned if one of the query amino acids is unrecognised
+                                         const score_type     &arg_score_for_two_unknown_aas, ///< The score that's returned if both query amino acids are unrecognised
                                          const string         &arg_name                       ///< A name for the substitution matrix
                                          ) : amino_acids              ( sort_copy( arg_amino_acids )  ),
                                              scores                   ( reorder_scores( arg_amino_acids, amino_acids, arg_scores ) ),
@@ -182,7 +182,7 @@ const string & substitution_matrix::get_name() const {
 }
 
 /// \brief The highest score of any of the elements in the matrix
-ptrdiff_t substitution_matrix::get_highest_score() const {
+score_type substitution_matrix::get_highest_score() const {
 	return highest_score_of_scores(
 		*max_element(
 			scores,
@@ -194,9 +194,9 @@ ptrdiff_t substitution_matrix::get_highest_score() const {
 /// \brief Get the score corresponding to the two specified amino acids
 ///
 /// \todo Tidied up this code
-ptrdiff_t substitution_matrix::get_score(const amino_acid &arg_amino_acid_a, ///< The first amino acid of the query
-                                         const amino_acid &arg_amino_acid_b  ///< The second amino acid of the query
-                                         ) const {
+score_type substitution_matrix::get_score(const amino_acid &arg_amino_acid_a, ///< The first amino acid of the query
+                                          const amino_acid &arg_amino_acid_b  ///< The second amino acid of the query
+                                          ) const {
 	// Grab the index of the first amino acid in amino_acids
 	const size_t index_a = numeric_cast<size_t>( distance(
 		common::cbegin( amino_acids ),

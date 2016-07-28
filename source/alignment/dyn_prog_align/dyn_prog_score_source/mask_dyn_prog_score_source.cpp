@@ -39,7 +39,7 @@ score_type mask_dyn_prog_score_source::do_get_score(const size_t &arg_index_a, /
                                                     const size_t &arg_index_b  ///< The index of the element of interest in the second sequence
                                                     ) const {
 	// Grab the mask value for this entry from the mask_matrix
-	const bool mask_result = mask_matrix [ arg_index_b + 1 ] [ arg_index_a + 1 ];
+	const bool mask_result = mask_matrix.get( arg_index_b + 1, arg_index_a + 1 );
 
 	// If the mask value is true then return the masked_score_source's score, else return 0
 	return mask_result ? masked_score_source.get_score(arg_index_a, arg_index_b)
@@ -47,7 +47,7 @@ score_type mask_dyn_prog_score_source::do_get_score(const size_t &arg_index_a, /
 }
 
 /// \brief Ctor for mask_dyn_prog_score_source
-mask_dyn_prog_score_source::mask_dyn_prog_score_source(const bool_vec_vec          &arg_mask_matrix,        ///< TODOCUMENT
+mask_dyn_prog_score_source::mask_dyn_prog_score_source(const bool_vec_of_vec       &arg_mask_matrix,        ///< TODOCUMENT
                                                        const dyn_prog_score_source &arg_masked_score_source ///< TODOCUMENT
                                                        ) : mask_matrix        ( arg_mask_matrix         ),
                                                            masked_score_source( arg_masked_score_source ) {

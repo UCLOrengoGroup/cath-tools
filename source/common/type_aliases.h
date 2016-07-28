@@ -33,6 +33,7 @@
 #include <utility>
 #include <vector>
 
+namespace cath { namespace common {  template <typename T> class vector_of_vector; } }
 
 namespace cath {
 
@@ -63,8 +64,7 @@ namespace cath {
 	using bool_deq_citr                 = bool_deq::const_iterator;
 	using bool_deq_vec                  = std::vector<bool_deq>;
 
-	using bool_vec                      = std::vector<bool>;     // WARNING: Remember std has a stupid template specialisation for vector<bool>
-	using bool_vec_vec                  = std::vector<bool_vec>; // WARNING: Remember std has a stupid template specialisation for vector<bool>
+	using bool_vec_of_vec               = common::vector_of_vector<bool>; // WARNING: Remember std has a stupid template specialisation for vector<bool>
 
 	using char_vec                      = std::vector<char>;
 
@@ -173,10 +173,11 @@ namespace cath {
 
 	/// \brief The type of the scores used in aligning with dynamic-programming etc
 	///
-	/// \todo Switch this to double and if that is to broad-brush then templatise on score_type where appropriate
-	using score_type                   = ptrdiff_t;
+	/// \todo Switch this to float/double; if thats too broad-brush then templatise on score_type where appropriate
+	using score_type                   = int;
 	using score_vec                    = std::vector<score_type>;
 	using score_vec_vec                = std::vector<score_vec>;
+	using score_vec_of_vec             = common::vector_of_vector<score_type>;
 
 	using str_str_score_tpl            = std::tuple<std::string, std::string, score_type>;
 }
