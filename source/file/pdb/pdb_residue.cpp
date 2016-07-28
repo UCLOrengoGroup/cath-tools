@@ -53,6 +53,15 @@ pdb_residue::pdb_residue(const chain_label  &arg_chain_label,  ///< TODOCUMENT
                              atoms           ( arg_atoms        ) {
 }
 
+/// \brief Ctor for pdb_residue
+pdb_residue::pdb_residue(const chain_label   &arg_chain_label,  ///< TODOCUMENT
+                         const residue_name  &arg_residue_name, ///< TODOCUMENT
+                         pdb_atom_vec       &&arg_atoms         ///< TODOCUMENT
+                         ) : the_chain_label ( arg_chain_label        ),
+                             the_residue_name( arg_residue_name       ),
+                             atoms           ( std::move( arg_atoms ) ) {
+}
+
 /// \brief TODOCUMENT
 chain_label pdb_residue::get_chain_label() const {
 	return the_chain_label;

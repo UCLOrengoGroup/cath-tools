@@ -65,6 +65,10 @@ namespace cath {
 			            const residue_name &,
 			            const pdb_atom_vec &);
 
+			pdb_residue(const chain_label &,
+			            const residue_name &,
+			            pdb_atom_vec &&);
+
 			chain_label get_chain_label() const;
 			residue_name get_residue_name() const;
 //			coord get_carbon_alpha_coord() const;

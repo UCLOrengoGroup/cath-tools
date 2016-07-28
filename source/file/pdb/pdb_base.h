@@ -88,6 +88,9 @@ namespace cath {
 
 			static const std::string PDB_RECORD_STRING_TER;
 
+			/// \brief Specify how short a line can be before it will be rejected.
+			static constexpr size_t MIN_NUM_PDB_COLS =  66;
+
 			/// \brief Specify how long a line can be before it will be rejected.
 			///
 			/// This is set to 160, twice the standard 80, to avoid rejecting lines that have just got some extra stuff at the end

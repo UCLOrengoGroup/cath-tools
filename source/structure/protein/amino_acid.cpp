@@ -66,20 +66,20 @@ const set<string> DNA_RNA_RESIDUE_NAMES = { "A", "C", "G", "N", "U", "DA", "DC",
 //}
 
 /// \brief TODOCUMENT
-const amino_acid::char_size_map & amino_acid::INDEX_OF_LETTER() {
-	static const amino_acid::char_size_map index_of_letter(amino_acid::build_index_map<char,   0>());
+auto amino_acid::INDEX_OF_LETTER() -> const char_size_unordered_map & {
+	static const char_size_unordered_map index_of_letter(amino_acid::build_index_unordered_map<char,   0>());
 	return index_of_letter;
 }
 
 /// \brief TODOCUMENT
-const amino_acid::string_size_map & amino_acid::INDEX_OF_CODE() {
-	static const amino_acid::string_size_map index_of_code(amino_acid::build_index_map<string, 1>());
+auto amino_acid::INDEX_OF_CODE() -> const string_size_unordered_map & {
+	static const string_size_unordered_map index_of_code(amino_acid::build_index_unordered_map<string, 1>());
 	return index_of_code;
 }
 
 /// \brief TODOCUMENT
-const amino_acid::string_size_map & amino_acid::INDEX_OF_NAME() {
-	static const amino_acid::string_size_map index_of_name(amino_acid::build_index_map<string, 2>());
+auto amino_acid::INDEX_OF_NAME() -> const string_size_unordered_map & {
+	static const string_size_unordered_map index_of_name(amino_acid::build_index_unordered_map<string, 2>());
 	return index_of_name;
 }
 
@@ -93,32 +93,29 @@ void amino_acid::check_is_proper_amino_acid() const {
 	}
 }
 
-
 /// \brief TODOCUMENT
 void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name ///< The 1 letter code, three letter code or name to which the amino_acid should be set
                                          ) {
 	// If the argument matches any names, then set to the corresponding index and return
-	if ( arg_letter_code_or_name.length() > 3 && contains( INDEX_OF_NAME(), arg_letter_code_or_name ) ) {
-		index = INDEX_OF_NAME().find( arg_letter_code_or_name )->second;
-		return;
+	if ( arg_letter_code_or_name.length() > 3 ) {
+		const auto index_itr = INDEX_OF_NAME().find( arg_letter_code_or_name );
+		if ( index_itr != common::cend( INDEX_OF_NAME() ) ) {
+			index = index_itr->second;
+			return;
+		}
 	}
 
 	// If the argument has one character and matches any of the LETTERS, then set to the corresponding index and return
 	if ( arg_letter_code_or_name.length() == 1 ) {
-//		const string upper_letter_string = to_upper_copy(arg_letter_code_or_name);
-		const char &letter = arg_letter_code_or_name.front();
-		if ( contains( INDEX_OF_LETTER(), letter ) ) {
-			index = INDEX_OF_LETTER().find( letter )->second;
-			return;
-		}
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Amino acid string \"" + arg_letter_code_or_name + "\" has one character but is not a recognised letter (currently case-sensitive)"));
+		index = get_letter_index( arg_letter_code_or_name.front() );
+		return;
 	}
 
 	// If the argument has three characters and matches any of the codes,  then set to the corresponding index and return
-	if (arg_letter_code_or_name.length() == 3) {
-//		const string upper_code = to_upper_copy(arg_letter_code_or_name);
-		if ( contains( INDEX_OF_CODE(), arg_letter_code_or_name ) ) {
-			index = INDEX_OF_CODE().find(arg_letter_code_or_name)->second;
+	if ( arg_letter_code_or_name.length() == 3 ) {
+		const auto index_itr = INDEX_OF_CODE().find( arg_letter_code_or_name );
+		if ( index_itr != common::cend( INDEX_OF_CODE() ) ) {
+			index = index_itr->second;
 			return;
 		}
 	}
@@ -139,7 +136,7 @@ void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name /
 		));
 	}
 
-	if (arg_letter_code_or_name.length() == 3) {
+	if ( arg_letter_code_or_name.length() == 3 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Amino acid string \"" + arg_letter_code_or_name + "\" has three characters but is not a recognised code (currently case-sensitive)"));
 	}
 
@@ -149,46 +146,11 @@ void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name /
 }
 
 /// \brief Ctor for amino_acid
-amino_acid::amino_acid(const string     &arg_string,    ///< TODOCUMENT
-                       const pdb_record &arg_pdb_record ///< TODOCUMENT
-					   ) {
-	if ( ! all( arg_string, is_print() ) ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot construct an amino acid from a string with non-printing characters"));
-	}
-	switch ( arg_pdb_record ) {
-		case ( pdb_record::ATOM   ) : {
-			set_letter_code_or_name( arg_string );
-			break;
-		}
-		case ( pdb_record::HETATM ) : {
-			if ( arg_string.length() != 3 ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot create a HETATM amino acid from a string that is not 3 characters long"));
-			}
-			raw_string = arg_string;
-			break;
-		}
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of arg_pdb_record not recognised whilst constructing an amino_acid"));
-		}
-	}
-	assert(   raw_string ||   index );
-	assert( ! raw_string || ! index );
-}
-
-/// \brief Ctor for amino_acid
 ///
 /// This is deliberately not explicit to allow implicit conversions from strings to amino_acid object
 amino_acid::amino_acid(const string &arg_code_or_name
                        ) {
 	set_letter_code_or_name(arg_code_or_name);
-}
-
-/// \brief Ctor for amino_acid
-///
-/// This is deliberately not explicit to allow implicit conversions from chars to amino_acid object
-amino_acid::amino_acid(const char &arg_code
-                       ) {
-	set_letter_code_or_name(string(1, arg_code));
 }
 
 /// \brief Make a vector of amino acids from a vector of amino acid chars

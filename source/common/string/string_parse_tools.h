@@ -29,6 +29,7 @@
 
 #include "common/c++14/cbegin_cend.h"
 #include "common/debug_numeric_cast.h"
+#include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
 
 #include <string>
@@ -36,14 +37,7 @@
 using namespace std::literals::string_literals;
 
 namespace cath {
-	/// \brief Type alias for string's const_iterator
-	///
-	/// \todo Move this into a type aliases header
-	using str_citr     = std::string::const_iterator;
-
 	/// \brief Type alias for boost::string_ref's const_iterator
-	///
-	/// \todo Move this into a type aliases header
 	using str_ref_citr = boost::string_ref::const_iterator;
 
 	namespace common {

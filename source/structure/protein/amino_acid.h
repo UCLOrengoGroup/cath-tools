@@ -31,8 +31,9 @@
 #include "structure/structure_type_aliases.h"
 
 #include <iosfwd>
-#include <map>
+// #include <map>
 #include <tuple>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -44,12 +45,12 @@ namespace cath {
 	private:
 		static const char_str_str_tpl_vec & LETTER_CODE_AND_NAME_LIST();
 
-		using char_size_map   = std::map<char,        size_t>;
-		using string_size_map = std::map<std::string, size_t>;
+		using char_size_unordered_map   = std::unordered_map<char,        size_t>;
+		using string_size_unordered_map = std::unordered_map<std::string, size_t>;
 
-		static const char_size_map   & INDEX_OF_LETTER();
-		static const string_size_map & INDEX_OF_CODE();
-		static const string_size_map & INDEX_OF_NAME();
+		static const char_size_unordered_map   & INDEX_OF_LETTER();
+		static const string_size_unordered_map & INDEX_OF_CODE();
+		static const string_size_unordered_map & INDEX_OF_NAME();
 
 		/// \brief TODOCUMENT
 		opt_str raw_string;
@@ -57,9 +58,10 @@ namespace cath {
 		/// \brief TODOCUMENT
 		opt_size index;
 
-		template <typename T, size_t I> static std::map<T, size_t> build_index_map();
+		template <typename T, size_t I> static std::unordered_map<T, size_t> build_index_unordered_map();
 		template <typename T, size_t I> static T get_label(const size_t &);
 
+		size_t get_letter_index(const char &);
 		void set_letter_code_or_name(const std::string &);
 
 		void check_is_proper_amino_acid() const;
@@ -120,8 +122,8 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	template <typename T, size_t I>
-	inline std::map<T, size_t> amino_acid::build_index_map() {
-		std::map<T, size_t> index_map;
+	inline std::unordered_map<T, size_t> amino_acid::build_index_unordered_map() {
+		std::unordered_map<T, size_t> index_map;
 		for (size_t amino_acid_ctr = 0; amino_acid_ctr < LETTER_CODE_AND_NAME_LIST().size(); ++amino_acid_ctr) {
 			const T &amino_acid_label = std::get<I>( LETTER_CODE_AND_NAME_LIST()[ amino_acid_ctr ] );
 			index_map.insert( std::make_pair( amino_acid_label, amino_acid_ctr ) );
@@ -134,11 +136,55 @@ namespace cath {
 	inline T amino_acid::get_label(const size_t &arg_index ///< TODOCUMENT
 	                               ) {
 		if (arg_index >= amino_acid::LETTER_CODE_AND_NAME_LIST().size()) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Amino acid index is out of range"));
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Amino acid index is out of range"));
 		}
 		return std::get<I>( amino_acid::LETTER_CODE_AND_NAME_LIST()[ arg_index ] );
 	}
 
+	/// \brief TODOCUMENT
+	inline size_t amino_acid::get_letter_index(const char &arg_letter ///< The 1 letter code
+	                                           ) {
+		const auto index_itr = INDEX_OF_LETTER().find( arg_letter );
+		if ( index_itr == common::cend( INDEX_OF_LETTER() ) ) {
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
+				"Amino acid letter \"" + std::string{ 1, arg_letter } + "\" is not a recognised letter (currently case-sensitive)"
+			));
+		}
+		return index_itr->second;
+	}
+
+	/// \brief Ctor for amino_acid
+	inline amino_acid::amino_acid(const std::string      &arg_string,    ///< TODOCUMENT
+	                              const file::pdb_record &arg_pdb_record ///< TODOCUMENT
+	                              ) {
+		switch ( arg_pdb_record ) {
+			case ( file::pdb_record::ATOM   ) : {
+				set_letter_code_or_name( arg_string );
+				break;
+			}
+			case ( file::pdb_record::HETATM ) : {
+				if ( arg_string.length() != 3 ) {
+					BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
+						"Cannot create a HETATM amino acid from a string that is not 3 characters long"
+					));
+				}
+				raw_string = arg_string;
+				break;
+			}
+			default : {
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
+					"Value of arg_pdb_record not recognised whilst constructing an amino_acid"
+				));
+			}
+		}
+		assert(   raw_string ||   index );
+		assert( ! raw_string || ! index );
+	}
+
+	/// \brief Ctor for amino_acid
+	inline amino_acid::amino_acid(const char &arg_letter ///< The 1 letter code
+	                              ) : index{ get_letter_index( arg_letter ) } {
+	}
 
 	/// \brief TODOCUMENT
 	inline bool amino_acid::is_proper_amino_acid() const {

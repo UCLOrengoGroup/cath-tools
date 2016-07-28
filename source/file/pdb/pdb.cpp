@@ -229,6 +229,12 @@ void pdb::set_residues(const pdb_residue_vec &arg_pdb_residues ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
+void pdb::set_residues(pdb_residue_vec &&arg_pdb_residues ///< TODOCUMENT
+                       ) {
+	pdb_residues = std::move( arg_pdb_residues );
+}
+
+/// \brief TODOCUMENT
 coord pdb::get_residue_ca_coord_of_backbone_complete_index(const size_t &arg_backbone_complete_index ///< TODOCUMENT
                                                            ) const {
 	const size_t index = get_index_of_backbone_complete_index( arg_backbone_complete_index );
@@ -323,9 +329,10 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 	while ( getline( input_stream, line_string ) ) {
 		// If this line is an ATOM or HETATM record
 		if ( is_pdb_record_of_type( line_string, pdb_record::ATOM ) || is_pdb_record_of_type( line_string, pdb_record::HETATM ) ) {
-			const auto parse_status_and_str = pdb_record_parse_problem( line_string );
-			const auto &parse_status = parse_status_and_str.first;
-			const auto &parse_string = parse_status_and_str.second;
+			const auto parse_status_str_and_aa = pdb_record_parse_problem( line_string );
+			const auto &parse_status = get<0>( parse_status_str_and_aa );
+			const auto &parse_string = get<1>( parse_status_str_and_aa );
+			const auto &parse_aa     = get<2>( parse_status_str_and_aa );
 			if ( parse_status == pdb_atom_parse_status::ABORT ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(
 					"ATOM record is malformed : " + parse_string
@@ -342,7 +349,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			}
 
 			// Grab the details from parsing this ATOM record
-			const chain_resname_atom_tuple  new_entry              = parse_pdb_atom_record( line_string );
+			const chain_resname_atom_tuple  new_entry              = parse_pdb_atom_record( line_string, parse_aa );
 			const chain_label              &chain                  = get<0>( new_entry );
 			const residue_name             &res_name               = get<1>( new_entry );
 			const pdb_atom                 &atom                   = get<2>( new_entry );
@@ -351,14 +358,12 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			// If there are previously seen atoms that don't match this chain/res_name,
 			// then add those atoms' residue and reset prev_atoms
 			if ( ! prev_atoms.empty() && ( chain != prev_chain || res_name != prev_res_name ) ) {
-				residues.push_back(
-					pdb_residue(
-						prev_chain,
-						prev_res_name,
-						prev_atoms
-					)
+				residues.emplace_back(
+					prev_chain,
+					prev_res_name,
+					std::move( prev_atoms )
 				);
-				prev_atoms.clear();
+				prev_atoms = pdb_atom_vec{};
 				prev_warned_conflict = false;
 			}
 
@@ -391,16 +396,14 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 
 	// Add any last remaining atoms
 	if ( ! prev_atoms.empty() ) {
-		residues.push_back(
-			pdb_residue(
-				prev_chain,
-				prev_res_name,
-				prev_atoms
-			)
+		residues.emplace_back(
+			prev_chain,
+			prev_res_name,
+			std::move( prev_atoms )
 		);
 	}
 
-	arg_pdb.set_residues(residues);
+	arg_pdb.set_residues( std::move( residues ) );
 	return input_stream;
 }
 

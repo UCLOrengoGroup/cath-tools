@@ -120,8 +120,7 @@ namespace cath {
 	using doub_size_pair                = std::pair<double, size_t>;
 	using size_doub_pair                = std::pair<size_t, double>;
 
-	//using uint_vec                      = std::vector<unsigned int>;
-	//using uint_vec_vec                  = std::vector<uint_vec>;
+	using str_citr                      = std::string::const_iterator;
 
 	using str_vec                       = std::vector<std::string>;
 	using str_vec_citr                  = str_vec::const_iterator;
@@ -141,7 +140,7 @@ namespace cath {
 	using size_vec_size_vec_pair        = std::pair<size_vec, size_vec>;
 
 	using size_deq                      = std::deque<size_t>;
-	
+
 	using size_size_map                 = std::map<size_t, size_t>;
 
 	using opt_char                      = boost::optional<char>;

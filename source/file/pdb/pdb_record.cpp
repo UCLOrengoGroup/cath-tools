@@ -28,20 +28,6 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace std;
 
-pdb_record cath::file::str_to_pdb_rec(const string &arg_string ///< TODOCUMENT
-                                      ) {
-	if      ( arg_string == "ATOM" || arg_string == "ATOM  " ) {
-		return pdb_record::ATOM;
-	}
-	else if ( arg_string == "HETATM" ) {
-		return pdb_record::HETATM;
-	}
-	else {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to recognise pdb_record type " + arg_string));
-		return pdb_record::ATOM; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-	}
-}
-
 /// \brief Simple extraction operator for pdb_record
 ///
 /// \relates pdb_record
@@ -50,7 +36,7 @@ istream & cath::file::operator>>(istream    &arg_is,        ///< The istream fro
                                  ) {
 	string input_string;
 	arg_is >> input_string;
-	arg_pdb_record = str_to_pdb_rec( input_string );
+	arg_pdb_record = pdb_rec_of_str( input_string );
 	return arg_is;
 }
 

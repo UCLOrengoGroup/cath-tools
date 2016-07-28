@@ -66,6 +66,7 @@ namespace cath {
 			size_t get_num_residues() const;
 			const pdb_residue & get_residue_cref_of_index__backbone_unchecked(const size_t &) const;
 			void set_residues(const pdb_residue_vec &);
+			void set_residues(pdb_residue_vec &&);
 
 			const pdb_residue & get_residue_cref_of_backbone_complete_index(const size_t &) const;
 			geom::coord get_residue_ca_coord_of_backbone_complete_index(const size_t &) const;

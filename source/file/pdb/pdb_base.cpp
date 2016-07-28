@@ -20,7 +20,6 @@
 
 #include "pdb_base.h"
 
-
 #include "structure/geometry/coord.h"
 #include "structure/residue_name.h"
 
@@ -31,7 +30,7 @@ using namespace cath::geom;
 using namespace std;
 
 const string pdb_base::PDB_RECORD_STRING_TER ( "TER   " );
-
+constexpr size_t pdb_base::MIN_NUM_PDB_COLS;
 constexpr size_t pdb_base::MAX_NUM_PDB_COLS;
 
 /// \brief An NVI pass-through to the virtual do_rotate()
