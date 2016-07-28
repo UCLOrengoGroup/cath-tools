@@ -48,15 +48,6 @@ namespace cath {
 
 BOOST_FIXTURE_TEST_SUITE(string_parse_tool_test_suite, string_parse_tool_test_suite_fixture)
 
-BOOST_AUTO_TEST_CASE(rejects_string_if_too_short) {
-	BOOST_CHECK_THROW( parse_double_from_substring( pdb_line,  60, 60 ), invalid_argument_exception );
-	BOOST_CHECK_THROW( parse_int_from_substring   ( pdb_line,  60, 60 ), invalid_argument_exception );
-	BOOST_CHECK_THROW( parse_ulong_from_substring ( pdb_line,  60, 60 ), invalid_argument_exception );
-	BOOST_CHECK_THROW( parse_double_from_substring(  "12345",   0,  6 ), invalid_argument_exception );
-	BOOST_CHECK_THROW( parse_int_from_substring   (  "12345",   0,  6 ), invalid_argument_exception );
-	BOOST_CHECK_THROW( parse_ulong_from_substring (  "12345",   0,  6 ), invalid_argument_exception );
-}
-
 BOOST_AUTO_TEST_CASE(rejects_invalid_strings) {
 	BOOST_CHECK_THROW( parse_double_from_substring( "a12345b",  0, 6 ), invalid_argument_exception );
 	BOOST_CHECK_THROW( parse_int_from_substring   ( "a12345b",  0, 6 ), invalid_argument_exception );
