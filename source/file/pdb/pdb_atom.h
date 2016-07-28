@@ -82,11 +82,6 @@ namespace cath {
 			         const double &,
 			         const double &);
 
-			pdb_atom(const pdb_atom &) = default;
-			pdb_atom(pdb_atom &&) noexcept = default;
-			pdb_atom & operator=(const pdb_atom &) = default;
-			pdb_atom & operator=(pdb_atom &&) noexcept = default;
-
 			const pdb_record & get_record_type() const;
 			const size_t & get_atom_serial() const;
 			const std::string & get_element_type_untrimmed() const;
