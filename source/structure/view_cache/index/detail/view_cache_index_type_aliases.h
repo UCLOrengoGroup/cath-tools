@@ -24,8 +24,9 @@
 #include <boost/geometry/geometries/geometries.hpp> // ***** TEMPORARY? *****
 #include <boost/geometry/geometries/point.hpp> // ***** TEMPORARY? *****
 
-namespace cath { namespace geom { template <typename T> class quat_rot_impl; } }
 namespace cath { namespace geom { class coord; } }
+namespace cath { namespace geom { template <typename T> class angle; } }
+namespace cath { namespace geom { template <typename T> class quat_rot_impl; } }
 
 namespace cath {
 	namespace index {

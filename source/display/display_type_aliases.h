@@ -21,6 +21,7 @@
 #ifndef DISPLAY_TYPE_ALIASES_H_INCLUDED
 #define DISPLAY_TYPE_ALIASES_H_INCLUDED
 
+#include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
 #include <boost/optional/optional_fwd.hpp>
 
 #include "common/type_aliases.h"

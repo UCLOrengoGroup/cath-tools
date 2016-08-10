@@ -23,6 +23,8 @@
 
 #include <boost/range.hpp>
 
+#include "common/c++14/cbegin_cend.h"
+
 namespace cath {
 	namespace common {
 		/// \brief TODOCUMENT

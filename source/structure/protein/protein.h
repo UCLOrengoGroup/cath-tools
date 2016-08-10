@@ -21,16 +21,14 @@
 #ifndef PROTEIN_H_INCLUDED
 #define PROTEIN_H_INCLUDED
 
-//#include <boost/core/ignore_unused.hpp>
 #include <boost/lexical_cast.hpp>
-//#include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/sub_range.hpp>
 
 #include "common/temp_check_offset_1.h"
-//#include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
 #include "structure/geometry/coord.h"
 #include "structure/protein/amino_acid.h"
+#include "structure/protein/residue.h"
 #include "structure/structure_type_aliases.h"
 
 #include <iosfwd>

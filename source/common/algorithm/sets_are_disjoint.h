@@ -25,6 +25,8 @@
 
 #include "common/boost_addenda/range/range_concept_type_aliases.h"
 
+#include <vector>
+
 namespace cath {
 	namespace common {
 

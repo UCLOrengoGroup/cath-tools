@@ -21,6 +21,7 @@
 #ifndef VIEW_CACHE_H_INCLUDED
 #define VIEW_CACHE_H_INCLUDED
 
+#include "structure/geometry/coord.h"
 #include "structure/structure_type_aliases.h"
 
 namespace cath { class protein; }

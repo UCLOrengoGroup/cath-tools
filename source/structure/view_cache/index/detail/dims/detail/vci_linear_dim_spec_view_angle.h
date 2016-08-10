@@ -22,6 +22,8 @@
 #define VCI_LINEAR_DIM_SPEC_VIEW_ANGLE_H_INCLUDED
 
 #include "structure/view_cache/index/detail/dims/detail/vci_linear_dim_spec_view_angle.h"
+#include "structure/view_cache/index/detail/vcie_match_criteria.h"
+#include "structure/view_cache/index/detail/view_cache_index_type_aliases.h"
 
 namespace cath {
 	namespace index {

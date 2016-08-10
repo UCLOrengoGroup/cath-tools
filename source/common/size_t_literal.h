@@ -21,6 +21,8 @@
 #ifndef SIZE_T_LITERAL_H_INCLUDED
 #define SIZE_T_LITERAL_H_INCLUDED
 
+#include <cstddef>
+
 namespace cath {
 	namespace common {
 		inline namespace literals {

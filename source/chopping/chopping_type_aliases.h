@@ -21,6 +21,7 @@
 #ifndef CHOPPING_TYPE_ALIASES_H_INCLUDED
 #define CHOPPING_TYPE_ALIASES_H_INCLUDED
 
+#include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
 #include <boost/optional/optional_fwd.hpp>
 
 #include "chopping/residue_location/residue_locating.h"

@@ -24,6 +24,8 @@
 #include "common/algorithm/constexpr_is_uniq.h"
 #include "score/length_getter/length_getter_enum.h"
 
+#include <tuple>	
+
 namespace cath {
 	namespace score {
 

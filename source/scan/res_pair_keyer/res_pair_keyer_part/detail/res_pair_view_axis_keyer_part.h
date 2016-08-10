@@ -23,6 +23,9 @@
 
 #include <boost/range/irange.hpp>
 
+#include "common/debug_numeric_cast.h"
+#include "scan/detail/scan_type_aliases.h"
+
 namespace cath {
 	namespace scan {
 		namespace detail {

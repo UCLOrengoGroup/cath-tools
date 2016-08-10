@@ -21,6 +21,8 @@
 #ifndef LIMITED_H_INCLUDED
 #define LIMITED_H_INCLUDED
 
+#include <boost/core/ignore_unused.hpp>
+
 #include "common/boost_addenda/range/adaptor/detail/gen_forwarder.h"
 #include "common/boost_addenda/range/adaptor/detail/limited_holder.h"
 #include "common/boost_addenda/range/adaptor/range/limited_range.h"
@@ -62,6 +64,13 @@ namespace cath {
 			///        whose function operator constructs an limited_holder
 			static cath::common::detail::gen_forwarder<detail::limited_holder> limited
 				= cath::common::detail::gen_forwarder<detail::limited_holder>();
+
+
+			namespace ignore_unused_detail {
+				void ignore_unused_limited_function_b();
+				void ignore_unused_limited_function_a() { ignore_unused_limited_function_b(); boost::ignore_unused( limited ); }
+				void ignore_unused_limited_function_b() { ignore_unused_limited_function_a(); boost::ignore_unused( limited ); }
+			}
 		}
 	}
 }

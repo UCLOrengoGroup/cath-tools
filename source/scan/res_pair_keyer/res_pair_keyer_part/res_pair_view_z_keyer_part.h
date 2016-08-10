@@ -21,10 +21,10 @@
 #ifndef RES_PAIR_VIEW_Z_KEYER_PART_H_INCLUDED
 #define RES_PAIR_VIEW_Z_KEYER_PART_H_INCLUDED
 
-#include "scan/res_pair_keyer/res_pair_keyer_part/detail/res_pair_view_axis_keyer_part.h"
 #include "scan/detail/res_pair/multi_struc_res_rep_pair.h"
 #include "scan/detail/res_pair/res_pair_core.h"
 #include "scan/quad_criteria.h"
+#include "scan/res_pair_keyer/res_pair_keyer_part/detail/res_pair_view_axis_keyer_part.h"
 
 namespace cath {
 	namespace scan {

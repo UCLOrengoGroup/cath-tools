@@ -22,6 +22,7 @@
 #define SCAN_MULTI_STRUCTURE_DATA_H_INCLUDED
 
 #include "common/boost_addenda/range/front.h"
+#include "scan/detail/res_pair/multi_struc_res_rep_pair_list.h"
 #include "scan/detail/scan_structure_data.h"
 
 namespace cath {

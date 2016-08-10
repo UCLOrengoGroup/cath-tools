@@ -21,6 +21,7 @@
 #ifndef SCORE_VALUE_READER_H_INCLUDED
 #define SCORE_VALUE_READER_H_INCLUDED
 
+#include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 
 namespace cath { namespace score { class aligned_pair_score_value_list; } }

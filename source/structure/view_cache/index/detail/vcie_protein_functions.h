@@ -27,10 +27,16 @@
 #ifndef VCIE_PROTEIN_FUNCTIONS_H_INCLUDED
 #define VCIE_PROTEIN_FUNCTIONS_H_INCLUDED
 
-//#include "structure/geometry/angle.h"
+#include "ssap/context_res.h"
+#include "structure/geometry/rotation.h"
+#include "structure/protein/protein.h"
+#include "structure/protein/residue.h"
 #include "structure/view_cache/index/detail/view_cache_index_type_aliases.h"
 
 #include <utility>
+
+namespace cath { class protein; }
+namespace cath { namespace geom { class rotation; } }
 
 namespace cath {
 	namespace index {

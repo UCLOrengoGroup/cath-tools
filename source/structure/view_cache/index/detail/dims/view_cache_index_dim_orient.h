@@ -21,15 +21,27 @@
 #ifndef VIEW_CACHE_INDEX_DIM_ORIENT_H_INCLUDED
 #define VIEW_CACHE_INDEX_DIM_ORIENT_H_INCLUDED
 
+// ********************************************************
+// ********************************************************
+// ****                                                ****
+// **** !! AT PRESENT, THIS HEADER IS COMMENTED OUT !! ****
+// **** !! BECAUSE IT DOES NOT COMPILE              !! ****
+// ****                                                ****
+// ********************************************************
+// ********************************************************
+
+/*
+
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/range/begin.hpp>
 
+#include "common/algorithm/sort_uniq_copy.h"
 #include "common/debug_numeric_cast.h"
 #include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
 #include "exception/not_implemented_exception.h"
-#include "structure/view_cache/index/detail/view_cache_index_type_aliases.h"
 #include "structure/view_cache/index/detail/vcie_match_criteria.h"
+#include "structure/view_cache/index/detail/view_cache_index_type_aliases.h"
 #include "structure/view_cache/index/view_cache_index_entry.h"
 
 #include <cstddef>
@@ -46,7 +58,7 @@ namespace cath {
 			class view_cache_index_dim_orient final {
 			private:
 				/// \brief TODOCUMENT
-				geom::angle search_radius;
+				angle_type search_radius;
 
 				/// \brief TODOCUMENT
 				frame_quat_rot_vec cell_width;
@@ -55,7 +67,7 @@ namespace cath {
 				size_vec_vec neighbours;
 
 				static size_vec_vec calc_neighbours(const frame_quat_rot_vec &,
-				                                    const geom::angle &) const;
+				                                    const angle_type &);
 
 				// const value_type & get_cell_width() const;
 				// const int & get_start_offset() const;
@@ -104,8 +116,8 @@ namespace cath {
 			///       distance_1_of_angle(2.0 * arg_search_radius) at the start and then compare
 			///       the distance_1_of_quat_rot( anchor, neighbour ) to that value
 			size_vec_vec view_cache_index_dim_orient::calc_neighbours(const frame_quat_rot_vec &arg_anchor_quat_rots, ///< TODOCUMENT
-			                                                          const geom::angle        &arg_search_radius     ///< TODOCUMENT
-			                                                          ) const {
+			                                                          const angle_type         &arg_search_radius     ///< TODOCUMENT
+			                                                          ) {
 				const size_t num_anchor_quat_rots = arg_anchor_quat_rots.size();
 
 				size_vec_vec new_neighbours;
@@ -284,5 +296,6 @@ namespace cath {
 	}
 }
 
-#endif
+*/
 
+#endif

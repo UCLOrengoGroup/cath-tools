@@ -24,6 +24,8 @@
 #include <boost/range/algorithm/adjacent_find.hpp>
 #include <boost/range/concepts.hpp>
 
+#include "common/c++14/cbegin_cend.h"
+
 namespace cath {
 	namespace common {
 

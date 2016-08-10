@@ -21,6 +21,7 @@
 #ifndef CLIQUE_H_INCLUDED
 #define CLIQUE_H_INCLUDED
 
+#include <cstddef>
 #include <vector>
 
 namespace cath {

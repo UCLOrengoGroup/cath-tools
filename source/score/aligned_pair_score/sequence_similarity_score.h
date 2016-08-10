@@ -28,6 +28,7 @@
 #include "score/aligned_pair_score/substitution_matrix/substitution_matrix.h"
 #include "score/length_getter/length_getter_make_clone.h"
 #include "score/length_getter/length_of_longer_getter.h"
+#include "structure/protein/amino_acid.h"
 #include "structure/structure_type_aliases.h"
 
 #include <memory>

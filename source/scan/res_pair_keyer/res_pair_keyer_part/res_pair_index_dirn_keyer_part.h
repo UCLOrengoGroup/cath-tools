@@ -24,6 +24,10 @@
 #include <boost/core/ignore_unused.hpp>
 
 #include "exception/not_implemented_exception.h"
+#include "scan/detail/res_pair/multi_struc_res_rep_pair.h"
+#include "scan/detail/res_pair_dirn/res_pair_dirn.h"
+#include "scan/quad_criteria.h"
+#include "scan/res_pair_index_dirn_criterion.h"
 
 namespace cath {
 	namespace scan {

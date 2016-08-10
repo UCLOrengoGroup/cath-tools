@@ -56,11 +56,17 @@ namespace cath {
 	namespace geom {
 
 		/// \brief TODOCUMENT
+		using uint8_vec     = std::vector<uint8_t>;
+
+		/// \brief TODOCUMENT
+		using uint8_vec_vec = std::vector<uint8_vec>;
+
+		/// \brief TODOCUMENT
 		template <typename T>
 		class orientation_covering_with_radius final {
 		private:
 			/// \brief The covering set
-			orientation_covering the_covering;
+			orientation_covering_impl<T> the_covering;
 
 			/// \brief TODOCUMENT
 			angle<T> search_radius;

@@ -25,6 +25,8 @@
 #include <boost/mpl/find_if.hpp>
 #include <boost/type_traits/is_same.hpp>
 
+#include <type_traits>
+
 namespace cath { namespace score { class geometric_mean_length_getter; } }
 namespace cath { namespace score { class length_of_first_getter; } }
 namespace cath { namespace score { class length_of_longer_getter; } }

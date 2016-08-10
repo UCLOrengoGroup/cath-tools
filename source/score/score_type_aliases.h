@@ -21,6 +21,7 @@
 #ifndef SCORE_TYPE_ALIASES_H_INCLUDED
 #define SCORE_TYPE_ALIASES_H_INCLUDED
 
+#include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
 #include <boost/optional/optional_fwd.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 

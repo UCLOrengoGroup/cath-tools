@@ -25,6 +25,7 @@
 
 #include "score/score_type_aliases.h"
 #include "structure/structure_type_aliases.h"
+#include "structure/view_cache/filter/filter_vs_full_score.h"
 
 #include <cstddef>
 

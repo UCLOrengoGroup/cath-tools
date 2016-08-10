@@ -21,6 +21,8 @@
 #ifndef CONSTEXPR_CLAMP_H_INCLUDED
 #define CONSTEXPR_CLAMP_H_INCLUDED
 
+#include <stdexcept>
+
 namespace cath {
 	namespace common {
 

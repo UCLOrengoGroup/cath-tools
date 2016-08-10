@@ -22,6 +22,7 @@
 #define CHOPPING_H_INCLUDED
 
 #include "chopping/chopping_type_aliases.h"
+#include "chopping/region/region.h"
 
 #include <cstddef>
 #include <vector>

@@ -21,6 +21,7 @@
 #ifndef VCI_LINEAR_DIM_SPEC_VIEW_AXIS_H_INCLUDED
 #define VCI_LINEAR_DIM_SPEC_VIEW_AXIS_H_INCLUDED
 
+#include "structure/view_cache/index/detail/dims/detail/view_cache_index_dim_linear.h"
 #include "structure/view_cache/index/detail/view_cache_index_type_aliases.h"
 
 namespace cath {
