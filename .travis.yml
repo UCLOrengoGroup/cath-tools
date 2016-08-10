@@ -48,6 +48,10 @@ matrix:
 ##    - compiler: gcc
 ##      env: TOOLS="ANALYZE"
 
+before_install:
+ - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CXX" == "clang++" ]; then sudo apt-get update  -qq            ; fi
+ - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CXX" == "clang++" ]; then sudo apt-get install -qq libc++-dev ; fi
+
 install:
   - if [ "$CXX"   == "clang++" ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -stdlib=libc++ "                            ; fi
   - if [ "$CXX"   == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9"                                                  ; fi
