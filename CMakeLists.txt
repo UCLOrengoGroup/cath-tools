@@ -24,6 +24,8 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
 	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-local-typedef")
 endif()
 
+# Note: to use libc++, pass -DCMAKE_CXX_FLAGS="-stdlib=libc++" to cmake
+
 if ( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_GENERATOR STREQUAL "Ninja" )
 	set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -fcolor-diagnostics" )
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics" )
