@@ -25,32 +25,16 @@
 #include "resolve_hits/hit_resolver.h"
 #include "resolve_hits/read_and_resolve_mgr.h"
 
-#include <iostream> // ***** TEMPORARY *****
-
-namespace cath { namespace test { } }
-
 using namespace cath;
 using namespace cath::rslv;
-using namespace cath::test;
 
 using std::istringstream;
 using std::ostringstream;
 using std::string;
 using std::stringstream;
 
-namespace cath {
-	namespace test {
 
-		/// \brief The hit_resolver_test_suite_fixture to assist in testing hit_resolver
-		struct hit_resolver_test_suite_fixture {
-		protected:
-			~hit_resolver_test_suite_fixture() noexcept = default;
-		};
-
-	}
-}
-
-BOOST_FIXTURE_TEST_SUITE(hit_resolver_test_suite, hit_resolver_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(hit_resolver_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	const string input_data = R"(qyikaz cath|current|2i24N00/2-114-i5_1,6.7e-18 2744.56644492722 8-108
