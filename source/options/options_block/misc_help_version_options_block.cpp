@@ -25,6 +25,7 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/optional.hpp>
 
+#include "cath_tools_git_version.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/clone/make_uptr_clone.h"
 #include "exception/invalid_argument_exception.h"
@@ -41,10 +42,10 @@ using boost::algorithm::join;
 using boost::none;
 
 /// The program's current version
-const string misc_help_version_options_block::CATH_TOOLS_VERSION      ( "v0.12.4"            );
+const string misc_help_version_options_block::CATH_TOOLS_VERSION      ( CATH_TOOLS_GIT_VERSION );
 
 /// The program's most recent update date
-const string misc_help_version_options_block::CATH_TOOLS_VERSION_DATE ( "19th January 2015"    );
+const string misc_help_version_options_block::CATH_TOOLS_VERSION_DATE ( CATH_TOOLS_GIT_DATE    );
 
 /// \brief The option name for the help option
 const string misc_help_version_options_block::PO_HELP   ( "help"    );
@@ -111,35 +112,17 @@ string misc_help_version_options_block::get_help_string(const options_descriptio
 string misc_help_version_options_block::get_version_string(const string &arg_program_name,       ///< The name of the program
                                                            const string &arg_program_description ///< A description of the program
                                                            ) const {
-	// Construct a copy of the string that indents all of the lines
-	const string  indent_string("   ");
-	const str_vec desc_lines = split_build<str_vec>( arg_program_description, is_any_of( "\n" ) );
-	const string  indented_description = indent_string + join( desc_lines, "\n" + indent_string );
-
 	ostringstream version_ss;
-	version_ss << "Overview"                                                                                 << endl;
-	version_ss << "--------"                                                                                 << endl;
-	version_ss << "   Name                  : " << arg_program_name                                          << endl;
-	version_ss << "   Version               : " << CATH_TOOLS_VERSION                                     << endl;
-	version_ss << "   Version date          : " << CATH_TOOLS_VERSION_DATE                                << endl;
-	version_ss << endl;
-	version_ss << "Build details"                                                                            << endl;
-	version_ss << "-------------"                                                                            << endl;
-	version_ss << "   Platform              : " << BOOST_PLATFORM                                            << endl;
-	version_ss << "   Compiler              : " << BOOST_COMPILER                                            << endl;
-	version_ss << "   Library               : " << BOOST_STDLIB                                              << endl;
-	version_ss << "   Boost version         : " << BOOST_LIB_VERSION                                         << endl;
-//	version_ss << "   Boost Program Options : " << BOOST_PROGRAM_OPTIONS_VERSION                             << endl;
-#ifdef BUILD_BRANCH_NAME
-	version_ss << "   Build branch          : " << BUILD_BRANCH_NAME                                         << endl;
-#endif
-#ifdef BUILD_REVISION_NUMBER
-	version_ss << "   Build revision number : " << BUILD_REVISION_NUMBER                                     << endl;
-#endif
-	version_ss << "   Compile time          : " << __DATE__ << " " << __TIME__ << " (of " << __FILE__ << ")" << endl;
-	version_ss << endl;
-	version_ss << "Description"                                                                              << endl;
-	version_ss << "-----------"                                                                              << endl;
-	version_ss << indented_description                                                                       << endl;
+	version_ss << "============\n";
+	version_ss << arg_program_name << " " << CATH_TOOLS_VERSION << " [" << CATH_TOOLS_VERSION_DATE << "]\n";
+	version_ss << "============\n\n";
+	version_ss << arg_program_description << "\n\n\n";
+	version_ss << "Build\n";
+	version_ss << "-----\n";
+	// version_ss << "   " << BOOST_PLATFORM              << "\n";
+	version_ss << "   " << __DATE__ << " " << __TIME__ << "\n";
+	version_ss << "   " << BOOST_COMPILER              << "\n";
+	version_ss << "   " << BOOST_STDLIB                << "\n";
+	version_ss << "   Boost " << BOOST_LIB_VERSION           << "\n";
 	return version_ss.str();
 }

@@ -1,5 +1,23 @@
 cmake_minimum_required (VERSION 2.8.8)
 
+execute_process(
+	COMMAND git describe --tags --long
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	OUTPUT_VARIABLE CATH_TOOLS_GIT_VERSION
+	OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+execute_process(
+	COMMAND git log -1 --date=short --pretty=format:%cd
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	OUTPUT_VARIABLE CATH_TOOLS_GIT_DATE
+	OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+configure_file( "source/cath_tools_git_version.h.in"
+                "source/cath_tools_git_version.h"
+                )
+
 # For useful information on getting CMake to work with Boost, type the following command: cmake --help-module FindBoost
 
 if( BUILD_SHARED_LIBS )
