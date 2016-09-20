@@ -62,6 +62,7 @@ using boost::spirit::qi::double_;
 using boost::spirit::qi::omit;
 using boost::spirit::qi::parse;
 using boost::spirit::uint_;
+using boost::string_ref;
 using boost::sub_range;
 using boost::token_compress_on;
 using std::distance;
@@ -72,7 +73,6 @@ using std::make_pair;
 using std::ostream;
 using std::string;
 using std::vector;
-
 
 /// \brief Read a hit_list from the specified file
 ///
@@ -95,9 +95,7 @@ void cath::rslv::read_hit_list_from_file(read_and_resolve_mgr &arg_read_and_reso
 void cath::rslv::read_hit_list_from_istream(read_and_resolve_mgr &arg_read_and_resolve_mgr, ///< The read_and_resolve_mgr to which each hit should be sent when it's read
                                             istream              &arg_istream               ///< The istream from which to read the hits data
                                             ) {
-	if ( arg_read_and_resolve_mgr.is_active() ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot read_hit_list_from_file() with a read_and_resolve_mgr that's already active"));
-	}
+	arg_read_and_resolve_mgr.process_all_outstanding();
 
 	const auto is_space_char     = [ ] (const auto &x) { return ( ( x == ' ' ) || ( x == '\t' ) ); };
 	const auto is_non_space_char = [ ] (const auto &x) { return ( ( x != ' ' ) && ( x != '\t' ) ); };
@@ -125,10 +123,10 @@ void cath::rslv::read_hit_list_from_istream(read_and_resolve_mgr &arg_read_and_r
 		const auto end_of_match_id_itr   = find_space    ( begin_of_match_id_itr, line_end_itr );
 		const auto begin_of_score_itr    = find_non_space( end_of_match_id_itr,   line_end_itr );
 
-		if ( ! arg_read_and_resolve_mgr.is_active() || ! boost::range::equal( arg_read_and_resolve_mgr.get_query_id(), sub_range<const string>{ line_begin_itr, end_of_query_id_itr } ) ) {
-			complete_if_active( arg_read_and_resolve_mgr );
-			arg_read_and_resolve_mgr.set_query_id( string{ line_begin_itr, end_of_query_id_itr } );
-		}
+		const auto query_id_str_ref      = string_ref{
+			&*line_begin_itr,
+			numeric_cast<size_t>( distance( line_begin_itr, end_of_query_id_itr ) )
+		};
 
 		bounds.clear();
 		auto parse_itr = begin_of_score_itr;
@@ -170,6 +168,7 @@ void cath::rslv::read_hit_list_from_istream(read_and_resolve_mgr &arg_read_and_r
 		}
 
 		arg_read_and_resolve_mgr.add_hit(
+			query_id_str_ref,
 			arrow_before_res( bounds.front() ),
 			arrow_after_res ( bounds.back () ),
 			fragments,
@@ -178,8 +177,7 @@ void cath::rslv::read_hit_list_from_istream(read_and_resolve_mgr &arg_read_and_r
 		);
 	}
 
-	complete_if_active( arg_read_and_resolve_mgr );
-	arg_read_and_resolve_mgr.final_wait();
+	arg_read_and_resolve_mgr.process_all_outstanding();
 }
 
 /// \brief Generate a string describing the specified hit_list

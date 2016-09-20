@@ -103,17 +103,17 @@ iexvva cath|current|1p53A03/368-450-i5_11,0.00016 1103.67040138753 2084-2124,221
 	stringstream test_oss;
 	read_and_resolve_mgr the_read_and_resolve_mgr{ test_oss };
 	read_hit_list_from_istream( the_read_and_resolve_mgr, test_iss );
-	const string expected_output = R"(qyikaz cath|current|2i24N00/2-114-i5_1,6.7e-18 2744.566406 8-108
+	const string expected_output = R"(iexvva cath|current|3k3qA00/4-140-i5_1,1.5e-15 2507.214844 8-108
+iexvva cath|current|1gxeA00/1-130-i5_3,2.2e-26 3957.990967 852-962
+iexvva cath|current|1xiwB00/1-74-i5_8,2.3e-07 1397.614868 1630-1713
+iexvva cath|current|1xedC00/3-112-i5_9,2.9e-10 1738.846558 1756-1844
+iexvva cath|current|1nctA00/-6-91-i5_11,4e-07 1492.212524 2083-2173
+qyikaz cath|current|2i24N00/2-114-i5_1,6.7e-18 2744.566406 8-108
 qyikaz cath|current|3gbnL02/124-195-i5_3,1.1e-12 1559.061157 839-909
 qyikaz cath|current|1gxeA00/1-130-i5_4,2.7e-18 3418.510986 930-1053
 qyikaz cath|current|2y23A02/1245-1358-i5_7,1.4e-13 2239.679443 1424-1521
 qyikaz cath|current|2eo1A00/1-102-i5_9,4e-14 2292.998047 1697-1794
 qyikaz cath|current|1nctA00/-6-91-i5_11,4e-07 1492.212524 2037-2127
-iexvva cath|current|3k3qA00/4-140-i5_1,1.5e-15 2507.214844 8-108
-iexvva cath|current|1gxeA00/1-130-i5_3,2.2e-26 3957.990967 852-962
-iexvva cath|current|1xiwB00/1-74-i5_8,2.3e-07 1397.614868 1630-1713
-iexvva cath|current|1xedC00/3-112-i5_9,2.9e-10 1738.846558 1756-1844
-iexvva cath|current|1nctA00/-6-91-i5_11,4e-07 1492.212524 2083-2173
 )";
 	istringstream expected_iss{ expected_output };
 
