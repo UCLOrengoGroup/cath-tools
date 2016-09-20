@@ -67,7 +67,7 @@ namespace cath {
 		template <typename Container, typename R>
 		Container sort_build(R arg_range ///< The range on which the sorted copy should be based
 		                     ) {
-			return sort_build(
+			return sort_build<Container>(
 				common::cbegin( arg_range ),
 				common::cend  ( arg_range )
 			);
@@ -78,7 +78,7 @@ namespace cath {
 		Container sort_build(R arg_range,   ///< The range on which the sorted copy should be based
 		                     P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
 					         ) {
-			return sort_build(
+			return sort_build<Container>(
 				common::cbegin( arg_range ),
 				common::cend  ( arg_range ),
 				arg_bin_pred
