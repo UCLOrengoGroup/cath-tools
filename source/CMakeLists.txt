@@ -586,8 +586,15 @@ set(
 )
 
 set(
+	NORMSOURCES_RESOLVE_HITS_FILE
+		resolve_hits/file/cath_id_score_category.cpp
+		resolve_hits/file/hmmer_hmmsearch_domtblout.cpp
+)
+
+set(
 	NORMSOURCES_RESOLVE_HITS
 		resolve_hits/discont_hits_index_by_start.cpp
+		${NORMSOURCES_RESOLVE_HITS_FILE}
 		resolve_hits/hit.cpp
 		resolve_hits/hit_arch.cpp
 		resolve_hits/hit_list.cpp
@@ -1423,7 +1430,13 @@ set(
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS_FILE
+		resolve_hits/file/cath_id_score_category_test.cpp
+)
+
+set(
 	TESTSOURCES_RESOLVE_HITS
+		${TESTSOURCES_RESOLVE_HITS_FILE}
 		resolve_hits/hit_list_test.cpp
 		resolve_hits/hit_resolver_test.cpp
 		resolve_hits/hit_seg_test.cpp

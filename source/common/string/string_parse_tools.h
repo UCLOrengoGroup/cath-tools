@@ -21,8 +21,10 @@
 #ifndef STRING_PARSE_TOOLS_H_INCLUDED
 #define STRING_PARSE_TOOLS_H_INCLUDED
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/find_if.hpp>
+#include <boost/range/irange.hpp>
 #include <boost/range/sub_range.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/utility/string_ref.hpp>
@@ -32,14 +34,21 @@
 #include "common/debug_numeric_cast.h"
 #include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
+#include "exception/runtime_error_exception.h"
 
 #include <string>
 
 using namespace std::literals::string_literals;
 
 namespace cath {
+
 	/// \brief Type alias for boost::string_ref's const_iterator
 	using str_ref_citr = boost::string_ref::const_iterator;
+
+	/// \brief A type alias for a pair of str_ctirs
+	///
+	/// \todo Should this be moved into common/type_aliases.h?
+	using str_citr_str_citr_pair = std::pair<str_citr, str_citr>;
 
 	namespace common {
 		namespace detail {
@@ -72,6 +81,35 @@ namespace cath {
 			}
 
 		}
+
+		/// \brief Return an iterator pointing to the first point before a non-space character in the region between the specified
+		///        iterators (or arg_end if none is found)
+		///
+		/// This is dumb about whitespace (explicitly compares to ' ' and '\t'; ignores locale) for the sake of speed
+		inline str_citr find_itr_before_first_non_space(const str_citr &arg_begin, ///< A  begin              iterator of the region of string to search
+		                                                const str_citr &arg_end    ///< An end (one-past-end) iterator of the region of string to search
+		                                                ) {
+			return std::find_if(
+				arg_begin,
+				arg_end,
+				[] (const auto &x) { return ( ( x != ' ' ) && ( x != '\t' ) ); }
+			);
+		}
+
+		/// \brief Return an iterator pointing to the first point before a space character in the region between the specified
+		///        iterators (or arg_end if none is found)
+		///
+		/// This is dumb about whitespace (explicitly compares to ' ' and '\t'; ignores locale) for the sake of speed
+		inline str_citr find_itr_before_first_space(const str_citr &arg_begin, ///< A  begin              iterator of the region of string to search
+		                                            const str_citr &arg_end    ///< An end (one-past-end) iterator of the region of string to search
+		                                            ) {
+			return std::find_if(
+				arg_begin,
+				arg_end,
+				[] (const auto &x) { return ( ( x == ' ' ) || ( x == '\t' ) ); }
+			);
+		}
+
 
 		/// \brief Find the iterator that points to (just before) the first non-whitespace character
 		///        in the specified string_ref
@@ -119,6 +157,28 @@ namespace cath {
 			return make_string_ref(
 				find_itr_before_first_non_space( arg_substring ),
 				find_itr_after_last_non_space  ( arg_substring )
+			);
+		}
+
+		/// \brief Parse a float from the field between the two specified string iterators
+		inline float parse_float_from_field(const str_citr &arg_begin_itr, ///< A const_iterator pointing to the begin              of the field to be parsed
+		                                    const str_citr &arg_end_itr    ///< A const_iterator pointing to the end (one-past-end) of the field to be parsed
+		                                    ) {
+			return detail::do_spirit_parse<float>(
+				arg_begin_itr,
+				arg_end_itr,
+				boost::spirit::float_
+			);
+		}
+
+		/// \brief Parse an unsigned int from the field between the two specified string iterators
+		inline unsigned int parse_uint_from_field(const str_citr &arg_begin_itr, ///< A const_iterator pointing to the begin              of the field to be parsed
+		                                          const str_citr &arg_end_itr    ///< A const_iterator pointing to the end (one-past-end) of the field to be parsed
+		                                          ) {
+			return detail::do_spirit_parse<unsigned int>(
+				arg_begin_itr,
+				arg_end_itr,
+				boost::spirit::uint_
 			);
 		}
 
@@ -173,6 +233,47 @@ namespace cath {
 				   boost::spirit::omit[ *boost::spirit::qi::space ]
 				>> boost::spirit::ulong_
 				>> boost::spirit::omit[ *boost::spirit::qi::space ]
+			);
+		}
+
+		/// \brief Find the iterators wrapping the specified field in the specified in the specified string
+		///        starting from the specified initial iterator at the specified index
+		inline str_citr_str_citr_pair find_field_itrs(const std::string &arg_string,      ///< The string to search
+		                                              const size_t      &arg_field_index, ///< The index of the field to find
+		                                              const size_t      &arg_init_index,  ///< The index of the field from which the search should start
+		                                              const str_citr    &arg_init_itr     ///< The iterator from which the search should start
+		                                              ) {
+			const auto end_itr = common::cend( arg_string );
+			auto field_itr = find_itr_before_first_non_space( arg_init_itr, end_itr );
+			for (const size_t field_ctr : boost::irange( arg_init_index, arg_field_index ) ) {
+				boost::ignore_unused( field_ctr );
+				field_itr = find_itr_before_first_space    ( field_itr, end_itr );
+				field_itr = find_itr_before_first_non_space( field_itr, end_itr );
+				if ( field_itr == end_itr ) {
+					BOOST_THROW_EXCEPTION(runtime_error_exception(
+						"Unable to find field "
+						+ std::to_string( arg_field_index )
+						+ " in line \""
+						+ ( arg_string.size() > 103 ? ( arg_string.substr( 0, 100 ) + "[...]" ) : arg_string )
+						+ "\""
+					));
+				}
+			}
+			return {
+				field_itr,
+				find_itr_before_first_space( field_itr, end_itr )
+			};
+		}
+
+		/// \brief Find the iterators wrapping the specified field in the specified string
+		inline str_citr_str_citr_pair find_field_itrs(const std::string &arg_string,      ///< The string to search
+		                                              const size_t      &arg_field_index  ///< The index of the field to find
+		                                              ) {
+			return find_field_itrs(
+				arg_string,
+				arg_field_index,
+				0,
+				common::cbegin( arg_string )
 			);
 		}
 
