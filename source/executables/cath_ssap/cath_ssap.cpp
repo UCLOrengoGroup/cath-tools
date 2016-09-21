@@ -42,8 +42,7 @@ namespace cath {
 
 		/// \brief Parse the options and then pass them to run_ssap()
 		virtual void do_run_program(int argc, char * argv[]) override final {
-			cath_ssap_options the_cath_ssap_options;
-			the_cath_ssap_options.parse_options( argc, argv );
+			const auto the_cath_ssap_options = make_and_parse_options<cath_ssap_options>( argc, argv );
 
 			// If using Boost Log, and if debug requested, set the default filter to : permit all messages of severity info or more
 			if ( the_cath_ssap_options.get_old_ssap_options().get_debug() ) {

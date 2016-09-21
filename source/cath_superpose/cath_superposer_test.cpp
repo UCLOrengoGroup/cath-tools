@@ -77,8 +77,8 @@ void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_use_c
                                                                                     const bool    &arg_outputs_to_temp_file  ///< TODOCUMENT
                                                                                     ) {
 	argc_argv_faker faked_argc_and_argv(arg_command_line_args);
-	cath_superpose_options my_cath_superpose_options;
-	my_cath_superpose_options.parse_options(
+
+	const auto my_cath_superpose_options = make_and_parse_options<cath_superpose_options>(
 		faked_argc_and_argv.get_argc(),
 		faked_argc_and_argv.get_argv()
 	);

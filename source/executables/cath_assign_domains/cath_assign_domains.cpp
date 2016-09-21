@@ -237,8 +237,7 @@ namespace cath {
 				severity >= info
 			);
 
-			cath_assign_domains_options the_cath_assign_domains_options;
-			the_cath_assign_domains_options.parse_options( argc, argv );
+			const auto the_cath_assign_domains_options = make_and_parse_options<cath_assign_domains_options>( argc, argv );
 
 			// If the options are invalid or specify to do_nothing, then just return
 			const string error_or_help_string = the_cath_assign_domains_options.get_error_or_help_string();

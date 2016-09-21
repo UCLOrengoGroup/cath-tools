@@ -115,6 +115,19 @@ namespace cath {
 			std::string get_error_or_help_string() const;
 		};
 
+		/// \brief Return a new instance of the specified type of executable_options with the specified options parsed into it
+		template <typename T>
+		T make_and_parse_options(const int          &argc,  ///< The main()-style argc parameter
+		                         const char * const  argv[] ///< The main()-style argv parameter
+		                         ) {
+			static_assert(
+				std::is_base_of<executable_options, T>::value,
+				"make_and_parse_options() can only be used to make types that inherit from executable_options."
+			);
+			T new_options;
+			new_options.parse_options( argc, argv );
+			return new_options;
+		}
 	}
 }
 

@@ -38,8 +38,7 @@ namespace cath {
 
 		/// \brief Parse the options and then pass them to cath_superposer::superpose()
 		virtual void do_run_program(int argc, char * argv[]) override final {
-			cath_superpose_options the_cath_superpose_options;
-			the_cath_superpose_options.parse_options(argc, argv);
+			const auto the_cath_superpose_options = make_and_parse_options<cath_superpose_options>( argc, argv );
 			cath_superposer::superpose(the_cath_superpose_options);
 		}
 	};

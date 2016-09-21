@@ -42,8 +42,7 @@ namespace cath {
 
 		/// \brief Parse the options and then pass them to cath_superposer::superpose()
 		virtual void do_run_program(int argc, char * argv[]) override final {
-			cath_check_pdb_options the_cath_check_pdb_options;
-			the_cath_check_pdb_options.parse_options(argc, argv);
+			const auto the_cath_check_pdb_options = make_and_parse_options<cath_check_pdb_options>( argc, argv );
 
 			// If the options are invalid or specify to do_nothing, then just output string return
 			const string error_or_help_string = the_cath_check_pdb_options.get_error_or_help_string();

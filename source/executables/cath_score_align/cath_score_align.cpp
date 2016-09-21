@@ -38,8 +38,7 @@ namespace cath {
 
 		/// \brief Parse the options and then pass them to cath_score_alignr::superpose()
 		virtual void do_run_program(int argc, char * argv[]) override final {
-			cath_score_align_options the_cath_score_align_options;
-			the_cath_score_align_options.parse_options(argc, argv);
+			const auto the_cath_score_align_options = make_and_parse_options<cath_score_align_options>( argc, argv );
 			cath_align_scorer::score(the_cath_score_align_options);
 		}
 	};

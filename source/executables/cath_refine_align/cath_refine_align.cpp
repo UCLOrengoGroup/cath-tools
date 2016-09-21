@@ -38,8 +38,7 @@ namespace cath {
 
 		/// \brief Parse the options and then pass them to cath_refine_alignr::superpose()
 		virtual void do_run_program(int argc, char * argv[]) override final {
-			cath_refine_align_options the_cath_refine_align_options;
-			the_cath_refine_align_options.parse_options(argc, argv);
+			const auto the_cath_refine_align_options = make_and_parse_options<cath_refine_align_options>( argc, argv );
 			cath_align_refiner::refine(the_cath_refine_align_options);
 		}
 	};
