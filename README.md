@@ -1,6 +1,6 @@
 # CATH Tools [![Build Status](https://travis-ci.org/UCLOrengoGroup/cath-tools.svg?branch=master)](https://travis-ci.org/UCLOrengoGroup/cath-tools) [![Documentation Status](https://readthedocs.org/projects/cath-tools/badge/?version=latest)](https://readthedocs.org/projects/cath-tools/?badge=latest)
 
-**64-bit Linux Binaries**: [cath-resolve-hits](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "A Linux cath-resolve-hits binary from a recent commit") (chmod these to be executable)
+**Latest Release**: [**DOWNLOADS**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "The latest CATH Tools release") (including 64-bit Linux executables, chmod them to be executable)
 
 **Related Software**:
 [UCLOrengoGroup/secmake](http://github.com/UCLOrengoGroup/secmake) (makes sec files, which are required by cath-ssap)
