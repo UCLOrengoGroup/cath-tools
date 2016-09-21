@@ -1,13 +1,9 @@
 # CATH Tools [![Build Status](https://travis-ci.org/UCLOrengoGroup/cath-tools.svg?branch=master)](https://travis-ci.org/UCLOrengoGroup/cath-tools) [![Documentation Status](https://readthedocs.org/projects/cath-tools/badge/?version=latest)](https://readthedocs.org/projects/cath-tools/?badge=latest)
 
-**Recent 64-bit Linux Binaries**: [cath-ssap](https://cath-tools.s3.amazonaws.com/UCLOrengoGroup/cath-tools/175/175.1/release_build/cath-ssap "A Linux cath-ssap binary from a recent commit"),
-[cath-superpose](https://cath-tools.s3.amazonaws.com/UCLOrengoGroup/cath-tools/175/175.1/release_build/cath-superpose "A Linux cath-superpose binary from a recent commit"),
-[cath-refine-align](https://cath-tools.s3.amazonaws.com/UCLOrengoGroup/cath-tools/175/175.1/release_build/cath-refine-align "A Linux cath-refine-align binary from a recent commit"),
-[cath-resolve-hits](https://cath-tools.s3.amazonaws.com/UCLOrengoGroup/cath-tools/175/175.1/release_build/cath-resolve-hits "A Linux cath-resolve-hits binary from a recent commit")
-(chmod these to be executable)
+**64-bit Linux Binaries**: [cath-resolve-hits](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "A Linux cath-resolve-hits binary from a recent commit") (chmod these to be executable)
 
-**Additional Binaries**:
-[secmake](http://github.com/UCLOrengoGroup/secmake) (makes the sec files that cath-ssap uses)
+**Related Software**:
+[UCLOrengoGroup/secmake](http://github.com/UCLOrengoGroup/secmake) (makes sec files, which are required by cath-ssap)
 
 **User documentation**: at [Read the Docs](http://cath-tools.readthedocs.io/en/latest/ "The CATH Tools user documentation at Read the Docs")
 
