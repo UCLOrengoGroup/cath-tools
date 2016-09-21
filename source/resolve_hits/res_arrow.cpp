@@ -41,7 +41,7 @@ static_assert( start_arrow().res_after() == 0, "" );
 /// \brief Generate a string describing the specified res_arrow
 ///
 /// \relates res_arrow
-string cath::rslv::to_string(const res_arrow &arg_res_arrow ///< THe res_arrow to describe
+string cath::rslv::to_string(const res_arrow &arg_res_arrow ///< The res_arrow to describe
                              ) {
 	return "res_arrow[before residue " + std::to_string( arg_res_arrow.res_after() ) + "]";
 }

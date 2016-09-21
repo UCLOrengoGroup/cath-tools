@@ -68,7 +68,7 @@ void read_and_resolve_mgr::process_query_id(const string &arg_query_id, ///< The
 }
 
 /// \brief Trigger asynchronous processing of the data corresponding to the specified protein_query_id
-void read_and_resolve_mgr::trigger_async_process_query_id(const string &arg_query_id ///< THe protein_query_id
+void read_and_resolve_mgr::trigger_async_process_query_id(const string &arg_query_id ///< The protein_query_id
                                                           ) {
 	// Wait until any previously triggered asynchronous processing is complete
 	wait_for_any_active_work();
