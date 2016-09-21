@@ -64,7 +64,7 @@ true_false_pos_neg_list::const_iterator true_false_pos_neg_list::begin() const {
 	return tfpns.begin();
 }
 
-/// \brief Return a end() const_iterator
+/// \brief Return an end() const_iterator
 ///
 /// This is part of making the class into a (readonly) range
 true_false_pos_neg_list::const_iterator true_false_pos_neg_list::end() const {
