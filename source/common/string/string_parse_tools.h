@@ -27,6 +27,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <boost/utility/string_ref.hpp>
 
+#include "common/boost_addenda/make_string_ref.h"
 #include "common/c++14/cbegin_cend.h"
 #include "common/debug_numeric_cast.h"
 #include "common/type_aliases.h"
@@ -115,12 +116,10 @@ namespace cath {
 		/// This is dumb about whitespace (explicitly compares to ' ' and '\t'; ignores locale) for the sake of speed
 		inline boost::string_ref dumb_trim_string_ref(const boost::string_ref &arg_substring ///< The string_ref to trim
 		                                              ) {
-			const auto before_first_non_space_itr = find_itr_before_first_non_space( arg_substring );
-			const auto after_last_non_space_itr   = find_itr_after_last_non_space  ( arg_substring );
-			return {
-				&*before_first_non_space_itr,
-				static_cast<size_t>( std::distance( before_first_non_space_itr, after_last_non_space_itr ) )
-			};
+			return make_string_ref(
+				find_itr_before_first_non_space( arg_substring ),
+				find_itr_after_last_non_space  ( arg_substring )
+			);
 		}
 
 		/// \brief Parse a (possibly space-padded) double from the specified region of string

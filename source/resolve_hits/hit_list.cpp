@@ -34,6 +34,7 @@
 #include <boost/spirit/include/qi.hpp>
 
 #include "common/algorithm/transform_build.h"
+#include "common/boost_addenda/make_string_ref.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/file/open_fstream.h"
 #include "common/type_aliases.h"
@@ -115,18 +116,14 @@ void cath::rslv::read_hit_list_from_istream(read_and_resolve_mgr &arg_read_and_r
 	const auto bounds_pusher = [&] (const residx_t &x) { bounds.push_back( x ); };
 
 	while ( getline( arg_istream, line ) ) {
-		const auto line_begin_itr        = common::cbegin( line );
-		const auto line_end_itr          = common::cend  ( line );
+		const auto line_begin_itr        = common::cbegin ( line );
+		const auto line_end_itr          = common::cend   ( line );
 
-		const auto end_of_query_id_itr   = find_space    ( line_begin_itr,        line_end_itr );
-		const auto begin_of_match_id_itr = find_non_space( end_of_query_id_itr,   line_end_itr );
-		const auto end_of_match_id_itr   = find_space    ( begin_of_match_id_itr, line_end_itr );
-		const auto begin_of_score_itr    = find_non_space( end_of_match_id_itr,   line_end_itr );
-
-		const auto query_id_str_ref      = string_ref{
-			&*line_begin_itr,
-			numeric_cast<size_t>( distance( line_begin_itr, end_of_query_id_itr ) )
-		};
+		const auto end_of_query_id_itr   = find_space     ( line_begin_itr,        line_end_itr        );
+		const auto begin_of_match_id_itr = find_non_space ( end_of_query_id_itr,   line_end_itr        );
+		const auto end_of_match_id_itr   = find_space     ( begin_of_match_id_itr, line_end_itr        );
+		const auto begin_of_score_itr    = find_non_space ( end_of_match_id_itr,   line_end_itr        );
+		const auto query_id_str_ref      = make_string_ref( line_begin_itr,        end_of_query_id_itr );
 
 		bounds.clear();
 		auto parse_itr = begin_of_score_itr;
