@@ -11,9 +11,9 @@
 
 **User documentation**: at [Read the Docs](http://cath-tools.readthedocs.io/en/latest/ "The CATH Tools user documentation at Read the Docs")
 
-**Code**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools "The CATH Tools GitHub respository")
+**Code**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools "The CATH Tools GitHub repository")
 
-**Supplementary Materials**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools-supplementary "The CATH Tools Supplementary GitHub respository")
+**Supplementary Materials**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools-supplementary "The CATH Tools Supplementary GitHub repository")
 
 **Builds**: at [Travis-CI](https://travis-ci.org/UCLOrengoGroup/cath-tools "The CATH Tools Travis-CI builds")
 
