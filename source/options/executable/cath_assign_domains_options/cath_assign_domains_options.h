@@ -63,6 +63,8 @@ namespace cath {
 			const boost::filesystem::path & get_sf_of_dom_file() const;
 			const str_vec & get_forbidden_nodes() const;
 
+			static std::string get_overview_string();
+
 			static const std::string PROGRAM_NAME;
 		};
 

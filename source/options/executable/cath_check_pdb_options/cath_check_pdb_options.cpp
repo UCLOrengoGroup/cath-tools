@@ -31,7 +31,6 @@
 #include "file/pdb/pdb_residue.h"
 
 #include <fstream>
-#include <iostream>
 
 using namespace boost::filesystem;
 using namespace boost::program_options;
@@ -75,7 +74,7 @@ string cath_check_pdb_options::do_update_error_or_help_string(const options_desc
 
 	// If version information was requested, then provide it
 	if (the_misc_options_block.get_version()) {
-		return the_misc_options_block.get_version_string(get_program_name(), "This checks PDB files.");
+		return the_misc_options_block.get_version_string( get_program_name(), get_overview_string() );
 	}
 
 	// If there is no PDB file to check then grumble
@@ -94,10 +93,8 @@ string cath_check_pdb_options::do_update_error_or_help_string(const options_desc
 }
 
 string cath_check_pdb_options::get_help_prefix_string() {
-	ostringstream help_ss;
-	help_ss << "Usage: " << PROGRAM_NAME << " pdb_file\n";
-	help_ss << "Check for some potential problems in a PDB file";
-	return help_ss.str();
+	return "Usage: " + PROGRAM_NAME + " pdb_file\n\n"
+		+ get_overview_string();
 }
 
 /// \brief Ctor for cath_check_pdb_options
@@ -114,6 +111,13 @@ path cath_check_pdb_options::get_pdb_file() const {
 /// \brief Getter for whether to permit no ATOMs
 bool cath_check_pdb_options::get_permit_no_atoms() const {
 	return the_check_pdb_options_block.get_permit_no_atoms();
+}
+
+/// \brief Get an overview of the job that these options are for
+///
+/// This can be used in the --help and --version outputs
+string cath_check_pdb_options::get_overview_string() {
+	return "Check a PDB file for some potential problems";
 }
 
 /// \brief Check that the PDB file is OK and throw an invalid_argument_exception if not

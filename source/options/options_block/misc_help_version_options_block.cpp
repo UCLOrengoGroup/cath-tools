@@ -116,7 +116,7 @@ string misc_help_version_options_block::get_version_string(const string &arg_pro
 	version_ss << "============\n";
 	version_ss << arg_program_name << " " << CATH_TOOLS_VERSION << " [" << CATH_TOOLS_VERSION_DATE << "]\n";
 	version_ss << "============\n\n";
-	version_ss << arg_program_description << "\n\n\n";
+	version_ss << arg_program_description << "\n\n";
 	version_ss << "Build\n";
 	version_ss << "-----\n";
 	// version_ss << "   " << BOOST_PLATFORM              << "\n";

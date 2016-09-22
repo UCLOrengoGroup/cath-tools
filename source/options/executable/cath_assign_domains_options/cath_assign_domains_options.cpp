@@ -43,8 +43,6 @@
 #include "options/outputter/superposition_outputter/superposition_outputter_list.h"
 #include "superposition/superposition_context.h"
 
-#include <iostream>
-
 namespace boost { namespace program_options { class variables_map; } }
 
 using namespace boost::filesystem;
@@ -89,7 +87,7 @@ string cath_assign_domains_options::do_update_error_or_help_string(const options
 
 	// If version information was requested, then provide it
 	if (the_misc_options_block.get_version()) {
-		return the_misc_options_block.get_version_string(get_program_name(), "This superposes protein structures.");
+		return the_misc_options_block.get_version_string(get_program_name(), get_overview_string() );
 	}
 
 	if ( get_rbf_svm_file().empty() ) {
@@ -107,10 +105,8 @@ string cath_assign_domains_options::do_update_error_or_help_string(const options
 
 /// \brief Get a string to prepend to the standard help
 string cath_assign_domains_options::get_help_prefix_string() {
-	ostringstream help_ss;
-	help_ss << "Usage: " << PROGRAM_NAME << " [options]" << endl;
-	help_ss << "Form plan of CATH assignments for query domains based on their PRC and SSAP results";
-	return help_ss.str();
+	return "Usage: "      + PROGRAM_NAME + " [options]\n\n"
+		+ get_overview_string();
 }
 
 /// \brief Get a string to append to the standard help (just empty here)
@@ -144,3 +140,10 @@ const str_vec & cath_assign_domains_options::get_forbidden_nodes() const {
 	return the_cath_assign_domains_options_block.get_forbidden_nodes();
 }
 
+/// \brief Get an overview of the job that these options are for
+///
+/// This can be used in the --help and --version outputs
+string cath_assign_domains_options::get_overview_string() {
+	return R"(Use an SVM model on SSAP+PRC data to form a plan for assigning the domains to
+CATH superfamilies/folds)";
+}

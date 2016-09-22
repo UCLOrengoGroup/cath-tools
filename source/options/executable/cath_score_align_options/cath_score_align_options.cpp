@@ -46,8 +46,6 @@
 #include "options/outputter/superposition_outputter/superposition_outputter_list.h"
 #include "superposition/superposition_context.h"
 
-#include <iostream>
-
 using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath::align;
@@ -86,7 +84,7 @@ string cath_score_align_options::do_update_error_or_help_string(const options_de
 
 	// If version information was requested, then provide it
 	if (the_misc_options_block.get_version()) {
-		return the_misc_options_block.get_version_string(get_program_name(), "This superposes protein structures.");
+		return the_misc_options_block.get_version_string(get_program_name(), get_overview_string() );
 	}
 
 	// Grab the objects from the options blocks
@@ -120,8 +118,8 @@ string cath_score_align_options::do_update_error_or_help_string(const options_de
 }
 
 string cath_score_align_options::get_help_prefix_string() {
-	return "Usage: " + PROGRAM_NAME + R"( alignment_source protein_file_source [superposition_outputs]
-Refine an existing alignment by iteratively attempting to optimise SSAP score
+	return "Usage: " + PROGRAM_NAME + " alignment_source protein_file_source [superposition_outputs]\n\n"
+		+ get_overview_string() + R"(
 
 Please specify:
  * one alignment
@@ -129,12 +127,7 @@ Please specify:
 }
 
 string cath_score_align_options::get_help_suffix_string() {
-	return R"(Usage examples:
- * cath-superpose --ssap-aln-infile 1cukA1bvsA.list --pdb-infile $PDBDIR/1cukA --pdb-infile $PDBDIR/1bvsA --sup-to-pymol
-     (Superpose 1cukA and 1bvsA (in directory $PDBDIR) based on SSAP alignment file 1cukA1bvsA.list and then display in PyMOL)
- * cat pdb1 end_file pdb2 end_file pdb3 | cath-superpose --pdbs-from-stdin --sup-to-stdout --res-name-align
-     (Superpose the structures from stdin based on matching residue names and then write them to stdout [common Genome3D use case])
-)";
+	return "";
 }
 
 /// TODOCUMENT
@@ -169,3 +162,9 @@ ptr_vector<alignment_acquirer> cath_score_align_options::get_alignment_acquirers
 	return the_alignment_input_options_block.get_alignment_acquirers();
 }
 
+/// \brief Get an overview of the job that these options are for
+///
+/// This can be used in the --help and --version outputs
+string cath_score_align_options::get_overview_string() {
+	return "Score an existing alignment using structural data";
+}

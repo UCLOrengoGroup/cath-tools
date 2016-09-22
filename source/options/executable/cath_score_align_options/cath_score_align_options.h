@@ -76,6 +76,8 @@ namespace cath {
 			std::unique_ptr<const pdbs_acquirer> get_pdbs_acquirer() const;
 			boost::ptr_vector<alignment_acquirer> get_alignment_acquirers() const;
 
+			static std::string get_overview_string();
+
 			static const std::string PROGRAM_NAME;
 		};
 	}

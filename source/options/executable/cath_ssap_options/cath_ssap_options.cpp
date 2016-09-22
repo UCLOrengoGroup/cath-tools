@@ -46,8 +46,6 @@
 #include "structure/protein/protein_source_file_set/protein_source_file_set.h"
 #include "superposition/superposition_context.h"
 
-#include <iostream>
-
 using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath;
@@ -151,8 +149,7 @@ string cath_ssap_options::do_update_error_or_help_string(const options_descripti
 
 /// \brief Output the standard program overview to an ostream
 string cath_ssap_options::get_version_description_string() {
-	ostringstream version_ss;
-	version_ss << R"(Protein structure comparison algorithm
+	return R"(Protein structure comparison algorithm
 Devised by Christine A Orengo and William R Taylor
 
 Please cite: "Protein Structure Alignment", Taylor and Orengo [1989]
@@ -163,24 +160,25 @@ Many people have contributed to this code, most notably:
   * Tony E Lewis               (  2011 - ....)
   * Oliver C Redfern           (~ 2003 - 2011)
   * James E Bray, Ian Sillitoe (~ 2000 - 2003)
-  * Andrew C R Martin          (considerable edits around 2001))";
-	return version_ss.str();
+  * Andrew C R Martin          (considerable edits around 2001)
+)";
 }
 
 /// \brief Return the standard usage string
 string cath_ssap_options::get_usage_string() {
-	ostringstream usage_ss;
-	usage_ss
-		<< "Usage: " << PROGRAM_NAME << R"( [options] <protein1> <protein2>
+	return "Usage: " + PROGRAM_NAME + R"( [options] <protein1> <protein2>
 
 Run a SSAP pairwise structural alignment
 
-)" << PROGRAM_NAME << R"( uses two types of structural comparison:
+)" + PROGRAM_NAME + R"( uses two types of structural comparison:
   1. Fast SSAP: a quick secondary-structure based SSAP alignment
   2. Slow SSAP: residue alignment only
 
-If both structures have more than one SS element, a fast SSAP is run first. If the fast SSAP score isn't good, another fast SSAP is run with looser cutoffs. If the (best) fast SSAP score isn't good, a slow SSAP is run. Only the best of these scores is output. These behaviours can be configured using the parameters below.)";
-	return usage_ss.str();
+If both structures have more than one SS element, a fast SSAP is run first.)"
+	" If the fast SSAP score isn't good, another fast SSAP is run with looser cutoffs."
+	" If the (best) fast SSAP score isn't good, a slow SSAP is run."
+	" Only the best of these scores is output."
+	" These behaviours can be configured using the parameters below.)";
 }
 
 /// \brief Check that these options are OK to use
@@ -218,8 +216,7 @@ const data_dirs_spec & cath_ssap_options::get_data_dirs_spec() const {
 
 /// \brief Return the string containing help on the SSAP matches format
 string cath::opts::get_ssap_matches_format_help_string() {
-	ostringstream ssap_matches_format_help_ss;
-	ssap_matches_format_help_ss << R"(Help on Standard SSAP Scores Output
+	return R"(Help on Standard SSAP Scores Output
 ===================================
 
 Overview
@@ -242,14 +239,12 @@ Column descriptions
 Example
 -------
   "1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71")";
-	return ssap_matches_format_help_ss.str();
 }
 
 
 /// \brief Return the string containing help on the SSAP alignment format
 string cath::opts::get_ssap_alignment_format_help_string() {
-	ostringstream ssap_matches_format_help_ss;
-	ssap_matches_format_help_ss << R"(Output Format: Standard SSAP Alignment Format
+	return R"(Output Format: Standard SSAP Alignment Format
 =============================================
 
 Format
@@ -287,6 +282,4 @@ Example
  162 H 0 E   90  E 0 H  162
  163 H 0 A   93  A 0 H  163
  164 H 0 V   92  V 0 H  164)";
-
-	return ssap_matches_format_help_ss.str();
 }

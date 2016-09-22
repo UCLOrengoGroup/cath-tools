@@ -77,6 +77,8 @@ namespace cath {
 			alignment_outputter_list get_alignment_outputters() const;
 			superposition_outputter_list get_superposition_outputters() const;
 
+			static std::string get_overview_string();
+
 			static const std::string PROGRAM_NAME;
 		};
 	}

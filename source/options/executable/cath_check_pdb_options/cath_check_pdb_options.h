@@ -56,6 +56,8 @@ namespace cath {
 			boost::filesystem::path get_pdb_file() const;
 			bool get_permit_no_atoms() const;
 
+			static std::string get_overview_string();
+
 			static const std::string PROGRAM_NAME;
 		};
 

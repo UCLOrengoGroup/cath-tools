@@ -46,8 +46,6 @@
 #include "options/outputter/superposition_outputter/superposition_outputter_list.h"
 #include "superposition/superposition_context.h"
 
-#include <iostream>
-
 using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath::align;
@@ -86,7 +84,7 @@ string cath_refine_align_options::do_update_error_or_help_string(const options_d
 
 	// If version information was requested, then provide it
 	if (the_misc_options_block.get_version()) {
-		return the_misc_options_block.get_version_string(get_program_name(), "This superposes protein structures.");
+		return the_misc_options_block.get_version_string(get_program_name(), get_overview_string() );
 	}
 
 	// Grab the objects from the options blocks
@@ -130,24 +128,17 @@ string cath_refine_align_options::do_update_error_or_help_string(const options_d
 }
 
 string cath_refine_align_options::get_help_prefix_string() {
-	ostringstream help_ss;
-	help_ss << "Usage: " << PROGRAM_NAME << " alignment_source protein_file_source [superposition_outputs]" << endl;
-	help_ss << "Refine an existing alignment by iteratively attempting to optimise SSAP score"          << endl;
-	help_ss << endl;
-	help_ss << "Please specify:"                                                                        << endl;
-	help_ss << " * one alignment"                                                                       << endl;
-	help_ss << " * one method of reading proteins (number of proteins currently restricted to 2)\n";
-	return help_ss.str();
+	return "Usage: " + PROGRAM_NAME + " alignment_source protein_file_source [superposition_outputs]\n\n"
+		+ get_overview_string() + R"(
+
+Please specify:
+ * one alignment
+ * one method of reading proteins (number of proteins currently restricted to 2)
+)";
 }
 
 string cath_refine_align_options::get_help_suffix_string() {
-	ostringstream help_ss;
-	help_ss << "Usage examples:"                                                                                                                << endl;
-	help_ss << " * cath-superpose --ssap-aln-infile 1cukA1bvsA.list --pdb-infile $PDBDIR/1cukA --pdb-infile $PDBDIR/1bvsA --sup-to-pymol"       << endl;
-	help_ss << "     (Superpose 1cukA and 1bvsA (in directory $PDBDIR) based on SSAP alignment file 1cukA1bvsA.list and then display in PyMOL)" << endl;
-	help_ss << " * cat pdb1 end_file pdb2 end_file pdb3 | cath-superpose --pdbs-from-stdin --sup-to-stdout --res-name-align "                   << endl;
-	help_ss << "     (Superpose the structures from stdin based on matching residue names and then write them to stdout [common Genome3D use case])\n";
-	return help_ss.str();
+	return "";
 }
 
 /// TODOCUMENT
@@ -213,4 +204,11 @@ superposition_outputter_list cath_refine_align_options::get_superposition_output
 	check_ok_to_use();
 	const display_spec the_display_spec = the_display_options_block.get_display_spec();
 	return the_superposition_output_options_block.get_superposition_outputters( the_display_spec );
+}
+
+/// \brief Get an overview of the job that these options are for
+///
+/// This can be used in the --help and --version outputs
+string cath_refine_align_options::get_overview_string() {
+	return "Iteratively refine an existing alignment by attempting to optimise SSAP score";
 }
