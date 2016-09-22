@@ -34,7 +34,7 @@ namespace cath {
 			/// \todo Eliminate redundancy between this and view_cache
 			///
 			/// \todo If profiles reveal that this is critical in performance:
-			///        * ensure that access the the entries is inlined
+			///        * ensure that access the entries is inlined
 			///        * consider trying giving access to a particular rod (ie sub-vector)
 			///          so that the using code can directly index into that vector
 			///          And then profile because it might well all have been optimised away anyway

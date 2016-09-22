@@ -66,7 +66,7 @@ const prc_scores_entry & ssap_and_prc::get_prc() const {
 	return the_prc;
 }
 
-/// \brief Getter for the the magic function score (calculated during construction)
+/// \brief Getter for the magic function score (calculated during construction)
 ///
 /// \seealso magic_function()
 const double & ssap_and_prc::get_magic_function_score() const {

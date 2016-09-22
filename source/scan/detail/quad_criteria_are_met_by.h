@@ -31,7 +31,7 @@ namespace cath {
 	namespace scan {
 		namespace detail {
 
-			/// \brief Returns whether a the specified criteria are met by the the specified single_struc_res_pair
+			/// \brief Returns whether a the specified criteria are met by the specified single_struc_res_pair
 			///
 			/// NOTE: As indicated by the name, this can be used to rule some single_struc_res_rep_pairs out of
 			///       consideration but the criteria assess the similarity of two res_pairs so it doesn't make sense
@@ -54,7 +54,7 @@ namespace cath {
 				return true;
 			}
 
-			/// \brief Returns whether a the specified criteria are met by the the specified multi_struc_res_pair
+			/// \brief Returns whether a the specified criteria are met by the specified multi_struc_res_pair
 			///
 			/// NOTE: As indicated by the name, this can be used to rule some single_struc_res_rep_pairs out of
 			///       consideration but the criteria assess the similarity of two res_pairs so it doesn't make sense
@@ -72,7 +72,7 @@ namespace cath {
 				return ( from_res_rep_index != to_res_rep_index );
 			}
 
-			/// \brief Returns whether a the specified criteria are met by the the specified single_struc_res_pair
+			/// \brief Returns whether a the specified criteria are met by the specified single_struc_res_pair
 			///
 			/// NOTE: As indicated by the name, this can be used to rule some single_struc_res_rep_pairs out of
 			///       consideration but the criteria assess the similarity of two res_pairs so it doesn't make sense

@@ -32,7 +32,7 @@ namespace cath {
 		/// \brief The style in which superposition JSON should be written
 		///
 		/// \todo This should be used in more superposition/JSON code rather than just in json_file_superposition_outputter.
-		///       Extend the use of this all the way to the the call to the Boost code.
+		///       Extend the use of this all the way to the call to the Boost code.
 		enum class sup_json_style {
 			PRETTY, ///< Insert white-space characters to format the JSON in a more human-readable layout
 			COMPACT ///< Suppress superfluous white-space characters to keep the JSON compact

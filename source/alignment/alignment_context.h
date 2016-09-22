@@ -32,7 +32,7 @@ namespace cath { namespace sup { class superposition; } }
 namespace cath {
 	namespace align {
 
-		/// \brief Store a superposition along with the the context of the pdbs and ids of the structures
+		/// \brief Store a superposition along with the context of the pdbs and ids of the structures
 		///
 		/// ATM, this is little more than a tuple<pdb_list, str_vec, alignment>
 		class alignment_context final {

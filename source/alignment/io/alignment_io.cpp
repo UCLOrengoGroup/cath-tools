@@ -333,7 +333,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 				opt_aln_posn_vec   &data_col           = data [ prot_ctr ];
 				aln_posn_type       &posn              = posns[ prot_ctr ];
 
-				// Grab the the details for this protein
+				// Grab the details for this protein
 				const int              residue_num = lexical_cast<int>(          trim_copy( prot_string.substr(  1, 4 ))); // Column 4 (7,10 etc): Residue number in PDB file (ddddc) 4 digit number
 				const char             insert_code =                                        prot_string.at(      5    )  ; //    + 1 character insert code
 				const char              amino_acid =                                        prot_string.at(      7    )  ; // Column 5 (8,11 etc): Amino Acid Code (c)

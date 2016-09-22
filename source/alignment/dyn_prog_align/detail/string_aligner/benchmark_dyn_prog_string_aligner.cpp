@@ -159,7 +159,7 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 					prev_seq_2_posn = 0;
 				}
 
-				// If not at the the top of a column and if the element to the top left of this element
+				// If not at the top of a column and if the element to the top left of this element
 				// is better than thisVal (may not be due to gap penalties) then start with that as our best find
 				score_type this_value = 0;
 				if (seq_2_ctr > 0) {

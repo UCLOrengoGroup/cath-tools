@@ -1855,7 +1855,7 @@ void cath::print_ssap_scores(ostream            &arg_os,              ///< TODOC
 
 /// \brief Superpose two structures based on an alignment between them
 ///
-/// AFAIK, this currently reads from the the following globals:
+/// AFAIK, this currently reads from the following globals:
 ///  - global_upper_score_matrix
 ///  - global_window
 /// but is otherwise local.
