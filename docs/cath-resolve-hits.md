@@ -1,7 +1,7 @@
 cath-resolve-hits
 =================
 
-A fast, effective way to collapse a list of domain matches to your query sequence(s) down to the the best, non-overlapping subset (ie domain architecture).
+A fast, effective way to collapse a list of domain matches to your query sequence(s) down to the best, non-overlapping subset (ie domain architecture).
 
 Usage
 -----
