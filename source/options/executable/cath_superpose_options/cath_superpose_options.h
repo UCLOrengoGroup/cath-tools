@@ -62,7 +62,7 @@ namespace cath {
 			pdb_input_options_block            the_pdb_input_options_block;
 			alignment_output_options_block     the_alignment_output_options_block;
 			superposition_output_options_block the_superposition_output_options_block;
-			display_options_block               the_display_options_block;
+			display_options_block              the_display_options_block;
 
 			virtual std::string do_get_program_name() const override final;
 			virtual std::string do_update_error_or_help_string(const boost::program_options::options_description &) const override final;

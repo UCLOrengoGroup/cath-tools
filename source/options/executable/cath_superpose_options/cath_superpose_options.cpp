@@ -194,7 +194,7 @@ cath_superpose_options::cath_superpose_options() {
 	super::add_options_block( the_pdb_input_options_block            );
 	super::add_options_block( the_alignment_output_options_block     );
 	super::add_options_block( the_superposition_output_options_block );
-	super::add_options_block( the_display_options_block               );
+	super::add_options_block( the_display_options_block              );
 }
 
 /// \brief TODOCUMENT
