@@ -531,8 +531,14 @@ set(
 )
 
 set(
+	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_RESOLVE_HITS_OPTIONS
+		options/executable/cath_resolve_hits_options/cath_resolve_hits_options.cpp
+)
+
+set(
 	NORMSOURCES_OPTIONS_EXECUTABLE
 		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS}
+		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_RESOLVE_HITS_OPTIONS}
 		options/executable/env_var_option_name_handler.cpp
 		options/executable/executable_options.cpp
 )
@@ -549,6 +555,8 @@ set(
 		options/options_block/options_block_tester.cpp
 		options/options_block/pdb_input_options_block.cpp
 		options/options_block/pdb_input_spec.cpp
+		options/options_block/resolve_hits_input_options_block.cpp
+		options/options_block/resolve_hits_input_spec.cpp
 )
 
 set(
@@ -1167,8 +1175,14 @@ set(
 )
 
 set(
+	TESTSOURCES_CATH_REFINE_ALIGN_OPTIONS
+		cath_refine_align/options/cath_refine_align_options_test.cpp
+)
+
+set(
 	TESTSOURCES_CATH_REFINE_ALIGN
 		cath_refine_align/cath_align_refiner_test.cpp
+		${TESTSOURCES_CATH_REFINE_ALIGN_OPTIONS}
 )
 
 set(
@@ -1398,10 +1412,13 @@ set(
 )
 
 set(
+	TESTSOURCES_OPTIONS_EXECUTABLE_CATH_RESOLVE_HITS_OPTIONS
+		options/executable/cath_resolve_hits_options/cath_resolve_hits_options_test.cpp
 )
 
 set(
 	TESTSOURCES_OPTIONS_EXECUTABLE
+		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_RESOLVE_HITS_OPTIONS}
 		options/executable/env_var_option_name_handler_test.cpp
 		options/executable/executable_options_test.cpp
 )
@@ -1414,6 +1431,7 @@ set(
 		options/options_block/misc_help_version_options_block_test.cpp
 		options/options_block/options_block_test.cpp
 		options/options_block/pdb_input_options_block_test.cpp
+		options/options_block/resolve_hits_input_options_block_test.cpp
 )
 
 set(
@@ -1779,7 +1797,7 @@ set(
 		${NORMSOURCES_FILE}
 		${NORMSOURCES_OPTIONS}
 		${NORMSOURCES_OUTPUTTER}
-		 ${NORMSOURCES_RESOLVE_HITS}
+		${NORMSOURCES_RESOLVE_HITS}
 		${NORMSOURCES_SCAN}
 		${NORMSOURCES_SCORE}
 		${NORMSOURCES_SSAP}
@@ -1799,7 +1817,7 @@ set(
 		${TESTSOURCES_FILE}
 		${TESTSOURCES_OPTIONS}
 		${TESTSOURCES_OUTPUTTER}
-		 ${TESTSOURCES_RESOLVE_HITS}
+		${TESTSOURCES_RESOLVE_HITS}
 		${TESTSOURCES_SCAN}
 		${TESTSOURCES_SCORE}
 		${TESTSOURCES_SSAP}
@@ -1893,14 +1911,13 @@ add_executable(
 
 #####################################################################
 
-target_link_libraries  ( build-test          normsources_cath_superpose normsources_test std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries  ( cath-assign-domains normsources_cath_assign_domains             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries  ( cath-refine-align   normsources_cath_refine_align               std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-# target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                    biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries  ( cath-resolve-hits   normsources_resolve_hits                                             pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries  ( cath-score-align    normsources_cath_score_align                std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries  ( cath-ssap                                                       std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries  ( cath-superpose      normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( build-test          normsources_cath_superpose normsources_test std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-assign-domains normsources_cath_assign_domains             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-refine-align   normsources_cath_refine_align               std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                             pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-score-align    normsources_cath_score_align                std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-ssap                                                       std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-superpose      normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 
 add_dependencies( build-test          built_bioplib_libraries )
 add_dependencies( cath-assign-domains built_bioplib_libraries )
