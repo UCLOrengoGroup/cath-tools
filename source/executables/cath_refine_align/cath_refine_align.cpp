@@ -19,8 +19,8 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "cath_refine_align/cath_align_refiner.h"
+#include "cath_refine_align/options/cath_refine_align_options.h"
 #include "exception/program_exception_wrapper.h"
-#include "options/executable/cath_refine_align_options/cath_refine_align_options.h"
 
 using namespace cath::common;
 using namespace cath::opts;

@@ -24,6 +24,7 @@
 #include <iostream>
 
 namespace cath { namespace opts { class cath_superpose_options; } }
+namespace cath { namespace sup { class superposition_context; } }
 
 namespace cath {
 
@@ -39,6 +40,10 @@ namespace cath {
 		                      std::istream &arg_istream = std::cin,
 		                      std::ostream &arg_stdout = std::cout,
 		                      std::ostream &arg_stderr = std::cerr);
+
+		static sup::superposition_context get_superposition_context(const opts::cath_superpose_options &,
+		                                                            std::istream &,
+		                                                            std::ostream &);
 	};
 
 }

@@ -21,37 +21,33 @@
 #ifndef PDB_INPUT_OPTIONS_BLOCK_H_INCLUDED
 #define PDB_INPUT_OPTIONS_BLOCK_H_INCLUDED
 
-#include <boost/ptr_container/ptr_vector.hpp>
-
 #include "options/options_block/options_block.h"
-
-namespace cath { namespace opts { class pdbs_acquirer; } }
+#include "options/options_block/pdb_input_spec.h"
 
 namespace cath {
 	namespace opts {
 
-		/// \brief TODOCUMENT
+		/// \brief An options block for specifiying how PDBs should be read in
 		class pdb_input_options_block final : public cath::opts::options_block {
 		private:
 			static const std::string PO_PDB_INFILE;
 			static const std::string PO_PDBS_FROM_STDIN;
 
-			path_vec input_files;
-			bool read_from_stdin;
+			/// \brief The pdb_input_spec to be configured by this options block
+			pdb_input_spec the_pdb_input_spec;
 
 			virtual std::unique_ptr<options_block> do_clone() const override final;
 			virtual std::string do_get_block_name() const override final;
 			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
 			virtual opt_str do_invalid_string() const override final;
 
-			const path_vec & get_input_files_cref() const;
-			bool get_read_from_stdin() const;
-
 		public:
 			virtual ~pdb_input_options_block() noexcept = default;
 
-			boost::ptr_vector<pdbs_acquirer> get_pdbs_acquirers() const;
+			const pdb_input_spec & get_pdb_input_spec() const;
 		};
+
+		size_t get_num_acquirers(const pdb_input_options_block &);
 
 	}
 }

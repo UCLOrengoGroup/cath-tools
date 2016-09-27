@@ -2,6 +2,43 @@ include_directories( ${Boost_INCLUDE_DIR} )
 
 ##### BEGINNING OF AUTO-GENERATED #####
 set(
+	NORMSOURCES_ACQUIRER_ALIGNMENT_ACQUIRER
+		acquirer/alignment_acquirer/alignment_acquirer.cpp
+		acquirer/alignment_acquirer/cora_aln_file_alignment_acquirer.cpp
+		acquirer/alignment_acquirer/fasta_aln_file_alignment_acquirer.cpp
+		acquirer/alignment_acquirer/residue_name_alignment_acquirer.cpp
+		acquirer/alignment_acquirer/ssap_aln_file_alignment_acquirer.cpp
+		acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.cpp
+)
+
+set(
+	NORMSOURCES_ACQUIRER_PDBS_ACQUIRER
+		acquirer/pdbs_acquirer/domain_defn_pdbs_acquirer.cpp
+		acquirer/pdbs_acquirer/file_list_pdbs_acquirer.cpp
+		acquirer/pdbs_acquirer/istream_pdbs_acquirer.cpp
+		acquirer/pdbs_acquirer/pdbs_acquirer.cpp
+)
+
+set(
+	NORMSOURCES_ACQUIRER_SELECTION_POLICY_ACQUIRER
+		acquirer/selection_policy_acquirer/selection_policy_acquirer.cpp
+)
+
+set(
+	NORMSOURCES_ACQUIRER_SUPERPOSITION_ACQUIRER
+		acquirer/superposition_acquirer/align_based_superposition_acquirer.cpp
+		acquirer/superposition_acquirer/superposition_acquirer.cpp
+)
+
+set(
+	NORMSOURCES_ACQUIRER
+		${NORMSOURCES_ACQUIRER_ALIGNMENT_ACQUIRER}
+		${NORMSOURCES_ACQUIRER_PDBS_ACQUIRER}
+		${NORMSOURCES_ACQUIRER_SELECTION_POLICY_ACQUIRER}
+		${NORMSOURCES_ACQUIRER_SUPERPOSITION_ACQUIRER}
+)
+
+set(
 	NORMSOURCES_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY
 		alignment/common_atom_selection_policy/common_atom_select_ca_policy.cpp
 		alignment/common_atom_selection_policy/common_atom_select_cb_policy.cpp
@@ -139,18 +176,47 @@ set(
 )
 
 set(
+	NORMSOURCES_CATH_ASSIGN_DOMAINS_OPTIONS
+		cath_assign_domains/options/cath_assign_domains_options.cpp
+		cath_assign_domains/options/cath_assign_domains_options_block.cpp
+)
+
+set(
+	NORMSOURCES_CATH_ASSIGN_DOMAINS
+		${NORMSOURCES_CATH_ASSIGN_DOMAINS_OPTIONS}
+)
+
+set(
+	NORMSOURCES_CATH_REFINE_ALIGN_OPTIONS
+		cath_refine_align/options/cath_refine_align_options.cpp
+)
+
+set(
 	NORMSOURCES_CATH_REFINE_ALIGN
 		cath_refine_align/cath_align_refiner.cpp
+		${NORMSOURCES_CATH_REFINE_ALIGN_OPTIONS}
+)
+
+set(
+	NORMSOURCES_CATH_SCORE_ALIGN_OPTIONS
+		cath_score_align/options/cath_score_align_options.cpp
 )
 
 set(
 	NORMSOURCES_CATH_SCORE_ALIGN
 		cath_score_align/cath_align_scorer.cpp
+		${NORMSOURCES_CATH_SCORE_ALIGN_OPTIONS}
+)
+
+set(
+	NORMSOURCES_CATH_SUPERPOSE_OPTIONS
+		cath_superpose/options/cath_superpose_options.cpp
 )
 
 set(
 	NORMSOURCES_CATH_SUPERPOSE
 		cath_superpose/cath_superposer.cpp
+		${NORMSOURCES_CATH_SUPERPOSE_OPTIONS}
 )
 
 set(
@@ -236,6 +302,7 @@ set(
 
 set(
 	NORMSOURCES_COMMON_FILE
+		common/file/find_file.cpp
 		common/file/open_fstream.cpp
 		common/file/temp_file.cpp
 )
@@ -291,8 +358,9 @@ set(
 )
 
 set(
-	NORMSOURCES_DISPLAY_DISPLAY_SPEC
-		display/display_spec/display_spec.cpp
+	NORMSOURCES_DISPLAY_OPTIONS
+		display/options/display_options_block.cpp
+		display/options/display_spec.cpp
 )
 
 set(
@@ -315,7 +383,7 @@ set(
 	NORMSOURCES_DISPLAY
 		${NORMSOURCES_DISPLAY_DISPLAY_COLOUR}
 		${NORMSOURCES_DISPLAY_DISPLAY_COLOURER}
-		${NORMSOURCES_DISPLAY_DISPLAY_SPEC}
+		${NORMSOURCES_DISPLAY_OPTIONS}
 		${NORMSOURCES_DISPLAY_VIEWER}
 )
 
@@ -407,6 +475,13 @@ set(
 )
 
 set(
+	NORMSOURCES_FILE_OPTIONS
+		file/options/data_dirs_options_block.cpp
+		file/options/data_dirs_spec.cpp
+		file/options/data_option.cpp
+)
+
+set(
 	NORMSOURCES_FILE_PDB
 		file/pdb/element_type_string.cpp
 		file/pdb/pdb.cpp
@@ -443,52 +518,11 @@ set(
 		${NORMSOURCES_FILE_DOMAIN_DEFINITION_LIST}
 		${NORMSOURCES_FILE_DSSP_WOLF}
 		${NORMSOURCES_FILE_HMMER_SCORES_FILE}
+		${NORMSOURCES_FILE_OPTIONS}
 		${NORMSOURCES_FILE_PDB}
 		${NORMSOURCES_FILE_PRC_SCORES_FILE}
 		${NORMSOURCES_FILE_SEC}
 		${NORMSOURCES_FILE_SSAP_SCORES_FILE}
-)
-
-set(
-	NORMSOURCES_OPTIONS_ACQUIRER_ALIGNMENT_ACQUIRER
-		options/acquirer/alignment_acquirer/alignment_acquirer.cpp
-		options/acquirer/alignment_acquirer/cora_aln_file_alignment_acquirer.cpp
-		options/acquirer/alignment_acquirer/fasta_aln_file_alignment_acquirer.cpp
-		options/acquirer/alignment_acquirer/residue_name_alignment_acquirer.cpp
-		options/acquirer/alignment_acquirer/ssap_aln_file_alignment_acquirer.cpp
-		options/acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.cpp
-)
-
-set(
-	NORMSOURCES_OPTIONS_ACQUIRER_PDBS_ACQUIRER
-		options/acquirer/pdbs_acquirer/domain_defn_pdbs_acquirer.cpp
-		options/acquirer/pdbs_acquirer/file_list_pdbs_acquirer.cpp
-		options/acquirer/pdbs_acquirer/istream_pdbs_acquirer.cpp
-		options/acquirer/pdbs_acquirer/pdbs_acquirer.cpp
-)
-
-set(
-	NORMSOURCES_OPTIONS_ACQUIRER_SELECTION_POLICY_ACQUIRER
-		options/acquirer/selection_policy_acquirer/selection_policy_acquirer.cpp
-)
-
-set(
-	NORMSOURCES_OPTIONS_ACQUIRER_SUPERPOSITION_ACQUIRER
-		options/acquirer/superposition_acquirer/align_based_superposition_acquirer.cpp
-		options/acquirer/superposition_acquirer/superposition_acquirer.cpp
-)
-
-set(
-	NORMSOURCES_OPTIONS_ACQUIRER
-		${NORMSOURCES_OPTIONS_ACQUIRER_ALIGNMENT_ACQUIRER}
-		${NORMSOURCES_OPTIONS_ACQUIRER_PDBS_ACQUIRER}
-		${NORMSOURCES_OPTIONS_ACQUIRER_SELECTION_POLICY_ACQUIRER}
-		${NORMSOURCES_OPTIONS_ACQUIRER_SUPERPOSITION_ACQUIRER}
-)
-
-set(
-	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_ASSIGN_DOMAINS_OPTIONS
-		options/executable/cath_assign_domains_options/cath_assign_domains_options.cpp
 )
 
 set(
@@ -497,33 +531,8 @@ set(
 )
 
 set(
-	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_REFINE_ALIGN_OPTIONS
-		options/executable/cath_refine_align_options/cath_refine_align_options.cpp
-)
-
-set(
-	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_SCORE_ALIGN_OPTIONS
-		options/executable/cath_score_align_options/cath_score_align_options.cpp
-)
-
-set(
-	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_SSAP_OPTIONS
-		options/executable/cath_ssap_options/cath_ssap_options.cpp
-)
-
-set(
-	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_SUPERPOSE_OPTIONS
-		options/executable/cath_superpose_options/cath_superpose_options.cpp
-)
-
-set(
 	NORMSOURCES_OPTIONS_EXECUTABLE
-		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_ASSIGN_DOMAINS_OPTIONS}
 		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS}
-		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_REFINE_ALIGN_OPTIONS}
-		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_SCORE_ALIGN_OPTIONS}
-		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_SSAP_OPTIONS}
-		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_SUPERPOSE_OPTIONS}
 		options/executable/env_var_option_name_handler.cpp
 		options/executable/executable_options.cpp
 )
@@ -531,58 +540,62 @@ set(
 set(
 	NORMSOURCES_OPTIONS_OPTIONS_BLOCK
 		options/options_block/alignment_input_options_block.cpp
-		options/options_block/alignment_output_options_block.cpp
-		options/options_block/cath_assign_domains_options_block.cpp
+		options/options_block/alignment_input_spec.cpp
 		options/options_block/check_pdb_options_block.cpp
-		options/options_block/data_dirs_options_block.cpp
-		options/options_block/data_dirs_spec.cpp
-		options/options_block/data_option.cpp
 		options/options_block/detail_help_options_block.cpp
-		options/options_block/display_options_block.cpp
 		options/options_block/ids_options_block.cpp
 		options/options_block/misc_help_version_options_block.cpp
-		options/options_block/old_ssap_options_block.cpp
 		options/options_block/options_block.cpp
 		options/options_block/options_block_tester.cpp
 		options/options_block/pdb_input_options_block.cpp
-		options/options_block/superposition_output_options_block.cpp
-)
-
-set(
-	NORMSOURCES_OPTIONS_OUTPUTTER_ALIGNMENT_OUTPUTTER
-		options/outputter/alignment_outputter/alignment_outputter.cpp
-		options/outputter/alignment_outputter/alignment_outputter_list.cpp
-		options/outputter/alignment_outputter/cath_aln_ostream_alignment_outputter.cpp
-		options/outputter/alignment_outputter/fasta_ostream_alignment_outputter.cpp
-		options/outputter/alignment_outputter/file_alignment_outputter.cpp
-		options/outputter/alignment_outputter/html_ostream_alignment_outputter.cpp
-		options/outputter/alignment_outputter/ssap_ostream_alignment_outputter.cpp
-)
-
-set(
-	NORMSOURCES_OPTIONS_OUTPUTTER_SUPERPOSITION_OUTPUTTER
-		options/outputter/superposition_outputter/json_file_superposition_outputter.cpp
-		options/outputter/superposition_outputter/ostream_superposition_outputter.cpp
-		options/outputter/superposition_outputter/pdb_file_superposition_outputter.cpp
-		options/outputter/superposition_outputter/pdb_files_superposition_outputter.cpp
-		options/outputter/superposition_outputter/pymol_file_superposition_outputter.cpp
-		options/outputter/superposition_outputter/pymol_view_superposition_outputter.cpp
-		options/outputter/superposition_outputter/superposition_outputter.cpp
-		options/outputter/superposition_outputter/superposition_outputter_list.cpp
-)
-
-set(
-	NORMSOURCES_OPTIONS_OUTPUTTER
-		${NORMSOURCES_OPTIONS_OUTPUTTER_ALIGNMENT_OUTPUTTER}
-		${NORMSOURCES_OPTIONS_OUTPUTTER_SUPERPOSITION_OUTPUTTER}
+		options/options_block/pdb_input_spec.cpp
 )
 
 set(
 	NORMSOURCES_OPTIONS
-		${NORMSOURCES_OPTIONS_ACQUIRER}
 		${NORMSOURCES_OPTIONS_EXECUTABLE}
 		${NORMSOURCES_OPTIONS_OPTIONS_BLOCK}
-		${NORMSOURCES_OPTIONS_OUTPUTTER}
+)
+
+set(
+	NORMSOURCES_OUTPUTTER_ALIGNMENT_OUTPUTTER
+		outputter/alignment_outputter/alignment_outputter.cpp
+		outputter/alignment_outputter/alignment_outputter_list.cpp
+		outputter/alignment_outputter/cath_aln_ostream_alignment_outputter.cpp
+		outputter/alignment_outputter/fasta_ostream_alignment_outputter.cpp
+		outputter/alignment_outputter/file_alignment_outputter.cpp
+		outputter/alignment_outputter/html_ostream_alignment_outputter.cpp
+		outputter/alignment_outputter/ssap_ostream_alignment_outputter.cpp
+)
+
+set(
+	NORMSOURCES_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS
+		outputter/alignment_outputter_options/alignment_output_options_block.cpp
+)
+
+set(
+	NORMSOURCES_OUTPUTTER_SUPERPOSITION_OUTPUT_OPTIONS
+		outputter/superposition_output_options/superposition_output_options_block.cpp
+)
+
+set(
+	NORMSOURCES_OUTPUTTER_SUPERPOSITION_OUTPUTTER
+		outputter/superposition_outputter/json_file_superposition_outputter.cpp
+		outputter/superposition_outputter/ostream_superposition_outputter.cpp
+		outputter/superposition_outputter/pdb_file_superposition_outputter.cpp
+		outputter/superposition_outputter/pdb_files_superposition_outputter.cpp
+		outputter/superposition_outputter/pymol_file_superposition_outputter.cpp
+		outputter/superposition_outputter/pymol_view_superposition_outputter.cpp
+		outputter/superposition_outputter/superposition_outputter.cpp
+		outputter/superposition_outputter/superposition_outputter_list.cpp
+)
+
+set(
+	NORMSOURCES_OUTPUTTER
+		${NORMSOURCES_OUTPUTTER_ALIGNMENT_OUTPUTTER}
+		${NORMSOURCES_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS}
+		${NORMSOURCES_OUTPUTTER_SUPERPOSITION_OUTPUT_OPTIONS}
+		${NORMSOURCES_OUTPUTTER_SUPERPOSITION_OUTPUTTER}
 )
 
 set(
@@ -850,8 +863,15 @@ set(
 )
 
 set(
+	NORMSOURCES_SSAP_OPTIONS
+		ssap/options/cath_ssap_options.cpp
+		ssap/options/old_ssap_options_block.cpp
+)
+
+set(
 	NORMSOURCES_SSAP
 		ssap/distance_score_formula.cpp
+		${NORMSOURCES_SSAP_OPTIONS}
 		ssap/selected_pair.cpp
 		ssap/ssap.cpp
 		ssap/ssap_scores.cpp
@@ -995,6 +1015,42 @@ set(
 )
 
 set(
+	TESTSOURCES_ACQUIRER_ALIGNMENT_ACQUIRER
+		acquirer/alignment_acquirer/alignment_acquirer_test.cpp
+		acquirer/alignment_acquirer/cora_aln_file_alignment_acquirer_test.cpp
+		acquirer/alignment_acquirer/fasta_aln_file_alignment_acquirer_test.cpp
+		acquirer/alignment_acquirer/residue_name_alignment_acquirer_test.cpp
+		acquirer/alignment_acquirer/ssap_aln_file_alignment_acquirer_test.cpp
+		acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer_test.cpp
+)
+
+set(
+	TESTSOURCES_ACQUIRER_PDBS_ACQUIRER
+		acquirer/pdbs_acquirer/file_list_pdbs_acquirer_test.cpp
+		acquirer/pdbs_acquirer/istream_pdbs_acquirer_test.cpp
+		acquirer/pdbs_acquirer/pdbs_acquirer_test.cpp
+)
+
+set(
+	TESTSOURCES_ACQUIRER_SELECTION_POLICY_ACQUIRER
+		acquirer/selection_policy_acquirer/selection_policy_acquirer_test.cpp
+)
+
+set(
+	TESTSOURCES_ACQUIRER_SUPERPOSITION_ACQUIRER
+		acquirer/superposition_acquirer/align_based_superposition_acquirer_test.cpp
+		acquirer/superposition_acquirer/superposition_acquirer_test.cpp
+)
+
+set(
+	TESTSOURCES_ACQUIRER
+		${TESTSOURCES_ACQUIRER_ALIGNMENT_ACQUIRER}
+		${TESTSOURCES_ACQUIRER_PDBS_ACQUIRER}
+		${TESTSOURCES_ACQUIRER_SELECTION_POLICY_ACQUIRER}
+		${TESTSOURCES_ACQUIRER_SUPERPOSITION_ACQUIRER}
+)
+
+set(
 	TESTSOURCES_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY
 		alignment/common_residue_selection_policy/common_residue_selection_policy_test.cpp
 )
@@ -1101,18 +1157,40 @@ set(
 )
 
 set(
+	TESTSOURCES_CATH_ASSIGN_DOMAINS_OPTIONS
+		cath_assign_domains/options/cath_assign_domains_options_test.cpp
+)
+
+set(
+	TESTSOURCES_CATH_ASSIGN_DOMAINS
+		${TESTSOURCES_CATH_ASSIGN_DOMAINS_OPTIONS}
+)
+
+set(
 	TESTSOURCES_CATH_REFINE_ALIGN
 		cath_refine_align/cath_align_refiner_test.cpp
 )
 
 set(
+	TESTSOURCES_CATH_SCORE_ALIGN_OPTIONS
+		cath_score_align/options/cath_score_align_options_test.cpp
+)
+
+set(
 	TESTSOURCES_CATH_SCORE_ALIGN
 		cath_score_align/cath_align_scorer_test.cpp
+		${TESTSOURCES_CATH_SCORE_ALIGN_OPTIONS}
+)
+
+set(
+	TESTSOURCES_CATH_SUPERPOSE_OPTIONS
+		cath_superpose/options/cath_superpose_options_test.cpp
 )
 
 set(
 	TESTSOURCES_CATH_SUPERPOSE
 		cath_superpose/cath_superposer_test.cpp
+		${TESTSOURCES_CATH_SUPERPOSE_OPTIONS}
 )
 
 set(
@@ -1177,6 +1255,7 @@ set(
 
 set(
 	TESTSOURCES_COMMON_STRING
+		common/string/booled_to_string_test.cpp
 		common/string/string_parse_tools_test.cpp
 		common/string/sub_string_parser_test.cpp
 )
@@ -1218,8 +1297,9 @@ set(
 )
 
 set(
-	TESTSOURCES_DISPLAY_DISPLAY_SPEC
-		display/display_spec/display_spec_test.cpp
+	TESTSOURCES_DISPLAY_OPTIONS
+		display/options/display_options_block_test.cpp
+		display/options/display_spec_test.cpp
 )
 
 set(
@@ -1241,7 +1321,7 @@ set(
 	TESTSOURCES_DISPLAY
 		${TESTSOURCES_DISPLAY_DISPLAY_COLOUR}
 		${TESTSOURCES_DISPLAY_DISPLAY_COLOURER}
-		${TESTSOURCES_DISPLAY_DISPLAY_SPEC}
+		${TESTSOURCES_DISPLAY_OPTIONS}
 		${TESTSOURCES_DISPLAY_VIEWER}
 )
 
@@ -1271,6 +1351,12 @@ set(
 	TESTSOURCES_FILE_HMMER_SCORES_FILE
 		file/hmmer_scores_file/hmmer_scores_entry_test.cpp
 		file/hmmer_scores_file/hmmer_scores_file_test.cpp
+)
+
+set(
+	TESTSOURCES_FILE_OPTIONS
+		file/options/data_dirs_options_block_test.cpp
+		file/options/data_dirs_spec_test.cpp
 )
 
 set(
@@ -1304,6 +1390,7 @@ set(
 	TESTSOURCES_FILE
 		${TESTSOURCES_FILE_DSSP_WOLF}
 		${TESTSOURCES_FILE_HMMER_SCORES_FILE}
+		${TESTSOURCES_FILE_OPTIONS}
 		${TESTSOURCES_FILE_PDB}
 		${TESTSOURCES_FILE_PRC_SCORES_FILE}
 		${TESTSOURCES_FILE_SEC}
@@ -1311,73 +1398,10 @@ set(
 )
 
 set(
-	TESTSOURCES_OPTIONS_ACQUIRER_ALIGNMENT_ACQUIRER
-		options/acquirer/alignment_acquirer/alignment_acquirer_test.cpp
-		options/acquirer/alignment_acquirer/cora_aln_file_alignment_acquirer_test.cpp
-		options/acquirer/alignment_acquirer/fasta_aln_file_alignment_acquirer_test.cpp
-		options/acquirer/alignment_acquirer/residue_name_alignment_acquirer_test.cpp
-		options/acquirer/alignment_acquirer/ssap_aln_file_alignment_acquirer_test.cpp
-		options/acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_ACQUIRER_PDBS_ACQUIRER
-		options/acquirer/pdbs_acquirer/file_list_pdbs_acquirer_test.cpp
-		options/acquirer/pdbs_acquirer/istream_pdbs_acquirer_test.cpp
-		options/acquirer/pdbs_acquirer/pdbs_acquirer_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_ACQUIRER_SELECTION_POLICY_ACQUIRER
-		options/acquirer/selection_policy_acquirer/selection_policy_acquirer_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_ACQUIRER_SUPERPOSITION_ACQUIRER
-		options/acquirer/superposition_acquirer/align_based_superposition_acquirer_test.cpp
-		options/acquirer/superposition_acquirer/superposition_acquirer_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_ACQUIRER
-		${TESTSOURCES_OPTIONS_ACQUIRER_ALIGNMENT_ACQUIRER}
-		${TESTSOURCES_OPTIONS_ACQUIRER_PDBS_ACQUIRER}
-		${TESTSOURCES_OPTIONS_ACQUIRER_SELECTION_POLICY_ACQUIRER}
-		${TESTSOURCES_OPTIONS_ACQUIRER_SUPERPOSITION_ACQUIRER}
-)
-
-set(
-	TESTSOURCES_OPTIONS_EXECUTABLE_CATH_ASSIGN_DOMAINS_OPTIONS
-		options/executable/cath_assign_domains_options/cath_assign_domains_options_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_EXECUTABLE_CATH_REFINE_ALIGN_OPTIONS
-		options/executable/cath_refine_align_options/cath_refine_align_options_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_EXECUTABLE_CATH_SCORE_ALIGN_OPTIONS
-		options/executable/cath_score_align_options/cath_score_align_options_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_EXECUTABLE_CATH_SSAP_OPTIONS
-		options/executable/cath_ssap_options/cath_ssap_options_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_EXECUTABLE_CATH_SUPERPOSE_OPTIONS
-		options/executable/cath_superpose_options/cath_superpose_options_test.cpp
 )
 
 set(
 	TESTSOURCES_OPTIONS_EXECUTABLE
-		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_ASSIGN_DOMAINS_OPTIONS}
-		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_REFINE_ALIGN_OPTIONS}
-		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_SCORE_ALIGN_OPTIONS}
-		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_SSAP_OPTIONS}
-		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_SUPERPOSE_OPTIONS}
 		options/executable/env_var_option_name_handler_test.cpp
 		options/executable/executable_options_test.cpp
 )
@@ -1385,48 +1409,52 @@ set(
 set(
 	TESTSOURCES_OPTIONS_OPTIONS_BLOCK
 		options/options_block/alignment_input_options_block_test.cpp
-		options/options_block/alignment_output_options_block_test.cpp
 		options/options_block/check_pdb_options_block_test.cpp
-		options/options_block/data_dirs_options_block_test.cpp
-		options/options_block/data_dirs_spec_test.cpp
 		options/options_block/detail_help_options_block_test.cpp
-		options/options_block/display_options_block_test.cpp
 		options/options_block/misc_help_version_options_block_test.cpp
-		options/options_block/old_ssap_options_block_test.cpp
 		options/options_block/options_block_test.cpp
 		options/options_block/pdb_input_options_block_test.cpp
-		options/options_block/superposition_output_options_block_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_OUTPUTTER_ALIGNMENT_OUTPUTTER
-		options/outputter/alignment_outputter/alignment_outputter_list_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_OUTPUTTER_SUPERPOSITION_OUTPUTTER
-		options/outputter/superposition_outputter/json_file_superposition_outputter_test.cpp
-		options/outputter/superposition_outputter/ostream_superposition_outputter_test.cpp
-		options/outputter/superposition_outputter/pdb_file_superposition_outputter_test.cpp
-		options/outputter/superposition_outputter/pdb_files_superposition_outputter_test.cpp
-		options/outputter/superposition_outputter/pymol_file_superposition_outputter_test.cpp
-		options/outputter/superposition_outputter/pymol_view_superposition_outputter_test.cpp
-		options/outputter/superposition_outputter/superposition_outputter_list_test.cpp
-		options/outputter/superposition_outputter/superposition_outputter_test.cpp
-)
-
-set(
-	TESTSOURCES_OPTIONS_OUTPUTTER
-		${TESTSOURCES_OPTIONS_OUTPUTTER_ALIGNMENT_OUTPUTTER}
-		${TESTSOURCES_OPTIONS_OUTPUTTER_SUPERPOSITION_OUTPUTTER}
 )
 
 set(
 	TESTSOURCES_OPTIONS
-		${TESTSOURCES_OPTIONS_ACQUIRER}
 		${TESTSOURCES_OPTIONS_EXECUTABLE}
 		${TESTSOURCES_OPTIONS_OPTIONS_BLOCK}
-		${TESTSOURCES_OPTIONS_OUTPUTTER}
+)
+
+set(
+	TESTSOURCES_OUTPUTTER_ALIGNMENT_OUTPUTTER
+		outputter/alignment_outputter/alignment_outputter_list_test.cpp
+)
+
+set(
+	TESTSOURCES_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS
+		outputter/alignment_outputter_options/alignment_output_options_block_test.cpp
+)
+
+set(
+	TESTSOURCES_OUTPUTTER_SUPERPOSITION_OUTPUT_OPTIONS
+		outputter/superposition_output_options/superposition_output_options_block_test.cpp
+)
+
+set(
+	TESTSOURCES_OUTPUTTER_SUPERPOSITION_OUTPUTTER
+		outputter/superposition_outputter/json_file_superposition_outputter_test.cpp
+		outputter/superposition_outputter/ostream_superposition_outputter_test.cpp
+		outputter/superposition_outputter/pdb_file_superposition_outputter_test.cpp
+		outputter/superposition_outputter/pdb_files_superposition_outputter_test.cpp
+		outputter/superposition_outputter/pymol_file_superposition_outputter_test.cpp
+		outputter/superposition_outputter/pymol_view_superposition_outputter_test.cpp
+		outputter/superposition_outputter/superposition_outputter_list_test.cpp
+		outputter/superposition_outputter/superposition_outputter_test.cpp
+)
+
+set(
+	TESTSOURCES_OUTPUTTER
+		${TESTSOURCES_OUTPUTTER_ALIGNMENT_OUTPUTTER}
+		${TESTSOURCES_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS}
+		${TESTSOURCES_OUTPUTTER_SUPERPOSITION_OUTPUT_OPTIONS}
+		${TESTSOURCES_OUTPUTTER_SUPERPOSITION_OUTPUTTER}
 )
 
 set(
@@ -1608,8 +1636,15 @@ set(
 )
 
 set(
+	TESTSOURCES_SSAP_OPTIONS
+		ssap/options/cath_ssap_options_test.cpp
+		ssap/options/old_ssap_options_block_test.cpp
+)
+
+set(
 	TESTSOURCES_SSAP
 		ssap/distance_score_formula_test.cpp
+		${TESTSOURCES_SSAP_OPTIONS}
 		ssap/selected_pair_test.cpp
 		ssap/ssap_scores_test.cpp
 		ssap/ssap_test.cpp
@@ -1735,6 +1770,7 @@ set(
 
 set(
 	STD_NORMSOURCES
+		${NORMSOURCES_ACQUIRER}
 		${NORMSOURCES_ALIGNMENT}
 		${NORMSOURCES_CHOPPING}
 		${NORMSOURCES_COMMON}
@@ -1742,6 +1778,7 @@ set(
 		${NORMSOURCES_EXCEPTION}
 		${NORMSOURCES_FILE}
 		${NORMSOURCES_OPTIONS}
+		${NORMSOURCES_OUTPUTTER}
 		 ${NORMSOURCES_RESOLVE_HITS}
 		${NORMSOURCES_SCAN}
 		${NORMSOURCES_SCORE}
@@ -1752,6 +1789,7 @@ set(
 
 set(
 	STD_TESTSOURCES
+		${TESTSOURCES_ACQUIRER}
 		${TESTSOURCES_ALIGNMENT}
 		${TESTSOURCES_CATH_SUPERPOSE}
 		${TESTSOURCES_CHOPPING}
@@ -1760,6 +1798,7 @@ set(
 		${TESTSOURCES_EXCEPTION}
 		${TESTSOURCES_FILE}
 		${TESTSOURCES_OPTIONS}
+		${TESTSOURCES_OUTPUTTER}
 		 ${TESTSOURCES_RESOLVE_HITS}
 		${TESTSOURCES_SCAN}
 		${TESTSOURCES_SCORE}
@@ -1770,10 +1809,10 @@ set(
 
 #####################################################################
 
-# add_library(
-# 	normsources_cath_assign_domains
-# 		${NORMSOURCES_CATH_ASSIGN_DOMAINS}
-# )
+add_library(
+	normsources_cath_assign_domains
+		${NORMSOURCES_CATH_ASSIGN_DOMAINS}
+)
 
 add_library(
 	normsources_cath_refine_align
@@ -1834,6 +1873,7 @@ add_executable(
 		${NORMSOURCES_EXECUTABLES_CATH_RESOLVE_HITS}
 		${NORMSOURCES_COMMON}
 		${NORMSOURCES_EXCEPTION}
+		${NORMSOURCES_OPTIONS}
 )
 
 add_executable(
@@ -1853,15 +1893,14 @@ add_executable(
 
 #####################################################################
 
-target_link_libraries( build-test          normsources_cath_superpose normsources_test std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-assign-domains                                             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-# target_link_libraries( cath-assign-domains normsources_cath_assign-domains             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-refine-align   normsources_cath_refine_align               std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries  ( build-test          normsources_cath_superpose normsources_test std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries  ( cath-assign-domains normsources_cath_assign_domains             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries  ( cath-refine-align   normsources_cath_refine_align               std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 # target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                    biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-  target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                             pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-score-align    normsources_cath_score_align                std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-ssap                                                       std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-superpose      normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries  ( cath-resolve-hits   normsources_resolve_hits                                             pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries  ( cath-score-align    normsources_cath_score_align                std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries  ( cath-ssap                                                       std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries  ( cath-superpose      normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 
 add_dependencies( build-test          built_bioplib_libraries )
 add_dependencies( cath-assign-domains built_bioplib_libraries )

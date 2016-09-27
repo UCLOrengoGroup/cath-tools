@@ -80,52 +80,57 @@ opt_str ids_options_block::do_invalid_string() const {
 	return none;
 }
 
-/// \brief TODOCUMENT
-size_t ids_options_block::num_ids_specified() const {
-	return ids.size();
-}
+// /// \brief TODOCUMENT
+// size_t ids_options_block::num_ids_specified() const {
+// 	return ids.size();
+// }
+
+// /// \brief TODOCUMENT
+// string ids_options_block::get_id_of_index(const size_t &arg_index ///< TODOCUMENT
+//                                                ) const {
+// 	return ids[ arg_index ];
+// }
 
 /// \brief TODOCUMENT
-string ids_options_block::get_id_of_index(const size_t &arg_index ///< TODOCUMENT
-                                               ) const {
-	return ids[ arg_index ];
+const str_vec & ids_options_block::get_ids() const {
+	return ids;
 }
 
-/// \brief TODOCUMENT
-str_vec cath::opts::get_all_ids(const ids_options_block &arg_block ///< TODOCUMENT
-                                ) {
-	const size_t num_ids = arg_block.num_ids_specified();
+// /// \brief TODOCUMENT
+// str_vec cath::opts::get_all_ids(const ids_options_block &arg_block ///< TODOCUMENT
+//                                 ) {
+// 	const size_t num_ids = arg_block.num_ids_specified();
 
-	str_vec all_ids;
-	all_ids.reserve( num_ids );
-	for (size_t id_ctr = 0; id_ctr < num_ids; ++id_ctr) {
-		all_ids.push_back( arg_block.get_id_of_index( id_ctr ) );
-	}
+// 	str_vec all_ids;
+// 	all_ids.reserve( num_ids );
+// 	for (size_t id_ctr = 0; id_ctr < num_ids; ++id_ctr) {
+// 		all_ids.push_back( arg_block.get_id_of_index( id_ctr ) );
+// 	}
 
-	return all_ids;
-}
+// 	return all_ids;
+// }
 
 /// \brief TODOCUMENT
 bool cath::opts::ids_specified(const ids_options_block &arg_block ///< TODOCUMENT
                                ) {
-	return (arg_block.num_ids_specified() > 0);
+	return ( arg_block.get_ids().size() > 0 );
 }
 
 /// \brief Getter for the name of the first protein structure to be compared
 string cath::opts::get_id_a(const ids_options_block &arg_block ///< TODOCUMENT
                             ) {
-	if (arg_block.num_ids_specified() != 2) {
+	if ( arg_block.get_ids().size() != 2 ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Cannot get protein name a because two names have not (yet) been specified"));
 	}
-	return arg_block.get_id_of_index( 0 );
+	return arg_block.get_ids()[ 0 ];
 }
 
 /// \brief Getter for the name of the second protein structure to be compared
 string cath::opts::get_id_b(const ids_options_block &arg_block ///< TODOCUMENT
                             ) {
-	if ( arg_block.num_ids_specified() != 2 ) {
-		BOOST_THROW_EXCEPTION(out_of_range_exception("Cannot get protein name a because two names have not (yet) been specified"));
+	if ( arg_block.get_ids().size() != 2 ) {
+		BOOST_THROW_EXCEPTION(out_of_range_exception("Cannot get protein name b because two names have not (yet) been specified"));
 	}
-	return arg_block.get_id_of_index( 1 );
+	return arg_block.get_ids()[ 1 ];
 }
 

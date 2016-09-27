@@ -52,10 +52,14 @@ BOOST_FIXTURE_TEST_SUITE(check_pdb_options_block_test_suite, cath::test::check_p
 
 /// \brief Check that if permit_atoms is requested, then that is handled correctly
 BOOST_AUTO_TEST_CASE(handles_permit_atoms) {
+	const temp_file temp_file("cath_tools_test_temp_file.check_pdb_options_block.%%%%");
+	const path      temp_file_filename = get_filename( temp_file );
 	parse_into_options_block(
 		the_options_block,
 		{ IGNORE_OPT,
-		  "--" + check_pdb_options_block::PO_PERMIT }
+		  "--" + check_pdb_options_block::PO_PERMIT,
+		  // "--" + check_pdb_options_block::PO_PDB_FILE,
+		  temp_file_filename.string() }
 	);
 	BOOST_CHECK_EQUAL( path(), the_options_block.get_pdb_file()        );
 	BOOST_CHECK_EQUAL( true,   the_options_block.get_permit_no_atoms() );

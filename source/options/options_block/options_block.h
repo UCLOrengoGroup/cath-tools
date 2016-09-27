@@ -82,8 +82,9 @@ namespace cath {
 			std::unique_ptr<options_block> clone() const;
 			virtual ~options_block() noexcept = default;
 
+			boost::program_options::options_description get_all_options_description(const size_t &);
 			boost::program_options::options_description get_visible_options_description(const size_t &);
-			boost::program_options::options_description get_hidden_options_description(const size_t &);
+			boost::program_options::options_description get_hidden_options_description();
 
 			opt_str invalid_string() const;
 

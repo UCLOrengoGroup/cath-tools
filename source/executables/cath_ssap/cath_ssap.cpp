@@ -22,7 +22,7 @@
 #include <boost/log/trivial.hpp>
 
 #include "exception/program_exception_wrapper.h"
-#include "options/executable/cath_ssap_options/cath_ssap_options.h"
+#include "ssap/options/cath_ssap_options.h"
 #include "ssap/ssap.h"
 
 using namespace boost::log::trivial;

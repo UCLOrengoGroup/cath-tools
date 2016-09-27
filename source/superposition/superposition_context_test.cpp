@@ -21,7 +21,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "options/options_block/data_dirs_options_block.h"
+#include "file/options/data_dirs_options_block.h"
 #include "test/superposition_fixture.h"
 
 using namespace cath::common;

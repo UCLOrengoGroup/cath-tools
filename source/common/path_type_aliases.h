@@ -26,6 +26,8 @@
 
 namespace cath {
 
+	/// \todo Move path_vec from common/type_aliases.h to here (common/path_type_aliases.h)
+
 	/// \brief TODOCUMENT
 	using opt_path = boost::optional<boost::filesystem::path>;
 }

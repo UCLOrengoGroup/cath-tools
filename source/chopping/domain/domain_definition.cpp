@@ -23,10 +23,10 @@
 #include <boost/filesystem/path.hpp>
 
 #include "file/data_file.h"
+#include "file/options/data_dirs_options_block.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"
-#include "options/options_block/data_dirs_options_block.h"
 
 using namespace boost::filesystem;
 using namespace cath;

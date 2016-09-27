@@ -20,13 +20,13 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "cath_refine_align/options/cath_refine_align_options.h"
 #include "cath_superpose/cath_superposer.h"
 #include "common/argc_argv_faker.h"
 #include "common/file/open_fstream.h"
+#include "common/file/temp_file.h"
 #include "common/test_predicate/files_equal.h"
 #include "common/test_predicate/istream_and_file_equal.h"
-#include "common/file/temp_file.h"
-#include "options/executable/cath_superpose_options/cath_superpose_options.h"
 #include "test/global_test_constants.h"
 
 #include <fstream>
@@ -71,7 +71,7 @@ void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner
                                                                                           const bool    &arg_outputs_to_temp_file  ///< TODOCUMENT
                                                                                           ) {
 		argc_argv_faker faked_argc_and_argv( arg_command_line_args );
-		const auto my_cath_superpose_options = make_and_parse_options<cath_superpose_options>(
+		const auto my_cath_refine_align_options = make_and_parse_options<cath_refine_align_options>(
 			faked_argc_and_argv.get_argc(),
 			faked_argc_and_argv.get_argv()
 		);
@@ -80,7 +80,7 @@ void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner
 		stringstream test_ostream;
 
 		// Perform the superposition and then close the input file
-		cath_superposer::superpose( my_cath_superpose_options, arg_istream, test_ostream );
+		cath_superposer::superpose( my_cath_refine_align_options, arg_istream, test_ostream );
 
 		if (arg_outputs_to_temp_file) {
 			BOOST_CHECK_FILES_EQUAL( get_filename( temp_cath_align_refiner_output_file ), arg_expected_output_file);

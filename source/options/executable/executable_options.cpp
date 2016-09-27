@@ -21,26 +21,34 @@
 #include "executable_options.h"
 
 #include <boost/algorithm/string/predicate.hpp>
+#include <boost/algorithm/string/trim.hpp>
 #include <boost/optional.hpp>
 
 #include "common/argc_argv_faker.h"
+#include "common/file/find_file.h"
 #include "common/file/open_fstream.h"
 #include "exception/invalid_argument_exception.h"
 #include "options/executable/env_var_option_name_handler.h"
-#include "options/options_block/data_dirs_options_block.h"
 #include "options/options_block/misc_help_version_options_block.h"
 
 #include <fstream>
 #include <iostream>
 #include <iosfwd>
 
-using namespace boost::algorithm;
-using namespace boost::filesystem;
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
-using namespace std;
+using namespace std::literals::string_literals;
+
+using boost::ends_with;
+using boost::filesystem::path;
+using boost::program_options::command_line_parser;
+using boost::program_options::options_description;
+using boost::program_options::positional_options_description;
+using boost::program_options::variables_map;
+using boost::trim_right_copy;
+using std::ifstream;
+using std::string;
 
 constexpr size_t executable_options::DEFAULT_PROG_OPS_LINE_LENGTH;
 
@@ -70,16 +78,33 @@ positional_options_description executable_options::get_positional_options() {
 ///
 /// > Try 'cath-ssap --help' for usage information.
 string executable_options::get_standard_usage_error_string() const {
-	return "Try '"
+	return "See '"
 	       + get_program_name()
 	       + " --"
 	       + misc_help_version_options_block::PO_HELP
-	       + "' for usage information.";
+	       + "' for usage.";
 }
 
 /// \brief An NVI pass-though method to get the name of the program from do_get_program_name()
 string executable_options::get_program_name() const {
 	return do_get_program_name();
+}
+
+/// \brief Get a string to prepend to the standard help
+string executable_options::get_help_prefix_string() const {
+	return do_get_help_prefix_string();
+}
+
+/// \brief Get a string to append to the standard help
+string executable_options::get_help_suffix_string() const {
+	return do_get_help_suffix_string();
+}
+
+/// \brief Get an overview of the job that these options are for
+///
+/// This can be used in the --help and --version outputs
+string executable_options::get_overview_string() const {
+	return do_get_overview_string();
 }
 
 /// \brief Get the Boost variables map that has been populated by parsing options
@@ -91,7 +116,7 @@ string executable_options::get_program_name() const {
 /// things like whether options had values specified or were defaulted() etc
 const variables_map & executable_options::get_variables_map() const {
 	// Check the options have been processed
-	if (!processed_options) {
+	if ( ! processed_options ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get variables_map because the options haven't yet been processed"));
 	}
 	return vm;
@@ -109,7 +134,24 @@ void executable_options::add_options_block(options_block &arg_options_block ///<
 	if (processed_options) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot add an options_block once the options have been processed"));
 	}
-	all_options_blocks.push_back(&arg_options_block);
+	all_options_blocks.push_back( arg_options_block );
+}
+
+/// \brief Add all the options of the specified options_block to the specified options_description
+void executable_options::add_all_options_to_description(options_description &arg_options_description, ///< The options_description to which the options should be added
+                                                        options_block       &arg_options_block,       ///< The options_block from which the options to be added should be drawn
+                                                        const size_t        &arg_prog_ops_line_length ///< The length of the line to use
+                                                        ) {
+	arg_options_description.add( arg_options_block.get_hidden_options_description (                          ) );
+	arg_options_description.add( arg_options_block.get_visible_options_description( arg_prog_ops_line_length ) );
+}
+
+/// \brief Add the visible options of the specified options_block to the specified options_description
+void executable_options::add_visble_options_to_description(options_description &arg_options_description, ///< The options_description to which the options should be added
+                                                           options_block       &arg_options_block,       ///< The options_block from which the options to be added should be drawn
+                                                           const size_t        &arg_prog_ops_line_length ///< The length of the line to use
+                                                           ) {
+	arg_options_description.add( arg_options_block.get_visible_options_description( arg_prog_ops_line_length ) );
 }
 
 /// \brief Attempt to parse the specified options
@@ -127,9 +169,10 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
                                        const char * const  argv[] ///< The argv from command line parameters
                                        ) {
 	// Check the options haven't already been processed
-	if (processed_options) {
+	if ( processed_options ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot process options once they have already been processed"));
 	}
+	processed_options = true;
 
 	// Create two options_description, one complete and another containing all visible options
 	options_description full_po_desc   ( DEFAULT_PROG_OPS_LINE_LENGTH );
@@ -141,107 +184,170 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 	int new_argc      = fake_argc_argv.get_argc();
 	char * * new_argv = fake_argc_argv.get_argv();
 
+	misc_help_version_options_block the_help_block;
+	add_all_options_to_description   ( full_po_desc,    the_help_block, DEFAULT_PROG_OPS_LINE_LENGTH );
+	add_visble_options_to_description( visible_po_desc, the_help_block, DEFAULT_PROG_OPS_LINE_LENGTH );
+
+	// std::cerr << "full_po_desc    is " << full_po_desc    << "\n\n";
+
+	// std::cerr << "visible_po_desc is " << visible_po_desc << "\n\n";
+
+	// Attempt the standard parses and catch any exceptions
+	//
+	// \todo Consider putting each parse into different objects
+	//       (presumably of classes deriving from a single ABC).
+
+	// const auto parsed = try_parse(
+	// 	command_line_parser( ac, av )
+	// 		.options   ( action_od )
+	// 		.positional( pod       )
+	// 		.allow_unregistered(),
+	// 	vm
+	// );
+
+	// return prog_opts_try(
+	// 	[&] () {
+	// 		const auto parsed = arg_parser.run();
+	// 		store( parsed, arg_vm );
+	// 		notify( arg_vm );
+	// 		return parsed;
+	// 	}
+	// );
+
+	prog_opts_try(
+		error_or_help_string,
+		[&] () {
+			const auto parsed = command_line_parser( new_argc, new_argv )
+				.options( full_po_desc )
+				.allow_unregistered()
+				.run();
+			store( parsed, vm );
+			notify( vm );
+			// return parsed;
+		},
+		"[whilst parsing initial help/version options]"s
+	);
+
+	// std::cerr << "Done initial parse\n";
+
 	// Add each of the options_blocks to po_desc
-	for (options_block * const options_block_ptr : all_options_blocks) {
-		const options_description hidden_opts  = options_block_ptr->get_hidden_options_description(  DEFAULT_PROG_OPS_LINE_LENGTH );
-		const options_description visible_opts = options_block_ptr->get_visible_options_description( DEFAULT_PROG_OPS_LINE_LENGTH );
-		full_po_desc.add(    hidden_opts  );
-		full_po_desc.add(    visible_opts );
-		visible_po_desc.add( visible_opts );
+	for (const auto &the_options_block_ref : all_options_blocks) {
+		add_all_options_to_description   ( full_po_desc,    the_options_block_ref.get(), DEFAULT_PROG_OPS_LINE_LENGTH );
+		add_visble_options_to_description( visible_po_desc, the_options_block_ref.get(), DEFAULT_PROG_OPS_LINE_LENGTH );
 	}
 
-	// Attempt the parses and catch any exceptions
+	// If help was requested, then provide it
+	if ( the_help_block.get_help() ) {
+		// std::cerr << "Getting help\n";
+		error_or_help_string = misc_help_version_options_block::get_help_string( visible_po_desc, get_help_prefix_string(), get_help_suffix_string() );
+		return;
+	}
+
+	// If version information was requested, then provide it
+	if ( the_help_block.get_version() ) {
+		// std::cerr << "Getting version\n";
+		error_or_help_string = misc_help_version_options_block::get_version_string( get_program_name(), get_overview_string() );
+		return;
+	}
+
+	// std::cerr << "On to main parses...\n";
+
+	const positional_options_description positionals = get_positional_options();
+
+	
+
+	// Attempt the command line parse
 	//
-	// The parses are performed in decreasing order of precedence
+	// The remaining parses are performed in decreasing order of precedence
 	// (ie options specified via the command line should take precedence over those
 	//  specified via environment variables so it comes first)
-	//
-	// \todo If this gets any more complicated then consider putting each of these
-	//       different parses into different objects (presumably of classes deriving from
-	//       a single ABC).
-	string parsing_approach = "";
-	try {
-		// Parse options from the command line
-		parsing_approach = "from the command line";
-		const positional_options_description positionals = get_positional_options();
-		processed_options = true;
-		store(
-			command_line_parser(
-				new_argc,
-				new_argv
-			).options(
-				full_po_desc
-			).positional(
-				positionals
-			).run(),
-			vm
-		);
-
-		// Parse any environment variables prefixed with "CATH_TOOLS_"
-		// and just silently ignore any unknown options
-		parsing_approach = "from global environment variables with prefix " + CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX;
-		//! [Using env_var_option_name_handler]
-		store(
-			parse_environment(
-				full_po_desc,
-				env_var_option_name_handler(
-					CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX,
-					true,
+	prog_opts_try(
+		error_or_help_string,
+		[&] () {
+			store(
+				command_line_parser(
+					new_argc,
+					new_argv
+				).options(
 					full_po_desc
-				)
-			),
-			vm
-		);
-		//! [Using env_var_option_name_handler]
-
-		// Parse any configuration file called cath_tools.conf
-		const path located_cath_tools_conf_file = find_file(CATH_TOOLS_CONF_FILE_SEARCH_PATH, CATH_TOOLS_CONF_FILE.string());
-		if (!located_cath_tools_conf_file.empty()) {
-//			cerr << "Parsing configuration from file " << CATH_TOOLS_CONF_FILE << endl;
-			parsing_approach = "from the global configuration file " + located_cath_tools_conf_file.string();
-			ifstream config_file_stream;
-			open_ifstream(config_file_stream, CATH_TOOLS_CONF_FILE);
-			store(parse_config_file(config_file_stream, full_po_desc, true), vm);
-			config_file_stream.close();
+				).positional(
+					positionals
+				).run(),
+				vm
+			);
 		}
+	);
 
-		// All parsing is complete so call notify, which will trigger any
-		// post-parsing hooks to get called
-		notify(vm);
+	// Parse any environment variables prefixed with "CATH_TOOLS_"
+	// and just silently ignore any unknown options
+	//
+	// The remaining parses are performed in decreasing order of precedence
+	// (ie options specified via the command line should take precedence over those
+	//  specified via environment variables so it comes first)
+	prog_opts_try(
+		error_or_help_string,
+		[&] () {
+			store(
+				parse_environment(
+					full_po_desc,
+					env_var_option_name_handler(
+						CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX,
+						true,
+						full_po_desc
+					)
+				),
+				vm
+			);
+		},
+		"[whilst parsing from global environment variables with prefix " + CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX + "]"
+	);
+
+	// Parse any configuration file called cath_tools.conf
+	const path located_cath_tools_conf_file = find_file( CATH_TOOLS_CONF_FILE_SEARCH_PATH, CATH_TOOLS_CONF_FILE.string() );
+	if ( ! located_cath_tools_conf_file.empty() ) {
+//		cerr << "Parsing configuration from file " << CATH_TOOLS_CONF_FILE << endl;
+		ifstream config_file_stream;
+		prog_opts_try(
+			error_or_help_string,
+			[&] () {
+				open_ifstream(config_file_stream, CATH_TOOLS_CONF_FILE);
+				store( parse_config_file( config_file_stream, full_po_desc, true ), vm );
+				config_file_stream.close();
+			},
+			"[whilst parsing from the global configuration file " + located_cath_tools_conf_file.string() + "]"
+		);
 	}
-	catch (std::exception &e) {
-		error_or_help_string = get_program_name() + ": Error in parsing program options (" + parsing_approach + "): " + e.what();
-	}
-	catch (...) {
-		error_or_help_string = get_program_name() + ": Caught an unrecognised exception whilst parsing program options (" + parsing_approach + ").\n";
+
+	// All parsing is complete so call notify, which will trigger any
+	// post-parsing hooks to get called
+	prog_opts_try(
+		error_or_help_string,
+		[&] () { notify( vm ); }
+	);
+
+	if ( error_or_help_string ) {
+		return;
 	}
 
 	// If no error has yet been encountered
 	// and if any of the blocks return non-empty invalid_string() results,
 	// then set error_or_help_string to the first
-	if (error_or_help_string.empty()) {
-		for (options_block * const options_block_ptr : all_options_blocks) {
-			const opt_str block_invalid_string = options_block_ptr->invalid_string();
-			if ( block_invalid_string ) {
-				error_or_help_string = *block_invalid_string;
-				break;
-			}
+	for (const auto &options_block_ref : all_options_blocks) {
+		const auto block_invalid_string = options_block_ref.get().invalid_string();
+		if ( block_invalid_string ) {
+			prog_opts_try( error_or_help_string, [&] () {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception(*block_invalid_string));
+			} );
+			return;
 		}
 	}
 
-	// If an error string has already arisen from the parsing or from an options block being invalid...
-	if (!error_or_help_string.empty()) {
-		// ...and if doesn't already end with the standard usage error string
-		// (eg "Try 'cath-ssap --help' for usage information.")
-		// then append it now.
-		if (!ends_with(error_or_help_string, get_standard_usage_error_string())) {
-			error_or_help_string += ("\n" + get_standard_usage_error_string());
-		}
-	}
-	// Else there is no error string yet, so now let the derived class consider then
-	// set it to whatever the derived class decides
-	else {
-		error_or_help_string = do_update_error_or_help_string( visible_po_desc );
+	// If there is still no error/help string yet, let the derived class have a chance to set it
+	const auto concrete_error_or_help_string = do_get_error_or_help_string();
+	if ( concrete_error_or_help_string ) {
+		error_or_help_string = *concrete_error_or_help_string
+			+ ( concrete_error_or_help_string->empty() ? ""s : "\n"s )
+			+ get_standard_usage_error_string();
 	}
 }
 
@@ -252,8 +358,8 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 ///
 /// \returns Any error or help string generated during parsing,
 ///          or otherwise an empty string
-string executable_options::get_error_or_help_string() const {
-	if (!processed_options) {
+const opt_str & executable_options::get_error_or_help_string() const {
+	if ( ! processed_options) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get error/help string because the options haven't yet been processed"));
 	}
 	return error_or_help_string;

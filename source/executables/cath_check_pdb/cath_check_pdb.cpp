@@ -20,15 +20,27 @@
 
 #include <boost/filesystem.hpp>
 
+#include "common/file/open_fstream.h"
 #include "common/logger.h"
 #include "exception/invalid_argument_exception.h"
 #include "exception/program_exception_wrapper.h"
+#include "file/pdb/pdb.h"
+#include "file/pdb/pdb_atom.h"
+#include "file/pdb/pdb_residue.h"
 #include "options/executable/cath_check_pdb_options/cath_check_pdb_options.h"
 
-using namespace boost::filesystem;
+#include <fstream>
+
 using namespace cath::common;
+using namespace cath::file;
 using namespace cath::opts;
-using namespace std;
+
+using boost::filesystem::path;
+using std::cerr;
+using std::cout;
+using std::endl;
+using std::ifstream;
+using std::string;
 
 namespace cath {
 
@@ -45,9 +57,9 @@ namespace cath {
 			const auto the_cath_check_pdb_options = make_and_parse_options<cath_check_pdb_options>( argc, argv );
 
 			// If the options are invalid or specify to do_nothing, then just output string return
-			const string error_or_help_string = the_cath_check_pdb_options.get_error_or_help_string();
-			if (!error_or_help_string.empty()) {
-				cout << error_or_help_string << endl;
+			const auto error_or_help_string = the_cath_check_pdb_options.get_error_or_help_string();
+			if ( error_or_help_string ) {
+				cout << *error_or_help_string << endl;
 				return;
 			}
 
@@ -65,7 +77,34 @@ namespace cath {
 			}
 
 			// If no problems were caught, output that the PDB file was parsed successfully
-			cerr << "PDB file " << pdb_file << " parsed successfully" << endl;
+			cerr << "PDB file " << pdb_file << " parsed successfully\n";
+		}
+	public:
+
+		/// \brief Check that the PDB file is OK and throw an invalid_argument_exception if not
+		///
+		/// \returns Nothing
+		static void check_pdb_file(const path &arg_pdb_file,       ///< The PDB file to check
+		                           const bool &arg_permit_no_atoms ///< Whether to permit no ATOM records
+		                           ) {
+			// Check the PDB file is a valid input file
+			if ( ! options_block::is_acceptable_input_file( arg_pdb_file ) ) {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception("No such valid, non-empty PDB file \"" + arg_pdb_file.string() + "\"."));
+			}
+
+			// Open an ifstream on the PDB files
+			ifstream pdb_istream;
+			open_ifstream(pdb_istream, arg_pdb_file);
+
+			// Attempt to read the PDB file (and let any exceptions propagate out)
+			const pdb newly_read_pdb = read_pdb_file( pdb_istream );
+			pdb_istream.close();
+
+			// If there were no ATOM records and that isn't allowed, then throw an exception
+			// (which will be caught just below)
+			if (!arg_permit_no_atoms && newly_read_pdb.get_num_atoms() <= 0) {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception("PDB file \"" + arg_pdb_file.string() + "\" did not contain any valid ATOM records"));
+			}
 		}
 	};
 }

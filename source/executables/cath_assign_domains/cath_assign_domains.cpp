@@ -28,6 +28,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 
+#include "cath_assign_domains/options/cath_assign_domains_options.h"
 #include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/file/open_fstream.h"
@@ -36,7 +37,6 @@
 #include "exception/program_exception_wrapper.h"
 #include "file/prc_scores_file/prc_scores_file.h"
 #include "file/ssap_scores_file/ssap_scores_file.h"
-#include "options/executable/cath_assign_domains_options/cath_assign_domains_options.h"
 #include "score/homcheck_tools/first_result_if.h"
 #include "score/homcheck_tools/ssaps_and_prcs_of_query.h"
 #include "score/homcheck_tools/superfamily_of_domain.h"
@@ -240,9 +240,9 @@ namespace cath {
 			const auto the_cath_assign_domains_options = make_and_parse_options<cath_assign_domains_options>( argc, argv );
 
 			// If the options are invalid or specify to do_nothing, then just return
-			const string error_or_help_string = the_cath_assign_domains_options.get_error_or_help_string();
-			if ( ! error_or_help_string.empty() ) {
-				cerr << error_or_help_string << "\n";
+			const auto error_or_help_string = the_cath_assign_domains_options.get_error_or_help_string();
+			if ( error_or_help_string ) {
+				cerr << *error_or_help_string << "\n";
 				return;
 			}
 

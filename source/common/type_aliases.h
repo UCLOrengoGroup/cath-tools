@@ -74,6 +74,9 @@ namespace cath {
 	using diff_vec                      = std::vector<ptrdiff_t>;
 	using diff_vec_vec                  = std::vector<diff_vec>;
 
+	template <typename T>
+	using uptr_vec                      = std::vector<std::unique_ptr<T>>;
+
 	using path_vec                      = std::vector<boost::filesystem::path>;
 
 	using opt_size                      = boost::optional<size_t>;

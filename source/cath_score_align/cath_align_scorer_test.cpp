@@ -27,7 +27,6 @@
 #include "common/size_t_literal.h"
 #include "common/test_predicate/files_equal.h"
 #include "common/test_predicate/istream_and_file_equal.h"
-#include "options/executable/cath_superpose_options/cath_superpose_options.h"
 #include "test/global_test_constants.h"
 
 #include <fstream>

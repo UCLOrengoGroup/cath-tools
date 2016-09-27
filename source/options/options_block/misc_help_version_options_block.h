@@ -53,14 +53,14 @@ namespace cath {
 		public:
 			virtual ~misc_help_version_options_block() noexcept = default;
 
-			bool get_help() const;
-			bool get_version() const;
+			const bool & get_help() const;
+			const bool & get_version() const;
 
-			std::string get_help_string(const boost::program_options::options_description &,
-			                            const std::string &,
-			                            const std::string &) const;
-			std::string get_version_string(const std::string &,
-			                               const std::string &) const;
+			static std::string get_help_string(const boost::program_options::options_description &,
+			                                   const std::string &,
+			                                   const std::string &);
+			static std::string get_version_string(const std::string &,
+			                                      const std::string &);
 
 			static const std::string CATH_TOOLS_VERSION;
 			static const std::string CATH_TOOLS_VERSION_DATE;

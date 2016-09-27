@@ -27,8 +27,10 @@
 #include <string>
 #include <vector>
 
+namespace cath { class display_colour; }
+namespace cath { class display_spec; }
+
 namespace cath {
-	class display_colour;
 
 	/// \brief TODOCUMENT
 	class display_colour_list final {
@@ -47,11 +49,10 @@ namespace cath {
 		static std::string DEFAULT_COLOURS_STRING;
 	};
 
+	display_colour_list get_colour_list(const display_spec &);
+
 	const display_colour & colour_of_mod_index(const display_colour_list &,
 	                                           const size_t &);
-
-//	std::string name_of_colour_of_mod_index(const display_colour_list &,
-//	                                        const display_colour_list::size_type &);
 
 	display_colour_list make_display_colour_list_from_string(const std::string &);
 }

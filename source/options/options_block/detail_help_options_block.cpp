@@ -25,13 +25,15 @@
 #include "common/clone/make_uptr_clone.h"
 #include "exception/invalid_argument_exception.h"
 
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
-using namespace std;
 
 using boost::none;
+using boost::program_options::bool_switch;
+using boost::program_options::options_description;
+using std::string;
+using std::unique_ptr;
 
 /// \brief A standard do_clone method
 ///
@@ -51,7 +53,7 @@ string detail_help_options_block::do_get_block_name() const {
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
 void detail_help_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
-                                                              ) {
+                                                                      ) {
 	// Foreach option requested
 	for (const str_str_str_pair_pair &option_help_pair : desc_and_help_of_option_name) {
 		// Grab the name, description and a reference to a (possibly newly created) bool value in the values map

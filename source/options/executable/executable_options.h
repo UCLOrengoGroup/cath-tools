@@ -22,8 +22,10 @@
 #define EXECUTABLE_OPTIONS_H_INCLUDED
 
 #include <boost/filesystem/path.hpp>
+#include <boost/optional.hpp>
 #include <boost/program_options.hpp>
 
+#include "common/boost_addenda/program_options/set_opt_str_from_prog_opts_try.h"
 #include "common/type_aliases.h"
 
 #include <string>
@@ -54,7 +56,7 @@ namespace cath {
 		///  - Global configuration file    (   file : "cath-tools.conf"     )
 		class executable_options {
 		private:
-			/// \brief This affects the way Boost Program Options formats the outputting of the options description
+			/// \brief The line legnth to use when rendering program options
 			///
 			/// Its behaviour isn't 100% clear but setting this value to roughly the character-width of a
 			/// modern terminal prevents it prematurely wrapping and making a very long, narrow output.
@@ -64,11 +66,8 @@ namespace cath {
 			static const     boost::filesystem::path CATH_TOOLS_CONF_FILE;
 			static const     path_vec                CATH_TOOLS_CONF_FILE_SEARCH_PATH;
 
-			/// \brief A list of pointers to the options blocks to be processed during parsing
-			std::vector<options_block *> all_options_blocks;
-
-			/// \brief A list of pointers to the options blocks to be processed during parsing
-			std::vector<options_block *> visible_options_blocks;
+			/// \brief A list of (references to) the options blocks to be processed during parsing
+			std::vector<std::reference_wrapper<options_block>> all_options_blocks;
 
 			/// \brief Whether or not options have been parsed
 			///
@@ -78,7 +77,7 @@ namespace cath {
 
 			/// \brief A string that is populated with any error/help messages that arise
 			///        during parsing. May be queried with get_error_or_help_string()
-			std::string error_or_help_string;
+			opt_str error_or_help_string;
 
 			/// \brief The Boost program_options variable map which stores details of the parsing.
 			///        This can be queried by the protected method get_variables_map() for checking
@@ -95,16 +94,35 @@ namespace cath {
 			/// \brief Review all specified options and return a string containing any errors or a help string
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			virtual std::string do_update_error_or_help_string(const boost::program_options::options_description &) const = 0;
+			virtual opt_str do_get_error_or_help_string() const = 0;
 
 			virtual boost::program_options::positional_options_description get_positional_options();
+
+			virtual std::string do_get_help_prefix_string() const = 0;
+			virtual std::string do_get_help_suffix_string() const = 0;
+			virtual std::string do_get_overview_string() const = 0;
+
+			template <typename FN>
+			void prog_opts_try(opt_str &,
+			                   FN &&,
+			                   const opt_str & = boost::none);
 
 		protected:
 			std::string get_standard_usage_error_string() const;
 			std::string get_program_name() const;
+			std::string get_help_prefix_string() const;
+			std::string get_help_suffix_string() const;
+			std::string get_overview_string() const;
 			const boost::program_options::variables_map & get_variables_map() const;
 
 			void add_options_block(options_block &);
+
+			static void add_all_options_to_description(boost::program_options::options_description &,
+			                                           options_block &,
+			                                           const size_t &);
+			static void add_visble_options_to_description(boost::program_options::options_description &,
+			                                              options_block &,
+			                                              const size_t &);
 
 		public:
 			virtual ~executable_options() noexcept = default;
@@ -112,8 +130,22 @@ namespace cath {
 			void parse_options(const int &,
 			                   const char * const []);
 
-			std::string get_error_or_help_string() const;
+			const opt_str & get_error_or_help_string() const;
 		};
+
+		/// \brief Try a program options action and handle any exceptions that are thrown
+		template <typename Func>
+		void executable_options::prog_opts_try(opt_str        &arg_error_string, ///< The optional error string to update with a description of any errors that occur
+		                                       Func          &&arg_function,     ///< The function to perform
+		                                       const opt_str  &arg_parsing_phase ///< The phase in which this parsing is occurring (or none)
+		                                       ) {
+			common::set_opt_str_from_prog_opts_try(
+				arg_error_string,
+				std::forward<Func>( arg_function ),
+				get_program_name() + ": " + ( arg_parsing_phase ? *arg_parsing_phase + " " : std::string{} ),
+				"\n" + get_standard_usage_error_string()
+			);
+		}
 
 		/// \brief Return a new instance of the specified type of executable_options with the specified options parsed into it
 		template <typename T>

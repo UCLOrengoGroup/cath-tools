@@ -62,7 +62,7 @@ void options_block_tester::parse_into_options_block(options_block &the_options_b
                                                     const str_vec &arg_options        ///< A vector of options strings to parse into the options_block (without the program name at the start - a dummy program name will be added)
 	                                                ) {
 	const str_vec opts_with_dummy_progname = prepend_dummy_program_name_copy( arg_options );
-	options_description  po_desc           = the_options_block.get_visible_options_description( 100 );
+	options_description  po_desc           = the_options_block.get_all_options_description( 100 );
 	argc_argv_faker      faked_arguments( opts_with_dummy_progname );
 
 	// cerr << "Parsing from options : " << faked_arguments << endl;

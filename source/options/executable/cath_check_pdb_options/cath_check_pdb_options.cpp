@@ -24,32 +24,32 @@
 #include <boost/shared_array.hpp>
 
 #include "common/argc_argv_faker.h"
-#include "common/file/open_fstream.h"
 #include "exception/invalid_argument_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
 
 #include <fstream>
 
-using namespace boost::filesystem;
-using namespace boost::program_options;
+using namespace cath;
 using namespace cath::common;
-using namespace cath::file;
 using namespace cath::opts;
-using namespace std;
 
+using boost::filesystem::path;
+using boost::none;
+using boost::program_options::positional_options_description;
+using std::ifstream;
+using std::string;
+
+/// \brief The name of the program that uses this executable_options
 const string cath_check_pdb_options::PROGRAM_NAME("check-pdb");
 
-/// TODOCUMENT
+/// \brief Get the name of the program that uses this executable_options
 string cath_check_pdb_options::do_get_program_name() const {
 	return PROGRAM_NAME;
 }
 
-/// TODOCUMENT
+/// \brief TODOCUMENT
 positional_options_description cath_check_pdb_options::get_positional_options() {
 	positional_options_description positionals;
-	positionals.add(check_pdb_options_block::PO_PDB_FILE.c_str(), -1);
+	positionals.add( check_pdb_options_block::PO_PDB_FILE.c_str(), 1 );
 	return positionals;
 }
 
@@ -65,41 +65,30 @@ positional_options_description cath_check_pdb_options::get_positional_options() 
 ///
 /// \returns Any error/help string arising from the newly specified options
 ///          or an empty string if there aren't any
-string cath_check_pdb_options::do_update_error_or_help_string(const options_description &arg_visible_program_options ///< The full options_description of visible options
-                                                              ) const {
-	// If help was requested, then provide it
-	if (the_misc_options_block.get_help()) {
-		return the_misc_options_block.get_help_string(arg_visible_program_options, get_help_prefix_string(), "");
-	}
-
-	// If version information was requested, then provide it
-	if (the_misc_options_block.get_version()) {
-		return the_misc_options_block.get_version_string( get_program_name(), get_overview_string() );
-	}
-
-	// If there is no PDB file to check then grumble
-	const path pdb_file(get_pdb_file());
-	if (pdb_file.empty()) {
-		return "Must specify a PDB file to check.";
-	}
-
-	// Check the PDB file is a valid input file
-	if (!options_block::is_acceptable_input_file(pdb_file)) {
-		return "No such valid, non-empty PDB file \"" + pdb_file.string() + "\".";
-	}
-
-	// Otherwise, no problems have been detected so return an empty string
-	return "";
+opt_str cath_check_pdb_options::do_get_error_or_help_string() const {
+	return none;
 }
 
-string cath_check_pdb_options::get_help_prefix_string() {
+/// \brief Get a string to prepend to the standard help
+string cath_check_pdb_options::do_get_help_prefix_string() const {
 	return "Usage: " + PROGRAM_NAME + " pdb_file\n\n"
 		+ get_overview_string();
 }
 
+/// \brief Get a string to append to the standard help (just empty here)
+string cath_check_pdb_options::do_get_help_suffix_string() const {
+	return "";
+}
+
+/// \brief Get an overview of the job that these options are for
+///
+/// This can be used in the --help and --version outputs
+string cath_check_pdb_options::do_get_overview_string() const {
+	return "Check a PDB file for some potential problems";
+}
+
 /// \brief Ctor for cath_check_pdb_options
 cath_check_pdb_options::cath_check_pdb_options() {
-	super::add_options_block( the_misc_options_block      );
 	super::add_options_block( the_check_pdb_options_block );
 }
 
@@ -113,36 +102,4 @@ bool cath_check_pdb_options::get_permit_no_atoms() const {
 	return the_check_pdb_options_block.get_permit_no_atoms();
 }
 
-/// \brief Get an overview of the job that these options are for
-///
-/// This can be used in the --help and --version outputs
-string cath_check_pdb_options::get_overview_string() {
-	return "Check a PDB file for some potential problems";
-}
-
-/// \brief Check that the PDB file is OK and throw an invalid_argument_exception if not
-///
-/// \returns Nothing
-void cath::opts::check_pdb_file(const path &arg_pdb_file,       ///< The PDB file to check
-                                const bool &arg_permit_no_atoms ///< Whether to permit no ATOM records
-                                ) {
-	// Check the PDB file is a valid input file
-	if (!options_block::is_acceptable_input_file(arg_pdb_file)) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("No such valid, non-empty PDB file \"" + arg_pdb_file.string() + "\"."));
-	}
-
-	// Open an ifstream on the PDB files
-	ifstream pdb_istream;
-	open_ifstream(pdb_istream, arg_pdb_file);
-
-	// Attempt to read the PDB file (and let any exceptions propagate out)
-	const pdb newly_read_pdb = read_pdb_file( pdb_istream );
-	pdb_istream.close();
-
-	// If there were no ATOM records and that isn't allowed, then throw an exception
-	// (which will be caught just below)
-	if (!arg_permit_no_atoms && newly_read_pdb.get_num_atoms() <= 0) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("PDB file \"" + arg_pdb_file.string() + "\" did not contain any valid ATOM records"));
-	}
-}
 

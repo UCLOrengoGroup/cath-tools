@@ -20,34 +20,35 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/c++14/make_unique.h"
 #include "file/pdb/element_type_string.h"
 
 #include <memory>
 
+using namespace cath;
 using namespace cath::file;
 
-using std::make_unique;
 using std::move;
 using std::string;
 
 BOOST_AUTO_TEST_SUITE(element_type_string_test_suite)
 
 BOOST_AUTO_TEST_CASE(copy_constructs) {
-	auto first_ptr = make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
+	auto first_ptr = common::make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
 	element_type_string second{ *first_ptr };
 	first_ptr.reset();
 	BOOST_CHECK_EQUAL( second.get_element_type(), "me_to_the_bridge" );
 }
 
 BOOST_AUTO_TEST_CASE(move_constructs) {
-	auto first_ptr = make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
+	auto first_ptr = common::make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
 	element_type_string second{ move( *first_ptr ) };
 	first_ptr.reset();
 	BOOST_CHECK_EQUAL( second.get_element_type(), "me_to_the_bridge" );
 }
 
 BOOST_AUTO_TEST_CASE(copy_assigns) {
-	auto first_ptr = make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
+	auto first_ptr = common::make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
 	element_type_string second{ string{ "  so_long_my_fatal_friend  "} };
 	second = *first_ptr;
 	first_ptr.reset();
@@ -55,7 +56,7 @@ BOOST_AUTO_TEST_CASE(copy_assigns) {
 }
 
 BOOST_AUTO_TEST_CASE(move_assigns) {
-	auto first_ptr = make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
+	auto first_ptr = common::make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
 	element_type_string second{ string{ "  so_long_my_fatal_friend  "} };
 	second = move( *first_ptr );
 	first_ptr.reset();

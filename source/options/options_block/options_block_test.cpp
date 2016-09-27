@@ -24,14 +24,13 @@
 #include <boost/optional.hpp>
 
 #include "common/boost_check_no_throw_diag.h"
+#include "display/options/display_options_block.h"
 #include "options/options_block/alignment_input_options_block.h"
-#include "options/options_block/data_dirs_options_block.h"
 #include "options/options_block/detail_help_options_block.h"
-#include "options/options_block/old_ssap_options_block.h"
 #include "options/options_block/options_block_tester.h"
 #include "options/options_block/pdb_input_options_block.h"
-#include "options/options_block/superposition_output_options_block.h"
-#include "options/options_block/display_options_block.h"
+#include "outputter/superposition_output_options/superposition_output_options_block.h"
+#include "ssap/options/old_ssap_options_block.h"
 
 using namespace boost::program_options;
 using namespace cath;
@@ -42,7 +41,6 @@ BOOST_TEST_DONT_PRINT_LOG_VALUE(type_info)
 
 /// \brief A type alias for a list of all the different types of options_blocks, so they can all be tested
 using all_options_block_types = boost::mpl::list<alignment_input_options_block,
-                                                 data_dirs_options_block,
                                                  detail_help_options_block,
                                                  old_ssap_options_block,
                                                  pdb_input_options_block,
@@ -105,8 +103,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(clone_works, options_block_type, all_options_block
 /// \brief Check that each type of options_block will return an options_description from get_options_description()
 BOOST_AUTO_TEST_CASE_TEMPLATE(get_options_description_works, options_block_type, all_options_block_types) {
 	options_block_type the_options_block(construct_options_block_for_testing<options_block_type>());
-	BOOST_CHECK_NO_THROW_DIAG(const options_description desc = the_options_block.get_visible_options_description(100));
-	BOOST_CHECK_NO_THROW_DIAG(const options_description desc = the_options_block.get_hidden_options_description(100));
+	BOOST_CHECK_NO_THROW_DIAG( const options_description desc = the_options_block.get_visible_options_description( 100 ) );
+	BOOST_CHECK_NO_THROW_DIAG( const options_description desc = the_options_block.get_hidden_options_description (     ) );
 }
 
 /// \brief Check that each type of options_block will return an options_description from get_options_description()

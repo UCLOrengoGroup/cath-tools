@@ -21,8 +21,13 @@
 #include "display_colourer.h"
 
 #include "alignment/alignment_context.h"
+#include "common/c++14/make_unique.h"
 #include "common/clone/check_uptr_clone_against_this.h"
+#include "display/display_colourer/detail/score_colour_handler.h"
 #include "display/display_colourer/display_colour_spec.h"
+#include "display/display_colourer/display_colourer_alignment.h"
+#include "display/display_colourer/display_colourer_consecutive.h"
+#include "display/options/display_spec.h"
 #include "display/viewer/viewer.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
@@ -32,9 +37,12 @@
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
+using namespace cath::detail;
 using namespace cath::file;
 using namespace cath::sup;
-using namespace std;
+
+using std::ostream;
+using std::unique_ptr;
 
 /// \brief Standard approach to achieving a virtual copy-ctor
 unique_ptr<display_colourer> display_colourer::clone() const {
@@ -73,6 +81,23 @@ display_colour_spec cath::get_colour_spec(const display_colourer &arg_colourer, 
 		arg_names,
 		arg_alignment
 	) );
+}
+
+/// \brief TODOCUMENT
+unique_ptr<const display_colourer> cath::get_display_colourer(const display_spec            &arg_display_spec,   ///< TODOCUMENT
+                                                              const display_colour_gradient &arg_colour_gradient ///< TODOCUMENT
+                                                              ) {
+	const score_colour_handler colour_handler{
+		arg_display_spec.get_show_scores_if_present(),
+		arg_display_spec.get_scores_to_equivs(),
+		arg_display_spec.get_normalise_scores()
+	};
+	if ( arg_display_spec.get_gradient_colour_alignment() ) {
+		return { common::make_unique< display_colourer_alignment   >( colour_handler, arg_colour_gradient                 ) };
+	}
+	else {
+		return { common::make_unique< display_colourer_consecutive >( colour_handler, get_colour_list( arg_display_spec ) ) };
+	}
 }
 
 /// \brief TODOCUMENT

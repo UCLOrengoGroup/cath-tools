@@ -50,13 +50,12 @@ namespace cath {
 		public:
 			virtual ~ids_options_block() noexcept = default;
 
-			size_t num_ids_specified() const;
-			std::string get_id_of_index(const size_t &) const;
+			const str_vec & get_ids() const;
 			
 			static const std::string PO_ID;
 		};
 		
-		str_vec get_all_ids(const ids_options_block &);
+		// str_vec get_all_ids(const ids_options_block &);
 		bool ids_specified(const ids_options_block &);
 		std::string get_id_a(const ids_options_block &);
 		std::string get_id_b(const ids_options_block &);

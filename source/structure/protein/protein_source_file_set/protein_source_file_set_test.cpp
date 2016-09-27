@@ -22,7 +22,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/file/simple_file_read_write.h"
-#include "options/options_block/data_dirs_spec.h"
+#include "file/options/data_dirs_spec.h"
 #include "structure/protein/protein.h"
 #include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.h"
 #include "structure/protein/residue.h"

@@ -22,16 +22,18 @@
 #define DISPLAY_COLOURER_H_INCLUDED
 
 #include "common/type_aliases.h"
+#include "display/display_colour/display_colour_gradient.h"
 
 #include <iosfwd>
 #include <memory>
 
+namespace cath { class display_colour_spec; }
+namespace cath { class display_spec; }
+namespace cath { class viewer; }
 namespace cath { namespace align { class alignment; } }
 namespace cath { namespace align { class alignment_context; } }
-namespace cath { class display_colour_spec; }
 namespace cath { namespace file { class pdb_list; } }
 namespace cath { namespace sup { class superposition_context; } }
-namespace cath { class viewer; }
 
 namespace cath {
 
@@ -51,6 +53,9 @@ namespace cath {
 
 		display_colour_spec get_colour_spec(const align::alignment_context &) const;
 	};
+
+	std::unique_ptr<const display_colourer> get_display_colourer(const display_spec &,
+	                                                             const display_colour_gradient &arg_colour_gradient = make_default_colour_gradient() );
 
 	display_colour_spec get_colour_spec(const display_colourer &,
 	                                    const file::pdb_list &,

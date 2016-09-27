@@ -18,16 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "cath_superposer.h"
+
 #include <boost/log/trivial.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "cath_superposer.h"
+#include "cath_superpose/options/cath_superpose_options.h"
 #include "common/argc_argv_faker.h"
 #include "common/file/open_fstream.h"
+#include "common/file/temp_file.h"
 #include "common/test_predicate/files_equal.h"
 #include "common/test_predicate/istream_and_file_equal.h"
-#include "common/file/temp_file.h"
-#include "options/executable/cath_superpose_options/cath_superpose_options.h"
 #include "test/global_test_constants.h"
 
 #include <fstream>

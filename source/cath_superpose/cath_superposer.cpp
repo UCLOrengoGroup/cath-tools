@@ -20,17 +20,23 @@
 
 #include "cath_superposer.h"
 
+#include <boost/filesystem/path.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
+#include "acquirer/alignment_acquirer/alignment_acquirer.h"
+#include "acquirer/pdbs_acquirer/pdbs_acquirer.h"
+#include "acquirer/selection_policy_acquirer/selection_policy_acquirer.h"
+#include "acquirer/superposition_acquirer/align_based_superposition_acquirer.h"
 #include "alignment/alignment_context.h"
-#include "options/executable/cath_superpose_options/cath_superpose_options.h"
+#include "cath_superpose/options/cath_superpose_options.h"
+#include "common/logger.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"
-#include "options/outputter/alignment_outputter/alignment_outputter.h"
-#include "options/outputter/alignment_outputter/alignment_outputter_list.h"
-#include "options/outputter/superposition_outputter/superposition_outputter.h"
-#include "options/outputter/superposition_outputter/superposition_outputter_list.h"
+#include "outputter/alignment_outputter/alignment_outputter.h"
+#include "outputter/alignment_outputter/alignment_outputter_list.h"
+#include "outputter/superposition_outputter/superposition_outputter.h"
+#include "outputter/superposition_outputter/superposition_outputter_list.h"
 #include "superposition/superposition_context.h"
 
 using namespace cath;
@@ -40,6 +46,7 @@ using namespace cath::opts;
 using namespace cath::sup;
 using namespace std;
 
+using boost::filesystem::path;
 using boost::ptr_vector;
 
 /// \brief Perform a cath-superpose job as specified by the cath_superpose_options argument
@@ -52,14 +59,14 @@ void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose
                                 ostream                      &arg_stderr                  ///< The ostream to which any stderr-like output should be written
                                 ) {
 	// If the options are invalid or specify to do_nothing, then just return
-	const string error_or_help_string = arg_cath_superpose_options.get_error_or_help_string();
-	if (!error_or_help_string.empty()) {
-		arg_stderr << error_or_help_string << endl;
+	const auto error_or_help_string = arg_cath_superpose_options.get_error_or_help_string();
+	if ( error_or_help_string ) {
+		arg_stderr << *error_or_help_string << endl;
 		return;
 	}
 
 	// Get the superposition (and context) as specified by the cath_superpose_options
-	const superposition_context the_sup_context = arg_cath_superpose_options.get_superposition_context( arg_istream, arg_stderr );
+	const superposition_context the_sup_context = get_superposition_context( arg_cath_superpose_options, arg_istream, arg_stderr );
 
 	// If there is an alignment, then for each of the alignment_outputters specified by the cath_superpose_options, output it
 	if ( the_sup_context.has_alignment() ) {
@@ -73,4 +80,65 @@ void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
 	const superposition_outputter_list outputters = arg_cath_superpose_options.get_superposition_outputters();
 	use_all_superposition_outputters( outputters, the_sup_context, arg_stdout, arg_stderr );
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates cath_superpose_options
+superposition_context cath_superposer::get_superposition_context(const cath_superpose_options &arg_cath_superpose_options, ///< TODOCUMENT
+                                                                 istream                      &arg_istream,                ///< TODOCUMENT
+                                                                 ostream                      &arg_stderr                  ///< TODOCUMENT
+                                                                 ) {
+	arg_cath_superpose_options.check_ok_to_use();
+	const auto      pdbs_acq_ptr   = get_pdbs_acquirer( arg_cath_superpose_options );
+	const auto      pdbs_and_names = pdbs_acq_ptr->get_pdbs_and_names( arg_istream, false );
+	const pdb_list &raw_pdbs       = pdbs_and_names.first;
+	const str_vec  &raw_names      = pdbs_and_names.second;
+	const str_vec  &ids_block_ids  = arg_cath_superpose_options.get_ids();
+	const str_vec  &names          = ( ids_block_ids.size() == raw_pdbs.size() ) ? ids_block_ids
+	                                                                             : raw_names;
+	const pdb_list  pdbs           = pdb_list_of_backbone_complete_subset_pdbs( raw_pdbs );
+
+	if ( raw_pdbs.empty() ) {
+		logger::log_and_exit(
+			logger::return_code::NO_PDB_FILES_LOADED,
+			"No valid PDBs were loaded"
+		);
+	}
+
+	// For now, all superpositions come from alignment so throw if !acquires_alignment()
+	const auto alignment_acq_ptr = get_alignment_acquirer( arg_cath_superpose_options );
+
+	// Use the alignment_acquirer to get the alignment and corresponding spanning tree
+	const auto       aln_and_spn_tree = alignment_acq_ptr->get_alignment_and_spanning_tree( pdbs );
+	const alignment &the_alignment    = aln_and_spn_tree.first;
+	const auto      &spanning_tree    = aln_and_spn_tree.second;
+
+	// \todo Remove this hacky code and fix it
+	const path ssap_scores_file = arg_cath_superpose_options.get_alignment_input_spec().get_ssap_scores_file();
+	if ( ! ssap_scores_file.empty() ) {
+		return superposition_context(
+			raw_pdbs, ///< This should be raw_pdbs, not pdbs, so that superpositions include stripped residues (eg HETATM only residues). /// \todo Consider adding fast, simple test that ssap_scores_file superposition output includes HETATMs.
+			names,
+			hacky_multi_ssap_fuction(
+				pdbs,
+				names,
+				spanning_tree,
+				ssap_scores_file.parent_path(),
+				arg_cath_superpose_options.get_selection_policy_acquirer(),
+				arg_stderr
+			),
+			the_alignment
+		);
+	}
+
+	// Construct an align_based_superposition_acquirer from the data and return the superposition it generates
+	const align_based_superposition_acquirer aln_based_sup_acq(
+		raw_pdbs,
+		names,
+		the_alignment,
+		spanning_tree,
+		arg_cath_superpose_options.get_selection_policy_acquirer()
+	);
+	return aln_based_sup_acq.get_superposition( arg_stderr );
 }

@@ -23,13 +23,14 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/split.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
+#include <boost/optional.hpp>
 
 #include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "display/display_colour/display_colour.h"
 #include "display/display_type_aliases.h"
+#include "display/options/display_spec.h"
 
 using namespace boost::algorithm;
 using namespace cath;
@@ -89,22 +90,23 @@ const display_colour & display_colour_list::colour_of_index(const size_t &arg_in
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour_list
+display_colour_list cath::get_colour_list(const display_spec &arg_display_spec ///< TODOCUMENT
+                                          ) {
+	const auto opt_cols_str = arg_display_spec.get_display_colours_string();
+	return make_display_colour_list_from_string(
+		opt_cols_str ? *opt_cols_str : display_colour_list::DEFAULT_COLOURS_STRING
+	);
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates display_colour_list
 const display_colour & cath::colour_of_mod_index(const display_colour_list &arg_display_colour_list, ///< TODOCUMENT
                                                  const size_t              &arg_index                ///< TODOCUMENT
                                                  ) {
 	const size_t num_colours = arg_display_colour_list.size();
 	return arg_display_colour_list.colour_of_index( arg_index % num_colours );
 }
-
-///// \brief TODOCUMENT
-/////
-///// \relates display_colour_list
-//string cath::name_of_colour_of_mod_index(const display_colour_list            &arg_display_colour_list, ///< TODOCUMENT
-//                                         const display_colour_list::size_type &arg_index                ///< TODOCUMENT
-//                                         ) {
-//	const display_colour_list::size_type num_colours = arg_display_colour_list.size();
-//	return "cath_tools_defined_colour_" + lexical_cast<string>(arg_index % num_colours);
-//}
 
 /// \brief TODOCUMENT
 ///
@@ -118,3 +120,4 @@ display_colour_list cath::make_display_colour_list_from_string(const string &arg
 	) );
 	return result;
 }
+

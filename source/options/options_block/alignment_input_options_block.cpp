@@ -20,31 +20,35 @@
 
 #include "alignment_input_options_block.h"
 
-#include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/optional.hpp>
 
 #include "common/clone/make_uptr_clone.h"
-#include "options/acquirer/alignment_acquirer/cora_aln_file_alignment_acquirer.h"
-#include "options/acquirer/alignment_acquirer/fasta_aln_file_alignment_acquirer.h"
-#include "options/acquirer/alignment_acquirer/residue_name_alignment_acquirer.h"
-#include "options/acquirer/alignment_acquirer/ssap_aln_file_alignment_acquirer.h"
-#include "options/acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.h"
 
-using namespace boost::filesystem;
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
-using namespace std;
 
-using boost::assign::ptr_push_back;
+using boost::filesystem::path;
 using boost::none;
-using boost::ptr_vector;
+using boost::program_options::bool_switch;
+using boost::program_options::options_description;
+using boost::program_options::value;
+using std::string;
+using std::unique_ptr;
 
+/// \brief The option name for whether to align based on matching residue names
 const string alignment_input_options_block::PO_RES_NAME_ALIGN    ( "res-name-align"     );
+
+/// \brief The option name for a file from which to read a FASTA alignment
 const string alignment_input_options_block::PO_FASTA_ALIGN_INFILE( "fasta-aln-infile"    );
+
+/// \brief The option name for a file from which to read a legacy-SSAP-format alignment
 const string alignment_input_options_block::PO_SSAP_ALIGN_INFILE ( "ssap-aln-infile"    );
+
+/// \brief The option name for a file from which to read a CORA alignment
 const string alignment_input_options_block::PO_CORA_ALIGN_INFILE ( "cora-aln-infile"    );
+
+/// \brief The option name for a file from which to read SSAP-scores format data to use to attempt to glue pairwise alignments together
 const string alignment_input_options_block::PO_SSAP_SCORE_INFILE ( "ssap-scores-infile" );
 
 /// \brief A standard do_clone method.
@@ -60,83 +64,81 @@ string alignment_input_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 void alignment_input_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
                                                                   ) {
+	const string file_varname { "<file>" };
+
+	const auto residue_name_align_notifier   = [&] (const bool &x) { the_alignment_input_spec.set_residue_name_align  ( x ); };
+	const auto fasta_alignment_file_notifier = [&] (const path &x) { the_alignment_input_spec.set_fasta_alignment_file( x ); };
+	const auto ssap_alignment_file_notifier  = [&] (const path &x) { the_alignment_input_spec.set_ssap_alignment_file ( x ); };
+	const auto cora_alignment_file_notifier  = [&] (const path &x) { the_alignment_input_spec.set_cora_alignment_file ( x ); };
+	const auto ssap_scores_file_notifier     = [&] (const path &x) { the_alignment_input_spec.set_ssap_scores_file    ( x ); };
+
 	arg_desc.add_options()
-		( PO_RES_NAME_ALIGN.c_str(),     bool_switch( &residue_name_align   )->default_value(false), "Align residues by simply matching their names (numbers+insert)\n(for multiple models of the same structure)" )
-		( PO_FASTA_ALIGN_INFILE.c_str(), value<path>( &fasta_alignment_file ),                       "Read FASTA alignment from file arg"                                                  )
-		( PO_SSAP_ALIGN_INFILE.c_str(),  value<path>( &ssap_alignment_file  ),                       "Read SSAP alignment from file arg"                                                   )
-		( PO_CORA_ALIGN_INFILE.c_str(),  value<path>( &cora_alignment_file  ),                       "Read CORA alignment from file arg"                                                   )
-		( PO_SSAP_SCORE_INFILE.c_str(),  value<path>( &ssap_scores_file     ),                       "Read SSAP scores from file arg\nAssumes all .list alignment files in same directory" );
+		(
+			PO_RES_NAME_ALIGN.c_str(),
+			bool_switch()
+				->notifier     ( residue_name_align_notifier                      )
+				->default_value( alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN ),
+			"Align residues by simply matching their names (numbers+insert)\n(for multiple models of the same structure)"
+		)
+		(
+			PO_FASTA_ALIGN_INFILE.c_str(),
+			value<path>()
+				->value_name( file_varname                  )
+				->notifier  ( fasta_alignment_file_notifier ),
+			( "Read FASTA alignment from file " + file_varname ).c_str()
+		)
+		(
+			PO_SSAP_ALIGN_INFILE.c_str(),
+			value<path>()
+				->value_name( file_varname                 )
+				->notifier  ( ssap_alignment_file_notifier ),
+			( "Read SSAP alignment from file " + file_varname ).c_str()
+		)
+		(
+			PO_CORA_ALIGN_INFILE.c_str(),
+			value<path>()
+				->value_name( file_varname                 )
+				->notifier  ( cora_alignment_file_notifier ),
+			( "Read CORA alignment from file " + file_varname ).c_str()
+		)
+		(
+			PO_SSAP_SCORE_INFILE.c_str(),
+			value<path>()
+				->value_name( file_varname              )
+				->notifier  ( ssap_scores_file_notifier ),
+			( "Read SSAP scores from file " + file_varname + "\nAssumes all .list alignment files in same directory" ).c_str()
+		);
+
+	static_assert( ! alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN,
+		"If alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief TODOCUMENT
 opt_str alignment_input_options_block::do_invalid_string() const {
-	if ( ! get_fasta_alignment_file().empty() && ! is_acceptable_input_file( get_fasta_alignment_file()    ) ) {
-		return "FASTA alignment file " + get_ssap_alignment_file().string() + " is not a valid input file";
+	if ( ! the_alignment_input_spec.get_fasta_alignment_file().empty() && ! is_acceptable_input_file( the_alignment_input_spec.get_fasta_alignment_file()    ) ) {
+		return "FASTA alignment file " + the_alignment_input_spec.get_ssap_alignment_file().string() + " is not a valid input file";
 	}
-	if ( ! get_ssap_alignment_file().empty()  && ! is_acceptable_input_file( get_ssap_alignment_file()    ) ) {
-		return "SSAP alignment file " + get_ssap_alignment_file().string() + " is not a valid input file";
+	if ( ! the_alignment_input_spec.get_ssap_alignment_file().empty()  && ! is_acceptable_input_file( the_alignment_input_spec.get_ssap_alignment_file()    ) ) {
+		return "SSAP alignment file " + the_alignment_input_spec.get_ssap_alignment_file().string() + " is not a valid input file";
 	}
-	if ( ! get_cora_alignment_file().empty()  && ! is_acceptable_input_file( get_cora_alignment_file()    ) ) {
-		return "CORA alignment file " + get_cora_alignment_file().string() + " is not a valid input file";
+	if ( ! the_alignment_input_spec.get_cora_alignment_file().empty()  && ! is_acceptable_input_file( the_alignment_input_spec.get_cora_alignment_file()    ) ) {
+		return "CORA alignment file " + the_alignment_input_spec.get_cora_alignment_file().string() + " is not a valid input file";
 	}
-	if ( ! get_ssap_scores_file().empty()     && ! is_acceptable_input_file( get_ssap_scores_file(), true ) ) {
-		return "SSAP scores file "    + get_ssap_scores_file().string()    + " is not a valid input file";
+	if ( ! the_alignment_input_spec.get_ssap_scores_file().empty()     && ! is_acceptable_input_file( the_alignment_input_spec.get_ssap_scores_file(), true ) ) {
+		return "SSAP scores file "    + the_alignment_input_spec.get_ssap_scores_file().string()    + " is not a valid input file";
 	}
 	return none;
 }
 
 /// \brief TODOCUMENT
-path alignment_input_options_block::get_fasta_alignment_file() const {
-	return fasta_alignment_file;
+const alignment_input_spec & alignment_input_options_block::get_alignment_input_spec() const {
+	return the_alignment_input_spec;
 }
 
-/// \brief TODOCUMENT
-path alignment_input_options_block::get_ssap_alignment_file() const {
-	return ssap_alignment_file;
-}
-
-/// \brief TODOCUMENT
-path alignment_input_options_block::get_cora_alignment_file() const {
-	return cora_alignment_file;
-}
-
-/// \brief TODOCUMENT
+/// \brief Get the number of alignment_acquirer objects implied by the alignment_input_spec in the specified alignment_input_options_block
 ///
-/// Temporarily public so that cath_superpose_options can flick to common_residue_select_all_policy
-/// when performing residue name aligning
-bool alignment_input_options_block::get_residue_name_align() const {
-	return residue_name_align;
-}
-
-/// \brief TODOCUMENT
-path alignment_input_options_block::get_ssap_scores_file() const {
-	return ssap_scores_file;
-}
-
-/// \brief Construct suitable alignment_acquirer objects
-ptr_vector<alignment_acquirer> alignment_input_options_block::get_alignment_acquirers() const {
-	ptr_vector<alignment_acquirer> alignment_acquirers;
-
-	//      If the alignment is to be created by reading a legacy CORA alignment file, do that
-	// Else if the alignment is to be created by aligning using residue names,         do that
-	// Else if the alignment is to be created by reading a FASTA alignment file,       do that
-	// Else if the alignment is to be created by reading a legacy SSAP alignment file, do that
-	// Else if the alignment is to be created by reading a list of SSAP scores,        do that
-	if ( ! get_cora_alignment_file().empty()  ) {
-		ptr_push_back< cora_aln_file_alignment_acquirer    >( alignment_acquirers )( get_cora_alignment_file()  );
-	}
-	if (   get_residue_name_align()           ) {
-		ptr_push_back< residue_name_alignment_acquirer     >( alignment_acquirers )(                            );
-	}
-	if ( ! get_fasta_alignment_file().empty()  ) {
-		ptr_push_back< fasta_aln_file_alignment_acquirer   >( alignment_acquirers )( get_fasta_alignment_file() );
-	}
-	if ( ! get_ssap_alignment_file().empty()  ) {
-		ptr_push_back< ssap_aln_file_alignment_acquirer    >( alignment_acquirers )( get_ssap_alignment_file()  );
-	}
-	if ( ! get_ssap_scores_file().empty()     ) {
-		ptr_push_back< ssap_scores_file_alignment_acquirer >( alignment_acquirers )( get_ssap_scores_file()     );
-	}
-
-	return alignment_acquirers;
+/// \relates alignment_input_options_block
+size_t cath::opts::get_num_acquirers(const alignment_input_options_block &arg_alignment_input_options_block ///< The alignment_input_options_block to query
+                                     ) {
+	return get_num_acquirers( arg_alignment_input_options_block.get_alignment_input_spec() );
 }

@@ -20,28 +20,29 @@
 
 #include "pdb_input_options_block.h"
 
-#include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/optional.hpp>
 
 #include "common/clone/make_uptr_clone.h"
-#include "options/acquirer/pdbs_acquirer/istream_pdbs_acquirer.h"
-#include "options/acquirer/pdbs_acquirer/file_list_pdbs_acquirer.h"
 
-using namespace boost::filesystem;
-using namespace boost::program_options;
-using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
-using namespace std;
+using namespace cath;
 
-using boost::assign::ptr_push_back;
+using boost::filesystem::path;
 using boost::none;
-using boost::ptr_vector;
+using boost::program_options::bool_switch;
+using boost::program_options::options_description;
+using boost::program_options::value;
+using std::string;
+using std::unique_ptr;
 
+/// \brief The option name for the a list of PDB files that should be read
 const string pdb_input_options_block::PO_PDB_INFILE     ( "pdb-infile"      );
+
+/// \brief The option name for whether to read PDBs from stdin
 const string pdb_input_options_block::PO_PDBS_FROM_STDIN( "pdbs-from-stdin" );
 
-/// \brief A standard do_clone method.
+/// \brief A standard do_clone method
 unique_ptr<options_block> pdb_input_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
 }
@@ -54,15 +55,34 @@ string pdb_input_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 void pdb_input_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
                                                                     ) {
+	const string pdb_file_varname = "<pdbfile>";
+
+	const auto pdb_infile_notifier = [&] (const path_vec &x) { the_pdb_input_spec.set_input_files    ( x ); };
+	const auto stdin_read_notifier = [&] (const bool     &x) { the_pdb_input_spec.set_read_from_stdin( x ); };
+
 	arg_desc.add_options()
-		(PO_PDB_INFILE.c_str(),      value<path_vec >(&input_files),                      "Read PDB from file arg (specify multiple times)"      )
-		(PO_PDBS_FROM_STDIN.c_str(), bool_switch(&read_from_stdin)->default_value(false), "Read PDBs from stdin (separated by line: \"END   \")" );
+		(
+			PO_PDB_INFILE.c_str(),
+			value<path_vec>()
+				->value_name( pdb_file_varname        )
+				->notifier  ( pdb_infile_notifier ),
+			( "Read PDB from file " + pdb_file_varname + " (may be specified multiple times)" ).c_str()
+		)
+		(
+			PO_PDBS_FROM_STDIN.c_str(),
+			bool_switch()
+				->notifier     ( stdin_read_notifier                     )
+				->default_value( pdb_input_spec::DEFAULT_READ_FROM_STDIN ),
+			"Read PDBs from stdin (separated by line: \"END   \")"
+		);
+
+	static_assert( ! pdb_input_spec::DEFAULT_READ_FROM_STDIN,
+		"If pdb_input_spec::DEFAULT_READ_FROM_STDIN isn't false, it might mess up the bool switch in here" );
 }
 
 opt_str pdb_input_options_block::do_invalid_string() const {
-	const path_vec input_files = get_input_files_cref();
-	for (const path &input_file : input_files) {
-		if (!is_acceptable_input_file(input_file)) {
+	for (const path &input_file : the_pdb_input_spec.get_input_files() ) {
+		if ( ! is_acceptable_input_file( input_file ) ) {
 			return "PDB input file " + input_file.string() + " is not a valid input file";
 		}
 	}
@@ -70,24 +90,15 @@ opt_str pdb_input_options_block::do_invalid_string() const {
 }
 
 /// \brief TODOCUMENT
-const path_vec & pdb_input_options_block::get_input_files_cref() const {
-	return input_files;
+const pdb_input_spec & pdb_input_options_block::get_pdb_input_spec() const {
+	return the_pdb_input_spec;
 }
 
-/// \brief TODOCUMENT
-bool pdb_input_options_block::get_read_from_stdin() const {
-	return read_from_stdin;
-}
-
-/// \brief TODOCUMENT
-ptr_vector<pdbs_acquirer> pdb_input_options_block::get_pdbs_acquirers() const {
-	ptr_vector<pdbs_acquirer> pdb_acquirers;
-	if ( get_read_from_stdin() ) {
-		ptr_push_back<istream_pdbs_acquirer>( pdb_acquirers )();
-	}
-	if ( ! get_input_files_cref().empty() ) {
-		ptr_push_back<file_list_pdbs_acquirer>( pdb_acquirers )( get_input_files_cref() );
-	}
-	return pdb_acquirers;
+/// \brief Get the number of pdb_acquirer objects implied by the pdb_input_spec in the specified pdb_input_options_block
+///
+/// \relates pdb_input_options_block
+size_t cath::opts::get_num_acquirers(const pdb_input_options_block &arg_pdb_input_options_block ///< The pdb_input_options_block to query
+                                     ) {
+	return get_num_acquirers( arg_pdb_input_options_block.get_pdb_input_spec() );
 }
 

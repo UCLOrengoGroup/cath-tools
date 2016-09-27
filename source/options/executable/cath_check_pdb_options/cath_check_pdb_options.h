@@ -25,7 +25,6 @@
 
 #include "options/executable/executable_options.h"
 #include "options/options_block/check_pdb_options_block.h"
-#include "options/options_block/misc_help_version_options_block.h"
 
 #include <vector>
 
@@ -38,16 +37,15 @@ namespace cath {
 			using super = executable_options;
 
 			/// \brief TODOCUMENT
-			misc_help_version_options_block the_misc_options_block;
-
-			/// \brief TODOCUMENT
-			check_pdb_options_block         the_check_pdb_options_block;
+			check_pdb_options_block the_check_pdb_options_block;
 
 			virtual std::string do_get_program_name() const override final;
 			virtual boost::program_options::positional_options_description get_positional_options() override final;
-			virtual std::string do_update_error_or_help_string(const boost::program_options::options_description &) const override final;
+			virtual opt_str do_get_error_or_help_string() const override final;
 
-			static std::string get_help_prefix_string();
+			virtual std::string do_get_help_prefix_string() const override final;
+			virtual std::string do_get_help_suffix_string() const override final;
+			virtual std::string do_get_overview_string() const override final;
 
 		public:
 			cath_check_pdb_options();
@@ -56,13 +54,9 @@ namespace cath {
 			boost::filesystem::path get_pdb_file() const;
 			bool get_permit_no_atoms() const;
 
-			static std::string get_overview_string();
-
 			static const std::string PROGRAM_NAME;
 		};
 
-		void check_pdb_file(const boost::filesystem::path &,
-		                    const bool &);
 	}
 }
 

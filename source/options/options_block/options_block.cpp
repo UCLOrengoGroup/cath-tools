@@ -47,6 +47,16 @@ unique_ptr<options_block> options_block::clone() const {
 }
 
 /// \brief A method that uses the concrete class's methods to construct an options description
+///        (using the specified line_length) of the hidden options
+options_description options_block::get_all_options_description(const size_t &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+                                                               ) {
+	options_description desc{ do_get_block_name(), numeric_cast<unsigned int>( arg_line_length ) };
+	do_add_visible_options_to_description( desc );
+	do_add_hidden_options_to_description ( desc );
+	return desc;
+}
+
+/// \brief A method that uses the concrete class's methods to construct an options description
 ///        (using the specified line_length) of the visible options
 ///
 /// The Boost program_options documentation seems to be a bit out of sync with the actual code.
@@ -64,10 +74,9 @@ options_description options_block::get_visible_options_description(const size_t 
 ///
 /// The Boost program_options documentation seems to be a bit out of sync with the actual code.
 /// In particular, line_length isn't (well) documented.
-options_description options_block::get_hidden_options_description(const size_t &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
-                                                                  ) {
+options_description options_block::get_hidden_options_description() {
 	const string block_name = do_get_block_name();
-	options_description desc( block_name + " [hidden options]", numeric_cast<unsigned int>( arg_line_length ) );
+	options_description desc( block_name + " [hidden options]" );
 	do_add_hidden_options_to_description( desc );
 	return desc;
 }

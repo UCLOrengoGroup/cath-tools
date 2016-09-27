@@ -19,8 +19,8 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "cath_score_align/cath_align_scorer.h"
+#include "cath_score_align/options/cath_score_align_options.h"
 #include "exception/program_exception_wrapper.h"
-#include "options/executable/cath_score_align_options/cath_score_align_options.h"
 
 using namespace cath::common;
 using namespace cath::opts;

@@ -21,12 +21,8 @@
 #ifndef ALIGNMENT_INPUT_OPTIONS_BLOCK_H_INCLUDED
 #define ALIGNMENT_INPUT_OPTIONS_BLOCK_H_INCLUDED
 
-#include <boost/ptr_container/ptr_vector.hpp>
-
+#include "options/options_block/alignment_input_spec.h"
 #include "options/options_block/options_block.h"
-
-namespace cath { namespace opts { class alignment_acquirer; } }
-namespace cath { namespace file { class pdb_list; } }
 
 namespace cath {
 	namespace opts {
@@ -42,29 +38,21 @@ namespace cath {
 			static const std::string PO_CORA_ALIGN_INFILE;
 			static const std::string PO_SSAP_SCORE_INFILE;
 
-			bool residue_name_align;
-			boost::filesystem::path fasta_alignment_file;
-			boost::filesystem::path ssap_alignment_file;
-			boost::filesystem::path cora_alignment_file;
-			boost::filesystem::path ssap_scores_file;
+			/// \brief The alignment_input_spec to be configured by this options block
+			alignment_input_spec the_alignment_input_spec;
 
 			virtual std::unique_ptr<options_block> do_clone() const override final;
 			virtual std::string do_get_block_name() const override final;
 			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
 			virtual opt_str do_invalid_string() const override final;
 
-			boost::filesystem::path get_fasta_alignment_file() const;
-			boost::filesystem::path get_ssap_alignment_file() const;
-			boost::filesystem::path get_cora_alignment_file() const;
-
 		public:
 			virtual ~alignment_input_options_block() noexcept = default;
 
-			bool get_residue_name_align() const;
-			boost::filesystem::path get_ssap_scores_file() const;
-
-			boost::ptr_vector<alignment_acquirer> get_alignment_acquirers() const;
+			const alignment_input_spec & get_alignment_input_spec() const;
 		};
+
+		size_t get_num_acquirers(const alignment_input_options_block &);
 
 	}
 }

@@ -26,7 +26,7 @@
 
 #include "common/algorithm/transform_build.h"
 #include "common/clone/check_uptr_clone_against_this.h"
-#include "options/options_block/data_dirs_options_block.h"
+#include "file/options/data_dirs_options_block.h"
 #include "structure/protein/protein.h"
 #include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.h"
 #include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.h"

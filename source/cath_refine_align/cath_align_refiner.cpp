@@ -20,24 +20,24 @@
 
 #include "cath_align_refiner.h"
 
+#include "acquirer/alignment_acquirer/alignment_acquirer.h"
+#include "acquirer/pdbs_acquirer/pdbs_acquirer.h"
+#include "acquirer/superposition_acquirer/align_based_superposition_acquirer.h"
 #include "alignment/alignment.h"
 #include "alignment/alignment_context.h"
 #include "alignment/gap/gap_penalty.h"
 #include "alignment/refiner/alignment_refiner.h"
 #include "alignment/residue_score/residue_scorer.h"
+#include "cath_refine_align/options/cath_refine_align_options.h"
 #include "exception/not_implemented_exception.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_list.h"
 #include "file/pdb/pdb_residue.h"
-#include "options/acquirer/alignment_acquirer/alignment_acquirer.h"
-#include "options/acquirer/pdbs_acquirer/pdbs_acquirer.h"
-#include "options/acquirer/superposition_acquirer/align_based_superposition_acquirer.h"
-#include "options/executable/cath_refine_align_options/cath_refine_align_options.h"
-#include "options/outputter/alignment_outputter/alignment_outputter.h"
-#include "options/outputter/alignment_outputter/alignment_outputter_list.h"
-#include "options/outputter/superposition_outputter/superposition_outputter.h"
-#include "options/outputter/superposition_outputter/superposition_outputter_list.h"
+#include "outputter/alignment_outputter/alignment_outputter.h"
+#include "outputter/alignment_outputter/alignment_outputter_list.h"
+#include "outputter/superposition_outputter/superposition_outputter.h"
+#include "outputter/superposition_outputter/superposition_outputter_list.h"
 #include "score/aligned_pair_score_list/aligned_pair_score_list_factory.h"
 #include "score/aligned_pair_score_list/aligned_pair_score_value_list.h"
 #include "score/aligned_pair_score_list/score_value_list_outputter/score_value_list_json_outputter.h"
@@ -69,26 +69,23 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
                                 ostream                         &arg_stderr                     ///< The ostream to which any stderr-like output should be written
                                 ) {
 	// If the options are invalid or specify to do_nothing, then just return
-	const string error_or_help_string = arg_cath_refine_align_options.get_error_or_help_string();
-	if (!error_or_help_string.empty()) {
-		arg_stdout << error_or_help_string << endl;
+	const auto error_or_help_string = arg_cath_refine_align_options.get_error_or_help_string();
+	if ( error_or_help_string ) {
+		arg_stdout << *error_or_help_string << endl;
 		return;
 	}
 
-	const unique_ptr<const pdbs_acquirer> pdbs_acquirer_ptr = arg_cath_refine_align_options.get_pdbs_acquirer();
-	const pdb_list_str_vec_pair         pdbs_and_names    = pdbs_acquirer_ptr->get_pdbs_and_names( arg_istream, true );
-	const pdb_list     &pdbs     = pdbs_and_names.first;
-	const str_vec      &names    = pdbs_and_names.second;
-	const protein_list  proteins = build_protein_list_of_pdb_list_and_names( pdbs, names );
+	const auto          pdbs_acquirer_ptr = get_pdbs_acquirer( arg_cath_refine_align_options );
+	const auto          pdbs_and_names    = pdbs_acquirer_ptr->get_pdbs_and_names( arg_istream, true );
+	const pdb_list     &pdbs              = pdbs_and_names.first;
+	const str_vec      &names             = pdbs_and_names.second;
+	const protein_list  proteins          = build_protein_list_of_pdb_list_and_names( pdbs, names );
 
 	// An alignment is required but this should have been checked elsewhere
-	const ptr_vector<alignment_acquirer> alignment_acquirers = arg_cath_refine_align_options.get_alignment_acquirers();
-	assert(alignment_acquirers.size() == 1); // This should already have been checked elsewhere
-	const alignment_acquirer &the_alignment_acquirer = alignment_acquirers.front();
-
-	const pair<alignment, size_size_pair_vec>  alignment_and_tree = the_alignment_acquirer.get_alignment_and_spanning_tree(pdbs);
-	const alignment                           &the_alignment      = alignment_and_tree.first;
-	const size_size_pair_vec                  &spanning_tree      = alignment_and_tree.second;
+	const auto                aln_acq_ptr        = get_alignment_acquirer( arg_cath_refine_align_options );
+	const auto                alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree( pdbs );
+	const alignment          &the_alignment      = alignment_and_tree.first;
+	const size_size_pair_vec &spanning_tree      = alignment_and_tree.second;
 
 //	if ( proteins.size() != 2 || the_alignment.num_entries() != 2 ) {
 //		BOOST_THROW_EXCEPTION(not_implemented_exception("Currently only able to score alignments of more than two structures"));
@@ -129,7 +126,7 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 		names,
 		scored_refined_alignment,
 		spanning_tree,
-		arg_cath_refine_align_options.get_selection_policy_acquirer()
+		get_selection_policy_acquirer( arg_cath_refine_align_options )
 	);
 
 	// For each of the alignment_outputters specified by the cath_superpose_options, output the alignment

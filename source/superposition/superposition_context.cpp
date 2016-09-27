@@ -32,10 +32,10 @@
 #include "alignment/alignment_context.h"
 #include "common/algorithm/transform_build.h"
 #include "exception/invalid_argument_exception.h"
+#include "file/options/data_dirs_options_block.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"
-#include "options/options_block/data_dirs_options_block.h"
 #include "structure/structure_type_aliases.h"
 #include "superposition/io/superposition_io.h"
 

@@ -116,6 +116,7 @@
 #include <boost/log/expressions.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/optional/optional_io.hpp>
 #include <boost/range/algorithm/stable_sort.hpp>
 
 #include "alignment/alignment_coord_extractor.h"
@@ -136,9 +137,9 @@
 #include "exception/invalid_argument_exception.h"
 #include "exception/not_implemented_exception.h"
 #include "exception/out_of_range_exception.h"
-#include "options/executable/cath_ssap_options/cath_ssap_options.h"
-#include "options/options_block/old_ssap_options_block.h"
 #include "ssap/clique.h"
+#include "ssap/options/cath_ssap_options.h"
+#include "ssap/options/old_ssap_options_block.h"
 #include "ssap/selected_pair.h"
 #include "ssap/ssap_scores.h"
 #include "ssap/windowed_matrix.h"
@@ -157,6 +158,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <fstream>
 #include <iostream>
 #include <string>
 
@@ -172,12 +174,27 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::sup;
 using namespace cath::opts;
-using namespace std;
 
 using boost::irange;
 using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
+using boost::range::stable_sort;
+using std::abs;
+using std::boolalpha;
+using std::deque;
+using std::endl;
+using std::fill_n;
+using std::fixed;
+using std::make_pair;
+using std::max;
+using std::min;
+using std::ofstream;
+using std::ostream;
+using std::pair;
+using std::setprecision;
+using std::string;
+using std::vector;
 
 /// \brief The number of top-scoring residue pairs to select
 constexpr size_t     NUM_SELECTIONS_TO_SAVE   =  20;
@@ -334,8 +351,8 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 	reset_ssap_global_variables();
 
 	// If the options are invalid or specify to do_nothing, then just return
-	const string error_or_help_string = arg_cath_ssap_options.get_error_or_help_string();
-	if (!error_or_help_string.empty()) {
+	const auto error_or_help_string = arg_cath_ssap_options.get_error_or_help_string();
+	if ( error_or_help_string ) {
 		arg_stderr << error_or_help_string << endl;
 		return;
 	}

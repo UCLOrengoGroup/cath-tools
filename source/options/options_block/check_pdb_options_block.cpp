@@ -25,14 +25,18 @@
 #include "common/clone/make_uptr_clone.h"
 #include "exception/invalid_argument_exception.h"
 
-using namespace boost::filesystem;
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
-using namespace std;
+using namespace std::literals::string_literals;
 
+using boost::filesystem::path;
 using boost::none;
+using boost::program_options::bool_switch;
+using boost::program_options::options_description;
+using boost::program_options::value;
+using std::string;
+using std::unique_ptr;
 
 const string check_pdb_options_block::PO_PDB_FILE ( "pdb-file"        );
 const string check_pdb_options_block::PO_PERMIT   ( "permit-no-atoms" );
@@ -57,8 +61,14 @@ string check_pdb_options_block::do_get_block_name() const {
 void check_pdb_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
                                                                     ) {
 	arg_desc.add_options()
-		(PO_PDB_FILE.c_str(),  value<path>(&pdb_file),                              "PDB file to check"                                  )
-		(PO_PERMIT.c_str(),    bool_switch(&permit_no_atoms)->default_value(false), "Permit success for a file that has no ATOM records" );
+		( PO_PERMIT.c_str(), bool_switch( &permit_no_atoms )->default_value( false ), "Permit success for a file that has no ATOM records" );
+}
+
+/// \brief Add this block's hidden options to the provided options_description
+void check_pdb_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+                                                                   ) {
+	arg_desc.add_options()
+		( PO_PDB_FILE.c_str(), value<path>( &pdb_file ), "PDB file to check" );
 }
 
 /// \brief Identify any conflicts that make the currently stored options invalid
@@ -67,6 +77,23 @@ void check_pdb_options_block::do_add_visible_options_to_description(options_desc
 ///
 /// At present, this always accepts all options
 opt_str check_pdb_options_block::do_invalid_string() const {
+	// If there is no PDB file to check then grumble
+	//
+	// (Best done here rather than via boost::program_options::typed_value::required() because
+	//  that leads to an error message that's unclear for users that don't know about positional options
+	//  being implemented via hidden options)
+	if ( get_pdb_file().empty() ) {
+		return "Must specify a PDB file to check."s;
+	}
+
+	// Check the PDB file is a valid input file
+	//
+	// \todo This check can probably be best implemented in the validation of the option
+	if ( ! options_block::is_acceptable_input_file( pdb_file ) ) {
+		return "No such valid, non-empty PDB file \"" + pdb_file.string() + "\".";
+	}
+
+	// Otherwise return all OK
 	return none;
 }
 
