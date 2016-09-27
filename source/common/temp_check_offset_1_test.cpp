@@ -22,6 +22,7 @@
 
 #include "temp_check_offset_1.h"
 
+#include "common/boost_check_no_throw_diag.h"
 #include "exception/invalid_argument_exception.h"
 
 using namespace cath;
@@ -41,12 +42,16 @@ namespace cath {
 
 BOOST_FIXTURE_TEST_SUITE(temp_check_offset_1_test_suite, cath::test::temp_check_offset_1_test_suite_fixture)
 
-#ifndef NDEBUG
+
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(zero_throws) {
-	BOOST_CHECK_THROW( check_offset_1(0), invalid_argument_exception );
-}
+#ifndef NDEBUG
+	BOOST_CHECK_THROW        ( check_offset_1( 0 ), invalid_argument_exception );
+#else
+	BOOST_CHECK_NO_THROW_DIAG( check_offset_1( 0 ) );
 #endif
+}
+
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(one_does_not_throw) {
