@@ -24,7 +24,7 @@
 #include <boost/range/algorithm.hpp>
 
 #include "common/algorithm/sort_uniq_copy.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "common/invert_permutation.h"
 #include "common/less_than_helper.h"
 #include "exception/invalid_argument_exception.h"

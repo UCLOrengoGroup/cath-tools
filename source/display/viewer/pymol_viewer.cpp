@@ -29,7 +29,7 @@
 
 #include "alignment/alignment.h"
 #include "common/batch/batch_functions.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "display/display_colour/display_colour.h"
 #include "display/viewer/pymol/pymol_tools.h"
 #include "exception/invalid_argument_exception.h"

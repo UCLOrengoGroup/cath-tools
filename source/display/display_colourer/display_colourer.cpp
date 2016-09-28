@@ -21,8 +21,8 @@
 #include "display_colourer.h"
 
 #include "alignment/alignment_context.h"
-#include "common/c++14/make_unique.h"
 #include "common/clone/check_uptr_clone_against_this.h"
+#include "common/cpp14/make_unique.h"
 #include "display/display_colourer/detail/score_colour_handler.h"
 #include "display/display_colourer/display_colour_spec.h"
 #include "display/display_colourer/display_colourer_alignment.h"

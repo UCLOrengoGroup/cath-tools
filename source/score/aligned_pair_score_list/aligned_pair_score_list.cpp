@@ -26,7 +26,7 @@
 #include "common/algorithm/sort_uniq_copy.h"
 #include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/ptr_container/unique_ptr_functions.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "exception/not_implemented_exception.h"
 #include "score/aligned_pair_score/aligned_pair_score.h"
 

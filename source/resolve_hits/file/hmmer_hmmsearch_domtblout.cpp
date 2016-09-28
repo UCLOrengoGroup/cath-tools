@@ -21,7 +21,7 @@
 #include "hmmer_hmmsearch_domtblout.h"
 
 #include "common/boost_addenda/make_string_ref.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "common/file/open_fstream.h"
 #include "common/string/string_parse_tools.h"
 #include "resolve_hits/read_and_resolve_mgr.h"

@@ -24,7 +24,7 @@
 
 #include "common/algorithm/adjacent_accumulate.h"
 #include "common/boost_addenda/range/range_concept_type_aliases.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "exception/invalid_argument_exception.h"
 #include "score/true_pos_false_neg/classn_stat.h"
 

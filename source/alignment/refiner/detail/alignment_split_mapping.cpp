@@ -28,7 +28,7 @@
 #include "alignment/alignment_row.h"
 #include "alignment/pair_alignment.h"
 #include "alignment/refiner/detail/alignment_split.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "exception/invalid_argument_exception.h"
 #include "structure/protein/protein.h"
 #include "structure/protein/residue.h"

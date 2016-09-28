@@ -26,7 +26,7 @@
 #include "alignment/detail/multi_align_group.h"
 #include "alignment/gap/gap_penalty.h"
 #include "alignment/io/outputter/horiz_align_outputter.h" // ***** TEMPORARY *****
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "common/invert_permutation.h"
 #include "exception/invalid_argument_exception.h"
 #include "exception/out_of_range_exception.h"

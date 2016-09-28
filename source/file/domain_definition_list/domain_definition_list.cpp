@@ -25,7 +25,7 @@
 #include "chopping/chopping_format/sillitoe_chopping_format.h"
 #include "chopping/domain/domain_definition.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "common/file/open_fstream.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"

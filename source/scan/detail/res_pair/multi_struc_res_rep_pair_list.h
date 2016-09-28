@@ -21,7 +21,7 @@
 #ifndef MULTI_STRUC_RES_REP_PAIR_LIST_H_INCLUDED
 #define MULTI_STRUC_RES_REP_PAIR_LIST_H_INCLUDED
 
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "scan/detail/res_pair/multi_struc_res_rep_pair.h"
 #include "scan/detail/scan_type_aliases.h"
 

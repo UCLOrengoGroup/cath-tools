@@ -28,7 +28,7 @@
 #include <boost/range/irange.hpp>
 
 #include "common/algorithm/copy_build.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "common/size_t_literal.h"
 #include "file/dssp_wolf/tally_residue_names.h"
 #include "file/pdb/pdb.h"

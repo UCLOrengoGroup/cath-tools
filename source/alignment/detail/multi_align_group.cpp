@@ -30,7 +30,7 @@
 #include "alignment/io/alignment_io.h"
 #include "alignment/io/outputter/horiz_align_outputter.h"
 #include "alignment/pair_alignment.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "exception/invalid_argument_exception.h"
 
 using namespace cath;

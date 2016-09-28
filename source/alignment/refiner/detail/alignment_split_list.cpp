@@ -21,7 +21,7 @@
 #include "alignment_split_list.h"
 
 #include "alignment/alignment.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 
 #include <iostream>
 

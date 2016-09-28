@@ -23,7 +23,7 @@
 
 #include <boost/range/algorithm_ext/for_each.hpp>
 
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "scan/detail/quad_criteria_are_met_by.h"
 #include "scan/detail/res_pair/single_struc_res_pair.h"
 

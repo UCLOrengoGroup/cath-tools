@@ -21,7 +21,7 @@
 #ifndef SCORED_ARCH_PROXY_H_INCLUDED
 #define SCORED_ARCH_PROXY_H_INCLUDED
 
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "resolve_hits/resolve_hits_type_aliases.h"
 
 namespace cath {

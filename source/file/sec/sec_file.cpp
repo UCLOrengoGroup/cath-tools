@@ -20,7 +20,7 @@
 
 #include "sec_file.h"
 
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "exception/invalid_argument_exception.h"
 #include "file/sec/sec_file_record.h"
 #include "structure/protein/sec_struc.h"

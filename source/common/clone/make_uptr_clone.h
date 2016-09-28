@@ -21,7 +21,7 @@
 #ifndef MAKE_UPTR_CLONE_H_INCLUDED
 #define MAKE_UPTR_CLONE_H_INCLUDED
 
-#include "common/c++14/make_unique.h"
+#include "common/cpp14/make_unique.h"
 
 namespace cath {
 	namespace common {

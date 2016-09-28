@@ -25,8 +25,8 @@
 #include <boost/range/algorithm/adjacent_find.hpp>
 #include <boost/range/algorithm/sort.hpp>
 
-#include "common/c++14/cbegin_cend.h"
 #include "common/chrono/duration_to_seconds_string.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "resolve_hits/hit.h"
 
 #include <tuple>

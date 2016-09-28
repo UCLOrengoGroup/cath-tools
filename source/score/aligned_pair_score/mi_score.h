@@ -21,11 +21,11 @@
 #ifndef MI_SCORE_H_INCLUDED
 #define MI_SCORE_H_INCLUDED
 
-#include "common/c++14/make_unique.h"
-#include "score/length_getter/length_getter_make_clone.h"
 #include "common/clone/clone_ptr.h"
+#include "common/cpp14/make_unique.h"
 #include "score/aligned_pair_score/aligned_pair_score.h"
 #include "score/aligned_pair_score/rmsd_score.h"
+#include "score/length_getter/length_getter_make_clone.h"
 #include "score/length_getter/length_of_shorter_getter.h"
 #include "score/length_getter/num_aligned_length_getter.h"
 

@@ -27,7 +27,7 @@
 #include "alignment/dyn_prog_align/detail/score_accumulation_matrix.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.h"
 #include "common/boost_addenda/range/utility/iterator/cross_itr.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "exception/invalid_argument_exception.h"
 #include "ssap/windowed_matrix.h"
 

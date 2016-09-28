@@ -40,7 +40,7 @@
 #include "common/boost_addenda/range/back.h"
 #include "common/boost_addenda/range/front.h"
 #include "common/boost_addenda/sorted_insert.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "common/size_t_literal.h"
 #include "common/type_aliases.h"
 #include "score/score_classification/value_list_scaling.h"

@@ -29,7 +29,7 @@
 //#include "common/algorithm/contains.h"                         // ***** TEMPORARY *****
 //#include "common/boost_addenda/range/adaptor/lexical_casted.h" // ***** TEMPORARY *****
 #include "common/boost_addenda/range/utility/iterator/cross_itr.h"
-//#include "common/c++14/cbegin_cend.h"                          // ***** TEMPORARY *****
+//#include "common/cpp14/cbegin_cend.h"                          // ***** TEMPORARY *****
 #include "scan/detail/res_pair/multi_struc_res_rep_pair.h"
 #include "scan/detail/scan_role.h"
 #include "scan/detail/scan_type_aliases.h"

@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "aligned_pair_score.h"
+
 //#include <boost/algorithm/string/join.hpp>
 //#include <boost/algorithm/string/classification.hpp>
 //#include <boost/algorithm/string/predicate.hpp>
@@ -25,14 +27,13 @@
 //#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/find.hpp>
 
-#include "aligned_pair_score.h"
 #include "alignment/alignment.h"
 #include "alignment/pair_alignment.h"
 #include "common/algorithm/contains.h"
 #include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/ptr_container/unique_ptr_functions.h"
-#include "common/c++14/cbegin_cend.h"
 #include "common/clone/check_uptr_clone_against_this.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "exception/invalid_argument_exception.h"
 #include "exception/out_of_range_exception.h"
 #include "score/aligned_pair_score_list/aligned_pair_score_list.h"

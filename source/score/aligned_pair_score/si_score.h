@@ -21,8 +21,8 @@
 #ifndef SI_SCORE_H_INCLUDED
 #define SI_SCORE_H_INCLUDED
 
-#include "common/c++14/make_unique.h"
 #include "common/clone/clone_ptr.h"
+#include "common/cpp14/make_unique.h"
 #include "score/aligned_pair_score/aligned_pair_score.h"
 #include "score/aligned_pair_score/rmsd_score.h"
 #include "score/length_getter/length_getter_make_clone.h"

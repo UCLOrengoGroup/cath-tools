@@ -22,7 +22,7 @@
 #define CONSTEXPR_MODULO_FNS_H_INCLUDED
 
 #include "common/algorithm/constexpr_integer_rounding.h"
-#include "common/c++14/constexpr_min_max.h"
+#include "common/cpp14/constexpr_min_max.h"
 #include "common/type_aliases.h"
 
 #include <type_traits>

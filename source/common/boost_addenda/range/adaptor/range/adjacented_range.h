@@ -22,7 +22,7 @@
 #define ADJACENTED_RANGE_H_INCLUDED
 
 #include "common/boost_addenda/range/adaptor/iterator/adjacent_itr.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 
 namespace cath {
 	namespace common {

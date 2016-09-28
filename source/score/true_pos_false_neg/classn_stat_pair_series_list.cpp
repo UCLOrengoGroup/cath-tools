@@ -22,7 +22,7 @@
 
 #include <boost/range/algorithm/find_if.hpp>
 
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "exception/invalid_argument_exception.h"
 #include "score/true_pos_false_neg/classn_stat_pair_series.h"
 

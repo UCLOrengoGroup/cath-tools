@@ -20,7 +20,7 @@
 
 #include "protein_file_combn.h"
 
-#include "common/c++14/make_unique.h"
+#include "common/cpp14/make_unique.h"
 #include "exception/invalid_argument_exception.h"
 #include "structure/protein/protein_source_file_set/protein_source_from_pdb.h"
 #include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.h"

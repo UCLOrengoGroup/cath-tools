@@ -8,7 +8,7 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/filesystem/path.hpp>
 
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "exception/runtime_error_exception.h"
 #include "file/file_type_aliases.h"
 #include "file/prc_scores_file/prc_scores_entry.h"

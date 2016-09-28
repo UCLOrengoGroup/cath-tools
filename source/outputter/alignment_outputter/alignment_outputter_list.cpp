@@ -21,7 +21,7 @@
 #include "alignment_outputter_list.h"
 
 #include "common/boost_addenda/ptr_container/unique_ptr_functions.h"
-#include "common/c++14/cbegin_cend.h"
+#include "common/cpp14/cbegin_cend.h"
 #include "outputter/alignment_outputter/alignment_outputter.h"
 
 using namespace cath::align;

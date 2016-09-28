@@ -21,8 +21,8 @@
 #ifndef SSAP_SCORE_H_INCLUDED
 #define SSAP_SCORE_H_INCLUDED
 
-#include "common/c++14/make_unique.h"
 #include "common/clone/clone_ptr.h"
+#include "common/cpp14/make_unique.h"
 #include "score/aligned_pair_score/aligned_pair_score.h"
 #include "score/aligned_pair_score/detail/score_common_coord_handler.h"
 #include "score/aligned_pair_score/ssap_score/ssap_score_accuracy.h"
