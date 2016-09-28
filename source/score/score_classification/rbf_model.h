@@ -4,6 +4,8 @@
 #ifndef RBF_MODEL_H_INCLUDED
 #define RBF_MODEL_H_INCLUDED
 
+#include <boost/filesystem/path.hpp>
+
 #include "common/type_aliases.h"
 #include "score/score_classification/value_list_scaling.h"
 

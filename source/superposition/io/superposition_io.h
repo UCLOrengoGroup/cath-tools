@@ -23,6 +23,7 @@
 
 #include <boost/filesystem.hpp>
 
+#include "common/path_type_aliases.h"
 #include "superposition/superposition.h"
 
 #include <iosfwd>

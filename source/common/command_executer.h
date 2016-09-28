@@ -21,6 +21,8 @@
 #ifndef COMMAND_EXECUTER_H_INCLUDED
 #define COMMAND_EXECUTER_H_INCLUDED
 
+#include <boost/filesystem/path.hpp>
+
 #include "common/type_aliases.h"
 
 #include <vector>

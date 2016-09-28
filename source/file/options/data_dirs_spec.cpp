@@ -30,6 +30,7 @@
 #include "common/algorithm/contains.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/file/find_file.h"
+#include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
 #include "exception/runtime_error_exception.h"
 

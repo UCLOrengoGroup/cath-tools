@@ -24,7 +24,7 @@
 #include <boost/operators.hpp>
 #include <boost/range.hpp>
 
-#include "common/type_aliases.h"
+#include "common/path_type_aliases.h"
 #include "file/file_type_aliases.h"
 #include "structure/structure_type_aliases.h"
 

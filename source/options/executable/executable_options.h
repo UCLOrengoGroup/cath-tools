@@ -26,6 +26,7 @@
 #include <boost/program_options.hpp>
 
 #include "common/boost_addenda/program_options/set_opt_str_from_prog_opts_try.h"
+#include "common/path_type_aliases.h"
 #include "common/type_aliases.h"
 
 #include <string>

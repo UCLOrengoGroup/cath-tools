@@ -21,7 +21,7 @@
 #ifndef PDB_INPUT_SPEC_H_INCLUDED
 #define PDB_INPUT_SPEC_H_INCLUDED
 
-#include "common/type_aliases.h"
+#include "common/path_type_aliases.h"
 
 namespace cath {
 	namespace opts {

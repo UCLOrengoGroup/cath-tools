@@ -25,6 +25,8 @@
 #include "alignment/alignment.h"
 #include "alignment/pair_alignment.h"
 
+#include <iostream>
+
 using namespace cath;
 using namespace cath::align;
 using namespace cath::align::detail;

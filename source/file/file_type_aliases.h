@@ -21,6 +21,8 @@
 #ifndef FILE_TYPE_ALIASES_H_INCLUDED
 #define FILE_TYPE_ALIASES_H_INCLUDED
 
+#include <boost/filesystem/path.hpp>
+
 #include "common/type_aliases.h"
 #include "file/pdb/pdb_atom_parse_status.h"
 

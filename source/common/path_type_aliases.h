@@ -24,9 +24,12 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/optional/optional_fwd.hpp>
 
+#include <vector>
+
 namespace cath {
 
-	/// \todo Move path_vec from common/type_aliases.h to here (common/path_type_aliases.h)
+	/// \brief TODOCUMENT
+	using path_vec = std::vector<boost::filesystem::path>;
 
 	/// \brief TODOCUMENT
 	using opt_path = boost::optional<boost::filesystem::path>;

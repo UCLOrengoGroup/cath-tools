@@ -23,6 +23,7 @@
 
 #include <boost/filesystem.hpp>
 
+#include "common/path_type_aliases.h"
 #include "structure/entry_querier/residue_querier.h"
 #include "structure/entry_querier/sec_struc_querier.h"
 

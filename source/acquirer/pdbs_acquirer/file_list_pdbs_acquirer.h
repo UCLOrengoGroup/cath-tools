@@ -24,6 +24,7 @@
 #include <boost/filesystem.hpp>
 
 #include "acquirer/pdbs_acquirer/pdbs_acquirer.h"
+#include "common/path_type_aliases.h"
 
 namespace cath {
 	namespace opts {

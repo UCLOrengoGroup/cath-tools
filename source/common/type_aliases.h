@@ -21,13 +21,13 @@
 #ifndef TYPE_ALIASES_H_INCLUDED
 #define TYPE_ALIASES_H_INCLUDED
 
-#include <boost/filesystem/path.hpp>
 #include <boost/optional/optional_fwd.hpp>
 #include <boost/tuple/tuple.hpp>
 
 #include <deque>
 #include <iosfwd>
 #include <map>
+#include <memory>
 #include <set>
 #include <string>
 #include <utility>
@@ -76,8 +76,6 @@ namespace cath {
 
 	template <typename T>
 	using uptr_vec                      = std::vector<std::unique_ptr<T>>;
-
-	using path_vec                      = std::vector<boost::filesystem::path>;
 
 	using opt_size                      = boost::optional<size_t>;
 	using opt_size_vec                  = std::vector<boost::optional<size_t> >;

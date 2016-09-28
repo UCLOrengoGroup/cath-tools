@@ -4,6 +4,8 @@
 #ifndef LABEL_PAIR_IS_POSITIVE_H_INCLUDED
 #define LABEL_PAIR_IS_POSITIVE_H_INCLUDED
 
+#include <boost/filesystem/path.hpp>
+
 #include "common/type_aliases.h"
 
 namespace cath {

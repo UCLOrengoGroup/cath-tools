@@ -21,6 +21,8 @@
 #ifndef POPULATE_MATRIX_SCAN_ACTION_H_INCLUDED
 #define POPULATE_MATRIX_SCAN_ACTION_H_INCLUDED
 
+#include <boost/filesystem/path.hpp>
+
 #include "scan/detail/res_pair/single_struc_res_pair.h"
 #include "scan/scan_index.h"
 #include "scan/scan_query_set.h"

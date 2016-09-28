@@ -23,7 +23,7 @@
 
 #include <boost/filesystem/path.hpp>
 
-#include "common/type_aliases.h"
+#include "common/path_type_aliases.h"
 #include "file/data_file.h"
 #include "file/options/data_option.h"
 
