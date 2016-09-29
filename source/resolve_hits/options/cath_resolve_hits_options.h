@@ -22,16 +22,17 @@
 #define CATH_RESOLVE_HITS_OPTIONS_H_INCLUDED
 
 #include "options/executable/executable_options.h"
-#include "options/options_block/resolve_hits_input_options_block.h"
+#include "resolve_hits/options/resolve_hits_input_options_block.h"
 
 #include <iosfwd>
+
 namespace cath {
-	namespace opts {
+	namespace rslv {
 
 		/// \brief TODOCUMENT
-		class cath_resolve_hits_options final : public executable_options {
+		class cath_resolve_hits_options final : public opts::executable_options {
 		private:
-			using super = executable_options;
+			using super = opts::executable_options;
 
 			static const std::string STANDARD_USAGE_ERROR_STRING;
 

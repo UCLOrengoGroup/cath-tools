@@ -24,13 +24,10 @@
 #include <boost/optional.hpp>
 
 #include "common/boost_check_no_throw_diag.h"
-#include "display/options/display_options_block.h"
 #include "options/options_block/alignment_input_options_block.h"
 #include "options/options_block/detail_help_options_block.h"
 #include "options/options_block/options_block_tester.h"
 #include "options/options_block/pdb_input_options_block.h"
-#include "outputter/superposition_output_options/superposition_output_options_block.h"
-#include "ssap/options/old_ssap_options_block.h"
 
 using namespace boost::program_options;
 using namespace cath;
@@ -42,10 +39,7 @@ BOOST_TEST_DONT_PRINT_LOG_VALUE(type_info)
 /// \brief A type alias for a list of all the different types of options_blocks, so they can all be tested
 using all_options_block_types = boost::mpl::list<alignment_input_options_block,
                                                  detail_help_options_block,
-                                                 old_ssap_options_block,
-                                                 pdb_input_options_block,
-                                                 superposition_output_options_block,
-                                                 display_options_block>;
+                                                 pdb_input_options_block>;
 
 namespace cath {
 	namespace test {

@@ -330,6 +330,7 @@ set(
 		common/invert_permutation.cpp
 		common/logger.cpp
 		common/pair_insertion_operator.cpp
+		common/program_exception_wrapper.cpp
 		${NORMSOURCES_COMMON_STRING}
 		common/temp_check_offset_1.cpp
 		${NORMSOURCES_COMMON_TEST_PREDICATE}
@@ -392,7 +393,6 @@ set(
 		exception/invalid_argument_exception.cpp
 		exception/not_implemented_exception.cpp
 		exception/out_of_range_exception.cpp
-		exception/program_exception_wrapper.cpp
 		exception/runtime_error_exception.cpp
 )
 
@@ -531,14 +531,8 @@ set(
 )
 
 set(
-	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_RESOLVE_HITS_OPTIONS
-		options/executable/cath_resolve_hits_options/cath_resolve_hits_options.cpp
-)
-
-set(
 	NORMSOURCES_OPTIONS_EXECUTABLE
 		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS}
-		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_RESOLVE_HITS_OPTIONS}
 		options/executable/env_var_option_name_handler.cpp
 		options/executable/executable_options.cpp
 )
@@ -555,8 +549,6 @@ set(
 		options/options_block/options_block_tester.cpp
 		options/options_block/pdb_input_options_block.cpp
 		options/options_block/pdb_input_spec.cpp
-		options/options_block/resolve_hits_input_options_block.cpp
-		options/options_block/resolve_hits_input_spec.cpp
 )
 
 set(
@@ -613,6 +605,13 @@ set(
 )
 
 set(
+	NORMSOURCES_RESOLVE_HITS_OPTIONS
+		resolve_hits/options/cath_resolve_hits_options.cpp
+		resolve_hits/options/resolve_hits_input_options_block.cpp
+		resolve_hits/options/resolve_hits_input_spec.cpp
+)
+
+set(
 	NORMSOURCES_RESOLVE_HITS
 		resolve_hits/discont_hits_index_by_start.cpp
 		${NORMSOURCES_RESOLVE_HITS_FILE}
@@ -622,6 +621,7 @@ set(
 		resolve_hits/hit_resolver.cpp
 		resolve_hits/hit_seg.cpp
 		resolve_hits/masked_bests_cacher.cpp
+		${NORMSOURCES_RESOLVE_HITS_OPTIONS}
 		resolve_hits/read_and_resolve_mgr.cpp
 		resolve_hits/res_arrow.cpp
 		resolve_hits/scored_hit_arch.cpp
@@ -1292,6 +1292,7 @@ set(
 		common/invert_permutation_test.cpp
 		common/less_than_helper_test.cpp
 		common/logger_test.cpp
+		common/program_exception_wrapper_test.cpp
 		${TESTSOURCES_COMMON_STRING}
 		common/temp_check_offset_1_test.cpp
 		${TESTSOURCES_COMMON_TEST_PREDICATE}
@@ -1342,7 +1343,6 @@ set(
 set(
 	TESTSOURCES_EXCEPTION
 		exception/exception_is_equivalent_test.cpp
-		exception/program_exception_wrapper_test.cpp
 )
 
 set(
@@ -1412,13 +1412,7 @@ set(
 )
 
 set(
-	TESTSOURCES_OPTIONS_EXECUTABLE_CATH_RESOLVE_HITS_OPTIONS
-		options/executable/cath_resolve_hits_options/cath_resolve_hits_options_test.cpp
-)
-
-set(
 	TESTSOURCES_OPTIONS_EXECUTABLE
-		${TESTSOURCES_OPTIONS_EXECUTABLE_CATH_RESOLVE_HITS_OPTIONS}
 		options/executable/env_var_option_name_handler_test.cpp
 		options/executable/executable_options_test.cpp
 )
@@ -1431,7 +1425,6 @@ set(
 		options/options_block/misc_help_version_options_block_test.cpp
 		options/options_block/options_block_test.cpp
 		options/options_block/pdb_input_options_block_test.cpp
-		options/options_block/resolve_hits_input_options_block_test.cpp
 )
 
 set(
@@ -1481,6 +1474,12 @@ set(
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS_OPTIONS
+		resolve_hits/options/cath_resolve_hits_options_test.cpp
+		resolve_hits/options/resolve_hits_input_options_block_test.cpp
+)
+
+set(
 	TESTSOURCES_RESOLVE_HITS
 		${TESTSOURCES_RESOLVE_HITS_FILE}
 		resolve_hits/hit_list_test.cpp
@@ -1488,6 +1487,7 @@ set(
 		resolve_hits/hit_seg_test.cpp
 		resolve_hits/hit_test.cpp
 		resolve_hits/masked_bests_cache_test.cpp
+		${TESTSOURCES_RESOLVE_HITS_OPTIONS}
 )
 
 set(

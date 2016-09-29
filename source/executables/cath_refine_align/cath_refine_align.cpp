@@ -20,7 +20,7 @@
 
 #include "cath_refine_align/cath_align_refiner.h"
 #include "cath_refine_align/options/cath_refine_align_options.h"
-#include "exception/program_exception_wrapper.h"
+#include "common/program_exception_wrapper.h"
 
 using namespace cath::common;
 using namespace cath::opts;

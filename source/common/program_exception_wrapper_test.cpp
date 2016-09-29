@@ -24,8 +24,8 @@
 #include <boost/test/output_test_stream.hpp>
 
 #include "common/argc_argv_faker.h"
+#include "common/program_exception_wrapper.h"
 #include "exception/invalid_argument_exception.h"
-#include "exception/program_exception_wrapper.h"
 
 #include <sstream>
 #include <string>

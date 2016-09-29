@@ -20,44 +20,11 @@
 
 #include "cath_resolve_hits_options.h"
 
-#include <boost/program_options.hpp>
-#include <boost/shared_array.hpp>
-
-#include "acquirer/alignment_acquirer/alignment_acquirer.h"
-#include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.h"
-#include "acquirer/pdbs_acquirer/istream_pdbs_acquirer.h"
-#include "acquirer/selection_policy_acquirer/selection_policy_acquirer.h"
-#include "acquirer/superposition_acquirer/align_based_superposition_acquirer.h"
-#include "alignment/alignment.h"
-#include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.h"
-#include "common/argc_argv_faker.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/not_implemented_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "outputter/alignment_outputter/alignment_outputter.h"
-#include "outputter/alignment_outputter/alignment_outputter_list.h"
-#include "outputter/superposition_outputter/superposition_outputter.h"
-#include "outputter/superposition_outputter/superposition_outputter_list.h"
-#include "superposition/superposition_context.h"
-
-#include <iostream>
-
 using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::opts;
+using namespace cath::rslv;
 
-using boost::lexical_cast;
 using boost::none;
-using boost::program_options::options_description;
 using boost::program_options::positional_options_description;
-using boost::ptr_vector;
 using std::string;
 
 /// The name of the program that uses this executable_options

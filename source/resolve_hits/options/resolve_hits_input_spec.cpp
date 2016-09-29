@@ -20,7 +20,7 @@
 
 #include "resolve_hits_input_spec.h"
 
-using namespace cath::opts;
+using namespace cath::rslv;
 using namespace cath;
 using namespace std::literals::string_literals;
 
@@ -120,7 +120,7 @@ resolve_hits_input_spec & resolve_hits_input_spec::set_apply_cath_rules(const bo
 /// \brief TODOCUMENT
 ///
 /// \relates resolve_hits_input_spec
-opt_str cath::opts::get_invalid_description(const resolve_hits_input_spec &arg_spec ///< TODOCUMENT
+opt_str cath::rslv::get_invalid_description(const resolve_hits_input_spec &arg_spec ///< TODOCUMENT
                                             ) {
 	if ( arg_spec.get_domtblout() && arg_spec.get_hmmeraln() ) {
 		return "Format cannot be both domtblout and hmmeraln"s;

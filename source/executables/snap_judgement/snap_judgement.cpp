@@ -20,7 +20,7 @@
 
 #include <boost/units/quantity.hpp>
 
-#include "exception/program_exception_wrapper.h"
+#include "common/program_exception_wrapper.h"
 #include "scan/scan_tools/all_vs_all.h"
 #include "scan/scan_tools/load_and_scan.h"
 #include "scan/scan_tools/load_and_scan_metrics.h"

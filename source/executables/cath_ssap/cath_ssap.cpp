@@ -21,7 +21,7 @@
 #include <boost/log/expressions.hpp>
 #include <boost/log/trivial.hpp>
 
-#include "exception/program_exception_wrapper.h"
+#include "common/program_exception_wrapper.h"
 #include "ssap/options/cath_ssap_options.h"
 #include "ssap/ssap.h"
 

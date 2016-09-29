@@ -25,6 +25,7 @@
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
+using namespace cath::rslv;
 using namespace std::literals::string_literals;
 
 using boost::program_options::options_description;

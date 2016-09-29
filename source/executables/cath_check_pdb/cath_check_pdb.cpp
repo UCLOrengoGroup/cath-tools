@@ -22,8 +22,8 @@
 
 #include "common/file/open_fstream.h"
 #include "common/logger.h"
+#include "common/program_exception_wrapper.h"
 #include "exception/invalid_argument_exception.h"
-#include "exception/program_exception_wrapper.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_residue.h"

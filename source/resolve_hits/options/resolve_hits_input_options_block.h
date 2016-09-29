@@ -22,20 +22,20 @@
 #define RESOLVE_HITS_INPUT_OPTIONS_BLOCK_H_INCLUDED
 
 #include "options/options_block/options_block.h"
-#include "options/options_block/resolve_hits_input_spec.h"
+#include "resolve_hits/options/resolve_hits_input_spec.h"
 
 namespace cath {
-	namespace opts {
+	namespace rslv {
 
 		/// \brief TODOCUMENT
-		class resolve_hits_input_options_block final : public options_block {
+		class resolve_hits_input_options_block final : public opts::options_block {
 		private:
-			using super = options_block;
+			using super = opts::options_block;
 
 			/// \brief TODOCUMENT
 			resolve_hits_input_spec the_spec;
 
-			virtual std::unique_ptr<options_block> do_clone() const override final;
+			virtual std::unique_ptr<opts::options_block> do_clone() const override final;
 			virtual std::string do_get_block_name() const override final;
 			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
 			virtual void do_add_hidden_options_to_description(boost::program_options::options_description &) override final;

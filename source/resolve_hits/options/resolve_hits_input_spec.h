@@ -27,7 +27,7 @@
 #include "common/type_aliases.h"
 
 namespace cath {
-	namespace opts {
+	namespace rslv {
 
 		class resolve_hits_input_spec final {
 		private:

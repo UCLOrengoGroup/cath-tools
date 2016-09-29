@@ -21,9 +21,9 @@
 #include "ids_options_block.h"
 
 #include <boost/lexical_cast.hpp>
+#include <boost/optional.hpp>
 #include <boost/program_options.hpp>
 
-#include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.h"
 #include "common/clone/make_uptr_clone.h"
 #include "exception/invalid_argument_exception.h"
 #include "exception/out_of_range_exception.h"
@@ -33,7 +33,6 @@
 using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath;
-using namespace cath::align;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;

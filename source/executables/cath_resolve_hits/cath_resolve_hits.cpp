@@ -22,8 +22,8 @@
 #include <boost/filesystem.hpp>
 
 #include "common/boost_addenda/range/adaptor/lexical_casted.h"
+#include "common/program_exception_wrapper.h"
 #include "common/type_aliases.h"
-#include "exception/program_exception_wrapper.h"
 #include "resolve_hits/hit_arch.h"
 #include "resolve_hits/hit_list.h"
 #include "resolve_hits/hit_resolver.h"
