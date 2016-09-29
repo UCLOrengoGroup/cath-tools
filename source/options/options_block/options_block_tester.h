@@ -53,7 +53,7 @@ namespace cath {
 			static const std::string          TEST_OPTION_2;
 			static const std::string          TEST_HELP_1;
 			static const std::string          TEST_HELP_2;
-			static const str_str_str_pair_map TEST_DESC_AND_HELP_OF_OPTION_NAME;
+			static str_str_str_pair_map TEST_DESC_AND_HELP_OF_OPTION_NAME();
 		};
 
 		/// \brief For a concrete options_block, parse the specified options into a copy of the specified block

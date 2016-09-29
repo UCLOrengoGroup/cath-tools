@@ -63,7 +63,9 @@ const string       executable_options::CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX("C
 const path         executable_options::CATH_TOOLS_CONF_FILE                  ("cath-tools.conf");
 
 /// \brief The path through which to search for the "global" configuration file.
-const path_vec executable_options::CATH_TOOLS_CONF_FILE_SEARCH_PATH = { ".", "~/.cath" };
+path_vec executable_options::CATH_TOOLS_CONF_FILE_SEARCH_PATH () {
+	return path_vec{ ".", "~/.cath" };
+}
 
 /// \brief Default implementation of get_positional_options() that doesn't set any positional options
 ///
@@ -303,7 +305,7 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 	);
 
 	// Parse any configuration file called cath_tools.conf
-	const path located_cath_tools_conf_file = find_file( CATH_TOOLS_CONF_FILE_SEARCH_PATH, CATH_TOOLS_CONF_FILE.string() );
+	const path located_cath_tools_conf_file = find_file( CATH_TOOLS_CONF_FILE_SEARCH_PATH(), CATH_TOOLS_CONF_FILE.string() );
 	if ( ! located_cath_tools_conf_file.empty() ) {
 //		cerr << "Parsing configuration from file " << CATH_TOOLS_CONF_FILE << endl;
 		ifstream config_file_stream;

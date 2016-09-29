@@ -36,10 +36,6 @@ const string options_block_tester::TEST_OPTION_1( "test_help_option_1"          
 const string options_block_tester::TEST_OPTION_2( "test_help_option_2"               );
 const string options_block_tester::TEST_HELP_1  ( "This is the first piece of help"  );
 const string options_block_tester::TEST_HELP_2  ( "This is the second piece of help" );
-const str_str_str_pair_map options_block_tester::TEST_DESC_AND_HELP_OF_OPTION_NAME = {
-	{ TEST_OPTION_1, { "Description of " + TEST_OPTION_1, TEST_HELP_1 } },
-	{ TEST_OPTION_2, { "Description of " + TEST_OPTION_2, TEST_HELP_2 } }
-};
 
 /// \brief Simple implementation function to return the specified list of parameters but with a dummy program name prepended
 str_vec options_block_tester::prepend_dummy_program_name_copy(const str_vec &arg_params
@@ -82,4 +78,12 @@ void options_block_tester::parse_into_options_block(options_block &the_options_b
 
 	// All parsing is complete so call notify, which will trigger any post-parsing hooks to get called
 	notify( vm );
+}
+
+/// \brief TODOCUMENT
+str_str_str_pair_map options_block_tester::TEST_DESC_AND_HELP_OF_OPTION_NAME() {
+	return {
+		{ TEST_OPTION_1, make_pair( "Description of " + TEST_OPTION_1, TEST_HELP_1 ), },
+		{ TEST_OPTION_2, make_pair( "Description of " + TEST_OPTION_2, TEST_HELP_2 ), },
+	};
 }

@@ -72,7 +72,7 @@ namespace cath {
 		/// This is needed because detail_help_options_block cannot be default constructed
 		template <>
 		detail_help_options_block options_block_test_suite_fixture::construct_options_block_for_testing<detail_help_options_block>() {
-			return detail_help_options_block( TEST_DESC_AND_HELP_OF_OPTION_NAME );
+			return detail_help_options_block( TEST_DESC_AND_HELP_OF_OPTION_NAME() );
 		}
 	}
 }

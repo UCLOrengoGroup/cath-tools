@@ -38,7 +38,7 @@ namespace cath {
 			~detail_help_options_block_test_suite_fixture() noexcept = default;
 
 		public:
-			detail_help_options_block the_options_block{ str_str_str_pair_map{ TEST_DESC_AND_HELP_OF_OPTION_NAME } };
+			detail_help_options_block the_options_block{ TEST_DESC_AND_HELP_OF_OPTION_NAME() };
 			const string              IGNORE_OPT       { "positional-that-should-be-ignored" };
 		};
 

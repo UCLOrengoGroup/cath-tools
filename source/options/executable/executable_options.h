@@ -65,7 +65,8 @@ namespace cath {
 
 			static const     std::string             CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX;
 			static const     boost::filesystem::path CATH_TOOLS_CONF_FILE;
-			static const     path_vec                CATH_TOOLS_CONF_FILE_SEARCH_PATH;
+			
+			static path_vec CATH_TOOLS_CONF_FILE_SEARCH_PATH();
 
 			/// \brief A list of (references to) the options blocks to be processed during parsing
 			std::vector<std::reference_wrapper<options_block>> all_options_blocks;
