@@ -43,10 +43,10 @@ void display_colour_gradient::check_values() const {
 }
 
 /// \brief Ctor for display_colour_gradient
-display_colour_gradient::display_colour_gradient(const display_colour_vec &arg_colour_points, ///< TODOCUMENT
-                                                 const size_t                 &arg_steps_in_between_points ///< TODOCUMENT
-                                                 ) : colour_points(arg_colour_points),
-                                                     steps_in_between_points(arg_steps_in_between_points) {
+display_colour_gradient::display_colour_gradient(const display_colour_vec &arg_colour_points,          ///< TODOCUMENT
+                                                 const size_t             &arg_steps_in_between_points ///< TODOCUMENT
+                                                 ) : colour_points          ( arg_colour_points           ),
+                                                     steps_in_between_points( arg_steps_in_between_points ) {
 	check_values();
 }
 
