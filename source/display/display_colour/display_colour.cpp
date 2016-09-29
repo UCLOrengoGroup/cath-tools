@@ -32,6 +32,8 @@
 #include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
 
+#include <tuple>
+
 using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::common;
@@ -41,6 +43,7 @@ using boost::algorithm::is_any_of;
 using boost::algorithm::join;
 using boost::lexical_cast;
 using boost::numeric_cast;
+using std::tie;
 
 /// \brief TODOCUMENT
 const string        display_colour::COMPONENT_SEPARATOR(",");
@@ -119,42 +122,54 @@ display_colour::display_colour(const double &arg_r, ///< TODOCUMENT
 	check_component_value( b );
 }
 
-/// \brief TODOCUMENT
-double display_colour::get_r() const {
+/// \brief Getter for the red component (between 0 and 1)
+const double & display_colour::get_r() const {
 	return r;
 }
 
-/// \brief TODOCUMENT
-double display_colour::get_g() const {
+/// \brief Getter for the green component (between 0 and 1)
+const double & display_colour::get_g() const {
 	return g;
 }
 
-/// \brief TODOCUMENT
-double display_colour::get_b() const {
+/// \brief Getter for the blue component (between 0 and 1)
+const double & display_colour::get_b() const {
 	return b;
 }
 
-/// \brief TODOCUMENT
+/// \brief Return a copy of the specified colour that has been lightened by the specified fraction
 ///
 /// \relates display_colour
-bool cath::operator<(const display_colour &arg_display_colour_a, ///< TODOCUMENT
-                     const display_colour &arg_display_colour_b  ///< TODOCUMENT
+display_colour cath::lighten_by_fraction(const display_colour &arg_colour,  ///< The colour from which to start
+                                         const double         &arg_fraction ///< The fraction change (0.0 gives the original colour; 1.0 gives white)
+                                         ) {
+	return rgb_mid_point( arg_colour, display_colour::WHITE, arg_fraction );
+}
+
+/// \brief Return a copy of the specified colour that has been darkened by the specified fraction
+///
+/// \relates display_colour
+display_colour cath::darken_by_fraction(const display_colour &arg_colour,  ///< The colour from which to start
+                                        const double         &arg_fraction ///< The fraction change (0.0 gives the original colour; 1.0 gives black)
+                                        ) {
+	return rgb_mid_point( arg_colour, display_colour::BLACK, arg_fraction );
+}
+
+/// \brief Return whether the first colour is less than the second
+///
+/// This is a simple ordering that compares on the red, green and then blue components
+///
+/// \todo Is this actually useful? If so, document the context; if not, consider removing.
+///
+/// \relates display_colour
+bool cath::operator<(const display_colour &arg_lhs, ///< The first  display_colour to compare
+                     const display_colour &arg_rhs  ///< The second display_colour to compare
                      ) {
-	const double red_a = arg_display_colour_a.get_r();
-	const double red_b = arg_display_colour_b.get_r();
-	if ( red_a != red_b ) {
-		return ( red_a < red_b );
-	}
-
-	const double green_a = arg_display_colour_a.get_g();
-	const double green_b = arg_display_colour_b.get_g();
-	if ( green_a != green_b ) {
-		return ( green_a < green_b );
-	}
-
-	const double blue_a = arg_display_colour_a.get_b();
-	const double blue_b = arg_display_colour_b.get_b();
-	return ( blue_a < blue_b );
+	return (
+		tie( arg_lhs.get_r(), arg_lhs.get_g(), arg_lhs.get_b() )
+		<
+		tie( arg_rhs.get_r(), arg_rhs.get_g(), arg_rhs.get_b() )
+	);
 }
 
 /// \brief TODOCUMENT

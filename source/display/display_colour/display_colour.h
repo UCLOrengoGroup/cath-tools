@@ -31,6 +31,8 @@
 namespace cath {
 
 	/// \brief TODOCUMENT
+	///
+	/// \todo Consider making this constexpr
 	class display_colour final : private boost::equivalent      < display_colour,
 	                                     boost::totally_ordered < display_colour > > {
 		/// \brief TODOCUMENT
@@ -51,9 +53,9 @@ namespace cath {
 		               const double &,
 		               const double &);
 
-		double get_r() const;
-		double get_g() const;
-		double get_b() const;
+		const double & get_r() const;
+		const double & get_g() const;
+		const double & get_b() const;
 
 		static const std::string    COMPONENT_SEPARATOR;
 		static const display_colour BLACK;
@@ -72,6 +74,11 @@ namespace cath {
 		static const display_colour MAGENTA;
 		static const display_colour DARK_MAGENTA;
 	};
+
+	display_colour lighten_by_fraction(const display_colour &,
+	                                   const double &);
+	display_colour darken_by_fraction(const display_colour &,
+	                                  const double &);
 
 	bool operator<(const display_colour &,
 	               const display_colour &);
