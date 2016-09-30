@@ -21,8 +21,8 @@
 #ifndef DISPLAY_COLOUR_GRADIENT_H_INCLUDED
 #define DISPLAY_COLOUR_GRADIENT_H_INCLUDED
 
-#include "display/display_colour/display_colour.h"
-#include "display/display_type_aliases.h"
+#include "display_colour/display_colour.h"
+#include "display_colour/display_colour_type_aliases.h"
 
 #include <cstddef>
 #include <vector>

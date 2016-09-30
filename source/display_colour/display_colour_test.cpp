@@ -23,10 +23,10 @@
 
 #include "common/boost_check_no_throw_diag.h"
 #include "common/test_tools.h"
+#include "display_colour/display_colour.h"
+#include "display_colour/display_colour_type_aliases.h"
 #include "exception/invalid_argument_exception.h"
 #include "test/global_test_constants.h"
-#include "display/display_type_aliases.h"
-#include "display/display_colour/display_colour.h"
 
 using namespace cath;
 using namespace cath::common;

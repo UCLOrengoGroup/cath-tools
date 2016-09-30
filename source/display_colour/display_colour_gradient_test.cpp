@@ -21,9 +21,9 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_check_no_throw_diag.h"
+#include "display_colour/display_colour.h"
+#include "display_colour/display_colour_gradient.h"
 #include "exception/invalid_argument_exception.h"
-#include "display/display_colour/display_colour.h"
-#include "display/display_colour/display_colour_gradient.h"
 
 using namespace cath;
 using namespace cath::common;

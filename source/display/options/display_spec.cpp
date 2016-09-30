@@ -25,8 +25,8 @@
 #include <boost/optional.hpp>
 
 #include "common/cpp14/make_unique.h"
-#include "display/display_colour/display_colour.h"
-#include "display/display_colour/display_colour_list.h"
+#include "display_colour/display_colour.h"
+#include "display_colour/display_colour_list.h"
 
 using namespace cath;
 using namespace cath::common;
@@ -137,4 +137,15 @@ opt_str cath::invalid_string(const display_spec &arg_display_spec ///< TODOCUMEN
 		return "Colour list could not be parsed from \"" + arg_display_spec.get_display_colours_string().value_or( "<no-colour-list-specified>" ) + "\"";
 	}
 	return none;
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates display_colour_list
+display_colour_list cath::get_colour_list(const display_spec &arg_display_spec ///< TODOCUMENT
+                                          ) {
+	const auto opt_cols_str = arg_display_spec.get_display_colours_string();
+	return make_display_colour_list_from_string(
+		opt_cols_str ? *opt_cols_str : display_colour_list::DEFAULT_COLOURS_STRING
+	);
 }

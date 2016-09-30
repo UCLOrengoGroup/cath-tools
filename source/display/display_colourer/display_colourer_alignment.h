@@ -21,9 +21,9 @@
 #ifndef DISPLAY_COLOURER_ALIGNMENT_H_INCLUDED
 #define DISPLAY_COLOURER_ALIGNMENT_H_INCLUDED
 
-#include "display/display_colour/display_colour_gradient.h"
 #include "display/display_colourer/detail/score_colour_handler.h"
 #include "display/display_colourer/score_adjusted_display_colourer.h"
+#include "display_colour/display_colour_gradient.h"
 
 namespace cath {
 

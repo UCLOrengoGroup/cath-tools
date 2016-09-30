@@ -20,8 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "display/display_colour/display_colour.h"
-#include "display/display_colour/display_colour_list.h"
+#include "display_colour/display_colour.h"
+#include "display_colour/display_colour_list.h"
 
 using namespace cath;
 

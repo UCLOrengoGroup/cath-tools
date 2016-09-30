@@ -26,6 +26,8 @@
 #include <memory>
 #include <string>
 
+namespace cath { class display_colour_list; }
+
 namespace cath {
 
 	/// \brief TODOCUMENT
@@ -84,5 +86,6 @@ namespace cath {
 
 	bool has_display_colours_string(const display_spec &);
 	opt_str invalid_string(const display_spec &);
+	display_colour_list get_colour_list(const display_spec &);
 }
 #endif

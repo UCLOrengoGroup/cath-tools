@@ -28,9 +28,8 @@
 
 #include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/string_algorithm/split_build.h"
-#include "display/display_colour/display_colour.h"
-#include "display/display_type_aliases.h"
-#include "display/options/display_spec.h"
+#include "display_colour/display_colour.h"
+#include "display_colour/display_colour_type_aliases.h"
 
 using namespace boost::algorithm;
 using namespace cath;
@@ -85,17 +84,6 @@ size_t display_colour_list::size() const {
 const display_colour & display_colour_list::colour_of_index(const size_t &arg_index ///< TODOCUMENT
                                                             ) const {
 	return colours[arg_index];
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates display_colour_list
-display_colour_list cath::get_colour_list(const display_spec &arg_display_spec ///< TODOCUMENT
-                                          ) {
-	const auto opt_cols_str = arg_display_spec.get_display_colours_string();
-	return make_display_colour_list_from_string(
-		opt_cols_str ? *opt_cols_str : display_colour_list::DEFAULT_COLOURS_STRING
-	);
 }
 
 /// \brief TODOCUMENT

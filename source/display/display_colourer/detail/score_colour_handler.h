@@ -23,8 +23,8 @@
 
 #include "common/type_aliases.h"
 
-//#include "display/display_colour/display_colour_gradient.h"
 //#include "display/display_colourer/display_colourer.h"
+//#include "display_colour/display_colour_gradient.h"
 
 namespace cath {
 	namespace align {

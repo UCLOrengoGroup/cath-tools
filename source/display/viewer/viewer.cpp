@@ -27,11 +27,11 @@
 #include <boost/lexical_cast.hpp>
 
 #include "alignment/alignment_context.h"
-#include "display/display_colour/display_colour.h"
-#include "display/display_colour/display_colour_list.h"
 #include "display/display_colourer/display_colourer.h"
 #include "display/options/display_spec.h"
 #include "display/viewer/pymol/pymol_tools.h"
+#include "display_colour/display_colour.h"
+#include "display_colour/display_colour_list.h"
 #include "exception/invalid_argument_exception.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"

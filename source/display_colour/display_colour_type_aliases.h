@@ -1,5 +1,5 @@
 /// \file
-/// \brief The  class header
+/// \brief The display_colour type aliases header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DISPLAY_TYPE_ALIASES_H_INCLUDED
-#define DISPLAY_TYPE_ALIASES_H_INCLUDED
+#ifndef DISPLAY_COLOUR_TYPE_ALIASES_H_INCLUDED
+#define DISPLAY_COLOUR_TYPE_ALIASES_H_INCLUDED
 
 #include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
 #include <boost/optional/optional_fwd.hpp>

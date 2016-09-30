@@ -23,7 +23,7 @@
 #include <boost/optional.hpp>
 
 #include "common/clone/make_uptr_clone.h"
-#include "display/display_colour/display_colour_list.h"
+#include "display_colour/display_colour_list.h"
 
 using namespace boost::filesystem;
 using namespace boost::program_options;

@@ -337,13 +337,6 @@ set(
 )
 
 set(
-	NORMSOURCES_DISPLAY_DISPLAY_COLOUR
-		display/display_colour/display_colour.cpp
-		display/display_colour/display_colour_gradient.cpp
-		display/display_colour/display_colour_list.cpp
-)
-
-set(
 	NORMSOURCES_DISPLAY_DISPLAY_COLOURER_DETAIL
 		display/display_colourer/detail/score_colour_handler.cpp
 )
@@ -382,10 +375,16 @@ set(
 
 set(
 	NORMSOURCES_DISPLAY
-		${NORMSOURCES_DISPLAY_DISPLAY_COLOUR}
 		${NORMSOURCES_DISPLAY_DISPLAY_COLOURER}
 		${NORMSOURCES_DISPLAY_OPTIONS}
 		${NORMSOURCES_DISPLAY_VIEWER}
+)
+
+set(
+	NORMSOURCES_DISPLAY_COLOUR
+		display_colour/display_colour.cpp
+		display_colour/display_colour_gradient.cpp
+		display_colour/display_colour_list.cpp
 )
 
 set(
@@ -1299,13 +1298,6 @@ set(
 )
 
 set(
-	TESTSOURCES_DISPLAY_DISPLAY_COLOUR
-		display/display_colour/display_colour_gradient_test.cpp
-		display/display_colour/display_colour_list_test.cpp
-		display/display_colour/display_colour_test.cpp
-)
-
-set(
 	TESTSOURCES_DISPLAY_DISPLAY_COLOURER
 		display/display_colourer/display_colour_spec_test.cpp
 		display/display_colourer/display_colourer_test.cpp
@@ -1334,10 +1326,16 @@ set(
 
 set(
 	TESTSOURCES_DISPLAY
-		${TESTSOURCES_DISPLAY_DISPLAY_COLOUR}
 		${TESTSOURCES_DISPLAY_DISPLAY_COLOURER}
 		${TESTSOURCES_DISPLAY_OPTIONS}
 		${TESTSOURCES_DISPLAY_VIEWER}
+)
+
+set(
+	TESTSOURCES_DISPLAY_COLOUR
+		display_colour/display_colour_gradient_test.cpp
+		display_colour/display_colour_list_test.cpp
+		display_colour/display_colour_test.cpp
 )
 
 set(
@@ -1793,6 +1791,7 @@ set(
 		${NORMSOURCES_CHOPPING}
 		${NORMSOURCES_COMMON}
 		${NORMSOURCES_DISPLAY}
+		${NORMSOURCES_DISPLAY_COLOUR}
 		${NORMSOURCES_EXCEPTION}
 		${NORMSOURCES_FILE}
 		${NORMSOURCES_OPTIONS}
@@ -1813,6 +1812,7 @@ set(
 		${TESTSOURCES_CHOPPING}
 		${TESTSOURCES_COMMON}
 		${TESTSOURCES_DISPLAY}
+		${TESTSOURCES_DISPLAY_COLOUR}
 		${TESTSOURCES_EXCEPTION}
 		${TESTSOURCES_FILE}
 		${TESTSOURCES_OPTIONS}
@@ -1890,6 +1890,7 @@ add_executable(
 	cath-resolve-hits
 		${NORMSOURCES_EXECUTABLES_CATH_RESOLVE_HITS}
 		${NORMSOURCES_COMMON}
+		${NORMSOURCES_DISPLAY_COLOUR}
 		${NORMSOURCES_EXCEPTION}
 		${NORMSOURCES_OPTIONS}
 )

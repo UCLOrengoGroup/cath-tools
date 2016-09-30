@@ -23,7 +23,7 @@
 #include "common/clone/make_uptr_clone.h"
 #include "common/file/open_fstream.h"
 #include "display/viewer/pymol_viewer.h"
-#include "display/display_colour/display_colour_list.h"
+#include "display_colour/display_colour_list.h"
 
 #include <fstream>
 

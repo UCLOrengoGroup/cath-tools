@@ -25,7 +25,7 @@
 
 #include "alignment/alignment.h"
 #include "common/type_aliases.h"
-#include "display/display_colour/display_colour.h"
+#include "display_colour/display_colour.h"
 
 using namespace cath;
 using namespace cath::detail;

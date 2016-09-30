@@ -22,13 +22,12 @@
 #define DISPLAY_COLOUR_LIST_H_INCLUDED
 
 #include "common/type_aliases.h"
-#include "display/display_type_aliases.h"
+#include "display_colour/display_colour_type_aliases.h"
 
 #include <string>
 #include <vector>
 
 namespace cath { class display_colour; }
-namespace cath { class display_spec; }
 
 namespace cath {
 
@@ -48,8 +47,6 @@ namespace cath {
 		static std::string COLOURS_SEPARATOR;
 		static std::string DEFAULT_COLOURS_STRING;
 	};
-
-	display_colour_list get_colour_list(const display_spec &);
 
 	const display_colour & colour_of_mod_index(const display_colour_list &,
 	                                           const size_t &);

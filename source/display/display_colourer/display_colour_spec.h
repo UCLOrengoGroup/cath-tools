@@ -23,8 +23,8 @@
 
 #include <boost/optional.hpp>
 
-#include "display/display_colour/display_colour.h"
-#include "display/display_type_aliases.h"
+#include "display_colour/display_colour_type_aliases.h"
+#include "display_colour/display_colour.h"
 
 namespace cath { namespace align { class alignment; } }
 namespace cath { namespace align { class alignment_context; } } 

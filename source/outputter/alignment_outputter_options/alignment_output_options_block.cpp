@@ -23,8 +23,8 @@
 #include <boost/optional.hpp>
 
 #include "common/clone/make_uptr_clone.h"
-#include "display/display_colour/display_colour.h"
 #include "display/display_colourer/display_colourer_alignment.h"
+#include "display_colour/display_colour.h"
 #include "outputter/alignment_outputter/alignment_outputter_list.h"
 #include "outputter/alignment_outputter/cath_aln_ostream_alignment_outputter.h"
 #include "outputter/alignment_outputter/fasta_ostream_alignment_outputter.h"

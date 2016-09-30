@@ -22,9 +22,9 @@
 
 #include "alignment/alignment_context.h"
 #include "common/clone/make_uptr_clone.h"
-#include "display/display_colour/display_colour.h"
 #include "display/display_colourer/display_colour_spec.h"
 #include "display/viewer/viewer.h"
+#include "display_colour/display_colour.h"
 #include "superposition/superposition_context.h"
 
 #include <algorithm>
