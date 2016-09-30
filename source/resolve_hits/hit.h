@@ -21,7 +21,9 @@
 #ifndef HIT_H_INCLUDED
 #define HIT_H_INCLUDED
 
+#include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/irange.hpp>
+#include <boost/range/numeric.hpp>
 
 #include "common/algorithm/transform_build.h"
 #include "common/cpp14/cbegin_cend.h"
@@ -230,6 +232,19 @@ namespace cath {
 			return ( arg_segment_index < fragments.size() ) ? fragments[ arg_segment_index     ].get_start_arrow()
 			                                                : stop_arrow;
 		}
+
+		/// \brief Get the length of the specified hit's segment corresponding to the specified index
+		///
+		/// \relates hit
+		inline size_t get_length_of_hit_seg(const hit    &arg_hit,    ///< The hit to query
+		                                    const size_t &arg_seg_idx ///< The index of the segment who length should be returned
+		                                    ) {
+			return static_cast<size_t>(
+				arg_hit.get_stop_arrow_of_segment ( arg_seg_idx ).get_index()
+				-
+				arg_hit.get_start_arrow_of_segment( arg_seg_idx ).get_index()
+			);
+		}
 		
 		/// \brief Get the specified hit's segment corresponding to the specified index
 		///
@@ -370,6 +385,20 @@ namespace cath {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_start_of_last_segment of contiguous hit"));
 			}
 			return arg_hit.get_start_arrow_of_segment( arg_hit.get_num_segments() - 1 );
+		}
+
+		/// \brief Get the total length of the specified hit (ie the sum of its segments' lengths)
+		///
+		/// \relates hit
+		inline size_t get_total_length(const hit &arg_hit ///< The hit to query
+		                               ) {
+			return boost::accumulate(
+				boost::irange( 0_z, arg_hit.get_num_segments() )
+					| boost::adaptors::transformed( [&] (const size_t &x) {
+						return get_length_of_hit_seg( arg_hit, x );
+					} ),
+				0_z
+			);
 		}
 
 		/// \brief Make a continuous hit from the residue indices

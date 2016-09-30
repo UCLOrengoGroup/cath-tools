@@ -41,9 +41,9 @@ using boost::format;
 using boost::irange;
 using std::string;
 
-/// \brief TODOCUMENT
-string resolve_hits_html_outputter::output_html(const hit_list  &arg_hit_list, ///< TODOCUMENT
-                                                const trim_spec &arg_trim_spec ///< TODOCUMENT
+/// \brief Generate HTML to describe the specified hit_list with the specified trim_spec applied
+string resolve_hits_html_outputter::output_html(const hit_list  &arg_hit_list, ///< The hit_list to describe
+                                                const trim_spec &arg_trim_spec ///< The trim_spec that should be shown on the hits
                                                 ) {
 	const auto gradient = display_colour_gradient{
 		{
@@ -108,12 +108,12 @@ string resolve_hits_html_outputter::output_html(const hit_list  &arg_hit_list, /
 )";
 }
 
-/// \brief TODOCUMENT
-string resolve_hits_html_outputter::output_html_fragment(const hit            &arg_hit,            ///< TODOCUMENT
-                                                         const string         &arg_label,          ///< TODOCUMENT
-                                                         const display_colour &arg_colour,         ///< TODOCUMENT
-                                                         const trim_spec      &arg_trim_spec,      ///< TODOCUMENT
-                                                         const size_t         &arg_sequence_length ///< TODOCUMENT
+// /// \brief Generate an HTML fragment to describe the specified hit with the specified trim_spec applied
+string resolve_hits_html_outputter::output_html_fragment(const hit            &arg_hit,            ///< The hit to desribe
+                                                         const string         &arg_label,          ///< The match ID / label associated with the hit
+                                                         const display_colour &arg_colour,         ///< The colour in which the hit should be rendered
+                                                         const trim_spec      &arg_trim_spec,      ///< ///< The trim_spec that should be shown on the hit
+                                                         const size_t         &arg_sequence_length ///< The length of the full sequence on which this hit appears
                                                          ) {
 	const double length_mult = 100.0 / debug_numeric_cast<double>( arg_sequence_length );
 

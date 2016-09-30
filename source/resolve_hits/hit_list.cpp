@@ -54,6 +54,8 @@ using boost::contains;
 using boost::filesystem::path;
 using boost::integer_range;
 using boost::irange;
+using boost::make_optional;
+using boost::none;
 using boost::numeric_cast;
 using boost::range::equal;
 using boost::range::lower_bound;
@@ -198,15 +200,35 @@ ostream & cath::rslv::operator<<(ostream        &arg_ostream, ///< The ostream i
 }
 
 /// \brief Get the maximum stop residue of all the hits in the specified hit_list
+///        or none if the hit_list is empty
 ///
 /// \relates hit_list
-residx_t cath::rslv::get_max_stop(const hit_list &arg_hit_list ///< The hit_list to query
-                                  ) {
-	return get_stop_res_index( *max_element(
-		arg_hit_list,
-		[] (const hit &x, const hit &y) {
-			return x.get_stop_arrow() < y.get_stop_arrow();
-	} ) );
+residx_opt cath::rslv::get_max_stop(const hit_list &arg_hit_list ///< The hit_list to query
+                                    ) {
+	return arg_hit_list.empty()
+		? none
+		: make_optional( get_stop_res_index( *max_element(
+			arg_hit_list,
+			[] (const hit &x, const hit &y) {
+				return x.get_stop_arrow() < y.get_stop_arrow();
+		} ) ) );
+}
+
+
+/// \brief Get the best (ie maximum) score of all the hits in the specified hit_list
+///        or none if the hit_list is empty
+///
+/// \relates hit_list
+resscr_opt cath::rslv::get_best_score(const hit_list &arg_hit_list ///< The hit_list to query
+                                      ) {
+	return arg_hit_list.empty()
+		? none
+		: make_optional(  	max_element(
+			arg_hit_list,
+			[] (const hit &x, const hit &y) {
+				return x.get_score() < y.get_score();
+			}
+		)->get_score() );
 }
 
 /// \brief Find the first hit in the specified hit_list that stops at or after the specified residue boundary

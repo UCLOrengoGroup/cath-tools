@@ -600,7 +600,13 @@ set(
 set(
 	NORMSOURCES_RESOLVE_HITS_FILE
 		resolve_hits/file/cath_id_score_category.cpp
+		resolve_hits/file/hits_input_format_tag.cpp
 		resolve_hits/file/hmmer_hmmsearch_domtblout.cpp
+)
+
+set(
+	NORMSOURCES_RESOLVE_HITS_HTML_OUTPUT
+		resolve_hits/html_output/resolve_hits_html_outputter.cpp
 )
 
 set(
@@ -608,6 +614,11 @@ set(
 		resolve_hits/options/cath_resolve_hits_options.cpp
 		resolve_hits/options/resolve_hits_input_options_block.cpp
 		resolve_hits/options/resolve_hits_input_spec.cpp
+)
+
+set(
+	NORMSOURCES_RESOLVE_HITS_TRIM
+		resolve_hits/trim/trim_spec.cpp
 )
 
 set(
@@ -619,11 +630,13 @@ set(
 		resolve_hits/hit_list.cpp
 		resolve_hits/hit_resolver.cpp
 		resolve_hits/hit_seg.cpp
+		${NORMSOURCES_RESOLVE_HITS_HTML_OUTPUT}
 		resolve_hits/masked_bests_cacher.cpp
 		${NORMSOURCES_RESOLVE_HITS_OPTIONS}
 		resolve_hits/read_and_resolve_mgr.cpp
 		resolve_hits/res_arrow.cpp
 		resolve_hits/scored_hit_arch.cpp
+		${NORMSOURCES_RESOLVE_HITS_TRIM}
 )
 
 set(
@@ -1478,6 +1491,11 @@ set(
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS_TRIM
+		resolve_hits/trim/trim_spec_test.cpp
+)
+
+set(
 	TESTSOURCES_RESOLVE_HITS
 		${TESTSOURCES_RESOLVE_HITS_FILE}
 		resolve_hits/hit_list_test.cpp
@@ -1486,6 +1504,7 @@ set(
 		resolve_hits/hit_test.cpp
 		resolve_hits/masked_bests_cache_test.cpp
 		${TESTSOURCES_RESOLVE_HITS_OPTIONS}
+		${TESTSOURCES_RESOLVE_HITS_TRIM}
 )
 
 set(

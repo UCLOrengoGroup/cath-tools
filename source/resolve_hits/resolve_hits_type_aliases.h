@@ -51,6 +51,9 @@ namespace cath {
 		/// \brief Type alias for the type to be used to index residues
 		using residx_t = unsigned int;
 
+		/// \brief Type alias for an optional residx_t
+		using residx_opt = boost::optional<residx_t>;
+
 		/// \brief Type alias for a pair of res_arrow and hit index
 		using res_arr_idx_pair = std::pair<res_arrow, hitidx_t>;
 
@@ -69,6 +72,9 @@ namespace cath {
 
 		/// \brief Type alias for the type to be used for hits' scores
 		using resscr_t = float;
+
+		/// \brief Type alias for an optional resscr_t
+		using resscr_opt = boost::optional<resscr_t>;
 
 		/// \brief Type alias for an optional scored_arch_proxy object
 		using scored_arch_proxy_opt = boost::optional<scored_arch_proxy>;

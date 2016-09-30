@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(insertion_operator_works) {
 }
 
 BOOST_AUTO_TEST_CASE(get_max_stop_works) {
-	BOOST_CHECK_EQUAL( get_max_stop( eg_hit_list ), 1439 );
+	BOOST_CHECK_EQUAL( *get_max_stop( eg_hit_list ), 1439 );
 }
 
 BOOST_AUTO_TEST_CASE(find_first_hit_stopping_at_or_after_works) {

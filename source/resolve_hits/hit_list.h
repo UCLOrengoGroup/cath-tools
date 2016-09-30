@@ -108,7 +108,8 @@ namespace cath {
 		std::string to_string(const hit_list &);
 		std::ostream & operator<<(std::ostream &,
 		                          const hit_list &);
-		residx_t get_max_stop(const hit_list &);
+		residx_opt get_max_stop(const hit_list &);
+		resscr_opt get_best_score(const hit_list &);
 		hit_list::const_iterator find_first_hit_stopping_at_or_after(const hit_list  &,
 		                                                             const res_arrow &);
 		hit_list::const_iterator find_first_hit_stopping_after(const hit_list  &,
