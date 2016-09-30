@@ -36,6 +36,13 @@ using boost::filesystem::is_empty;
 using boost::none;
 using boost::numeric_cast;
 
+
+/// \brief A string to use to separate (valid values and their descriptions) from each other
+const string options_block::SUB_DESC_SEPARATOR = "\n   ";
+
+/// \brief The string to use to separate valid values' names from their descriptions
+const string options_block::SUB_DESC_PAIR_SEPARATOR = " - ";
+
 /// \brief TODOCUMENT
 void options_block::do_add_hidden_options_to_description(options_description &/*arg_desc*/ ///< TODOCUMENT
                                                          ) {

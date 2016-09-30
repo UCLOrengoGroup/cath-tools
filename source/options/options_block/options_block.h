@@ -94,6 +94,9 @@ namespace cath {
 			static bool is_acceptable_output_dir(const boost::filesystem::path &);
 			static bool is_acceptable_input_dir(const boost::filesystem::path &);
 			static bool is_acceptable_executable(const boost::filesystem::path &);
+
+			static const std::string SUB_DESC_SEPARATOR;
+			static const std::string SUB_DESC_PAIR_SEPARATOR;
 		};
 
 		/// \brief Function to make options_block meet the Clonable concept (used in ptr_container)
