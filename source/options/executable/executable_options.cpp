@@ -335,7 +335,7 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 	// and if any of the blocks return non-empty invalid_string() results,
 	// then set error_or_help_string to the first
 	for (const auto &options_block_ref : all_options_blocks) {
-		const auto block_invalid_string = options_block_ref.get().invalid_string();
+		const auto block_invalid_string = options_block_ref.get().invalid_string( vm );
 		if ( block_invalid_string ) {
 			prog_opts_try( error_or_help_string, [&] () {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(*block_invalid_string));

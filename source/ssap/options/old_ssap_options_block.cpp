@@ -149,7 +149,8 @@ void old_ssap_options_block::do_add_hidden_options_to_description(options_descri
 ///  * Otherwise accept
 ///
 /// \returns A string describing the conflict in the options or an empty string if there's none
-opt_str old_ssap_options_block::do_invalid_string() const {
+opt_str old_ssap_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                  ) const {
 	// Always accept if no names have been specified
 	if ( names.empty() ) {
 		return none;

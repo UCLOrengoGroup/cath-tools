@@ -34,6 +34,7 @@ using boost::lexical_cast;
 using boost::none;
 using boost::program_options::bool_switch;
 using boost::program_options::options_description;
+using boost::program_options::variables_map;
 
 /// The program's current version
 const string misc_help_version_options_block::CATH_TOOLS_VERSION      { CATH_TOOLS_GIT_VERSION };
@@ -76,7 +77,8 @@ void misc_help_version_options_block::do_add_visible_options_to_description(opti
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts
-opt_str misc_help_version_options_block::do_invalid_string() const {
+opt_str misc_help_version_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                           ) const {
 	return none;
 }
 

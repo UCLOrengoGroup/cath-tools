@@ -32,6 +32,7 @@ using namespace cath::opts;
 using boost::none;
 using boost::program_options::bool_switch;
 using boost::program_options::options_description;
+using boost::program_options::variables_map;
 using std::string;
 using std::unique_ptr;
 
@@ -72,7 +73,8 @@ void detail_help_options_block::do_add_visible_options_to_description(options_de
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts all options
-opt_str detail_help_options_block::do_invalid_string() const {
+opt_str detail_help_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                     ) const {
 	return none;
 }
 

@@ -33,6 +33,7 @@ using boost::none;
 using boost::program_options::bool_switch;
 using boost::program_options::options_description;
 using boost::program_options::value;
+using boost::program_options::variables_map;
 using std::string;
 using std::unique_ptr;
 
@@ -114,7 +115,8 @@ void alignment_input_options_block::do_add_visible_options_to_description(option
 }
 
 /// \brief TODOCUMENT
-opt_str alignment_input_options_block::do_invalid_string() const {
+opt_str alignment_input_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                         ) const {
 	if ( ! the_alignment_input_spec.get_fasta_alignment_file().empty() && ! is_acceptable_input_file( the_alignment_input_spec.get_fasta_alignment_file()    ) ) {
 		return "FASTA alignment file " + the_alignment_input_spec.get_ssap_alignment_file().string() + " is not a valid input file";
 	}

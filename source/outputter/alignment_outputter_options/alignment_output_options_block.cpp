@@ -76,7 +76,8 @@ void alignment_output_options_block::do_add_visible_options_to_description(optio
 		( PO_ALN_TO_HTML_STDOUT.c_str(),     bool_switch( &aln_to_html_stdout     )->default_value(false), "Print the alignment to stdout as HTML"                                 );
 }
 
-opt_str alignment_output_options_block::do_invalid_string() const {
+opt_str alignment_output_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                          ) const {
 	if ( ! get_aln_to_cath_aln_file().empty() && ! is_acceptable_output_file( get_aln_to_cath_aln_file() ) ) {
 		return "Not a valid alignment CATH alignment output file :\"" + get_aln_to_cath_aln_file().string() + "\"";
 	}

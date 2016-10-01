@@ -76,7 +76,8 @@ void superposition_output_options_block::do_add_visible_options_to_description(o
 		(PO_SUP_TO_JSON_FILE.c_str(),  value<path>(&json_file),                                           "Write the superposition to JSON superposition file\n(Recommended filename extension: .sup_json)"        );
 }
 
-opt_str superposition_output_options_block::do_invalid_string() const {
+opt_str superposition_output_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                              ) const {
 	if (!get_sup_to_pdb_file().empty() && !is_acceptable_output_file(get_sup_to_pdb_file())) {
 		return "Not a valid superposition pdb output file :\"" + get_sup_to_pdb_file().string() + "\"";
 	}

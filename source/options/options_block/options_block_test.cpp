@@ -104,7 +104,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(get_options_description_works, options_block_type,
 /// \brief Check that each type of options_block will return an options_description from get_options_description()
 BOOST_AUTO_TEST_CASE_TEMPLATE(invalid_string_works, options_block_type, all_options_block_types) {
 	const options_block_type the_options_block(construct_options_block_for_testing<options_block_type>());
-	BOOST_CHECK_NO_THROW_DIAG(const opt_str desc = the_options_block.invalid_string());
+	variables_map vm;
+	BOOST_CHECK_NO_THROW_DIAG( const opt_str desc = the_options_block.invalid_string( vm ) );
 }
 
 /// \brief Check that the parsing throws on an unrecognised option

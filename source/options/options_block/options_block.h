@@ -76,7 +76,7 @@ namespace cath {
 			/// if that might be reasonable when the user requests help.
 			///
 			/// \returns A string describing the conflict in the options or an empty string if there's none
-			virtual opt_str do_invalid_string() const = 0;
+			virtual opt_str do_invalid_string(const boost::program_options::variables_map &) const = 0;
 
 		public:
 			std::unique_ptr<options_block> clone() const;
@@ -86,7 +86,7 @@ namespace cath {
 			boost::program_options::options_description get_visible_options_description(const size_t &);
 			boost::program_options::options_description get_hidden_options_description();
 
-			opt_str invalid_string() const;
+			opt_str invalid_string(const boost::program_options::variables_map &) const;
 
 			static bool is_acceptable_output_file(const boost::filesystem::path &);
 			static bool is_acceptable_input_file(const boost::filesystem::path &,

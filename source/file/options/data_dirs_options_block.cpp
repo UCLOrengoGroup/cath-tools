@@ -44,6 +44,7 @@ using boost::lexical_cast;
 using boost::none;
 using boost::program_options::options_description;
 using boost::program_options::value;
+using boost::program_options::variables_map;
 
 const string data_dirs_options_block::DATA_OPTION_PATH_VARNAME   = "<path>";
 const string data_dirs_options_block::DATA_OPTION_PREFIX_VARNAME = "<pre>";
@@ -153,7 +154,8 @@ void data_dirs_options_block::do_add_hidden_options_to_description(options_descr
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts
-opt_str data_dirs_options_block::do_invalid_string() const {
+opt_str data_dirs_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                   ) const {
 	const auto &cath_root_dir = the_data_dirs_spec.get_cath_root_dir();
 	if ( ! cath_root_dir.empty() &&  ! is_acceptable_input_dir( cath_root_dir ) ) {
 		return "CATH root directory \"" + cath_root_dir.string() + "\" is not a valid input directory";

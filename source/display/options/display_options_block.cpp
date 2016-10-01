@@ -26,11 +26,15 @@
 #include "display_colour/display_colour_list.h"
 
 using namespace boost::filesystem;
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
+
+using boost::program_options::bool_switch;
+using boost::program_options::options_description;
+using boost::program_options::value;
+using boost::program_options::variables_map;
 
 /// \brief The option name for the string to specify the colours to use
 const string display_options_block::PO_VIEWER_COLOURS            { "viewer-colours"            };
@@ -117,7 +121,8 @@ void display_options_block::do_add_visible_options_to_description(options_descri
 }
 
 /// \brief TODOCUMENT
-opt_str display_options_block::do_invalid_string() const {
+opt_str display_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                 ) const {
 	return ::cath::invalid_string( get_display_spec() );
 }
 

@@ -42,9 +42,10 @@ using boost::algorithm::join;
 using boost::assign::ptr_push_back;
 using boost::filesystem::path;
 using boost::none;
+using boost::program_options::options_description;
+using boost::program_options::value;
+using boost::program_options::variables_map;
 using boost::ptr_vector;
-
-namespace po = boost::program_options;
 
 /// \brief The long option specifying the SVM-light RBF model file
 const string cath_assign_domains_options_block::PO_SVMLIGHT_RBF_FILE( "svmlight-rbf-file" );
@@ -79,18 +80,19 @@ string cath_assign_domains_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void cath_assign_domains_options_block::do_add_visible_options_to_description(po::options_description &arg_desc ///< The options_description to which the options are added
-                                                                    ) {
+void cath_assign_domains_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+                                                                              ) {
 	const string default_forbidden_nodes_str = join( DEFAULT_FORBIDDEN_NODES, ", " );
 	arg_desc.add_options()
-		( PO_SVMLIGHT_RBF_FILE.c_str(), po::value<path   >( &rbf_svm_file    ),                                                                        "File containing SVM-light RBF model for CATH assignment" )
-		( PO_FILELIST_FILE.c_str(),     po::value<path   >( &data_data_file  ),                                                                        "File of data files (one line per query domain containing: ssap_results_file prc_results_file)" )
-		( PO_SF_OF_DOMAIN_FILE.c_str(), po::value<path   >( &sf_of_dom_file  ),                                                                        "File containing up-to-date assignments (one line per domain containing: domain_id superfamily_id)" )
-		( PO_FORBIDDEN_NODES.c_str(),   po::value<str_vec>( &forbidden_nodes )->default_value( DEFAULT_FORBIDDEN_NODES, default_forbidden_nodes_str ), "List of nodes to which automatic assignment is forbidden; specify option multiple times for multiple nodes\nRECOMMENDED: do not specify this option so that the default list of propeller architectures is used." )
+		( PO_SVMLIGHT_RBF_FILE.c_str(), value<path   >( &rbf_svm_file    ),                                                                        "File containing SVM-light RBF model for CATH assignment" )
+		( PO_FILELIST_FILE.c_str(),     value<path   >( &data_data_file  ),                                                                        "File of data files (one line per query domain containing: ssap_results_file prc_results_file)" )
+		( PO_SF_OF_DOMAIN_FILE.c_str(), value<path   >( &sf_of_dom_file  ),                                                                        "File containing up-to-date assignments (one line per domain containing: domain_id superfamily_id)" )
+		( PO_FORBIDDEN_NODES.c_str(),   value<str_vec>( &forbidden_nodes )->default_value( DEFAULT_FORBIDDEN_NODES, default_forbidden_nodes_str ), "List of nodes to which automatic assignment is forbidden; specify option multiple times for multiple nodes\nRECOMMENDED: do not specify this option so that the default list of propeller architectures is used." )
 		;
 }
 
-opt_str cath_assign_domains_options_block::do_invalid_string() const {
+opt_str cath_assign_domains_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                             ) const {
 	if ( ! rbf_svm_file.empty()   && ! is_acceptable_input_file( rbf_svm_file   ) ) {
 		return "SVM-light RBF model file " + rbf_svm_file.string() + " is not a valid input file";
 	}

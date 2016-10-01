@@ -30,7 +30,9 @@ using namespace std::literals::string_literals;
 
 using boost::program_options::options_description;
 using boost::program_options::bool_switch;
+using boost::program_options::options_description;
 using boost::program_options::value;
+using boost::program_options::variables_map;
 using std::string;
 using std::unique_ptr;
 
@@ -142,7 +144,9 @@ void resolve_hits_input_options_block::do_add_hidden_options_to_description(opti
 }
 
 /// \brief TODOCUMENT
-opt_str resolve_hits_input_options_block::do_invalid_string() const {
+opt_str resolve_hits_input_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                            ) const {
+
 	return get_invalid_description( the_spec );
 }
 
