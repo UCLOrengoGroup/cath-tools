@@ -70,7 +70,7 @@ string display_options_block::do_get_block_name() const {
 
 /// \brief Add this block's options to the provided options_description
 void display_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
-                                                                 ) {
+                                                                  ) {
 	const string colrs_varname{ "<colrs>" };
 
 	const auto display_colours_string_notifier    = [&] (const string &x) { the_display_spec.set_display_colours_string   ( x ); };

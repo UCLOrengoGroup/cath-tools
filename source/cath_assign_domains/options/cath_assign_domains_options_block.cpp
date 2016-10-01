@@ -87,8 +87,7 @@ void cath_assign_domains_options_block::do_add_visible_options_to_description(op
 		( PO_SVMLIGHT_RBF_FILE.c_str(), value<path   >( &rbf_svm_file    ),                                                                        "File containing SVM-light RBF model for CATH assignment" )
 		( PO_FILELIST_FILE.c_str(),     value<path   >( &data_data_file  ),                                                                        "File of data files (one line per query domain containing: ssap_results_file prc_results_file)" )
 		( PO_SF_OF_DOMAIN_FILE.c_str(), value<path   >( &sf_of_dom_file  ),                                                                        "File containing up-to-date assignments (one line per domain containing: domain_id superfamily_id)" )
-		( PO_FORBIDDEN_NODES.c_str(),   value<str_vec>( &forbidden_nodes )->default_value( DEFAULT_FORBIDDEN_NODES, default_forbidden_nodes_str ), "List of nodes to which automatic assignment is forbidden; specify option multiple times for multiple nodes\nRECOMMENDED: do not specify this option so that the default list of propeller architectures is used." )
-		;
+		( PO_FORBIDDEN_NODES.c_str(),   value<str_vec>( &forbidden_nodes )->default_value( DEFAULT_FORBIDDEN_NODES, default_forbidden_nodes_str ), "List of nodes to which automatic assignment is forbidden; specify option multiple times for multiple nodes\nRECOMMENDED: do not specify this option so that the default list of propeller architectures is used." );
 }
 
 opt_str cath_assign_domains_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
