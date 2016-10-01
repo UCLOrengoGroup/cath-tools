@@ -72,7 +72,7 @@ namespace cath {
 			/// This must be greater than 0.0
 			resscr_t score;
 
-			/// \brief The index of the lable for this hit (in some corresponding list labels)
+			/// \brief The index of the label for this hit (in some corresponding list labels)
 			hitidx_t label_idx;
 
 			/// \brief The (possibly empty) list of the boundaries associated with any gaps between this hit's segments
