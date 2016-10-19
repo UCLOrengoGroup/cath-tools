@@ -193,8 +193,7 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		///
-		/// \todo A better constexpr GCD function is likely to get added to
-		///       the C++ standard library (see N3913) so switch to that when it's available
+		/// \todo Come C++17, switch to std::gdd()
 		template <typename T>
 		inline constexpr T constexpr_gcd(T a, ///< TODOCUMENT
 		                                 T b  ///< TODOCUMENT
@@ -206,8 +205,7 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		///
-		/// \todo A better constexpr LCM function is likely to get added to
-		///       the C++ standard library (see N3913) so switch to that when it's available
+		/// \todo Come C++17, switch to std::lcm()
 		template <typename T>
 		inline constexpr T constexpr_lcm(T a, ///< TODOCUMENT
 		                                 T b  ///< TODOCUMENT
