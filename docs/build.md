@@ -122,7 +122,10 @@ Then substitute their locations into the following commands and then run the com
     mkdir build-analyze && cd build-analyze
     setenv CCC_CC  clang
     setenv CCC_CXX clang++
-    /usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.6/ccc-analyzer" -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.6/c++-analyzer" -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+    # For Clang 3.6
+    /usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.6/ccc-analyzer"         -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.6/c++-analyzer"         -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+    # For Clang 3.8
+    /usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.8/libexec/ccc-analyzer" -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.8/libexec/c++-analyzer" -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
     scan-build make
 
 To get parallel compilation, you can append ` -j #` to the `scan-build make` (where `#` is the number of threads).
@@ -130,7 +133,19 @@ To get parallel compilation, you can append ` -j #` to the `scan-build make` (wh
 Checking headers compile independently [For developers]
 -------------------------------------------------------
 
-find source -iname '*.h' | xargs -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0             -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -I source VAR
+find source -iname '*.h' | grep third_party_code -v | xargs -P 4 -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -I source VAR
+
+Fixing trailing namespace comments [For developers]
+---------------------------------------------------
+
+find source -iname '*.h' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-namespace-comment VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
+
+Fixing header guards [For developers]
+-------------------------------------
+
+ln -s source src
+find src/   -iname '*.h' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-header-guard      VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
+rm -f src
 
 Running the Build Tests
 =======================
