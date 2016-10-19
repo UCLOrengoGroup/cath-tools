@@ -99,7 +99,9 @@ string executable_options::get_help_prefix_string() const {
 
 /// \brief Get a string to append to the standard help
 string executable_options::get_help_suffix_string() const {
-	return do_get_help_suffix_string();
+	return do_get_help_suffix_string()
+		+ "\nPlease tell us your cath-tools bugs/suggestions : "
+		+ "https://github.com/UCLOrengoGroup/cath-tools/issues/new";
 }
 
 /// \brief Get an overview of the job that these options are for
