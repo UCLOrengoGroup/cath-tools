@@ -17,14 +17,15 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///        and a template factory function, make_example_alignment(), that is specialised
-///        for constructing each of these types.
 
 #ifndef ALIGNMENT_FIXTURE_H_INCLUDED
 #define ALIGNMENT_FIXTURE_H_INCLUDED
 
 #include "alignment/alignment.h"
 #include "test/global_test_constants.h"
+
+// Add a template factory function, make_example_alignment(), that is specialised
+// for constructing each of these types.
 
 namespace cath {
 	namespace align {

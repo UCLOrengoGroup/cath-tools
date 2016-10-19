@@ -17,8 +17,6 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///        and a template factory function, make_example_alignment(), that is specialised
-///        for constructing each of these types.
 
 #ifndef SUPERPOSITION_FIXTURE_H_INCLUDED
 #define SUPERPOSITION_FIXTURE_H_INCLUDED

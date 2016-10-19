@@ -17,13 +17,10 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///        and a template factory function, make_example_dyn_prog_score_source(), that is specialised
-///        for constructing each of these types.
 
 #ifndef DYN_PROG_SCORE_SOURCE_FIXTURE_H_INCLUDED
 #define DYN_PROG_SCORE_SOURCE_FIXTURE_H_INCLUDED
 
-//#include "alignment/dyn_prog_align/dyn_prog_score_source/entry_querier_dyn_prog_score_source.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/mask_dyn_prog_score_source.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/old_matrix_dyn_prog_score_source.h"
