@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef VIEW_CACHE_LIST_H_INCLUDED
-#define VIEW_CACHE_LIST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_VIEW_CACHE_LIST_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_VIEW_CACHE_LIST_H
 
 #include "common/type_aliases.h"
 #include "ssap/context_res.h"
@@ -87,8 +87,8 @@ namespace cath {
 			);
 		}
 
-	}
+	} // namespace index
 
-}
+} // namespace cath
 
 #endif

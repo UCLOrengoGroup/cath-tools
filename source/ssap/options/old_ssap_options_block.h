@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef OLD_SSAP_OPTIONS_BLOCK_H_INCLUDED
-#define OLD_SSAP_OPTIONS_BLOCK_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SSAP_OPTIONS_OLD_SSAP_OPTIONS_BLOCK_H
+#define _CATH_TOOLS_SOURCE_SSAP_OPTIONS_OLD_SSAP_OPTIONS_BLOCK_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -148,7 +148,7 @@ namespace cath {
 		boost::filesystem::path get_domin_file(const old_ssap_options_block &);
 		bool has_superposition_dir(const old_ssap_options_block &);
 		boost::filesystem::path get_superposition_dir(const old_ssap_options_block &);
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

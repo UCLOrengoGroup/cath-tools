@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef NAMED_TRUE_FALSE_POS_NEG_LIST_LIST_H_INCLUDED
-#define NAMED_TRUE_FALSE_POS_NEG_LIST_LIST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_NAMED_TRUE_FALSE_POS_NEG_LIST_LIST_H
+#define _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_NAMED_TRUE_FALSE_POS_NEG_LIST_LIST_H
 
 #include "common/type_aliases.h"
 #include "score/score_type_aliases.h"
@@ -56,7 +56,7 @@ namespace cath {
 
 		str_doub_pair_vec areas_under_roc_curves(const named_true_false_pos_neg_list_list &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

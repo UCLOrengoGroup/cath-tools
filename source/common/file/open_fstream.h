@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef OPEN_FSTREAM_H_INCLUDED
-#define OPEN_FSTREAM_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_FILE_OPEN_FSTREAM_H
+#define _CATH_TOOLS_SOURCE_COMMON_FILE_OPEN_FSTREAM_H
 
 #include <boost/filesystem.hpp>
 
@@ -74,7 +74,7 @@ namespace cath {
 				assert(arg_fstream.is_open());
 				assert(arg_fstream.good());
 			}
-		}
+		} // namespace detail
 
 		void open_ifstream(std::ifstream &,
 		                   const boost::filesystem::path &,
@@ -84,7 +84,7 @@ namespace cath {
 		                   const boost::filesystem::path &,
 		                   const std::ios_base::openmode &arg_mode = std::ios_base::out);
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

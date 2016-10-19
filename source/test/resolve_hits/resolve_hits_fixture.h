@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RESOLVE_HITS_FIXTURE_H_INCLUDED
-#define RESOLVE_HITS_FIXTURE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_TEST_RESOLVE_HITS_RESOLVE_HITS_FIXTURE_H
+#define _CATH_TOOLS_SOURCE_TEST_RESOLVE_HITS_RESOLVE_HITS_FIXTURE_H
 
 #include <string>
 
@@ -33,6 +33,6 @@ namespace cath {
 			static const std::string example_output;
 		};
 
-	}
-}
+	} // namespace rslv
+} // namespace cath
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RMSD_SCORE_H_INCLUDED
-#define RMSD_SCORE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_RMSD_SCORE_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_RMSD_SCORE_H
 
 #include "score/aligned_pair_score/aligned_pair_score.h"
 #include "score/aligned_pair_score/detail/score_common_coord_handler.h"
@@ -82,6 +82,6 @@ namespace cath {
 		bool operator<(const rmsd_score &,
 		               const rmsd_score &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 #endif

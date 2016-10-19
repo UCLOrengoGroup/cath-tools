@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SUPERPOSITION_FIXTURE_H_INCLUDED
-#define SUPERPOSITION_FIXTURE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_TEST_SUPERPOSITION_FIXTURE_H
+#define _CATH_TOOLS_SOURCE_TEST_SUPERPOSITION_FIXTURE_H
 
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
@@ -71,6 +71,6 @@ namespace cath {
 				R"(]}}]})" "\n";
 		};
 
-	}
-}
+	} // namespace sup
+} // namespace cath
 #endif

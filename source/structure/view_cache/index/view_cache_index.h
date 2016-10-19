@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef VIEW_CACHE_INDEX_H_INCLUDED
-#define VIEW_CACHE_INDEX_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_VIEW_CACHE_INDEX_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_VIEW_CACHE_INDEX_H
 
 #include <boost/optional/optional_io.hpp>
 #include <boost/optional.hpp>
@@ -61,7 +61,7 @@ namespace cath {
 			                                   
 			                                   view_cache_index_tail
 			                                   > > > > >;
-		}
+		} // namespace detail
 
 
 		/// \brief TODOCUMENT
@@ -154,7 +154,7 @@ namespace cath {
 		                                                                    const double &,
 		                                                                    const detail::vcie_match_criteria &,
 		                                                                    quad_find_action &);
-	}
-}
+	} // namespace index
+} // namespace cath
 
 #endif

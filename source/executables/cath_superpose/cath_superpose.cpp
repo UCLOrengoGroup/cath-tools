@@ -42,7 +42,7 @@ namespace cath {
 			cath_superposer::superpose(the_cath_superpose_options);
 		}
 	};
-}
+} // namespace cath
 
 /// \brief A main function for cath_superpose that just calls run_program() on a cath_superpose_program_exception_wrapper
 int main(int argc, char * argv[] ) {

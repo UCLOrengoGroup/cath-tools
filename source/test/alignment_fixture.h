@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_FIXTURE_H_INCLUDED
-#define ALIGNMENT_FIXTURE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_TEST_ALIGNMENT_FIXTURE_H
+#define _CATH_TOOLS_SOURCE_TEST_ALIGNMENT_FIXTURE_H
 
 #include "alignment/alignment.h"
 #include "test/global_test_constants.h"
@@ -48,6 +48,6 @@ namespace cath {
 			static const cath::score_opt_vec example_scores;
 		};
 
-	}
-}
+	} // namespace align
+} // namespace cath
 #endif

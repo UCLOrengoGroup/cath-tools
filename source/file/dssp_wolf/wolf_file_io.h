@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef WOLF_FILE_IO_H_INCLUDED
-#define WOLF_FILE_IO_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_DSSP_WOLF_WOLF_FILE_IO_H
+#define _CATH_TOOLS_SOURCE_FILE_DSSP_WOLF_WOLF_FILE_IO_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -32,6 +32,6 @@ namespace cath {
 
 		wolf_file read_wolf(const boost::filesystem::path &);
 
-	}
-}
+	} // namespace file
+} // namespace cath
 #endif

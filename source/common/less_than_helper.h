@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LESS_THAN_HELPER_H_INCLUDED
-#define LESS_THAN_HELPER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_LESS_THAN_HELPER_H
+#define _CATH_TOOLS_SOURCE_COMMON_LESS_THAN_HELPER_H
 
 #include <boost/logic/tribool.hpp>
 
@@ -154,7 +154,7 @@ namespace cath {
 			return less_than_helper<T>( arg_val_a, arg_val_b );
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

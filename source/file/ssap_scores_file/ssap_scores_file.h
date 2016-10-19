@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SSAP_SCORES_FILE_H_INCLUDED
-#define SSAP_SCORES_FILE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_SSAP_SCORES_FILE_SSAP_SCORES_FILE_H
+#define _CATH_TOOLS_SOURCE_FILE_SSAP_SCORES_FILE_SSAP_SCORES_FILE_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -50,7 +50,7 @@ namespace cath {
 
 		str_str_pair_bool_map make_arbitrary_is_positive_data(const ssap_scores_entry_vec &);
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

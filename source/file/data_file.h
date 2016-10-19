@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DATA_FILE_H_INCLUDED
-#define DATA_FILE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_DATA_FILE_H
+#define _CATH_TOOLS_SOURCE_FILE_DATA_FILE_H
 
 #include "common/algorithm/constexpr_is_uniq.h"
 
@@ -48,7 +48,7 @@ namespace cath {
 
 			static_assert( common::constexpr_is_uniq( all_data_file_types ), "all_data_file_types shouldn't contain repeated values" );
 
-		}
+		} // namespace detail
 
 		std::string to_string(const data_file &);
 
@@ -58,7 +58,7 @@ namespace cath {
 		size_t str_length_of_data_file(const data_file &);
 
 		size_t max_data_file_str_length();
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

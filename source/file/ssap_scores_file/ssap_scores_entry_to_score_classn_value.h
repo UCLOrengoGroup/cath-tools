@@ -1,8 +1,8 @@
 /// \file
 /// \brief The ssap_scores_entry_to_score_classn_value header
 
-#ifndef SSAP_SCORES_ENTRY_TO_SCORE_CLASSN_VALUE_H_INCLUDED
-#define SSAP_SCORES_ENTRY_TO_SCORE_CLASSN_VALUE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_SSAP_SCORES_FILE_SSAP_SCORES_ENTRY_TO_SCORE_CLASSN_VALUE_H
+#define _CATH_TOOLS_SOURCE_FILE_SSAP_SCORES_FILE_SSAP_SCORES_ENTRY_TO_SCORE_CLASSN_VALUE_H
 
 #include <boost/tuple/tuple.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -55,7 +55,7 @@ namespace cath {
 					};
 				}
 			};
-		}
+		} // namespace detail
 
 		/// \brief Build a score_classn_value_list for the specified ssap_scores_entry field from the specified ssap_scores_entry_vec
 		template <typename T, typename GETR_FN, typename NAME_FN>
@@ -76,7 +76,7 @@ namespace cath {
 			);
 		}
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

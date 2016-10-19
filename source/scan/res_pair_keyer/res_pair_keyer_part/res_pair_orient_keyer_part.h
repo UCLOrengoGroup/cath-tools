@@ -1,8 +1,8 @@
 /// \file
 /// \brief The res_pair_orient_keyer_part class header
 
-#ifndef RES_PAIR_ORIENT_KEYER_PART_H_INCLUDED
-#define RES_PAIR_ORIENT_KEYER_PART_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_ORIENT_KEYER_PART_H
+#define _CATH_TOOLS_SOURCE_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_ORIENT_KEYER_PART_H
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -91,8 +91,8 @@ namespace cath {
 				}
 			};
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace scan
+} // namespace cath
 
 #endif

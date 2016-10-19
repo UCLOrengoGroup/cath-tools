@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DISCONT_HITS_INDEX_BY_START_H_INCLUDED
-#define DISCONT_HITS_INDEX_BY_START_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_ALGO_DISCONT_HITS_INDEX_BY_START_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_ALGO_DISCONT_HITS_INDEX_BY_START_H
 
 #include "resolve_hits/calc_hit.h"
 #include "resolve_hits/calc_hit_list.h"
@@ -54,8 +54,8 @@ namespace cath {
 			};
 
 			std::string to_string(const discont_hits_index_by_start &);
-		}
-	}
-}
+		} // namespace detail
+	} // namespace rslv
+} // namespace cath
 
 #endif

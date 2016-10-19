@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef REGION_H_INCLUDED
-#define REGION_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_REGION_REGION_H
+#define _CATH_TOOLS_SOURCE_CHOPPING_REGION_REGION_H
 
 #include "chopping/region/region_comparison.h"
 #include "chopping/residue_location/residue_location.h"
@@ -102,7 +102,7 @@ namespace cath {
 		region_comparison compare_locations(const region &,
 		                                    const region &);
 
-	}
-}
+	} // namespace chop
+} // namespace cath
 
 #endif

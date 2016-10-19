@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCAN_MULTI_STRUCTURE_DATA_H_INCLUDED
-#define SCAN_MULTI_STRUCTURE_DATA_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_MULTI_STRUCTURE_DATA_H
+#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_MULTI_STRUCTURE_DATA_H
 
 #include "common/boost_addenda/range/front.h"
 #include "scan/detail/res_pair/multi_struc_res_rep_pair_list.h"
@@ -241,8 +241,8 @@ namespace cath {
 				}
 			}
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace scan
+} // namespace cath
 
 #endif

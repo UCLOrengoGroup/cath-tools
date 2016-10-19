@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CLASSN_NUM_STAT_H_INCLUDED
-#define CLASSN_NUM_STAT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_CLASSN_NUM_STAT_H
+#define _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_CLASSN_NUM_STAT_H
 
 #include "score/true_pos_false_neg/classn_outcome.h"
 #include "score/true_pos_false_neg/classn_stat.h"
@@ -51,7 +51,7 @@ namespace cath {
 		using true_negative_stat  = classn_num_stat< classn_outcome::TRUE_NEGATIVE  >;
 		using false_positive_stat = classn_num_stat< classn_outcome::FALSE_POSITIVE >;
 		using false_negative_stat = classn_num_stat< classn_outcome::FALSE_NEGATIVE >;
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

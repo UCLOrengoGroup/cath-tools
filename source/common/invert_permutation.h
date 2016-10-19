@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef INVERT_PERMUTATION_H_INCLUDED
-#define INVERT_PERMUTATION_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_INVERT_PERMUTATION_H
+#define _CATH_TOOLS_SOURCE_COMMON_INVERT_PERMUTATION_H
 
 #include "common/type_aliases.h"
 
@@ -27,6 +27,6 @@ namespace cath {
 
 	size_vec invert_permutation(const size_vec &);
 
-}
+} // namespace cath
 
 #endif

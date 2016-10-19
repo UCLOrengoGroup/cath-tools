@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef OLD_MATRIX_DYN_PROG_SCORE_SOURCE_H_INCLUDED
-#define OLD_MATRIX_DYN_PROG_SCORE_SOURCE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_OLD_MATRIX_DYN_PROG_SCORE_SOURCE_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_OLD_MATRIX_DYN_PROG_SCORE_SOURCE_H
 
 #include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.h"
 #include "common/container/vector_of_vector.h"
@@ -58,6 +58,6 @@ namespace cath {
 			virtual ~old_matrix_dyn_prog_score_source() noexcept = default;
 		};
 
-	}
-}
+	} // namespace align
+} // namespace cath
 #endif

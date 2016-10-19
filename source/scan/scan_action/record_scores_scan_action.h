@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RECORD_SCORES_SCAN_ACTION_H_INCLUDED
-#define RECORD_SCORES_SCAN_ACTION_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_SCAN_ACTION_RECORD_SCORES_SCAN_ACTION_H
+#define _CATH_TOOLS_SOURCE_SCAN_SCAN_ACTION_RECORD_SCORES_SCAN_ACTION_H
 
 #include "scan/detail/res_pair/single_struc_res_pair.h"
 
@@ -114,7 +114,7 @@ namespace cath {
 				arg_index.get_num_structures()
 			};
 		}
-	}
-}
+	} // namespace scan
+} // namespace cath
 
 #endif

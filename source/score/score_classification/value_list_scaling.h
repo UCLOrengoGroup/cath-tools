@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef VALUE_LIST_SCALING_H_INCLUDED
-#define VALUE_LIST_SCALING_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_VALUE_LIST_SCALING_H
+#define _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_VALUE_LIST_SCALING_H
 
 #include <iosfwd>
 
@@ -74,8 +74,8 @@ namespace cath {
 		double scale_value_copy(const value_list_scaling &,
 		                        double);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif
 

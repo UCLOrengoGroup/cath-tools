@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef EQUAL_GROUP_ITR_H_INCLUDED
-#define EQUAL_GROUP_ITR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ITERATOR_EQUAL_GROUP_ITR_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ITERATOR_EQUAL_GROUP_ITR_H
 
 #include <boost/range/sub_range.hpp>
 
@@ -42,7 +42,7 @@ namespace cath {
 			                                                     boost::forward_traversal_tag, // CategoryOrTraversal. ///< \todo There's no fundamental reason this couldn't be bidirectional or random-access; only that implementing the extras would be more work that hasn't yet been warranted.
 			                                                     boost::sub_range<RNG>         // Reference
 			                                                     >;
-		}
+		} // namespace detail
 
 		/// \brief TODOCUMENT
 		template <class RNG>
@@ -194,8 +194,8 @@ namespace cath {
 		typename equal_group_itr<RNG>::base_iterator_type equal_group_itr<RNG>::get_begin_itr() const {
 			return this->base();
 		}
-	}
-}
+	} // namespace common
+} // namespace cath
 
 
 #endif

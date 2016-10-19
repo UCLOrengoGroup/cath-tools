@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef QUAD_FIND_ACTION_CHECK_H_INCLUDED
-#define QUAD_FIND_ACTION_CHECK_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_QUAD_FIND_ACTION_CHECK_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_QUAD_FIND_ACTION_CHECK_H
 
 #include <boost/test/floating_point_comparison.hpp>
 
@@ -127,7 +127,7 @@ namespace cath {
 // 			total_score += score;
 // 		}
 
-	}
-}
+	} // namespace index
+} // namespace cath
 
 #endif

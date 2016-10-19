@@ -104,7 +104,7 @@ Build details
 | )" << BOOST_PLATFORM << " | " << BOOST_COMPILER << " | " << BOOST_STDLIB << " | " << BOOST_LIB_VERSION  << " |" << "\n";
 		}
 	};
-}
+} // namespace cath
 
 /// \brief A main function for snap_judgement that just calls run_program() on a snap_judgement_program_exception_wrapper
 int main(int argc, char * argv[] ) {

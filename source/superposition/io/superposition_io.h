@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SUPERPOSITION_IO_H_INCLUDED
-#define SUPERPOSITION_IO_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SUPERPOSITION_IO_SUPERPOSITION_IO_H
+#define _CATH_TOOLS_SOURCE_SUPERPOSITION_IO_SUPERPOSITION_IO_H
 
 #include <boost/filesystem.hpp>
 
@@ -46,7 +46,7 @@ namespace cath {
 				static const std::string TRANSLATION_KEY;
 			};
 
-		}
+		} // namespace detail
 
 		void write_xml_sup(std::ostream &,
 		                   const superposition &,
@@ -97,7 +97,7 @@ namespace cath {
 
 		std::string to_json_string(const superposition &,
 		                           const bool &arg_pretty_print = true);
-	}
-}
+	} // namespace sup
+} // namespace cath
 
 #endif

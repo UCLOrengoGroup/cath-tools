@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LOAD_AND_SCAN_H_INCLUDED
-#define LOAD_AND_SCAN_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_SCAN_TOOLS_LOAD_AND_SCAN_H
+#define _CATH_TOOLS_SOURCE_SCAN_SCAN_TOOLS_LOAD_AND_SCAN_H
 
 #include <boost/optional.hpp>
 
@@ -71,8 +71,8 @@ namespace cath {
 			load_and_scan_metrics get_load_and_scan_metrics() const;
 		};
 
-	}
-}
+	} // namespace scan
+} // namespace cath
 
 #endif
 

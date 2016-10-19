@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef HASH_TUPLE_H_INCLUDED
-#define HASH_TUPLE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_DETAIL_HASH_TUPLE_H
+#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_DETAIL_HASH_TUPLE_H
 
 #include "scan/detail/res_pair_dirn/res_pair_dirn.h"
 
@@ -87,7 +87,7 @@ namespace cath {
 							hash_combine( seed, std::get<0>( arg_value ) );
 						}
 					};
-				}
+				} // namespace detail
 
 				/// \brief Specialisation of the hash class for tuples
 				template <typename ... T>
@@ -102,9 +102,9 @@ namespace cath {
 					}
 				};
 
-			}
-		}
-	}
-}
+			} // namespace hash_tuple
+		} // namespace detail
+	} // namespace scan
+} // namespace cath
 
 #endif

@@ -24,8 +24,8 @@
 /// This is helpful in implementing equivalent functionality with and without view_cache_index code
 /// so that the results can be compared etc.
 
-#ifndef VCIE_PROTEIN_FUNCTIONS_H_INCLUDED
-#define VCIE_PROTEIN_FUNCTIONS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VCIE_PROTEIN_FUNCTIONS_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VCIE_PROTEIN_FUNCTIONS_H
 
 #include "ssap/context_res.h"
 #include "structure/geometry/rotation.h"
@@ -183,8 +183,8 @@ namespace cath {
 				);
 			}
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace index
+} // namespace cath
 
 #endif

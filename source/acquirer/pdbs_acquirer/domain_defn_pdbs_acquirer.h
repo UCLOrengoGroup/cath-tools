@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DOMAIN_DEFN_PDBS_ACQUIRER_H_INCLUDED
-#define DOMAIN_DEFN_PDBS_ACQUIRER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ACQUIRER_PDBS_ACQUIRER_DOMAIN_DEFN_PDBS_ACQUIRER_H
+#define _CATH_TOOLS_SOURCE_ACQUIRER_PDBS_ACQUIRER_DOMAIN_DEFN_PDBS_ACQUIRER_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -42,7 +42,7 @@ namespace cath {
 			virtual ~domain_defn_pdbs_acquirer() noexcept = default;
 		};
 
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef FILE_ALIGNMENT_OUTPUTTER_H_INCLUDED
-#define FILE_ALIGNMENT_OUTPUTTER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_OUTPUTTER_ALIGNMENT_OUTPUTTER_FILE_ALIGNMENT_OUTPUTTER_H
+#define _CATH_TOOLS_SOURCE_OUTPUTTER_ALIGNMENT_OUTPUTTER_FILE_ALIGNMENT_OUTPUTTER_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -49,7 +49,7 @@ namespace cath {
 			virtual ~file_alignment_outputter() noexcept = default;
 		};
 
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

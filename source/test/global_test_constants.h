@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef GLOBAL_TEST_CONSTANTS_H_INCLUDED
-#define GLOBAL_TEST_CONSTANTS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_TEST_GLOBAL_TEST_CONSTANTS_H
+#define _CATH_TOOLS_SOURCE_TEST_GLOBAL_TEST_CONSTANTS_H
 
 #include <boost/filesystem.hpp>
 
@@ -125,6 +125,6 @@ namespace cath {
 	template <> const float       & global_test_constants::ACCURACY_PERCENTAGE_TMPL<float>();
 	template <> const double      & global_test_constants::ACCURACY_PERCENTAGE_TMPL<double>();
 	template <> const long double & global_test_constants::ACCURACY_PERCENTAGE_TMPL<long double>();
-}
+} // namespace cath
 
 #endif

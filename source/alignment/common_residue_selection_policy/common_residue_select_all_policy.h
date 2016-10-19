@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef COMMON_RESIDUE_SELECT_ALL_POLICY_H_INCLUDED
-#define COMMON_RESIDUE_SELECT_ALL_POLICY_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY_COMMON_RESIDUE_SELECT_ALL_POLICY_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY_COMMON_RESIDUE_SELECT_ALL_POLICY_H
 
 #include "alignment/common_residue_selection_policy/common_residue_selection_policy.h"
 
@@ -41,7 +41,7 @@ namespace cath {
 		public:
 			virtual ~common_residue_select_all_policy() noexcept = default;
 		};
-	}
-}
+	} // namespace align
+} // namespace cath
 
 #endif

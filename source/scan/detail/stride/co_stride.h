@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CO_STRIDE_H_INCLUDED
-#define CO_STRIDE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_STRIDE_CO_STRIDE_H
+#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_STRIDE_CO_STRIDE_H
 
 #include <boost/optional.hpp>
 
@@ -58,7 +58,7 @@ namespace cath {
 					 std::make_pair( true, arg_centre_entry_index + arg_stride_index -  detail::stride_neighbour_index_of_centre( arg_co_stride ) );
 				}
 
-			}
+			} // namespace detail
 
 			/// \brief TODOCUMENT
 			template <typename T>
@@ -101,8 +101,8 @@ namespace cath {
 
 
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace scan
+} // namespace cath
 
 #endif

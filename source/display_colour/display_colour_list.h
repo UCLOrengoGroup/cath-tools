@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DISPLAY_COLOUR_LIST_H_INCLUDED
-#define DISPLAY_COLOUR_LIST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_DISPLAY_COLOUR_DISPLAY_COLOUR_LIST_H
+#define _CATH_TOOLS_SOURCE_DISPLAY_COLOUR_DISPLAY_COLOUR_LIST_H
 
 #include "common/type_aliases.h"
 #include "display_colour/display_colour_type_aliases.h"
@@ -52,6 +52,6 @@ namespace cath {
 	                                           const size_t &);
 
 	display_colour_list make_display_colour_list_from_string(const std::string &);
-}
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_ACQUIRER_H_INCLUDED
-#define ALIGNMENT_ACQUIRER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_ALIGNMENT_ACQUIRER_H
+#define _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_ALIGNMENT_ACQUIRER_H
 
 #include "common/type_aliases.h"
 
@@ -68,7 +68,7 @@ namespace cath {
 		uptr_vec<alignment_acquirer> get_alignment_acquirers(const alignment_input_options_block &);
 
 		std::unique_ptr<alignment_acquirer> get_alignment_acquirer(const alignment_input_spec &);
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

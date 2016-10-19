@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LENGTH_GETTER_TYPES_H_INCLUDED
-#define LENGTH_GETTER_TYPES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_LENGTH_GETTER_LENGTH_GETTER_TYPES_H
+#define _CATH_TOOLS_SOURCE_SCORE_LENGTH_GETTER_LENGTH_GETTER_TYPES_H
 
 #include <boost/mpl/copy.hpp>
 #include <boost/mpl/vector.hpp>
@@ -60,7 +60,7 @@ namespace cath {
 			boost::mpl::back_inserter< protein_only_length_getter_types >
 		>::type;
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

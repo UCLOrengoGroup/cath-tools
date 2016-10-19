@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LENGTH_OF_FIRST_GETTER_H_INCLUDED
-#define LENGTH_OF_FIRST_GETTER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_LENGTH_GETTER_LENGTH_OF_FIRST_GETTER_H
+#define _CATH_TOOLS_SOURCE_SCORE_LENGTH_GETTER_LENGTH_OF_FIRST_GETTER_H
 
 #include "score/length_getter/sym_protein_only_length_getter.h"
 
@@ -44,7 +44,7 @@ namespace cath {
 			virtual ~length_of_first_getter() noexcept = default;
 		};
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

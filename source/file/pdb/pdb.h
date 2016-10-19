@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PDB_H_INCLUDED
-#define PDB_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_PDB_PDB_H
+#define _CATH_TOOLS_SOURCE_FILE_PDB_PDB_H
 
 #include <boost/operators.hpp>
 
@@ -113,7 +113,7 @@ namespace cath {
 
 		size_set get_protein_res_indices_that_dssp_might_skip(const pdb &,
 		                                                      std::ostream & = std::cerr);
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

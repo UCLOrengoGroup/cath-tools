@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DOMALL_CHOPPING_FORMAT_H_INCLUDED
-#define DOMALL_CHOPPING_FORMAT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_DOMALL_CHOPPING_FORMAT_H
+#define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_DOMALL_CHOPPING_FORMAT_H
 
 #include "chopping/chopping_format/chopping_format.h"
 
@@ -39,7 +39,7 @@ namespace cath {
 			virtual ~domall_chopping_format() noexcept = default;
 		};
 
-	}
-}
+	} // namespace chop
+} // namespace cath
 
 #endif

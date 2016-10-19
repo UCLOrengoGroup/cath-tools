@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RESOLVE_HITS_TYPE_ALIASES_H_INCLUDED
-#define RESOLVE_HITS_TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_RESOLVE_HITS_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_RESOLVE_HITS_TYPE_ALIASES_H
 
 #include <boost/optional/optional_fwd.hpp>
 
@@ -94,7 +94,7 @@ namespace cath {
 		/// \brief The initial score before any hits have been added
 		constexpr resscr_t INIT_SCORE = 0.0;
 
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

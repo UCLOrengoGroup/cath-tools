@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RANGE_CONCEPT_TYPE_ALIASES_H_INCLUDED
-#define RANGE_CONCEPT_TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_RANGE_CONCEPT_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_RANGE_CONCEPT_TYPE_ALIASES_H
 
 #include <boost/range/metafunctions.hpp>
 
@@ -62,7 +62,7 @@ namespace cath {
 		template <typename T>
 		using has_range_const_iterator_t     = typename boost::has_range_const_iterator<T>::type;
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CONTEXT_RES_H_INCLUDED
-#define CONTEXT_RES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SSAP_CONTEXT_RES_H
+#define _CATH_TOOLS_SOURCE_SSAP_CONTEXT_RES_H
 
 #include "common/debug_numeric_cast.h"
 #include "ssap/distance_score_formula.h"
@@ -213,6 +213,6 @@ namespace cath {
 			arg_dist_form
 		);
 	}
-}
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef MULTI_STRUC_RES_REP_PAIR_H_INCLUDED
-#define MULTI_STRUC_RES_REP_PAIR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_RES_PAIR_MULTI_STRUC_RES_REP_PAIR_H
+#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_RES_PAIR_MULTI_STRUC_RES_REP_PAIR_H
 
 #include "scan/detail/res_pair/res_pair_core.h"
 #include "scan/detail/res_pair_dirn/res_pair_dirn.h"
@@ -144,8 +144,8 @@ namespace cath {
 
 			std::ostream & operator<<(std::ostream &,
 			                          const multi_struc_res_rep_pair &);
-		}
-	}
-}
+		} // namespace detail
+	} // namespace scan
+} // namespace cath
 
 #endif

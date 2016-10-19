@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef STRING_PARSE_TOOLS_H_INCLUDED
-#define STRING_PARSE_TOOLS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_STRING_STRING_PARSE_TOOLS_H
+#define _CATH_TOOLS_SOURCE_COMMON_STRING_STRING_PARSE_TOOLS_H
 
 #include <boost/core/ignore_unused.hpp>
 #include <boost/range/adaptor/reversed.hpp>
@@ -80,7 +80,7 @@ namespace cath {
 				return value;
 			}
 
-		}
+		} // namespace detail
 
 		/// \brief Return an iterator pointing to the first point before a non-space character in the region between the specified
 		///        iterators (or arg_end if none is found)
@@ -288,7 +288,7 @@ namespace cath {
 			);
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

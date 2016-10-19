@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCAN_ROLE_H_INCLUDED
-#define SCAN_ROLE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_ROLE_H
+#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_ROLE_H
 
 namespace cath {
 	namespace scan {
@@ -40,8 +40,8 @@ namespace cath {
 				INDEX  ///< The role of being an index, against which queries can be scanned
 			};
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace scan
+} // namespace cath
 
 #endif

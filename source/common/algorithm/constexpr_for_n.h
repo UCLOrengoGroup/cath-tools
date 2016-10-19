@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CONSTEXPR_FOR_N_H_INCLUDED
-#define CONSTEXPR_FOR_N_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_CONSTEXPR_FOR_N_H
+#define _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_CONSTEXPR_FOR_N_H
 
 #include "common/cpp14/constexpr_min_max.h"
 
@@ -43,7 +43,7 @@ namespace cath {
 				}
 			}
 
-		}
+		} // namespace detail
 
 		/// \brief Execute the function operator of F<I>() for all size_t values in half-open range [ 0, TO )
 		///
@@ -55,8 +55,8 @@ namespace cath {
 			detail::constexpr_for_n_impl<F, 0, TO>( std::forward<Args>( args )... );
 		}
 
-	}
+	} // namespace common
 
-}
+} // namespace cath
 
 #endif

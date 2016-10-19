@@ -34,8 +34,8 @@
 ///
 ///  - matfit()
 
-#ifndef BIOPLIB_INTERFACE_H_INCLUDED
-#define BIOPLIB_INTERFACE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_BIOPLIB_FACADE_BIOPLIB_INTERFACE_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_BIOPLIB_FACADE_BIOPLIB_INTERFACE_H
 
 extern "C" {
 	/// \todo This hits a problem when trying to compile against bioplib >= v3.0
@@ -80,6 +80,6 @@ namespace cath {
 
 	COOR COOR_of_coord(const geom::coord &);
 	geom::coord coord_of_COOR(const COOR &);
-}
+} // namespace cath
 
 #endif

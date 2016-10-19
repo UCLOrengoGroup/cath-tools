@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DIFFERENCE_H_INCLUDED
-#define DIFFERENCE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_DIFFERENCE_H
+#define _CATH_TOOLS_SOURCE_COMMON_DIFFERENCE_H
 
 #include <algorithm>
 
@@ -40,7 +40,7 @@ namespace cath {
     		return std::max( arg_value_a, arg_value_b ) - std::min( arg_value_a, arg_value_b );
     	}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

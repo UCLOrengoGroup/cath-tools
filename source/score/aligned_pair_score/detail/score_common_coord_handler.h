@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCORE_COMMON_COORD_HANDLER_H_INCLUDED
-#define SCORE_COMMON_COORD_HANDLER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_DETAIL_SCORE_COMMON_COORD_HANDLER_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_DETAIL_SCORE_COMMON_COORD_HANDLER_H
 
 #include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.h"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
@@ -133,7 +133,7 @@ namespace cath {
 			std::ostream & operator<<(std::ostream &,
 			                          const score_common_coord_handler &);
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace score
+} // namespace cath
 #endif

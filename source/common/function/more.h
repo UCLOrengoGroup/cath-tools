@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef MORE_H_INCLUDED
-#define MORE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_FUNCTION_MORE_H
+#define _CATH_TOOLS_SOURCE_COMMON_FUNCTION_MORE_H
 
 #include <utility>
 
@@ -41,7 +41,7 @@ namespace cath {
 			using is_transparent = void;
 		};
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

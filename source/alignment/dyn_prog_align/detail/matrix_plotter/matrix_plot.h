@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef MATRIX_PLOT_H_INCLUDED
-#define MATRIX_PLOT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_MATRIX_PLOTTER_MATRIX_PLOT_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_MATRIX_PLOTTER_MATRIX_PLOT_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -60,8 +60,8 @@ namespace cath {
 				plotter.plot_accumulated_scores( arg_score_accumulation_matrix );
 				plotter.finish( arg_output_stem );
 			}
-		}
-	}
-}
+		} // namespace detail
+	} // namespace align
+} // namespace cath
 
 #endif

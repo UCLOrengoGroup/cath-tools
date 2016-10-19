@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef FIND_FILE_H_INCLUDED
-#define FIND_FILE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_FILE_FIND_FILE_H
+#define _CATH_TOOLS_SOURCE_COMMON_FILE_FIND_FILE_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -33,7 +33,7 @@ namespace cath {
 		boost::filesystem::path find_file(const path_vec &,
 		                                  const std::string &);
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

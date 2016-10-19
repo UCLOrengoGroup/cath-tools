@@ -47,7 +47,7 @@ namespace cath {
 			);
 		}
 	};
-}
+} // namespace cath
 
 /// \brief A main function for cath_resolve_hits that just calls run_program() on a cath_resolve_hits_program_exception_wrapper
 int main(int argc, char * argv[] ) {

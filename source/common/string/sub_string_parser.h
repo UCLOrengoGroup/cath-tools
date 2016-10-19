@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SUB_STRING_PARSER_H_INCLUDED
-#define SUB_STRING_PARSER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_STRING_SUB_STRING_PARSER_H
+#define _CATH_TOOLS_SOURCE_COMMON_STRING_SUB_STRING_PARSER_H
 
 #include <string>
 
@@ -89,7 +89,7 @@ namespace cath {
 			return the_substring;
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

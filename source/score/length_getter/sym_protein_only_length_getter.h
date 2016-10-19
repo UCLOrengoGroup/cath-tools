@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SYM_PROTEIN_ONLY_LENGTH_GETTER_H_INCLUDED
-#define SYM_PROTEIN_ONLY_LENGTH_GETTER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_LENGTH_GETTER_SYM_PROTEIN_ONLY_LENGTH_GETTER_H
+#define _CATH_TOOLS_SOURCE_SCORE_LENGTH_GETTER_SYM_PROTEIN_ONLY_LENGTH_GETTER_H
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -58,7 +58,7 @@ namespace cath {
                                                           ) {
                 return arg_sym_protein_only_length_getter.sym_protein_only_clone().release();
         }
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

@@ -1,8 +1,8 @@
 /// \file
 /// \brief The ssap_scores_entry class header
 
-#ifndef SSAP_SCORES_ENTRY_H_INCLUDED
-#define SSAP_SCORES_ENTRY_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_SSAP_SCORES_FILE_SSAP_SCORES_ENTRY_H
+#define _CATH_TOOLS_SOURCE_FILE_SSAP_SCORES_FILE_SSAP_SCORES_ENTRY_H
 
 #include <boost/operators.hpp>
 
@@ -74,7 +74,7 @@ namespace cath {
 
 		std::ostream & operator<<(std::ostream &,
 		                          const ssap_scores_entry &);
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

@@ -1,8 +1,8 @@
 /// \file
 /// \brief The hmmer_scores_entry class header
 
-#ifndef HMMER_SCORES_ENTRY_H_INCLUDED
-#define HMMER_SCORES_ENTRY_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_HMMER_SCORES_FILE_HMMER_SCORES_ENTRY_H
+#define _CATH_TOOLS_SOURCE_FILE_HMMER_SCORES_FILE_HMMER_SCORES_ENTRY_H
 
 #include <boost/operators.hpp>
 
@@ -14,9 +14,9 @@ namespace cath {
 	namespace file {
 		namespace detail {
 			std::string strip_header_name(const std::string &);
-		}
-	}
-}
+		} // namespace detail
+	} // namespace file
+} // namespace cath
 
 namespace cath {
 	namespace file {
@@ -137,7 +137,7 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const hmmer_scores_entry &);
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef FASTA_ALN_FILE_ALIGNMENT_ACQUIRER_H_INCLUDED
-#define FASTA_ALN_FILE_ALIGNMENT_ACQUIRER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_FASTA_ALN_FILE_ALIGNMENT_ACQUIRER_H
+#define _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_FASTA_ALN_FILE_ALIGNMENT_ACQUIRER_H
 
 #include <boost/filesystem.hpp>
 
@@ -45,7 +45,7 @@ namespace cath {
 			boost::filesystem::path get_fasta_alignment_file() const;
 		};
 
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

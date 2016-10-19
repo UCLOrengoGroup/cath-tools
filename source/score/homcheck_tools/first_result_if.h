@@ -1,8 +1,8 @@
 /// \file
 /// \brief The first_result_if header
 
-#ifndef FIRST_RESULT_IF_H_INCLUDED
-#define FIRST_RESULT_IF_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_HOMCHECK_TOOLS_FIRST_RESULT_IF_H
+#define _CATH_TOOLS_SOURCE_SCORE_HOMCHECK_TOOLS_FIRST_RESULT_IF_H
 
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/find_if.hpp>
@@ -79,7 +79,7 @@ namespace cath {
 					}
 				);
 			}
-		}
+		} // namespace detail
 
 		/// \brief Return the first SSAP and PRC result ordered by the specified less-than function that meets the specified predicate
 		template <typename LT_FN, typename PRED_FN>
@@ -93,8 +93,8 @@ namespace cath {
 				arg_pred
 			);
 		}
-	}
-}
+	} // namespace homcheck
+} // namespace cath
 
 
 namespace cath {
@@ -146,7 +146,7 @@ namespace cath {
 		}
 
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

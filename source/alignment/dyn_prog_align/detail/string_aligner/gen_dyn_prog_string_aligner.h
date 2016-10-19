@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef GEN_DYN_PROG_STRING_ALIGNER_H_INCLUDED
-#define GEN_DYN_PROG_STRING_ALIGNER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_STRING_ALIGNER_GEN_DYN_PROG_STRING_ALIGNER_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_STRING_ALIGNER_GEN_DYN_PROG_STRING_ALIGNER_H
 
 #include "alignment/dyn_prog_align/detail/string_aligner/string_aligner.h"
 
@@ -53,8 +53,8 @@ namespace cath {
 				virtual ~gen_dyn_prog_string_aligner() noexcept = default;
 			};
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace align
+} // namespace cath
 
 #endif

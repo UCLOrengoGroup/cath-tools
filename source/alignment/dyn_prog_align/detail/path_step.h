@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PATH_STEP_H_INCLUDED
-#define PATH_STEP_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_PATH_STEP_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_PATH_STEP_H
 
 #include "common/type_aliases.h"
 
@@ -57,8 +57,8 @@ namespace cath {
 			void append_path_step_to_pair_alignment_from_point(alignment &,
 			                                                   const path_step &,
 			                                                   const size_size_pair &);
-		}
-	}
-}
+		} // namespace detail
+	} // namespace align
+} // namespace cath
 
 #endif

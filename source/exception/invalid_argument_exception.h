@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef INVALID_ARGUMENT_EXCEPTION_H_INCLUDED
-#define INVALID_ARGUMENT_EXCEPTION_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_EXCEPTION_INVALID_ARGUMENT_EXCEPTION_H
+#define _CATH_TOOLS_SOURCE_EXCEPTION_INVALID_ARGUMENT_EXCEPTION_H
 
 #include <boost/exception/all.hpp>
 
@@ -34,7 +34,7 @@ namespace cath {
 			virtual ~invalid_argument_exception() noexcept = default;
 		};
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

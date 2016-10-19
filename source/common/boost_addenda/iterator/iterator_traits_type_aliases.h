@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ITERATOR_TRAITS_TYPE_ALIASES_H_INCLUDED
-#define ITERATOR_TRAITS_TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_ITERATOR_ITERATOR_TRAITS_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_ITERATOR_ITERATOR_TRAITS_TYPE_ALIASES_H
 
 #include <boost/iterator/iterator_traits.hpp>
 
@@ -41,7 +41,7 @@ namespace cath {
 		template <typename T>
 		using iterator_category_t   = typename boost::iterator_category  <T>::type;
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

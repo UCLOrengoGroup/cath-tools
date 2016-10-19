@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CRH_FILTER_OPTIONS_BLOCK_H_INCLUDED
-#define CRH_FILTER_OPTIONS_BLOCK_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_FILTER_OPTIONS_BLOCK_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_FILTER_OPTIONS_BLOCK_H
 
 #include "options/options_block/options_block.h"
 #include "resolve_hits/options/spec/crh_filter_spec.h"
@@ -51,7 +51,7 @@ namespace cath {
 			const crh_filter_spec & get_crh_filter_spec() const;
 		};
 
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

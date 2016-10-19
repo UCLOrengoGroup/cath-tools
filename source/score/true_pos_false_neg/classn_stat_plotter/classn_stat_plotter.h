@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CLASSN_STAT_PLOTTER_H_INCLUDED
-#define CLASSN_STAT_PLOTTER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PLOTTER_CLASSN_STAT_PLOTTER_H
+#define _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PLOTTER_CLASSN_STAT_PLOTTER_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -161,7 +161,7 @@ namespace cath {
 		                           const named_true_false_pos_neg_list &,
 		                           const classn_stat_plotter_spec &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

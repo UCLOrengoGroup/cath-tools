@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SSAP_SCORE_POST_PROCESSING_H_INCLUDED
-#define SSAP_SCORE_POST_PROCESSING_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_SSAP_SCORE_SSAP_SCORE_POST_PROCESSING_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_SSAP_SCORE_SSAP_SCORE_POST_PROCESSING_H
 
 #include "common/algorithm/constexpr_is_uniq.h"
 
@@ -70,7 +70,7 @@ namespace cath {
 		bool has_pre_log(const ssap_score_post_processing &);
 		bool normalisation_is_simple(const ssap_score_post_processing &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

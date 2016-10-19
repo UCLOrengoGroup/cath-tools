@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DISPLAY_COLOURER_ALIGNMENT_H_INCLUDED
-#define DISPLAY_COLOURER_ALIGNMENT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_ALIGNMENT_H
+#define _CATH_TOOLS_SOURCE_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_ALIGNMENT_H
 
 #include "display/display_colourer/detail/score_colour_handler.h"
 #include "display/display_colourer/score_adjusted_display_colourer.h"
@@ -66,6 +66,6 @@ namespace cath {
 		virtual ~display_colourer_alignment() noexcept = default;
 	};
 
-}
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CONSTEXPR_FIND_H_INCLUDED
-#define CONSTEXPR_FIND_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_CONSTEXPR_FIND_H
+#define _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_CONSTEXPR_FIND_H
 
 #include "common/cpp14/constexpr_min_max.h"
 
@@ -58,7 +58,7 @@ namespace cath {
 				       ( I + 1 < N                                       ) ? constexpr_find_impl<constexpr_min(N-1, I+1), J>( arg_array, arg_value ) :
 				                                                            ( throw std::logic_error( "Unable to constexpr_find() element in std::array" ), std::get<0>( arg_array ) );
 			}
-		}
+		} // namespace detail
 
 		/// \brief Recursively search through an array for an entry that has arg_value in position J (default 0)
 		///        (where the array's entries are of some type like pair or tuple that can be queried with std::get<J>() )
@@ -87,7 +87,7 @@ namespace cath {
 			return detail::constexpr_find_impl<0, J>( arg_array, arg_value );
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

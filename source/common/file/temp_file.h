@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef TEMP_FILE_H_INCLUDED
-#define TEMP_FILE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_FILE_TEMP_FILE_H
+#define _CATH_TOOLS_SOURCE_COMMON_FILE_TEMP_FILE_H
 
 //#include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
@@ -59,7 +59,7 @@ namespace cath {
 
 		bool has_filename(const temp_file &);
 		boost::filesystem::path get_filename(const temp_file &);
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

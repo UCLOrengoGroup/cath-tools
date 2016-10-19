@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef COMPARE_UPPER_CELL_RESULT_H_INCLUDED
-#define COMPARE_UPPER_CELL_RESULT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SSAP_COMPARE_UPPER_CELL_RESULT_H
+#define _CATH_TOOLS_SOURCE_SSAP_COMPARE_UPPER_CELL_RESULT_H
 
 namespace cath {
 
@@ -31,6 +31,6 @@ namespace cath {
 		SCORED                    ///< The lower alignment scored enough to meet the MIN_LOWER_MAT_RES_SCORE threshold and
 		                          ///< will be added to the upper matrix
 	};
-}
+} // namespace cath
 
 #endif

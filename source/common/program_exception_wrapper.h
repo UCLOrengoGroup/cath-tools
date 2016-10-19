@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PROGRAM_EXCEPTION_WRAPPER_H_INCLUDED
-#define PROGRAM_EXCEPTION_WRAPPER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_PROGRAM_EXCEPTION_WRAPPER_H
+#define _CATH_TOOLS_SOURCE_COMMON_PROGRAM_EXCEPTION_WRAPPER_H
 
 #include <boost/log/utility/setup/console.hpp>
 
@@ -71,7 +71,7 @@ namespace cath {
 			sink_sptr get_sink_ptr();
 		};
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

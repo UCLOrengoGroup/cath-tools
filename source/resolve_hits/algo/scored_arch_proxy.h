@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCORED_ARCH_PROXY_H_INCLUDED
-#define SCORED_ARCH_PROXY_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_ALGO_SCORED_ARCH_PROXY_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_ALGO_SCORED_ARCH_PROXY_H
 
 #include "common/cpp14/cbegin_cend.h"
 #include "resolve_hits/resolve_hits_type_aliases.h"
@@ -114,7 +114,7 @@ namespace cath {
 			return arg_scored_arch_proxy;
 		}
 
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

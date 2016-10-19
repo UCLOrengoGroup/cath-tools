@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef IDS_OPTIONS_BLOCK_H_INCLUDED
-#define IDS_OPTIONS_BLOCK_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_OPTIONS_OPTIONS_BLOCK_IDS_OPTIONS_BLOCK_H
+#define _CATH_TOOLS_SOURCE_OPTIONS_OPTIONS_BLOCK_IDS_OPTIONS_BLOCK_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -59,7 +59,7 @@ namespace cath {
 		bool ids_specified(const ids_options_block &);
 		std::string get_id_a(const ids_options_block &);
 		std::string get_id_b(const ids_options_block &);
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

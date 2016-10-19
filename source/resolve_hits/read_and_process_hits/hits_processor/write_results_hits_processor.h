@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef WRITE_RESULTS_HITS_PROCESSOR_H_INCLUDED
-#define WRITE_RESULTS_HITS_PROCESSOR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR_WRITE_RESULTS_HITS_PROCESSOR_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR_WRITE_RESULTS_HITS_PROCESSOR_H
 
 #include "resolve_hits/options/spec/hit_boundary_output.h"
 #include "resolve_hits/read_and_process_hits/hits_processor/hits_processor.h"
@@ -55,8 +55,8 @@ namespace cath {
 				virtual ~write_results_hits_processor() noexcept = default;
 			};
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace rslv
+} // namespace cath
 
 #endif

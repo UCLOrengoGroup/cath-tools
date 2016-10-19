@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef VIEWER_H_INCLUDED
-#define VIEWER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_VIEWER_H
+#define _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_VIEWER_H
 
 #include "common/type_aliases.h"
 #include "structure/structure_type_aliases.h"
@@ -101,6 +101,6 @@ namespace cath {
 
 	std::string colour_of_index_from_colours_string(const size_t &,
 	                                                const std::string &);
-}
+} // namespace cath
 
 #endif

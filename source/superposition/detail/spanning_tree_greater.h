@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SPANNING_TREE_GREATER_H_INCLUDED
-#define SPANNING_TREE_GREATER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SUPERPOSITION_DETAIL_SPANNING_TREE_GREATER_H
+#define _CATH_TOOLS_SOURCE_SUPERPOSITION_DETAIL_SPANNING_TREE_GREATER_H
 
 #include "common/type_aliases.h"
 
@@ -41,8 +41,8 @@ namespace cath {
 				                const size_size_pair &) const;
 			};
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace sup
+} // namespace cath
 
 #endif

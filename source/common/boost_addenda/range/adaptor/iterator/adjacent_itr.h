@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ADJACENT_ITR_H_INCLUDED
-#define ADJACENT_ITR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ITERATOR_ADJACENT_ITR_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ITERATOR_ADJACENT_ITR_H
 
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/range/category.hpp>
@@ -47,7 +47,7 @@ namespace cath {
 			                                                  range_category_t<RNG>,        // CategoryOrTraversal
 			                                                  range_adjacent_ref_pair<RNG>  // Reference
 			                                                  >;
-		}
+		} // namespace detail
 
 		/// \brief Iterator for wrapping a range and dereferencing to pairs of adjacent members
 		///        (to a pair of references to: the current member and the member after that)
@@ -184,7 +184,7 @@ namespace cath {
 			advance_to_end_if_one_off();
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

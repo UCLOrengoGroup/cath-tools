@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CATH_CHECK_PDB_OPTIONS_H_INCLUDED
-#define CATH_CHECK_PDB_OPTIONS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS_CATH_CHECK_PDB_OPTIONS_H
+#define _CATH_TOOLS_SOURCE_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS_CATH_CHECK_PDB_OPTIONS_H
 
 #include <boost/filesystem.hpp>
 
@@ -57,7 +57,7 @@ namespace cath {
 			static const std::string PROGRAM_NAME;
 		};
 
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

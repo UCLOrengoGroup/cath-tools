@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PDBS_ACQUIRER_H_INCLUDED
-#define PDBS_ACQUIRER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_H
+#define _CATH_TOOLS_SOURCE_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_H
 
 #include "common/type_aliases.h"
 #include "file/file_type_aliases.h"
@@ -58,7 +58,7 @@ namespace cath {
 		uptr_vec<pdbs_acquirer> get_pdbs_acquirers(const pdb_input_options_block &);
 
 		std::unique_ptr<pdbs_acquirer> get_pdbs_acquirer(const pdb_input_spec &);
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

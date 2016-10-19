@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SUPERPOSITION_H_INCLUDED
-#define SUPERPOSITION_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SUPERPOSITION_SUPERPOSITION_H
+#define _CATH_TOOLS_SOURCE_SUPERPOSITION_SUPERPOSITION_H
 
 #include <boost/operators.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -158,6 +158,6 @@ namespace cath {
 		void check_superposition_is_pairwise(const superposition &);
 //		double get_rmsd_from_pairwise_superposition(const superposition &);
 
-	}
-}
+	} // namespace sup
+} // namespace cath
 #endif

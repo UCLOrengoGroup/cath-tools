@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CALC_HIT_H_INCLUDED
-#define CALC_HIT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_CALC_HIT_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_CALC_HIT_H
 
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/irange.hpp>
@@ -531,7 +531,7 @@ namespace cath {
 			return ( ! hits_overlap( arg_hit_a, arg_hit_b ) );
 		}
 
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef REGION_WRITER_H_INCLUDED
-#define REGION_WRITER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_IO_REGION_IO_REGION_WRITER_REGION_WRITER_H
+#define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_IO_REGION_IO_REGION_WRITER_REGION_WRITER_H
 
 #include <string>
 
@@ -40,7 +40,7 @@ namespace cath {
 			std::string write_region(const region &) const;
 		};
 
-	}
-}
+	} // namespace chop
+} // namespace cath
 
 #endif

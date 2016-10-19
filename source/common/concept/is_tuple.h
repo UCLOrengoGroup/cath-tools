@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef IS_TUPLE_H_INCLUDED
-#define IS_TUPLE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_CONCEPT_IS_TUPLE_H
+#define _CATH_TOOLS_SOURCE_COMMON_CONCEPT_IS_TUPLE_H
 
 #include <tuple>
 #include <type_traits>
@@ -38,7 +38,7 @@ namespace cath {
 		/// std::tuple<ARGS...> for some ...ARGS
 		template <typename... Args> struct is_tuple<std::tuple<Args...>> final : std::true_type  {};
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

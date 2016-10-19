@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LENGTH_GETTER_H_INCLUDED
-#define LENGTH_GETTER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_LENGTH_GETTER_LENGTH_GETTER_H
+#define _CATH_TOOLS_SOURCE_SCORE_LENGTH_GETTER_LENGTH_GETTER_H
 
 #include <boost/logic/tribool_fwd.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
@@ -29,7 +29,7 @@
 namespace cath {
 	namespace align {
 		class alignment;
-	}
+	} // namespace align
 	class protein;
 
 	namespace score {
@@ -132,7 +132,7 @@ namespace cath {
                                          ) {
                 return arg_length_getter.clone().release();
         }
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

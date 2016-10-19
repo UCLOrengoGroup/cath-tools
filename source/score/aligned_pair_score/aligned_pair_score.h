@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNED_PAIR_SCORE_H_INCLUDED
-#define ALIGNED_PAIR_SCORE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_ALIGNED_PAIR_SCORE_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_ALIGNED_PAIR_SCORE_H
 
 #include <boost/logic/tribool_fwd.hpp>
 #include <boost/operators.hpp>
@@ -39,7 +39,7 @@ namespace cath {
 
 		namespace detail {
 			str_aligned_pair_score_pmap get_aligned_pair_score_of_id_name();
-		}
+		} // namespace detail
 
 		/// \brief Provide ABC interface for classes that calculate scores for pair alignments and their associated proteins
 		class aligned_pair_score : private cath::common::polymorphic_less_than_comparable<aligned_pair_score>,
@@ -131,7 +131,7 @@ namespace cath {
 		                                      ) {
 			return arg_aligned_pair_score.clone().release();
 		}
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

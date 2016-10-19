@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CATH_REFINE_ALIGN_OPTIONS_H_INCLUDED
-#define CATH_REFINE_ALIGN_OPTIONS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_CATH_REFINE_ALIGN_OPTIONS_CATH_REFINE_ALIGN_OPTIONS_H
+#define _CATH_TOOLS_SOURCE_CATH_REFINE_ALIGN_OPTIONS_CATH_REFINE_ALIGN_OPTIONS_H
 
 #include "common/type_aliases.h"
 #include "display/options/display_options_block.h"
@@ -87,7 +87,7 @@ namespace cath {
 		std::unique_ptr<const alignment_acquirer> get_alignment_acquirer(const cath_refine_align_options &);
 		std::unique_ptr<const pdbs_acquirer> get_pdbs_acquirer(const cath_refine_align_options &);
 		selection_policy_acquirer get_selection_policy_acquirer(const cath_refine_align_options &);
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

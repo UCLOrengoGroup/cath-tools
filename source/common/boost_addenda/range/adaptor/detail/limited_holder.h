@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIMITED_HOLDER_H_INCLUDED
-#define LIMITED_HOLDER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_DETAIL_LIMITED_HOLDER_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_DETAIL_LIMITED_HOLDER_H
 
 #include "common/boost_addenda/range/range_concept_type_aliases.h"
 
@@ -51,8 +51,8 @@ namespace cath {
 				return max_num_elements;
 			}
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace common
+} // namespace cath
 
 #endif

@@ -53,7 +53,7 @@ namespace cath {
 			run_ssap( the_cath_ssap_options );
 		}
 	};
-}
+} // namespace cath
 
 /// \brief A main function for SSAP that just calls run_program() on a ssap_program_exception_wrapper
 int main(int argc, char * argv[]) {

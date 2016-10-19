@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ISTREAMS_EQUAL_H_INCLUDED
-#define ISTREAMS_EQUAL_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_TEST_PREDICATE_ISTREAMS_EQUAL_H
+#define _CATH_TOOLS_SOURCE_COMMON_TEST_PREDICATE_ISTREAMS_EQUAL_H
 
 #include <boost/test/test_tools.hpp>
 
@@ -50,7 +50,7 @@ namespace cath {
 		/// \brief The default half-width used when displaying any differences
 		static constexpr str_size_type DEFAULT_DIFF_HALF_WIDTH = 50;
 	};
-}
+} // namespace cath
 
 #define BOOST_WARN_ISTREAMS_EQUAL(    I1, S1, I2, S2 )   BOOST_WARN(    ( istreams_equal() ( ( (I1) ), ( (S1) ), ( (I2) ), ( (S2) ) ) ) )
 #define BOOST_CHECK_ISTREAMS_EQUAL(   I1, S1, I2, S2 )   BOOST_CHECK(   ( istreams_equal() ( ( (I1) ), ( (S1) ), ( (I2) ), ( (S2) ) ) ) )

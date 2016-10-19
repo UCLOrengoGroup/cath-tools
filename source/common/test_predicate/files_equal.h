@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef FILES_EQUAL_H_INCLUDED
-#define FILES_EQUAL_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_TEST_PREDICATE_FILES_EQUAL_H
+#define _CATH_TOOLS_SOURCE_COMMON_TEST_PREDICATE_FILES_EQUAL_H
 
 #include <boost/filesystem/path.hpp>
 #include <boost/test/test_tools.hpp>
@@ -47,7 +47,7 @@ namespace cath {
 
 		static const std::string FILENAME_NAME_PREFIX;
 	};
-}
+} // namespace cath
 
 #define BOOST_WARN_FILES_EQUAL(                 S1, S2 )   BOOST_WARN(    ( cath::files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )
 #define BOOST_CHECK_FILES_EQUAL(                S1, S2 )   BOOST_CHECK(   ( cath::files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )

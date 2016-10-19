@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RESIDUE_NAME_ALIGN_MAP_H_INCLUDED
-#define RESIDUE_NAME_ALIGN_MAP_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_RESIDUE_NAME_ALIGN_DETAIL_RESIDUE_NAME_ALIGN_MAP_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_RESIDUE_NAME_ALIGN_DETAIL_RESIDUE_NAME_ALIGN_MAP_H
 
 #include "common/type_aliases.h"
 #include "structure/structure_type_aliases.h"
@@ -61,8 +61,8 @@ namespace cath {
 
 			std::ostream & operator<<(std::ostream &,
 			                          const residue_name_align_map &arg_residue_name_align_map);
-		}
-	}
-}
+		} // namespace detail
+	} // namespace align
+} // namespace cath
 
 #endif

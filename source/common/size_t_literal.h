@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SIZE_T_LITERAL_H_INCLUDED
-#define SIZE_T_LITERAL_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_SIZE_T_LITERAL_H
+#define _CATH_TOOLS_SOURCE_COMMON_SIZE_T_LITERAL_H
 
 #include <cstddef>
 
@@ -30,8 +30,8 @@ namespace cath {
 			/// \brief TODOCUMENT
 			constexpr std::size_t operator "" _z ( unsigned long long n ) { return static_cast<size_t>( n ); }
 
-		}
-	}
-}
+		} // namespace literals
+	} // namespace common
+} // namespace cath
 
 #endif

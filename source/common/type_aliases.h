@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef TYPE_ALIASES_H_INCLUDED
-#define TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_COMMON_TYPE_ALIASES_H
 
 #include <boost/optional/optional_fwd.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -155,7 +155,7 @@ namespace cath {
 	using size_size_vec_map             = std::map<size_t, size_vec>;
 
 	using size_size_size_size_tpl       = std::tuple<size_t, size_t, size_t, size_t>;
-}
+} // namespace cath
 
 namespace cath {
 	class protein;
@@ -180,6 +180,6 @@ namespace cath {
 	using score_vec_of_vec             = common::vector_of_vector<score_type>;
 
 	using str_str_score_tpl            = std::tuple<std::string, std::string, score_type>;
-}
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef BEST_SCAN_ARCHES_H_INCLUDED
-#define BEST_SCAN_ARCHES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_ALGO_BEST_SCAN_ARCHES_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_ALGO_BEST_SCAN_ARCHES_H
 
 #include <boost/core/ignore_unused.hpp>
 
@@ -158,7 +158,7 @@ namespace cath {
 			return arg_best_scan_arches.get_best_scored_arch_so_far().get_score();
 		}
 
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

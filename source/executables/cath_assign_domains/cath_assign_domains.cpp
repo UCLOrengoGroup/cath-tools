@@ -408,7 +408,7 @@ namespace cath {
 			write_file( "new_fold_info.trac_wiki", new_fold_strings );
 		}
 	};
-}
+} // namespace cath
 
 /// \brief A main function for cath_assign_domains that just calls run_program() on a cath_assign_domains_program_exception_wrapper
 int main(int argc, char * argv[] ) {

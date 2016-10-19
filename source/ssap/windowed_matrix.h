@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef WINDOWED_MATRIX_H_INCLUDED
-#define WINDOWED_MATRIX_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SSAP_WINDOWED_MATRIX_H
+#define _CATH_TOOLS_SOURCE_SSAP_WINDOWED_MATRIX_H
 
 #include <boost/algorithm/clamp.hpp>
 #include <boost/core/ignore_unused.hpp>
@@ -463,6 +463,6 @@ namespace cath {
 		return arg_length_a + arg_length_b;
 	}
 
-}
+} // namespace cath
 
 #endif

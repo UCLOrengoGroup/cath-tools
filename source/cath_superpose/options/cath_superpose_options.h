@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CATH_SUPERPOSE_OPTIONS_H_INCLUDED
-#define CATH_SUPERPOSE_OPTIONS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_CATH_SUPERPOSE_OPTIONS_CATH_SUPERPOSE_OPTIONS_H
+#define _CATH_TOOLS_SOURCE_CATH_SUPERPOSE_OPTIONS_CATH_SUPERPOSE_OPTIONS_H
 
 #include "display/options/display_options_block.h"
 #include "options/executable/executable_options.h"
@@ -100,7 +100,7 @@ namespace cath {
 
 		std::unique_ptr<const alignment_acquirer> get_alignment_acquirer(const cath_superpose_options &);
 		std::unique_ptr<const pdbs_acquirer> get_pdbs_acquirer(const cath_superpose_options &);
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

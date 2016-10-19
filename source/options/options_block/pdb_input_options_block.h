@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PDB_INPUT_OPTIONS_BLOCK_H_INCLUDED
-#define PDB_INPUT_OPTIONS_BLOCK_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_OPTIONS_OPTIONS_BLOCK_PDB_INPUT_OPTIONS_BLOCK_H
+#define _CATH_TOOLS_SOURCE_OPTIONS_OPTIONS_BLOCK_PDB_INPUT_OPTIONS_BLOCK_H
 
 #include "options/options_block/options_block.h"
 #include "options/options_block/pdb_input_spec.h"
@@ -49,7 +49,7 @@ namespace cath {
 
 		size_t get_num_acquirers(const pdb_input_options_block &);
 
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

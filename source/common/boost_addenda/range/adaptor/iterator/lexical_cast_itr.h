@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LEXICAL_CAST_ITR_H_INCLUDED
-#define LEXICAL_CAST_ITR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ITERATOR_LEXICAL_CAST_ITR_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ITERATOR_LEXICAL_CAST_ITR_H
 
 #include <boost/iterator/transform_iterator.hpp>
 #include <boost/lexical_cast.hpp>
@@ -43,7 +43,7 @@ namespace cath {
 			                                       ) const {
 				return boost::lexical_cast<T>( arg_value );
 			}
-		}
+		} // namespace detail
 
 		/// \brief Type alias for a lexical_cast_itr for a given destination type, T, and range, RNG.
 		///
@@ -56,7 +56,7 @@ namespace cath {
 			range_iterator_t<RNG>
 		>;
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

@@ -1,8 +1,8 @@
 /// \file
 /// \brief The prc_scores_file class header
 
-#ifndef PRC_SCORES_FILE_H_INCLUDED
-#define PRC_SCORES_FILE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_PRC_SCORES_FILE_PRC_SCORES_FILE_H
+#define _CATH_TOOLS_SOURCE_FILE_PRC_SCORES_FILE_PRC_SCORES_FILE_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -32,7 +32,7 @@ namespace cath {
 			static prc_scores_entry_vec parse_prc_scores_file_fancy(const boost::filesystem::path &);
 		};
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

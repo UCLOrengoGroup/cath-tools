@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CRH_SEGMENT_SPEC_H_INCLUDED
-#define CRH_SEGMENT_SPEC_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_SEGMENT_SPEC_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_SEGMENT_SPEC_H
 
 #include "resolve_hits/trim/trim_spec.h"
 
@@ -53,7 +53,7 @@ namespace cath {
 
 		hit_seg_opt apply_spec_to_seg_copy(const hit_seg &,
 		                                   const crh_segment_spec &);
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

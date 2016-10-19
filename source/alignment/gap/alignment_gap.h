@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_GAP_H_INCLUDED
-#define ALIGNMENT_GAP_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_GAP_ALIGNMENT_GAP_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_GAP_ALIGNMENT_GAP_H
 
 #include <cstddef>
 
@@ -41,7 +41,7 @@ namespace cath {
 				                                                               const size_t &,
 				                                                               const size_t &);
 
-			}
+			} // namespace detail
 
 			float_score_type gap_count_of_alignment(const alignment &);
 
@@ -52,9 +52,9 @@ namespace cath {
 
 			size_t get_naive_num_gaps(const alignment &);
 
-		}
-	}
+		} // namespace gap
+	} // namespace align
 
-}
+} // namespace cath
 
 #endif

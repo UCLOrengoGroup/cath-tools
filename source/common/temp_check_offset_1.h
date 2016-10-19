@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef TEMP_CHECK_OFFSET_1_H_INCLUDED
-#define TEMP_CHECK_OFFSET_1_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_TEMP_CHECK_OFFSET_1_H
+#define _CATH_TOOLS_SOURCE_COMMON_TEMP_CHECK_OFFSET_1_H
 
 #include <boost/core/ignore_unused.hpp>
 
@@ -41,6 +41,6 @@ namespace cath {
 		boost::ignore_unused(arg_index_offset_1);
 #endif
 	}
-}
+} // namespace cath
 
 #endif

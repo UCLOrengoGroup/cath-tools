@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCAN_INDEX_H_INCLUDED
-#define SCAN_INDEX_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_SCAN_INDEX_H
+#define _CATH_TOOLS_SOURCE_SCAN_SCAN_INDEX_H
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/units/quantity.hpp>
@@ -233,7 +233,7 @@ namespace cath {
 		scan_index<KPs...> make_scan_index(const scan_policy<KPs...> &&,
 		                                   const protein_list &) = delete; // Don't try to build a scan_index from a temporary scan_policy
 
-	}
-}
+	} // namespace scan
+} // namespace cath
 
 #endif

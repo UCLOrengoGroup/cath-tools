@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DISPLAY_COLOURER_H_INCLUDED
-#define DISPLAY_COLOURER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_H
+#define _CATH_TOOLS_SOURCE_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_H
 
 #include "common/type_aliases.h"
 #include "display_colour/display_colour_gradient.h"
@@ -67,6 +67,6 @@ namespace cath {
 	                   const viewer &,
 	                   const align::alignment_context &);
 
-}
+} // namespace cath
 
 #endif

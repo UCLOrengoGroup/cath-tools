@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CLASSN_STAT_H_INCLUDED
-#define CLASSN_STAT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_H
+#define _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_H
 
 #include <boost/rational.hpp>
 
@@ -66,7 +66,7 @@ namespace cath {
 		double calculate_and_convert(const classn_stat &,
 		                             const true_false_pos_neg &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

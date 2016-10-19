@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ADJACENTED_RANGE_H_INCLUDED
-#define ADJACENTED_RANGE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_ADJACENTED_RANGE_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_ADJACENTED_RANGE_H
 
 #include "common/boost_addenda/range/adaptor/iterator/adjacent_itr.h"
 #include "common/cpp14/cbegin_cend.h"
@@ -58,7 +58,7 @@ namespace cath {
 		                                            ) {
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

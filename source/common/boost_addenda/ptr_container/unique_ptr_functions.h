@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef UNIQUE_PTR_FUNCTIONS_H_INCLUDED
-#define UNIQUE_PTR_FUNCTIONS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_PTR_CONTAINER_UNIQUE_PTR_FUNCTIONS_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_PTR_CONTAINER_UNIQUE_PTR_FUNCTIONS_H
 
 #include <boost/ptr_container/ptr_map.hpp>
 #include <boost/ptr_container/ptr_set.hpp>
@@ -78,7 +78,7 @@ namespace common {
 			arg_ptr_vector.replace( idx, arg_ptr_value.release() );
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

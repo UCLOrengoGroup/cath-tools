@@ -1,8 +1,8 @@
 /// \file
 /// \brief The label_pair_is_positive class header
 
-#ifndef LABEL_PAIR_IS_POSITIVE_H_INCLUDED
-#define LABEL_PAIR_IS_POSITIVE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_LABEL_PAIR_IS_POSITIVE_LABEL_PAIR_IS_POSITIVE_H
+#define _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_LABEL_PAIR_IS_POSITIVE_LABEL_PAIR_IS_POSITIVE_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -28,7 +28,7 @@ namespace cath {
 
 		label_pair_is_positive make_label_pair_is_positive(const boost::filesystem::path &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

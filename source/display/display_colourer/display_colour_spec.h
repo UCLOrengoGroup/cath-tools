@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DISPLAY_COLOUR_SPEC_H_INCLUDED
-#define DISPLAY_COLOUR_SPEC_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOUR_SPEC_H
+#define _CATH_TOOLS_SOURCE_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOUR_SPEC_H
 
 #include <boost/optional.hpp>
 
@@ -97,6 +97,6 @@ namespace cath {
 //	                                const pdb_list &,
 //	                                const str_vec &,
 //	                                std::ostream &);
-}
+} // namespace cath
 
 #endif

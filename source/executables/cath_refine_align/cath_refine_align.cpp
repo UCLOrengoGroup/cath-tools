@@ -42,7 +42,7 @@ namespace cath {
 			cath_align_refiner::refine(the_cath_refine_align_options);
 		}
 	};
-}
+} // namespace cath
 
 /// \brief A main function for cath_refine_align that just calls run_program() on a cath_refine_align_program_exception_wrapper
 int main(int argc, char * argv[] ) {

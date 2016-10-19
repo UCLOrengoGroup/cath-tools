@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_REFINER_H_INCLUDED
-#define ALIGNMENT_REFINER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_REFINER_ALIGNMENT_REFINER_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_REFINER_ALIGNMENT_REFINER_H
 
 #include "alignment/align_type_aliases.h"
 #include "common/type_aliases.h"
@@ -71,8 +71,8 @@ namespace cath {
 			                  const gap::gap_penalty &);
 
 		};
-	}
+	} // namespace align
 
-}
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNED_PAIR_SCORE_LIST_APPEND_H_INCLUDED
-#define ALIGNED_PAIR_SCORE_LIST_APPEND_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_LIST_DETAIL_ALIGNED_PAIR_SCORE_LIST_APPEND_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_LIST_DETAIL_ALIGNED_PAIR_SCORE_LIST_APPEND_H
 
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
@@ -256,8 +256,8 @@ namespace cath {
 				score_variety_factory::append_all_varieties<T>(new_scores);
 				return new_scores;
 			}
-		}
-	}
-}
+		} // namespace detail
+	} // namespace score
+} // namespace cath
 
 #endif

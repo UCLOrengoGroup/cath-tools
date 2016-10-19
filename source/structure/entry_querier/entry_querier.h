@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ENTRY_QUERIER_H_INCLUDED
-#define ENTRY_QUERIER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_ENTRY_QUERIER_ENTRY_QUERIER_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_ENTRY_QUERIER_ENTRY_QUERIER_H
 
 #include "common/type_aliases.h"
 
@@ -97,6 +97,6 @@ namespace cath {
 	                      const size_t &);
 	size_t _num_comparable_impl(const size_t &,
 	                            const size_t &);
-}
+} // namespace cath
 
 #endif

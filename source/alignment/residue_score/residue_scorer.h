@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RESIDUE_SCORER_H_INCLUDED
-#define RESIDUE_SCORER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_RESIDUE_SCORE_RESIDUE_SCORER_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_RESIDUE_SCORE_RESIDUE_SCORER_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -27,9 +27,9 @@ namespace cath {
 	namespace align {
 		class alignment;
 		class alignment_residue_scores;
-	}
+	} // namespace align
 	class protein_list;
-}
+} // namespace cath
 
 namespace cath {
 	namespace align {
@@ -63,7 +63,7 @@ namespace cath {
 												   const residue_scorer &,
 												   std::ostream &);
 
-	}
-}
+	} // namespace align
+} // namespace cath
 
 #endif

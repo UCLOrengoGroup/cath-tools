@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LOG_TO_OSTREAM_GUARD_H_INCLUDED
-#define LOG_TO_OSTREAM_GUARD_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_TEST_LOG_TO_OSTREAM_GUARD_H
+#define _CATH_TOOLS_SOURCE_TEST_LOG_TO_OSTREAM_GUARD_H
 
 #include <boost/log/utility/setup/console.hpp>
 using sink_t     = boost::log::sinks::synchronous_sink<boost::log::sinks::basic_text_ostream_backend<char>>;
@@ -47,6 +47,6 @@ namespace cath {
 		void remove_log_sink();
 	};
 
-}
+} // namespace cath
 
 #endif

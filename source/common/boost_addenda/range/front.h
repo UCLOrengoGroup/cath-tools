@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef FRONT_H_INCLUDED
-#define FRONT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_FRONT_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_FRONT_H
 
 #include <boost/range.hpp>
 
@@ -48,7 +48,7 @@ namespace cath {
 			return * common::cbegin( arg_range );
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

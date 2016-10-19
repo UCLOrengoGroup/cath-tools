@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef MULTI_ALIGN_BUILDER_H_INCLUDED
-#define MULTI_ALIGN_BUILDER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_DETAIL_MULTI_ALIGN_BUILDER_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_DETAIL_MULTI_ALIGN_BUILDER_H
 
 #include "alignment/align_type_aliases.h"
 #include "alignment/detail/multi_align_group.h"
@@ -76,8 +76,8 @@ namespace cath {
 			void add_alignment_branch(multi_align_builder &,
 			                          const size_size_alignment_tuple &,
 			                          const protein_list &);
-		}
-	}
-}
+		} // namespace detail
+	} // namespace align
+} // namespace cath
 
 #endif

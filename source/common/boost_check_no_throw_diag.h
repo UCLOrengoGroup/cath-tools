@@ -27,8 +27,8 @@
 /// is a failure because it tells the user nothing about the exception that
 /// was thrown.
 
-#ifndef BOOST_CHECK_NO_THROW_DIAG_H_INCLUDED
-#define BOOST_CHECK_NO_THROW_DIAG_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_CHECK_NO_THROW_DIAG_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_CHECK_NO_THROW_DIAG_H
 
 #define BOOST_CHECK_NO_THROW_DIAG_IMPL( S, TL )                                                          \
     try {                                                                                           \

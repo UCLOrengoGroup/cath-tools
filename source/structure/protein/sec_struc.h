@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SEC_STRUC_H_INCLUDED
-#define SEC_STRUC_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_SEC_STRUC_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_SEC_STRUC_H
 
 #include "structure/geometry/coord.h"
 #include "structure/protein/sec_struc_type.h"
@@ -91,5 +91,5 @@ namespace cath {
 	geom::coord calculate_inter_sec_struc_vector(const sec_struc &,
 	                                             const sec_struc &,
 	                                             const sec_struc &);
-}
+} // namespace cath
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_OUTPUT_OPTIONS_BLOCK_H_INCLUDED
-#define ALIGNMENT_OUTPUT_OPTIONS_BLOCK_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS_ALIGNMENT_OUTPUT_OPTIONS_BLOCK_H
+#define _CATH_TOOLS_SOURCE_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS_ALIGNMENT_OUTPUT_OPTIONS_BLOCK_H
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -79,7 +79,7 @@ namespace cath {
 			bool outputs_to_stdout() const;
 		};
 
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

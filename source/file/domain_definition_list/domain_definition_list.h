@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DOMAIN_DEFINITION_LIST_H_INCLUDED
-#define DOMAIN_DEFINITION_LIST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_DOMAIN_DEFINITION_LIST_DOMAIN_DEFINITION_LIST_H
+#define _CATH_TOOLS_SOURCE_FILE_DOMAIN_DEFINITION_LIST_DOMAIN_DEFINITION_LIST_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -54,7 +54,7 @@ namespace cath {
 		pdb_list_str_vec_pair read_domains_from_pdbs(const domain_definition_list &,
 		                                             const opts::data_dirs_spec &);
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

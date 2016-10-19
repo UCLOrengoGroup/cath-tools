@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DYN_PROG_SCORE_SOURCE_H_INCLUDED
-#define DYN_PROG_SCORE_SOURCE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_DYN_PROG_SCORE_SOURCE_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_DYN_PROG_SCORE_SOURCE_H
 
 #include "common/temp_check_offset_1.h"
 #include "common/type_aliases.h"
@@ -89,7 +89,7 @@ namespace cath {
 			return arg_dyn_prog_score_source.get_score( arg_index_a__offset_1 - 1,
 			                                            arg_index_b__offset_1 - 1 );
 		}
-	}
+	} // namespace align
 
-}
+} // namespace cath
 #endif

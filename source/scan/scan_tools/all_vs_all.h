@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALL_VS_ALL_H_INCLUDED
-#define ALL_VS_ALL_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_SCAN_TOOLS_ALL_VS_ALL_H
+#define _CATH_TOOLS_SOURCE_SCAN_SCAN_TOOLS_ALL_VS_ALL_H
 
 #include "scan/scan_tools/scan_type.h"
 
@@ -44,7 +44,7 @@ namespace cath {
 				virtual ~all_vs_all() noexcept = default;
 			};
 
-	}
-}
+	} // namespace scan
+} // namespace cath
 
 #endif

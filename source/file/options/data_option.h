@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DATA_OPTION_H_INCLUDED
-#define DATA_OPTION_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_OPTIONS_DATA_OPTION_H
+#define _CATH_TOOLS_SOURCE_FILE_OPTIONS_DATA_OPTION_H
 
 #include <iosfwd>
 
@@ -36,8 +36,8 @@ namespace cath {
 
 			std::ostream & operator<<(std::ostream &,
 			                          const data_option &);
-		}
-	}
-}
+		} // namespace detail
+	} // namespace opts
+} // namespace cath
 
 #endif

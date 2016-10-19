@@ -18,16 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef IDENTITY_SUBSTITUTION_MATRIX_H_INCLUDED
-#define IDENTITY_SUBSTITUTION_MATRIX_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_SUBSTITUTION_MATRIX_IDENTITY_SUBSTITUTION_MATRIX_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_SUBSTITUTION_MATRIX_IDENTITY_SUBSTITUTION_MATRIX_H
 
 namespace cath { namespace score { class substitution_matrix; } }
 
 namespace cath {
 	namespace score {
 		substitution_matrix make_subs_matrix_identity();
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif
 

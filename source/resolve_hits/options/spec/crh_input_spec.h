@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CRH_INPUT_SPEC_H_INCLUDED
-#define CRH_INPUT_SPEC_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_INPUT_SPEC_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_INPUT_SPEC_H
 
 #include <boost/optional.hpp>
 
@@ -76,7 +76,7 @@ namespace cath {
 
 		str_opt get_invalid_description(const crh_input_spec &);
 
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

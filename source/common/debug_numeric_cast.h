@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DEBUG_NUMERIC_CAST_H_INCLUDED
-#define DEBUG_NUMERIC_CAST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_DEBUG_NUMERIC_CAST_H
+#define _CATH_TOOLS_SOURCE_COMMON_DEBUG_NUMERIC_CAST_H
 
 #include <boost/numeric/conversion/cast.hpp>
 
@@ -48,6 +48,6 @@ namespace cath {
 		);
 		return debug_unwarned_numeric_cast<Target, Source>( arg_value );
 	}
-}
+} // namespace cath
 
 #endif

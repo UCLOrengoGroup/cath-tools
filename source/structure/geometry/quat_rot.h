@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef QUAT_ROT_H_INCLUDED
-#define QUAT_ROT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_QUAT_ROT_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_QUAT_ROT_H
 
 #include <boost/math/quaternion.hpp>
 #include <boost/math/special_functions/sign.hpp>
@@ -421,7 +421,7 @@ namespace cath {
 //		using all_quat_rot_types = boost::mpl::vector<       double, long double>;
 //		using quat_rot = quat_rot_impl<double>;
 		using float_quat_rot = quat_rot_impl<float>;
-	}
-}
+	} // namespace geom
+} // namespace cath
 
 #endif

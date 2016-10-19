@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNED_PAIR_SCORE_LIST_FACTORY_H_INCLUDED
-#define ALIGNED_PAIR_SCORE_LIST_FACTORY_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_LIST_ALIGNED_PAIR_SCORE_LIST_FACTORY_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_LIST_ALIGNED_PAIR_SCORE_LIST_FACTORY_H
 
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/mpl/vector.hpp>
@@ -55,8 +55,8 @@ namespace cath {
 		aligned_pair_score_list make_one_of_each_type_aligned_pair_score_list();
 		aligned_pair_score_list make_default_aligned_pair_score_list();
 		aligned_pair_score_list make_old_ssap_aligned_pair_score_list();
-	}
+	} // namespace score
 
-}
+} // namespace cath
 
 #endif

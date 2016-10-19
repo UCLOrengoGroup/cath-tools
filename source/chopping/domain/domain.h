@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DOMAIN_H_INCLUDED
-#define DOMAIN_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_DOMAIN_DOMAIN_H
+#define _CATH_TOOLS_SOURCE_CHOPPING_DOMAIN_DOMAIN_H
 
 #include <boost/optional.hpp>
 
@@ -71,7 +71,7 @@ namespace cath {
 
 		residue_locating_opt get_residue_locating(const domain &);
 
-	}
-}
+	} // namespace chop
+} // namespace cath
 
 #endif

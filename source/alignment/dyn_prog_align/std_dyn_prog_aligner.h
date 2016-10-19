@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef STD_DYN_PROG_ALIGNER_H_INCLUDED
-#define STD_DYN_PROG_ALIGNER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_STD_DYN_PROG_ALIGNER_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_STD_DYN_PROG_ALIGNER_H
 
 #include "alignment/dyn_prog_align/detail/return_path_matrix.h"
 #include "alignment/dyn_prog_align/detail/score_accumulation_matrix.h"
@@ -53,6 +53,6 @@ namespace cath {
 		public:
 			virtual ~std_dyn_prog_aligner() noexcept = default;
 		};
-	}
-}
+	} // namespace align
+} // namespace cath
 #endif

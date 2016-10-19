@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_CONTEXT_H_INCLUDED
-#define ALIGNMENT_CONTEXT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_CONTEXT_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_CONTEXT_H
 
 
 #include "alignment/alignment.h"                  // for alignment
@@ -59,7 +59,7 @@ namespace cath {
 		sup::superposition_context make_superposition_context(const alignment_context &,
 		                                                      const sup::superposition &);
 
-	}
-}
+	} // namespace align
+} // namespace cath
 
 #endif

@@ -42,7 +42,7 @@ namespace cath {
 			cath_align_scorer::score(the_cath_score_align_options);
 		}
 	};
-}
+} // namespace cath
 
 /// \brief A main function for cath_score_align that just calls run_program() on a cath_score_align_program_exception_wrapper
 int main(int argc, char * argv[] ) {

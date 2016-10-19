@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef BOOLED_TO_STRING_H_INCLUDED
-#define BOOLED_TO_STRING_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_STRING_BOOLED_TO_STRING_H
+#define _CATH_TOOLS_SOURCE_COMMON_STRING_BOOLED_TO_STRING_H
 
 #include <sstream>
 #include <string>

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PATH_TYPE_ALIASES_H_INCLUDED
-#define PATH_TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_PATH_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_COMMON_PATH_TYPE_ALIASES_H
 
 #include <boost/filesystem/path.hpp>
 #include <boost/optional/optional_fwd.hpp>
@@ -33,6 +33,6 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	using path_opt = boost::optional<boost::filesystem::path>;
-}
+} // namespace cath
 
 #endif

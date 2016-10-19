@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCAN_QUERY_SET_H_INCLUDED
-#define SCAN_QUERY_SET_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_SCAN_QUERY_SET_H
+#define _CATH_TOOLS_SOURCE_SCAN_SCAN_QUERY_SET_H
 
 //#include <boost/log/trivial.hpp> // ***** TEMPORARY *****
 #include <boost/numeric/conversion/cast.hpp>
@@ -225,7 +225,7 @@ namespace cath {
 		scan_query_set<KPs...> make_scan_query_set(const scan_policy<KPs...> &&,
 		                                           const protein_list &) = delete; // Don't try to build a scan_query_set from a temporary scan_policy
 
-	}
-}
+	} // namespace scan
+} // namespace cath
 
 #endif

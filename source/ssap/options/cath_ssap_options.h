@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CATH_SSAP_OPTIONS_H_INCLUDED
-#define CATH_SSAP_OPTIONS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SSAP_OPTIONS_CATH_SSAP_OPTIONS_H
+#define _CATH_TOOLS_SOURCE_SSAP_OPTIONS_CATH_SSAP_OPTIONS_H
 
 #include "file/options/data_dirs_options_block.h"
 #include "options/executable/executable_options.h"
@@ -78,7 +78,7 @@ namespace cath {
 
 		std::string get_ssap_citation_help_string();
 		
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

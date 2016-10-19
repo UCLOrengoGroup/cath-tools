@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SEC_STRUC_QUERIER_H_INCLUDED
-#define SEC_STRUC_QUERIER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_ENTRY_QUERIER_SEC_STRUC_QUERIER_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_ENTRY_QUERIER_SEC_STRUC_QUERIER_H
 
 #include "structure/entry_querier/entry_querier.h"
 
@@ -92,6 +92,6 @@ namespace cath {
 		static constexpr size_t SEC_STRUC_MAX_DIST_SQ_CUTOFF = SEC_STRUC_A_VALUE / SEC_STRUC_MIN_SCORE_CUTOFF - SEC_STRUC_B_VALUE;
 	};
 
-}
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DATA_DIRS_OPTIONS_BLOCK_H_INCLUDED
-#define DATA_DIRS_OPTIONS_BLOCK_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_OPTIONS_DATA_DIRS_OPTIONS_BLOCK_H
+#define _CATH_TOOLS_SOURCE_FILE_OPTIONS_DATA_DIRS_OPTIONS_BLOCK_H
 
 #include "file/options/data_dirs_spec.h"
 #include "options/options_block/options_block.h"
@@ -60,7 +60,7 @@ namespace cath {
 
 			static const std::string PO_CATH_ROOT_DIR;
 		};
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

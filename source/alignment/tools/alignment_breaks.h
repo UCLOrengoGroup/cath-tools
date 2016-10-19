@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_BREAKS_H_INCLUDED
-#define ALIGNMENT_BREAKS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_TOOLS_ALIGNMENT_BREAKS_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_TOOLS_ALIGNMENT_BREAKS_H
 
 #include "common/type_aliases.h"
 
@@ -46,12 +46,12 @@ namespace cath {
 			break_pair_validity_and_future check_pair(const alignment &,
 			                                          const size_t &,
 			                                          const size_t &);
-		}
+		} // namespace detail
 
 		size_vec get_alignment_breaks(const alignment &);
 		size_size_pair_vec get_alignment_break_pairs(const alignment &);
 
-	}
-}
+	} // namespace align
+} // namespace cath
 
 #endif

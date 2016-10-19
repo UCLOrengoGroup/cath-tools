@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PROTEIN_IO_H_INCLUDED
-#define PROTEIN_IO_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_IO_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_IO_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -93,6 +93,6 @@ namespace cath {
 	void remove_domin_res(protein &,
 	                      const size_size_pair_vec &,
 	                      std::ostream &);
-}
+} // namespace cath
 
 #endif

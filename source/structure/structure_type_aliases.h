@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef STRUCTURE_TYPE_ALIASES_H_INCLUDED
-#define STRUCTURE_TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_STRUCTURE_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_STRUCTURE_TYPE_ALIASES_H
 
 #include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
 #include <boost/optional/optional_fwd.hpp>
@@ -51,7 +51,7 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			using vcie_match_criteria_vec = std::vector<vcie_match_criteria>;
-		}
+		} // namespace detail
 
 		namespace filter {
 			class filter_vs_full_score;
@@ -64,11 +64,11 @@ namespace cath {
 
 			/// \brief Type alias for filter_vs_full_score_vec's const_iterator
 			using filter_vs_full_score_vec_citr = filter_vs_full_score_vec::const_iterator;
-		}
+		} // namespace filter
 
 		/// \brief TODOCUMENT
 		using view_cache_vec = std::vector<view_cache>;
-	}
+	} // namespace index
 
 	namespace geom {
 		/// \brief TODOCUMENT
@@ -116,7 +116,7 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename T>
 		using quat_rot_vec = std::vector<quat_rot_impl<T>>;
-	}
+	} // namespace geom
 
 
 
@@ -193,6 +193,6 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	using amino_diff_vec_pair_vec = std::vector<amino_diff_vec_pair>;
-}
+} // namespace cath
 
 #endif

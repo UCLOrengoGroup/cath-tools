@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef FILTER_VS_FULL_SCORE_H_INCLUDED
-#define FILTER_VS_FULL_SCORE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_H
 
 #include <boost/operators.hpp>
 
@@ -75,8 +75,8 @@ namespace cath {
 			std::ostream & operator<<(std::ostream &,
 			                          const filter_vs_full_score &);
 
-		}
-	}
-}
+		} // namespace filter
+	} // namespace index
+} // namespace cath
 
 #endif

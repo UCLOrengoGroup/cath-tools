@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ADJACENT_ACCUMULATE_H_INCLUDED
-#define ADJACENT_ACCUMULATE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_ADJACENT_ACCUMULATE_H
+#define _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_ADJACENT_ACCUMULATE_H
 
 #include <boost/range/concepts.hpp>
 
@@ -76,6 +76,6 @@ namespace cath {
 		}
 
 
-	}
-}
+	} // namespace common
+} // namespace cath
 #endif

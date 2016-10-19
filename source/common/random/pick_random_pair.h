@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PICK_RANDOM_PAIR_H_INCLUDED
-#define PICK_RANDOM_PAIR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_RANDOM_PICK_RANDOM_PAIR_H
+#define _CATH_TOOLS_SOURCE_COMMON_RANDOM_PICK_RANDOM_PAIR_H
 
 #include "exception/invalid_argument_exception.h"
 
@@ -55,7 +55,7 @@ namespace cath {
 				value_b
 			};
 		}
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

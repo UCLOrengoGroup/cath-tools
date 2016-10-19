@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef REP_STRIDER_H_INCLUDED
-#define REP_STRIDER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_STRIDE_REP_STRIDER_H
+#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_STRIDE_REP_STRIDER_H
 
 #include <boost/operators.hpp>
 #include <boost/range/irange.hpp>
@@ -171,8 +171,8 @@ namespace cath {
 //			}
 
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace scan
+} // namespace cath
 
 #endif

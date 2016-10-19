@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef HTML_OSTREAM_ALIGNMENT_OUTPUTTER_H_INCLUDED
-#define HTML_OSTREAM_ALIGNMENT_OUTPUTTER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_OUTPUTTER_ALIGNMENT_OUTPUTTER_HTML_OSTREAM_ALIGNMENT_OUTPUTTER_H
+#define _CATH_TOOLS_SOURCE_OUTPUTTER_ALIGNMENT_OUTPUTTER_HTML_OSTREAM_ALIGNMENT_OUTPUTTER_H
 
 #include "common/clone/clone_ptr.h"
 #include "display/display_colourer/display_colourer.h"
@@ -48,7 +48,7 @@ namespace cath {
 
 		html_ostream_alignment_outputter make_html_ostream_alignment_outputter(const display_spec &);
 
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

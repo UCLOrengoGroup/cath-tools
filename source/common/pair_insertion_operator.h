@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PAIR_INSERTION_OPERATOR_H_INCLUDED
-#define PAIR_INSERTION_OPERATOR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_PAIR_INSERTION_OPERATOR_H
+#define _CATH_TOOLS_SOURCE_COMMON_PAIR_INSERTION_OPERATOR_H
 
 #include <iomanip>
 #include <iostream>
@@ -50,6 +50,6 @@ namespace std {
 		arg_os << temp_ss.str();
 		return arg_os;
 	}
-}
+} // namespace std
 
 #endif

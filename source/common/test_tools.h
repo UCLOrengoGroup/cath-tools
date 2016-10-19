@@ -21,8 +21,8 @@
 /// \todo Extend all of the below to also provide checking of less-than functionality and consistency
 ///       (using common implementations as far as possible)
 
-#ifndef TEST_TOOLS_H_INCLUDED
-#define TEST_TOOLS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_TEST_TOOLS_H
+#define _CATH_TOOLS_SOURCE_COMMON_TEST_TOOLS_H
 
 #include <boost/test/unit_test.hpp>
 
@@ -97,7 +97,7 @@ namespace cath {
 						detail::check_equality_and_inequality_are_consistent(    arg_value,      arg_value,   true );
 					}
 				};
-			}
+			} // namespace detail
 
 			/// \brief Boost Test that the equality/inequality operators are correct for comparing arg_value against itself
 			///        and, if copy-constructible, against a copy-constructed copy of itself (in both directions)
@@ -168,8 +168,8 @@ namespace cath {
 					}
 				}
 			}
-		}
-	}
-}
+		} // namespace test
+	} // namespace common
+} // namespace cath
 
 #endif

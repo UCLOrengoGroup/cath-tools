@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LAYOUT_VALUES_WITH_DESCS_H_INCLUDED
-#define LAYOUT_VALUES_WITH_DESCS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_PROGRAM_OPTIONS_LAYOUT_VALUES_WITH_DESCS_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_PROGRAM_OPTIONS_LAYOUT_VALUES_WITH_DESCS_H
 
 #include <boost/optional.hpp>
 
@@ -58,7 +58,7 @@ namespace cath {
 			);
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

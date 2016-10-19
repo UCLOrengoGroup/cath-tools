@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SEC_STRUC_PLANAR_ANGLES_H_INCLUDED
-#define SEC_STRUC_PLANAR_ANGLES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_SEC_STRUC_PLANAR_ANGLES_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_SEC_STRUC_PLANAR_ANGLES_H
 
 namespace cath {
 
@@ -51,6 +51,6 @@ namespace cath {
 		static const sec_struc_planar_angles NULL_SEC_STRUC_PLANAR_ANGLES;
 	};
 
-}
+} // namespace cath
 
 #endif

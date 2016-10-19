@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef HIT_BOUNDARY_OUTPUT_H_INCLUDED
-#define HIT_BOUNDARY_OUTPUT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_HIT_BOUNDARY_OUTPUT_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_HIT_BOUNDARY_OUTPUT_H
 
 namespace cath {
 	namespace rslv {
@@ -48,7 +48,7 @@ namespace cath {
 			return ( arg_hit_boundary_output == hit_boundary_output::TRIMMED );
 		}
 
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

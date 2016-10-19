@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SSAP_OSTREAM_ALIGNMENT_OUTPUTTER_H_INCLUDED
-#define SSAP_OSTREAM_ALIGNMENT_OUTPUTTER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_OUTPUTTER_ALIGNMENT_OUTPUTTER_SSAP_OSTREAM_ALIGNMENT_OUTPUTTER_H
+#define _CATH_TOOLS_SOURCE_OUTPUTTER_ALIGNMENT_OUTPUTTER_SSAP_OSTREAM_ALIGNMENT_OUTPUTTER_H
 
 #include "outputter/alignment_outputter/alignment_outputter.h"
 
@@ -38,7 +38,7 @@ namespace cath {
 			virtual ~ssap_ostream_alignment_outputter() noexcept = default;
 		};
 
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RES_PAIR_TO_PHI_KEYER_PART_H_INCLUDED
-#define RES_PAIR_TO_PHI_KEYER_PART_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_TO_PHI_KEYER_PART_H
+#define _CATH_TOOLS_SOURCE_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_TO_PHI_KEYER_PART_H
 
 //#include <boost/range/irange.hpp>
 //#include <boost/range/join.hpp>
@@ -63,12 +63,12 @@ namespace cath {
 				}
 			};
 
-		}
+		} // namespace detail
 
 		/// \brief Type alias for keyer_part for from-phi angle
 		using res_pair_to_phi_keyer_part = detail::res_pair_phi_psi_angle_keyer_part<detail::res_pair_to_phi_keyer_part_spec>;
 
-	}
-}
+	} // namespace scan
+} // namespace cath
 
 #endif

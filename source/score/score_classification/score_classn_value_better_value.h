@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCORE_CLASSN_VALUE_BETTER_VALUE_H_INCLUDED
-#define SCORE_CLASSN_VALUE_BETTER_VALUE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_BETTER_VALUE_H
+#define _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_BETTER_VALUE_H
 
 namespace cath { namespace score { class score_classn_value; } }
 
@@ -59,7 +59,7 @@ namespace cath {
 		double get_worst_possible_score(const score_classn_value_better_value &);
 		double get_worst_possible_score(const bool &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

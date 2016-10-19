@@ -66,5 +66,5 @@ namespace cath {
 		/// \brief TODOCUMENT
 		BOOST_GLOBAL_FIXTURE( prepare_for_test_global_fixture )
 
-	}
-}
+	} // namespace test
+} // namespace cath

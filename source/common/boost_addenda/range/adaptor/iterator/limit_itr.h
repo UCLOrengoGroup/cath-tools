@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIMIT_ITR_H_INCLUDED
-#define LIMIT_ITR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ITERATOR_LIMIT_ITR_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ITERATOR_LIMIT_ITR_H
 
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -46,7 +46,7 @@ namespace cath {
 			                                               range_category_t<RNG>, // CategoryOrTraversal
 			                                               range_reference_t<RNG> // Reference
 			                                               >;
-		}
+		} // namespace detail
 
 		/// \brief Iterator for wrapping a range and limiting it to, at most, n elements
 		///        (but without requiring random_access as sliced does)
@@ -213,7 +213,7 @@ namespace cath {
 		                              ) {
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

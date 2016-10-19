@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RES_PAIR_CORE_FUNCTIONS_H_INCLUDED
-#define RES_PAIR_CORE_FUNCTIONS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_RES_PAIR_FUNCTIONS_RES_PAIR_CORE_FUNCTIONS_H
+#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_RES_PAIR_FUNCTIONS_RES_PAIR_CORE_FUNCTIONS_H
 
 #include <boost/geometry/algorithms/comparable_distance.hpp>
 
@@ -134,8 +134,8 @@ namespace cath {
 				);
 			}
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace scan
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef TALLY_RESIDUE_NAMES_H_INCLUDED
-#define TALLY_RESIDUE_NAMES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_DSSP_WOLF_TALLY_RESIDUE_NAMES_H
+#define _CATH_TOOLS_SOURCE_FILE_DSSP_WOLF_TALLY_RESIDUE_NAMES_H
 
 #include "common/type_aliases.h"
 #include "structure/structure_type_aliases.h"
@@ -37,7 +37,7 @@ namespace cath {
 		                                           const str_vec &,
 		                                           const bool &,
 		                                           const bool & = true);
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

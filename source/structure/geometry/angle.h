@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ANGLE_H_INCLUDED
-#define ANGLE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_ANGLE_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_ANGLE_H
 
 #include <boost/math/constants/constants.hpp>
 #include <boost/operators.hpp>
@@ -426,7 +426,7 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		using doub_angle  = angle<double>;
-	}
-}
+	} // namespace geom
+} // namespace cath
 
 #endif

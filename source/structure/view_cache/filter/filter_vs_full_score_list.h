@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef FILTER_VS_FULL_SCORE_LIST_H_INCLUDED
-#define FILTER_VS_FULL_SCORE_LIST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_LIST_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_LIST_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -116,8 +116,8 @@ namespace cath {
 			void gnuplot_classsn_stat_for_recall(const score::doub_true_false_pos_neg_pair_vec &,
 			                                     const boost::filesystem::path &,
 			                                     const score::classn_stat &);
-		}
-	}
-}
+		} // namespace filter
+	} // namespace index
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PROTEIN_LIST_LOADER_H_INCLUDED
-#define PROTEIN_LIST_LOADER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_LOADER_PROTEIN_LIST_LOADER_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_LOADER_PROTEIN_LIST_LOADER_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -57,6 +57,6 @@ namespace cath {
 
 		std::pair<protein_list, hrc_duration> load_proteins(std::ostream &) const;
 	};
-}
+} // namespace cath
 
 #endif

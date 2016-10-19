@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_ROW_H_INCLUDED
-#define ALIGNMENT_ROW_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_ROW_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_ROW_H
 
 #include "alignment/align_type_aliases.h"
 #include "common/type_aliases.h"
@@ -115,7 +115,7 @@ namespace cath {
 		                                          const size_t &);
 
 		aln_posn_opt_vec get_has_posns_and_posns(const alignment_row &);
-	}
-}
+	} // namespace align
+} // namespace cath
 
 #endif

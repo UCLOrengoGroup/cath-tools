@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ENV_VAR_OPTION_NAME_HANDLER_H_INCLUDED
-#define ENV_VAR_OPTION_NAME_HANDLER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_OPTIONS_EXECUTABLE_ENV_VAR_OPTION_NAME_HANDLER_H
+#define _CATH_TOOLS_SOURCE_OPTIONS_EXECUTABLE_ENV_VAR_OPTION_NAME_HANDLER_H
 
 #include <boost/program_options.hpp>
 
@@ -57,7 +57,7 @@ namespace cath {
 
 		std::string environment_variable_prefix_of_program_name(const std::string &);
 		
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

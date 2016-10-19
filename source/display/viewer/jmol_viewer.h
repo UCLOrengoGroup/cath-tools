@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef JMOL_VIEWER_H_INCLUDED
-#define JMOL_VIEWER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_JMOL_VIEWER_H
+#define _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_JMOL_VIEWER_H
 
 #include "display/viewer/rasmol_style_viewer.h"
 
@@ -53,6 +53,6 @@ namespace cath {
 		virtual ~jmol_viewer() noexcept = default;
 	};
 
-}
+} // namespace cath
 
 #endif

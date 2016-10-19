@@ -1,8 +1,8 @@
 /// \file
 /// \brief The rbf_model class header
 
-#ifndef RBF_MODEL_H_INCLUDED
-#define RBF_MODEL_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_RBF_MODEL_H
+#define _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_RBF_MODEL_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -80,8 +80,8 @@ namespace cath {
 		                 const file::prc_scores_entry &,
 		                 const file::ssap_scores_entry &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif
 

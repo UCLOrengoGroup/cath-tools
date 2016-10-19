@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CROSS_ITR_H_INCLUDED
-#define CROSS_ITR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_UTILITY_ITERATOR_CROSS_ITR_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_UTILITY_ITERATOR_CROSS_ITR_H
 
 #include <boost/iterator/iterator_facade.hpp>
 
@@ -127,7 +127,7 @@ namespace cath {
 				}
 			}
 
-		}
+		} // namespace detail
 
 		/// \brief TODOCUMENT
 		///
@@ -273,7 +273,7 @@ namespace cath {
 				}
 			};
 
-		}
+		} // namespace detail
 
 		/// \brief Ctor from a tuple of ranges
 		template <typename... RNGs>
@@ -374,7 +374,7 @@ namespace cath {
 			};
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

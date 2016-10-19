@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_ACTION_H_INCLUDED
-#define ALIGNMENT_ACTION_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_ACTION_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_ACTION_H
 
 #include "alignment/align_type_aliases.h"
 
@@ -42,7 +42,7 @@ namespace cath {
 			void append_glued_row(alignment &,
 			                      const aln_ent_ind_tup_pair &,
 			                      const glued_row_type &);
-		}
+		} // namespace detail
 
 		alignment glue_two_alignments(const alignment &,
 		                              const size_t &,
@@ -52,7 +52,7 @@ namespace cath {
 		alignment build_alignment_from_parts(const size_size_alignment_tuple_vec &,
 		                                     const protein_list &);
 
-	}
-}
+	} // namespace align
+} // namespace cath
 
 #endif

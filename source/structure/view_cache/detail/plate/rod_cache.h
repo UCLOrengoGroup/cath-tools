@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROD_CACHE_H_INCLUDED
-#define ROD_CACHE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_DETAIL_PLATE_ROD_CACHE_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_DETAIL_PLATE_ROD_CACHE_H
 
 #include "common/type_aliases.h"
 #include "exception/invalid_argument_exception.h"
@@ -79,7 +79,7 @@ namespace cath {
 					return std::max( arg_size_a - 1, arg_rod_index ) + arg_notch_index - ( arg_size_a - 1 );
 				}
 
-			}
+			} // namespace detail
 
 			/// \brief Get the rod of the entry in the matrix of specified dimensions with the specified indices
 			///
@@ -264,8 +264,8 @@ namespace cath {
 				return std::make_pair( index_a, index_b );
 			}
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace index
+} // namespace cath
 
 #endif

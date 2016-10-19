@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CRH_FILTER_SPEC_H_INCLUDED
-#define CRH_FILTER_SPEC_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_FILTER_SPEC_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_FILTER_SPEC_H
 
 #include <boost/optional.hpp>
 #include <boost/utility/string_ref.hpp>
@@ -135,7 +135,7 @@ namespace cath {
 		}
 		
 
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SUPERPOSITION_OUTPUTTER_LIST_H_INCLUDED
-#define SUPERPOSITION_OUTPUTTER_LIST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_OUTPUTTER_SUPERPOSITION_OUTPUTTER_SUPERPOSITION_OUTPUTTER_LIST_H
+#define _CATH_TOOLS_SOURCE_OUTPUTTER_SUPERPOSITION_OUTPUTTER_SUPERPOSITION_OUTPUTTER_LIST_H
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -53,7 +53,7 @@ namespace cath {
 		                                      std::ostream &);
 
 		bool any_superposition_outputters_involve_display_spec(const superposition_outputter_list &);
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

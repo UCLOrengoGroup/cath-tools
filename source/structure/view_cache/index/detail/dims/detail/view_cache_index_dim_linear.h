@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef VIEW_CACHE_INDEX_DIM_LINEAR_H_INCLUDED
-#define VIEW_CACHE_INDEX_DIM_LINEAR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_DETAIL_VIEW_CACHE_INDEX_DIM_LINEAR_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_DETAIL_VIEW_CACHE_INDEX_DIM_LINEAR_H
 
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/range/begin.hpp>
@@ -104,7 +104,7 @@ namespace cath {
 							( arg_search_begin >= arg_search_end ) ? clamped_cell_index_of_value_in_current( arg_cell_width, arg_start_offset, arg_num_cells, arg_search_end + arg_cell_width ) : 0_z
 						);
 					}
-				}
+				} // namespace detail
 
 				/// \brief Perform indexing for a single layer based on a single linear, continuous dimension as specified in T
 				///
@@ -392,9 +392,9 @@ namespace cath {
 					}
 				}
 
-			}
-		}
-	}
-}
+			} // namespace detail
+		} // namespace detail
+	} // namespace index
+} // namespace cath
 
 #endif

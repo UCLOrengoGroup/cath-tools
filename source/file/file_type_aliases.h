@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef FILE_TYPE_ALIASES_H_INCLUDED
-#define FILE_TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_FILE_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_FILE_FILE_TYPE_ALIASES_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -91,7 +91,7 @@ namespace cath {
 
 		/// \brief Type alias for a tuple of pdb_atom_parse_status, residuestring_name and amino_acid
 		using status_string_aa_tuple = std::tuple<pdb_atom_parse_status, std::string, amino_acid>;
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

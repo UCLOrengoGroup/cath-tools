@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CLONE_PTR_H_INCLUDED
-#define CLONE_PTR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_CLONE_CLONE_PTR_H
+#define _CATH_TOOLS_SOURCE_COMMON_CLONE_CLONE_PTR_H
 
 #include <boost/serialization/nvp.hpp> // not needed for compilation but kept as is used in this header's templates
 #include <boost/serialization/unique_ptr.hpp> // not needed for compilation but kept as is used in this header's templates
@@ -37,8 +37,8 @@
 namespace boost {
 	namespace serialization {
 		class access;
-	}
-}
+	} // namespace serialization
+} // namespace boost
 
 namespace cath {
 	namespace common {
@@ -157,7 +157,7 @@ namespace cath {
 		                       ) {
 			return arg_clone_ptr_a.get() == arg_clone_ptr_b.get();
 		}
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

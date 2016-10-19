@@ -107,7 +107,7 @@ namespace cath {
 			}
 		}
 	};
-}
+} // namespace cath
 
 /// \brief A main function for cath_check_pdb that just calls run_program() on a cath_check_pdb_program_exception_wrapper
 int main(int argc, char * argv[] ) {

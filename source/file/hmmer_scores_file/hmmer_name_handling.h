@@ -1,8 +1,8 @@
 /// \file
 /// \brief The hmmer_name_handling class header
 
-#ifndef HMMER_NAME_HANDLING_H_INCLUDED
-#define HMMER_NAME_HANDLING_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_HMMER_SCORES_FILE_HMMER_NAME_HANDLING_H
+#define _CATH_TOOLS_SOURCE_FILE_HMMER_SCORES_FILE_HMMER_NAME_HANDLING_H
 
 namespace cath {
 	namespace file {
@@ -13,7 +13,7 @@ namespace cath {
 			LEAVE  ///< TODOCUMENT
 		};
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

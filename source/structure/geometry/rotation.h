@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROTATION_H_INCLUDED
-#define ROTATION_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_ROTATION_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_ROTATION_H
 
 #include <boost/algorithm/clamp.hpp>
 #include <boost/core/ignore_unused.hpp>
@@ -178,7 +178,7 @@ namespace cath {
 
 			boost::property_tree::ptree make_ptree_of_row(const rotation &,
 			                                              const size_t &);
-		}
+		} // namespace detail
 
 		rotation rotation_from_ptree(const boost::property_tree::ptree &);
 
@@ -710,7 +710,7 @@ namespace cath {
 			return new_coord;
 		}
 
-	}
-}
+	} // namespace geom
+} // namespace cath
 
 #endif

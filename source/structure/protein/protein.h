@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PROTEIN_H_INCLUDED
-#define PROTEIN_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_H
 
 #include <boost/lexical_cast.hpp>
 #include <boost/range/sub_range.hpp>
@@ -210,5 +210,5 @@ namespace cath {
 		return arg_protein.get_residue_ref_of_index(arg_index_offset_1 - 1);
 	}
 
-}
+} // namespace cath
 #endif

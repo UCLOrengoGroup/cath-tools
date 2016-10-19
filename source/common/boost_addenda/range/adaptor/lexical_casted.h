@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LEXICAL_CASTED_H_INCLUDED
-#define LEXICAL_CASTED_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_LEXICAL_CASTED_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_LEXICAL_CASTED_H
 
 #include "common/boost_addenda/range/adaptor/range/lexical_casted_range.h"
 
@@ -46,7 +46,7 @@ namespace cath {
 			return detail::lexical_casted_range<T, const ForwardRng>( arg_range );
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

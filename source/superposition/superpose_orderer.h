@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SUPERPOSE_ORDERER_H_INCLUDED
-#define SUPERPOSE_ORDERER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SUPERPOSITION_SUPERPOSE_ORDERER_H
+#define _CATH_TOOLS_SOURCE_SUPERPOSITION_SUPERPOSE_ORDERER_H
 
 #include "common/type_aliases.h"
 
@@ -79,7 +79,7 @@ namespace cath {
 		superpose_orderer make_superpose_orderer(const size_size_pair_doub_map &);
 
 		size_size_pair_vec get_spanning_tree_ordered_by_desc_score(const size_size_pair_doub_map &);
-	}
-}
+	} // namespace sup
+} // namespace cath
 
 #endif

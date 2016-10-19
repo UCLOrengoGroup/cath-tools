@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef OVERLAP_TYPE_H_INCLUDED
-#define OVERLAP_TYPE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_TYPE_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_TYPE_H
 
 #include "common/algorithm/constexpr_is_uniq.h"
 #include "score/length_getter/length_getter_enum.h"
@@ -44,7 +44,7 @@ namespace cath {
 
 		static_assert( cath::common::constexpr_is_uniq( all_overlap_types ), "all_overlap_types should not contain any repeated entries" );
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

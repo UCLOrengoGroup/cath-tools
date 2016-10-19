@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CHOPPING_TYPE_ALIASES_H_INCLUDED
-#define CHOPPING_TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_TYPE_ALIASES_H
 
 #include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
 #include <boost/optional/optional_fwd.hpp>
@@ -47,7 +47,7 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		using residue_locating_opt = boost::optional<residue_locating>;
-	}
-}
+	} // namespace chop
+} // namespace cath
 
 #endif

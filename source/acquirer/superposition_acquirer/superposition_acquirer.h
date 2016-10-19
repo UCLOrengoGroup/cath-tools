@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SUPERPOSITION_ACQUIRER_H_INCLUDED
-#define SUPERPOSITION_ACQUIRER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ACQUIRER_SUPERPOSITION_ACQUIRER_SUPERPOSITION_ACQUIRER_H
+#define _CATH_TOOLS_SOURCE_ACQUIRER_SUPERPOSITION_ACQUIRER_SUPERPOSITION_ACQUIRER_H
 
 #include <boost/tuple/tuple.hpp>
 
@@ -46,7 +46,7 @@ namespace cath {
 			static constexpr double PERCENT_TOLERANCE_FOR_EQUAL_RMSDS = 0.0001;
 		};
 
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

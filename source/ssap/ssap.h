@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SSAP_H_INCLUDED
-#define SSAP_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SSAP_SSAP_H
+#define _CATH_TOOLS_SOURCE_SSAP_SSAP_H
 
 #include <boost/filesystem.hpp>
 
@@ -176,6 +176,6 @@ namespace cath {
 	                                                            const boost::filesystem::path &arg_local_dir = boost::filesystem::current_path(),
 	                                                            const bool &arg_only_look_locally = false);
 
-}
+} // namespace cath
 
 #endif

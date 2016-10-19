@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef BATCH_FUNCTIONS_H_INCLUDED
-#define BATCH_FUNCTIONS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BATCH_BATCH_FUNCTIONS_H
+#define _CATH_TOOLS_SOURCE_COMMON_BATCH_BATCH_FUNCTIONS_H
 
 #include "common/batch/broken_batch_tol.h"
 #include "common/type_aliases.h"
@@ -60,7 +60,7 @@ namespace cath {
 		                                    const size_t &,
 		                                    const broken_batch_tol &);
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

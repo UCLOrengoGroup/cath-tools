@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SAS_SCORE_H_INCLUDED
-#define SAS_SCORE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_SAS_SCORE_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_SAS_SCORE_H
 
 #include "score/aligned_pair_score/aligned_pair_score.h"
 #include "score/aligned_pair_score/length_score.h"
@@ -79,6 +79,6 @@ namespace cath {
 		bool operator<(const sas_score &,
 		               const sas_score &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 #endif

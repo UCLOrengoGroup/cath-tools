@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCAN_POLICY_H_INCLUDED
-#define SCAN_POLICY_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_SCAN_POLICY_H
+#define _CATH_TOOLS_SOURCE_SCAN_SCAN_POLICY_H
 
 #include "scan/quad_criteria.h"
 #include "scan/res_pair_keyer/res_pair_keyer.h"
@@ -100,7 +100,7 @@ namespace cath {
 			};
 		}
 
-	}
-}
+	} // namespace scan
+} // namespace cath
 
 #endif

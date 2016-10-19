@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CRH_OPTIONS_H_INCLUDED
-#define CRH_OPTIONS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_H
 
 #include "options/executable/executable_options.h"
 #include "options/options_block/detail_help_options_block.h"
@@ -88,7 +88,7 @@ namespace cath {
 
 		std::string get_crh_raw_format_help_string();
 		std::string get_crh_cath_rules_help_string();
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

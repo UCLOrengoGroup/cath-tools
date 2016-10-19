@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef QUAD_CRITERIA_ARE_MET_BY_H_INCLUDED
-#define QUAD_CRITERIA_ARE_MET_BY_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_QUAD_CRITERIA_ARE_MET_BY_H
+#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_QUAD_CRITERIA_ARE_MET_BY_H
 
 #include "scan/detail/res_pair/functions/res_index_pair_functions.h"
 #include "scan/detail/res_pair/functions/res_pair_core_functions.h"
@@ -192,8 +192,8 @@ namespace cath {
 				}
 				return true;
 			}
-		}
-	}
-}
+		} // namespace detail
+	} // namespace scan
+} // namespace cath
 
 #endif

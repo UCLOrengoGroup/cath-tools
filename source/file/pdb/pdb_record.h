@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PDB_RECORD_H_INCLUDED
-#define PDB_RECORD_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_PDB_PDB_RECORD_H
+#define _CATH_TOOLS_SOURCE_FILE_PDB_PDB_RECORD_H
 
 #include <boost/range/sub_range.hpp>
 
@@ -106,7 +106,7 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const pdb_record &);
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

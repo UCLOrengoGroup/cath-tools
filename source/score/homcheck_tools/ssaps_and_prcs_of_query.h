@@ -1,8 +1,8 @@
 /// \file
 /// \brief The ssaps_and_prcs_of_query class header
 
-#ifndef SSAPS_AND_PRCS_OF_QUERY_H_INCLUDED
-#define SSAPS_AND_PRCS_OF_QUERY_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_HOMCHECK_TOOLS_SSAPS_AND_PRCS_OF_QUERY_H
+#define _CATH_TOOLS_SOURCE_SCORE_HOMCHECK_TOOLS_SSAPS_AND_PRCS_OF_QUERY_H
 
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/sort.hpp>
@@ -79,7 +79,7 @@ namespace cath {
 		ssaps_and_prcs_of_query make_ssaps_and_prcs_of_query(const file::ssap_scores_entry_vec &,
 		                                                     const file::prc_scores_entry_vec &);
 
-	}
-}
+	} // namespace homcheck
+} // namespace cath
 
 #endif

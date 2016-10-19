@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CLASSN_STAT_PAIR_SERIES_H_INCLUDED
-#define CLASSN_STAT_PAIR_SERIES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PAIR_SERIES_H
+#define _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PAIR_SERIES_H
 
 #include "score/true_pos_false_neg/classn_stat.h"
 
@@ -60,7 +60,7 @@ namespace cath {
 		};
 
 		double area_under_curve(const classn_stat_pair_series &);
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

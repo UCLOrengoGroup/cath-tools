@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DISPLAY_COLOUR_GRADIENT_H_INCLUDED
-#define DISPLAY_COLOUR_GRADIENT_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_DISPLAY_COLOUR_DISPLAY_COLOUR_GRADIENT_H
+#define _CATH_TOOLS_SOURCE_DISPLAY_COLOUR_DISPLAY_COLOUR_GRADIENT_H
 
 #include "display_colour/display_colour.h"
 #include "display_colour/display_colour_type_aliases.h"
@@ -57,6 +57,6 @@ namespace cath {
 	display_colour_gradient make_default_light_colour_gradient();
 	display_colour_gradient make_default_colour_gradient();
 	display_colour_gradient make_default_dark_colour_gradient();
-}
+} // namespace cath
 
 #endif

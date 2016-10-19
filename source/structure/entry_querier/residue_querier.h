@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RESIDUE_QUERIER_H_INCLUDED
-#define RESIDUE_QUERIER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_ENTRY_QUERIER_RESIDUE_QUERIER_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_ENTRY_QUERIER_RESIDUE_QUERIER_H
 
 #include "structure/entry_querier/entry_querier.h"
 
@@ -97,6 +97,6 @@ namespace cath {
 		static constexpr float_score_type RESIDUE_MAX_DIST_SQ_CUTOFF = RESIDUE_A_VALUE / RESIDUE_MIN_SCORE_CUTOFF - RESIDUE_B_VALUE;
 	};
 
-}
+} // namespace cath
 
 #endif

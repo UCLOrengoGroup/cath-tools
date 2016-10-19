@@ -1,8 +1,8 @@
 /// \file
 /// \brief The superfamily_of_domain class header
 
-#ifndef SUPERFAMILY_OF_DOMAIN_H_INCLUDED
-#define SUPERFAMILY_OF_DOMAIN_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_HOMCHECK_TOOLS_SUPERFAMILY_OF_DOMAIN_H
+#define _CATH_TOOLS_SOURCE_SCORE_HOMCHECK_TOOLS_SUPERFAMILY_OF_DOMAIN_H
 
 #include <boost/filesystem/path.hpp>
 
@@ -40,7 +40,7 @@ namespace cath {
 				}
 			};
 			std::string fold_of_superfamily_id(const std::string &);
-		}
+		} // namespace detail
 
 		/// \brief A lookup from domain_id to the superfamily in which that domain is currently classified
 		///        (or will be classified after actions suggested by this code)
@@ -80,7 +80,7 @@ namespace cath {
 		superfamily_of_domain parse_superfamily_of_domain(const boost::filesystem::path &);
 		superfamily_of_domain parse_superfamily_of_domain(const std::string &);
 
-	}
-}
+	} // namespace homcheck
+} // namespace cath
 
 #endif

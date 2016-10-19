@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef REGION_READER_H_INCLUDED
-#define REGION_READER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_IO_REGION_IO_REGION_READER_REGION_READER_H
+#define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_IO_REGION_IO_REGION_READER_REGION_READER_H
 
 #include <string>
 
@@ -39,7 +39,7 @@ namespace cath {
 			region read_region(const std::string &) const;
 		};
 
-	}
-}
+	} // namespace chop
+} // namespace cath
 
 #endif

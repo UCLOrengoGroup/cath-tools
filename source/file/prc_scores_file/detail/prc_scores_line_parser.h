@@ -1,8 +1,8 @@
 /// \file
 /// \brief The prc_scores_line_parser class header
 
-#ifndef PRC_SCORES_LINE_PARSER_H_INCLUDED
-#define PRC_SCORES_LINE_PARSER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_PRC_SCORES_FILE_DETAIL_PRC_SCORES_LINE_PARSER_H
+#define _CATH_TOOLS_SOURCE_FILE_PRC_SCORES_FILE_DETAIL_PRC_SCORES_LINE_PARSER_H
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
@@ -74,7 +74,7 @@ namespace cath {
 				};
 		}
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

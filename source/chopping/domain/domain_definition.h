@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DOMAIN_DEFINITION_H_INCLUDED
-#define DOMAIN_DEFINITION_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_DOMAIN_DOMAIN_DEFINITION_H
+#define _CATH_TOOLS_SOURCE_CHOPPING_DOMAIN_DOMAIN_DEFINITION_H
 
 #include "chopping/domain/domain.h"
 
@@ -49,7 +49,7 @@ namespace cath {
 		file::pdb read_domain_from_pdb(const domain_definition &,
 		                               const opts::data_dirs_spec &);
 
-	}
-}
+	} // namespace chop
+} // namespace cath
 
 #endif

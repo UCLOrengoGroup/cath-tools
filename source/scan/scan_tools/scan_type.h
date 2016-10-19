@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCAN_TYPE_H_INCLUDED
-#define SCAN_TYPE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_SCAN_TOOLS_SCAN_TYPE_H
+#define _CATH_TOOLS_SOURCE_SCAN_SCAN_TOOLS_SCAN_TYPE_H
 
 namespace cath { class protein_list; }
 namespace cath { namespace scan { class record_scores_scan_action; } }
@@ -48,7 +48,7 @@ namespace cath {
 				                                                                const protein_list &);
 			};
 
-	}
-}
+	} // namespace scan
+} // namespace cath
 
 #endif

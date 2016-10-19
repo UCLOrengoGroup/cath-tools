@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DSSP_FILE_IO_H_INCLUDED
-#define DSSP_FILE_IO_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_DSSP_WOLF_DSSP_FILE_IO_H
+#define _CATH_TOOLS_SOURCE_FILE_DSSP_WOLF_DSSP_FILE_IO_H
 
 #include <boost/filesystem/path.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -40,7 +40,7 @@ namespace cath {
 		using size_chain_residue_tuple = std::tuple<size_t, chain_label, residue>;
 		size_chain_residue_tuple parse_dssp_residue_line(const std::string &);
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

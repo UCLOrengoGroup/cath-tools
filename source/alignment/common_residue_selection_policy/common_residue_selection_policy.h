@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef COMMON_RESIDUE_SELECTION_POLICY_H_INCLUDED
-#define COMMON_RESIDUE_SELECTION_POLICY_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY_COMMON_RESIDUE_SELECTION_POLICY_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY_COMMON_RESIDUE_SELECTION_POLICY_H
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -91,7 +91,7 @@ namespace cath {
 		                                                ) {
 			return arg_common_residue_selection_policy.clone().release();
 		}
-	}
-}
+	} // namespace align
+} // namespace cath
 
 #endif

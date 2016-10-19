@@ -1,8 +1,8 @@
 /// \file
 /// \brief The ssap_and_prc class header
 
-#ifndef SSAP_AND_PRC_H_INCLUDED
-#define SSAP_AND_PRC_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_HOMCHECK_TOOLS_SSAP_AND_PRC_H
+#define _CATH_TOOLS_SOURCE_SCORE_HOMCHECK_TOOLS_SSAP_AND_PRC_H
 
 #include <boost/optional.hpp>
 
@@ -76,7 +76,7 @@ namespace cath {
 		std::string to_string(const ssap_and_prc &);
 		std::ostream & operator<<(std::ostream &,
 		                          const ssap_and_prc &);
-	}
-}
+	} // namespace homcheck
+} // namespace cath
 
 #endif

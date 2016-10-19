@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_SCAFFOLD_H_INCLUDED
-#define ALIGNMENT_SCAFFOLD_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_IO_ALIGN_SCAFFOLD_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_IO_ALIGN_SCAFFOLD_H
 
 #include "alignment/align_type_aliases.h"
 #include "common/type_aliases.h"
@@ -36,13 +36,13 @@ namespace cath {
 			std::string scaffold_line_of_alignment_entry(const alignment &,
 			                                             const size_t &);
 
-		}
+		} // namespace detail
 
 		alignment alignment_of_scaffold_lines(const str_vec &);
 		alignment alignment_of_scaffold(const std::string &);
 		str_vec scaffold_lines_of_alignment(const alignment &);
 		std::string scaffold_of_alignment(const alignment &);
-	}
-}
+	} // namespace align
+} // namespace cath
 
 #endif

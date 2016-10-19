@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PROTEIN_FILE_COMBN_H_INCLUDED
-#define PROTEIN_FILE_COMBN_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_FILE_COMBN_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_FILE_COMBN_H
 
 #include <iosfwd>
 #include <memory>
@@ -46,6 +46,6 @@ namespace cath {
 
     std::ostream & operator<<(std::ostream &,
                               const protein_file_combn &);
-}
+} // namespace cath
 
 #endif

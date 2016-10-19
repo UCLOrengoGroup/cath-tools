@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCORE_TYPE_ALIASES_H_INCLUDED
-#define SCORE_TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_SCORE_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_SCORE_SCORE_TYPE_ALIASES_H
 
 #include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
 #include <boost/optional/optional_fwd.hpp>
@@ -48,8 +48,8 @@ namespace cath {
 
 		/// \brief Type alias for an optional reference_wrapper to a const ssap_and_prc
 		using ssap_and_prc_cref_opt = boost::optional<ssap_and_prc_cref>;
-	}
-}
+	} // namespace homcheck
+} // namespace cath
 
 namespace cath {
 	namespace score {
@@ -156,10 +156,10 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			using score_common_coord_handler_vec = std::vector<score_common_coord_handler>;
-		}
+		} // namespace detail
 
 		/// \brief TODOCUMENT
 		using value_list_scaling_vec = std::vector<value_list_scaling>;
-	}
-}
+	} // namespace score
+} // namespace cath
 #endif

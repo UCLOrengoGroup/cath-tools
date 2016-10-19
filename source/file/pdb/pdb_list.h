@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PDB_LIST_H_INCLUDED
-#define PDB_LIST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_PDB_PDB_LIST_H
+#define _CATH_TOOLS_SOURCE_FILE_PDB_PDB_LIST_H
 
 #include <boost/operators.hpp>
 #include <boost/range.hpp>
@@ -82,7 +82,7 @@ namespace cath {
 		residue_name_vec_vec get_residue_names_of_first_chains__backbone_unchecked(const pdb_list &);
 
 		residue_name_vec_vec get_backbone_complete_residue_names_of_first_chains(const pdb_list &);
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

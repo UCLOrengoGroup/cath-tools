@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNED_PAIR_SCORE_LIST_H_INCLUDED
-#define ALIGNED_PAIR_SCORE_LIST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_LIST_ALIGNED_PAIR_SCORE_LIST_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_LIST_ALIGNED_PAIR_SCORE_LIST_H
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -67,7 +67,7 @@ namespace cath {
 		str_vec get_long_names(const aligned_pair_score_list &);
 		str_vec get_descriptions(const aligned_pair_score_list &);
 		str_vec get_references(const aligned_pair_score_list &);
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

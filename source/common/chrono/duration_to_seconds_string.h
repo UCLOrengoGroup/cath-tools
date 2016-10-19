@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DURATION_TO_SECONDS_STRING_H_INCLUDED
-#define DURATION_TO_SECONDS_STRING_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_CHRONO_DURATION_TO_SECONDS_STRING_H
+#define _CATH_TOOLS_SOURCE_COMMON_CHRONO_DURATION_TO_SECONDS_STRING_H
 
 #include <chrono>
 #include <string>
@@ -61,8 +61,8 @@ namespace cath {
 			return std::to_string( durn_to_rate_per_second( arg_duration ) ) + " / second";
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif
 

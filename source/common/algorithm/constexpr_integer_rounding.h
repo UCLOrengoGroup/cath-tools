@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CONSTEXPR_INTEGER_ROUNDING_H_INCLUDED
-#define CONSTEXPR_INTEGER_ROUNDING_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_CONSTEXPR_INTEGER_ROUNDING_H
+#define _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_CONSTEXPR_INTEGER_ROUNDING_H
 
 #include <type_traits>
 	
@@ -55,7 +55,7 @@ namespace cath {
 			return ( a < 0 || b < 0 ) ? throw("round_up_mod() currently only implemented for non-negative values")
 			                          : b * round_div_up( a, b );
 		}
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

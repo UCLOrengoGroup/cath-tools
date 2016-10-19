@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef EXECUTABLE_OPTIONS_H_INCLUDED
-#define EXECUTABLE_OPTIONS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_OPTIONS_EXECUTABLE_EXECUTABLE_OPTIONS_H
+#define _CATH_TOOLS_SOURCE_OPTIONS_EXECUTABLE_EXECUTABLE_OPTIONS_H
 
 #include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
@@ -174,7 +174,7 @@ namespace cath {
 				my_argc_argv_faker.get_argv()
 			);
 		}
-	}
-}
+	} // namespace opts
+} // namespace cath
 
 #endif

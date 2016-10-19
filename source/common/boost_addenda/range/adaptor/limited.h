@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIMITED_H_INCLUDED
-#define LIMITED_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_LIMITED_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_LIMITED_H
 
 #include <boost/core/ignore_unused.hpp>
 
@@ -52,9 +52,9 @@ namespace cath {
 					arg_holder.get_max_num_elements()
 				};
 			}
-		}
-	}
-}
+		} // namespace detail
+	} // namespace common
+} // namespace cath
 
 namespace cath {
 	namespace common {
@@ -70,9 +70,9 @@ namespace cath {
 				void ignore_unused_limited_function_b();
 				void ignore_unused_limited_function_a() { ignore_unused_limited_function_b(); boost::ignore_unused( limited ); }
 				void ignore_unused_limited_function_b() { ignore_unused_limited_function_a(); boost::ignore_unused( limited ); }
-			}
-		}
-	}
-}
+			} // namespace ignore_unused_detail
+		} // namespace
+	} // namespace common
+} // namespace cath
 
 #endif

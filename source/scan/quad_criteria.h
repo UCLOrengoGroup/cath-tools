@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef QUAD_CRITERIA_H_INCLUDED
-#define QUAD_CRITERIA_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_QUAD_CRITERIA_H
+#define _CATH_TOOLS_SOURCE_SCAN_QUAD_CRITERIA_H
 
 #include "scan/detail/scan_type_aliases.h"
 #include "scan/res_pair_index_dirn_criterion.h"
@@ -140,7 +140,7 @@ namespace cath {
 
 			std::ostream & operator<<(std::ostream &,
 			                          const quad_criteria &);
-	}
-}
+	} // namespace scan
+} // namespace cath
 
 #endif

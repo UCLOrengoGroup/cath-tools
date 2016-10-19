@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ALIGNMENT_COORD_EXTRACTOR_H_INCLUDED
-#define ALIGNMENT_COORD_EXTRACTOR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_COORD_EXTRACTOR_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_COORD_EXTRACTOR_H
 
 #include "alignment/alignment.h"
 #include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.h"
@@ -99,7 +99,7 @@ namespace cath {
 			                                                          const alignment::size_type            &arg_entry_index_1    = alignment::PAIR_A_IDX,
 			                                                          const alignment::size_type            &arg_entry_index_2    = alignment::PAIR_B_IDX);
 		};
-	}
-}
+	} // namespace align
+} // namespace cath
 
 #endif

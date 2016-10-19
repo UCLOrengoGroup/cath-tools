@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PDB_ATOM_PARSE_STATUS_H_INCLUDED
-#define PDB_ATOM_PARSE_STATUS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_FILE_PDB_PDB_ATOM_PARSE_STATUS_H
+#define _CATH_TOOLS_SOURCE_FILE_PDB_PDB_ATOM_PARSE_STATUS_H
 
 #include <iosfwd>
 
@@ -41,7 +41,7 @@ namespace cath {
 //		std::ostream & operator<<(std::ostream &,
 //		                          const pdb_atom_parse_status &);
 
-	}
-}
+	} // namespace file
+} // namespace cath
 
 #endif

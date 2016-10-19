@@ -23,8 +23,8 @@
 ///
 /// \todo Split this file into scan's public type aliases and detail type aliases
 
-#ifndef SCAN_TYPE_ALIASES_H_INCLUDED
-#define SCAN_TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_TYPE_ALIASES_H
 
 #include <boost/geometry/arithmetic/arithmetic.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
@@ -168,7 +168,7 @@ namespace cath {
 
 			/// \brief The default unsigned int type used for indices for from/to phi/psi angles
 			using key_angle_index_type  = uint8_t;
-		}
+		} // namespace detail
 
 		/// \brief TODOCUMENT
 		using info_value        = size_t;
@@ -187,7 +187,7 @@ namespace cath {
 
 		/// \brief Type alias for a vector of quad_criteria
 		using quad_criteria_vec = std::vector<quad_criteria>;
-	}
-}
+	} // namespace scan
+} // namespace cath
 
 #endif

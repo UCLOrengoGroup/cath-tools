@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CLASSN_STAT_PAIR_SERIES_LIST_H_INCLUDED
-#define CLASSN_STAT_PAIR_SERIES_LIST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PAIR_SERIES_LIST_H
+#define _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PAIR_SERIES_LIST_H
 
 #include "score/score_type_aliases.h"
 
@@ -49,7 +49,7 @@ namespace cath {
 		const classn_stat_pair_series & classn_stat_pair_series_list_of_name(const classn_stat_pair_series_list &,
 		                                                                     const std::string &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

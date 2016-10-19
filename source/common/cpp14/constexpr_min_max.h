@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CONSTEXPR_MIN_MAX_H_INCLUDED
-#define CONSTEXPR_MIN_MAX_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_CPP14_CONSTEXPR_MIN_MAX_H
+#define _CATH_TOOLS_SOURCE_COMMON_CPP14_CONSTEXPR_MIN_MAX_H
 
 #include <cstddef>
 
@@ -52,9 +52,9 @@ namespace cath {
 		return ( arg_lhs < arg_rhs ) ? arg_rhs : arg_lhs;
 	}
 
-}
+} // namespace common
 
 
-}
+} // namespace cath
 
 #endif

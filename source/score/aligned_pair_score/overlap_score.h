@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef OVERLAP_SCORE_H_INCLUDED
-#define OVERLAP_SCORE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_SCORE_H
+#define _CATH_TOOLS_SOURCE_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_SCORE_H
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/join.hpp>
@@ -165,7 +165,7 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		using global_overlap = overlap_score< overlap_type::NUM_ALIGNED_OVER_LONGER >;
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

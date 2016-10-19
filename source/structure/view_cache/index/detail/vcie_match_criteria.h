@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef VCIE_MATCH_CRITERIA_H_INCLUDED
-#define VCIE_MATCH_CRITERIA_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VCIE_MATCH_CRITERIA_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VCIE_MATCH_CRITERIA_H
 
 #include "structure/geometry/angle.h"
 #include "structure/view_cache/index/view_cache_index_entry.h"
@@ -237,8 +237,8 @@ namespace cath {
 
 			std::ostream & operator<<(std::ostream &,
 			                          const vcie_match_criteria &);
-		}
-	}
-}
+		} // namespace detail
+	} // namespace index
+} // namespace cath
 
 #endif

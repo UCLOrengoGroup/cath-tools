@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef TRUE_FALSE_POS_NEG_H_INCLUDED
-#define TRUE_FALSE_POS_NEG_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_TRUE_FALSE_POS_NEG_H
+#define _CATH_TOOLS_SOURCE_SCORE_TRUE_POS_FALSE_NEG_TRUE_FALSE_POS_NEG_H
 
 #include <boost/operators.hpp>
 
@@ -116,7 +116,7 @@ namespace cath {
 
 		std::ostream & operator<<(std::ostream &,
 		                          const true_false_pos_neg &);
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

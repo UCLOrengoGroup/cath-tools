@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCAN_INDEX_HASH_STORE_H_INCLUDED
-#define SCAN_INDEX_HASH_STORE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_HASH_STORE_H
+#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_HASH_STORE_H
 
 //#include <boost/log/trivial.hpp> // ***** TEMPORARY *****
 #include <boost/numeric/conversion/cast.hpp>
@@ -51,7 +51,7 @@ namespace cath {
 						return std::make_tuple( std::numeric_limits<Ts>::max()... );
 					}
 				};
-			}
+			} // namespace detail
 
 			/// \brief TODOCUMENT
 			template <typename KEY>
@@ -116,8 +116,8 @@ namespace cath {
 				return num_bytes * boost::units::information::bytes;
 			}
 
-		}
-	}
-}
+		} // namespace detail
+	} // namespace scan
+} // namespace cath
 
 #endif

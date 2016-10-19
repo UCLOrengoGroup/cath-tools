@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef STRING_ALIGNER_H_INCLUDED
-#define STRING_ALIGNER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_STRING_ALIGNER_STRING_ALIGNER_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_STRING_ALIGNER_STRING_ALIGNER_H
 
 #include "common/type_aliases.h"
 
@@ -91,8 +91,8 @@ namespace cath {
 //			str_str_pair align_and_format_sequence_strings(const std::string &,
 //			                                               const std::string &,
 //			                                               const score_type &);
-		}
-	}
-}
+		} // namespace detail
+	} // namespace align
+} // namespace cath
 
 #endif

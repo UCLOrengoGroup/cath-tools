@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CONSTEXPR_FLOOR_H_INCLUDED
-#define CONSTEXPR_FLOOR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_CONSTEXPR_FLOOR_H
+#define _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_CONSTEXPR_FLOOR_H
 
 namespace cath {
 	namespace common {
@@ -46,7 +46,7 @@ namespace cath {
 			                                                                           -constexpr_floor( static_cast<T>( 1.0 ) - arg_value );
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

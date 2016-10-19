@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef STD_REGION_WRITER_H_INCLUDED
-#define STD_REGION_WRITER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_IO_REGION_IO_REGION_WRITER_STD_REGION_WRITER_H
+#define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_IO_REGION_IO_REGION_WRITER_STD_REGION_WRITER_H
 
 #include "chopping/chopping_io/region_io/region_writer/region_writer.h"
 #include "chopping/chopping_io/region_io/std_region_io_spec.h"
@@ -39,7 +39,7 @@ namespace cath {
 			explicit std_region_writer(const std_region_io_spec &);
 		};
 
-	}
-}
+	} // namespace chop
+} // namespace cath
 
 #endif

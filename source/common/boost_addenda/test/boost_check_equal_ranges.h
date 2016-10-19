@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef BOOST_CHECK_EQUAL_RANGES_H_INCLUDED
-#define BOOST_CHECK_EQUAL_RANGES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_TEST_BOOST_CHECK_EQUAL_RANGES_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_TEST_BOOST_CHECK_EQUAL_RANGES_H
 
 #include <boost/range/concepts.hpp>
 #include <boost/test/test_tools.hpp>
@@ -51,7 +51,7 @@ namespace cath {
 		}
 
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef VIEW_CACHE_INDEX_TYPE_ALIASES_H_INCLUDED
-#define VIEW_CACHE_INDEX_TYPE_ALIASES_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VIEW_CACHE_INDEX_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VIEW_CACHE_INDEX_TYPE_ALIASES_H
 
 #include <boost/geometry/geometries/geometries.hpp> // ***** TEMPORARY? *****
 #include <boost/geometry/geometries/point.hpp> // ***** TEMPORARY? *****
@@ -93,8 +93,8 @@ namespace cath {
 
 			/// \brief The default numeric type used to multiply types
 			using multiplier_type     = float;
-		}
-	}
-}
+		} // namespace detail
+	} // namespace index
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef EQUAL_GROUPED_RANGE_H_INCLUDED
-#define EQUAL_GROUPED_RANGE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_EQUAL_GROUPED_RANGE_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_EQUAL_GROUPED_RANGE_H
 
 #include "common/boost_addenda/range/adaptor/iterator/equal_group_itr.h"
 
@@ -56,8 +56,8 @@ namespace cath {
 		                                                  	equal_grouped_iterator( std::end  ( arg_range ), std::end( arg_range ), arg_unequal_function )
 		                                                  ) {
 		}
-	}
+	} // namespace common
 
-}
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCORE_CLASSN_VALUE_H_INCLUDED
-#define SCORE_CLASSN_VALUE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_H
+#define _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_H
 
 #include <string>
 
@@ -51,7 +51,7 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const score_classn_value &);
 
-	}
-}
+	} // namespace score
+} // namespace cath
 
 #endif

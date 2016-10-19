@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef PROTEIN_LIST_H_INCLUDED
-#define PROTEIN_LIST_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_LIST_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_LIST_H
 
 #include "common/type_aliases.h"
 #include "structure/structure_type_aliases.h"
@@ -67,6 +67,6 @@ namespace cath {
 	size_vec get_protein_lengths(const protein_list &);
 
 	size_size_pair min_max_protein_length(const protein_list &);
-}
+} // namespace cath
 
 #endif

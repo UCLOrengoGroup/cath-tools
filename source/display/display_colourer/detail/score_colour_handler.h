@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCORE_COLOUR_HANDLER_H_INCLUDED
-#define SCORE_COLOUR_HANDLER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_DISPLAY_DISPLAY_COLOURER_DETAIL_SCORE_COLOUR_HANDLER_H
+#define _CATH_TOOLS_SOURCE_DISPLAY_DISPLAY_COLOURER_DETAIL_SCORE_COLOUR_HANDLER_H
 
 #include "common/type_aliases.h"
 
@@ -29,9 +29,9 @@
 namespace cath {
 	namespace align {
 		class alignment;
-	}
+	} // namespace align
 	class display_colour;
-}
+} // namespace cath
 
 namespace cath {
 	namespace detail {
@@ -73,7 +73,7 @@ namespace cath {
 		                                 const size_t &,
 		                                 const size_t &,
 		                                 const display_colour);
-	}
-}
+	} // namespace detail
+} // namespace cath
 
 #endif

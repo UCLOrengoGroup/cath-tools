@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef COMMON_ATOM_SELECTION_POLICY_H_INCLUDED
-#define COMMON_ATOM_SELECTION_POLICY_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY_COMMON_ATOM_SELECTION_POLICY_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY_COMMON_ATOM_SELECTION_POLICY_H
 
 #include <boost/operators.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
@@ -109,7 +109,7 @@ namespace cath {
                                                         ) {
         	return arg_common_atom_selection_policy.clone().release();
         }
-	}
-}
+	} // namespace align
+} // namespace cath
 
 #endif

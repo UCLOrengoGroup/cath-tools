@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef EQUAL_GROUPED_H_INCLUDED
-#define EQUAL_GROUPED_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_H
 
 #include "common/boost_addenda/range/adaptor/detail/gen_forwarder.h"
 #include "common/boost_addenda/range/adaptor/detail/equal_grouped_holder.h"
@@ -72,9 +72,9 @@ namespace cath {
 					arg_holder.template get_function<const RNG>()
 				};
 			}
-		}
-	}
-}
+		} // namespace detail
+	} // namespace common
+} // namespace cath
 
 namespace cath {
 	namespace common {
@@ -83,8 +83,8 @@ namespace cath {
 			/// \brief Following Boost Range's adaptor implementations, create a static forwarder
 			///        whose function operator constructs an equal_grouped_holder
 			static const equal_grouped_forwarder equal_grouped = equal_grouped_forwarder{};
-		}
-	}
-}
+		} // namespace
+	} // namespace common
+} // namespace cath
 
 #endif

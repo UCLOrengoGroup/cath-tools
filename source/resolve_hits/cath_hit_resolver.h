@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CATH_HIT_RESOLVER_H_INCLUDED
-#define CATH_HIT_RESOLVER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_CATH_HIT_RESOLVER_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_CATH_HIT_RESOLVER_H
 
 #include "common/type_aliases.h"
 
@@ -45,7 +45,7 @@ namespace cath {
 		                          std::istream & = std::cin,
 		                          std::ostream & = std::cout);
 
-	}
-}
+	} // namespace rslv
+} // namespace cath
 
 #endif

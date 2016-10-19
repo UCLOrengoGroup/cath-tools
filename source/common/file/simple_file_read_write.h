@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SIMPLE_FILE_READ_WRITE_H_INCLUDED
-#define SIMPLE_FILE_READ_WRITE_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_FILE_SIMPLE_FILE_READ_WRITE_H
+#define _CATH_TOOLS_SOURCE_COMMON_FILE_SIMPLE_FILE_READ_WRITE_H
 
 #include <boost/concept/assert.hpp>
 #include <boost/concept_archetype.hpp>
@@ -246,7 +246,7 @@ namespace cath {
 			};
 
 
-		}
+		} // namespace detail
 
 		/// \brief TODOCUMENT
 		template <typename T>
@@ -302,7 +302,7 @@ namespace cath {
 				str_vec{ { arg_string } }
 			);
 		}
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

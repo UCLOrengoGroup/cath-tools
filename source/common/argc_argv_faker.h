@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ARGC_ARGV_FAKER_H_INCLUDED
-#define ARGC_ARGV_FAKER_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_ARGC_ARGV_FAKER_H
+#define _CATH_TOOLS_SOURCE_COMMON_ARGC_ARGV_FAKER_H
 
 #include <boost/shared_array.hpp>
 
@@ -73,6 +73,6 @@ namespace cath {
 	std::ostream & operator<<(std::ostream &,
 	                          const argc_argv_faker &);
 
-}
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CONSTEXPR_MODULO_FNS_H_INCLUDED
-#define CONSTEXPR_MODULO_FNS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_CONSTEXPR_MODULO_FNS_H
+#define _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_CONSTEXPR_MODULO_FNS_H
 
 #include "common/algorithm/constexpr_integer_rounding.h"
 #include "common/cpp14/constexpr_min_max.h"
@@ -189,7 +189,7 @@ namespace cath {
 					chinese_remainder_coprime_pair_num_above( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b ) - arg_index_a
 				);
 			}
-		}
+		} // namespace detail
 
 		/// \brief TODOCUMENT
 		///
@@ -227,7 +227,7 @@ namespace cath {
 			return detail::chinese_remainder_coprime_pair( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b );
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RETURN_PATH_MATRIX_H_INCLUDED
-#define RETURN_PATH_MATRIX_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_RETURN_PATH_MATRIX_H
+#define _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_RETURN_PATH_MATRIX_H
 
 #include "alignment/align_type_aliases.h"
 #include "alignment/dyn_prog_align/detail/path_step.h"
@@ -112,8 +112,8 @@ namespace cath {
 			                          const return_path_matrix &);
 
 			score_type max_path_step_score(const path_step_score_map &);
-		}
-	}
-}
+		} // namespace detail
+	} // namespace align
+} // namespace cath
 
 #endif

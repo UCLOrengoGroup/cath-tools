@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef VCI_LINEAR_DIM_SPEC_VIEW_AXIS_H_INCLUDED
-#define VCI_LINEAR_DIM_SPEC_VIEW_AXIS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_DETAIL_VCI_LINEAR_DIM_SPEC_VIEW_AXIS_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_DETAIL_VCI_LINEAR_DIM_SPEC_VIEW_AXIS_H
 
 #include "structure/view_cache/index/detail/dims/detail/view_cache_index_dim_linear.h"
 #include "structure/view_cache/index/detail/view_cache_index_type_aliases.h"
@@ -82,10 +82,10 @@ namespace cath {
 					}
 				};
 
-			}
-		}
-	}
-}
+			} // namespace detail
+		} // namespace detail
+	} // namespace index
+} // namespace cath
 
 #endif
 

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef FILTER_VS_FULL_SCORE_LESS_H_INCLUDED
-#define FILTER_VS_FULL_SCORE_LESS_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_FILTER_DETAIL_FILTER_VS_FULL_SCORE_LESS_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_FILTER_DETAIL_FILTER_VS_FULL_SCORE_LESS_H
 
 namespace cath { namespace index { namespace filter { class filter_vs_full_score; } } }
 
@@ -48,9 +48,9 @@ namespace cath {
 					                const double &) const;
 				};
 
-			}
-		}
-	}
-}
+			} // namespace detail
+		} // namespace filter
+	} // namespace index
+} // namespace cath
 
 #endif
