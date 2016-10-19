@@ -20,11 +20,12 @@
 
 #include "hmmer_hmmsearch_domtblout.h"
 
+#include "common/algorithm/contains.h"
 #include "common/boost_addenda/make_string_ref.h"
 #include "common/cpp14/cbegin_cend.h"
 #include "common/file/open_fstream.h"
 #include "common/string/string_parse_tools.h"
-#include "resolve_hits/read_and_resolve_mgr.h"
+#include "resolve_hits/read_and_process_hits/read_and_process_mgr.h"
 #include "resolve_hits/resolve_hits_type_aliases.h"
 
 #include <fstream>
@@ -40,15 +41,19 @@ using std::istream;
 using std::string;
 
 /// \brief Parse a HMMER domain hits table file (as produced by the --domtblout option to a HMMER program)
-///        from the specified file and pass them to the specified read_and_resolve_mgr
-void cath::rslv::parse_domain_hits_table_file(read_and_resolve_mgr &arg_read_and_resolve_mgr,   ///< The read_and_resolve manager to which the hits should be passed for processing
+///        from the specified file and pass them to the specified read_and_process_mgr
+void cath::rslv::parse_domain_hits_table_file(read_and_process_mgr &arg_read_and_process_mgr,   ///< The read_and_process_mgr to which the hits should be passed for processing
                                               const path           &arg_domain_hits_table_file, ///< The file from which the HMMER domain hits table data should be parsed
                                               const bool           &arg_apply_cath_policies     ///< Whether to apply CATH-specific policies
                                               ) {
 	ifstream the_ifstream;
 	open_ifstream( the_ifstream, arg_domain_hits_table_file );
 
-	parse_domain_hits_table( arg_read_and_resolve_mgr, the_ifstream, arg_apply_cath_policies );
+	parse_domain_hits_table(
+		arg_read_and_process_mgr,
+		the_ifstream,
+		arg_apply_cath_policies
+	);
 
 	the_ifstream.close();
 }
@@ -60,14 +65,17 @@ static_assert( jon_score_of_hmmer_scores(  28.0f, static_cast<resscr_t>( 7.5e-09
 
 
 /// \brief Parse HMMER domain hits table data (as produced by the --domtblout option to a HMMER program)
-///        from the specified istream and pass them to the specified read_and_resolve_mgr
-void cath::rslv::parse_domain_hits_table(read_and_resolve_mgr &arg_read_and_resolve_mgr, ///< The read_and_resolve manager to which the hits should be passed for processing
+///        from the specified istream and pass them to the specified read_and_process_mgr
+void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which the hits should be passed for processing
                                          istream              &arg_input_stream,         ///< The istream from which the HMMER domain hits table data should be parsed
                                          const bool           &arg_apply_cath_policies   ///< Whether to apply CATH-specific policies
                                          ) {
-	string line_string;
+	constexpr double EVALUE_CUTOFF = 0.001;
 
-	arg_read_and_resolve_mgr.process_all_outstanding();
+	string line_string;
+	bool skipped_for_negtv_bitscore = false;
+
+	arg_read_and_process_mgr.process_all_outstanding();
 
 	while ( getline( arg_input_stream, line_string ) ) {
 		// Skip comment lines
@@ -86,15 +94,21 @@ void cath::rslv::parse_domain_hits_table(read_and_resolve_mgr &arg_read_and_reso
 		constexpr size_t ENV_STOP_RES_FIELD_IDX  = 20;
 
 		const auto     target_field_itrs      = find_field_itrs( line_string, TARGET_FIELD_IDX                                                                );
-		const auto     query_field_itrs       = find_field_itrs( line_string, QUERY_FIELD_IDX,       1 + TARGET_FIELD_IDX,      target_field_itrs.second      );
-
 		const auto     target_id_str_ref      = make_string_ref( target_field_itrs.first, target_field_itrs.second );
+
+		// If there are filter query IDs but this isn't amongst them, then skip this entry
+		if ( should_skip_query_id( arg_read_and_process_mgr, target_id_str_ref ) ) {
+			continue;
+		}
+
+		const auto     query_field_itrs       = find_field_itrs( line_string, QUERY_FIELD_IDX,       1 + TARGET_FIELD_IDX,      target_field_itrs.second      );
 		const auto     query_id_str_ref       = make_string_ref( query_field_itrs.first,  query_field_itrs.second  );
 
-		const auto     id_score_category      = cath_score_category_of_id( query_id_str_ref, arg_apply_cath_policies );
+		const auto     id_score_cat           = cath_score_category_of_id( query_id_str_ref, arg_apply_cath_policies );
+		const bool     apply_dc_cat           = ( id_score_cat == cath_id_score_category::DC_TYPE );
 
-		const size_t   start_field_idx        = ( id_score_category == cath_id_score_category::DC_TYPE ) ? ALI_START_RES_FIELD_IDX : ENV_START_RES_FIELD_IDX;
-		const size_t   stop_field_idx         = ( id_score_category == cath_id_score_category::DC_TYPE ) ? ALI_STOP_RES_FIELD_IDX  : ENV_STOP_RES_FIELD_IDX;
+		const size_t   start_field_idx        = apply_dc_cat ? ALI_START_RES_FIELD_IDX : ENV_START_RES_FIELD_IDX;
+		const size_t   stop_field_idx         = apply_dc_cat ? ALI_STOP_RES_FIELD_IDX  : ENV_STOP_RES_FIELD_IDX;
 
 		const auto     cond_evalue_field_itrs = find_field_itrs( line_string, COND_EVALUE_FIELD_IDX, 1 + QUERY_FIELD_IDX,       query_field_itrs.second       );
 		const auto     indp_evalue_field_itrs = find_field_itrs( line_string, INDP_EVALUE_FIELD_IDX, 1 + COND_EVALUE_FIELD_IDX, cond_evalue_field_itrs.second );
@@ -102,29 +116,45 @@ void cath::rslv::parse_domain_hits_table(read_and_resolve_mgr &arg_read_and_reso
 		const auto     start_res_field_itrs   = find_field_itrs( line_string, start_field_idx,       1 + BITSCORE_FIELD_IDX,    bitscore_field_itrs.second    );
 		const auto     stop_res_field_itrs    = find_field_itrs( line_string, stop_field_idx,        1 + start_field_idx,       start_res_field_itrs.second   );
 
-		const resscr_t cond_evalue            = parse_float_from_field( cond_evalue_field_itrs.first, cond_evalue_field_itrs.second );
-		const resscr_t indp_evalue            = parse_float_from_field( indp_evalue_field_itrs.first, indp_evalue_field_itrs.second );
-		const resscr_t bitscore               = parse_float_from_field( bitscore_field_itrs.first,    bitscore_field_itrs.second    );
-		const residx_t start                  = parse_uint_from_field ( start_res_field_itrs.first,   start_res_field_itrs.second   );
-		const residx_t stop                   = parse_uint_from_field ( stop_res_field_itrs.first,    stop_res_field_itrs.second    );
+		const resscr_t bitscore               = parse_float_from_field ( bitscore_field_itrs.first,    bitscore_field_itrs.second    );
+		const residx_t start                  = parse_uint_from_field  ( start_res_field_itrs.first,   start_res_field_itrs.second   );
+		const residx_t stop                   = parse_uint_from_field  ( stop_res_field_itrs.first,    stop_res_field_itrs.second    );
+		const bool     evalues_are_susp       = (
+			arg_apply_cath_policies
+			&&
+			parse_double_from_field( cond_evalue_field_itrs.first, cond_evalue_field_itrs.second ) <= EVALUE_CUTOFF
+			&&
+			parse_double_from_field( indp_evalue_field_itrs.first, indp_evalue_field_itrs.second ) >  EVALUE_CUTOFF
+		);
 
 		if ( bitscore < 0 ) {
-			BOOST_THROW_EXCEPTION(runtime_error_exception(
-				"Cannot currently handle a negative bitscore value ("
-				+ ::std::to_string( bitscore )
-				+ ")"
-			));
+			if ( ! skipped_for_negtv_bitscore ) {
+				BOOST_LOG_TRIVIAL( warning ) << "Skipping at least one hit (eg between \""
+					<< target_id_str_ref
+					<< "\" and \""
+					<< query_id_str_ref
+					<< "\" with bitscore "
+					<< bitscore
+					<< ") for having a negative bitscore, which cannot currently be handled.";
+				skipped_for_negtv_bitscore = true;
+			}
+			continue;
 		}
 
-		arg_read_and_resolve_mgr.add_hit(
+		const bool     is_suspicious  = ( arg_apply_cath_policies && ( id_score_cat != cath_id_score_category::DC_TYPE     ) && evalues_are_susp );
+		const bool     is_later_round = ( arg_apply_cath_policies && ( id_score_cat == cath_id_score_category::LATER_ROUND ) );
+		const double   denom_mult     = is_suspicious  ? 4.0 :
+		                                is_later_round ? 2.0 :
+		                                                 1.0;
+
+		arg_read_and_process_mgr.add_hit(
 			target_id_str_ref,
-			arrow_before_res( start ),
-			arrow_after_res ( stop  ),
-			hit_seg_vec{},
-			jon_score_of_hmmer_scores( bitscore, cond_evalue, indp_evalue, id_score_category ),
-			string{ query_field_itrs.first, query_field_itrs.second }
+			{ { hit_seg{ arrow_before_res( start ), arrow_after_res ( stop  ) } } },
+			string{ query_field_itrs.first, query_field_itrs.second },
+			bitscore / denom_mult,
+			hit_score_type::BITSCORE
 		);
 	}
 
-	arg_read_and_resolve_mgr.process_all_outstanding();
+	arg_read_and_process_mgr.process_all_outstanding();
 }

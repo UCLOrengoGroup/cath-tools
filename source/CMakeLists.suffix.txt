@@ -1,25 +1,6 @@
 
 #####################################################################
-
-set(
-	STD_NORMSOURCES
-		${NORMSOURCES_ACQUIRER}
-		${NORMSOURCES_ALIGNMENT}
-		${NORMSOURCES_CHOPPING}
-		${NORMSOURCES_COMMON}
-		${NORMSOURCES_DISPLAY}
-		${NORMSOURCES_DISPLAY_COLOUR}
-		${NORMSOURCES_EXCEPTION}
-		${NORMSOURCES_FILE}
-		${NORMSOURCES_OPTIONS}
-		${NORMSOURCES_OUTPUTTER}
-		${NORMSOURCES_RESOLVE_HITS}
-		${NORMSOURCES_SCAN}
-		${NORMSOURCES_SCORE}
-		${NORMSOURCES_SSAP}
-		${NORMSOURCES_STRUCTURE}
-		${NORMSOURCES_SUPERPOSITION}
-)
+#####################################################################
 
 set(
 	STD_TESTSOURCES
@@ -43,6 +24,52 @@ set(
 )
 
 #####################################################################
+
+add_library(
+	std_testsources
+	OBJECT
+		${STD_TESTSOURCES}
+)
+
+#####################################################################
+#####################################################################
+
+add_library(
+	normsources_common
+		${NORMSOURCES_COMMON}
+)
+
+add_library(
+	normsources_exception
+		${NORMSOURCES_EXCEPTION}
+)
+
+add_library(
+	normsources_test
+		${NORMSOURCES_TEST}
+)
+
+#####################################################################
+
+add_library(
+	std_normsources_remain
+		${NORMSOURCES_ACQUIRER}
+		${NORMSOURCES_ALIGNMENT}
+		${NORMSOURCES_CHOPPING}
+		${NORMSOURCES_DISPLAY}
+		${NORMSOURCES_DISPLAY_COLOUR}
+		${NORMSOURCES_FILE}
+		${NORMSOURCES_OPTIONS}
+		${NORMSOURCES_OUTPUTTER}
+		${NORMSOURCES_SCAN}
+		${NORMSOURCES_SCORE}
+		${NORMSOURCES_SSAP}
+		${NORMSOURCES_STRUCTURE}
+		${NORMSOURCES_SUPERPOSITION}
+)
+
+#####################################################################
+
 
 add_library(
 	normsources_cath_assign_domains
@@ -69,22 +96,8 @@ add_library(
 		${NORMSOURCES_RESOLVE_HITS}
 )
 
-add_library(
-	normsources_test
-		${NORMSOURCES_TEST}
-)
 
-add_library(
-	std_normsources
-		${STD_NORMSOURCES}
-)
-
-add_library(
-	std_testsources
-	OBJECT
-		${STD_TESTSOURCES}
-)
-
+#####################################################################
 #####################################################################
 
 add_executable(
@@ -127,15 +140,31 @@ add_executable(
 		${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}
 )
 
+# add_executable(
+# 	mod-test-common
+# 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+# 		${TESTSOURCES_COMMON}
+# )
+#
+# add_executable(
+# 	mod-test-exception
+# 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+# 		${TESTSOURCES_EXCEPTION}
+# )
+
+#####################################################################
 #####################################################################
 
-target_link_libraries( build-test          normsources_cath_superpose normsources_test std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-assign-domains normsources_cath_assign_domains             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-refine-align   normsources_cath_refine_align               std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                             pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-score-align    normsources_cath_score_align                std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-ssap                                                       std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-superpose      normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( build-test          normsources_cath_superpose normsources_resolve_hits normsources_test std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-assign-domains normsources_cath_assign_domains                                      std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-refine-align   normsources_cath_refine_align                                        std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                                                       normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-score-align    normsources_cath_score_align                                         std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-ssap                                                                                std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-superpose      normsources_cath_superpose                                           std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+
+# target_link_libraries( mod-test-common                                     normsources_test                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+# target_link_libraries( mod-test-exception                                  normsources_test                                           normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 
 add_dependencies( build-test          built_bioplib_libraries )
 add_dependencies( cath-assign-domains built_bioplib_libraries )
@@ -144,6 +173,7 @@ add_dependencies( cath-score-align    built_bioplib_libraries )
 add_dependencies( cath-ssap           built_bioplib_libraries )
 add_dependencies( cath-superpose      built_bioplib_libraries )
 
+#####################################################################
 #####################################################################
 
 if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
@@ -157,53 +187,56 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 		check-pdb
 			${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
 	)
-	
-	set(
-		DEVELTEST_ALIGNMENT_SOURCES
-			alignment/alignment.cpp
-			alignment/alignment_row.cpp
-			alignment/residue_score/alignment_residue_scores.cpp
-			exception/invalid_argument_exception.cpp
-)
 
-	add_executable(
-		develtest
-			executables/develtest/develtest.cpp
-			
-			# superposition/superposition_test.cpp // requires complex spider of stuff
+#	set(
+#		DEVELTEST_ALIGNMENT_SOURCES
+#			alignment/alignment.cpp
+#			alignment/alignment_row.cpp
+#			alignment/residue_score/alignment_residue_scores.cpp
+#			exception/invalid_argument_exception.cpp
+#	)
 
-			# alignment/alignment_test.cpp
-			# alignment/io/align_scaffold.cpp
-			# alignment/pair_alignment.cpp
-			# test/alignment_fixture.cpp
-			# ${DEVELTEST_ALIGNMENT_SOURCES}
-			
-			alignment/tools/alignment_breaks_test.cpp
-			alignment/tools/alignment_breaks.cpp
-			alignment/io/align_scaffold.cpp
-			${DEVELTEST_ALIGNMENT_SOURCES}
-			
-			# alignment/io/align_scaffold_test.cpp
-			# alignment/io/align_scaffold.cpp
-			# test/alignment_fixture.cpp
-			# ${DEVELTEST_ALIGNMENT_SOURCES}
-			
-			# common/boost_addenda/range/adaptor/adaptor_test.cpp
-			# exception/invalid_argument_exception.cpp
-			
-			# common/file/open_fstream.cpp
-			# exception/invalid_argument_exception.cpp
-			# exception/runtime_error_exception.cpp
-			# structure/geometry/orientation_covering.cpp
-			# structure/geometry/orientation_covering_test.cpp
-			# structure/geometry/quat_rot.cpp
-	)
-	
-	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-	target_link_libraries( check-pdb                                 std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-	target_link_libraries( develtest                                                          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-	
+#	add_executable(
+#		develtest
+#			executables/develtest/develtest.cpp
+#
+#			# superposition/superposition_test.cpp // requires complex spider of stuff
+#
+#			# alignment/alignment_test.cpp
+#			# alignment/io/align_scaffold.cpp
+#			# alignment/pair_alignment.cpp
+#			# test/alignment_fixture.cpp
+#			# ${DEVELTEST_ALIGNMENT_SOURCES}
+#
+#			alignment/tools/alignment_breaks_test.cpp
+#			alignment/tools/alignment_breaks.cpp
+#			alignment/io/align_scaffold.cpp
+#			${DEVELTEST_ALIGNMENT_SOURCES}
+#
+#			# alignment/io/align_scaffold_test.cpp
+#			# alignment/io/align_scaffold.cpp
+#			# test/alignment_fixture.cpp
+#			# ${DEVELTEST_ALIGNMENT_SOURCES}
+#
+#			# common/boost_addenda/range/adaptor/adaptor_test.cpp
+#			# exception/invalid_argument_exception.cpp
+#
+#			# common/file/open_fstream.cpp
+#			# exception/invalid_argument_exception.cpp
+#			# exception/runtime_error_exception.cpp
+#			# structure/geometry/orientation_covering.cpp
+#			# structure/geometry/orientation_covering_test.cpp
+#			# structure/geometry/quat_rot.cpp
+#	)
+
+	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+	target_link_libraries( check-pdb                                 std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+#	target_link_libraries( develtest                                                                                                                  pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+
 	add_dependencies( snap-judgement built_bioplib_libraries )
 	add_dependencies( check-pdb      built_bioplib_libraries )
 
 endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
+
+#####################################################################
+#####################################################################

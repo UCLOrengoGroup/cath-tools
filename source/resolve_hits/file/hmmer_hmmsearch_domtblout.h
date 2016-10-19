@@ -23,10 +23,11 @@
 
 #include <boost/filesystem/path.hpp>
 
+#include "common/type_aliases.h"
 #include "resolve_hits/resolve_hits_type_aliases.h"
 #include "resolve_hits/file/cath_id_score_category.h"
 
-namespace cath { namespace rslv { class read_and_resolve_mgr; } }
+namespace cath { namespace rslv { class read_and_process_mgr; } }
 
 namespace cath {
 	namespace rslv {
@@ -57,11 +58,11 @@ namespace cath {
 			return ratio * ratio * ratio;
 		}
 
-		void parse_domain_hits_table_file(read_and_resolve_mgr &,
+		void parse_domain_hits_table_file(read_and_process_mgr &,
 		                                  const boost::filesystem::path &,
 		                                  const bool &);
 
-		void parse_domain_hits_table(read_and_resolve_mgr &,
+		void parse_domain_hits_table(read_and_process_mgr &,
 		                             std::istream &,
 		                             const bool &);
 

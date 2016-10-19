@@ -27,34 +27,39 @@
 
 #include "common/chrono/duration_to_seconds_string.h"
 #include "common/cpp14/cbegin_cend.h"
-#include "resolve_hits/hit.h"
+#include "resolve_hits/calc_hit.h"
+#include "resolve_hits/hit_output_format.h"
+#include "resolve_hits/options/spec/hit_boundary_output.h"
+#include "resolve_hits/trim/trim_spec.h"
 
 #include <tuple>
+
+namespace cath { namespace rslv { class full_hit_list; } }
 
 namespace cath {
 	namespace rslv {
 
-		/// \brief An architecture of non-overlapping hits
+		/// \brief An architecture of non-overlapping calc_hits
 		///
-		/// \invariant The hits are kept sorted in ascending order of start residue
+		/// \invariant The calc_hits are kept sorted in ascending order of start residue
 		class hit_arch final {
 		private:
-			/// \brief The (non-overlapping) hits that make up the architecture
-			hit_vec the_hits;
+			/// \brief The (non-overlapping) calc_hits that make up the architecture
+			calc_hit_vec the_hits;
 
-			static void sort_hit_vec(hit_vec &);
+			static void sort_hit_vec(calc_hit_vec &);
 
 			void sanity_check() const;
 
 		public:
 			/// \brief An iterator type alias to make this a range
-			using iterator       = hit_vec::iterator;
+			using iterator       = calc_hit_vec::iterator;
 
 			/// \brief A const_iterator type alias to make this a range
-			using const_iterator = hit_vec::const_iterator;
+			using const_iterator = calc_hit_vec::const_iterator;
 
 			hit_arch() = default; ///< \brief Default ctor
-			explicit hit_arch(const hit_vec &);
+			explicit hit_arch(const calc_hit_vec &);
 
 			hit_arch            (const hit_arch &)          = default; ///< \brief Default copy-ctor
 			hit_arch            (hit_arch &&     ) noexcept = default; ///< \brief Default move-ctor
@@ -64,38 +69,39 @@ namespace cath {
 			size_t size() const;
 			bool empty() const;
 
-			const hit & operator[](const size_t &) const;
+			const calc_hit & operator[](const size_t &) const;
 
 			const_iterator begin() const;
 			const_iterator end() const;
 
-			bool remove(const hit &);
-			hit_arch & operator+=(const hit &);
+			bool remove(const calc_hit &);
+			hit_arch & operator+=(const calc_hit &);
 			hit_arch & operator+=(const hit_arch &);
 		};
 
-		std::string to_string(const hit_arch &,
-		                      const str_vec &,
-		                      const hit_output_format & = hit_output_format::CLASS,
-		                      const std::string & = std::string{});
+		std::string to_output_string(const hit_arch &,
+		                             const full_hit_list &,
+		                             const hit_output_format & = hit_output_format::CLASS,
+		                             const std::string & = std::string{},
+		                             const boost::optional<trim_spec> & = boost::none);
 
 		hit_arch operator+(hit_arch,
-		                   const hit &);
+		                   const calc_hit &);
 		hit_arch operator+(hit_arch,
 		                   const hit_arch &);
 
-		/// \brief In-place sort the specified vector of hits by hit::get_hit_start_less() (ie, by their starts)
-		inline void hit_arch::sort_hit_vec(hit_vec &arg_hit_vec ///< The vector of hits to in-place sort
+		/// \brief In-place sort the specified vector of calc_hits by calc_hit::get_hit_start_less() (ie, by their starts)
+		inline void hit_arch::sort_hit_vec(calc_hit_vec &arg_hit_vec ///< The vector of calc_hits to in-place sort
 		                                   ) {
 			boost::range::sort(
 				arg_hit_vec,
-				hit::get_hit_start_less()
+				calc_hit::get_hit_start_less()
 			);
 		}
 
-		/// \brief Check that there are no overlaps between any hits, and throw if any are found
+		/// \brief Check that there are no overlaps between any calc_hits, and throw if any are found
 		///
-		/// \pre The hits must be sorted before any calls to this method because it assumes
+		/// \pre The calc_hits must be sorted before any calls to this method because it assumes
 		///      that any overlaps will be detectable in neighbours.
 		///
 		/// \todo Make this check more comprehensive so that it would no longer miss cases like:
@@ -116,26 +122,26 @@ namespace cath {
 			}
 		}
 
-		/// \brief Ctor from a vector of hits
-		inline hit_arch::hit_arch(const hit_vec &arg_hit_arch ///< The vector of hits from which to construct the hit_arch. Must have no mutually overlapping hits. Need not be pre-sorted.
+		/// \brief Ctor from a vector of calc_hits
+		inline hit_arch::hit_arch(const calc_hit_vec &arg_hit_arch ///< The vector of calc_hits from which to construct the hit_arch. Must have no mutually overlapping calc_hits. Need not be pre-sorted.
 		                          ) : the_hits( arg_hit_arch ) {
 			sort_hit_vec( the_hits );
 			sanity_check();
 		}
 
-		/// \brief Return the number of hits in the architecture
+		/// \brief Return the number of calc_hits in the architecture
 		inline size_t hit_arch::size() const {
 			return the_hits.size();
 		}
 
-		/// \brief Return whether there are zero hits in this architecture
+		/// \brief Return whether there are zero calc_hits in this architecture
 		inline bool hit_arch::empty() const {
 			return the_hits.empty();
 		}
 
-		/// \brief Const subscript operator for accessing the hit at the specified index (after sorting in ascending order of start residue)
-		inline const hit & hit_arch::operator[](const size_t &arg_index ///< The index of the hit to return
-		                                        ) const {
+		/// \brief Const subscript operator for accessing the calc_hit at the specified index (after sorting in ascending order of start residue)
+		inline const calc_hit & hit_arch::operator[](const size_t &arg_index ///< The index of the calc_hit to return
+		                                             ) const {
 			return the_hits[ arg_index ];
 		}
 
@@ -149,8 +155,8 @@ namespace cath {
 			return common::cend( the_hits );
 		}
 
-		/// \brief If the hit_arch contains the specified hit, remove it and return true; otherwise, return false
-		inline bool hit_arch::remove(const hit &arg_hit ///< The hit to remove from the hit_arch
+		/// \brief If the hit_arch contains the specified calc_hit, remove it and return true; otherwise, return false
+		inline bool hit_arch::remove(const calc_hit &arg_hit ///< The calc_hit to remove from the hit_arch
 		                             ) {
 			// Do score second so that this can propagate any hit_arch::operator-=(const hit_arch &) exception guarantee
 			const auto find_itr = boost::range::find( the_hits, arg_hit );
@@ -161,10 +167,10 @@ namespace cath {
 			return false;
 		}
 
-		/// \brief Add the specified hit to this hit_arch
+		/// \brief Add the specified calc_hit to this hit_arch
 		///
-		/// \pre The specified hit may not overlap with any of the hits contained within the hit_arch
-		inline hit_arch & hit_arch::operator+=(const hit &arg_hit ///< The hit to add to this hit_arch
+		/// \pre The specified calc_hit may not overlap with any of the calc_hits contained within the hit_arch
+		inline hit_arch & hit_arch::operator+=(const calc_hit &arg_hit ///< The calc_hit to add to this hit_arch
 		                                       ) {
 			the_hits.push_back( arg_hit );
 			sort_hit_vec( the_hits );
@@ -172,38 +178,38 @@ namespace cath {
 			return *this;
 		}
 
-		/// \brief Add the specified hit_arch's hits to this hit_arch
+		/// \brief Add the specified hit_arch's calc_hits to this hit_arch
 		///
-		/// \pre The specified hit_arch's hits may not overlap with any of the hits contained within the hit_arch
-		inline hit_arch & hit_arch::operator+=(const hit_arch &arg_hit_arch ///< The hit_arch whose hits should be added to this hit_arch
+		/// \pre The specified hit_arch's calc_hits may not overlap with any of the calc_hits contained within the hit_arch
+		inline hit_arch & hit_arch::operator+=(const hit_arch &arg_hit_arch ///< The hit_arch whose calc_hits should be added to this hit_arch
 		                                       ) {
-			for (const hit &the_hit : arg_hit_arch) {
+			for (const calc_hit &the_hit : arg_hit_arch) {
 				( *this ) += the_hit;
 			}
 			return *this;
 		}
 
-		/// \brief Add the specified hit to the specified hit_arch
+		/// \brief Add the specified calc_hit to the specified hit_arch
 		///
-		/// \pre The specified hit may not overlap with any of the hits contained within the hit_arch
+		/// \pre The specified calc_hit may not overlap with any of the calc_hits contained within the hit_arch
 		///
 		/// The first hit_arch is taken by non-const value to avoid copying an rvalue argument
 		///
 		/// \relates hit_arch
-		inline hit_arch operator+(hit_arch   arg_hit_arch, ///< The hit_arch to which the hit should be added
-		                          const hit &arg_hit       ///< The hit to add to the hit_arch
+		inline hit_arch operator+(hit_arch        arg_hit_arch, ///< The hit_arch to which the calc_hit should be added
+		                          const calc_hit &arg_hit       ///< The calc_hit to add to the hit_arch
 		                          ) {
 			arg_hit_arch += arg_hit;
 			return arg_hit_arch;
 		}
 
-		/// \brief Add the second specified hit_arch's hits to the first specified hit_arch
+		/// \brief Add the second specified hit_arch's calc_hits to the first specified hit_arch
 		///
 		/// The first hit_arch is taken by non-const value to avoid copying an rvalue argument
 		///
 		/// \relates hit_arch
-		inline hit_arch operator+(hit_arch        arg_hit_arch_lhs, ///< The hit_arch to which the hits should be added
-		                          const hit_arch &arg_hit_arch_rhs  ///< The hit_arch whose hits should be added to the other hit_arch
+		inline hit_arch operator+(hit_arch        arg_hit_arch_lhs, ///< The hit_arch to which the calc_hits should be added
+		                          const hit_arch &arg_hit_arch_rhs  ///< The hit_arch whose calc_hits should be added to the other hit_arch
 		                          ) {
 			arg_hit_arch_lhs += arg_hit_arch_rhs;
 			return arg_hit_arch_lhs;

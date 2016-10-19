@@ -45,20 +45,23 @@ cath_id_score_category cath::rslv::cath_score_category_of_id(const string_ref &a
 		return cath_id_score_category::NORMAL;
 	}
 
-	static const regex dc_regex       { R"(^dc_\w{32}$)" };
-	static const regex round_regex    { R"(_round_\d+$)" };
-	static const regex round_one_regex{ R"(_round_1$)"   };
+	static const regex  dc_regex        { R"(^dc_\w{32}$)" };
+	static const regex  round_regex     { R"(_round_\d+$)" };
+	static const string round_one_suffix{ "_round_1" };
+	static const string dc_prefix_suffix{ "dc_" };
 
-	if (   regex_search( common::cbegin( arg_id ), common::cend( arg_id ), dc_regex        ) ) {
-		return cath_id_score_category::DC_TYPE;
-	}
-	if ( ! regex_search( common::cbegin( arg_id ), common::cend( arg_id ), round_regex     ) ) {
+	if ( arg_id.ends_with( round_one_suffix ) ) {
 		return cath_id_score_category::NORMAL;
 	}
-	if (   regex_search( common::cbegin( arg_id ), common::cend( arg_id ), round_one_regex ) ) {
-		return cath_id_score_category::NORMAL;
+	if ( arg_id.length() == 35 && arg_id.starts_with( dc_prefix_suffix ) ) {
+		if (   regex_search( common::cbegin( arg_id ), common::cend( arg_id ), dc_regex        ) ) {
+			return cath_id_score_category::DC_TYPE;
+		}
 	}
-	return cath_id_score_category::LATER_ROUND;
+	if ( regex_search( common::cbegin( arg_id ), common::cend( arg_id ), round_regex     ) ) {
+		return cath_id_score_category::LATER_ROUND;
+	}
+	return cath_id_score_category::NORMAL;
 }
 
 /// \brief Generate a string describing the specified cath_id_score_category

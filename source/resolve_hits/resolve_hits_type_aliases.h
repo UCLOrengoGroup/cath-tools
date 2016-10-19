@@ -25,10 +25,13 @@
 
 #include <vector>
 
+namespace cath { namespace rslv { class calc_hit; } }
+namespace cath { namespace rslv { class full_hit; } }
 namespace cath { namespace rslv { class hit_seg; } }
-namespace cath { namespace rslv { class hit; } }
 namespace cath { namespace rslv { class res_arrow; } }
 namespace cath { namespace rslv { class scored_arch_proxy; } }
+
+
 
 namespace cath {
 	namespace rslv {
@@ -36,14 +39,20 @@ namespace cath {
 		/// \brief Type alias for a vector of hit_seg objects
 		using hit_seg_vec = std::vector<hit_seg>;
 
+		/// \brief Type alias for an optional hit_seg
+		using hit_seg_opt = boost::optional<hit_seg>;
+
 		/// \brief Type alias for the type to be used to index hits
 		using hitidx_t = unsigned int;
 
 		/// \brief Type alias for a vector of hitidx_t values
 		using hitidx_vec = std::vector<hitidx_t>;
 
-		/// \brief Type alias for a vector of hit objects
-		using hit_vec = std::vector<hit>;
+		/// \brief Type alias for a vector of calc_hit objects
+		using calc_hit_vec = std::vector<calc_hit>;
+
+		/// \brief Type alias for a vector of full_hit objects
+		using full_hit_vec = std::vector<full_hit>;
 
 		/// \brief Type alias for a vector of res_arrow objects
 		using res_arrow_vec = std::vector<res_arrow>;

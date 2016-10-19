@@ -41,10 +41,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 	static_assert( get_start_res_index( hit_seg_of_res_idcs(    0,    0 ) ) ==    0, "" );
 	static_assert( get_stop_res_index ( hit_seg_of_res_idcs(    0,    0 ) ) ==    0, "" );
 
-	/// \todo GCC >= 5 (with relaxed constexpr), reinstate the hit_seg::sanity_check() and then reinstate this test
-	///       and remove the dummy `BOOST_CHECK( true )`
-	//BOOST_CHECK_THROW( hit_seg_of_res_idcs( 1, 0 ), invalid_argument );
-	BOOST_CHECK( true );
+	BOOST_CHECK_THROW( hit_seg_of_res_idcs( 1, 0 ), invalid_argument );
 }
 
 BOOST_AUTO_TEST_CASE(to_string_works) {
@@ -67,25 +64,5 @@ BOOST_AUTO_TEST_CASE(overlap) {
 	static_assert( ! hit_segs_overlap( hit_seg_c, hit_seg_b ), "" );
 	BOOST_CHECK( true );
 }
-
-
-// BOOST_AUTO_TEST_CASE(free_regions_correct_for_empty_seg_list) {
-// 	BOOST_CHECK_EQUAL_RANGES(
-// 		free_regions( {}, arrow_before_res(  5 ), arrow_after_res( 30 ) ),
-// 		{
-// 			hit_seg_of_res_idcs(  5, 30 )
-// 		}
-// 	);
-// }
-
-// {  }
-// res_before( )
-
-// { { 30, 35 } }
-// res_before( )
-
-// { { 10, 15 }, { 20, 25 } }
-// res_before( )
-
 
 BOOST_AUTO_TEST_SUITE_END()

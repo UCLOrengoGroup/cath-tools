@@ -23,7 +23,9 @@
 
 #include <boost/any.hpp>
 
+#include "common/debug_numeric_cast.h"
 #include "common/type_aliases.h"
+#include "resolve_hits/hit_seg.h"
 #include "resolve_hits/resolve_hits_type_aliases.h"
 
 #include <stdexcept>
@@ -61,10 +63,8 @@ namespace cath {
 
 			constexpr const residx_t & get_full_length() const noexcept;
 			constexpr const residx_t & get_total_trimming() const noexcept;
-
-			// constexpr trim_spec & set_full_length(const residx_t &) noexcept;
-			// constexpr trim_spec & set_total_trimming(const residx_t &) noexcept;
 		};
+		
 
 		std::string to_options_string(const trim_spec &);
 
@@ -77,6 +77,9 @@ namespace cath {
 
 		std::istream & operator>>(std::istream &,
 		                          trim_spec &);
+
+		std::string to_possibly_trimmed_simple_string(const hit_seg &,
+		                                              const boost::optional<trim_spec> &);
 
 		void validate(boost::any &,
 		              const str_vec &,
@@ -106,23 +109,10 @@ namespace cath {
 			return total_trimming;
 		}
 
-		// /// \brief Setter for the length of a segment on which the trimming is to be defined
-		// ///
-		// /// \todo Can thsi 
-		// inline constexpr trim_spec & trim_spec::set_full_length(const residx_t &arg_full_length ///< The length of a segment on which the trimming is to be defined
-		//                                                         ) noexcept {
-		// 	full_length = arg_full_length;
-		// 	return *this;
-		// }
-
-		// /// \brief Setter for the total amount of trimming (split between start and end) to be performed on a segment of the specified length
-		// ///
-		// /// \todo GCC >= 5 (with relaxed constexpr), make this constexpr (and remove inline)
-		// inline constexpr trim_spec & trim_spec::set_total_trimming(const residx_t &arg_total_trimming ///< The total amount of trimming (split between start and end) to be performed on a segment of the specified length
-		//                                                            ) noexcept {
-		// 	total_trimming = arg_total_trimming;
-		// 	return *this;
-		// }
+		/// \brief Make a trim_spec that implies no trimming
+		constexpr trim_spec make_no_trim_trim_spec() {
+			return { 1, 0 };
+		}
 
 		/// \brief Get the total trimming resulting from applying the specified trim_spec on a segment of the specified length
 		///
@@ -166,6 +156,31 @@ namespace cath {
 			return ( total_trimming / 2 ) + ( total_trimming % 2 );
 		}
 
+		/// \brief Trim the specified hit_seg according to the specified trim_spec
+		///
+		/// \todo Come relaxed constexpr, make this constexpr
+		///
+		/// \relates trim_spec
+		inline void trim_hit_seg(hit_seg         &arg_hit_seg,    ///< The hit_seg to trim
+		                         const trim_spec &arg_trim_spec ///< The trim_spec to apply
+		                         ) {
+			const auto length = debug_numeric_cast<residx_t>( get_length( arg_hit_seg ) );
+			arg_hit_seg.set_start_arrow( arg_hit_seg.get_start_arrow() + start_trimming_of_length( arg_trim_spec, length ) );
+			arg_hit_seg.set_stop_arrow ( arg_hit_seg.get_stop_arrow () - stop_trimming_of_length ( arg_trim_spec, length ) );
+		}
+
+		/// \brief Return a copy of the specified hit_seg, trimmed according to the specified trim_spec
+		///
+		/// \todo Come relaxed constexpr, make this constexpr
+		///
+		/// \relates trim_spec
+		inline hit_seg trim_hit_seg_copy(hit_seg          arg_hit_seg,  ///< The hit_seg to trim
+		                                 const trim_spec &arg_trim_spec ///< The trim_spec to apply
+		                                 ) {
+			trim_hit_seg( arg_hit_seg, arg_trim_spec );
+			return arg_hit_seg;
+		}
+
 		/// \brief Get the trimmed start/stop resulting from applying the specified trim_spec on a segment with the specified start/stop
 		///
 		/// \relates trim_spec
@@ -174,7 +189,7 @@ namespace cath {
 		                                                  const residx_t  &arg_stop       ///< The stop  residue index of the segment in question
 		                                                  ) {
 			return ( arg_stop < arg_start )
-				? throw std::logic_error("stop must not come before start")
+				? throw std::invalid_argument("stop must not come before start")
 				: residx_residx_pair{
 					arg_start + start_trimming_of_length( arg_trim_spec, arg_stop + 1 - arg_start ),
 					arg_stop  - stop_trimming_of_length ( arg_trim_spec, arg_stop + 1 - arg_start )

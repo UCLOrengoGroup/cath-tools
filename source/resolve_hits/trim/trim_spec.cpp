@@ -36,6 +36,7 @@ using namespace cath::rslv;
 using boost::algorithm::is_any_of;
 using boost::any;
 using boost::lexical_cast;
+using boost::optional;
 using std::istream;
 using std::ostream;
 using std::stoul;
@@ -66,7 +67,7 @@ string cath::rslv::to_string(const trim_spec &arg_trim_spec ///< The trim_spec t
 		+ "]";
 }
 
-/// \brief Insert a description of the specified res_arrow into the specified ostream
+/// \brief Insert a description of the specified trim_spec into the specified ostream
 ///
 /// \relates trim_spec
 ostream & cath::rslv::operator<<(ostream         &arg_os,       ///< The ostream into which the description should be inserted
@@ -107,6 +108,19 @@ istream & cath::rslv::operator>>(istream   &arg_is,       ///< The stream from w
 	arg_is >> input_string;
 	arg_trim_spec = parse_trim_spec( input_string );
 	return arg_is;
+}
+
+/// \brief Extract into the specified trim_spec from the specified stream
+///
+/// \relates hit_seg
+///
+/// \alsorelates trim_spec
+string cath::rslv::to_possibly_trimmed_simple_string(const hit_seg             &arg_hit_seg,      ///< The hit_seg to describe
+                                                     const optional<trim_spec> &arg_trim_spec_opt ///< The optional specification describing the possible trimming
+                                                     ) {
+	return arg_trim_spec_opt
+		? to_simple_string( trim_hit_seg_copy( arg_hit_seg, *arg_trim_spec_opt ) )
+		: to_simple_string(                    arg_hit_seg                       );
 }
 
 /// \brief Provide Boost program_options validation for trim_spec

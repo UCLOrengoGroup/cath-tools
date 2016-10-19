@@ -167,7 +167,7 @@ namespace cath {
 		inline coord & coord::operator*=(const double &arg_factor ///< TODOCUMENT
 		                                 ) {
 	#ifndef NDEBUG
-			if ( isnan( arg_factor ) ) {
+			if ( boost::math::isnan( arg_factor ) ) {
 				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("InvalidcoordFactor"));
 			}
 	#endif

@@ -25,6 +25,7 @@
 #include <boost/optional.hpp>
 #include <boost/program_options.hpp>
 
+#include "common/argc_argv_faker.h"
 #include "common/boost_addenda/program_options/set_opt_str_from_prog_opts_try.h"
 #include "common/path_type_aliases.h"
 #include "common/type_aliases.h"
@@ -57,7 +58,7 @@ namespace cath {
 		///  - Global configuration file    (   file : "cath-tools.conf"     )
 		class executable_options {
 		private:
-			/// \brief The line legnth to use when rendering program options
+			/// \brief The line length to use when rendering program options
 			///
 			/// Its behaviour isn't 100% clear but setting this value to roughly the character-width of a
 			/// modern terminal prevents it prematurely wrapping and making a very long, narrow output.
@@ -161,6 +162,17 @@ namespace cath {
 			T new_options;
 			new_options.parse_options( argc, argv );
 			return new_options;
+		}
+
+		/// \brief Return a new instance of the specified type of executable_options with the specified options parsed into it
+		template <typename T>
+		T make_and_parse_options(const str_vec &args ///< The arguments
+		                         ) {
+			argc_argv_faker my_argc_argv_faker( args );
+			return make_and_parse_options<T>(
+				my_argc_argv_faker.get_argc(),
+				my_argc_argv_faker.get_argv()
+			);
 		}
 	}
 }

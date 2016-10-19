@@ -21,24 +21,24 @@
 #include "scored_hit_arch.h"
 
 #include "common/algorithm/transform_build.h"
-#include "resolve_hits/hit_list.h"
+#include "resolve_hits/calc_hit_list.h"
 
 using namespace cath::common;
 using namespace cath::rslv;
 
-/// \brief Make a scored_hit_arch from a scored_arch_proxy and hit_list
+/// \brief Make a scored_hit_arch from a scored_arch_proxy and calc_hit_list
 ///
 /// \relates scored_hit_arch
 scored_hit_arch cath::rslv::make_scored_hit_arch(const scored_arch_proxy &arg_scored_arch_proxy, ///< The scored_arch_proxy which the scored_hit_arch should copy
-                                                 const hit_list          &arg_hit_list           ///< The hit_list to which the scored_arch_proxy refers
+                                                 const calc_hit_list     &arg_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy refers
                                                  ) {
 	return {
 		arg_scored_arch_proxy.get_score(),
 		hit_arch{
-			transform_build<hit_vec>(
+			transform_build<calc_hit_vec>(
 				arg_scored_arch_proxy,
 				[&] (const hitidx_t &x) {
-					return arg_hit_list[ x ];
+					return arg_calc_hit_list[ x ];
 				}
 			)
 		}

@@ -40,6 +40,9 @@ namespace cath {
 			RAW_WITH_EVALUES  ///< "raw" format with evalues
 		};
 
+		/// \brief Type alias for vector of hits_input_format_tags
+		using hits_input_format_tag_vec = std::vector<hits_input_format_tag>;
+
 		/// \brief A constexpr list of all hits_input_format_tags
 		static constexpr std::array<hits_input_format_tag, 4> all_hits_input_format_tags { {
 			hits_input_format_tag::HMMER_DOMTMBLOUT,
@@ -53,7 +56,6 @@ namespace cath {
 
 		/// \brief Store a constexpr record of the number of hits_input_format_tags
 		static constexpr size_t num_hits_input_format_tags = std::tuple_size< decltype( all_hits_input_format_tags ) >::value;
-		// static constexpr size_t num_hits_input_format_tags = common::tuple_size_v< decltype( all_hits_input_format_tags ) >;
 
 		namespace detail {
 

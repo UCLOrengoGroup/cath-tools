@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "resolve_hits/hit.h"
+#include "resolve_hits/calc_hit.h"
 
 using namespace cath;
 using namespace cath::rslv;
@@ -31,7 +31,6 @@ BOOST_AUTO_TEST_CASE(basic) {
 	const auto the_hit = make_hit_from_res_indices( { { 1272, 1363 } }, 1.0, 0 );
 	BOOST_CHECK_EQUAL( get_start_res_index_of_segment( the_hit, 0 ), 1272 );
 	BOOST_CHECK_EQUAL( get_stop_res_index_of_segment ( the_hit, 0 ), 1363 );
-	BOOST_CHECK_EQUAL( to_string( the_hit, { "label" } ), "hit[1272-1363; score: 1.000000; label: \"label\"]" );
 }
 
 BOOST_AUTO_TEST_CASE(basic_2) {
@@ -40,7 +39,6 @@ BOOST_AUTO_TEST_CASE(basic_2) {
 	BOOST_CHECK_EQUAL( get_stop_res_index_of_segment ( the_hit, 0 ), 1320 );
 	BOOST_CHECK_EQUAL( get_start_res_index_of_segment( the_hit, 1 ), 1398 );
 	BOOST_CHECK_EQUAL( get_stop_res_index_of_segment ( the_hit, 1 ), 1437 );
-	BOOST_CHECK_EQUAL( to_string( the_hit, { "label" } ), "hit[1272-1320,1398-1437; score: 1.000000; label: \"label\"]" );
 }
 
 BOOST_AUTO_TEST_CASE(overlap) {

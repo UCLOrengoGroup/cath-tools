@@ -18,30 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/algorithm/string/join.hpp>
-#include <boost/filesystem.hpp>
-
-#include "common/boost_addenda/range/adaptor/lexical_casted.h"
 #include "common/program_exception_wrapper.h"
-#include "common/type_aliases.h"
-#include "resolve_hits/hit_arch.h"
-#include "resolve_hits/hit_list.h"
-#include "resolve_hits/hit_resolver.h"
-#include "resolve_hits/read_and_resolve_mgr.h"
-#include "resolve_hits/res_arrow.h"
-#include "resolve_hits/scored_hit_arch.h"
+#include "resolve_hits/cath_hit_resolver.h"
+#include "resolve_hits/options/crh_options.h"
 
 #include <chrono>
 
 using namespace cath::common;
+using namespace cath::opts;
 using namespace cath::rslv;
 
-using boost::algorithm::join;
-using boost::filesystem::exists;
-using boost::filesystem::path;
-using std::chrono::high_resolution_clock;
-using std::cin;
-using std::cout;
 using std::string;
 
 namespace cath {
@@ -56,29 +42,9 @@ namespace cath {
 
 		/// \brief Parse the options and then pass them to cath_resolve_hits::superpose()
 		virtual void do_run_program(int argc, char * argv[]) override final {
-			if ( argc != 2 ) {
-				std::cerr << "Usage: cath-resolve-hits hits_file_to_process\n (use 'cath-resolve-hits -'' to read from stdin)\n";
-				return;
-			}
-
-			// If dash, then read input from stdin
-			if ( argv[ 1 ] == string{ "-" } ) {
-				// Read the hits from stdin and print the resolved hits to cout
-				read_and_resolve_mgr the_read_and_resolve_mgr{ cout };
-				read_hit_list_from_istream( the_read_and_resolve_mgr, cin );
-				return;
-			}
-
-			// Grab the filename and check the file exists
-			const path the_file{ argv[ 1 ] };
-			if ( ! exists( the_file ) ) {
-				std::cerr << "Error: no such file \"" << the_file << "\" exists\n";
-				return;
-			}
-
-			// Read the hits and print the resolved hits to cout
-			read_and_resolve_mgr the_read_and_resolve_mgr{ cout };
-			read_hit_list_from_file( the_read_and_resolve_mgr, the_file );
+			perform_resolve_hits(
+				make_and_parse_options<crh_options>( argc, argv )
+			);
 		}
 	};
 }

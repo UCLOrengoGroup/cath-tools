@@ -152,6 +152,12 @@ const path & global_test_constants::TEST_OUTPUT_DIRECTORY() {
 	return test_output_directory;
 }
 
+/// \brief Test constant for the cath-resolve-hits test data directory
+const path & global_test_constants::CRH_TEST_DATA_DIR() {
+	static const path crh_test_data_dir( TEST_SOURCE_DATA_DIR() / "resolve_hits" );
+	return crh_test_data_dir;
+}
+
 /// \brief TODOCUMENT
 const path & global_test_constants::NONEXISTENT_FILE() {
 	static const path nonexistent_file( "filename_of_nonexistent_file" );
@@ -251,6 +257,72 @@ const path & global_test_constants::EXAMPLE_DOUBLES_FILENAME() {
 const path & global_test_constants::EXAMPLE_TUPLES_FILENAME() {
 	static const path test_output_filename  ( TEST_SOURCE_DATA_DIR() / "simple_file_read_write" / "example_tuples" );
 	return test_output_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_DOMTBL_IN_FILENAME() {
+	static const path crh_eg_domtbl_in_filename      ( CRH_TEST_DATA_DIR() / "eg_domtblout.in"                     );
+	return crh_eg_domtbl_in_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_DOMTBL_OUT_FILENAME() {
+	static const path crh_eg_domtbl_out_filename     ( CRH_TEST_DATA_DIR() / "eg_domtblout.out"                    );
+	return crh_eg_domtbl_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_HMMSEARCH_IN_FILENAME() {
+	static const path crh_eg_hmmsearch_in_filename   ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.in"                 );
+	return crh_eg_hmmsearch_in_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_HMMSEARCH_OUT_FILENAME() {
+	static const path crh_eg_hmmsearch_out_filename  ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out"                );
+	return crh_eg_hmmsearch_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME() {
+	static const path crh_eg_hmmsearch_out_filename  ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out_big_gap"        );
+	return crh_eg_hmmsearch_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME() {
+	static const path crh_eg_hmmsearch_out_filename  ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out_small_gap"      );
+	return crh_eg_hmmsearch_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME() {
+	static const path crh_eg_hmmsearch_out_filename  ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out_output_trimmed" );
+	return crh_eg_hmmsearch_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_RAW_EVALUE_IN_FILENAME() {
+	static const path crh_eg_raw_eva_in_filename     ( CRH_TEST_DATA_DIR() / "eg_raw_evalue.in"                    );
+	return crh_eg_raw_eva_in_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_RAW_EVALUE_OUT_FILENAME() {
+	static const path crh_eg_raw_eva_out_filename    ( CRH_TEST_DATA_DIR() / "eg_raw_evalue.out"                   );
+	return crh_eg_raw_eva_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_RAW_SCORE_IN_FILENAME() {
+	static const path crh_eg_raw_sc_in_filename      ( CRH_TEST_DATA_DIR() / "eg_raw_score.in"                     );
+	return crh_eg_raw_sc_in_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_RAW_SCORE_OUT_FILENAME() {
+	static const path crh_eg_raw_sc_out_filename     ( CRH_TEST_DATA_DIR() / "eg_raw_score.out"                    );
+	return crh_eg_raw_sc_out_filename;
 }
 
 /// \brief TODOCUMENT

@@ -30,8 +30,8 @@
 #include "common/boost_addenda/range/adaptor/equal_grouped.h"
 #include "common/boost_addenda/range/front.h"
 #include "common/cpp14/cbegin_cend.h"
-#include "resolve_hits/hit_list.h"
-#include "resolve_hits/masked_bests_cacher.h"
+#include "resolve_hits/algo/masked_bests_cacher.h"
+#include "resolve_hits/calc_hit_list.h"
 #include "resolve_hits/scored_hit_arch.h"
 
 #include <map>
@@ -57,10 +57,10 @@ using std::numeric_limits;
 ///        specified indices have differing stop points
 ///
 /// This is used to group hits that stop at the same boundary
-auto hit_resolver::get_hit_stops_differ_fn(const hit_list &arg_hit_list ///< The list of hits to which the indices will refer
+auto hit_resolver::get_hit_stops_differ_fn(const calc_hit_list &arg_calc_hit_list ///< The list of hits to which the indices will refer
                                            ) {
 	return [&] (const hitidx_t &x, const hitidx_t &y) {
-		return ( arg_hit_list[ x ].get_stop_arrow() != arg_hit_list[ y ].get_stop_arrow() );
+		return ( arg_calc_hit_list[ x ].get_stop_arrow() != arg_calc_hit_list[ y ].get_stop_arrow() );
 	};
 }
 
@@ -70,8 +70,8 @@ auto hit_resolver::get_hit_stops_differ_fn(const hit_list &arg_hit_list ///< The
 /// \todo Consider dropping this check it doesn't fire when
 ///       run under debug mode over some large data set
 inline void sanity_check(const scored_arch_proxy &arg_scored_arch_proxy, ///< The architecture (scored_arch_proxy) to check
-                         const hit_list          &arg_hits,              ///< The list of hits to which the scored_arch_proxy corresponds
-                         const hit_vec           &arg_mask               ///< The mask with which to check for conflicts
+                         const calc_hit_list     &arg_hits,              ///< The list of hits to which the scored_arch_proxy corresponds
+                         const calc_hit_vec      &arg_mask               ///< The mask with which to check for conflicts
                          ) {
 	ignore_unused( arg_scored_arch_proxy, arg_hits, arg_mask );
 #ifndef NDEBUG
@@ -92,7 +92,7 @@ inline void sanity_check(const scored_arch_proxy &arg_scored_arch_proxy, ///< Th
 /// and doesn't overlap with any segments in the specified discontiguous hits
 ///
 /// \todo Could be more efficient at rejecting hits that stop in forbidden regions
-scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(const hit_vec           &arg_mask,           ///< The active mask defining any no-go areas.
+scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(const calc_hit_vec      &arg_mask,           ///< The active mask defining any no-go areas.
                                                                              const res_arrow         &arg_start_arrow,    ///< The point at which to start the dynamic-programming scan. Guaranteed to be at the boundary of a segment in arg_masks, or at the very start if arg_masks is empty
                                                                              const res_arrow         &arg_stop_arrow,     ///< The point at which to stop the dynamic-programming scan. Guaranteed to be at the boundary of a segment in arg_masks, or at the very end   if arg_masks is empty
                                                                              const scored_arch_proxy &arg_best_upto_start ///< The known-best architecture up to the start point
@@ -171,7 +171,7 @@ scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(con
 }
 
 /// \brief Ctor for hit_resolver
-hit_resolver::hit_resolver(const hit_list &arg_hits ///< The hits to resolve
+hit_resolver::hit_resolver(const calc_hit_list &arg_hits ///< The hits to resolve
                            ) : hits     ( arg_hits                  ),
                                max_stop ( *get_max_stop( arg_hits ) ),
                                the_dhibs( arg_hits                  ) {
@@ -203,7 +203,7 @@ scored_hit_arch hit_resolver::resolve() {
 }
 
 /// \brief The front-end for resolving hits
-scored_hit_arch cath::rslv::resolve_hits(const hit_list &arg_hits ///< The hits to resolve
+scored_hit_arch cath::rslv::resolve_hits(const calc_hit_list &arg_hits ///< The hits to resolve
                                          ) {
 	return detail::hit_resolver{ arg_hits }.resolve();
 }

@@ -26,6 +26,8 @@
 
 #include "common/boost_addenda/range/range_concept_type_aliases.h"
 
+#include <iterator>
+
 namespace cath { namespace common { template <class RNG> class adjacent_itr; } }
 
 namespace cath {

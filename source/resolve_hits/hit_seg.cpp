@@ -89,13 +89,20 @@ hit_seg_vec cath::rslv::make_fragments_of_start_sorted_segments(const hit_seg_ve
 /// \brief Generate a string describing the specified hit_seg
 ///
 /// \relates hit_seg
+string cath::rslv::to_simple_string(const hit_seg &arg_hit_seg ///< The hit_seg to describe
+                                    ) {
+	return
+		  ::std::to_string( get_start_res_index( arg_hit_seg ) )
+		+ "-"
+		+ ::std::to_string( get_stop_res_index ( arg_hit_seg ) );
+}
+
+/// \brief Generate a string describing the specified hit_seg
+///
+/// \relates hit_seg
 string cath::rslv::to_string(const hit_seg &arg_hit_seg ///< The hit_seg to describe
                              ) {
-	return "hit_seg["
-		+ ::std::to_string( get_start_res_index( arg_hit_seg ) )
-		+ "-"
-		+ ::std::to_string( get_stop_res_index ( arg_hit_seg ) )
-		+ "]";
+	return "hit_seg[" + to_simple_string( arg_hit_seg ) + "]";
 }
 
 /// \brief Insert a description of the specified hit_seg into the specified ostream

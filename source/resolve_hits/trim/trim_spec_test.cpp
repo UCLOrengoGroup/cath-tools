@@ -24,9 +24,6 @@
 
 using namespace cath::rslv;
 
-// using boost::lexical_cast;
-// using std::invalid_argument;
-// using std::string;
 using std::make_pair;
 
 BOOST_AUTO_TEST_SUITE(trim_spec_test_suite)

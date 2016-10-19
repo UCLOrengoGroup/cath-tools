@@ -20,6 +20,7 @@
 
 #include "resolve_hits/res_arrow.h"
 
+#include <iostream>
 #include <string>
 
 using namespace cath::rslv;

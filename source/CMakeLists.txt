@@ -598,10 +598,24 @@ set(
 )
 
 set(
+	NORMSOURCES_RESOLVE_HITS_ALGO
+		resolve_hits/algo/discont_hits_index_by_start.cpp
+		resolve_hits/algo/masked_bests_cacher.cpp
+)
+
+set(
+	NORMSOURCES_RESOLVE_HITS_FILE_DETAIL
+		resolve_hits/file/detail/hmmsearch_aln.cpp
+		resolve_hits/file/detail/hmmsearch_parser.cpp
+)
+
+set(
 	NORMSOURCES_RESOLVE_HITS_FILE
 		resolve_hits/file/cath_id_score_category.cpp
+		${NORMSOURCES_RESOLVE_HITS_FILE_DETAIL}
 		resolve_hits/file/hits_input_format_tag.cpp
 		resolve_hits/file/hmmer_hmmsearch_domtblout.cpp
+		resolve_hits/file/hmmer_hmmsearch_out.cpp
 )
 
 set(
@@ -610,10 +624,43 @@ set(
 )
 
 set(
+	NORMSOURCES_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK
+		resolve_hits/options/options_block/crh_filter_options_block.cpp
+		resolve_hits/options/options_block/crh_input_options_block.cpp
+		resolve_hits/options/options_block/crh_output_options_block.cpp
+		resolve_hits/options/options_block/crh_score_options_block.cpp
+		resolve_hits/options/options_block/crh_segment_options_block.cpp
+)
+
+set(
+	NORMSOURCES_RESOLVE_HITS_OPTIONS_SPEC
+		resolve_hits/options/spec/crh_filter_spec.cpp
+		resolve_hits/options/spec/crh_input_spec.cpp
+		resolve_hits/options/spec/crh_output_spec.cpp
+		resolve_hits/options/spec/crh_score_spec.cpp
+		resolve_hits/options/spec/crh_segment_spec.cpp
+		resolve_hits/options/spec/crh_spec.cpp
+		resolve_hits/options/spec/hit_boundary_output.cpp
+)
+
+set(
 	NORMSOURCES_RESOLVE_HITS_OPTIONS
-		resolve_hits/options/cath_resolve_hits_options.cpp
-		resolve_hits/options/resolve_hits_input_options_block.cpp
-		resolve_hits/options/resolve_hits_input_spec.cpp
+		resolve_hits/options/crh_options.cpp
+		${NORMSOURCES_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK}
+		${NORMSOURCES_RESOLVE_HITS_OPTIONS_SPEC}
+)
+
+set(
+	NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR
+		resolve_hits/read_and_process_hits/hits_processor/hits_processor.cpp
+		resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.cpp
+		resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.cpp
+)
+
+set(
+	NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS
+		${NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR}
+		resolve_hits/read_and_process_hits/read_and_process_mgr.cpp
 )
 
 set(
@@ -623,17 +670,20 @@ set(
 
 set(
 	NORMSOURCES_RESOLVE_HITS
-		resolve_hits/discont_hits_index_by_start.cpp
+		${NORMSOURCES_RESOLVE_HITS_ALGO}
+		resolve_hits/calc_hit.cpp
+		resolve_hits/calc_hit_list.cpp
+		resolve_hits/cath_hit_resolver.cpp
 		${NORMSOURCES_RESOLVE_HITS_FILE}
-		resolve_hits/hit.cpp
+		resolve_hits/full_hit.cpp
+		resolve_hits/full_hit_list.cpp
 		resolve_hits/hit_arch.cpp
-		resolve_hits/hit_list.cpp
 		resolve_hits/hit_resolver.cpp
+		resolve_hits/hit_score_type.cpp
 		resolve_hits/hit_seg.cpp
 		${NORMSOURCES_RESOLVE_HITS_HTML_OUTPUT}
-		resolve_hits/masked_bests_cacher.cpp
 		${NORMSOURCES_RESOLVE_HITS_OPTIONS}
-		resolve_hits/read_and_resolve_mgr.cpp
+		${NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS}
 		resolve_hits/res_arrow.cpp
 		resolve_hits/scored_hit_arch.cpp
 		${NORMSOURCES_RESOLVE_HITS_TRIM}
@@ -1027,11 +1077,17 @@ set(
 )
 
 set(
+	NORMSOURCES_TEST_RESOLVE_HITS
+		test/resolve_hits/resolve_hits_fixture.cpp
+)
+
+set(
 	NORMSOURCES_TEST
 		test/alignment_fixture.cpp
 		test/dyn_prog_score_source_fixture.cpp
 		test/global_test_constants.cpp
 		test/log_to_ostream_guard.cpp
+		${NORMSOURCES_TEST_RESOLVE_HITS}
 )
 
 set(
@@ -1480,14 +1536,33 @@ set(
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS_ALGO
+		resolve_hits/algo/masked_bests_cache_test.cpp
+)
+
+set(
 	TESTSOURCES_RESOLVE_HITS_FILE
 		resolve_hits/file/cath_id_score_category_test.cpp
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS_HTML_OUTPUT
+		resolve_hits/html_output/resolve_hits_html_outputter_test.cpp
+)
+
+set(
+	TESTSOURCES_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK
+		resolve_hits/options/options_block/crh_filter_options_block_test.cpp
+		resolve_hits/options/options_block/crh_input_options_block_test.cpp
+		resolve_hits/options/options_block/crh_output_options_block_test.cpp
+		resolve_hits/options/options_block/crh_score_options_block_test.cpp
+		resolve_hits/options/options_block/crh_segment_options_block_test.cpp
+)
+
+set(
 	TESTSOURCES_RESOLVE_HITS_OPTIONS
-		resolve_hits/options/cath_resolve_hits_options_test.cpp
-		resolve_hits/options/resolve_hits_input_options_block_test.cpp
+		resolve_hits/options/crh_options_test.cpp
+		${TESTSOURCES_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK}
 )
 
 set(
@@ -1497,12 +1572,16 @@ set(
 
 set(
 	TESTSOURCES_RESOLVE_HITS
+		${TESTSOURCES_RESOLVE_HITS_ALGO}
+		resolve_hits/calc_hit_list_test.cpp
+		resolve_hits/cath_hit_resolver_test.cpp
 		${TESTSOURCES_RESOLVE_HITS_FILE}
-		resolve_hits/hit_list_test.cpp
+		resolve_hits/full_hit_list_test.cpp
+		resolve_hits/full_hit_test.cpp
 		resolve_hits/hit_resolver_test.cpp
 		resolve_hits/hit_seg_test.cpp
 		resolve_hits/hit_test.cpp
-		resolve_hits/masked_bests_cache_test.cpp
+		${TESTSOURCES_RESOLVE_HITS_HTML_OUTPUT}
 		${TESTSOURCES_RESOLVE_HITS_OPTIONS}
 		${TESTSOURCES_RESOLVE_HITS_TRIM}
 )
@@ -1802,26 +1881,7 @@ set(
 ##### END OF AUTO-GENERATED #####
 
 #####################################################################
-
-set(
-	STD_NORMSOURCES
-		${NORMSOURCES_ACQUIRER}
-		${NORMSOURCES_ALIGNMENT}
-		${NORMSOURCES_CHOPPING}
-		${NORMSOURCES_COMMON}
-		${NORMSOURCES_DISPLAY}
-		${NORMSOURCES_DISPLAY_COLOUR}
-		${NORMSOURCES_EXCEPTION}
-		${NORMSOURCES_FILE}
-		${NORMSOURCES_OPTIONS}
-		${NORMSOURCES_OUTPUTTER}
-		${NORMSOURCES_RESOLVE_HITS}
-		${NORMSOURCES_SCAN}
-		${NORMSOURCES_SCORE}
-		${NORMSOURCES_SSAP}
-		${NORMSOURCES_STRUCTURE}
-		${NORMSOURCES_SUPERPOSITION}
-)
+#####################################################################
 
 set(
 	STD_TESTSOURCES
@@ -1845,6 +1905,52 @@ set(
 )
 
 #####################################################################
+
+add_library(
+	std_testsources
+	OBJECT
+		${STD_TESTSOURCES}
+)
+
+#####################################################################
+#####################################################################
+
+add_library(
+	normsources_common
+		${NORMSOURCES_COMMON}
+)
+
+add_library(
+	normsources_exception
+		${NORMSOURCES_EXCEPTION}
+)
+
+add_library(
+	normsources_test
+		${NORMSOURCES_TEST}
+)
+
+#####################################################################
+
+add_library(
+	std_normsources_remain
+		${NORMSOURCES_ACQUIRER}
+		${NORMSOURCES_ALIGNMENT}
+		${NORMSOURCES_CHOPPING}
+		${NORMSOURCES_DISPLAY}
+		${NORMSOURCES_DISPLAY_COLOUR}
+		${NORMSOURCES_FILE}
+		${NORMSOURCES_OPTIONS}
+		${NORMSOURCES_OUTPUTTER}
+		${NORMSOURCES_SCAN}
+		${NORMSOURCES_SCORE}
+		${NORMSOURCES_SSAP}
+		${NORMSOURCES_STRUCTURE}
+		${NORMSOURCES_SUPERPOSITION}
+)
+
+#####################################################################
+
 
 add_library(
 	normsources_cath_assign_domains
@@ -1871,22 +1977,8 @@ add_library(
 		${NORMSOURCES_RESOLVE_HITS}
 )
 
-add_library(
-	normsources_test
-		${NORMSOURCES_TEST}
-)
 
-add_library(
-	std_normsources
-		${STD_NORMSOURCES}
-)
-
-add_library(
-	std_testsources
-	OBJECT
-		${STD_TESTSOURCES}
-)
-
+#####################################################################
 #####################################################################
 
 add_executable(
@@ -1929,15 +2021,31 @@ add_executable(
 		${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}
 )
 
+# add_executable(
+# 	mod-test-common
+# 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+# 		${TESTSOURCES_COMMON}
+# )
+#
+# add_executable(
+# 	mod-test-exception
+# 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+# 		${TESTSOURCES_EXCEPTION}
+# )
+
+#####################################################################
 #####################################################################
 
-target_link_libraries( build-test          normsources_cath_superpose normsources_test std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-assign-domains normsources_cath_assign_domains             std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-refine-align   normsources_cath_refine_align               std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                             pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-score-align    normsources_cath_score_align                std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-ssap                                                       std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-superpose      normsources_cath_superpose                  std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( build-test          normsources_cath_superpose normsources_resolve_hits normsources_test std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-assign-domains normsources_cath_assign_domains                                      std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-refine-align   normsources_cath_refine_align                                        std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                                                       normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-score-align    normsources_cath_score_align                                         std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-ssap                                                                                std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-superpose      normsources_cath_superpose                                           std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+
+# target_link_libraries( mod-test-common                                     normsources_test                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+# target_link_libraries( mod-test-exception                                  normsources_test                                           normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 
 add_dependencies( build-test          built_bioplib_libraries )
 add_dependencies( cath-assign-domains built_bioplib_libraries )
@@ -1946,6 +2054,7 @@ add_dependencies( cath-score-align    built_bioplib_libraries )
 add_dependencies( cath-ssap           built_bioplib_libraries )
 add_dependencies( cath-superpose      built_bioplib_libraries )
 
+#####################################################################
 #####################################################################
 
 if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
@@ -1959,54 +2068,57 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 		check-pdb
 			${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
 	)
-	
-	set(
-		DEVELTEST_ALIGNMENT_SOURCES
-			alignment/alignment.cpp
-			alignment/alignment_row.cpp
-			alignment/residue_score/alignment_residue_scores.cpp
-			exception/invalid_argument_exception.cpp
-)
 
-	add_executable(
-		develtest
-			executables/develtest/develtest.cpp
-			
-			# superposition/superposition_test.cpp // requires complex spider of stuff
+#	set(
+#		DEVELTEST_ALIGNMENT_SOURCES
+#			alignment/alignment.cpp
+#			alignment/alignment_row.cpp
+#			alignment/residue_score/alignment_residue_scores.cpp
+#			exception/invalid_argument_exception.cpp
+#	)
 
-			# alignment/alignment_test.cpp
-			# alignment/io/align_scaffold.cpp
-			# alignment/pair_alignment.cpp
-			# test/alignment_fixture.cpp
-			# ${DEVELTEST_ALIGNMENT_SOURCES}
-			
-			alignment/tools/alignment_breaks_test.cpp
-			alignment/tools/alignment_breaks.cpp
-			alignment/io/align_scaffold.cpp
-			${DEVELTEST_ALIGNMENT_SOURCES}
-			
-			# alignment/io/align_scaffold_test.cpp
-			# alignment/io/align_scaffold.cpp
-			# test/alignment_fixture.cpp
-			# ${DEVELTEST_ALIGNMENT_SOURCES}
-			
-			# common/boost_addenda/range/adaptor/adaptor_test.cpp
-			# exception/invalid_argument_exception.cpp
-			
-			# common/file/open_fstream.cpp
-			# exception/invalid_argument_exception.cpp
-			# exception/runtime_error_exception.cpp
-			# structure/geometry/orientation_covering.cpp
-			# structure/geometry/orientation_covering_test.cpp
-			# structure/geometry/quat_rot.cpp
-	)
-	
-	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-	target_link_libraries( check-pdb                                 std_normsources biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-	target_link_libraries( develtest                                                          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-	
+#	add_executable(
+#		develtest
+#			executables/develtest/develtest.cpp
+#
+#			# superposition/superposition_test.cpp // requires complex spider of stuff
+#
+#			# alignment/alignment_test.cpp
+#			# alignment/io/align_scaffold.cpp
+#			# alignment/pair_alignment.cpp
+#			# test/alignment_fixture.cpp
+#			# ${DEVELTEST_ALIGNMENT_SOURCES}
+#
+#			alignment/tools/alignment_breaks_test.cpp
+#			alignment/tools/alignment_breaks.cpp
+#			alignment/io/align_scaffold.cpp
+#			${DEVELTEST_ALIGNMENT_SOURCES}
+#
+#			# alignment/io/align_scaffold_test.cpp
+#			# alignment/io/align_scaffold.cpp
+#			# test/alignment_fixture.cpp
+#			# ${DEVELTEST_ALIGNMENT_SOURCES}
+#
+#			# common/boost_addenda/range/adaptor/adaptor_test.cpp
+#			# exception/invalid_argument_exception.cpp
+#
+#			# common/file/open_fstream.cpp
+#			# exception/invalid_argument_exception.cpp
+#			# exception/runtime_error_exception.cpp
+#			# structure/geometry/orientation_covering.cpp
+#			# structure/geometry/orientation_covering_test.cpp
+#			# structure/geometry/quat_rot.cpp
+#	)
+
+	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+	target_link_libraries( check-pdb                                 std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+#	target_link_libraries( develtest                                                                                                                  pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+
 	add_dependencies( snap-judgement built_bioplib_libraries )
 	add_dependencies( check-pdb      built_bioplib_libraries )
 
 endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
+
+#####################################################################
+#####################################################################
 

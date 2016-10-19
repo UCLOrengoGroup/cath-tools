@@ -58,6 +58,7 @@ namespace cath {
 		static const boost::filesystem::path              & TEST_SUP_JSON_DIR();
 		static const boost::filesystem::path              & TEST_SVM_DIR();
 		static const boost::filesystem::path              & TEST_OUTPUT_DIRECTORY();
+		static const boost::filesystem::path              & CRH_TEST_DATA_DIR();
 
 		static const boost::filesystem::path              & NONEXISTENT_FILE();
 
@@ -84,6 +85,18 @@ namespace cath {
 
 		static const boost::filesystem::path              & EXAMPLE_DOUBLES_FILENAME();
 		static const boost::filesystem::path              & EXAMPLE_TUPLES_FILENAME();
+
+		static const boost::filesystem::path              & CRH_EG_DOMTBL_IN_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_DOMTBL_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_IN_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_IN_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_RAW_SCORE_IN_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_RAW_SCORE_OUT_FILENAME();
 
 		static const double                               & LOOSER_ACCURACY_PERCENTAGE();
 		static const double                               & ACCURACY_PERCENTAGE();

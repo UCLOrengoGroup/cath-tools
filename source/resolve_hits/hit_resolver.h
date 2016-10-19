@@ -24,10 +24,10 @@
 #include <boost/optional.hpp>
 #include <boost/range/sub_range.hpp>
 
-#include "resolve_hits/best_scan_arches.h"
-#include "resolve_hits/discont_hits_index_by_start.h"
-#include "resolve_hits/hit_list.h"
-#include "resolve_hits/masked_bests_cache.h"
+#include "resolve_hits/algo/best_scan_arches.h"
+#include "resolve_hits/algo/discont_hits_index_by_start.h"
+#include "resolve_hits/algo/masked_bests_cache.h"
+#include "resolve_hits/calc_hit_list.h"
 #include "resolve_hits/resolve_hits_type_aliases.h"
 
 #include <functional>
@@ -51,7 +51,7 @@ namespace cath {
 			/// and is hence unsuitable for use with raw PDB residue numbers.
 			class hit_resolver final {
 			private:
-				static auto get_hit_stops_differ_fn(const hit_list &);
+				static auto get_hit_stops_differ_fn(const calc_hit_list &);
 
 				static void update_best_if_hit_improves(scored_arch_proxy_opt &,
 				                                        const resscr_t &,
@@ -60,13 +60,13 @@ namespace cath {
 				                                        const resscr_t &);
 
 				scored_arch_proxy_opt get_best_scored_arch_with_one_of_hits(const boost::sub_range<boost::integer_range<hitidx_t>> &,
-				                                                            const hit_vec &,
+				                                                            const calc_hit_vec &,
 				                                                            const res_arrow &,
 				                                                            const best_scan_arches &,
 				                                                            const resscr_t &);
 
 				/// \brief A reference to the hits to be resolved
-				std::reference_wrapper<const hit_list> hits;
+				std::reference_wrapper<const calc_hit_list> hits;
 
 				/// \brief The maximum stop of any of the hits
 				residx_t max_stop;
@@ -80,13 +80,13 @@ namespace cath {
 				/// This is initialised on construction and isn't modified after that
 				discont_hits_index_by_start the_dhibs;
 
-				scored_arch_proxy get_best_score_and_arch_of_specified_regions(const hit_vec &,
+				scored_arch_proxy get_best_score_and_arch_of_specified_regions(const calc_hit_vec &,
 				                                                               const res_arrow &,
 				                                                               const res_arrow &,
 				                                                               const scored_arch_proxy &);
 
 			public:
-				explicit hit_resolver(const hit_list &);
+				explicit hit_resolver(const calc_hit_list &);
 
 				scored_hit_arch resolve();
 			};
@@ -118,7 +118,7 @@ namespace cath {
 			///
 			/// Note: Not using max_element because that'd probably call get_complex_hit_score() twice for many elements
 			inline scored_arch_proxy_opt hit_resolver::get_best_scored_arch_with_one_of_hits(const boost::sub_range<boost::integer_range<hitidx_t>> &arg_hit_indices,  ///< The indices of the hits to consider
-			                                                                                 const hit_vec                                          &arg_mask,         ///< The active mask defining no-go regions
+			                                                                                 const calc_hit_vec                                     &arg_mask,         ///< The active mask defining no-go regions
 			                                                                                 const res_arrow                                        &arg_start_arrow,  ///< The start point of the current scan (from which arg_bests should have results (up to the one place before the stop of these hits))
 			                                                                                                                                                           ///< Guaranteed to be at the boundary of a segment in arg_masks, or at the very start if arg_masks is empty
 			                                                                                 const best_scan_arches                                 &arg_bests,        ///< The history of best-seen architectures so far in this layer of dynamic programming. This is setup to handle the current forbidden arg_masks.
@@ -156,6 +156,7 @@ namespace cath {
 					// Else if the hit is discontiguous...
 					else {
 						const auto &hit_start = the_hit.get_start_arrow();
+
 						const scored_arch_proxy &best_hit_complement =
 							// If the discontiguous hit is within this region
 							//   (ie hit_start >= arg_start_arrow;
@@ -206,7 +207,7 @@ namespace cath {
 
 		}
 
-		scored_hit_arch resolve_hits(const hit_list &);
+		scored_hit_arch resolve_hits(const calc_hit_list &);
 
 	}
 }
