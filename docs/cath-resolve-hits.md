@@ -3,6 +3,9 @@ cath-resolve-hits
 
 A fast, effective way to collapse a list of domain matches to your query sequence(s) down to the best, non-overlapping subset (ie domain architecture).
 
+![Screenshot](img/cath-resolve-hits.example.jpg)
+ &nbsp; &nbsp; *__Above__: cath-resolve-hits chooses the hits at the top from the list of posible hits at the bottom*
+
 Usage
 -----
 

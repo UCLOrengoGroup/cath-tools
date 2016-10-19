@@ -1,0 +1,6 @@
+img[alt="Screenshot"] {
+	border-color : black;
+	border-style : solid;
+	border-width : 1px;
+	padding      : 5px;
+}

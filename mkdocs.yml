@@ -1,0 +1,9 @@
+site_name: cath-tools
+theme: readthedocs
+
+pages:
+- Home:  index.md
+- Build: build.md
+- cath-resolve-hits: cath-resolve-hits.md
+
+extra_css: [extra.css]
