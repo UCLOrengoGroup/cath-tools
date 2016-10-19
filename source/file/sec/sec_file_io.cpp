@@ -159,7 +159,7 @@ pair<size_t, sec_file_record> cath::file::detail::parse_sec_main_line(const stri
 	// Prepare variables to hold the parsed data
 	size_t         sec_struc_number;
 	sec_struc_type helix_or_strand;
-	char           strand_type;
+	char           unused_strand_type;
 	size_t         start_residue_num, stop_residue_num;
 	double         midpoint_x,  midpoint_y,  midpoint_z;
 	double         unit_dirn_x, unit_dirn_y, unit_dirn_z;
@@ -170,19 +170,13 @@ pair<size_t, sec_file_record> cath::file::detail::parse_sec_main_line(const stri
 	try {
 		sec_line_ss >> sec_struc_number;
 		sec_line_ss >> helix_or_strand;
-		sec_line_ss >> strand_type;
+		sec_line_ss >> unused_strand_type;
 		sec_line_ss >> start_residue_num >> stop_residue_num;
 		sec_line_ss >> midpoint_x  >> midpoint_y  >> midpoint_z;
 		sec_line_ss >> unit_dirn_x >> unit_dirn_y >> unit_dirn_z;
 	}
 	catch (const boost::bad_lexical_cast &) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to cast a column whilst parsing a main lie record from a sec file, which probably means the line's malformed.\nRecord was \"" + arg_sec_line_string + "\""));
-	}
-
-	// Check that the strand type is always a '*' character
-	if (strand_type != '*') {
-		cerr << "Woohoo - strand_type is '" << strand_type << "' not '*' and hence may have some use" << endl;
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Woohoo - strand_type is not '*' and hence may have some use"));
 	}
 
 	// Return a pair containing the index and a newly populated sec_file_record
