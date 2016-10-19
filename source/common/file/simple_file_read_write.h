@@ -32,6 +32,7 @@
 #include "common/algorithm/transform_tuple.h"
 #include "common/cpp14/cbegin_cend.h"
 #include "common/file/open_fstream.h"
+#include "common/type_aliases.h"
 #include "exception/out_of_range_exception.h"
 
 #include <fstream>
@@ -280,16 +281,26 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		template<typename SinglePassRange>
+		template <typename SinglePassRange>
 		void write_file(const boost::filesystem::path &arg_file, ///< TODOCUMENT
 		                const SinglePassRange         &arg_range ///< TODOCUMENT
 		                ) {
-		    BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept<const SinglePassRange> ));
-		    cath::common::write_file(
-		    	arg_file,
-		    	common::cbegin( arg_range ),
-		    	common::cend  ( arg_range )
-		    );
+			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept<const SinglePassRange> ));
+			cath::common::write_file(
+				arg_file,
+				common::cbegin( arg_range ),
+				common::cend  ( arg_range )
+			);
+		}
+
+		/// \brief Write a single string to a file
+		inline void write_file(const boost::filesystem::path &arg_file,  ///< The file to which the string should be written
+		                       const std::string             &arg_string ///< The string to write
+		                       ) {
+			cath::common::write_file(
+				arg_file,
+				str_vec{ { arg_string } }
+			);
 		}
 	}
 }
