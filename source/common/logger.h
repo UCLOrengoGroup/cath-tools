@@ -32,15 +32,16 @@ namespace cath {
 
 		/// TODOCUMENT
 		enum class return_code {
-			SUCCESS                              =  0,
-			EXCEPTION_WITHOUT_SPECIFIC_RETCODE   =  1,
-			TOO_FEW_PDBS_FOR_ALIGNMENT           = 10,
-			TOO_MANY_PDBS_FOR_ALIGNMENT          = 20,
-			INSUFFICIENT_RESIDUE_NAME_OVERLAPS   = 30,
-			NO_SUCH_FILE                         = 40,
-			MALFORMED_PDB_FILE                   = 50,
-			UNABLE_TO_LOAD_SSAP_LEGACY_ALIGNMENT = 60,
-			NO_PDB_FILES_LOADED                  = 70
+			SUCCESS                              =  0, ///< TODOCUMENT
+			EXCEPTION_WITHOUT_SPECIFIC_RETCODE   =  1, ///< TODOCUMENT
+			TOO_FEW_PDBS_FOR_ALIGNMENT           = 10, ///< TODOCUMENT
+			TOO_MANY_PDBS_FOR_ALIGNMENT          = 20, ///< TODOCUMENT
+			INSUFFICIENT_RESIDUE_NAME_OVERLAPS   = 30, ///< TODOCUMENT
+			NO_SUCH_FILE                         = 40, ///< TODOCUMENT
+			MALFORMED_PDB_FILE                   = 50, ///< TODOCUMENT
+			UNABLE_TO_LOAD_SSAP_LEGACY_ALIGNMENT = 60, ///< TODOCUMENT
+			NO_PDB_FILES_LOADED                  = 70, ///< TODOCUMENT
+			MALFORMED_RESOLVE_HITS_INFILE        = 80  ///< TODOCUMENT
 		};
 
 		static void log_and_exit(const return_code &,
