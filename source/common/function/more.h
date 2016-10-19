@@ -21,6 +21,8 @@
 #ifndef MORE_H_INCLUDED
 #define MORE_H_INCLUDED
 
+#include <utility>
+
 namespace cath {
 	namespace common {
 

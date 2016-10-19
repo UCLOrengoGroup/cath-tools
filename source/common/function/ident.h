@@ -21,6 +21,8 @@
 #ifndef IDENT_H_INCLUDED
 #define IDENT_H_INCLUDED
 
+#include <utility>
+
 namespace cath {
 	namespace common {
 

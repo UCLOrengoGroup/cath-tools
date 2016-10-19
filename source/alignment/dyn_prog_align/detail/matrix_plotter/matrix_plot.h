@@ -21,6 +21,8 @@
 #ifndef MATRIX_PLOT_H_INCLUDED
 #define MATRIX_PLOT_H_INCLUDED
 
+#include <boost/filesystem/path.hpp>
+
 #include "alignment/dyn_prog_align/detail/return_path_matrix.h"
 #include "alignment/dyn_prog_align/detail/score_accumulation_matrix.h"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.h"
