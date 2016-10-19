@@ -160,6 +160,17 @@ namespace cath {
 			);
 		}
 
+		/// \brief Parse a double from the field between the two specified string iterators
+		inline double parse_double_from_field(const str_citr &arg_begin_itr, ///< A const_iterator pointing to the begin              of the field to be parsed
+		                                      const str_citr &arg_end_itr    ///< A const_iterator pointing to the end (one-past-end) of the field to be parsed
+		                                      ) {
+			return detail::do_spirit_parse<double>(
+				arg_begin_itr,
+				arg_end_itr,
+				boost::spirit::double_
+			);
+		}
+
 		/// \brief Parse a float from the field between the two specified string iterators
 		inline float parse_float_from_field(const str_citr &arg_begin_itr, ///< A const_iterator pointing to the begin              of the field to be parsed
 		                                    const str_citr &arg_end_itr    ///< A const_iterator pointing to the end (one-past-end) of the field to be parsed
