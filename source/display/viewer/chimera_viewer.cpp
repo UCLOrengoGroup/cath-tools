@@ -100,8 +100,8 @@ void cath::detail::write_chimera_pair_alignments(ostream                     &ar
 
 			bool added_pair_distances(false);
 			for (alignment::size_type aln_posn_ctr = 0; aln_posn_ctr < aln_length; ++aln_posn_ctr) {
-				const opt_aln_posn position_a = the_alignment.position_of_entry_of_index( entry_ctr_a, aln_posn_ctr );
-				const opt_aln_posn position_b = the_alignment.position_of_entry_of_index( entry_ctr_b, aln_posn_ctr );
+				const aln_posn_opt position_a = the_alignment.position_of_entry_of_index( entry_ctr_a, aln_posn_ctr );
+				const aln_posn_opt position_b = the_alignment.position_of_entry_of_index( entry_ctr_b, aln_posn_ctr );
 				if ( position_a && position_b) {
 					added_pair_distances = true;
 					if ( *position_a >= residue_names_a.size() ) {
@@ -196,8 +196,8 @@ void cath::detail::write_chimera_global_alignment(ostream                     &a
 		for (size_t entry_a = 0; entry_a < num_entries; ++entry_a) {
 			for (size_t entry_b = entry_a + 1; entry_b < num_entries; ++entry_b) {
 
-				const opt_aln_posn posn_a = the_alignment.position_of_entry_of_index( entry_a, aln_index );
-				const opt_aln_posn posn_b = the_alignment.position_of_entry_of_index( entry_b, aln_index );
+				const aln_posn_opt posn_a = the_alignment.position_of_entry_of_index( entry_a, aln_index );
+				const aln_posn_opt posn_b = the_alignment.position_of_entry_of_index( entry_b, aln_index );
 
 				if ( posn_a && posn_b ) {
 					added_distances = true;

@@ -31,14 +31,14 @@ using namespace std;
 
 using boost::none;
 
-const opt_aln_posn_vec alignment_fixture::aln_list_a     = { opt_size( 0_z ), 1, 2, 3       };
-const opt_aln_posn_vec alignment_fixture::aln_list_b     = { opt_size( 0_z ), 1, 2, none    };
-const opt_aln_posn_vec alignment_fixture::aln_list_long  = { opt_size( 0_z ), 1, 2, 3, 4, 5 };
+const aln_posn_opt_vec alignment_fixture::aln_list_a     = { size_opt( 0_z ), 1, 2, 3       };
+const aln_posn_opt_vec alignment_fixture::aln_list_b     = { size_opt( 0_z ), 1, 2, none    };
+const aln_posn_opt_vec alignment_fixture::aln_list_long  = { size_opt( 0_z ), 1, 2, 3, 4, 5 };
 
 const alignment        alignment_fixture::aln_a_a        ( { aln_list_a,    aln_list_a    } );
 const alignment        alignment_fixture::aln_a_b        ( { aln_list_a,    aln_list_b    } );
 const alignment        alignment_fixture::aln_b_a        ( { aln_list_b,    aln_list_a    } );
 const alignment        alignment_fixture::aln_long_long  ( { aln_list_long, aln_list_long } );
 
-const opt_score_vec    alignment_fixture::example_scores = { 3.6, 6.8, 2.1, 999.999 };
+const score_opt_vec    alignment_fixture::example_scores = { 3.6, 6.8, 2.1, 999.999 };
 

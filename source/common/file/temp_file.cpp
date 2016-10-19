@@ -38,7 +38,7 @@ using boost::none;
 
 /// \brief Constructor for temp_file.
 temp_file::temp_file(const string &arg_filename_pattern ///< A pattern for the filename to create with % symbols for characters to be altered (eg ".%%%%-%%%%-%%%%-%%%%.pml")
-                     ) : filename( ! arg_filename_pattern.empty() ? opt_path( temp_filename_of_basename_pattern( arg_filename_pattern ) ) : none ) {
+                     ) : filename( ! arg_filename_pattern.empty() ? path_opt( temp_filename_of_basename_pattern( arg_filename_pattern ) ) : none ) {
 }
 
 /// \brief A function to construct a temporary filename from a pattern.
@@ -63,7 +63,7 @@ temp_file::~temp_file() noexcept {
 	}
 }
 /// \brief TODOCUMENT
-const opt_path & temp_file::get_opt_filename() const {
+const path_opt & temp_file::get_opt_filename() const {
 	return filename;
 }
 

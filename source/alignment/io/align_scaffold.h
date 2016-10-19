@@ -32,7 +32,7 @@ namespace cath {
 	namespace align {
 		namespace detail {
 
-			opt_aln_posn_vec alignment_entry_of_scaffold_string(const std::string &);
+			aln_posn_opt_vec alignment_entry_of_scaffold_string(const std::string &);
 			std::string scaffold_line_of_alignment_entry(const alignment &,
 			                                             const size_t &);
 

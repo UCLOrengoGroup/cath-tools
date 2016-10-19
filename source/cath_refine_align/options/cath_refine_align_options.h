@@ -64,7 +64,7 @@ namespace cath {
 			display_options_block              the_display_options_block;
 
 			virtual std::string do_get_program_name() const override final;
-			virtual opt_str do_get_error_or_help_string() const override final;
+			virtual str_opt do_get_error_or_help_string() const override final;
 
 			virtual std::string do_get_help_prefix_string() const override final;
 			virtual std::string do_get_help_suffix_string() const override final;

@@ -154,7 +154,7 @@ void data_dirs_options_block::do_add_hidden_options_to_description(options_descr
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts
-opt_str data_dirs_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt data_dirs_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                    ) const {
 	const auto &cath_root_dir = the_data_dirs_spec.get_cath_root_dir();
 	if ( ! cath_root_dir.empty() &&  ! is_acceptable_input_dir( cath_root_dir ) ) {

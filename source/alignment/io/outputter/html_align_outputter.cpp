@@ -131,7 +131,7 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 		arg_os << "<div class=\"seq-name\">&gt;" << name << "</div>";
 		arg_os << "<div class=\"seq-res\">";
 		for (alignment::size_type index_ctr = 0; index_ctr < length; ++index_ctr) {
-			const opt_aln_posn position = the_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
+			const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
 			if ( position ) {
 				const char           amino_acid_letter  = *get_amino_acid_letter( the_pdb.get_residue_cref_of_backbone_complete_index( *position ) );
 				const size_size_pair entry_and_res_pair = make_pair( entry_ctr, *position );

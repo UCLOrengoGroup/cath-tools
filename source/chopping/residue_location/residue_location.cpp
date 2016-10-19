@@ -48,12 +48,12 @@ residue_location::residue_location(const size_t &arg_residue_index ///< TODOCUME
 }
 
 /// \brief TODOCUMENT
-const opt_residue_name & residue_location::get_opt_residue_name() const {
+const residue_name_opt & residue_location::get_opt_residue_name() const {
 	return the_residue_name;
 }
 
 /// \brief TODOCUMENT
-const opt_size & residue_location::get_opt_residue_index() const {
+const size_opt & residue_location::get_opt_residue_index() const {
 	return residue_index;
 }
 

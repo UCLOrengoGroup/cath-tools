@@ -60,7 +60,7 @@ ostream & cath::align::operator<<(ostream                     &arg_os,          
 	const alignment            the_alignment   = arg_horiz_align_outputter.get_alignment();
 	const alignment::size_type length          = the_alignment.length();
 	const alignment::size_type num_entries     = the_alignment.num_entries();
-	const opt_aln_posn         max_index_opt   = get_max_last_present_position( the_alignment );
+	const aln_posn_opt         max_index_opt   = get_max_last_present_position( the_alignment );
 	const aln_posn_type        max_index       = max_index_opt ? max_index_opt.get() : 0;
 	const size_t               max_index_width = lexical_cast<string>( max_index ).length();
 
@@ -70,7 +70,7 @@ ostream & cath::align::operator<<(ostream                     &arg_os,          
 		arg_os << "\n\t";
 		for (alignment::size_type index_ctr = 0; index_ctr < length; ++index_ctr) {
 			arg_os << " ";
-			const opt_aln_posn position = the_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
+			const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
 			if ( position ) {
 				ostringstream posn_ss;
 				posn_ss << setw( numeric_cast<int>( max_index_width ) ) << setfill( ' ' );

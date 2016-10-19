@@ -91,7 +91,7 @@ void display_colour_spec::colour_pdb_residue(const size_t         &arg_pdb_index
 }
 
 /// \brief TODOCUMENT
-const opt_display_colour & display_colour_spec::get_base_clr() const {
+const display_colour_opt & display_colour_spec::get_base_clr() const {
 	return base_clr;
 }
 
@@ -108,27 +108,27 @@ const size_size_display_colour_map & display_colour_spec::get_clr_of_pdb_and_res
 /// \brief TODOCUMENT
 ///
 /// relates display_colour_spec
-opt_display_colour cath::get_clr_of_pdb_index(const display_colour_spec &arg_display_colour_spec, ///< TODOCUMENT
+display_colour_opt cath::get_clr_of_pdb_index(const display_colour_spec &arg_display_colour_spec, ///< TODOCUMENT
                                               const size_t              &arg_entry                ///< TODOCUMENT
                                               ) {
 	const size_display_colour_map &colour_of_pdb = arg_display_colour_spec.get_clr_of_pdb();
 	const bool                     has_entry     = contains( colour_of_pdb, arg_entry );
-	return has_entry ? opt_display_colour( colour_of_pdb.at( arg_entry ) )
-	                 : opt_display_colour( none                          );
+	return has_entry ? display_colour_opt( colour_of_pdb.at( arg_entry ) )
+	                 : display_colour_opt( none                          );
 }
 
 /// \brief TODOCUMENT
 ///
 /// relates display_colour_spec
-opt_display_colour cath::get_clr_of_pdb_and_res_indices(const display_colour_spec &arg_display_colour_spec, ///< TODOCUMENT
+display_colour_opt cath::get_clr_of_pdb_and_res_indices(const display_colour_spec &arg_display_colour_spec, ///< TODOCUMENT
                                                         const size_t              &arg_entry,               ///< TODOCUMENT
                                                         const size_t              &arg_index                ///< TODOCUMENT
                                                         ) {
 	const size_size_pair                entry_index_pair = make_pair( arg_entry, arg_index );
 	const size_size_display_colour_map &colour_of_pdb    = arg_display_colour_spec.get_clr_of_pdb_and_res();
 	const bool                          has_entry        = contains( colour_of_pdb, entry_index_pair );
-	return has_entry ? opt_display_colour( colour_of_pdb.at( entry_index_pair ) )
-	                 : opt_display_colour( none                                 );
+	return has_entry ? display_colour_opt( colour_of_pdb.at( entry_index_pair ) )
+	                 : display_colour_opt( none                                 );
 }
 
 /// \brief TODOCUMENT

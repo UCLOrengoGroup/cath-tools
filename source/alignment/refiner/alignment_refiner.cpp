@@ -142,8 +142,8 @@ bool_aln_pair alignment_refiner::iterate_step_for_alignment_split(const alignmen
 
 	const alignment::size_type alignment_length = arg_alignment.length();
 	for (size_t aln_ctr = 0; aln_ctr < alignment_length; ++aln_ctr) {
-		const opt_size mapping_index_a = mapping_a.index_of_orig_aln_index( aln_ctr );
-		const opt_size mapping_index_b = mapping_b.index_of_orig_aln_index( aln_ctr );
+		const size_opt mapping_index_a = mapping_a.index_of_orig_aln_index( aln_ctr );
+		const size_opt mapping_index_b = mapping_b.index_of_orig_aln_index( aln_ctr );
 		if ( ! mapping_index_a || ! mapping_index_b ) {
 			continue;
 		}

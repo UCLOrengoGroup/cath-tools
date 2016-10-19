@@ -33,7 +33,7 @@ namespace cath {
 	class display_colour;
 
 	/// \brief TODOCUMENT
-	using opt_display_colour = boost::optional<display_colour>;
+	using display_colour_opt = boost::optional<display_colour>;
 
 	/// \brief TODOCUMENT
 	using display_colour_set = std::set<display_colour>;

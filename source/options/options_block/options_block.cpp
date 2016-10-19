@@ -89,7 +89,7 @@ options_description options_block::get_hidden_options_description() {
 }
 
 /// \brief An NVI pass-through to a method that returns a string describing any problems or "" if none
-opt_str options_block::invalid_string(const variables_map &arg_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt options_block::invalid_string(const variables_map &arg_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                       ) const {
 	return do_invalid_string( arg_variables_map );
 }

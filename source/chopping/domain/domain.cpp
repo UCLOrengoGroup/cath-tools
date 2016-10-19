@@ -77,13 +77,13 @@ const region & domain::operator[](const size_t &arg_index ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-void domain::set_opt_domain_id(const opt_str &arg_opt_domain_id ///< TODOCUMENT
+void domain::set_opt_domain_id(const str_opt &arg_opt_domain_id ///< TODOCUMENT
                                ) {
 	domain_id = arg_opt_domain_id;
 }
 
 /// \brief TODOCUMENT
-const opt_str & domain::get_opt_domain_id() const {
+const str_opt & domain::get_opt_domain_id() const {
 	return domain_id;
 }
 
@@ -120,7 +120,7 @@ string cath::chop::get_domain_id(const domain &arg_domain ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-opt_residue_locating cath::chop::get_residue_locating(const domain &arg_domain ///< TODOCUMENT
+residue_locating_opt cath::chop::get_residue_locating(const domain &arg_domain ///< TODOCUMENT
                                                       ) {
 	// If there are no segments then this domain doesn't locate any residues so return none
 	if ( arg_domain.num_segments() == 0 ) {

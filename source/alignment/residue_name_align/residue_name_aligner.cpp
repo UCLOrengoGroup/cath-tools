@@ -85,7 +85,7 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 
 	// Data structures to create the alignment:
 	size_vec next_index_to_add_for_lists(num_lists, 0);
-	opt_aln_posn_vec_vec raw_alignment_data( num_lists );
+	aln_posn_opt_vec_vec raw_alignment_data( num_lists );
 
 	// Do the actual work of building an alignment
 	bool more_to_do = true;
@@ -116,18 +116,18 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 			}
 
 			// Find which entries have equivalent residues and the indices of those equivalents
-			opt_aln_posn_vec equivalent_indices;
+			aln_posn_opt_vec equivalent_indices;
 			equivalent_indices.reserve( num_lists );
 			for (const residue_name_align_map &map : maps) {
-				const opt_aln_posn value = contains_residue_name( map, the_res_name ) ? opt_aln_posn( get_index_of_residue_name( map, the_res_name ) )
-				                                                                      : opt_aln_posn( none );
+				const aln_posn_opt value = contains_residue_name( map, the_res_name ) ? aln_posn_opt( get_index_of_residue_name( map, the_res_name ) )
+				                                                                      : aln_posn_opt( none );
 				equivalent_indices.push_back( value );
 			}
 
 			// Check whether inserting this row of of equivalents would involve skipping anything
 			bool found_skip_here = false;
 			for (size_t entry_check_ctr = 0; entry_check_ctr < num_lists; ++entry_check_ctr) {
-				const opt_aln_posn &position = equivalent_indices[entry_check_ctr];
+				const aln_posn_opt &position = equivalent_indices[entry_check_ctr];
 				if ( position && *position != next_index_to_add_for_lists[ entry_check_ctr ] ) {
 					if ( *position < next_index_to_add_for_lists[entry_check_ctr]) {
 						BOOST_THROW_EXCEPTION(
@@ -168,8 +168,8 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 			// Insert the new positions and increment the relevant indices in next_index_to_add_for_lists
 			for (size_t entry_check_ctr = 0; entry_check_ctr < num_lists; ++entry_check_ctr) {
 				const bool &should_insert_entry = equivalent_presences[ entry_check_ctr ];
-				const opt_aln_posn value = should_insert_entry ? next_index_to_add_for_lists[ entry_check_ctr ]
-				                                               : opt_aln_posn( none );
+				const aln_posn_opt value = should_insert_entry ? next_index_to_add_for_lists[ entry_check_ctr ]
+				                                               : aln_posn_opt( none );
 				raw_alignment_data[ entry_check_ctr ].push_back( value );
 				if ( should_insert_entry ) {
 					++( next_index_to_add_for_lists[ entry_check_ctr ] );

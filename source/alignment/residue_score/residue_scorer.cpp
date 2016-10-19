@@ -155,7 +155,7 @@ alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alig
 		}
 	}
 
-	opt_score_vec_vec scores( num_entries, opt_score_vec( length ) );
+	score_opt_vec_vec scores( num_entries, score_opt_vec( length ) );
 	for (size_t index_ctr = 0; index_ctr < length; ++index_ctr) {
 		for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
 			if ( has_position_of_entry_of_index( arg_alignment, entry_ctr, index_ctr ) ) {

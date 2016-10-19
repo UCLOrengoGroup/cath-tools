@@ -41,11 +41,11 @@ namespace cath {
 		/// \brief TODOCUMENT
 		using aln_posn_vec_vec = std::vector<aln_posn_vec>;
 		/// \brief TODOCUMENT
-		using opt_aln_posn = boost::optional<aln_posn_type>;
+		using aln_posn_opt = boost::optional<aln_posn_type>;
 		/// \brief TODOCUMENT
-		using opt_aln_posn_vec = std::vector<opt_aln_posn>;
+		using aln_posn_opt_vec = std::vector<aln_posn_opt>;
 		/// \brief TODOCUMENT
-		using opt_aln_posn_vec_vec = std::vector<opt_aln_posn_vec>;
+		using aln_posn_opt_vec_vec = std::vector<aln_posn_opt_vec>;
 
 		namespace detail {
 			/// \brief TODOCUMENT
@@ -66,7 +66,7 @@ namespace cath {
 		using size_size_alignment_tuple_vec = std::vector<size_size_alignment_tuple>;
 
 		/// \brief TODOCUMENT
-		using opt_alignment = boost::optional<alignment>;
+		using alignment_opt = boost::optional<alignment>;
 
 		/// \brief TODOCUMENT
 		using alignment_vec = std::vector<alignment>;

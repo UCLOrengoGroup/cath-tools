@@ -83,7 +83,7 @@ void view_cache_index::store(const view_cache_index_entry &arg_entry ///< TODOCU
 //bool cath::index_contains_value(const view_cache_index &arg_view_cache_index, ///< TODOCUMENT
 //                                const coord            &arg_coord             ///< TODOCUMENT
 //                                ) {
-//	const opt_vcie_vec_cref entries = arg_view_cache_index.get_entries( arg_coord );
+//	const vcie_vec_cref_opt entries = arg_view_cache_index.get_entries( arg_coord );
 //	/// \todo Make this neater with ranges/lambdas/algorithms etc
 //	if ( entries ) {
 //		for (const view_cache_index_entry &the_entry : *entries) {

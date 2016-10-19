@@ -55,14 +55,14 @@ namespace cath {
 			~alignment_test_suite_fixture() noexcept = default;
 
 			void check_consecutive_position(const alignment &,
-			                                const opt_size_size_pair &);
+			                                const size_size_pair_opt &);
 
 			/// \brief Check that the has_position... and get_position methods work for an alignment by comparing to the lists from which it was made
 			void check_details_match_lists(const alignment            &arg_aln,
-			                               const opt_aln_posn_vec_vec &arg_lists
+			                               const aln_posn_opt_vec_vec &arg_lists
 			                               ) {
 				// Require that the sizes all match the length of the alignment
-				for (const opt_aln_posn_vec &list : arg_lists) {
+				for (const aln_posn_opt_vec &list : arg_lists) {
 					BOOST_REQUIRE_EQUAL( arg_aln.length(), list.size() );
 				}
 
@@ -81,7 +81,7 @@ namespace cath {
 					// Loop over the entries
 					for (size_t entry_ctr = 0; entry_ctr < arg_lists.size(); ++entry_ctr) {
 						// Check has_position_of_index_of_entry()
-						const opt_aln_posn entry = arg_lists[entry_ctr][index_ctr];
+						const aln_posn_opt entry = arg_lists[entry_ctr][index_ctr];
 						BOOST_REQUIRE_EQUAL(
 							static_cast<bool>( entry ),
 							has_position_of_entry_of_index( arg_aln, entry_ctr, index_ctr )
@@ -160,7 +160,7 @@ namespace cath {
 
 /// \brief Check the consecutive position functions get the same result for the specified alignment as specified
 void cath::test::alignment_test_suite_fixture::check_consecutive_position(const alignment          &arg_alignment, ///< The alignment to search
-                                                                          const opt_size_size_pair &arg_expected   ///< The correct result
+                                                                          const size_size_pair_opt &arg_expected   ///< The correct result
                                                                           ) {
 
 	if ( arg_expected ) {
@@ -211,8 +211,8 @@ BOOST_AUTO_TEST_CASE(append_a_b_and_both) {
 	alignment new_aln_a_b(alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT);
 	alignment new_aln_b_a(alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT);
 	for ( size_t ctr = 0; ctr < aln_list_a.size(); ++ctr ) {
-		const opt_aln_posn &a_posn = aln_list_a[ctr];
-		const opt_aln_posn &b_posn = aln_list_b[ctr];
+		const aln_posn_opt &a_posn = aln_list_a[ctr];
+		const aln_posn_opt &b_posn = aln_list_b[ctr];
 
 		if ( a_posn  && b_posn ) {
 			append_position_both( new_aln_a_b, *a_posn, *b_posn );

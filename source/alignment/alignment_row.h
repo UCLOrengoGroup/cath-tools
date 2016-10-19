@@ -40,16 +40,16 @@ namespace cath {
 		class alignment_row final {
 		private:
 			/// \brief The positions in the row (with absent positions represented as none)
-			opt_aln_posn_vec positions;
+			aln_posn_opt_vec positions;
 
 			void sanity_check_entry(const size_t &) const;
 			void check_has_position_of_entry(const size_t &) const;
 
 		public:
-			explicit alignment_row(const opt_aln_posn_vec &);
+			explicit alignment_row(const aln_posn_opt_vec &);
 
 			size_t num_entries() const;
-			opt_aln_posn position_of_entry(const size_t &) const;
+			aln_posn_opt position_of_entry(const size_t &) const;
 		};
 
 		bool has_position_of_entry(const alignment_row &,
@@ -102,7 +102,7 @@ namespace cath {
 		alignment_row join(const alignment_row &,
 		                   const alignment_row &);
 
-		void set_positions_of_entries_from_row(opt_aln_posn_vec &,
+		void set_positions_of_entries_from_row(aln_posn_opt_vec &,
 		                                       const alignment_row &,
 		                                       const size_vec &);
 
@@ -114,7 +114,7 @@ namespace cath {
 		const alignment_row remove_entry_from_row(const alignment_row &,
 		                                          const size_t &);
 
-		opt_aln_posn_vec get_has_posns_and_posns(const alignment_row &);
+		aln_posn_opt_vec get_has_posns_and_posns(const alignment_row &);
 	}
 }
 

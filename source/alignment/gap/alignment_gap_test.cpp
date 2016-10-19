@@ -62,11 +62,11 @@ namespace cath {
 /// \brief Build an alignment from strings of 'x's for positions and '-'s for gaps (and ignored spaces for formatting)
 alignment cath::test::alignment_gap_test_suite_fixture::make_gap_alignment_of_strings(const str_vec &arg_strings ///< The strings from which to make the alignment entries
                                                                                       ) {
-	opt_aln_posn_vec_vec entries;
+	aln_posn_opt_vec_vec entries;
 	entries.reserve( arg_strings.size() );
 	for (const string &the_string : arg_strings) {
 		const string stripped_string = erase_all_copy( the_string, " " );
-		opt_aln_posn_vec positions;
+		aln_posn_opt_vec positions;
 		positions.reserve( stripped_string.length() );
 		size_t counter = 0;
 		for (const char &character : stripped_string) {

@@ -58,7 +58,7 @@ namespace cath {
 	                                 const std::string &,
 	                                 const opts::data_dirs_spec &,
 	                                 const protein_source_file_set &,
-	                                 const opt_path &,
+	                                 const path_opt &,
 	                                 std::ostream &arg_stderr = std::cerr);
 
 	void run_ssap(const opts::cath_ssap_options &,
@@ -81,20 +81,20 @@ namespace cath {
 	                                                 const entry_querier &,
 	                                                 const opts::old_ssap_options_block &,
 	                                                 const opts::data_dirs_spec &,
-	                                                 const align::opt_alignment &);
+	                                                 const align::alignment_opt &);
 
 	protein read_protein_data_from_ssap_options_files(const opts::data_dirs_spec &,
 	                                                  const std::string &,
 	                                                  const protein_source_file_set &,
-	                                                  const opt_path &,
+	                                                  const path_opt &,
 	                                                  std::ostream &arg_stderr = std::cerr);
 
 	clique read_clique_file(const boost::filesystem::path &);
 
 	void set_mask_matrix(const protein &,
 	                     const protein &,
-	                     const align::opt_alignment &,
-	                     const opt_path &);
+	                     const align::alignment_opt &,
+	                     const path_opt &);
 
 	void select_pairs(const protein &,
 	                  const protein &,

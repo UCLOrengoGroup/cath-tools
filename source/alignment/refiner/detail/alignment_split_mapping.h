@@ -66,7 +66,7 @@ namespace cath {
 				///
 				/// Since some rows may have been inserted to fill in missing residues, not all indices
 				/// will map back to original alignment positions
-				opt_size_vec idx_of_orig_aln_idx;
+				size_opt_vec idx_of_orig_aln_idx;
 
 				/// \brief TODOCUMENT
 				size_vec orig_aln_entries;
@@ -86,11 +86,11 @@ namespace cath {
 				size_t length() const;
 				size_t num_entries() const;
 
-				opt_size index_of_orig_aln_index(const size_t &) const;
-				opt_size entry_of_orig_aln_entry(const size_t &) const;
+				size_opt index_of_orig_aln_index(const size_t &) const;
+				size_opt entry_of_orig_aln_entry(const size_t &) const;
 				size_t orig_aln_entry_of_entry(const size_t &) const;
 
-				opt_aln_posn position_of_entry_of_index(const size_t &,
+				aln_posn_opt position_of_entry_of_index(const size_t &,
 				                                        const size_t &) const;
 
 				size_t index_of_protein_index(const size_t &,

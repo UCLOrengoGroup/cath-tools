@@ -67,7 +67,7 @@ namespace cath {
 //			aln_posn_vec_vec old_positions;
 
 			/// \brief TODOCUMENT
-			opt_aln_posn_vec_vec positions;
+			aln_posn_opt_vec_vec positions;
 
 			/// \brief TODOCUMENT
 			size_type logical_length;
@@ -85,7 +85,7 @@ namespace cath {
 
 		public:
 			explicit alignment(const size_type &);
-			explicit alignment(const opt_aln_posn_vec_vec &);
+			explicit alignment(const aln_posn_opt_vec_vec &);
 
 			void reserve(const size_type &);
 			size_type num_entries() const;
@@ -95,7 +95,7 @@ namespace cath {
 			const alignment_residue_scores & get_alignment_residue_scores() const;
 //			double get_score_of_index(const size_type &) const;
 
-			opt_aln_posn position_of_entry_of_index(const size_type &,
+			aln_posn_opt position_of_entry_of_index(const size_type &,
 			                                        const size_type &) const;
 
 			void set_position_value(const size_type &,
@@ -113,7 +113,7 @@ namespace cath {
 			static constexpr size_type PAIR_B_IDX = 1;
 		};
 
-		opt_size_size_pair first_non_consecutive_entry_positions(const alignment &);
+		size_size_pair_opt first_non_consecutive_entry_positions(const alignment &);
 
 		void check_entry_positions_are_consecutive(const alignment &);
 
@@ -139,7 +139,7 @@ namespace cath {
 		                                           const size_t &);
 
 		/// \brief TODOCUMENT
-		using opt_aln_size = boost::optional<alignment::size_type>;
+		using aln_size_opt = boost::optional<alignment::size_type>;
 
 		bool operator==(const alignment &,
 		                const alignment &);
@@ -167,10 +167,10 @@ namespace cath {
 
 		size_vec num_present_positions_by_entry(const alignment &);
 
-		opt_aln_size get_index_of_first_present_position_of_entry(const alignment &,
+		aln_size_opt get_index_of_first_present_position_of_entry(const alignment &,
 		                                                          const alignment::size_type &);
 
-		opt_aln_size get_index_of_last_present_position_of_entry(const alignment &,
+		aln_size_opt get_index_of_last_present_position_of_entry(const alignment &,
 		                                                         const alignment::size_type &);
 
 		size_t num_present_positions_of_both_entries(const alignment &,
@@ -179,21 +179,21 @@ namespace cath {
 
 		size_t num_present_positions_of_all_entries(const alignment &);
 
-		opt_aln_size get_index_of_first_present_position_of_both_entries(const alignment &,
+		aln_size_opt get_index_of_first_present_position_of_both_entries(const alignment &,
 		                                                                 const alignment::size_type &,
 		                                                                 const alignment::size_type &);
 
-		opt_aln_size get_index_of_last_present_position_of_both_entries(const alignment &,
+		aln_size_opt get_index_of_last_present_position_of_both_entries(const alignment &,
 		                                                                const alignment::size_type &,
 		                                                                const alignment::size_type &);
 
-		opt_aln_posn get_first_present_position_of_entry(const alignment &,
+		aln_posn_opt get_first_present_position_of_entry(const alignment &,
 		                                                 const alignment::size_type &);
 
-		opt_aln_posn get_last_present_position_of_entry(const alignment &,
+		aln_posn_opt get_last_present_position_of_entry(const alignment &,
 		                                                const alignment::size_type &);
 
-		opt_aln_posn get_max_last_present_position(const alignment &);
+		aln_posn_opt get_max_last_present_position(const alignment &);
 
 		float_score_type get_score_of_entry_and_index(const alignment &,
 		                                              const size_t &,
@@ -212,10 +212,10 @@ namespace cath {
 		float_score_vec get_total_score_or_num_positions_by_index(const alignment &);
 
 		void set_scores(alignment &,
-		                const opt_score_vec_vec &);
+		                const score_opt_vec_vec &);
 
 		alignment set_scores_copy(alignment,
-		                          const opt_score_vec_vec &);
+		                          const score_opt_vec_vec &);
 
 		void set_empty_scores(alignment &);
 
@@ -223,7 +223,7 @@ namespace cath {
 
 		alignment make_single_alignment(const size_t &);
 
-		alignment alignment_offset_1_factory(opt_aln_posn_vec_vec);
+		alignment alignment_offset_1_factory(aln_posn_opt_vec_vec);
 
 		alignment make_permuted_alignment(const alignment &,
 		                                  const size_vec &);
@@ -232,7 +232,7 @@ namespace cath {
 		                const alignment_row &);
 
 		void append_row(alignment &,
-		                const opt_aln_posn_vec &);
+		                const aln_posn_opt_vec &);
 
 		void set_position_value(alignment &,
 		                        const alignment::size_type &,

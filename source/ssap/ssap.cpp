@@ -325,7 +325,7 @@ prot_prot_pair cath::read_protein_pair(const cath_ssap_options &arg_cath_ssap_op
 	const string                 protein_name_a       = the_ssap_options.get_protein_name_a();
 	const string                 protein_name_b       = the_ssap_options.get_protein_name_b();
 	const auto                   protein_sources_ptr  = the_ssap_options.get_protein_source_files();
-	const opt_path               domin_file           = the_ssap_options.get_opt_domin_file();
+	const path_opt               domin_file           = the_ssap_options.get_opt_domin_file();
 	return read_protein_pair( protein_name_a, protein_name_b, the_data_dirs, *protein_sources_ptr, domin_file, arg_stderr );
 }
 
@@ -334,7 +334,7 @@ prot_prot_pair cath::read_protein_pair(const string                  &arg_protei
                                        const string                  &arg_protein_name_b,          ///< TODOCUMENT
                                        const data_dirs_spec          &arg_data_dirs_spec,          ///< TODOCUMENT
                                        const protein_source_file_set &arg_protein_source_file_set, ///< TODOCUMENT
-                                       const opt_path                &arg_domin_file,              ///< TODOCUMENT
+                                       const path_opt                &arg_domin_file,              ///< TODOCUMENT
                                        ostream                       &arg_stderr                   ///< TODOCUMENT
                                        ) {
 	const protein protein_a      = read_protein_data_from_ssap_options_files(arg_data_dirs_spec, arg_protein_name_a, arg_protein_source_file_set, arg_domin_file, arg_stderr );
@@ -636,7 +636,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
                                            const entry_querier           &arg_entry_querier,        ///< The entry_querier to query either residues or secondary structures
                                            const old_ssap_options_block  &arg_ssap_options,         ///< The old_ssap_options_block to specify how things should be done
                                            const data_dirs_spec          &arg_data_dirs,            ///< The data directories from which data should be read
-                                           const opt_alignment           &arg_previous_ss_alignment ///< An optional parameter specifying a previous secondary structure alignment
+                                           const alignment_opt           &arg_previous_ss_alignment ///< An optional parameter specifying a previous secondary structure alignment
                                            ) {
 	const bool   res_not_ss__hacky = arg_entry_querier.temp_hacky_is_residue();
 	const string entry_plural_name = get_plural_name(arg_entry_querier);
@@ -668,7 +668,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	}
 
 	// Select allowed pairs
-	const opt_path clique_file = arg_ssap_options.get_opt_clique_file();
+	const path_opt clique_file = arg_ssap_options.get_opt_clique_file();
 	if ( res_not_ss__hacky && arg_pass_ctr == 1 ) {
 		set_mask_matrix(
 			arg_protein_a,
@@ -714,7 +714,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	alignment        &new_alignment = score_and_alignment.second;
 
 	// Save scores to alignment
-	opt_score_vec scores;
+	score_opt_vec scores;
 	scores.reserve( new_alignment.length() );
 	for (size_t alignment_ctr = 0; alignment_ctr < new_alignment.length(); ++alignment_ctr) {
 		if ( has_both_positions_of_index( new_alignment, alignment_ctr  )) {
@@ -768,7 +768,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec          &arg_data_dirs,               ///< The old_ssap_options_block to specify how things should be done
                                                         const string                  &arg_protein_name,            ///< The name of the protein that is to be read from files
                                                         const protein_source_file_set &arg_protein_source_file_set, ///< TODOCUMENT
-                                                        const opt_path                &arg_domin_file,              ///< Optional domin file
+                                                        const path_opt                &arg_domin_file,              ///< Optional domin file
                                                         ostream                       &arg_stderr                   ///< TODOCUMENT
                                                         ) {
 	// Report which files are being used
@@ -851,8 +851,8 @@ clique cath::read_clique_file(const path &arg_filename ///< The clique file to r
 /// pass of a residue comparison
 void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The first protein
                            const protein       &arg_protein_b,        ///< The second protein
-                           const opt_alignment &arg_opt_ss_alignment, ///< A secondary structure alignment that is required in some modes so that it can be transferred to a residue mask matrix
-                           const opt_path      &arg_clique_file       ///< An optional clique file to use
+                           const alignment_opt &arg_opt_ss_alignment, ///< A secondary structure alignment that is required in some modes so that it can be transferred to a residue mask matrix
+                           const path_opt      &arg_clique_file       ///< An optional clique file to use
                            ) {
 	const size_t length_a = arg_protein_a.get_length();
 	const size_t length_b = arg_protein_b.get_length();

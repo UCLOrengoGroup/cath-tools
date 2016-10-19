@@ -52,10 +52,10 @@ using boost::none;
 ///  * space characters (according to boost::algorithm::is_space()
 ///  * '-'
 ///  * '.'
-opt_aln_posn_vec cath::align::detail::alignment_entry_of_scaffold_string(const string &arg_scaffold_string ///< The scaffold string defining the entry to be built
+aln_posn_opt_vec cath::align::detail::alignment_entry_of_scaffold_string(const string &arg_scaffold_string ///< The scaffold string defining the entry to be built
                                                                          ) {
 	aln_posn_type ctr = 0;
-	return transform_build<opt_aln_posn_vec>(
+	return transform_build<aln_posn_opt_vec>(
 		arg_scaffold_string,
 		[&] (const char &x) {
 			return ( ! is_space()( x ) && x != '-' && x != '.' ) ? make_optional( ctr++ )
@@ -90,7 +90,7 @@ alignment cath::align::alignment_of_scaffold_lines(const str_vec &arg_scaffold_l
                                                    ) {
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return alignment{
-		transform_build<opt_aln_posn_vec_vec>(
+		transform_build<aln_posn_opt_vec_vec>(
 			arg_scaffold_lines,
 			[] (const string &x) {
 				return detail::alignment_entry_of_scaffold_string( x );

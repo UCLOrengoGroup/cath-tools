@@ -78,7 +78,7 @@ string cath_assign_domains_options::do_get_program_name() const {
 ///
 /// \returns Any error/help string arising from the newly specified options
 ///          or an empty string if there aren't any
-opt_str cath_assign_domains_options::do_get_error_or_help_string() const {
+str_opt cath_assign_domains_options::do_get_error_or_help_string() const {
 	if ( get_rbf_svm_file().empty() ) {
 		return "Please specify an SVM-light RBF model file"s;
 	}

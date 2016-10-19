@@ -65,7 +65,7 @@ positional_options_description cath_check_pdb_options::get_positional_options() 
 ///
 /// \returns Any error/help string arising from the newly specified options
 ///          or an empty string if there aren't any
-opt_str cath_check_pdb_options::do_get_error_or_help_string() const {
+str_opt cath_check_pdb_options::do_get_error_or_help_string() const {
 	return none;
 }
 

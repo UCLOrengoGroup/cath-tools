@@ -86,7 +86,7 @@ namespace cath {
 			virtual std::string do_get_block_name() const override final;
 			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
 			virtual void do_add_hidden_options_to_description(boost::program_options::options_description &) override final;
-			virtual opt_str do_invalid_string(const boost::program_options::variables_map &) const override final;
+			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
 			virtual ~old_ssap_options_block() noexcept = default;
@@ -100,8 +100,8 @@ namespace cath {
 			bool get_output_to_file() const;
 			boost::filesystem::path get_output_filename() const;
 
-			opt_path get_opt_clique_file() const;
-			opt_path get_opt_domin_file() const;
+			path_opt get_opt_clique_file() const;
+			path_opt get_opt_domin_file() const;
 
 			double get_max_score_to_fast_ssap_rerun() const;
 			double get_max_score_to_slow_ssap_rerun() const;
@@ -111,7 +111,7 @@ namespace cath {
 			bool get_write_all_scores() const;
 			std::unique_ptr<const protein_source_file_set> get_protein_source_files() const;
 
-			opt_path get_opt_superposition_dir() const;
+			path_opt get_opt_superposition_dir() const;
 			boost::filesystem::path get_alignment_dir() const;
 			double get_min_score_for_writing_files() const;
 			double get_min_score_for_superposition() const;

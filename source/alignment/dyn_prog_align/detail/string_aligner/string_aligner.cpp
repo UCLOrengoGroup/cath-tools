@@ -290,7 +290,7 @@ str_vec cath::align::detail::format_alignment_strings(const alignment      &arg_
 
 			// If this entry has a position at this index, grab it, check it against the (input) sequence string's length
 			// and then use it to update the appropriate letter of the (output) formatted string
-			const opt_aln_posn position = arg_alignment.position_of_entry_of_index( alignment_entry, alignment_idx );
+			const aln_posn_opt position = arg_alignment.position_of_entry_of_index( alignment_entry, alignment_idx );
 			if ( position ) {
 				if ( *position >= seq_string_length ) {
 					BOOST_THROW_EXCEPTION(invalid_argument_exception("Position retrieved from alignment is out of range of the corresponding sequence string"));

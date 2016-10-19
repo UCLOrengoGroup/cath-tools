@@ -39,7 +39,7 @@ using boost::optional;
 
 /// \brief TODOCUMENT
 classn_stat_plotter_spec::classn_stat_plotter_spec(const str_vec                                      &arg_pre_plot_strs,              ///< TODOCUMENT
-                                                   const std::vector<std::pair<std::string, opt_str>> &arg_series_to_plot,             ///< TODOCUMENT
+                                                   const std::vector<std::pair<std::string, str_opt>> &arg_series_to_plot,             ///< TODOCUMENT
                                                    const bool                                         &arg_tidy_up_score_based_legends ///< TODOCUMENT
                                                    ) : pre_plot_strs              ( arg_pre_plot_strs               ),
                                                        series_to_plot             ( arg_series_to_plot              ),
@@ -52,7 +52,7 @@ const str_vec & classn_stat_plotter_spec::get_pre_plot_strs() const {
 }
 
 /// \brief TODOCUMENT
-const vector<pair<string, opt_str>> & classn_stat_plotter_spec::get_series_to_plot() const {
+const vector<pair<string, str_opt>> & classn_stat_plotter_spec::get_series_to_plot() const {
 	return series_to_plot;
 }
 
@@ -62,7 +62,7 @@ const bool & classn_stat_plotter_spec::get_tidy_up_score_based_legends() const {
 }
 
 /// \brief TODOCUMENT
-vector<pair<string, opt_str>> cath::score::get_series_to_plot_or_make_default(const classn_stat_plotter_spec     &arg_spec, ///< TODOCUMENT
+vector<pair<string, str_opt>> cath::score::get_series_to_plot_or_make_default(const classn_stat_plotter_spec     &arg_spec, ///< TODOCUMENT
                                                                               const classn_stat_pair_series_list &arg_list  ///< TODOCUMENT
                                                                               ) {
 	const auto &the_series_to_plot = arg_spec.get_series_to_plot();
@@ -70,7 +70,7 @@ vector<pair<string, opt_str>> cath::score::get_series_to_plot_or_make_default(co
 		return the_series_to_plot;
 	}
 
-	return transform_build<vector<pair<string, opt_str>>>(
+	return transform_build<vector<pair<string, str_opt>>>(
 		irange( 0_z, arg_list.size() ),
 		[&] (const size_t &x) {
 			return make_pair( arg_list[ x].get_name(), none );
@@ -79,7 +79,7 @@ vector<pair<string, opt_str>> cath::score::get_series_to_plot_or_make_default(co
 }
 
 /// \brief TODOCUMENT
-classn_stat_plotter_spec cath::score::make_standard_score_roc_plotter_spec(const vector<pair<string, opt_str>> &arg_series_to_plot ///< TODOCUMENT
+classn_stat_plotter_spec cath::score::make_standard_score_roc_plotter_spec(const vector<pair<string, str_opt>> &arg_series_to_plot ///< TODOCUMENT
                                                                            ) {
 	return {
 		{
@@ -92,7 +92,7 @@ classn_stat_plotter_spec cath::score::make_standard_score_roc_plotter_spec(const
 }
 
 /// \brief TODOCUMENT
-classn_stat_plotter_spec cath::score::make_standard_score_precision_recall_plotter_spec(const vector<pair<string, opt_str>> &arg_series_to_plot ///< TODOCUMENT
+classn_stat_plotter_spec cath::score::make_standard_score_precision_recall_plotter_spec(const vector<pair<string, str_opt>> &arg_series_to_plot ///< TODOCUMENT
                                                                                         ) {
 	return {
 		{

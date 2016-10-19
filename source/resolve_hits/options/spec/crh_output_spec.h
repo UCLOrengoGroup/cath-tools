@@ -34,7 +34,7 @@ namespace cath {
 		class crh_output_spec final {
 		private:
 			/// \brief The output file to which data should be written
-			opt_path            output_file;
+			path_opt            output_file;
 
 			/// \brief Whether to output the hits starts/stops *after* trimming
 			hit_boundary_output boundary_output      = DEFAULT_BOUNDARY_OUTPUT;
@@ -49,7 +49,7 @@ namespace cath {
 			/// \brief The default value for whether to output HTML describing the hits and the results
 			static constexpr bool                DEFAULT_GENERATE_HTML_OUTPUT = false;
 
-			const opt_path & get_output_file() const;
+			const path_opt & get_output_file() const;
 			const hit_boundary_output & get_boundary_output() const;
 			const bool & get_generate_html_output() const;
 
@@ -58,7 +58,7 @@ namespace cath {
 			crh_output_spec & set_generate_html_output(const bool &);
 		};
 
-		opt_str get_invalid_description(const crh_output_spec &);
+		str_opt get_invalid_description(const crh_output_spec &);
 
 		crh_output_spec & set_output_trimmed_hits(crh_output_spec &,
 		                                          const bool &);

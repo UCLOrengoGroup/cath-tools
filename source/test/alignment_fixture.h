@@ -34,18 +34,18 @@ namespace cath {
 		class alignment_fixture {
 		protected:
 			// A normal list
-			static const opt_aln_posn_vec aln_list_a;
+			static const aln_posn_opt_vec aln_list_a;
 			// A normal list
-			static const opt_aln_posn_vec aln_list_b;
+			static const aln_posn_opt_vec aln_list_b;
 			// A list that is longer than the normal lists
-			static const opt_aln_posn_vec aln_list_long;
+			static const aln_posn_opt_vec aln_list_long;
 
 			static const alignment aln_a_a;
 			static const alignment aln_a_b;
 			static const alignment aln_b_a;
 			static const alignment aln_long_long;
 
-			static const cath::opt_score_vec example_scores;
+			static const cath::score_opt_vec example_scores;
 		};
 
 	}

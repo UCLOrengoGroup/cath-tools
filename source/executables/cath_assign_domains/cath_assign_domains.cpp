@@ -87,7 +87,7 @@ namespace cath {
 
 	/// \brief The query ID extracted from either SSAP or PRC results, whichever is non-empty
 	///        or boost::none if both are empty
-	opt_str query_id_of_either(const ssap_scores_entry_vec &arg_ssaps, ///< The possibly-empty SSAP results
+	str_opt query_id_of_either(const ssap_scores_entry_vec &arg_ssaps, ///< The possibly-empty SSAP results
 	                           const prc_scores_entry_vec  &arg_prcs   ///< The possibly-empty PRC  results
 	                           ) {
 		return ( ! arg_prcs.empty()                   ) ? make_optional( arg_prcs.front().get_name_1()  ) :
@@ -97,7 +97,7 @@ namespace cath {
 
 	/// \brief The query length extracted from either SSAP or PRC results, whichever is non-empty
 	///        or boost::none if both are empty
-	opt_size query_length_of_either(const ssap_scores_entry_vec &arg_ssaps, ///< The possibly-empty SSAP results
+	size_opt query_length_of_either(const ssap_scores_entry_vec &arg_ssaps, ///< The possibly-empty SSAP results
 	                                const prc_scores_entry_vec  &arg_prcs   ///< The possibly-empty PRC  results
 	                                ) {
 		return ( ! arg_prcs.empty()                   ) ? make_optional( arg_prcs.front().get_length_1()  ) :

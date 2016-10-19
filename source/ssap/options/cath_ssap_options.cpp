@@ -98,7 +98,7 @@ positional_options_description cath_ssap_options::get_positional_options() {
 ///
 /// \returns Any error/help string arising from the newly specified options
 ///          or an empty string if there aren't any
-opt_str cath_ssap_options::do_get_error_or_help_string() const {
+str_opt cath_ssap_options::do_get_error_or_help_string() const {
 	// If detailed help was requested, then provide it
 	if ( the_detail_help_options_block.has_help_string() ) {
 		return the_detail_help_options_block.help_string();

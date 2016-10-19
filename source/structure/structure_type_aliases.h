@@ -125,10 +125,10 @@ namespace cath {
 	using chain_label_vec = std::vector<chain_label>;
 
 	/// \brief TODOCUMENT
-	using opt_chain_label = boost::optional<chain_label>;
+	using chain_label_opt = boost::optional<chain_label>;
 
 	/// \brief TODOCUMENT
-	using opt_residue_name = boost::optional<residue_name>;
+	using residue_name_opt = boost::optional<residue_name>;
 
 	/// \brief TODOCUMENT
 	using residue_name_set = std::set<residue_name>;

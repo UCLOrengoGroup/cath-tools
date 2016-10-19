@@ -58,11 +58,11 @@ size_t cath::align::gap::detail::get_naive_num_gaps_of_entry(const alignment &ar
                                                              ) {
 	// Get the index of the first and last present position of the entry
 	// (and sanity check that they are values for both)
-	const opt_aln_size index_of_first_present_position = get_index_of_first_present_position_of_entry(
+	const aln_size_opt index_of_first_present_position = get_index_of_first_present_position_of_entry(
 		arg_alignment,
 		arg_entry
 	);
-	const opt_aln_size index_of_last_present_position  = get_index_of_last_present_position_of_entry(
+	const aln_size_opt index_of_last_present_position  = get_index_of_last_present_position_of_entry(
 		arg_alignment,
 		arg_entry
 	);
@@ -105,8 +105,8 @@ size_size_pair cath::align::gap::detail::gap_open_and_extend_counts_of_pair_in_a
 	size_size_pair open_and_extend_counts = make_pair( 0_z, 0_z );
 
 	// Grab the indices in which these two entries first/last both appear together
-	const opt_aln_size first_index = get_index_of_first_present_position_of_both_entries( arg_alignment, arg_entry_a, arg_entry_b );
-	const opt_aln_size last_index  = get_index_of_last_present_position_of_both_entries ( arg_alignment, arg_entry_a, arg_entry_b );
+	const aln_size_opt first_index = get_index_of_first_present_position_of_both_entries( arg_alignment, arg_entry_a, arg_entry_b );
+	const aln_size_opt last_index  = get_index_of_last_present_position_of_both_entries ( arg_alignment, arg_entry_a, arg_entry_b );
 
 	// If there are such indices then look for gaps in between
 	if ( first_index && last_index ) {

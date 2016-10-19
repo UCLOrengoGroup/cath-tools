@@ -77,8 +77,8 @@ namespace cath {
 	template <typename T>
 	using uptr_vec                      = std::vector<std::unique_ptr<T>>;
 
-	using opt_size                      = boost::optional<size_t>;
-	using opt_size_vec                  = std::vector<boost::optional<size_t> >;
+	using size_opt                      = boost::optional<size_t>;
+	using size_opt_vec                  = std::vector<boost::optional<size_t> >;
 
 	//using uint_uint_pair                = std::pair<unsigned int, unsigned int>;
 	//using uint_uint_pair_vec            = std::vector<uint_uint_pair>;
@@ -103,7 +103,7 @@ namespace cath {
 
 	using str_str_map                   = std::map<std::string, std::string>;
 
-	using opt_size_size_pair            = boost::optional<size_size_pair>;
+	using size_size_pair_opt            = boost::optional<size_size_pair>;
 
 	using str_doub_map                  = std::map <std::string, double>;
 
@@ -111,7 +111,7 @@ namespace cath {
 	using str_size_map                  = std::map <std::string, size_t>;
 	using str_size_pair_vec             = std::vector<str_size_pair>;
 
-	using opt_str                       = boost::optional<std::string>;
+	using str_opt                       = boost::optional<std::string>;
 
 	using doub_doub_pair                = std::pair<double, double>;
 	using doub_doub_pair_vec            = std::vector<doub_doub_pair>;
@@ -144,7 +144,7 @@ namespace cath {
 
 	using size_size_map                 = std::map<size_t, size_t>;
 
-	using opt_char                      = boost::optional<char>;
+	using char_opt                      = boost::optional<char>;
 
 	using int_vec                       = std::vector<int>;
 	using int_vec_vec                   = std::vector<int_vec>;
@@ -165,9 +165,9 @@ namespace cath {
 	using float_score_vec_vec          = std::vector<float_score_vec>;
 	using float_score_float_score_pair = std::pair<float_score_type, float_score_type>;
 
-	using opt_score                    = boost::optional<double>;
-	using opt_score_vec                = std::vector<opt_score>;
-	using opt_score_vec_vec            = std::vector<opt_score_vec>;
+	using score_opt                    = boost::optional<double>;
+	using score_opt_vec                = std::vector<score_opt>;
+	using score_opt_vec_vec            = std::vector<score_opt_vec>;
 
 	using prot_prot_pair               = std::pair<protein, protein>;
 

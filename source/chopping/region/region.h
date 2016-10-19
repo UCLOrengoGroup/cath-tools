@@ -48,7 +48,7 @@ namespace cath {
 		class region final {
 		private:
 			/// \brief TODOCUMENT
-			opt_chain_label the_chain_label;
+			chain_label_opt the_chain_label;
 
 			/// \brief TODOCUMENT
 			residue_location start_residue;
@@ -70,7 +70,7 @@ namespace cath {
 			region(const size_t &,
 			       const size_t &);
 
-			const opt_chain_label & get_opt_chain_label() const;
+			const chain_label_opt & get_opt_chain_label() const;
 
 			const residue_location & get_start_residue() const;
 			const residue_location & get_stop_residue() const;
@@ -79,10 +79,10 @@ namespace cath {
 		bool has_chain_label(const region &);
 		chain_label get_chain_label(const region &);
 
-		const opt_residue_name & get_opt_start_name(const region &);
-		const opt_residue_name & get_opt_stop_name(const region &);
-		const opt_size & get_opt_start_index(const region &);
-		const opt_size & get_opt_stop_index(const region &);
+		const residue_name_opt & get_opt_start_name(const region &);
+		const residue_name_opt & get_opt_stop_name(const region &);
+		const size_opt & get_opt_start_index(const region &);
+		const size_opt & get_opt_stop_index(const region &);
 
 		bool has_names(const region &);
 		bool has_indices(const region &);
@@ -90,8 +90,8 @@ namespace cath {
 		void check_has_names(const region &);
 		void check_has_indices(const region &);
 
-		opt_residue_name get_start_name(const region &);
-		opt_residue_name get_stop_name(const region &);
+		residue_name_opt get_start_name(const region &);
+		residue_name_opt get_stop_name(const region &);
 		size_t get_start_index(const region &);
 		size_t get_stop_index(const region &);
 

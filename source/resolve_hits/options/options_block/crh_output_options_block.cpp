@@ -97,7 +97,7 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 
 /// \brief Generate a description of any problem that makes the specified crh_output_options_block invalid
 ///        or none otherwise
-opt_str crh_output_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt crh_output_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                     ) const {
 	return get_invalid_description( the_spec );
 }

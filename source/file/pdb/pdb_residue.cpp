@@ -141,10 +141,10 @@ const amino_acid & cath::file::get_amino_acid(const pdb_residue &arg_residue ///
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_residue
-opt_char cath::file::get_amino_acid_letter(const pdb_residue &arg_residue ///< The pdb_residue to query
+char_opt cath::file::get_amino_acid_letter(const pdb_residue &arg_residue ///< The pdb_residue to query
                                            ) {
 	const amino_acid &the_amino_acid = get_amino_acid( arg_residue );
-	return the_amino_acid.is_proper_amino_acid() ? opt_char( the_amino_acid.get_letter() )
+	return the_amino_acid.is_proper_amino_acid() ? char_opt( the_amino_acid.get_letter() )
 	                                             : none;
 }
 

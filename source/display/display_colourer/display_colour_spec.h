@@ -38,7 +38,7 @@ namespace cath {
 	class display_colour_spec final {
 	private:
 		/// \brief TODOCUMENT
-		opt_display_colour           base_clr;
+		display_colour_opt           base_clr;
 
 		/// \brief TODOCUMENT
 		size_display_colour_map      clr_of_pdb;
@@ -59,17 +59,17 @@ namespace cath {
 		                        const display_colour &,
 		                        const bool &arg_overwrite = false);
 
-		const opt_display_colour & get_base_clr() const;
+		const display_colour_opt & get_base_clr() const;
 
 		const size_display_colour_map & get_clr_of_pdb() const;
 
 		const size_size_display_colour_map & get_clr_of_pdb_and_res() const;
 	};
 
-	opt_display_colour get_clr_of_pdb_index(const display_colour_spec &,
+	display_colour_opt get_clr_of_pdb_index(const display_colour_spec &,
 	                                        const size_t &);
 
-	opt_display_colour get_clr_of_pdb_and_res_indices(const display_colour_spec &,
+	display_colour_opt get_clr_of_pdb_and_res_indices(const display_colour_spec &,
 	                                                  const size_t &,
 	                                                  const size_t &);
 

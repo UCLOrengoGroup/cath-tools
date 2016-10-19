@@ -32,7 +32,7 @@ namespace cath {
 	using path_vec = std::vector<boost::filesystem::path>;
 
 	/// \brief TODOCUMENT
-	using opt_path = boost::optional<boost::filesystem::path>;
+	using path_opt = boost::optional<boost::filesystem::path>;
 }
 
 #endif

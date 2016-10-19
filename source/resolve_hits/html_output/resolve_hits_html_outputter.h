@@ -50,7 +50,7 @@ namespace cath {
 		private:
 			static std::string total_score_row(const resscr_t &);
 			static std::string markers_row(const size_t &,
-			                               const opt_str &);
+			                               const str_opt &);
 			static std::string output_html_fragment(const full_hit &,
 			                                        const size_t &,
 			                                        const display_colour &,

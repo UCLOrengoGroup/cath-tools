@@ -36,10 +36,10 @@ namespace cath {
 		class residue_location final : private boost::totally_ordered<residue_location,
 		                                       boost::equivalent<residue_location> > {
 			/// \brief TODOCUMENT
-			opt_residue_name the_residue_name;
+			residue_name_opt the_residue_name;
 
 			/// \brief TODOCUMENT
-			opt_size         residue_index;
+			size_opt         residue_index;
 
 		public:
 			residue_location(const residue_name &);
@@ -47,8 +47,8 @@ namespace cath {
 			                 const size_t &);
 			residue_location(const size_t &);
 
-			const opt_residue_name & get_opt_residue_name() const;
-			const opt_size & get_opt_residue_index() const;
+			const residue_name_opt & get_opt_residue_name() const;
+			const size_opt & get_opt_residue_index() const;
 		};
 
 		bool has_residue_name(const residue_location &);

@@ -33,7 +33,7 @@ constexpr residx_t              crh_input_spec::DEFAULT_MIN_GAP_LENGTH;
 constexpr bool                  crh_input_spec::DEFAULT_INPUT_HITS_ARE_GROUPED;
 
 /// \brief Getter for the input file from which data should be read
-const opt_path & crh_input_spec::get_input_file() const {
+const path_opt & crh_input_spec::get_input_file() const {
 	return input_file;
 }
 
@@ -96,7 +96,7 @@ crh_input_spec & crh_input_spec::set_input_hits_are_grouped(const bool &arg_inpu
 ///        or none otherwise
 ///
 /// \relates crh_input_spec
-opt_str cath::rslv::get_invalid_description(const crh_input_spec &arg_spec ///< The crh_input_spec to query
+str_opt cath::rslv::get_invalid_description(const crh_input_spec &arg_spec ///< The crh_input_spec to query
                                             ) {
 	if ( arg_spec.get_input_file() && arg_spec.get_read_from_stdin() ) {
 		return "Cannot read from both a file and stdin"s;

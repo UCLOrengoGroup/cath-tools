@@ -53,10 +53,10 @@ namespace cath {
 		static const string_size_unordered_map & INDEX_OF_NAME();
 
 		/// \brief TODOCUMENT
-		opt_str raw_string;
+		str_opt raw_string;
 
 		/// \brief TODOCUMENT
-		opt_size index;
+		size_opt index;
 
 		template <typename T, size_t I> static std::unordered_map<T, size_t> build_index_unordered_map();
 		template <typename T, size_t I> static T get_label(const size_t &);

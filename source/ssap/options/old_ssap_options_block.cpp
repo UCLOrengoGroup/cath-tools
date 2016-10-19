@@ -149,7 +149,7 @@ void old_ssap_options_block::do_add_hidden_options_to_description(options_descri
 ///  * Otherwise accept
 ///
 /// \returns A string describing the conflict in the options or an empty string if there's none
-opt_str old_ssap_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt old_ssap_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                   ) const {
 	// Always accept if no names have been specified
 	if ( names.empty() ) {
@@ -227,13 +227,13 @@ path old_ssap_options_block::get_output_filename() const {
 }
 
 /// \brief TODOCUMENT
-opt_path old_ssap_options_block::get_opt_clique_file() const {
-	return ( ! clique_file.empty() ) ? opt_path( clique_file ) : none;
+path_opt old_ssap_options_block::get_opt_clique_file() const {
+	return ( ! clique_file.empty() ) ? path_opt( clique_file ) : none;
 }
 
 /// \brief TODOCUMENT
-opt_path old_ssap_options_block::get_opt_domin_file() const {
-	return ( ! domin_file.empty() ) ? opt_path( domin_file ) : none;
+path_opt old_ssap_options_block::get_opt_domin_file() const {
+	return ( ! domin_file.empty() ) ? path_opt( domin_file ) : none;
 }
 
 /// \brief Getter for max_score_considered_distant
@@ -267,8 +267,8 @@ unique_ptr<const protein_source_file_set> old_ssap_options_block::get_protein_so
 }
 
 /// \brief TODOCUMENT
-opt_path old_ssap_options_block::get_opt_superposition_dir() const {
-	return ( ! superposition_dir.empty() ) ? opt_path( superposition_dir ) : none;
+path_opt old_ssap_options_block::get_opt_superposition_dir() const {
+	return ( ! superposition_dir.empty() ) ? path_opt( superposition_dir ) : none;
 }
 
 /// \brief Getter for alignment_dir

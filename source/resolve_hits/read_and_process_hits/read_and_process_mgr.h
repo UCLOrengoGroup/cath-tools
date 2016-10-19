@@ -124,7 +124,7 @@ namespace cath {
 			///        thread.
 			///
 			/// This is only used by the main thread, never by the async worker thread.
-			opt_str to_be_erased_query_id;
+			str_opt to_be_erased_query_id;
 
 			/// \brief The std::future for the std::async() processing.
 			///

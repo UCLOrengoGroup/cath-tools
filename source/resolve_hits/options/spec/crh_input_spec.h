@@ -34,7 +34,7 @@ namespace cath {
 		class crh_input_spec final {
 		private:
 			/// \brief The input file from which data should be read
-			opt_path              input_file;
+			path_opt              input_file;
 
 			/// \brief Whether to read the input data from stdin
 			bool                  read_from_stdin        = DEFAULT_READ_FROM_STDIN;
@@ -61,7 +61,7 @@ namespace cath {
 			/// \brief The default value for whether the code can assume that the input data is pre-grouped by query_id
 			static constexpr bool                  DEFAULT_INPUT_HITS_ARE_GROUPED = false;
 
-			const opt_path & get_input_file() const;
+			const path_opt & get_input_file() const;
 			const bool & get_read_from_stdin() const;
 			const hits_input_format_tag & get_input_format() const;
 			const residx_t & get_min_gap_length() const;
@@ -74,7 +74,7 @@ namespace cath {
 			crh_input_spec & set_input_hits_are_grouped(const bool &);
 		};
 
-		opt_str get_invalid_description(const crh_input_spec &);
+		str_opt get_invalid_description(const crh_input_spec &);
 
 	}
 }

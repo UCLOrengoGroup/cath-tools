@@ -33,8 +33,8 @@ namespace cath {
 		void check_alignment_is_a_pair(const alignment &);
 
 		// A bunch of convenience functions for pair alignments
-		opt_aln_posn a_position_of_index(const alignment &, const size_t &);
-		opt_aln_posn b_position_of_index(const alignment &, const size_t &);
+		aln_posn_opt a_position_of_index(const alignment &, const size_t &);
+		aln_posn_opt b_position_of_index(const alignment &, const size_t &);
 
 		bool alignment_contains_pair(const alignment &, const size_t &, const size_t &);
 
@@ -51,10 +51,10 @@ namespace cath {
 		bool has_last_b_position(        const alignment & );
 		bool has_last_position_of_entry( const alignment &, const size_t & );
 
-		opt_aln_posn get_first_present_a_position(const alignment &);
-		opt_aln_posn get_first_present_b_position(const alignment &);
-		opt_aln_posn get_last_present_a_position(const alignment &);
-		opt_aln_posn get_last_present_b_position(const alignment &);
+		aln_posn_opt get_first_present_a_position(const alignment &);
+		aln_posn_opt get_first_present_b_position(const alignment &);
+		aln_posn_opt get_last_present_a_position(const alignment &);
+		aln_posn_opt get_last_present_b_position(const alignment &);
 
 		aln_posn_type get_last_a_position(                 const alignment & );
 		aln_posn_type get_last_b_position(                 const alignment & );
@@ -76,8 +76,8 @@ namespace cath {
 		size_t num_present_positions_of_both_entries(const alignment &);
 		size_vec indices_of_present_positions_of_both_entries(const alignment &);
 
-		void set_pair_alignment_duplicate_scores(alignment &, const opt_score_vec &);
-		alignment set_pair_alignment_duplicate_scores_copy(alignment, const opt_score_vec &);
+		void set_pair_alignment_duplicate_scores(alignment &, const score_opt_vec &);
+		alignment set_pair_alignment_duplicate_scores_copy(alignment, const score_opt_vec &);
 	}
 }
 

@@ -52,7 +52,7 @@ void cath::align::check_alignment_is_a_pair(const alignment &arg_alignment ///< 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-opt_aln_posn cath::align::a_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
+aln_posn_opt cath::align::a_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
                                               const size_t    &arg_index      ///< The index to query
                                               ) {
 	check_alignment_is_a_pair(arg_alignment);
@@ -62,7 +62,7 @@ opt_aln_posn cath::align::a_position_of_index(const alignment &arg_alignment, //
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-opt_aln_posn cath::align::b_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
+aln_posn_opt cath::align::b_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
                                               const size_t    &arg_index      ///< The index to query
                                               ) {
 	check_alignment_is_a_pair( arg_alignment );
@@ -80,8 +80,8 @@ bool cath::align::alignment_contains_pair(const alignment &arg_alignment, ///< T
 
 	const size_t length = arg_alignment.length();
 	for (size_t index = 0; index < length; ++index) {
-		const opt_aln_posn &posn_a = arg_alignment.position_of_entry_of_index( alignment::PAIR_A_IDX, index );
-		const opt_aln_posn &posn_b = arg_alignment.position_of_entry_of_index( alignment::PAIR_B_IDX, index );
+		const aln_posn_opt &posn_a = arg_alignment.position_of_entry_of_index( alignment::PAIR_A_IDX, index );
+		const aln_posn_opt &posn_b = arg_alignment.position_of_entry_of_index( alignment::PAIR_B_IDX, index );
 		if ( posn_a && *posn_a == arg_posn_a && posn_b && *posn_b == arg_posn_b ) {
 			return true;
 		}
@@ -195,7 +195,7 @@ bool cath::align::has_last_position_of_entry(const alignment &arg_alignment, ///
 ///      else an invalid_argument_exception will be thrown
 ///
 /// \relates alignment
-opt_aln_posn cath::align::get_first_present_a_position(const alignment &arg_alignment ///< The alignment to be queried
+aln_posn_opt cath::align::get_first_present_a_position(const alignment &arg_alignment ///< The alignment to be queried
                                                        ) {
 	return get_first_present_position_of_entry( arg_alignment, alignment::PAIR_A_IDX );
 }
@@ -206,7 +206,7 @@ opt_aln_posn cath::align::get_first_present_a_position(const alignment &arg_alig
 ///      else an invalid_argument_exception will be thrown
 ///
 /// \relates alignment
-opt_aln_posn cath::align::get_first_present_b_position(const alignment &arg_alignment ///< The alignment to be queried
+aln_posn_opt cath::align::get_first_present_b_position(const alignment &arg_alignment ///< The alignment to be queried
                                                        ) {
 	return get_first_present_position_of_entry( arg_alignment, alignment::PAIR_B_IDX );
 }
@@ -217,7 +217,7 @@ opt_aln_posn cath::align::get_first_present_b_position(const alignment &arg_alig
 ///      else an invalid_argument_exception will be thrown
 ///
 /// \relates alignment
-opt_aln_posn cath::align::get_last_present_a_position(const alignment &arg_alignment ///< The alignment to be queried
+aln_posn_opt cath::align::get_last_present_a_position(const alignment &arg_alignment ///< The alignment to be queried
                                                       ) {
 	return get_last_present_position_of_entry( arg_alignment, alignment::PAIR_A_IDX );
 }
@@ -228,7 +228,7 @@ opt_aln_posn cath::align::get_last_present_a_position(const alignment &arg_align
 ///      else an invalid_argument_exception will be thrown
 ///
 /// \relates alignment
-opt_aln_posn cath::align::get_last_present_b_position(const alignment &arg_alignment ///< The alignment to be queried
+aln_posn_opt cath::align::get_last_present_b_position(const alignment &arg_alignment ///< The alignment to be queried
                                                       ) {
 	return get_last_present_position_of_entry( arg_alignment, alignment::PAIR_B_IDX );
 }
@@ -405,16 +405,16 @@ size_vec cath::align::indices_of_present_positions_of_both_entries(const alignme
 ///
 /// \relates alignment
 void cath::align::set_pair_alignment_duplicate_scores(alignment           &arg_alignment, ///< TODOCUMENT
-                                                      const opt_score_vec &arg_scores     ///< TODOCUMENT
+                                                      const score_opt_vec &arg_scores     ///< TODOCUMENT
                                                       ) {
-	set_scores( arg_alignment, opt_score_vec_vec( alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT, arg_scores ) );
+	set_scores( arg_alignment, score_opt_vec_vec( alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT, arg_scores ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
 alignment cath::align::set_pair_alignment_duplicate_scores_copy(alignment            arg_alignment, ///< TODOCUMENT
-                                                                const opt_score_vec &arg_scores     ///< TODOCUMENT
+                                                                const score_opt_vec &arg_scores     ///< TODOCUMENT
                                                                 ) {
 	set_pair_alignment_duplicate_scores( arg_alignment, arg_scores );
 	return arg_alignment;

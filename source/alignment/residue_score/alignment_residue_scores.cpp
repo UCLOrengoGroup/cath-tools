@@ -42,7 +42,7 @@ using boost::numeric_cast;
 /// \brief Ctor for alignment_residue_scores
 alignment_residue_scores::alignment_residue_scores(const size_t            &arg_num_entries,                    ///< TODOCUMENT
                                                    const size_vec          &arg_num_present_entries_by_index,   ///< TODOCUMENT
-                                                   const opt_score_vec_vec &arg_scores_to_other_present_entries ///< TODOCUMENT
+                                                   const score_opt_vec_vec &arg_scores_to_other_present_entries ///< TODOCUMENT
                                                    ) : num_entries                    ( arg_num_entries                     ),
                                                        num_present_entries_by_index   ( arg_num_present_entries_by_index    ),
                                                        scores_to_other_present_entries( arg_scores_to_other_present_entries ) {
@@ -75,7 +75,7 @@ size_t alignment_residue_scores::get_num_present_entries_of_index(const size_t &
 }
 
 /// \brief TODOCUMENT
-opt_score alignment_residue_scores::get_opt_score_to_other_present_entries(const size_t &arg_entry, ///< TODOCUMENT
+score_opt alignment_residue_scores::get_opt_score_to_other_present_entries(const size_t &arg_entry, ///< TODOCUMENT
                                                                            const size_t &arg_index  ///< TODOCUMENT
                                                                            ) const {
 	return scores_to_other_present_entries[ arg_entry ][ arg_index ];
@@ -117,7 +117,7 @@ float_score_type cath::align::get_unnormalised_score(const alignment_residue_sco
 ////			+ " present entries"
 ////		));
 //	}
-	const opt_score &score_to_other_present_entries = arg_scores.get_opt_score_to_other_present_entries( arg_entry,  arg_index );
+	const score_opt &score_to_other_present_entries = arg_scores.get_opt_score_to_other_present_entries( arg_entry,  arg_index );
 	if ( ! arg_to_all_other_entries ) {
 		return *score_to_other_present_entries;
 	}
@@ -205,7 +205,7 @@ float_score_type cath::align::get_normalised_score_to_all_entries(const alignmen
 ///
 /// \relates alignment_residue_scores
 alignment_residue_scores cath::align::make_alignment_residue_scores(const alignment         &arg_alignment, ///< TODOCUMENT
-                                                                    const opt_score_vec_vec &arg_scores     ///< TODOCUMENT
+                                                                    const score_opt_vec_vec &arg_scores     ///< TODOCUMENT
                                                                     ) {
 	const size_t num_entries = arg_alignment.num_entries();
 	const size_t length      = arg_alignment.length();
@@ -213,7 +213,7 @@ alignment_residue_scores cath::align::make_alignment_residue_scores(const alignm
 	if ( arg_scores.size() != num_entries ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Number of entries in scores doesn't match number of entries in alignment"));
 	}
-	if ( any_of( arg_scores, [&] (const opt_score_vec &x) { return x.size() != length; } ) ) {
+	if ( any_of( arg_scores, [&] (const score_opt_vec &x) { return x.size() != length; } ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Length of scores for entry doesn't match length of alignment"));
 	}
 

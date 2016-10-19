@@ -54,15 +54,15 @@ namespace cath {
 			void check_policy_on_score_aln(const common_residue_selection_policy &,
 			                               const size_vec &) const;
 
-			const opt_aln_posn_vec aln_list_a       = {  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
+			const aln_posn_opt_vec aln_list_a       = {  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
 			                                            11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 
-			const opt_aln_posn_vec aln_list_b       = {  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
+			const aln_posn_opt_vec aln_list_b       = {  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
 			                                            11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 
 			const alignment        unscored_aln     = { alignment_offset_1_factory( { aln_list_a, aln_list_b } ) };
 
-			const opt_score_vec    alignment_scores = { 47.7, 1, 94.2, 94.9, 52.8, 35.2, 67.3, 29, 12.8, 30.9,
+			const score_opt_vec    alignment_scores = { 47.7, 1, 94.2, 94.9, 52.8, 35.2, 67.3, 29, 12.8, 30.9,
 			                                            27.6, 79.9, 35, 8.3, 21.6,88.1, 4.4, 45.7, 9.1, 95.9 };
 
 			alignment              scored_aln       = { set_pair_alignment_duplicate_scores_copy(unscored_aln, alignment_scores) };
@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(does_not_throw_for_scored_alignment, common_residu
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE_TEMPLATE(handles_an_empty_alignment, common_residue_selection_policy_type, all_common_residue_selection_policy_types) {
 	alignment empty_pair_alignment(alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT);
-	set_pair_alignment_duplicate_scores( empty_pair_alignment, opt_score_vec() );
+	set_pair_alignment_duplicate_scores( empty_pair_alignment, score_opt_vec() );
 	const common_residue_selection_policy_type my_policy{};
 	const alignment &aln_const_ref(empty_pair_alignment);
 	const vector<alignment::size_type> common_residue_indices = select_common_residues_of_pair_alignment(my_policy, aln_const_ref);

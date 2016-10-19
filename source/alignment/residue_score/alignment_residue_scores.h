@@ -41,20 +41,20 @@ namespace cath {
 			size_vec          num_present_entries_by_index;
 
 			/// \brief TODOCUMENT
-			opt_score_vec_vec scores_to_other_present_entries;
+			score_opt_vec_vec scores_to_other_present_entries;
 
 			void sanity_check() const;
 
 		public:
 			alignment_residue_scores(const size_t &,
 			                         const size_vec &,
-			                         const opt_score_vec_vec &);
+			                         const score_opt_vec_vec &);
 
 			size_t get_num_entries() const;
 			size_t get_length() const;
 			size_t get_num_present_entries_of_index(const size_t &) const;
 
-			opt_score get_opt_score_to_other_present_entries(const size_t &,
+			score_opt get_opt_score_to_other_present_entries(const size_t &,
 			                                                 const size_t &) const;
 		};
 
@@ -93,7 +93,7 @@ namespace cath {
 		                                                     const size_t &);
 
 		alignment_residue_scores make_alignment_residue_scores(const alignment &,
-		                                                       const opt_score_vec_vec &);
+		                                                       const score_opt_vec_vec &);
 
 	}
 }

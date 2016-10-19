@@ -37,7 +37,7 @@ namespace cath {
 		/// get_filename() will return an empty path and the destructor will do nothing.
 		class temp_file final {
 		private:
-			opt_path filename;
+			path_opt filename;
 
 			static boost::filesystem::path temp_filename_of_basename_pattern(const std::string &);
 
@@ -54,7 +54,7 @@ namespace cath {
 			/// \todo Consider implementing a move-assign that ensures the source filename gets wiped
 			temp_file & operator=(const temp_file &) = delete;
 
-			const opt_path & get_opt_filename() const;
+			const path_opt & get_opt_filename() const;
 		};
 
 		bool has_filename(const temp_file &);

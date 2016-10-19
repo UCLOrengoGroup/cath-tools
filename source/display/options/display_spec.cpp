@@ -62,7 +62,7 @@ display_spec::display_spec(const string &arg_display_colours_string,    ///< TOD
 }
 
 /// \brief TODOCUMENT
-opt_str display_spec::get_display_colours_string() const {
+str_opt display_spec::get_display_colours_string() const {
 	return ( display_colours_string != COLOURS_UNSPECIFIED ) ? make_optional( display_colours_string )
 	                                                         : none;
 }
@@ -124,7 +124,7 @@ bool cath::has_display_colours_string(const display_spec &arg_display_spec ///< 
 }
 
 /// \brief String describing any problems, or "" if none (as part of the interface to friend display_options_block)
-opt_str cath::invalid_string(const display_spec &arg_display_spec ///< TODOCUMENT
+str_opt cath::invalid_string(const display_spec &arg_display_spec ///< TODOCUMENT
                              ) {
 	try {
 		get_colour_list( arg_display_spec );
@@ -144,8 +144,8 @@ opt_str cath::invalid_string(const display_spec &arg_display_spec ///< TODOCUMEN
 /// \relates display_colour_list
 display_colour_list cath::get_colour_list(const display_spec &arg_display_spec ///< TODOCUMENT
                                           ) {
-	const auto opt_cols_str = arg_display_spec.get_display_colours_string();
+	const auto cols_str_opt = arg_display_spec.get_display_colours_string();
 	return make_display_colour_list_from_string(
-		opt_cols_str ? *opt_cols_str : display_colour_list::DEFAULT_COLOURS_STRING
+		cols_str_opt ? *cols_str_opt : display_colour_list::DEFAULT_COLOURS_STRING
 	);
 }

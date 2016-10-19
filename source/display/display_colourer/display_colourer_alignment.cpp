@@ -87,7 +87,7 @@ display_colour_spec display_colourer_alignment::do_get_colour_spec_before_scorin
 
 		// For each entry, determine whether there is a position in the alignment and store the colour there if so
 		for (alignment::size_type entry = 0; entry < num_entries; ++entry) {
-			const opt_aln_posn position = the_alignment.position_of_entry_of_index( entry, index );
+			const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry, index );
 			if ( position ) {
 				new_spec.colour_pdb_residue( entry, *position, the_colour );
 			}

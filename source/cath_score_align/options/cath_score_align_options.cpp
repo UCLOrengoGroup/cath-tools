@@ -77,7 +77,7 @@ string cath_score_align_options::do_get_program_name() const {
 ///
 /// \returns Any error/help string arising from the newly specified options
 ///          or an empty string if there aren't any
-opt_str cath_score_align_options::do_get_error_or_help_string() const {
+str_opt cath_score_align_options::do_get_error_or_help_string() const {
 	// Grab the objects from the options blocks
 	const auto num_aln_acquirers = get_num_acquirers( the_alignment_input_options_block );
 	const auto num_pdb_acquirers = get_num_acquirers( the_pdb_input_options_block       );

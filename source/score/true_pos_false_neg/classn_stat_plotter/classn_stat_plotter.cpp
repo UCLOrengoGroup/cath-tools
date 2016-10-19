@@ -182,7 +182,7 @@ set ytics font "Helvetica,18"
 
 	const auto main_plot_strs = transform_build<str_vec>(
 		series_to_plot,
-		[&] (const pair<string, opt_str> &x) {
+		[&] (const pair<string, str_opt> &x) {
 			const auto &the_series    = classn_stat_pair_series_list_of_name( arg_serieses, x.first );
 			const auto  data_filename = the_data_file.string() + lexical_cast<string>( x.first );
 			const auto  legend_name   = process_legend_name_copy( the_series.get_name(), arg_plot_spec.get_tidy_up_score_based_legends() );

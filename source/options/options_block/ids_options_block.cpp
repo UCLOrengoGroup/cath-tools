@@ -75,7 +75,7 @@ void ids_options_block::do_add_visible_options_to_description(options_descriptio
 /// \brief Identify any conflicts that make the currently stored options invalid
 ///
 /// \returns A string describing the conflict in the options or an empty string if there's none
-opt_str ids_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt ids_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                              ) const {
 	return none;
 }

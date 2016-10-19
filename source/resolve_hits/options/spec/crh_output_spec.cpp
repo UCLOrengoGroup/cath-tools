@@ -31,7 +31,7 @@ constexpr hit_boundary_output crh_output_spec::DEFAULT_BOUNDARY_OUTPUT;
 constexpr bool                crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;
 
 /// \brief Getter for the output file to which data should be written
-const opt_path & crh_output_spec::get_output_file() const {
+const path_opt & crh_output_spec::get_output_file() const {
 	return output_file;
 }
 
@@ -80,7 +80,7 @@ crh_output_spec & cath::rslv::set_output_trimmed_hits(crh_output_spec &arg_outpu
 ///        or none otherwise
 ///
 /// \relates crh_output_spec
-opt_str cath::rslv::get_invalid_description(const crh_output_spec &arg_output_spec ///< The crh_output_spec to query
+str_opt cath::rslv::get_invalid_description(const crh_output_spec &arg_output_spec ///< The crh_output_spec to query
                                             ) {
 	return make_optional(
 		means_output_trimmed_hits( arg_output_spec.get_boundary_output() ) && arg_output_spec.get_generate_html_output(),

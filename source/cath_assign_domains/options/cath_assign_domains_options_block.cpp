@@ -90,7 +90,7 @@ void cath_assign_domains_options_block::do_add_visible_options_to_description(op
 		( PO_FORBIDDEN_NODES.c_str(),   value<str_vec>( &forbidden_nodes )->default_value( DEFAULT_FORBIDDEN_NODES, default_forbidden_nodes_str ), "List of nodes to which automatic assignment is forbidden; specify option multiple times for multiple nodes\nRECOMMENDED: do not specify this option so that the default list of propeller architectures is used." );
 }
 
-opt_str cath_assign_domains_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt cath_assign_domains_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                              ) const {
 	if ( ! rbf_svm_file.empty()   && ! is_acceptable_input_file( rbf_svm_file   ) ) {
 		return "SVM-light RBF model file " + rbf_svm_file.string() + " is not a valid input file";

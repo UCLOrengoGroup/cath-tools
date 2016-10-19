@@ -40,11 +40,11 @@ display_colour_spec score_adjusted_display_colourer::do_get_colour_spec(const al
 	if ( get_score_handler().get_show_scores_if_present() ) {
 		for (alignment::size_type entry = 0; entry < num_entries; ++entry) {
 			for (size_t index = 0; index < aln_length; ++index) {
-				const opt_aln_posn position = the_alignment.position_of_entry_of_index( entry, index );
+				const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry, index );
 				if ( position ) {
-					const opt_display_colour base_col = unscored_spec.get_base_clr();
-					const opt_display_colour pdb_col  = get_clr_of_pdb_index          ( unscored_spec, entry            );
-					const opt_display_colour res_col  = get_clr_of_pdb_and_res_indices( unscored_spec, entry, *position );
+					const display_colour_opt base_col = unscored_spec.get_base_clr();
+					const display_colour_opt pdb_col  = get_clr_of_pdb_index          ( unscored_spec, entry            );
+					const display_colour_opt res_col  = get_clr_of_pdb_and_res_indices( unscored_spec, entry, *position );
 					const display_colour best_colour = res_col  ? ( *res_col  ) :
 					                                   pdb_col  ? ( *pdb_col  ) :
 					                                   base_col ? ( *base_col ) : display_colour::BLACK;

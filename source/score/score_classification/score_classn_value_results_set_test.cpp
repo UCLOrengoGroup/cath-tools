@@ -118,7 +118,7 @@ namespace cath {
 
 			void plot_both(const score_classn_value_list_vec    &arg_results,        ///< TODOCUMENT
 			               const string                         &arg_file_stem_stem, ///< TODOCUMENT
-			               const vector<pair<string, opt_str>>  &arg_series_to_plot  ///< TODOCUMENT
+			               const vector<pair<string, str_opt>>  &arg_series_to_plot  ///< TODOCUMENT
 			               ) {
 				plot_roc(
 					classn_stat_plotter(),
@@ -140,15 +140,15 @@ namespace cath {
 			public:
 				optional<pair<bool, string>> operator()(const path &arg_file) const {
 //					optional<pair<bool, string>> select_file(const path &arg_file) {
-					using opt_bool_str_pair = optional<pair<bool, string>>;
+					using bool_str_pair_opt = optional<pair<bool, string>>;
 					if ( file_size( arg_file ) < 100
 							|| icontains( arg_file.string(), "stderr" )
 							|| icontains( arg_file.string(), "svmlight_data" ) ) {
-						return opt_bool_str_pair( none );
+						return bool_str_pair_opt( none );
 					}
 
 					const auto file_stem = arg_file.stem().string();
-					return opt_bool_str_pair{ make_pair(
+					return bool_str_pair_opt{ make_pair(
 						score_classn_value_results_set_test_suite_fixture::is_positive( file_stem ),
 						file_stem
 					) };
@@ -380,10 +380,10 @@ namespace cath {
 			/// \brief TODOCUMENT
 			///
 			/// \todo Ideally, make this a variadic template
-			static vector<pair<string, opt_str>> join_series_lists(const vector<pair<string, opt_str>> &arg_list_a, ///< TODOCUMENT
-			                                                       const vector<pair<string, opt_str>> &arg_list_b  ///< TODOCUMENT
+			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &arg_list_a, ///< TODOCUMENT
+			                                                       const vector<pair<string, str_opt>> &arg_list_b  ///< TODOCUMENT
 			                                                       ) {
-				vector<pair<string, opt_str>> results;
+				vector<pair<string, str_opt>> results;
 				results.reserve( arg_list_a.size() + arg_list_b.size() );
 				copy( arg_list_a, back_inserter( results ) );
 				copy( arg_list_b, back_inserter( results ) );
@@ -392,8 +392,8 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename... Ts>
-			static vector<pair<string, opt_str>> join_series_lists(const vector<pair<string, opt_str>> &arg_list_a, ///< TODOCUMENT
-			                                                       const vector<pair<string, opt_str>> &arg_list_b, ///< TODOCUMENT
+			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &arg_list_a, ///< TODOCUMENT
+			                                                       const vector<pair<string, str_opt>> &arg_list_b, ///< TODOCUMENT
 			                                                       const Ts &...                        arg_lists   ///< TODOCUMENT
 			                                                       ) {
 				return join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_lists... );
@@ -402,9 +402,9 @@ namespace cath {
 //			/// \brief TODOCUMENT
 //			///
 //			/// \todo Ideally, make this a variadic template
-//			static vector<pair<string, opt_str>> join_series_lists(const vector<pair<string, opt_str>> &arg_list_a, ///< TODOCUMENT
-//			                                                       const vector<pair<string, opt_str>> &arg_list_b, ///< TODOCUMENT
-//			                                                       const vector<pair<string, opt_str>> &arg_list_c  ///< TODOCUMENT
+//			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &arg_list_a, ///< TODOCUMENT
+//			                                                       const vector<pair<string, str_opt>> &arg_list_b, ///< TODOCUMENT
+//			                                                       const vector<pair<string, str_opt>> &arg_list_c  ///< TODOCUMENT
 //			                                                       ) {
 //				return join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_list_c );
 //			}
@@ -412,10 +412,10 @@ namespace cath {
 //			/// \brief TODOCUMENT
 //			///
 //			/// \todo Ideally, make this a variadic template
-//			static vector<pair<string, opt_str>> join_series_lists(const vector<pair<string, opt_str>> &arg_list_a, ///< TODOCUMENT
-//			                                                       const vector<pair<string, opt_str>> &arg_list_b, ///< TODOCUMENT
-//			                                                       const vector<pair<string, opt_str>> &arg_list_c, ///< TODOCUMENT
-//			                                                       const vector<pair<string, opt_str>> &arg_list_d  ///< TODOCUMENT
+//			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &arg_list_a, ///< TODOCUMENT
+//			                                                       const vector<pair<string, str_opt>> &arg_list_b, ///< TODOCUMENT
+//			                                                       const vector<pair<string, str_opt>> &arg_list_c, ///< TODOCUMENT
+//			                                                       const vector<pair<string, str_opt>> &arg_list_d  ///< TODOCUMENT
 //			                                                       ) {
 //				return join_series_lists( join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_list_c ), arg_list_d );
 //			}
@@ -444,63 +444,63 @@ namespace cath {
 			// "#7e2dd2"
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> ssap_series_list() {
+			static vector<pair<string, str_opt>> ssap_series_list() {
 				return {
-//					{ "ssap.length1",    opt_str{ R"( linetype 1 linecolor rgb "black"               )" } },
-//					{ "ssap.length2",    opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
-					{ "ssap.ssap_score", opt_str{ R"( linetype 1 linecolor rgb "#0000ff" linewidth 3 )" } },
-					{ "ssap.num_equivs", opt_str{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
-					{ "ssap.overlap_pc", opt_str{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
-					{ "ssap.seq_id_pc",  opt_str{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
-					{ "ssap.rmsd",       opt_str{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } }
+//					{ "ssap.length1",    str_opt{ R"( linetype 1 linecolor rgb "black"               )" } },
+//					{ "ssap.length2",    str_opt{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
+					{ "ssap.ssap_score", str_opt{ R"( linetype 1 linecolor rgb "#0000ff" linewidth 3 )" } },
+					{ "ssap.num_equivs", str_opt{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
+					{ "ssap.overlap_pc", str_opt{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
+					{ "ssap.seq_id_pc",  str_opt{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
+					{ "ssap.rmsd",       str_opt{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } }
 				};
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> prc_series_list() {
+			static vector<pair<string, str_opt>> prc_series_list() {
 				return {
-//					{ "prc.length1", opt_str{ R"( linetype 1 linecolor rgb "#006401"             )" } },
-//					{ "prc.length2", opt_str{ R"( linetype 1 linecolor rgb "#010067"             )" } },
-					{ "prc.evalue",  opt_str{ R"( linetype 1 linecolor rgb "#95003a" linewidth 3 )" } },
-					{ "prc.simple",  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "prc.reverse", opt_str{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } }
+//					{ "prc.length1", str_opt{ R"( linetype 1 linecolor rgb "#006401"             )" } },
+//					{ "prc.length2", str_opt{ R"( linetype 1 linecolor rgb "#010067"             )" } },
+					{ "prc.evalue",  str_opt{ R"( linetype 1 linecolor rgb "#95003a" linewidth 3 )" } },
+					{ "prc.simple",  str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "prc.reverse", str_opt{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } }
 				};
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> hmmer_series_list() {
+			static vector<pair<string, str_opt>> hmmer_series_list() {
 				return {
-					{ "hmmer.full_sequence_evalue", opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.full_sequence_score",  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.full_sequence_bias",   opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.best_1_domain_evalue", opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.best_1_domain_score",  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.best_1_domain_bias",   opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.expected_num_doms",    opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.reg",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.clu",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.ov",                   opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.env",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.dom",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.rep",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-					{ "hmmer.inc",                  opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } }
+					{ "hmmer.full_sequence_evalue", str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.full_sequence_score",  str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.full_sequence_bias",   str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.best_1_domain_evalue", str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.best_1_domain_score",  str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.best_1_domain_bias",   str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.expected_num_doms",    str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.reg",                  str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.clu",                  str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.ov",                   str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.env",                  str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.dom",                  str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.rep",                  str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+					{ "hmmer.inc",                  str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } }
 				};
 			}
 
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> magic_series_list() {
+			static vector<pair<string, str_opt>> magic_series_list() {
 				return {
-					{ "magic.function", opt_str{ R"( linetype 1 linecolor rgb "#774d00" linewidth 3 )" } }
+					{ "magic.function", str_opt{ R"( linetype 1 linecolor rgb "#774d00" linewidth 3 )" } }
 				};
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> make_svm_series_list(const string &arg_name_stem,   ///< TODOCUMENT
+			static vector<pair<string, str_opt>> make_svm_series_list(const string &arg_name_stem,   ///< TODOCUMENT
 			                                                          const string &arg_spec_string, ///< TODOCUMENT
 			                                                          const size_t &arg_num          ///< TODOCUMENT
 			                                                          ) {
-				return transform_build<vector<pair<string, opt_str>>>(
+				return transform_build<vector<pair<string, str_opt>>>(
 					irange( 0_z, arg_num ),
 					[&] (const size_t &x) {
 						const string title_string = x == 0 ? string{ ""          }
@@ -514,44 +514,44 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> svm__prc_alone_series_list() {
+			static vector<pair<string, str_opt>> svm__prc_alone_series_list() {
 				return make_svm_series_list( "svm__prc_alone", R"( linecolor rgb "#FFCC00" )", 5 );
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> svm__ssap_alone_series_list() {
+			static vector<pair<string, str_opt>> svm__ssap_alone_series_list() {
 				return make_svm_series_list( "svm__ssap_alone", R"( linecolor rgb "#FF029D" )", 5 );
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> svm__hmmer_alone_series_list() {
+			static vector<pair<string, str_opt>> svm__hmmer_alone_series_list() {
 				return make_svm_series_list( "svm__hmmer_alone", R"( linecolor rgb "#FE8900" )", 5 );
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> svm__ssap_prc_series_list() {
+			static vector<pair<string, str_opt>> svm__ssap_prc_series_list() {
 				return make_svm_series_list( "svm__ssap_prc", R"( linecolor rgb "#22FF22" )", 5 );
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> svm__ssap_hmmer_series_list() {
+			static vector<pair<string, str_opt>> svm__ssap_hmmer_series_list() {
 				return make_svm_series_list( "svm__ssap_hmmer", R"( linecolor rgb "#01fffe" )", 5 );
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> svm__ssap_prc_hmmer_series_list() {
+			static vector<pair<string, str_opt>> svm__ssap_prc_hmmer_series_list() {
 				return make_svm_series_list( "svm__ssap_prc_hmmer", R"( linecolor rgb "#2222FF" )", 5 );
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> svm__ssap_prc_multi_series_list() {
+			static vector<pair<string, str_opt>> svm__ssap_prc_multi_series_list() {
 				return make_svm_series_list( "svm__ssap_prc_multi", R"( linecolor rgb "#FF7F00" )", 5 );
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, opt_str>> svm__full_series_list() {
+			static vector<pair<string, str_opt>> svm__full_series_list() {
 				return {
-					{ "svm__full", opt_str{ R"( linetype 1 linewidth 4 linecolor rgb "#000000" )" } }
+					{ "svm__full", str_opt{ R"( linetype 1 linewidth 4 linecolor rgb "#000000" )" } }
 				};
 			}
 
@@ -894,21 +894,21 @@ BOOST_AUTO_TEST_SUITE_END()
 //	plot_both(
 //		som2_results,
 //		"/export/people/ucbctnl/sab_graphs/1.ssap",
-//		{ { "ssap", opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } } }
+//		{ { "ssap", str_opt{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } } }
 //	);
 //
 ////	plot_roc(
 ////		classn_stat_plotter(),
 ////		"/export/people/ucbctnl/sab_graphs/1.ssap.roc",
 ////		som2_results,
-////		make_standard_score_roc_plotter_spec( { { "ssap", opt_str{ R"( linetype 1 linecolor rgb "#000000" )" } } } )
+////		make_standard_score_roc_plotter_spec( { { "ssap", str_opt{ R"( linetype 1 linecolor rgb "#000000" )" } } } )
 ////	);
 ////
 ////	plot_precision_recall(
 ////		classn_stat_plotter(),
 ////		"/export/people/ucbctnl/sab_graphs/1.ssap.precision_recall",
 ////		som2_results,
-////		make_standard_score_precision_recall_plotter_spec( { { "ssap", opt_str{ R"( linetype 1 linecolor rgb "#000000" )" } } } )
+////		make_standard_score_precision_recall_plotter_spec( { { "ssap", str_opt{ R"( linetype 1 linecolor rgb "#000000" )" } } } )
 ////	);
 //}
 //
@@ -920,12 +920,12 @@ BOOST_AUTO_TEST_SUITE_END()
 //		som2_results,
 //		"/export/people/ucbctnl/sab_graphs/2.ssap_plus_naives",
 //		{
-//			{ "ssap",                                                 opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
-//			{ "shorter_protein_length",                               opt_str{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
-//			{ "geometric_mean_protein_length",                        opt_str{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
-//			{ "overlap.shorter_protein_length.longer_protein_length", opt_str{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
-//			{ "mean_protein_length",                                  opt_str{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
-//			{ "longer_protein_length",                                opt_str{ R"( linetype 1 linecolor rgb "#7a4782"             )" } }
+//			{ "ssap",                                                 str_opt{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
+//			{ "shorter_protein_length",                               str_opt{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
+//			{ "geometric_mean_protein_length",                        str_opt{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
+//			{ "overlap.shorter_protein_length.longer_protein_length", str_opt{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
+//			{ "mean_protein_length",                                  str_opt{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
+//			{ "longer_protein_length",                                str_opt{ R"( linetype 1 linecolor rgb "#7a4782"             )" } }
 //		}
 //	);
 //}
@@ -938,28 +938,28 @@ BOOST_AUTO_TEST_SUITE_END()
 //		som2_results,
 //		"/export/people/ucbctnl/sab_graphs/3.ssap_plus_basics",
 //		{
-//			{ "ssap",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
-//			{ "GSAS",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
-//			{ "SAS",                                                                                    opt_str{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
-//			{ "structal",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
-//			{ "TM-score",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
-//			{ "MIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
-//			{ "SIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
-//			{ "sequence_id.identity",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#006401"             )" } },
-//			{ "lDDT.threshold[STD_MEAN]",                                                               opt_str{ R"( linetype 1 linecolor rgb "#010067"             )" } },
-//			{ "num_aligned_residues",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
-//			{ "overlap.num_aligned_residues.longer_protein_length",                                     opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-//			{ "dRMSD",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
-//			{ "shorter_protein_length",                                                                 opt_str{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
-//			{ "SI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
-//			{ "MI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
-//			{ "RMSD",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
-//			{ "geometric_mean_protein_length",                                                          opt_str{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
-//			{ "overlap.shorter_protein_length.longer_protein_length",                                   opt_str{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
-//			{ "mean_protein_length",                                                                    opt_str{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
-//			{ "sequence_id.blosum62",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
-//			{ "longer_protein_length",                                                                  opt_str{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
-//			{ "overlap.num_aligned_residues.shorter_protein_length",                                    opt_str{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
+//			{ "ssap",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
+//			{ "GSAS",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
+//			{ "SAS",                                                                                    str_opt{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
+//			{ "structal",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
+//			{ "TM-score",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
+//			{ "MIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
+//			{ "SIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
+//			{ "sequence_id.identity",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#006401"             )" } },
+//			{ "lDDT.threshold[STD_MEAN]",                                                               str_opt{ R"( linetype 1 linecolor rgb "#010067"             )" } },
+//			{ "num_aligned_residues",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
+//			{ "overlap.num_aligned_residues.longer_protein_length",                                     str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+//			{ "dRMSD",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
+//			{ "shorter_protein_length",                                                                 str_opt{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
+//			{ "SI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
+//			{ "MI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
+//			{ "RMSD",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
+//			{ "geometric_mean_protein_length",                                                          str_opt{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
+//			{ "overlap.shorter_protein_length.longer_protein_length",                                   str_opt{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
+//			{ "mean_protein_length",                                                                    str_opt{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
+//			{ "sequence_id.blosum62",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
+//			{ "longer_protein_length",                                                                  str_opt{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
+//			{ "overlap.num_aligned_residues.shorter_protein_length",                                    str_opt{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
 //		}
 //	);
 //}
@@ -981,29 +981,29 @@ BOOST_AUTO_TEST_SUITE_END()
 //		som2_results,
 //		"/export/people/ucbctnl/sab_graphs/4.ssap_plus_natives_and_non_natives",
 //		{
-//			{ "ssap",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
-////			{ "GSAS",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
-////			{ "SAS",                                                                                    opt_str{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
-//			{ "structal",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
-//			{ "TM-score",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#2222ff" linewidth 3 )" } },
-////			{ "MIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
-////			{ "SIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
-////			{ "sequence_id.identity",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#006401"             )" } },
-////			{ "lDDT.threshold[STD_MEAN]",                                                               opt_str{ R"( linetype 1 linecolor rgb "#010067"             )" } },
-////			{ "num_aligned_residues",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
-////			{ "overlap.num_aligned_residues.longer_protein_length",                                     opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-////			{ "dRMSD",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
-////			{ "shorter_protein_length",                                                                 opt_str{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
-////			{ "SI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
-////			{ "MI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
-////			{ "RMSD",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
-////			{ "geometric_mean_protein_length",                                                          opt_str{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
-////			{ "overlap.shorter_protein_length.longer_protein_length",                                   opt_str{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
-////			{ "mean_protein_length",                                                                    opt_str{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
-////			{ "sequence_id.blosum62",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
-////			{ "longer_protein_length",                                                                  opt_str{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
-////			{ "overlap.num_aligned_residues.shorter_protein_length",                                    opt_str{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
-//			{ "Native TM-align",                                                                        opt_str{ R"( linetype 1 linecolor rgb "#000088" linewidth 3 )" } }
+//			{ "ssap",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
+////			{ "GSAS",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
+////			{ "SAS",                                                                                    str_opt{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
+//			{ "structal",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
+//			{ "TM-score",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#2222ff" linewidth 3 )" } },
+////			{ "MIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
+////			{ "SIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
+////			{ "sequence_id.identity",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#006401"             )" } },
+////			{ "lDDT.threshold[STD_MEAN]",                                                               str_opt{ R"( linetype 1 linecolor rgb "#010067"             )" } },
+////			{ "num_aligned_residues",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
+////			{ "overlap.num_aligned_residues.longer_protein_length",                                     str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+////			{ "dRMSD",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
+////			{ "shorter_protein_length",                                                                 str_opt{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
+////			{ "SI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
+////			{ "MI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
+////			{ "RMSD",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
+////			{ "geometric_mean_protein_length",                                                          str_opt{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
+////			{ "overlap.shorter_protein_length.longer_protein_length",                                   str_opt{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
+////			{ "mean_protein_length",                                                                    str_opt{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
+////			{ "sequence_id.blosum62",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
+////			{ "longer_protein_length",                                                                  str_opt{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
+////			{ "overlap.num_aligned_residues.shorter_protein_length",                                    str_opt{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
+//			{ "Native TM-align",                                                                        str_opt{ R"( linetype 1 linecolor rgb "#000088" linewidth 3 )" } }
 //		}
 //	);
 //}
@@ -1027,29 +1027,29 @@ BOOST_AUTO_TEST_SUITE_END()
 //		som2_results,
 //		"/export/people/ucbctnl/sab_graphs/5.ssap_plus_natives_and_non_natives_on_refined",
 //		{
-//			{ "ssap",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
-////			{ "GSAS",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
-////			{ "SAS",                                                                                    opt_str{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
-//			{ "structal",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
-//			{ "TM-score",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#2222ff" linewidth 3 )" } },
-////			{ "MIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
-////			{ "SIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
-////			{ "sequence_id.identity",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#006401"             )" } },
-////			{ "lDDT.threshold[STD_MEAN]",                                                               opt_str{ R"( linetype 1 linecolor rgb "#010067"             )" } },
-////			{ "num_aligned_residues",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
-////			{ "overlap.num_aligned_residues.longer_protein_length",                                     opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-////			{ "dRMSD",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
-////			{ "shorter_protein_length",                                                                 opt_str{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
-////			{ "SI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
-////			{ "MI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
-////			{ "RMSD",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
-////			{ "geometric_mean_protein_length",                                                          opt_str{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
-////			{ "overlap.shorter_protein_length.longer_protein_length",                                   opt_str{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
-////			{ "mean_protein_length",                                                                    opt_str{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
-////			{ "sequence_id.blosum62",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
-////			{ "longer_protein_length",                                                                  opt_str{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
-////			{ "overlap.num_aligned_residues.shorter_protein_length",                                    opt_str{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
-//			{ "Native TM-align",                                                                        opt_str{ R"( linetype 1 linecolor rgb "#000088" linewidth 3 )" } }
+//			{ "ssap",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
+////			{ "GSAS",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
+////			{ "SAS",                                                                                    str_opt{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
+//			{ "structal",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
+//			{ "TM-score",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#2222ff" linewidth 3 )" } },
+////			{ "MIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
+////			{ "SIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
+////			{ "sequence_id.identity",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#006401"             )" } },
+////			{ "lDDT.threshold[STD_MEAN]",                                                               str_opt{ R"( linetype 1 linecolor rgb "#010067"             )" } },
+////			{ "num_aligned_residues",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
+////			{ "overlap.num_aligned_residues.longer_protein_length",                                     str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+////			{ "dRMSD",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
+////			{ "shorter_protein_length",                                                                 str_opt{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
+////			{ "SI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
+////			{ "MI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
+////			{ "RMSD",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
+////			{ "geometric_mean_protein_length",                                                          str_opt{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
+////			{ "overlap.shorter_protein_length.longer_protein_length",                                   str_opt{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
+////			{ "mean_protein_length",                                                                    str_opt{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
+////			{ "sequence_id.blosum62",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
+////			{ "longer_protein_length",                                                                  str_opt{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
+////			{ "overlap.num_aligned_residues.shorter_protein_length",                                    str_opt{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
+//			{ "Native TM-align",                                                                        str_opt{ R"( linetype 1 linecolor rgb "#000088" linewidth 3 )" } }
 //		}
 //	);
 //}
@@ -1062,53 +1062,53 @@ BOOST_AUTO_TEST_SUITE_END()
 //		som2_results,
 //		"/export/people/ucbctnl/sab_graphs/6.ssap_plus_basics_plus_extras",
 //		{
-//			{ "ssap.cb_atoms.high_accuracy.num_excluded_on_sides:10.distance_score_formula_simplified", opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_best_score_percent[70].cb_atoms",                                            opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "ssap",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
-//			{ "SAS.select_best_score_percent[70].cb_atoms",                                             opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_best_score_percent[70].cb_atoms",                                        opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_best_score_percent[70]",                                                 opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_best_score_percent[70]",                                                     opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.select_best_score_percent[70]",                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.cb_atoms",                                                                          opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_min_score[0.01].cb_atoms",                                                   opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_min_score[0.01].cb_atoms",                                               opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_min_score[0.01]",                                                            opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
-//			{ "structal.cb_atoms",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "TM-score.select_min_score[0.01].cb_atoms",                                               opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "TM-score.cb_atoms",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.select_min_score[0.01].cb_atoms",                                                    opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_min_score[0.01]",                                                        opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.cb_atoms",                                                                           opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.select_min_score[0.01]",                                                             opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS",                                                                                    opt_str{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
-//			{ "structal",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
-//			{ "TM-score.select_min_score[0.01]",                                                        opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "TM-score",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
-//			{ "MIMAX.select_best_score_percent[70].cb_atoms",                                           opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SIMAX.select_best_score_percent[70].cb_atoms",                                           opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "MIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
-//			{ "lDDT.threshold[4]",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
-//			{ "sequence_id.identity",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#006401"             )" } },
-//			{ "lDDT.threshold[2]",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "lDDT.threshold[STD_MEAN]",                                                               opt_str{ R"( linetype 1 linecolor rgb "#010067"             )" } },
-//			{ "lDDT.threshold[1]",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "num_aligned_residues",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
-//			{ "lDDT.threshold[0.5]",                                                                    opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "overlap.num_aligned_residues.longer_protein_length",                                     opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-//			{ "dRMSD",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
-//			{ "shorter_protein_length",                                                                 opt_str{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
-//			{ "SI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
-//			{ "MI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
-//			{ "RMSD",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
-//			{ "geometric_mean_protein_length",                                                          opt_str{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
-//			{ "overlap.shorter_protein_length.longer_protein_length",                                   opt_str{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
-//			{ "mean_protein_length",                                                                    opt_str{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
-//			{ "sequence_id.blosum62",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
-//			{ "longer_protein_length",                                                                  opt_str{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
-//			{ "overlap.num_aligned_residues.shorter_protein_length",                                    opt_str{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
+//			{ "ssap.cb_atoms.high_accuracy.num_excluded_on_sides:10.distance_score_formula_simplified", str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_best_score_percent[70].cb_atoms",                                            str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "ssap",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
+//			{ "SAS.select_best_score_percent[70].cb_atoms",                                             str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_best_score_percent[70].cb_atoms",                                        str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_best_score_percent[70]",                                                 str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_best_score_percent[70]",                                                     str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.select_best_score_percent[70]",                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.cb_atoms",                                                                          str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_min_score[0.01].cb_atoms",                                                   str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_min_score[0.01].cb_atoms",                                               str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_min_score[0.01]",                                                            str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
+//			{ "structal.cb_atoms",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "TM-score.select_min_score[0.01].cb_atoms",                                               str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "TM-score.cb_atoms",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.select_min_score[0.01].cb_atoms",                                                    str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_min_score[0.01]",                                                        str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.cb_atoms",                                                                           str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.select_min_score[0.01]",                                                             str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS",                                                                                    str_opt{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
+//			{ "structal",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
+//			{ "TM-score.select_min_score[0.01]",                                                        str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "TM-score",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
+//			{ "MIMAX.select_best_score_percent[70].cb_atoms",                                           str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SIMAX.select_best_score_percent[70].cb_atoms",                                           str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "MIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
+//			{ "lDDT.threshold[4]",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
+//			{ "sequence_id.identity",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#006401"             )" } },
+//			{ "lDDT.threshold[2]",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "lDDT.threshold[STD_MEAN]",                                                               str_opt{ R"( linetype 1 linecolor rgb "#010067"             )" } },
+//			{ "lDDT.threshold[1]",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "num_aligned_residues",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
+//			{ "lDDT.threshold[0.5]",                                                                    str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "overlap.num_aligned_residues.longer_protein_length",                                     str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+//			{ "dRMSD",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
+//			{ "shorter_protein_length",                                                                 str_opt{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
+//			{ "SI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
+//			{ "MI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
+//			{ "RMSD",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
+//			{ "geometric_mean_protein_length",                                                          str_opt{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
+//			{ "overlap.shorter_protein_length.longer_protein_length",                                   str_opt{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
+//			{ "mean_protein_length",                                                                    str_opt{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
+//			{ "sequence_id.blosum62",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
+//			{ "longer_protein_length",                                                                  str_opt{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
+//			{ "overlap.num_aligned_residues.shorter_protein_length",                                    str_opt{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
 //		}
 //	);
 //}
@@ -1136,65 +1136,65 @@ BOOST_AUTO_TEST_SUITE_END()
 //		som2_results,
 //		"/export/people/ucbctnl/sab_graphs/7.ssap_plus_basics_plus_extras_plus_svm",
 //		{
-//			{ "SVM01",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM02",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM03",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM04",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM05",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM06",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM07",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM08",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM09",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM10",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM01",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM02",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM03",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM04",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM05",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM06",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM07",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM08",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM09",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM10",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
 //
 //
-//			{ "ssap.cb_atoms.high_accuracy.num_excluded_on_sides:10.distance_score_formula_simplified", opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_best_score_percent[70].cb_atoms",                                            opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "ssap",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
-//			{ "SAS.select_best_score_percent[70].cb_atoms",                                             opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_best_score_percent[70].cb_atoms",                                        opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_best_score_percent[70]",                                                 opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_best_score_percent[70]",                                                     opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.select_best_score_percent[70]",                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.cb_atoms",                                                                          opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_min_score[0.01].cb_atoms",                                                   opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_min_score[0.01].cb_atoms",                                               opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_min_score[0.01]",                                                            opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
-//			{ "structal.cb_atoms",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "TM-score.select_min_score[0.01].cb_atoms",                                               opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "TM-score.cb_atoms",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.select_min_score[0.01].cb_atoms",                                                    opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_min_score[0.01]",                                                        opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.cb_atoms",                                                                           opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.select_min_score[0.01]",                                                             opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS",                                                                                    opt_str{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
-//			{ "structal",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
-//			{ "TM-score.select_min_score[0.01]",                                                        opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "TM-score",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
-//			{ "MIMAX.select_best_score_percent[70].cb_atoms",                                           opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SIMAX.select_best_score_percent[70].cb_atoms",                                           opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "MIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
-//			{ "lDDT.threshold[4]",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
-//			{ "sequence_id.identity",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#006401"             )" } },
-//			{ "lDDT.threshold[2]",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "lDDT.threshold[STD_MEAN]",                                                               opt_str{ R"( linetype 1 linecolor rgb "#010067"             )" } },
-//			{ "lDDT.threshold[1]",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "num_aligned_residues",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
-//			{ "lDDT.threshold[0.5]",                                                                    opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "overlap.num_aligned_residues.longer_protein_length",                                     opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-//			{ "dRMSD",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
-//			{ "shorter_protein_length",                                                                 opt_str{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
-//			{ "SI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
-//			{ "MI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
-//			{ "RMSD",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
-//			{ "geometric_mean_protein_length",                                                          opt_str{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
-//			{ "overlap.shorter_protein_length.longer_protein_length",                                   opt_str{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
-//			{ "mean_protein_length",                                                                    opt_str{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
-//			{ "sequence_id.blosum62",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
-//			{ "longer_protein_length",                                                                  opt_str{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
-//			{ "overlap.num_aligned_residues.shorter_protein_length",                                    opt_str{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
+//			{ "ssap.cb_atoms.high_accuracy.num_excluded_on_sides:10.distance_score_formula_simplified", str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_best_score_percent[70].cb_atoms",                                            str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "ssap",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
+//			{ "SAS.select_best_score_percent[70].cb_atoms",                                             str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_best_score_percent[70].cb_atoms",                                        str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_best_score_percent[70]",                                                 str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_best_score_percent[70]",                                                     str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.select_best_score_percent[70]",                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.cb_atoms",                                                                          str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_min_score[0.01].cb_atoms",                                                   str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_min_score[0.01].cb_atoms",                                               str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_min_score[0.01]",                                                            str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
+//			{ "structal.cb_atoms",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "TM-score.select_min_score[0.01].cb_atoms",                                               str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "TM-score.cb_atoms",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.select_min_score[0.01].cb_atoms",                                                    str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_min_score[0.01]",                                                        str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.cb_atoms",                                                                           str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.select_min_score[0.01]",                                                             str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS",                                                                                    str_opt{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
+//			{ "structal",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
+//			{ "TM-score.select_min_score[0.01]",                                                        str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "TM-score",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
+//			{ "MIMAX.select_best_score_percent[70].cb_atoms",                                           str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SIMAX.select_best_score_percent[70].cb_atoms",                                           str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "MIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
+//			{ "lDDT.threshold[4]",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
+//			{ "sequence_id.identity",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#006401"             )" } },
+//			{ "lDDT.threshold[2]",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "lDDT.threshold[STD_MEAN]",                                                               str_opt{ R"( linetype 1 linecolor rgb "#010067"             )" } },
+//			{ "lDDT.threshold[1]",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "num_aligned_residues",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
+//			{ "lDDT.threshold[0.5]",                                                                    str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "overlap.num_aligned_residues.longer_protein_length",                                     str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+//			{ "dRMSD",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
+//			{ "shorter_protein_length",                                                                 str_opt{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
+//			{ "SI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
+//			{ "MI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
+//			{ "RMSD",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
+//			{ "geometric_mean_protein_length",                                                          str_opt{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
+//			{ "overlap.shorter_protein_length.longer_protein_length",                                   str_opt{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
+//			{ "mean_protein_length",                                                                    str_opt{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
+//			{ "sequence_id.blosum62",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
+//			{ "longer_protein_length",                                                                  str_opt{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
+//			{ "overlap.num_aligned_residues.shorter_protein_length",                                    str_opt{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
 //		}
 //	);
 //}
@@ -1223,65 +1223,65 @@ BOOST_AUTO_TEST_SUITE_END()
 //		som2_results,
 //		"/export/people/ucbctnl/sab_graphs/8.ssap_plus_basics_plus_extras_plus_svm_on_refined",
 //		{
-//			{ "SVM01",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM02",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM03",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM04",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM05",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM06",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM07",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM08",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM09",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
-//			{ "SVM10",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM01",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM02",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM03",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM04",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM05",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM06",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM07",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM08",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM09",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
+//			{ "SVM10",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#FFCC00" notitle     )" } },
 //
 //
-//			{ "ssap.cb_atoms.high_accuracy.num_excluded_on_sides:10.distance_score_formula_simplified", opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_best_score_percent[70].cb_atoms",                                            opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "ssap",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
-//			{ "SAS.select_best_score_percent[70].cb_atoms",                                             opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_best_score_percent[70].cb_atoms",                                        opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_best_score_percent[70]",                                                 opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_best_score_percent[70]",                                                     opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.select_best_score_percent[70]",                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.cb_atoms",                                                                          opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_min_score[0.01].cb_atoms",                                                   opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_min_score[0.01].cb_atoms",                                               opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS.select_min_score[0.01]",                                                            opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "GSAS",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
-//			{ "structal.cb_atoms",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "TM-score.select_min_score[0.01].cb_atoms",                                               opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "TM-score.cb_atoms",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.select_min_score[0.01].cb_atoms",                                                    opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "structal.select_min_score[0.01]",                                                        opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.cb_atoms",                                                                           opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS.select_min_score[0.01]",                                                             opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SAS",                                                                                    opt_str{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
-//			{ "structal",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
-//			{ "TM-score.select_min_score[0.01]",                                                        opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "TM-score",                                                                               opt_str{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
-//			{ "MIMAX.select_best_score_percent[70].cb_atoms",                                           opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SIMAX.select_best_score_percent[70].cb_atoms",                                           opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "MIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
-//			{ "lDDT.threshold[4]",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "SIMAX",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
-//			{ "sequence_id.identity",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#006401"             )" } },
-//			{ "lDDT.threshold[2]",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "lDDT.threshold[STD_MEAN]",                                                               opt_str{ R"( linetype 1 linecolor rgb "#010067"             )" } },
-//			{ "lDDT.threshold[1]",                                                                      opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "num_aligned_residues",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
-//			{ "lDDT.threshold[0.5]",                                                                    opt_str{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
-//			{ "overlap.num_aligned_residues.longer_protein_length",                                     opt_str{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
-//			{ "dRMSD",                                                                                  opt_str{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
-//			{ "shorter_protein_length",                                                                 opt_str{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
-//			{ "SI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
-//			{ "MI",                                                                                     opt_str{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
-//			{ "RMSD",                                                                                   opt_str{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
-//			{ "geometric_mean_protein_length",                                                          opt_str{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
-//			{ "overlap.shorter_protein_length.longer_protein_length",                                   opt_str{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
-//			{ "mean_protein_length",                                                                    opt_str{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
-//			{ "sequence_id.blosum62",                                                                   opt_str{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
-//			{ "longer_protein_length",                                                                  opt_str{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
-//			{ "overlap.num_aligned_residues.shorter_protein_length",                                    opt_str{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
+//			{ "ssap.cb_atoms.high_accuracy.num_excluded_on_sides:10.distance_score_formula_simplified", str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_best_score_percent[70].cb_atoms",                                            str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "ssap",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "black"   linewidth 3 )" } },
+//			{ "SAS.select_best_score_percent[70].cb_atoms",                                             str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_best_score_percent[70].cb_atoms",                                        str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_best_score_percent[70]",                                                 str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_best_score_percent[70]",                                                     str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.select_best_score_percent[70]",                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.cb_atoms",                                                                          str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_min_score[0.01].cb_atoms",                                                   str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_min_score[0.01].cb_atoms",                                               str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS.select_min_score[0.01]",                                                            str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "GSAS",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#00ff00"             )" } },
+//			{ "structal.cb_atoms",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "TM-score.select_min_score[0.01].cb_atoms",                                               str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "TM-score.cb_atoms",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.select_min_score[0.01].cb_atoms",                                                    str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "structal.select_min_score[0.01]",                                                        str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.cb_atoms",                                                                           str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS.select_min_score[0.01]",                                                             str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SAS",                                                                                    str_opt{ R"( linetype 1 linecolor rgb "#0000ff"             )" } },
+//			{ "structal",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#ff0000"             )" } },
+//			{ "TM-score.select_min_score[0.01]",                                                        str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "TM-score",                                                                               str_opt{ R"( linetype 1 linecolor rgb "#01fffe"             )" } },
+//			{ "MIMAX.select_best_score_percent[70].cb_atoms",                                           str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SIMAX.select_best_score_percent[70].cb_atoms",                                           str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "MIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffa6fe"             )" } },
+//			{ "lDDT.threshold[4]",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "SIMAX",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ffdb66"             )" } },
+//			{ "sequence_id.identity",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#006401"             )" } },
+//			{ "lDDT.threshold[2]",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "lDDT.threshold[STD_MEAN]",                                                               str_opt{ R"( linetype 1 linecolor rgb "#010067"             )" } },
+//			{ "lDDT.threshold[1]",                                                                      str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "num_aligned_residues",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#95003a"             )" } },
+//			{ "lDDT.threshold[0.5]",                                                                    str_opt{ R"( linetype 2 linecolor rgb "#cccccc"             )" } },
+//			{ "overlap.num_aligned_residues.longer_protein_length",                                     str_opt{ R"( linetype 1 linecolor rgb "#007db5"             )" } },
+//			{ "dRMSD",                                                                                  str_opt{ R"( linetype 1 linecolor rgb "#ff00f6"             )" } },
+//			{ "shorter_protein_length",                                                                 str_opt{ R"( linetype 1 linecolor rgb "#774d00"             )" } },
+//			{ "SI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#90fb92"             )" } },
+//			{ "MI",                                                                                     str_opt{ R"( linetype 1 linecolor rgb "#0076ff"             )" } },
+//			{ "RMSD",                                                                                   str_opt{ R"( linetype 1 linecolor rgb "#d5ff00"             )" } },
+//			{ "geometric_mean_protein_length",                                                          str_opt{ R"( linetype 1 linecolor rgb "#ff937e"             )" } },
+//			{ "overlap.shorter_protein_length.longer_protein_length",                                   str_opt{ R"( linetype 1 linecolor rgb "#6a826c"             )" } },
+//			{ "mean_protein_length",                                                                    str_opt{ R"( linetype 1 linecolor rgb "#ff029d"             )" } },
+//			{ "sequence_id.blosum62",                                                                   str_opt{ R"( linetype 1 linecolor rgb "#fe8900"             )" } },
+//			{ "longer_protein_length",                                                                  str_opt{ R"( linetype 1 linecolor rgb "#7a4782"             )" } },
+//			{ "overlap.num_aligned_residues.shorter_protein_length",                                    str_opt{ R"( linetype 1 linecolor rgb "#7e2dd2"             )" } }
 //		}
 //	);
 //
@@ -1342,10 +1342,10 @@ BOOST_AUTO_TEST_SUITE_END()
 //		make_score_classn_value_list_vec( som2_results ),
 //		"/tmp/dssp_discrimination",
 //		{
-//			{ "ssap",                 opt_str{ R"( linetype 1 linecolor rgb "red"    linewidth 3 )" } },
-//			{ "dssp_based_cath-ssap", opt_str{ R"( linetype 1 linecolor rgb "blue"   linewidth 3 )" } },
-//			{ "SSAP_r17937",          opt_str{ R"( linetype 1 linecolor rgb "green"  linewidth 3 )" } },
-//			{ "SSAP_r7906",           opt_str{ R"( linetype 1 linecolor rgb "orange" linewidth 3 )" } }
+//			{ "ssap",                 str_opt{ R"( linetype 1 linecolor rgb "red"    linewidth 3 )" } },
+//			{ "dssp_based_cath-ssap", str_opt{ R"( linetype 1 linecolor rgb "blue"   linewidth 3 )" } },
+//			{ "SSAP_r17937",          str_opt{ R"( linetype 1 linecolor rgb "green"  linewidth 3 )" } },
+//			{ "SSAP_r7906",           str_opt{ R"( linetype 1 linecolor rgb "orange" linewidth 3 )" } }
 //		}
 //	);
 //}
@@ -1397,13 +1397,13 @@ BOOST_AUTO_TEST_SUITE_END()
 //////		path( "/export/people/ucbctnl/full_scores" ),
 ////		path( "/export/people/ucbctnl/som2_scores" ),
 ////		[&] (const path &arg_file) {
-////			using opt_bool_str_pair = optional<pair<bool, string>>;
+////			using bool_str_pair_opt = optional<pair<bool, string>>;
 ////			if ( file_size( arg_file ) < 100 || icontains( arg_file.string(), "stderr" ) ) {
-////				return opt_bool_str_pair( none );
+////				return bool_str_pair_opt( none );
 ////			}
 ////
 ////			const auto file_stem = arg_file.stem().string();
-////			return opt_bool_str_pair{ make_pair(
+////			return bool_str_pair_opt{ make_pair(
 ////				is_positive( file_stem ),
 ////				file_stem
 ////			) };

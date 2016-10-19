@@ -107,7 +107,7 @@ string resolve_hits_html_outputter::total_score_row(const resscr_t &arg_total_sc
 
 /// \brief Generate the HTML string for the markers row (ie the residue numbers)
 string resolve_hits_html_outputter::markers_row(const size_t  &arg_sequence_length, ///< The length of the full sequence on which this full_hit appears
-                                                const opt_str &arg_score_header_lbl ///< The string for the score header or none if headers shouldn't be used
+                                                const str_opt &arg_score_header_lbl ///< The string for the score header or none if headers shouldn't be used
                                                 ) {
 	const double length_mult  = 100.0 / debug_numeric_cast<double>( arg_sequence_length );
 	return R"(<tr class="crh-row-colhead">

@@ -87,7 +87,7 @@ namespace cath {
 		};
 
 		const amino_acid & get_amino_acid(const pdb_residue &);
-		opt_char get_amino_acid_letter(const pdb_residue &);
+		char_opt get_amino_acid_letter(const pdb_residue &);
 		std::string get_amino_acid_code(const pdb_residue &);
 		std::string get_amino_acid_name(const pdb_residue &);
 

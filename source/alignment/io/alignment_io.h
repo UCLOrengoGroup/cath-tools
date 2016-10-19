@@ -71,7 +71,7 @@ namespace cath {
 
 		str_str_pair_vec read_ids_and_sequences_from_fasta(std::istream &);
 
-		opt_aln_posn_vec align_sequence_to_amino_acids(const std::string &,
+		aln_posn_opt_vec align_sequence_to_amino_acids(const std::string &,
 		                                               const amino_acid_vec &,
 		                                               const std::string &,
 		                                               std::ostream &arg_stderr = std::cerr);
@@ -109,7 +109,7 @@ namespace cath {
 		                                    const str_vec &,
 		                                    std::ostream &arg_stderr = std::cerr);
 
-		opt_aln_posn search_for_residue_in_residue_names(const size_t &,
+		aln_posn_opt search_for_residue_in_residue_names(const size_t &,
 		                                                 const residue_name_vec &,
 		                                                 const char &,
 		                                                 const residue_name &,

@@ -73,7 +73,7 @@ void detail_help_options_block::do_add_visible_options_to_description(options_de
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts all options
-opt_str detail_help_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt detail_help_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                      ) const {
 	return none;
 }

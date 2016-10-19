@@ -46,7 +46,7 @@ namespace cath {
 
 
 		/// \brief TODOCUMENT
-		using opt_residue_locating = boost::optional<residue_locating>;
+		using residue_locating_opt = boost::optional<residue_locating>;
 	}
 }
 

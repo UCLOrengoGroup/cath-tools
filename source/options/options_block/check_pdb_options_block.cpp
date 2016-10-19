@@ -77,7 +77,7 @@ void check_pdb_options_block::do_add_hidden_options_to_description(options_descr
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts all options
-opt_str check_pdb_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt check_pdb_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                    ) const {
 	// If there is no PDB file to check then grumble
 	//

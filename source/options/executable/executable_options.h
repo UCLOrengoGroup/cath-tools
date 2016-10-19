@@ -80,7 +80,7 @@ namespace cath {
 
 			/// \brief A string that is populated with any error/help messages that arise
 			///        during parsing. May be queried with get_error_or_help_string()
-			opt_str error_or_help_string;
+			str_opt error_or_help_string;
 
 			/// \brief The Boost program_options variable map which stores details of the parsing.
 			///        This can be queried by the protected method get_variables_map() for checking
@@ -97,7 +97,7 @@ namespace cath {
 			/// \brief Review all specified options and return a string containing any errors or a help string
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			virtual opt_str do_get_error_or_help_string() const = 0;
+			virtual str_opt do_get_error_or_help_string() const = 0;
 
 			virtual boost::program_options::positional_options_description get_positional_options();
 
@@ -106,9 +106,9 @@ namespace cath {
 			virtual std::string do_get_overview_string() const = 0;
 
 			template <typename FN>
-			void prog_opts_try(opt_str &,
+			void prog_opts_try(str_opt &,
 			                   FN &&,
-			                   const opt_str & = boost::none);
+			                   const str_opt & = boost::none);
 
 		protected:
 			std::string get_standard_usage_error_string() const;
@@ -133,14 +133,14 @@ namespace cath {
 			void parse_options(const int &,
 			                   const char * const []);
 
-			const opt_str & get_error_or_help_string() const;
+			const str_opt & get_error_or_help_string() const;
 		};
 
 		/// \brief Try a program options action and handle any exceptions that are thrown
 		template <typename Func>
-		void executable_options::prog_opts_try(opt_str        &arg_error_string, ///< The optional error string to update with a description of any errors that occur
+		void executable_options::prog_opts_try(str_opt        &arg_error_string, ///< The optional error string to update with a description of any errors that occur
 		                                       Func          &&arg_function,     ///< The function to perform
-		                                       const opt_str  &arg_parsing_phase ///< The phase in which this parsing is occurring (or none)
+		                                       const str_opt  &arg_parsing_phase ///< The phase in which this parsing is occurring (or none)
 		                                       ) {
 			common::set_opt_str_from_prog_opts_try(
 				arg_error_string,

@@ -70,7 +70,7 @@ namespace cath {
 		             const bool &,
 		             const bool &);
 
-		opt_str get_display_colours_string() const;
+		str_opt get_display_colours_string() const;
 
 		bool get_gradient_colour_alignment() const;
 		bool get_show_scores_if_present() const;
@@ -85,7 +85,7 @@ namespace cath {
 	};
 
 	bool has_display_colours_string(const display_spec &);
-	opt_str invalid_string(const display_spec &);
+	str_opt invalid_string(const display_spec &);
 	display_colour_list get_colour_list(const display_spec &);
 }
 #endif

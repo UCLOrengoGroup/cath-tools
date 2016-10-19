@@ -61,7 +61,7 @@ positional_options_description crh_options::get_positional_options() {
 ///
 /// \returns Any error/help string arising from the newly specified options
 ///          or an empty string if there aren't any
-opt_str crh_options::do_get_error_or_help_string() const {
+str_opt crh_options::do_get_error_or_help_string() const {
 	// If detailed help was requested, then provide it
 	if ( detail_help_ob.has_help_string() ) {
 		return detail_help_ob.help_string();

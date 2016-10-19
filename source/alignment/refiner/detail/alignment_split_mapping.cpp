@@ -85,7 +85,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,
 				//  * the position for this index/entry in the original alignment
 				size_vec          &pdb_res_indices = index_of_pdb_res_index[ entry ];
 				const size_t      &orig_aln_entry  = orig_aln_entries      [ entry ];
-				const opt_aln_posn position        = arg_alignment.position_of_entry_of_index( orig_aln_entry, orig_aln_index );
+				const aln_posn_opt position        = arg_alignment.position_of_entry_of_index( orig_aln_entry, orig_aln_index );
 
 				// If there is something present here in the original alignment then add any missing residues
 				if ( position ) {
@@ -107,7 +107,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,
 				//  * the position for this index/entry in the original alignment
 				size_vec          &pdb_res_indices = index_of_pdb_res_index[ entry ];
 				const size_t      &orig_aln_entry  = orig_aln_entries      [ entry ];
-				const opt_aln_posn position        = arg_alignment.position_of_entry_of_index( orig_aln_entry, orig_aln_index );
+				const aln_posn_opt position        = arg_alignment.position_of_entry_of_index( orig_aln_entry, orig_aln_index );
 
 				// If there is something present here in the original alignment then store the residue for this index will go
 				if ( position ) {
@@ -172,7 +172,7 @@ size_t alignment_split_mapping::num_entries() const {
 }
 
 /// \brief TODOCUMENT
-opt_size alignment_split_mapping::index_of_orig_aln_index(const size_t &arg_orig_aln_index ///< TODOCUMENT
+size_opt alignment_split_mapping::index_of_orig_aln_index(const size_t &arg_orig_aln_index ///< TODOCUMENT
                                                           ) const {
 	if ( arg_orig_aln_index >= orig_aln_length() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Index is too large for the original alignment"));
@@ -189,7 +189,7 @@ opt_size alignment_split_mapping::index_of_orig_aln_index(const size_t &arg_orig
 }
 
 /// \brief TODOCUMENT
-opt_size alignment_split_mapping::entry_of_orig_aln_entry(const size_t &arg_orig_aln_entry ///< TODOCUMENT
+size_opt alignment_split_mapping::entry_of_orig_aln_entry(const size_t &arg_orig_aln_entry ///< TODOCUMENT
                                                           ) const {
 
 	if ( arg_orig_aln_entry >= orig_aln_num_entries() ) {
@@ -216,7 +216,7 @@ size_t alignment_split_mapping::orig_aln_entry_of_entry(const size_t &arg_orig_a
 }
 
 /// \brief TODOCUMENT
-opt_aln_posn alignment_split_mapping::position_of_entry_of_index(const size_t &arg_entry, ///< TODOCUMENT
+aln_posn_opt alignment_split_mapping::position_of_entry_of_index(const size_t &arg_entry, ///< TODOCUMENT
                                                                  const size_t &arg_index  ///< TODOCUMENT
                                                                  ) const {
 	return local_aln.position_of_entry_of_index( arg_entry, arg_index );
@@ -240,7 +240,7 @@ opt_aln_posn alignment_split_mapping::position_of_entry_of_index(const size_t &a
 //	size_t entry_of_orig_aln_entry(const size_t &) const;
 //	size_t orig_aln_entry_of_entry(const size_t &) const;
 //
-//	opt_aln_posn position_of_entry_of_index(const size_t &,
+//	aln_posn_opt position_of_entry_of_index(const size_t &,
 //	                                        const size_t &) const;
 //
 //	size_t index_of_protein_index(const size_t &,
@@ -270,10 +270,10 @@ alignment_row cath::align::detail::get_row_of_alignment(const alignment_split_ma
                                                         const size_t                  &arg_index        ///< TODOCUMENT
                                                         ) {
 	const size_t num_entries = arg_aln_mapping.num_entries();
-	opt_aln_posn_vec positions;
+	aln_posn_opt_vec positions;
 	positions.reserve( num_entries );
 	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
-		const opt_aln_posn position = arg_aln_mapping.position_of_entry_of_index( entry_ctr, arg_index );
+		const aln_posn_opt position = arg_aln_mapping.position_of_entry_of_index( entry_ctr, arg_index );
 		positions.push_back( position );
 	}
 	return alignment_row( positions );
@@ -306,7 +306,7 @@ size_t cath::align::detail::get_position_of_entry_of_index(const alignment_split
 //size_vec cath::align::detail::present_orig_aln_entries_of_orig_aln_index(const alignment_split_mapping &arg_aln_mapping,   ///< TODOCUMENT
 //                                                                         const size_t                  &arg_orig_aln_index ///< TODOCUMENT
 //                                                                         ) {
-//	const opt_size index = arg_aln_mapping.index_of_orig_aln_index( arg_orig_aln_index );
+//	const size_opt index = arg_aln_mapping.index_of_orig_aln_index( arg_orig_aln_index );
 //	return index ? present_orig_aln_entries_of_index( arg_aln_mapping, *index )
 //	             : size_vec();
 //}
@@ -320,7 +320,7 @@ size_vec cath::align::detail::present_orig_aln_entries_of_index(const alignment_
 	const size_t orig_aln_num_entries = arg_aln_mapping.orig_aln_num_entries();
 	size_vec present_positions;
 	for (size_t orig_aln_entry_ctr = 0; orig_aln_entry_ctr < orig_aln_num_entries; ++orig_aln_entry_ctr) {
-		const opt_size entry = arg_aln_mapping.entry_of_orig_aln_entry( orig_aln_entry_ctr );
+		const size_opt entry = arg_aln_mapping.entry_of_orig_aln_entry( orig_aln_entry_ctr );
 		if ( entry && has_position_of_entry_of_index( arg_aln_mapping, *entry, arg_index ) ) {
 			present_positions.push_back( orig_aln_entry_ctr );
 		}
@@ -363,8 +363,8 @@ alignment cath::align::detail::build_alignment(const alignment               &ar
 	new_alignment.reserve( inter_mapping_aln_length );
 
 	for (size_t inter_mapping_index = 0; inter_mapping_index < inter_mapping_aln_length; ++inter_mapping_index) {
-		const opt_aln_posn a_position = a_position_of_index( arg_inter_mapping_alignment, inter_mapping_index );
-		const opt_aln_posn b_position = b_position_of_index( arg_inter_mapping_alignment, inter_mapping_index );
+		const aln_posn_opt a_position = a_position_of_index( arg_inter_mapping_alignment, inter_mapping_index );
+		const aln_posn_opt b_position = b_position_of_index( arg_inter_mapping_alignment, inter_mapping_index );
 		if ( ! a_position && ! b_position) {
 			BOOST_THROW_EXCEPTION(out_of_range("Inter-mapping alignment has an empty row"));
 		}

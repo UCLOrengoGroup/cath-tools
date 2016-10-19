@@ -41,7 +41,7 @@ namespace cath {
 			region_vec segments;
 
 			/// \brief TODOCUMENT
-			opt_str domain_id;
+			str_opt domain_id;
 
 			void sanity_check() const;
 
@@ -57,8 +57,8 @@ namespace cath {
 //			region operator[](const size_t &);
 			const region & operator[](const size_t &) const;
 
-			void set_opt_domain_id(const opt_str &);
-			const opt_str & get_opt_domain_id() const;
+			void set_opt_domain_id(const str_opt &);
+			const str_opt & get_opt_domain_id() const;
 
 //			iterator begin();
 //			iterator end();
@@ -69,7 +69,7 @@ namespace cath {
 		bool has_domain_id(const domain &);
 		std::string get_domain_id(const domain &);
 
-		opt_residue_locating get_residue_locating(const domain &);
+		residue_locating_opt get_residue_locating(const domain &);
 
 	}
 }

@@ -73,7 +73,7 @@ region::region(const size_t &arg_start_index, ///<TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-const opt_chain_label & region::get_opt_chain_label() const {
+const chain_label_opt & region::get_opt_chain_label() const {
 	return the_chain_label;
 }
 
@@ -100,25 +100,25 @@ chain_label cath::chop::get_chain_label(const region &arg_region ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-const opt_residue_name & cath::chop::get_opt_start_name(const region &arg_region ///< TODOCUMENT
+const residue_name_opt & cath::chop::get_opt_start_name(const region &arg_region ///< TODOCUMENT
                                                         ) {
 	return arg_region.get_start_residue().get_opt_residue_name();
 }
 
 /// \brief TODOCUMENT
-const opt_residue_name & cath::chop::get_opt_stop_name(const region &arg_region ///< TODOCUMENT
+const residue_name_opt & cath::chop::get_opt_stop_name(const region &arg_region ///< TODOCUMENT
                                                        ) {
 	return arg_region.get_stop_residue().get_opt_residue_name();
 }
 
 /// \brief TODOCUMENT
-const opt_size & cath::chop::get_opt_start_index(const region &arg_region ///< TODOCUMENT
+const size_opt & cath::chop::get_opt_start_index(const region &arg_region ///< TODOCUMENT
                                                  ) {
 	return arg_region.get_start_residue().get_opt_residue_index();
 }
 
 /// \brief TODOCUMENT
-const opt_size & cath::chop::get_opt_stop_index(const region &arg_region ///< TODOCUMENT
+const size_opt & cath::chop::get_opt_stop_index(const region &arg_region ///< TODOCUMENT
                                                 ) {
 	return arg_region.get_stop_residue().get_opt_residue_index();
 }
@@ -152,13 +152,13 @@ void cath::chop::check_has_indices(const region &arg_region ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-opt_residue_name cath::chop::get_start_name(const region &arg_region ///< TODOCUMENT
+residue_name_opt cath::chop::get_start_name(const region &arg_region ///< TODOCUMENT
                                             ) {
 	return *get_opt_start_name( arg_region );
 }
 
 /// \brief TODOCUMENT
-opt_residue_name cath::chop::get_stop_name(const region &arg_region ///< TODOCUMENT
+residue_name_opt cath::chop::get_stop_name(const region &arg_region ///< TODOCUMENT
                                            ) {
 	return *get_opt_stop_name( arg_region );
 }

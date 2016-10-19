@@ -38,7 +38,7 @@ namespace cath {
 			virtual std::unique_ptr<opts::options_block> do_clone() const override final;
 			virtual std::string do_get_block_name() const override final;
 			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
-			virtual opt_str do_invalid_string(const boost::program_options::variables_map &) const override final;
+			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
 			virtual ~crh_segment_options_block() noexcept = default;

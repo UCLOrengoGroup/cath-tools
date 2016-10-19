@@ -81,7 +81,7 @@ void pdb_input_options_block::do_add_visible_options_to_description(options_desc
 		"If pdb_input_spec::DEFAULT_READ_FROM_STDIN isn't false, it might mess up the bool switch in here" );
 }
 
-opt_str pdb_input_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt pdb_input_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                    ) const {
 	for (const path &input_file : the_pdb_input_spec.get_input_files() ) {
 		if ( ! is_acceptable_input_file( input_file ) ) {

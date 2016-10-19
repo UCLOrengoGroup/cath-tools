@@ -362,7 +362,7 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 ///
 /// \returns Any error or help string generated during parsing,
 ///          or otherwise an empty string
-const opt_str & executable_options::get_error_or_help_string() const {
+const str_opt & executable_options::get_error_or_help_string() const {
 	if ( ! processed_options) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get error/help string because the options haven't yet been processed"));
 	}

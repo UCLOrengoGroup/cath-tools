@@ -154,7 +154,7 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 	string line_string;
 	size_t pos_a(0);
 	size_t pos_b(0);
-	opt_score_vec scores;
+	score_opt_vec scores;
 	while ( getline(arg_istream, line_string ) ) {
 		const int             res_num_a = lexical_cast<int>(    trim_copy( line_string.substr(  0, 4 ))); // Column 1: Protein 1 PDB residue number (excluding insert character)
 //		const char          sec_struc_a =                                  line_string.at(      5    )  ; // Column 2: Protein 1 Secondary structure character
@@ -169,8 +169,8 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 		// For each side, move the PDB position forward if necessary
 		const residue_name res_name_a = make_residue_name_with_non_insert_char( res_num_a, insert_a, '0');
 		const residue_name res_name_b = make_residue_name_with_non_insert_char( res_num_b, insert_b, '0' );
-		const opt_size find_a_result = search_for_residue_in_residue_names( pos_a, arg_res_names_a, amino_acid_a, res_name_a, arg_stderr );
-		const opt_size find_b_result = search_for_residue_in_residue_names( pos_b, arg_res_names_b, amino_acid_b, res_name_b, arg_stderr );
+		const size_opt find_a_result = search_for_residue_in_residue_names( pos_a, arg_res_names_a, amino_acid_a, res_name_a, arg_stderr );
+		const size_opt find_b_result = search_for_residue_in_residue_names( pos_b, arg_res_names_b, amino_acid_b, res_name_b, arg_stderr );
 		pos_a = find_a_result ? *find_a_result : pos_a;
 		pos_b = find_b_result ? *find_b_result : pos_b;
 
@@ -302,10 +302,10 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 
 		// Prepare the data structures to populate
 		aln_posn_vec posns( num_proteins, 0 );
-		opt_score_vec scores;
+		score_opt_vec scores;
 		scores.reserve( num_positions );
-		opt_aln_posn_vec_vec data( num_proteins );
-		for (opt_aln_posn_vec &data_col : data) {
+		aln_posn_opt_vec_vec data( num_proteins );
+		for (aln_posn_opt_vec &data_col : data) {
 			data_col.reserve( num_positions );
 		}
 		// Loop over the main data section
@@ -330,7 +330,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 				// Prepare string and other data for this protein
 				const size_t        prot_string_offset = CHARS_IN_MAIN_DATA_LINE_START + prot_ctr * CHARS_IN_MAIN_DATA_LINE_PROT;
 				const string        prot_string        = line_string.substr( prot_string_offset, CHARS_IN_MAIN_DATA_LINE_PROT );
-				opt_aln_posn_vec   &data_col           = data [ prot_ctr ];
+				aln_posn_opt_vec   &data_col           = data [ prot_ctr ];
 				aln_posn_type       &posn              = posns[ prot_ctr ];
 
 				// Grab the details for this protein
@@ -342,14 +342,14 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 				// Find the residue in the list of this PDB's residue names
 				const residue_name_vec &residues_names = residue_names_of_first_chains[ prot_ctr ];
 				const residue_name      res_name       = make_residue_name_with_non_insert_char( residue_num, insert_code, ' ' );
-				const opt_aln_posn      find_result    = search_for_residue_in_residue_names(
+				const aln_posn_opt      find_result    = search_for_residue_in_residue_names(
 					posn,
 					residues_names,
 					amino_acid,
 					res_name,
 					arg_stderr
 				);
-				data_col.push_back( find_result ? opt_aln_posn( ( *find_result ) + 1 ) : opt_aln_posn( none ) );
+				data_col.push_back( find_result ? aln_posn_opt( ( *find_result ) + 1 ) : aln_posn_opt( none ) );
 				if ( find_result ) {
 					posn = *find_result;
 					++num_present_posns;
@@ -393,7 +393,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 		alignment new_alignment = alignment_offset_1_factory( data );
 
 		// Create a scores matrix and then empty any cells that are absent from the alignment
-		opt_score_vec_vec all_scores( new_alignment.num_entries(), scores );
+		score_opt_vec_vec all_scores( new_alignment.num_entries(), scores );
 		for (size_t entry = 0; entry < new_alignment.num_entries(); ++entry) {
 			for (size_t index = 0; index < new_alignment.length(); ++index) {
 				if ( ! has_position_of_entry_of_index( new_alignment, entry, index ) ) {
@@ -467,10 +467,10 @@ str_str_pair_vec cath::align::read_ids_and_sequences_from_fasta(istream &arg_ist
 /// \brief Align a sequence against a corresponding pdb
 ///        (broadly handling residues missing in the sequence but not extra residues)
 ///
-/// \returns A vector of opt_aln_posns corresponding to the letters of the sequence. Each is:
+/// \returns A vector of aln_posn_opts corresponding to the letters of the sequence. Each is:
 ///           * none if the entry is a '-' character
 ///           * the index of the corresponding residue in arg_pdb otherwise
-opt_aln_posn_vec cath::align::align_sequence_to_amino_acids(const string         &arg_sequence_string, ///< The raw sequence string (no headers; no whitespace) to be aligned
+aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string         &arg_sequence_string, ///< The raw sequence string (no headers; no whitespace) to be aligned
                                                             const amino_acid_vec &arg_amino_acids,     ///< The PDB against which the sequence is to be aligned
                                                             const string         &arg_name,            ///< The name of the entry to use in warnings / errors
                                                             ostream              &/*arg_stderr*/       ///< The ostream to which warnings should be output
@@ -480,7 +480,7 @@ opt_aln_posn_vec cath::align::align_sequence_to_amino_acids(const string        
 
 	// Prepare the variables to be populated when looping through the sequence
 	str_vec skipped_residues;
-	opt_aln_posn_vec new_posns;
+	aln_posn_opt_vec new_posns;
 	new_posns.reserve( sequence_length );
 	size_t pdb_ctr         = 0;
 
@@ -690,7 +690,7 @@ alignment cath::align::read_alignment_from_fasta(istream                  &arg_i
 
 			const size_t sequence_length = sequence_of_id.front().second.length();
 
-			opt_aln_posn_vec_vec positions;
+			aln_posn_opt_vec_vec positions;
 			positions.reserve( num_entries );
 			for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
 				const amino_acid_vec &amino_acids     = arg_amino_acid_lists      [ entry_ctr ];
@@ -737,7 +737,7 @@ alignment cath::align::read_alignment_from_fasta(istream                  &arg_i
 	}
 
 /// \brief Convenience function for read_alignment_from_cath_ssap_legacy_format() to use
-opt_aln_posn cath::align::search_for_residue_in_residue_names(const size_t           &arg_pos,           ///< TODOCUMENT
+aln_posn_opt cath::align::search_for_residue_in_residue_names(const size_t           &arg_pos,           ///< TODOCUMENT
                                                               const residue_name_vec &arg_residue_names, ///< TODOCUMENT
                                                               const char             &arg_amino_acid,    ///< TODOCUMENT
                                                               const residue_name     &arg_residue_name,  ///< TODOCUMENT
@@ -782,9 +782,9 @@ opt_aln_posn cath::align::search_for_residue_in_residue_names(const size_t      
 			                             << new_pos
 			                             << ")";
 		}
-		return opt_aln_posn( new_pos );
+		return aln_posn_opt( new_pos );
 	}
-	return opt_aln_posn( none );
+	return aln_posn_opt( none );
 }
 
 
@@ -914,7 +914,7 @@ ostream & cath::align::write_alignment_as_fasta_alignment(ostream            &ar
 		for (size_t aln_index = 0; aln_index < length; ++aln_index) {
 			// If this entry has no position at this index, output a '-' character
 			// otherwise, use the position at this index to output the amino acid letter
-			const opt_aln_posn position = arg_alignment.position_of_entry_of_index( entry_ctr, aln_index );
+			const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry_ctr, aln_index );
 			arg_os << ( position ? get_amino_acid_letter_of_index( the_protein, *position )
 			                     : '-' );
 		}

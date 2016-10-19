@@ -121,7 +121,7 @@ void display_options_block::do_add_visible_options_to_description(options_descri
 }
 
 /// \brief TODOCUMENT
-opt_str display_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt display_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                  ) const {
 	return ::cath::invalid_string( get_display_spec() );
 }

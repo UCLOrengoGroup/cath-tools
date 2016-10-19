@@ -61,7 +61,7 @@ namespace cath {
 			virtual std::unique_ptr<options_block> do_clone() const override final;
 			virtual std::string do_get_block_name() const override final;
 			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
-			virtual opt_str do_invalid_string(const boost::program_options::variables_map &) const override final;
+			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
 			explicit detail_help_options_block(const str_str_str_pair_map &);
