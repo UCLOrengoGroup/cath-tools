@@ -55,7 +55,7 @@ namespace cath {
 			/// \todo GCC 4.9.2 (on the UCL CS CentOS 6 machines) errors out if this is labelled
 			///       noexcept, but it should be so change that when a compiler that old no longer
 			///       needs to be supported.
-			full_hit_list() noexcept = default;
+			full_hit_list() = default;
 			explicit full_hit_list(const full_hit_vec &);
 
 			size_t size() const;
