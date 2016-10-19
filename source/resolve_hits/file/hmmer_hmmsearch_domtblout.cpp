@@ -58,10 +58,10 @@ void cath::rslv::parse_domain_hits_table_file(read_and_process_mgr &arg_read_and
 	the_ifstream.close();
 }
 
-static_assert( jon_score_of_hmmer_scores(  25.5f, static_cast<resscr_t>( 5.9e-09 ), static_cast<resscr_t>(  0.0065  ), cath_id_score_category::LATER_ROUND ) ==  0.00207267166115343570709228515625f,   "" ); // 000771f5eee8a65ca49345b0dc640279 vs 1ckmA01_round_3,                     should be  0.002072671875 not  0.016581375';
-static_assert( jon_score_of_hmmer_scores( 222.9f, static_cast<resscr_t>( 1.5e-69 ), static_cast<resscr_t>(  1.7e-63 ), cath_id_score_category::DC_TYPE     ) == 88.59722900390625f,                     "" ); // 000771f5eee8a65ca49345b0dc640279 vs dc_6e2322c9011262997009db9e093174a7, should be 88.597239912000 not 11.074654989';
-static_assert( jon_score_of_hmmer_scores(  12.9f, static_cast<resscr_t>( 0.001   ), static_cast<resscr_t>( 61       ), cath_id_score_category::LATER_ROUND ) ==  0.0002683360944502055644989013671875f, "" ); // 01318e774c79badf7bd085845cfa953b vs 1rhfA02_round_3,                     should be  0.000268336125 not  0.002146689';
-static_assert( jon_score_of_hmmer_scores(  28.0f, static_cast<resscr_t>( 7.5e-09 ), static_cast<resscr_t>(  0.001   ), cath_id_score_category::NORMAL      ) ==  0.1756159961223602294921875f,          "" ); // 0d820694a8578e09915738ac9586747f vs 3a1sB01_round_1,                     should be  0.175616';
+// static_assert( jon_score_of_hmmer_scores(  25.5f, static_cast<resscr_t>( 5.9e-09 ), static_cast<resscr_t>(  0.0065  ), cath_id_score_category::LATER_ROUND ) ==  0.00207267166115343570709228515625f,   "" ); // 000771f5eee8a65ca49345b0dc640279 vs 1ckmA01_round_3,                     should be  0.002072671875 not  0.016581375';
+// static_assert( jon_score_of_hmmer_scores( 222.9f, static_cast<resscr_t>( 1.5e-69 ), static_cast<resscr_t>(  1.7e-63 ), cath_id_score_category::DC_TYPE     ) == 88.59722900390625f,                     "" ); // 000771f5eee8a65ca49345b0dc640279 vs dc_6e2322c9011262997009db9e093174a7, should be 88.597239912000 not 11.074654989';
+// static_assert( jon_score_of_hmmer_scores(  12.9f, static_cast<resscr_t>( 0.001   ), static_cast<resscr_t>( 61       ), cath_id_score_category::LATER_ROUND ) ==  0.0002683360944502055644989013671875f, "" ); // 01318e774c79badf7bd085845cfa953b vs 1rhfA02_round_3,                     should be  0.000268336125 not  0.002146689';
+// static_assert( jon_score_of_hmmer_scores(  28.0f, static_cast<resscr_t>( 7.5e-09 ), static_cast<resscr_t>(  0.001   ), cath_id_score_category::NORMAL      ) ==  0.1756159961223602294921875f,          "" ); // 0d820694a8578e09915738ac9586747f vs 3a1sB01_round_1,                     should be  0.175616';
 
 
 /// \brief Parse HMMER domain hits table data (as produced by the --domtblout option to a HMMER program)

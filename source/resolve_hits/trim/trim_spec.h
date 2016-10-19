@@ -152,8 +152,10 @@ namespace cath {
 		constexpr residx_t stop_trimming_of_length(const trim_spec &arg_trim_spec, ///< The trim_spec to apply
 		                                           const residx_t  &arg_length     ///< The length of the segment in question
 		                                           ) {
-			const residx_t total_trimming = total_trimming_of_length( arg_trim_spec, arg_length );
-			return ( total_trimming / 2 ) + ( total_trimming % 2 );
+			return
+				( total_trimming_of_length( arg_trim_spec, arg_length ) / 2 )
+				+
+				( total_trimming_of_length( arg_trim_spec, arg_length ) % 2 );
 		}
 
 		/// \brief Trim the specified hit_seg according to the specified trim_spec
