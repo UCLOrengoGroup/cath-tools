@@ -109,7 +109,7 @@ Building against Clang's C++ library (libc++) rather than GCC's (libstdc++) requ
     $ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
 
 Clang Static Analzyer [For developers]
----------------------------------
+--------------------------------------
 
 Want to search for bugs in the code? These instructions aim to help you run Clang-based static analysis. (TODO: Get this running on a CI server, such as Travis-CI.)
 
@@ -126,6 +126,11 @@ Then substitute their locations into the following commands and then run the com
     scan-build make
 
 To get parallel compilation, you can append ` -j #` to the `scan-build make` (where `#` is the number of threads).
+
+Checking headers compile independently [For developers]
+-------------------------------------------------------
+
+find source -iname '*.h' | xargs -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0             -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -I source VAR
 
 Running the Build Tests
 =======================
