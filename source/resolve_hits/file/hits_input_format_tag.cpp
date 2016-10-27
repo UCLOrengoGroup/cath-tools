@@ -108,8 +108,8 @@ istream & cath::rslv::operator>>(istream               &arg_is,        ///< The 
 string cath::rslv::description_of_input_format(const hits_input_format_tag &arg_format_tag ///< The hits_input_format_tag to describe
                                                ) {
 	switch ( arg_format_tag ) {
-		case ( hits_input_format_tag::HMMER_DOMTMBLOUT ) : { return "HMMER domtblout fomat (must assume all hits are continuous)"             ; }
-		case ( hits_input_format_tag::HMMSEARCH_OUT    ) : { return "HMMer hmmsearch output fomat (can be used to deduce discontinuous hits)" ; }
+		case ( hits_input_format_tag::HMMER_DOMTMBLOUT ) : { return "HMMER domtblout format (must assume all hits are continuous)"             ; }
+		case ( hits_input_format_tag::HMMSEARCH_OUT    ) : { return "HMMer hmmsearch output format (can be used to deduce discontinuous hits)" ; }
 		case ( hits_input_format_tag::RAW_WITH_SCORES  ) : { return "\"raw\" format with scores"                                              ; }
 		case ( hits_input_format_tag::RAW_WITH_EVALUES ) : { return "\"raw\" format with evalues"                                             ; }
 		default : {
