@@ -4,14 +4,14 @@ cath-resolve-hits
 A fast, effective way to collapse a list of domain matches to your query sequence(s) down to the best, non-overlapping subset (ie domain architecture).
 
 ![Screenshot](img/cath-resolve-hits.example.jpg)
- &nbsp; &nbsp; *__Above__: cath-resolve-hits chooses the hits at the top from the list of posible hits at the bottom*
+ &nbsp; &nbsp; *__Above__: cath-resolve-hits chooses the hits at the top from the list of possible hits at the bottom*
 
 Usage
 -----
 
-At the moment, it takes one argument: a file which contains lines like:
+At the moment, it takes one argument: a file which, by default, contains lines like:
 
-~~~~~
+~~~~~no-highlight
 qyikaz 1mkfA01/12-210-i5_1,2.9e-20 2983.29780221221 3-103
 qyikaz 1mkfA01/12-210-i5_2,4.9e-19 3510.41568607646 101-224
 qyikaz 1mkfA01/12-210-i5_3,7e-25 3552.10980383852 825-928
@@ -28,6 +28,70 @@ Where the fields are space-separated and are:
 The output is the non-overlapping subset that maximises the sum of the hits' scores.
 
 The input file can contain data for multiple different query protein sequences but at the moment, they must be pre-grouped into consecutive lines.
+
+The current full `--help` usage information is:
+
+~~~~~no-highlight
+Usage: cath-resolve-hits [options] <input_file>
+
+Collapse a list of domain matches to your query sequence(s) down to the
+non-overlapping subset (ie domain architecture) that maximises the sum of the
+hits' scores.
+
+When <input_file> is -, the input is read from standard input.
+
+The input data may contain unsorted hits for different query protein sequences.
+
+However, if your input data is already grouped by query protein sequence, then
+specify the --input-hits-are-grouped flag for faster runs that use less memory.
+
+Miscellaneous:
+  -h [ --help ]                                  Output help message
+  -v [ --version ]                               Output version information
+
+Input:
+  --input-format <format> (=raw_with_scores)     Parse the input data from <format>, one of available formats:
+                                                    hmmer_domtmblout - HMMER domtblout format (must assume all hits are continuous)
+                                                    hmmsearch_out    - HMMer hmmsearch output format (can be used to deduce discontinuous hits)
+                                                    raw_with_scores  - "raw" format with scores
+                                                    raw_with_evalues - "raw" format with evalues
+  --min-gap-length <length> (=30)                When parsing starts/stops from alignment data, ignore gaps of less than <length> residues
+  --input-hits-are-grouped                       Rely on the input hits being grouped by query protein
+                                                 (so the run is faster and uses less memory)
+
+Segment overlap/removal:
+  --overlap-trim-spec <trim> (=50/30)            Allow different hits' segments to overlap a bit by trimming all segments using spec <trim>
+                                                 of the form n/m (n is a segment length; m is the *total* length to be trimmed off both ends)
+                                                 For longer segments, total trim stays at m; for shorter, it decreases linearly (to 0 for length 1).
+                                                 To choose: set m to the biggest total trim you'd want for a really long segment;
+                                                            then, set n to length of the shortest segment you'd want to have that total trim
+  --min-seg-length <length> (=7)                 Ignore all segments that are fewer than <length> residues long
+
+Hit preference:
+  --long-domains-preference <val> (=0)           Prefer longer hits to degree <val>
+                                                 (<val> may be negative to prefer shorter; 0 leaves scores unaffected)
+  --high-scores-preference <val> (=0)            Prefer higher scores to degree <val>
+                                                 (<val> may be negative to reduce preference for higher scores; 0 leaves scores unaffected)
+  --apply-cath-rules                             Apply rules specific to CATH-Gene3D during the parsing and processing
+
+Hit filtering:
+  --worst-permissible-evalue <evalue> (=0.001)   Ignore any hits with an evalue worse than <evalue>
+  --worst-permissible-bitscore <bitscore> (=10)  Ignore any hits with a bitscore worse than <bitscore>
+  --worst-permissible-score <score>              Ignore any hits with a score worse than <score>
+  --filter-query-id <id>                         Ignore all input data except that for query protein(s) <id>
+                                                 (may be specified multiple times for multiple query proteins)
+
+Output:
+  --output-file <file>                           Write output to file <file> (or, if unspecified, to stdout)
+  --output-trimmed-hits                          When writing out the final hits, output the hits' starts/stop as they are *after trimming*
+  --html-output                                  Output the results as HTML
+
+Detailed help:
+  --cath-rules-help                              Show help on the rules activated by the --apply-cath-rules option
+  --raw-format-help                              Show help about the raw input formats (raw_with_scores and raw_with_evalues)
+
+Please tell us your cath-tools bugs/suggestions : https://github.com/UCLOrengoGroup/cath-tools/issues/new
+~~~~~
 
 How Fast?
 ---------

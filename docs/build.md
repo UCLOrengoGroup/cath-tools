@@ -14,14 +14,18 @@ This project currently uses the superposition routine from [bioplib](https://git
 
 ### Boost
 
-    [Ubuntu]
-    $ sudo apt-get install libboost-all-dev
+~~~~~no-highlight
+[Ubuntu]
+$ sudo apt-get install libboost-all-dev
+~~~~~
 
 ### CMake (internal users)
 
 NOTE: You may wish to explicitly specify which cmake to run, particularly if running on a machine that has a local cmake that's more recent than an alternative network cmake, e.g.
 
-    /usr/bin/cmake
+~~~~~no-highlight
+/usr/bin/cmake
+~~~~~
 
 (can otherwise produce errors like: ```cmake: error while loading shared libraries: libssl.so.6: cannot open shared object file: No such file or directory```)
 
@@ -31,11 +35,13 @@ Building the Code
 
 Once the dependencies are in place, the code can be built with:
 
-    $ cmake -DCMAKE_BUILD_TYPE=RELEASE .
-    $ make
 
-NOTE: If you have multiple cores, you can make compiling faster by specifying that it may compile up to N sources simultaneously by appending
-      `-j [N]` to the end of the make command.
+~~~~~no-highlight
+$ cmake -DCMAKE_BUILD_TYPE=RELEASE .
+$ make
+~~~~~
+
+NOTE: If you have multiple cores, you can make compiling faster by specifying that it may compile up to N sources simultaneously by appending `-j [N]` to the end of the make command.
 
 
 Compiling Multiple Versions (release/relwithdebinfo/debug)
@@ -44,11 +50,14 @@ Compiling Multiple Versions (release/relwithdebinfo/debug)
 To compile multiple versions, you can put them in individual directories. First make sure that you don't have any
 build files in the root directory and then run something like:
 
-    $ mkdir release
-    $ cd release
-    $ cmake -DCMAKE_BUILD_TYPE=RELEASE ..
-    $ cd ..
-    $ make -C release
+
+~~~~~no-highlight
+$ mkdir release
+$ cd release
+$ cmake -DCMAKE_BUILD_TYPE=RELEASE ..
+$ cd ..
+$ make -C release
+~~~~~
 
 Available types are: release, relwithdebinfo and debug
 
@@ -61,27 +70,39 @@ Example CMake Commands
 
 **clang_debug**
 
-    /usr/bin/cmake -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+~~~~~no-highlight
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+~~~~~
 
 **clang_release**
 
-    /usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE                               -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+~~~~~no-highlight
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE                               -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+~~~~~
 
 **clang_relwithdebinfo**
 
-    /usr/bin/cmake -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+~~~~~no-highlight
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+~~~~~
 
 **gcc_debug**
 
-    /usr/bin/cmake -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
+~~~~~no-highlight
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
+~~~~~
 
 **gcc_release**
 
-    /usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE                               -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
+~~~~~no-highlight
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE                               -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
+~~~~~
 
 **gcc_relwithdebinfo**
 
-    /usr/bin/cmake -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
+~~~~~no-highlight
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
+~~~~~
 
 Shared Versus Static
 ----------------
@@ -93,20 +114,26 @@ Building with Clang
 
 Basic idea:
 
-    $ cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ .
-    $ make
+~~~~~no-highlight
+$ cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ .
+$ make
+~~~~~
 
 Multiple versions:
 
-    $ mkdir clang_release
-    $ cd clang_release
-    $ cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ ..
-    $ cd ..
-    $ make -C clang_release
+~~~~~no-highlight
+$ mkdir clang_release
+$ cd clang_release
+$ cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ ..
+$ cd ..
+$ make -C clang_release
+~~~~~
 
 Building against Clang's C++ library (libc++) rather than GCC's (libstdc++) requires a version of Boost built with Clang and libc++. If you have one, you can use a cmake command like:
 
-    $ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+~~~~~no-highlight
+$ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+~~~~~
 
 Clang Static Analzyer [For developers]
 --------------------------------------
@@ -115,37 +142,48 @@ Want to search for bugs in the code? These instructions aim to help you run Clan
 
 Ensure you have clang installed. Find the analyzer programs `ccc-analyzer` and `c++-analyzer`. For example, on Ubuntu you can do something like:
 
-    dpkg -l | grep clang | awk '{print $2}' | xargs dpkg -L | grep analyzer
+~~~~~no-highlight
+dpkg -l | grep clang | awk '{print $2}' | xargs dpkg -L | grep analyzer
+~~~~~
 
 Then substitute their locations into the following commands and then run the commands, starting in the root of the cath-tools project (with bioplib already built if you don't want errors from static analysis of bioplib):
 
-    mkdir build-analyze && cd build-analyze
-    setenv CCC_CC  clang
-    setenv CCC_CXX clang++
-    # For Clang 3.6
-    /usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.6/ccc-analyzer"         -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.6/c++-analyzer"         -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
-    # For Clang 3.8
-    /usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.8/libexec/ccc-analyzer" -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.8/libexec/c++-analyzer" -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
-    scan-build make
+
+~~~~~no-highlight
+mkdir build-analyze && cd build-analyze
+setenv CCC_CC  clang
+setenv CCC_CXX clang++
+# For Clang 3.6
+/usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.6/ccc-analyzer"         -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.6/c++-analyzer"         -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+# For Clang 3.8
+/usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.8/libexec/ccc-analyzer" -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.8/libexec/c++-analyzer" -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+scan-build make
+~~~~~
 
 To get parallel compilation, you can append ` -j #` to the `scan-build make` (where `#` is the number of threads).
 
 Checking headers compile independently [For developers]
 -------------------------------------------------------
 
+~~~~~no-highlight
 find source -iname '*.h' | grep third_party_code -v | xargs -P 4 -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -I source VAR
+~~~~~
 
 Fixing trailing namespace comments [For developers]
 ---------------------------------------------------
 
+~~~~~no-highlight
 find source -iname '*.h' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-namespace-comment VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
+~~~~~
 
 Fixing header guards [For developers]
 -------------------------------------
 
+~~~~~no-highlight
 ln -s source src
 find src/   -iname '*.h' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-header-guard      VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
 rm -f src
+~~~~~
 
 Running the Build Tests
 =======================
@@ -164,7 +202,7 @@ Building on CentOS v6 (or v7?) Machines
 
 Find a CentOS 6 machine and then install some packages as root:
 
-~~~~~
+~~~~~no-highlight
 yum install bzip2-devel cmake git
 yum install centos-release-scl-rh
 yum install devtoolset-3-gcc devtoolset-3-gcc-c++
@@ -173,14 +211,15 @@ yum install devtoolset-3-gcc devtoolset-3-gcc-c++
 Then ssh to the build machine as yourself, find some working directory with at least a few Gb of free space, and then substitute it in for `WHATEVER_YOU_HAVE_CHOSEN_AS_YOUR_BUILD_ROOT_DIRECTORY` in these commands:
 
 Setup:
-~~~~~
+
+~~~~~no-highlight
 scl enable devtoolset-3 bash
 export BUILD_ROOT_DIR=WHATEVER_YOU_HAVE_CHOSEN_AS_YOUR_BUILD_ROOT_DIRECTORY
 ~~~~~
 
 Build Boost:
 
-~~~~~
+~~~~~no-highlight
 mkdir -p ${BUILD_ROOT_DIR}/boost_1_58_0_build/{include,lib}
 cd ${BUILD_ROOT_DIR}/
 wget "http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz"
@@ -192,7 +231,8 @@ cd ${BUILD_ROOT_DIR}/boost_1_58_0/
 ~~~~~
 
 Build cath-tools:
-~~~~~
+
+~~~~~no-highlight
 cd ${BUILD_ROOT_DIR}/
 git clone --recursive https://github.com/UCLOrengoGroup/cath-tools.git
 
