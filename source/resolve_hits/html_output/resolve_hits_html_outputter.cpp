@@ -520,7 +520,7 @@ string resolve_hits_html_outputter::html_suffix() {
 ///  * return the order of magnitude multiplied by that multiplier
 size_t resolve_hits_html_outputter::step_for_length(const size_t &arg_sequence_length ///< The length of the sequence for which the markers' step-size should be calculated
                                                     ) {
-	constexpr double aim_min_num_steps = 4;
+	constexpr size_t aim_min_num_steps = 4;
 	if ( arg_sequence_length <= 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to calculate step length for sequence of 0 length"));
 	}
@@ -528,7 +528,7 @@ size_t resolve_hits_html_outputter::step_for_length(const size_t &arg_sequence_l
 		return 1;
 	}
 
-	const double naive_guess    = debug_numeric_cast<double>( arg_sequence_length ) / aim_min_num_steps;
+	const double naive_guess    = debug_numeric_cast<double>( arg_sequence_length ) / debug_numeric_cast<double>( aim_min_num_steps );
 	const size_t order_of_mgntd = debug_numeric_cast<size_t>( pow( 10, floor( log10( naive_guess ) ) ) );
 	const double naive_mantissa = naive_guess / debug_numeric_cast<double>( order_of_mgntd );
 	const size_t mult           = (

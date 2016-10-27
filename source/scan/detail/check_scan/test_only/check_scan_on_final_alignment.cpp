@@ -323,11 +323,11 @@ pair<index_vec, index_vec> cath::scan::detail::get_rep_index_lists(const roled_s
 	const auto         num_to_reps   = get_num_reps_of_num_residues( to_strider,   arg_num_residues );
 	return make_pair(
 		transform_build<index_vec>(
-			irange<res_rep_index_type>( 0_z, num_from_reps ),
+			irange<res_rep_index_type>( 0, num_from_reps ),
 			[&] (const res_rep_index_type &x) { return get_index_of_rep_index( from_strider, x ); }
 		),
 		transform_build<index_vec>(
-			irange<res_rep_index_type>( 0_z, num_to_reps ),
+			irange<res_rep_index_type>( 0, num_to_reps ),
 			[&] (const res_rep_index_type &x) { return get_index_of_rep_index( from_strider, x ); }
 		)
 	);

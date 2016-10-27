@@ -83,7 +83,7 @@ namespace cath {
 			// Attempt to lexical_cast value_string and if it fails, throw an invalid_option_value exception
 			try {
 				const Num result = boost::numeric_cast<Num>( boost::lexical_cast<ConvNum>( value_string ) );
-				if ( result < MinVal || result > MaxVal ) {
+				if ( boost::numeric_cast<int64_t>( result ) < MinVal || boost::numeric_cast<int64_t>( result ) > MaxVal ) {
 					throw 0;
 				}
 				arg_value = ponr_t{ result };
