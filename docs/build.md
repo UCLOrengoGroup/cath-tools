@@ -1,34 +1,58 @@
+Build
+=====
 
-Building
-========
+Why?
+----
 
-Compiling from Source
----------------------
+Do you really need to build cath-tools, or can you just use the 64-bit Linux executables from [**DOWNLOADS**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "The latest CATH Tools release")? Remember to chmod them to be executable (eg `chmod +x cath-ssap`). If you need cath-tools on a different platform (Windows? Mac?), please consider creating a [new GitHub issue](https://github.com/UCLOrengoGroup/cath-tools/issues/new "Open a new GitHub issue for cath-tools"); maybe we can work together to set up an automated build.
 
-You'll need a fairly good (ie recent) C++ compiler (eg on Ubuntu: sudo apt-get install g++). The code's currently being developed against GCC v4.9.2 and Clang v3.6.0.
+Requirements
+------------
 
-This project currently uses the superposition routine from [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage"), which is included as a Git submodule. There are 2 other dependencies/prerequisites:
+You'll need a fairly good (ie recent) C++ compiler (eg on Ubuntu: `sudo apt-get install g++`). The code is currently being developed against GCC v4.9.2 and Clang v3.6.0.
 
- * **CMake** (&ge; v2.8.8  ) : Used to build the software
- * **Boost** (&ge; v1.58.0 ) : Used heavily the Boost libraries (both headers and libraries) must be installed on the build machine.
+To get the source code, you can clone from GitHub (making sure you use the `--recursive` option so you include [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage"), which we include as a Git submodule to use its superposition routine).
 
-### Boost
+
+~~~~~no-highlight
+git clone --recursive https://github.com/UCLOrengoGroup/cath-tools.git
+~~~~~
+
+If you've already cloned cath-tools without including bioplib, then use:
+
+~~~~~no-highlight
+git submodule update --init --recursive
+~~~~~
+
+
+There are two further dependencies/prerequisites...
+
+### Boost ( &ge; v1.58.0 )
+
+This is used heavily throughout the code. Both headers and compiled library files are needed.
 
 ~~~~~no-highlight
 [Ubuntu]
 $ sudo apt-get install libboost-all-dev
 ~~~~~
 
-### CMake (internal users)
+### CMake ( &ge; v2.8.8 )
 
-NOTE: You may wish to explicitly specify which cmake to run, particularly if running on a machine that has a local cmake that's more recent than an alternative network cmake, e.g.
+This is used to build the software.
+
 
 ~~~~~no-highlight
-/usr/bin/cmake
+[Ubuntu]
+$ sudo apt-get install cmake
 ~~~~~
 
-(can otherwise produce errors like: ```cmake: error while loading shared libraries: libssl.so.6: cannot open shared object file: No such file or directory```)
+*NOTE for UCL SMB users*: If running cmake gives you errors like:
 
+~~~~~no-highlight
+cmake: error while loading shared libraries: libssl.so.6: cannot open shared object file: No such file or directory
+~~~~~
+
+You probably mixing local/network binaries and libraries so try explicitly running /usr/bin/cmake.
 
 Building the Code
 -----------------
@@ -43,146 +67,12 @@ $ make
 
 NOTE: If you have multiple cores, you can make compiling faster by specifying that it may compile up to N sources simultaneously by appending `-j [N]` to the end of the make command.
 
+With default Ubuntu config, this will build with GCC against GCC's standard library (libstdc++). If you instead want to build with Clang against Clang's standard C++ library (libc++), you'll need a version of Boost built with Clang and libc++. If you have one, then you can build with Clang by adding `-DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++` to the CMake command and build against libc++ by adding `-DBOOST_ROOT=ROOT_DIR_OF_YOUR_CLANG_BUILD_OF_BOOST` and `-DCMAKE_CXX_FLAGS="-stdlib=libc++"`.
 
-Compiling Multiple Versions (release/relwithdebinfo/debug)
-----------------------------------------------------------
-
-To compile multiple versions, you can put them in individual directories. First make sure that you don't have any
-build files in the root directory and then run something like:
-
-
-~~~~~no-highlight
-$ mkdir release
-$ cd release
-$ cmake -DCMAKE_BUILD_TYPE=RELEASE ..
-$ cd ..
-$ make -C release
-~~~~~
-
-Available types are: release, relwithdebinfo and debug
-
-NOTE: the debug build requires a debug version of Boost built with `_GLIBCXX_DEBUG` enabled otherwise the resulting code will have all sorts of
-horrible, non-obvious errors. If you really want to build a debug version without doing this, you can work around this issue by removing all
-mentions of `-D_GLIBCXX_DEBUG` from CMakeLists.txt.
-
-Example CMake Commands
-----------------------
-
-**clang_debug**
-
-~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
-~~~~~
-
-**clang_release**
-
-~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE                               -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
-~~~~~
-
-**clang_relwithdebinfo**
-
-~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
-~~~~~
-
-**gcc_debug**
-
-~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
-~~~~~
-
-**gcc_release**
-
-~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE                               -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
-~~~~~
-
-**gcc_relwithdebinfo**
-
-~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
-~~~~~
-
-Shared Versus Static
-----------------
-
-At present, the builds are all completely static. This should be made more configurable in the future so that (at least debug) builds can be run in static mode using the CMake flag `-DBUILD_SHARED_LIBS=ON`.
-
-Building with Clang
--------------------
-
-Basic idea:
-
-~~~~~no-highlight
-$ cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ .
-$ make
-~~~~~
-
-Multiple versions:
-
-~~~~~no-highlight
-$ mkdir clang_release
-$ cd clang_release
-$ cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ ..
-$ cd ..
-$ make -C clang_release
-~~~~~
-
-Building against Clang's C++ library (libc++) rather than GCC's (libstdc++) requires a version of Boost built with Clang and libc++. If you have one, you can use a cmake command like:
+To build against Clang's C++ library (libc++) rather than GCC's (libstdc++), you'll need a version of Boost built with Clang and libc++. If you have one, you can use a cmake command like:
 
 ~~~~~no-highlight
 $ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
-~~~~~
-
-Clang Static Analzyer [For developers]
---------------------------------------
-
-Want to search for bugs in the code? These instructions aim to help you run Clang-based static analysis. (TODO: Get this running on a CI server, such as Travis-CI.)
-
-Ensure you have clang installed. Find the analyzer programs `ccc-analyzer` and `c++-analyzer`. For example, on Ubuntu you can do something like:
-
-~~~~~no-highlight
-dpkg -l | grep clang | awk '{print $2}' | xargs dpkg -L | grep analyzer
-~~~~~
-
-Then substitute their locations into the following commands and then run the commands, starting in the root of the cath-tools project (with bioplib already built if you don't want errors from static analysis of bioplib):
-
-
-~~~~~no-highlight
-mkdir build-analyze && cd build-analyze
-setenv CCC_CC  clang
-setenv CCC_CXX clang++
-# For Clang 3.6
-/usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.6/ccc-analyzer"         -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.6/c++-analyzer"         -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
-# For Clang 3.8
-/usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.8/libexec/ccc-analyzer" -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.8/libexec/c++-analyzer" -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
-scan-build make
-~~~~~
-
-To get parallel compilation, you can append ` -j #` to the `scan-build make` (where `#` is the number of threads).
-
-Checking headers compile independently [For developers]
--------------------------------------------------------
-
-~~~~~no-highlight
-find source -iname '*.h' | grep third_party_code -v | xargs -P 4 -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -I source VAR
-~~~~~
-
-Fixing trailing namespace comments [For developers]
----------------------------------------------------
-
-~~~~~no-highlight
-find source -iname '*.h' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-namespace-comment VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
-~~~~~
-
-Fixing header guards [For developers]
--------------------------------------
-
-~~~~~no-highlight
-ln -s source src
-find src/   -iname '*.h' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-header-guard      VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
-rm -f src
 ~~~~~
 
 Running the Build Tests
@@ -194,13 +84,13 @@ Once you've built the binaries, run the build tests to sanity check the build. F
 
 If your machine has Perl, you can also try running the Perl tests (which includes a run of `build-test` as one of the tests):
 
- * Set the environment variable CATH_TOOLS_BIN_DIR to the location of the built binaries
+ * Set the environment variable `CATH_TOOLS_BIN_DIR` to the location of the built binaries
  * From the root directory of the project, run `prove -l -v t`
 
-Building on CentOS v6 (or v7?) Machines
+Building on CentOS 7 Machines
 =======================================
 
-Find a CentOS 6 machine and then install some packages as root:
+Install these packages as root:
 
 ~~~~~no-highlight
 yum install bzip2-devel cmake git
@@ -244,3 +134,20 @@ make -C gcc_relwithdebinfo -k -j2
 ls -l ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
 ~~~~~
 
+
+
+Other Bioplib versions
+----------------------
+
+At present, cath-tools uses [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage") v2.1.2. If you want to try using ge;v3.0, be sure to comment out the line in the Makefile that switches on the use of libxml2:
+
+~~~~~no-highlight
+# Include libxml2
+# Note: xml2-config is installed with libxml2
+#       Link to libxml2 with -lxml2
+COPT := $(COPT) -D XML_SUPPORT $(shell xml2-config --cflags)
+~~~~~
+
+(otherwise the build against the bioplib libraries will be broken by unresolved dependencies to libxml2)
+
+For advance building options, see [Developers](developers).

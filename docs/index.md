@@ -1,94 +1,69 @@
 # CATH Tools [![Build Status](https://travis-ci.org/UCLOrengoGroup/cath-tools.svg?branch=master)](https://travis-ci.org/UCLOrengoGroup/cath-tools) [![Documentation Status](https://readthedocs.org/projects/cath-tools/badge/?version=latest)](https://readthedocs.org/projects/cath-tools/?badge=latest)
 
-**Latest Release**: [**DOWNLOADS**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "The latest CATH Tools release") (including 64-bit Linux executables, chmod them to be executable)
 
-**Related Software**:
-[UCLOrengoGroup/secmake](http://github.com/UCLOrengoGroup/secmake) (makes sec files, which are required by cath-ssap)
+Protein structure comparison tools such as SSAP, as used by the [Orengo Group](https://www.ucl.ac.uk/orengo-group "Orengo Group website") in curating [CATH](http://www.cathdb.info/ "CATH website").
 
-**User documentation**: at [Read the Docs](http://cath-tools.readthedocs.io/en/latest/ "The CATH Tools user documentation at Read the Docs")
 
-**Code**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools "The CATH Tools GitHub repository")
 
-**Supplementary Materials**: at [GitHub](https://github.com/UCLOrengoGroup/cath-tools-supplementary "The CATH Tools Supplementary GitHub repository")
+Resources
+---------
 
-**Builds**: at [Travis-CI](https://travis-ci.org/UCLOrengoGroup/cath-tools "The CATH Tools Travis-CI builds")
+| | |
+|:-- |:-- |
+| **Latest Release**          | [**DOWNLOADS**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "The latest CATH Tools release") (including 64-bit Linux executables, chmod them to be executable) |
+| **User documentation**      | at [Read the Docs](http://cath-tools.readthedocs.io/en/latest/ "The CATH Tools user documentation at Read the Docs")                                                            |
+| **Related Software**        | [UCLOrengoGroup/secmake](http://github.com/UCLOrengoGroup/secmake) (makes sec files, which are required by cath-ssap)                                                           |
+| **Code**                    | at [GitHub](https://github.com/UCLOrengoGroup/cath-tools "The CATH Tools GitHub repository")                                                                                    |
+| **Supplementary Materials** | at [GitHub](https://github.com/UCLOrengoGroup/cath-tools-supplementary "The CATH Tools Supplementary GitHub repository")                                                        |
+| **Builds**                  | at [Travis-CI](https://travis-ci.org/UCLOrengoGroup/cath-tools "The CATH Tools Travis-CI builds")                                                                               |
+| **Acknowledgements**        | the [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage") library, used to execute the superpositions                                                     |
 
-About
------
 
-Protein structure tools such as SSAP, as used by the [Orengo Group](https://www.ucl.ac.uk/orengo-group "Orengo Group website") in the curation of [CATH](http://www.cathdb.info/ "CATH website").
 
-SSAP algorithm (`cath-ssap`) devised by Christine A Orengo and William R Taylor. Please cite: *Protein Structure Alignment*, Taylor and Orengo, Journal of Molecular Biology 208, 1-22, PMID: 2769748.
+Summary of Tools
+----------------
+
+### Primary tools
+
+ * [ `cath-resolve-hits` ]( tools/cath-resolve-hits ) : Collapse a list of domain matches to your query sequence(s) down to the non-overlapping subset (ie domain architecture) that maximises the sum of the hits' scores.
+ * [ `cath-ssap`         ]( tools/cath-ssap         ) : Run a SSAP pairwise structural alignment
+ * [ `cath-superpose`    ]( tools/cath-superpose    ) : Superpose protein structures using an existing alignment
+ * `build-test`                                       : Perform the cath-tools tests (which should all pass, abeit with a few warnings)
+
+### Extras
+
+ * `cath-assign-domains` Use an SVM model on SSAP+PRC data to form a plan for assigning the domains to CATH superfamilies/folds
+ * `cath-refine-align`   Iteratively refine an existing alignment by attempting to optimise SSAP score
+ * `cath-score-align`    Score an existing alignment using structural data
+ * `check-pdb`           Check a PDB file for some potential problems
+
+
+<!--
+| |
+|:-- |:-- |
+| `cath-assign-domains` | Use an SVM model on SSAP+PRC data to form a plan for assigning the domains to CATH superfamilies/folds |
+| `cath-refine-align`   | Iteratively refine an existing alignment by attempting to optimise SSAP score                          |
+| `cath-score-align`    | Score an existing alignment using structural data                                                      |
+| `check-pdb`           | Check a PDB file for some potential problems                                                           |
+-->
+
+Authors
+-------
+
+The SSAP algorithm (`cath-ssap`) was devised by Christine A Orengo and William R Taylor.
+
+Please cite: *Protein Structure Alignment*, Taylor and Orengo, Journal of Molecular Biology 208, 1-22, PMID: 2769748. ([PubMed](https://www.ncbi.nlm.nih.gov/pubmed/2769748), [Elsevier](http://www.sciencedirect.com/science/article/pii/0022283689900843))
 
 Since then, many people have contributed to this code, most notably:
-  * Tony E Lewis               (2011  - ....)
-  * Oliver C Redfern           (~2003 - 2011)
-  * James E Bray, Ian Sillitoe (~2000 - 2003)
-  * Andrew C R Martin          (considerable edits around 2001)
+
+  * [Tony E Lewis](https://github.com/tonyelewis)             (2011  - ....)
+  * Oliver C Redfern                                          (~2003 - 2011)
+  * James E Bray, [Ian Sillitoe](https://github.com/sillitoe) (~2000 - 2003)
+  * [Andrew C R Martin](https://github.com/AndrewCRMartin)    (considerable edits around 2001)
+
+Feedback
+--------
+
+Please tell us about your cath-tools bugs/suggestions [here](https://github.com/UCLOrengoGroup/cath-tools/issues/new).
 
 
-
-
-
-
-
-Cloning the cath-tools GitHub Repo
----
-
-This project includes [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub homepage") as a submodule. To ensure the bioplib directory gets populated, clone with:
-
-~~~~~no-highlight
-git clone --recursive https://github.com/UCLOrengoGroup/cath-tools.git
-~~~~~
-
-...or if you've already cloned, then use:
-
-
-~~~~~no-highlight
-git submodule update --init --recursive
-~~~~~
-
-Quickstart: Running SSAP
-========================
-
-The binary for SSAP is called `cath-ssap` and it'll tell you its usage if you run `cath-ssap --help`.
-
-You'll need to tell it where to find the PDB, wolf and sec files. We recommend you use the path options to manage your list of directories to search. This can be done with command line options, but it may be easier to add suitable environment variables to your profile:
-
-~~~~~no-highlight
-CATH_TOOLS_PDB_PATH  .:/global/data/directories/pdb
-CATH_TOOLS_DSSP_PATH .:/global/data/directories/dssp
-CATH_TOOLS_SEC_PATH  .:/global/data/directories/sec
-~~~~~
-
-Similarly, if you use a different style of prefix/suffix for your files, you can specify these with command line options or with these environment variables:
-
-~~~~~no-highlight
-CATH_TOOLS_PDB_PREFIX
-CATH_TOOLS_DSSP_PREFIX
-CATH_TOOLS_SEC_PREFIX
-CATH_TOOLS_PDB_SUFFIX
-CATH_TOOLS_DSSP_SUFFIX
-CATH_TOOLS_SEC_SUFFIX
-~~~~~
-
-The cath-superpose tool makes superpositions that look better (but have higher RMSDs). You can pass it the alignment generated by cath-ssap as follows:
-
-~~~~~no-highlight
-./cath-ssap 1cukA 1bvsA
-./cath-superpose --ssap-aln-infile 1cukA1bvsA.list --pdb-infile /global/data/directories/pdb/1cukA --pdb-infile /global/data/directories/pdb/1bvsA --sup-to-pymol
-~~~~~
-
-Extra Bioplib Notes
--------------------
-
-At present, the [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage") submodule is v2.1.2. If you attempt to use &ge; v3.0, be sure to comment out the line in the Makefile that switches on use of libxml2:
-
-~~~~~no-highlight
-# Include libxml2
-# Note: xml2-config is installed with libxml2
-#       Link to libxml2 with -lxml2
-COPT := $(COPT) -D XML_SUPPORT $(shell xml2-config --cflags)
-~~~~~
-
-(otherwise the build against the bioplib libraries will be broken by unresolved dependencies to libxml2)

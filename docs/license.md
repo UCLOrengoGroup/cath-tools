@@ -1,0 +1,1 @@
+For the licence of this software, please see the [LICENSE](https://raw.githubusercontent.com/UCLOrengoGroup/cath-tools/master/LICENSE) file in the root directory of the [cath-tools GitHub repo](https://github.com/UCLOrengoGroup/cath-tools).

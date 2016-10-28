@@ -2,8 +2,14 @@ site_name: cath-tools
 theme: readthedocs
 
 pages:
-- Home              : index.md
-- Build             : build.md
-- cath-resolve-hits : cath-resolve-hits.md
+- Home                  : index.md
+- Tools :
+  - cath-resolve-hits   : tools/cath-resolve-hits.md
+  - cath-ssap           : tools/cath-ssap.md
+  - cath-superpose      : tools/cath-superpose.md
+- Build                 : build.md
+- Development           : development.md
+- License               : license.md
+- References            : references.md
 
 extra_css: [extra.css]
