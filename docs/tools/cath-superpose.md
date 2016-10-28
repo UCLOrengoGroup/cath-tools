@@ -1,5 +1,5 @@
-cath-ssap
-=========
+cath-superpose
+==============
 
 The cath-superpose tool makes superpositions that look better (but have higher RMSDs).
 
