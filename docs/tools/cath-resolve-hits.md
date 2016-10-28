@@ -7,10 +7,13 @@ A fast, effective way to collapse a list of domain matches to your query sequenc
 <br>
 *__Above__: cath-resolve-hits chooses the hits at the top from the list of possible hits at the bottom*
 
-Usage
------
 
-At the moment, it takes one argument: a file which, by default, contains lines like:
+
+
+Getting started
+---------------
+
+At the moment, `cath-resolve-hits` takes one argument: a file which, by default, contains lines like:
 
 ~~~~~no-highlight
 qyikaz 1mkfA01/12-210-i5_1,2.9e-20 2983.29780221221 3-103
@@ -29,6 +32,9 @@ Where the fields are space-separated and are:
 The output is the non-overlapping subset that maximises the sum of the hits' scores.
 
 The input file can contain data for multiple different query protein sequences but at the moment, they must be pre-grouped into consecutive lines.
+
+Usage
+-----
 
 The current full `--help` usage information is:
 
@@ -102,6 +108,8 @@ Warning
 For now, don't set `--high-scores-preference` too high (say, above 3.5) because otherwise the range of scores will exceed what can be reliably handled by a 32-bit floating point number. 
 
 <!-- Example: 3uunB00_round_3 drops out of 98300abb63cbbe1df0ce443557c9e767's results at --high-scores-preference around 4.9971849915 because it's crh-score (2.91038000874e-11 from bitscore 12.1) is small enough to not have any effect when added to a float representation of the best hit's score (5.40697294016e-4 from bitscore 233.9) ) -->
+
+
 
 
 How Fast?
