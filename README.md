@@ -35,8 +35,6 @@ Summary of Tools
  * `cath-assign-domains` Use an SVM model on SSAP+PRC data to form a plan for assigning the domains to CATH superfamilies/folds
  * `cath-refine-align`   Iteratively refine an existing alignment by attempting to optimise SSAP score
  * `cath-score-align`    Score an existing alignment using structural data
- * `check-pdb`           Check a PDB file for some potential problems
-
 
 <!--
 | |
