@@ -57,7 +57,7 @@ namespace cath {
 			///
 			/// These are just EXAMPLE_A_PDB_STEMNAME(), EXAMPLE_B_PDB_STEMNAME() and TEST_SOURCE_DATA_DIR()
 			/// from global_test_constants 
-			const path   &the_dir = "build-test-data";
+			const path   &the_dir = path{ "build-test-data" } / "snap_judgement_pdbs";
 //			const string &name_a  = "1c0pA01";
 //			const string &name_b  = "1hdoA00";
 			const string &name_a  = "1n3lA01";
@@ -76,7 +76,7 @@ namespace cath {
 				all_vs_all{}
 			}.get_load_and_scan_metrics();
 
-			cerr <<
+			cout <<
 R"(SNAP Judgement
 ===============
 
@@ -91,10 +91,12 @@ SSAP takes about 2.7 seconds and gets a score of 69.28.
 All versus all within a set of 60 domains
 -----------------------------------------
 
-single pair comparison of largish structures 1n3lA01 (209 residues) and 1r6xA02 (213 residues).
+All-vs-all comparison of 60 structures with a range of lenghts (min: 18 residues, max: 236 residues, mean: 107.31666... residues).
 SSAPs typically take around a second so 60x60=3600 would normally take around an hour.
 
-)" << to_markdown_string( single_pair_lasm ) << R"(
+Note that rate is to process all structures (ie 60 for loads/builds; 3600 for scan)
+
+)" << to_markdown_string( all_vs_all_lasm ) << R"(
 
 Build details
 -------------
