@@ -213,8 +213,6 @@ namespace cath {
 			/// \brief Parse a summary from the current summary header line
 			inline void hmmsearch_parser::parse_summary_from_header(const bool &arg_apply_cath_policies /// Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
 			                                                        ) {
-				constexpr double EVALUE_CUTOFF = 0.001;
-
 				summaries.clear();
 				summary_ctr = 0;
 				advance_line();
@@ -239,12 +237,9 @@ namespace cath {
 						arg_apply_cath_policies
 							? common::parse_uint_from_field ( ali_to_itrs.first,   ali_to_itrs.second   )
 							: 0,
-						(
-							arg_apply_cath_policies
-							&&
-							common::parse_double_from_field( cond_evalue_itrs.first, cond_evalue_itrs.second ) <= EVALUE_CUTOFF
-							&&
-							common::parse_double_from_field( indp_evalue_itrs.first, indp_evalue_itrs.second ) >  EVALUE_CUTOFF
+						hmmer_evalues_are_suspicious(
+							common::parse_double_from_field( cond_evalue_itrs.first, cond_evalue_itrs.second ),
+							common::parse_double_from_field( indp_evalue_itrs.first, indp_evalue_itrs.second )
 						)
 					} );
 
@@ -291,16 +286,11 @@ namespace cath {
 				segs.front().set_start_arrow( arrow_before_res( start ) );
 				segs.back ().set_stop_arrow ( arrow_after_res ( stop  ) );
 
-				const bool     is_suspicious  = ( arg_apply_cath_policies && ( id_score_cat != cath_id_score_category::DC_TYPE     ) && summ.evalues_are_susp );
-				const bool     is_later_round = ( arg_apply_cath_policies && ( id_score_cat == cath_id_score_category::LATER_ROUND ) );
-				const double   denom_mult     = is_suspicious  ? 4.0 :
-				                                is_later_round ? 2.0 :
-				                                                 1.0;
 				arg_read_and_process_mgr.add_hit(
 					query_id,
 					segs,
 					std::move( id_a ),
-					summ.bitscore / denom_mult,
+					summ.bitscore / bitscore_divisor( arg_apply_cath_policies, id_score_cat, summ.evalues_are_susp ),
 					hit_score_type::BITSCORE
 				);
 

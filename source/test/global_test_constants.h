@@ -59,6 +59,7 @@ namespace cath {
 		static const boost::filesystem::path              & TEST_SVM_DIR();
 		static const boost::filesystem::path              & TEST_OUTPUT_DIRECTORY();
 		static const boost::filesystem::path              & CRH_TEST_DATA_DIR();
+		static const boost::filesystem::path              & CRH_CATH_DC_HANDLING_DATA_DIR();
 
 		static const boost::filesystem::path              & NONEXISTENT_FILE();
 

@@ -158,6 +158,12 @@ const path & global_test_constants::CRH_TEST_DATA_DIR() {
 	return crh_test_data_dir;
 }
 
+/// \brief Test constant for the cath-resolve-hits cath_gene3d_dc_handling test data subdirectory
+const path & global_test_constants::CRH_CATH_DC_HANDLING_DATA_DIR() {
+	static const path crh_cath_dc_handling_data_dir( CRH_TEST_DATA_DIR() / "cath_gene3d_dc_handling" );
+	return crh_cath_dc_handling_data_dir;
+}
+
 /// \brief TODOCUMENT
 const path & global_test_constants::NONEXISTENT_FILE() {
 	static const path nonexistent_file( "filename_of_nonexistent_file" );

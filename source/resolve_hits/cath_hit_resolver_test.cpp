@@ -29,6 +29,7 @@
 #include "resolve_hits/cath_hit_resolver.h"
 #include "resolve_hits/options/options_block/crh_input_options_block.h"
 #include "resolve_hits/options/options_block/crh_output_options_block.h"
+#include "resolve_hits/options/options_block/crh_score_options_block.h"
 #include "resolve_hits/options/options_block/crh_segment_options_block.h"
 #include "test/global_test_constants.h"
 #include "test/resolve_hits/resolve_hits_fixture.h"
@@ -215,5 +216,17 @@ BOOST_AUTO_TEST_CASE(file_raw_score) {
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_OUT_FILENAME() );
 }
+
+
+BOOST_AUTO_TEST_CASE(handles_dc_correcctly) {
+	execute_perform_resolve_hits( {
+		(CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.in" ).string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTMBLOUT ),
+		"--" + crh_score_options_block::PO_APPLY_CATH_RULES,
+	} );
+	istringstream istream_of_output{ output_ss.str() };
+	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()

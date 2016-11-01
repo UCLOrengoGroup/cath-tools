@@ -41,6 +41,28 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const cath_id_score_category &);
 
+		/// \brief Return whether the specified HMMER evalues are suspicious under the CATH-Gene3D rules
+		inline bool hmmer_evalues_are_suspicious(const double &arg_cond_evalue, ///< The HMMER conditional evalue
+		                                         const double &arg_indp_evalue  ///< The HMMER independent evalue
+		                                         ) {
+			constexpr double EVALUE_CUTOFF = 0.001;
+			return (
+				arg_cond_evalue <= EVALUE_CUTOFF
+				&&
+				arg_indp_evalue >  EVALUE_CUTOFF
+			);
+		}
+
+		/// \brief Return the value by which the bitscore should be divided under the CATH-Gene3d rules
+		inline double bitscore_divisor(const bool                   &arg_apply_cath_policies, ///< Whether the CATH-Gene3D rules are to be applied (if not, then this will return 1.0 )
+		                               const cath_id_score_category &arg_id_score_cat,        ///< The category of ID under CATH-Gene3d
+		                               const bool                   &arg_evalues_are_susp     ///< Whether the HMMER evalues were demed suspicious
+		                               ) {
+			return ( arg_apply_cath_policies && arg_evalues_are_susp                                    ) ? 4.0 :
+			       ( arg_apply_cath_policies && arg_id_score_cat == cath_id_score_category::LATER_ROUND ) ? 2.0 :
+			                                                                                                1.0;
+		}
+
 	} // namespace rslv
 } // namespace cath
 

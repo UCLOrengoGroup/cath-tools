@@ -119,6 +119,28 @@ To give a very rough idea: on an SSD-enable laptop, we've seen `cath-resolve-hit
 
 
 
+
+CATH Rules invoked by option `--apply-cath-rules`
+-------------------------------------------------
+
+The `--apply-cath-rules` option applies the following CATH-Gene3D specific rules when parsing from `hmmer_domtmblout` or `hmmsearch_out` format files.
+
+### Discontinuous domains
+
+If hit's match ID is like `dc_72a964d791dea7a3dd35a8bbf49385b8` (matches `/^dc_\w{32}$/`), then:
+
+ * use the `ali_from`/`ali_to` fields rather than `env_from`/`env_to` to determine the final start/stop and
+ * ignore gaps when parsing an alignment from a hmmsearch_outfile (ie keep the hit as one continuous segment).
+
+### Bitscore reductions
+
+If the conditional-evalue is &le; 0.001 but the independent-value is > 0.001, then quarter the bitscore when parsing the hit.
+
+Otherwise, if the hit's match ID is like `1pbyB00_round_3` (matches `/_round_\d+$/` but not `/_round_1$/`), then halve the bitscore when parsing the hit.
+
+
+
+
 Feedback
 --------
 
