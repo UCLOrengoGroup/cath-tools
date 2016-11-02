@@ -39,6 +39,11 @@ static_assert( arrow_after_res ( 0 ).res_after () == 1, "" );
 
 static_assert( start_arrow().res_after() == 0, "" );
 
+static_assert( arrow_after_res( 15 ) - arrow_after_res( 10 ) == 5, "" );
+
+static_assert( arrow_after_res( 10 ) - 5 == arrow_after_res(  5 ), "" );
+static_assert( arrow_after_res( 10 ) + 5 == arrow_after_res( 15 ), "" );
+
 /// \brief Generate a string describing the specified res_arrow
 ///
 /// \relates res_arrow

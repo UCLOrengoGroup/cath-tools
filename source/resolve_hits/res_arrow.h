@@ -23,6 +23,7 @@
 
 #include <boost/operators.hpp>
 
+#include "exception/invalid_argument_exception.h"
 #include "resolve_hits/resolve_hits_type_aliases.h"
 
 #include <iosfwd>
@@ -41,8 +42,7 @@ namespace cath {
 		///  * `arrow_after_res (const residx_t &)`
 		///  * `res_arrow::res_before()`
 		///  * `res_arrow::res_after ()`
-		class res_arrow final : private boost::totally_ordered<res_arrow,
-		                                boost::additive<res_arrow, resarw_t> > {
+		class res_arrow final : private boost::totally_ordered<res_arrow> {
 		private:
 			friend constexpr res_arrow arrow_before_res(const residx_t &);
 			friend constexpr res_arrow arrow_after_res (const residx_t &);
@@ -118,6 +118,8 @@ namespace cath {
 		}
 
 		/// \brief Increment the arrow by the specified offset
+		///
+		/// \todo Come relaxed constexpr in all supported compilers, make this constexpr
 		inline res_arrow & res_arrow::operator+=(const resarw_t &arg_offset ///< The offset by which to increment the res_arrow
 		                                         ) {
 			arrow += arg_offset;
@@ -125,10 +127,59 @@ namespace cath {
 		}
 
 		/// \brief Decrement the arrow by the specified offset
+		///
+		/// \todo Come relaxed constexpr in all supported compilers, make this constexpr
 		inline res_arrow & res_arrow::operator-=(const resarw_t &arg_offset ///< The offset by which to decrement the res_arrow
 		                                         ) {
+#ifndef NDEBUG
+			if ( arg_offset > arrow ) {
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot decrement res_arrow below 0"));
+			}
+#endif
 			arrow -= arg_offset;
 			return *this;
+		}
+
+		/// \brief Return the result of decrementing the specified arrow by some specified offset
+		///
+		/// \todo Come constexpr Boost.Operators and relaxed constexpr support in all supported compilers,
+		///       implement this using boost::additive<>
+		///
+		/// \relates res_arrow
+		inline constexpr res_arrow operator-(const res_arrow &arg_res_arrow, ///< The res_arrow whose copy should be decremented and returned
+		                                     const residx_t  &arg_offset     ///< The offset by which to decrement the the copy of the res_arrow
+		                                     ) {
+
+
+			return
+#ifndef NDEBUG
+				( arg_res_arrow.res_after() < arg_offset )
+				?
+					throw std::invalid_argument("Cannot decrement res_arrow beyond 0")
+				:
+#endif
+					arrow_before_res( arg_res_arrow.res_after() - arg_offset );
+		}
+
+		/// \brief Return the result of incrementing the specified arrow by some specified offset
+		///
+		/// \todo Come constexpr Boost.Operators and relaxed constexpr support in all supported compilers,
+		///       implement this using boost::additive<>
+		///
+		/// \relates res_arrow
+		inline constexpr res_arrow operator+(const res_arrow &arg_res_arrow, ///< The res_arrow whose copy should be incremented and returned
+		                                     const residx_t  &arg_offset     ///< The offset by which to increment the the copy of the res_arrow
+		                                     ) {
+			return arrow_before_res( arg_res_arrow.res_after() + arg_offset );
+		}
+
+		/// \brief Return the result of subtracting one res_arrow from another
+		///
+		/// \relates res_arrow
+		inline constexpr residx_t operator-(const res_arrow &arg_lhs, ///< The res_arrow from which to subtract
+		                                    const res_arrow &arg_rhs  ///< The res_arrow to subtract
+		                                    ) {
+			return arg_lhs.get_index() - arg_rhs.get_index();
 		}
 
 		/// \brief Get the arrow immedately before the residue with the specified index

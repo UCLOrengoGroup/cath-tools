@@ -65,4 +65,11 @@ BOOST_AUTO_TEST_CASE(overlap) {
 	BOOST_CHECK( true );
 }
 
+
+BOOST_AUTO_TEST_CASE(length) {
+	static_assert( get_length( hit_seg_of_res_idcs( 10, 10 ) ) ==  1, "" );
+	static_assert( get_length( hit_seg_of_res_idcs( 10, 20 ) ) == 11, "" );
+	BOOST_CHECK( true );
+}
+
 BOOST_AUTO_TEST_SUITE_END()

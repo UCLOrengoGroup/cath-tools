@@ -145,9 +145,9 @@ namespace cath {
 		inline constexpr size_t get_length(const hit_seg &arg_hit_seg ///< The hit_seg to query
 		                                   ) {
 			return static_cast<size_t>(
-				arg_hit_seg.get_stop_arrow ().get_index()
+				arg_hit_seg.get_stop_arrow ()
 				-
-				arg_hit_seg.get_start_arrow().get_index()
+				arg_hit_seg.get_start_arrow()
 			);
 		}
 

@@ -222,9 +222,9 @@ namespace cath {
 		                                    const size_t   &arg_seg_idx ///< The index of the segment who length should be returned
 		                                    ) {
 			return static_cast<size_t>(
-				arg_hit.get_stop_arrow_of_segment ( arg_seg_idx ).get_index()
+				arg_hit.get_stop_arrow_of_segment ( arg_seg_idx )
 				-
-				arg_hit.get_start_arrow_of_segment( arg_seg_idx ).get_index()
+				arg_hit.get_start_arrow_of_segment( arg_seg_idx )
 			);
 		}
 		
