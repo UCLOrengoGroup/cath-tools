@@ -49,7 +49,7 @@ namespace cath {
 
 					/// \brief TODOCUMENT
 					template <typename T>
-					constexpr inline int cell_index_of_value_in_current(const T   &arg_cell_width,   ///< TODOCUMENT
+					inline constexpr int cell_index_of_value_in_current(const T   &arg_cell_width,   ///< TODOCUMENT
 					                                                    const int &arg_start_offset, ///< TODOCUMENT
 					                                                    const T   &arg_value         ///< TODOCUMENT
 					                                                    ) {
@@ -63,7 +63,7 @@ namespace cath {
 
 					/// \brief TODOCUMENT
 					template <typename T>
-					constexpr inline size_t clamped_cell_index_of_value_in_current(const T      &arg_cell_width,   ///< TODOCUMENT
+					inline constexpr size_t clamped_cell_index_of_value_in_current(const T      &arg_cell_width,   ///< TODOCUMENT
 					                                                               const int    &arg_start_offset, ///< TODOCUMENT
 					                                                               const size_t &arg_num_cells,    ///< TODOCUMENT
 					                                                               const T      &arg_value         ///< TODOCUMENT
@@ -78,7 +78,7 @@ namespace cath {
 
 					/// \brief TODOCUMENT
 					template <typename T>
-					constexpr inline T min_value_in_cell_of_index_in_current(const T      &arg_cell_width,   ///< TODOCUMENT
+					inline constexpr T min_value_in_cell_of_index_in_current(const T      &arg_cell_width,   ///< TODOCUMENT
 					                                                         const int    &arg_start_offset, ///< TODOCUMENT
 					                                                         const size_t &arg_cell_index    ///< TODOCUMENT
 					                                                         ) {
@@ -89,7 +89,7 @@ namespace cath {
 
 					/// \brief TODOCUMENT
 					template <typename T>
-					constexpr inline size_size_size_size_tpl search_cell_ranges(const T      &arg_cell_width,   ///< TODOCUMENT
+					inline constexpr size_size_size_size_tpl search_cell_ranges(const T      &arg_cell_width,   ///< TODOCUMENT
 					                                                            const int    &arg_start_offset, ///< TODOCUMENT
 					                                                            const size_t &arg_num_cells,    ///< TODOCUMENT
 					                                                            const T      &arg_search_begin, ///< TODOCUMENT
