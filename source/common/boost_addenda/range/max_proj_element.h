@@ -35,9 +35,9 @@ namespace cath {
 		template <typename Rng,
 		          typename Pred = std::less<>,
 		          typename Proj = ident>
-		inline auto max_proj_element(Rng  &&arg_range, ///< The range to query
-		                             Pred &&arg_pred,  ///< The less-than predicate function
-		                             Proj &&arg_proj   ///< The projection fuction
+		inline auto max_proj_element(Rng  &&arg_range,          ///< The range to query
+		                             Pred &&arg_pred  = Pred{}, ///< The less-than predicate function
+		                             Proj &&arg_proj  = Proj{}  ///< The projection fuction
 		                             ) {
 			/// \todo Come Clang (>= 3.7?) with fix, drop this type alias and use generic lambdas
 			using const_reference_type = common::range_const_reference_t<Rng>;
@@ -56,9 +56,9 @@ namespace cath {
 		template <typename Rng,
 		          typename Pred = std::less<>,
 		          typename Proj = ident>
-		inline auto max_proj(Rng  &&arg_range, ///< The range to query
-		                     Pred &&arg_pred,  ///< The less-than predicate function
-		                     Proj &&arg_proj   ///< The projection fuction
+		inline auto max_proj(Rng  &&arg_range,          ///< The range to query
+		                     Pred &&arg_pred  = Pred{}, ///< The less-than predicate function
+		                     Proj &&arg_proj  = Proj{}  ///< The projection fuction
 		                     ) {
 			return arg_proj( *max_proj_element(
 				std::forward< Rng  >( arg_range ),
