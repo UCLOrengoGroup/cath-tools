@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FULL_HIT_H
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FULL_HIT_H
 
+#include <boost/operators.hpp>
 #include <boost/optional.hpp>
 
 #include "common/type_aliases.h"
@@ -43,7 +44,7 @@ namespace cath {
 		///
 		/// Like all cath-resolve_hits code, this assumes simple residue numbering
 		/// and is hence unsuitable for use with raw PDB residue numbers.
-		class full_hit final {
+		class full_hit final : private boost::equality_comparable<full_hit> {
 		private:
 			/// \brief The list of segments
 			hit_seg_vec segments;

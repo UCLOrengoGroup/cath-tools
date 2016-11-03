@@ -57,6 +57,24 @@ namespace cath {
 		/// \brief Type alias for a vector of res_arrow objects
 		using res_arrow_vec = std::vector<res_arrow>;
 
+		/// \brief Type alias for a pair of res_arrows
+		using res_arr_res_arr_pair = std::pair<res_arrow, res_arrow>;
+
+		/// \brief Type alias for a pair of res_arrows
+		using res_arr_res_arr_pair_vec = std::vector<res_arr_res_arr_pair>;
+
+		/// \brief Type alias for an optional res_arrow
+		using res_arrow_opt = boost::optional<res_arrow>;
+
+		/// \brief Type alias for a pair of res_arrow_opt values
+		using seg_boundary_pair     = std::pair<res_arrow_opt, res_arrow_opt>;
+
+		/// \brief Type alias for a vector of seg_boundary_pair values
+		using seg_boundary_pair_vec = std::vector<seg_boundary_pair>;
+
+		/// \brief Type alias for an optional seg_boundary_pair_vec
+		using seg_boundary_pair_vec_opt = boost::optional<seg_boundary_pair_vec>;
+
 		/// \brief Type alias for the type to be used to index residues
 		using residx_t = unsigned int;
 

@@ -83,6 +83,10 @@ namespace cath {
 		resscr_opt get_best_crh_score(const full_hit_list &,
 		                              const crh_score_spec &);
 
+		seg_boundary_pair_vec resolved_boundaries(const full_hit &,
+		                                          const full_hit_list &,
+		                                          const trim_spec &);
+
 		/// \brief Ctor from lvalues
 		inline full_hit_list::full_hit_list(const full_hit_vec &arg_full_hit_list ///< The full_hits
 		                                    ) : the_full_hits   ( arg_full_hit_list   ) {

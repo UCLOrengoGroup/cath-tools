@@ -236,6 +236,8 @@ namespace cath {
 		hit_seg_vec make_fragments_of_segments(hit_seg_vec);
 		bool segments_are_start_sorted_and_non_overlapping(const hit_seg_vec &);
 		hit_seg_vec make_fragments_of_start_sorted_segments(const hit_seg_vec &);
+		bool midpoint_less(const hit_seg &,
+		                   const hit_seg &);
 		std::string to_simple_string(const hit_seg &);
 		std::string to_string(const hit_seg &);
 		std::ostream & operator<<(std::ostream &,

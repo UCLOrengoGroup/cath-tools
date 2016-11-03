@@ -20,7 +20,10 @@
 
 #include "full_hit_list.h"
 
+#include "common/algorithm/append.h"
+#include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/range/max_proj_element.h"
+#include "resolve_hits/trim/hit_seg_boundary_fns.h"
 
 using namespace cath::common;
 using namespace cath::rslv;
@@ -29,6 +32,41 @@ using boost::make_optional;
 using boost::none;
 using std::ostream;
 using std::string;
+
+/// \brief Get a vector of all the segments in the specified list of hits that
+///        differ from the specified hit
+///
+/// \relates full_hit_list
+hit_seg_vec get_other_hits_segments(const full_hit      &arg_full_hit, ///< The hit whose segments should be excluded from the list
+                                    const full_hit_list &arg_full_hits ///< The list of hits from which the segments should be drawn
+                                    ) {
+	hit_seg_vec results;
+	for (const full_hit &the_full_hit : arg_full_hits) {
+		if ( the_full_hit != arg_full_hit ) {
+			append( results, the_full_hit.get_segments() );
+		}
+	}
+	return results;
+}
+
+/// \brief Calculate the resolved boundaries for the specified hit in the context of
+///        the specified list of hits and trim_spec
+///
+/// \relates full_hit_list
+seg_boundary_pair_vec cath::rslv::resolved_boundaries(const full_hit      &arg_full_hit,  ///< The hit whose boundaries should be resolved
+                                                      const full_hit_list &arg_full_hits, ///< The list of hits providing the context (may include the original hit)
+                                                      const trim_spec     &arg_trim_spec  ///< The trim_spec to use
+                                                      ) {
+	const hit_seg_vec other_segments = get_other_hits_segments( arg_full_hit, arg_full_hits );
+
+	// Build up a vector of res_arr_res_arr_pairs, one calculated for each segment of arg_full_hit
+	return transform_build<seg_boundary_pair_vec>(
+		arg_full_hit.get_segments(),
+		[&] (const hit_seg &x) {
+			return get_boundary_pair( x, other_segments, arg_trim_spec );
+		}
+	);
+}
 
 /// \brief Generate a string describing the specified full_hit_list
 ///

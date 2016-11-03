@@ -86,6 +86,18 @@ hit_seg_vec cath::rslv::make_fragments_of_start_sorted_segments(const hit_seg_ve
 	);
 }
 
+/// \brief Return whether the midpoint of the first specified hit_seg is less than that of the second
+///
+/// \relates hit_seg
+bool cath::rslv::midpoint_less(const hit_seg &arg_hit_seg_lhs, ///< The first  hit_seg to compare
+                               const hit_seg &arg_hit_seg_rhs  ///< The second hit_seg to compare
+                               ) {
+	const auto midpoint_x2_fn = [] (const hit_seg &x) {
+		return x.get_start_arrow().get_index() + x.get_stop_arrow().get_index();
+	};
+	return midpoint_x2_fn( arg_hit_seg_lhs ) < midpoint_x2_fn( arg_hit_seg_rhs );
+}
+
 /// \brief Generate a string describing the specified hit_seg
 ///
 /// \relates hit_seg

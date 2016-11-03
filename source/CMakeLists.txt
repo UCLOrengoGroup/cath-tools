@@ -665,6 +665,7 @@ set(
 
 set(
 	NORMSOURCES_RESOLVE_HITS_TRIM
+		resolve_hits/trim/hit_seg_boundary_fns.cpp
 		resolve_hits/trim/trim_spec.cpp
 )
 
@@ -1567,6 +1568,7 @@ set(
 
 set(
 	TESTSOURCES_RESOLVE_HITS_TRIM
+		resolve_hits/trim/hit_seg_boundary_fns_test.cpp
 		resolve_hits/trim/resolve_boundary_test.cpp
 		resolve_hits/trim/trim_spec_test.cpp
 )
