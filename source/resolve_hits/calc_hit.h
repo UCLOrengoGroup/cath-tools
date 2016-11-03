@@ -25,6 +25,7 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
+#include "common/algorithm/append.h"
 #include "common/algorithm/transform_build.h"
 #include "common/cpp14/cbegin_cend.h"
 #include "common/size_t_literal.h"
@@ -253,18 +254,6 @@ namespace cath {
 			);
 		}
 
-		/// \brief Append a range of values to a vector of values
-		template <typename T, typename U>
-		void append(std::vector<T> &arg_vec, ///< The vector to which the values should be appended
-		            const U        &arg_rng  ///< The range of values to append
-		            ) {
-			arg_vec.insert(
-				common::cend  ( arg_vec ),
-				common::cbegin( arg_rng ),
-				common::cend  ( arg_rng )
-			);
-		}
-
 		/// \brief Get the (possibly-repeated, non-sorted) segments from the specified hits
 		///
 		/// \relates calc_hit
@@ -272,7 +261,7 @@ namespace cath {
 		                                      ) {
 			hit_seg_vec results;
 			for (const calc_hit &the_hit : arg_hit_vec) {
-				append( results, get_hit_segs( the_hit ) );
+				common::append( results, get_hit_segs( the_hit ) );
 			}
 			return results;
 		}
