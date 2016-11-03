@@ -142,9 +142,9 @@ namespace cath {
 		/// \brief Get the length of the specified hit_seg
 		///
 		/// \relates hit_seg
-		inline constexpr size_t get_length(const hit_seg &arg_hit_seg ///< The hit_seg to query
+		inline constexpr residx_t get_length(const hit_seg &arg_hit_seg ///< The hit_seg to query
 		                                   ) {
-			return static_cast<size_t>(
+			return (
 				arg_hit_seg.get_stop_arrow ()
 				-
 				arg_hit_seg.get_start_arrow()

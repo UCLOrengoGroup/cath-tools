@@ -166,7 +166,7 @@ namespace cath {
 		inline void trim_hit_seg(hit_seg         &arg_hit_seg,    ///< The hit_seg to trim
 		                         const trim_spec &arg_trim_spec ///< The trim_spec to apply
 		                         ) {
-			const auto length = debug_numeric_cast<residx_t>( get_length( arg_hit_seg ) );
+			const auto length = get_length( arg_hit_seg );
 			arg_hit_seg.set_start_arrow( arg_hit_seg.get_start_arrow() + start_trimming_of_length( arg_trim_spec, length ) );
 			arg_hit_seg.set_stop_arrow ( arg_hit_seg.get_stop_arrow () - stop_trimming_of_length ( arg_trim_spec, length ) );
 		}
