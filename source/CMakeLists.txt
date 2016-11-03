@@ -620,6 +620,7 @@ set(
 
 set(
 	NORMSOURCES_RESOLVE_HITS_HTML_OUTPUT
+		resolve_hits/html_output/html_segment.cpp
 		resolve_hits/html_output/resolve_hits_html_outputter.cpp
 )
 

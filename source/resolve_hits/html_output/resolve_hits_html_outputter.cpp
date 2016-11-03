@@ -35,6 +35,7 @@
 #include "resolve_hits/calc_hit_list.h"
 #include "resolve_hits/full_hit_list.h"
 #include "resolve_hits/hit_resolver.h"
+#include "resolve_hits/html_output/html_segment.h"
 #include "resolve_hits/options/spec/crh_segment_spec.h"
 #include "resolve_hits/scored_hit_arch.h"
 #include "resolve_hits/trim/trim_spec.h"
@@ -147,22 +148,21 @@ string resolve_hits_html_outputter::markers_row(const size_t  &arg_sequence_leng
 </tr>)";
 }
 
-
 // /// \brief Generate an HTML fragment to describe the specified full_hit with the specified trim_spec applied
-string resolve_hits_html_outputter::output_html_fragment(const full_hit         &arg_full_hit,        ///< The full_hit to desribe
-                                                         const size_t           &arg_full_hit_idx,    ///< The index of the full_hit
-                                                         const display_colour   &arg_colour,          ///< The colour in which the full_hit should be rendered
-                                                         const crh_segment_spec &arg_segment_spec,    ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
-                                                         const crh_score_spec   &arg_score_spec,      ///< The crh_score_spec to use to calculate the crh-score
-                                                         const size_t           &arg_sequence_length, ///< The length of the full sequence on which this full_hit appears
-                                                         const bool             &arg_in_result,       ///< Whether this row is being displayed in the result
-                                                         const bool             &arg_highlight        ///< Whether this row it to be highlighted
+string resolve_hits_html_outputter::output_html_fragment(const full_hit                  &arg_full_hit,          ///< The full_hit to desribe
+                                                         const size_t                    &arg_full_hit_idx,      ///< The index of the full_hit
+                                                         const display_colour            &arg_colour,            ///< The colour in which the full_hit should be rendered
+                                                         const crh_segment_spec          &arg_segment_spec,      ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                                         const crh_score_spec            &arg_score_spec,        ///< The crh_score_spec to use to calculate the crh-score
+                                                         const size_t                    &arg_sequence_length,   ///< The length of the full sequence on which this full_hit appears
+                                                         const seg_boundary_pair_vec_opt &arg_result_boundaries, ///< Whether this row is being displayed in the result
+                                                         const bool                      &arg_highlight          ///< Whether this row it to be highlighted
                                                          ) {
 	const double length_mult   = 100.0 / debug_numeric_cast<double>( arg_sequence_length );
-	const string first_class   = ( arg_highlight || arg_in_result ) ? "crh-cell-first-highlight"s : "crh-cell-first-norm"s;
-	const string row_class     =   arg_in_result                    ? "crh-row-result"    :
-	                               arg_highlight                    ? "crh-row-highlight" :
-	                                                                  "crh-row-norm";
+	const string first_class   = ( arg_highlight || arg_result_boundaries ) ? "crh-cell-first-highlight"s : "crh-cell-first-norm"s;
+	const string row_class     =   arg_result_boundaries                    ? "crh-row-result"    :
+	                               arg_highlight                            ? "crh-row-highlight" :
+	                                                                          "crh-row-norm";
 
 	// For strictly-worse rows, can set: background-color: #ddd; color: #999;
 	return R"(<tr class=")" + row_class + R"(">
@@ -182,44 +182,37 @@ string resolve_hits_html_outputter::output_html_fragment(const full_hit         
 			""
 		)
 		+ join(
-			arg_full_hit.get_segments()
-				| transformed( [&] (const hit_seg &x) {
+			irange( 0_z, arg_full_hit.get_segments().size() )
+				| transformed( [&] (const size_t &x_idx) {
+					const hit_seg &x = arg_full_hit.get_segments()[ x_idx ];
+
 					// Grab the result of applying the crh_segment_spec to the segment
 					// (which may be boost::none if the segment is shorter than min-seg-length)
 					const hit_seg_opt trimmed_seg_opt = apply_spec_to_seg_copy( x, arg_segment_spec );
 
-					return R"(		<span class="crh-hit-pill-ends crh-hit-ends-id-)" + ::std::to_string( arg_full_hit_idx ) + R"(" style="background-color: #)"
-						+ hex_string_of_colour( lighten_by_fraction( arg_colour, 0.75 ) )
-						+ R"(; border-color: #)"
-						+ hex_string_of_colour( darken_by_fraction ( arg_colour, 0.65 ) )
-						+ "; left: "
-						+ ::std::to_string( length_mult * debug_numeric_cast<double>( get_start_res_index( x ) - 1 ) )
-						+ R"(%; width: )"
-						+ ::std::to_string( length_mult * debug_numeric_cast<double>( get_length         ( x )     ) )
-						+ R"(%;"></span>)"
-						+ "\n"
-						+ (
-							trimmed_seg_opt
-							? R"(		<span class="crh-hit-pill-core crh-hit-core-id-)" + ::std::to_string( arg_full_hit_idx ) + R"(" style="background-color: #)"
-								+ hex_string_of_colour( arg_colour )
-								+ "; border-color: #"
-								+ hex_string_of_colour( darken_by_fraction ( arg_colour, 0.65 ) )
-								+ "; left: "
-								+ ::std::to_string( length_mult * debug_numeric_cast<double>( get_start_res_index( *trimmed_seg_opt ) - 1 ) )
-								+ R"(%; width: )"
-								+ ::std::to_string( length_mult * debug_numeric_cast<double>( get_length         ( *trimmed_seg_opt )     ) )
-								+ R"(%;"></span>)"
-								+ "\n"
-							: ""s
-						);;
-
+					return "\t\t"
+						+ join(
+							html_segment{
+								x.get_start_arrow(),
+								( trimmed_seg_opt ? make_optional( trimmed_seg_opt->get_start_arrow() ) : none ),
+								( trimmed_seg_opt ? make_optional( trimmed_seg_opt->get_stop_arrow () ) : none ),
+								x.get_stop_arrow (),
+								( arg_result_boundaries ? ( *arg_result_boundaries )[ x_idx ].first  : none ),
+								( arg_result_boundaries ? ( *arg_result_boundaries )[ x_idx ].second : none ),
+								arg_colour,
+								arg_full_hit_idx,
+								arg_sequence_length
+							}.get_all_span_html_strs(),
+							"\n\t\t"
+						)
+						+ "\n";
 				} ),
 			""
 		)
 		+ R"(		</div>
 	</td>
 	<td class="crh-cell crh-cell-data">)"
-		+ ( arg_in_result ? "+ "s : ""s )
+		+ ( arg_result_boundaries ? "+ "s : ""s )
 		+ ( format("%.3g") % get_crh_score( arg_full_hit, arg_score_spec ) ).str()
 		+ R"(</td>
 	<td class="crh-cell crh-cell-data">)"
@@ -438,25 +431,44 @@ crh-row-colhead {}
 	height            : 3px;
 }
 
+.crh-hit-pill-core, .crh-hit-pill-ends, .crh-hit-boundary {
+	box-shadow        : 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
 
-.crh-hit-pill-core, .crh-hit-pill-ends {
+.crh-hit-pill-core, .crh-hit-pill-ends, .crh-hit-pill-tail {
 	border-radius     : 5px;
 	border-style      : solid;
 	border-width      : 1px;
-	box-shadow        : 1px 1px 2px rgba(0, 0, 0, 0.2);
 	position          : absolute;
+}
+
+.crh-hit-pill-ends, .crh-hit-pill-tail {
+	height            : 5px;
+	margin-top        : -2px;
+}
+
+.crh-hit-pill-tail {
+	border-color      : #bbb;
+	border-style      : dotted;
+	z-index           : 2;
+}
+
+.crh-hit-boundary {
+	height            : 11px;
+	margin-top        : -4px;
+	position          : absolute;
+	width             : 2px;
+	z-index           : 4;
+}
+
+.crh-hit-pill-ends {
+	z-index           : 6;
 }
 
 .crh-hit-pill-core {
 	height            : 7px;
 	margin-top        : -3px;
-	z-index           : 2;
-}
-
-.crh-hit-pill-ends {
-	height            : 5px;
-	margin-top        : -2px;
-	z-index           : 1;
+	z-index           : 8;
 }
 
 .crh-chopping-region-text { }
@@ -587,12 +599,12 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 	const auto  filtered_grey     = display_colour{ 0.666, 0.666, 0.666 };
 	const auto &the_full_hit_list = arg_calc_hit_list.get_full_hits();
 	const auto  best_result       = resolve_hits( arg_calc_hit_list );
-	const auto  chosen_full_hits  = transform_build<full_hit_vec>(
+	const auto  chosen_full_hits  = full_hit_list{ transform_build<full_hit_vec>(
 		best_result.get_arch(),
 		[&] (const calc_hit &x) {
 			return the_full_hit_list[ x.get_label_idx() ];
 		}
-	);
+	) };
 	const auto sorted_indices = sort_build<size_vec>(
 		irange( 0_z, the_full_hit_list.size() ),
 		[&] (const size_t &x, const size_t &y) {
@@ -652,7 +664,11 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 					arg_segment_spec,
 					arg_score_spec,
 					seq_length,
-					true,
+					make_optional( resolved_boundaries(
+						the_full_hit,
+						chosen_full_hits,
+						arg_segment_spec.get_overlap_trim_spec()
+					) ),
 					false
 				);
 			} ),
@@ -696,7 +712,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 					arg_segment_spec,
 					arg_score_spec,
 					seq_length,
-					false,
+					none,
 					any_of( best_result.get_arch(), [&] (const calc_hit &y) { return y.get_label_idx() == x; } )
 				);
 			} ),

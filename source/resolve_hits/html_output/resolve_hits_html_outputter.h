@@ -57,7 +57,7 @@ namespace cath {
 			                                        const crh_segment_spec &,
 			                                        const crh_score_spec &,
 			                                        const size_t &,
-			                                        const bool &,
+			                                        const seg_boundary_pair_vec_opt &,
 			                                        const bool &);
 
 		public:
