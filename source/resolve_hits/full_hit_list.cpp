@@ -43,7 +43,7 @@ string cath::rslv::to_string(const full_hit_list &arg_full_hit_list ///< The ful
 /// \brief Insert a description of the specified full_hit_list into the specified ostream
 ///
 /// \relates full_hit_list
-ostream & cath::rslv::operator<<(ostream        &arg_ostream, ///< The ostream into which the description should be inserted
+ostream & cath::rslv::operator<<(ostream             &arg_ostream, ///< The ostream into which the description should be inserted
                                  const full_hit_list &arg_full_hit_list ///< The full_hit_list to describe
                                  ) {
 	arg_ostream << to_string( arg_full_hit_list );
