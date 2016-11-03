@@ -1567,6 +1567,7 @@ set(
 
 set(
 	TESTSOURCES_RESOLVE_HITS_TRIM
+		resolve_hits/trim/resolve_boundary_test.cpp
 		resolve_hits/trim/trim_spec_test.cpp
 )
 
