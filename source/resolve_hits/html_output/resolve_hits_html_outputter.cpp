@@ -148,7 +148,17 @@ string resolve_hits_html_outputter::markers_row(const size_t  &arg_sequence_leng
 </tr>)";
 }
 
-// /// \brief Generate an HTML fragment to describe the specified full_hit with the specified trim_spec applied
+/// \brief Merge the original segment boundaries with an optional set of resolved
+///        boundaries, replacing originals with resolveds if they exist
+hit_seg_vec merge_opt_resolved_boundaries(const hit_seg_vec               &arg_segs,             ///< The original boundaries
+                                          const seg_boundary_pair_vec_opt &arg_result_boundaries ///< The optional resolved boundaries, where that has been required
+                                          ) {
+	return arg_result_boundaries
+		? merge_boundaries( arg_segs, *arg_result_boundaries )
+		: arg_segs;
+}
+
+/// \brief Generate an HTML fragment to describe the specified full_hit with the specified trim_spec applied
 string resolve_hits_html_outputter::output_html_fragment(const full_hit                  &arg_full_hit,          ///< The full_hit to desribe
                                                          const size_t                    &arg_full_hit_idx,      ///< The index of the full_hit
                                                          const display_colour            &arg_colour,            ///< The colour in which the full_hit should be rendered
@@ -226,7 +236,7 @@ string resolve_hits_html_outputter::output_html_fragment(const full_hit         
 		<div class="scan-result-regions">
 			)"
 			+ join(
-				arg_full_hit.get_segments()
+				merge_opt_resolved_boundaries( arg_full_hit.get_segments(), arg_result_boundaries )
 					| transformed( [] (const hit_seg &x) {
 						return R"(<span class="crh-chopping-region-text">)"
 							+ ::std::to_string( get_start_res_index( x ) )

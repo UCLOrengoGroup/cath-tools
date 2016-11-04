@@ -307,6 +307,12 @@ const path & global_test_constants::CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME() {
 	return crh_eg_hmmsearch_out_filename;
 }
 
+/// \brief TODOCUMENT
+const path & global_test_constants::CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME() {
+	static const path crh_eg_hmmsearch_big_trim_out_filename  ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out_big_trim"       );
+	return crh_eg_hmmsearch_big_trim_out_filename;
+}
+
 /// \brief Test constant for a cath-resolve-hits test file
 const path & global_test_constants::CRH_EG_RAW_EVALUE_IN_FILENAME() {
 	static const path crh_eg_raw_eva_in_filename     ( CRH_TEST_DATA_DIR() / "eg_raw_evalue.in"                    );

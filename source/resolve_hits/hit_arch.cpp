@@ -31,7 +31,9 @@
 
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace std::literals::string_literals;
 
+using boost::make_optional;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::optional;
@@ -49,25 +51,37 @@ static_assert( std::is_nothrow_move_constructible<hit_arch>::value, "" );
 /// passes the crh_score_spec, trim_spec, hits_boundary_output)
 ///
 /// \relates hit_arch
-string cath::rslv::to_output_string(const hit_arch            &arg_hit_arch,     ///< The hit_arch to describe
-                                    const full_hit_list       &arg_full_hits,    ///< The list of labels corresponding to the hit
-                                    const hit_output_format   &arg_format,       ///< The format in which the hit_arch should be described
-                                    const string              &arg_prefix,       ///< Any prefix that should come before the hit in hit_output_format::JON
-                                    const optional<trim_spec> &arg_trim_spec_opt ///< An optional trim_spec specifying any trimming that should be performed on the output segments
+string cath::rslv::to_output_string(const hit_arch            &arg_hit_arch,       ///< The hit_arch to describe
+                                    const full_hit_list       &arg_full_hits,      ///< The list of labels corresponding to the hit
+                                    const trim_spec           &arg_trim_spec,      ///< The trim_spec specifying any trimming that should be performed on the output segments
+                                    const hit_output_format   &arg_format,         ///< The format in which the hit_arch should be described
+                                    const string              &arg_prefix,         ///< Any prefix that should come before the hit in hit_output_format::JON
+                                    const hit_boundary_output &arg_boundary_output ///< Whether to output the trimmed or original boundaries
                                     ) {
 	const bool is_jon = ( arg_format == hit_output_format::JON );
 	const string prefix    = is_jon ? ""   : "hit_arch[\n\t";
 	const string separator = is_jon ? "\n" : "\n\t";
 	const string suffix    = is_jon ? "\n" : "\n]";
+
+	const auto arch_full_hits = full_hit_list{ transform_build<full_hit_vec>(
+		arg_hit_arch,
+		[&] (const calc_hit &x) { return arg_full_hits[ x.get_label_idx() ]; }
+	) };
+
 	return prefix
 		+ join(
-			arg_hit_arch
-				| transformed( [&] (const calc_hit &x) {
+			arch_full_hits
+				| transformed( [&] (const full_hit &x) {
 					return to_string(
-						arg_full_hits[ x.get_label_idx() ],
+						x,
 						arg_format,
 						arg_prefix,
-						arg_trim_spec_opt
+						make_optional( arg_boundary_output == hit_boundary_output::TRIMMED, arg_trim_spec )
+					)
+					+ (
+						is_jon
+						? " " + get_all_resolved_segments_string( x, arch_full_hits, arg_trim_spec )
+						: ""s
 					);
 				} ),
 			separator

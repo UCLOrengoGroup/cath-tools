@@ -20,6 +20,8 @@
 
 #include "full_hit_list.h"
 
+#include <boost/range/combine.hpp>
+
 #include "common/algorithm/append.h"
 #include "common/algorithm/transform_build.h"
 #include "common/boost_addenda/range/max_proj_element.h"
@@ -30,6 +32,7 @@ using namespace cath::rslv;
 
 using boost::make_optional;
 using boost::none;
+using boost::range::combine;
 using std::ostream;
 using std::string;
 
@@ -65,6 +68,51 @@ seg_boundary_pair_vec cath::rslv::resolved_boundaries(const full_hit      &arg_f
 		[&] (const hit_seg &x) {
 			return get_boundary_pair( x, other_segments, arg_trim_spec );
 		}
+	);
+}
+
+/// \brief Merge original boundaries with resolved boundaries, replacing originals with
+///        resolveds where they exist
+hit_seg_vec cath::rslv::merge_boundaries(const hit_seg_vec           &arg_segs,               ///< The original boundaries
+                                         const seg_boundary_pair_vec &arg_resolved_boundaries ///< The resolved boundaries (where resolving has been required)
+                                         ) {
+	return transform_build<hit_seg_vec>(
+		combine( arg_segs, arg_resolved_boundaries ),
+		[] (const boost::tuple<hit_seg, seg_boundary_pair> &x) {
+			return hit_seg{
+				x.get<1>().first .value_or( x.get<0>().get_start_arrow() ),
+				x.get<1>().second.value_or( x.get<0>().get_stop_arrow () )
+			};
+		}
+	);
+}
+
+/// \brief Resolved all boundaries for the specified hit in the context of
+///        the specified list of hits and trim_spec (ie return either the
+///        resolved boundary or the original where no resolving is required)
+///
+/// \relates full_hit_list
+hit_seg_vec cath::rslv::resolve_all_boundaries(const full_hit      &arg_full_hit,  ///< The hit whose boundaries should be resolved
+                                               const full_hit_list &arg_full_hits, ///< The list of hits providing the context (may include the original hit)
+                                               const trim_spec     &arg_trim_spec  ///< The trim_spec to use
+                                               ) {
+	return merge_boundaries(
+		arg_full_hit.get_segments(),
+		resolved_boundaries( arg_full_hit, arg_full_hits, arg_trim_spec )
+	);
+}
+
+/// \brief Get a string describing the full resolved boundaries for the specified hit in the context of
+///        the specified list of hits and trim_spec
+///
+/// \relates full_hit_list
+string cath::rslv::get_all_resolved_segments_string(const full_hit      &arg_full_hit,  ///< The hit whose boundaries should be resolved
+                                                    const full_hit_list &arg_full_hits, ///< The list of hits providing the context (may include the original hit)
+                                                    const trim_spec     &arg_trim_spec  ///< The trim_spec to use
+                                                    ) {
+	return get_segments_string(
+		resolve_all_boundaries( arg_full_hit, arg_full_hits, arg_trim_spec ),
+		none
 	);
 }
 

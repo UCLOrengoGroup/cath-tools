@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_TRIM_TRIM_SPEC_H
 
 #include <boost/any.hpp>
+#include <boost/optional/optional_fwd.hpp>
 
 #include "common/debug_numeric_cast.h"
 #include "common/type_aliases.h"
@@ -80,6 +81,9 @@ namespace cath {
 
 		std::string to_possibly_trimmed_simple_string(const hit_seg &,
 		                                              const boost::optional<trim_spec> &);
+
+		std::string get_segments_string(const hit_seg_vec &,
+		                                const boost::optional<trim_spec> &);
 
 		void validate(boost::any &,
 		              const str_vec &,

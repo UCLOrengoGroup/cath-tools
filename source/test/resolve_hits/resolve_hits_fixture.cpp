@@ -88,15 +88,15 @@ iexvva cath|current|1p53A03/368-450-i5_11,0.00016 1103.67040138753 2084-2124,221
 )";
 
 /// \brief Example resolve_hits output
-const string resolve_hits_fixture::example_output = R"(iexvva cath|current|3k3qA00/4-140-i5_1,1.5e-15 2507.21 8-108
-iexvva cath|current|1gxeA00/1-130-i5_3,2.2e-26 3957.99 852-962
-iexvva cath|current|1xiwB00/1-74-i5_8,2.3e-07 1397.61 1630-1713
-iexvva cath|current|1xedC00/3-112-i5_9,2.9e-10 1738.85 1756-1844
-iexvva cath|current|1nctA00/-6-91-i5_11,4e-07 1492.21 2083-2173
-qyikaz cath|current|2i24N00/2-114-i5_1,6.7e-18 2744.57 8-108
-qyikaz cath|current|3gbnL02/124-195-i5_3,1.1e-12 1559.06 839-909
-qyikaz cath|current|1gxeA00/1-130-i5_4,2.7e-18 3418.51 930-1053
-qyikaz cath|current|2y23A02/1245-1358-i5_7,1.4e-13 2239.68 1424-1521
-qyikaz cath|current|2eo1A00/1-102-i5_9,4e-14 2293 1697-1794
-qyikaz cath|current|1nctA00/-6-91-i5_11,4e-07 1492.21 2037-2127
+const string resolve_hits_fixture::example_output = R"(iexvva cath|current|3k3qA00/4-140-i5_1,1.5e-15 2507.21 8-108 8-108
+iexvva cath|current|1gxeA00/1-130-i5_3,2.2e-26 3957.99 852-962 852-962
+iexvva cath|current|1xiwB00/1-74-i5_8,2.3e-07 1397.61 1630-1713 1630-1713
+iexvva cath|current|1xedC00/3-112-i5_9,2.9e-10 1738.85 1756-1844 1756-1844
+iexvva cath|current|1nctA00/-6-91-i5_11,4e-07 1492.21 2083-2173 2083-2173
+qyikaz cath|current|2i24N00/2-114-i5_1,6.7e-18 2744.57 8-108 8-108
+qyikaz cath|current|3gbnL02/124-195-i5_3,1.1e-12 1559.06 839-909 839-909
+qyikaz cath|current|1gxeA00/1-130-i5_4,2.7e-18 3418.51 930-1053 930-1053
+qyikaz cath|current|2y23A02/1245-1358-i5_7,1.4e-13 2239.68 1424-1521 1424-1521
+qyikaz cath|current|2eo1A00/1-102-i5_9,4e-14 2293 1697-1794 1697-1794
+qyikaz cath|current|1nctA00/-6-91-i5_11,4e-07 1492.21 2037-2127 2037-2127
 )";

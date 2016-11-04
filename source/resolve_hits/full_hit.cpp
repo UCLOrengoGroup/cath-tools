@@ -27,7 +27,6 @@ using namespace cath::common;
 using namespace cath::rslv;
 using namespace std::literals::string_literals;
 
-using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::format;
 using boost::optional;
@@ -72,13 +71,7 @@ string cath::rslv::get_score_string(const full_hit &arg_full_hit,   ///< The ful
 string cath::rslv::get_segments_string(const full_hit            &arg_full_hit,     ///< The full_hit whose segments should be described
                                        const optional<trim_spec> &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                        ) {
-	return join(
-		arg_full_hit.get_segments()
-			| boost::adaptors::transformed( [&] (const hit_seg &x) {
-				return to_possibly_trimmed_simple_string( x, arg_trim_spec_opt );
-			} ),
-		","
-	);
+	return get_segments_string( arg_full_hit.get_segments(), arg_trim_spec_opt );
 }
 
 /// \brief Generate a string describing the specified full_hit

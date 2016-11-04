@@ -21,7 +21,9 @@
 #include "trim_spec.h"
 
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "common/boost_addenda/string_algorithm/split_build.h"
 #include "common/debug_numeric_cast.h"
@@ -33,7 +35,9 @@
 using namespace cath::common;
 using namespace cath::rslv;
 
+using boost::adaptors::transformed;
 using boost::algorithm::is_any_of;
+using boost::algorithm::join;
 using boost::any;
 using boost::lexical_cast;
 using boost::optional;
@@ -121,6 +125,24 @@ string cath::rslv::to_possibly_trimmed_simple_string(const hit_seg             &
 	return arg_trim_spec_opt
 		? to_simple_string( trim_hit_seg_copy( arg_hit_seg, *arg_trim_spec_opt ) )
 		: to_simple_string(                    arg_hit_seg                       );
+}
+
+/// \brief Generate a string describing the segments of the specified segments
+///
+/// This is the numbers of the start/stop residues, separated by a '-' between the start and stop
+/// and by a ',' between segments.
+///
+/// \relates full_hit
+string cath::rslv::get_segments_string(const hit_seg_vec         &arg_segs,         ///< The segments to be described
+                                       const optional<trim_spec> &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+                                       ) {
+	return join(
+		arg_segs
+			| transformed( [&] (const hit_seg &x) {
+				return to_possibly_trimmed_simple_string( x, arg_trim_spec_opt );
+			} ),
+		","
+	);
 }
 
 /// \brief Provide Boost program_options validation for trim_spec

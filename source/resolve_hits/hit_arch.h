@@ -81,9 +81,10 @@ namespace cath {
 
 		std::string to_output_string(const hit_arch &,
 		                             const full_hit_list &,
+		                             const trim_spec &,
 		                             const hit_output_format & = hit_output_format::CLASS,
 		                             const std::string & = std::string{},
-		                             const boost::optional<trim_spec> & = boost::none);
+		                             const hit_boundary_output & = hit_boundary_output::ORIG);
 
 		hit_arch operator+(hit_arch,
 		                   const calc_hit &);

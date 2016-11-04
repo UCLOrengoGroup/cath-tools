@@ -28,7 +28,6 @@
 using namespace cath::common;
 using namespace cath::rslv::detail;
 
-using boost::make_optional;
 using std::move;
 using std::ostream;
 using std::string;
@@ -57,12 +56,10 @@ void write_results_hits_processor::do_process_hits_for_query(const string       
 	get_ostream() << to_output_string(
 		best_result.get_arch(),
 		the_calc_hit_list.get_full_hits(),
+		get_segment_spec().get_overlap_trim_spec(),
 		hit_output_format::JON,
 		arg_query_id,
-		make_optional(
-			boundary_output == hit_boundary_output::TRIMMED,
-			get_segment_spec().get_overlap_trim_spec()
-		)
+		boundary_output
 	);
 }
 

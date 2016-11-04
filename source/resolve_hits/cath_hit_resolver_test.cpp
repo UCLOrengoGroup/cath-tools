@@ -134,16 +134,17 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file) {
 	BOOST_CHECK_EQUAL( output_ss.str(), "" );
 	istringstream expected_out_ss{ example_output };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( expected_out_ss, "expected_crh_output", TEMP_TEST_FILE_FILENAME );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( expected_out_ss, "expected_crh_output", TEMP_TEST_FILE_FILENAME );
 }
 
 BOOST_AUTO_TEST_CASE(does_not_require_right_intersperses_all_to_cache) {
 	// Given an input that requires caching at the start of match_b whilst processing in match_a and match_c
 	// even though match_b doesn't right intersperse match_c
-	const string hits_str =
+	const string input_hits_str =
 		"query match_c 1 0-9,60-69\n"
 		"query match_a 1 10-19,40-49\n"
 		"query match_b 1 30-39,50-59\n";
-	input_ss.str( hits_str );
+	input_ss.str( input_hits_str );
 
 	// When calling perform_resolve_hits on that data with no trimming
 	execute_perform_resolve_hits( {
@@ -153,7 +154,12 @@ BOOST_AUTO_TEST_CASE(does_not_require_right_intersperses_all_to_cache) {
 	} );
 	
 	// Then expect the output to be the same as the input
-	BOOST_CHECK_EQUAL( output_ss.str(), hits_str );
+	// (but with repeat of the boundaries for the resolved version)
+	const string output_hits_str =
+		"query match_c 1 0-9,60-69 0-9,60-69\n"
+		"query match_a 1 10-19,40-49 10-19,40-49\n"
+		"query match_b 1 30-39,50-59 30-39,50-59\n";
+	BOOST_CHECK_EQUAL( output_ss.str(), output_hits_str );
 }
 
 BOOST_AUTO_TEST_CASE(file_domtbl) {
@@ -162,6 +168,7 @@ BOOST_AUTO_TEST_CASE(file_domtbl) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_DOMTBL_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_DOMTBL_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch) {
@@ -170,6 +177,7 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_big_gap) {
@@ -179,6 +187,7 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_big_gap) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_small_gap) {
@@ -188,6 +197,7 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_small_gap) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_trimmed) {
@@ -198,6 +208,16 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_trimmed) {
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME() );
 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME() );
+}
+
+BOOST_AUTO_TEST_CASE(file_hmmsearch_big_trim) {
+	execute_perform_resolve_hits( {
+		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		"--" + crh_segment_options_block::PO_OVERLAP_TRIM_SPEC, "100/60"
+	} );
+	istringstream istream_of_output{ output_ss.str() };
+	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_raw_evalue) {
@@ -215,6 +235,7 @@ BOOST_AUTO_TEST_CASE(file_raw_score) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_OUT_FILENAME() );
 }
 
 
@@ -226,6 +247,7 @@ BOOST_AUTO_TEST_CASE(handles_dc_correcctly) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
 }
 
 

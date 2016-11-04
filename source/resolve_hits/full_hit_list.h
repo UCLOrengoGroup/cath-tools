@@ -87,6 +87,17 @@ namespace cath {
 		                                          const full_hit_list &,
 		                                          const trim_spec &);
 
+		hit_seg_vec merge_boundaries(const hit_seg_vec &,
+		                             const seg_boundary_pair_vec &);
+
+		hit_seg_vec resolve_all_boundaries(const full_hit &,
+		                                   const full_hit_list &,
+		                                   const trim_spec &);
+
+		std::string get_all_resolved_segments_string(const full_hit &,
+		                                             const full_hit_list &,
+		                                             const trim_spec &);
+
 		/// \brief Ctor from lvalues
 		inline full_hit_list::full_hit_list(const full_hit_vec &arg_full_hit_list ///< The full_hits
 		                                    ) : the_full_hits   ( arg_full_hit_list   ) {
