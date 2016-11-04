@@ -285,26 +285,26 @@ const path & global_test_constants::CRH_EG_HMMSEARCH_IN_FILENAME() {
 
 /// \brief Test constant for a cath-resolve-hits test file
 const path & global_test_constants::CRH_EG_HMMSEARCH_OUT_FILENAME() {
-	static const path crh_eg_hmmsearch_out_filename  ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out"                );
+	static const path crh_eg_hmmsearch_out_filename           ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out"                );
 	return crh_eg_hmmsearch_out_filename;
 }
 
 /// \brief Test constant for a cath-resolve-hits test file
 const path & global_test_constants::CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME() {
-	static const path crh_eg_hmmsearch_out_filename  ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out_big_gap"        );
-	return crh_eg_hmmsearch_out_filename;
+	static const path crh_eg_hmmsearch_big_gap_out_filename   ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out_big_gap"        );
+	return crh_eg_hmmsearch_big_gap_out_filename;
 }
 
 /// \brief Test constant for a cath-resolve-hits test file
 const path & global_test_constants::CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME() {
-	static const path crh_eg_hmmsearch_out_filename  ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out_small_gap"      );
-	return crh_eg_hmmsearch_out_filename;
+	static const path crh_eg_hmmsearch_small_gap_out_filename ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out_small_gap"      );
+	return crh_eg_hmmsearch_small_gap_out_filename;
 }
 
 /// \brief Test constant for a cath-resolve-hits test file
 const path & global_test_constants::CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME() {
-	static const path crh_eg_hmmsearch_out_filename  ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out_output_trimmed" );
-	return crh_eg_hmmsearch_out_filename;
+	static const path crh_eg_hmmsearch_trimmed_out_filename   ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out_output_trimmed" );
+	return crh_eg_hmmsearch_trimmed_out_filename;
 }
 
 /// \brief TODOCUMENT
