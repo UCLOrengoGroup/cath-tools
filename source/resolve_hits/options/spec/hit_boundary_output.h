@@ -27,7 +27,7 @@ namespace cath {
 		/// \brief Whether the output of the hits' boundaries should have them trimmed
 		enum class hit_boundary_output : bool {
 			TRIMMED, ///< Output the trimmed version of the boundaries
-			ORIG     ///< Output the original, untrimmed version of teh boundaries
+			ORIG     ///< Output the original, untrimmed version of the boundaries
 		};
 
 		/// \brief Convert the specified bool output-trimmed-hits to the equivalent hit_boundary_output
