@@ -146,6 +146,6 @@ display_colour_list cath::get_colour_list(const display_spec &arg_display_spec /
                                           ) {
 	const auto cols_str_opt = arg_display_spec.get_display_colours_string();
 	return make_display_colour_list_from_string(
-		cols_str_opt ? *cols_str_opt : display_colour_list::DEFAULT_COLOURS_STRING
+		cols_str_opt.value_or( display_colour_list::DEFAULT_COLOURS_STRING )
 	);
 }

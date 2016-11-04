@@ -114,8 +114,8 @@ string html_segment::get_grey_back_html_string() const {
 /// This is used to show the region of the full segment, before trimming
 string html_segment::get_lightened_back_html_string() const {
 	return get_html_string(
-		resolved_start ? *resolved_start : start,
-		resolved_stop  ? *resolved_stop  : stop,
+		resolved_start.value_or( start ),
+		resolved_stop .value_or( stop  ),
 		{ "crh-hit-pill-ends", "crh-hit-ends-id-" + ::std::to_string( hit_idx ) },
 		darken_by_fraction ( colour, 0.60 ),
 		lighten_by_fraction( colour, 0.75 ),

@@ -141,10 +141,10 @@ string resolve_hits_html_outputter::markers_row(const size_t  &arg_sequence_leng
 	)
 	+ R"(		</div>
 	</td>
-	<td class="crh-cell">)" + ( arg_score_header_lbl ? "Calc Score"s         : ""s ) + R"(</td>
-	<td class="crh-cell">)" + ( arg_score_header_lbl ? *arg_score_header_lbl : ""s ) + R"(</td>
-	<td class="crh-cell">)" + ( arg_score_header_lbl ? "Regions"s            : ""s ) + R"(</td>
-	<td class="crh-cell">)" + ( arg_score_header_lbl ? "Length"s             : ""s ) + R"(</td>
+	<td class="crh-cell">)" + ( arg_score_header_lbl ? "Calc Score"s : ""s )   + R"(</td>
+	<td class="crh-cell">)" + ( arg_score_header_lbl.value_or(         ""s ) ) + R"(</td>
+	<td class="crh-cell">)" + ( arg_score_header_lbl ? "Regions"s    : ""s )   + R"(</td>
+	<td class="crh-cell">)" + ( arg_score_header_lbl ? "Length"s     : ""s )   + R"(</td>
 </tr>)";
 }
 
@@ -627,7 +627,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 	};
 	const auto   best_crh_score = get_best_crh_score( the_full_hit_list, arg_score_spec );
 	const auto   max_stop       = get_max_stop      ( the_full_hit_list );
-	const size_t seq_length     = max_stop ? *max_stop : 0_z;
+	const size_t seq_length     = max_stop.value_or( 0_z );
 	const auto   orig_score_str = the_full_hit_list.empty() ? "Score"s
 	                                                        : upper_first_lower_rest( to_string( front( the_full_hit_list ).get_score_type() ) );
 	return ( arg_output_head_tail ? html_prefix() : string{} ) + R"(

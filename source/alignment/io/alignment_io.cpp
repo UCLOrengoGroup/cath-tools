@@ -171,8 +171,8 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 		const residue_name res_name_b = make_residue_name_with_non_insert_char( res_num_b, insert_b, '0' );
 		const size_opt find_a_result = search_for_residue_in_residue_names( pos_a, arg_res_names_a, amino_acid_a, res_name_a, arg_stderr );
 		const size_opt find_b_result = search_for_residue_in_residue_names( pos_b, arg_res_names_b, amino_acid_b, res_name_b, arg_stderr );
-		pos_a = find_a_result ? *find_a_result : pos_a;
-		pos_b = find_b_result ? *find_b_result : pos_b;
+		pos_a = find_a_result.value_or( pos_a );
+		pos_b = find_b_result.value_or( pos_b );
 
 		if ( find_a_result && find_b_result ) {
 			append_position_both_offset_1( new_alignment, ( *find_a_result ) + 1, ( *find_b_result ) + 1 );

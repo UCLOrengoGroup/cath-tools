@@ -88,7 +88,7 @@ void amino_acid::check_is_proper_amino_acid() const {
 	if ( ! is_proper_amino_acid() ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception(
 			"Cannot use a generic amino_acid \""
-			+ ( raw_string ? *raw_string : string("") )
+			+ ( raw_string.value_or( ""s ) )
 			+ "\" as a proper, ATOM-record amino acid"));
 	}
 }

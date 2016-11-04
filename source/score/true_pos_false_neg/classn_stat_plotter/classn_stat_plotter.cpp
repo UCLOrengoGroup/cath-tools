@@ -187,7 +187,7 @@ set ytics font "Helvetica,18"
 			const auto  data_filename = the_data_file.string() + lexical_cast<string>( x.first );
 			const auto  legend_name   = process_legend_name_copy( the_series.get_name(), arg_plot_spec.get_tidy_up_score_based_legends() );
 
-			const auto  series_props  = ( x.second ? *x.second : string() );
+			const auto  series_props  = ( x.second.value_or( ""s ) );
 			const auto  legend_props  = icontains( series_props, "title" ) ? string() : ( " title '" + legend_name + "'" );
 
 			return gp.file1d( the_series.data, data_filename ) + " with lines " + series_props + legend_props;
