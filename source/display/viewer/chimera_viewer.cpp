@@ -28,8 +28,10 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "alignment/alignment.h"
+#include "common/algorithm/transform_build.h"
 #include "common/batch/batch_functions.h"
 #include "common/cpp14/cbegin_cend.h"
+#include "common/size_t_literal.h"
 #include "display/viewer/pymol/pymol_tools.h"
 #include "display_colour/display_colour.h"
 #include "exception/invalid_argument_exception.h"
@@ -41,7 +43,6 @@
 #include "superposition/superposition_context.h"
 
 #include <algorithm>
-#include <iostream> // ***** TEMPORARY *****
 
 using namespace cath;
 using namespace cath::align;
@@ -57,6 +58,7 @@ using boost::algorithm::join;
 using boost::algorithm::replace_all_copy;
 using boost::edge_weight_t;
 using boost::graph_traits;
+using boost::irange;
 using boost::kruskal_minimum_spanning_tree;
 using boost::lexical_cast;
 using boost::no_property;
@@ -360,41 +362,47 @@ void chimera_viewer::do_define_colour(ostream              &arg_os,         ///<
 }
 
 /// \brief TODOCUMENT
-void chimera_viewer::do_colour_pdb(ostream      &arg_os,          ///< TODOCUMENT
-                                   const string &arg_colour_name, ///< TODOCUMENT
-                                   const string &arg_pdb_name     ///< TODOCUMENT
-                                   ) const {
-	arg_os << "colour "
-	       << arg_colour_name
-	       << ", "
-	       << arg_pdb_name
-	       << "\n";
+string chimera_viewer::do_get_colour_pdb_str(const string &arg_colour_name, ///< TODOCUMENT
+                                             const string &arg_pdb_name     ///< TODOCUMENT
+                                             ) const {
+	return "colour "
+		+ arg_colour_name
+		+ ", "
+		+ arg_pdb_name
+		+ "\n";
 }
 
 /// \brief TODOCUMENT
 ///
 /// This splits the list of residues into batches of RESIDUE_BATCH_SIZE
 /// because PyMOL just ignores a list of residues that's too long
-void chimera_viewer::do_colour_pdb_residues(ostream                &arg_os,           ///< TODOCUMENT
-                                            const string           &arg_colour_name,  ///< TODOCUMENT
-                                            const string           &arg_pdb_name,     ///< TODOCUMENT
-                                            const residue_name_vec &arg_residue_names ///< TODOCUMENT
-                                            ) const {
-	arg_os << "colour " << arg_colour_name << ",";
-
+string chimera_viewer::do_get_colour_pdb_residues_str(const string           &arg_colour_name,  ///< TODOCUMENT
+                                                      const string           &arg_pdb_name,     ///< TODOCUMENT
+                                                      const residue_name_vec &arg_residue_names ///< TODOCUMENT
+                                                      ) const {
 	const size_t num_res_names   = arg_residue_names.size();
 	const size_t num_res_batches = num_batches( num_res_names, RESIDUE_BATCH_SIZE, broken_batch_tol::PERMIT );
-	for (size_t batch_ctr = 0; batch_ctr < num_res_batches; ++batch_ctr) {
-		arg_os << ( batch_ctr > 0 ? " or " : " " );
-		arg_os << "/" << arg_pdb_name << "///";
-		const size_size_pair begin_and_end = batch_begin_and_end( num_res_names, RESIDUE_BATCH_SIZE, batch_ctr, broken_batch_tol::PERMIT );
-		for (size_t res_index = begin_and_end.first; res_index < begin_and_end.second; ++res_index) {
-			arg_os << ( res_index > 0 ? "+" : "" );
-			arg_os << arg_residue_names[ res_index ];
-		}
-		arg_os << "//";
-	}
-	arg_os << "\n";
+	return "colour " + arg_colour_name + ", "
+		+ join(
+			transform_build<str_vec>(
+				irange( 0_z, num_res_batches ),
+				[&] (const size_t &batch_idx) {
+					return "/"
+						+ arg_pdb_name
+						+ "///"
+						+ join(
+							transform_build<str_vec>(
+								batch_subrange( arg_residue_names, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT ),
+								[&] (const residue_name &x) { return to_string( x ); }
+							),
+							"+"
+						)
+						+ "//";
+				}
+			),
+			" or "
+		)
+		+ "\n";
 }
 
 /// \brief TODOCUMENT

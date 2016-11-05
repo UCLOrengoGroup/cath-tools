@@ -49,13 +49,11 @@ namespace cath {
 		virtual void do_define_colour(std::ostream &,
 		                              const display_colour &,
 		                              const std::string &) const = 0;
-		virtual void do_colour_pdb(std::ostream &,
-		                           const std::string &,
-		                           const std::string &) const = 0;
-		virtual void do_colour_pdb_residues(std::ostream &,
-		                                    const std::string &,
-		                                    const std::string &,
-		                                    const residue_name_vec &) const = 0;
+		virtual std::string do_get_colour_pdb_str(const std::string &,
+		                                          const std::string &) const = 0;
+		virtual std::string do_get_colour_pdb_residues_str(const std::string &,
+		                                                   const std::string &,
+		                                                   const residue_name_vec &) const = 0;
 		virtual void do_write_alignment_extras(std::ostream &,
 		                                       const sup::superposition_context &) const = 0;
 		virtual void do_write_end(std::ostream &) const = 0;
@@ -74,13 +72,11 @@ namespace cath {
 		void define_colour(std::ostream &,
 		                   const display_colour &,
 		                   const std::string &) const;
-		void colour_pdb(std::ostream &,
-		                const std::string &,
-		                const std::string &) const;
-		void colour_pdb_residues(std::ostream &,
-		                         const std::string &,
-		                         const std::string &,
-		                         const residue_name_vec &) const;
+		std::string get_colour_pdb_str(const std::string &,
+		                               const std::string &) const;
+		std::string get_colour_pdb_residues_str(const std::string &,
+		                                        const std::string &,
+		                                        const residue_name_vec &) const;
 		void write_alignment_extras(std::ostream &,
 		                            const sup::superposition_context &) const;
 		void write_end(std::ostream &) const;

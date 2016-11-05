@@ -20,23 +20,18 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-namespace cath {
-	namespace test {
+#include "display/viewer/pymol_viewer.h"
+#include "structure/residue_name.h"
 
-		/// \brief The pymol_viewer_test_suite_fixture to assist in testing pymol_viewer_test
-		struct pymol_viewer_test_suite_fixture {
-		protected:
-			~pymol_viewer_test_suite_fixture() noexcept = default;
-		};
+using namespace cath;
 
-	}
-}
+BOOST_AUTO_TEST_SUITE(pymol_viewer_test_suite)
 
-BOOST_FIXTURE_TEST_SUITE(pymol_viewer_test_suite, cath::test::pymol_viewer_test_suite_fixture)
-
-/// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK( true );
+	BOOST_CHECK_EQUAL(
+		pymol_viewer{}.get_colour_pdb_residues_str( "red", "1cukA", { residue_name{ 1 }, residue_name{ 2 } } ),
+		"colour red, /1cukA///1+2//\n"
+	);
 }
 BOOST_AUTO_TEST_SUITE_END()
 

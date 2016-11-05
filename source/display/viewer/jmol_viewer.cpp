@@ -53,17 +53,15 @@ void jmol_viewer::do_define_colour(ostream &,
 }
 
 /// \brief TODOCUMENT
-void jmol_viewer::do_colour_pdb(ostream &,
-                                const string &,
-                                const string &) const {
+string jmol_viewer::do_get_colour_pdb_str(const string &,
+                                          const string &) const {
 	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_viewer::do_colour_pdb"));
 }
 
 /// \brief TODOCUMENT
-void jmol_viewer::do_colour_pdb_residues(ostream &,
-                                        const string &,
-                                        const string &,
-                                        const residue_name_vec &) const {
+string jmol_viewer::do_get_colour_pdb_residues_str(const string &,
+                                                   const string &,
+                                                   const residue_name_vec &) const {
 	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_viewer::do_colour_pdb_residues"));
 }
 

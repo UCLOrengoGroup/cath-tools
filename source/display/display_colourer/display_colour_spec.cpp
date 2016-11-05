@@ -238,8 +238,7 @@ void cath::colour_viewer_with_spec(const display_colour_spec &arg_colour_spec,  
 		const display_colour &colour = colours[ colour_ctr ];
 		const size_vec pdb_indices = get_pdbs_of_colour( arg_colour_spec, colour );
 		for (const size_t &pdb_index : pdb_indices) {
-			arg_viewer.colour_pdb(
-				arg_os,
+			arg_os << arg_viewer.get_colour_pdb_str(
 				colour_names [ colour_ctr ],
 				cleaned_names[ pdb_index  ]
 			);
@@ -258,8 +257,7 @@ void cath::colour_viewer_with_spec(const display_colour_spec &arg_colour_spec,  
 			for (const size_t &residue_index : residue_indices) {
 				residue_names.push_back( the_pdb.get_residue_cref_of_backbone_complete_index( residue_index ).get_residue_name() ) ;
 			}
-			arg_viewer.colour_pdb_residues(
-				arg_os,
+			arg_os << arg_viewer.get_colour_pdb_residues_str(
 				colour_names [ colour_ctr ],
 				cleaned_names[ pdb_index  ],
 				residue_names

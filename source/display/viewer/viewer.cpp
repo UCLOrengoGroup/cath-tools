@@ -90,20 +90,18 @@ void viewer::define_colour(ostream             &arg_ostream,    ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-void viewer::colour_pdb(ostream      &arg_ostream,     ///< TODOCUMENT
-                        const string &arg_colour_name, ///< TODOCUMENT
-                        const string &arg_pdb_name     ///< TODOCUMENT
-                        ) const {
-	do_colour_pdb(arg_ostream, arg_colour_name, arg_pdb_name);
+string viewer::get_colour_pdb_str(const string &arg_colour_name, ///< TODOCUMENT
+                                  const string &arg_pdb_name     ///< TODOCUMENT
+                                  ) const {
+	return do_get_colour_pdb_str( arg_colour_name, arg_pdb_name );
 }
 
 /// \brief TODOCUMENT
-void viewer::colour_pdb_residues(ostream                &arg_ostream,     ///< TODOCUMENT
-                                 const string           &arg_colour_name, ///< TODOCUMENT
-                                 const string           &arg_pdb_name,    ///< TODOCUMENT
-                                 const residue_name_vec &arg_residues     ///< TODOCUMENT
-                                 ) const {
-	do_colour_pdb_residues( arg_ostream, arg_colour_name, arg_pdb_name, arg_residues );
+string viewer::get_colour_pdb_residues_str(const string           &arg_colour_name, ///< TODOCUMENT
+                                           const string           &arg_pdb_name,    ///< TODOCUMENT
+                                           const residue_name_vec &arg_residues     ///< TODOCUMENT
+                                           ) const {
+	return do_get_colour_pdb_residues_str( arg_colour_name, arg_pdb_name, arg_residues );
 }
 
 /// \brief TODOCUMENT
