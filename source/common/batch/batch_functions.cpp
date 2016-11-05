@@ -21,6 +21,7 @@
 #include "batch_functions.h"
 
 #include <boost/lexical_cast.hpp>
+#include <boost/range/irange.hpp>
 
 #include "exception/invalid_argument_exception.h"
 
@@ -30,6 +31,8 @@ using namespace cath;
 using namespace cath::common;
 using namespace std;
 
+using boost::integer_range;
+using boost::irange;
 using boost::lexical_cast;
 
 /// \brief TODOCUMENT
@@ -143,3 +146,17 @@ size_size_pair cath::common::batch_start_and_stop(const size_t           &arg_nu
 	return make_pair( begin_and_end.first, begin_and_end.second - 1 );
 }
 
+/// \brief Return an range of the integers in the batch of the specified settings
+integer_range<size_t> cath::common::batch_irange(const size_t           &arg_num_items,       ///< The total number of items
+                                                 const size_t           &arg_batch_size,      ///< The size of the batch
+                                                 const size_t           &arg_batch_index,     ///< The index of the batch whose indices should be returned
+                                                 const broken_batch_tol &arg_broken_batch_tol ///< Whether to tolerate a broken batch at the end
+                                                 ) {
+	const auto begin_and_end = batch_begin_and_end(
+		arg_num_items,
+		arg_batch_size,
+		arg_batch_index,
+		arg_broken_batch_tol
+	);
+	return irange( begin_and_end.first, begin_and_end.second );
+}
