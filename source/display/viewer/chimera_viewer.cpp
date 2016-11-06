@@ -28,6 +28,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "alignment/alignment.h"
+#include "common/algorithm/copy_build.h"
 #include "common/algorithm/transform_build.h"
 #include "common/batch/batch_functions.h"
 #include "common/cpp14/cbegin_cend.h"
@@ -387,17 +388,12 @@ string chimera_viewer::do_get_colour_pdb_residues_str(const string           &ar
 			transform_build<str_vec>(
 				irange( 0_z, num_res_batches ),
 				[&] (const size_t &batch_idx) {
-					return "/"
-						+ arg_pdb_name
-						+ "///"
-						+ join(
-							transform_build<str_vec>(
-								batch_subrange( arg_residue_names, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT ),
-								[&] (const residue_name &x) { return to_string( x ); }
-							),
-							"+"
+					return pymol_tools::pymol_res_seln_str(
+						arg_pdb_name,
+						copy_build<residue_name_vec>(
+							batch_subrange( arg_residue_names, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT )
 						)
-						+ "//";
+					);
 				}
 			),
 			" or "

@@ -21,21 +21,36 @@
 #ifndef _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_PYMOL_PYMOL_TOOLS_H
 #define _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_PYMOL_PYMOL_TOOLS_H
 
+#include <boost/optional/optional.hpp>
+
+#include "common/type_aliases.h"
+#include "structure/structure_type_aliases.h"
+
 #include <cstddef>
+#include <string>
+
+namespace cath { class residue_name; }
 
 namespace cath {
 
 	/// \brief TODOCUMENT
-	class pymol_tools final {
-	private:
+	struct pymol_tools final {
 		pymol_tools() = delete;
-		
-	public:
+		~pymol_tools() = delete;
+
 		static double pymol_size(const size_t &,
 		                         const double &,
 		                         const size_t &,
 		                         const double &,
 		                         const size_t &);
+
+		static std::string parse_residue_name_for_pymol(const residue_name &);
+
+		static str_vec parse_residue_names_for_pymol(const residue_name_vec &);
+
+		static std::string pymol_res_seln_str(const std::string &,
+		                                      const residue_name_vec &,
+		                                      const str_opt & = boost::none);
 
 	};
 

@@ -28,6 +28,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "alignment/alignment.h"
+#include "common/algorithm/copy_build.h"
 #include "common/algorithm/transform_build.h"
 #include "common/batch/batch_functions.h"
 #include "common/cpp14/cbegin_cend.h"
@@ -131,36 +132,31 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &arg_
 					const residue_name &residue_name_a = residue_names_a[ *position_a ];
 					const residue_name &residue_name_b = residue_names_b[ *position_b ];
 
-					arg_os << "distance ";
-					arg_os << name_a;
-					arg_os << "_";
-					arg_os << name_b;
-					arg_os << "_alignment, /";
-					arg_os << name_a;
-					arg_os << "///";
-					arg_os << pymol_viewer::parse_residue_name_for_pymol( residue_name_a );
-					arg_os << "/CA/, /";
-					arg_os << name_b;
-					arg_os << "///";
-//					arg_os << residue_name_b;
-					arg_os << pymol_viewer::parse_residue_name_for_pymol( residue_name_b );
-					arg_os << "/CA/\n";
+					arg_os << "distance "
+						+ name_a
+						+ "_"
+						+ name_b
+						+ "_alignment, "
+						+ pymol_tools::pymol_res_seln_str( name_a, { residue_name_a }, "CA"s )
+						+ ", "
+						+ pymol_tools::pymol_res_seln_str( name_b, { residue_name_b }, "CA"s )
+						+ "\n";
 				}
 			}
 
 			if (added_pair_distances) {
-				arg_os << "disable ";
-				arg_os << name_a;
-				arg_os << "_";
-				arg_os << name_b;
-				arg_os << "_alignment\n";
+				arg_os << "disable "
+					+ name_a
+					+ "_"
+					+ name_b
+					+ "_alignment\n";
 			}
 		}
 	}
-	arg_os << "hide labels\n";
-	arg_os << "set dash_gap,    0.0\n";
-	arg_os << "set dash_color,  black\n";
-	arg_os << "set dash_radius, 0.05\n";
+	arg_os << "hide labels\n"
+		"set dash_gap,    0.0\n"
+		"set dash_color,  black\n"
+		"set dash_radius, 0.05\n";
 
 }
 
@@ -245,16 +241,11 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 			const residue_name  &res_name_a  = residue_names[ entry_a ][ res_index_a ];
 			const residue_name  &res_name_b  = residue_names[ entry_b ][ res_index_b ];
 
-			arg_os << "distance ";
-			arg_os << "alignment, /";
-			arg_os << name_a;
-			arg_os << "///";
-			arg_os << pymol_viewer::parse_residue_name_for_pymol( res_name_a );
-			arg_os << "/CA/, /";
-			arg_os << name_b;
-			arg_os << "///";
-			arg_os << pymol_viewer::parse_residue_name_for_pymol( res_name_b );
-			arg_os << "/CA/\n";
+			arg_os << "distance alignment, "
+				+ pymol_tools::pymol_res_seln_str( name_a, { res_name_a }, "CA"s )
+				+ ", "
+				+ pymol_tools::pymol_res_seln_str( name_b, { res_name_b }, "CA"s )
+				+ "\n";
 		}
 	}
 	if (added_distances) {
@@ -275,7 +266,7 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 					const bool              is_core    = ( the_score > 0.25 );
 					const aln_posn_type     the_posn   = get_position_of_entry_of_index( the_alignment, entry, index );
 					const residue_name     &res_name   = residue_names[ entry ][ the_posn ];
-					core_res_names_of_entry_name[ is_core ][ entry_name ].push_back( pymol_viewer::parse_residue_name_for_pymol( res_name ) );
+					core_res_names_of_entry_name[ is_core ][ entry_name ].push_back( pymol_tools::parse_residue_name_for_pymol( res_name ) );
 				}
 			}
 		}
@@ -361,10 +352,10 @@ void pymol_viewer::do_define_colour(ostream              &arg_os,         ///< T
                                     const string         &arg_colour_name ///< TODOCUMENT
                                     ) const {
 	arg_os << "set_color "
-	       << arg_colour_name
-	       << ", ["
-	       << comma_separated_string_of_display_colour(arg_colour)
-	       << "]\n";
+		+ arg_colour_name
+		+ ", ["
+		+ comma_separated_string_of_display_colour( arg_colour )
+		+ "]\n";
 }
 
 /// \brief TODOCUMENT
@@ -393,17 +384,12 @@ string pymol_viewer::do_get_colour_pdb_residues_str(const string           &arg_
 			transform_build<str_vec>(
 				irange( 0_z, num_res_batches ),
 				[&] (const size_t &batch_idx) {
-					return "/"
-						+ arg_pdb_name
-						+ "///"
-						+ join(
-							transform_build<str_vec>(
-								batch_subrange( arg_residue_names, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT ),
-								[&] (const residue_name &x) { return to_string( x ); }
-							),
-							"+"
+					return pymol_tools::pymol_res_seln_str(
+						arg_pdb_name,
+						copy_build<residue_name_vec>(
+							batch_subrange( arg_residue_names, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT )
 						)
-						+ "//";
+					);
 				}
 			),
 			" or "
@@ -434,22 +420,5 @@ void pymol_viewer::do_write_end(ostream &arg_os ///< TODOCUMENT
 	arg_os << "set ribbon_width, 1.5\n";
 	arg_os << "orient\n";
 	arg_os << "feedback enable,all,output\n";
-}
-
-/// \brief TODOCUMENT
-string pymol_viewer::parse_residue_name_for_pymol(const residue_name &arg_residue_name ///< TODOCUMENT
-                                                  ) {
-	return replace_all_copy( lexical_cast<string>( arg_residue_name ), "-", "\\-" );
-}
-
-/// \brief TODOCUMENT
-str_vec pymol_viewer::parse_residue_names_for_pymol(const residue_name_vec &arg_residue_names ///< TODOCUMENT
-                                                    ) {
-	str_vec new_residue_names;
-	new_residue_names.reserve( arg_residue_names.size() );
-	for (const residue_name &the_residue_name : arg_residue_names) {
-		new_residue_names.push_back( parse_residue_name_for_pymol( the_residue_name ) );
-	}
-	return new_residue_names;
 }
 

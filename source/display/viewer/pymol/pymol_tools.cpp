@@ -20,15 +20,24 @@
 
 #include "pymol_tools.h"
 
+#include <boost/algorithm/string/join.hpp>
+#include <boost/algorithm/string/replace.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "exception/invalid_argument_exception.h"
+#include "structure/residue_name.h"
 
 using namespace cath;
 using namespace cath::common;
+using namespace std::literals::string_literals;
 
+using boost::adaptors::transformed;
+using boost::algorithm::join;
+using boost::algorithm::replace_all_copy;
 using boost::numeric_cast;
+using std::string;
 
 /// \brief Calculates a sensible size for some PyMOL size by calculating fitting some a formula to two other values and using that.
 ///
@@ -66,4 +75,42 @@ double pymol_tools::pymol_size(const size_t &arg_x_1,
 
 	// Return the result
 	return y;
+}
+
+/// \brief Escape a residue name string for use in PyMOL
+string pymol_tools::parse_residue_name_for_pymol(const residue_name &arg_residue_name ///< The residue name string to escape
+                                                 ) {
+	return replace_all_copy( to_string( arg_residue_name ), "-", "\\-" );
+}
+
+/// \brief Escape residue name strings for use in PyMOL
+str_vec pymol_tools::parse_residue_names_for_pymol(const residue_name_vec &arg_residue_names ///< The residue name strings to escape
+                                                   ) {
+	str_vec new_residue_names;
+	new_residue_names.reserve( arg_residue_names.size() );
+	for (const residue_name &the_residue_name : arg_residue_names) {
+		new_residue_names.push_back( parse_residue_name_for_pymol( the_residue_name ) );
+	}
+	return new_residue_names;
+}
+
+
+/// \brief Generate the PyMOL string to select the specified residue(s)/atom(s) in the specified object
+string pymol_tools::pymol_res_seln_str(const string           &arg_name,      ///< The object in which to select residues/atoms
+                                       const residue_name_vec &arg_res_names, ///< The names of the residue(s) to select
+                                       const str_opt          &arg_atom       ///< (optional) The name of the atom type to select (eg "CA")
+                                       ) {
+	return "/"
+		+ arg_name
+		+ "///"
+		+ join(
+			arg_res_names
+				| transformed( [] (const residue_name &x) {
+					return parse_residue_name_for_pymol( x );
+				} ),
+			"+"
+		)
+		+ "/"
+		+ arg_atom.value_or( ""s )
+		+ "/";
 }
