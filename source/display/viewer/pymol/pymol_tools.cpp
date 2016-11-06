@@ -111,6 +111,5 @@ string pymol_tools::pymol_res_seln_str(const string           &arg_name,      //
 			"+"
 		)
 		+ "/"
-		+ arg_atom.value_or( ""s )
-		+ "/";
+		+ arg_atom.value_or( ""s );
 }

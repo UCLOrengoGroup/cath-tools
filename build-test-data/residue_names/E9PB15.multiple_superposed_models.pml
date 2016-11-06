@@ -2808,490 +2808,490 @@ set_color cath_tools_defined_colour_93, [1,0.890625,0]
 set_color cath_tools_defined_colour_94, [1,0.921875,0]
 set_color cath_tools_defined_colour_95, [1,0.96875,0]
 set_color cath_tools_defined_colour_96, [1,1,0]
-colour cath_tools_defined_colour_00, /PDB_1_from_stdin_with_1042_atoms///39+40+41+42+43+44+45+46//
-colour cath_tools_defined_colour_00, /PDB_2_from_stdin_with_836_atoms///46//
-colour cath_tools_defined_colour_01, /PDB_1_from_stdin_with_1042_atoms///47//
-colour cath_tools_defined_colour_01, /PDB_2_from_stdin_with_836_atoms///47//
-colour cath_tools_defined_colour_01, /PDB_3_from_stdin_with_819_atoms///47//
-colour cath_tools_defined_colour_02, /PDB_1_from_stdin_with_1042_atoms///48//
-colour cath_tools_defined_colour_02, /PDB_2_from_stdin_with_836_atoms///48//
-colour cath_tools_defined_colour_02, /PDB_3_from_stdin_with_819_atoms///48//
-colour cath_tools_defined_colour_03, /PDB_1_from_stdin_with_1042_atoms///49//
-colour cath_tools_defined_colour_03, /PDB_2_from_stdin_with_836_atoms///49//
-colour cath_tools_defined_colour_03, /PDB_3_from_stdin_with_819_atoms///49//
-colour cath_tools_defined_colour_04, /PDB_1_from_stdin_with_1042_atoms///50//
-colour cath_tools_defined_colour_04, /PDB_2_from_stdin_with_836_atoms///50//
-colour cath_tools_defined_colour_04, /PDB_3_from_stdin_with_819_atoms///50//
-colour cath_tools_defined_colour_05, /PDB_1_from_stdin_with_1042_atoms///51//
-colour cath_tools_defined_colour_05, /PDB_2_from_stdin_with_836_atoms///51//
-colour cath_tools_defined_colour_05, /PDB_3_from_stdin_with_819_atoms///51//
-colour cath_tools_defined_colour_06, /PDB_1_from_stdin_with_1042_atoms///52//
-colour cath_tools_defined_colour_06, /PDB_2_from_stdin_with_836_atoms///52//
-colour cath_tools_defined_colour_06, /PDB_3_from_stdin_with_819_atoms///52//
-colour cath_tools_defined_colour_07, /PDB_1_from_stdin_with_1042_atoms///53//
-colour cath_tools_defined_colour_07, /PDB_2_from_stdin_with_836_atoms///53//
-colour cath_tools_defined_colour_07, /PDB_3_from_stdin_with_819_atoms///53//
-colour cath_tools_defined_colour_08, /PDB_1_from_stdin_with_1042_atoms///54//
-colour cath_tools_defined_colour_08, /PDB_2_from_stdin_with_836_atoms///54//
-colour cath_tools_defined_colour_08, /PDB_3_from_stdin_with_819_atoms///54//
-colour cath_tools_defined_colour_09, /PDB_1_from_stdin_with_1042_atoms///55//
-colour cath_tools_defined_colour_09, /PDB_2_from_stdin_with_836_atoms///55//
-colour cath_tools_defined_colour_09, /PDB_3_from_stdin_with_819_atoms///55//
-colour cath_tools_defined_colour_10, /PDB_1_from_stdin_with_1042_atoms///56//
-colour cath_tools_defined_colour_10, /PDB_2_from_stdin_with_836_atoms///56//
-colour cath_tools_defined_colour_10, /PDB_3_from_stdin_with_819_atoms///56//
-colour cath_tools_defined_colour_11, /PDB_1_from_stdin_with_1042_atoms///57//
-colour cath_tools_defined_colour_11, /PDB_2_from_stdin_with_836_atoms///57//
-colour cath_tools_defined_colour_11, /PDB_3_from_stdin_with_819_atoms///57//
-colour cath_tools_defined_colour_12, /PDB_1_from_stdin_with_1042_atoms///58//
-colour cath_tools_defined_colour_12, /PDB_2_from_stdin_with_836_atoms///58//
-colour cath_tools_defined_colour_12, /PDB_3_from_stdin_with_819_atoms///58//
-colour cath_tools_defined_colour_13, /PDB_1_from_stdin_with_1042_atoms///59//
-colour cath_tools_defined_colour_13, /PDB_2_from_stdin_with_836_atoms///59//
-colour cath_tools_defined_colour_13, /PDB_3_from_stdin_with_819_atoms///59//
-colour cath_tools_defined_colour_14, /PDB_1_from_stdin_with_1042_atoms///60//
-colour cath_tools_defined_colour_14, /PDB_2_from_stdin_with_836_atoms///60//
-colour cath_tools_defined_colour_14, /PDB_3_from_stdin_with_819_atoms///60//
-colour cath_tools_defined_colour_15, /PDB_1_from_stdin_with_1042_atoms///61//
-colour cath_tools_defined_colour_15, /PDB_2_from_stdin_with_836_atoms///61//
-colour cath_tools_defined_colour_15, /PDB_3_from_stdin_with_819_atoms///61//
-colour cath_tools_defined_colour_16, /PDB_1_from_stdin_with_1042_atoms///62//
-colour cath_tools_defined_colour_16, /PDB_2_from_stdin_with_836_atoms///62//
-colour cath_tools_defined_colour_16, /PDB_3_from_stdin_with_819_atoms///62//
-colour cath_tools_defined_colour_17, /PDB_1_from_stdin_with_1042_atoms///63//
-colour cath_tools_defined_colour_17, /PDB_2_from_stdin_with_836_atoms///63//
-colour cath_tools_defined_colour_17, /PDB_3_from_stdin_with_819_atoms///63//
-colour cath_tools_defined_colour_18, /PDB_1_from_stdin_with_1042_atoms///83//
-colour cath_tools_defined_colour_18, /PDB_2_from_stdin_with_836_atoms///83//
-colour cath_tools_defined_colour_18, /PDB_3_from_stdin_with_819_atoms///83//
-colour cath_tools_defined_colour_19, /PDB_1_from_stdin_with_1042_atoms///82//
-colour cath_tools_defined_colour_19, /PDB_2_from_stdin_with_836_atoms///82//
-colour cath_tools_defined_colour_19, /PDB_3_from_stdin_with_819_atoms///82//
-colour cath_tools_defined_colour_20, /PDB_1_from_stdin_with_1042_atoms///81//
-colour cath_tools_defined_colour_20, /PDB_2_from_stdin_with_836_atoms///81//
-colour cath_tools_defined_colour_20, /PDB_3_from_stdin_with_819_atoms///81//
-colour cath_tools_defined_colour_21, /PDB_1_from_stdin_with_1042_atoms///80//
-colour cath_tools_defined_colour_21, /PDB_2_from_stdin_with_836_atoms///80//
-colour cath_tools_defined_colour_21, /PDB_3_from_stdin_with_819_atoms///80//
-colour cath_tools_defined_colour_22, /PDB_1_from_stdin_with_1042_atoms///79//
-colour cath_tools_defined_colour_22, /PDB_2_from_stdin_with_836_atoms///79//
-colour cath_tools_defined_colour_22, /PDB_3_from_stdin_with_819_atoms///79//
-colour cath_tools_defined_colour_23, /PDB_1_from_stdin_with_1042_atoms///78//
-colour cath_tools_defined_colour_23, /PDB_2_from_stdin_with_836_atoms///78//
-colour cath_tools_defined_colour_23, /PDB_3_from_stdin_with_819_atoms///78//
-colour cath_tools_defined_colour_24, /PDB_1_from_stdin_with_1042_atoms///77//
-colour cath_tools_defined_colour_24, /PDB_2_from_stdin_with_836_atoms///77//
-colour cath_tools_defined_colour_24, /PDB_3_from_stdin_with_819_atoms///77//
-colour cath_tools_defined_colour_25, /PDB_1_from_stdin_with_1042_atoms///76//
-colour cath_tools_defined_colour_25, /PDB_2_from_stdin_with_836_atoms///76//
-colour cath_tools_defined_colour_25, /PDB_3_from_stdin_with_819_atoms///76//
-colour cath_tools_defined_colour_26, /PDB_1_from_stdin_with_1042_atoms///75//
-colour cath_tools_defined_colour_26, /PDB_2_from_stdin_with_836_atoms///75//
-colour cath_tools_defined_colour_26, /PDB_3_from_stdin_with_819_atoms///75//
-colour cath_tools_defined_colour_27, /PDB_1_from_stdin_with_1042_atoms///74//
-colour cath_tools_defined_colour_27, /PDB_2_from_stdin_with_836_atoms///74//
-colour cath_tools_defined_colour_27, /PDB_3_from_stdin_with_819_atoms///74//
-colour cath_tools_defined_colour_28, /PDB_1_from_stdin_with_1042_atoms///73//
-colour cath_tools_defined_colour_28, /PDB_2_from_stdin_with_836_atoms///73//
-colour cath_tools_defined_colour_28, /PDB_3_from_stdin_with_819_atoms///73//
-colour cath_tools_defined_colour_29, /PDB_1_from_stdin_with_1042_atoms///72//
-colour cath_tools_defined_colour_29, /PDB_2_from_stdin_with_836_atoms///72//
-colour cath_tools_defined_colour_29, /PDB_3_from_stdin_with_819_atoms///72//
-colour cath_tools_defined_colour_30, /PDB_1_from_stdin_with_1042_atoms///71//
-colour cath_tools_defined_colour_30, /PDB_2_from_stdin_with_836_atoms///71//
-colour cath_tools_defined_colour_30, /PDB_3_from_stdin_with_819_atoms///71//
-colour cath_tools_defined_colour_31, /PDB_1_from_stdin_with_1042_atoms///70//
-colour cath_tools_defined_colour_31, /PDB_2_from_stdin_with_836_atoms///70//
-colour cath_tools_defined_colour_31, /PDB_3_from_stdin_with_819_atoms///70//
-colour cath_tools_defined_colour_32, /PDB_1_from_stdin_with_1042_atoms///69//
-colour cath_tools_defined_colour_32, /PDB_2_from_stdin_with_836_atoms///69//
-colour cath_tools_defined_colour_32, /PDB_3_from_stdin_with_819_atoms///69//
-colour cath_tools_defined_colour_33, /PDB_1_from_stdin_with_1042_atoms///68//
-colour cath_tools_defined_colour_33, /PDB_2_from_stdin_with_836_atoms///68//
-colour cath_tools_defined_colour_33, /PDB_3_from_stdin_with_819_atoms///68//
-colour cath_tools_defined_colour_34, /PDB_1_from_stdin_with_1042_atoms///67//
-colour cath_tools_defined_colour_34, /PDB_2_from_stdin_with_836_atoms///67//
-colour cath_tools_defined_colour_34, /PDB_3_from_stdin_with_819_atoms///67//
-colour cath_tools_defined_colour_35, /PDB_1_from_stdin_with_1042_atoms///66//
-colour cath_tools_defined_colour_35, /PDB_2_from_stdin_with_836_atoms///66//
-colour cath_tools_defined_colour_35, /PDB_3_from_stdin_with_819_atoms///66//
-colour cath_tools_defined_colour_36, /PDB_1_from_stdin_with_1042_atoms///65//
-colour cath_tools_defined_colour_36, /PDB_2_from_stdin_with_836_atoms///65//
-colour cath_tools_defined_colour_36, /PDB_3_from_stdin_with_819_atoms///65//
-colour cath_tools_defined_colour_37, /PDB_1_from_stdin_with_1042_atoms///64//
-colour cath_tools_defined_colour_37, /PDB_2_from_stdin_with_836_atoms///64//
-colour cath_tools_defined_colour_37, /PDB_3_from_stdin_with_819_atoms///64//
-colour cath_tools_defined_colour_38, /PDB_1_from_stdin_with_1042_atoms///84//
-colour cath_tools_defined_colour_38, /PDB_2_from_stdin_with_836_atoms///84//
-colour cath_tools_defined_colour_38, /PDB_3_from_stdin_with_819_atoms///84//
-colour cath_tools_defined_colour_39, /PDB_1_from_stdin_with_1042_atoms///85//
-colour cath_tools_defined_colour_39, /PDB_2_from_stdin_with_836_atoms///85//
-colour cath_tools_defined_colour_39, /PDB_3_from_stdin_with_819_atoms///85//
-colour cath_tools_defined_colour_40, /PDB_1_from_stdin_with_1042_atoms///86//
-colour cath_tools_defined_colour_40, /PDB_2_from_stdin_with_836_atoms///86//
-colour cath_tools_defined_colour_40, /PDB_3_from_stdin_with_819_atoms///86//
-colour cath_tools_defined_colour_41, /PDB_1_from_stdin_with_1042_atoms///87//
-colour cath_tools_defined_colour_41, /PDB_2_from_stdin_with_836_atoms///87//
-colour cath_tools_defined_colour_41, /PDB_3_from_stdin_with_819_atoms///87//
-colour cath_tools_defined_colour_42, /PDB_1_from_stdin_with_1042_atoms///88//
-colour cath_tools_defined_colour_42, /PDB_2_from_stdin_with_836_atoms///88//
-colour cath_tools_defined_colour_42, /PDB_3_from_stdin_with_819_atoms///88//
-colour cath_tools_defined_colour_43, /PDB_1_from_stdin_with_1042_atoms///89//
-colour cath_tools_defined_colour_43, /PDB_2_from_stdin_with_836_atoms///89//
-colour cath_tools_defined_colour_43, /PDB_3_from_stdin_with_819_atoms///89//
-colour cath_tools_defined_colour_44, /PDB_1_from_stdin_with_1042_atoms///90//
-colour cath_tools_defined_colour_44, /PDB_2_from_stdin_with_836_atoms///90//
-colour cath_tools_defined_colour_44, /PDB_3_from_stdin_with_819_atoms///90//
-colour cath_tools_defined_colour_45, /PDB_1_from_stdin_with_1042_atoms///91//
-colour cath_tools_defined_colour_45, /PDB_2_from_stdin_with_836_atoms///91//
-colour cath_tools_defined_colour_45, /PDB_3_from_stdin_with_819_atoms///91//
-colour cath_tools_defined_colour_46, /PDB_1_from_stdin_with_1042_atoms///92//
-colour cath_tools_defined_colour_46, /PDB_2_from_stdin_with_836_atoms///92//
-colour cath_tools_defined_colour_46, /PDB_3_from_stdin_with_819_atoms///92//
-colour cath_tools_defined_colour_47, /PDB_1_from_stdin_with_1042_atoms///93//
-colour cath_tools_defined_colour_47, /PDB_2_from_stdin_with_836_atoms///93//
-colour cath_tools_defined_colour_47, /PDB_3_from_stdin_with_819_atoms///93//
-colour cath_tools_defined_colour_48, /PDB_1_from_stdin_with_1042_atoms///94//
-colour cath_tools_defined_colour_48, /PDB_2_from_stdin_with_836_atoms///94//
-colour cath_tools_defined_colour_48, /PDB_3_from_stdin_with_819_atoms///94//
-colour cath_tools_defined_colour_49, /PDB_1_from_stdin_with_1042_atoms///95//
-colour cath_tools_defined_colour_49, /PDB_2_from_stdin_with_836_atoms///95//
-colour cath_tools_defined_colour_49, /PDB_3_from_stdin_with_819_atoms///95//
-colour cath_tools_defined_colour_50, /PDB_1_from_stdin_with_1042_atoms///96//
-colour cath_tools_defined_colour_50, /PDB_2_from_stdin_with_836_atoms///96//
-colour cath_tools_defined_colour_50, /PDB_3_from_stdin_with_819_atoms///96//
-colour cath_tools_defined_colour_51, /PDB_1_from_stdin_with_1042_atoms///97//
-colour cath_tools_defined_colour_51, /PDB_2_from_stdin_with_836_atoms///97//
-colour cath_tools_defined_colour_51, /PDB_3_from_stdin_with_819_atoms///97//
-colour cath_tools_defined_colour_52, /PDB_1_from_stdin_with_1042_atoms///98//
-colour cath_tools_defined_colour_52, /PDB_2_from_stdin_with_836_atoms///98//
-colour cath_tools_defined_colour_52, /PDB_3_from_stdin_with_819_atoms///98//
-colour cath_tools_defined_colour_53, /PDB_1_from_stdin_with_1042_atoms///99//
-colour cath_tools_defined_colour_53, /PDB_2_from_stdin_with_836_atoms///99//
-colour cath_tools_defined_colour_53, /PDB_3_from_stdin_with_819_atoms///99//
-colour cath_tools_defined_colour_54, /PDB_1_from_stdin_with_1042_atoms///100//
-colour cath_tools_defined_colour_54, /PDB_2_from_stdin_with_836_atoms///100//
-colour cath_tools_defined_colour_54, /PDB_3_from_stdin_with_819_atoms///100//
-colour cath_tools_defined_colour_55, /PDB_1_from_stdin_with_1042_atoms///101//
-colour cath_tools_defined_colour_55, /PDB_2_from_stdin_with_836_atoms///101//
-colour cath_tools_defined_colour_55, /PDB_3_from_stdin_with_819_atoms///101//
-colour cath_tools_defined_colour_56, /PDB_1_from_stdin_with_1042_atoms///102//
-colour cath_tools_defined_colour_56, /PDB_2_from_stdin_with_836_atoms///102//
-colour cath_tools_defined_colour_56, /PDB_3_from_stdin_with_819_atoms///102//
-colour cath_tools_defined_colour_57, /PDB_1_from_stdin_with_1042_atoms///103//
-colour cath_tools_defined_colour_57, /PDB_2_from_stdin_with_836_atoms///103//
-colour cath_tools_defined_colour_57, /PDB_3_from_stdin_with_819_atoms///103//
-colour cath_tools_defined_colour_58, /PDB_1_from_stdin_with_1042_atoms///104//
-colour cath_tools_defined_colour_58, /PDB_2_from_stdin_with_836_atoms///104//
-colour cath_tools_defined_colour_58, /PDB_3_from_stdin_with_819_atoms///104//
-colour cath_tools_defined_colour_59, /PDB_1_from_stdin_with_1042_atoms///105//
-colour cath_tools_defined_colour_59, /PDB_2_from_stdin_with_836_atoms///105//
-colour cath_tools_defined_colour_59, /PDB_3_from_stdin_with_819_atoms///105//
-colour cath_tools_defined_colour_60, /PDB_1_from_stdin_with_1042_atoms///106//
-colour cath_tools_defined_colour_60, /PDB_2_from_stdin_with_836_atoms///106//
-colour cath_tools_defined_colour_60, /PDB_3_from_stdin_with_819_atoms///106//
-colour cath_tools_defined_colour_61, /PDB_1_from_stdin_with_1042_atoms///142+143+144+145+146+147+148+149+150+151+152+153+154+155+156+157+158+159+160+161+162+163+164+165+166//
-colour cath_tools_defined_colour_61, /PDB_2_from_stdin_with_836_atoms///142+143//
-colour cath_tools_defined_colour_61, /PDB_3_from_stdin_with_819_atoms///142//
-colour cath_tools_defined_colour_62, /PDB_1_from_stdin_with_1042_atoms///141//
-colour cath_tools_defined_colour_62, /PDB_2_from_stdin_with_836_atoms///141//
-colour cath_tools_defined_colour_62, /PDB_3_from_stdin_with_819_atoms///141//
-colour cath_tools_defined_colour_63, /PDB_1_from_stdin_with_1042_atoms///140//
-colour cath_tools_defined_colour_63, /PDB_2_from_stdin_with_836_atoms///140//
-colour cath_tools_defined_colour_63, /PDB_3_from_stdin_with_819_atoms///140//
-colour cath_tools_defined_colour_64, /PDB_1_from_stdin_with_1042_atoms///139//
-colour cath_tools_defined_colour_64, /PDB_2_from_stdin_with_836_atoms///139//
-colour cath_tools_defined_colour_64, /PDB_3_from_stdin_with_819_atoms///139//
-colour cath_tools_defined_colour_65, /PDB_1_from_stdin_with_1042_atoms///138//
-colour cath_tools_defined_colour_65, /PDB_2_from_stdin_with_836_atoms///138//
-colour cath_tools_defined_colour_65, /PDB_3_from_stdin_with_819_atoms///138//
-colour cath_tools_defined_colour_66, /PDB_1_from_stdin_with_1042_atoms///137//
-colour cath_tools_defined_colour_66, /PDB_2_from_stdin_with_836_atoms///137//
-colour cath_tools_defined_colour_66, /PDB_3_from_stdin_with_819_atoms///137//
-colour cath_tools_defined_colour_67, /PDB_1_from_stdin_with_1042_atoms///136//
-colour cath_tools_defined_colour_67, /PDB_2_from_stdin_with_836_atoms///136//
-colour cath_tools_defined_colour_67, /PDB_3_from_stdin_with_819_atoms///136//
-colour cath_tools_defined_colour_68, /PDB_1_from_stdin_with_1042_atoms///135//
-colour cath_tools_defined_colour_68, /PDB_2_from_stdin_with_836_atoms///135//
-colour cath_tools_defined_colour_68, /PDB_3_from_stdin_with_819_atoms///135//
-colour cath_tools_defined_colour_69, /PDB_1_from_stdin_with_1042_atoms///134//
-colour cath_tools_defined_colour_69, /PDB_2_from_stdin_with_836_atoms///134//
-colour cath_tools_defined_colour_69, /PDB_3_from_stdin_with_819_atoms///134//
-colour cath_tools_defined_colour_70, /PDB_1_from_stdin_with_1042_atoms///133//
-colour cath_tools_defined_colour_70, /PDB_2_from_stdin_with_836_atoms///133//
-colour cath_tools_defined_colour_70, /PDB_3_from_stdin_with_819_atoms///133//
-colour cath_tools_defined_colour_71, /PDB_1_from_stdin_with_1042_atoms///132//
-colour cath_tools_defined_colour_71, /PDB_2_from_stdin_with_836_atoms///132//
-colour cath_tools_defined_colour_71, /PDB_3_from_stdin_with_819_atoms///132//
-colour cath_tools_defined_colour_72, /PDB_1_from_stdin_with_1042_atoms///131//
-colour cath_tools_defined_colour_72, /PDB_2_from_stdin_with_836_atoms///131//
-colour cath_tools_defined_colour_72, /PDB_3_from_stdin_with_819_atoms///131//
-colour cath_tools_defined_colour_73, /PDB_1_from_stdin_with_1042_atoms///130//
-colour cath_tools_defined_colour_73, /PDB_2_from_stdin_with_836_atoms///130//
-colour cath_tools_defined_colour_73, /PDB_3_from_stdin_with_819_atoms///130//
-colour cath_tools_defined_colour_74, /PDB_1_from_stdin_with_1042_atoms///129//
-colour cath_tools_defined_colour_74, /PDB_2_from_stdin_with_836_atoms///129//
-colour cath_tools_defined_colour_74, /PDB_3_from_stdin_with_819_atoms///129//
-colour cath_tools_defined_colour_75, /PDB_1_from_stdin_with_1042_atoms///128//
-colour cath_tools_defined_colour_75, /PDB_2_from_stdin_with_836_atoms///128//
-colour cath_tools_defined_colour_75, /PDB_3_from_stdin_with_819_atoms///128//
-colour cath_tools_defined_colour_76, /PDB_1_from_stdin_with_1042_atoms///127//
-colour cath_tools_defined_colour_76, /PDB_2_from_stdin_with_836_atoms///127//
-colour cath_tools_defined_colour_76, /PDB_3_from_stdin_with_819_atoms///127//
-colour cath_tools_defined_colour_77, /PDB_1_from_stdin_with_1042_atoms///126//
-colour cath_tools_defined_colour_77, /PDB_2_from_stdin_with_836_atoms///126//
-colour cath_tools_defined_colour_77, /PDB_3_from_stdin_with_819_atoms///126//
-colour cath_tools_defined_colour_78, /PDB_1_from_stdin_with_1042_atoms///125//
-colour cath_tools_defined_colour_78, /PDB_2_from_stdin_with_836_atoms///125//
-colour cath_tools_defined_colour_78, /PDB_3_from_stdin_with_819_atoms///125//
-colour cath_tools_defined_colour_79, /PDB_1_from_stdin_with_1042_atoms///124//
-colour cath_tools_defined_colour_79, /PDB_2_from_stdin_with_836_atoms///124//
-colour cath_tools_defined_colour_79, /PDB_3_from_stdin_with_819_atoms///124//
-colour cath_tools_defined_colour_80, /PDB_1_from_stdin_with_1042_atoms///123//
-colour cath_tools_defined_colour_80, /PDB_2_from_stdin_with_836_atoms///123//
-colour cath_tools_defined_colour_80, /PDB_3_from_stdin_with_819_atoms///123//
-colour cath_tools_defined_colour_81, /PDB_1_from_stdin_with_1042_atoms///122//
-colour cath_tools_defined_colour_81, /PDB_2_from_stdin_with_836_atoms///122//
-colour cath_tools_defined_colour_81, /PDB_3_from_stdin_with_819_atoms///122//
-colour cath_tools_defined_colour_82, /PDB_1_from_stdin_with_1042_atoms///121//
-colour cath_tools_defined_colour_82, /PDB_2_from_stdin_with_836_atoms///121//
-colour cath_tools_defined_colour_82, /PDB_3_from_stdin_with_819_atoms///121//
-colour cath_tools_defined_colour_83, /PDB_1_from_stdin_with_1042_atoms///120//
-colour cath_tools_defined_colour_83, /PDB_2_from_stdin_with_836_atoms///120//
-colour cath_tools_defined_colour_83, /PDB_3_from_stdin_with_819_atoms///120//
-colour cath_tools_defined_colour_84, /PDB_1_from_stdin_with_1042_atoms///119//
-colour cath_tools_defined_colour_84, /PDB_2_from_stdin_with_836_atoms///119//
-colour cath_tools_defined_colour_84, /PDB_3_from_stdin_with_819_atoms///119//
-colour cath_tools_defined_colour_85, /PDB_1_from_stdin_with_1042_atoms///118//
-colour cath_tools_defined_colour_85, /PDB_2_from_stdin_with_836_atoms///118//
-colour cath_tools_defined_colour_85, /PDB_3_from_stdin_with_819_atoms///118//
-colour cath_tools_defined_colour_86, /PDB_1_from_stdin_with_1042_atoms///117//
-colour cath_tools_defined_colour_86, /PDB_2_from_stdin_with_836_atoms///117//
-colour cath_tools_defined_colour_86, /PDB_3_from_stdin_with_819_atoms///117//
-colour cath_tools_defined_colour_87, /PDB_1_from_stdin_with_1042_atoms///116//
-colour cath_tools_defined_colour_87, /PDB_2_from_stdin_with_836_atoms///116//
-colour cath_tools_defined_colour_87, /PDB_3_from_stdin_with_819_atoms///116//
-colour cath_tools_defined_colour_88, /PDB_1_from_stdin_with_1042_atoms///115//
-colour cath_tools_defined_colour_88, /PDB_2_from_stdin_with_836_atoms///115//
-colour cath_tools_defined_colour_88, /PDB_3_from_stdin_with_819_atoms///115//
-colour cath_tools_defined_colour_89, /PDB_1_from_stdin_with_1042_atoms///114//
-colour cath_tools_defined_colour_89, /PDB_2_from_stdin_with_836_atoms///114//
-colour cath_tools_defined_colour_89, /PDB_3_from_stdin_with_819_atoms///114//
-colour cath_tools_defined_colour_90, /PDB_1_from_stdin_with_1042_atoms///113//
-colour cath_tools_defined_colour_90, /PDB_2_from_stdin_with_836_atoms///113//
-colour cath_tools_defined_colour_90, /PDB_3_from_stdin_with_819_atoms///113//
-colour cath_tools_defined_colour_91, /PDB_1_from_stdin_with_1042_atoms///112//
-colour cath_tools_defined_colour_91, /PDB_2_from_stdin_with_836_atoms///112//
-colour cath_tools_defined_colour_91, /PDB_3_from_stdin_with_819_atoms///112//
-colour cath_tools_defined_colour_92, /PDB_1_from_stdin_with_1042_atoms///111//
-colour cath_tools_defined_colour_92, /PDB_2_from_stdin_with_836_atoms///111//
-colour cath_tools_defined_colour_92, /PDB_3_from_stdin_with_819_atoms///111//
-colour cath_tools_defined_colour_93, /PDB_1_from_stdin_with_1042_atoms///110//
-colour cath_tools_defined_colour_93, /PDB_2_from_stdin_with_836_atoms///110//
-colour cath_tools_defined_colour_93, /PDB_3_from_stdin_with_819_atoms///110//
-colour cath_tools_defined_colour_94, /PDB_1_from_stdin_with_1042_atoms///109//
-colour cath_tools_defined_colour_94, /PDB_2_from_stdin_with_836_atoms///109//
-colour cath_tools_defined_colour_94, /PDB_3_from_stdin_with_819_atoms///109//
-colour cath_tools_defined_colour_95, /PDB_1_from_stdin_with_1042_atoms///108//
-colour cath_tools_defined_colour_95, /PDB_2_from_stdin_with_836_atoms///108//
-colour cath_tools_defined_colour_95, /PDB_3_from_stdin_with_819_atoms///108//
-colour cath_tools_defined_colour_96, /PDB_1_from_stdin_with_1042_atoms///107//
-colour cath_tools_defined_colour_96, /PDB_2_from_stdin_with_836_atoms///107//
-colour cath_tools_defined_colour_96, /PDB_3_from_stdin_with_819_atoms///107//
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///46/CA/, /PDB_2_from_stdin_with_836_atoms///46/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///47/CA/, /PDB_3_from_stdin_with_819_atoms///47/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///47/CA/, /PDB_2_from_stdin_with_836_atoms///47/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///48/CA/, /PDB_3_from_stdin_with_819_atoms///48/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///48/CA/, /PDB_2_from_stdin_with_836_atoms///48/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///49/CA/, /PDB_3_from_stdin_with_819_atoms///49/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///49/CA/, /PDB_2_from_stdin_with_836_atoms///49/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///50/CA/, /PDB_3_from_stdin_with_819_atoms///50/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///50/CA/, /PDB_2_from_stdin_with_836_atoms///50/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///51/CA/, /PDB_2_from_stdin_with_836_atoms///51/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///51/CA/, /PDB_3_from_stdin_with_819_atoms///51/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///52/CA/, /PDB_2_from_stdin_with_836_atoms///52/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///52/CA/, /PDB_3_from_stdin_with_819_atoms///52/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///53/CA/, /PDB_2_from_stdin_with_836_atoms///53/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///53/CA/, /PDB_3_from_stdin_with_819_atoms///53/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///54/CA/, /PDB_2_from_stdin_with_836_atoms///54/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///54/CA/, /PDB_3_from_stdin_with_819_atoms///54/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///55/CA/, /PDB_2_from_stdin_with_836_atoms///55/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///55/CA/, /PDB_3_from_stdin_with_819_atoms///55/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///56/CA/, /PDB_2_from_stdin_with_836_atoms///56/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///56/CA/, /PDB_3_from_stdin_with_819_atoms///56/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///57/CA/, /PDB_2_from_stdin_with_836_atoms///57/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///57/CA/, /PDB_3_from_stdin_with_819_atoms///57/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///58/CA/, /PDB_3_from_stdin_with_819_atoms///58/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///58/CA/, /PDB_2_from_stdin_with_836_atoms///58/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///59/CA/, /PDB_2_from_stdin_with_836_atoms///59/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///59/CA/, /PDB_3_from_stdin_with_819_atoms///59/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///60/CA/, /PDB_2_from_stdin_with_836_atoms///60/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///60/CA/, /PDB_3_from_stdin_with_819_atoms///60/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///61/CA/, /PDB_2_from_stdin_with_836_atoms///61/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///61/CA/, /PDB_3_from_stdin_with_819_atoms///61/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///62/CA/, /PDB_2_from_stdin_with_836_atoms///62/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///62/CA/, /PDB_3_from_stdin_with_819_atoms///62/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///63/CA/, /PDB_2_from_stdin_with_836_atoms///63/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///63/CA/, /PDB_3_from_stdin_with_819_atoms///63/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///64/CA/, /PDB_2_from_stdin_with_836_atoms///64/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///64/CA/, /PDB_3_from_stdin_with_819_atoms///64/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///65/CA/, /PDB_2_from_stdin_with_836_atoms///65/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///65/CA/, /PDB_3_from_stdin_with_819_atoms///65/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///66/CA/, /PDB_2_from_stdin_with_836_atoms///66/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///66/CA/, /PDB_3_from_stdin_with_819_atoms///66/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///67/CA/, /PDB_2_from_stdin_with_836_atoms///67/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///67/CA/, /PDB_3_from_stdin_with_819_atoms///67/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///68/CA/, /PDB_2_from_stdin_with_836_atoms///68/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///68/CA/, /PDB_3_from_stdin_with_819_atoms///68/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///69/CA/, /PDB_2_from_stdin_with_836_atoms///69/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///69/CA/, /PDB_3_from_stdin_with_819_atoms///69/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///70/CA/, /PDB_3_from_stdin_with_819_atoms///70/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///70/CA/, /PDB_2_from_stdin_with_836_atoms///70/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///71/CA/, /PDB_3_from_stdin_with_819_atoms///71/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///71/CA/, /PDB_3_from_stdin_with_819_atoms///71/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///72/CA/, /PDB_2_from_stdin_with_836_atoms///72/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///72/CA/, /PDB_3_from_stdin_with_819_atoms///72/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///73/CA/, /PDB_2_from_stdin_with_836_atoms///73/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///73/CA/, /PDB_3_from_stdin_with_819_atoms///73/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///74/CA/, /PDB_2_from_stdin_with_836_atoms///74/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///74/CA/, /PDB_3_from_stdin_with_819_atoms///74/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///75/CA/, /PDB_2_from_stdin_with_836_atoms///75/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///75/CA/, /PDB_3_from_stdin_with_819_atoms///75/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///76/CA/, /PDB_2_from_stdin_with_836_atoms///76/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///76/CA/, /PDB_3_from_stdin_with_819_atoms///76/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///77/CA/, /PDB_2_from_stdin_with_836_atoms///77/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///77/CA/, /PDB_3_from_stdin_with_819_atoms///77/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///78/CA/, /PDB_3_from_stdin_with_819_atoms///78/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///78/CA/, /PDB_2_from_stdin_with_836_atoms///78/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///79/CA/, /PDB_3_from_stdin_with_819_atoms///79/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///79/CA/, /PDB_3_from_stdin_with_819_atoms///79/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///80/CA/, /PDB_3_from_stdin_with_819_atoms///80/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///80/CA/, /PDB_3_from_stdin_with_819_atoms///80/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///81/CA/, /PDB_3_from_stdin_with_819_atoms///81/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///81/CA/, /PDB_3_from_stdin_with_819_atoms///81/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///82/CA/, /PDB_3_from_stdin_with_819_atoms///82/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///82/CA/, /PDB_3_from_stdin_with_819_atoms///82/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///83/CA/, /PDB_3_from_stdin_with_819_atoms///83/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///83/CA/, /PDB_3_from_stdin_with_819_atoms///83/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///84/CA/, /PDB_3_from_stdin_with_819_atoms///84/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///84/CA/, /PDB_3_from_stdin_with_819_atoms///84/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///85/CA/, /PDB_3_from_stdin_with_819_atoms///85/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///85/CA/, /PDB_3_from_stdin_with_819_atoms///85/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///86/CA/, /PDB_3_from_stdin_with_819_atoms///86/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///86/CA/, /PDB_3_from_stdin_with_819_atoms///86/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///87/CA/, /PDB_3_from_stdin_with_819_atoms///87/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///87/CA/, /PDB_3_from_stdin_with_819_atoms///87/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///88/CA/, /PDB_3_from_stdin_with_819_atoms///88/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///88/CA/, /PDB_3_from_stdin_with_819_atoms///88/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///89/CA/, /PDB_3_from_stdin_with_819_atoms///89/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///89/CA/, /PDB_3_from_stdin_with_819_atoms///89/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///90/CA/, /PDB_3_from_stdin_with_819_atoms///90/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///90/CA/, /PDB_3_from_stdin_with_819_atoms///90/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///91/CA/, /PDB_3_from_stdin_with_819_atoms///91/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///91/CA/, /PDB_2_from_stdin_with_836_atoms///91/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///92/CA/, /PDB_2_from_stdin_with_836_atoms///92/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///92/CA/, /PDB_3_from_stdin_with_819_atoms///92/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///93/CA/, /PDB_3_from_stdin_with_819_atoms///93/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///93/CA/, /PDB_2_from_stdin_with_836_atoms///93/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///94/CA/, /PDB_2_from_stdin_with_836_atoms///94/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///94/CA/, /PDB_3_from_stdin_with_819_atoms///94/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///95/CA/, /PDB_3_from_stdin_with_819_atoms///95/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///95/CA/, /PDB_2_from_stdin_with_836_atoms///95/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///96/CA/, /PDB_2_from_stdin_with_836_atoms///96/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///96/CA/, /PDB_3_from_stdin_with_819_atoms///96/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///97/CA/, /PDB_3_from_stdin_with_819_atoms///97/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///97/CA/, /PDB_2_from_stdin_with_836_atoms///97/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///98/CA/, /PDB_2_from_stdin_with_836_atoms///98/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///98/CA/, /PDB_3_from_stdin_with_819_atoms///98/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///99/CA/, /PDB_3_from_stdin_with_819_atoms///99/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///99/CA/, /PDB_2_from_stdin_with_836_atoms///99/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///100/CA/, /PDB_3_from_stdin_with_819_atoms///100/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///100/CA/, /PDB_2_from_stdin_with_836_atoms///100/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///101/CA/, /PDB_3_from_stdin_with_819_atoms///101/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///101/CA/, /PDB_2_from_stdin_with_836_atoms///101/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///102/CA/, /PDB_2_from_stdin_with_836_atoms///102/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///102/CA/, /PDB_3_from_stdin_with_819_atoms///102/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///103/CA/, /PDB_3_from_stdin_with_819_atoms///103/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///103/CA/, /PDB_3_from_stdin_with_819_atoms///103/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///104/CA/, /PDB_3_from_stdin_with_819_atoms///104/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///104/CA/, /PDB_3_from_stdin_with_819_atoms///104/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///105/CA/, /PDB_3_from_stdin_with_819_atoms///105/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///105/CA/, /PDB_3_from_stdin_with_819_atoms///105/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///106/CA/, /PDB_2_from_stdin_with_836_atoms///106/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///106/CA/, /PDB_3_from_stdin_with_819_atoms///106/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///107/CA/, /PDB_2_from_stdin_with_836_atoms///107/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///107/CA/, /PDB_3_from_stdin_with_819_atoms///107/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///108/CA/, /PDB_2_from_stdin_with_836_atoms///108/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///108/CA/, /PDB_3_from_stdin_with_819_atoms///108/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///109/CA/, /PDB_2_from_stdin_with_836_atoms///109/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///109/CA/, /PDB_3_from_stdin_with_819_atoms///109/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///110/CA/, /PDB_2_from_stdin_with_836_atoms///110/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///110/CA/, /PDB_3_from_stdin_with_819_atoms///110/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///111/CA/, /PDB_2_from_stdin_with_836_atoms///111/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///111/CA/, /PDB_3_from_stdin_with_819_atoms///111/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///112/CA/, /PDB_3_from_stdin_with_819_atoms///112/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///112/CA/, /PDB_2_from_stdin_with_836_atoms///112/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///113/CA/, /PDB_2_from_stdin_with_836_atoms///113/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///113/CA/, /PDB_3_from_stdin_with_819_atoms///113/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///114/CA/, /PDB_3_from_stdin_with_819_atoms///114/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///114/CA/, /PDB_3_from_stdin_with_819_atoms///114/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///115/CA/, /PDB_3_from_stdin_with_819_atoms///115/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///115/CA/, /PDB_2_from_stdin_with_836_atoms///115/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///116/CA/, /PDB_3_from_stdin_with_819_atoms///116/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///116/CA/, /PDB_3_from_stdin_with_819_atoms///116/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///117/CA/, /PDB_2_from_stdin_with_836_atoms///117/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///117/CA/, /PDB_3_from_stdin_with_819_atoms///117/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///118/CA/, /PDB_2_from_stdin_with_836_atoms///118/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///118/CA/, /PDB_3_from_stdin_with_819_atoms///118/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///119/CA/, /PDB_2_from_stdin_with_836_atoms///119/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///119/CA/, /PDB_3_from_stdin_with_819_atoms///119/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///120/CA/, /PDB_2_from_stdin_with_836_atoms///120/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///120/CA/, /PDB_3_from_stdin_with_819_atoms///120/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///121/CA/, /PDB_3_from_stdin_with_819_atoms///121/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///121/CA/, /PDB_2_from_stdin_with_836_atoms///121/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///122/CA/, /PDB_3_from_stdin_with_819_atoms///122/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///122/CA/, /PDB_3_from_stdin_with_819_atoms///122/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///123/CA/, /PDB_3_from_stdin_with_819_atoms///123/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///123/CA/, /PDB_2_from_stdin_with_836_atoms///123/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///124/CA/, /PDB_3_from_stdin_with_819_atoms///124/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///124/CA/, /PDB_3_from_stdin_with_819_atoms///124/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///125/CA/, /PDB_3_from_stdin_with_819_atoms///125/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///125/CA/, /PDB_3_from_stdin_with_819_atoms///125/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///126/CA/, /PDB_3_from_stdin_with_819_atoms///126/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///126/CA/, /PDB_3_from_stdin_with_819_atoms///126/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///127/CA/, /PDB_3_from_stdin_with_819_atoms///127/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///127/CA/, /PDB_3_from_stdin_with_819_atoms///127/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///128/CA/, /PDB_3_from_stdin_with_819_atoms///128/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///128/CA/, /PDB_3_from_stdin_with_819_atoms///128/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///129/CA/, /PDB_3_from_stdin_with_819_atoms///129/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///129/CA/, /PDB_3_from_stdin_with_819_atoms///129/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///130/CA/, /PDB_3_from_stdin_with_819_atoms///130/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///130/CA/, /PDB_2_from_stdin_with_836_atoms///130/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///131/CA/, /PDB_3_from_stdin_with_819_atoms///131/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///131/CA/, /PDB_3_from_stdin_with_819_atoms///131/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///132/CA/, /PDB_3_from_stdin_with_819_atoms///132/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///132/CA/, /PDB_2_from_stdin_with_836_atoms///132/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///133/CA/, /PDB_3_from_stdin_with_819_atoms///133/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///133/CA/, /PDB_2_from_stdin_with_836_atoms///133/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///134/CA/, /PDB_2_from_stdin_with_836_atoms///134/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///134/CA/, /PDB_3_from_stdin_with_819_atoms///134/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///135/CA/, /PDB_2_from_stdin_with_836_atoms///135/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///135/CA/, /PDB_3_from_stdin_with_819_atoms///135/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///136/CA/, /PDB_2_from_stdin_with_836_atoms///136/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///136/CA/, /PDB_3_from_stdin_with_819_atoms///136/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///137/CA/, /PDB_2_from_stdin_with_836_atoms///137/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///137/CA/, /PDB_3_from_stdin_with_819_atoms///137/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///138/CA/, /PDB_2_from_stdin_with_836_atoms///138/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///138/CA/, /PDB_3_from_stdin_with_819_atoms///138/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///139/CA/, /PDB_2_from_stdin_with_836_atoms///139/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///139/CA/, /PDB_3_from_stdin_with_819_atoms///139/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///140/CA/, /PDB_2_from_stdin_with_836_atoms///140/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///140/CA/, /PDB_3_from_stdin_with_819_atoms///140/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///141/CA/, /PDB_3_from_stdin_with_819_atoms///141/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///141/CA/, /PDB_2_from_stdin_with_836_atoms///141/CA/
-distance alignment, /PDB_2_from_stdin_with_836_atoms///142/CA/, /PDB_3_from_stdin_with_819_atoms///142/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///142/CA/, /PDB_2_from_stdin_with_836_atoms///142/CA/
-distance alignment, /PDB_1_from_stdin_with_1042_atoms///143/CA/, /PDB_2_from_stdin_with_836_atoms///143/CA/
+colour cath_tools_defined_colour_00, /PDB_1_from_stdin_with_1042_atoms///39+40+41+42+43+44+45+46/
+colour cath_tools_defined_colour_00, /PDB_2_from_stdin_with_836_atoms///46/
+colour cath_tools_defined_colour_01, /PDB_1_from_stdin_with_1042_atoms///47/
+colour cath_tools_defined_colour_01, /PDB_2_from_stdin_with_836_atoms///47/
+colour cath_tools_defined_colour_01, /PDB_3_from_stdin_with_819_atoms///47/
+colour cath_tools_defined_colour_02, /PDB_1_from_stdin_with_1042_atoms///48/
+colour cath_tools_defined_colour_02, /PDB_2_from_stdin_with_836_atoms///48/
+colour cath_tools_defined_colour_02, /PDB_3_from_stdin_with_819_atoms///48/
+colour cath_tools_defined_colour_03, /PDB_1_from_stdin_with_1042_atoms///49/
+colour cath_tools_defined_colour_03, /PDB_2_from_stdin_with_836_atoms///49/
+colour cath_tools_defined_colour_03, /PDB_3_from_stdin_with_819_atoms///49/
+colour cath_tools_defined_colour_04, /PDB_1_from_stdin_with_1042_atoms///50/
+colour cath_tools_defined_colour_04, /PDB_2_from_stdin_with_836_atoms///50/
+colour cath_tools_defined_colour_04, /PDB_3_from_stdin_with_819_atoms///50/
+colour cath_tools_defined_colour_05, /PDB_1_from_stdin_with_1042_atoms///51/
+colour cath_tools_defined_colour_05, /PDB_2_from_stdin_with_836_atoms///51/
+colour cath_tools_defined_colour_05, /PDB_3_from_stdin_with_819_atoms///51/
+colour cath_tools_defined_colour_06, /PDB_1_from_stdin_with_1042_atoms///52/
+colour cath_tools_defined_colour_06, /PDB_2_from_stdin_with_836_atoms///52/
+colour cath_tools_defined_colour_06, /PDB_3_from_stdin_with_819_atoms///52/
+colour cath_tools_defined_colour_07, /PDB_1_from_stdin_with_1042_atoms///53/
+colour cath_tools_defined_colour_07, /PDB_2_from_stdin_with_836_atoms///53/
+colour cath_tools_defined_colour_07, /PDB_3_from_stdin_with_819_atoms///53/
+colour cath_tools_defined_colour_08, /PDB_1_from_stdin_with_1042_atoms///54/
+colour cath_tools_defined_colour_08, /PDB_2_from_stdin_with_836_atoms///54/
+colour cath_tools_defined_colour_08, /PDB_3_from_stdin_with_819_atoms///54/
+colour cath_tools_defined_colour_09, /PDB_1_from_stdin_with_1042_atoms///55/
+colour cath_tools_defined_colour_09, /PDB_2_from_stdin_with_836_atoms///55/
+colour cath_tools_defined_colour_09, /PDB_3_from_stdin_with_819_atoms///55/
+colour cath_tools_defined_colour_10, /PDB_1_from_stdin_with_1042_atoms///56/
+colour cath_tools_defined_colour_10, /PDB_2_from_stdin_with_836_atoms///56/
+colour cath_tools_defined_colour_10, /PDB_3_from_stdin_with_819_atoms///56/
+colour cath_tools_defined_colour_11, /PDB_1_from_stdin_with_1042_atoms///57/
+colour cath_tools_defined_colour_11, /PDB_2_from_stdin_with_836_atoms///57/
+colour cath_tools_defined_colour_11, /PDB_3_from_stdin_with_819_atoms///57/
+colour cath_tools_defined_colour_12, /PDB_1_from_stdin_with_1042_atoms///58/
+colour cath_tools_defined_colour_12, /PDB_2_from_stdin_with_836_atoms///58/
+colour cath_tools_defined_colour_12, /PDB_3_from_stdin_with_819_atoms///58/
+colour cath_tools_defined_colour_13, /PDB_1_from_stdin_with_1042_atoms///59/
+colour cath_tools_defined_colour_13, /PDB_2_from_stdin_with_836_atoms///59/
+colour cath_tools_defined_colour_13, /PDB_3_from_stdin_with_819_atoms///59/
+colour cath_tools_defined_colour_14, /PDB_1_from_stdin_with_1042_atoms///60/
+colour cath_tools_defined_colour_14, /PDB_2_from_stdin_with_836_atoms///60/
+colour cath_tools_defined_colour_14, /PDB_3_from_stdin_with_819_atoms///60/
+colour cath_tools_defined_colour_15, /PDB_1_from_stdin_with_1042_atoms///61/
+colour cath_tools_defined_colour_15, /PDB_2_from_stdin_with_836_atoms///61/
+colour cath_tools_defined_colour_15, /PDB_3_from_stdin_with_819_atoms///61/
+colour cath_tools_defined_colour_16, /PDB_1_from_stdin_with_1042_atoms///62/
+colour cath_tools_defined_colour_16, /PDB_2_from_stdin_with_836_atoms///62/
+colour cath_tools_defined_colour_16, /PDB_3_from_stdin_with_819_atoms///62/
+colour cath_tools_defined_colour_17, /PDB_1_from_stdin_with_1042_atoms///63/
+colour cath_tools_defined_colour_17, /PDB_2_from_stdin_with_836_atoms///63/
+colour cath_tools_defined_colour_17, /PDB_3_from_stdin_with_819_atoms///63/
+colour cath_tools_defined_colour_18, /PDB_1_from_stdin_with_1042_atoms///83/
+colour cath_tools_defined_colour_18, /PDB_2_from_stdin_with_836_atoms///83/
+colour cath_tools_defined_colour_18, /PDB_3_from_stdin_with_819_atoms///83/
+colour cath_tools_defined_colour_19, /PDB_1_from_stdin_with_1042_atoms///82/
+colour cath_tools_defined_colour_19, /PDB_2_from_stdin_with_836_atoms///82/
+colour cath_tools_defined_colour_19, /PDB_3_from_stdin_with_819_atoms///82/
+colour cath_tools_defined_colour_20, /PDB_1_from_stdin_with_1042_atoms///81/
+colour cath_tools_defined_colour_20, /PDB_2_from_stdin_with_836_atoms///81/
+colour cath_tools_defined_colour_20, /PDB_3_from_stdin_with_819_atoms///81/
+colour cath_tools_defined_colour_21, /PDB_1_from_stdin_with_1042_atoms///80/
+colour cath_tools_defined_colour_21, /PDB_2_from_stdin_with_836_atoms///80/
+colour cath_tools_defined_colour_21, /PDB_3_from_stdin_with_819_atoms///80/
+colour cath_tools_defined_colour_22, /PDB_1_from_stdin_with_1042_atoms///79/
+colour cath_tools_defined_colour_22, /PDB_2_from_stdin_with_836_atoms///79/
+colour cath_tools_defined_colour_22, /PDB_3_from_stdin_with_819_atoms///79/
+colour cath_tools_defined_colour_23, /PDB_1_from_stdin_with_1042_atoms///78/
+colour cath_tools_defined_colour_23, /PDB_2_from_stdin_with_836_atoms///78/
+colour cath_tools_defined_colour_23, /PDB_3_from_stdin_with_819_atoms///78/
+colour cath_tools_defined_colour_24, /PDB_1_from_stdin_with_1042_atoms///77/
+colour cath_tools_defined_colour_24, /PDB_2_from_stdin_with_836_atoms///77/
+colour cath_tools_defined_colour_24, /PDB_3_from_stdin_with_819_atoms///77/
+colour cath_tools_defined_colour_25, /PDB_1_from_stdin_with_1042_atoms///76/
+colour cath_tools_defined_colour_25, /PDB_2_from_stdin_with_836_atoms///76/
+colour cath_tools_defined_colour_25, /PDB_3_from_stdin_with_819_atoms///76/
+colour cath_tools_defined_colour_26, /PDB_1_from_stdin_with_1042_atoms///75/
+colour cath_tools_defined_colour_26, /PDB_2_from_stdin_with_836_atoms///75/
+colour cath_tools_defined_colour_26, /PDB_3_from_stdin_with_819_atoms///75/
+colour cath_tools_defined_colour_27, /PDB_1_from_stdin_with_1042_atoms///74/
+colour cath_tools_defined_colour_27, /PDB_2_from_stdin_with_836_atoms///74/
+colour cath_tools_defined_colour_27, /PDB_3_from_stdin_with_819_atoms///74/
+colour cath_tools_defined_colour_28, /PDB_1_from_stdin_with_1042_atoms///73/
+colour cath_tools_defined_colour_28, /PDB_2_from_stdin_with_836_atoms///73/
+colour cath_tools_defined_colour_28, /PDB_3_from_stdin_with_819_atoms///73/
+colour cath_tools_defined_colour_29, /PDB_1_from_stdin_with_1042_atoms///72/
+colour cath_tools_defined_colour_29, /PDB_2_from_stdin_with_836_atoms///72/
+colour cath_tools_defined_colour_29, /PDB_3_from_stdin_with_819_atoms///72/
+colour cath_tools_defined_colour_30, /PDB_1_from_stdin_with_1042_atoms///71/
+colour cath_tools_defined_colour_30, /PDB_2_from_stdin_with_836_atoms///71/
+colour cath_tools_defined_colour_30, /PDB_3_from_stdin_with_819_atoms///71/
+colour cath_tools_defined_colour_31, /PDB_1_from_stdin_with_1042_atoms///70/
+colour cath_tools_defined_colour_31, /PDB_2_from_stdin_with_836_atoms///70/
+colour cath_tools_defined_colour_31, /PDB_3_from_stdin_with_819_atoms///70/
+colour cath_tools_defined_colour_32, /PDB_1_from_stdin_with_1042_atoms///69/
+colour cath_tools_defined_colour_32, /PDB_2_from_stdin_with_836_atoms///69/
+colour cath_tools_defined_colour_32, /PDB_3_from_stdin_with_819_atoms///69/
+colour cath_tools_defined_colour_33, /PDB_1_from_stdin_with_1042_atoms///68/
+colour cath_tools_defined_colour_33, /PDB_2_from_stdin_with_836_atoms///68/
+colour cath_tools_defined_colour_33, /PDB_3_from_stdin_with_819_atoms///68/
+colour cath_tools_defined_colour_34, /PDB_1_from_stdin_with_1042_atoms///67/
+colour cath_tools_defined_colour_34, /PDB_2_from_stdin_with_836_atoms///67/
+colour cath_tools_defined_colour_34, /PDB_3_from_stdin_with_819_atoms///67/
+colour cath_tools_defined_colour_35, /PDB_1_from_stdin_with_1042_atoms///66/
+colour cath_tools_defined_colour_35, /PDB_2_from_stdin_with_836_atoms///66/
+colour cath_tools_defined_colour_35, /PDB_3_from_stdin_with_819_atoms///66/
+colour cath_tools_defined_colour_36, /PDB_1_from_stdin_with_1042_atoms///65/
+colour cath_tools_defined_colour_36, /PDB_2_from_stdin_with_836_atoms///65/
+colour cath_tools_defined_colour_36, /PDB_3_from_stdin_with_819_atoms///65/
+colour cath_tools_defined_colour_37, /PDB_1_from_stdin_with_1042_atoms///64/
+colour cath_tools_defined_colour_37, /PDB_2_from_stdin_with_836_atoms///64/
+colour cath_tools_defined_colour_37, /PDB_3_from_stdin_with_819_atoms///64/
+colour cath_tools_defined_colour_38, /PDB_1_from_stdin_with_1042_atoms///84/
+colour cath_tools_defined_colour_38, /PDB_2_from_stdin_with_836_atoms///84/
+colour cath_tools_defined_colour_38, /PDB_3_from_stdin_with_819_atoms///84/
+colour cath_tools_defined_colour_39, /PDB_1_from_stdin_with_1042_atoms///85/
+colour cath_tools_defined_colour_39, /PDB_2_from_stdin_with_836_atoms///85/
+colour cath_tools_defined_colour_39, /PDB_3_from_stdin_with_819_atoms///85/
+colour cath_tools_defined_colour_40, /PDB_1_from_stdin_with_1042_atoms///86/
+colour cath_tools_defined_colour_40, /PDB_2_from_stdin_with_836_atoms///86/
+colour cath_tools_defined_colour_40, /PDB_3_from_stdin_with_819_atoms///86/
+colour cath_tools_defined_colour_41, /PDB_1_from_stdin_with_1042_atoms///87/
+colour cath_tools_defined_colour_41, /PDB_2_from_stdin_with_836_atoms///87/
+colour cath_tools_defined_colour_41, /PDB_3_from_stdin_with_819_atoms///87/
+colour cath_tools_defined_colour_42, /PDB_1_from_stdin_with_1042_atoms///88/
+colour cath_tools_defined_colour_42, /PDB_2_from_stdin_with_836_atoms///88/
+colour cath_tools_defined_colour_42, /PDB_3_from_stdin_with_819_atoms///88/
+colour cath_tools_defined_colour_43, /PDB_1_from_stdin_with_1042_atoms///89/
+colour cath_tools_defined_colour_43, /PDB_2_from_stdin_with_836_atoms///89/
+colour cath_tools_defined_colour_43, /PDB_3_from_stdin_with_819_atoms///89/
+colour cath_tools_defined_colour_44, /PDB_1_from_stdin_with_1042_atoms///90/
+colour cath_tools_defined_colour_44, /PDB_2_from_stdin_with_836_atoms///90/
+colour cath_tools_defined_colour_44, /PDB_3_from_stdin_with_819_atoms///90/
+colour cath_tools_defined_colour_45, /PDB_1_from_stdin_with_1042_atoms///91/
+colour cath_tools_defined_colour_45, /PDB_2_from_stdin_with_836_atoms///91/
+colour cath_tools_defined_colour_45, /PDB_3_from_stdin_with_819_atoms///91/
+colour cath_tools_defined_colour_46, /PDB_1_from_stdin_with_1042_atoms///92/
+colour cath_tools_defined_colour_46, /PDB_2_from_stdin_with_836_atoms///92/
+colour cath_tools_defined_colour_46, /PDB_3_from_stdin_with_819_atoms///92/
+colour cath_tools_defined_colour_47, /PDB_1_from_stdin_with_1042_atoms///93/
+colour cath_tools_defined_colour_47, /PDB_2_from_stdin_with_836_atoms///93/
+colour cath_tools_defined_colour_47, /PDB_3_from_stdin_with_819_atoms///93/
+colour cath_tools_defined_colour_48, /PDB_1_from_stdin_with_1042_atoms///94/
+colour cath_tools_defined_colour_48, /PDB_2_from_stdin_with_836_atoms///94/
+colour cath_tools_defined_colour_48, /PDB_3_from_stdin_with_819_atoms///94/
+colour cath_tools_defined_colour_49, /PDB_1_from_stdin_with_1042_atoms///95/
+colour cath_tools_defined_colour_49, /PDB_2_from_stdin_with_836_atoms///95/
+colour cath_tools_defined_colour_49, /PDB_3_from_stdin_with_819_atoms///95/
+colour cath_tools_defined_colour_50, /PDB_1_from_stdin_with_1042_atoms///96/
+colour cath_tools_defined_colour_50, /PDB_2_from_stdin_with_836_atoms///96/
+colour cath_tools_defined_colour_50, /PDB_3_from_stdin_with_819_atoms///96/
+colour cath_tools_defined_colour_51, /PDB_1_from_stdin_with_1042_atoms///97/
+colour cath_tools_defined_colour_51, /PDB_2_from_stdin_with_836_atoms///97/
+colour cath_tools_defined_colour_51, /PDB_3_from_stdin_with_819_atoms///97/
+colour cath_tools_defined_colour_52, /PDB_1_from_stdin_with_1042_atoms///98/
+colour cath_tools_defined_colour_52, /PDB_2_from_stdin_with_836_atoms///98/
+colour cath_tools_defined_colour_52, /PDB_3_from_stdin_with_819_atoms///98/
+colour cath_tools_defined_colour_53, /PDB_1_from_stdin_with_1042_atoms///99/
+colour cath_tools_defined_colour_53, /PDB_2_from_stdin_with_836_atoms///99/
+colour cath_tools_defined_colour_53, /PDB_3_from_stdin_with_819_atoms///99/
+colour cath_tools_defined_colour_54, /PDB_1_from_stdin_with_1042_atoms///100/
+colour cath_tools_defined_colour_54, /PDB_2_from_stdin_with_836_atoms///100/
+colour cath_tools_defined_colour_54, /PDB_3_from_stdin_with_819_atoms///100/
+colour cath_tools_defined_colour_55, /PDB_1_from_stdin_with_1042_atoms///101/
+colour cath_tools_defined_colour_55, /PDB_2_from_stdin_with_836_atoms///101/
+colour cath_tools_defined_colour_55, /PDB_3_from_stdin_with_819_atoms///101/
+colour cath_tools_defined_colour_56, /PDB_1_from_stdin_with_1042_atoms///102/
+colour cath_tools_defined_colour_56, /PDB_2_from_stdin_with_836_atoms///102/
+colour cath_tools_defined_colour_56, /PDB_3_from_stdin_with_819_atoms///102/
+colour cath_tools_defined_colour_57, /PDB_1_from_stdin_with_1042_atoms///103/
+colour cath_tools_defined_colour_57, /PDB_2_from_stdin_with_836_atoms///103/
+colour cath_tools_defined_colour_57, /PDB_3_from_stdin_with_819_atoms///103/
+colour cath_tools_defined_colour_58, /PDB_1_from_stdin_with_1042_atoms///104/
+colour cath_tools_defined_colour_58, /PDB_2_from_stdin_with_836_atoms///104/
+colour cath_tools_defined_colour_58, /PDB_3_from_stdin_with_819_atoms///104/
+colour cath_tools_defined_colour_59, /PDB_1_from_stdin_with_1042_atoms///105/
+colour cath_tools_defined_colour_59, /PDB_2_from_stdin_with_836_atoms///105/
+colour cath_tools_defined_colour_59, /PDB_3_from_stdin_with_819_atoms///105/
+colour cath_tools_defined_colour_60, /PDB_1_from_stdin_with_1042_atoms///106/
+colour cath_tools_defined_colour_60, /PDB_2_from_stdin_with_836_atoms///106/
+colour cath_tools_defined_colour_60, /PDB_3_from_stdin_with_819_atoms///106/
+colour cath_tools_defined_colour_61, /PDB_1_from_stdin_with_1042_atoms///142+143+144+145+146+147+148+149+150+151+152+153+154+155+156+157+158+159+160+161+162+163+164+165+166/
+colour cath_tools_defined_colour_61, /PDB_2_from_stdin_with_836_atoms///142+143/
+colour cath_tools_defined_colour_61, /PDB_3_from_stdin_with_819_atoms///142/
+colour cath_tools_defined_colour_62, /PDB_1_from_stdin_with_1042_atoms///141/
+colour cath_tools_defined_colour_62, /PDB_2_from_stdin_with_836_atoms///141/
+colour cath_tools_defined_colour_62, /PDB_3_from_stdin_with_819_atoms///141/
+colour cath_tools_defined_colour_63, /PDB_1_from_stdin_with_1042_atoms///140/
+colour cath_tools_defined_colour_63, /PDB_2_from_stdin_with_836_atoms///140/
+colour cath_tools_defined_colour_63, /PDB_3_from_stdin_with_819_atoms///140/
+colour cath_tools_defined_colour_64, /PDB_1_from_stdin_with_1042_atoms///139/
+colour cath_tools_defined_colour_64, /PDB_2_from_stdin_with_836_atoms///139/
+colour cath_tools_defined_colour_64, /PDB_3_from_stdin_with_819_atoms///139/
+colour cath_tools_defined_colour_65, /PDB_1_from_stdin_with_1042_atoms///138/
+colour cath_tools_defined_colour_65, /PDB_2_from_stdin_with_836_atoms///138/
+colour cath_tools_defined_colour_65, /PDB_3_from_stdin_with_819_atoms///138/
+colour cath_tools_defined_colour_66, /PDB_1_from_stdin_with_1042_atoms///137/
+colour cath_tools_defined_colour_66, /PDB_2_from_stdin_with_836_atoms///137/
+colour cath_tools_defined_colour_66, /PDB_3_from_stdin_with_819_atoms///137/
+colour cath_tools_defined_colour_67, /PDB_1_from_stdin_with_1042_atoms///136/
+colour cath_tools_defined_colour_67, /PDB_2_from_stdin_with_836_atoms///136/
+colour cath_tools_defined_colour_67, /PDB_3_from_stdin_with_819_atoms///136/
+colour cath_tools_defined_colour_68, /PDB_1_from_stdin_with_1042_atoms///135/
+colour cath_tools_defined_colour_68, /PDB_2_from_stdin_with_836_atoms///135/
+colour cath_tools_defined_colour_68, /PDB_3_from_stdin_with_819_atoms///135/
+colour cath_tools_defined_colour_69, /PDB_1_from_stdin_with_1042_atoms///134/
+colour cath_tools_defined_colour_69, /PDB_2_from_stdin_with_836_atoms///134/
+colour cath_tools_defined_colour_69, /PDB_3_from_stdin_with_819_atoms///134/
+colour cath_tools_defined_colour_70, /PDB_1_from_stdin_with_1042_atoms///133/
+colour cath_tools_defined_colour_70, /PDB_2_from_stdin_with_836_atoms///133/
+colour cath_tools_defined_colour_70, /PDB_3_from_stdin_with_819_atoms///133/
+colour cath_tools_defined_colour_71, /PDB_1_from_stdin_with_1042_atoms///132/
+colour cath_tools_defined_colour_71, /PDB_2_from_stdin_with_836_atoms///132/
+colour cath_tools_defined_colour_71, /PDB_3_from_stdin_with_819_atoms///132/
+colour cath_tools_defined_colour_72, /PDB_1_from_stdin_with_1042_atoms///131/
+colour cath_tools_defined_colour_72, /PDB_2_from_stdin_with_836_atoms///131/
+colour cath_tools_defined_colour_72, /PDB_3_from_stdin_with_819_atoms///131/
+colour cath_tools_defined_colour_73, /PDB_1_from_stdin_with_1042_atoms///130/
+colour cath_tools_defined_colour_73, /PDB_2_from_stdin_with_836_atoms///130/
+colour cath_tools_defined_colour_73, /PDB_3_from_stdin_with_819_atoms///130/
+colour cath_tools_defined_colour_74, /PDB_1_from_stdin_with_1042_atoms///129/
+colour cath_tools_defined_colour_74, /PDB_2_from_stdin_with_836_atoms///129/
+colour cath_tools_defined_colour_74, /PDB_3_from_stdin_with_819_atoms///129/
+colour cath_tools_defined_colour_75, /PDB_1_from_stdin_with_1042_atoms///128/
+colour cath_tools_defined_colour_75, /PDB_2_from_stdin_with_836_atoms///128/
+colour cath_tools_defined_colour_75, /PDB_3_from_stdin_with_819_atoms///128/
+colour cath_tools_defined_colour_76, /PDB_1_from_stdin_with_1042_atoms///127/
+colour cath_tools_defined_colour_76, /PDB_2_from_stdin_with_836_atoms///127/
+colour cath_tools_defined_colour_76, /PDB_3_from_stdin_with_819_atoms///127/
+colour cath_tools_defined_colour_77, /PDB_1_from_stdin_with_1042_atoms///126/
+colour cath_tools_defined_colour_77, /PDB_2_from_stdin_with_836_atoms///126/
+colour cath_tools_defined_colour_77, /PDB_3_from_stdin_with_819_atoms///126/
+colour cath_tools_defined_colour_78, /PDB_1_from_stdin_with_1042_atoms///125/
+colour cath_tools_defined_colour_78, /PDB_2_from_stdin_with_836_atoms///125/
+colour cath_tools_defined_colour_78, /PDB_3_from_stdin_with_819_atoms///125/
+colour cath_tools_defined_colour_79, /PDB_1_from_stdin_with_1042_atoms///124/
+colour cath_tools_defined_colour_79, /PDB_2_from_stdin_with_836_atoms///124/
+colour cath_tools_defined_colour_79, /PDB_3_from_stdin_with_819_atoms///124/
+colour cath_tools_defined_colour_80, /PDB_1_from_stdin_with_1042_atoms///123/
+colour cath_tools_defined_colour_80, /PDB_2_from_stdin_with_836_atoms///123/
+colour cath_tools_defined_colour_80, /PDB_3_from_stdin_with_819_atoms///123/
+colour cath_tools_defined_colour_81, /PDB_1_from_stdin_with_1042_atoms///122/
+colour cath_tools_defined_colour_81, /PDB_2_from_stdin_with_836_atoms///122/
+colour cath_tools_defined_colour_81, /PDB_3_from_stdin_with_819_atoms///122/
+colour cath_tools_defined_colour_82, /PDB_1_from_stdin_with_1042_atoms///121/
+colour cath_tools_defined_colour_82, /PDB_2_from_stdin_with_836_atoms///121/
+colour cath_tools_defined_colour_82, /PDB_3_from_stdin_with_819_atoms///121/
+colour cath_tools_defined_colour_83, /PDB_1_from_stdin_with_1042_atoms///120/
+colour cath_tools_defined_colour_83, /PDB_2_from_stdin_with_836_atoms///120/
+colour cath_tools_defined_colour_83, /PDB_3_from_stdin_with_819_atoms///120/
+colour cath_tools_defined_colour_84, /PDB_1_from_stdin_with_1042_atoms///119/
+colour cath_tools_defined_colour_84, /PDB_2_from_stdin_with_836_atoms///119/
+colour cath_tools_defined_colour_84, /PDB_3_from_stdin_with_819_atoms///119/
+colour cath_tools_defined_colour_85, /PDB_1_from_stdin_with_1042_atoms///118/
+colour cath_tools_defined_colour_85, /PDB_2_from_stdin_with_836_atoms///118/
+colour cath_tools_defined_colour_85, /PDB_3_from_stdin_with_819_atoms///118/
+colour cath_tools_defined_colour_86, /PDB_1_from_stdin_with_1042_atoms///117/
+colour cath_tools_defined_colour_86, /PDB_2_from_stdin_with_836_atoms///117/
+colour cath_tools_defined_colour_86, /PDB_3_from_stdin_with_819_atoms///117/
+colour cath_tools_defined_colour_87, /PDB_1_from_stdin_with_1042_atoms///116/
+colour cath_tools_defined_colour_87, /PDB_2_from_stdin_with_836_atoms///116/
+colour cath_tools_defined_colour_87, /PDB_3_from_stdin_with_819_atoms///116/
+colour cath_tools_defined_colour_88, /PDB_1_from_stdin_with_1042_atoms///115/
+colour cath_tools_defined_colour_88, /PDB_2_from_stdin_with_836_atoms///115/
+colour cath_tools_defined_colour_88, /PDB_3_from_stdin_with_819_atoms///115/
+colour cath_tools_defined_colour_89, /PDB_1_from_stdin_with_1042_atoms///114/
+colour cath_tools_defined_colour_89, /PDB_2_from_stdin_with_836_atoms///114/
+colour cath_tools_defined_colour_89, /PDB_3_from_stdin_with_819_atoms///114/
+colour cath_tools_defined_colour_90, /PDB_1_from_stdin_with_1042_atoms///113/
+colour cath_tools_defined_colour_90, /PDB_2_from_stdin_with_836_atoms///113/
+colour cath_tools_defined_colour_90, /PDB_3_from_stdin_with_819_atoms///113/
+colour cath_tools_defined_colour_91, /PDB_1_from_stdin_with_1042_atoms///112/
+colour cath_tools_defined_colour_91, /PDB_2_from_stdin_with_836_atoms///112/
+colour cath_tools_defined_colour_91, /PDB_3_from_stdin_with_819_atoms///112/
+colour cath_tools_defined_colour_92, /PDB_1_from_stdin_with_1042_atoms///111/
+colour cath_tools_defined_colour_92, /PDB_2_from_stdin_with_836_atoms///111/
+colour cath_tools_defined_colour_92, /PDB_3_from_stdin_with_819_atoms///111/
+colour cath_tools_defined_colour_93, /PDB_1_from_stdin_with_1042_atoms///110/
+colour cath_tools_defined_colour_93, /PDB_2_from_stdin_with_836_atoms///110/
+colour cath_tools_defined_colour_93, /PDB_3_from_stdin_with_819_atoms///110/
+colour cath_tools_defined_colour_94, /PDB_1_from_stdin_with_1042_atoms///109/
+colour cath_tools_defined_colour_94, /PDB_2_from_stdin_with_836_atoms///109/
+colour cath_tools_defined_colour_94, /PDB_3_from_stdin_with_819_atoms///109/
+colour cath_tools_defined_colour_95, /PDB_1_from_stdin_with_1042_atoms///108/
+colour cath_tools_defined_colour_95, /PDB_2_from_stdin_with_836_atoms///108/
+colour cath_tools_defined_colour_95, /PDB_3_from_stdin_with_819_atoms///108/
+colour cath_tools_defined_colour_96, /PDB_1_from_stdin_with_1042_atoms///107/
+colour cath_tools_defined_colour_96, /PDB_2_from_stdin_with_836_atoms///107/
+colour cath_tools_defined_colour_96, /PDB_3_from_stdin_with_819_atoms///107/
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///46/CA, /PDB_2_from_stdin_with_836_atoms///46/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///47/CA, /PDB_3_from_stdin_with_819_atoms///47/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///47/CA, /PDB_2_from_stdin_with_836_atoms///47/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///48/CA, /PDB_3_from_stdin_with_819_atoms///48/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///48/CA, /PDB_2_from_stdin_with_836_atoms///48/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///49/CA, /PDB_3_from_stdin_with_819_atoms///49/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///49/CA, /PDB_2_from_stdin_with_836_atoms///49/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///50/CA, /PDB_3_from_stdin_with_819_atoms///50/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///50/CA, /PDB_2_from_stdin_with_836_atoms///50/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///51/CA, /PDB_2_from_stdin_with_836_atoms///51/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///51/CA, /PDB_3_from_stdin_with_819_atoms///51/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///52/CA, /PDB_2_from_stdin_with_836_atoms///52/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///52/CA, /PDB_3_from_stdin_with_819_atoms///52/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///53/CA, /PDB_2_from_stdin_with_836_atoms///53/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///53/CA, /PDB_3_from_stdin_with_819_atoms///53/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///54/CA, /PDB_2_from_stdin_with_836_atoms///54/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///54/CA, /PDB_3_from_stdin_with_819_atoms///54/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///55/CA, /PDB_2_from_stdin_with_836_atoms///55/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///55/CA, /PDB_3_from_stdin_with_819_atoms///55/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///56/CA, /PDB_2_from_stdin_with_836_atoms///56/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///56/CA, /PDB_3_from_stdin_with_819_atoms///56/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///57/CA, /PDB_2_from_stdin_with_836_atoms///57/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///57/CA, /PDB_3_from_stdin_with_819_atoms///57/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///58/CA, /PDB_3_from_stdin_with_819_atoms///58/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///58/CA, /PDB_2_from_stdin_with_836_atoms///58/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///59/CA, /PDB_2_from_stdin_with_836_atoms///59/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///59/CA, /PDB_3_from_stdin_with_819_atoms///59/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///60/CA, /PDB_2_from_stdin_with_836_atoms///60/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///60/CA, /PDB_3_from_stdin_with_819_atoms///60/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///61/CA, /PDB_2_from_stdin_with_836_atoms///61/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///61/CA, /PDB_3_from_stdin_with_819_atoms///61/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///62/CA, /PDB_2_from_stdin_with_836_atoms///62/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///62/CA, /PDB_3_from_stdin_with_819_atoms///62/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///63/CA, /PDB_2_from_stdin_with_836_atoms///63/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///63/CA, /PDB_3_from_stdin_with_819_atoms///63/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///64/CA, /PDB_2_from_stdin_with_836_atoms///64/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///64/CA, /PDB_3_from_stdin_with_819_atoms///64/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///65/CA, /PDB_2_from_stdin_with_836_atoms///65/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///65/CA, /PDB_3_from_stdin_with_819_atoms///65/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///66/CA, /PDB_2_from_stdin_with_836_atoms///66/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///66/CA, /PDB_3_from_stdin_with_819_atoms///66/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///67/CA, /PDB_2_from_stdin_with_836_atoms///67/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///67/CA, /PDB_3_from_stdin_with_819_atoms///67/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///68/CA, /PDB_2_from_stdin_with_836_atoms///68/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///68/CA, /PDB_3_from_stdin_with_819_atoms///68/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///69/CA, /PDB_2_from_stdin_with_836_atoms///69/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///69/CA, /PDB_3_from_stdin_with_819_atoms///69/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///70/CA, /PDB_3_from_stdin_with_819_atoms///70/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///70/CA, /PDB_2_from_stdin_with_836_atoms///70/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///71/CA, /PDB_3_from_stdin_with_819_atoms///71/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///71/CA, /PDB_3_from_stdin_with_819_atoms///71/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///72/CA, /PDB_2_from_stdin_with_836_atoms///72/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///72/CA, /PDB_3_from_stdin_with_819_atoms///72/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///73/CA, /PDB_2_from_stdin_with_836_atoms///73/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///73/CA, /PDB_3_from_stdin_with_819_atoms///73/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///74/CA, /PDB_2_from_stdin_with_836_atoms///74/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///74/CA, /PDB_3_from_stdin_with_819_atoms///74/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///75/CA, /PDB_2_from_stdin_with_836_atoms///75/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///75/CA, /PDB_3_from_stdin_with_819_atoms///75/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///76/CA, /PDB_2_from_stdin_with_836_atoms///76/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///76/CA, /PDB_3_from_stdin_with_819_atoms///76/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///77/CA, /PDB_2_from_stdin_with_836_atoms///77/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///77/CA, /PDB_3_from_stdin_with_819_atoms///77/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///78/CA, /PDB_3_from_stdin_with_819_atoms///78/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///78/CA, /PDB_2_from_stdin_with_836_atoms///78/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///79/CA, /PDB_3_from_stdin_with_819_atoms///79/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///79/CA, /PDB_3_from_stdin_with_819_atoms///79/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///80/CA, /PDB_3_from_stdin_with_819_atoms///80/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///80/CA, /PDB_3_from_stdin_with_819_atoms///80/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///81/CA, /PDB_3_from_stdin_with_819_atoms///81/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///81/CA, /PDB_3_from_stdin_with_819_atoms///81/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///82/CA, /PDB_3_from_stdin_with_819_atoms///82/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///82/CA, /PDB_3_from_stdin_with_819_atoms///82/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///83/CA, /PDB_3_from_stdin_with_819_atoms///83/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///83/CA, /PDB_3_from_stdin_with_819_atoms///83/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///84/CA, /PDB_3_from_stdin_with_819_atoms///84/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///84/CA, /PDB_3_from_stdin_with_819_atoms///84/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///85/CA, /PDB_3_from_stdin_with_819_atoms///85/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///85/CA, /PDB_3_from_stdin_with_819_atoms///85/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///86/CA, /PDB_3_from_stdin_with_819_atoms///86/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///86/CA, /PDB_3_from_stdin_with_819_atoms///86/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///87/CA, /PDB_3_from_stdin_with_819_atoms///87/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///87/CA, /PDB_3_from_stdin_with_819_atoms///87/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///88/CA, /PDB_3_from_stdin_with_819_atoms///88/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///88/CA, /PDB_3_from_stdin_with_819_atoms///88/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///89/CA, /PDB_3_from_stdin_with_819_atoms///89/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///89/CA, /PDB_3_from_stdin_with_819_atoms///89/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///90/CA, /PDB_3_from_stdin_with_819_atoms///90/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///90/CA, /PDB_3_from_stdin_with_819_atoms///90/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///91/CA, /PDB_3_from_stdin_with_819_atoms///91/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///91/CA, /PDB_2_from_stdin_with_836_atoms///91/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///92/CA, /PDB_2_from_stdin_with_836_atoms///92/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///92/CA, /PDB_3_from_stdin_with_819_atoms///92/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///93/CA, /PDB_3_from_stdin_with_819_atoms///93/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///93/CA, /PDB_2_from_stdin_with_836_atoms///93/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///94/CA, /PDB_2_from_stdin_with_836_atoms///94/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///94/CA, /PDB_3_from_stdin_with_819_atoms///94/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///95/CA, /PDB_3_from_stdin_with_819_atoms///95/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///95/CA, /PDB_2_from_stdin_with_836_atoms///95/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///96/CA, /PDB_2_from_stdin_with_836_atoms///96/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///96/CA, /PDB_3_from_stdin_with_819_atoms///96/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///97/CA, /PDB_3_from_stdin_with_819_atoms///97/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///97/CA, /PDB_2_from_stdin_with_836_atoms///97/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///98/CA, /PDB_2_from_stdin_with_836_atoms///98/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///98/CA, /PDB_3_from_stdin_with_819_atoms///98/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///99/CA, /PDB_3_from_stdin_with_819_atoms///99/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///99/CA, /PDB_2_from_stdin_with_836_atoms///99/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///100/CA, /PDB_3_from_stdin_with_819_atoms///100/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///100/CA, /PDB_2_from_stdin_with_836_atoms///100/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///101/CA, /PDB_3_from_stdin_with_819_atoms///101/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///101/CA, /PDB_2_from_stdin_with_836_atoms///101/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///102/CA, /PDB_2_from_stdin_with_836_atoms///102/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///102/CA, /PDB_3_from_stdin_with_819_atoms///102/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///103/CA, /PDB_3_from_stdin_with_819_atoms///103/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///103/CA, /PDB_3_from_stdin_with_819_atoms///103/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///104/CA, /PDB_3_from_stdin_with_819_atoms///104/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///104/CA, /PDB_3_from_stdin_with_819_atoms///104/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///105/CA, /PDB_3_from_stdin_with_819_atoms///105/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///105/CA, /PDB_3_from_stdin_with_819_atoms///105/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///106/CA, /PDB_2_from_stdin_with_836_atoms///106/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///106/CA, /PDB_3_from_stdin_with_819_atoms///106/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///107/CA, /PDB_2_from_stdin_with_836_atoms///107/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///107/CA, /PDB_3_from_stdin_with_819_atoms///107/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///108/CA, /PDB_2_from_stdin_with_836_atoms///108/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///108/CA, /PDB_3_from_stdin_with_819_atoms///108/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///109/CA, /PDB_2_from_stdin_with_836_atoms///109/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///109/CA, /PDB_3_from_stdin_with_819_atoms///109/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///110/CA, /PDB_2_from_stdin_with_836_atoms///110/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///110/CA, /PDB_3_from_stdin_with_819_atoms///110/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///111/CA, /PDB_2_from_stdin_with_836_atoms///111/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///111/CA, /PDB_3_from_stdin_with_819_atoms///111/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///112/CA, /PDB_3_from_stdin_with_819_atoms///112/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///112/CA, /PDB_2_from_stdin_with_836_atoms///112/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///113/CA, /PDB_2_from_stdin_with_836_atoms///113/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///113/CA, /PDB_3_from_stdin_with_819_atoms///113/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///114/CA, /PDB_3_from_stdin_with_819_atoms///114/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///114/CA, /PDB_3_from_stdin_with_819_atoms///114/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///115/CA, /PDB_3_from_stdin_with_819_atoms///115/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///115/CA, /PDB_2_from_stdin_with_836_atoms///115/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///116/CA, /PDB_3_from_stdin_with_819_atoms///116/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///116/CA, /PDB_3_from_stdin_with_819_atoms///116/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///117/CA, /PDB_2_from_stdin_with_836_atoms///117/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///117/CA, /PDB_3_from_stdin_with_819_atoms///117/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///118/CA, /PDB_2_from_stdin_with_836_atoms///118/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///118/CA, /PDB_3_from_stdin_with_819_atoms///118/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///119/CA, /PDB_2_from_stdin_with_836_atoms///119/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///119/CA, /PDB_3_from_stdin_with_819_atoms///119/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///120/CA, /PDB_2_from_stdin_with_836_atoms///120/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///120/CA, /PDB_3_from_stdin_with_819_atoms///120/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///121/CA, /PDB_3_from_stdin_with_819_atoms///121/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///121/CA, /PDB_2_from_stdin_with_836_atoms///121/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///122/CA, /PDB_3_from_stdin_with_819_atoms///122/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///122/CA, /PDB_3_from_stdin_with_819_atoms///122/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///123/CA, /PDB_3_from_stdin_with_819_atoms///123/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///123/CA, /PDB_2_from_stdin_with_836_atoms///123/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///124/CA, /PDB_3_from_stdin_with_819_atoms///124/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///124/CA, /PDB_3_from_stdin_with_819_atoms///124/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///125/CA, /PDB_3_from_stdin_with_819_atoms///125/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///125/CA, /PDB_3_from_stdin_with_819_atoms///125/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///126/CA, /PDB_3_from_stdin_with_819_atoms///126/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///126/CA, /PDB_3_from_stdin_with_819_atoms///126/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///127/CA, /PDB_3_from_stdin_with_819_atoms///127/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///127/CA, /PDB_3_from_stdin_with_819_atoms///127/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///128/CA, /PDB_3_from_stdin_with_819_atoms///128/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///128/CA, /PDB_3_from_stdin_with_819_atoms///128/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///129/CA, /PDB_3_from_stdin_with_819_atoms///129/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///129/CA, /PDB_3_from_stdin_with_819_atoms///129/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///130/CA, /PDB_3_from_stdin_with_819_atoms///130/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///130/CA, /PDB_2_from_stdin_with_836_atoms///130/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///131/CA, /PDB_3_from_stdin_with_819_atoms///131/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///131/CA, /PDB_3_from_stdin_with_819_atoms///131/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///132/CA, /PDB_3_from_stdin_with_819_atoms///132/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///132/CA, /PDB_2_from_stdin_with_836_atoms///132/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///133/CA, /PDB_3_from_stdin_with_819_atoms///133/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///133/CA, /PDB_2_from_stdin_with_836_atoms///133/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///134/CA, /PDB_2_from_stdin_with_836_atoms///134/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///134/CA, /PDB_3_from_stdin_with_819_atoms///134/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///135/CA, /PDB_2_from_stdin_with_836_atoms///135/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///135/CA, /PDB_3_from_stdin_with_819_atoms///135/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///136/CA, /PDB_2_from_stdin_with_836_atoms///136/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///136/CA, /PDB_3_from_stdin_with_819_atoms///136/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///137/CA, /PDB_2_from_stdin_with_836_atoms///137/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///137/CA, /PDB_3_from_stdin_with_819_atoms///137/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///138/CA, /PDB_2_from_stdin_with_836_atoms///138/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///138/CA, /PDB_3_from_stdin_with_819_atoms///138/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///139/CA, /PDB_2_from_stdin_with_836_atoms///139/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///139/CA, /PDB_3_from_stdin_with_819_atoms///139/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///140/CA, /PDB_2_from_stdin_with_836_atoms///140/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///140/CA, /PDB_3_from_stdin_with_819_atoms///140/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///141/CA, /PDB_3_from_stdin_with_819_atoms///141/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///141/CA, /PDB_2_from_stdin_with_836_atoms///141/CA
+distance alignment, /PDB_2_from_stdin_with_836_atoms///142/CA, /PDB_3_from_stdin_with_819_atoms///142/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///142/CA, /PDB_2_from_stdin_with_836_atoms///142/CA
+distance alignment, /PDB_1_from_stdin_with_1042_atoms///143/CA, /PDB_2_from_stdin_with_836_atoms///143/CA
 disable alignment
 select noncore, ( /PDB_1_from_stdin_with_1042_atoms///39+40+41+42+43+44+45+46+101+105+121+122+123+124+125+126+127+128+129+130+131+132+133+134+135+136+137+138+139+140+141+142+143+144+145+146+147+148+149+150+151+152+153+154+155+156+157+158+159+160+161+162+163+164+165+166 or /PDB_2_from_stdin_with_836_atoms///46+100+101+105+121+122+123+124+125+126+127+128+129+130+131+132+133+134+135+136+137+138+139+140+141+142+143 or /PDB_3_from_stdin_with_819_atoms///69+70+100+101+102+103+104+105+109+110+114+115+116+117+118+119+121+122+123+124+125+126+127+128+129+130+131+132+134+135+136+137+138+139+140+141+142 )
 select core, ( /PDB_1_from_stdin_with_1042_atoms///47+48+49+50+51+52+53+54+55+56+57+58+59+60+61+62+63+64+65+66+67+68+69+70+71+72+73+74+75+76+77+78+79+80+81+82+83+84+85+86+87+88+89+90+91+92+93+94+95+96+97+98+99+100+102+103+104+106+107+108+109+110+111+112+113+114+115+116+117+118+119+120 or /PDB_2_from_stdin_with_836_atoms///47+48+49+50+51+52+53+54+55+56+57+58+59+60+61+62+63+64+65+66+67+68+69+70+71+72+73+74+75+76+77+78+79+80+81+82+83+84+85+86+87+88+89+90+91+92+93+94+95+96+97+98+99+102+103+104+106+107+108+109+110+111+112+113+114+115+116+117+118+119+120 or /PDB_3_from_stdin_with_819_atoms///47+48+49+50+51+52+53+54+55+56+57+58+59+60+61+62+63+64+65+66+67+68+71+72+73+74+75+76+77+78+79+80+81+82+83+84+85+86+87+88+89+90+91+92+93+94+95+96+97+98+99+106+107+108+111+112+113+120+133 )

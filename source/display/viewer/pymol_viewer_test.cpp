@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(pymol_viewer_test_suite)
 BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK_EQUAL(
 		pymol_viewer{}.get_colour_pdb_residues_str( "red", "1cukA", { residue_name{ 1 }, residue_name{ 2 } } ),
-		"colour red, /1cukA///1+2//\n"
+		"colour red, /1cukA///1+2/\n"
 	);
 }
 BOOST_AUTO_TEST_SUITE_END()

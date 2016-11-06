@@ -10284,1582 +10284,1582 @@ set_color cath_tools_defined_colour_200, [1,0.921875,0]
 set_color cath_tools_defined_colour_201, [1,0.953125,0]
 set_color cath_tools_defined_colour_202, [1,0.96875,0]
 set_color cath_tools_defined_colour_203, [1,1,0]
-colour cath_tools_defined_colour_000, /Q9HAU8DomSerf1///1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+21+22+23+24+25+26+27+28+29+30+31+32+33+34+35+36//
-colour cath_tools_defined_colour_000, /Q9HAU8PHYRE21///35+36//
-colour cath_tools_defined_colour_000, /Q9HAU8VIVACE1///35+36//
-colour cath_tools_defined_colour_001, /Q9HAU8DomSerf1///37//
-colour cath_tools_defined_colour_001, /Q9HAU8PHYRE21///37//
-colour cath_tools_defined_colour_001, /Q9HAU8VIVACE1///37//
-colour cath_tools_defined_colour_002, /Q9HAU8DomSerf1///38//
-colour cath_tools_defined_colour_002, /Q9HAU8PHYRE21///38//
-colour cath_tools_defined_colour_002, /Q9HAU8VIVACE1///38//
-colour cath_tools_defined_colour_003, /Q9HAU8DomSerf1///39+40//
-colour cath_tools_defined_colour_003, /Q9HAU8PHYRE21///39+40//
-colour cath_tools_defined_colour_003, /Q9HAU8SUPERFAMILY2///40//
-colour cath_tools_defined_colour_003, /Q9HAU8VIVACE1///39+40//
-colour cath_tools_defined_colour_004, /Q9HAU8DomSerf1///41+42//
-colour cath_tools_defined_colour_004, /Q9HAU8PHYRE21///41+42//
-colour cath_tools_defined_colour_004, /Q9HAU8SUPERFAMILY2///41+42//
-colour cath_tools_defined_colour_004, /Q9HAU8VIVACE1///41+42//
-colour cath_tools_defined_colour_005, /Q9HAU8DomSerf1///43+44+45//
-colour cath_tools_defined_colour_005, /Q9HAU8PHYRE21///43+44+45//
-colour cath_tools_defined_colour_005, /Q9HAU8SUPERFAMILY2///43+44+45//
-colour cath_tools_defined_colour_005, /Q9HAU8VIVACE1///43+44+45//
-colour cath_tools_defined_colour_006, /Q9HAU8DomSerf1///46//
-colour cath_tools_defined_colour_006, /Q9HAU8PHYRE21///46//
-colour cath_tools_defined_colour_006, /Q9HAU8SUPERFAMILY2///46//
-colour cath_tools_defined_colour_006, /Q9HAU8VIVACE1///46//
-colour cath_tools_defined_colour_007, /Q9HAU8DomSerf1///47+48//
-colour cath_tools_defined_colour_007, /Q9HAU8PHYRE21///47+48//
-colour cath_tools_defined_colour_007, /Q9HAU8SUPERFAMILY2///47+48//
-colour cath_tools_defined_colour_007, /Q9HAU8VIVACE1///47+48//
-colour cath_tools_defined_colour_008, /Q9HAU8DomSerf1///49+50//
-colour cath_tools_defined_colour_008, /Q9HAU8PHYRE21///49+50//
-colour cath_tools_defined_colour_008, /Q9HAU8SUPERFAMILY2///49+50//
-colour cath_tools_defined_colour_008, /Q9HAU8VIVACE1///49+50//
-colour cath_tools_defined_colour_009, /Q9HAU8DomSerf1///51+52//
-colour cath_tools_defined_colour_009, /Q9HAU8PHYRE21///51+52//
-colour cath_tools_defined_colour_009, /Q9HAU8SUPERFAMILY2///51+52//
-colour cath_tools_defined_colour_009, /Q9HAU8VIVACE1///51+52//
-colour cath_tools_defined_colour_010, /Q9HAU8DomSerf1///53+54//
-colour cath_tools_defined_colour_010, /Q9HAU8PHYRE21///53+54//
-colour cath_tools_defined_colour_010, /Q9HAU8SUPERFAMILY2///53+54//
-colour cath_tools_defined_colour_010, /Q9HAU8VIVACE1///53+54//
-colour cath_tools_defined_colour_011, /Q9HAU8DomSerf1///55+56//
-colour cath_tools_defined_colour_011, /Q9HAU8PHYRE21///55+56//
-colour cath_tools_defined_colour_011, /Q9HAU8SUPERFAMILY2///55+56//
-colour cath_tools_defined_colour_011, /Q9HAU8VIVACE1///55+56//
-colour cath_tools_defined_colour_012, /Q9HAU8DomSerf1///57+58//
-colour cath_tools_defined_colour_012, /Q9HAU8PHYRE21///57+58//
-colour cath_tools_defined_colour_012, /Q9HAU8SUPERFAMILY2///57+58//
-colour cath_tools_defined_colour_012, /Q9HAU8VIVACE1///57+58//
-colour cath_tools_defined_colour_013, /Q9HAU8DomSerf1///59+60+61+62//
-colour cath_tools_defined_colour_013, /Q9HAU8PHYRE21///59+60+61+62//
-colour cath_tools_defined_colour_013, /Q9HAU8SUPERFAMILY2///59+60+61+62//
-colour cath_tools_defined_colour_013, /Q9HAU8VIVACE1///59+60+61+62//
-colour cath_tools_defined_colour_014, /Q9HAU8DomSerf1///63+64+65//
-colour cath_tools_defined_colour_014, /Q9HAU8PHYRE21///63+64+65//
-colour cath_tools_defined_colour_014, /Q9HAU8SUPERFAMILY2///63+64+65//
-colour cath_tools_defined_colour_014, /Q9HAU8VIVACE1///63+64+65//
-colour cath_tools_defined_colour_015, /Q9HAU8DomSerf1///66//
-colour cath_tools_defined_colour_015, /Q9HAU8PHYRE21///66//
-colour cath_tools_defined_colour_015, /Q9HAU8SUPERFAMILY2///66//
-colour cath_tools_defined_colour_015, /Q9HAU8VIVACE1///66//
-colour cath_tools_defined_colour_016, /Q9HAU8DomSerf1///67+68//
-colour cath_tools_defined_colour_016, /Q9HAU8PHYRE21///67+68//
-colour cath_tools_defined_colour_016, /Q9HAU8SUPERFAMILY2///67+68//
-colour cath_tools_defined_colour_016, /Q9HAU8VIVACE1///67+68//
-colour cath_tools_defined_colour_017, /Q9HAU8DomSerf1///69//
-colour cath_tools_defined_colour_017, /Q9HAU8PHYRE21///69//
-colour cath_tools_defined_colour_017, /Q9HAU8SUPERFAMILY2///69//
-colour cath_tools_defined_colour_017, /Q9HAU8VIVACE1///69//
-colour cath_tools_defined_colour_018, /Q9HAU8DomSerf1///70//
-colour cath_tools_defined_colour_018, /Q9HAU8PHYRE21///70//
-colour cath_tools_defined_colour_018, /Q9HAU8SUPERFAMILY2///70//
-colour cath_tools_defined_colour_018, /Q9HAU8VIVACE1///70//
-colour cath_tools_defined_colour_019, /Q9HAU8DomSerf1///71+72//
-colour cath_tools_defined_colour_019, /Q9HAU8PHYRE21///71+72//
-colour cath_tools_defined_colour_019, /Q9HAU8SUPERFAMILY2///71+72//
-colour cath_tools_defined_colour_019, /Q9HAU8VIVACE1///71+72//
-colour cath_tools_defined_colour_020, /Q9HAU8DomSerf1///73//
-colour cath_tools_defined_colour_020, /Q9HAU8PHYRE21///73//
-colour cath_tools_defined_colour_020, /Q9HAU8SUPERFAMILY2///73//
-colour cath_tools_defined_colour_020, /Q9HAU8VIVACE1///73//
-colour cath_tools_defined_colour_021, /Q9HAU8DomSerf1///74+75//
-colour cath_tools_defined_colour_021, /Q9HAU8PHYRE21///74+75//
-colour cath_tools_defined_colour_021, /Q9HAU8SUPERFAMILY2///74+75//
-colour cath_tools_defined_colour_021, /Q9HAU8VIVACE1///74+75//
-colour cath_tools_defined_colour_022, /Q9HAU8DomSerf1///76//
-colour cath_tools_defined_colour_022, /Q9HAU8PHYRE21///76//
-colour cath_tools_defined_colour_022, /Q9HAU8SUPERFAMILY2///76//
-colour cath_tools_defined_colour_022, /Q9HAU8VIVACE1///76//
-colour cath_tools_defined_colour_023, /Q9HAU8DomSerf1///77+78//
-colour cath_tools_defined_colour_023, /Q9HAU8PHYRE21///77+78//
-colour cath_tools_defined_colour_023, /Q9HAU8SUPERFAMILY2///77+78//
-colour cath_tools_defined_colour_023, /Q9HAU8VIVACE1///77+78//
-colour cath_tools_defined_colour_024, /Q9HAU8DomSerf1///79+80//
-colour cath_tools_defined_colour_024, /Q9HAU8PHYRE21///79+80//
-colour cath_tools_defined_colour_024, /Q9HAU8SUPERFAMILY2///79+80//
-colour cath_tools_defined_colour_024, /Q9HAU8VIVACE1///79+80//
-colour cath_tools_defined_colour_025, /Q9HAU8DomSerf1///81+82//
-colour cath_tools_defined_colour_025, /Q9HAU8PHYRE21///81+82//
-colour cath_tools_defined_colour_025, /Q9HAU8SUPERFAMILY2///81+82//
-colour cath_tools_defined_colour_025, /Q9HAU8VIVACE1///81+82//
-colour cath_tools_defined_colour_026, /Q9HAU8DomSerf1///83+84//
-colour cath_tools_defined_colour_026, /Q9HAU8PHYRE21///83+84//
-colour cath_tools_defined_colour_026, /Q9HAU8SUPERFAMILY2///83+84//
-colour cath_tools_defined_colour_026, /Q9HAU8VIVACE1///83+84//
-colour cath_tools_defined_colour_027, /Q9HAU8DomSerf1///85//
-colour cath_tools_defined_colour_027, /Q9HAU8PHYRE21///85//
-colour cath_tools_defined_colour_027, /Q9HAU8SUPERFAMILY2///85//
-colour cath_tools_defined_colour_027, /Q9HAU8VIVACE1///85//
-colour cath_tools_defined_colour_028, /Q9HAU8DomSerf1///86+87//
-colour cath_tools_defined_colour_028, /Q9HAU8PHYRE21///86+87//
-colour cath_tools_defined_colour_028, /Q9HAU8SUPERFAMILY2///86+87//
-colour cath_tools_defined_colour_028, /Q9HAU8VIVACE1///86+87//
-colour cath_tools_defined_colour_029, /Q9HAU8DomSerf1///88//
-colour cath_tools_defined_colour_029, /Q9HAU8PHYRE21///88//
-colour cath_tools_defined_colour_029, /Q9HAU8SUPERFAMILY2///88//
-colour cath_tools_defined_colour_029, /Q9HAU8VIVACE1///88//
-colour cath_tools_defined_colour_030, /Q9HAU8DomSerf1///89+90//
-colour cath_tools_defined_colour_030, /Q9HAU8PHYRE21///89+90//
-colour cath_tools_defined_colour_030, /Q9HAU8SUPERFAMILY2///89+90//
-colour cath_tools_defined_colour_030, /Q9HAU8VIVACE1///89+90//
-colour cath_tools_defined_colour_031, /Q9HAU8DomSerf1///91+92//
-colour cath_tools_defined_colour_031, /Q9HAU8PHYRE21///91+92//
-colour cath_tools_defined_colour_031, /Q9HAU8SUPERFAMILY2///91+92//
-colour cath_tools_defined_colour_031, /Q9HAU8VIVACE1///91+92//
-colour cath_tools_defined_colour_032, /Q9HAU8DomSerf1///93//
-colour cath_tools_defined_colour_032, /Q9HAU8PHYRE21///93//
-colour cath_tools_defined_colour_032, /Q9HAU8SUPERFAMILY2///93//
-colour cath_tools_defined_colour_032, /Q9HAU8VIVACE1///93//
-colour cath_tools_defined_colour_033, /Q9HAU8DomSerf1///94+95//
-colour cath_tools_defined_colour_033, /Q9HAU8PHYRE21///94+95//
-colour cath_tools_defined_colour_033, /Q9HAU8SUPERFAMILY2///94+95//
-colour cath_tools_defined_colour_033, /Q9HAU8VIVACE1///94+95//
-colour cath_tools_defined_colour_034, /Q9HAU8DomSerf1///96//
-colour cath_tools_defined_colour_034, /Q9HAU8PHYRE21///96//
-colour cath_tools_defined_colour_034, /Q9HAU8SUPERFAMILY2///96//
-colour cath_tools_defined_colour_034, /Q9HAU8VIVACE1///96//
-colour cath_tools_defined_colour_035, /Q9HAU8DomSerf1///97+98//
-colour cath_tools_defined_colour_035, /Q9HAU8PHYRE21///97+98//
-colour cath_tools_defined_colour_035, /Q9HAU8SUPERFAMILY2///97+98//
-colour cath_tools_defined_colour_035, /Q9HAU8VIVACE1///97+98//
-colour cath_tools_defined_colour_036, /Q9HAU8DomSerf1///99+100//
-colour cath_tools_defined_colour_036, /Q9HAU8PHYRE21///99+100//
-colour cath_tools_defined_colour_036, /Q9HAU8SUPERFAMILY2///99+100//
-colour cath_tools_defined_colour_036, /Q9HAU8VIVACE1///99+100//
-colour cath_tools_defined_colour_037, /Q9HAU8DomSerf1///101+102//
-colour cath_tools_defined_colour_037, /Q9HAU8PHYRE21///101+102//
-colour cath_tools_defined_colour_037, /Q9HAU8SUPERFAMILY2///101+102//
-colour cath_tools_defined_colour_037, /Q9HAU8VIVACE1///101+102//
-colour cath_tools_defined_colour_038, /Q9HAU8DomSerf1///103//
-colour cath_tools_defined_colour_038, /Q9HAU8PHYRE21///103//
-colour cath_tools_defined_colour_038, /Q9HAU8SUPERFAMILY2///103//
-colour cath_tools_defined_colour_038, /Q9HAU8VIVACE1///103//
-colour cath_tools_defined_colour_039, /Q9HAU8DomSerf1///104+105//
-colour cath_tools_defined_colour_039, /Q9HAU8PHYRE21///104+105//
-colour cath_tools_defined_colour_039, /Q9HAU8SUPERFAMILY2///104+105//
-colour cath_tools_defined_colour_039, /Q9HAU8VIVACE1///104+105//
-colour cath_tools_defined_colour_040, /Q9HAU8DomSerf1///106//
-colour cath_tools_defined_colour_040, /Q9HAU8PHYRE21///106//
-colour cath_tools_defined_colour_040, /Q9HAU8SUPERFAMILY2///106//
-colour cath_tools_defined_colour_040, /Q9HAU8VIVACE1///106//
-colour cath_tools_defined_colour_041, /Q9HAU8DomSerf1///107+108//
-colour cath_tools_defined_colour_041, /Q9HAU8PHYRE21///107+108//
-colour cath_tools_defined_colour_041, /Q9HAU8SUPERFAMILY2///107+108//
-colour cath_tools_defined_colour_041, /Q9HAU8VIVACE1///107+108//
-colour cath_tools_defined_colour_042, /Q9HAU8DomSerf1///109+110//
-colour cath_tools_defined_colour_042, /Q9HAU8PHYRE21///109+110//
-colour cath_tools_defined_colour_042, /Q9HAU8SUPERFAMILY2///109+110//
-colour cath_tools_defined_colour_042, /Q9HAU8VIVACE1///109+110//
-colour cath_tools_defined_colour_043, /Q9HAU8DomSerf1///111+112//
-colour cath_tools_defined_colour_043, /Q9HAU8PHYRE21///111+112//
-colour cath_tools_defined_colour_043, /Q9HAU8SUPERFAMILY2///111+112//
-colour cath_tools_defined_colour_043, /Q9HAU8VIVACE1///111+112//
-colour cath_tools_defined_colour_044, /Q9HAU8DomSerf1///113+114//
-colour cath_tools_defined_colour_044, /Q9HAU8PHYRE21///113+114//
-colour cath_tools_defined_colour_044, /Q9HAU8SUPERFAMILY2///113+114//
-colour cath_tools_defined_colour_044, /Q9HAU8VIVACE1///113+114//
-colour cath_tools_defined_colour_045, /Q9HAU8DomSerf1///115+116//
-colour cath_tools_defined_colour_045, /Q9HAU8PHYRE21///115+116//
-colour cath_tools_defined_colour_045, /Q9HAU8SUPERFAMILY2///115+116//
-colour cath_tools_defined_colour_045, /Q9HAU8VIVACE1///115+116//
-colour cath_tools_defined_colour_046, /Q9HAU8DomSerf1///117+118//
-colour cath_tools_defined_colour_046, /Q9HAU8PHYRE21///117+118//
-colour cath_tools_defined_colour_046, /Q9HAU8SUPERFAMILY2///117+118//
-colour cath_tools_defined_colour_046, /Q9HAU8VIVACE1///117+118//
-colour cath_tools_defined_colour_047, /Q9HAU8DomSerf1///119//
-colour cath_tools_defined_colour_047, /Q9HAU8PHYRE21///119//
-colour cath_tools_defined_colour_047, /Q9HAU8SUPERFAMILY2///119//
-colour cath_tools_defined_colour_047, /Q9HAU8VIVACE1///119//
-colour cath_tools_defined_colour_048, /Q9HAU8DomSerf1///120+121//
-colour cath_tools_defined_colour_048, /Q9HAU8PHYRE21///120+121//
-colour cath_tools_defined_colour_048, /Q9HAU8SUPERFAMILY2///120+121//
-colour cath_tools_defined_colour_048, /Q9HAU8VIVACE1///120+121//
-colour cath_tools_defined_colour_049, /Q9HAU8DomSerf1///122//
-colour cath_tools_defined_colour_049, /Q9HAU8PHYRE21///122//
-colour cath_tools_defined_colour_049, /Q9HAU8SUPERFAMILY2///122//
-colour cath_tools_defined_colour_049, /Q9HAU8VIVACE1///122//
-colour cath_tools_defined_colour_050, /Q9HAU8DomSerf1///123//
-colour cath_tools_defined_colour_050, /Q9HAU8PHYRE21///123//
-colour cath_tools_defined_colour_050, /Q9HAU8SUPERFAMILY2///123//
-colour cath_tools_defined_colour_050, /Q9HAU8VIVACE1///123//
-colour cath_tools_defined_colour_051, /Q9HAU8DomSerf1///124+125//
-colour cath_tools_defined_colour_051, /Q9HAU8PHYRE21///124+125//
-colour cath_tools_defined_colour_051, /Q9HAU8SUPERFAMILY2///124+125//
-colour cath_tools_defined_colour_051, /Q9HAU8VIVACE1///124+125//
-colour cath_tools_defined_colour_052, /Q9HAU8DomSerf1///126//
-colour cath_tools_defined_colour_052, /Q9HAU8PHYRE21///126//
-colour cath_tools_defined_colour_052, /Q9HAU8SUPERFAMILY2///126//
-colour cath_tools_defined_colour_052, /Q9HAU8VIVACE1///126//
-colour cath_tools_defined_colour_053, /Q9HAU8DomSerf1///127//
-colour cath_tools_defined_colour_053, /Q9HAU8PHYRE21///127//
-colour cath_tools_defined_colour_053, /Q9HAU8SUPERFAMILY2///127//
-colour cath_tools_defined_colour_053, /Q9HAU8VIVACE1///127//
-colour cath_tools_defined_colour_054, /Q9HAU8DomSerf1///128+129//
-colour cath_tools_defined_colour_054, /Q9HAU8PHYRE21///128+129//
-colour cath_tools_defined_colour_054, /Q9HAU8SUPERFAMILY2///128+129//
-colour cath_tools_defined_colour_054, /Q9HAU8VIVACE1///128+129//
-colour cath_tools_defined_colour_055, /Q9HAU8DomSerf1///130+131//
-colour cath_tools_defined_colour_055, /Q9HAU8PHYRE21///130+131//
-colour cath_tools_defined_colour_055, /Q9HAU8SUPERFAMILY2///130+131//
-colour cath_tools_defined_colour_055, /Q9HAU8VIVACE1///130+131//
-colour cath_tools_defined_colour_056, /Q9HAU8DomSerf1///132//
-colour cath_tools_defined_colour_056, /Q9HAU8PHYRE21///132//
-colour cath_tools_defined_colour_056, /Q9HAU8SUPERFAMILY2///132//
-colour cath_tools_defined_colour_056, /Q9HAU8VIVACE1///132//
-colour cath_tools_defined_colour_057, /Q9HAU8DomSerf1///133//
-colour cath_tools_defined_colour_057, /Q9HAU8PHYRE21///133//
-colour cath_tools_defined_colour_057, /Q9HAU8SUPERFAMILY2///133//
-colour cath_tools_defined_colour_057, /Q9HAU8VIVACE1///133//
-colour cath_tools_defined_colour_058, /Q9HAU8DomSerf1///134//
-colour cath_tools_defined_colour_058, /Q9HAU8PHYRE21///134//
-colour cath_tools_defined_colour_058, /Q9HAU8SUPERFAMILY2///134//
-colour cath_tools_defined_colour_058, /Q9HAU8VIVACE1///134//
-colour cath_tools_defined_colour_059, /Q9HAU8DomSerf1///135//
-colour cath_tools_defined_colour_059, /Q9HAU8PHYRE21///135//
-colour cath_tools_defined_colour_059, /Q9HAU8SUPERFAMILY2///135//
-colour cath_tools_defined_colour_059, /Q9HAU8VIVACE1///135//
-colour cath_tools_defined_colour_060, /Q9HAU8DomSerf1///136//
-colour cath_tools_defined_colour_060, /Q9HAU8PHYRE21///136//
-colour cath_tools_defined_colour_060, /Q9HAU8SUPERFAMILY2///136//
-colour cath_tools_defined_colour_060, /Q9HAU8VIVACE1///136//
-colour cath_tools_defined_colour_061, /Q9HAU8DomSerf1///137//
-colour cath_tools_defined_colour_061, /Q9HAU8PHYRE21///137//
-colour cath_tools_defined_colour_061, /Q9HAU8SUPERFAMILY2///137//
-colour cath_tools_defined_colour_061, /Q9HAU8VIVACE1///137//
-colour cath_tools_defined_colour_062, /Q9HAU8DomSerf1///182//
-colour cath_tools_defined_colour_062, /Q9HAU8PHYRE21///182//
-colour cath_tools_defined_colour_062, /Q9HAU8SUPERFAMILY2///182//
-colour cath_tools_defined_colour_062, /Q9HAU8VIVACE1///182//
-colour cath_tools_defined_colour_063, /Q9HAU8DomSerf1///181//
-colour cath_tools_defined_colour_063, /Q9HAU8PHYRE21///181//
-colour cath_tools_defined_colour_063, /Q9HAU8SUPERFAMILY2///181//
-colour cath_tools_defined_colour_063, /Q9HAU8VIVACE1///181//
-colour cath_tools_defined_colour_064, /Q9HAU8DomSerf1///180//
-colour cath_tools_defined_colour_064, /Q9HAU8PHYRE21///180//
-colour cath_tools_defined_colour_064, /Q9HAU8SUPERFAMILY2///180//
-colour cath_tools_defined_colour_064, /Q9HAU8VIVACE1///180//
-colour cath_tools_defined_colour_065, /Q9HAU8DomSerf1///179//
-colour cath_tools_defined_colour_065, /Q9HAU8PHYRE21///179//
-colour cath_tools_defined_colour_065, /Q9HAU8SUPERFAMILY2///179//
-colour cath_tools_defined_colour_065, /Q9HAU8VIVACE1///179//
-colour cath_tools_defined_colour_066, /Q9HAU8DomSerf1///178//
-colour cath_tools_defined_colour_066, /Q9HAU8PHYRE21///178//
-colour cath_tools_defined_colour_066, /Q9HAU8SUPERFAMILY2///178//
-colour cath_tools_defined_colour_066, /Q9HAU8VIVACE1///178//
-colour cath_tools_defined_colour_067, /Q9HAU8DomSerf1///177//
-colour cath_tools_defined_colour_067, /Q9HAU8PHYRE21///177//
-colour cath_tools_defined_colour_067, /Q9HAU8SUPERFAMILY2///177//
-colour cath_tools_defined_colour_067, /Q9HAU8VIVACE1///177//
-colour cath_tools_defined_colour_068, /Q9HAU8DomSerf1///176//
-colour cath_tools_defined_colour_068, /Q9HAU8PHYRE21///176//
-colour cath_tools_defined_colour_068, /Q9HAU8SUPERFAMILY2///176//
-colour cath_tools_defined_colour_068, /Q9HAU8VIVACE1///176//
-colour cath_tools_defined_colour_069, /Q9HAU8DomSerf1///175//
-colour cath_tools_defined_colour_069, /Q9HAU8PHYRE21///175//
-colour cath_tools_defined_colour_069, /Q9HAU8SUPERFAMILY2///175//
-colour cath_tools_defined_colour_069, /Q9HAU8VIVACE1///175//
-colour cath_tools_defined_colour_070, /Q9HAU8DomSerf1///174//
-colour cath_tools_defined_colour_070, /Q9HAU8PHYRE21///174//
-colour cath_tools_defined_colour_070, /Q9HAU8SUPERFAMILY2///174//
-colour cath_tools_defined_colour_070, /Q9HAU8VIVACE1///174//
-colour cath_tools_defined_colour_071, /Q9HAU8DomSerf1///173//
-colour cath_tools_defined_colour_071, /Q9HAU8PHYRE21///173//
-colour cath_tools_defined_colour_071, /Q9HAU8SUPERFAMILY2///173//
-colour cath_tools_defined_colour_071, /Q9HAU8VIVACE1///173//
-colour cath_tools_defined_colour_072, /Q9HAU8DomSerf1///172//
-colour cath_tools_defined_colour_072, /Q9HAU8PHYRE21///172//
-colour cath_tools_defined_colour_072, /Q9HAU8SUPERFAMILY2///172//
-colour cath_tools_defined_colour_072, /Q9HAU8VIVACE1///172//
-colour cath_tools_defined_colour_073, /Q9HAU8DomSerf1///171//
-colour cath_tools_defined_colour_073, /Q9HAU8PHYRE21///171//
-colour cath_tools_defined_colour_073, /Q9HAU8SUPERFAMILY2///171//
-colour cath_tools_defined_colour_073, /Q9HAU8VIVACE1///171//
-colour cath_tools_defined_colour_074, /Q9HAU8DomSerf1///170//
-colour cath_tools_defined_colour_074, /Q9HAU8PHYRE21///170//
-colour cath_tools_defined_colour_074, /Q9HAU8SUPERFAMILY2///170//
-colour cath_tools_defined_colour_074, /Q9HAU8VIVACE1///170//
-colour cath_tools_defined_colour_075, /Q9HAU8DomSerf1///169//
-colour cath_tools_defined_colour_075, /Q9HAU8PHYRE21///169//
-colour cath_tools_defined_colour_075, /Q9HAU8SUPERFAMILY2///169//
-colour cath_tools_defined_colour_075, /Q9HAU8VIVACE1///169//
-colour cath_tools_defined_colour_076, /Q9HAU8DomSerf1///168//
-colour cath_tools_defined_colour_076, /Q9HAU8PHYRE21///168//
-colour cath_tools_defined_colour_076, /Q9HAU8SUPERFAMILY2///168//
-colour cath_tools_defined_colour_076, /Q9HAU8VIVACE1///168//
-colour cath_tools_defined_colour_077, /Q9HAU8DomSerf1///167//
-colour cath_tools_defined_colour_077, /Q9HAU8PHYRE21///167//
-colour cath_tools_defined_colour_077, /Q9HAU8SUPERFAMILY2///167//
-colour cath_tools_defined_colour_077, /Q9HAU8VIVACE1///167//
-colour cath_tools_defined_colour_078, /Q9HAU8DomSerf1///166//
-colour cath_tools_defined_colour_078, /Q9HAU8PHYRE21///166//
-colour cath_tools_defined_colour_078, /Q9HAU8SUPERFAMILY2///166//
-colour cath_tools_defined_colour_078, /Q9HAU8VIVACE1///166//
-colour cath_tools_defined_colour_079, /Q9HAU8DomSerf1///165//
-colour cath_tools_defined_colour_079, /Q9HAU8PHYRE21///165//
-colour cath_tools_defined_colour_079, /Q9HAU8SUPERFAMILY2///165//
-colour cath_tools_defined_colour_079, /Q9HAU8VIVACE1///165//
-colour cath_tools_defined_colour_080, /Q9HAU8DomSerf1///164//
-colour cath_tools_defined_colour_080, /Q9HAU8PHYRE21///164//
-colour cath_tools_defined_colour_080, /Q9HAU8SUPERFAMILY2///164//
-colour cath_tools_defined_colour_080, /Q9HAU8VIVACE1///164//
-colour cath_tools_defined_colour_081, /Q9HAU8DomSerf1///163//
-colour cath_tools_defined_colour_081, /Q9HAU8PHYRE21///163//
-colour cath_tools_defined_colour_081, /Q9HAU8SUPERFAMILY2///163//
-colour cath_tools_defined_colour_081, /Q9HAU8VIVACE1///163//
-colour cath_tools_defined_colour_082, /Q9HAU8DomSerf1///162//
-colour cath_tools_defined_colour_082, /Q9HAU8PHYRE21///162//
-colour cath_tools_defined_colour_082, /Q9HAU8SUPERFAMILY2///162//
-colour cath_tools_defined_colour_082, /Q9HAU8VIVACE1///162//
-colour cath_tools_defined_colour_083, /Q9HAU8DomSerf1///161//
-colour cath_tools_defined_colour_083, /Q9HAU8PHYRE21///161//
-colour cath_tools_defined_colour_083, /Q9HAU8SUPERFAMILY2///161//
-colour cath_tools_defined_colour_083, /Q9HAU8VIVACE1///161//
-colour cath_tools_defined_colour_084, /Q9HAU8DomSerf1///160//
-colour cath_tools_defined_colour_084, /Q9HAU8PHYRE21///160//
-colour cath_tools_defined_colour_084, /Q9HAU8SUPERFAMILY2///160//
-colour cath_tools_defined_colour_084, /Q9HAU8VIVACE1///160//
-colour cath_tools_defined_colour_085, /Q9HAU8DomSerf1///159//
-colour cath_tools_defined_colour_085, /Q9HAU8PHYRE21///159//
-colour cath_tools_defined_colour_085, /Q9HAU8SUPERFAMILY2///159//
-colour cath_tools_defined_colour_085, /Q9HAU8VIVACE1///159//
-colour cath_tools_defined_colour_086, /Q9HAU8DomSerf1///158//
-colour cath_tools_defined_colour_086, /Q9HAU8PHYRE21///158//
-colour cath_tools_defined_colour_086, /Q9HAU8SUPERFAMILY2///158//
-colour cath_tools_defined_colour_086, /Q9HAU8VIVACE1///158//
-colour cath_tools_defined_colour_087, /Q9HAU8DomSerf1///157//
-colour cath_tools_defined_colour_087, /Q9HAU8PHYRE21///157//
-colour cath_tools_defined_colour_087, /Q9HAU8SUPERFAMILY2///157//
-colour cath_tools_defined_colour_087, /Q9HAU8VIVACE1///157//
-colour cath_tools_defined_colour_088, /Q9HAU8DomSerf1///156//
-colour cath_tools_defined_colour_088, /Q9HAU8PHYRE21///156//
-colour cath_tools_defined_colour_088, /Q9HAU8SUPERFAMILY2///156//
-colour cath_tools_defined_colour_088, /Q9HAU8VIVACE1///156//
-colour cath_tools_defined_colour_089, /Q9HAU8DomSerf1///155//
-colour cath_tools_defined_colour_089, /Q9HAU8PHYRE21///155//
-colour cath_tools_defined_colour_089, /Q9HAU8SUPERFAMILY2///155//
-colour cath_tools_defined_colour_089, /Q9HAU8VIVACE1///155//
-colour cath_tools_defined_colour_090, /Q9HAU8DomSerf1///154//
-colour cath_tools_defined_colour_090, /Q9HAU8PHYRE21///154//
-colour cath_tools_defined_colour_090, /Q9HAU8SUPERFAMILY2///154//
-colour cath_tools_defined_colour_090, /Q9HAU8VIVACE1///154//
-colour cath_tools_defined_colour_091, /Q9HAU8DomSerf1///153//
-colour cath_tools_defined_colour_091, /Q9HAU8PHYRE21///153//
-colour cath_tools_defined_colour_091, /Q9HAU8SUPERFAMILY2///153//
-colour cath_tools_defined_colour_091, /Q9HAU8VIVACE1///153//
-colour cath_tools_defined_colour_092, /Q9HAU8DomSerf1///152//
-colour cath_tools_defined_colour_092, /Q9HAU8PHYRE21///152//
-colour cath_tools_defined_colour_092, /Q9HAU8SUPERFAMILY2///152//
-colour cath_tools_defined_colour_092, /Q9HAU8VIVACE1///152//
-colour cath_tools_defined_colour_093, /Q9HAU8DomSerf1///151//
-colour cath_tools_defined_colour_093, /Q9HAU8PHYRE21///151//
-colour cath_tools_defined_colour_093, /Q9HAU8SUPERFAMILY2///151//
-colour cath_tools_defined_colour_093, /Q9HAU8VIVACE1///151//
-colour cath_tools_defined_colour_094, /Q9HAU8DomSerf1///150//
-colour cath_tools_defined_colour_094, /Q9HAU8PHYRE21///150//
-colour cath_tools_defined_colour_094, /Q9HAU8SUPERFAMILY2///150//
-colour cath_tools_defined_colour_094, /Q9HAU8VIVACE1///150//
-colour cath_tools_defined_colour_095, /Q9HAU8DomSerf1///149//
-colour cath_tools_defined_colour_095, /Q9HAU8PHYRE21///149//
-colour cath_tools_defined_colour_095, /Q9HAU8SUPERFAMILY2///149//
-colour cath_tools_defined_colour_095, /Q9HAU8VIVACE1///149//
-colour cath_tools_defined_colour_096, /Q9HAU8DomSerf1///148//
-colour cath_tools_defined_colour_096, /Q9HAU8PHYRE21///148//
-colour cath_tools_defined_colour_096, /Q9HAU8SUPERFAMILY2///148//
-colour cath_tools_defined_colour_096, /Q9HAU8VIVACE1///148//
-colour cath_tools_defined_colour_097, /Q9HAU8DomSerf1///147//
-colour cath_tools_defined_colour_097, /Q9HAU8PHYRE21///147//
-colour cath_tools_defined_colour_097, /Q9HAU8SUPERFAMILY2///147//
-colour cath_tools_defined_colour_097, /Q9HAU8VIVACE1///147//
-colour cath_tools_defined_colour_098, /Q9HAU8DomSerf1///146//
-colour cath_tools_defined_colour_098, /Q9HAU8PHYRE21///146//
-colour cath_tools_defined_colour_098, /Q9HAU8SUPERFAMILY2///146//
-colour cath_tools_defined_colour_098, /Q9HAU8VIVACE1///146//
-colour cath_tools_defined_colour_099, /Q9HAU8DomSerf1///145//
-colour cath_tools_defined_colour_099, /Q9HAU8PHYRE21///145//
-colour cath_tools_defined_colour_099, /Q9HAU8SUPERFAMILY2///145//
-colour cath_tools_defined_colour_099, /Q9HAU8VIVACE1///145//
-colour cath_tools_defined_colour_100, /Q9HAU8DomSerf1///144//
-colour cath_tools_defined_colour_100, /Q9HAU8PHYRE21///144//
-colour cath_tools_defined_colour_100, /Q9HAU8SUPERFAMILY2///144//
-colour cath_tools_defined_colour_100, /Q9HAU8VIVACE1///144//
-colour cath_tools_defined_colour_101, /Q9HAU8DomSerf1///143//
-colour cath_tools_defined_colour_101, /Q9HAU8PHYRE21///143//
-colour cath_tools_defined_colour_101, /Q9HAU8SUPERFAMILY2///143//
-colour cath_tools_defined_colour_101, /Q9HAU8VIVACE1///143//
-colour cath_tools_defined_colour_102, /Q9HAU8DomSerf1///142//
-colour cath_tools_defined_colour_102, /Q9HAU8PHYRE21///142//
-colour cath_tools_defined_colour_102, /Q9HAU8SUPERFAMILY2///142//
-colour cath_tools_defined_colour_102, /Q9HAU8VIVACE1///142//
-colour cath_tools_defined_colour_103, /Q9HAU8DomSerf1///141//
-colour cath_tools_defined_colour_103, /Q9HAU8PHYRE21///141//
-colour cath_tools_defined_colour_103, /Q9HAU8SUPERFAMILY2///141//
-colour cath_tools_defined_colour_103, /Q9HAU8VIVACE1///141//
-colour cath_tools_defined_colour_104, /Q9HAU8DomSerf1///140//
-colour cath_tools_defined_colour_104, /Q9HAU8PHYRE21///140//
-colour cath_tools_defined_colour_104, /Q9HAU8SUPERFAMILY2///140//
-colour cath_tools_defined_colour_104, /Q9HAU8VIVACE1///140//
-colour cath_tools_defined_colour_105, /Q9HAU8DomSerf1///139//
-colour cath_tools_defined_colour_105, /Q9HAU8PHYRE21///139//
-colour cath_tools_defined_colour_105, /Q9HAU8SUPERFAMILY2///139//
-colour cath_tools_defined_colour_105, /Q9HAU8VIVACE1///139//
-colour cath_tools_defined_colour_106, /Q9HAU8DomSerf1///138//
-colour cath_tools_defined_colour_106, /Q9HAU8PHYRE21///138//
-colour cath_tools_defined_colour_106, /Q9HAU8SUPERFAMILY2///138//
-colour cath_tools_defined_colour_106, /Q9HAU8VIVACE1///138//
-colour cath_tools_defined_colour_107, /Q9HAU8DomSerf1///183//
-colour cath_tools_defined_colour_107, /Q9HAU8PHYRE21///183//
-colour cath_tools_defined_colour_107, /Q9HAU8SUPERFAMILY2///183//
-colour cath_tools_defined_colour_107, /Q9HAU8VIVACE1///183//
-colour cath_tools_defined_colour_108, /Q9HAU8DomSerf1///184//
-colour cath_tools_defined_colour_108, /Q9HAU8PHYRE21///184//
-colour cath_tools_defined_colour_108, /Q9HAU8SUPERFAMILY2///184//
-colour cath_tools_defined_colour_108, /Q9HAU8VIVACE1///184//
-colour cath_tools_defined_colour_109, /Q9HAU8DomSerf1///185//
-colour cath_tools_defined_colour_109, /Q9HAU8PHYRE21///185//
-colour cath_tools_defined_colour_109, /Q9HAU8SUPERFAMILY2///185//
-colour cath_tools_defined_colour_109, /Q9HAU8VIVACE1///185//
-colour cath_tools_defined_colour_110, /Q9HAU8DomSerf1///186//
-colour cath_tools_defined_colour_110, /Q9HAU8PHYRE21///186//
-colour cath_tools_defined_colour_110, /Q9HAU8SUPERFAMILY2///186//
-colour cath_tools_defined_colour_110, /Q9HAU8VIVACE1///186//
-colour cath_tools_defined_colour_111, /Q9HAU8DomSerf1///187//
-colour cath_tools_defined_colour_111, /Q9HAU8PHYRE21///187//
-colour cath_tools_defined_colour_111, /Q9HAU8SUPERFAMILY2///187//
-colour cath_tools_defined_colour_111, /Q9HAU8VIVACE1///187//
-colour cath_tools_defined_colour_112, /Q9HAU8DomSerf1///188//
-colour cath_tools_defined_colour_112, /Q9HAU8PHYRE21///188//
-colour cath_tools_defined_colour_112, /Q9HAU8SUPERFAMILY2///188//
-colour cath_tools_defined_colour_112, /Q9HAU8VIVACE1///188//
-colour cath_tools_defined_colour_113, /Q9HAU8DomSerf1///189//
-colour cath_tools_defined_colour_113, /Q9HAU8PHYRE21///189//
-colour cath_tools_defined_colour_113, /Q9HAU8SUPERFAMILY2///189//
-colour cath_tools_defined_colour_113, /Q9HAU8VIVACE1///189//
-colour cath_tools_defined_colour_114, /Q9HAU8DomSerf1///190//
-colour cath_tools_defined_colour_114, /Q9HAU8PHYRE21///190//
-colour cath_tools_defined_colour_114, /Q9HAU8SUPERFAMILY2///190//
-colour cath_tools_defined_colour_114, /Q9HAU8VIVACE1///190//
-colour cath_tools_defined_colour_115, /Q9HAU8DomSerf1///191//
-colour cath_tools_defined_colour_115, /Q9HAU8PHYRE21///191//
-colour cath_tools_defined_colour_115, /Q9HAU8SUPERFAMILY2///191//
-colour cath_tools_defined_colour_115, /Q9HAU8VIVACE1///191//
-colour cath_tools_defined_colour_116, /Q9HAU8DomSerf1///192//
-colour cath_tools_defined_colour_116, /Q9HAU8PHYRE21///192//
-colour cath_tools_defined_colour_116, /Q9HAU8SUPERFAMILY2///192//
-colour cath_tools_defined_colour_116, /Q9HAU8VIVACE1///192//
-colour cath_tools_defined_colour_117, /Q9HAU8DomSerf1///193//
-colour cath_tools_defined_colour_117, /Q9HAU8PHYRE21///193//
-colour cath_tools_defined_colour_117, /Q9HAU8SUPERFAMILY2///193//
-colour cath_tools_defined_colour_117, /Q9HAU8VIVACE1///193//
-colour cath_tools_defined_colour_118, /Q9HAU8DomSerf1///194//
-colour cath_tools_defined_colour_118, /Q9HAU8PHYRE21///194//
-colour cath_tools_defined_colour_118, /Q9HAU8SUPERFAMILY2///194//
-colour cath_tools_defined_colour_118, /Q9HAU8VIVACE1///194//
-colour cath_tools_defined_colour_119, /Q9HAU8DomSerf1///195//
-colour cath_tools_defined_colour_119, /Q9HAU8PHYRE21///195//
-colour cath_tools_defined_colour_119, /Q9HAU8SUPERFAMILY2///195//
-colour cath_tools_defined_colour_119, /Q9HAU8VIVACE1///195//
-colour cath_tools_defined_colour_120, /Q9HAU8DomSerf1///196//
-colour cath_tools_defined_colour_120, /Q9HAU8PHYRE21///196//
-colour cath_tools_defined_colour_120, /Q9HAU8SUPERFAMILY2///196//
-colour cath_tools_defined_colour_120, /Q9HAU8VIVACE1///196//
-colour cath_tools_defined_colour_121, /Q9HAU8DomSerf1///197+198+199//
-colour cath_tools_defined_colour_121, /Q9HAU8PHYRE21///197+198+199//
-colour cath_tools_defined_colour_121, /Q9HAU8SUPERFAMILY2///197+198+199//
-colour cath_tools_defined_colour_121, /Q9HAU8VIVACE1///197+198+199//
-colour cath_tools_defined_colour_122, /Q9HAU8DomSerf1///200+201//
-colour cath_tools_defined_colour_122, /Q9HAU8PHYRE21///200+201//
-colour cath_tools_defined_colour_122, /Q9HAU8SUPERFAMILY2///200+201//
-colour cath_tools_defined_colour_122, /Q9HAU8VIVACE1///200+201//
-colour cath_tools_defined_colour_123, /Q9HAU8DomSerf1///202//
-colour cath_tools_defined_colour_123, /Q9HAU8PHYRE21///202//
-colour cath_tools_defined_colour_123, /Q9HAU8SUPERFAMILY2///202//
-colour cath_tools_defined_colour_123, /Q9HAU8VIVACE1///202//
-colour cath_tools_defined_colour_124, /Q9HAU8DomSerf1///203//
-colour cath_tools_defined_colour_124, /Q9HAU8PHYRE21///203//
-colour cath_tools_defined_colour_124, /Q9HAU8SUPERFAMILY2///203//
-colour cath_tools_defined_colour_124, /Q9HAU8VIVACE1///203//
-colour cath_tools_defined_colour_125, /Q9HAU8DomSerf1///204//
-colour cath_tools_defined_colour_125, /Q9HAU8PHYRE21///204//
-colour cath_tools_defined_colour_125, /Q9HAU8SUPERFAMILY2///204//
-colour cath_tools_defined_colour_125, /Q9HAU8VIVACE1///204//
-colour cath_tools_defined_colour_126, /Q9HAU8DomSerf1///205//
-colour cath_tools_defined_colour_126, /Q9HAU8PHYRE21///205//
-colour cath_tools_defined_colour_126, /Q9HAU8SUPERFAMILY2///205//
-colour cath_tools_defined_colour_126, /Q9HAU8VIVACE1///205//
-colour cath_tools_defined_colour_127, /Q9HAU8DomSerf1///206//
-colour cath_tools_defined_colour_127, /Q9HAU8PHYRE21///206//
-colour cath_tools_defined_colour_127, /Q9HAU8SUPERFAMILY2///206//
-colour cath_tools_defined_colour_127, /Q9HAU8VIVACE1///206//
-colour cath_tools_defined_colour_128, /Q9HAU8DomSerf1///207//
-colour cath_tools_defined_colour_128, /Q9HAU8PHYRE21///207//
-colour cath_tools_defined_colour_128, /Q9HAU8SUPERFAMILY2///207//
-colour cath_tools_defined_colour_128, /Q9HAU8VIVACE1///207//
-colour cath_tools_defined_colour_129, /Q9HAU8DomSerf1///208//
-colour cath_tools_defined_colour_129, /Q9HAU8PHYRE21///208//
-colour cath_tools_defined_colour_129, /Q9HAU8SUPERFAMILY2///208//
-colour cath_tools_defined_colour_129, /Q9HAU8VIVACE1///208//
-colour cath_tools_defined_colour_130, /Q9HAU8DomSerf1///209//
-colour cath_tools_defined_colour_130, /Q9HAU8PHYRE21///209//
-colour cath_tools_defined_colour_130, /Q9HAU8SUPERFAMILY2///209//
-colour cath_tools_defined_colour_130, /Q9HAU8VIVACE1///209//
-colour cath_tools_defined_colour_131, /Q9HAU8DomSerf1///210//
-colour cath_tools_defined_colour_131, /Q9HAU8PHYRE21///210//
-colour cath_tools_defined_colour_131, /Q9HAU8SUPERFAMILY2///210//
-colour cath_tools_defined_colour_131, /Q9HAU8VIVACE1///210//
-colour cath_tools_defined_colour_132, /Q9HAU8DomSerf1///211//
-colour cath_tools_defined_colour_132, /Q9HAU8PHYRE21///211//
-colour cath_tools_defined_colour_132, /Q9HAU8SUPERFAMILY2///211//
-colour cath_tools_defined_colour_132, /Q9HAU8VIVACE1///211//
-colour cath_tools_defined_colour_133, /Q9HAU8DomSerf1///212//
-colour cath_tools_defined_colour_133, /Q9HAU8PHYRE21///212//
-colour cath_tools_defined_colour_133, /Q9HAU8SUPERFAMILY2///212//
-colour cath_tools_defined_colour_133, /Q9HAU8VIVACE1///212//
-colour cath_tools_defined_colour_134, /Q9HAU8DomSerf1///213//
-colour cath_tools_defined_colour_134, /Q9HAU8PHYRE21///213//
-colour cath_tools_defined_colour_134, /Q9HAU8SUPERFAMILY2///213//
-colour cath_tools_defined_colour_134, /Q9HAU8VIVACE1///213//
-colour cath_tools_defined_colour_135, /Q9HAU8DomSerf1///214//
-colour cath_tools_defined_colour_135, /Q9HAU8PHYRE21///214//
-colour cath_tools_defined_colour_135, /Q9HAU8SUPERFAMILY2///214//
-colour cath_tools_defined_colour_135, /Q9HAU8VIVACE1///214//
-colour cath_tools_defined_colour_136, /Q9HAU8DomSerf1///215//
-colour cath_tools_defined_colour_136, /Q9HAU8PHYRE21///215//
-colour cath_tools_defined_colour_136, /Q9HAU8SUPERFAMILY2///215//
-colour cath_tools_defined_colour_136, /Q9HAU8VIVACE1///215//
-colour cath_tools_defined_colour_137, /Q9HAU8DomSerf1///216//
-colour cath_tools_defined_colour_137, /Q9HAU8PHYRE21///216//
-colour cath_tools_defined_colour_137, /Q9HAU8SUPERFAMILY2///216//
-colour cath_tools_defined_colour_137, /Q9HAU8VIVACE1///216//
-colour cath_tools_defined_colour_138, /Q9HAU8DomSerf1///217//
-colour cath_tools_defined_colour_138, /Q9HAU8PHYRE21///217//
-colour cath_tools_defined_colour_138, /Q9HAU8SUPERFAMILY2///217//
-colour cath_tools_defined_colour_138, /Q9HAU8VIVACE1///217//
-colour cath_tools_defined_colour_139, /Q9HAU8DomSerf1///218//
-colour cath_tools_defined_colour_139, /Q9HAU8PHYRE21///218//
-colour cath_tools_defined_colour_139, /Q9HAU8SUPERFAMILY2///218//
-colour cath_tools_defined_colour_139, /Q9HAU8VIVACE1///218//
-colour cath_tools_defined_colour_140, /Q9HAU8DomSerf1///219//
-colour cath_tools_defined_colour_140, /Q9HAU8PHYRE21///219//
-colour cath_tools_defined_colour_140, /Q9HAU8SUPERFAMILY2///219//
-colour cath_tools_defined_colour_140, /Q9HAU8VIVACE1///219//
-colour cath_tools_defined_colour_141, /Q9HAU8DomSerf1///220//
-colour cath_tools_defined_colour_141, /Q9HAU8PHYRE21///220//
-colour cath_tools_defined_colour_141, /Q9HAU8SUPERFAMILY2///220//
-colour cath_tools_defined_colour_141, /Q9HAU8VIVACE1///220//
-colour cath_tools_defined_colour_142, /Q9HAU8DomSerf1///221//
-colour cath_tools_defined_colour_142, /Q9HAU8PHYRE21///221//
-colour cath_tools_defined_colour_142, /Q9HAU8SUPERFAMILY2///221//
-colour cath_tools_defined_colour_142, /Q9HAU8VIVACE1///221//
-colour cath_tools_defined_colour_143, /Q9HAU8DomSerf1///222//
-colour cath_tools_defined_colour_143, /Q9HAU8PHYRE21///222//
-colour cath_tools_defined_colour_143, /Q9HAU8SUPERFAMILY2///222//
-colour cath_tools_defined_colour_143, /Q9HAU8VIVACE1///222//
-colour cath_tools_defined_colour_144, /Q9HAU8DomSerf1///223//
-colour cath_tools_defined_colour_144, /Q9HAU8PHYRE21///223//
-colour cath_tools_defined_colour_144, /Q9HAU8SUPERFAMILY2///223//
-colour cath_tools_defined_colour_144, /Q9HAU8VIVACE1///223//
-colour cath_tools_defined_colour_145, /Q9HAU8DomSerf1///224//
-colour cath_tools_defined_colour_145, /Q9HAU8PHYRE21///224//
-colour cath_tools_defined_colour_145, /Q9HAU8SUPERFAMILY2///224//
-colour cath_tools_defined_colour_145, /Q9HAU8VIVACE1///224//
-colour cath_tools_defined_colour_146, /Q9HAU8DomSerf1///225//
-colour cath_tools_defined_colour_146, /Q9HAU8PHYRE21///225//
-colour cath_tools_defined_colour_146, /Q9HAU8SUPERFAMILY2///225//
-colour cath_tools_defined_colour_146, /Q9HAU8VIVACE1///225//
-colour cath_tools_defined_colour_147, /Q9HAU8DomSerf1///226//
-colour cath_tools_defined_colour_147, /Q9HAU8PHYRE21///226//
-colour cath_tools_defined_colour_147, /Q9HAU8SUPERFAMILY2///226//
-colour cath_tools_defined_colour_147, /Q9HAU8VIVACE1///226//
-colour cath_tools_defined_colour_148, /Q9HAU8DomSerf1///227//
-colour cath_tools_defined_colour_148, /Q9HAU8PHYRE21///227//
-colour cath_tools_defined_colour_148, /Q9HAU8SUPERFAMILY2///227//
-colour cath_tools_defined_colour_148, /Q9HAU8VIVACE1///227//
-colour cath_tools_defined_colour_149, /Q9HAU8DomSerf1///228//
-colour cath_tools_defined_colour_149, /Q9HAU8PHYRE21///228//
-colour cath_tools_defined_colour_149, /Q9HAU8SUPERFAMILY2///228//
-colour cath_tools_defined_colour_149, /Q9HAU8VIVACE1///228//
-colour cath_tools_defined_colour_150, /Q9HAU8DomSerf1///229//
-colour cath_tools_defined_colour_150, /Q9HAU8PHYRE21///229//
-colour cath_tools_defined_colour_150, /Q9HAU8SUPERFAMILY2///229//
-colour cath_tools_defined_colour_150, /Q9HAU8VIVACE1///229//
-colour cath_tools_defined_colour_151, /Q9HAU8DomSerf1///230//
-colour cath_tools_defined_colour_151, /Q9HAU8PHYRE21///230//
-colour cath_tools_defined_colour_151, /Q9HAU8SUPERFAMILY2///230//
-colour cath_tools_defined_colour_151, /Q9HAU8VIVACE1///230//
-colour cath_tools_defined_colour_152, /Q9HAU8DomSerf1///231//
-colour cath_tools_defined_colour_152, /Q9HAU8PHYRE21///231//
-colour cath_tools_defined_colour_152, /Q9HAU8SUPERFAMILY2///231//
-colour cath_tools_defined_colour_152, /Q9HAU8VIVACE1///231//
-colour cath_tools_defined_colour_153, /Q9HAU8DomSerf1///232//
-colour cath_tools_defined_colour_153, /Q9HAU8PHYRE21///232//
-colour cath_tools_defined_colour_153, /Q9HAU8SUPERFAMILY2///232//
-colour cath_tools_defined_colour_153, /Q9HAU8VIVACE1///232//
-colour cath_tools_defined_colour_154, /Q9HAU8DomSerf1///292+293+294+295+296+297+298+299+300+301+302+303+304+305+306+307+308+309+310+311+312+313+314+315+316+317+318+319+320+321+322+323+324+325+326+327+328+329+330+331+332+333+334+335+336+337+338+339+340+341+342+343+344+345+346+347+348+349+350+351+352+353+354+355+356+357+358+359+360+361+362+363+364+365+366+367+368+369+370+371+372+373+374+375+376+377+378+379+380+381+382+383+384+385+386+387+388+389+390+391+392+393+394+395+396+397+398+399+400+401+402+403+404+405+406+407+408+409+410+411+412+413+414+415+416+417+418+419+420+421+422+423+424+425+426+427+428+429+430+431+432+433+434+435+436+437+438+439+440+441+442+443+444+445+446+447+448+449+450+451+452+453+454+455+456+457+458+459+460+461+462+463+464+465+466+467+468+469+470+471+472+473+474+475+476+477+478+479+480+481+482+483+484+485+486+487+488+489+490+491// or /Q9HAU8DomSerf1///492+493+494//
-colour cath_tools_defined_colour_154, /Q9HAU8PHYRE21///292//
-colour cath_tools_defined_colour_154, /Q9HAU8VIVACE1///292//
-colour cath_tools_defined_colour_155, /Q9HAU8DomSerf1///291//
-colour cath_tools_defined_colour_155, /Q9HAU8PHYRE21///291//
-colour cath_tools_defined_colour_155, /Q9HAU8VIVACE1///291//
-colour cath_tools_defined_colour_156, /Q9HAU8DomSerf1///290//
-colour cath_tools_defined_colour_156, /Q9HAU8PHYRE21///290//
-colour cath_tools_defined_colour_156, /Q9HAU8VIVACE1///290//
-colour cath_tools_defined_colour_157, /Q9HAU8DomSerf1///289//
-colour cath_tools_defined_colour_157, /Q9HAU8PHYRE21///289//
-colour cath_tools_defined_colour_157, /Q9HAU8SUPERFAMILY2///289//
-colour cath_tools_defined_colour_157, /Q9HAU8VIVACE1///289//
-colour cath_tools_defined_colour_158, /Q9HAU8DomSerf1///288//
-colour cath_tools_defined_colour_158, /Q9HAU8PHYRE21///288//
-colour cath_tools_defined_colour_158, /Q9HAU8SUPERFAMILY2///288//
-colour cath_tools_defined_colour_158, /Q9HAU8VIVACE1///288//
-colour cath_tools_defined_colour_159, /Q9HAU8DomSerf1///287//
-colour cath_tools_defined_colour_159, /Q9HAU8PHYRE21///287//
-colour cath_tools_defined_colour_159, /Q9HAU8SUPERFAMILY2///287//
-colour cath_tools_defined_colour_159, /Q9HAU8VIVACE1///287//
-colour cath_tools_defined_colour_160, /Q9HAU8DomSerf1///286//
-colour cath_tools_defined_colour_160, /Q9HAU8PHYRE21///286//
-colour cath_tools_defined_colour_160, /Q9HAU8SUPERFAMILY2///286//
-colour cath_tools_defined_colour_160, /Q9HAU8VIVACE1///286//
-colour cath_tools_defined_colour_161, /Q9HAU8DomSerf1///285//
-colour cath_tools_defined_colour_161, /Q9HAU8PHYRE21///285//
-colour cath_tools_defined_colour_161, /Q9HAU8SUPERFAMILY2///285//
-colour cath_tools_defined_colour_161, /Q9HAU8VIVACE1///285//
-colour cath_tools_defined_colour_162, /Q9HAU8DomSerf1///284//
-colour cath_tools_defined_colour_162, /Q9HAU8PHYRE21///284//
-colour cath_tools_defined_colour_162, /Q9HAU8SUPERFAMILY2///284//
-colour cath_tools_defined_colour_162, /Q9HAU8VIVACE1///284//
-colour cath_tools_defined_colour_163, /Q9HAU8DomSerf1///283//
-colour cath_tools_defined_colour_163, /Q9HAU8PHYRE21///283//
-colour cath_tools_defined_colour_163, /Q9HAU8SUPERFAMILY2///283//
-colour cath_tools_defined_colour_163, /Q9HAU8VIVACE1///283//
-colour cath_tools_defined_colour_164, /Q9HAU8DomSerf1///282//
-colour cath_tools_defined_colour_164, /Q9HAU8PHYRE21///282//
-colour cath_tools_defined_colour_164, /Q9HAU8SUPERFAMILY2///282//
-colour cath_tools_defined_colour_164, /Q9HAU8VIVACE1///282//
-colour cath_tools_defined_colour_165, /Q9HAU8DomSerf1///281//
-colour cath_tools_defined_colour_165, /Q9HAU8PHYRE21///281//
-colour cath_tools_defined_colour_165, /Q9HAU8SUPERFAMILY2///281//
-colour cath_tools_defined_colour_165, /Q9HAU8VIVACE1///281//
-colour cath_tools_defined_colour_166, /Q9HAU8DomSerf1///280//
-colour cath_tools_defined_colour_166, /Q9HAU8PHYRE21///280//
-colour cath_tools_defined_colour_166, /Q9HAU8SUPERFAMILY2///280//
-colour cath_tools_defined_colour_166, /Q9HAU8VIVACE1///280//
-colour cath_tools_defined_colour_167, /Q9HAU8DomSerf1///279//
-colour cath_tools_defined_colour_167, /Q9HAU8PHYRE21///279//
-colour cath_tools_defined_colour_167, /Q9HAU8SUPERFAMILY2///279//
-colour cath_tools_defined_colour_167, /Q9HAU8VIVACE1///279//
-colour cath_tools_defined_colour_168, /Q9HAU8DomSerf1///278//
-colour cath_tools_defined_colour_168, /Q9HAU8PHYRE21///278//
-colour cath_tools_defined_colour_168, /Q9HAU8SUPERFAMILY2///278//
-colour cath_tools_defined_colour_168, /Q9HAU8VIVACE1///278//
-colour cath_tools_defined_colour_169, /Q9HAU8DomSerf1///277//
-colour cath_tools_defined_colour_169, /Q9HAU8PHYRE21///277//
-colour cath_tools_defined_colour_169, /Q9HAU8SUPERFAMILY2///277//
-colour cath_tools_defined_colour_169, /Q9HAU8VIVACE1///277//
-colour cath_tools_defined_colour_170, /Q9HAU8DomSerf1///275+276//
-colour cath_tools_defined_colour_170, /Q9HAU8PHYRE21///275+276//
-colour cath_tools_defined_colour_170, /Q9HAU8SUPERFAMILY2///275+276//
-colour cath_tools_defined_colour_170, /Q9HAU8VIVACE1///275+276//
-colour cath_tools_defined_colour_171, /Q9HAU8DomSerf1///274//
-colour cath_tools_defined_colour_171, /Q9HAU8PHYRE21///274//
-colour cath_tools_defined_colour_171, /Q9HAU8SUPERFAMILY2///274//
-colour cath_tools_defined_colour_171, /Q9HAU8VIVACE1///274//
-colour cath_tools_defined_colour_172, /Q9HAU8DomSerf1///272+273//
-colour cath_tools_defined_colour_172, /Q9HAU8PHYRE21///272+273//
-colour cath_tools_defined_colour_172, /Q9HAU8SUPERFAMILY2///272+273//
-colour cath_tools_defined_colour_172, /Q9HAU8VIVACE1///272+273//
-colour cath_tools_defined_colour_173, /Q9HAU8DomSerf1///270+271//
-colour cath_tools_defined_colour_173, /Q9HAU8PHYRE21///270+271//
-colour cath_tools_defined_colour_173, /Q9HAU8SUPERFAMILY2///270+271//
-colour cath_tools_defined_colour_173, /Q9HAU8VIVACE1///270+271//
-colour cath_tools_defined_colour_174, /Q9HAU8DomSerf1///265+266+267+268+269//
-colour cath_tools_defined_colour_174, /Q9HAU8PHYRE21///265+266+267+268+269//
-colour cath_tools_defined_colour_174, /Q9HAU8SUPERFAMILY2///265+266+267+268+269//
-colour cath_tools_defined_colour_174, /Q9HAU8VIVACE1///265+266+267+268+269//
-colour cath_tools_defined_colour_175, /Q9HAU8DomSerf1///261+262+263+264//
-colour cath_tools_defined_colour_175, /Q9HAU8PHYRE21///261+262+263+264//
-colour cath_tools_defined_colour_175, /Q9HAU8SUPERFAMILY2///261+262+263+264//
-colour cath_tools_defined_colour_175, /Q9HAU8VIVACE1///261+262+263+264//
-colour cath_tools_defined_colour_176, /Q9HAU8DomSerf1///260//
-colour cath_tools_defined_colour_176, /Q9HAU8PHYRE21///260//
-colour cath_tools_defined_colour_176, /Q9HAU8SUPERFAMILY2///260//
-colour cath_tools_defined_colour_176, /Q9HAU8VIVACE1///260//
-colour cath_tools_defined_colour_177, /Q9HAU8DomSerf1///259//
-colour cath_tools_defined_colour_177, /Q9HAU8PHYRE21///259//
-colour cath_tools_defined_colour_177, /Q9HAU8SUPERFAMILY2///259//
-colour cath_tools_defined_colour_177, /Q9HAU8VIVACE1///259//
-colour cath_tools_defined_colour_178, /Q9HAU8DomSerf1///258//
-colour cath_tools_defined_colour_178, /Q9HAU8PHYRE21///258//
-colour cath_tools_defined_colour_178, /Q9HAU8SUPERFAMILY2///258//
-colour cath_tools_defined_colour_178, /Q9HAU8VIVACE1///258//
-colour cath_tools_defined_colour_179, /Q9HAU8DomSerf1///257//
-colour cath_tools_defined_colour_179, /Q9HAU8PHYRE21///257//
-colour cath_tools_defined_colour_179, /Q9HAU8SUPERFAMILY2///257//
-colour cath_tools_defined_colour_179, /Q9HAU8VIVACE1///257//
-colour cath_tools_defined_colour_180, /Q9HAU8DomSerf1///256//
-colour cath_tools_defined_colour_180, /Q9HAU8PHYRE21///256//
-colour cath_tools_defined_colour_180, /Q9HAU8SUPERFAMILY2///256//
-colour cath_tools_defined_colour_180, /Q9HAU8VIVACE1///256//
-colour cath_tools_defined_colour_181, /Q9HAU8DomSerf1///255//
-colour cath_tools_defined_colour_181, /Q9HAU8PHYRE21///255//
-colour cath_tools_defined_colour_181, /Q9HAU8SUPERFAMILY2///255//
-colour cath_tools_defined_colour_181, /Q9HAU8VIVACE1///255//
-colour cath_tools_defined_colour_182, /Q9HAU8DomSerf1///254//
-colour cath_tools_defined_colour_182, /Q9HAU8PHYRE21///254//
-colour cath_tools_defined_colour_182, /Q9HAU8SUPERFAMILY2///254//
-colour cath_tools_defined_colour_182, /Q9HAU8VIVACE1///254//
-colour cath_tools_defined_colour_183, /Q9HAU8DomSerf1///253//
-colour cath_tools_defined_colour_183, /Q9HAU8PHYRE21///253//
-colour cath_tools_defined_colour_183, /Q9HAU8SUPERFAMILY2///253//
-colour cath_tools_defined_colour_183, /Q9HAU8VIVACE1///253//
-colour cath_tools_defined_colour_184, /Q9HAU8DomSerf1///252//
-colour cath_tools_defined_colour_184, /Q9HAU8PHYRE21///252//
-colour cath_tools_defined_colour_184, /Q9HAU8SUPERFAMILY2///252//
-colour cath_tools_defined_colour_184, /Q9HAU8VIVACE1///252//
-colour cath_tools_defined_colour_185, /Q9HAU8DomSerf1///251//
-colour cath_tools_defined_colour_185, /Q9HAU8PHYRE21///251//
-colour cath_tools_defined_colour_185, /Q9HAU8SUPERFAMILY2///251//
-colour cath_tools_defined_colour_185, /Q9HAU8VIVACE1///251//
-colour cath_tools_defined_colour_186, /Q9HAU8DomSerf1///250//
-colour cath_tools_defined_colour_186, /Q9HAU8PHYRE21///250//
-colour cath_tools_defined_colour_186, /Q9HAU8SUPERFAMILY2///250//
-colour cath_tools_defined_colour_186, /Q9HAU8VIVACE1///250//
-colour cath_tools_defined_colour_187, /Q9HAU8DomSerf1///249//
-colour cath_tools_defined_colour_187, /Q9HAU8PHYRE21///249//
-colour cath_tools_defined_colour_187, /Q9HAU8SUPERFAMILY2///249//
-colour cath_tools_defined_colour_187, /Q9HAU8VIVACE1///249//
-colour cath_tools_defined_colour_188, /Q9HAU8DomSerf1///248//
-colour cath_tools_defined_colour_188, /Q9HAU8PHYRE21///248//
-colour cath_tools_defined_colour_188, /Q9HAU8SUPERFAMILY2///248//
-colour cath_tools_defined_colour_188, /Q9HAU8VIVACE1///248//
-colour cath_tools_defined_colour_189, /Q9HAU8DomSerf1///247//
-colour cath_tools_defined_colour_189, /Q9HAU8PHYRE21///247//
-colour cath_tools_defined_colour_189, /Q9HAU8SUPERFAMILY2///247//
-colour cath_tools_defined_colour_189, /Q9HAU8VIVACE1///247//
-colour cath_tools_defined_colour_190, /Q9HAU8DomSerf1///246//
-colour cath_tools_defined_colour_190, /Q9HAU8PHYRE21///246//
-colour cath_tools_defined_colour_190, /Q9HAU8SUPERFAMILY2///246//
-colour cath_tools_defined_colour_190, /Q9HAU8VIVACE1///246//
-colour cath_tools_defined_colour_191, /Q9HAU8DomSerf1///245//
-colour cath_tools_defined_colour_191, /Q9HAU8PHYRE21///245//
-colour cath_tools_defined_colour_191, /Q9HAU8SUPERFAMILY2///245//
-colour cath_tools_defined_colour_191, /Q9HAU8VIVACE1///245//
-colour cath_tools_defined_colour_192, /Q9HAU8DomSerf1///244//
-colour cath_tools_defined_colour_192, /Q9HAU8PHYRE21///244//
-colour cath_tools_defined_colour_192, /Q9HAU8SUPERFAMILY2///244//
-colour cath_tools_defined_colour_192, /Q9HAU8VIVACE1///244//
-colour cath_tools_defined_colour_193, /Q9HAU8DomSerf1///243//
-colour cath_tools_defined_colour_193, /Q9HAU8PHYRE21///243//
-colour cath_tools_defined_colour_193, /Q9HAU8SUPERFAMILY2///243//
-colour cath_tools_defined_colour_193, /Q9HAU8VIVACE1///243//
-colour cath_tools_defined_colour_194, /Q9HAU8DomSerf1///242//
-colour cath_tools_defined_colour_194, /Q9HAU8PHYRE21///242//
-colour cath_tools_defined_colour_194, /Q9HAU8SUPERFAMILY2///242//
-colour cath_tools_defined_colour_194, /Q9HAU8VIVACE1///242//
-colour cath_tools_defined_colour_195, /Q9HAU8DomSerf1///241//
-colour cath_tools_defined_colour_195, /Q9HAU8PHYRE21///241//
-colour cath_tools_defined_colour_195, /Q9HAU8SUPERFAMILY2///241//
-colour cath_tools_defined_colour_195, /Q9HAU8VIVACE1///241//
-colour cath_tools_defined_colour_196, /Q9HAU8DomSerf1///240//
-colour cath_tools_defined_colour_196, /Q9HAU8PHYRE21///240//
-colour cath_tools_defined_colour_196, /Q9HAU8SUPERFAMILY2///240//
-colour cath_tools_defined_colour_196, /Q9HAU8VIVACE1///240//
-colour cath_tools_defined_colour_197, /Q9HAU8DomSerf1///239//
-colour cath_tools_defined_colour_197, /Q9HAU8PHYRE21///239//
-colour cath_tools_defined_colour_197, /Q9HAU8SUPERFAMILY2///239//
-colour cath_tools_defined_colour_197, /Q9HAU8VIVACE1///239//
-colour cath_tools_defined_colour_198, /Q9HAU8DomSerf1///238//
-colour cath_tools_defined_colour_198, /Q9HAU8PHYRE21///238//
-colour cath_tools_defined_colour_198, /Q9HAU8SUPERFAMILY2///238//
-colour cath_tools_defined_colour_198, /Q9HAU8VIVACE1///238//
-colour cath_tools_defined_colour_199, /Q9HAU8DomSerf1///237//
-colour cath_tools_defined_colour_199, /Q9HAU8PHYRE21///237//
-colour cath_tools_defined_colour_199, /Q9HAU8SUPERFAMILY2///237//
-colour cath_tools_defined_colour_199, /Q9HAU8VIVACE1///237//
-colour cath_tools_defined_colour_200, /Q9HAU8DomSerf1///236//
-colour cath_tools_defined_colour_200, /Q9HAU8PHYRE21///236//
-colour cath_tools_defined_colour_200, /Q9HAU8SUPERFAMILY2///236//
-colour cath_tools_defined_colour_200, /Q9HAU8VIVACE1///236//
-colour cath_tools_defined_colour_201, /Q9HAU8DomSerf1///235//
-colour cath_tools_defined_colour_201, /Q9HAU8PHYRE21///235//
-colour cath_tools_defined_colour_201, /Q9HAU8SUPERFAMILY2///235//
-colour cath_tools_defined_colour_201, /Q9HAU8VIVACE1///235//
-colour cath_tools_defined_colour_202, /Q9HAU8DomSerf1///234//
-colour cath_tools_defined_colour_202, /Q9HAU8PHYRE21///234//
-colour cath_tools_defined_colour_202, /Q9HAU8SUPERFAMILY2///234//
-colour cath_tools_defined_colour_202, /Q9HAU8VIVACE1///234//
-colour cath_tools_defined_colour_203, /Q9HAU8DomSerf1///233//
-colour cath_tools_defined_colour_203, /Q9HAU8PHYRE21///233//
-colour cath_tools_defined_colour_203, /Q9HAU8SUPERFAMILY2///233//
-colour cath_tools_defined_colour_203, /Q9HAU8VIVACE1///233//
-distance alignment, /Q9HAU8PHYRE21///35/CA/, /Q9HAU8VIVACE1///35/CA/
-distance alignment, /Q9HAU8DomSerf1///35/CA/, /Q9HAU8VIVACE1///35/CA/
-distance alignment, /Q9HAU8PHYRE21///36/CA/, /Q9HAU8VIVACE1///36/CA/
-distance alignment, /Q9HAU8DomSerf1///36/CA/, /Q9HAU8VIVACE1///36/CA/
-distance alignment, /Q9HAU8PHYRE21///37/CA/, /Q9HAU8VIVACE1///37/CA/
-distance alignment, /Q9HAU8DomSerf1///37/CA/, /Q9HAU8PHYRE21///37/CA/
-distance alignment, /Q9HAU8PHYRE21///38/CA/, /Q9HAU8VIVACE1///38/CA/
-distance alignment, /Q9HAU8DomSerf1///38/CA/, /Q9HAU8PHYRE21///38/CA/
-distance alignment, /Q9HAU8PHYRE21///39/CA/, /Q9HAU8VIVACE1///39/CA/
-distance alignment, /Q9HAU8DomSerf1///39/CA/, /Q9HAU8VIVACE1///39/CA/
-distance alignment, /Q9HAU8PHYRE21///40/CA/, /Q9HAU8VIVACE1///40/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///40/CA/, /Q9HAU8VIVACE1///40/CA/
-distance alignment, /Q9HAU8DomSerf1///40/CA/, /Q9HAU8PHYRE21///40/CA/
-distance alignment, /Q9HAU8PHYRE21///41/CA/, /Q9HAU8VIVACE1///41/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///41/CA/, /Q9HAU8VIVACE1///41/CA/
-distance alignment, /Q9HAU8DomSerf1///41/CA/, /Q9HAU8SUPERFAMILY2///41/CA/
-distance alignment, /Q9HAU8PHYRE21///42/CA/, /Q9HAU8VIVACE1///42/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///42/CA/, /Q9HAU8VIVACE1///42/CA/
-distance alignment, /Q9HAU8DomSerf1///42/CA/, /Q9HAU8SUPERFAMILY2///42/CA/
-distance alignment, /Q9HAU8PHYRE21///43/CA/, /Q9HAU8VIVACE1///43/CA/
-distance alignment, /Q9HAU8PHYRE21///43/CA/, /Q9HAU8SUPERFAMILY2///43/CA/
-distance alignment, /Q9HAU8DomSerf1///43/CA/, /Q9HAU8SUPERFAMILY2///43/CA/
-distance alignment, /Q9HAU8PHYRE21///44/CA/, /Q9HAU8VIVACE1///44/CA/
-distance alignment, /Q9HAU8PHYRE21///44/CA/, /Q9HAU8SUPERFAMILY2///44/CA/
-distance alignment, /Q9HAU8DomSerf1///44/CA/, /Q9HAU8SUPERFAMILY2///44/CA/
-distance alignment, /Q9HAU8PHYRE21///45/CA/, /Q9HAU8VIVACE1///45/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///45/CA/, /Q9HAU8VIVACE1///45/CA/
-distance alignment, /Q9HAU8DomSerf1///45/CA/, /Q9HAU8PHYRE21///45/CA/
-distance alignment, /Q9HAU8PHYRE21///46/CA/, /Q9HAU8VIVACE1///46/CA/
-distance alignment, /Q9HAU8PHYRE21///46/CA/, /Q9HAU8SUPERFAMILY2///46/CA/
-distance alignment, /Q9HAU8DomSerf1///46/CA/, /Q9HAU8VIVACE1///46/CA/
-distance alignment, /Q9HAU8PHYRE21///47/CA/, /Q9HAU8VIVACE1///47/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///47/CA/, /Q9HAU8VIVACE1///47/CA/
-distance alignment, /Q9HAU8DomSerf1///47/CA/, /Q9HAU8PHYRE21///47/CA/
-distance alignment, /Q9HAU8PHYRE21///48/CA/, /Q9HAU8VIVACE1///48/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///48/CA/, /Q9HAU8VIVACE1///48/CA/
-distance alignment, /Q9HAU8DomSerf1///48/CA/, /Q9HAU8PHYRE21///48/CA/
-distance alignment, /Q9HAU8PHYRE21///49/CA/, /Q9HAU8VIVACE1///49/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///49/CA/, /Q9HAU8VIVACE1///49/CA/
-distance alignment, /Q9HAU8DomSerf1///49/CA/, /Q9HAU8VIVACE1///49/CA/
-distance alignment, /Q9HAU8PHYRE21///50/CA/, /Q9HAU8VIVACE1///50/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///50/CA/, /Q9HAU8VIVACE1///50/CA/
-distance alignment, /Q9HAU8DomSerf1///50/CA/, /Q9HAU8PHYRE21///50/CA/
-distance alignment, /Q9HAU8PHYRE21///51/CA/, /Q9HAU8VIVACE1///51/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///51/CA/, /Q9HAU8VIVACE1///51/CA/
-distance alignment, /Q9HAU8DomSerf1///51/CA/, /Q9HAU8VIVACE1///51/CA/
-distance alignment, /Q9HAU8PHYRE21///52/CA/, /Q9HAU8VIVACE1///52/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///52/CA/, /Q9HAU8VIVACE1///52/CA/
-distance alignment, /Q9HAU8DomSerf1///52/CA/, /Q9HAU8PHYRE21///52/CA/
-distance alignment, /Q9HAU8PHYRE21///53/CA/, /Q9HAU8VIVACE1///53/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///53/CA/, /Q9HAU8VIVACE1///53/CA/
-distance alignment, /Q9HAU8DomSerf1///53/CA/, /Q9HAU8PHYRE21///53/CA/
-distance alignment, /Q9HAU8PHYRE21///54/CA/, /Q9HAU8VIVACE1///54/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///54/CA/, /Q9HAU8VIVACE1///54/CA/
-distance alignment, /Q9HAU8DomSerf1///54/CA/, /Q9HAU8PHYRE21///54/CA/
-distance alignment, /Q9HAU8PHYRE21///55/CA/, /Q9HAU8VIVACE1///55/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///55/CA/, /Q9HAU8VIVACE1///55/CA/
-distance alignment, /Q9HAU8DomSerf1///55/CA/, /Q9HAU8SUPERFAMILY2///55/CA/
-distance alignment, /Q9HAU8PHYRE21///56/CA/, /Q9HAU8VIVACE1///56/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///56/CA/, /Q9HAU8VIVACE1///56/CA/
-distance alignment, /Q9HAU8DomSerf1///56/CA/, /Q9HAU8SUPERFAMILY2///56/CA/
-distance alignment, /Q9HAU8PHYRE21///57/CA/, /Q9HAU8VIVACE1///57/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///57/CA/, /Q9HAU8VIVACE1///57/CA/
-distance alignment, /Q9HAU8DomSerf1///57/CA/, /Q9HAU8SUPERFAMILY2///57/CA/
-distance alignment, /Q9HAU8PHYRE21///58/CA/, /Q9HAU8VIVACE1///58/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///58/CA/, /Q9HAU8VIVACE1///58/CA/
-distance alignment, /Q9HAU8DomSerf1///58/CA/, /Q9HAU8SUPERFAMILY2///58/CA/
-distance alignment, /Q9HAU8PHYRE21///59/CA/, /Q9HAU8VIVACE1///59/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///59/CA/, /Q9HAU8VIVACE1///59/CA/
-distance alignment, /Q9HAU8DomSerf1///59/CA/, /Q9HAU8SUPERFAMILY2///59/CA/
-distance alignment, /Q9HAU8PHYRE21///60/CA/, /Q9HAU8VIVACE1///60/CA/
-distance alignment, /Q9HAU8PHYRE21///60/CA/, /Q9HAU8SUPERFAMILY2///60/CA/
-distance alignment, /Q9HAU8DomSerf1///60/CA/, /Q9HAU8SUPERFAMILY2///60/CA/
-distance alignment, /Q9HAU8PHYRE21///61/CA/, /Q9HAU8SUPERFAMILY2///61/CA/
-distance alignment, /Q9HAU8PHYRE21///61/CA/, /Q9HAU8VIVACE1///61/CA/
-distance alignment, /Q9HAU8DomSerf1///61/CA/, /Q9HAU8SUPERFAMILY2///61/CA/
-distance alignment, /Q9HAU8PHYRE21///62/CA/, /Q9HAU8VIVACE1///62/CA/
-distance alignment, /Q9HAU8PHYRE21///62/CA/, /Q9HAU8SUPERFAMILY2///62/CA/
-distance alignment, /Q9HAU8DomSerf1///62/CA/, /Q9HAU8SUPERFAMILY2///62/CA/
-distance alignment, /Q9HAU8PHYRE21///63/CA/, /Q9HAU8VIVACE1///63/CA/
-distance alignment, /Q9HAU8PHYRE21///63/CA/, /Q9HAU8SUPERFAMILY2///63/CA/
-distance alignment, /Q9HAU8DomSerf1///63/CA/, /Q9HAU8SUPERFAMILY2///63/CA/
-distance alignment, /Q9HAU8PHYRE21///64/CA/, /Q9HAU8VIVACE1///64/CA/
-distance alignment, /Q9HAU8PHYRE21///64/CA/, /Q9HAU8SUPERFAMILY2///64/CA/
-distance alignment, /Q9HAU8DomSerf1///64/CA/, /Q9HAU8SUPERFAMILY2///64/CA/
-distance alignment, /Q9HAU8PHYRE21///65/CA/, /Q9HAU8VIVACE1///65/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///65/CA/, /Q9HAU8VIVACE1///65/CA/
-distance alignment, /Q9HAU8DomSerf1///65/CA/, /Q9HAU8SUPERFAMILY2///65/CA/
-distance alignment, /Q9HAU8PHYRE21///66/CA/, /Q9HAU8VIVACE1///66/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///66/CA/, /Q9HAU8VIVACE1///66/CA/
-distance alignment, /Q9HAU8DomSerf1///66/CA/, /Q9HAU8SUPERFAMILY2///66/CA/
-distance alignment, /Q9HAU8PHYRE21///67/CA/, /Q9HAU8VIVACE1///67/CA/
-distance alignment, /Q9HAU8PHYRE21///67/CA/, /Q9HAU8SUPERFAMILY2///67/CA/
-distance alignment, /Q9HAU8DomSerf1///67/CA/, /Q9HAU8SUPERFAMILY2///67/CA/
-distance alignment, /Q9HAU8PHYRE21///68/CA/, /Q9HAU8VIVACE1///68/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///68/CA/, /Q9HAU8VIVACE1///68/CA/
-distance alignment, /Q9HAU8DomSerf1///68/CA/, /Q9HAU8SUPERFAMILY2///68/CA/
-distance alignment, /Q9HAU8PHYRE21///69/CA/, /Q9HAU8VIVACE1///69/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///69/CA/, /Q9HAU8VIVACE1///69/CA/
-distance alignment, /Q9HAU8DomSerf1///69/CA/, /Q9HAU8SUPERFAMILY2///69/CA/
-distance alignment, /Q9HAU8PHYRE21///70/CA/, /Q9HAU8VIVACE1///70/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///70/CA/, /Q9HAU8VIVACE1///70/CA/
-distance alignment, /Q9HAU8DomSerf1///70/CA/, /Q9HAU8SUPERFAMILY2///70/CA/
-distance alignment, /Q9HAU8PHYRE21///71/CA/, /Q9HAU8VIVACE1///71/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///71/CA/, /Q9HAU8VIVACE1///71/CA/
-distance alignment, /Q9HAU8DomSerf1///71/CA/, /Q9HAU8SUPERFAMILY2///71/CA/
-distance alignment, /Q9HAU8PHYRE21///72/CA/, /Q9HAU8VIVACE1///72/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///72/CA/, /Q9HAU8VIVACE1///72/CA/
-distance alignment, /Q9HAU8DomSerf1///72/CA/, /Q9HAU8SUPERFAMILY2///72/CA/
-distance alignment, /Q9HAU8PHYRE21///73/CA/, /Q9HAU8VIVACE1///73/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///73/CA/, /Q9HAU8VIVACE1///73/CA/
-distance alignment, /Q9HAU8DomSerf1///73/CA/, /Q9HAU8SUPERFAMILY2///73/CA/
-distance alignment, /Q9HAU8PHYRE21///74/CA/, /Q9HAU8VIVACE1///74/CA/
-distance alignment, /Q9HAU8PHYRE21///74/CA/, /Q9HAU8SUPERFAMILY2///74/CA/
-distance alignment, /Q9HAU8DomSerf1///74/CA/, /Q9HAU8SUPERFAMILY2///74/CA/
-distance alignment, /Q9HAU8PHYRE21///75/CA/, /Q9HAU8VIVACE1///75/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///75/CA/, /Q9HAU8VIVACE1///75/CA/
-distance alignment, /Q9HAU8DomSerf1///75/CA/, /Q9HAU8SUPERFAMILY2///75/CA/
-distance alignment, /Q9HAU8PHYRE21///76/CA/, /Q9HAU8VIVACE1///76/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///76/CA/, /Q9HAU8VIVACE1///76/CA/
-distance alignment, /Q9HAU8DomSerf1///76/CA/, /Q9HAU8SUPERFAMILY2///76/CA/
-distance alignment, /Q9HAU8PHYRE21///77/CA/, /Q9HAU8VIVACE1///77/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///77/CA/, /Q9HAU8VIVACE1///77/CA/
-distance alignment, /Q9HAU8DomSerf1///77/CA/, /Q9HAU8PHYRE21///77/CA/
-distance alignment, /Q9HAU8PHYRE21///78/CA/, /Q9HAU8VIVACE1///78/CA/
-distance alignment, /Q9HAU8PHYRE21///78/CA/, /Q9HAU8SUPERFAMILY2///78/CA/
-distance alignment, /Q9HAU8DomSerf1///78/CA/, /Q9HAU8VIVACE1///78/CA/
-distance alignment, /Q9HAU8PHYRE21///79/CA/, /Q9HAU8VIVACE1///79/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///79/CA/, /Q9HAU8VIVACE1///79/CA/
-distance alignment, /Q9HAU8DomSerf1///79/CA/, /Q9HAU8PHYRE21///79/CA/
-distance alignment, /Q9HAU8PHYRE21///80/CA/, /Q9HAU8VIVACE1///80/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///80/CA/, /Q9HAU8VIVACE1///80/CA/
-distance alignment, /Q9HAU8DomSerf1///80/CA/, /Q9HAU8PHYRE21///80/CA/
-distance alignment, /Q9HAU8PHYRE21///81/CA/, /Q9HAU8VIVACE1///81/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///81/CA/, /Q9HAU8VIVACE1///81/CA/
-distance alignment, /Q9HAU8DomSerf1///81/CA/, /Q9HAU8PHYRE21///81/CA/
-distance alignment, /Q9HAU8PHYRE21///82/CA/, /Q9HAU8VIVACE1///82/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///82/CA/, /Q9HAU8VIVACE1///82/CA/
-distance alignment, /Q9HAU8DomSerf1///82/CA/, /Q9HAU8VIVACE1///82/CA/
-distance alignment, /Q9HAU8PHYRE21///83/CA/, /Q9HAU8VIVACE1///83/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///83/CA/, /Q9HAU8VIVACE1///83/CA/
-distance alignment, /Q9HAU8DomSerf1///83/CA/, /Q9HAU8VIVACE1///83/CA/
-distance alignment, /Q9HAU8PHYRE21///84/CA/, /Q9HAU8VIVACE1///84/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///84/CA/, /Q9HAU8VIVACE1///84/CA/
-distance alignment, /Q9HAU8DomSerf1///84/CA/, /Q9HAU8PHYRE21///84/CA/
-distance alignment, /Q9HAU8PHYRE21///85/CA/, /Q9HAU8VIVACE1///85/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///85/CA/, /Q9HAU8VIVACE1///85/CA/
-distance alignment, /Q9HAU8DomSerf1///85/CA/, /Q9HAU8PHYRE21///85/CA/
-distance alignment, /Q9HAU8PHYRE21///86/CA/, /Q9HAU8VIVACE1///86/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///86/CA/, /Q9HAU8VIVACE1///86/CA/
-distance alignment, /Q9HAU8DomSerf1///86/CA/, /Q9HAU8VIVACE1///86/CA/
-distance alignment, /Q9HAU8PHYRE21///87/CA/, /Q9HAU8VIVACE1///87/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///87/CA/, /Q9HAU8VIVACE1///87/CA/
-distance alignment, /Q9HAU8DomSerf1///87/CA/, /Q9HAU8VIVACE1///87/CA/
-distance alignment, /Q9HAU8PHYRE21///88/CA/, /Q9HAU8VIVACE1///88/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///88/CA/, /Q9HAU8VIVACE1///88/CA/
-distance alignment, /Q9HAU8DomSerf1///88/CA/, /Q9HAU8PHYRE21///88/CA/
-distance alignment, /Q9HAU8PHYRE21///89/CA/, /Q9HAU8VIVACE1///89/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///89/CA/, /Q9HAU8VIVACE1///89/CA/
-distance alignment, /Q9HAU8DomSerf1///89/CA/, /Q9HAU8PHYRE21///89/CA/
-distance alignment, /Q9HAU8PHYRE21///90/CA/, /Q9HAU8VIVACE1///90/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///90/CA/, /Q9HAU8VIVACE1///90/CA/
-distance alignment, /Q9HAU8DomSerf1///90/CA/, /Q9HAU8VIVACE1///90/CA/
-distance alignment, /Q9HAU8PHYRE21///91/CA/, /Q9HAU8VIVACE1///91/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///91/CA/, /Q9HAU8VIVACE1///91/CA/
-distance alignment, /Q9HAU8DomSerf1///91/CA/, /Q9HAU8SUPERFAMILY2///91/CA/
-distance alignment, /Q9HAU8PHYRE21///92/CA/, /Q9HAU8VIVACE1///92/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///92/CA/, /Q9HAU8VIVACE1///92/CA/
-distance alignment, /Q9HAU8DomSerf1///92/CA/, /Q9HAU8SUPERFAMILY2///92/CA/
-distance alignment, /Q9HAU8PHYRE21///93/CA/, /Q9HAU8VIVACE1///93/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///93/CA/, /Q9HAU8VIVACE1///93/CA/
-distance alignment, /Q9HAU8DomSerf1///93/CA/, /Q9HAU8SUPERFAMILY2///93/CA/
-distance alignment, /Q9HAU8PHYRE21///94/CA/, /Q9HAU8VIVACE1///94/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///94/CA/, /Q9HAU8VIVACE1///94/CA/
-distance alignment, /Q9HAU8DomSerf1///94/CA/, /Q9HAU8SUPERFAMILY2///94/CA/
-distance alignment, /Q9HAU8PHYRE21///95/CA/, /Q9HAU8VIVACE1///95/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///95/CA/, /Q9HAU8VIVACE1///95/CA/
-distance alignment, /Q9HAU8DomSerf1///95/CA/, /Q9HAU8SUPERFAMILY2///95/CA/
-distance alignment, /Q9HAU8PHYRE21///96/CA/, /Q9HAU8VIVACE1///96/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///96/CA/, /Q9HAU8VIVACE1///96/CA/
-distance alignment, /Q9HAU8DomSerf1///96/CA/, /Q9HAU8SUPERFAMILY2///96/CA/
-distance alignment, /Q9HAU8PHYRE21///97/CA/, /Q9HAU8VIVACE1///97/CA/
-distance alignment, /Q9HAU8PHYRE21///97/CA/, /Q9HAU8SUPERFAMILY2///97/CA/
-distance alignment, /Q9HAU8DomSerf1///97/CA/, /Q9HAU8SUPERFAMILY2///97/CA/
-distance alignment, /Q9HAU8PHYRE21///98/CA/, /Q9HAU8VIVACE1///98/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///98/CA/, /Q9HAU8VIVACE1///98/CA/
-distance alignment, /Q9HAU8DomSerf1///98/CA/, /Q9HAU8PHYRE21///98/CA/
-distance alignment, /Q9HAU8PHYRE21///99/CA/, /Q9HAU8VIVACE1///99/CA/
-distance alignment, /Q9HAU8PHYRE21///99/CA/, /Q9HAU8SUPERFAMILY2///99/CA/
-distance alignment, /Q9HAU8DomSerf1///99/CA/, /Q9HAU8PHYRE21///99/CA/
-distance alignment, /Q9HAU8PHYRE21///100/CA/, /Q9HAU8VIVACE1///100/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///100/CA/, /Q9HAU8VIVACE1///100/CA/
-distance alignment, /Q9HAU8DomSerf1///100/CA/, /Q9HAU8PHYRE21///100/CA/
-distance alignment, /Q9HAU8PHYRE21///101/CA/, /Q9HAU8VIVACE1///101/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///101/CA/, /Q9HAU8VIVACE1///101/CA/
-distance alignment, /Q9HAU8DomSerf1///101/CA/, /Q9HAU8PHYRE21///101/CA/
-distance alignment, /Q9HAU8PHYRE21///102/CA/, /Q9HAU8VIVACE1///102/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///102/CA/, /Q9HAU8VIVACE1///102/CA/
-distance alignment, /Q9HAU8DomSerf1///102/CA/, /Q9HAU8PHYRE21///102/CA/
-distance alignment, /Q9HAU8PHYRE21///103/CA/, /Q9HAU8VIVACE1///103/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///103/CA/, /Q9HAU8VIVACE1///103/CA/
-distance alignment, /Q9HAU8DomSerf1///103/CA/, /Q9HAU8VIVACE1///103/CA/
-distance alignment, /Q9HAU8PHYRE21///104/CA/, /Q9HAU8VIVACE1///104/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///104/CA/, /Q9HAU8VIVACE1///104/CA/
-distance alignment, /Q9HAU8DomSerf1///104/CA/, /Q9HAU8VIVACE1///104/CA/
-distance alignment, /Q9HAU8PHYRE21///105/CA/, /Q9HAU8VIVACE1///105/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///105/CA/, /Q9HAU8VIVACE1///105/CA/
-distance alignment, /Q9HAU8DomSerf1///105/CA/, /Q9HAU8VIVACE1///105/CA/
-distance alignment, /Q9HAU8PHYRE21///106/CA/, /Q9HAU8VIVACE1///106/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///106/CA/, /Q9HAU8VIVACE1///106/CA/
-distance alignment, /Q9HAU8DomSerf1///106/CA/, /Q9HAU8SUPERFAMILY2///106/CA/
-distance alignment, /Q9HAU8PHYRE21///107/CA/, /Q9HAU8VIVACE1///107/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///107/CA/, /Q9HAU8VIVACE1///107/CA/
-distance alignment, /Q9HAU8DomSerf1///107/CA/, /Q9HAU8VIVACE1///107/CA/
-distance alignment, /Q9HAU8PHYRE21///108/CA/, /Q9HAU8VIVACE1///108/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///108/CA/, /Q9HAU8VIVACE1///108/CA/
-distance alignment, /Q9HAU8DomSerf1///108/CA/, /Q9HAU8SUPERFAMILY2///108/CA/
-distance alignment, /Q9HAU8PHYRE21///109/CA/, /Q9HAU8VIVACE1///109/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///109/CA/, /Q9HAU8VIVACE1///109/CA/
-distance alignment, /Q9HAU8DomSerf1///109/CA/, /Q9HAU8SUPERFAMILY2///109/CA/
-distance alignment, /Q9HAU8PHYRE21///110/CA/, /Q9HAU8VIVACE1///110/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///110/CA/, /Q9HAU8VIVACE1///110/CA/
-distance alignment, /Q9HAU8DomSerf1///110/CA/, /Q9HAU8SUPERFAMILY2///110/CA/
-distance alignment, /Q9HAU8PHYRE21///111/CA/, /Q9HAU8VIVACE1///111/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///111/CA/, /Q9HAU8VIVACE1///111/CA/
-distance alignment, /Q9HAU8DomSerf1///111/CA/, /Q9HAU8SUPERFAMILY2///111/CA/
-distance alignment, /Q9HAU8PHYRE21///112/CA/, /Q9HAU8VIVACE1///112/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///112/CA/, /Q9HAU8VIVACE1///112/CA/
-distance alignment, /Q9HAU8DomSerf1///112/CA/, /Q9HAU8SUPERFAMILY2///112/CA/
-distance alignment, /Q9HAU8PHYRE21///113/CA/, /Q9HAU8VIVACE1///113/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///113/CA/, /Q9HAU8VIVACE1///113/CA/
-distance alignment, /Q9HAU8DomSerf1///113/CA/, /Q9HAU8SUPERFAMILY2///113/CA/
-distance alignment, /Q9HAU8PHYRE21///114/CA/, /Q9HAU8VIVACE1///114/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///114/CA/, /Q9HAU8VIVACE1///114/CA/
-distance alignment, /Q9HAU8DomSerf1///114/CA/, /Q9HAU8SUPERFAMILY2///114/CA/
-distance alignment, /Q9HAU8PHYRE21///115/CA/, /Q9HAU8VIVACE1///115/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///115/CA/, /Q9HAU8VIVACE1///115/CA/
-distance alignment, /Q9HAU8DomSerf1///115/CA/, /Q9HAU8SUPERFAMILY2///115/CA/
-distance alignment, /Q9HAU8PHYRE21///116/CA/, /Q9HAU8VIVACE1///116/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///116/CA/, /Q9HAU8VIVACE1///116/CA/
-distance alignment, /Q9HAU8DomSerf1///116/CA/, /Q9HAU8SUPERFAMILY2///116/CA/
-distance alignment, /Q9HAU8PHYRE21///117/CA/, /Q9HAU8VIVACE1///117/CA/
-distance alignment, /Q9HAU8PHYRE21///117/CA/, /Q9HAU8SUPERFAMILY2///117/CA/
-distance alignment, /Q9HAU8DomSerf1///117/CA/, /Q9HAU8SUPERFAMILY2///117/CA/
-distance alignment, /Q9HAU8PHYRE21///118/CA/, /Q9HAU8VIVACE1///118/CA/
-distance alignment, /Q9HAU8PHYRE21///118/CA/, /Q9HAU8SUPERFAMILY2///118/CA/
-distance alignment, /Q9HAU8DomSerf1///118/CA/, /Q9HAU8SUPERFAMILY2///118/CA/
-distance alignment, /Q9HAU8PHYRE21///119/CA/, /Q9HAU8VIVACE1///119/CA/
-distance alignment, /Q9HAU8PHYRE21///119/CA/, /Q9HAU8SUPERFAMILY2///119/CA/
-distance alignment, /Q9HAU8DomSerf1///119/CA/, /Q9HAU8PHYRE21///119/CA/
-distance alignment, /Q9HAU8PHYRE21///120/CA/, /Q9HAU8VIVACE1///120/CA/
-distance alignment, /Q9HAU8PHYRE21///120/CA/, /Q9HAU8SUPERFAMILY2///120/CA/
-distance alignment, /Q9HAU8DomSerf1///120/CA/, /Q9HAU8VIVACE1///120/CA/
-distance alignment, /Q9HAU8PHYRE21///121/CA/, /Q9HAU8VIVACE1///121/CA/
-distance alignment, /Q9HAU8PHYRE21///121/CA/, /Q9HAU8SUPERFAMILY2///121/CA/
-distance alignment, /Q9HAU8DomSerf1///121/CA/, /Q9HAU8VIVACE1///121/CA/
-distance alignment, /Q9HAU8PHYRE21///122/CA/, /Q9HAU8VIVACE1///122/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///122/CA/, /Q9HAU8VIVACE1///122/CA/
-distance alignment, /Q9HAU8DomSerf1///122/CA/, /Q9HAU8VIVACE1///122/CA/
-distance alignment, /Q9HAU8PHYRE21///123/CA/, /Q9HAU8VIVACE1///123/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///123/CA/, /Q9HAU8VIVACE1///123/CA/
-distance alignment, /Q9HAU8DomSerf1///123/CA/, /Q9HAU8PHYRE21///123/CA/
-distance alignment, /Q9HAU8PHYRE21///124/CA/, /Q9HAU8VIVACE1///124/CA/
-distance alignment, /Q9HAU8PHYRE21///124/CA/, /Q9HAU8SUPERFAMILY2///124/CA/
-distance alignment, /Q9HAU8DomSerf1///124/CA/, /Q9HAU8VIVACE1///124/CA/
-distance alignment, /Q9HAU8PHYRE21///125/CA/, /Q9HAU8VIVACE1///125/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///125/CA/, /Q9HAU8VIVACE1///125/CA/
-distance alignment, /Q9HAU8DomSerf1///125/CA/, /Q9HAU8VIVACE1///125/CA/
-distance alignment, /Q9HAU8PHYRE21///126/CA/, /Q9HAU8VIVACE1///126/CA/
-distance alignment, /Q9HAU8PHYRE21///126/CA/, /Q9HAU8SUPERFAMILY2///126/CA/
-distance alignment, /Q9HAU8DomSerf1///126/CA/, /Q9HAU8VIVACE1///126/CA/
-distance alignment, /Q9HAU8PHYRE21///127/CA/, /Q9HAU8VIVACE1///127/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///127/CA/, /Q9HAU8VIVACE1///127/CA/
-distance alignment, /Q9HAU8DomSerf1///127/CA/, /Q9HAU8PHYRE21///127/CA/
-distance alignment, /Q9HAU8PHYRE21///128/CA/, /Q9HAU8VIVACE1///128/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///128/CA/, /Q9HAU8VIVACE1///128/CA/
-distance alignment, /Q9HAU8DomSerf1///128/CA/, /Q9HAU8VIVACE1///128/CA/
-distance alignment, /Q9HAU8PHYRE21///129/CA/, /Q9HAU8VIVACE1///129/CA/
-distance alignment, /Q9HAU8PHYRE21///129/CA/, /Q9HAU8SUPERFAMILY2///129/CA/
-distance alignment, /Q9HAU8DomSerf1///129/CA/, /Q9HAU8VIVACE1///129/CA/
-distance alignment, /Q9HAU8PHYRE21///130/CA/, /Q9HAU8VIVACE1///130/CA/
-distance alignment, /Q9HAU8PHYRE21///130/CA/, /Q9HAU8SUPERFAMILY2///130/CA/
-distance alignment, /Q9HAU8DomSerf1///130/CA/, /Q9HAU8SUPERFAMILY2///130/CA/
-distance alignment, /Q9HAU8PHYRE21///131/CA/, /Q9HAU8VIVACE1///131/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///131/CA/, /Q9HAU8VIVACE1///131/CA/
-distance alignment, /Q9HAU8DomSerf1///131/CA/, /Q9HAU8VIVACE1///131/CA/
-distance alignment, /Q9HAU8PHYRE21///132/CA/, /Q9HAU8VIVACE1///132/CA/
-distance alignment, /Q9HAU8DomSerf1///132/CA/, /Q9HAU8VIVACE1///132/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///132/CA/, /Q9HAU8VIVACE1///132/CA/
-distance alignment, /Q9HAU8PHYRE21///133/CA/, /Q9HAU8VIVACE1///133/CA/
-distance alignment, /Q9HAU8DomSerf1///133/CA/, /Q9HAU8PHYRE21///133/CA/
-distance alignment, /Q9HAU8PHYRE21///133/CA/, /Q9HAU8SUPERFAMILY2///133/CA/
-distance alignment, /Q9HAU8PHYRE21///134/CA/, /Q9HAU8VIVACE1///134/CA/
-distance alignment, /Q9HAU8DomSerf1///134/CA/, /Q9HAU8VIVACE1///134/CA/
-distance alignment, /Q9HAU8PHYRE21///134/CA/, /Q9HAU8SUPERFAMILY2///134/CA/
-distance alignment, /Q9HAU8PHYRE21///135/CA/, /Q9HAU8VIVACE1///135/CA/
-distance alignment, /Q9HAU8DomSerf1///135/CA/, /Q9HAU8VIVACE1///135/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///135/CA/, /Q9HAU8VIVACE1///135/CA/
-distance alignment, /Q9HAU8PHYRE21///136/CA/, /Q9HAU8VIVACE1///136/CA/
-distance alignment, /Q9HAU8DomSerf1///136/CA/, /Q9HAU8PHYRE21///136/CA/
-distance alignment, /Q9HAU8PHYRE21///136/CA/, /Q9HAU8SUPERFAMILY2///136/CA/
-distance alignment, /Q9HAU8PHYRE21///137/CA/, /Q9HAU8VIVACE1///137/CA/
-distance alignment, /Q9HAU8DomSerf1///137/CA/, /Q9HAU8PHYRE21///137/CA/
-distance alignment, /Q9HAU8DomSerf1///137/CA/, /Q9HAU8SUPERFAMILY2///137/CA/
-distance alignment, /Q9HAU8PHYRE21///138/CA/, /Q9HAU8VIVACE1///138/CA/
-distance alignment, /Q9HAU8DomSerf1///138/CA/, /Q9HAU8PHYRE21///138/CA/
-distance alignment, /Q9HAU8DomSerf1///138/CA/, /Q9HAU8SUPERFAMILY2///138/CA/
-distance alignment, /Q9HAU8PHYRE21///139/CA/, /Q9HAU8VIVACE1///139/CA/
-distance alignment, /Q9HAU8DomSerf1///139/CA/, /Q9HAU8PHYRE21///139/CA/
-distance alignment, /Q9HAU8DomSerf1///139/CA/, /Q9HAU8SUPERFAMILY2///139/CA/
-distance alignment, /Q9HAU8PHYRE21///140/CA/, /Q9HAU8VIVACE1///140/CA/
-distance alignment, /Q9HAU8DomSerf1///140/CA/, /Q9HAU8VIVACE1///140/CA/
-distance alignment, /Q9HAU8DomSerf1///140/CA/, /Q9HAU8SUPERFAMILY2///140/CA/
-distance alignment, /Q9HAU8PHYRE21///141/CA/, /Q9HAU8VIVACE1///141/CA/
-distance alignment, /Q9HAU8DomSerf1///141/CA/, /Q9HAU8VIVACE1///141/CA/
-distance alignment, /Q9HAU8DomSerf1///141/CA/, /Q9HAU8SUPERFAMILY2///141/CA/
-distance alignment, /Q9HAU8PHYRE21///142/CA/, /Q9HAU8VIVACE1///142/CA/
-distance alignment, /Q9HAU8DomSerf1///142/CA/, /Q9HAU8VIVACE1///142/CA/
-distance alignment, /Q9HAU8DomSerf1///142/CA/, /Q9HAU8SUPERFAMILY2///142/CA/
-distance alignment, /Q9HAU8PHYRE21///143/CA/, /Q9HAU8VIVACE1///143/CA/
-distance alignment, /Q9HAU8DomSerf1///143/CA/, /Q9HAU8VIVACE1///143/CA/
-distance alignment, /Q9HAU8DomSerf1///143/CA/, /Q9HAU8SUPERFAMILY2///143/CA/
-distance alignment, /Q9HAU8PHYRE21///144/CA/, /Q9HAU8VIVACE1///144/CA/
-distance alignment, /Q9HAU8DomSerf1///144/CA/, /Q9HAU8VIVACE1///144/CA/
-distance alignment, /Q9HAU8DomSerf1///144/CA/, /Q9HAU8SUPERFAMILY2///144/CA/
-distance alignment, /Q9HAU8PHYRE21///145/CA/, /Q9HAU8VIVACE1///145/CA/
-distance alignment, /Q9HAU8DomSerf1///145/CA/, /Q9HAU8PHYRE21///145/CA/
-distance alignment, /Q9HAU8DomSerf1///145/CA/, /Q9HAU8SUPERFAMILY2///145/CA/
-distance alignment, /Q9HAU8PHYRE21///146/CA/, /Q9HAU8VIVACE1///146/CA/
-distance alignment, /Q9HAU8DomSerf1///146/CA/, /Q9HAU8VIVACE1///146/CA/
-distance alignment, /Q9HAU8DomSerf1///146/CA/, /Q9HAU8SUPERFAMILY2///146/CA/
-distance alignment, /Q9HAU8PHYRE21///147/CA/, /Q9HAU8VIVACE1///147/CA/
-distance alignment, /Q9HAU8DomSerf1///147/CA/, /Q9HAU8PHYRE21///147/CA/
-distance alignment, /Q9HAU8DomSerf1///147/CA/, /Q9HAU8SUPERFAMILY2///147/CA/
-distance alignment, /Q9HAU8PHYRE21///148/CA/, /Q9HAU8VIVACE1///148/CA/
-distance alignment, /Q9HAU8DomSerf1///148/CA/, /Q9HAU8PHYRE21///148/CA/
-distance alignment, /Q9HAU8DomSerf1///148/CA/, /Q9HAU8SUPERFAMILY2///148/CA/
-distance alignment, /Q9HAU8PHYRE21///149/CA/, /Q9HAU8VIVACE1///149/CA/
-distance alignment, /Q9HAU8DomSerf1///149/CA/, /Q9HAU8VIVACE1///149/CA/
-distance alignment, /Q9HAU8DomSerf1///149/CA/, /Q9HAU8SUPERFAMILY2///149/CA/
-distance alignment, /Q9HAU8PHYRE21///150/CA/, /Q9HAU8VIVACE1///150/CA/
-distance alignment, /Q9HAU8DomSerf1///150/CA/, /Q9HAU8PHYRE21///150/CA/
-distance alignment, /Q9HAU8DomSerf1///150/CA/, /Q9HAU8SUPERFAMILY2///150/CA/
-distance alignment, /Q9HAU8PHYRE21///151/CA/, /Q9HAU8VIVACE1///151/CA/
-distance alignment, /Q9HAU8DomSerf1///151/CA/, /Q9HAU8PHYRE21///151/CA/
-distance alignment, /Q9HAU8DomSerf1///151/CA/, /Q9HAU8SUPERFAMILY2///151/CA/
-distance alignment, /Q9HAU8PHYRE21///152/CA/, /Q9HAU8VIVACE1///152/CA/
-distance alignment, /Q9HAU8DomSerf1///152/CA/, /Q9HAU8VIVACE1///152/CA/
-distance alignment, /Q9HAU8DomSerf1///152/CA/, /Q9HAU8SUPERFAMILY2///152/CA/
-distance alignment, /Q9HAU8PHYRE21///153/CA/, /Q9HAU8VIVACE1///153/CA/
-distance alignment, /Q9HAU8DomSerf1///153/CA/, /Q9HAU8PHYRE21///153/CA/
-distance alignment, /Q9HAU8DomSerf1///153/CA/, /Q9HAU8SUPERFAMILY2///153/CA/
-distance alignment, /Q9HAU8PHYRE21///154/CA/, /Q9HAU8VIVACE1///154/CA/
-distance alignment, /Q9HAU8DomSerf1///154/CA/, /Q9HAU8VIVACE1///154/CA/
-distance alignment, /Q9HAU8DomSerf1///154/CA/, /Q9HAU8SUPERFAMILY2///154/CA/
-distance alignment, /Q9HAU8PHYRE21///155/CA/, /Q9HAU8VIVACE1///155/CA/
-distance alignment, /Q9HAU8DomSerf1///155/CA/, /Q9HAU8VIVACE1///155/CA/
-distance alignment, /Q9HAU8DomSerf1///155/CA/, /Q9HAU8SUPERFAMILY2///155/CA/
-distance alignment, /Q9HAU8PHYRE21///156/CA/, /Q9HAU8VIVACE1///156/CA/
-distance alignment, /Q9HAU8DomSerf1///156/CA/, /Q9HAU8VIVACE1///156/CA/
-distance alignment, /Q9HAU8DomSerf1///156/CA/, /Q9HAU8SUPERFAMILY2///156/CA/
-distance alignment, /Q9HAU8PHYRE21///157/CA/, /Q9HAU8VIVACE1///157/CA/
-distance alignment, /Q9HAU8DomSerf1///157/CA/, /Q9HAU8PHYRE21///157/CA/
-distance alignment, /Q9HAU8DomSerf1///157/CA/, /Q9HAU8SUPERFAMILY2///157/CA/
-distance alignment, /Q9HAU8PHYRE21///158/CA/, /Q9HAU8VIVACE1///158/CA/
-distance alignment, /Q9HAU8DomSerf1///158/CA/, /Q9HAU8PHYRE21///158/CA/
-distance alignment, /Q9HAU8DomSerf1///158/CA/, /Q9HAU8SUPERFAMILY2///158/CA/
-distance alignment, /Q9HAU8PHYRE21///159/CA/, /Q9HAU8VIVACE1///159/CA/
-distance alignment, /Q9HAU8DomSerf1///159/CA/, /Q9HAU8VIVACE1///159/CA/
-distance alignment, /Q9HAU8DomSerf1///159/CA/, /Q9HAU8SUPERFAMILY2///159/CA/
-distance alignment, /Q9HAU8PHYRE21///160/CA/, /Q9HAU8VIVACE1///160/CA/
-distance alignment, /Q9HAU8DomSerf1///160/CA/, /Q9HAU8PHYRE21///160/CA/
-distance alignment, /Q9HAU8DomSerf1///160/CA/, /Q9HAU8SUPERFAMILY2///160/CA/
-distance alignment, /Q9HAU8PHYRE21///161/CA/, /Q9HAU8VIVACE1///161/CA/
-distance alignment, /Q9HAU8DomSerf1///161/CA/, /Q9HAU8VIVACE1///161/CA/
-distance alignment, /Q9HAU8DomSerf1///161/CA/, /Q9HAU8SUPERFAMILY2///161/CA/
-distance alignment, /Q9HAU8PHYRE21///162/CA/, /Q9HAU8VIVACE1///162/CA/
-distance alignment, /Q9HAU8DomSerf1///162/CA/, /Q9HAU8PHYRE21///162/CA/
-distance alignment, /Q9HAU8DomSerf1///162/CA/, /Q9HAU8SUPERFAMILY2///162/CA/
-distance alignment, /Q9HAU8PHYRE21///163/CA/, /Q9HAU8VIVACE1///163/CA/
-distance alignment, /Q9HAU8DomSerf1///163/CA/, /Q9HAU8VIVACE1///163/CA/
-distance alignment, /Q9HAU8DomSerf1///163/CA/, /Q9HAU8SUPERFAMILY2///163/CA/
-distance alignment, /Q9HAU8PHYRE21///164/CA/, /Q9HAU8VIVACE1///164/CA/
-distance alignment, /Q9HAU8DomSerf1///164/CA/, /Q9HAU8VIVACE1///164/CA/
-distance alignment, /Q9HAU8DomSerf1///164/CA/, /Q9HAU8SUPERFAMILY2///164/CA/
-distance alignment, /Q9HAU8PHYRE21///165/CA/, /Q9HAU8VIVACE1///165/CA/
-distance alignment, /Q9HAU8DomSerf1///165/CA/, /Q9HAU8PHYRE21///165/CA/
-distance alignment, /Q9HAU8PHYRE21///165/CA/, /Q9HAU8SUPERFAMILY2///165/CA/
-distance alignment, /Q9HAU8PHYRE21///166/CA/, /Q9HAU8VIVACE1///166/CA/
-distance alignment, /Q9HAU8DomSerf1///166/CA/, /Q9HAU8VIVACE1///166/CA/
-distance alignment, /Q9HAU8DomSerf1///166/CA/, /Q9HAU8SUPERFAMILY2///166/CA/
-distance alignment, /Q9HAU8PHYRE21///167/CA/, /Q9HAU8VIVACE1///167/CA/
-distance alignment, /Q9HAU8DomSerf1///167/CA/, /Q9HAU8VIVACE1///167/CA/
-distance alignment, /Q9HAU8DomSerf1///167/CA/, /Q9HAU8SUPERFAMILY2///167/CA/
-distance alignment, /Q9HAU8PHYRE21///168/CA/, /Q9HAU8VIVACE1///168/CA/
-distance alignment, /Q9HAU8DomSerf1///168/CA/, /Q9HAU8VIVACE1///168/CA/
-distance alignment, /Q9HAU8DomSerf1///168/CA/, /Q9HAU8SUPERFAMILY2///168/CA/
-distance alignment, /Q9HAU8PHYRE21///169/CA/, /Q9HAU8VIVACE1///169/CA/
-distance alignment, /Q9HAU8DomSerf1///169/CA/, /Q9HAU8PHYRE21///169/CA/
-distance alignment, /Q9HAU8DomSerf1///169/CA/, /Q9HAU8SUPERFAMILY2///169/CA/
-distance alignment, /Q9HAU8PHYRE21///170/CA/, /Q9HAU8VIVACE1///170/CA/
-distance alignment, /Q9HAU8DomSerf1///170/CA/, /Q9HAU8VIVACE1///170/CA/
-distance alignment, /Q9HAU8DomSerf1///170/CA/, /Q9HAU8SUPERFAMILY2///170/CA/
-distance alignment, /Q9HAU8PHYRE21///171/CA/, /Q9HAU8VIVACE1///171/CA/
-distance alignment, /Q9HAU8DomSerf1///171/CA/, /Q9HAU8PHYRE21///171/CA/
-distance alignment, /Q9HAU8DomSerf1///171/CA/, /Q9HAU8SUPERFAMILY2///171/CA/
-distance alignment, /Q9HAU8PHYRE21///172/CA/, /Q9HAU8VIVACE1///172/CA/
-distance alignment, /Q9HAU8DomSerf1///172/CA/, /Q9HAU8PHYRE21///172/CA/
-distance alignment, /Q9HAU8DomSerf1///172/CA/, /Q9HAU8SUPERFAMILY2///172/CA/
-distance alignment, /Q9HAU8PHYRE21///173/CA/, /Q9HAU8VIVACE1///173/CA/
-distance alignment, /Q9HAU8DomSerf1///173/CA/, /Q9HAU8VIVACE1///173/CA/
-distance alignment, /Q9HAU8DomSerf1///173/CA/, /Q9HAU8SUPERFAMILY2///173/CA/
-distance alignment, /Q9HAU8PHYRE21///174/CA/, /Q9HAU8VIVACE1///174/CA/
-distance alignment, /Q9HAU8DomSerf1///174/CA/, /Q9HAU8PHYRE21///174/CA/
-distance alignment, /Q9HAU8DomSerf1///174/CA/, /Q9HAU8SUPERFAMILY2///174/CA/
-distance alignment, /Q9HAU8PHYRE21///175/CA/, /Q9HAU8VIVACE1///175/CA/
-distance alignment, /Q9HAU8DomSerf1///175/CA/, /Q9HAU8PHYRE21///175/CA/
-distance alignment, /Q9HAU8DomSerf1///175/CA/, /Q9HAU8SUPERFAMILY2///175/CA/
-distance alignment, /Q9HAU8PHYRE21///176/CA/, /Q9HAU8VIVACE1///176/CA/
-distance alignment, /Q9HAU8DomSerf1///176/CA/, /Q9HAU8PHYRE21///176/CA/
-distance alignment, /Q9HAU8DomSerf1///176/CA/, /Q9HAU8SUPERFAMILY2///176/CA/
-distance alignment, /Q9HAU8PHYRE21///177/CA/, /Q9HAU8VIVACE1///177/CA/
-distance alignment, /Q9HAU8DomSerf1///177/CA/, /Q9HAU8PHYRE21///177/CA/
-distance alignment, /Q9HAU8DomSerf1///177/CA/, /Q9HAU8SUPERFAMILY2///177/CA/
-distance alignment, /Q9HAU8PHYRE21///178/CA/, /Q9HAU8VIVACE1///178/CA/
-distance alignment, /Q9HAU8DomSerf1///178/CA/, /Q9HAU8PHYRE21///178/CA/
-distance alignment, /Q9HAU8DomSerf1///178/CA/, /Q9HAU8SUPERFAMILY2///178/CA/
-distance alignment, /Q9HAU8PHYRE21///179/CA/, /Q9HAU8VIVACE1///179/CA/
-distance alignment, /Q9HAU8DomSerf1///179/CA/, /Q9HAU8PHYRE21///179/CA/
-distance alignment, /Q9HAU8DomSerf1///179/CA/, /Q9HAU8SUPERFAMILY2///179/CA/
-distance alignment, /Q9HAU8PHYRE21///180/CA/, /Q9HAU8VIVACE1///180/CA/
-distance alignment, /Q9HAU8DomSerf1///180/CA/, /Q9HAU8PHYRE21///180/CA/
-distance alignment, /Q9HAU8DomSerf1///180/CA/, /Q9HAU8SUPERFAMILY2///180/CA/
-distance alignment, /Q9HAU8PHYRE21///181/CA/, /Q9HAU8VIVACE1///181/CA/
-distance alignment, /Q9HAU8DomSerf1///181/CA/, /Q9HAU8PHYRE21///181/CA/
-distance alignment, /Q9HAU8DomSerf1///181/CA/, /Q9HAU8SUPERFAMILY2///181/CA/
-distance alignment, /Q9HAU8PHYRE21///182/CA/, /Q9HAU8VIVACE1///182/CA/
-distance alignment, /Q9HAU8DomSerf1///182/CA/, /Q9HAU8PHYRE21///182/CA/
-distance alignment, /Q9HAU8DomSerf1///182/CA/, /Q9HAU8SUPERFAMILY2///182/CA/
-distance alignment, /Q9HAU8PHYRE21///183/CA/, /Q9HAU8VIVACE1///183/CA/
-distance alignment, /Q9HAU8DomSerf1///183/CA/, /Q9HAU8VIVACE1///183/CA/
-distance alignment, /Q9HAU8DomSerf1///183/CA/, /Q9HAU8SUPERFAMILY2///183/CA/
-distance alignment, /Q9HAU8PHYRE21///184/CA/, /Q9HAU8VIVACE1///184/CA/
-distance alignment, /Q9HAU8DomSerf1///184/CA/, /Q9HAU8VIVACE1///184/CA/
-distance alignment, /Q9HAU8DomSerf1///184/CA/, /Q9HAU8SUPERFAMILY2///184/CA/
-distance alignment, /Q9HAU8PHYRE21///185/CA/, /Q9HAU8VIVACE1///185/CA/
-distance alignment, /Q9HAU8DomSerf1///185/CA/, /Q9HAU8PHYRE21///185/CA/
-distance alignment, /Q9HAU8DomSerf1///185/CA/, /Q9HAU8SUPERFAMILY2///185/CA/
-distance alignment, /Q9HAU8PHYRE21///186/CA/, /Q9HAU8VIVACE1///186/CA/
-distance alignment, /Q9HAU8DomSerf1///186/CA/, /Q9HAU8VIVACE1///186/CA/
-distance alignment, /Q9HAU8DomSerf1///186/CA/, /Q9HAU8SUPERFAMILY2///186/CA/
-distance alignment, /Q9HAU8PHYRE21///187/CA/, /Q9HAU8VIVACE1///187/CA/
-distance alignment, /Q9HAU8DomSerf1///187/CA/, /Q9HAU8PHYRE21///187/CA/
-distance alignment, /Q9HAU8DomSerf1///187/CA/, /Q9HAU8SUPERFAMILY2///187/CA/
-distance alignment, /Q9HAU8PHYRE21///188/CA/, /Q9HAU8VIVACE1///188/CA/
-distance alignment, /Q9HAU8DomSerf1///188/CA/, /Q9HAU8VIVACE1///188/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///188/CA/, /Q9HAU8VIVACE1///188/CA/
-distance alignment, /Q9HAU8PHYRE21///189/CA/, /Q9HAU8VIVACE1///189/CA/
-distance alignment, /Q9HAU8DomSerf1///189/CA/, /Q9HAU8VIVACE1///189/CA/
-distance alignment, /Q9HAU8PHYRE21///189/CA/, /Q9HAU8SUPERFAMILY2///189/CA/
-distance alignment, /Q9HAU8PHYRE21///190/CA/, /Q9HAU8VIVACE1///190/CA/
-distance alignment, /Q9HAU8DomSerf1///190/CA/, /Q9HAU8PHYRE21///190/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///190/CA/, /Q9HAU8VIVACE1///190/CA/
-distance alignment, /Q9HAU8PHYRE21///191/CA/, /Q9HAU8VIVACE1///191/CA/
-distance alignment, /Q9HAU8DomSerf1///191/CA/, /Q9HAU8VIVACE1///191/CA/
-distance alignment, /Q9HAU8PHYRE21///191/CA/, /Q9HAU8SUPERFAMILY2///191/CA/
-distance alignment, /Q9HAU8PHYRE21///192/CA/, /Q9HAU8VIVACE1///192/CA/
-distance alignment, /Q9HAU8DomSerf1///192/CA/, /Q9HAU8PHYRE21///192/CA/
-distance alignment, /Q9HAU8DomSerf1///192/CA/, /Q9HAU8SUPERFAMILY2///192/CA/
-distance alignment, /Q9HAU8PHYRE21///193/CA/, /Q9HAU8VIVACE1///193/CA/
-distance alignment, /Q9HAU8DomSerf1///193/CA/, /Q9HAU8PHYRE21///193/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///193/CA/, /Q9HAU8VIVACE1///193/CA/
-distance alignment, /Q9HAU8PHYRE21///194/CA/, /Q9HAU8VIVACE1///194/CA/
-distance alignment, /Q9HAU8DomSerf1///194/CA/, /Q9HAU8VIVACE1///194/CA/
-distance alignment, /Q9HAU8PHYRE21///194/CA/, /Q9HAU8SUPERFAMILY2///194/CA/
-distance alignment, /Q9HAU8PHYRE21///195/CA/, /Q9HAU8VIVACE1///195/CA/
-distance alignment, /Q9HAU8DomSerf1///195/CA/, /Q9HAU8VIVACE1///195/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///195/CA/, /Q9HAU8VIVACE1///195/CA/
-distance alignment, /Q9HAU8PHYRE21///196/CA/, /Q9HAU8VIVACE1///196/CA/
-distance alignment, /Q9HAU8DomSerf1///196/CA/, /Q9HAU8VIVACE1///196/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///196/CA/, /Q9HAU8VIVACE1///196/CA/
-distance alignment, /Q9HAU8PHYRE21///197/CA/, /Q9HAU8VIVACE1///197/CA/
-distance alignment, /Q9HAU8DomSerf1///197/CA/, /Q9HAU8VIVACE1///197/CA/
-distance alignment, /Q9HAU8DomSerf1///197/CA/, /Q9HAU8SUPERFAMILY2///197/CA/
-distance alignment, /Q9HAU8PHYRE21///198/CA/, /Q9HAU8VIVACE1///198/CA/
-distance alignment, /Q9HAU8DomSerf1///198/CA/, /Q9HAU8PHYRE21///198/CA/
-distance alignment, /Q9HAU8DomSerf1///198/CA/, /Q9HAU8SUPERFAMILY2///198/CA/
-distance alignment, /Q9HAU8DomSerf1///199/CA/, /Q9HAU8VIVACE1///199/CA/
-distance alignment, /Q9HAU8PHYRE21///199/CA/, /Q9HAU8VIVACE1///199/CA/
-distance alignment, /Q9HAU8DomSerf1///199/CA/, /Q9HAU8SUPERFAMILY2///199/CA/
-distance alignment, /Q9HAU8DomSerf1///200/CA/, /Q9HAU8VIVACE1///200/CA/
-distance alignment, /Q9HAU8DomSerf1///200/CA/, /Q9HAU8PHYRE21///200/CA/
-distance alignment, /Q9HAU8DomSerf1///200/CA/, /Q9HAU8SUPERFAMILY2///200/CA/
-distance alignment, /Q9HAU8DomSerf1///201/CA/, /Q9HAU8VIVACE1///201/CA/
-distance alignment, /Q9HAU8PHYRE21///201/CA/, /Q9HAU8VIVACE1///201/CA/
-distance alignment, /Q9HAU8DomSerf1///201/CA/, /Q9HAU8SUPERFAMILY2///201/CA/
-distance alignment, /Q9HAU8DomSerf1///202/CA/, /Q9HAU8VIVACE1///202/CA/
-distance alignment, /Q9HAU8PHYRE21///202/CA/, /Q9HAU8VIVACE1///202/CA/
-distance alignment, /Q9HAU8DomSerf1///202/CA/, /Q9HAU8SUPERFAMILY2///202/CA/
-distance alignment, /Q9HAU8PHYRE21///203/CA/, /Q9HAU8VIVACE1///203/CA/
-distance alignment, /Q9HAU8DomSerf1///203/CA/, /Q9HAU8VIVACE1///203/CA/
-distance alignment, /Q9HAU8DomSerf1///203/CA/, /Q9HAU8SUPERFAMILY2///203/CA/
-distance alignment, /Q9HAU8PHYRE21///204/CA/, /Q9HAU8VIVACE1///204/CA/
-distance alignment, /Q9HAU8DomSerf1///204/CA/, /Q9HAU8PHYRE21///204/CA/
-distance alignment, /Q9HAU8DomSerf1///204/CA/, /Q9HAU8SUPERFAMILY2///204/CA/
-distance alignment, /Q9HAU8PHYRE21///205/CA/, /Q9HAU8VIVACE1///205/CA/
-distance alignment, /Q9HAU8DomSerf1///205/CA/, /Q9HAU8VIVACE1///205/CA/
-distance alignment, /Q9HAU8DomSerf1///205/CA/, /Q9HAU8SUPERFAMILY2///205/CA/
-distance alignment, /Q9HAU8PHYRE21///206/CA/, /Q9HAU8VIVACE1///206/CA/
-distance alignment, /Q9HAU8DomSerf1///206/CA/, /Q9HAU8VIVACE1///206/CA/
-distance alignment, /Q9HAU8DomSerf1///206/CA/, /Q9HAU8SUPERFAMILY2///206/CA/
-distance alignment, /Q9HAU8PHYRE21///207/CA/, /Q9HAU8VIVACE1///207/CA/
-distance alignment, /Q9HAU8DomSerf1///207/CA/, /Q9HAU8VIVACE1///207/CA/
-distance alignment, /Q9HAU8DomSerf1///207/CA/, /Q9HAU8SUPERFAMILY2///207/CA/
-distance alignment, /Q9HAU8PHYRE21///208/CA/, /Q9HAU8VIVACE1///208/CA/
-distance alignment, /Q9HAU8DomSerf1///208/CA/, /Q9HAU8PHYRE21///208/CA/
-distance alignment, /Q9HAU8DomSerf1///208/CA/, /Q9HAU8SUPERFAMILY2///208/CA/
-distance alignment, /Q9HAU8PHYRE21///209/CA/, /Q9HAU8VIVACE1///209/CA/
-distance alignment, /Q9HAU8DomSerf1///209/CA/, /Q9HAU8PHYRE21///209/CA/
-distance alignment, /Q9HAU8DomSerf1///209/CA/, /Q9HAU8SUPERFAMILY2///209/CA/
-distance alignment, /Q9HAU8PHYRE21///210/CA/, /Q9HAU8VIVACE1///210/CA/
-distance alignment, /Q9HAU8DomSerf1///210/CA/, /Q9HAU8PHYRE21///210/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///210/CA/, /Q9HAU8VIVACE1///210/CA/
-distance alignment, /Q9HAU8PHYRE21///211/CA/, /Q9HAU8VIVACE1///211/CA/
-distance alignment, /Q9HAU8DomSerf1///211/CA/, /Q9HAU8VIVACE1///211/CA/
-distance alignment, /Q9HAU8PHYRE21///211/CA/, /Q9HAU8SUPERFAMILY2///211/CA/
-distance alignment, /Q9HAU8PHYRE21///212/CA/, /Q9HAU8VIVACE1///212/CA/
-distance alignment, /Q9HAU8DomSerf1///212/CA/, /Q9HAU8PHYRE21///212/CA/
-distance alignment, /Q9HAU8DomSerf1///212/CA/, /Q9HAU8SUPERFAMILY2///212/CA/
-distance alignment, /Q9HAU8PHYRE21///213/CA/, /Q9HAU8VIVACE1///213/CA/
-distance alignment, /Q9HAU8DomSerf1///213/CA/, /Q9HAU8VIVACE1///213/CA/
-distance alignment, /Q9HAU8DomSerf1///213/CA/, /Q9HAU8SUPERFAMILY2///213/CA/
-distance alignment, /Q9HAU8PHYRE21///214/CA/, /Q9HAU8VIVACE1///214/CA/
-distance alignment, /Q9HAU8DomSerf1///214/CA/, /Q9HAU8VIVACE1///214/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///214/CA/, /Q9HAU8VIVACE1///214/CA/
-distance alignment, /Q9HAU8PHYRE21///215/CA/, /Q9HAU8VIVACE1///215/CA/
-distance alignment, /Q9HAU8DomSerf1///215/CA/, /Q9HAU8VIVACE1///215/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///215/CA/, /Q9HAU8VIVACE1///215/CA/
-distance alignment, /Q9HAU8PHYRE21///216/CA/, /Q9HAU8VIVACE1///216/CA/
-distance alignment, /Q9HAU8DomSerf1///216/CA/, /Q9HAU8VIVACE1///216/CA/
-distance alignment, /Q9HAU8DomSerf1///216/CA/, /Q9HAU8SUPERFAMILY2///216/CA/
-distance alignment, /Q9HAU8PHYRE21///217/CA/, /Q9HAU8VIVACE1///217/CA/
-distance alignment, /Q9HAU8DomSerf1///217/CA/, /Q9HAU8PHYRE21///217/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///217/CA/, /Q9HAU8VIVACE1///217/CA/
-distance alignment, /Q9HAU8PHYRE21///218/CA/, /Q9HAU8VIVACE1///218/CA/
-distance alignment, /Q9HAU8DomSerf1///218/CA/, /Q9HAU8PHYRE21///218/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///218/CA/, /Q9HAU8VIVACE1///218/CA/
-distance alignment, /Q9HAU8PHYRE21///219/CA/, /Q9HAU8VIVACE1///219/CA/
-distance alignment, /Q9HAU8DomSerf1///219/CA/, /Q9HAU8VIVACE1///219/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///219/CA/, /Q9HAU8VIVACE1///219/CA/
-distance alignment, /Q9HAU8PHYRE21///220/CA/, /Q9HAU8VIVACE1///220/CA/
-distance alignment, /Q9HAU8DomSerf1///220/CA/, /Q9HAU8PHYRE21///220/CA/
-distance alignment, /Q9HAU8DomSerf1///220/CA/, /Q9HAU8SUPERFAMILY2///220/CA/
-distance alignment, /Q9HAU8PHYRE21///221/CA/, /Q9HAU8VIVACE1///221/CA/
-distance alignment, /Q9HAU8DomSerf1///221/CA/, /Q9HAU8PHYRE21///221/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///221/CA/, /Q9HAU8VIVACE1///221/CA/
-distance alignment, /Q9HAU8PHYRE21///222/CA/, /Q9HAU8VIVACE1///222/CA/
-distance alignment, /Q9HAU8DomSerf1///222/CA/, /Q9HAU8VIVACE1///222/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///222/CA/, /Q9HAU8VIVACE1///222/CA/
-distance alignment, /Q9HAU8PHYRE21///223/CA/, /Q9HAU8VIVACE1///223/CA/
-distance alignment, /Q9HAU8DomSerf1///223/CA/, /Q9HAU8VIVACE1///223/CA/
-distance alignment, /Q9HAU8DomSerf1///223/CA/, /Q9HAU8SUPERFAMILY2///223/CA/
-distance alignment, /Q9HAU8PHYRE21///224/CA/, /Q9HAU8VIVACE1///224/CA/
-distance alignment, /Q9HAU8DomSerf1///224/CA/, /Q9HAU8PHYRE21///224/CA/
-distance alignment, /Q9HAU8PHYRE21///224/CA/, /Q9HAU8SUPERFAMILY2///224/CA/
-distance alignment, /Q9HAU8PHYRE21///225/CA/, /Q9HAU8VIVACE1///225/CA/
-distance alignment, /Q9HAU8DomSerf1///225/CA/, /Q9HAU8PHYRE21///225/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///225/CA/, /Q9HAU8VIVACE1///225/CA/
-distance alignment, /Q9HAU8PHYRE21///226/CA/, /Q9HAU8VIVACE1///226/CA/
-distance alignment, /Q9HAU8DomSerf1///226/CA/, /Q9HAU8VIVACE1///226/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///226/CA/, /Q9HAU8VIVACE1///226/CA/
-distance alignment, /Q9HAU8PHYRE21///227/CA/, /Q9HAU8VIVACE1///227/CA/
-distance alignment, /Q9HAU8DomSerf1///227/CA/, /Q9HAU8PHYRE21///227/CA/
-distance alignment, /Q9HAU8DomSerf1///227/CA/, /Q9HAU8SUPERFAMILY2///227/CA/
-distance alignment, /Q9HAU8PHYRE21///228/CA/, /Q9HAU8VIVACE1///228/CA/
-distance alignment, /Q9HAU8DomSerf1///228/CA/, /Q9HAU8VIVACE1///228/CA/
-distance alignment, /Q9HAU8DomSerf1///228/CA/, /Q9HAU8SUPERFAMILY2///228/CA/
-distance alignment, /Q9HAU8PHYRE21///229/CA/, /Q9HAU8VIVACE1///229/CA/
-distance alignment, /Q9HAU8DomSerf1///229/CA/, /Q9HAU8VIVACE1///229/CA/
-distance alignment, /Q9HAU8DomSerf1///229/CA/, /Q9HAU8SUPERFAMILY2///229/CA/
-distance alignment, /Q9HAU8PHYRE21///230/CA/, /Q9HAU8VIVACE1///230/CA/
-distance alignment, /Q9HAU8DomSerf1///230/CA/, /Q9HAU8PHYRE21///230/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///230/CA/, /Q9HAU8VIVACE1///230/CA/
-distance alignment, /Q9HAU8PHYRE21///231/CA/, /Q9HAU8VIVACE1///231/CA/
-distance alignment, /Q9HAU8DomSerf1///231/CA/, /Q9HAU8PHYRE21///231/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///231/CA/, /Q9HAU8VIVACE1///231/CA/
-distance alignment, /Q9HAU8PHYRE21///232/CA/, /Q9HAU8VIVACE1///232/CA/
-distance alignment, /Q9HAU8DomSerf1///232/CA/, /Q9HAU8PHYRE21///232/CA/
-distance alignment, /Q9HAU8DomSerf1///232/CA/, /Q9HAU8SUPERFAMILY2///232/CA/
-distance alignment, /Q9HAU8PHYRE21///233/CA/, /Q9HAU8VIVACE1///233/CA/
-distance alignment, /Q9HAU8DomSerf1///233/CA/, /Q9HAU8PHYRE21///233/CA/
-distance alignment, /Q9HAU8DomSerf1///233/CA/, /Q9HAU8SUPERFAMILY2///233/CA/
-distance alignment, /Q9HAU8PHYRE21///234/CA/, /Q9HAU8VIVACE1///234/CA/
-distance alignment, /Q9HAU8DomSerf1///234/CA/, /Q9HAU8PHYRE21///234/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///234/CA/, /Q9HAU8VIVACE1///234/CA/
-distance alignment, /Q9HAU8PHYRE21///235/CA/, /Q9HAU8VIVACE1///235/CA/
-distance alignment, /Q9HAU8DomSerf1///235/CA/, /Q9HAU8VIVACE1///235/CA/
-distance alignment, /Q9HAU8PHYRE21///235/CA/, /Q9HAU8SUPERFAMILY2///235/CA/
-distance alignment, /Q9HAU8PHYRE21///236/CA/, /Q9HAU8VIVACE1///236/CA/
-distance alignment, /Q9HAU8DomSerf1///236/CA/, /Q9HAU8VIVACE1///236/CA/
-distance alignment, /Q9HAU8DomSerf1///236/CA/, /Q9HAU8SUPERFAMILY2///236/CA/
-distance alignment, /Q9HAU8PHYRE21///237/CA/, /Q9HAU8VIVACE1///237/CA/
-distance alignment, /Q9HAU8DomSerf1///237/CA/, /Q9HAU8VIVACE1///237/CA/
-distance alignment, /Q9HAU8DomSerf1///237/CA/, /Q9HAU8SUPERFAMILY2///237/CA/
-distance alignment, /Q9HAU8PHYRE21///238/CA/, /Q9HAU8VIVACE1///238/CA/
-distance alignment, /Q9HAU8DomSerf1///238/CA/, /Q9HAU8VIVACE1///238/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///238/CA/, /Q9HAU8VIVACE1///238/CA/
-distance alignment, /Q9HAU8PHYRE21///239/CA/, /Q9HAU8VIVACE1///239/CA/
-distance alignment, /Q9HAU8DomSerf1///239/CA/, /Q9HAU8VIVACE1///239/CA/
-distance alignment, /Q9HAU8DomSerf1///239/CA/, /Q9HAU8SUPERFAMILY2///239/CA/
-distance alignment, /Q9HAU8PHYRE21///240/CA/, /Q9HAU8VIVACE1///240/CA/
-distance alignment, /Q9HAU8DomSerf1///240/CA/, /Q9HAU8PHYRE21///240/CA/
-distance alignment, /Q9HAU8DomSerf1///240/CA/, /Q9HAU8SUPERFAMILY2///240/CA/
-distance alignment, /Q9HAU8PHYRE21///241/CA/, /Q9HAU8VIVACE1///241/CA/
-distance alignment, /Q9HAU8DomSerf1///241/CA/, /Q9HAU8PHYRE21///241/CA/
-distance alignment, /Q9HAU8PHYRE21///241/CA/, /Q9HAU8SUPERFAMILY2///241/CA/
-distance alignment, /Q9HAU8PHYRE21///242/CA/, /Q9HAU8VIVACE1///242/CA/
-distance alignment, /Q9HAU8DomSerf1///242/CA/, /Q9HAU8PHYRE21///242/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///242/CA/, /Q9HAU8VIVACE1///242/CA/
-distance alignment, /Q9HAU8PHYRE21///243/CA/, /Q9HAU8VIVACE1///243/CA/
-distance alignment, /Q9HAU8DomSerf1///243/CA/, /Q9HAU8PHYRE21///243/CA/
-distance alignment, /Q9HAU8DomSerf1///243/CA/, /Q9HAU8SUPERFAMILY2///243/CA/
-distance alignment, /Q9HAU8PHYRE21///244/CA/, /Q9HAU8VIVACE1///244/CA/
-distance alignment, /Q9HAU8DomSerf1///244/CA/, /Q9HAU8VIVACE1///244/CA/
-distance alignment, /Q9HAU8DomSerf1///244/CA/, /Q9HAU8SUPERFAMILY2///244/CA/
-distance alignment, /Q9HAU8PHYRE21///245/CA/, /Q9HAU8VIVACE1///245/CA/
-distance alignment, /Q9HAU8DomSerf1///245/CA/, /Q9HAU8VIVACE1///245/CA/
-distance alignment, /Q9HAU8DomSerf1///245/CA/, /Q9HAU8SUPERFAMILY2///245/CA/
-distance alignment, /Q9HAU8PHYRE21///246/CA/, /Q9HAU8VIVACE1///246/CA/
-distance alignment, /Q9HAU8DomSerf1///246/CA/, /Q9HAU8VIVACE1///246/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///246/CA/, /Q9HAU8VIVACE1///246/CA/
-distance alignment, /Q9HAU8PHYRE21///247/CA/, /Q9HAU8VIVACE1///247/CA/
-distance alignment, /Q9HAU8DomSerf1///247/CA/, /Q9HAU8PHYRE21///247/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///247/CA/, /Q9HAU8VIVACE1///247/CA/
-distance alignment, /Q9HAU8PHYRE21///248/CA/, /Q9HAU8VIVACE1///248/CA/
-distance alignment, /Q9HAU8DomSerf1///248/CA/, /Q9HAU8VIVACE1///248/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///248/CA/, /Q9HAU8VIVACE1///248/CA/
-distance alignment, /Q9HAU8PHYRE21///249/CA/, /Q9HAU8VIVACE1///249/CA/
-distance alignment, /Q9HAU8DomSerf1///249/CA/, /Q9HAU8PHYRE21///249/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///249/CA/, /Q9HAU8VIVACE1///249/CA/
-distance alignment, /Q9HAU8PHYRE21///250/CA/, /Q9HAU8VIVACE1///250/CA/
-distance alignment, /Q9HAU8DomSerf1///250/CA/, /Q9HAU8VIVACE1///250/CA/
-distance alignment, /Q9HAU8PHYRE21///250/CA/, /Q9HAU8SUPERFAMILY2///250/CA/
-distance alignment, /Q9HAU8PHYRE21///251/CA/, /Q9HAU8VIVACE1///251/CA/
-distance alignment, /Q9HAU8DomSerf1///251/CA/, /Q9HAU8VIVACE1///251/CA/
-distance alignment, /Q9HAU8PHYRE21///251/CA/, /Q9HAU8SUPERFAMILY2///251/CA/
-distance alignment, /Q9HAU8PHYRE21///252/CA/, /Q9HAU8VIVACE1///252/CA/
-distance alignment, /Q9HAU8DomSerf1///252/CA/, /Q9HAU8VIVACE1///252/CA/
-distance alignment, /Q9HAU8DomSerf1///252/CA/, /Q9HAU8SUPERFAMILY2///252/CA/
-distance alignment, /Q9HAU8PHYRE21///253/CA/, /Q9HAU8VIVACE1///253/CA/
-distance alignment, /Q9HAU8DomSerf1///253/CA/, /Q9HAU8VIVACE1///253/CA/
-distance alignment, /Q9HAU8DomSerf1///253/CA/, /Q9HAU8SUPERFAMILY2///253/CA/
-distance alignment, /Q9HAU8PHYRE21///254/CA/, /Q9HAU8VIVACE1///254/CA/
-distance alignment, /Q9HAU8DomSerf1///254/CA/, /Q9HAU8VIVACE1///254/CA/
-distance alignment, /Q9HAU8PHYRE21///254/CA/, /Q9HAU8SUPERFAMILY2///254/CA/
-distance alignment, /Q9HAU8PHYRE21///255/CA/, /Q9HAU8VIVACE1///255/CA/
-distance alignment, /Q9HAU8DomSerf1///255/CA/, /Q9HAU8VIVACE1///255/CA/
-distance alignment, /Q9HAU8PHYRE21///255/CA/, /Q9HAU8SUPERFAMILY2///255/CA/
-distance alignment, /Q9HAU8PHYRE21///256/CA/, /Q9HAU8VIVACE1///256/CA/
-distance alignment, /Q9HAU8DomSerf1///256/CA/, /Q9HAU8PHYRE21///256/CA/
-distance alignment, /Q9HAU8DomSerf1///256/CA/, /Q9HAU8SUPERFAMILY2///256/CA/
-distance alignment, /Q9HAU8PHYRE21///257/CA/, /Q9HAU8VIVACE1///257/CA/
-distance alignment, /Q9HAU8DomSerf1///257/CA/, /Q9HAU8PHYRE21///257/CA/
-distance alignment, /Q9HAU8PHYRE21///257/CA/, /Q9HAU8SUPERFAMILY2///257/CA/
-distance alignment, /Q9HAU8PHYRE21///258/CA/, /Q9HAU8VIVACE1///258/CA/
-distance alignment, /Q9HAU8DomSerf1///258/CA/, /Q9HAU8VIVACE1///258/CA/
-distance alignment, /Q9HAU8PHYRE21///258/CA/, /Q9HAU8SUPERFAMILY2///258/CA/
-distance alignment, /Q9HAU8PHYRE21///259/CA/, /Q9HAU8VIVACE1///259/CA/
-distance alignment, /Q9HAU8DomSerf1///259/CA/, /Q9HAU8VIVACE1///259/CA/
-distance alignment, /Q9HAU8DomSerf1///259/CA/, /Q9HAU8SUPERFAMILY2///259/CA/
-distance alignment, /Q9HAU8PHYRE21///260/CA/, /Q9HAU8VIVACE1///260/CA/
-distance alignment, /Q9HAU8DomSerf1///260/CA/, /Q9HAU8VIVACE1///260/CA/
-distance alignment, /Q9HAU8DomSerf1///260/CA/, /Q9HAU8SUPERFAMILY2///260/CA/
-distance alignment, /Q9HAU8DomSerf1///261/CA/, /Q9HAU8PHYRE21///261/CA/
-distance alignment, /Q9HAU8PHYRE21///261/CA/, /Q9HAU8SUPERFAMILY2///261/CA/
-distance alignment, /Q9HAU8PHYRE21///261/CA/, /Q9HAU8VIVACE1///261/CA/
-distance alignment, /Q9HAU8DomSerf1///262/CA/, /Q9HAU8PHYRE21///262/CA/
-distance alignment, /Q9HAU8PHYRE21///262/CA/, /Q9HAU8SUPERFAMILY2///262/CA/
-distance alignment, /Q9HAU8DomSerf1///262/CA/, /Q9HAU8VIVACE1///262/CA/
-distance alignment, /Q9HAU8DomSerf1///263/CA/, /Q9HAU8PHYRE21///263/CA/
-distance alignment, /Q9HAU8PHYRE21///263/CA/, /Q9HAU8SUPERFAMILY2///263/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///263/CA/, /Q9HAU8VIVACE1///263/CA/
-distance alignment, /Q9HAU8DomSerf1///264/CA/, /Q9HAU8PHYRE21///264/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///264/CA/, /Q9HAU8VIVACE1///264/CA/
-distance alignment, /Q9HAU8PHYRE21///264/CA/, /Q9HAU8SUPERFAMILY2///264/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///265/CA/, /Q9HAU8VIVACE1///265/CA/
-distance alignment, /Q9HAU8PHYRE21///265/CA/, /Q9HAU8SUPERFAMILY2///265/CA/
-distance alignment, /Q9HAU8DomSerf1///265/CA/, /Q9HAU8PHYRE21///265/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///266/CA/, /Q9HAU8VIVACE1///266/CA/
-distance alignment, /Q9HAU8PHYRE21///266/CA/, /Q9HAU8SUPERFAMILY2///266/CA/
-distance alignment, /Q9HAU8DomSerf1///266/CA/, /Q9HAU8SUPERFAMILY2///266/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///267/CA/, /Q9HAU8VIVACE1///267/CA/
-distance alignment, /Q9HAU8DomSerf1///267/CA/, /Q9HAU8SUPERFAMILY2///267/CA/
-distance alignment, /Q9HAU8PHYRE21///267/CA/, /Q9HAU8SUPERFAMILY2///267/CA/
-distance alignment, /Q9HAU8PHYRE21///268/CA/, /Q9HAU8SUPERFAMILY2///268/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///268/CA/, /Q9HAU8VIVACE1///268/CA/
-distance alignment, /Q9HAU8DomSerf1///268/CA/, /Q9HAU8VIVACE1///268/CA/
-distance alignment, /Q9HAU8PHYRE21///269/CA/, /Q9HAU8VIVACE1///269/CA/
-distance alignment, /Q9HAU8PHYRE21///269/CA/, /Q9HAU8SUPERFAMILY2///269/CA/
-distance alignment, /Q9HAU8DomSerf1///269/CA/, /Q9HAU8SUPERFAMILY2///269/CA/
-distance alignment, /Q9HAU8PHYRE21///270/CA/, /Q9HAU8VIVACE1///270/CA/
-distance alignment, /Q9HAU8PHYRE21///270/CA/, /Q9HAU8SUPERFAMILY2///270/CA/
-distance alignment, /Q9HAU8DomSerf1///270/CA/, /Q9HAU8SUPERFAMILY2///270/CA/
-distance alignment, /Q9HAU8PHYRE21///271/CA/, /Q9HAU8VIVACE1///271/CA/
-distance alignment, /Q9HAU8PHYRE21///271/CA/, /Q9HAU8SUPERFAMILY2///271/CA/
-distance alignment, /Q9HAU8DomSerf1///271/CA/, /Q9HAU8VIVACE1///271/CA/
-distance alignment, /Q9HAU8PHYRE21///272/CA/, /Q9HAU8VIVACE1///272/CA/
-distance alignment, /Q9HAU8PHYRE21///272/CA/, /Q9HAU8SUPERFAMILY2///272/CA/
-distance alignment, /Q9HAU8DomSerf1///272/CA/, /Q9HAU8PHYRE21///272/CA/
-distance alignment, /Q9HAU8PHYRE21///273/CA/, /Q9HAU8VIVACE1///273/CA/
-distance alignment, /Q9HAU8PHYRE21///273/CA/, /Q9HAU8SUPERFAMILY2///273/CA/
-distance alignment, /Q9HAU8DomSerf1///273/CA/, /Q9HAU8SUPERFAMILY2///273/CA/
-distance alignment, /Q9HAU8PHYRE21///274/CA/, /Q9HAU8VIVACE1///274/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///274/CA/, /Q9HAU8VIVACE1///274/CA/
-distance alignment, /Q9HAU8DomSerf1///274/CA/, /Q9HAU8PHYRE21///274/CA/
-distance alignment, /Q9HAU8PHYRE21///275/CA/, /Q9HAU8VIVACE1///275/CA/
-distance alignment, /Q9HAU8DomSerf1///275/CA/, /Q9HAU8SUPERFAMILY2///275/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///275/CA/, /Q9HAU8VIVACE1///275/CA/
-distance alignment, /Q9HAU8PHYRE21///276/CA/, /Q9HAU8VIVACE1///276/CA/
-distance alignment, /Q9HAU8DomSerf1///276/CA/, /Q9HAU8SUPERFAMILY2///276/CA/
-distance alignment, /Q9HAU8DomSerf1///276/CA/, /Q9HAU8PHYRE21///276/CA/
-distance alignment, /Q9HAU8PHYRE21///277/CA/, /Q9HAU8VIVACE1///277/CA/
-distance alignment, /Q9HAU8DomSerf1///277/CA/, /Q9HAU8PHYRE21///277/CA/
-distance alignment, /Q9HAU8DomSerf1///277/CA/, /Q9HAU8SUPERFAMILY2///277/CA/
-distance alignment, /Q9HAU8PHYRE21///278/CA/, /Q9HAU8VIVACE1///278/CA/
-distance alignment, /Q9HAU8DomSerf1///278/CA/, /Q9HAU8PHYRE21///278/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///278/CA/, /Q9HAU8VIVACE1///278/CA/
-distance alignment, /Q9HAU8PHYRE21///279/CA/, /Q9HAU8VIVACE1///279/CA/
-distance alignment, /Q9HAU8DomSerf1///279/CA/, /Q9HAU8PHYRE21///279/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///279/CA/, /Q9HAU8VIVACE1///279/CA/
-distance alignment, /Q9HAU8PHYRE21///280/CA/, /Q9HAU8VIVACE1///280/CA/
-distance alignment, /Q9HAU8DomSerf1///280/CA/, /Q9HAU8PHYRE21///280/CA/
-distance alignment, /Q9HAU8DomSerf1///280/CA/, /Q9HAU8SUPERFAMILY2///280/CA/
-distance alignment, /Q9HAU8PHYRE21///281/CA/, /Q9HAU8VIVACE1///281/CA/
-distance alignment, /Q9HAU8DomSerf1///281/CA/, /Q9HAU8VIVACE1///281/CA/
-distance alignment, /Q9HAU8DomSerf1///281/CA/, /Q9HAU8SUPERFAMILY2///281/CA/
-distance alignment, /Q9HAU8PHYRE21///282/CA/, /Q9HAU8VIVACE1///282/CA/
-distance alignment, /Q9HAU8DomSerf1///282/CA/, /Q9HAU8PHYRE21///282/CA/
-distance alignment, /Q9HAU8DomSerf1///282/CA/, /Q9HAU8SUPERFAMILY2///282/CA/
-distance alignment, /Q9HAU8PHYRE21///283/CA/, /Q9HAU8VIVACE1///283/CA/
-distance alignment, /Q9HAU8DomSerf1///283/CA/, /Q9HAU8PHYRE21///283/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///283/CA/, /Q9HAU8VIVACE1///283/CA/
-distance alignment, /Q9HAU8PHYRE21///284/CA/, /Q9HAU8VIVACE1///284/CA/
-distance alignment, /Q9HAU8DomSerf1///284/CA/, /Q9HAU8PHYRE21///284/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///284/CA/, /Q9HAU8VIVACE1///284/CA/
-distance alignment, /Q9HAU8PHYRE21///285/CA/, /Q9HAU8VIVACE1///285/CA/
-distance alignment, /Q9HAU8DomSerf1///285/CA/, /Q9HAU8PHYRE21///285/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///285/CA/, /Q9HAU8VIVACE1///285/CA/
-distance alignment, /Q9HAU8PHYRE21///286/CA/, /Q9HAU8VIVACE1///286/CA/
-distance alignment, /Q9HAU8DomSerf1///286/CA/, /Q9HAU8PHYRE21///286/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///286/CA/, /Q9HAU8VIVACE1///286/CA/
-distance alignment, /Q9HAU8PHYRE21///287/CA/, /Q9HAU8VIVACE1///287/CA/
-distance alignment, /Q9HAU8DomSerf1///287/CA/, /Q9HAU8PHYRE21///287/CA/
-distance alignment, /Q9HAU8SUPERFAMILY2///287/CA/, /Q9HAU8VIVACE1///287/CA/
-distance alignment, /Q9HAU8PHYRE21///288/CA/, /Q9HAU8VIVACE1///288/CA/
-distance alignment, /Q9HAU8DomSerf1///288/CA/, /Q9HAU8VIVACE1///288/CA/
-distance alignment, /Q9HAU8DomSerf1///288/CA/, /Q9HAU8SUPERFAMILY2///288/CA/
-distance alignment, /Q9HAU8PHYRE21///289/CA/, /Q9HAU8VIVACE1///289/CA/
-distance alignment, /Q9HAU8DomSerf1///289/CA/, /Q9HAU8VIVACE1///289/CA/
-distance alignment, /Q9HAU8DomSerf1///289/CA/, /Q9HAU8SUPERFAMILY2///289/CA/
-distance alignment, /Q9HAU8PHYRE21///290/CA/, /Q9HAU8VIVACE1///290/CA/
-distance alignment, /Q9HAU8DomSerf1///290/CA/, /Q9HAU8PHYRE21///290/CA/
-distance alignment, /Q9HAU8PHYRE21///291/CA/, /Q9HAU8VIVACE1///291/CA/
-distance alignment, /Q9HAU8DomSerf1///291/CA/, /Q9HAU8PHYRE21///291/CA/
-distance alignment, /Q9HAU8PHYRE21///292/CA/, /Q9HAU8VIVACE1///292/CA/
-distance alignment, /Q9HAU8DomSerf1///292/CA/, /Q9HAU8PHYRE21///292/CA/
+colour cath_tools_defined_colour_000, /Q9HAU8DomSerf1///1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+21+22+23+24+25+26+27+28+29+30+31+32+33+34+35+36/
+colour cath_tools_defined_colour_000, /Q9HAU8PHYRE21///35+36/
+colour cath_tools_defined_colour_000, /Q9HAU8VIVACE1///35+36/
+colour cath_tools_defined_colour_001, /Q9HAU8DomSerf1///37/
+colour cath_tools_defined_colour_001, /Q9HAU8PHYRE21///37/
+colour cath_tools_defined_colour_001, /Q9HAU8VIVACE1///37/
+colour cath_tools_defined_colour_002, /Q9HAU8DomSerf1///38/
+colour cath_tools_defined_colour_002, /Q9HAU8PHYRE21///38/
+colour cath_tools_defined_colour_002, /Q9HAU8VIVACE1///38/
+colour cath_tools_defined_colour_003, /Q9HAU8DomSerf1///39+40/
+colour cath_tools_defined_colour_003, /Q9HAU8PHYRE21///39+40/
+colour cath_tools_defined_colour_003, /Q9HAU8SUPERFAMILY2///40/
+colour cath_tools_defined_colour_003, /Q9HAU8VIVACE1///39+40/
+colour cath_tools_defined_colour_004, /Q9HAU8DomSerf1///41+42/
+colour cath_tools_defined_colour_004, /Q9HAU8PHYRE21///41+42/
+colour cath_tools_defined_colour_004, /Q9HAU8SUPERFAMILY2///41+42/
+colour cath_tools_defined_colour_004, /Q9HAU8VIVACE1///41+42/
+colour cath_tools_defined_colour_005, /Q9HAU8DomSerf1///43+44+45/
+colour cath_tools_defined_colour_005, /Q9HAU8PHYRE21///43+44+45/
+colour cath_tools_defined_colour_005, /Q9HAU8SUPERFAMILY2///43+44+45/
+colour cath_tools_defined_colour_005, /Q9HAU8VIVACE1///43+44+45/
+colour cath_tools_defined_colour_006, /Q9HAU8DomSerf1///46/
+colour cath_tools_defined_colour_006, /Q9HAU8PHYRE21///46/
+colour cath_tools_defined_colour_006, /Q9HAU8SUPERFAMILY2///46/
+colour cath_tools_defined_colour_006, /Q9HAU8VIVACE1///46/
+colour cath_tools_defined_colour_007, /Q9HAU8DomSerf1///47+48/
+colour cath_tools_defined_colour_007, /Q9HAU8PHYRE21///47+48/
+colour cath_tools_defined_colour_007, /Q9HAU8SUPERFAMILY2///47+48/
+colour cath_tools_defined_colour_007, /Q9HAU8VIVACE1///47+48/
+colour cath_tools_defined_colour_008, /Q9HAU8DomSerf1///49+50/
+colour cath_tools_defined_colour_008, /Q9HAU8PHYRE21///49+50/
+colour cath_tools_defined_colour_008, /Q9HAU8SUPERFAMILY2///49+50/
+colour cath_tools_defined_colour_008, /Q9HAU8VIVACE1///49+50/
+colour cath_tools_defined_colour_009, /Q9HAU8DomSerf1///51+52/
+colour cath_tools_defined_colour_009, /Q9HAU8PHYRE21///51+52/
+colour cath_tools_defined_colour_009, /Q9HAU8SUPERFAMILY2///51+52/
+colour cath_tools_defined_colour_009, /Q9HAU8VIVACE1///51+52/
+colour cath_tools_defined_colour_010, /Q9HAU8DomSerf1///53+54/
+colour cath_tools_defined_colour_010, /Q9HAU8PHYRE21///53+54/
+colour cath_tools_defined_colour_010, /Q9HAU8SUPERFAMILY2///53+54/
+colour cath_tools_defined_colour_010, /Q9HAU8VIVACE1///53+54/
+colour cath_tools_defined_colour_011, /Q9HAU8DomSerf1///55+56/
+colour cath_tools_defined_colour_011, /Q9HAU8PHYRE21///55+56/
+colour cath_tools_defined_colour_011, /Q9HAU8SUPERFAMILY2///55+56/
+colour cath_tools_defined_colour_011, /Q9HAU8VIVACE1///55+56/
+colour cath_tools_defined_colour_012, /Q9HAU8DomSerf1///57+58/
+colour cath_tools_defined_colour_012, /Q9HAU8PHYRE21///57+58/
+colour cath_tools_defined_colour_012, /Q9HAU8SUPERFAMILY2///57+58/
+colour cath_tools_defined_colour_012, /Q9HAU8VIVACE1///57+58/
+colour cath_tools_defined_colour_013, /Q9HAU8DomSerf1///59+60+61+62/
+colour cath_tools_defined_colour_013, /Q9HAU8PHYRE21///59+60+61+62/
+colour cath_tools_defined_colour_013, /Q9HAU8SUPERFAMILY2///59+60+61+62/
+colour cath_tools_defined_colour_013, /Q9HAU8VIVACE1///59+60+61+62/
+colour cath_tools_defined_colour_014, /Q9HAU8DomSerf1///63+64+65/
+colour cath_tools_defined_colour_014, /Q9HAU8PHYRE21///63+64+65/
+colour cath_tools_defined_colour_014, /Q9HAU8SUPERFAMILY2///63+64+65/
+colour cath_tools_defined_colour_014, /Q9HAU8VIVACE1///63+64+65/
+colour cath_tools_defined_colour_015, /Q9HAU8DomSerf1///66/
+colour cath_tools_defined_colour_015, /Q9HAU8PHYRE21///66/
+colour cath_tools_defined_colour_015, /Q9HAU8SUPERFAMILY2///66/
+colour cath_tools_defined_colour_015, /Q9HAU8VIVACE1///66/
+colour cath_tools_defined_colour_016, /Q9HAU8DomSerf1///67+68/
+colour cath_tools_defined_colour_016, /Q9HAU8PHYRE21///67+68/
+colour cath_tools_defined_colour_016, /Q9HAU8SUPERFAMILY2///67+68/
+colour cath_tools_defined_colour_016, /Q9HAU8VIVACE1///67+68/
+colour cath_tools_defined_colour_017, /Q9HAU8DomSerf1///69/
+colour cath_tools_defined_colour_017, /Q9HAU8PHYRE21///69/
+colour cath_tools_defined_colour_017, /Q9HAU8SUPERFAMILY2///69/
+colour cath_tools_defined_colour_017, /Q9HAU8VIVACE1///69/
+colour cath_tools_defined_colour_018, /Q9HAU8DomSerf1///70/
+colour cath_tools_defined_colour_018, /Q9HAU8PHYRE21///70/
+colour cath_tools_defined_colour_018, /Q9HAU8SUPERFAMILY2///70/
+colour cath_tools_defined_colour_018, /Q9HAU8VIVACE1///70/
+colour cath_tools_defined_colour_019, /Q9HAU8DomSerf1///71+72/
+colour cath_tools_defined_colour_019, /Q9HAU8PHYRE21///71+72/
+colour cath_tools_defined_colour_019, /Q9HAU8SUPERFAMILY2///71+72/
+colour cath_tools_defined_colour_019, /Q9HAU8VIVACE1///71+72/
+colour cath_tools_defined_colour_020, /Q9HAU8DomSerf1///73/
+colour cath_tools_defined_colour_020, /Q9HAU8PHYRE21///73/
+colour cath_tools_defined_colour_020, /Q9HAU8SUPERFAMILY2///73/
+colour cath_tools_defined_colour_020, /Q9HAU8VIVACE1///73/
+colour cath_tools_defined_colour_021, /Q9HAU8DomSerf1///74+75/
+colour cath_tools_defined_colour_021, /Q9HAU8PHYRE21///74+75/
+colour cath_tools_defined_colour_021, /Q9HAU8SUPERFAMILY2///74+75/
+colour cath_tools_defined_colour_021, /Q9HAU8VIVACE1///74+75/
+colour cath_tools_defined_colour_022, /Q9HAU8DomSerf1///76/
+colour cath_tools_defined_colour_022, /Q9HAU8PHYRE21///76/
+colour cath_tools_defined_colour_022, /Q9HAU8SUPERFAMILY2///76/
+colour cath_tools_defined_colour_022, /Q9HAU8VIVACE1///76/
+colour cath_tools_defined_colour_023, /Q9HAU8DomSerf1///77+78/
+colour cath_tools_defined_colour_023, /Q9HAU8PHYRE21///77+78/
+colour cath_tools_defined_colour_023, /Q9HAU8SUPERFAMILY2///77+78/
+colour cath_tools_defined_colour_023, /Q9HAU8VIVACE1///77+78/
+colour cath_tools_defined_colour_024, /Q9HAU8DomSerf1///79+80/
+colour cath_tools_defined_colour_024, /Q9HAU8PHYRE21///79+80/
+colour cath_tools_defined_colour_024, /Q9HAU8SUPERFAMILY2///79+80/
+colour cath_tools_defined_colour_024, /Q9HAU8VIVACE1///79+80/
+colour cath_tools_defined_colour_025, /Q9HAU8DomSerf1///81+82/
+colour cath_tools_defined_colour_025, /Q9HAU8PHYRE21///81+82/
+colour cath_tools_defined_colour_025, /Q9HAU8SUPERFAMILY2///81+82/
+colour cath_tools_defined_colour_025, /Q9HAU8VIVACE1///81+82/
+colour cath_tools_defined_colour_026, /Q9HAU8DomSerf1///83+84/
+colour cath_tools_defined_colour_026, /Q9HAU8PHYRE21///83+84/
+colour cath_tools_defined_colour_026, /Q9HAU8SUPERFAMILY2///83+84/
+colour cath_tools_defined_colour_026, /Q9HAU8VIVACE1///83+84/
+colour cath_tools_defined_colour_027, /Q9HAU8DomSerf1///85/
+colour cath_tools_defined_colour_027, /Q9HAU8PHYRE21///85/
+colour cath_tools_defined_colour_027, /Q9HAU8SUPERFAMILY2///85/
+colour cath_tools_defined_colour_027, /Q9HAU8VIVACE1///85/
+colour cath_tools_defined_colour_028, /Q9HAU8DomSerf1///86+87/
+colour cath_tools_defined_colour_028, /Q9HAU8PHYRE21///86+87/
+colour cath_tools_defined_colour_028, /Q9HAU8SUPERFAMILY2///86+87/
+colour cath_tools_defined_colour_028, /Q9HAU8VIVACE1///86+87/
+colour cath_tools_defined_colour_029, /Q9HAU8DomSerf1///88/
+colour cath_tools_defined_colour_029, /Q9HAU8PHYRE21///88/
+colour cath_tools_defined_colour_029, /Q9HAU8SUPERFAMILY2///88/
+colour cath_tools_defined_colour_029, /Q9HAU8VIVACE1///88/
+colour cath_tools_defined_colour_030, /Q9HAU8DomSerf1///89+90/
+colour cath_tools_defined_colour_030, /Q9HAU8PHYRE21///89+90/
+colour cath_tools_defined_colour_030, /Q9HAU8SUPERFAMILY2///89+90/
+colour cath_tools_defined_colour_030, /Q9HAU8VIVACE1///89+90/
+colour cath_tools_defined_colour_031, /Q9HAU8DomSerf1///91+92/
+colour cath_tools_defined_colour_031, /Q9HAU8PHYRE21///91+92/
+colour cath_tools_defined_colour_031, /Q9HAU8SUPERFAMILY2///91+92/
+colour cath_tools_defined_colour_031, /Q9HAU8VIVACE1///91+92/
+colour cath_tools_defined_colour_032, /Q9HAU8DomSerf1///93/
+colour cath_tools_defined_colour_032, /Q9HAU8PHYRE21///93/
+colour cath_tools_defined_colour_032, /Q9HAU8SUPERFAMILY2///93/
+colour cath_tools_defined_colour_032, /Q9HAU8VIVACE1///93/
+colour cath_tools_defined_colour_033, /Q9HAU8DomSerf1///94+95/
+colour cath_tools_defined_colour_033, /Q9HAU8PHYRE21///94+95/
+colour cath_tools_defined_colour_033, /Q9HAU8SUPERFAMILY2///94+95/
+colour cath_tools_defined_colour_033, /Q9HAU8VIVACE1///94+95/
+colour cath_tools_defined_colour_034, /Q9HAU8DomSerf1///96/
+colour cath_tools_defined_colour_034, /Q9HAU8PHYRE21///96/
+colour cath_tools_defined_colour_034, /Q9HAU8SUPERFAMILY2///96/
+colour cath_tools_defined_colour_034, /Q9HAU8VIVACE1///96/
+colour cath_tools_defined_colour_035, /Q9HAU8DomSerf1///97+98/
+colour cath_tools_defined_colour_035, /Q9HAU8PHYRE21///97+98/
+colour cath_tools_defined_colour_035, /Q9HAU8SUPERFAMILY2///97+98/
+colour cath_tools_defined_colour_035, /Q9HAU8VIVACE1///97+98/
+colour cath_tools_defined_colour_036, /Q9HAU8DomSerf1///99+100/
+colour cath_tools_defined_colour_036, /Q9HAU8PHYRE21///99+100/
+colour cath_tools_defined_colour_036, /Q9HAU8SUPERFAMILY2///99+100/
+colour cath_tools_defined_colour_036, /Q9HAU8VIVACE1///99+100/
+colour cath_tools_defined_colour_037, /Q9HAU8DomSerf1///101+102/
+colour cath_tools_defined_colour_037, /Q9HAU8PHYRE21///101+102/
+colour cath_tools_defined_colour_037, /Q9HAU8SUPERFAMILY2///101+102/
+colour cath_tools_defined_colour_037, /Q9HAU8VIVACE1///101+102/
+colour cath_tools_defined_colour_038, /Q9HAU8DomSerf1///103/
+colour cath_tools_defined_colour_038, /Q9HAU8PHYRE21///103/
+colour cath_tools_defined_colour_038, /Q9HAU8SUPERFAMILY2///103/
+colour cath_tools_defined_colour_038, /Q9HAU8VIVACE1///103/
+colour cath_tools_defined_colour_039, /Q9HAU8DomSerf1///104+105/
+colour cath_tools_defined_colour_039, /Q9HAU8PHYRE21///104+105/
+colour cath_tools_defined_colour_039, /Q9HAU8SUPERFAMILY2///104+105/
+colour cath_tools_defined_colour_039, /Q9HAU8VIVACE1///104+105/
+colour cath_tools_defined_colour_040, /Q9HAU8DomSerf1///106/
+colour cath_tools_defined_colour_040, /Q9HAU8PHYRE21///106/
+colour cath_tools_defined_colour_040, /Q9HAU8SUPERFAMILY2///106/
+colour cath_tools_defined_colour_040, /Q9HAU8VIVACE1///106/
+colour cath_tools_defined_colour_041, /Q9HAU8DomSerf1///107+108/
+colour cath_tools_defined_colour_041, /Q9HAU8PHYRE21///107+108/
+colour cath_tools_defined_colour_041, /Q9HAU8SUPERFAMILY2///107+108/
+colour cath_tools_defined_colour_041, /Q9HAU8VIVACE1///107+108/
+colour cath_tools_defined_colour_042, /Q9HAU8DomSerf1///109+110/
+colour cath_tools_defined_colour_042, /Q9HAU8PHYRE21///109+110/
+colour cath_tools_defined_colour_042, /Q9HAU8SUPERFAMILY2///109+110/
+colour cath_tools_defined_colour_042, /Q9HAU8VIVACE1///109+110/
+colour cath_tools_defined_colour_043, /Q9HAU8DomSerf1///111+112/
+colour cath_tools_defined_colour_043, /Q9HAU8PHYRE21///111+112/
+colour cath_tools_defined_colour_043, /Q9HAU8SUPERFAMILY2///111+112/
+colour cath_tools_defined_colour_043, /Q9HAU8VIVACE1///111+112/
+colour cath_tools_defined_colour_044, /Q9HAU8DomSerf1///113+114/
+colour cath_tools_defined_colour_044, /Q9HAU8PHYRE21///113+114/
+colour cath_tools_defined_colour_044, /Q9HAU8SUPERFAMILY2///113+114/
+colour cath_tools_defined_colour_044, /Q9HAU8VIVACE1///113+114/
+colour cath_tools_defined_colour_045, /Q9HAU8DomSerf1///115+116/
+colour cath_tools_defined_colour_045, /Q9HAU8PHYRE21///115+116/
+colour cath_tools_defined_colour_045, /Q9HAU8SUPERFAMILY2///115+116/
+colour cath_tools_defined_colour_045, /Q9HAU8VIVACE1///115+116/
+colour cath_tools_defined_colour_046, /Q9HAU8DomSerf1///117+118/
+colour cath_tools_defined_colour_046, /Q9HAU8PHYRE21///117+118/
+colour cath_tools_defined_colour_046, /Q9HAU8SUPERFAMILY2///117+118/
+colour cath_tools_defined_colour_046, /Q9HAU8VIVACE1///117+118/
+colour cath_tools_defined_colour_047, /Q9HAU8DomSerf1///119/
+colour cath_tools_defined_colour_047, /Q9HAU8PHYRE21///119/
+colour cath_tools_defined_colour_047, /Q9HAU8SUPERFAMILY2///119/
+colour cath_tools_defined_colour_047, /Q9HAU8VIVACE1///119/
+colour cath_tools_defined_colour_048, /Q9HAU8DomSerf1///120+121/
+colour cath_tools_defined_colour_048, /Q9HAU8PHYRE21///120+121/
+colour cath_tools_defined_colour_048, /Q9HAU8SUPERFAMILY2///120+121/
+colour cath_tools_defined_colour_048, /Q9HAU8VIVACE1///120+121/
+colour cath_tools_defined_colour_049, /Q9HAU8DomSerf1///122/
+colour cath_tools_defined_colour_049, /Q9HAU8PHYRE21///122/
+colour cath_tools_defined_colour_049, /Q9HAU8SUPERFAMILY2///122/
+colour cath_tools_defined_colour_049, /Q9HAU8VIVACE1///122/
+colour cath_tools_defined_colour_050, /Q9HAU8DomSerf1///123/
+colour cath_tools_defined_colour_050, /Q9HAU8PHYRE21///123/
+colour cath_tools_defined_colour_050, /Q9HAU8SUPERFAMILY2///123/
+colour cath_tools_defined_colour_050, /Q9HAU8VIVACE1///123/
+colour cath_tools_defined_colour_051, /Q9HAU8DomSerf1///124+125/
+colour cath_tools_defined_colour_051, /Q9HAU8PHYRE21///124+125/
+colour cath_tools_defined_colour_051, /Q9HAU8SUPERFAMILY2///124+125/
+colour cath_tools_defined_colour_051, /Q9HAU8VIVACE1///124+125/
+colour cath_tools_defined_colour_052, /Q9HAU8DomSerf1///126/
+colour cath_tools_defined_colour_052, /Q9HAU8PHYRE21///126/
+colour cath_tools_defined_colour_052, /Q9HAU8SUPERFAMILY2///126/
+colour cath_tools_defined_colour_052, /Q9HAU8VIVACE1///126/
+colour cath_tools_defined_colour_053, /Q9HAU8DomSerf1///127/
+colour cath_tools_defined_colour_053, /Q9HAU8PHYRE21///127/
+colour cath_tools_defined_colour_053, /Q9HAU8SUPERFAMILY2///127/
+colour cath_tools_defined_colour_053, /Q9HAU8VIVACE1///127/
+colour cath_tools_defined_colour_054, /Q9HAU8DomSerf1///128+129/
+colour cath_tools_defined_colour_054, /Q9HAU8PHYRE21///128+129/
+colour cath_tools_defined_colour_054, /Q9HAU8SUPERFAMILY2///128+129/
+colour cath_tools_defined_colour_054, /Q9HAU8VIVACE1///128+129/
+colour cath_tools_defined_colour_055, /Q9HAU8DomSerf1///130+131/
+colour cath_tools_defined_colour_055, /Q9HAU8PHYRE21///130+131/
+colour cath_tools_defined_colour_055, /Q9HAU8SUPERFAMILY2///130+131/
+colour cath_tools_defined_colour_055, /Q9HAU8VIVACE1///130+131/
+colour cath_tools_defined_colour_056, /Q9HAU8DomSerf1///132/
+colour cath_tools_defined_colour_056, /Q9HAU8PHYRE21///132/
+colour cath_tools_defined_colour_056, /Q9HAU8SUPERFAMILY2///132/
+colour cath_tools_defined_colour_056, /Q9HAU8VIVACE1///132/
+colour cath_tools_defined_colour_057, /Q9HAU8DomSerf1///133/
+colour cath_tools_defined_colour_057, /Q9HAU8PHYRE21///133/
+colour cath_tools_defined_colour_057, /Q9HAU8SUPERFAMILY2///133/
+colour cath_tools_defined_colour_057, /Q9HAU8VIVACE1///133/
+colour cath_tools_defined_colour_058, /Q9HAU8DomSerf1///134/
+colour cath_tools_defined_colour_058, /Q9HAU8PHYRE21///134/
+colour cath_tools_defined_colour_058, /Q9HAU8SUPERFAMILY2///134/
+colour cath_tools_defined_colour_058, /Q9HAU8VIVACE1///134/
+colour cath_tools_defined_colour_059, /Q9HAU8DomSerf1///135/
+colour cath_tools_defined_colour_059, /Q9HAU8PHYRE21///135/
+colour cath_tools_defined_colour_059, /Q9HAU8SUPERFAMILY2///135/
+colour cath_tools_defined_colour_059, /Q9HAU8VIVACE1///135/
+colour cath_tools_defined_colour_060, /Q9HAU8DomSerf1///136/
+colour cath_tools_defined_colour_060, /Q9HAU8PHYRE21///136/
+colour cath_tools_defined_colour_060, /Q9HAU8SUPERFAMILY2///136/
+colour cath_tools_defined_colour_060, /Q9HAU8VIVACE1///136/
+colour cath_tools_defined_colour_061, /Q9HAU8DomSerf1///137/
+colour cath_tools_defined_colour_061, /Q9HAU8PHYRE21///137/
+colour cath_tools_defined_colour_061, /Q9HAU8SUPERFAMILY2///137/
+colour cath_tools_defined_colour_061, /Q9HAU8VIVACE1///137/
+colour cath_tools_defined_colour_062, /Q9HAU8DomSerf1///182/
+colour cath_tools_defined_colour_062, /Q9HAU8PHYRE21///182/
+colour cath_tools_defined_colour_062, /Q9HAU8SUPERFAMILY2///182/
+colour cath_tools_defined_colour_062, /Q9HAU8VIVACE1///182/
+colour cath_tools_defined_colour_063, /Q9HAU8DomSerf1///181/
+colour cath_tools_defined_colour_063, /Q9HAU8PHYRE21///181/
+colour cath_tools_defined_colour_063, /Q9HAU8SUPERFAMILY2///181/
+colour cath_tools_defined_colour_063, /Q9HAU8VIVACE1///181/
+colour cath_tools_defined_colour_064, /Q9HAU8DomSerf1///180/
+colour cath_tools_defined_colour_064, /Q9HAU8PHYRE21///180/
+colour cath_tools_defined_colour_064, /Q9HAU8SUPERFAMILY2///180/
+colour cath_tools_defined_colour_064, /Q9HAU8VIVACE1///180/
+colour cath_tools_defined_colour_065, /Q9HAU8DomSerf1///179/
+colour cath_tools_defined_colour_065, /Q9HAU8PHYRE21///179/
+colour cath_tools_defined_colour_065, /Q9HAU8SUPERFAMILY2///179/
+colour cath_tools_defined_colour_065, /Q9HAU8VIVACE1///179/
+colour cath_tools_defined_colour_066, /Q9HAU8DomSerf1///178/
+colour cath_tools_defined_colour_066, /Q9HAU8PHYRE21///178/
+colour cath_tools_defined_colour_066, /Q9HAU8SUPERFAMILY2///178/
+colour cath_tools_defined_colour_066, /Q9HAU8VIVACE1///178/
+colour cath_tools_defined_colour_067, /Q9HAU8DomSerf1///177/
+colour cath_tools_defined_colour_067, /Q9HAU8PHYRE21///177/
+colour cath_tools_defined_colour_067, /Q9HAU8SUPERFAMILY2///177/
+colour cath_tools_defined_colour_067, /Q9HAU8VIVACE1///177/
+colour cath_tools_defined_colour_068, /Q9HAU8DomSerf1///176/
+colour cath_tools_defined_colour_068, /Q9HAU8PHYRE21///176/
+colour cath_tools_defined_colour_068, /Q9HAU8SUPERFAMILY2///176/
+colour cath_tools_defined_colour_068, /Q9HAU8VIVACE1///176/
+colour cath_tools_defined_colour_069, /Q9HAU8DomSerf1///175/
+colour cath_tools_defined_colour_069, /Q9HAU8PHYRE21///175/
+colour cath_tools_defined_colour_069, /Q9HAU8SUPERFAMILY2///175/
+colour cath_tools_defined_colour_069, /Q9HAU8VIVACE1///175/
+colour cath_tools_defined_colour_070, /Q9HAU8DomSerf1///174/
+colour cath_tools_defined_colour_070, /Q9HAU8PHYRE21///174/
+colour cath_tools_defined_colour_070, /Q9HAU8SUPERFAMILY2///174/
+colour cath_tools_defined_colour_070, /Q9HAU8VIVACE1///174/
+colour cath_tools_defined_colour_071, /Q9HAU8DomSerf1///173/
+colour cath_tools_defined_colour_071, /Q9HAU8PHYRE21///173/
+colour cath_tools_defined_colour_071, /Q9HAU8SUPERFAMILY2///173/
+colour cath_tools_defined_colour_071, /Q9HAU8VIVACE1///173/
+colour cath_tools_defined_colour_072, /Q9HAU8DomSerf1///172/
+colour cath_tools_defined_colour_072, /Q9HAU8PHYRE21///172/
+colour cath_tools_defined_colour_072, /Q9HAU8SUPERFAMILY2///172/
+colour cath_tools_defined_colour_072, /Q9HAU8VIVACE1///172/
+colour cath_tools_defined_colour_073, /Q9HAU8DomSerf1///171/
+colour cath_tools_defined_colour_073, /Q9HAU8PHYRE21///171/
+colour cath_tools_defined_colour_073, /Q9HAU8SUPERFAMILY2///171/
+colour cath_tools_defined_colour_073, /Q9HAU8VIVACE1///171/
+colour cath_tools_defined_colour_074, /Q9HAU8DomSerf1///170/
+colour cath_tools_defined_colour_074, /Q9HAU8PHYRE21///170/
+colour cath_tools_defined_colour_074, /Q9HAU8SUPERFAMILY2///170/
+colour cath_tools_defined_colour_074, /Q9HAU8VIVACE1///170/
+colour cath_tools_defined_colour_075, /Q9HAU8DomSerf1///169/
+colour cath_tools_defined_colour_075, /Q9HAU8PHYRE21///169/
+colour cath_tools_defined_colour_075, /Q9HAU8SUPERFAMILY2///169/
+colour cath_tools_defined_colour_075, /Q9HAU8VIVACE1///169/
+colour cath_tools_defined_colour_076, /Q9HAU8DomSerf1///168/
+colour cath_tools_defined_colour_076, /Q9HAU8PHYRE21///168/
+colour cath_tools_defined_colour_076, /Q9HAU8SUPERFAMILY2///168/
+colour cath_tools_defined_colour_076, /Q9HAU8VIVACE1///168/
+colour cath_tools_defined_colour_077, /Q9HAU8DomSerf1///167/
+colour cath_tools_defined_colour_077, /Q9HAU8PHYRE21///167/
+colour cath_tools_defined_colour_077, /Q9HAU8SUPERFAMILY2///167/
+colour cath_tools_defined_colour_077, /Q9HAU8VIVACE1///167/
+colour cath_tools_defined_colour_078, /Q9HAU8DomSerf1///166/
+colour cath_tools_defined_colour_078, /Q9HAU8PHYRE21///166/
+colour cath_tools_defined_colour_078, /Q9HAU8SUPERFAMILY2///166/
+colour cath_tools_defined_colour_078, /Q9HAU8VIVACE1///166/
+colour cath_tools_defined_colour_079, /Q9HAU8DomSerf1///165/
+colour cath_tools_defined_colour_079, /Q9HAU8PHYRE21///165/
+colour cath_tools_defined_colour_079, /Q9HAU8SUPERFAMILY2///165/
+colour cath_tools_defined_colour_079, /Q9HAU8VIVACE1///165/
+colour cath_tools_defined_colour_080, /Q9HAU8DomSerf1///164/
+colour cath_tools_defined_colour_080, /Q9HAU8PHYRE21///164/
+colour cath_tools_defined_colour_080, /Q9HAU8SUPERFAMILY2///164/
+colour cath_tools_defined_colour_080, /Q9HAU8VIVACE1///164/
+colour cath_tools_defined_colour_081, /Q9HAU8DomSerf1///163/
+colour cath_tools_defined_colour_081, /Q9HAU8PHYRE21///163/
+colour cath_tools_defined_colour_081, /Q9HAU8SUPERFAMILY2///163/
+colour cath_tools_defined_colour_081, /Q9HAU8VIVACE1///163/
+colour cath_tools_defined_colour_082, /Q9HAU8DomSerf1///162/
+colour cath_tools_defined_colour_082, /Q9HAU8PHYRE21///162/
+colour cath_tools_defined_colour_082, /Q9HAU8SUPERFAMILY2///162/
+colour cath_tools_defined_colour_082, /Q9HAU8VIVACE1///162/
+colour cath_tools_defined_colour_083, /Q9HAU8DomSerf1///161/
+colour cath_tools_defined_colour_083, /Q9HAU8PHYRE21///161/
+colour cath_tools_defined_colour_083, /Q9HAU8SUPERFAMILY2///161/
+colour cath_tools_defined_colour_083, /Q9HAU8VIVACE1///161/
+colour cath_tools_defined_colour_084, /Q9HAU8DomSerf1///160/
+colour cath_tools_defined_colour_084, /Q9HAU8PHYRE21///160/
+colour cath_tools_defined_colour_084, /Q9HAU8SUPERFAMILY2///160/
+colour cath_tools_defined_colour_084, /Q9HAU8VIVACE1///160/
+colour cath_tools_defined_colour_085, /Q9HAU8DomSerf1///159/
+colour cath_tools_defined_colour_085, /Q9HAU8PHYRE21///159/
+colour cath_tools_defined_colour_085, /Q9HAU8SUPERFAMILY2///159/
+colour cath_tools_defined_colour_085, /Q9HAU8VIVACE1///159/
+colour cath_tools_defined_colour_086, /Q9HAU8DomSerf1///158/
+colour cath_tools_defined_colour_086, /Q9HAU8PHYRE21///158/
+colour cath_tools_defined_colour_086, /Q9HAU8SUPERFAMILY2///158/
+colour cath_tools_defined_colour_086, /Q9HAU8VIVACE1///158/
+colour cath_tools_defined_colour_087, /Q9HAU8DomSerf1///157/
+colour cath_tools_defined_colour_087, /Q9HAU8PHYRE21///157/
+colour cath_tools_defined_colour_087, /Q9HAU8SUPERFAMILY2///157/
+colour cath_tools_defined_colour_087, /Q9HAU8VIVACE1///157/
+colour cath_tools_defined_colour_088, /Q9HAU8DomSerf1///156/
+colour cath_tools_defined_colour_088, /Q9HAU8PHYRE21///156/
+colour cath_tools_defined_colour_088, /Q9HAU8SUPERFAMILY2///156/
+colour cath_tools_defined_colour_088, /Q9HAU8VIVACE1///156/
+colour cath_tools_defined_colour_089, /Q9HAU8DomSerf1///155/
+colour cath_tools_defined_colour_089, /Q9HAU8PHYRE21///155/
+colour cath_tools_defined_colour_089, /Q9HAU8SUPERFAMILY2///155/
+colour cath_tools_defined_colour_089, /Q9HAU8VIVACE1///155/
+colour cath_tools_defined_colour_090, /Q9HAU8DomSerf1///154/
+colour cath_tools_defined_colour_090, /Q9HAU8PHYRE21///154/
+colour cath_tools_defined_colour_090, /Q9HAU8SUPERFAMILY2///154/
+colour cath_tools_defined_colour_090, /Q9HAU8VIVACE1///154/
+colour cath_tools_defined_colour_091, /Q9HAU8DomSerf1///153/
+colour cath_tools_defined_colour_091, /Q9HAU8PHYRE21///153/
+colour cath_tools_defined_colour_091, /Q9HAU8SUPERFAMILY2///153/
+colour cath_tools_defined_colour_091, /Q9HAU8VIVACE1///153/
+colour cath_tools_defined_colour_092, /Q9HAU8DomSerf1///152/
+colour cath_tools_defined_colour_092, /Q9HAU8PHYRE21///152/
+colour cath_tools_defined_colour_092, /Q9HAU8SUPERFAMILY2///152/
+colour cath_tools_defined_colour_092, /Q9HAU8VIVACE1///152/
+colour cath_tools_defined_colour_093, /Q9HAU8DomSerf1///151/
+colour cath_tools_defined_colour_093, /Q9HAU8PHYRE21///151/
+colour cath_tools_defined_colour_093, /Q9HAU8SUPERFAMILY2///151/
+colour cath_tools_defined_colour_093, /Q9HAU8VIVACE1///151/
+colour cath_tools_defined_colour_094, /Q9HAU8DomSerf1///150/
+colour cath_tools_defined_colour_094, /Q9HAU8PHYRE21///150/
+colour cath_tools_defined_colour_094, /Q9HAU8SUPERFAMILY2///150/
+colour cath_tools_defined_colour_094, /Q9HAU8VIVACE1///150/
+colour cath_tools_defined_colour_095, /Q9HAU8DomSerf1///149/
+colour cath_tools_defined_colour_095, /Q9HAU8PHYRE21///149/
+colour cath_tools_defined_colour_095, /Q9HAU8SUPERFAMILY2///149/
+colour cath_tools_defined_colour_095, /Q9HAU8VIVACE1///149/
+colour cath_tools_defined_colour_096, /Q9HAU8DomSerf1///148/
+colour cath_tools_defined_colour_096, /Q9HAU8PHYRE21///148/
+colour cath_tools_defined_colour_096, /Q9HAU8SUPERFAMILY2///148/
+colour cath_tools_defined_colour_096, /Q9HAU8VIVACE1///148/
+colour cath_tools_defined_colour_097, /Q9HAU8DomSerf1///147/
+colour cath_tools_defined_colour_097, /Q9HAU8PHYRE21///147/
+colour cath_tools_defined_colour_097, /Q9HAU8SUPERFAMILY2///147/
+colour cath_tools_defined_colour_097, /Q9HAU8VIVACE1///147/
+colour cath_tools_defined_colour_098, /Q9HAU8DomSerf1///146/
+colour cath_tools_defined_colour_098, /Q9HAU8PHYRE21///146/
+colour cath_tools_defined_colour_098, /Q9HAU8SUPERFAMILY2///146/
+colour cath_tools_defined_colour_098, /Q9HAU8VIVACE1///146/
+colour cath_tools_defined_colour_099, /Q9HAU8DomSerf1///145/
+colour cath_tools_defined_colour_099, /Q9HAU8PHYRE21///145/
+colour cath_tools_defined_colour_099, /Q9HAU8SUPERFAMILY2///145/
+colour cath_tools_defined_colour_099, /Q9HAU8VIVACE1///145/
+colour cath_tools_defined_colour_100, /Q9HAU8DomSerf1///144/
+colour cath_tools_defined_colour_100, /Q9HAU8PHYRE21///144/
+colour cath_tools_defined_colour_100, /Q9HAU8SUPERFAMILY2///144/
+colour cath_tools_defined_colour_100, /Q9HAU8VIVACE1///144/
+colour cath_tools_defined_colour_101, /Q9HAU8DomSerf1///143/
+colour cath_tools_defined_colour_101, /Q9HAU8PHYRE21///143/
+colour cath_tools_defined_colour_101, /Q9HAU8SUPERFAMILY2///143/
+colour cath_tools_defined_colour_101, /Q9HAU8VIVACE1///143/
+colour cath_tools_defined_colour_102, /Q9HAU8DomSerf1///142/
+colour cath_tools_defined_colour_102, /Q9HAU8PHYRE21///142/
+colour cath_tools_defined_colour_102, /Q9HAU8SUPERFAMILY2///142/
+colour cath_tools_defined_colour_102, /Q9HAU8VIVACE1///142/
+colour cath_tools_defined_colour_103, /Q9HAU8DomSerf1///141/
+colour cath_tools_defined_colour_103, /Q9HAU8PHYRE21///141/
+colour cath_tools_defined_colour_103, /Q9HAU8SUPERFAMILY2///141/
+colour cath_tools_defined_colour_103, /Q9HAU8VIVACE1///141/
+colour cath_tools_defined_colour_104, /Q9HAU8DomSerf1///140/
+colour cath_tools_defined_colour_104, /Q9HAU8PHYRE21///140/
+colour cath_tools_defined_colour_104, /Q9HAU8SUPERFAMILY2///140/
+colour cath_tools_defined_colour_104, /Q9HAU8VIVACE1///140/
+colour cath_tools_defined_colour_105, /Q9HAU8DomSerf1///139/
+colour cath_tools_defined_colour_105, /Q9HAU8PHYRE21///139/
+colour cath_tools_defined_colour_105, /Q9HAU8SUPERFAMILY2///139/
+colour cath_tools_defined_colour_105, /Q9HAU8VIVACE1///139/
+colour cath_tools_defined_colour_106, /Q9HAU8DomSerf1///138/
+colour cath_tools_defined_colour_106, /Q9HAU8PHYRE21///138/
+colour cath_tools_defined_colour_106, /Q9HAU8SUPERFAMILY2///138/
+colour cath_tools_defined_colour_106, /Q9HAU8VIVACE1///138/
+colour cath_tools_defined_colour_107, /Q9HAU8DomSerf1///183/
+colour cath_tools_defined_colour_107, /Q9HAU8PHYRE21///183/
+colour cath_tools_defined_colour_107, /Q9HAU8SUPERFAMILY2///183/
+colour cath_tools_defined_colour_107, /Q9HAU8VIVACE1///183/
+colour cath_tools_defined_colour_108, /Q9HAU8DomSerf1///184/
+colour cath_tools_defined_colour_108, /Q9HAU8PHYRE21///184/
+colour cath_tools_defined_colour_108, /Q9HAU8SUPERFAMILY2///184/
+colour cath_tools_defined_colour_108, /Q9HAU8VIVACE1///184/
+colour cath_tools_defined_colour_109, /Q9HAU8DomSerf1///185/
+colour cath_tools_defined_colour_109, /Q9HAU8PHYRE21///185/
+colour cath_tools_defined_colour_109, /Q9HAU8SUPERFAMILY2///185/
+colour cath_tools_defined_colour_109, /Q9HAU8VIVACE1///185/
+colour cath_tools_defined_colour_110, /Q9HAU8DomSerf1///186/
+colour cath_tools_defined_colour_110, /Q9HAU8PHYRE21///186/
+colour cath_tools_defined_colour_110, /Q9HAU8SUPERFAMILY2///186/
+colour cath_tools_defined_colour_110, /Q9HAU8VIVACE1///186/
+colour cath_tools_defined_colour_111, /Q9HAU8DomSerf1///187/
+colour cath_tools_defined_colour_111, /Q9HAU8PHYRE21///187/
+colour cath_tools_defined_colour_111, /Q9HAU8SUPERFAMILY2///187/
+colour cath_tools_defined_colour_111, /Q9HAU8VIVACE1///187/
+colour cath_tools_defined_colour_112, /Q9HAU8DomSerf1///188/
+colour cath_tools_defined_colour_112, /Q9HAU8PHYRE21///188/
+colour cath_tools_defined_colour_112, /Q9HAU8SUPERFAMILY2///188/
+colour cath_tools_defined_colour_112, /Q9HAU8VIVACE1///188/
+colour cath_tools_defined_colour_113, /Q9HAU8DomSerf1///189/
+colour cath_tools_defined_colour_113, /Q9HAU8PHYRE21///189/
+colour cath_tools_defined_colour_113, /Q9HAU8SUPERFAMILY2///189/
+colour cath_tools_defined_colour_113, /Q9HAU8VIVACE1///189/
+colour cath_tools_defined_colour_114, /Q9HAU8DomSerf1///190/
+colour cath_tools_defined_colour_114, /Q9HAU8PHYRE21///190/
+colour cath_tools_defined_colour_114, /Q9HAU8SUPERFAMILY2///190/
+colour cath_tools_defined_colour_114, /Q9HAU8VIVACE1///190/
+colour cath_tools_defined_colour_115, /Q9HAU8DomSerf1///191/
+colour cath_tools_defined_colour_115, /Q9HAU8PHYRE21///191/
+colour cath_tools_defined_colour_115, /Q9HAU8SUPERFAMILY2///191/
+colour cath_tools_defined_colour_115, /Q9HAU8VIVACE1///191/
+colour cath_tools_defined_colour_116, /Q9HAU8DomSerf1///192/
+colour cath_tools_defined_colour_116, /Q9HAU8PHYRE21///192/
+colour cath_tools_defined_colour_116, /Q9HAU8SUPERFAMILY2///192/
+colour cath_tools_defined_colour_116, /Q9HAU8VIVACE1///192/
+colour cath_tools_defined_colour_117, /Q9HAU8DomSerf1///193/
+colour cath_tools_defined_colour_117, /Q9HAU8PHYRE21///193/
+colour cath_tools_defined_colour_117, /Q9HAU8SUPERFAMILY2///193/
+colour cath_tools_defined_colour_117, /Q9HAU8VIVACE1///193/
+colour cath_tools_defined_colour_118, /Q9HAU8DomSerf1///194/
+colour cath_tools_defined_colour_118, /Q9HAU8PHYRE21///194/
+colour cath_tools_defined_colour_118, /Q9HAU8SUPERFAMILY2///194/
+colour cath_tools_defined_colour_118, /Q9HAU8VIVACE1///194/
+colour cath_tools_defined_colour_119, /Q9HAU8DomSerf1///195/
+colour cath_tools_defined_colour_119, /Q9HAU8PHYRE21///195/
+colour cath_tools_defined_colour_119, /Q9HAU8SUPERFAMILY2///195/
+colour cath_tools_defined_colour_119, /Q9HAU8VIVACE1///195/
+colour cath_tools_defined_colour_120, /Q9HAU8DomSerf1///196/
+colour cath_tools_defined_colour_120, /Q9HAU8PHYRE21///196/
+colour cath_tools_defined_colour_120, /Q9HAU8SUPERFAMILY2///196/
+colour cath_tools_defined_colour_120, /Q9HAU8VIVACE1///196/
+colour cath_tools_defined_colour_121, /Q9HAU8DomSerf1///197+198+199/
+colour cath_tools_defined_colour_121, /Q9HAU8PHYRE21///197+198+199/
+colour cath_tools_defined_colour_121, /Q9HAU8SUPERFAMILY2///197+198+199/
+colour cath_tools_defined_colour_121, /Q9HAU8VIVACE1///197+198+199/
+colour cath_tools_defined_colour_122, /Q9HAU8DomSerf1///200+201/
+colour cath_tools_defined_colour_122, /Q9HAU8PHYRE21///200+201/
+colour cath_tools_defined_colour_122, /Q9HAU8SUPERFAMILY2///200+201/
+colour cath_tools_defined_colour_122, /Q9HAU8VIVACE1///200+201/
+colour cath_tools_defined_colour_123, /Q9HAU8DomSerf1///202/
+colour cath_tools_defined_colour_123, /Q9HAU8PHYRE21///202/
+colour cath_tools_defined_colour_123, /Q9HAU8SUPERFAMILY2///202/
+colour cath_tools_defined_colour_123, /Q9HAU8VIVACE1///202/
+colour cath_tools_defined_colour_124, /Q9HAU8DomSerf1///203/
+colour cath_tools_defined_colour_124, /Q9HAU8PHYRE21///203/
+colour cath_tools_defined_colour_124, /Q9HAU8SUPERFAMILY2///203/
+colour cath_tools_defined_colour_124, /Q9HAU8VIVACE1///203/
+colour cath_tools_defined_colour_125, /Q9HAU8DomSerf1///204/
+colour cath_tools_defined_colour_125, /Q9HAU8PHYRE21///204/
+colour cath_tools_defined_colour_125, /Q9HAU8SUPERFAMILY2///204/
+colour cath_tools_defined_colour_125, /Q9HAU8VIVACE1///204/
+colour cath_tools_defined_colour_126, /Q9HAU8DomSerf1///205/
+colour cath_tools_defined_colour_126, /Q9HAU8PHYRE21///205/
+colour cath_tools_defined_colour_126, /Q9HAU8SUPERFAMILY2///205/
+colour cath_tools_defined_colour_126, /Q9HAU8VIVACE1///205/
+colour cath_tools_defined_colour_127, /Q9HAU8DomSerf1///206/
+colour cath_tools_defined_colour_127, /Q9HAU8PHYRE21///206/
+colour cath_tools_defined_colour_127, /Q9HAU8SUPERFAMILY2///206/
+colour cath_tools_defined_colour_127, /Q9HAU8VIVACE1///206/
+colour cath_tools_defined_colour_128, /Q9HAU8DomSerf1///207/
+colour cath_tools_defined_colour_128, /Q9HAU8PHYRE21///207/
+colour cath_tools_defined_colour_128, /Q9HAU8SUPERFAMILY2///207/
+colour cath_tools_defined_colour_128, /Q9HAU8VIVACE1///207/
+colour cath_tools_defined_colour_129, /Q9HAU8DomSerf1///208/
+colour cath_tools_defined_colour_129, /Q9HAU8PHYRE21///208/
+colour cath_tools_defined_colour_129, /Q9HAU8SUPERFAMILY2///208/
+colour cath_tools_defined_colour_129, /Q9HAU8VIVACE1///208/
+colour cath_tools_defined_colour_130, /Q9HAU8DomSerf1///209/
+colour cath_tools_defined_colour_130, /Q9HAU8PHYRE21///209/
+colour cath_tools_defined_colour_130, /Q9HAU8SUPERFAMILY2///209/
+colour cath_tools_defined_colour_130, /Q9HAU8VIVACE1///209/
+colour cath_tools_defined_colour_131, /Q9HAU8DomSerf1///210/
+colour cath_tools_defined_colour_131, /Q9HAU8PHYRE21///210/
+colour cath_tools_defined_colour_131, /Q9HAU8SUPERFAMILY2///210/
+colour cath_tools_defined_colour_131, /Q9HAU8VIVACE1///210/
+colour cath_tools_defined_colour_132, /Q9HAU8DomSerf1///211/
+colour cath_tools_defined_colour_132, /Q9HAU8PHYRE21///211/
+colour cath_tools_defined_colour_132, /Q9HAU8SUPERFAMILY2///211/
+colour cath_tools_defined_colour_132, /Q9HAU8VIVACE1///211/
+colour cath_tools_defined_colour_133, /Q9HAU8DomSerf1///212/
+colour cath_tools_defined_colour_133, /Q9HAU8PHYRE21///212/
+colour cath_tools_defined_colour_133, /Q9HAU8SUPERFAMILY2///212/
+colour cath_tools_defined_colour_133, /Q9HAU8VIVACE1///212/
+colour cath_tools_defined_colour_134, /Q9HAU8DomSerf1///213/
+colour cath_tools_defined_colour_134, /Q9HAU8PHYRE21///213/
+colour cath_tools_defined_colour_134, /Q9HAU8SUPERFAMILY2///213/
+colour cath_tools_defined_colour_134, /Q9HAU8VIVACE1///213/
+colour cath_tools_defined_colour_135, /Q9HAU8DomSerf1///214/
+colour cath_tools_defined_colour_135, /Q9HAU8PHYRE21///214/
+colour cath_tools_defined_colour_135, /Q9HAU8SUPERFAMILY2///214/
+colour cath_tools_defined_colour_135, /Q9HAU8VIVACE1///214/
+colour cath_tools_defined_colour_136, /Q9HAU8DomSerf1///215/
+colour cath_tools_defined_colour_136, /Q9HAU8PHYRE21///215/
+colour cath_tools_defined_colour_136, /Q9HAU8SUPERFAMILY2///215/
+colour cath_tools_defined_colour_136, /Q9HAU8VIVACE1///215/
+colour cath_tools_defined_colour_137, /Q9HAU8DomSerf1///216/
+colour cath_tools_defined_colour_137, /Q9HAU8PHYRE21///216/
+colour cath_tools_defined_colour_137, /Q9HAU8SUPERFAMILY2///216/
+colour cath_tools_defined_colour_137, /Q9HAU8VIVACE1///216/
+colour cath_tools_defined_colour_138, /Q9HAU8DomSerf1///217/
+colour cath_tools_defined_colour_138, /Q9HAU8PHYRE21///217/
+colour cath_tools_defined_colour_138, /Q9HAU8SUPERFAMILY2///217/
+colour cath_tools_defined_colour_138, /Q9HAU8VIVACE1///217/
+colour cath_tools_defined_colour_139, /Q9HAU8DomSerf1///218/
+colour cath_tools_defined_colour_139, /Q9HAU8PHYRE21///218/
+colour cath_tools_defined_colour_139, /Q9HAU8SUPERFAMILY2///218/
+colour cath_tools_defined_colour_139, /Q9HAU8VIVACE1///218/
+colour cath_tools_defined_colour_140, /Q9HAU8DomSerf1///219/
+colour cath_tools_defined_colour_140, /Q9HAU8PHYRE21///219/
+colour cath_tools_defined_colour_140, /Q9HAU8SUPERFAMILY2///219/
+colour cath_tools_defined_colour_140, /Q9HAU8VIVACE1///219/
+colour cath_tools_defined_colour_141, /Q9HAU8DomSerf1///220/
+colour cath_tools_defined_colour_141, /Q9HAU8PHYRE21///220/
+colour cath_tools_defined_colour_141, /Q9HAU8SUPERFAMILY2///220/
+colour cath_tools_defined_colour_141, /Q9HAU8VIVACE1///220/
+colour cath_tools_defined_colour_142, /Q9HAU8DomSerf1///221/
+colour cath_tools_defined_colour_142, /Q9HAU8PHYRE21///221/
+colour cath_tools_defined_colour_142, /Q9HAU8SUPERFAMILY2///221/
+colour cath_tools_defined_colour_142, /Q9HAU8VIVACE1///221/
+colour cath_tools_defined_colour_143, /Q9HAU8DomSerf1///222/
+colour cath_tools_defined_colour_143, /Q9HAU8PHYRE21///222/
+colour cath_tools_defined_colour_143, /Q9HAU8SUPERFAMILY2///222/
+colour cath_tools_defined_colour_143, /Q9HAU8VIVACE1///222/
+colour cath_tools_defined_colour_144, /Q9HAU8DomSerf1///223/
+colour cath_tools_defined_colour_144, /Q9HAU8PHYRE21///223/
+colour cath_tools_defined_colour_144, /Q9HAU8SUPERFAMILY2///223/
+colour cath_tools_defined_colour_144, /Q9HAU8VIVACE1///223/
+colour cath_tools_defined_colour_145, /Q9HAU8DomSerf1///224/
+colour cath_tools_defined_colour_145, /Q9HAU8PHYRE21///224/
+colour cath_tools_defined_colour_145, /Q9HAU8SUPERFAMILY2///224/
+colour cath_tools_defined_colour_145, /Q9HAU8VIVACE1///224/
+colour cath_tools_defined_colour_146, /Q9HAU8DomSerf1///225/
+colour cath_tools_defined_colour_146, /Q9HAU8PHYRE21///225/
+colour cath_tools_defined_colour_146, /Q9HAU8SUPERFAMILY2///225/
+colour cath_tools_defined_colour_146, /Q9HAU8VIVACE1///225/
+colour cath_tools_defined_colour_147, /Q9HAU8DomSerf1///226/
+colour cath_tools_defined_colour_147, /Q9HAU8PHYRE21///226/
+colour cath_tools_defined_colour_147, /Q9HAU8SUPERFAMILY2///226/
+colour cath_tools_defined_colour_147, /Q9HAU8VIVACE1///226/
+colour cath_tools_defined_colour_148, /Q9HAU8DomSerf1///227/
+colour cath_tools_defined_colour_148, /Q9HAU8PHYRE21///227/
+colour cath_tools_defined_colour_148, /Q9HAU8SUPERFAMILY2///227/
+colour cath_tools_defined_colour_148, /Q9HAU8VIVACE1///227/
+colour cath_tools_defined_colour_149, /Q9HAU8DomSerf1///228/
+colour cath_tools_defined_colour_149, /Q9HAU8PHYRE21///228/
+colour cath_tools_defined_colour_149, /Q9HAU8SUPERFAMILY2///228/
+colour cath_tools_defined_colour_149, /Q9HAU8VIVACE1///228/
+colour cath_tools_defined_colour_150, /Q9HAU8DomSerf1///229/
+colour cath_tools_defined_colour_150, /Q9HAU8PHYRE21///229/
+colour cath_tools_defined_colour_150, /Q9HAU8SUPERFAMILY2///229/
+colour cath_tools_defined_colour_150, /Q9HAU8VIVACE1///229/
+colour cath_tools_defined_colour_151, /Q9HAU8DomSerf1///230/
+colour cath_tools_defined_colour_151, /Q9HAU8PHYRE21///230/
+colour cath_tools_defined_colour_151, /Q9HAU8SUPERFAMILY2///230/
+colour cath_tools_defined_colour_151, /Q9HAU8VIVACE1///230/
+colour cath_tools_defined_colour_152, /Q9HAU8DomSerf1///231/
+colour cath_tools_defined_colour_152, /Q9HAU8PHYRE21///231/
+colour cath_tools_defined_colour_152, /Q9HAU8SUPERFAMILY2///231/
+colour cath_tools_defined_colour_152, /Q9HAU8VIVACE1///231/
+colour cath_tools_defined_colour_153, /Q9HAU8DomSerf1///232/
+colour cath_tools_defined_colour_153, /Q9HAU8PHYRE21///232/
+colour cath_tools_defined_colour_153, /Q9HAU8SUPERFAMILY2///232/
+colour cath_tools_defined_colour_153, /Q9HAU8VIVACE1///232/
+colour cath_tools_defined_colour_154, /Q9HAU8DomSerf1///292+293+294+295+296+297+298+299+300+301+302+303+304+305+306+307+308+309+310+311+312+313+314+315+316+317+318+319+320+321+322+323+324+325+326+327+328+329+330+331+332+333+334+335+336+337+338+339+340+341+342+343+344+345+346+347+348+349+350+351+352+353+354+355+356+357+358+359+360+361+362+363+364+365+366+367+368+369+370+371+372+373+374+375+376+377+378+379+380+381+382+383+384+385+386+387+388+389+390+391+392+393+394+395+396+397+398+399+400+401+402+403+404+405+406+407+408+409+410+411+412+413+414+415+416+417+418+419+420+421+422+423+424+425+426+427+428+429+430+431+432+433+434+435+436+437+438+439+440+441+442+443+444+445+446+447+448+449+450+451+452+453+454+455+456+457+458+459+460+461+462+463+464+465+466+467+468+469+470+471+472+473+474+475+476+477+478+479+480+481+482+483+484+485+486+487+488+489+490+491/ or /Q9HAU8DomSerf1///492+493+494/
+colour cath_tools_defined_colour_154, /Q9HAU8PHYRE21///292/
+colour cath_tools_defined_colour_154, /Q9HAU8VIVACE1///292/
+colour cath_tools_defined_colour_155, /Q9HAU8DomSerf1///291/
+colour cath_tools_defined_colour_155, /Q9HAU8PHYRE21///291/
+colour cath_tools_defined_colour_155, /Q9HAU8VIVACE1///291/
+colour cath_tools_defined_colour_156, /Q9HAU8DomSerf1///290/
+colour cath_tools_defined_colour_156, /Q9HAU8PHYRE21///290/
+colour cath_tools_defined_colour_156, /Q9HAU8VIVACE1///290/
+colour cath_tools_defined_colour_157, /Q9HAU8DomSerf1///289/
+colour cath_tools_defined_colour_157, /Q9HAU8PHYRE21///289/
+colour cath_tools_defined_colour_157, /Q9HAU8SUPERFAMILY2///289/
+colour cath_tools_defined_colour_157, /Q9HAU8VIVACE1///289/
+colour cath_tools_defined_colour_158, /Q9HAU8DomSerf1///288/
+colour cath_tools_defined_colour_158, /Q9HAU8PHYRE21///288/
+colour cath_tools_defined_colour_158, /Q9HAU8SUPERFAMILY2///288/
+colour cath_tools_defined_colour_158, /Q9HAU8VIVACE1///288/
+colour cath_tools_defined_colour_159, /Q9HAU8DomSerf1///287/
+colour cath_tools_defined_colour_159, /Q9HAU8PHYRE21///287/
+colour cath_tools_defined_colour_159, /Q9HAU8SUPERFAMILY2///287/
+colour cath_tools_defined_colour_159, /Q9HAU8VIVACE1///287/
+colour cath_tools_defined_colour_160, /Q9HAU8DomSerf1///286/
+colour cath_tools_defined_colour_160, /Q9HAU8PHYRE21///286/
+colour cath_tools_defined_colour_160, /Q9HAU8SUPERFAMILY2///286/
+colour cath_tools_defined_colour_160, /Q9HAU8VIVACE1///286/
+colour cath_tools_defined_colour_161, /Q9HAU8DomSerf1///285/
+colour cath_tools_defined_colour_161, /Q9HAU8PHYRE21///285/
+colour cath_tools_defined_colour_161, /Q9HAU8SUPERFAMILY2///285/
+colour cath_tools_defined_colour_161, /Q9HAU8VIVACE1///285/
+colour cath_tools_defined_colour_162, /Q9HAU8DomSerf1///284/
+colour cath_tools_defined_colour_162, /Q9HAU8PHYRE21///284/
+colour cath_tools_defined_colour_162, /Q9HAU8SUPERFAMILY2///284/
+colour cath_tools_defined_colour_162, /Q9HAU8VIVACE1///284/
+colour cath_tools_defined_colour_163, /Q9HAU8DomSerf1///283/
+colour cath_tools_defined_colour_163, /Q9HAU8PHYRE21///283/
+colour cath_tools_defined_colour_163, /Q9HAU8SUPERFAMILY2///283/
+colour cath_tools_defined_colour_163, /Q9HAU8VIVACE1///283/
+colour cath_tools_defined_colour_164, /Q9HAU8DomSerf1///282/
+colour cath_tools_defined_colour_164, /Q9HAU8PHYRE21///282/
+colour cath_tools_defined_colour_164, /Q9HAU8SUPERFAMILY2///282/
+colour cath_tools_defined_colour_164, /Q9HAU8VIVACE1///282/
+colour cath_tools_defined_colour_165, /Q9HAU8DomSerf1///281/
+colour cath_tools_defined_colour_165, /Q9HAU8PHYRE21///281/
+colour cath_tools_defined_colour_165, /Q9HAU8SUPERFAMILY2///281/
+colour cath_tools_defined_colour_165, /Q9HAU8VIVACE1///281/
+colour cath_tools_defined_colour_166, /Q9HAU8DomSerf1///280/
+colour cath_tools_defined_colour_166, /Q9HAU8PHYRE21///280/
+colour cath_tools_defined_colour_166, /Q9HAU8SUPERFAMILY2///280/
+colour cath_tools_defined_colour_166, /Q9HAU8VIVACE1///280/
+colour cath_tools_defined_colour_167, /Q9HAU8DomSerf1///279/
+colour cath_tools_defined_colour_167, /Q9HAU8PHYRE21///279/
+colour cath_tools_defined_colour_167, /Q9HAU8SUPERFAMILY2///279/
+colour cath_tools_defined_colour_167, /Q9HAU8VIVACE1///279/
+colour cath_tools_defined_colour_168, /Q9HAU8DomSerf1///278/
+colour cath_tools_defined_colour_168, /Q9HAU8PHYRE21///278/
+colour cath_tools_defined_colour_168, /Q9HAU8SUPERFAMILY2///278/
+colour cath_tools_defined_colour_168, /Q9HAU8VIVACE1///278/
+colour cath_tools_defined_colour_169, /Q9HAU8DomSerf1///277/
+colour cath_tools_defined_colour_169, /Q9HAU8PHYRE21///277/
+colour cath_tools_defined_colour_169, /Q9HAU8SUPERFAMILY2///277/
+colour cath_tools_defined_colour_169, /Q9HAU8VIVACE1///277/
+colour cath_tools_defined_colour_170, /Q9HAU8DomSerf1///275+276/
+colour cath_tools_defined_colour_170, /Q9HAU8PHYRE21///275+276/
+colour cath_tools_defined_colour_170, /Q9HAU8SUPERFAMILY2///275+276/
+colour cath_tools_defined_colour_170, /Q9HAU8VIVACE1///275+276/
+colour cath_tools_defined_colour_171, /Q9HAU8DomSerf1///274/
+colour cath_tools_defined_colour_171, /Q9HAU8PHYRE21///274/
+colour cath_tools_defined_colour_171, /Q9HAU8SUPERFAMILY2///274/
+colour cath_tools_defined_colour_171, /Q9HAU8VIVACE1///274/
+colour cath_tools_defined_colour_172, /Q9HAU8DomSerf1///272+273/
+colour cath_tools_defined_colour_172, /Q9HAU8PHYRE21///272+273/
+colour cath_tools_defined_colour_172, /Q9HAU8SUPERFAMILY2///272+273/
+colour cath_tools_defined_colour_172, /Q9HAU8VIVACE1///272+273/
+colour cath_tools_defined_colour_173, /Q9HAU8DomSerf1///270+271/
+colour cath_tools_defined_colour_173, /Q9HAU8PHYRE21///270+271/
+colour cath_tools_defined_colour_173, /Q9HAU8SUPERFAMILY2///270+271/
+colour cath_tools_defined_colour_173, /Q9HAU8VIVACE1///270+271/
+colour cath_tools_defined_colour_174, /Q9HAU8DomSerf1///265+266+267+268+269/
+colour cath_tools_defined_colour_174, /Q9HAU8PHYRE21///265+266+267+268+269/
+colour cath_tools_defined_colour_174, /Q9HAU8SUPERFAMILY2///265+266+267+268+269/
+colour cath_tools_defined_colour_174, /Q9HAU8VIVACE1///265+266+267+268+269/
+colour cath_tools_defined_colour_175, /Q9HAU8DomSerf1///261+262+263+264/
+colour cath_tools_defined_colour_175, /Q9HAU8PHYRE21///261+262+263+264/
+colour cath_tools_defined_colour_175, /Q9HAU8SUPERFAMILY2///261+262+263+264/
+colour cath_tools_defined_colour_175, /Q9HAU8VIVACE1///261+262+263+264/
+colour cath_tools_defined_colour_176, /Q9HAU8DomSerf1///260/
+colour cath_tools_defined_colour_176, /Q9HAU8PHYRE21///260/
+colour cath_tools_defined_colour_176, /Q9HAU8SUPERFAMILY2///260/
+colour cath_tools_defined_colour_176, /Q9HAU8VIVACE1///260/
+colour cath_tools_defined_colour_177, /Q9HAU8DomSerf1///259/
+colour cath_tools_defined_colour_177, /Q9HAU8PHYRE21///259/
+colour cath_tools_defined_colour_177, /Q9HAU8SUPERFAMILY2///259/
+colour cath_tools_defined_colour_177, /Q9HAU8VIVACE1///259/
+colour cath_tools_defined_colour_178, /Q9HAU8DomSerf1///258/
+colour cath_tools_defined_colour_178, /Q9HAU8PHYRE21///258/
+colour cath_tools_defined_colour_178, /Q9HAU8SUPERFAMILY2///258/
+colour cath_tools_defined_colour_178, /Q9HAU8VIVACE1///258/
+colour cath_tools_defined_colour_179, /Q9HAU8DomSerf1///257/
+colour cath_tools_defined_colour_179, /Q9HAU8PHYRE21///257/
+colour cath_tools_defined_colour_179, /Q9HAU8SUPERFAMILY2///257/
+colour cath_tools_defined_colour_179, /Q9HAU8VIVACE1///257/
+colour cath_tools_defined_colour_180, /Q9HAU8DomSerf1///256/
+colour cath_tools_defined_colour_180, /Q9HAU8PHYRE21///256/
+colour cath_tools_defined_colour_180, /Q9HAU8SUPERFAMILY2///256/
+colour cath_tools_defined_colour_180, /Q9HAU8VIVACE1///256/
+colour cath_tools_defined_colour_181, /Q9HAU8DomSerf1///255/
+colour cath_tools_defined_colour_181, /Q9HAU8PHYRE21///255/
+colour cath_tools_defined_colour_181, /Q9HAU8SUPERFAMILY2///255/
+colour cath_tools_defined_colour_181, /Q9HAU8VIVACE1///255/
+colour cath_tools_defined_colour_182, /Q9HAU8DomSerf1///254/
+colour cath_tools_defined_colour_182, /Q9HAU8PHYRE21///254/
+colour cath_tools_defined_colour_182, /Q9HAU8SUPERFAMILY2///254/
+colour cath_tools_defined_colour_182, /Q9HAU8VIVACE1///254/
+colour cath_tools_defined_colour_183, /Q9HAU8DomSerf1///253/
+colour cath_tools_defined_colour_183, /Q9HAU8PHYRE21///253/
+colour cath_tools_defined_colour_183, /Q9HAU8SUPERFAMILY2///253/
+colour cath_tools_defined_colour_183, /Q9HAU8VIVACE1///253/
+colour cath_tools_defined_colour_184, /Q9HAU8DomSerf1///252/
+colour cath_tools_defined_colour_184, /Q9HAU8PHYRE21///252/
+colour cath_tools_defined_colour_184, /Q9HAU8SUPERFAMILY2///252/
+colour cath_tools_defined_colour_184, /Q9HAU8VIVACE1///252/
+colour cath_tools_defined_colour_185, /Q9HAU8DomSerf1///251/
+colour cath_tools_defined_colour_185, /Q9HAU8PHYRE21///251/
+colour cath_tools_defined_colour_185, /Q9HAU8SUPERFAMILY2///251/
+colour cath_tools_defined_colour_185, /Q9HAU8VIVACE1///251/
+colour cath_tools_defined_colour_186, /Q9HAU8DomSerf1///250/
+colour cath_tools_defined_colour_186, /Q9HAU8PHYRE21///250/
+colour cath_tools_defined_colour_186, /Q9HAU8SUPERFAMILY2///250/
+colour cath_tools_defined_colour_186, /Q9HAU8VIVACE1///250/
+colour cath_tools_defined_colour_187, /Q9HAU8DomSerf1///249/
+colour cath_tools_defined_colour_187, /Q9HAU8PHYRE21///249/
+colour cath_tools_defined_colour_187, /Q9HAU8SUPERFAMILY2///249/
+colour cath_tools_defined_colour_187, /Q9HAU8VIVACE1///249/
+colour cath_tools_defined_colour_188, /Q9HAU8DomSerf1///248/
+colour cath_tools_defined_colour_188, /Q9HAU8PHYRE21///248/
+colour cath_tools_defined_colour_188, /Q9HAU8SUPERFAMILY2///248/
+colour cath_tools_defined_colour_188, /Q9HAU8VIVACE1///248/
+colour cath_tools_defined_colour_189, /Q9HAU8DomSerf1///247/
+colour cath_tools_defined_colour_189, /Q9HAU8PHYRE21///247/
+colour cath_tools_defined_colour_189, /Q9HAU8SUPERFAMILY2///247/
+colour cath_tools_defined_colour_189, /Q9HAU8VIVACE1///247/
+colour cath_tools_defined_colour_190, /Q9HAU8DomSerf1///246/
+colour cath_tools_defined_colour_190, /Q9HAU8PHYRE21///246/
+colour cath_tools_defined_colour_190, /Q9HAU8SUPERFAMILY2///246/
+colour cath_tools_defined_colour_190, /Q9HAU8VIVACE1///246/
+colour cath_tools_defined_colour_191, /Q9HAU8DomSerf1///245/
+colour cath_tools_defined_colour_191, /Q9HAU8PHYRE21///245/
+colour cath_tools_defined_colour_191, /Q9HAU8SUPERFAMILY2///245/
+colour cath_tools_defined_colour_191, /Q9HAU8VIVACE1///245/
+colour cath_tools_defined_colour_192, /Q9HAU8DomSerf1///244/
+colour cath_tools_defined_colour_192, /Q9HAU8PHYRE21///244/
+colour cath_tools_defined_colour_192, /Q9HAU8SUPERFAMILY2///244/
+colour cath_tools_defined_colour_192, /Q9HAU8VIVACE1///244/
+colour cath_tools_defined_colour_193, /Q9HAU8DomSerf1///243/
+colour cath_tools_defined_colour_193, /Q9HAU8PHYRE21///243/
+colour cath_tools_defined_colour_193, /Q9HAU8SUPERFAMILY2///243/
+colour cath_tools_defined_colour_193, /Q9HAU8VIVACE1///243/
+colour cath_tools_defined_colour_194, /Q9HAU8DomSerf1///242/
+colour cath_tools_defined_colour_194, /Q9HAU8PHYRE21///242/
+colour cath_tools_defined_colour_194, /Q9HAU8SUPERFAMILY2///242/
+colour cath_tools_defined_colour_194, /Q9HAU8VIVACE1///242/
+colour cath_tools_defined_colour_195, /Q9HAU8DomSerf1///241/
+colour cath_tools_defined_colour_195, /Q9HAU8PHYRE21///241/
+colour cath_tools_defined_colour_195, /Q9HAU8SUPERFAMILY2///241/
+colour cath_tools_defined_colour_195, /Q9HAU8VIVACE1///241/
+colour cath_tools_defined_colour_196, /Q9HAU8DomSerf1///240/
+colour cath_tools_defined_colour_196, /Q9HAU8PHYRE21///240/
+colour cath_tools_defined_colour_196, /Q9HAU8SUPERFAMILY2///240/
+colour cath_tools_defined_colour_196, /Q9HAU8VIVACE1///240/
+colour cath_tools_defined_colour_197, /Q9HAU8DomSerf1///239/
+colour cath_tools_defined_colour_197, /Q9HAU8PHYRE21///239/
+colour cath_tools_defined_colour_197, /Q9HAU8SUPERFAMILY2///239/
+colour cath_tools_defined_colour_197, /Q9HAU8VIVACE1///239/
+colour cath_tools_defined_colour_198, /Q9HAU8DomSerf1///238/
+colour cath_tools_defined_colour_198, /Q9HAU8PHYRE21///238/
+colour cath_tools_defined_colour_198, /Q9HAU8SUPERFAMILY2///238/
+colour cath_tools_defined_colour_198, /Q9HAU8VIVACE1///238/
+colour cath_tools_defined_colour_199, /Q9HAU8DomSerf1///237/
+colour cath_tools_defined_colour_199, /Q9HAU8PHYRE21///237/
+colour cath_tools_defined_colour_199, /Q9HAU8SUPERFAMILY2///237/
+colour cath_tools_defined_colour_199, /Q9HAU8VIVACE1///237/
+colour cath_tools_defined_colour_200, /Q9HAU8DomSerf1///236/
+colour cath_tools_defined_colour_200, /Q9HAU8PHYRE21///236/
+colour cath_tools_defined_colour_200, /Q9HAU8SUPERFAMILY2///236/
+colour cath_tools_defined_colour_200, /Q9HAU8VIVACE1///236/
+colour cath_tools_defined_colour_201, /Q9HAU8DomSerf1///235/
+colour cath_tools_defined_colour_201, /Q9HAU8PHYRE21///235/
+colour cath_tools_defined_colour_201, /Q9HAU8SUPERFAMILY2///235/
+colour cath_tools_defined_colour_201, /Q9HAU8VIVACE1///235/
+colour cath_tools_defined_colour_202, /Q9HAU8DomSerf1///234/
+colour cath_tools_defined_colour_202, /Q9HAU8PHYRE21///234/
+colour cath_tools_defined_colour_202, /Q9HAU8SUPERFAMILY2///234/
+colour cath_tools_defined_colour_202, /Q9HAU8VIVACE1///234/
+colour cath_tools_defined_colour_203, /Q9HAU8DomSerf1///233/
+colour cath_tools_defined_colour_203, /Q9HAU8PHYRE21///233/
+colour cath_tools_defined_colour_203, /Q9HAU8SUPERFAMILY2///233/
+colour cath_tools_defined_colour_203, /Q9HAU8VIVACE1///233/
+distance alignment, /Q9HAU8PHYRE21///35/CA, /Q9HAU8VIVACE1///35/CA
+distance alignment, /Q9HAU8DomSerf1///35/CA, /Q9HAU8VIVACE1///35/CA
+distance alignment, /Q9HAU8PHYRE21///36/CA, /Q9HAU8VIVACE1///36/CA
+distance alignment, /Q9HAU8DomSerf1///36/CA, /Q9HAU8VIVACE1///36/CA
+distance alignment, /Q9HAU8PHYRE21///37/CA, /Q9HAU8VIVACE1///37/CA
+distance alignment, /Q9HAU8DomSerf1///37/CA, /Q9HAU8PHYRE21///37/CA
+distance alignment, /Q9HAU8PHYRE21///38/CA, /Q9HAU8VIVACE1///38/CA
+distance alignment, /Q9HAU8DomSerf1///38/CA, /Q9HAU8PHYRE21///38/CA
+distance alignment, /Q9HAU8PHYRE21///39/CA, /Q9HAU8VIVACE1///39/CA
+distance alignment, /Q9HAU8DomSerf1///39/CA, /Q9HAU8VIVACE1///39/CA
+distance alignment, /Q9HAU8PHYRE21///40/CA, /Q9HAU8VIVACE1///40/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///40/CA, /Q9HAU8VIVACE1///40/CA
+distance alignment, /Q9HAU8DomSerf1///40/CA, /Q9HAU8PHYRE21///40/CA
+distance alignment, /Q9HAU8PHYRE21///41/CA, /Q9HAU8VIVACE1///41/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///41/CA, /Q9HAU8VIVACE1///41/CA
+distance alignment, /Q9HAU8DomSerf1///41/CA, /Q9HAU8SUPERFAMILY2///41/CA
+distance alignment, /Q9HAU8PHYRE21///42/CA, /Q9HAU8VIVACE1///42/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///42/CA, /Q9HAU8VIVACE1///42/CA
+distance alignment, /Q9HAU8DomSerf1///42/CA, /Q9HAU8SUPERFAMILY2///42/CA
+distance alignment, /Q9HAU8PHYRE21///43/CA, /Q9HAU8VIVACE1///43/CA
+distance alignment, /Q9HAU8PHYRE21///43/CA, /Q9HAU8SUPERFAMILY2///43/CA
+distance alignment, /Q9HAU8DomSerf1///43/CA, /Q9HAU8SUPERFAMILY2///43/CA
+distance alignment, /Q9HAU8PHYRE21///44/CA, /Q9HAU8VIVACE1///44/CA
+distance alignment, /Q9HAU8PHYRE21///44/CA, /Q9HAU8SUPERFAMILY2///44/CA
+distance alignment, /Q9HAU8DomSerf1///44/CA, /Q9HAU8SUPERFAMILY2///44/CA
+distance alignment, /Q9HAU8PHYRE21///45/CA, /Q9HAU8VIVACE1///45/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///45/CA, /Q9HAU8VIVACE1///45/CA
+distance alignment, /Q9HAU8DomSerf1///45/CA, /Q9HAU8PHYRE21///45/CA
+distance alignment, /Q9HAU8PHYRE21///46/CA, /Q9HAU8VIVACE1///46/CA
+distance alignment, /Q9HAU8PHYRE21///46/CA, /Q9HAU8SUPERFAMILY2///46/CA
+distance alignment, /Q9HAU8DomSerf1///46/CA, /Q9HAU8VIVACE1///46/CA
+distance alignment, /Q9HAU8PHYRE21///47/CA, /Q9HAU8VIVACE1///47/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///47/CA, /Q9HAU8VIVACE1///47/CA
+distance alignment, /Q9HAU8DomSerf1///47/CA, /Q9HAU8PHYRE21///47/CA
+distance alignment, /Q9HAU8PHYRE21///48/CA, /Q9HAU8VIVACE1///48/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///48/CA, /Q9HAU8VIVACE1///48/CA
+distance alignment, /Q9HAU8DomSerf1///48/CA, /Q9HAU8PHYRE21///48/CA
+distance alignment, /Q9HAU8PHYRE21///49/CA, /Q9HAU8VIVACE1///49/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///49/CA, /Q9HAU8VIVACE1///49/CA
+distance alignment, /Q9HAU8DomSerf1///49/CA, /Q9HAU8VIVACE1///49/CA
+distance alignment, /Q9HAU8PHYRE21///50/CA, /Q9HAU8VIVACE1///50/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///50/CA, /Q9HAU8VIVACE1///50/CA
+distance alignment, /Q9HAU8DomSerf1///50/CA, /Q9HAU8PHYRE21///50/CA
+distance alignment, /Q9HAU8PHYRE21///51/CA, /Q9HAU8VIVACE1///51/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///51/CA, /Q9HAU8VIVACE1///51/CA
+distance alignment, /Q9HAU8DomSerf1///51/CA, /Q9HAU8VIVACE1///51/CA
+distance alignment, /Q9HAU8PHYRE21///52/CA, /Q9HAU8VIVACE1///52/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///52/CA, /Q9HAU8VIVACE1///52/CA
+distance alignment, /Q9HAU8DomSerf1///52/CA, /Q9HAU8PHYRE21///52/CA
+distance alignment, /Q9HAU8PHYRE21///53/CA, /Q9HAU8VIVACE1///53/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///53/CA, /Q9HAU8VIVACE1///53/CA
+distance alignment, /Q9HAU8DomSerf1///53/CA, /Q9HAU8PHYRE21///53/CA
+distance alignment, /Q9HAU8PHYRE21///54/CA, /Q9HAU8VIVACE1///54/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///54/CA, /Q9HAU8VIVACE1///54/CA
+distance alignment, /Q9HAU8DomSerf1///54/CA, /Q9HAU8PHYRE21///54/CA
+distance alignment, /Q9HAU8PHYRE21///55/CA, /Q9HAU8VIVACE1///55/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///55/CA, /Q9HAU8VIVACE1///55/CA
+distance alignment, /Q9HAU8DomSerf1///55/CA, /Q9HAU8SUPERFAMILY2///55/CA
+distance alignment, /Q9HAU8PHYRE21///56/CA, /Q9HAU8VIVACE1///56/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///56/CA, /Q9HAU8VIVACE1///56/CA
+distance alignment, /Q9HAU8DomSerf1///56/CA, /Q9HAU8SUPERFAMILY2///56/CA
+distance alignment, /Q9HAU8PHYRE21///57/CA, /Q9HAU8VIVACE1///57/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///57/CA, /Q9HAU8VIVACE1///57/CA
+distance alignment, /Q9HAU8DomSerf1///57/CA, /Q9HAU8SUPERFAMILY2///57/CA
+distance alignment, /Q9HAU8PHYRE21///58/CA, /Q9HAU8VIVACE1///58/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///58/CA, /Q9HAU8VIVACE1///58/CA
+distance alignment, /Q9HAU8DomSerf1///58/CA, /Q9HAU8SUPERFAMILY2///58/CA
+distance alignment, /Q9HAU8PHYRE21///59/CA, /Q9HAU8VIVACE1///59/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///59/CA, /Q9HAU8VIVACE1///59/CA
+distance alignment, /Q9HAU8DomSerf1///59/CA, /Q9HAU8SUPERFAMILY2///59/CA
+distance alignment, /Q9HAU8PHYRE21///60/CA, /Q9HAU8VIVACE1///60/CA
+distance alignment, /Q9HAU8PHYRE21///60/CA, /Q9HAU8SUPERFAMILY2///60/CA
+distance alignment, /Q9HAU8DomSerf1///60/CA, /Q9HAU8SUPERFAMILY2///60/CA
+distance alignment, /Q9HAU8PHYRE21///61/CA, /Q9HAU8SUPERFAMILY2///61/CA
+distance alignment, /Q9HAU8PHYRE21///61/CA, /Q9HAU8VIVACE1///61/CA
+distance alignment, /Q9HAU8DomSerf1///61/CA, /Q9HAU8SUPERFAMILY2///61/CA
+distance alignment, /Q9HAU8PHYRE21///62/CA, /Q9HAU8VIVACE1///62/CA
+distance alignment, /Q9HAU8PHYRE21///62/CA, /Q9HAU8SUPERFAMILY2///62/CA
+distance alignment, /Q9HAU8DomSerf1///62/CA, /Q9HAU8SUPERFAMILY2///62/CA
+distance alignment, /Q9HAU8PHYRE21///63/CA, /Q9HAU8VIVACE1///63/CA
+distance alignment, /Q9HAU8PHYRE21///63/CA, /Q9HAU8SUPERFAMILY2///63/CA
+distance alignment, /Q9HAU8DomSerf1///63/CA, /Q9HAU8SUPERFAMILY2///63/CA
+distance alignment, /Q9HAU8PHYRE21///64/CA, /Q9HAU8VIVACE1///64/CA
+distance alignment, /Q9HAU8PHYRE21///64/CA, /Q9HAU8SUPERFAMILY2///64/CA
+distance alignment, /Q9HAU8DomSerf1///64/CA, /Q9HAU8SUPERFAMILY2///64/CA
+distance alignment, /Q9HAU8PHYRE21///65/CA, /Q9HAU8VIVACE1///65/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///65/CA, /Q9HAU8VIVACE1///65/CA
+distance alignment, /Q9HAU8DomSerf1///65/CA, /Q9HAU8SUPERFAMILY2///65/CA
+distance alignment, /Q9HAU8PHYRE21///66/CA, /Q9HAU8VIVACE1///66/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///66/CA, /Q9HAU8VIVACE1///66/CA
+distance alignment, /Q9HAU8DomSerf1///66/CA, /Q9HAU8SUPERFAMILY2///66/CA
+distance alignment, /Q9HAU8PHYRE21///67/CA, /Q9HAU8VIVACE1///67/CA
+distance alignment, /Q9HAU8PHYRE21///67/CA, /Q9HAU8SUPERFAMILY2///67/CA
+distance alignment, /Q9HAU8DomSerf1///67/CA, /Q9HAU8SUPERFAMILY2///67/CA
+distance alignment, /Q9HAU8PHYRE21///68/CA, /Q9HAU8VIVACE1///68/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///68/CA, /Q9HAU8VIVACE1///68/CA
+distance alignment, /Q9HAU8DomSerf1///68/CA, /Q9HAU8SUPERFAMILY2///68/CA
+distance alignment, /Q9HAU8PHYRE21///69/CA, /Q9HAU8VIVACE1///69/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///69/CA, /Q9HAU8VIVACE1///69/CA
+distance alignment, /Q9HAU8DomSerf1///69/CA, /Q9HAU8SUPERFAMILY2///69/CA
+distance alignment, /Q9HAU8PHYRE21///70/CA, /Q9HAU8VIVACE1///70/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///70/CA, /Q9HAU8VIVACE1///70/CA
+distance alignment, /Q9HAU8DomSerf1///70/CA, /Q9HAU8SUPERFAMILY2///70/CA
+distance alignment, /Q9HAU8PHYRE21///71/CA, /Q9HAU8VIVACE1///71/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///71/CA, /Q9HAU8VIVACE1///71/CA
+distance alignment, /Q9HAU8DomSerf1///71/CA, /Q9HAU8SUPERFAMILY2///71/CA
+distance alignment, /Q9HAU8PHYRE21///72/CA, /Q9HAU8VIVACE1///72/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///72/CA, /Q9HAU8VIVACE1///72/CA
+distance alignment, /Q9HAU8DomSerf1///72/CA, /Q9HAU8SUPERFAMILY2///72/CA
+distance alignment, /Q9HAU8PHYRE21///73/CA, /Q9HAU8VIVACE1///73/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///73/CA, /Q9HAU8VIVACE1///73/CA
+distance alignment, /Q9HAU8DomSerf1///73/CA, /Q9HAU8SUPERFAMILY2///73/CA
+distance alignment, /Q9HAU8PHYRE21///74/CA, /Q9HAU8VIVACE1///74/CA
+distance alignment, /Q9HAU8PHYRE21///74/CA, /Q9HAU8SUPERFAMILY2///74/CA
+distance alignment, /Q9HAU8DomSerf1///74/CA, /Q9HAU8SUPERFAMILY2///74/CA
+distance alignment, /Q9HAU8PHYRE21///75/CA, /Q9HAU8VIVACE1///75/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///75/CA, /Q9HAU8VIVACE1///75/CA
+distance alignment, /Q9HAU8DomSerf1///75/CA, /Q9HAU8SUPERFAMILY2///75/CA
+distance alignment, /Q9HAU8PHYRE21///76/CA, /Q9HAU8VIVACE1///76/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///76/CA, /Q9HAU8VIVACE1///76/CA
+distance alignment, /Q9HAU8DomSerf1///76/CA, /Q9HAU8SUPERFAMILY2///76/CA
+distance alignment, /Q9HAU8PHYRE21///77/CA, /Q9HAU8VIVACE1///77/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///77/CA, /Q9HAU8VIVACE1///77/CA
+distance alignment, /Q9HAU8DomSerf1///77/CA, /Q9HAU8PHYRE21///77/CA
+distance alignment, /Q9HAU8PHYRE21///78/CA, /Q9HAU8VIVACE1///78/CA
+distance alignment, /Q9HAU8PHYRE21///78/CA, /Q9HAU8SUPERFAMILY2///78/CA
+distance alignment, /Q9HAU8DomSerf1///78/CA, /Q9HAU8VIVACE1///78/CA
+distance alignment, /Q9HAU8PHYRE21///79/CA, /Q9HAU8VIVACE1///79/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///79/CA, /Q9HAU8VIVACE1///79/CA
+distance alignment, /Q9HAU8DomSerf1///79/CA, /Q9HAU8PHYRE21///79/CA
+distance alignment, /Q9HAU8PHYRE21///80/CA, /Q9HAU8VIVACE1///80/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///80/CA, /Q9HAU8VIVACE1///80/CA
+distance alignment, /Q9HAU8DomSerf1///80/CA, /Q9HAU8PHYRE21///80/CA
+distance alignment, /Q9HAU8PHYRE21///81/CA, /Q9HAU8VIVACE1///81/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///81/CA, /Q9HAU8VIVACE1///81/CA
+distance alignment, /Q9HAU8DomSerf1///81/CA, /Q9HAU8PHYRE21///81/CA
+distance alignment, /Q9HAU8PHYRE21///82/CA, /Q9HAU8VIVACE1///82/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///82/CA, /Q9HAU8VIVACE1///82/CA
+distance alignment, /Q9HAU8DomSerf1///82/CA, /Q9HAU8VIVACE1///82/CA
+distance alignment, /Q9HAU8PHYRE21///83/CA, /Q9HAU8VIVACE1///83/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///83/CA, /Q9HAU8VIVACE1///83/CA
+distance alignment, /Q9HAU8DomSerf1///83/CA, /Q9HAU8VIVACE1///83/CA
+distance alignment, /Q9HAU8PHYRE21///84/CA, /Q9HAU8VIVACE1///84/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///84/CA, /Q9HAU8VIVACE1///84/CA
+distance alignment, /Q9HAU8DomSerf1///84/CA, /Q9HAU8PHYRE21///84/CA
+distance alignment, /Q9HAU8PHYRE21///85/CA, /Q9HAU8VIVACE1///85/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///85/CA, /Q9HAU8VIVACE1///85/CA
+distance alignment, /Q9HAU8DomSerf1///85/CA, /Q9HAU8PHYRE21///85/CA
+distance alignment, /Q9HAU8PHYRE21///86/CA, /Q9HAU8VIVACE1///86/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///86/CA, /Q9HAU8VIVACE1///86/CA
+distance alignment, /Q9HAU8DomSerf1///86/CA, /Q9HAU8VIVACE1///86/CA
+distance alignment, /Q9HAU8PHYRE21///87/CA, /Q9HAU8VIVACE1///87/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///87/CA, /Q9HAU8VIVACE1///87/CA
+distance alignment, /Q9HAU8DomSerf1///87/CA, /Q9HAU8VIVACE1///87/CA
+distance alignment, /Q9HAU8PHYRE21///88/CA, /Q9HAU8VIVACE1///88/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///88/CA, /Q9HAU8VIVACE1///88/CA
+distance alignment, /Q9HAU8DomSerf1///88/CA, /Q9HAU8PHYRE21///88/CA
+distance alignment, /Q9HAU8PHYRE21///89/CA, /Q9HAU8VIVACE1///89/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///89/CA, /Q9HAU8VIVACE1///89/CA
+distance alignment, /Q9HAU8DomSerf1///89/CA, /Q9HAU8PHYRE21///89/CA
+distance alignment, /Q9HAU8PHYRE21///90/CA, /Q9HAU8VIVACE1///90/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///90/CA, /Q9HAU8VIVACE1///90/CA
+distance alignment, /Q9HAU8DomSerf1///90/CA, /Q9HAU8VIVACE1///90/CA
+distance alignment, /Q9HAU8PHYRE21///91/CA, /Q9HAU8VIVACE1///91/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///91/CA, /Q9HAU8VIVACE1///91/CA
+distance alignment, /Q9HAU8DomSerf1///91/CA, /Q9HAU8SUPERFAMILY2///91/CA
+distance alignment, /Q9HAU8PHYRE21///92/CA, /Q9HAU8VIVACE1///92/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///92/CA, /Q9HAU8VIVACE1///92/CA
+distance alignment, /Q9HAU8DomSerf1///92/CA, /Q9HAU8SUPERFAMILY2///92/CA
+distance alignment, /Q9HAU8PHYRE21///93/CA, /Q9HAU8VIVACE1///93/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///93/CA, /Q9HAU8VIVACE1///93/CA
+distance alignment, /Q9HAU8DomSerf1///93/CA, /Q9HAU8SUPERFAMILY2///93/CA
+distance alignment, /Q9HAU8PHYRE21///94/CA, /Q9HAU8VIVACE1///94/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///94/CA, /Q9HAU8VIVACE1///94/CA
+distance alignment, /Q9HAU8DomSerf1///94/CA, /Q9HAU8SUPERFAMILY2///94/CA
+distance alignment, /Q9HAU8PHYRE21///95/CA, /Q9HAU8VIVACE1///95/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///95/CA, /Q9HAU8VIVACE1///95/CA
+distance alignment, /Q9HAU8DomSerf1///95/CA, /Q9HAU8SUPERFAMILY2///95/CA
+distance alignment, /Q9HAU8PHYRE21///96/CA, /Q9HAU8VIVACE1///96/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///96/CA, /Q9HAU8VIVACE1///96/CA
+distance alignment, /Q9HAU8DomSerf1///96/CA, /Q9HAU8SUPERFAMILY2///96/CA
+distance alignment, /Q9HAU8PHYRE21///97/CA, /Q9HAU8VIVACE1///97/CA
+distance alignment, /Q9HAU8PHYRE21///97/CA, /Q9HAU8SUPERFAMILY2///97/CA
+distance alignment, /Q9HAU8DomSerf1///97/CA, /Q9HAU8SUPERFAMILY2///97/CA
+distance alignment, /Q9HAU8PHYRE21///98/CA, /Q9HAU8VIVACE1///98/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///98/CA, /Q9HAU8VIVACE1///98/CA
+distance alignment, /Q9HAU8DomSerf1///98/CA, /Q9HAU8PHYRE21///98/CA
+distance alignment, /Q9HAU8PHYRE21///99/CA, /Q9HAU8VIVACE1///99/CA
+distance alignment, /Q9HAU8PHYRE21///99/CA, /Q9HAU8SUPERFAMILY2///99/CA
+distance alignment, /Q9HAU8DomSerf1///99/CA, /Q9HAU8PHYRE21///99/CA
+distance alignment, /Q9HAU8PHYRE21///100/CA, /Q9HAU8VIVACE1///100/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///100/CA, /Q9HAU8VIVACE1///100/CA
+distance alignment, /Q9HAU8DomSerf1///100/CA, /Q9HAU8PHYRE21///100/CA
+distance alignment, /Q9HAU8PHYRE21///101/CA, /Q9HAU8VIVACE1///101/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///101/CA, /Q9HAU8VIVACE1///101/CA
+distance alignment, /Q9HAU8DomSerf1///101/CA, /Q9HAU8PHYRE21///101/CA
+distance alignment, /Q9HAU8PHYRE21///102/CA, /Q9HAU8VIVACE1///102/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///102/CA, /Q9HAU8VIVACE1///102/CA
+distance alignment, /Q9HAU8DomSerf1///102/CA, /Q9HAU8PHYRE21///102/CA
+distance alignment, /Q9HAU8PHYRE21///103/CA, /Q9HAU8VIVACE1///103/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///103/CA, /Q9HAU8VIVACE1///103/CA
+distance alignment, /Q9HAU8DomSerf1///103/CA, /Q9HAU8VIVACE1///103/CA
+distance alignment, /Q9HAU8PHYRE21///104/CA, /Q9HAU8VIVACE1///104/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///104/CA, /Q9HAU8VIVACE1///104/CA
+distance alignment, /Q9HAU8DomSerf1///104/CA, /Q9HAU8VIVACE1///104/CA
+distance alignment, /Q9HAU8PHYRE21///105/CA, /Q9HAU8VIVACE1///105/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///105/CA, /Q9HAU8VIVACE1///105/CA
+distance alignment, /Q9HAU8DomSerf1///105/CA, /Q9HAU8VIVACE1///105/CA
+distance alignment, /Q9HAU8PHYRE21///106/CA, /Q9HAU8VIVACE1///106/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///106/CA, /Q9HAU8VIVACE1///106/CA
+distance alignment, /Q9HAU8DomSerf1///106/CA, /Q9HAU8SUPERFAMILY2///106/CA
+distance alignment, /Q9HAU8PHYRE21///107/CA, /Q9HAU8VIVACE1///107/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///107/CA, /Q9HAU8VIVACE1///107/CA
+distance alignment, /Q9HAU8DomSerf1///107/CA, /Q9HAU8VIVACE1///107/CA
+distance alignment, /Q9HAU8PHYRE21///108/CA, /Q9HAU8VIVACE1///108/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///108/CA, /Q9HAU8VIVACE1///108/CA
+distance alignment, /Q9HAU8DomSerf1///108/CA, /Q9HAU8SUPERFAMILY2///108/CA
+distance alignment, /Q9HAU8PHYRE21///109/CA, /Q9HAU8VIVACE1///109/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///109/CA, /Q9HAU8VIVACE1///109/CA
+distance alignment, /Q9HAU8DomSerf1///109/CA, /Q9HAU8SUPERFAMILY2///109/CA
+distance alignment, /Q9HAU8PHYRE21///110/CA, /Q9HAU8VIVACE1///110/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///110/CA, /Q9HAU8VIVACE1///110/CA
+distance alignment, /Q9HAU8DomSerf1///110/CA, /Q9HAU8SUPERFAMILY2///110/CA
+distance alignment, /Q9HAU8PHYRE21///111/CA, /Q9HAU8VIVACE1///111/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///111/CA, /Q9HAU8VIVACE1///111/CA
+distance alignment, /Q9HAU8DomSerf1///111/CA, /Q9HAU8SUPERFAMILY2///111/CA
+distance alignment, /Q9HAU8PHYRE21///112/CA, /Q9HAU8VIVACE1///112/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///112/CA, /Q9HAU8VIVACE1///112/CA
+distance alignment, /Q9HAU8DomSerf1///112/CA, /Q9HAU8SUPERFAMILY2///112/CA
+distance alignment, /Q9HAU8PHYRE21///113/CA, /Q9HAU8VIVACE1///113/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///113/CA, /Q9HAU8VIVACE1///113/CA
+distance alignment, /Q9HAU8DomSerf1///113/CA, /Q9HAU8SUPERFAMILY2///113/CA
+distance alignment, /Q9HAU8PHYRE21///114/CA, /Q9HAU8VIVACE1///114/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///114/CA, /Q9HAU8VIVACE1///114/CA
+distance alignment, /Q9HAU8DomSerf1///114/CA, /Q9HAU8SUPERFAMILY2///114/CA
+distance alignment, /Q9HAU8PHYRE21///115/CA, /Q9HAU8VIVACE1///115/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///115/CA, /Q9HAU8VIVACE1///115/CA
+distance alignment, /Q9HAU8DomSerf1///115/CA, /Q9HAU8SUPERFAMILY2///115/CA
+distance alignment, /Q9HAU8PHYRE21///116/CA, /Q9HAU8VIVACE1///116/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///116/CA, /Q9HAU8VIVACE1///116/CA
+distance alignment, /Q9HAU8DomSerf1///116/CA, /Q9HAU8SUPERFAMILY2///116/CA
+distance alignment, /Q9HAU8PHYRE21///117/CA, /Q9HAU8VIVACE1///117/CA
+distance alignment, /Q9HAU8PHYRE21///117/CA, /Q9HAU8SUPERFAMILY2///117/CA
+distance alignment, /Q9HAU8DomSerf1///117/CA, /Q9HAU8SUPERFAMILY2///117/CA
+distance alignment, /Q9HAU8PHYRE21///118/CA, /Q9HAU8VIVACE1///118/CA
+distance alignment, /Q9HAU8PHYRE21///118/CA, /Q9HAU8SUPERFAMILY2///118/CA
+distance alignment, /Q9HAU8DomSerf1///118/CA, /Q9HAU8SUPERFAMILY2///118/CA
+distance alignment, /Q9HAU8PHYRE21///119/CA, /Q9HAU8VIVACE1///119/CA
+distance alignment, /Q9HAU8PHYRE21///119/CA, /Q9HAU8SUPERFAMILY2///119/CA
+distance alignment, /Q9HAU8DomSerf1///119/CA, /Q9HAU8PHYRE21///119/CA
+distance alignment, /Q9HAU8PHYRE21///120/CA, /Q9HAU8VIVACE1///120/CA
+distance alignment, /Q9HAU8PHYRE21///120/CA, /Q9HAU8SUPERFAMILY2///120/CA
+distance alignment, /Q9HAU8DomSerf1///120/CA, /Q9HAU8VIVACE1///120/CA
+distance alignment, /Q9HAU8PHYRE21///121/CA, /Q9HAU8VIVACE1///121/CA
+distance alignment, /Q9HAU8PHYRE21///121/CA, /Q9HAU8SUPERFAMILY2///121/CA
+distance alignment, /Q9HAU8DomSerf1///121/CA, /Q9HAU8VIVACE1///121/CA
+distance alignment, /Q9HAU8PHYRE21///122/CA, /Q9HAU8VIVACE1///122/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///122/CA, /Q9HAU8VIVACE1///122/CA
+distance alignment, /Q9HAU8DomSerf1///122/CA, /Q9HAU8VIVACE1///122/CA
+distance alignment, /Q9HAU8PHYRE21///123/CA, /Q9HAU8VIVACE1///123/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///123/CA, /Q9HAU8VIVACE1///123/CA
+distance alignment, /Q9HAU8DomSerf1///123/CA, /Q9HAU8PHYRE21///123/CA
+distance alignment, /Q9HAU8PHYRE21///124/CA, /Q9HAU8VIVACE1///124/CA
+distance alignment, /Q9HAU8PHYRE21///124/CA, /Q9HAU8SUPERFAMILY2///124/CA
+distance alignment, /Q9HAU8DomSerf1///124/CA, /Q9HAU8VIVACE1///124/CA
+distance alignment, /Q9HAU8PHYRE21///125/CA, /Q9HAU8VIVACE1///125/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///125/CA, /Q9HAU8VIVACE1///125/CA
+distance alignment, /Q9HAU8DomSerf1///125/CA, /Q9HAU8VIVACE1///125/CA
+distance alignment, /Q9HAU8PHYRE21///126/CA, /Q9HAU8VIVACE1///126/CA
+distance alignment, /Q9HAU8PHYRE21///126/CA, /Q9HAU8SUPERFAMILY2///126/CA
+distance alignment, /Q9HAU8DomSerf1///126/CA, /Q9HAU8VIVACE1///126/CA
+distance alignment, /Q9HAU8PHYRE21///127/CA, /Q9HAU8VIVACE1///127/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///127/CA, /Q9HAU8VIVACE1///127/CA
+distance alignment, /Q9HAU8DomSerf1///127/CA, /Q9HAU8PHYRE21///127/CA
+distance alignment, /Q9HAU8PHYRE21///128/CA, /Q9HAU8VIVACE1///128/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///128/CA, /Q9HAU8VIVACE1///128/CA
+distance alignment, /Q9HAU8DomSerf1///128/CA, /Q9HAU8VIVACE1///128/CA
+distance alignment, /Q9HAU8PHYRE21///129/CA, /Q9HAU8VIVACE1///129/CA
+distance alignment, /Q9HAU8PHYRE21///129/CA, /Q9HAU8SUPERFAMILY2///129/CA
+distance alignment, /Q9HAU8DomSerf1///129/CA, /Q9HAU8VIVACE1///129/CA
+distance alignment, /Q9HAU8PHYRE21///130/CA, /Q9HAU8VIVACE1///130/CA
+distance alignment, /Q9HAU8PHYRE21///130/CA, /Q9HAU8SUPERFAMILY2///130/CA
+distance alignment, /Q9HAU8DomSerf1///130/CA, /Q9HAU8SUPERFAMILY2///130/CA
+distance alignment, /Q9HAU8PHYRE21///131/CA, /Q9HAU8VIVACE1///131/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///131/CA, /Q9HAU8VIVACE1///131/CA
+distance alignment, /Q9HAU8DomSerf1///131/CA, /Q9HAU8VIVACE1///131/CA
+distance alignment, /Q9HAU8PHYRE21///132/CA, /Q9HAU8VIVACE1///132/CA
+distance alignment, /Q9HAU8DomSerf1///132/CA, /Q9HAU8VIVACE1///132/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///132/CA, /Q9HAU8VIVACE1///132/CA
+distance alignment, /Q9HAU8PHYRE21///133/CA, /Q9HAU8VIVACE1///133/CA
+distance alignment, /Q9HAU8DomSerf1///133/CA, /Q9HAU8PHYRE21///133/CA
+distance alignment, /Q9HAU8PHYRE21///133/CA, /Q9HAU8SUPERFAMILY2///133/CA
+distance alignment, /Q9HAU8PHYRE21///134/CA, /Q9HAU8VIVACE1///134/CA
+distance alignment, /Q9HAU8DomSerf1///134/CA, /Q9HAU8VIVACE1///134/CA
+distance alignment, /Q9HAU8PHYRE21///134/CA, /Q9HAU8SUPERFAMILY2///134/CA
+distance alignment, /Q9HAU8PHYRE21///135/CA, /Q9HAU8VIVACE1///135/CA
+distance alignment, /Q9HAU8DomSerf1///135/CA, /Q9HAU8VIVACE1///135/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///135/CA, /Q9HAU8VIVACE1///135/CA
+distance alignment, /Q9HAU8PHYRE21///136/CA, /Q9HAU8VIVACE1///136/CA
+distance alignment, /Q9HAU8DomSerf1///136/CA, /Q9HAU8PHYRE21///136/CA
+distance alignment, /Q9HAU8PHYRE21///136/CA, /Q9HAU8SUPERFAMILY2///136/CA
+distance alignment, /Q9HAU8PHYRE21///137/CA, /Q9HAU8VIVACE1///137/CA
+distance alignment, /Q9HAU8DomSerf1///137/CA, /Q9HAU8PHYRE21///137/CA
+distance alignment, /Q9HAU8DomSerf1///137/CA, /Q9HAU8SUPERFAMILY2///137/CA
+distance alignment, /Q9HAU8PHYRE21///138/CA, /Q9HAU8VIVACE1///138/CA
+distance alignment, /Q9HAU8DomSerf1///138/CA, /Q9HAU8PHYRE21///138/CA
+distance alignment, /Q9HAU8DomSerf1///138/CA, /Q9HAU8SUPERFAMILY2///138/CA
+distance alignment, /Q9HAU8PHYRE21///139/CA, /Q9HAU8VIVACE1///139/CA
+distance alignment, /Q9HAU8DomSerf1///139/CA, /Q9HAU8PHYRE21///139/CA
+distance alignment, /Q9HAU8DomSerf1///139/CA, /Q9HAU8SUPERFAMILY2///139/CA
+distance alignment, /Q9HAU8PHYRE21///140/CA, /Q9HAU8VIVACE1///140/CA
+distance alignment, /Q9HAU8DomSerf1///140/CA, /Q9HAU8VIVACE1///140/CA
+distance alignment, /Q9HAU8DomSerf1///140/CA, /Q9HAU8SUPERFAMILY2///140/CA
+distance alignment, /Q9HAU8PHYRE21///141/CA, /Q9HAU8VIVACE1///141/CA
+distance alignment, /Q9HAU8DomSerf1///141/CA, /Q9HAU8VIVACE1///141/CA
+distance alignment, /Q9HAU8DomSerf1///141/CA, /Q9HAU8SUPERFAMILY2///141/CA
+distance alignment, /Q9HAU8PHYRE21///142/CA, /Q9HAU8VIVACE1///142/CA
+distance alignment, /Q9HAU8DomSerf1///142/CA, /Q9HAU8VIVACE1///142/CA
+distance alignment, /Q9HAU8DomSerf1///142/CA, /Q9HAU8SUPERFAMILY2///142/CA
+distance alignment, /Q9HAU8PHYRE21///143/CA, /Q9HAU8VIVACE1///143/CA
+distance alignment, /Q9HAU8DomSerf1///143/CA, /Q9HAU8VIVACE1///143/CA
+distance alignment, /Q9HAU8DomSerf1///143/CA, /Q9HAU8SUPERFAMILY2///143/CA
+distance alignment, /Q9HAU8PHYRE21///144/CA, /Q9HAU8VIVACE1///144/CA
+distance alignment, /Q9HAU8DomSerf1///144/CA, /Q9HAU8VIVACE1///144/CA
+distance alignment, /Q9HAU8DomSerf1///144/CA, /Q9HAU8SUPERFAMILY2///144/CA
+distance alignment, /Q9HAU8PHYRE21///145/CA, /Q9HAU8VIVACE1///145/CA
+distance alignment, /Q9HAU8DomSerf1///145/CA, /Q9HAU8PHYRE21///145/CA
+distance alignment, /Q9HAU8DomSerf1///145/CA, /Q9HAU8SUPERFAMILY2///145/CA
+distance alignment, /Q9HAU8PHYRE21///146/CA, /Q9HAU8VIVACE1///146/CA
+distance alignment, /Q9HAU8DomSerf1///146/CA, /Q9HAU8VIVACE1///146/CA
+distance alignment, /Q9HAU8DomSerf1///146/CA, /Q9HAU8SUPERFAMILY2///146/CA
+distance alignment, /Q9HAU8PHYRE21///147/CA, /Q9HAU8VIVACE1///147/CA
+distance alignment, /Q9HAU8DomSerf1///147/CA, /Q9HAU8PHYRE21///147/CA
+distance alignment, /Q9HAU8DomSerf1///147/CA, /Q9HAU8SUPERFAMILY2///147/CA
+distance alignment, /Q9HAU8PHYRE21///148/CA, /Q9HAU8VIVACE1///148/CA
+distance alignment, /Q9HAU8DomSerf1///148/CA, /Q9HAU8PHYRE21///148/CA
+distance alignment, /Q9HAU8DomSerf1///148/CA, /Q9HAU8SUPERFAMILY2///148/CA
+distance alignment, /Q9HAU8PHYRE21///149/CA, /Q9HAU8VIVACE1///149/CA
+distance alignment, /Q9HAU8DomSerf1///149/CA, /Q9HAU8VIVACE1///149/CA
+distance alignment, /Q9HAU8DomSerf1///149/CA, /Q9HAU8SUPERFAMILY2///149/CA
+distance alignment, /Q9HAU8PHYRE21///150/CA, /Q9HAU8VIVACE1///150/CA
+distance alignment, /Q9HAU8DomSerf1///150/CA, /Q9HAU8PHYRE21///150/CA
+distance alignment, /Q9HAU8DomSerf1///150/CA, /Q9HAU8SUPERFAMILY2///150/CA
+distance alignment, /Q9HAU8PHYRE21///151/CA, /Q9HAU8VIVACE1///151/CA
+distance alignment, /Q9HAU8DomSerf1///151/CA, /Q9HAU8PHYRE21///151/CA
+distance alignment, /Q9HAU8DomSerf1///151/CA, /Q9HAU8SUPERFAMILY2///151/CA
+distance alignment, /Q9HAU8PHYRE21///152/CA, /Q9HAU8VIVACE1///152/CA
+distance alignment, /Q9HAU8DomSerf1///152/CA, /Q9HAU8VIVACE1///152/CA
+distance alignment, /Q9HAU8DomSerf1///152/CA, /Q9HAU8SUPERFAMILY2///152/CA
+distance alignment, /Q9HAU8PHYRE21///153/CA, /Q9HAU8VIVACE1///153/CA
+distance alignment, /Q9HAU8DomSerf1///153/CA, /Q9HAU8PHYRE21///153/CA
+distance alignment, /Q9HAU8DomSerf1///153/CA, /Q9HAU8SUPERFAMILY2///153/CA
+distance alignment, /Q9HAU8PHYRE21///154/CA, /Q9HAU8VIVACE1///154/CA
+distance alignment, /Q9HAU8DomSerf1///154/CA, /Q9HAU8VIVACE1///154/CA
+distance alignment, /Q9HAU8DomSerf1///154/CA, /Q9HAU8SUPERFAMILY2///154/CA
+distance alignment, /Q9HAU8PHYRE21///155/CA, /Q9HAU8VIVACE1///155/CA
+distance alignment, /Q9HAU8DomSerf1///155/CA, /Q9HAU8VIVACE1///155/CA
+distance alignment, /Q9HAU8DomSerf1///155/CA, /Q9HAU8SUPERFAMILY2///155/CA
+distance alignment, /Q9HAU8PHYRE21///156/CA, /Q9HAU8VIVACE1///156/CA
+distance alignment, /Q9HAU8DomSerf1///156/CA, /Q9HAU8VIVACE1///156/CA
+distance alignment, /Q9HAU8DomSerf1///156/CA, /Q9HAU8SUPERFAMILY2///156/CA
+distance alignment, /Q9HAU8PHYRE21///157/CA, /Q9HAU8VIVACE1///157/CA
+distance alignment, /Q9HAU8DomSerf1///157/CA, /Q9HAU8PHYRE21///157/CA
+distance alignment, /Q9HAU8DomSerf1///157/CA, /Q9HAU8SUPERFAMILY2///157/CA
+distance alignment, /Q9HAU8PHYRE21///158/CA, /Q9HAU8VIVACE1///158/CA
+distance alignment, /Q9HAU8DomSerf1///158/CA, /Q9HAU8PHYRE21///158/CA
+distance alignment, /Q9HAU8DomSerf1///158/CA, /Q9HAU8SUPERFAMILY2///158/CA
+distance alignment, /Q9HAU8PHYRE21///159/CA, /Q9HAU8VIVACE1///159/CA
+distance alignment, /Q9HAU8DomSerf1///159/CA, /Q9HAU8VIVACE1///159/CA
+distance alignment, /Q9HAU8DomSerf1///159/CA, /Q9HAU8SUPERFAMILY2///159/CA
+distance alignment, /Q9HAU8PHYRE21///160/CA, /Q9HAU8VIVACE1///160/CA
+distance alignment, /Q9HAU8DomSerf1///160/CA, /Q9HAU8PHYRE21///160/CA
+distance alignment, /Q9HAU8DomSerf1///160/CA, /Q9HAU8SUPERFAMILY2///160/CA
+distance alignment, /Q9HAU8PHYRE21///161/CA, /Q9HAU8VIVACE1///161/CA
+distance alignment, /Q9HAU8DomSerf1///161/CA, /Q9HAU8VIVACE1///161/CA
+distance alignment, /Q9HAU8DomSerf1///161/CA, /Q9HAU8SUPERFAMILY2///161/CA
+distance alignment, /Q9HAU8PHYRE21///162/CA, /Q9HAU8VIVACE1///162/CA
+distance alignment, /Q9HAU8DomSerf1///162/CA, /Q9HAU8PHYRE21///162/CA
+distance alignment, /Q9HAU8DomSerf1///162/CA, /Q9HAU8SUPERFAMILY2///162/CA
+distance alignment, /Q9HAU8PHYRE21///163/CA, /Q9HAU8VIVACE1///163/CA
+distance alignment, /Q9HAU8DomSerf1///163/CA, /Q9HAU8VIVACE1///163/CA
+distance alignment, /Q9HAU8DomSerf1///163/CA, /Q9HAU8SUPERFAMILY2///163/CA
+distance alignment, /Q9HAU8PHYRE21///164/CA, /Q9HAU8VIVACE1///164/CA
+distance alignment, /Q9HAU8DomSerf1///164/CA, /Q9HAU8VIVACE1///164/CA
+distance alignment, /Q9HAU8DomSerf1///164/CA, /Q9HAU8SUPERFAMILY2///164/CA
+distance alignment, /Q9HAU8PHYRE21///165/CA, /Q9HAU8VIVACE1///165/CA
+distance alignment, /Q9HAU8DomSerf1///165/CA, /Q9HAU8PHYRE21///165/CA
+distance alignment, /Q9HAU8PHYRE21///165/CA, /Q9HAU8SUPERFAMILY2///165/CA
+distance alignment, /Q9HAU8PHYRE21///166/CA, /Q9HAU8VIVACE1///166/CA
+distance alignment, /Q9HAU8DomSerf1///166/CA, /Q9HAU8VIVACE1///166/CA
+distance alignment, /Q9HAU8DomSerf1///166/CA, /Q9HAU8SUPERFAMILY2///166/CA
+distance alignment, /Q9HAU8PHYRE21///167/CA, /Q9HAU8VIVACE1///167/CA
+distance alignment, /Q9HAU8DomSerf1///167/CA, /Q9HAU8VIVACE1///167/CA
+distance alignment, /Q9HAU8DomSerf1///167/CA, /Q9HAU8SUPERFAMILY2///167/CA
+distance alignment, /Q9HAU8PHYRE21///168/CA, /Q9HAU8VIVACE1///168/CA
+distance alignment, /Q9HAU8DomSerf1///168/CA, /Q9HAU8VIVACE1///168/CA
+distance alignment, /Q9HAU8DomSerf1///168/CA, /Q9HAU8SUPERFAMILY2///168/CA
+distance alignment, /Q9HAU8PHYRE21///169/CA, /Q9HAU8VIVACE1///169/CA
+distance alignment, /Q9HAU8DomSerf1///169/CA, /Q9HAU8PHYRE21///169/CA
+distance alignment, /Q9HAU8DomSerf1///169/CA, /Q9HAU8SUPERFAMILY2///169/CA
+distance alignment, /Q9HAU8PHYRE21///170/CA, /Q9HAU8VIVACE1///170/CA
+distance alignment, /Q9HAU8DomSerf1///170/CA, /Q9HAU8VIVACE1///170/CA
+distance alignment, /Q9HAU8DomSerf1///170/CA, /Q9HAU8SUPERFAMILY2///170/CA
+distance alignment, /Q9HAU8PHYRE21///171/CA, /Q9HAU8VIVACE1///171/CA
+distance alignment, /Q9HAU8DomSerf1///171/CA, /Q9HAU8PHYRE21///171/CA
+distance alignment, /Q9HAU8DomSerf1///171/CA, /Q9HAU8SUPERFAMILY2///171/CA
+distance alignment, /Q9HAU8PHYRE21///172/CA, /Q9HAU8VIVACE1///172/CA
+distance alignment, /Q9HAU8DomSerf1///172/CA, /Q9HAU8PHYRE21///172/CA
+distance alignment, /Q9HAU8DomSerf1///172/CA, /Q9HAU8SUPERFAMILY2///172/CA
+distance alignment, /Q9HAU8PHYRE21///173/CA, /Q9HAU8VIVACE1///173/CA
+distance alignment, /Q9HAU8DomSerf1///173/CA, /Q9HAU8VIVACE1///173/CA
+distance alignment, /Q9HAU8DomSerf1///173/CA, /Q9HAU8SUPERFAMILY2///173/CA
+distance alignment, /Q9HAU8PHYRE21///174/CA, /Q9HAU8VIVACE1///174/CA
+distance alignment, /Q9HAU8DomSerf1///174/CA, /Q9HAU8PHYRE21///174/CA
+distance alignment, /Q9HAU8DomSerf1///174/CA, /Q9HAU8SUPERFAMILY2///174/CA
+distance alignment, /Q9HAU8PHYRE21///175/CA, /Q9HAU8VIVACE1///175/CA
+distance alignment, /Q9HAU8DomSerf1///175/CA, /Q9HAU8PHYRE21///175/CA
+distance alignment, /Q9HAU8DomSerf1///175/CA, /Q9HAU8SUPERFAMILY2///175/CA
+distance alignment, /Q9HAU8PHYRE21///176/CA, /Q9HAU8VIVACE1///176/CA
+distance alignment, /Q9HAU8DomSerf1///176/CA, /Q9HAU8PHYRE21///176/CA
+distance alignment, /Q9HAU8DomSerf1///176/CA, /Q9HAU8SUPERFAMILY2///176/CA
+distance alignment, /Q9HAU8PHYRE21///177/CA, /Q9HAU8VIVACE1///177/CA
+distance alignment, /Q9HAU8DomSerf1///177/CA, /Q9HAU8PHYRE21///177/CA
+distance alignment, /Q9HAU8DomSerf1///177/CA, /Q9HAU8SUPERFAMILY2///177/CA
+distance alignment, /Q9HAU8PHYRE21///178/CA, /Q9HAU8VIVACE1///178/CA
+distance alignment, /Q9HAU8DomSerf1///178/CA, /Q9HAU8PHYRE21///178/CA
+distance alignment, /Q9HAU8DomSerf1///178/CA, /Q9HAU8SUPERFAMILY2///178/CA
+distance alignment, /Q9HAU8PHYRE21///179/CA, /Q9HAU8VIVACE1///179/CA
+distance alignment, /Q9HAU8DomSerf1///179/CA, /Q9HAU8PHYRE21///179/CA
+distance alignment, /Q9HAU8DomSerf1///179/CA, /Q9HAU8SUPERFAMILY2///179/CA
+distance alignment, /Q9HAU8PHYRE21///180/CA, /Q9HAU8VIVACE1///180/CA
+distance alignment, /Q9HAU8DomSerf1///180/CA, /Q9HAU8PHYRE21///180/CA
+distance alignment, /Q9HAU8DomSerf1///180/CA, /Q9HAU8SUPERFAMILY2///180/CA
+distance alignment, /Q9HAU8PHYRE21///181/CA, /Q9HAU8VIVACE1///181/CA
+distance alignment, /Q9HAU8DomSerf1///181/CA, /Q9HAU8PHYRE21///181/CA
+distance alignment, /Q9HAU8DomSerf1///181/CA, /Q9HAU8SUPERFAMILY2///181/CA
+distance alignment, /Q9HAU8PHYRE21///182/CA, /Q9HAU8VIVACE1///182/CA
+distance alignment, /Q9HAU8DomSerf1///182/CA, /Q9HAU8PHYRE21///182/CA
+distance alignment, /Q9HAU8DomSerf1///182/CA, /Q9HAU8SUPERFAMILY2///182/CA
+distance alignment, /Q9HAU8PHYRE21///183/CA, /Q9HAU8VIVACE1///183/CA
+distance alignment, /Q9HAU8DomSerf1///183/CA, /Q9HAU8VIVACE1///183/CA
+distance alignment, /Q9HAU8DomSerf1///183/CA, /Q9HAU8SUPERFAMILY2///183/CA
+distance alignment, /Q9HAU8PHYRE21///184/CA, /Q9HAU8VIVACE1///184/CA
+distance alignment, /Q9HAU8DomSerf1///184/CA, /Q9HAU8VIVACE1///184/CA
+distance alignment, /Q9HAU8DomSerf1///184/CA, /Q9HAU8SUPERFAMILY2///184/CA
+distance alignment, /Q9HAU8PHYRE21///185/CA, /Q9HAU8VIVACE1///185/CA
+distance alignment, /Q9HAU8DomSerf1///185/CA, /Q9HAU8PHYRE21///185/CA
+distance alignment, /Q9HAU8DomSerf1///185/CA, /Q9HAU8SUPERFAMILY2///185/CA
+distance alignment, /Q9HAU8PHYRE21///186/CA, /Q9HAU8VIVACE1///186/CA
+distance alignment, /Q9HAU8DomSerf1///186/CA, /Q9HAU8VIVACE1///186/CA
+distance alignment, /Q9HAU8DomSerf1///186/CA, /Q9HAU8SUPERFAMILY2///186/CA
+distance alignment, /Q9HAU8PHYRE21///187/CA, /Q9HAU8VIVACE1///187/CA
+distance alignment, /Q9HAU8DomSerf1///187/CA, /Q9HAU8PHYRE21///187/CA
+distance alignment, /Q9HAU8DomSerf1///187/CA, /Q9HAU8SUPERFAMILY2///187/CA
+distance alignment, /Q9HAU8PHYRE21///188/CA, /Q9HAU8VIVACE1///188/CA
+distance alignment, /Q9HAU8DomSerf1///188/CA, /Q9HAU8VIVACE1///188/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///188/CA, /Q9HAU8VIVACE1///188/CA
+distance alignment, /Q9HAU8PHYRE21///189/CA, /Q9HAU8VIVACE1///189/CA
+distance alignment, /Q9HAU8DomSerf1///189/CA, /Q9HAU8VIVACE1///189/CA
+distance alignment, /Q9HAU8PHYRE21///189/CA, /Q9HAU8SUPERFAMILY2///189/CA
+distance alignment, /Q9HAU8PHYRE21///190/CA, /Q9HAU8VIVACE1///190/CA
+distance alignment, /Q9HAU8DomSerf1///190/CA, /Q9HAU8PHYRE21///190/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///190/CA, /Q9HAU8VIVACE1///190/CA
+distance alignment, /Q9HAU8PHYRE21///191/CA, /Q9HAU8VIVACE1///191/CA
+distance alignment, /Q9HAU8DomSerf1///191/CA, /Q9HAU8VIVACE1///191/CA
+distance alignment, /Q9HAU8PHYRE21///191/CA, /Q9HAU8SUPERFAMILY2///191/CA
+distance alignment, /Q9HAU8PHYRE21///192/CA, /Q9HAU8VIVACE1///192/CA
+distance alignment, /Q9HAU8DomSerf1///192/CA, /Q9HAU8PHYRE21///192/CA
+distance alignment, /Q9HAU8DomSerf1///192/CA, /Q9HAU8SUPERFAMILY2///192/CA
+distance alignment, /Q9HAU8PHYRE21///193/CA, /Q9HAU8VIVACE1///193/CA
+distance alignment, /Q9HAU8DomSerf1///193/CA, /Q9HAU8PHYRE21///193/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///193/CA, /Q9HAU8VIVACE1///193/CA
+distance alignment, /Q9HAU8PHYRE21///194/CA, /Q9HAU8VIVACE1///194/CA
+distance alignment, /Q9HAU8DomSerf1///194/CA, /Q9HAU8VIVACE1///194/CA
+distance alignment, /Q9HAU8PHYRE21///194/CA, /Q9HAU8SUPERFAMILY2///194/CA
+distance alignment, /Q9HAU8PHYRE21///195/CA, /Q9HAU8VIVACE1///195/CA
+distance alignment, /Q9HAU8DomSerf1///195/CA, /Q9HAU8VIVACE1///195/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///195/CA, /Q9HAU8VIVACE1///195/CA
+distance alignment, /Q9HAU8PHYRE21///196/CA, /Q9HAU8VIVACE1///196/CA
+distance alignment, /Q9HAU8DomSerf1///196/CA, /Q9HAU8VIVACE1///196/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///196/CA, /Q9HAU8VIVACE1///196/CA
+distance alignment, /Q9HAU8PHYRE21///197/CA, /Q9HAU8VIVACE1///197/CA
+distance alignment, /Q9HAU8DomSerf1///197/CA, /Q9HAU8VIVACE1///197/CA
+distance alignment, /Q9HAU8DomSerf1///197/CA, /Q9HAU8SUPERFAMILY2///197/CA
+distance alignment, /Q9HAU8PHYRE21///198/CA, /Q9HAU8VIVACE1///198/CA
+distance alignment, /Q9HAU8DomSerf1///198/CA, /Q9HAU8PHYRE21///198/CA
+distance alignment, /Q9HAU8DomSerf1///198/CA, /Q9HAU8SUPERFAMILY2///198/CA
+distance alignment, /Q9HAU8DomSerf1///199/CA, /Q9HAU8VIVACE1///199/CA
+distance alignment, /Q9HAU8PHYRE21///199/CA, /Q9HAU8VIVACE1///199/CA
+distance alignment, /Q9HAU8DomSerf1///199/CA, /Q9HAU8SUPERFAMILY2///199/CA
+distance alignment, /Q9HAU8DomSerf1///200/CA, /Q9HAU8VIVACE1///200/CA
+distance alignment, /Q9HAU8DomSerf1///200/CA, /Q9HAU8PHYRE21///200/CA
+distance alignment, /Q9HAU8DomSerf1///200/CA, /Q9HAU8SUPERFAMILY2///200/CA
+distance alignment, /Q9HAU8DomSerf1///201/CA, /Q9HAU8VIVACE1///201/CA
+distance alignment, /Q9HAU8PHYRE21///201/CA, /Q9HAU8VIVACE1///201/CA
+distance alignment, /Q9HAU8DomSerf1///201/CA, /Q9HAU8SUPERFAMILY2///201/CA
+distance alignment, /Q9HAU8DomSerf1///202/CA, /Q9HAU8VIVACE1///202/CA
+distance alignment, /Q9HAU8PHYRE21///202/CA, /Q9HAU8VIVACE1///202/CA
+distance alignment, /Q9HAU8DomSerf1///202/CA, /Q9HAU8SUPERFAMILY2///202/CA
+distance alignment, /Q9HAU8PHYRE21///203/CA, /Q9HAU8VIVACE1///203/CA
+distance alignment, /Q9HAU8DomSerf1///203/CA, /Q9HAU8VIVACE1///203/CA
+distance alignment, /Q9HAU8DomSerf1///203/CA, /Q9HAU8SUPERFAMILY2///203/CA
+distance alignment, /Q9HAU8PHYRE21///204/CA, /Q9HAU8VIVACE1///204/CA
+distance alignment, /Q9HAU8DomSerf1///204/CA, /Q9HAU8PHYRE21///204/CA
+distance alignment, /Q9HAU8DomSerf1///204/CA, /Q9HAU8SUPERFAMILY2///204/CA
+distance alignment, /Q9HAU8PHYRE21///205/CA, /Q9HAU8VIVACE1///205/CA
+distance alignment, /Q9HAU8DomSerf1///205/CA, /Q9HAU8VIVACE1///205/CA
+distance alignment, /Q9HAU8DomSerf1///205/CA, /Q9HAU8SUPERFAMILY2///205/CA
+distance alignment, /Q9HAU8PHYRE21///206/CA, /Q9HAU8VIVACE1///206/CA
+distance alignment, /Q9HAU8DomSerf1///206/CA, /Q9HAU8VIVACE1///206/CA
+distance alignment, /Q9HAU8DomSerf1///206/CA, /Q9HAU8SUPERFAMILY2///206/CA
+distance alignment, /Q9HAU8PHYRE21///207/CA, /Q9HAU8VIVACE1///207/CA
+distance alignment, /Q9HAU8DomSerf1///207/CA, /Q9HAU8VIVACE1///207/CA
+distance alignment, /Q9HAU8DomSerf1///207/CA, /Q9HAU8SUPERFAMILY2///207/CA
+distance alignment, /Q9HAU8PHYRE21///208/CA, /Q9HAU8VIVACE1///208/CA
+distance alignment, /Q9HAU8DomSerf1///208/CA, /Q9HAU8PHYRE21///208/CA
+distance alignment, /Q9HAU8DomSerf1///208/CA, /Q9HAU8SUPERFAMILY2///208/CA
+distance alignment, /Q9HAU8PHYRE21///209/CA, /Q9HAU8VIVACE1///209/CA
+distance alignment, /Q9HAU8DomSerf1///209/CA, /Q9HAU8PHYRE21///209/CA
+distance alignment, /Q9HAU8DomSerf1///209/CA, /Q9HAU8SUPERFAMILY2///209/CA
+distance alignment, /Q9HAU8PHYRE21///210/CA, /Q9HAU8VIVACE1///210/CA
+distance alignment, /Q9HAU8DomSerf1///210/CA, /Q9HAU8PHYRE21///210/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///210/CA, /Q9HAU8VIVACE1///210/CA
+distance alignment, /Q9HAU8PHYRE21///211/CA, /Q9HAU8VIVACE1///211/CA
+distance alignment, /Q9HAU8DomSerf1///211/CA, /Q9HAU8VIVACE1///211/CA
+distance alignment, /Q9HAU8PHYRE21///211/CA, /Q9HAU8SUPERFAMILY2///211/CA
+distance alignment, /Q9HAU8PHYRE21///212/CA, /Q9HAU8VIVACE1///212/CA
+distance alignment, /Q9HAU8DomSerf1///212/CA, /Q9HAU8PHYRE21///212/CA
+distance alignment, /Q9HAU8DomSerf1///212/CA, /Q9HAU8SUPERFAMILY2///212/CA
+distance alignment, /Q9HAU8PHYRE21///213/CA, /Q9HAU8VIVACE1///213/CA
+distance alignment, /Q9HAU8DomSerf1///213/CA, /Q9HAU8VIVACE1///213/CA
+distance alignment, /Q9HAU8DomSerf1///213/CA, /Q9HAU8SUPERFAMILY2///213/CA
+distance alignment, /Q9HAU8PHYRE21///214/CA, /Q9HAU8VIVACE1///214/CA
+distance alignment, /Q9HAU8DomSerf1///214/CA, /Q9HAU8VIVACE1///214/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///214/CA, /Q9HAU8VIVACE1///214/CA
+distance alignment, /Q9HAU8PHYRE21///215/CA, /Q9HAU8VIVACE1///215/CA
+distance alignment, /Q9HAU8DomSerf1///215/CA, /Q9HAU8VIVACE1///215/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///215/CA, /Q9HAU8VIVACE1///215/CA
+distance alignment, /Q9HAU8PHYRE21///216/CA, /Q9HAU8VIVACE1///216/CA
+distance alignment, /Q9HAU8DomSerf1///216/CA, /Q9HAU8VIVACE1///216/CA
+distance alignment, /Q9HAU8DomSerf1///216/CA, /Q9HAU8SUPERFAMILY2///216/CA
+distance alignment, /Q9HAU8PHYRE21///217/CA, /Q9HAU8VIVACE1///217/CA
+distance alignment, /Q9HAU8DomSerf1///217/CA, /Q9HAU8PHYRE21///217/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///217/CA, /Q9HAU8VIVACE1///217/CA
+distance alignment, /Q9HAU8PHYRE21///218/CA, /Q9HAU8VIVACE1///218/CA
+distance alignment, /Q9HAU8DomSerf1///218/CA, /Q9HAU8PHYRE21///218/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///218/CA, /Q9HAU8VIVACE1///218/CA
+distance alignment, /Q9HAU8PHYRE21///219/CA, /Q9HAU8VIVACE1///219/CA
+distance alignment, /Q9HAU8DomSerf1///219/CA, /Q9HAU8VIVACE1///219/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///219/CA, /Q9HAU8VIVACE1///219/CA
+distance alignment, /Q9HAU8PHYRE21///220/CA, /Q9HAU8VIVACE1///220/CA
+distance alignment, /Q9HAU8DomSerf1///220/CA, /Q9HAU8PHYRE21///220/CA
+distance alignment, /Q9HAU8DomSerf1///220/CA, /Q9HAU8SUPERFAMILY2///220/CA
+distance alignment, /Q9HAU8PHYRE21///221/CA, /Q9HAU8VIVACE1///221/CA
+distance alignment, /Q9HAU8DomSerf1///221/CA, /Q9HAU8PHYRE21///221/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///221/CA, /Q9HAU8VIVACE1///221/CA
+distance alignment, /Q9HAU8PHYRE21///222/CA, /Q9HAU8VIVACE1///222/CA
+distance alignment, /Q9HAU8DomSerf1///222/CA, /Q9HAU8VIVACE1///222/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///222/CA, /Q9HAU8VIVACE1///222/CA
+distance alignment, /Q9HAU8PHYRE21///223/CA, /Q9HAU8VIVACE1///223/CA
+distance alignment, /Q9HAU8DomSerf1///223/CA, /Q9HAU8VIVACE1///223/CA
+distance alignment, /Q9HAU8DomSerf1///223/CA, /Q9HAU8SUPERFAMILY2///223/CA
+distance alignment, /Q9HAU8PHYRE21///224/CA, /Q9HAU8VIVACE1///224/CA
+distance alignment, /Q9HAU8DomSerf1///224/CA, /Q9HAU8PHYRE21///224/CA
+distance alignment, /Q9HAU8PHYRE21///224/CA, /Q9HAU8SUPERFAMILY2///224/CA
+distance alignment, /Q9HAU8PHYRE21///225/CA, /Q9HAU8VIVACE1///225/CA
+distance alignment, /Q9HAU8DomSerf1///225/CA, /Q9HAU8PHYRE21///225/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///225/CA, /Q9HAU8VIVACE1///225/CA
+distance alignment, /Q9HAU8PHYRE21///226/CA, /Q9HAU8VIVACE1///226/CA
+distance alignment, /Q9HAU8DomSerf1///226/CA, /Q9HAU8VIVACE1///226/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///226/CA, /Q9HAU8VIVACE1///226/CA
+distance alignment, /Q9HAU8PHYRE21///227/CA, /Q9HAU8VIVACE1///227/CA
+distance alignment, /Q9HAU8DomSerf1///227/CA, /Q9HAU8PHYRE21///227/CA
+distance alignment, /Q9HAU8DomSerf1///227/CA, /Q9HAU8SUPERFAMILY2///227/CA
+distance alignment, /Q9HAU8PHYRE21///228/CA, /Q9HAU8VIVACE1///228/CA
+distance alignment, /Q9HAU8DomSerf1///228/CA, /Q9HAU8VIVACE1///228/CA
+distance alignment, /Q9HAU8DomSerf1///228/CA, /Q9HAU8SUPERFAMILY2///228/CA
+distance alignment, /Q9HAU8PHYRE21///229/CA, /Q9HAU8VIVACE1///229/CA
+distance alignment, /Q9HAU8DomSerf1///229/CA, /Q9HAU8VIVACE1///229/CA
+distance alignment, /Q9HAU8DomSerf1///229/CA, /Q9HAU8SUPERFAMILY2///229/CA
+distance alignment, /Q9HAU8PHYRE21///230/CA, /Q9HAU8VIVACE1///230/CA
+distance alignment, /Q9HAU8DomSerf1///230/CA, /Q9HAU8PHYRE21///230/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///230/CA, /Q9HAU8VIVACE1///230/CA
+distance alignment, /Q9HAU8PHYRE21///231/CA, /Q9HAU8VIVACE1///231/CA
+distance alignment, /Q9HAU8DomSerf1///231/CA, /Q9HAU8PHYRE21///231/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///231/CA, /Q9HAU8VIVACE1///231/CA
+distance alignment, /Q9HAU8PHYRE21///232/CA, /Q9HAU8VIVACE1///232/CA
+distance alignment, /Q9HAU8DomSerf1///232/CA, /Q9HAU8PHYRE21///232/CA
+distance alignment, /Q9HAU8DomSerf1///232/CA, /Q9HAU8SUPERFAMILY2///232/CA
+distance alignment, /Q9HAU8PHYRE21///233/CA, /Q9HAU8VIVACE1///233/CA
+distance alignment, /Q9HAU8DomSerf1///233/CA, /Q9HAU8PHYRE21///233/CA
+distance alignment, /Q9HAU8DomSerf1///233/CA, /Q9HAU8SUPERFAMILY2///233/CA
+distance alignment, /Q9HAU8PHYRE21///234/CA, /Q9HAU8VIVACE1///234/CA
+distance alignment, /Q9HAU8DomSerf1///234/CA, /Q9HAU8PHYRE21///234/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///234/CA, /Q9HAU8VIVACE1///234/CA
+distance alignment, /Q9HAU8PHYRE21///235/CA, /Q9HAU8VIVACE1///235/CA
+distance alignment, /Q9HAU8DomSerf1///235/CA, /Q9HAU8VIVACE1///235/CA
+distance alignment, /Q9HAU8PHYRE21///235/CA, /Q9HAU8SUPERFAMILY2///235/CA
+distance alignment, /Q9HAU8PHYRE21///236/CA, /Q9HAU8VIVACE1///236/CA
+distance alignment, /Q9HAU8DomSerf1///236/CA, /Q9HAU8VIVACE1///236/CA
+distance alignment, /Q9HAU8DomSerf1///236/CA, /Q9HAU8SUPERFAMILY2///236/CA
+distance alignment, /Q9HAU8PHYRE21///237/CA, /Q9HAU8VIVACE1///237/CA
+distance alignment, /Q9HAU8DomSerf1///237/CA, /Q9HAU8VIVACE1///237/CA
+distance alignment, /Q9HAU8DomSerf1///237/CA, /Q9HAU8SUPERFAMILY2///237/CA
+distance alignment, /Q9HAU8PHYRE21///238/CA, /Q9HAU8VIVACE1///238/CA
+distance alignment, /Q9HAU8DomSerf1///238/CA, /Q9HAU8VIVACE1///238/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///238/CA, /Q9HAU8VIVACE1///238/CA
+distance alignment, /Q9HAU8PHYRE21///239/CA, /Q9HAU8VIVACE1///239/CA
+distance alignment, /Q9HAU8DomSerf1///239/CA, /Q9HAU8VIVACE1///239/CA
+distance alignment, /Q9HAU8DomSerf1///239/CA, /Q9HAU8SUPERFAMILY2///239/CA
+distance alignment, /Q9HAU8PHYRE21///240/CA, /Q9HAU8VIVACE1///240/CA
+distance alignment, /Q9HAU8DomSerf1///240/CA, /Q9HAU8PHYRE21///240/CA
+distance alignment, /Q9HAU8DomSerf1///240/CA, /Q9HAU8SUPERFAMILY2///240/CA
+distance alignment, /Q9HAU8PHYRE21///241/CA, /Q9HAU8VIVACE1///241/CA
+distance alignment, /Q9HAU8DomSerf1///241/CA, /Q9HAU8PHYRE21///241/CA
+distance alignment, /Q9HAU8PHYRE21///241/CA, /Q9HAU8SUPERFAMILY2///241/CA
+distance alignment, /Q9HAU8PHYRE21///242/CA, /Q9HAU8VIVACE1///242/CA
+distance alignment, /Q9HAU8DomSerf1///242/CA, /Q9HAU8PHYRE21///242/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///242/CA, /Q9HAU8VIVACE1///242/CA
+distance alignment, /Q9HAU8PHYRE21///243/CA, /Q9HAU8VIVACE1///243/CA
+distance alignment, /Q9HAU8DomSerf1///243/CA, /Q9HAU8PHYRE21///243/CA
+distance alignment, /Q9HAU8DomSerf1///243/CA, /Q9HAU8SUPERFAMILY2///243/CA
+distance alignment, /Q9HAU8PHYRE21///244/CA, /Q9HAU8VIVACE1///244/CA
+distance alignment, /Q9HAU8DomSerf1///244/CA, /Q9HAU8VIVACE1///244/CA
+distance alignment, /Q9HAU8DomSerf1///244/CA, /Q9HAU8SUPERFAMILY2///244/CA
+distance alignment, /Q9HAU8PHYRE21///245/CA, /Q9HAU8VIVACE1///245/CA
+distance alignment, /Q9HAU8DomSerf1///245/CA, /Q9HAU8VIVACE1///245/CA
+distance alignment, /Q9HAU8DomSerf1///245/CA, /Q9HAU8SUPERFAMILY2///245/CA
+distance alignment, /Q9HAU8PHYRE21///246/CA, /Q9HAU8VIVACE1///246/CA
+distance alignment, /Q9HAU8DomSerf1///246/CA, /Q9HAU8VIVACE1///246/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///246/CA, /Q9HAU8VIVACE1///246/CA
+distance alignment, /Q9HAU8PHYRE21///247/CA, /Q9HAU8VIVACE1///247/CA
+distance alignment, /Q9HAU8DomSerf1///247/CA, /Q9HAU8PHYRE21///247/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///247/CA, /Q9HAU8VIVACE1///247/CA
+distance alignment, /Q9HAU8PHYRE21///248/CA, /Q9HAU8VIVACE1///248/CA
+distance alignment, /Q9HAU8DomSerf1///248/CA, /Q9HAU8VIVACE1///248/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///248/CA, /Q9HAU8VIVACE1///248/CA
+distance alignment, /Q9HAU8PHYRE21///249/CA, /Q9HAU8VIVACE1///249/CA
+distance alignment, /Q9HAU8DomSerf1///249/CA, /Q9HAU8PHYRE21///249/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///249/CA, /Q9HAU8VIVACE1///249/CA
+distance alignment, /Q9HAU8PHYRE21///250/CA, /Q9HAU8VIVACE1///250/CA
+distance alignment, /Q9HAU8DomSerf1///250/CA, /Q9HAU8VIVACE1///250/CA
+distance alignment, /Q9HAU8PHYRE21///250/CA, /Q9HAU8SUPERFAMILY2///250/CA
+distance alignment, /Q9HAU8PHYRE21///251/CA, /Q9HAU8VIVACE1///251/CA
+distance alignment, /Q9HAU8DomSerf1///251/CA, /Q9HAU8VIVACE1///251/CA
+distance alignment, /Q9HAU8PHYRE21///251/CA, /Q9HAU8SUPERFAMILY2///251/CA
+distance alignment, /Q9HAU8PHYRE21///252/CA, /Q9HAU8VIVACE1///252/CA
+distance alignment, /Q9HAU8DomSerf1///252/CA, /Q9HAU8VIVACE1///252/CA
+distance alignment, /Q9HAU8DomSerf1///252/CA, /Q9HAU8SUPERFAMILY2///252/CA
+distance alignment, /Q9HAU8PHYRE21///253/CA, /Q9HAU8VIVACE1///253/CA
+distance alignment, /Q9HAU8DomSerf1///253/CA, /Q9HAU8VIVACE1///253/CA
+distance alignment, /Q9HAU8DomSerf1///253/CA, /Q9HAU8SUPERFAMILY2///253/CA
+distance alignment, /Q9HAU8PHYRE21///254/CA, /Q9HAU8VIVACE1///254/CA
+distance alignment, /Q9HAU8DomSerf1///254/CA, /Q9HAU8VIVACE1///254/CA
+distance alignment, /Q9HAU8PHYRE21///254/CA, /Q9HAU8SUPERFAMILY2///254/CA
+distance alignment, /Q9HAU8PHYRE21///255/CA, /Q9HAU8VIVACE1///255/CA
+distance alignment, /Q9HAU8DomSerf1///255/CA, /Q9HAU8VIVACE1///255/CA
+distance alignment, /Q9HAU8PHYRE21///255/CA, /Q9HAU8SUPERFAMILY2///255/CA
+distance alignment, /Q9HAU8PHYRE21///256/CA, /Q9HAU8VIVACE1///256/CA
+distance alignment, /Q9HAU8DomSerf1///256/CA, /Q9HAU8PHYRE21///256/CA
+distance alignment, /Q9HAU8DomSerf1///256/CA, /Q9HAU8SUPERFAMILY2///256/CA
+distance alignment, /Q9HAU8PHYRE21///257/CA, /Q9HAU8VIVACE1///257/CA
+distance alignment, /Q9HAU8DomSerf1///257/CA, /Q9HAU8PHYRE21///257/CA
+distance alignment, /Q9HAU8PHYRE21///257/CA, /Q9HAU8SUPERFAMILY2///257/CA
+distance alignment, /Q9HAU8PHYRE21///258/CA, /Q9HAU8VIVACE1///258/CA
+distance alignment, /Q9HAU8DomSerf1///258/CA, /Q9HAU8VIVACE1///258/CA
+distance alignment, /Q9HAU8PHYRE21///258/CA, /Q9HAU8SUPERFAMILY2///258/CA
+distance alignment, /Q9HAU8PHYRE21///259/CA, /Q9HAU8VIVACE1///259/CA
+distance alignment, /Q9HAU8DomSerf1///259/CA, /Q9HAU8VIVACE1///259/CA
+distance alignment, /Q9HAU8DomSerf1///259/CA, /Q9HAU8SUPERFAMILY2///259/CA
+distance alignment, /Q9HAU8PHYRE21///260/CA, /Q9HAU8VIVACE1///260/CA
+distance alignment, /Q9HAU8DomSerf1///260/CA, /Q9HAU8VIVACE1///260/CA
+distance alignment, /Q9HAU8DomSerf1///260/CA, /Q9HAU8SUPERFAMILY2///260/CA
+distance alignment, /Q9HAU8DomSerf1///261/CA, /Q9HAU8PHYRE21///261/CA
+distance alignment, /Q9HAU8PHYRE21///261/CA, /Q9HAU8SUPERFAMILY2///261/CA
+distance alignment, /Q9HAU8PHYRE21///261/CA, /Q9HAU8VIVACE1///261/CA
+distance alignment, /Q9HAU8DomSerf1///262/CA, /Q9HAU8PHYRE21///262/CA
+distance alignment, /Q9HAU8PHYRE21///262/CA, /Q9HAU8SUPERFAMILY2///262/CA
+distance alignment, /Q9HAU8DomSerf1///262/CA, /Q9HAU8VIVACE1///262/CA
+distance alignment, /Q9HAU8DomSerf1///263/CA, /Q9HAU8PHYRE21///263/CA
+distance alignment, /Q9HAU8PHYRE21///263/CA, /Q9HAU8SUPERFAMILY2///263/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///263/CA, /Q9HAU8VIVACE1///263/CA
+distance alignment, /Q9HAU8DomSerf1///264/CA, /Q9HAU8PHYRE21///264/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///264/CA, /Q9HAU8VIVACE1///264/CA
+distance alignment, /Q9HAU8PHYRE21///264/CA, /Q9HAU8SUPERFAMILY2///264/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///265/CA, /Q9HAU8VIVACE1///265/CA
+distance alignment, /Q9HAU8PHYRE21///265/CA, /Q9HAU8SUPERFAMILY2///265/CA
+distance alignment, /Q9HAU8DomSerf1///265/CA, /Q9HAU8PHYRE21///265/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///266/CA, /Q9HAU8VIVACE1///266/CA
+distance alignment, /Q9HAU8PHYRE21///266/CA, /Q9HAU8SUPERFAMILY2///266/CA
+distance alignment, /Q9HAU8DomSerf1///266/CA, /Q9HAU8SUPERFAMILY2///266/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///267/CA, /Q9HAU8VIVACE1///267/CA
+distance alignment, /Q9HAU8DomSerf1///267/CA, /Q9HAU8SUPERFAMILY2///267/CA
+distance alignment, /Q9HAU8PHYRE21///267/CA, /Q9HAU8SUPERFAMILY2///267/CA
+distance alignment, /Q9HAU8PHYRE21///268/CA, /Q9HAU8SUPERFAMILY2///268/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///268/CA, /Q9HAU8VIVACE1///268/CA
+distance alignment, /Q9HAU8DomSerf1///268/CA, /Q9HAU8VIVACE1///268/CA
+distance alignment, /Q9HAU8PHYRE21///269/CA, /Q9HAU8VIVACE1///269/CA
+distance alignment, /Q9HAU8PHYRE21///269/CA, /Q9HAU8SUPERFAMILY2///269/CA
+distance alignment, /Q9HAU8DomSerf1///269/CA, /Q9HAU8SUPERFAMILY2///269/CA
+distance alignment, /Q9HAU8PHYRE21///270/CA, /Q9HAU8VIVACE1///270/CA
+distance alignment, /Q9HAU8PHYRE21///270/CA, /Q9HAU8SUPERFAMILY2///270/CA
+distance alignment, /Q9HAU8DomSerf1///270/CA, /Q9HAU8SUPERFAMILY2///270/CA
+distance alignment, /Q9HAU8PHYRE21///271/CA, /Q9HAU8VIVACE1///271/CA
+distance alignment, /Q9HAU8PHYRE21///271/CA, /Q9HAU8SUPERFAMILY2///271/CA
+distance alignment, /Q9HAU8DomSerf1///271/CA, /Q9HAU8VIVACE1///271/CA
+distance alignment, /Q9HAU8PHYRE21///272/CA, /Q9HAU8VIVACE1///272/CA
+distance alignment, /Q9HAU8PHYRE21///272/CA, /Q9HAU8SUPERFAMILY2///272/CA
+distance alignment, /Q9HAU8DomSerf1///272/CA, /Q9HAU8PHYRE21///272/CA
+distance alignment, /Q9HAU8PHYRE21///273/CA, /Q9HAU8VIVACE1///273/CA
+distance alignment, /Q9HAU8PHYRE21///273/CA, /Q9HAU8SUPERFAMILY2///273/CA
+distance alignment, /Q9HAU8DomSerf1///273/CA, /Q9HAU8SUPERFAMILY2///273/CA
+distance alignment, /Q9HAU8PHYRE21///274/CA, /Q9HAU8VIVACE1///274/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///274/CA, /Q9HAU8VIVACE1///274/CA
+distance alignment, /Q9HAU8DomSerf1///274/CA, /Q9HAU8PHYRE21///274/CA
+distance alignment, /Q9HAU8PHYRE21///275/CA, /Q9HAU8VIVACE1///275/CA
+distance alignment, /Q9HAU8DomSerf1///275/CA, /Q9HAU8SUPERFAMILY2///275/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///275/CA, /Q9HAU8VIVACE1///275/CA
+distance alignment, /Q9HAU8PHYRE21///276/CA, /Q9HAU8VIVACE1///276/CA
+distance alignment, /Q9HAU8DomSerf1///276/CA, /Q9HAU8SUPERFAMILY2///276/CA
+distance alignment, /Q9HAU8DomSerf1///276/CA, /Q9HAU8PHYRE21///276/CA
+distance alignment, /Q9HAU8PHYRE21///277/CA, /Q9HAU8VIVACE1///277/CA
+distance alignment, /Q9HAU8DomSerf1///277/CA, /Q9HAU8PHYRE21///277/CA
+distance alignment, /Q9HAU8DomSerf1///277/CA, /Q9HAU8SUPERFAMILY2///277/CA
+distance alignment, /Q9HAU8PHYRE21///278/CA, /Q9HAU8VIVACE1///278/CA
+distance alignment, /Q9HAU8DomSerf1///278/CA, /Q9HAU8PHYRE21///278/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///278/CA, /Q9HAU8VIVACE1///278/CA
+distance alignment, /Q9HAU8PHYRE21///279/CA, /Q9HAU8VIVACE1///279/CA
+distance alignment, /Q9HAU8DomSerf1///279/CA, /Q9HAU8PHYRE21///279/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///279/CA, /Q9HAU8VIVACE1///279/CA
+distance alignment, /Q9HAU8PHYRE21///280/CA, /Q9HAU8VIVACE1///280/CA
+distance alignment, /Q9HAU8DomSerf1///280/CA, /Q9HAU8PHYRE21///280/CA
+distance alignment, /Q9HAU8DomSerf1///280/CA, /Q9HAU8SUPERFAMILY2///280/CA
+distance alignment, /Q9HAU8PHYRE21///281/CA, /Q9HAU8VIVACE1///281/CA
+distance alignment, /Q9HAU8DomSerf1///281/CA, /Q9HAU8VIVACE1///281/CA
+distance alignment, /Q9HAU8DomSerf1///281/CA, /Q9HAU8SUPERFAMILY2///281/CA
+distance alignment, /Q9HAU8PHYRE21///282/CA, /Q9HAU8VIVACE1///282/CA
+distance alignment, /Q9HAU8DomSerf1///282/CA, /Q9HAU8PHYRE21///282/CA
+distance alignment, /Q9HAU8DomSerf1///282/CA, /Q9HAU8SUPERFAMILY2///282/CA
+distance alignment, /Q9HAU8PHYRE21///283/CA, /Q9HAU8VIVACE1///283/CA
+distance alignment, /Q9HAU8DomSerf1///283/CA, /Q9HAU8PHYRE21///283/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///283/CA, /Q9HAU8VIVACE1///283/CA
+distance alignment, /Q9HAU8PHYRE21///284/CA, /Q9HAU8VIVACE1///284/CA
+distance alignment, /Q9HAU8DomSerf1///284/CA, /Q9HAU8PHYRE21///284/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///284/CA, /Q9HAU8VIVACE1///284/CA
+distance alignment, /Q9HAU8PHYRE21///285/CA, /Q9HAU8VIVACE1///285/CA
+distance alignment, /Q9HAU8DomSerf1///285/CA, /Q9HAU8PHYRE21///285/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///285/CA, /Q9HAU8VIVACE1///285/CA
+distance alignment, /Q9HAU8PHYRE21///286/CA, /Q9HAU8VIVACE1///286/CA
+distance alignment, /Q9HAU8DomSerf1///286/CA, /Q9HAU8PHYRE21///286/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///286/CA, /Q9HAU8VIVACE1///286/CA
+distance alignment, /Q9HAU8PHYRE21///287/CA, /Q9HAU8VIVACE1///287/CA
+distance alignment, /Q9HAU8DomSerf1///287/CA, /Q9HAU8PHYRE21///287/CA
+distance alignment, /Q9HAU8SUPERFAMILY2///287/CA, /Q9HAU8VIVACE1///287/CA
+distance alignment, /Q9HAU8PHYRE21///288/CA, /Q9HAU8VIVACE1///288/CA
+distance alignment, /Q9HAU8DomSerf1///288/CA, /Q9HAU8VIVACE1///288/CA
+distance alignment, /Q9HAU8DomSerf1///288/CA, /Q9HAU8SUPERFAMILY2///288/CA
+distance alignment, /Q9HAU8PHYRE21///289/CA, /Q9HAU8VIVACE1///289/CA
+distance alignment, /Q9HAU8DomSerf1///289/CA, /Q9HAU8VIVACE1///289/CA
+distance alignment, /Q9HAU8DomSerf1///289/CA, /Q9HAU8SUPERFAMILY2///289/CA
+distance alignment, /Q9HAU8PHYRE21///290/CA, /Q9HAU8VIVACE1///290/CA
+distance alignment, /Q9HAU8DomSerf1///290/CA, /Q9HAU8PHYRE21///290/CA
+distance alignment, /Q9HAU8PHYRE21///291/CA, /Q9HAU8VIVACE1///291/CA
+distance alignment, /Q9HAU8DomSerf1///291/CA, /Q9HAU8PHYRE21///291/CA
+distance alignment, /Q9HAU8PHYRE21///292/CA, /Q9HAU8VIVACE1///292/CA
+distance alignment, /Q9HAU8DomSerf1///292/CA, /Q9HAU8PHYRE21///292/CA
 disable alignment
 select noncore, ( /Q9HAU8DomSerf1///1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+21+22+23+24+25+26+27+28+29+30+31+32+33+34+35+36+37+38+39+40+41+42+43+44+45+46+47+48+49+50+51+52+53+54+55+56+57+58+59+60+61+62+63+64+65+66+67+68+69+70+71+72+73+74+75+76+77+78+79+80+81+82+83+84+85+86+87+88+89+90+91+92+93+94+95+96+97+98+99+100+101+102+103+104+105+106+107+108+109+110+111+112+113+114+115+116+117+118+119+120+121+122+123+124+125+126+127+128+129+130+131+132+198+199+200+262+263+264+265+266+267+268+269+270+271+272+273+274+275+276+293+294+295+296+297+298+299+300+301+302+303+304+305+306+307+308+309+310+311+312+313+314+315+316+317+318+319+320+321+322+323+324+325+326+327+328+329+330+331+332+333+334+335+336+337+338+339+340+341+342 or /Q9HAU8DomSerf1///+343+344+345+346+347+348+349+350+351+352+353+354+355+356+357+358+359+360+361+362+363+364+365+366+367+368+369+370+371+372+373+374+375+376+377+378+379+380+381+382+383+384+385+386+387+388+389+390+391+392+393+394+395+396+397+398+399+400+401+402+403+404+405+406+407+408+409+410+411+412+413+414+415+416+417+418+419+420+421+422+423+424+425+426+427+428+429+430+431+432+433+434+435+436+437+438+439+440+441+442+443+444+445+446+447+448+449+450+451+452+453+454+455+456+457+458+459+460+461+462+463+464+465+466+467+468+469+470+471+472+473+474+475+476+477+478+479+480+481+482+483+484+485+486+487+488+489+490+491+492+493+494 or /Q9HAU8PHYRE21///43+60+61+62+63+198+199+200+262+263+264+265+266+267+268+269 or /Q9HAU8SUPERFAMILY2///40+41+42+43+44+45+46+47+48+49+50+51+52+53+54+55+56+57+58+59+60+61+62+63+64+65+66+67+68+69+70+71+72+73+74+75+76+77+78+79+80+81+82+83+84+85+86+87+88+89+90+91+92+93+94+95+96+97+98+99+100+101+102+103+104+105+106+107+108+109+110+111+112+113+114+115+116+117+118+119+120+121+122+123+124+125+126+127+128+129+130+131+132+133+134+135+136+137+138+139+140+141+142+143+144+145+146+147+148+149+150+151+152+153+154+155+156+157+158+159+160+161+162+163+164+165+166+167+168+169+170+171+172+173+174+175+176+177+178+179+180+181+182+183+184+185+186+187+188+189+190+191+192+193+194+195+196+197+198+199+200+201+202+203+204+205+206+207+208+209+210+211+212+213+214+215+216+217+218+219+220+221+222+223+224+225+226+227+228+229+230+231+232+233+234+235+236+237+238+239 or /Q9HAU8SUPERFAMILY2///+240+241+242+243+244+245+246+247+248+249+250+251+252+253+254+255+256+257+258+259+260+261+262+263+264+265+266+267+268+269+270+271+272+273+274+275+276+277+278+279+280+281+282+283+284+285+286+287+288+289 or /Q9HAU8VIVACE1///43+60+61+62+63+198+199+200+261+262+263+264+265+266+267+268+269 )
 select core, ( /Q9HAU8DomSerf1///133+134+135+136+137+138+139+140+141+142+143+144+145+146+147+148+149+150+151+152+153+154+155+156+157+158+159+160+161+162+163+164+165+166+167+168+169+170+171+172+173+174+175+176+177+178+179+180+181+182+183+184+185+186+187+188+189+190+191+192+193+194+195+196+197+201+202+203+204+205+206+207+208+209+210+211+212+213+214+215+216+217+218+219+220+221+222+223+224+225+226+227+228+229+230+231+232+233+234+235+236+237+238+239+240+241+242+243+244+245+246+247+248+249+250+251+252+253+254+255+256+257+258+259+260+261+277+278+279+280+281+282+283+284+285+286+287+288+289+290+291+292 or /Q9HAU8PHYRE21///35+36+37+38+39+40+41+42+44+45+46+47+48+49+50+51+52+53+54+55+56+57+58+59+64+65+66+67+68+69+70+71+72+73+74+75+76+77+78+79+80+81+82+83+84+85+86+87+88+89+90+91+92+93+94+95+96+97+98+99+100+101+102+103+104+105+106+107+108+109+110+111+112+113+114+115+116+117+118+119+120+121+122+123+124+125+126+127+128+129+130+131+132+133+134+135+136+137+138+139+140+141+142+143+144+145+146+147+148+149+150+151+152+153+154+155+156+157+158+159+160+161+162+163+164+165+166+167+168+169+170+171+172+173+174+175+176+177+178+179+180+181+182+183+184+185+186+187+188+189+190+191+192+193+194+195+196+197+201+202+203+204+205+206+207+208+209+210+211+212+213+214+215+216+217+218+219+220+221+222+223+224+225+226+227+228+229+230+231+232+233+234+235+236+237+238+239+240+241+242 or /Q9HAU8PHYRE21///+243+244+245+246+247+248+249+250+251+252+253+254+255+256+257+258+259+260+261+270+271+272+273+274+275+276+277+278+279+280+281+282+283+284+285+286+287+288+289+290+291+292 or /Q9HAU8VIVACE1///35+36+37+38+39+40+41+42+44+45+46+47+48+49+50+51+52+53+54+55+56+57+58+59+64+65+66+67+68+69+70+71+72+73+74+75+76+77+78+79+80+81+82+83+84+85+86+87+88+89+90+91+92+93+94+95+96+97+98+99+100+101+102+103+104+105+106+107+108+109+110+111+112+113+114+115+116+117+118+119+120+121+122+123+124+125+126+127+128+129+130+131+132+133+134+135+136+137+138+139+140+141+142+143+144+145+146+147+148+149+150+151+152+153+154+155+156+157+158+159+160+161+162+163+164+165+166+167+168+169+170+171+172+173+174+175+176+177+178+179+180+181+182+183+184+185+186+187+188+189+190+191+192+193+194+195+196+197+201+202+203+204+205+206+207+208+209+210+211+212+213+214+215+216+217+218+219+220+221+222+223+224+225+226+227+228+229+230+231+232+233+234+235+236+237+238+239+240+241+242 or /Q9HAU8VIVACE1///+243+244+245+246+247+248+249+250+251+252+253+254+255+256+257+258+259+260+270+271+272+273+274+275+276+277+278+279+280+281+282+283+284+285+286+287+288+289+290+291+292 )
