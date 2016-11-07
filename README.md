@@ -25,10 +25,10 @@ Summary of Tools
 
 ### Primary tools
 
- * [ `cath-resolve-hits` ]( tools/cath-resolve-hits ) : Collapse a list of domain matches to your query sequence(s) down to the non-overlapping subset (ie domain architecture) that maximises the sum of the hits' scores.
- * [ `cath-ssap`         ]( tools/cath-ssap         ) : Run a SSAP pairwise structural alignment
- * [ `cath-superpose`    ]( tools/cath-superpose    ) : Superpose protein structures using an existing alignment
- * `build-test`                                       : Perform the cath-tools tests (which should all pass, abeit with a few warnings)
+ * [ `cath-resolve-hits` ]( http://cath-tools.readthedocs.io/en/latest/tools/cath-resolve-hits ) : Collapse a list of domain matches to your query sequence(s) down to the non-overlapping subset (ie domain architecture) that maximises the sum of the hits' scores.
+ * [ `cath-ssap`         ]( http://cath-tools.readthedocs.io/en/latest/tools/cath-ssap         ) : Run a SSAP pairwise structural alignment
+ * [ `cath-superpose`    ]( http://cath-tools.readthedocs.io/en/latest/tools/cath-superpose    ) : Superpose protein structures using an existing alignment
+ * `build-test`                                                                                  : Perform the cath-tools tests (which should all pass, abeit with a few warnings)
 
 ### Extras
 
