@@ -42,6 +42,9 @@ namespace cath {
 			/// \brief Whether to output HTML describing the hits and the results
 			bool                generate_html_output = DEFAULT_GENERATE_HTML_OUTPUT;
 
+			/// \brief Whether to output a summary of the hmmsearch output alignment
+			bool                output_hmmsearch_aln = DEFAULT_OUTPUT_HMMSEARCH_ALN;
+
 		public:
 			/// \brief The default value for whether to output the hits starts/stops *after* trimming
 			static constexpr hit_boundary_output DEFAULT_BOUNDARY_OUTPUT      = hit_boundary_output::ORIG;
@@ -49,13 +52,18 @@ namespace cath {
 			/// \brief The default value for whether to output HTML describing the hits and the results
 			static constexpr bool                DEFAULT_GENERATE_HTML_OUTPUT = false;
 
+			/// \brief The default value for whether to output a summary of the hmmsearch output alignment
+			static constexpr bool                DEFAULT_OUTPUT_HMMSEARCH_ALN = false;
+
 			const path_opt & get_output_file() const;
 			const hit_boundary_output & get_boundary_output() const;
 			const bool & get_generate_html_output() const;
+			const bool & get_output_hmmsearch_aln() const;
 
 			crh_output_spec & set_output_file(const boost::filesystem::path &);
 			crh_output_spec & set_boundary_output(const hit_boundary_output &);
 			crh_output_spec & set_generate_html_output(const bool &);
+			crh_output_spec & set_output_hmmsearch_aln(const bool &);
 		};
 
 		str_opt get_invalid_description(const crh_output_spec &);

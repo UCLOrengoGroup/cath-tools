@@ -37,13 +37,16 @@ using std::string;
 using std::unique_ptr;
 
 /// \brief The option name for the output file to which data should be written (or unspecified for stdout)
-const string crh_output_options_block::PO_OUTPUT_FILE          { "output-file"         };
+const string crh_output_options_block::PO_OUTPUT_FILE          { "output-file"          };
 
 /// \brief The option name for whether to output the hits starts/stops *after* trimming
-const string crh_output_options_block::PO_OUTPUT_TRIMMED_HITS  { "output-trimmed-hits" };
+const string crh_output_options_block::PO_OUTPUT_TRIMMED_HITS  { "output-trimmed-hits"  };
 
 /// \brief The option name for whether to output HTML describing the hits and the results
-const string crh_output_options_block::PO_GENERATE_HTML_OUTPUT { "html-output"         };
+const string crh_output_options_block::PO_GENERATE_HTML_OUTPUT { "html-output"          };
+
+/// \brief The option name for whether to output a summary of the hmmsearch output alignment
+const string crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN { "output-hmmsearch-aln" };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_output_options_block::do_clone() const {
@@ -93,6 +96,24 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 		"If crh_segment_spec::DEFAULT_OUTPUT_TRIMMED_HITS isn't false, it might mess up the bool switch in here" );
 	static_assert( !                            crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT,
 		"If crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT isn't false, it might mess up the bool switch in here" );
+}
+
+/// \brief Add any hidden options to the provided options_description
+void crh_output_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+                                                                    ) {
+	const auto output_hmmsearch_aln_notifier = [&] (const bool &x) { the_spec.set_output_hmmsearch_aln( x ); };
+
+	arg_desc.add_options()
+		(
+			PO_OUTPUT_HMMSEARCH_ALN.c_str(),
+			bool_switch()
+				->notifier     ( output_hmmsearch_aln_notifier                 )
+				->default_value( crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN ),
+			"Print a summary of the hmmsearch alignment in the output"
+		);
+
+	static_assert( ! crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN,
+		"If crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_output_options_block invalid

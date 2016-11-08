@@ -28,6 +28,7 @@
 #include "common/boost_addenda/make_string_ref.h"
 #include "common/string/string_parse_tools.h"
 #include "exception/runtime_error_exception.h"
+#include "resolve_hits/file/alnd_rgn.h"
 #include "resolve_hits/hit_seg.h"
 #include "resolve_hits/res_arrow.h"
 #include "resolve_hits/resolve_hits_type_aliases.h"
@@ -79,25 +80,44 @@ namespace cath {
 			class hmmsearch_aln final {
 			private:
 				/// \brief The ID of the first protein
+				///
+				/// An empty string means "not yet been initialised" (because IDs must always have length >= 1)
 				std::string id_a;
 
 				/// \brief The ID of the second protein
+				///
+				/// An empty string means "not yet been initialised" (because IDs must always have length >= 1)
 				std::string id_b;
 
 				/// \brief The (optional) index of the start of the alignment in the first sequence
+				///
+				/// This is optional to allow it be initialised as the data is read in
 				residx_opt start_a;
 
 				/// \brief The (optional) index of the start of the alignment in the second sequence
+				///
+				/// This is optional to allow it be initialised as the data is read in
 				residx_opt start_b;
 
 				/// \brief The string of the aligned first sequence
+				///
+				/// This is stored during add_a() so that it's available during add_b()
 				std::string aln_seq_a;
 
 				/// \brief A list of the stretches (each being an aln_stretch and associated length)
 				aln_stretch_vec stretches;
 
 				/// \brief A list of the segments
+				///
+				/// This is only used in process_aln but is stored here to allow the
+				/// vector's allocated memory to be reused between results
 				hit_seg_vec segments;
+
+				/// \brief A list of the aligned regions
+				///
+				/// This is only used in process_aln but is stored here to allow the
+				/// vector's allocated memory to be reused between results
+				alnd_rgn_vec aligned_regions;
 
 				/// \brief The field offset to the ID in an alignment line
 				static constexpr size_t LINE_ID_OFFSET    = 0;
@@ -108,6 +128,9 @@ namespace cath {
 				/// \brief The field offset to the alignment in an alignment line
 				static constexpr size_t LINE_ALN_OFFSET   = 2;
 
+				void update_segments(const residx_t &);
+				void update_aligned_regions(const bool &);
+
 			public:
 				void reset();
 
@@ -115,10 +138,63 @@ namespace cath {
 
 				void add_b(const std::string &);
 
-				std::pair<std::string &, hit_seg_vec &> process_aln(const residx_t &);
+				std::tuple<std::string &, hit_seg_vec &, alnd_rgn_vec &> process_aln(const residx_t &,
+				                                                                     const bool &);
 
 				bool empty() const;
 			};
+
+			/// \brief Update the segments based on the parsed information
+			inline void hmmsearch_aln::update_segments(const residx_t &arg_min_gap_length ///< The minimum length for a missing stretch to be considered a gap
+			                                           ) {
+				segments.clear();
+				res_arrow arrow_b = arrow_before_res( *start_b );
+				for (const aln_stretch &stretch : stretches) {
+					const auto &presence = stretch.first;
+					const auto &length   = stretch.second;
+
+					if ( presence == aln_presence::BOTH || presence == aln_presence::B ) {
+						const res_arrow  start = arrow_b;
+						arrow_b += length;
+						const res_arrow &stop  = arrow_b;
+
+						if ( presence == aln_presence::BOTH || length < arg_min_gap_length ) {
+							if ( segments.empty() || segments.back().get_stop_arrow() != start ) {
+								segments.emplace_back( start, stop );
+							}
+							else {
+								segments.back().set_stop_arrow( stop );
+							}
+						}
+					}
+				}
+			}
+
+			/// \brief Update the aligned regions based on the parsed information
+			inline void hmmsearch_aln::update_aligned_regions(const bool &arg_parse_hmmsearch_aln ///< Whether or not to actually bother parsing this hmmsearch alignment information
+			                                                  ) {
+				aligned_regions.clear();
+				if ( arg_parse_hmmsearch_aln ) {
+					res_arrow arrow_a = arrow_before_res( *start_a );
+					res_arrow arrow_b = arrow_before_res( *start_b );
+					for (const aln_stretch &stretch : stretches) {
+						const auto &presence = stretch.first;
+						const auto &length   = stretch.second;
+
+						if ( presence == aln_presence::BOTH ) {
+							aligned_regions.emplace_back( arrow_a, arrow_b, length );
+						}
+
+						if ( presence == aln_presence::BOTH || presence == aln_presence::A ) {
+							arrow_a += length;
+						}
+
+						if ( presence == aln_presence::BOTH || presence == aln_presence::B ) {
+							arrow_b += length;
+						}
+					}
+				}
+			}
 
 			/// \brief Reset this hmmsearch_aln to be reused
 			inline void hmmsearch_aln::reset() {
@@ -153,6 +229,9 @@ namespace cath {
 			/// This should always be called after add_a() and before add_a() or process_aln()
 			inline void hmmsearch_aln::add_b(const std::string &arg_line ///< The second alignment line (eg "  404421f6d00e5b5f33713585fb60b9bf 811 SRSVMVKKGDTALLQCAVSGDK---PINIVWMRSGKNTLN-----PSTNYKISVK--QEATPDGVSAELQIRTVDAT 877")
 			                                 ) {
+				constexpr char GAP_CHAR_A = '.';
+				constexpr char GAP_CHAR_B = '-';
+
 				const auto id_itrs    = common::find_field_itrs( arg_line, LINE_ID_OFFSET                                              );
 				const auto start_itrs = common::find_field_itrs( arg_line, LINE_START_OFFSET, 1 + LINE_ID_OFFSET,    id_itrs.second    );
 				const auto aln_itrs   = common::find_field_itrs( arg_line, LINE_ALN_OFFSET,   1 + LINE_START_OFFSET, start_itrs.second );
@@ -170,14 +249,14 @@ namespace cath {
 					const char &char_a = x.get<0>();
 					const char &char_b = x.get<1>();
 
-					assert( char_b != '-' || char_a != '.' );
-					if ( char_b == '-' && char_a == '.' ) {
+					assert( char_b != GAP_CHAR_B || char_a != GAP_CHAR_A );
+					if ( char_b == GAP_CHAR_B && char_a == GAP_CHAR_A ) {
 						BOOST_THROW_EXCEPTION(common::runtime_error_exception("hmmsearch aligment files shouldn't contain alignment positions that have gaps on both sides"));
 					}
 
-					const aln_presence presence = ( char_a == '.' ) ? aln_presence::B :
-					                              ( char_b == '-' ) ? aln_presence::A :
-					                                                  aln_presence::BOTH;
+					const aln_presence presence = ( char_a == GAP_CHAR_A ) ? aln_presence::B :
+					                              ( char_b == GAP_CHAR_B ) ? aln_presence::A :
+					                                                         aln_presence::BOTH;
 
 					if ( stretches.empty() || stretches.back().first != presence ) {
 						stretches.emplace_back( presence, 1 );
@@ -191,30 +270,12 @@ namespace cath {
 			/// \brief Process the alignment that has been loaded into this hmmsearch_aln
 			///
 			/// This should always be called after add_b()
-			inline std::pair<std::string &, hit_seg_vec &> hmmsearch_aln::process_aln(const residx_t &arg_min_gap_length ///< The minimum length for a gap to be considered a gap
-			                                                                          ) {
-				segments.clear();
-				res_arrow arrow_b = arrow_before_res( *start_b );
-				for (const aln_stretch &stretch : stretches) {
-					const auto &presence = stretch.first;
-					const auto &length   = stretch.second;
-
-					if ( presence == aln_presence::BOTH || presence == aln_presence::B ) {
-						const res_arrow  start = arrow_b;
-						arrow_b += length;
-						const res_arrow &stop  = arrow_b;
-
-						if ( presence == aln_presence::BOTH || length < arg_min_gap_length ) {
-							if ( segments.empty() || segments.back().get_stop_arrow() != start ) {
-								segments.emplace_back( start, stop );
-							}
-							else {
-								segments.back().set_stop_arrow( stop );
-							}
-						}
-					}
-				}
-				return { id_a, segments };
+			inline std::tuple<std::string &, hit_seg_vec &, alnd_rgn_vec &> hmmsearch_aln::process_aln(const residx_t &arg_min_gap_length,     ///< The minimum length for a gap to be considered a gap
+			                                                                                           const bool     &arg_parse_hmmsearch_aln ///< Whether to parse the hmmsearch alignment information for outputting later
+			                                                                                           ) {
+				update_segments       ( arg_min_gap_length      );
+				update_aligned_regions( arg_parse_hmmsearch_aln );
+				return std::tie( id_a, segments, aligned_regions );
 			}
 
 			/// \brief Return whether the stretches are empty (ie none has been parsed in)

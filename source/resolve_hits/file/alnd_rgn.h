@@ -1,5 +1,5 @@
 /// \file
-/// \brief The hmmer_hmmsearch_out class header
+/// \brief The alnd_rgn class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,30 +18,40 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_HMMER_HMMSEARCH_OUT_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_HMMER_HMMSEARCH_OUT_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_ALND_RGN_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_ALND_RGN_H
 
-#include <boost/filesystem/path.hpp>
-
-#include "common/type_aliases.h"
+#include "resolve_hits/res_arrow.h"
 #include "resolve_hits/resolve_hits_type_aliases.h"
-
-namespace cath { namespace rslv { class read_and_process_mgr; } }
 
 namespace cath {
 	namespace rslv {
 
-		void parse_hmmsearch_out_file(read_and_process_mgr &,
-		                              const boost::filesystem::path &,
-		                              const bool &,
-		                              const residx_t &,
-		                              const bool &);
+		/// \brief Represent a continuous region of (sequence) residues that are aligned each other
+		///
+		/// At present this is only 
+		struct alnd_rgn {
+			/// \brief The start of the aligned region in the first  sequence
+			res_arrow start_res_a;
 
-		void parse_hmmsearch_out(read_and_process_mgr &,
-		                         std::istream &,
-		                         const bool &,
-		                         const residx_t &,
-		                         const bool &);
+			/// \brief The start of the aligned region in the second sequence
+			res_arrow start_res_b;
+
+			/// \brief The length of the aligned region
+			residx_t length;
+
+		public:
+			alnd_rgn(const res_arrow &,
+			         const res_arrow &,
+			         const residx_t &) noexcept;
+
+			const res_arrow & get_start_res_a() const;
+			const res_arrow & get_start_res_b() const;
+			const residx_t & get_length() const;
+		};
+
+		std::string to_string(const alnd_rgn &);
+		std::string to_string(const alnd_rgn_vec &);
 
 	} // namespace rslv
 } // namespace cath

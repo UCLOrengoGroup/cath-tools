@@ -30,11 +30,16 @@ namespace cath { namespace rslv { class full_hit; } }
 namespace cath { namespace rslv { class hit_seg; } }
 namespace cath { namespace rslv { class res_arrow; } }
 namespace cath { namespace rslv { class scored_arch_proxy; } }
-
-
+namespace cath { namespace rslv { struct alnd_rgn; } }
 
 namespace cath {
 	namespace rslv {
+
+		/// \brief Type alias for a vector of alnd_rgn
+		using alnd_rgn_vec = std::vector<alnd_rgn>;
+
+		/// \brief Type alias for an optional alnd_rgn_vec
+		using alnd_rgn_vec_opt = boost::optional<alnd_rgn_vec>;
 
 		/// \brief Type alias for a vector of hit_seg objects
 		using hit_seg_vec = std::vector<hit_seg>;

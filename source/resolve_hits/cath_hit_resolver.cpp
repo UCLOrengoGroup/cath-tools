@@ -126,7 +126,8 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 					the_read_and_process_mgr,
 					the_istream_ref,
 					arg_crh_spec.get_score_spec().get_apply_cath_rules(),
-					arg_crh_spec.get_input_spec().get_min_gap_length()
+					arg_crh_spec.get_input_spec().get_min_gap_length(),
+					arg_crh_spec.get_output_spec().get_output_hmmsearch_aln()
 				);
 				break;
 			}

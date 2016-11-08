@@ -110,7 +110,8 @@ namespace cath {
 				void parse_alignment_section();
 				void finish_alignment(read_and_process_mgr &,
 				                      const bool &,
-				                      const residx_t &);
+				                      const residx_t &,
+				                      const bool &);
 
 				std::string & get_line();
 				const std::string & get_line() const;
@@ -262,16 +263,22 @@ namespace cath {
 			/// \brief Finishe the current alignment
 			inline void hmmsearch_parser::finish_alignment(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which complete hits should be added
 			                                               const bool           &arg_apply_cath_policies,  ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
-			                                               const residx_t       &arg_min_gap_length        ///< The minimum length for a gap to be considered a gap
+			                                               const residx_t       &arg_min_gap_length,       ///< The minimum length for a gap to be considered a gap
+			                                               const bool           &arg_parse_hmmsearch_aln   ///< Whether to parse the hmmsearch alignment information for outputting later
 			                                               ) {
-				auto            aln_results  = the_aln.process_aln( arg_min_gap_length );
-				std::string    &id_a         = aln_results.first;
-				hit_seg_vec    &segs         = aln_results.second;
-				const auto     &summ         = summaries[ summary_ctr ];
-				const auto      id_score_cat = cath_score_category_of_id( id_a, arg_apply_cath_policies );
-				const bool      apply_dc_cat = ( id_score_cat == cath_id_score_category::DC_TYPE );
-				const residx_t &start        = apply_dc_cat ? summ.ali_from : summ.env_from;
-				const residx_t &stop         = apply_dc_cat ? summ.ali_to   : summ.env_to;
+				auto            aln_results   = the_aln.process_aln( arg_min_gap_length, arg_parse_hmmsearch_aln );
+				std::string    &id_a          = std::get<0>( aln_results );
+				hit_seg_vec    &segs          = std::get<1>( aln_results );
+				auto            alnd_rngs_opt = boost::make_optional(
+					arg_parse_hmmsearch_aln,
+					std::get<2>( aln_results )
+				);
+
+				const auto     &summ          = summaries[ summary_ctr ];
+				const auto      id_score_cat  = cath_score_category_of_id( id_a, arg_apply_cath_policies );
+				const bool      apply_dc_cat  = ( id_score_cat == cath_id_score_category::DC_TYPE );
+				const residx_t &start         = apply_dc_cat ? summ.ali_from : summ.env_from;
+				const residx_t &stop          = apply_dc_cat ? summ.ali_to   : summ.env_to;
 
 				// If applying the CATH discontinuous policy, erase any segments after the first
 				if ( apply_dc_cat ) {
@@ -291,7 +298,8 @@ namespace cath {
 					segs,
 					std::move( id_a ),
 					summ.bitscore / bitscore_divisor( arg_apply_cath_policies, id_score_cat, summ.evalues_are_susp ),
-					hit_score_type::BITSCORE
+					hit_score_type::BITSCORE,
+					std::move( alnd_rngs_opt )
 				);
 
 				++summary_ctr;

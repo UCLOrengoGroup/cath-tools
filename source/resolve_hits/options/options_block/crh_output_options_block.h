@@ -38,6 +38,7 @@ namespace cath {
 			virtual std::unique_ptr<opts::options_block> do_clone() const override final;
 			virtual std::string do_get_block_name() const override final;
 			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
+			virtual void do_add_hidden_options_to_description(boost::program_options::options_description &) override final;
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
@@ -46,6 +47,7 @@ namespace cath {
 			static const std::string PO_OUTPUT_FILE;
 			static const std::string PO_OUTPUT_TRIMMED_HITS;
 			static const std::string PO_GENERATE_HTML_OUTPUT;
+			static const std::string PO_OUTPUT_HMMSEARCH_ALN;
 
 			const crh_output_spec & get_crh_output_spec() const;
 		};

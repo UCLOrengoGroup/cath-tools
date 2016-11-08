@@ -82,6 +82,11 @@ string cath::rslv::to_output_string(const hit_arch            &arg_hit_arch,    
 						is_jon
 						? " " + get_all_resolved_segments_string( x, arch_full_hits, arg_trim_spec )
 						: ""s
+					)
+					+ (
+						is_jon && x.get_alnd_rgns_opt()
+						? " " + to_string( *x.get_alnd_rgns_opt() )
+						: ""s
 					);
 				} ),
 			separator

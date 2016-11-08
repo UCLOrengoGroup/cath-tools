@@ -611,6 +611,7 @@ set(
 
 set(
 	NORMSOURCES_RESOLVE_HITS_FILE
+		resolve_hits/file/alnd_rgn.cpp
 		resolve_hits/file/cath_id_score_category.cpp
 		${NORMSOURCES_RESOLVE_HITS_FILE_DETAIL}
 		resolve_hits/file/hits_input_format_tag.cpp

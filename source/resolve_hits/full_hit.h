@@ -25,6 +25,7 @@
 #include <boost/optional.hpp>
 
 #include "common/type_aliases.h"
+#include "resolve_hits/file/alnd_rgn.h"
 #include "resolve_hits/hit_output_format.h"
 #include "resolve_hits/hit_score_type.h"
 #include "resolve_hits/hit_seg.h"
@@ -60,23 +61,29 @@ namespace cath {
 			/// \brief The type of score that's being used here
 			hit_score_type score_type;
 
+			/// \brief Any aligned regions parsed from an hmmsearch output alignment or boost::none otherwise
+			alnd_rgn_vec_opt alnd_rgns_opt;
+
 			void sanity_check() const;
 
 		public:
 			full_hit(const hit_seg_vec &,
 			         const std::string &,
 			         const double &,
-			         const hit_score_type & = hit_score_type::CRH_SCORE);
+			         const hit_score_type & = hit_score_type::CRH_SCORE,
+			         const alnd_rgn_vec_opt & = boost::none);
 
 			full_hit(const hit_seg_vec &,
 			         const std::string &&,
 			         const double &,
-			         const hit_score_type & = hit_score_type::CRH_SCORE);
+			         const hit_score_type & = hit_score_type::CRH_SCORE,
+			         const alnd_rgn_vec_opt && = boost::none);
 
 			const hit_seg_vec & get_segments() const;
 			const std::string & get_label() const;
 			const double & get_score() const;
 			const hit_score_type & get_score_type() const;
+			const alnd_rgn_vec_opt & get_alnd_rgns_opt() const;
 		};
 
 		std::string get_score_string(const double &,
@@ -106,26 +113,30 @@ namespace cath {
 		}
 
 		/// \brief Ctor
-		inline full_hit::full_hit(const hit_seg_vec    &arg_segments,  ///< The segments of the full_hit
-		                          const std::string    &arg_label,     ///< The label of the hits' match protein
-		                          const double         &arg_score,     ///< The score associated with the full_hit
-		                          const hit_score_type &arg_score_type ///< The type of score stored in this hit (eg evalue / bitscore / crh-score)
-		                          ) : segments   { arg_segments   },
-		                              label      { arg_label      },
-		                              the_score  { arg_score      },
-		                              score_type { arg_score_type } {
+		inline full_hit::full_hit(const hit_seg_vec      &arg_segments,     ///< The segments of the full_hit
+		                          const std::string      &arg_label,        ///< The label of the hits' match protein
+		                          const double           &arg_score,        ///< The score associated with the full_hit
+		                          const hit_score_type   &arg_score_type,   ///< The type of score stored in this hit (eg evalue / bitscore / crh-score)
+		                          const alnd_rgn_vec_opt &arg_alnd_rgns_opt ///< Any aligned regions parsed from an hmmsearch output alignment or boost::none otherwise
+		                          ) : segments     { arg_segments      },
+		                              label        { arg_label         },
+		                              the_score    { arg_score         },
+		                              score_type   { arg_score_type    },
+		                              alnd_rgns_opt{ arg_alnd_rgns_opt } {
 			sanity_check();
 		}
 
 		/// \brief Ctor
-		inline full_hit::full_hit(const hit_seg_vec     &arg_segments,  ///< The segments of the full_hit
-		                          const std::string    &&arg_label,     ///< The label of the hits' match protein
-		                          const double          &arg_score,     ///< The score associated with the full_hit
-		                          const hit_score_type  &arg_score_type ///< The type of score stored in this hit (eg evalue / bitscore / crh-score)
-		                          ) : segments   { arg_segments           },
-		                              label      { std::move( arg_label ) },
-		                              the_score  { arg_score              },
-		                              score_type { arg_score_type         } {
+		inline full_hit::full_hit(const hit_seg_vec       &arg_segments,     ///< The segments of the full_hit
+		                          const std::string      &&arg_label,        ///< The label of the hits' match protein
+		                          const double            &arg_score,        ///< The score associated with the full_hit
+		                          const hit_score_type    &arg_score_type,   ///< The type of score stored in this hit (eg evalue / bitscore / crh-score)
+		                          const alnd_rgn_vec_opt &&arg_alnd_rgns_opt ///< Any aligned regions parsed from an hmmsearch output alignment or boost::none otherwise
+		                          ) : segments     { arg_segments           },
+		                              label        { std::move( arg_label ) },
+		                              the_score    { arg_score              },
+		                              score_type   { arg_score_type         },
+		                              alnd_rgns_opt{ arg_alnd_rgns_opt      } {
 			sanity_check();
 		}
 
@@ -147,6 +158,11 @@ namespace cath {
 		/// \brief Getter for the type of score stored in this hit (eg evalue / bitscore / crh-score)
 		inline const hit_score_type & full_hit::get_score_type() const {
 			return score_type;
+		}
+
+		/// \brief Getter for aligned regions if they were parsed from a hmmsearch files
+		inline const alnd_rgn_vec_opt & full_hit::get_alnd_rgns_opt() const {
+			return alnd_rgns_opt;
 		}
 
 		/// \brief Return whether the two specified full_hits are identical

@@ -239,6 +239,8 @@ namespace cath {
 		bool midpoint_less(const hit_seg &,
 		                   const hit_seg &);
 		std::string to_simple_string(const hit_seg &);
+		std::string to_simple_seg_string(const res_arrow &,
+		                                 const res_arrow &);
 		std::string to_string(const hit_seg &);
 		std::ostream & operator<<(std::ostream &,
 		                          const hit_seg &);

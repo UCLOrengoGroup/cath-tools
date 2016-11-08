@@ -29,6 +29,7 @@ using boost::make_optional;
 
 constexpr hit_boundary_output crh_output_spec::DEFAULT_BOUNDARY_OUTPUT;
 constexpr bool                crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;
+constexpr bool                crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN;
 
 /// \brief Getter for the output file to which data should be written
 const path_opt & crh_output_spec::get_output_file() const {
@@ -44,6 +45,11 @@ const hit_boundary_output & crh_output_spec::get_boundary_output() const {
 /// \brief Getter for whether to output HTML describing the hits and the results
 const bool & crh_output_spec::get_generate_html_output() const {
 	return generate_html_output;
+}
+
+/// \brief Getter for whether to output a summary of the hmmsearch output alignment
+const bool & crh_output_spec::get_output_hmmsearch_aln() const {
+	return output_hmmsearch_aln;
 }
 
 /// \brief Setter for the output file to which data should be written
@@ -64,6 +70,13 @@ crh_output_spec & crh_output_spec::set_boundary_output(const hit_boundary_output
 crh_output_spec & crh_output_spec::set_generate_html_output(const bool &arg_generate_html_output ///< Whether to output HTML describing the hits and the results
                                                             ) {
 	generate_html_output = arg_generate_html_output;
+	return *this;
+}
+
+/// \brief Setter for whether to output a summary of the hmmsearch output alignment
+crh_output_spec & crh_output_spec::set_output_hmmsearch_aln(const bool &arg_output_hmmsearch_aln ///< Whether to output a summary of the hmmsearch output alignment
+                                                            ) {
+	output_hmmsearch_aln = arg_output_hmmsearch_aln;
 	return *this;
 }
 

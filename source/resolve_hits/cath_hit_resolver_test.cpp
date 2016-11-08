@@ -220,6 +220,17 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_big_trim) {
 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME() );
 }
 
+
+BOOST_AUTO_TEST_CASE(handles_output_hmmsearch_aln) {
+	execute_perform_resolve_hits( {
+		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		"--" + crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN
+	} );
+	istringstream istream_of_output{ output_ss.str() };
+	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME() );
+}
+
 BOOST_AUTO_TEST_CASE(file_raw_evalue) {
 	execute_perform_resolve_hits( {
 		CRH_EG_RAW_EVALUE_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_EVALUES ),
