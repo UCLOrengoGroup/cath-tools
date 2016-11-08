@@ -8,12 +8,39 @@ A fast, effective way to collapse a list of domain matches to your query sequenc
 *__Above__: cath-resolve-hits chooses the hits at the top from the list of possible hits at the bottom*
 
 
+Features
+--------
 
+**Fast**
+
+ * Can process around 1-2 million input hits per second
+
+**Powerful**
+
+ * Finds the optimal result that maximises the sum of hits' scores
+ * Enables visualisation of results via graphical HTML
+ * Supports tolerance for overlaps between hits; auto-resolves any that occur
+
+**Simple**
+
+ * Uses a simple default input file format
+ * Also accepts HMMER domtblout files and hmmsearch output files
+ * Accepts input that hasn't been pre-sorted or even pre-grouped (but can exploit that where specified)
+
+**Configurable**
+
+ * Allows users to determine their own scoring system to be maximised
+ * Offers many easy-to-use options to configure the default behaviour
+
+<!--
+TODOCUMENT:
+ * open scoring scheme
+-->
 
 Getting started
 ---------------
 
-At the moment, `cath-resolve-hits` takes one argument: a file which, by default, contains lines like:
+At present, `cath-resolve-hits` only requires one argument: a file which, by default, contains lines like:
 
 ~~~~~no-highlight
 qyikaz 1mkfA01/12-210-i5_1,2.9e-20 2983.29780221221 3-103
@@ -31,7 +58,7 @@ Where the fields are space-separated and are:
 
 The output is the non-overlapping subset that maximises the sum of the hits' scores.
 
-The input file can contain data for multiple different query protein sequences but at the moment, they must be pre-grouped into consecutive lines.
+The input file can contain data for multiple different query protein sequences and they needn't be grouped into consecutive lines (though if they are, specify the `--input-hits-are-grouped` option).
 
 Usage
 -----
@@ -100,6 +127,13 @@ Detailed help:
 Please tell us your cath-tools bugs/suggestions : https://github.com/UCLOrengoGroup/cath-tools/issues/new
 ~~~~~
 
+
+Output format
+-------------
+
+The standard output is one line per selected hit. Each line contains the following space-separated fields: `query_protein_id`, `match_id`, `score`, `starts_stops` `resolved_starts_stops` (where `resolved_starts_stops` is like `starts_stops` but may include adjustments made to resolve overlaps between hits.)
+
+Alternatively, the `--html-output` triggers HTML output.
 
 
 Warning

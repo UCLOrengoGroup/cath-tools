@@ -156,13 +156,11 @@ specify the --)" + crh_input_options_block::PO_INPUT_HITS_ARE_GROUPED + R"( flag
 
 /// \brief Get a string to append to the standard help
 string crh_options::do_get_help_suffix_string() const {
-	// Consider adding usage examples:
-	//
-	// Some vague notes from various places
-	//  * cath-resolve_hits --)" + crh_input_options_block::PO_DOMTBLOUT + R"( my
-	//  * cat pdb1 end_file pdb2 end_file pdb3 | cath-resolve_hits --pdbs-from-stdin --sup-to-stdout --res-name-align
-	//      (Superpose the structures from stdin based on matching residue names and then write them to stdout [common Genome3D use case]))";
-	return "";
+	return "\nThe standard output is one line per selected hit."
+		" Each line contains the following space-separated fields:"
+		" `query_protein_id`, `match_id`, `score`, `starts_stops` `resolved_starts_stops`"
+		" (where `resolved_starts_stops` is like `starts_stops` but"
+		" may include adjustments made to resolve overlaps between hits.\n)";
 }
 
 /// \brief Get an overview of the job that these options are for
