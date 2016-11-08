@@ -90,6 +90,16 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		}
 	}
 
+	// Check that if the output_hmmsearch_aln option's enabled, the input format is HMMSEARCH_OUT
+	if ( the_output_ob.get_crh_output_spec().get_output_hmmsearch_aln() && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
+		return "Cannot use the --"
+			+ crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN
+			+ " option if using "
+			+ to_string( input_format )
+			+ " input format, must be using "
+			+ to_string( hits_input_format_tag::HMMSEARCH_OUT );
+	}
+
 	// Store a map from score type to the equivalent "--worst-permissible-[...]" option name
 	const auto worst_perm_opt_name_of_score = map<hit_score_type, string>{
 		{ hit_score_type::FULL_EVALUE, crh_filter_options_block::PO_WORST_PERMISSIBLE_EVALUE   },

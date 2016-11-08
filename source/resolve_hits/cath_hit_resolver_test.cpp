@@ -56,7 +56,7 @@ namespace cath {
 			~hit_resolver_test_suite_fixture() noexcept  = default;
 
 			/// \brief Call perform_resolve_hits() with the specified arguments preceded by a pseudo-program-name
-			///        and the fixture's i/o streams. Test that the error stream is empty afterwards.
+			///        and the fixture's i/o streams.
 			void execute_perform_resolve_hits(const str_vec &arg_arguments ///< The arguments to pass to perform_resolve_hits(), preceded by a pseudo-program-name
 			                                  ) {
 				const str_vec progname_vec = { "pseudo_program_name" };
@@ -67,6 +67,13 @@ namespace cath {
 					) ),
 					input_ss, output_ss, error_ss
 				);
+			}
+
+			/// \brief Call perform_resolve_hits() with the specified arguments preceded by a pseudo-program-name
+			///        and the fixture's i/o streams. Test that the error stream is empty afterwards.
+			void execute_perform_resolve_hits_and_check(const str_vec &arg_arguments ///< The arguments to pass to perform_resolve_hits(), preceded by a pseudo-program-name
+			                                            ) {
+				execute_perform_resolve_hits( arg_arguments );
 
 				// Tests for crh options errors should be in chr_options_test.cpp, not here
 				// so ensure that the errror error_ss is empty at the end of every perform_resolve_hits()
@@ -100,7 +107,7 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_stdout) {
 	input_ss.str( example_input_raw );
 
 	// When calling perform_resolve_hits with options: - (a dash to read from the input stream)
-	execute_perform_resolve_hits( { "-" } );
+	execute_perform_resolve_hits_and_check( { "-" } );
 
 	// Then expect the correct results in the output stream
 	BOOST_CHECK_EQUAL( output_ss.str(), example_output );
@@ -112,7 +119,7 @@ BOOST_AUTO_TEST_CASE(processes_from_file_to_stdout) {
 	write_file( TEMP_TEST_FILE_FILENAME, example_input_raw );
 
 	// When calling perform_resolve_hits with options: the input file
-	execute_perform_resolve_hits( { TEMP_TEST_FILE_FILENAME.string() } );
+	execute_perform_resolve_hits_and_check( { TEMP_TEST_FILE_FILENAME.string() } );
 
 	// Then expect the correct results in the output stream
 	BOOST_CHECK_EQUAL( output_ss.str(), example_output );
@@ -124,7 +131,7 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file) {
 	input_ss.str( example_input_raw );
 
 	// When calling perform_resolve_hits with options: - (a dash to read from the input stream), the output file option and an output file
-	execute_perform_resolve_hits( { "-", "--" + crh_output_options_block::PO_OUTPUT_FILE, TEMP_TEST_FILE_FILENAME.string() } );
+	execute_perform_resolve_hits_and_check( { "-", "--" + crh_output_options_block::PO_OUTPUT_FILE, TEMP_TEST_FILE_FILENAME.string() } );
 
 	// Then expect:
 	//  * an empty output stream and
@@ -147,7 +154,7 @@ BOOST_AUTO_TEST_CASE(does_not_require_right_intersperses_all_to_cache) {
 	input_ss.str( input_hits_str );
 
 	// When calling perform_resolve_hits on that data with no trimming
-	execute_perform_resolve_hits( {
+	execute_perform_resolve_hits_and_check( {
 		"-",
 		"--" + crh_segment_options_block::PO_OVERLAP_TRIM_SPEC,
 		"1/0"
@@ -163,7 +170,7 @@ BOOST_AUTO_TEST_CASE(does_not_require_right_intersperses_all_to_cache) {
 }
 
 BOOST_AUTO_TEST_CASE(file_domtbl) {
-	execute_perform_resolve_hits( {
+	execute_perform_resolve_hits_and_check( {
 		CRH_EG_DOMTBL_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTMBLOUT ),
 	} );
 	istringstream istream_of_output{ output_ss.str() };
@@ -172,7 +179,7 @@ BOOST_AUTO_TEST_CASE(file_domtbl) {
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch) {
-	execute_perform_resolve_hits( {
+	execute_perform_resolve_hits_and_check( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
 	} );
 	istringstream istream_of_output{ output_ss.str() };
@@ -181,7 +188,7 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch) {
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_big_gap) {
-	execute_perform_resolve_hits( {
+	execute_perform_resolve_hits_and_check( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
 		"--" + crh_input_options_block::PO_MIN_GAP_LENGTH, "10000"
 	} );
@@ -191,7 +198,7 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_big_gap) {
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_small_gap) {
-	execute_perform_resolve_hits( {
+	execute_perform_resolve_hits_and_check( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
 		"--" + crh_input_options_block::PO_MIN_GAP_LENGTH, "1"
 	} );
@@ -201,7 +208,7 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_small_gap) {
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_trimmed) {
-	execute_perform_resolve_hits( {
+	execute_perform_resolve_hits_and_check( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
 		"--" + crh_output_options_block::PO_OUTPUT_TRIMMED_HITS
 	} );
@@ -211,7 +218,7 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_trimmed) {
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_big_trim) {
-	execute_perform_resolve_hits( {
+	execute_perform_resolve_hits_and_check( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
 		"--" + crh_segment_options_block::PO_OVERLAP_TRIM_SPEC, "100/60"
 	} );
@@ -222,7 +229,7 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_big_trim) {
 
 
 BOOST_AUTO_TEST_CASE(handles_output_hmmsearch_aln) {
-	execute_perform_resolve_hits( {
+	execute_perform_resolve_hits_and_check( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
 		"--" + crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN
 	} );
@@ -232,7 +239,7 @@ BOOST_AUTO_TEST_CASE(handles_output_hmmsearch_aln) {
 }
 
 BOOST_AUTO_TEST_CASE(file_raw_evalue) {
-	execute_perform_resolve_hits( {
+	execute_perform_resolve_hits_and_check( {
 		CRH_EG_RAW_EVALUE_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_EVALUES ),
 	} );
 	istringstream istream_of_output{ output_ss.str() };
@@ -241,7 +248,7 @@ BOOST_AUTO_TEST_CASE(file_raw_evalue) {
 }
 
 BOOST_AUTO_TEST_CASE(file_raw_score) {
-	execute_perform_resolve_hits( {
+	execute_perform_resolve_hits_and_check( {
 		CRH_EG_RAW_SCORE_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_SCORES ),
 	} );
 	istringstream istream_of_output{ output_ss.str() };
@@ -250,8 +257,8 @@ BOOST_AUTO_TEST_CASE(file_raw_score) {
 }
 
 
-BOOST_AUTO_TEST_CASE(handles_dc_correcctly) {
-	execute_perform_resolve_hits( {
+BOOST_AUTO_TEST_CASE(handles_dc_correctly) {
+	execute_perform_resolve_hits_and_check( {
 		(CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.in" ).string(),
 		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTMBLOUT ),
 		"--" + crh_score_options_block::PO_APPLY_CATH_RULES,
@@ -259,6 +266,14 @@ BOOST_AUTO_TEST_CASE(handles_dc_correcctly) {
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
+}
+
+BOOST_AUTO_TEST_CASE(rejects_output_hmmsearch_aln_for_non_hmmsearch_format) {
+	execute_perform_resolve_hits( {
+		(CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.in" ).string(),
+		"--" + crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN,
+	} );
+	BOOST_CHECK_NE( error_ss.str(), "" );
 }
 
 
