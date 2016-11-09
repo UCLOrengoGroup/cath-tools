@@ -1,0 +1,8 @@
+
+/* Attempt */
+.params + p, .params + p + p {
+	font-size  : xx-small;
+	margin     : -5px 0;
+	opacity    : 0.5;
+	text-align : right;
+}
