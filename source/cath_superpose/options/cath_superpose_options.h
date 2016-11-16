@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CATH_SUPERPOSE_OPTIONS_CATH_SUPERPOSE_OPTIONS_H
 
 #include "display/options/display_options_block.h"
+#include "file/file_type_aliases.h"
 #include "options/executable/executable_options.h"
 #include "options/options_block/alignment_input_options_block.h"
 #include "options/options_block/ids_options_block.h"
@@ -36,6 +37,7 @@
 #include <string>
 
 namespace boost { namespace program_options { class options_description; } }
+namespace cath { namespace align { class alignment; } }
 namespace cath { namespace opts { class alignment_acquirer; } }
 namespace cath { namespace opts { class pdbs_acquirer; } }
 namespace cath { namespace opts { class selection_policy_acquirer; } }
@@ -98,7 +100,13 @@ namespace cath {
 		};
 
 		std::unique_ptr<const alignment_acquirer> get_alignment_acquirer(const cath_superpose_options &);
+		std::pair<align::alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const cath_superpose_options &,
+		                                                                                const file::pdb_list &);
+
 		std::unique_ptr<const pdbs_acquirer> get_pdbs_acquirer(const cath_superpose_options &);
+		file::pdb_list_str_vec_pair get_pdbs_and_names(const cath_superpose_options &,
+		                                               std::istream &,
+		                                               const bool &);
 	} // namespace opts
 } // namespace cath
 

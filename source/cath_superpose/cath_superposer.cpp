@@ -90,8 +90,9 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
                                                                  ostream                      &arg_stderr                  ///< TODOCUMENT
                                                                  ) {
 	arg_cath_superpose_options.check_ok_to_use();
-	const auto      pdbs_acq_ptr   = get_pdbs_acquirer( arg_cath_superpose_options );
-	const auto      pdbs_and_names = pdbs_acq_ptr->get_pdbs_and_names( arg_istream, false );
+
+	// Grab the PDBs and their IDs
+	const auto      pdbs_and_names = get_pdbs_and_names( arg_cath_superpose_options, arg_istream, false );
 	const pdb_list &raw_pdbs       = pdbs_and_names.first;
 	const str_vec  &raw_names      = pdbs_and_names.second;
 	const str_vec  &ids_block_ids  = arg_cath_superpose_options.get_ids();
@@ -106,11 +107,8 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 		);
 	}
 
-	// For now, all superpositions come from alignment so throw if !acquires_alignment()
-	const auto alignment_acq_ptr = get_alignment_acquirer( arg_cath_superpose_options );
-
-	// Use the alignment_acquirer to get the alignment and corresponding spanning tree
-	const auto       aln_and_spn_tree = alignment_acq_ptr->get_alignment_and_spanning_tree( pdbs );
+	// Get the alignment and corresponding spanning tree
+	const auto       aln_and_spn_tree = get_alignment_and_spanning_tree( arg_cath_superpose_options, pdbs );
 	const alignment &the_alignment    = aln_and_spn_tree.first;
 	const auto      &spanning_tree    = aln_and_spn_tree.second;
 

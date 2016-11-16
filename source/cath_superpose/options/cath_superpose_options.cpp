@@ -26,18 +26,25 @@
 #include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.h"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.h"
 #include "exception/invalid_argument_exception.h"
+#include "file/pdb/pdb.h"
+#include "file/pdb/pdb_atom.h"
+#include "file/pdb/pdb_list.h"
+#include "file/pdb/pdb_residue.h"
 #include "outputter/alignment_outputter/alignment_outputter.h"
 #include "outputter/superposition_outputter/superposition_outputter.h"
 
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
+using namespace cath::file;
 using namespace cath::opts;
 using namespace cath::sup;
 using namespace std::literals::string_literals;
 
 using boost::none;
 using boost::program_options::variables_map;
+using std::istream;
+using std::pair;
 using std::string;
 using std::unique_ptr;
 
@@ -190,6 +197,15 @@ unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const ca
 	return get_alignment_acquirer( arg_cath_superpose_options.get_alignment_input_spec() );
 }
 
+/// \brief Get alignment and spanning tree as implied by the specified cath_superpose_options
+///
+/// \relates cath_superpose_options
+pair<alignment, size_size_pair_vec> cath::opts::get_alignment_and_spanning_tree(const cath_superpose_options &arg_cath_sup_opts, ///< The options to specify how to get the alignment and spanning tree
+                                                                                const pdb_list               &arg_pdbs           ///< The PDBs to use
+                                                                                ) {
+	return get_alignment_acquirer( arg_cath_sup_opts )->get_alignment_and_spanning_tree( arg_pdbs );
+}
+
 /// \brief Get the single pdbs_acquirer implied by the specified cath_superpose_options
 ///        (or throw an invalid_argument_exception if fewer/more are implied)
 ///
@@ -197,4 +213,16 @@ unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const ca
 unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_superpose_options &arg_cath_superpose_options ///< The cath_superpose_options to query
                                                               ) {
 	return get_pdbs_acquirer( arg_cath_superpose_options.get_pdb_input_spec() );
+}
+
+/// \brief Get PDBs and names as implied by the specified cath_superpose_options
+///
+/// throw an invalid_argument_exception if the cath_superpose_options isn't configured to read PDBs
+///
+/// \relates cath_superpose_options
+pdb_list_str_vec_pair cath::opts::get_pdbs_and_names(const cath_superpose_options &arg_cath_sup_opts,          ///< The options to specify how to get the PDBs and names
+                                                     istream                      &arg_istream,                ///< The istream, which may contain PDB data
+                                                     const bool                   &arg_remove_partial_residues ///< Whether to remove partial residues from the PDB data
+                                                     ) {
+	return get_pdbs_acquirer( arg_cath_sup_opts )->get_pdbs_and_names( arg_istream, arg_remove_partial_residues );
 }
