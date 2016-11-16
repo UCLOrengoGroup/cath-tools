@@ -37,9 +37,6 @@ namespace cath {
 		virtual protein do_read_files(const file::data_file_path_map &,
 		                              const std::string &,
 		                              std::ostream &) const override final;
-
-	public:
-		virtual ~protein_source_from_pdb() noexcept = default;
 	};
 
 } // namespace cath

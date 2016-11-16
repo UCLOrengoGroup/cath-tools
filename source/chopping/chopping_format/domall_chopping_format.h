@@ -34,9 +34,6 @@ namespace cath {
 			virtual bool do_represents_fragments() const override final;
 
 			virtual domain do_parse_domain(const std::string &) const override final;
-
-		public:
-			virtual ~domall_chopping_format() noexcept = default;
 		};
 
 	} // namespace chop

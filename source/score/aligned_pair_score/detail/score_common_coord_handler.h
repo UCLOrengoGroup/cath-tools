@@ -68,8 +68,8 @@ namespace cath {
 			///
 			/// \todo Provide methods for providing strings that can used to provide more details
 			///       in short names, long names and descriptions.
-			class score_common_coord_handler : private boost::equivalent<score_common_coord_handler,
-			                                           boost::totally_ordered<score_common_coord_handler> > {
+			class score_common_coord_handler final : private boost::equivalent<score_common_coord_handler,
+			                                                 boost::totally_ordered<score_common_coord_handler> > {
 			private:
 				friend bool operator<(const score_common_coord_handler &,
 				                      const score_common_coord_handler &);
@@ -107,7 +107,6 @@ namespace cath {
 				score_common_coord_handler() = default;
 				score_common_coord_handler(const align::common_residue_selection_policy &,
 				                           const align::common_atom_selection_policy &);
-				virtual ~score_common_coord_handler() noexcept = default;
 				score_common_coord_handler(const score_common_coord_handler &) = default;
 
 				std::string short_suffix_string() const;

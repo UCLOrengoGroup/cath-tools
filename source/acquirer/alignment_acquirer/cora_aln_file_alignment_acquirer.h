@@ -40,7 +40,6 @@ namespace cath {
 
 		public:
 			cora_aln_file_alignment_acquirer(const boost::filesystem::path &);
-			virtual ~cora_aln_file_alignment_acquirer() noexcept = default;
 
 			boost::filesystem::path get_cora_alignment_file() const;
 		};

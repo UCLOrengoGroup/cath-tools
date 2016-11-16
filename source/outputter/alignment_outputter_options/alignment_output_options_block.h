@@ -72,8 +72,6 @@ namespace cath {
 			bool get_aln_to_html_stdout() const;
 
 		public:
-			virtual ~alignment_output_options_block() noexcept = default;
-
 			alignment_outputter_list get_alignment_outputters(const display_spec &) const;
 
 			bool outputs_to_stdout() const;

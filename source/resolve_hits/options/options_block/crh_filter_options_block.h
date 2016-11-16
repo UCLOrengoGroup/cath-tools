@@ -41,8 +41,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~crh_filter_options_block() noexcept = default;
-
 			static const std::string PO_WORST_PERMISSIBLE_EVALUE;
 			static const std::string PO_WORST_PERMISSIBLE_BITSCORE;
 			static const std::string PO_WORST_PERMISSIBLE_SCORE;

@@ -58,8 +58,6 @@ namespace cath {
 		virtual bool         do_temp_hacky_is_residue() const override final;
 
 	public:
-		virtual ~sec_struc_querier() noexcept = default;
-
 		/// \brief The value a used in the SSAP paper (for secondary structures)
 		///
 		/// Note that this scaled by INTEGER_SCALING^2 ( = 10 * 10 = 100), which matches

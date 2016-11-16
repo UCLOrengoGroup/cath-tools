@@ -55,7 +55,6 @@ namespace cath {
 		public:
 			json_file_superposition_outputter(const boost::filesystem::path &,
 			                                  const sup_json_style &arg_pretty_print = DEFAULT_JSON_STYLE);
-			virtual ~json_file_superposition_outputter() noexcept = default;
 
 			/// \brief The default style to use for outputting the JSON if it isn't specified
 			static constexpr sup_json_style DEFAULT_JSON_STYLE = sup_json_style::PRETTY;

@@ -89,8 +89,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~old_ssap_options_block() noexcept = default;
-
 			bool protein_names_specified() const;
 			std::string get_protein_name_a() const;
 			std::string get_protein_name_b() const;

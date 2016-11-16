@@ -48,8 +48,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~ids_options_block() noexcept = default;
-
 			const str_vec & get_ids() const;
 			
 			static const std::string PO_ID;

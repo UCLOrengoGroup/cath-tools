@@ -68,7 +68,6 @@ namespace cath {
 		public:
 			explicit pseudo_string_score(const std::string &,
 			                             const boost::logic::tribool &);
-			virtual ~pseudo_string_score() noexcept = default;
 		};
 
 		bool operator<(const pseudo_string_score &,

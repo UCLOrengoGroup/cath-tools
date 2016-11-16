@@ -44,7 +44,6 @@ namespace cath {
 		public:
 			mask_dyn_prog_score_source(const bool_vec_of_vec &,
 			                           const dyn_prog_score_source &);
-			virtual ~mask_dyn_prog_score_source() noexcept = default;
 		};
 	} // namespace align
 } // namespace cath

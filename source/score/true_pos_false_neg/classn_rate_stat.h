@@ -132,9 +132,6 @@ namespace cath {
 				detail::properties_of_classn_rate_stat::numerator_and_denominator_of_stat,
 				S
 			) );
-
-		public:
-			virtual ~classn_rate_stat() noexcept = default;
 		};
 
 		/// \brief Calculate the numerator and denominator of the rate and return a rational

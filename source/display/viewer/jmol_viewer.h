@@ -46,9 +46,6 @@ namespace cath {
 		virtual void do_write_alignment_extras(std::ostream &,
 		                                       const sup::superposition_context &) const override final;
 		virtual void do_write_end(std::ostream &) const override final;
-
-	public:
-		virtual ~jmol_viewer() noexcept = default;
 	};
 
 } // namespace cath

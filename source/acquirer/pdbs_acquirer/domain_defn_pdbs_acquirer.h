@@ -39,7 +39,6 @@ namespace cath {
 
 		public:
 			domain_defn_pdbs_acquirer(const boost::filesystem::path &);
-			virtual ~domain_defn_pdbs_acquirer() noexcept = default;
 		};
 
 	} // namespace opts

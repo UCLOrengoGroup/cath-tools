@@ -45,7 +45,6 @@ namespace cath {
 			new_matrix_dyn_prog_score_source(const float_score_vec_vec &,
 			                                 const size_t &,
 			                                 const size_t &);
-			virtual ~new_matrix_dyn_prog_score_source() noexcept = default;
 		};
 
 	} // namespace align

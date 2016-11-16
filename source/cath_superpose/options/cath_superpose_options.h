@@ -82,7 +82,6 @@ namespace cath {
 
 		public:
 			cath_superpose_options();
-			virtual ~cath_superpose_options() noexcept = default;
 
 			void check_ok_to_use() const;
 

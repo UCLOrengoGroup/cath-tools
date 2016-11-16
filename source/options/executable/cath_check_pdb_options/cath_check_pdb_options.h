@@ -49,7 +49,6 @@ namespace cath {
 
 		public:
 			cath_check_pdb_options();
-			virtual ~cath_check_pdb_options() noexcept = default;
 
 			boost::filesystem::path get_pdb_file() const;
 			bool get_permit_no_atoms() const;

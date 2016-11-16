@@ -42,8 +42,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~crh_input_options_block() noexcept = default;
-
 			static const std::string PO_INPUT_FILE_OR_STDIN;
 			static const std::string PO_INPUT_FORMAT;
 			static const std::string PO_MIN_GAP_LENGTH;

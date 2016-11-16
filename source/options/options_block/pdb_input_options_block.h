@@ -42,8 +42,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~pdb_input_options_block() noexcept = default;
-
 			const pdb_input_spec & get_pdb_input_spec() const;
 		};
 

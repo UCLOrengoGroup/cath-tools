@@ -56,8 +56,6 @@ namespace cath {
 		virtual void do_write_end(std::ostream &) const override final;
 
 	public:
-		virtual ~chimera_viewer() noexcept = default;
-
 		static std::string parse_residue_name_for_chimera(const residue_name &);
 		static str_vec parse_residue_names_for_chimera(const residue_name_vec &);
 

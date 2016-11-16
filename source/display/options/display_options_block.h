@@ -52,8 +52,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~display_options_block() noexcept = default;
-
 			display_spec get_display_spec() const;
 
 			bool has_specified_options(const boost::program_options::variables_map &arg_vm) const;

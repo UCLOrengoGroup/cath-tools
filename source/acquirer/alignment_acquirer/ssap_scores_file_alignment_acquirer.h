@@ -48,7 +48,6 @@ namespace cath {
 
 		public:
 			ssap_scores_file_alignment_acquirer(const boost::filesystem::path &);
-			virtual ~ssap_scores_file_alignment_acquirer() noexcept = default;
 
 			boost::filesystem::path get_ssap_scores_file() const;
 		};

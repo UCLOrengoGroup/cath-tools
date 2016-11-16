@@ -37,9 +37,6 @@ namespace cath {
 			virtual std::unique_ptr<common_residue_selection_policy> do_clone() const override final;
 
 			virtual bool do_less_than_with_same_dynamic_type(const common_residue_selection_policy &) const override final;
-
-		public:
-			virtual ~common_residue_select_all_policy() noexcept = default;
 		};
 	} // namespace align
 } // namespace cath

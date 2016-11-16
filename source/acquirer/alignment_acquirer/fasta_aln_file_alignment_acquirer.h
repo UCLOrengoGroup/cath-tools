@@ -40,7 +40,6 @@ namespace cath {
 
 		public:
 			fasta_aln_file_alignment_acquirer(const boost::filesystem::path &);
-			virtual ~fasta_aln_file_alignment_acquirer() noexcept = default;
 
 			boost::filesystem::path get_fasta_alignment_file() const;
 		};

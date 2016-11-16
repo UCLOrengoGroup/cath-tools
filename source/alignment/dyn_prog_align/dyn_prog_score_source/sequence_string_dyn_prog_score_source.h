@@ -45,7 +45,6 @@ namespace cath {
 		public:
 			sequence_string_dyn_prog_score_source(const std::string &,
 			                                      const std::string &);
-			virtual ~sequence_string_dyn_prog_score_source() noexcept = default;
 		};
 
 	} // namespace align

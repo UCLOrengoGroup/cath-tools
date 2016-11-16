@@ -49,9 +49,6 @@ namespace cath {
 			                                   const size_t &,
 			                                   const size_t &,
 			                                   const size_t &) const;
-
-		public:
-			virtual ~std_dyn_prog_aligner() noexcept = default;
 		};
 	} // namespace align
 } // namespace cath

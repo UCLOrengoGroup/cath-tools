@@ -46,7 +46,6 @@ namespace cath {
 		public:
 			file_alignment_outputter(const boost::filesystem::path &,
 			                         const alignment_outputter &);
-			virtual ~file_alignment_outputter() noexcept = default;
 		};
 
 	} // namespace opts

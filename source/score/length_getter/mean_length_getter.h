@@ -39,9 +39,6 @@ namespace cath {
 			virtual std::string do_get_choice_adjective() const override final;
 
 			virtual bool do_less_than_with_same_dynamic_type(const length_getter &) const override final;
-
-		public:
-			virtual ~mean_length_getter() noexcept = default;
 		};
 
 	} // namespace score

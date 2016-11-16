@@ -50,7 +50,6 @@ namespace cath {
 
 			public:
 				gen_dyn_prog_string_aligner(const dyn_prog_aligner &);
-				virtual ~gen_dyn_prog_string_aligner() noexcept = default;
 			};
 
 		} // namespace detail

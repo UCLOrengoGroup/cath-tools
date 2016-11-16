@@ -33,9 +33,6 @@ namespace cath {
 		private:
 			virtual std::unique_ptr<pdbs_acquirer> do_clone() const override final;
 			virtual file::pdb_list_str_vec_pair do_get_pdbs_and_names(std::istream &) const override final;
-
-		public:
-			virtual ~istream_pdbs_acquirer() noexcept = default;
 		};
 
 	} // namespace opts

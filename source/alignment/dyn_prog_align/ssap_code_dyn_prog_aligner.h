@@ -70,9 +70,6 @@ namespace cath {
 			virtual score_alignment_pair do_align(const dyn_prog_score_source &,
 			                                      const gap::gap_penalty &,
 			                                      const size_type &) const override final;
-
-		public:
-			virtual ~ssap_code_dyn_prog_aligner() noexcept = default;
 		};
 	} // namespace align
 } // namespace cath

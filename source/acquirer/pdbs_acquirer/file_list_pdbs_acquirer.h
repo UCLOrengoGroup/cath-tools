@@ -40,7 +40,6 @@ namespace cath {
 
 		public:
 			file_list_pdbs_acquirer(const path_vec &);
-			virtual ~file_list_pdbs_acquirer() noexcept = default;
 		};
 
 	} // namespace opts

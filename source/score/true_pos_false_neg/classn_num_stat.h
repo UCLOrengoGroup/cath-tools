@@ -34,9 +34,6 @@ namespace cath {
 		template <classn_outcome N>
 		class classn_num_stat final : public classn_stat {
 			virtual size_rational do_calculate(const true_false_pos_neg &) const override final;
-
-		public:
-			virtual ~classn_num_stat() noexcept = default;
 		};
 
 		/// \brief Calculate the numerator and denominator of the rate and return a rational

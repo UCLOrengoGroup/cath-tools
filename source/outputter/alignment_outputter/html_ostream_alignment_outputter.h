@@ -43,7 +43,6 @@ namespace cath {
 
 		public:
 			html_ostream_alignment_outputter(const display_colourer &);
-			virtual ~html_ostream_alignment_outputter() noexcept = default;
 		};
 
 		html_ostream_alignment_outputter make_html_ostream_alignment_outputter(const display_spec &);

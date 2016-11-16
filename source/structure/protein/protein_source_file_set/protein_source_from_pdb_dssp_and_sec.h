@@ -43,7 +43,6 @@ namespace cath {
 
 	public:
 		explicit protein_source_from_pdb_dssp_and_sec(const bool &arg_limit_to_residues_in_dssp = false);
-		virtual ~protein_source_from_pdb_dssp_and_sec() noexcept = default;
 	};
 
 } // namespace cath

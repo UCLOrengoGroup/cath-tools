@@ -85,7 +85,6 @@ namespace cath {
 			lddt_score(const lddt_distance_threshold &,
 			           const align::common_residue_selection_policy &,
 			           const align::common_atom_selection_policy &);
-			virtual ~lddt_score() noexcept = default;
 
 			const doub_vec & get_threshold_values() const;
 
