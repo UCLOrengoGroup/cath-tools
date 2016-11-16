@@ -36,9 +36,6 @@ namespace cath {
 
 			virtual std::unique_ptr<alignment_acquirer> do_clone() const override final;
 			virtual std::pair<align::alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const override final;
-
-		public:
-			virtual ~residue_name_alignment_acquirer() noexcept = default;
 		};
 
 	} // namespace opts

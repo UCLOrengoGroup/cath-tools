@@ -42,7 +42,6 @@ namespace cath {
 
 		public:
 			explicit common_residue_select_min_score_policy(const double &arg_score_cutoff = DEFAULT_CUTOFF);
-			virtual ~common_residue_select_min_score_policy() noexcept = default;
 
 			/// \brief The minimum permitted value for the score_cutoff
 			///

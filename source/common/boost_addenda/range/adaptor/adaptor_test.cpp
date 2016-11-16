@@ -85,7 +85,7 @@ namespace cath {
 		/// \brief The adaptor test_suite_fixture to assist in testing adaptors
 		struct adaptor_test_suite_fixture {
 		protected:
-			virtual ~adaptor_test_suite_fixture() noexcept = default;
+			~adaptor_test_suite_fixture() noexcept = default;
 
 			/// \brief TODOCUMENT
 			const str_vec            strings            = { "5", "3", "7", "1", "6", "8", "0", "9", "2" };

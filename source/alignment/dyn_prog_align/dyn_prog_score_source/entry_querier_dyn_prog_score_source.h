@@ -57,7 +57,6 @@ namespace cath {
 			                                    const protein &,
 			                                    const size_t &,
 			                                    const size_t &);
-			virtual ~entry_querier_dyn_prog_score_source() noexcept = default;
 		};
 	} // namespace align
 } // namespace cath

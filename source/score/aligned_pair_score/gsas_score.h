@@ -73,7 +73,6 @@ namespace cath {
 			gsas_score() = default;
 			gsas_score(const align::common_residue_selection_policy &,
 			           const align::common_atom_selection_policy &);
-			virtual ~gsas_score() noexcept = default;
 
 			const rmsd_score & get_rmsd_score() const;
 			const length_score & get_num_aligned_residues() const;

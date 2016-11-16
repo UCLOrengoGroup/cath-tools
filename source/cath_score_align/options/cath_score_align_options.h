@@ -59,7 +59,6 @@ namespace cath {
 
 		public:
 			cath_score_align_options();
-			virtual ~cath_score_align_options() noexcept = default;
 
 			const pdb_input_spec & get_pdb_input_spec() const;
 			const alignment_input_spec & get_alignment_input_spec() const;

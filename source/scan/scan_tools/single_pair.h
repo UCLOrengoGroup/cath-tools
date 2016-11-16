@@ -36,9 +36,6 @@ namespace cath {
 
 			virtual std::pair<record_scores_scan_action, scan_metrics> do_perform_scan(const protein_list &,
 			                                                                           const protein_list &) const override final;
-
-		public:
-			virtual ~single_pair() noexcept = default;
 		};
 	} // namespace scan
 } // namespace cath

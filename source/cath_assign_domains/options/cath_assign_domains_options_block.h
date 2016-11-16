@@ -58,8 +58,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~cath_assign_domains_options_block() noexcept = default;
-
 			const boost::filesystem::path & get_rbf_svm_file() const;
 			const boost::filesystem::path & get_data_data_file() const;
 			const boost::filesystem::path & get_sf_of_dom_file() const;

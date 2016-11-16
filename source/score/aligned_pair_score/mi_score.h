@@ -80,7 +80,6 @@ namespace cath {
 			mi_score(const sym_protein_only_length_getter &,
 			         const align::common_residue_selection_policy &,
 			         const align::common_atom_selection_policy &);
-			virtual ~mi_score() noexcept = default;
 
 			const rmsd_score & get_rmsd() const;
 			const num_aligned_length_getter & get_num_aligned_getter() const;

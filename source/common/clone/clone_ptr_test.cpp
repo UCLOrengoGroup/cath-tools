@@ -87,7 +87,6 @@ namespace cath {
 			}
 
 		public:
-			virtual ~clone_ptr_test_concrete1() noexcept = default;
 			virtual size_t method() const override final {
 				return CONCRETE1_METHOD_RESULT;
 			}
@@ -107,7 +106,6 @@ namespace cath {
 			}
 
 		public:
-			virtual ~clone_ptr_test_concrete2() noexcept = default;
 			virtual size_t method() const override final {
 				return CONCRETE2_METHOD_RESULT;
 			}

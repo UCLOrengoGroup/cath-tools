@@ -77,8 +77,6 @@ namespace cath {
 			boost::filesystem::path get_json_file() const;
 
 		public:
-			virtual ~superposition_output_options_block() noexcept = default;
-
 			/// \todo Consider adding a sister get_superposition_outputters() for getting non-display outputters
 			///       without having to specify a display_spec
 			superposition_outputter_list get_superposition_outputters(const display_spec &) const;

@@ -41,8 +41,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~crh_score_options_block() noexcept = default;
-
 			static const std::string PO_LONG_DOMAINS_PREFERENCE;
 			static const std::string PO_HIGH_SCORES_PREFERENCE;
 			static const std::string PO_APPLY_CATH_RULES;

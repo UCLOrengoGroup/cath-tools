@@ -62,7 +62,6 @@ namespace cath {
 				                       const size_t &);
 				gnuplot_matrix_plotter(const size_t &,
 				                       const size_t &);
-				virtual ~gnuplot_matrix_plotter() noexcept = default;
 			};
 
 		} // namespace detail

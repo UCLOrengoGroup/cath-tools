@@ -70,7 +70,6 @@ namespace cath {
 			rmsd_score() = default;
 			rmsd_score(const align::common_residue_selection_policy &,
 			           const align::common_atom_selection_policy &);
-			virtual ~rmsd_score() noexcept = default;
 
 			std::string short_suffix_string() const;
 			std::string long_suffix_string() const;

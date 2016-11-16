@@ -31,7 +31,6 @@ namespace cath {
 		                               public std::out_of_range {
 		public:
 			explicit out_of_range_exception(const std::string &);
-			virtual ~out_of_range_exception() noexcept = default;
 		};
 
 	} // namespace common

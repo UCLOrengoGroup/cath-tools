@@ -31,7 +31,6 @@ namespace cath {
 		                                   public std::invalid_argument {
 		public:
 			explicit invalid_argument_exception(const std::string &);
-			virtual ~invalid_argument_exception() noexcept = default;
 		};
 
 	} // namespace common

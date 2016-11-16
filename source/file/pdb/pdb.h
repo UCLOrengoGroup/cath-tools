@@ -58,8 +58,6 @@ namespace cath {
 			virtual void do_subtract(const geom::coord &) override final;
 
 		public:
-			virtual ~pdb() noexcept = default;
-
 			size_t get_num_backbone_complete_residues() const;
 			size_t get_index_of_backbone_complete_index(const size_t &) const;
 

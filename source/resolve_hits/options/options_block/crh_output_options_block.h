@@ -42,8 +42,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~crh_output_options_block() noexcept = default;
-
 			static const std::string PO_OUTPUT_FILE;
 			static const std::string PO_OUTPUT_TRIMMED_HITS;
 			static const std::string PO_GENERATE_HTML_OUTPUT;

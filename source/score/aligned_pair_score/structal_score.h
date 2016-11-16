@@ -64,7 +64,6 @@ namespace cath {
 			structal_score() = default;
 			structal_score(const align::common_residue_selection_policy &,
 			               const align::common_atom_selection_policy &);
-			virtual ~structal_score() noexcept = default;
 
 			const detail::score_common_coord_handler & get_score_common_coord_handler() const;
 		};

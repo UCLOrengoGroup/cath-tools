@@ -63,9 +63,6 @@ namespace cath {
 
 		public:
 			data_dirs_spec();
-			virtual ~data_dirs_spec() noexcept = default;
-
-
 
 			std::string get_value_of_option_and_data_file(const detail::data_option &,
 			                                              const file::data_file &) const;

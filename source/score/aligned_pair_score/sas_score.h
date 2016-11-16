@@ -70,7 +70,6 @@ namespace cath {
 			sas_score() = default;
 			sas_score(const align::common_residue_selection_policy &,
 			          const align::common_atom_selection_policy &);
-			virtual ~sas_score() noexcept = default;
 
 			const rmsd_score & get_rmsd_score() const;
 			const length_score & get_num_aligned_residues() const;

@@ -47,8 +47,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~alignment_input_options_block() noexcept = default;
-
 			const alignment_input_spec & get_alignment_input_spec() const;
 		};
 

@@ -53,7 +53,6 @@ namespace cath {
 	public:
 		display_colourer_consecutive(const detail::score_colour_handler &,
 		                             const display_colour_list &);
-		virtual ~display_colourer_consecutive() noexcept = default;
 	};
 
 } // namespace cath

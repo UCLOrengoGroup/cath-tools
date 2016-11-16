@@ -51,8 +51,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~misc_help_version_options_block() noexcept = default;
-
 			const bool & get_help() const;
 			const bool & get_version() const;
 

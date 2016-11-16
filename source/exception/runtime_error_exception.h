@@ -31,7 +31,6 @@ namespace cath {
 		                                public std::runtime_error {
 		public:
 			explicit runtime_error_exception(const std::string &);
-			virtual ~runtime_error_exception() noexcept = default;
 		};
 
 	} // namespace common

@@ -149,8 +149,6 @@ namespace cath {
 			           const size_t                     &arg_num_excluded_on_sides = default_num_excluded_on_sides,
 					   const distance_score_formula     &arg_distance_formula      = default_distance_formula);
 
-			virtual ~ssap_score() noexcept = default;
-
 			const length_getter & get_length_getter() const;
 			const ssap_score_post_processing & get_post_processing() const;
 			const ssap_score_accuracy & get_accuracy() const;

@@ -73,7 +73,6 @@ namespace cath {
 
 		public:
 			crh_options();
-			virtual ~crh_options() noexcept = default;
 
 			crh_spec get_crh_spec() const;
 

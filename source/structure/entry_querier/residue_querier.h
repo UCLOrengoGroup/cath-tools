@@ -56,8 +56,6 @@ namespace cath {
 		virtual bool         do_temp_hacky_is_residue() const override final;
 
 	public:
-		virtual ~residue_querier() noexcept = default;
-
 		/// As in the SSAP paper(s), the a and b values values are used to convert the distance into a score
 		/// for dynamic programming. The inherited code (this is being written in August 2013), which
 		/// appears to use the square of the distance between residues rather than the distance as indicated

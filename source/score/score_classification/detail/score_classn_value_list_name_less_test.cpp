@@ -32,10 +32,8 @@ namespace cath {
 
 		/// \brief The score_classn_value_list_name_less_test_suite_fixture to assist in testing score_classn_value_list_name_less
 		struct score_classn_value_list_name_less_test_suite_fixture {
-			score_classn_value_list_name_less_test_suite_fixture() {
-			}
-			virtual ~score_classn_value_list_name_less_test_suite_fixture() {
-			}
+		protected:
+			~score_classn_value_list_name_less_test_suite_fixture() noexcept = default;
 		};
 
 	}

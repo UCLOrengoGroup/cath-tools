@@ -41,8 +41,6 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			virtual ~crh_segment_options_block() noexcept = default;
-
 			static const std::string PO_OVERLAP_TRIM_SPEC;
 			static const std::string PO_MIN_SEG_LENGTH;
 

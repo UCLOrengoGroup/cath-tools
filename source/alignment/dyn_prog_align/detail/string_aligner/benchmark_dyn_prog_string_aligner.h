@@ -37,9 +37,6 @@ namespace cath {
 				virtual str_str_pair do_align(const std::string &,
 				                              const std::string &,
 				                              const gap::gap_penalty &) const override final;
-
-			public:
-				virtual ~benchmark_dyn_prog_string_aligner() noexcept = default;
 			};
 		} // namespace detail
 	} // namespace align

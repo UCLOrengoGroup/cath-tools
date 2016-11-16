@@ -31,7 +31,6 @@ namespace cath {
 		                                  public std::logic_error {
 		public:
 			explicit not_implemented_exception(const std::string &);
-			virtual ~not_implemented_exception() noexcept = default;
 		};
 
 	} // namespace common

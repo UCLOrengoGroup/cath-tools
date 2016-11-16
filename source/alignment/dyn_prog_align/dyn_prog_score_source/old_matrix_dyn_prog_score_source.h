@@ -55,7 +55,6 @@ namespace cath {
 			                                 const size_t &,
 			                                 const size_t &,
 			                                 const size_t &);
-			virtual ~old_matrix_dyn_prog_score_source() noexcept = default;
 		};
 
 	} // namespace align

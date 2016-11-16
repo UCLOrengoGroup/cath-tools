@@ -63,7 +63,6 @@ namespace cath {
 	public:
 		display_colourer_alignment(const detail::score_colour_handler &,
 		                           const display_colour_gradient &);
-		virtual ~display_colourer_alignment() noexcept = default;
 	};
 
 } // namespace cath

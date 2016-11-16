@@ -55,7 +55,6 @@ namespace cath {
 			                                   const align::alignment &,
 			                                   const size_size_pair_vec &,
 			                                   const selection_policy_acquirer &);
-			virtual ~align_based_superposition_acquirer() noexcept = default;
 		};
 
 		sup::superposition hacky_multi_ssap_fuction(const file::pdb_list &,

@@ -51,7 +51,6 @@ namespace cath {
 
 		public:
 			cath_assign_domains_options();
-			virtual ~cath_assign_domains_options() noexcept = default;
 
 			const boost::filesystem::path & get_rbf_svm_file() const;
 			const boost::filesystem::path & get_data_data_file() const;

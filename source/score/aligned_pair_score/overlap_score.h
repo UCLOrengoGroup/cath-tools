@@ -59,8 +59,6 @@ namespace cath {
 			virtual bool do_less_than_with_same_dynamic_type(const aligned_pair_score &) const override final;
 
 		public:
-			virtual ~overlap_score() noexcept = default;
-
 			/// \brief TODOCUMENT
 			using numerator_type   = detail::length_getter_of_enum_t< std::get<1>( common::constexpr_find( all_overlap_types, OL ) ) >;
 

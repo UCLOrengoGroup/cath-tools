@@ -65,7 +65,6 @@ namespace cath {
 
 		public:
 			explicit detail_help_options_block(const str_str_str_pair_map &);
-			virtual ~detail_help_options_block() noexcept = default;
 
 			bool has_help_string() const;
 			std::string help_string() const;

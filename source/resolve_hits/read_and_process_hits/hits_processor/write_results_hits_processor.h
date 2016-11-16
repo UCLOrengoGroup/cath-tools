@@ -52,7 +52,6 @@ namespace cath {
 				                                      const crh_score_spec &,
 				                                      const crh_segment_spec &,
 				                                      const hit_boundary_output &) noexcept;
-				virtual ~write_results_hits_processor() noexcept = default;
 			};
 
 		} // namespace detail

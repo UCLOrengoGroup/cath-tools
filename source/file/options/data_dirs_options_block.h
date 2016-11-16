@@ -54,7 +54,6 @@ namespace cath {
 
 		public:
 			data_dirs_options_block() = default;
-			virtual ~data_dirs_options_block() noexcept = default;
 
 			const data_dirs_spec & get_data_dirs_spec() const;
 

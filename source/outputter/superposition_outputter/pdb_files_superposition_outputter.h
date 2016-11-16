@@ -40,7 +40,6 @@ namespace cath {
 
 		public:
 			pdb_files_superposition_outputter(const boost::filesystem::path &);
-			virtual ~pdb_files_superposition_outputter() noexcept = default;
 		};
 
 	} // namespace opts

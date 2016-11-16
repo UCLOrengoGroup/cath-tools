@@ -64,7 +64,6 @@ namespace cath {
 
 		public:
 			cath_ssap_options();
-			virtual ~cath_ssap_options() noexcept = default;
 
 			const old_ssap_options_block & get_old_ssap_options() const;
 			const data_dirs_spec &         get_data_dirs_spec() const;

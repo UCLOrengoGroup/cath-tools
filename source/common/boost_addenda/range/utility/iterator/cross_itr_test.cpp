@@ -68,7 +68,7 @@ namespace cath {
 		/// \brief The cross_itr test_suite_fixture to assist in testing cross_itrs
 		struct cross_itr_test_suite_fixture {
 		protected:
-			virtual ~cross_itr_test_suite_fixture() noexcept = default;
+			~cross_itr_test_suite_fixture() noexcept = default;
 
 			/// \brief TODOCUMENT
 			const bool_deq false_true        = { false, true, true };

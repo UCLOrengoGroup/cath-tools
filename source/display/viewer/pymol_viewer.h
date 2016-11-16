@@ -56,8 +56,6 @@ namespace cath {
 		virtual void do_write_end(std::ostream &) const override final;
 
 	public:
-		virtual ~pymol_viewer() noexcept = default;
-
 		/// \brief TODOCUMENT
 		static constexpr size_t RESIDUE_BATCH_SIZE = 200;
 	};

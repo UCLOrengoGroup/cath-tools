@@ -63,7 +63,6 @@ namespace cath {
 
 		public:
 			explicit length_score(const length_getter &);
-			virtual ~length_score() noexcept = default;
 
 			const length_getter & get_length_getter() const;
 

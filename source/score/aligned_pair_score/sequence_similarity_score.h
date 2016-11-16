@@ -80,7 +80,6 @@ namespace cath {
 			explicit sequence_similarity_score(const substitution_matrix &arg_scores = make_subs_matrix_identity());
 			sequence_similarity_score(const length_getter &,
 			                          const substitution_matrix &arg_scores = make_subs_matrix_identity());
-			virtual ~sequence_similarity_score() noexcept = default;
 			
 			const substitution_matrix & get_substitution_matrix() const;
 			const length_getter & get_length_getter() const;
