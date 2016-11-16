@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_PYMOL_PYMOL_TOOLS_H
 #define _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_PYMOL_PYMOL_TOOLS_H
 
-#include <boost/optional/optional.hpp>
+#include <boost/optional.hpp>
 
 #include "common/type_aliases.h"
 #include "structure/structure_type_aliases.h"
