@@ -548,6 +548,7 @@ set(
 		options/options_block/options_block_tester.cpp
 		options/options_block/pdb_input_options_block.cpp
 		options/options_block/pdb_input_spec.cpp
+		options/options_block/superposition_input_options_block.cpp
 )
 
 set(
@@ -1495,6 +1496,7 @@ set(
 		options/options_block/misc_help_version_options_block_test.cpp
 		options/options_block/options_block_test.cpp
 		options/options_block/pdb_input_options_block_test.cpp
+		options/options_block/superposition_input_options_block_test.cpp
 )
 
 set(
