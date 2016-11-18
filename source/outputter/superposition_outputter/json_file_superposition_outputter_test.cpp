@@ -60,7 +60,7 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(json_file_superposition_outputter_test_suite, cath::test::json_file_superposition_outputter_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(writes_correct_pretty_style_json_file_without_errors) {
-	json_file_superposition_outputter{ temp_json_filename, sup_json_style::PRETTY }.output_superposition( the_sup_con, err_ss );
+	json_file_superposition_outputter{ temp_json_filename, json_style::PRETTY }.output_superposition( the_sup_con, err_ss );
 
 	BOOST_CHECK_FILES_EQUAL             ( temp_json_filename, expected_pretty_file );
 //	BOOST_CHECK_FILES_EQUAL_OR_OVERWRITE( temp_json_filename, expected_pretty_file );
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE(writes_correct_pretty_style_json_file_without_errors) {
 
 
 BOOST_AUTO_TEST_CASE(writes_correct_compact_style_json_file_without_errors) {
-	json_file_superposition_outputter{ temp_json_filename, sup_json_style::COMPACT }.output_superposition( the_sup_con, err_ss );
+	json_file_superposition_outputter{ temp_json_filename, json_style::COMPACT }.output_superposition( the_sup_con, err_ss );
 
 //	BOOST_CHECK_FILES_EQUAL             ( temp_json_filename, expected_compact_file );
 	BOOST_CHECK_FILES_EQUAL_OR_OVERWRITE( temp_json_filename, expected_compact_file );

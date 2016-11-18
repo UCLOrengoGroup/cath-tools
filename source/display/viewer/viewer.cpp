@@ -22,12 +22,17 @@
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
-#include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/replace.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/log/trivial.hpp>
 
 #include "alignment/alignment_context.h"
+#include "common/algorithm/transform_build.h"
+#include "common/size_t_literal.h"
 #include "display/display_colourer/display_colourer.h"
+#include "display/display_colourer/display_colourer_consecutive.h"
 #include "display/options/display_spec.h"
 #include "display/viewer/pymol/pymol_tools.h"
 #include "display_colour/display_colour.h"
@@ -44,12 +49,21 @@ using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
+using namespace cath::detail;
 using namespace cath::file;
 using namespace cath::sup;
-using namespace std;
 
 using boost::algorithm::is_space;
+using boost::format;
+using boost::irange;
 using boost::lexical_cast;
+using boost::numeric_cast;
+using std::max;
+using std::ostream;
+using std::setfill;
+using std::setw;
+using std::string;
+using std::unique_ptr;
 
 /// \brief TODOCUMENT
 string viewer::default_executable() const {
@@ -175,13 +189,15 @@ str_vec cath::clean_names_for_viewer(const alignment_context &arg_alignment_cont
 	return clean_names_for_viewer( arg_alignment_context.get_names() );
 }
 
-/// \brief TODOCUMENT
+/// \brief Output instructions from the specified viewer for the specified superposition_context to
+///        the specified ostream, using the specified display_spec and only_warn flat
 ///
 /// \relates viewer
-void cath::output_superposition_to_viewer(ostream                     &arg_ostream,              ///< TODOCUMENT
-                                          const viewer                &arg_viewer,               ///< TODOCUMENT
-                                          const display_spec          &arg_display_spec,         ///< TODOCUMENT
-                                          const superposition_context &arg_superposition_context ///< TODOCUMENT
+void cath::output_superposition_to_viewer(ostream                     &arg_ostream,                 ///< The ostream to which the data should be written
+                                          const viewer                &arg_viewer,                  ///< The viewer defining the instructions to be written
+                                          const display_spec          &arg_display_spec,            ///< The specification for how to display the superposition
+                                          const superposition_context &arg_superposition_context,   ///< The superposition_context to output
+                                          const bool                  &arg_only_warn_on_missing_aln ///< Whether to only warn (rather than throwing) if no alignment is present
                                           ) {
 	// Write the start of the viewer output
 	arg_viewer.write_start(arg_ostream);
@@ -194,32 +210,57 @@ void cath::output_superposition_to_viewer(ostream                     &arg_ostre
 		clean_names_for_viewer( arg_superposition_context )
 	);
 
-	// Apply the colour
-	const unique_ptr<const display_colourer> display_colourer_ptr = get_display_colourer( arg_display_spec );
-
-//	colour_alignment(
-//		*display_colourer_ptr,
-//		cerr,
-//		arg_superposition_context
-//	);
-
 	if ( ! arg_superposition_context.has_alignment() ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("WARNING: Unable to colour the superposition because it does not contain an alignment"));
+		const auto message = "Unable to apply a alignment-based coluring scheme to the superposition because it doesn't contain an alignment";
+		if ( arg_only_warn_on_missing_aln ) {
+			BOOST_LOG_TRIVIAL( warning ) << message;
+			colour_viewer(
+				display_colourer_consecutive{ get_colour_list( arg_display_spec ) },
+				arg_ostream,
+				arg_viewer,
+				clean_names_for_viewer( arg_superposition_context )
+			);
+		}
+		else {
+			BOOST_THROW_EXCEPTION(invalid_argument_exception(message));
+		}
 	}
+	else {
+		// Apply the colour
+		const unique_ptr<const display_colourer> display_colourer_ptr = get_display_colourer( arg_display_spec );
 
-	colour_viewer(
-		*display_colourer_ptr,
-		arg_ostream,
-		arg_viewer,
-		make_alignment_context( arg_superposition_context )
-	);
+		colour_viewer(
+			*display_colourer_ptr,
+			arg_ostream,
+			arg_viewer,
+			make_alignment_context( arg_superposition_context )
+		);
 
-	// If there is an alignment then do magic with it
-	if ( arg_superposition_context.has_alignment() ) {
+		// If there is an alignment then do magic with it
+		// if ( arg_superposition_context.has_alignment() ) {
 		arg_viewer.write_alignment_extras( arg_ostream, arg_superposition_context );
 	}
 
 	// Write the start of the viewer output
-	arg_viewer.write_end(arg_ostream);
+	arg_viewer.write_end( arg_ostream );
 }
 
+/// \brief Generate a name to use in the viewer for the specified colour index
+///        in the specified number of colours
+string cath::generate_colour_name(const size_t &arg_colour_index, ///< The index of the colour to name
+                                  const size_t &arg_num_colours   ///< The total number of colours
+                                  ) {
+	const size_t num_width  = lexical_cast<string>( max( static_cast<size_t>( 1_z ), arg_num_colours ) - 1 ).length();
+	const string format_str = "%0" + ::std::to_string( num_width ) + "d";
+	return "cath_tools_defined_colour_"
+		+ ( format( format_str ) % arg_colour_index ).str();
+}
+
+/// \brief Generate names to use in the viewer for the specified number of colours
+str_vec cath::generate_colour_names(const size_t &arg_num_colours ///< The total number of colours
+                                    ) {
+	return transform_build<str_vec>(
+		irange( 0_z, arg_num_colours ),
+		[&] (const size_t &x) { return generate_colour_name( x, arg_num_colours ); }
+	);
+}

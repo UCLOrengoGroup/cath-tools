@@ -27,6 +27,7 @@
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
+using namespace std::literals::string_literals;
 
 using boost::filesystem::path;
 using boost::none;
@@ -117,6 +118,9 @@ void alignment_input_options_block::do_add_visible_options_to_description(option
 /// \brief TODOCUMENT
 str_opt alignment_input_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                          ) const {
+	if ( get_num_acquirers( *this ) > 1 ) {
+		return "Cannot specify more than one alignment input"s;
+	}
 	if ( ! the_alignment_input_spec.get_fasta_alignment_file().empty() && ! is_acceptable_input_file( the_alignment_input_spec.get_fasta_alignment_file()    ) ) {
 		return "FASTA alignment file " + the_alignment_input_spec.get_ssap_alignment_file().string() + " is not a valid input file";
 	}

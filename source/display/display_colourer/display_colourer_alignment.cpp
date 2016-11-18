@@ -27,7 +27,7 @@
 #include "alignment/alignment_context.h"
 #include "alignment/io/outputter/horiz_align_outputter.h"
 #include "common/clone/make_uptr_clone.h"
-#include "display/display_colourer/display_colour_spec.h"
+#include "display/display_colour_spec/display_colour_spec.h"
 #include "display/viewer/viewer.h"
 #include "display_colour/display_colour.h"
 #include "exception/invalid_argument_exception.h"
@@ -43,10 +43,10 @@ using namespace cath::align;
 using namespace cath::common;
 using namespace cath::detail;
 using namespace cath::sup;
-using namespace std;
 
 using boost::accumulate;
 using boost::lexical_cast;
+using std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<display_colourer> display_colourer_alignment::do_clone() const {
@@ -57,8 +57,8 @@ unique_ptr<display_colourer> display_colourer_alignment::do_clone() const {
 ///        stretching it in proportion to the alignment's residue scores if they're present
 ///
 /// See the class notes for more details
-display_colour_spec display_colourer_alignment::do_get_colour_spec_before_scoring(const alignment_context &arg_alignment_context ///< The alignment_context to gradient-colour
-                                                                                  ) const {
+display_colour_spec display_colourer_alignment::do_get_colour_spec(const alignment_context &arg_alignment_context ///< The alignment_context to gradient-colour
+                                                                   ) const {
 	// Grab some basic details of the alignment and its score
 	// (total score is less half the first and half the last scores because they won't be counted
 	const alignment           &the_alignment = arg_alignment_context.get_alignment();
@@ -101,10 +101,14 @@ const display_colour_gradient & display_colourer_alignment::get_gradient() const
 	return gradient;
 }
 
-/// \brief Ctor for display_colourer_alignment
-display_colourer_alignment::display_colourer_alignment(const score_colour_handler    &arg_score_handler, ///< The score handler that this display_colourer_alignment should use to determine whether/how to update the colouring using scores
-                                                       const display_colour_gradient &arg_gradient      ///< The gradient with which this display_colourer_alignment should colour alignments
-                                                       ) : super    ( arg_score_handler ),
-                                                           gradient ( arg_gradient      ) {
+/// \brief Ctor
+display_colourer_alignment::display_colourer_alignment(const display_colour_gradient &arg_gradient ///< The gradient with which this display_colourer_alignment should colour alignments
+                                                       ) : gradient { arg_gradient } {
 }
 
+/// \brief Ctor
+display_colourer_alignment::display_colourer_alignment(const display_colour_gradient &arg_gradient,     ///< The gradient with which this display_colourer_alignment should colour alignments
+                                                       const score_colour_handler    &arg_score_handler ///< Specification for post-modifying the colouring based on scores
+                                                       ) : super    { arg_score_handler },
+                                                           gradient { arg_gradient      } {
+}

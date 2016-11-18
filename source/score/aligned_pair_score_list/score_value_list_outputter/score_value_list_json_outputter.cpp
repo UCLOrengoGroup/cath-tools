@@ -25,17 +25,19 @@
 
 #include "score/aligned_pair_score_list/aligned_pair_score_value_list.h"
 
-//using namespace boost;
 using namespace boost::property_tree;
 using namespace cath;
+using namespace cath::common;
 using namespace cath::score;
 using namespace std;
 
+constexpr json_style score_value_list_json_outputter::DEFAULT_JSON_STYLE;
+
 /// \brief Ctor for score_value_list_json_outputter
 score_value_list_json_outputter::score_value_list_json_outputter(const aligned_pair_score_value_list &arg_aligned_pair_score_value_list, ///< The alignment to be output
-                                                                 const bool                          &arg_pretty_print                   ///< TODOCUMENT
+                                                                 const json_style                    &arg_json_style                     ///< The style in which the JSON should be written
                                                                  ) : the_aligned_pair_score_value_list ( arg_aligned_pair_score_value_list ),
-                                                                     pretty_print                      ( arg_pretty_print                  ) {
+                                                                     the_json_style                    ( arg_json_style                    ) {
 }
 
 /// \brief Getter for the const reference to the aligned_pair_score_value_list
@@ -44,8 +46,8 @@ const aligned_pair_score_value_list & score_value_list_json_outputter::get_align
 }
 
 /// \brief Getter for pretty_print
-const bool & score_value_list_json_outputter::get_pretty_print() const {
-	return pretty_print;
+const json_style & score_value_list_json_outputter::get_json_style() const {
+	return the_json_style;
 }
 
 /// \brief Output the aligned_pair_score_value_list to the ostream in JSON format
@@ -56,11 +58,11 @@ ostream & cath::score::operator<<(ostream                               &arg_os,
                                   ) {
 	// Grab aligned_pair_score_value_list and then whether the JSON should be pretty printed
 	const aligned_pair_score_value_list &the_aligned_pair_score_value_list = arg_score_value_list_json_outputter.get_aligned_pair_score_value_list();
-	const bool                          &pretty_print                      = arg_score_value_list_json_outputter.get_pretty_print();
+	const json_style                    &the_json_style                    = arg_score_value_list_json_outputter.get_json_style();
 
 	ptree temp_ptree;
 	save_to_ptree( temp_ptree, the_aligned_pair_score_value_list );
-	write_json( arg_os, temp_ptree, pretty_print );
+	write_json( arg_os, temp_ptree, ( the_json_style == json_style::PRETTY ) );
 
 	// Return the specified ostream
 	return arg_os;

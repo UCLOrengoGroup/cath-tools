@@ -27,7 +27,7 @@
 #include "alignment/alignment.h"
 #include "alignment/alignment_context.h"
 #include "common/algorithm/contains.h"
-#include "display/display_colourer/display_colour_spec.h"
+#include "display/display_colour_spec/display_colour_spec.h"
 #include "display/display_colourer/display_colourer.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_list.h"
@@ -100,7 +100,7 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 	const size_t               num_colours     = colours.size();
 	const str_vec              colour_names    = generate_colour_names( num_colours );
 
-	const size_display_colour_map      &colour_of_pdb_map         = colour_spec.get_clr_of_pdb();
+	const size_display_colour_map      &colour_of_pdb_map         = get_clr_of_pdb( colour_spec );
 	const size_size_display_colour_map &colour_of_pdb_and_res_map = colour_spec.get_clr_of_pdb_and_res();
 
 	arg_os << "<html>\n";

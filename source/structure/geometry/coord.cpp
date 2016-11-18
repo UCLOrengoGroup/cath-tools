@@ -236,12 +236,12 @@ coord cath::geom::coord_from_json_string(const string &arg_json_string ///< The 
 /// \brief Create a JSON string to represent the specified coord
 ///
 /// \relates coord
-string cath::geom::to_json_string(const coord &arg_coord,       ///< The coord to represent in the JSON string
-                                  const bool  &arg_pretty_print ///< Whether to use whitespace (including line breaks) in the JSON to make it more human-readable
+string cath::geom::to_json_string(const coord      &arg_coord,     ///< The coord to represent in the JSON string
+                                  const json_style &arg_json_style ///< The style in which the JSON should be written
                                   ) {
 	ostringstream json_ss;
 	ptree temp_ptree;
 	save_to_ptree( temp_ptree, arg_coord );
-	write_json( json_ss, temp_ptree, arg_pretty_print );
+	write_json( json_ss, temp_ptree, ( arg_json_style == json_style::PRETTY ) );
 	return json_ss.str();
 }

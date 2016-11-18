@@ -26,18 +26,25 @@
 #include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.h"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.h"
 #include "exception/invalid_argument_exception.h"
+#include "file/pdb/pdb.h"
+#include "file/pdb/pdb_atom.h"
+#include "file/pdb/pdb_list.h"
+#include "file/pdb/pdb_residue.h"
 #include "outputter/alignment_outputter/alignment_outputter.h"
 #include "outputter/superposition_outputter/superposition_outputter.h"
 
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
+using namespace cath::file;
 using namespace cath::opts;
 using namespace cath::sup;
 using namespace std::literals::string_literals;
 
 using boost::none;
 using boost::program_options::variables_map;
+using std::istream;
+using std::pair;
 using std::string;
 using std::unique_ptr;
 
@@ -63,19 +70,25 @@ string cath_superpose_options::do_get_program_name() const {
 ///          or an empty string if there aren't any
 str_opt cath_superpose_options::do_get_error_or_help_string() const {
 	// Grab the objects from the options blocks
-	const size_t                       num_aln_acquirers = get_num_acquirers( the_alignment_input_options_block );
-	const size_t                       num_pdb_acquirers = get_num_acquirers( the_pdb_input_options_block );
-	const display_spec                 the_display_spec  = the_display_options_block.get_display_spec();
-	const alignment_outputter_list     aln_outputters    = the_alignment_output_options_block.get_alignment_outputters( the_display_spec );
-	const superposition_outputter_list sup_outputters    = the_superposition_output_options_block.get_superposition_outputters( the_display_spec );
+	const auto                         sup_file_opt      = the_superposition_input_ob.get_json_sup_infile();
+	const size_t                       num_aln_acquirers = get_num_acquirers( the_alignment_input_ob );
+	const size_t                       num_pdb_acquirers = get_num_acquirers( the_pdb_input_ob );
+	const display_spec                 the_display_spec  = the_display_ob.get_display_spec();
+	const alignment_outputter_list     aln_outputters    = the_alignment_output_ob.get_alignment_outputters( the_display_spec );
+	const superposition_outputter_list sup_outputters    = the_superposition_output_ob.get_superposition_outputters( the_display_spec );
 
 	// If there are no objects then no options were specified so just output the standard usage error string
-	if (  (num_aln_acquirers == 0 ) && ( num_pdb_acquirers == 0 ) && sup_outputters.empty()) {
+	if ( ! sup_file_opt && (num_aln_acquirers == 0 ) && ( num_pdb_acquirers == 0 ) && sup_outputters.empty() ) {
 		return ""s;
 	}
 
+	// Complain if input is being taken both from alignmetn and superposition JSON
+	if ( ( num_aln_acquirers > 0 ) && sup_file_opt ) {
+		return "Cannot specify both a superposition JSON input and an alignment input"s;
+	}
+
 	// Check that there is exactly one source of alignment
-	if ( num_aln_acquirers != 1 ) {
+	if ( ! sup_file_opt && num_aln_acquirers != 1 ) {
 		return "Please specify one source of an alignment or superposition ("
 			+ ::std::to_string( num_aln_acquirers )
 			+ " specified)";
@@ -92,7 +105,7 @@ str_opt cath_superpose_options::do_get_error_or_help_string() const {
 
 	const bool using_display_spec =    any_alignment_outputters_involve_display_spec    ( aln_outputters )
 	                                || any_superposition_outputters_involve_display_spec( sup_outputters );
-	if ( the_display_options_block.has_specified_options( vm ) && ! using_display_spec ) {
+	if ( the_display_ob.has_specified_options( vm ) && ! using_display_spec ) {
 		return "Cannot specify display options because no display is being used in superposition/alignment outputters"s;
 	}
 
@@ -105,7 +118,7 @@ string cath_superpose_options::do_get_help_prefix_string() const {
 		+ get_overview_string() + R"(
 
 Please specify:
- * one alignment
+ * one superposition JSON or alignment
  * one method of reading PDB files (number to match the alignment))";
 }
 
@@ -129,12 +142,13 @@ string cath_superpose_options::do_get_overview_string() const {
 
 /// \brief Get a lis of the options_blocks in this executable_options
 cath_superpose_options::cath_superpose_options() {
-	super::add_options_block( the_alignment_input_options_block      );
-	super::add_options_block( the_ids_options_block                  );
-	super::add_options_block( the_pdb_input_options_block            );
-	super::add_options_block( the_alignment_output_options_block     );
-	super::add_options_block( the_superposition_output_options_block );
-	super::add_options_block( the_display_options_block              );
+	super::add_options_block( the_alignment_input_ob      );
+	super::add_options_block( the_superposition_input_ob  );
+	super::add_options_block( the_ids_ob                  );
+	super::add_options_block( the_pdb_input_ob            );
+	super::add_options_block( the_alignment_output_ob     );
+	super::add_options_block( the_superposition_output_ob );
+	super::add_options_block( the_display_ob              );
 }
 
 /// TODOCUMENT
@@ -142,11 +156,16 @@ void cath_superpose_options::check_ok_to_use() const {
 	if ( get_error_or_help_string() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Attempt to use invalid cath_superpose_options"));
 	}
-	const bool alignment_outputs_to_stdout     = the_alignment_output_options_block.outputs_to_stdout();
-	const bool superposition_outputs_to_stdout = the_superposition_output_options_block.outputs_to_stdout();
+	const bool alignment_outputs_to_stdout     = the_alignment_output_ob.outputs_to_stdout();
+	const bool superposition_outputs_to_stdout = the_superposition_output_ob.outputs_to_stdout();
 	if ( alignment_outputs_to_stdout && superposition_outputs_to_stdout ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot output both alignment and superposition to stdout"));
 	}
+}
+
+/// \brief Get the optional JSON superposition input file
+const path_opt & cath_superpose_options::get_json_sup_infile() const {
+	return the_superposition_input_ob.get_json_sup_infile();
 }
 
 /// \brief TODOCUMENT
@@ -156,29 +175,29 @@ selection_policy_acquirer cath_superpose_options::get_selection_policy_acquirer(
 
 /// \brief TODOCUMENT
 const alignment_input_spec & cath_superpose_options::get_alignment_input_spec() const {
-	return the_alignment_input_options_block.get_alignment_input_spec();
+	return the_alignment_input_ob.get_alignment_input_spec();
 }
 
 /// \brief TODOCUMENT
 const str_vec & cath_superpose_options::get_ids() const {
-	return the_ids_options_block.get_ids();
+	return the_ids_ob.get_ids();
 }
 
 /// \brief Getter for the pdb_input_spec
 const pdb_input_spec & cath_superpose_options::get_pdb_input_spec() const {
-	return the_pdb_input_options_block.get_pdb_input_spec();
+	return the_pdb_input_ob.get_pdb_input_spec();
 }
 
 /// \brief TODOCUMENT
 alignment_outputter_list cath_superpose_options::get_alignment_outputters() const {
-	const display_spec the_display_spec = the_display_options_block.get_display_spec();
-	return the_alignment_output_options_block.get_alignment_outputters( the_display_spec );
+	const display_spec the_display_spec = the_display_ob.get_display_spec();
+	return the_alignment_output_ob.get_alignment_outputters( the_display_spec );
 }
 
 /// \brief TODOCUMENT
 superposition_outputter_list cath_superpose_options::get_superposition_outputters() const {
-	const display_spec the_display_spec = the_display_options_block.get_display_spec();
-	return the_superposition_output_options_block.get_superposition_outputters( the_display_spec );
+	const display_spec the_display_spec = the_display_ob.get_display_spec();
+	return the_superposition_output_ob.get_superposition_outputters( the_display_spec );
 }
 
 /// \brief Get the single alignment_acquirer implied by the specified cath_superpose_options
@@ -190,6 +209,15 @@ unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const ca
 	return get_alignment_acquirer( arg_cath_superpose_options.get_alignment_input_spec() );
 }
 
+/// \brief Get alignment and spanning tree as implied by the specified cath_superpose_options
+///
+/// \relates cath_superpose_options
+pair<alignment, size_size_pair_vec> cath::opts::get_alignment_and_spanning_tree(const cath_superpose_options &arg_cath_sup_opts, ///< The options to specify how to get the alignment and spanning tree
+                                                                                const pdb_list               &arg_pdbs           ///< The PDBs to use
+                                                                                ) {
+	return get_alignment_acquirer( arg_cath_sup_opts )->get_alignment_and_spanning_tree( arg_pdbs );
+}
+
 /// \brief Get the single pdbs_acquirer implied by the specified cath_superpose_options
 ///        (or throw an invalid_argument_exception if fewer/more are implied)
 ///
@@ -197,4 +225,16 @@ unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const ca
 unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_superpose_options &arg_cath_superpose_options ///< The cath_superpose_options to query
                                                               ) {
 	return get_pdbs_acquirer( arg_cath_superpose_options.get_pdb_input_spec() );
+}
+
+/// \brief Get PDBs and names as implied by the specified cath_superpose_options
+///
+/// throw an invalid_argument_exception if the cath_superpose_options isn't configured to read PDBs
+///
+/// \relates cath_superpose_options
+pdb_list_str_vec_pair cath::opts::get_pdbs_and_names(const cath_superpose_options &arg_cath_sup_opts,          ///< The options to specify how to get the PDBs and names
+                                                     istream                      &arg_istream,                ///< The istream, which may contain PDB data
+                                                     const bool                   &arg_remove_partial_residues ///< Whether to remove partial residues from the PDB data
+                                                     ) {
+	return get_pdbs_acquirer( arg_cath_sup_opts )->get_pdbs_and_names( arg_istream, arg_remove_partial_residues );
 }

@@ -93,10 +93,17 @@ namespace cath {
 	void output_superposition_to_viewer(std::ostream &,
 	                                    const viewer &,
 	                                    const display_spec &,
-	                                    const sup::superposition_context &);
+	                                    const sup::superposition_context &,
+	                                    const bool & = false);
 
 	std::string colour_of_index_from_colours_string(const size_t &,
 	                                                const std::string &);
+
+	std::string generate_colour_name(const size_t &,
+	                                 const size_t &);
+
+	str_vec generate_colour_names(const size_t &);
+
 } // namespace cath
 
 #endif

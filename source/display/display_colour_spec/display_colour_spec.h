@@ -23,48 +23,47 @@
 
 #include <boost/optional.hpp>
 
-#include "display_colour/display_colour_type_aliases.h"
+#include "display/display_colour_spec/broad_display_colour_spec.h"
 #include "display_colour/display_colour.h"
+#include "display_colour/display_colour_type_aliases.h"
 
-namespace cath { namespace align { class alignment; } }
 namespace cath { namespace align { class alignment_context; } } 
-namespace cath { namespace file { class pdb_list; } }
-namespace cath { namespace sup { class superposition_context; } }
-namespace cath { class viewer; }
 
 namespace cath {
 
-	/// \brief TODOCUMENT
+	/// \brief Represent the colouring of structures, possibly down to the residue-specific level
 	class display_colour_spec final {
 	private:
-		/// \brief TODOCUMENT
-		display_colour_opt           base_clr;
+		/// \brief The broad level colouring
+		broad_display_colour_spec    the_broad_spec;
 
-		/// \brief TODOCUMENT
-		size_display_colour_map      clr_of_pdb;
-
-		/// \brief TODOCUMENT
+		/// \brief Any residue-specific colouring
 		size_size_display_colour_map clr_of_pdb_and_res;
 
 	public:
+		display_colour_spec() = default;
+		display_colour_spec(const broad_display_colour_spec &);
+
 		void colour_base(const display_colour &,
-		                 const bool &arg_overwrite = false);
+		                 const bool & = false);
 
 		void colour_pdb(const size_t &,
 		                const display_colour &,
-		                const bool &arg_overwrite = false);
+		                const bool & = false);
 
 		void colour_pdb_residue(const size_t &,
 		                        const size_t &,
 		                        const display_colour &,
-		                        const bool &arg_overwrite = false);
+		                        const bool & = false);
 
-		const display_colour_opt & get_base_clr() const;
-
-		const size_display_colour_map & get_clr_of_pdb() const;
+		const broad_display_colour_spec & get_broad_spec() const;
 
 		const size_size_display_colour_map & get_clr_of_pdb_and_res() const;
 	};
+
+	const display_colour_opt & get_base_clr(const display_colour_spec &);
+
+	const size_display_colour_map & get_clr_of_pdb(const display_colour_spec &);
 
 	display_colour_opt get_clr_of_pdb_index(const display_colour_spec &,
 	                                        const size_t &);
@@ -85,8 +84,6 @@ namespace cath {
 	size_size_vec_map get_residues_of_colour(const display_colour_spec &,
 	                                         const display_colour &);
 
-	str_vec generate_colour_names(const size_t &);
-
 	void colour_viewer_with_spec(const display_colour_spec &,
 	                             const viewer &,
 	                             const align::alignment_context &,
@@ -97,6 +94,7 @@ namespace cath {
 //	                                const pdb_list &,
 //	                                const str_vec &,
 //	                                std::ostream &);
+
 } // namespace cath
 
 #endif

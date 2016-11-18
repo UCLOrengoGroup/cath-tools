@@ -31,6 +31,7 @@
 
 #include "alignment/alignment_context.h"
 #include "common/algorithm/transform_build.h"
+#include "common/file/open_fstream.h"
 #include "exception/invalid_argument_exception.h"
 #include "file/options/data_dirs_options_block.h"
 #include "file/pdb/pdb.h"
@@ -138,6 +139,16 @@ void superposition_context::set_pdbs(const pdb_list &arg_pdbs ///< The PDBs to s
 //                                const superposition_context &arg_sup_con ///< TODOCUMENT
 //                                ) {
 //}
+
+/// \brief Return a copy of the specified superposition_context in which the specified PDBs have been set
+///
+/// \relates superposition_context
+superposition_context cath::sup::set_pdbs_copy(superposition_context  arg_sup_con, ///< The superposition_context from which a copy should be taken, altered and returned
+                                               const pdb_list        &arg_pdbs     ///< The PDBs to set on the copy of the superposition_context
+                                               ) {
+	arg_sup_con.set_pdbs( arg_pdbs );
+	return arg_sup_con;
+}
 
 /// \brief Get the number of entries in the specified superposition_context
 ///
@@ -317,11 +328,41 @@ superposition_context cath::sup::superposition_context_from_json_string(const st
 ///
 /// \relates superposition_context
 string cath::sup::to_json_string(const superposition_context &arg_sup_context, ///< The superposition_context to represent in the JSON string
-                                 const bool                  &arg_pretty_print ///< Whether to use whitespace (including line breaks) in the JSON to make it more human-readable
+                                 const json_style            &arg_json_style   ///< Whether to use whitespace (including line breaks) in the JSON to make it more human-readable
                                  ) {
 	ostringstream json_ss;
 	ptree temp_ptree;
 	save_to_ptree( temp_ptree, arg_sup_context );
-	write_json( json_ss, temp_ptree, arg_pretty_print );
+	write_json( json_ss, temp_ptree, ( arg_json_style == json_style::PRETTY ) );
 	return json_ss.str();
+}
+
+/// \brief Read a superposition_context from the specified JSON file
+///
+/// \relates superposition_context
+superposition_context cath::sup::read_superposition_context_from_json_file(const path &arg_json_file ///< The JSON file to read
+                                                                           ) {
+	ifstream json_file_ifstream;
+	open_ifstream( json_file_ifstream, arg_json_file );
+	const string json_str {
+		istreambuf_iterator<char>( json_file_ifstream ),
+		istreambuf_iterator<char>()
+	};
+	json_file_ifstream.close();
+	return superposition_context_from_json_string( json_str );
+}
+
+/// \brief Write the specified superposition_context to the specified JSON file
+///        in the specified style
+///
+/// \relates superposition_context
+void cath::sup::write_to_json_file(const path                  &arg_json_out_file, ///< The file to which the JSON should be written
+                                   const superposition_context &arg_sup_context,   ///< The superposition_context to write
+                                   const json_style            &arg_json_style     ///< The style in which the JSON should be written
+                                   ) {
+	ofstream json_file_ostream;
+	open_ofstream( json_file_ostream, arg_json_out_file );
+	json_file_ostream << to_json_string( arg_sup_context, arg_json_style );
+	json_file_ostream << flush;
+	json_file_ostream.close();
 }

@@ -28,6 +28,7 @@
 #include <boost/operators.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 
+#include "common/json_style.h"
 #include "exception/invalid_argument_exception.h"
 
 namespace cath { namespace geom { template <typename T> class angle; } }
@@ -245,7 +246,7 @@ namespace cath {
 
 		coord coord_from_json_string(const std::string &);
 		std::string to_json_string(const coord &,
-		                           const bool &arg_pretty_print = true);
+		                           const common::json_style & = common::json_style::PRETTY);
 
 		/// \brief TODOCUMENT
 		///
