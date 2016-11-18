@@ -81,7 +81,9 @@ namespace cath {
 		public:
 			bioplib_pdb() = default;
 			bioplib_pdb(const bioplib_pdb &);
+			bioplib_pdb(bioplib_pdb &&) = default;
 			bioplib_pdb & operator=(const bioplib_pdb &);
+			bioplib_pdb & operator=(bioplib_pdb &&) = default;
 			virtual ~bioplib_pdb() noexcept;
 		};
 

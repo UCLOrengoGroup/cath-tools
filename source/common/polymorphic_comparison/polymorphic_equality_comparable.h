@@ -67,7 +67,12 @@ namespace cath {
 			}
 
 		protected:
+			polymorphic_less_than_comparable() noexcept = default;
 			~polymorphic_equality_comparable() noexcept = default;
+			polymorphic_equality_comparable(const polymorphic_equality_comparable &) noexcept = default;
+			polymorphic_equality_comparable(polymorphic_equality_comparable &&) noexcept = default;
+			polymorphic_equality_comparable & operator=(const polymorphic_equality_comparable &) noexcept = default;
+			polymorphic_equality_comparable & operator=(polymorphic_equality_comparable &&) noexcept = default;
 		};
 	
 	} // namespace common

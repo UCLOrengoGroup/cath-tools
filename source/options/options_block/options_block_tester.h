@@ -38,7 +38,12 @@ namespace cath {
 			static str_vec prepend_dummy_program_name_copy(const str_vec &);
 
 		protected:
+			options_block_tester() = default;
 			~options_block_tester() noexcept = default;
+			options_block_tester(const options_block_tester &) noexcept = default;
+			options_block_tester(options_block_tester &&) noexcept = default;
+			options_block_tester & operator=(const options_block_tester &) noexcept = default;
+			options_block_tester & operator=(options_block_tester &&) noexcept = default;
 
 		public:
 			static void parse_into_options_block(cath::opts::options_block &,
