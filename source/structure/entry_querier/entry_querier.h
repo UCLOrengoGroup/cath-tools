@@ -97,6 +97,97 @@ namespace cath {
 	                      const size_t &);
 	size_t _num_comparable_impl(const size_t &,
 	                            const size_t &);
+
+
+	/// \brief TODOCUMENT
+	inline size_t entry_querier::get_length(const protein &arg_protein ///< TODOCUMENT
+	                                        ) const {
+		return do_get_length(arg_protein);
+	}
+
+	/// \brief Return the ratio of the gap penalty to the optimum single score
+	///
+	/// If you just want the gap penalty, just use the non-member function get_gap_penalty().
+	///
+	/// Example: this value is 2, the optimum single score is 50 => gap penalty is 100.
+	inline double entry_querier::get_gap_penalty_ratio() const {
+		return do_get_gap_penalty_ratio();
+	}
+
+	/// \brief TODOCUMENT
+	inline double entry_querier::optimum_single_score() const {
+		return do_optimum_single_score();
+	}
+
+	/// \brief TODOCUMENT
+	inline size_t entry_querier::num_excluded_on_either_size() const {
+		return do_num_excluded_on_either_size();
+	}
+
+	/// \brief TODOCUMENT
+	inline std::string entry_querier::get_entry_name() const {
+		return do_get_entry_name();
+	}
+
+	/// \brief TODOCUMENT
+	inline score_type entry_querier::distance_score__offset_1(const protein &arg_protein_a,         ///< TODOCUMENT
+	                                                          const protein &arg_protein_b,         ///< TODOCUMENT
+	                                                          const size_t  &arg_a_view_from_index, ///< TODOCUMENT
+	                                                          const size_t  &arg_b_view_from_index, ///< TODOCUMENT
+	                                                          const size_t  &arg_a_dest_to_index,   ///< TODOCUMENT
+	                                                          const size_t  &arg_b_dest_to_index    ///< TODOCUMENT
+	                                                          ) const {
+		return do_distance_score__offset_1(
+			arg_protein_a,
+			arg_protein_b,
+			arg_a_view_from_index,
+			arg_b_view_from_index,
+			arg_a_dest_to_index,
+			arg_b_dest_to_index
+		);
+	}
+
+	/// \brief TODOCUMENT
+	inline bool entry_querier::are_comparable__offset_1(const protein &arg_protein_a,         ///< TODOCUMENT
+	                                                    const protein &arg_protein_b,         ///< TODOCUMENT
+	                                                    const size_t  &arg_a_view_from_index, ///< TODOCUMENT
+	                                                    const size_t  &arg_b_view_from_index, ///< TODOCUMENT
+	                                                    const size_t  &arg_a_dest_to_index,   ///< TODOCUMENT
+	                                                    const size_t  &arg_b_dest_to_index    ///< TODOCUMENT
+	                                                    ) const {
+		const bool a_index_pair_not_excluded = pair_is_not_excluded(*this, arg_a_view_from_index, arg_a_dest_to_index);
+		const bool b_index_pair_not_excluded = pair_is_not_excluded(*this, arg_b_view_from_index, arg_b_dest_to_index);
+		if (!a_index_pair_not_excluded || !b_index_pair_not_excluded) {
+			return false;
+		}
+		return do_are_comparable__offset_1(
+			arg_protein_a,
+			arg_protein_b,
+			arg_a_view_from_index,
+			arg_b_view_from_index,
+			arg_a_dest_to_index,
+			arg_b_dest_to_index
+		);
+	}
+
+	/// \brief TODOCUMENT
+	inline bool entry_querier::are_similar__offset_1(const protein &arg_protein_a,         ///< TODOCUMENT
+	                                                 const protein &arg_protein_b,         ///< TODOCUMENT
+	                                                 const size_t  &arg_index_a__offset_1, ///< TODOCUMENT
+	                                                 const size_t  &arg_index_b__offset_1  ///< TODOCUMENT
+	                                                 ) const {
+		return do_are_similar__offset_1(arg_protein_a, arg_protein_b, arg_index_a__offset_1, arg_index_b__offset_1);
+	}
+
+	/// \brief TODOCUMENT
+	///
+	/// \relates entry_querier
+	///
+	/// \todo Remove (the need for) this temporary hacky workaround
+	inline bool entry_querier::temp_hacky_is_residue() const {
+		return do_temp_hacky_is_residue();
+	}
+
 } // namespace cath
 
 #endif
