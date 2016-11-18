@@ -27,6 +27,7 @@
 #include "options/options_block/alignment_input_options_block.h"
 #include "options/options_block/ids_options_block.h"
 #include "options/options_block/pdb_input_options_block.h"
+#include "options/options_block/superposition_input_options_block.h"
 #include "outputter/alignment_outputter/alignment_outputter_list.h"
 #include "outputter/alignment_outputter_options/alignment_output_options_block.h"
 #include "outputter/superposition_output_options/superposition_output_options_block.h"
@@ -57,23 +58,26 @@ namespace cath {
 
 			static const std::string STANDARD_USAGE_ERROR_STRING;
 
-			/// \brief TODOCUMENT
-			alignment_input_options_block      the_alignment_input_options_block;
+			/// \brief The options_block for the alignment input options
+			alignment_input_options_block      the_alignment_input_ob;
 
-			/// \brief TODOCUMENT
-			ids_options_block                  the_ids_options_block;
+			/// \brief The options_block for the superposition input options
+			superposition_input_options_block  the_superposition_input_ob;
 
-			/// \brief TODOCUMENT
-			pdb_input_options_block            the_pdb_input_options_block;
+			/// \brief The options_block for the IDs options
+			ids_options_block                  the_ids_ob;
 
-			/// \brief TODOCUMENT
-			alignment_output_options_block     the_alignment_output_options_block;
+			/// \brief The options_block for the pdb input options
+			pdb_input_options_block            the_pdb_input_ob;
 
-			/// \brief TODOCUMENT
-			superposition_output_options_block the_superposition_output_options_block;
+			/// \brief The options_block for the alignment output options
+			alignment_output_options_block     the_alignment_output_ob;
 
-			/// \brief TODOCUMENT
-			display_options_block              the_display_options_block;
+			/// \brief The options_block for the superposition output options
+			superposition_output_options_block the_superposition_output_ob;
+
+			/// \brief The options_block for the display options
+			display_options_block              the_display_ob;
 
 			virtual std::string do_get_program_name() const override final;
 			virtual str_opt do_get_error_or_help_string() const override final;
@@ -86,6 +90,8 @@ namespace cath {
 			cath_superpose_options();
 
 			void check_ok_to_use() const;
+
+			const path_opt & get_json_sup_infile() const;
 
 			selection_policy_acquirer get_selection_policy_acquirer() const;
 

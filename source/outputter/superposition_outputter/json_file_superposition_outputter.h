@@ -23,20 +23,12 @@
 
 #include <boost/filesystem/path.hpp>
 
+#include "common/json_style.h"
 #include "display/options/display_spec.h"
 #include "outputter/superposition_outputter/superposition_outputter.h"
 
 namespace cath {
 	namespace opts {
-
-		/// \brief The style in which superposition JSON should be written
-		///
-		/// \todo This should be used in more superposition/JSON code rather than just in json_file_superposition_outputter.
-		///       Extend the use of this all the way to the call to the Boost code.
-		enum class sup_json_style {
-			PRETTY, ///< Insert white-space characters to format the JSON in a more human-readable layout
-			COMPACT ///< Suppress superfluous white-space characters to keep the JSON compact
-		};
 
 		/// \brief A superposition_outputter to write
 		class json_file_superposition_outputter final : public superposition_outputter {
@@ -45,7 +37,7 @@ namespace cath {
 			boost::filesystem::path output_file;
 
 			/// \brief The style in which the JSON should be written
-			const sup_json_style json_style = DEFAULT_JSON_STYLE;
+			const common::json_style the_json_style = DEFAULT_JSON_STYLE;
 
 			virtual std::unique_ptr<superposition_outputter> do_clone() const override final;
 			virtual void do_output_superposition(const sup::superposition_context &,
@@ -54,10 +46,10 @@ namespace cath {
 
 		public:
 			json_file_superposition_outputter(const boost::filesystem::path &,
-			                                  const sup_json_style &arg_pretty_print = DEFAULT_JSON_STYLE);
+			                                  const common::json_style &arg_pretty_print = DEFAULT_JSON_STYLE);
 
 			/// \brief The default style to use for outputting the JSON if it isn't specified
-			static constexpr sup_json_style DEFAULT_JSON_STYLE = sup_json_style::PRETTY;
+			static constexpr common::json_style DEFAULT_JSON_STYLE = common::json_style::PRETTY;
 		};
 
 	} // namespace opts

@@ -49,7 +49,8 @@ void pymol_file_superposition_outputter::do_output_superposition(const superposi
 		pymol_file_ostream,
 		pymol_viewer(),
 		the_display_spec,
-		arg_superposition_context
+		arg_superposition_context,
+		true
 	);
 	pymol_file_ostream << flush;
 	pymol_file_ostream.close();

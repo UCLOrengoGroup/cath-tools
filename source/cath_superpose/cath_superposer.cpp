@@ -107,6 +107,15 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 		);
 	}
 
+	// If a JSON superposition file has ben specified, return that
+	const path_opt json_sup_infile = arg_cath_superpose_options.get_json_sup_infile();
+	if ( json_sup_infile ) {
+		return set_pdbs_copy(
+			read_superposition_context_from_json_file( *json_sup_infile ),
+			pdbs
+		);
+	}
+
 	// Get the alignment and corresponding spanning tree
 	const auto       aln_and_spn_tree = get_alignment_and_spanning_tree( arg_cath_superpose_options, pdbs );
 	const alignment &the_alignment    = aln_and_spn_tree.first;

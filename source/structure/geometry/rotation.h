@@ -190,7 +190,7 @@ namespace cath {
 		rotation rotation_from_json_string(const std::string &);
 
 		std::string to_json_string(const rotation &,
-		                           const bool &arg_pretty_print = true);
+		                           const common::json_style & = common::json_style::PRETTY);
 
 		/// \brief Generate some rotation that has the specified angle of rotation
 		///

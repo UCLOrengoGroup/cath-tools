@@ -32,7 +32,7 @@ using namespace cath::opts;
 using namespace cath::sup;
 using namespace std;
 
-constexpr sup_json_style json_file_superposition_outputter::DEFAULT_JSON_STYLE;
+constexpr json_style json_file_superposition_outputter::DEFAULT_JSON_STYLE;
 
 /// \brief A standard do_clone method.
 unique_ptr<superposition_outputter> json_file_superposition_outputter::do_clone() const {
@@ -43,11 +43,7 @@ unique_ptr<superposition_outputter> json_file_superposition_outputter::do_clone(
 void json_file_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< The superpositon_context object to output
                                                                 ostream                     &/*arg_ostream*/            ///< An ostream object to which any warnings/errors may be written (currently ignored)
                                                                 ) const {
-	ofstream json_file_ostream;
-	open_ofstream( json_file_ostream, output_file );
-	json_file_ostream << to_json_string( arg_superposition_context, ( json_style == sup_json_style::PRETTY ) );
-	json_file_ostream << flush;
-	json_file_ostream.close();
+	write_to_json_file( output_file, arg_superposition_context, the_json_style );
 }
 
 /// \brief Specify that this outputter doesn't involve a display_spec
@@ -56,9 +52,9 @@ bool json_file_superposition_outputter::do_involves_display_spec() const {
 }
 
 /// \brief Ctor for json_file_superposition_outputter
-json_file_superposition_outputter::json_file_superposition_outputter(const path           &arg_output_file, ///< The file to which the superposition should be written
-                                                                     const sup_json_style &arg_json_style   ///< The style in which the JSON should be written
-                                                                     ) : output_file ( arg_output_file  ),
-                                                                         json_style  ( arg_json_style   ) {
+json_file_superposition_outputter::json_file_superposition_outputter(const path       &arg_output_file, ///< The file to which the superposition should be written
+                                                                     const json_style &arg_json_style   ///< The style in which the JSON should be written
+                                                                     ) : output_file    ( arg_output_file  ),
+                                                                         the_json_style ( arg_json_style   ) {
 }
 

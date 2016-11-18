@@ -27,6 +27,7 @@
 
 using namespace boost::math::constants;
 using namespace cath;
+using namespace cath::common;
 using namespace cath::geom;
 using namespace std;
 
@@ -195,19 +196,19 @@ BOOST_AUTO_TEST_CASE(dihedral_angle_between_four_points_handles_float_difficulti
 BOOST_AUTO_TEST_SUITE(json)
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_origin) {
-	BOOST_CHECK_EQUAL( to_json_string( coord::ORIGIN_COORD, false ), R"({"x":"0","y":"0","z":"0"})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( coord::ORIGIN_COORD, json_style::COMPACT ), R"({"x":"0","y":"0","z":"0"})" "\n" );
 }
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_unit_x) {
-	BOOST_CHECK_EQUAL( to_json_string( coord::UNIT_X,       false ), R"({"x":"1","y":"0","z":"0"})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( coord::UNIT_X,       json_style::COMPACT ), R"({"x":"1","y":"0","z":"0"})" "\n" );
 }
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_unit_y) {
-	BOOST_CHECK_EQUAL( to_json_string( coord::UNIT_Y,       false ), R"({"x":"0","y":"1","z":"0"})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( coord::UNIT_Y,       json_style::COMPACT ), R"({"x":"0","y":"1","z":"0"})" "\n" );
 }
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_unit_z) {
-	BOOST_CHECK_EQUAL( to_json_string( coord::UNIT_Z,       false ), R"({"x":"0","y":"0","z":"1"})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( coord::UNIT_Z,       json_style::COMPACT ), R"({"x":"0","y":"0","z":"1"})" "\n" );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_origin) {

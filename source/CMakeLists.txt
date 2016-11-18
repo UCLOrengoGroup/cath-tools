@@ -337,18 +337,23 @@ set(
 )
 
 set(
+	NORMSOURCES_DISPLAY_DISPLAY_COLOUR_SPEC
+		display/display_colour_spec/broad_display_colour_spec.cpp
+		display/display_colour_spec/display_colour_spec.cpp
+)
+
+set(
 	NORMSOURCES_DISPLAY_DISPLAY_COLOURER_DETAIL
 		display/display_colourer/detail/score_colour_handler.cpp
 )
 
 set(
 	NORMSOURCES_DISPLAY_DISPLAY_COLOURER
+		display/display_colourer/alignment_free_display_colourer.cpp
 		${NORMSOURCES_DISPLAY_DISPLAY_COLOURER_DETAIL}
-		display/display_colourer/display_colour_spec.cpp
 		display/display_colourer/display_colourer.cpp
 		display/display_colourer/display_colourer_alignment.cpp
 		display/display_colourer/display_colourer_consecutive.cpp
-		display/display_colourer/score_adjusted_display_colourer.cpp
 )
 
 set(
@@ -375,6 +380,7 @@ set(
 
 set(
 	NORMSOURCES_DISPLAY
+		${NORMSOURCES_DISPLAY_DISPLAY_COLOUR_SPEC}
 		${NORMSOURCES_DISPLAY_DISPLAY_COLOURER}
 		${NORMSOURCES_DISPLAY_OPTIONS}
 		${NORMSOURCES_DISPLAY_VIEWER}
@@ -1371,8 +1377,13 @@ set(
 )
 
 set(
+	TESTSOURCES_DISPLAY_DISPLAY_COLOUR_SPEC
+		display/display_colour_spec/broad_display_colour_spec_test.cpp
+		display/display_colour_spec/display_colour_spec_test.cpp
+)
+
+set(
 	TESTSOURCES_DISPLAY_DISPLAY_COLOURER
-		display/display_colourer/display_colour_spec_test.cpp
 		display/display_colourer/display_colourer_test.cpp
 )
 
@@ -1399,6 +1410,7 @@ set(
 
 set(
 	TESTSOURCES_DISPLAY
+		${TESTSOURCES_DISPLAY_DISPLAY_COLOUR_SPEC}
 		${TESTSOURCES_DISPLAY_DISPLAY_COLOURER}
 		${TESTSOURCES_DISPLAY_OPTIONS}
 		${TESTSOURCES_DISPLAY_VIEWER}

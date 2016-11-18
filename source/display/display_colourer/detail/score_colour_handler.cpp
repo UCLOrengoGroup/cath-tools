@@ -25,7 +25,9 @@
 
 #include "alignment/alignment.h"
 #include "common/type_aliases.h"
+#include "display/display_colour_spec/display_colour_spec.h"
 #include "display_colour/display_colour.h"
+#include "display_colour/display_colour_type_aliases.h"
 
 using namespace cath;
 using namespace cath::detail;
@@ -68,6 +70,8 @@ float_score_type score_colour_handler::get_score_of_postion(const alignment &arg
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates score_colour_handler
 void cath::detail::score_colour(const score_colour_handler &arg_score_colour_handler, ///< TODOCUMENT
                                 const alignment            &arg_alignment,            ///< TODOCUMENT
                                 const size_t               &arg_entry,                ///< TODOCUMENT
@@ -79,6 +83,8 @@ void cath::detail::score_colour(const score_colour_handler &arg_score_colour_han
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates score_colour_handler
 display_colour cath::detail::score_colour_copy(const score_colour_handler &arg_score_colour_handler, ///< TODOCUMENT
                                                const alignment            &arg_alignment,            ///< TODOCUMENT
                                                const size_t               &arg_entry,                ///< TODOCUMENT
@@ -93,4 +99,51 @@ display_colour cath::detail::score_colour_copy(const score_colour_handler &arg_s
 		arg_colour
 	);
 	return arg_colour;
+}
+
+/// \brief Adjust an existing display_colour_spec,
+///        based on the specified score_colour_handler and alignment
+///
+/// \relates score_colour_handler
+void cath::detail::adjust_display_colour_spec(display_colour_spec        &arg_colour_spec,          ///< The display_colour_spec to alter
+                                              const score_colour_handler &arg_score_colour_handler, ///< The specification for how to adjust the colours
+                                              const alignment            &arg_alignment             ///< The alignment to use to adjust the colours
+                                              ) {
+	const alignment::size_type num_entries   = arg_alignment.num_entries();
+	const alignment::size_type aln_length    = arg_alignment.length();
+
+	if ( arg_score_colour_handler.get_show_scores_if_present() ) {
+		for (alignment::size_type entry = 0; entry < num_entries; ++entry) {
+			for (size_t index = 0; index < aln_length; ++index) {
+				const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry, index );
+				if ( position ) {
+					const display_colour_opt base_col = get_base_clr( arg_colour_spec );
+					const display_colour_opt pdb_col  = get_clr_of_pdb_index          ( arg_colour_spec, entry            );
+					const display_colour_opt res_col  = get_clr_of_pdb_and_res_indices( arg_colour_spec, entry, *position );
+					const display_colour best_colour = res_col  ? ( *res_col  ) :
+					                                   pdb_col  ? ( *pdb_col  ) :
+					                                   base_col ? ( *base_col ) : display_colour::BLACK;
+					const display_colour the_colour = score_colour_copy( arg_score_colour_handler, arg_alignment, entry, index, best_colour );
+					arg_colour_spec.colour_pdb_residue(
+						entry,
+						*position,
+						the_colour,
+						true
+					);
+				}
+			}
+		}
+	}
+}
+
+/// \brief Adjust and return a copy of an existing display_colour_spec,
+///        based on the specified score_colour_handler and alignment
+///
+/// \relates score_colour_handler
+display_colour_spec cath::detail::adjust_display_colour_spec_copy(display_colour_spec         arg_colour_spec,          ///< The display_colour_spec from which a copy should be taken and altered
+                                                                  const score_colour_handler &arg_score_colour_handler, ///< The specification for how to adjust the colours
+                                                                  const alignment            &arg_alignment             ///< The alignment to use to adjust the colours
+                                                                  ) {
+	adjust_display_colour_spec( arg_colour_spec, arg_score_colour_handler, arg_alignment );
+	return arg_colour_spec;
 }

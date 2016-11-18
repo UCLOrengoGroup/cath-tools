@@ -20,9 +20,12 @@
 
 #include "display_colourer_consecutive.h"
 
+#include <boost/range/irange.hpp>
+
 #include "alignment/alignment_context.h"
 #include "common/clone/make_uptr_clone.h"
-#include "display/display_colourer/display_colour_spec.h"
+#include "common/size_t_literal.h"
+#include "display/display_colour_spec/display_colour_spec.h"
 #include "display/viewer/viewer.h"
 #include "display_colour/display_colour.h"
 #include "superposition/superposition_context.h"
@@ -34,7 +37,9 @@ using namespace cath::align;
 using namespace cath::common;
 using namespace cath::detail;
 using namespace cath::sup;
-using namespace std;
+
+using boost::irange;
+using std::unique_ptr;
 
 /// \brief A standard do_clone method
 unique_ptr<display_colourer> display_colourer_consecutive::do_clone() const {
@@ -42,17 +47,15 @@ unique_ptr<display_colourer> display_colourer_consecutive::do_clone() const {
 }
 
 /// \brief TODOCUMENT
-display_colour_spec display_colourer_consecutive::do_get_colour_spec_before_scoring(const alignment_context &arg_alignment_context ///< TODOCUMENT
-                                                                                    ) const {
-	// A const-reference to the alignment and grab the number of entries in it
-	const alignment           &the_alignment = arg_alignment_context.get_alignment();
-	const alignment::size_type num_entries   = the_alignment.num_entries();
-
+broad_display_colour_spec display_colourer_consecutive::do_get_colour_spec_from_num_entries(const size_t &arg_num_entries ///< The number of structures to be coloured
+                                                                                            ) const {
 	// Create a new display_colour_spec and populate it for the entries with colours
-	display_colour_spec new_spec;
-	for (alignment::size_type entry = 0; entry < num_entries; ++entry) {
-		const display_colour full_colour = colour_of_mod_index( colours, entry );
-		new_spec.colour_pdb( entry, full_colour );
+	broad_display_colour_spec new_spec;
+	for (const size_t entry_ctr : irange( 0_z, arg_num_entries ) ) {
+		new_spec.colour_pdb(
+			entry_ctr,
+			colour_of_mod_index( colours, entry_ctr )
+		);
 	}
 
 	// Return the generated display_colour_spec
@@ -64,10 +67,15 @@ const display_colour_list & display_colourer_consecutive::get_colours() const {
 	return colours;
 }
 
-/// \brief Ctor for display_colourer_consecutive
-display_colourer_consecutive::display_colourer_consecutive(const score_colour_handler &arg_score_handler, ///< TODOCUMENT
-                                                           const display_colour_list  &arg_colours        ///< The list of colours with which the structures should be coloured
-                                                           ) : super   ( arg_score_handler ),
-                                                               colours ( arg_colours       ) {
+/// \brief Ctor
+display_colourer_consecutive::display_colourer_consecutive(const display_colour_list &arg_colours ///< The list of colours with which the structures should be coloured
+                                                           ) : colours { arg_colours } {
+}
+
+/// \brief Ctor
+display_colourer_consecutive::display_colourer_consecutive(const display_colour_list  &arg_colours,      ///< The list of colours with which the structures should be coloured
+                                                           const score_colour_handler &arg_score_handler ///< Specification for post-modifying the colouring based on scores
+                                                           ) : super   { arg_score_handler },
+                                                               colours { arg_colours       } {
 }
 

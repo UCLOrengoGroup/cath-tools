@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_SUITE(json)
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup_con) {
 	BOOST_CHECK_EQUAL(
-		to_json_string( the_sup_con, false ),
+		to_json_string( the_sup_con, json_style::COMPACT ),
 		sup_context_json_str
 	);
 }

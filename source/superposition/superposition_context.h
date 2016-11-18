@@ -71,6 +71,9 @@ namespace cath {
 			void set_pdbs(const file::pdb_list &);
 		};
 
+		superposition_context set_pdbs_copy(superposition_context,
+		                                    const file::pdb_list &);
+
 //		bool operator==(const superposition_context &,
 //		                const superposition_context &);
 
@@ -97,7 +100,13 @@ namespace cath {
 		superposition_context superposition_context_from_json_string(const std::string &);
 
 		std::string to_json_string(const superposition_context &,
-		                           const bool &arg_pretty_print = true);
+		                           const common::json_style & = common::json_style::PRETTY);
+
+		superposition_context read_superposition_context_from_json_file(const boost::filesystem::path &);
+
+		void write_to_json_file(const boost::filesystem::path &,
+		                        const superposition_context &,
+		                        const common::json_style & = common::json_style::PRETTY);
 	} // namespace sup
 } // namespace cath
 

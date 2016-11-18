@@ -21,17 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_DISPLAY_DISPLAY_COLOURER_DETAIL_SCORE_COLOUR_HANDLER_H
 #define _CATH_TOOLS_SOURCE_DISPLAY_DISPLAY_COLOURER_DETAIL_SCORE_COLOUR_HANDLER_H
 
+#include <boost/optional/optional_fwd.hpp>
+
 #include "common/type_aliases.h"
 
-//#include "display/display_colourer/display_colourer.h"
-//#include "display_colour/display_colour_gradient.h"
-
-namespace cath {
-	namespace align {
-		class alignment;
-	} // namespace align
-	class display_colour;
-} // namespace cath
+namespace cath { class display_colour; }
+namespace cath { class display_colour_spec; }
+namespace cath { namespace align { class alignment; } }
 
 namespace cath {
 	namespace detail {
@@ -62,6 +58,8 @@ namespace cath {
 			                                      const size_t &) const;
 		};
 
+		using score_colour_handler_opt = boost::optional<score_colour_handler>;
+
 		void score_colour(const score_colour_handler &,
 		                  const align::alignment &,
 		                  const size_t &,
@@ -73,6 +71,14 @@ namespace cath {
 		                                 const size_t &,
 		                                 const size_t &,
 		                                 const display_colour);
+
+		void adjust_display_colour_spec(display_colour_spec &,
+		                                const score_colour_handler &,
+		                                const align::alignment &);
+
+		display_colour_spec adjust_display_colour_spec_copy(display_colour_spec,
+		                                                    const score_colour_handler &,
+		                                                    const align::alignment &);
 	} // namespace detail
 } // namespace cath
 
