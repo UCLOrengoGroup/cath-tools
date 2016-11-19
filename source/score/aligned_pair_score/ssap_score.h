@@ -132,22 +132,22 @@ namespace cath {
 			virtual bool do_less_than_with_same_dynamic_type(const aligned_pair_score &) const override final;
 
 		public:
-			explicit ssap_score(const ssap_score_post_processing &arg_post_processing       = default_post_processing,
-			                    const ssap_score_accuracy        &arg_accuracy              = default_accuracy,
-			                    const size_t                     &arg_num_excluded_on_sides = default_num_excluded_on_sides);
+			explicit ssap_score(const ssap_score_post_processing & = default_post_processing,
+			                    const ssap_score_accuracy        & = default_accuracy,
+			                    const size_t                     & = default_num_excluded_on_sides);
 
 			explicit ssap_score(const length_getter &,
-			                    const ssap_score_post_processing &arg_post_processing       = default_post_processing,
-			                    const ssap_score_accuracy        &arg_accuracy              = default_accuracy,
-			                    const size_t                     &arg_num_excluded_on_sides = default_num_excluded_on_sides);
+			                    const ssap_score_post_processing & = default_post_processing,
+			                    const ssap_score_accuracy        & = default_accuracy,
+			                    const size_t                     & = default_num_excluded_on_sides);
 
-			ssap_score(const length_getter &,
+			ssap_score(const length_getter                          &,
 			           const align::common_residue_selection_policy &,
-			           const align::common_atom_selection_policy &,
-			           const ssap_score_post_processing &arg_post_processing       = default_post_processing,
-			           const ssap_score_accuracy        &arg_accuracy              = default_accuracy,
-			           const size_t                     &arg_num_excluded_on_sides = default_num_excluded_on_sides,
-					   const distance_score_formula     &arg_distance_formula      = default_distance_formula);
+			           const align::common_atom_selection_policy    &,
+			           const ssap_score_post_processing             & = default_post_processing,
+			           const ssap_score_accuracy                    & = default_accuracy,
+			           const size_t                                 & = default_num_excluded_on_sides,
+					   const distance_score_formula                 & = default_distance_formula);
 
 			const length_getter & get_length_getter() const;
 			const ssap_score_post_processing & get_post_processing() const;

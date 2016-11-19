@@ -55,7 +55,7 @@ namespace cath {
 
 				void check_indices(const size_type &,
 				                   const size_type &,
-				                   const bool &arg_permit_one_extra = false) const;
+				                   const bool & = false) const;
 
 				void initialise(const size_type &,
 				                const size_type &,

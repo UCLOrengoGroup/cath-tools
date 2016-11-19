@@ -82,7 +82,7 @@ namespace cath {
 			base_iterator_type checked_next(const base_iterator_type &,
 			                                const base_iterator_type &,
 			                                const ineq_fn_type &,
-			                                const bool &arg_permit_end_itr = false);
+			                                const bool & = false);
 
 			sub_range dereference() const;
 			bool equal(const equal_group_itr &) const;
@@ -92,11 +92,11 @@ namespace cath {
 			template <typename FN>
 			equal_group_itr(const base_iterator_type &,
 			                const base_iterator_type &,
-			                FN arg_less_than_function = std::not_equal_to<orig_value_type>() );
+			                FN = std::not_equal_to<orig_value_type>() );
 
 			template <typename FN>
 			equal_group_itr(RNG &,
-			                FN arg_less_than_function = std::not_equal_to<orig_value_type>() );
+			                FN = std::not_equal_to<orig_value_type>() );
 
 			base_iterator_type get_begin_itr() const;
 		};

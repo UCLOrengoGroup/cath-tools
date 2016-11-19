@@ -86,8 +86,8 @@ namespace cath {
 			const sym_protein_only_length_getter & get_full_length_getter() const;
 		};
 
-		si_score make_simax_score(const align::common_residue_selection_policy &arg_common_residue_selection_policy = align::common_residue_select_all_policy(),
-		                          const align::common_atom_selection_policy    &arg_common_atom_selection_policy    = align::common_atom_select_ca_policy());
+		si_score make_simax_score(const align::common_residue_selection_policy & = align::common_residue_select_all_policy(),
+		                          const align::common_atom_selection_policy & = align::common_atom_select_ca_policy() );
 
 		bool operator<(const si_score &,
 		               const si_score &);

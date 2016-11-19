@@ -108,7 +108,7 @@ namespace cath {
 		};
 
 		str_bool_pair_vec length_getter_as_short_name_suffixes(const length_getter &,
-		                                                       const bool &arg_include_id_name_in_human_friendly = true);
+		                                                       const bool & = true);
 		str_bool_pair_vec length_getter_as_short_name_suffixes(const length_getter &,
 		                                                       const length_getter_category_vec &);
 

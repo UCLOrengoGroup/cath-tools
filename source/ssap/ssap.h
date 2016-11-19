@@ -52,18 +52,18 @@ namespace cath {
 	ptrdiff_t temp_get_global_run_counter();
 
 	prot_prot_pair read_protein_pair(const opts::cath_ssap_options &,
-	                                 std::ostream &arg_stderr = std::cerr);
+	                                 std::ostream & = std::cerr);
 
 	prot_prot_pair read_protein_pair(const std::string &,
 	                                 const std::string &,
 	                                 const opts::data_dirs_spec &,
 	                                 const protein_source_file_set &,
 	                                 const path_opt &,
-	                                 std::ostream &arg_stderr = std::cerr);
+	                                 std::ostream & = std::cerr);
 
 	void run_ssap(const opts::cath_ssap_options &,
-	              std::ostream &arg_stdout = std::cout,
-	              std::ostream &arg_stderr = std::cerr);
+	              std::ostream & = std::cout,
+	              std::ostream & = std::cerr);
 
 	void align_proteins(const protein &,
 	                    const protein &,
@@ -87,7 +87,7 @@ namespace cath {
 	                                                  const std::string &,
 	                                                  const protein_source_file_set &,
 	                                                  const path_opt &,
-	                                                  std::ostream &arg_stderr = std::cerr);
+	                                                  std::ostream & = std::cerr);
 
 	clique read_clique_file(const boost::filesystem::path &);
 
@@ -173,8 +173,8 @@ namespace cath {
 	boost::filesystem::path look_for_file_globally_then_locally(const std::string &,
 	                                                            const std::string &,
 	                                                            const boost::filesystem::path &,
-	                                                            const boost::filesystem::path &arg_local_dir = boost::filesystem::current_path(),
-	                                                            const bool &arg_only_look_locally = false);
+	                                                            const boost::filesystem::path & = boost::filesystem::current_path(),
+	                                                            const bool & = false);
 
 } // namespace cath
 

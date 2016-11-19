@@ -90,7 +90,7 @@ namespace cath {
 
 			static bool is_acceptable_output_file(const boost::filesystem::path &);
 			static bool is_acceptable_input_file(const boost::filesystem::path &,
-			                                     const bool &arg_allow_empty = false);
+			                                     const bool & = false);
 			static bool is_acceptable_output_dir(const boost::filesystem::path &);
 			static bool is_acceptable_input_dir(const boost::filesystem::path &);
 			static bool is_acceptable_executable(const boost::filesystem::path &);

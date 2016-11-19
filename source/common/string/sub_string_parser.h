@@ -35,16 +35,16 @@ namespace cath {
 			void reserve(const size_t &);
 			double substr_as_double(const std::string &,
 			                        const size_t &,
-			                        const size_t &arg_count = std::string::npos);
+			                        const size_t & = std::string::npos);
 			size_t substr_as_size_t(const std::string &,
 			                        const size_t &,
-			                        const size_t &arg_count = std::string::npos);
+			                        const size_t & = std::string::npos);
 			int substr_as_int(const std::string &,
 			                  const size_t &,
-			                  const size_t &arg_count = std::string::npos);
+			                  const size_t & = std::string::npos);
 			const std::string & substr_as_str_ref(const std::string &,
 			                                      const size_t &,
-			                                      const size_t &arg_count = std::string::npos);
+			                                      const size_t & = std::string::npos);
 		};
 
 		/// \brief TODOCUMENT

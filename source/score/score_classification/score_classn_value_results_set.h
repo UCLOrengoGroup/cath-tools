@@ -123,12 +123,12 @@ namespace cath {
 		                                   const boost::filesystem::path &,
 		                                   const size_t &,
 		                                   std::mt19937 &,
-		                                   const double &arg_fraction_positives = 0.5);
+		                                   const double & = 0.5);
 
 		void add_score_classn_value_list_and_add_missing(score_classn_value_results_set &,
 		                                                 score_classn_value_list,
 		                                                 const double &,
-		                                                 const bool &arg_warn_on_missing = false);
+		                                                 const bool & = false);
 
 		str_set get_sorted_instance_labels(const score_classn_value_results_set &);
 

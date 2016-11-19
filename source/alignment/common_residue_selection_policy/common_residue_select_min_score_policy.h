@@ -41,7 +41,7 @@ namespace cath {
 			virtual bool do_less_than_with_same_dynamic_type(const common_residue_selection_policy &) const override final;
 
 		public:
-			explicit common_residue_select_min_score_policy(const double &arg_score_cutoff = DEFAULT_CUTOFF);
+			explicit common_residue_select_min_score_policy(const double & = DEFAULT_CUTOFF);
 
 			/// \brief The minimum permitted value for the score_cutoff
 			///

@@ -70,34 +70,34 @@ namespace cath {
 			static residue_cref_residue_cref_pair_vec get_common_residues(const alignment &,
 			                                                              const protein &,
 			                                                              const protein &,
-			                                                              const common_residue_selection_policy &arg_res_seln_policy  = common_residue_select_all_policy(),
-			                                                              const alignment::size_type            &arg_entry_index_1    = alignment::PAIR_A_IDX,
-			                                                              const alignment::size_type            &arg_entry_index_2    = alignment::PAIR_B_IDX);
+			                                                              const common_residue_selection_policy & = common_residue_select_all_policy(),
+			                                                              const alignment::size_type            & = alignment::PAIR_A_IDX,
+			                                                              const alignment::size_type            & = alignment::PAIR_B_IDX);
 
 		public:
 			static std::pair<geom::coord_list_vec, geom::coord_list_vec> get_common_coords_by_residue(const alignment &,
 			                                                                                          const protein &,
 			                                                                                          const protein &,
-			                                                                                          const common_residue_selection_policy &arg_res_seln_policy  = common_residue_select_all_policy(),
-			                                                                                          const common_atom_selection_policy    &arg_atom_seln_policy = common_atom_select_ca_policy(),
-			                                                                                          const alignment::size_type            &arg_entry_index_1    = alignment::PAIR_A_IDX,
-			                                                                                          const alignment::size_type            &arg_entry_index_2    = alignment::PAIR_B_IDX);
+			                                                                                          const common_residue_selection_policy & = common_residue_select_all_policy(),
+			                                                                                          const common_atom_selection_policy    & = common_atom_select_ca_policy(),
+			                                                                                          const alignment::size_type            & = alignment::PAIR_A_IDX,
+			                                                                                          const alignment::size_type            & = alignment::PAIR_B_IDX);
 
 			static geom::coord_list_coord_list_pair get_common_coords(const alignment &,
 			                                                          const protein &,
 			                                                          const protein &,
-			                                                          const common_residue_selection_policy &arg_res_seln_policy  = common_residue_select_all_policy(),
-			                                                          const common_atom_selection_policy    &arg_atom_seln_policy = common_atom_select_ca_policy(),
-			                                                          const alignment::size_type            &arg_entry_index_1    = alignment::PAIR_A_IDX,
-			                                                          const alignment::size_type            &arg_entry_index_2    = alignment::PAIR_B_IDX);
+			                                                          const common_residue_selection_policy & = common_residue_select_all_policy(),
+			                                                          const common_atom_selection_policy    & = common_atom_select_ca_policy(),
+			                                                          const alignment::size_type            & = alignment::PAIR_A_IDX,
+			                                                          const alignment::size_type            & = alignment::PAIR_B_IDX);
 
 			static geom::coord_list_coord_list_pair get_common_coords(const alignment &,
 			                                                          const file::pdb &,
 			                                                          const file::pdb &,
-			                                                          const common_residue_selection_policy &arg_res_seln_policy  = common_residue_select_all_policy(),
-			                                                          const common_atom_selection_policy    &arg_atom_seln_policy = common_atom_select_ca_policy(),
-			                                                          const alignment::size_type            &arg_entry_index_1    = alignment::PAIR_A_IDX,
-			                                                          const alignment::size_type            &arg_entry_index_2    = alignment::PAIR_B_IDX);
+			                                                          const common_residue_selection_policy & = common_residue_select_all_policy(),
+			                                                          const common_atom_selection_policy    & = common_atom_select_ca_policy(),
+			                                                          const alignment::size_type            & = alignment::PAIR_A_IDX,
+			                                                          const alignment::size_type            & = alignment::PAIR_B_IDX);
 		};
 	} // namespace align
 } // namespace cath

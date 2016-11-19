@@ -64,9 +64,9 @@ namespace cath {
 			using indices_and_coord_lists_type = std::tuple<size_t, geom::coord_list, size_t, geom::coord_list>;
 
 			superposition(const std::vector<indices_and_coord_lists_type> &,
-			              const size_t         &arg_base_index       = 0,
-			              const geom::coord    &arg_base_translation = geom::coord::ORIGIN_COORD,
-			              const geom::rotation &arg_base_rotation    = geom::rotation::IDENTITY_ROTATION());
+			              const size_t         & = 0,
+			              const geom::coord    & = geom::coord::ORIGIN_COORD,
+			              const geom::rotation & = geom::rotation::IDENTITY_ROTATION());
 			superposition(const geom::coord_vec &,
 			              const geom::rotation_vec &);
 
@@ -136,9 +136,9 @@ namespace cath {
 
 		superposition create_pairwise_superposition(const geom::coord_list &,
 		                                            const geom::coord_list &,
-		                                            const bool           &arg_first_as_base    = true,
-		                                            const geom::coord    &arg_base_translation = geom::coord::ORIGIN_COORD,
-		                                            const geom::rotation &arg_base_rotation    = geom::rotation::IDENTITY_ROTATION());
+		                                            const bool           & = true,
+		                                            const geom::coord    & = geom::coord::ORIGIN_COORD,
+		                                            const geom::rotation & = geom::rotation::IDENTITY_ROTATION());
 
 		void superpose_second_coords_to_first(const geom::coord_list &,
 		                                      geom::coord_list &);

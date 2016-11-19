@@ -60,31 +60,31 @@ namespace cath {
 		                                               const superposition &,
 		                                               file::pdb,
 		                                               const size_t &,
-		                                               const bool &arg_relabel_chain = false);
+		                                               const bool & = false);
 
 		std::ostream & write_superposed_pdbs_to_ostream(std::ostream &,
 		                                               const superposition &,
 		                                               const file::pdb_list,
 		                                               const bool &,
-		                                               const bool &arg_relabel_chain = false);
+		                                               const bool & = false);
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const boost::filesystem::path &,
 		                                  const file::pdb &,
 		                                  const size_t &,
-		                                  const bool &arg_relabel_chain = false);
+		                                  const bool & = false);
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const boost::filesystem::path &,
 		                                  const file::pdb_list &,
 		                                  const bool &,
-		                                  const bool &arg_relabel_chain = false);
+		                                  const bool & = false);
 
 		void write_superposed_pdb_from_files(const superposition &,
 		                                     const boost::filesystem::path &,
 		                                     const path_vec &,
 		                                     const bool &,
-		                                     const bool &arg_relabel_chain = false);
+		                                     const bool & = false);
 
 		superposition superposition_from_ptree(const boost::property_tree::ptree &);
 
@@ -96,7 +96,7 @@ namespace cath {
 		superposition superposition_from_json_string(const std::string &);
 
 		std::string to_json_string(const superposition &,
-		                           const bool &arg_pretty_print = true);
+		                           const bool & = true);
 	} // namespace sup
 } // namespace cath
 

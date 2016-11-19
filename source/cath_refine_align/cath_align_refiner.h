@@ -38,9 +38,9 @@ namespace cath {
 
 	public:
 		static void refine(const opts::cath_refine_align_options &,
-		                   std::istream &arg_istream = std::cin,
-		                   std::ostream &arg_stdout  = std::cout,
-		                   std::ostream &arg_stderr  = std::cerr);
+		                   std::istream & = std::cin,
+		                   std::ostream & = std::cout,
+		                   std::ostream & = std::cerr);
 	};
 
 } // namespace cath

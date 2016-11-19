@@ -47,7 +47,7 @@ namespace cath {
 		alignment glue_two_alignments(const alignment &,
 		                              const size_t &,
 		                              const alignment &,
-		                              const size_t &arg_index_in_second = 0);
+		                              const size_t & = 0);
 
 		alignment build_alignment_from_parts(const size_size_alignment_tuple_vec &,
 		                                     const protein_list &);

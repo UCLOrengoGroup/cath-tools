@@ -69,7 +69,7 @@ namespace cath {
 	residue_name make_residue_name(const std::string &);
 	residue_name make_residue_name_with_non_insert_char(const int &,
 	                                                    const char &,
-	                                                    const char &arg_non_insert_char = ' ');
+	                                                    const char & = ' ');
 
 
 } // namespace cath

@@ -68,8 +68,8 @@ namespace cath {
 
 			angle & quick_shift();
 
-			angle & shift(const angle              &arg_lower_angle_of_range = make_angle_from_degrees<angle_type>( 0.0 ),
-			              const angle_endpoint_loc &arg_endpoint_loc         = angle_endpoint_loc::USE_LOWER);
+			angle & shift(const angle & = make_angle_from_degrees<angle_type>( 0.0 ),
+			              const angle_endpoint_loc & = angle_endpoint_loc::USE_LOWER);
 		};
 
 		template <typename T>
@@ -101,8 +101,8 @@ namespace cath {
 
 		template <typename T>
 		angle<T> shift_copy(angle<T>,
-		                    const angle<T>           &arg_lower_angle_of_range = make_angle_from_degrees<T>( 0.0 ),
-		                    const angle_endpoint_loc &arg_endpoint_loc         = angle_endpoint_loc::USE_LOWER);
+		                    const angle<T> & = make_angle_from_degrees<T>( 0.0 ),
+		                    const angle_endpoint_loc & = angle_endpoint_loc::USE_LOWER);
 
 		template <typename T>
 		inline angle<T> make_angle_from_degrees(const double &);

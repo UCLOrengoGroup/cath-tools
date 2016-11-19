@@ -37,9 +37,9 @@ namespace cath {
 
 	public:
 		static void superpose(const opts::cath_superpose_options &,
-		                      std::istream &arg_istream = std::cin,
-		                      std::ostream &arg_stdout = std::cout,
-		                      std::ostream &arg_stderr = std::cerr);
+		                      std::istream & = std::cin,
+		                      std::ostream & = std::cout,
+		                      std::ostream & = std::cerr);
 
 		static sup::superposition_context get_superposition_context(const opts::cath_superpose_options &,
 		                                                            std::istream &,

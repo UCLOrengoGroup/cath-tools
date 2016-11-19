@@ -51,8 +51,8 @@ namespace cath {
 		public:
 			populate_matrix_scan_action(const index_type &arg_num_residues_a,
 			                            const index_type &arg_num_residues_b,
-			                            const index_type &arg_structure_a = 0,
-			                            const index_type &arg_structure_b = 0);
+			                            const index_type & = 0,
+			                            const index_type & = 0);
 			void operator()(const detail::single_struc_res_pair &,
 			                const detail::single_struc_res_pair &,
 			                const index_type &,

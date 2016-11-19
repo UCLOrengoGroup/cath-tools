@@ -54,7 +54,7 @@ namespace cath {
 		protein protein_from_dssp_and_pdb(const dssp_file &,
 		                                  const pdb &,
 		                                  const bool &,
-		                                  const std::string &arg_name = "");
+		                                  const std::string & = "");
 
 		residue_name_vec get_residue_names(const dssp_file &,
 		                                   const bool &);

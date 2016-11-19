@@ -46,7 +46,7 @@ namespace cath {
 			using const_iterator = domain_vec::const_iterator;
 
 			chopping(const domain_vec &,
-			         const region_vec &arg_fragments = region_vec() );
+			         const region_vec & = region_vec() );
 
 			size_t num_domains() const;
 			size_t num_fragments() const;

@@ -47,7 +47,7 @@ namespace cath {
 		public:
 			env_var_option_name_handler(const std::string &,
 			                            const bool &,
-			                            const boost::program_options::options_description &arg_options = boost::program_options::options_description());
+			                            const boost::program_options::options_description & = boost::program_options::options_description());
 
 			std::string operator()(const std::string &) const;
 		};

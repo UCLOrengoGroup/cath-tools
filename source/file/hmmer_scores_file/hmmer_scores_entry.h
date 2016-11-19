@@ -130,7 +130,7 @@ namespace cath {
 		                const hmmer_scores_entry &);
 
 		hmmer_scores_entry hmmer_scores_entry_from_line(const std::string &,
-		                                                const hmmer_name_handling &arg_hmmer_name_handling = hmmer_name_handling::STRIP);
+		                                                const hmmer_name_handling & = hmmer_name_handling::STRIP);
 
 		std::string to_string(const hmmer_scores_entry &);
 

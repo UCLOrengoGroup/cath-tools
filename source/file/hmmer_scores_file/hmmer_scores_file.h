@@ -21,10 +21,10 @@ namespace cath {
 			static hmmer_scores_entry_vec remove_duplicates(const hmmer_scores_entry_vec &);
 
 			static hmmer_scores_entry_vec parse_hmmer_scores_file(std::istream &,
-			                                                      const hmmer_name_handling &arg_hmmer_name_handling = hmmer_name_handling::STRIP);
+			                                                      const hmmer_name_handling & = hmmer_name_handling::STRIP);
 
 			static hmmer_scores_entry_vec parse_hmmer_scores_file(const boost::filesystem::path &,
-			                                                      const hmmer_name_handling &arg_hmmer_name_handling = hmmer_name_handling::STRIP);
+			                                                      const hmmer_name_handling & = hmmer_name_handling::STRIP);
 
 //			static hmmer_scores_entry_vec parse_hmmer_scores_file_fancy(std::istream &);
 

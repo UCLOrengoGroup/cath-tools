@@ -48,72 +48,72 @@ namespace cath {
 		alignment read_alignment_from_cath_ssap_legacy_format(const boost::filesystem::path &,
 		                                                      const protein &,
 		                                                      const protein &,
-		                                                      std::ostream &arg_stderr = std::cerr);
+		                                                      std::ostream & = std::cerr);
 
 		alignment read_alignment_from_cath_ssap_legacy_format(std::istream &,
 		                                                      const protein &,
 		                                                      const protein &,
-		                                                      std::ostream &arg_stderr = std::cerr);
+		                                                      std::ostream & = std::cerr);
 
 		alignment read_alignment_from_cath_ssap_legacy_format(std::istream &,
 		                                                      const file::pdb &,
 		                                                      const file::pdb &,
-		                                                      std::ostream &arg_stderr = std::cerr);
+		                                                      std::ostream & = std::cerr);
 
 		alignment read_alignment_from_cath_ssap_legacy_format(std::istream &,
 		                                                      const residue_name_vec &,
 		                                                      const residue_name_vec &,
-		                                                      std::ostream &arg_stderr = std::cerr);
+		                                                      std::ostream & = std::cerr);
 
 		alignment read_alignment_from_cath_cora_legacy_format(std::istream &,
 		                                                      const file::pdb_list &,
-		                                                      std::ostream &arg_stderr = std::cerr);
+		                                                      std::ostream & = std::cerr);
 
 		str_str_pair_vec read_ids_and_sequences_from_fasta(std::istream &);
 
 		aln_posn_opt_vec align_sequence_to_amino_acids(const std::string &,
 		                                               const amino_acid_vec &,
 		                                               const std::string &,
-		                                               std::ostream &arg_stderr = std::cerr);
+		                                               std::ostream & = std::cerr);
 
 		/// \todo Write code to make it easy to parse from proteins (and to optionally rescore whilst doing so)
 
 		alignment read_alignment_from_fasta_file(const boost::filesystem::path &,
 		                                         const file::pdb_list &,
-		                                         std::ostream &arg_stderr = std::cerr);
+		                                         std::ostream & = std::cerr);
 
 		alignment read_alignment_from_fasta_file(const boost::filesystem::path &,
 		                                         const file::pdb_list &,
 		                                         const str_vec &,
-		                                         std::ostream &arg_stderr = std::cerr);
+		                                         std::ostream & = std::cerr);
 
 		alignment read_alignment_from_fasta(std::istream &,
 		                                    const file::pdb_list &,
-		                                    std::ostream &arg_stderr = std::cerr);
+		                                    std::ostream & = std::cerr);
 
 		alignment read_alignment_from_fasta_file(const boost::filesystem::path &,
 		                                         const protein_list &,
-		                                         std::ostream &arg_stderr = std::cerr);
+		                                         std::ostream & = std::cerr);
 
 		alignment read_alignment_from_fasta_file(const boost::filesystem::path &,
 		                                         const protein_list &,
 		                                         const str_vec &,
-		                                         std::ostream &arg_stderr = std::cerr);
+		                                         std::ostream & = std::cerr);
 
 		alignment read_alignment_from_fasta(std::istream &,
 		                                    const protein_list &,
-		                                    std::ostream &arg_stderr = std::cerr);
+		                                    std::ostream & = std::cerr);
 
 		alignment read_alignment_from_fasta(std::istream &,
 		                                    const amino_acid_vec_vec &,
 		                                    const str_vec &,
-		                                    std::ostream &arg_stderr = std::cerr);
+		                                    std::ostream & = std::cerr);
 
 		aln_posn_opt search_for_residue_in_residue_names(const size_t &,
 		                                                 const residue_name_vec &,
 		                                                 const char &,
 		                                                 const residue_name &,
-		                                                 std::ostream &arg_stderr = std::cerr);
+		                                                 std::ostream & = std::cerr);
 
 		void write_alignment_as_cath_ssap_legacy_format(const boost::filesystem::path &,
 		                                                const alignment &,

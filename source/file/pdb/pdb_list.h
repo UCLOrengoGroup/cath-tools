@@ -70,7 +70,7 @@ namespace cath {
 		pdb_list make_pdb_list(const pdb_vec &);
 
 		pdb_list pdb_list_of_backbone_complete_subset_pdbs(const pdb_list &,
-		                                                   std::ostream &arg_ostream = std::cerr);
+		                                                   std::ostream & = std::cerr);
 
 		protein_list build_protein_list_of_pdb_list(const pdb_list &);
 

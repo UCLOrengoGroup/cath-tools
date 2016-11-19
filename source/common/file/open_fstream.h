@@ -78,11 +78,11 @@ namespace cath {
 
 		void open_ifstream(std::ifstream &,
 		                   const boost::filesystem::path &,
-		                   const std::ios_base::openmode &arg_mode = std::ios_base::in);
+		                   const std::ios_base::openmode & = std::ios_base::in);
 
 		void open_ofstream(std::ofstream &,
 		                   const boost::filesystem::path &,
-		                   const std::ios_base::openmode &arg_mode = std::ios_base::out);
+		                   const std::ios_base::openmode & = std::ios_base::out);
 
 	} // namespace common
 } // namespace cath

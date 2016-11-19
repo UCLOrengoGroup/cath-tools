@@ -106,7 +106,7 @@ namespace cath {
 
 			void gnuplot_data(const filter_vs_full_score_list &,
 			                  const boost::filesystem::path &,
-			                  const filter_vs_full_score_list &arg_filter_attempts = filter_vs_full_score_list());
+			                  const filter_vs_full_score_list & = filter_vs_full_score_list());
 
 			void gnuplot_classsn_stat_for_recall(const filter_vs_full_score_list &,
 			                                     const boost::filesystem::path &,

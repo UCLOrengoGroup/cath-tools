@@ -39,8 +39,8 @@ namespace cath {
 
 	public:
 		files_equal(const bool &,
-		            const str_size_type &arg_diff_half_width = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
-		explicit files_equal(const str_size_type &arg_diff_half_width = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
+		            const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
+		explicit files_equal(const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
 
 		boost::test_tools::predicate_result operator()(const boost::filesystem::path &,
 		                                               const boost::filesystem::path &) const;

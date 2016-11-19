@@ -37,46 +37,46 @@ namespace cath {
 
 	protein read_protein_from_wolf_and_sec_files(const boost::filesystem::path &,
 	                                             const boost::filesystem::path &,
-	                                             const std::string &arg_name   = "",
-	                                             std::ostream      &arg_stderr = std::cerr);
+	                                             const std::string & = "",
+	                                             std::ostream & = std::cerr);
 
 	protein read_protein_from_dssp_pdb_and_sec_files(const boost::filesystem::path &,
 	                                                 const boost::filesystem::path &,
 	                                                 const boost::filesystem::path &,
 	                                                 const bool &,
-	                                                 const std::string &arg_name   = "",
-	                                                 std::ostream      &arg_stderr = std::cerr);
+	                                                 const std::string & = "",
+	                                                 std::ostream & = std::cerr);
 
 	protein read_protein_from_dssp_and_pdb(const boost::filesystem::path &,
 	                                       const boost::filesystem::path &,
 	                                       const bool &,
-	                                       const std::string &arg_name = "");
+	                                       const std::string & = "");
 
 	protein read_protein_from_pdb(const boost::filesystem::path &,
-	                              const std::string &arg_name = "",
-	                              std::ostream      &arg_stderr = std::cerr);
+	                              const std::string & = "",
+	                              std::ostream & = std::cerr);
 
 	protein protein_from_wolf_and_sec(const file::wolf_file &,
 	                                  const file::sec_file &,
-	                                  const std::string &arg_name   = "",
-	                                  std::ostream      &arg_stderr = std::cerr);
+	                                  const std::string & = "",
+	                                  std::ostream & = std::cerr);
 
 	protein protein_from_dssp_pdb_and_sec(const file::dssp_file &,
 	                                      const file::pdb &,
 	                                      const file::sec_file &,
 	                                      const bool &,
-	                                      const std::string &arg_name   = "",
-	                                      std::ostream      &arg_stderr = std::cerr);
+	                                      const std::string & = "",
+	                                      std::ostream & = std::cerr);
 
 	void add_name_and_paint_sec_file_onto_protein(protein &,
 	                                              const file::sec_file &,
-	                                              const std::string &arg_name   = "",
-	                                              std::ostream      &arg_stderr = std::cerr);
+	                                              const std::string & = "",
+	                                              std::ostream & = std::cerr);
 
 	protein add_name_and_paint_sec_file_onto_protein_copy(protein,
 	                                                      const file::sec_file &,
-	                                                      const std::string &arg_name   = "",
-	                                                      std::ostream      &arg_stderr = std::cerr);
+	                                                      const std::string & = "",
+	                                                      std::ostream & = std::cerr);
 
 	void paint_sec_file_onto_protein(protein &,
 	                                 const file::sec_file &,

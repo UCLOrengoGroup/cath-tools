@@ -67,7 +67,7 @@ namespace cath {
 	const detail::score_colour_handler & get_score_colour_handler(const display_colourer &);
 
 	std::unique_ptr<const display_colourer> get_display_colourer(const display_spec &,
-	                                                             const display_colour_gradient &arg_colour_gradient = make_default_colour_gradient() );
+	                                                             const display_colour_gradient & = make_default_colour_gradient() );
 
 	display_colour_spec get_colour_spec(const display_colourer &,
 	                                    const file::pdb_list &,

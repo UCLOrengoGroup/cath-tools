@@ -67,7 +67,7 @@ namespace cath {
 
 			int run_program(int,
 			                char * [],
-			                std::ostream &arg_os = std::cerr);
+			                std::ostream & = std::cerr);
 			sink_sptr get_sink_ptr();
 		};
 

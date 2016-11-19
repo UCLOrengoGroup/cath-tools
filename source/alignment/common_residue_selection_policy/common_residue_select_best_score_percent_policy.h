@@ -39,7 +39,7 @@ namespace cath {
 			virtual bool do_less_than_with_same_dynamic_type(const common_residue_selection_policy &) const override final;
 
 		public:
-			explicit common_residue_select_best_score_percent_policy(const double &arg_best_score_percentage = DEFAULT_BEST_SCORE_PERCENTAGE);
+			explicit common_residue_select_best_score_percent_policy(const double & = DEFAULT_BEST_SCORE_PERCENTAGE);
 
 			/// \brief TODOCUMENT
 			static constexpr double MIN_BEST_SCORE_PERCENTAGE     =   0.0;

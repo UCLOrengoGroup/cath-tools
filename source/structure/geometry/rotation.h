@@ -117,9 +117,9 @@ namespace cath {
 			rotation(const double &, const double &, const double &,
 			         const double &, const double &, const double &,
 			         const double &, const double &, const double &,
-			         const double &arg_tolerance = DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
+			         const double & = DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
 			rotation(const doub_vec &,
-			         const double &arg_tolerance = DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
+			         const double & = DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
 
 			const double & get_value(const size_t &, const size_t &) const;
 
@@ -162,9 +162,9 @@ namespace cath {
 		rotation tidy_rotation(const double &, const double &, const double &,
 		                       const double &, const double &, const double &,
 		                       const double &, const double &, const double &,
-		                       const double &arg_tolerance = rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
+		                       const double & = rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
 		rotation tidy_copy(const rotation &,
-		                   const double &arg_tolerance = rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
+		                   const double & = rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
 
 		void rotate(const rotation &, coord_list &);
 		void rotate(const rotation &, coord &);
