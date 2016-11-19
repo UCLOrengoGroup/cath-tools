@@ -49,8 +49,8 @@ namespace cath {
 		/// \brief Ctor from a range and a flag indicating whether it can be assumed that range is sorted
 		template <typename RNG>
 		template <typename FN>
-		equal_grouped_range<RNG>::equal_grouped_range(const RNG              &arg_range,           ///< The range over which to apply the equal_grouped_range
-		                                              FN                      arg_unequal_function ///< TODOCUMENT
+		equal_grouped_range<RNG>::equal_grouped_range(const RNG &arg_range,           ///< The range over which to apply the equal_grouped_range
+		                                              FN         arg_unequal_function ///< TODOCUMENT
 		                                              ) : super(
 		                                                  	equal_grouped_iterator( std::begin( arg_range ), std::end( arg_range ), arg_unequal_function ),
 		                                                  	equal_grouped_iterator( std::end  ( arg_range ), std::end( arg_range ), arg_unequal_function )

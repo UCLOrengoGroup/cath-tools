@@ -34,7 +34,7 @@ namespace cath {
 	template <distance_score_formula F = distance_score_formula::USED_IN_PREVIOUS_CODE>
 	inline float_score_type score_of_squared_distance(const float_score_type &arg_scaled_squared_distance, ///< TODOCUMENT
 	                                                  const float_score_type &arg_int_scaling_float_score  ///< TODOCUMENT
-													  ) {
+	                                                  ) {
 		//
 		const float_score_type &residue_max_dist_sq_cutoff = residue_querier::RESIDUE_MAX_DIST_SQ_CUTOFF;
 		const float_score_type &residue_a_value            = residue_querier::RESIDUE_A_VALUE;
