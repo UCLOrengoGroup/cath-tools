@@ -1852,16 +1852,16 @@ void cath::print_ssap_scores(ostream            &arg_os,              ///< TODOC
                              const bool         &arg_write_all_scores ///< TODOCUMENT
                              ) {
 	if (arg_run_counter == 1) {
-		arg_os << arg_ssap_line1 << endl;
+		arg_os << arg_ssap_line1 << "\n";
 	}
 	else if (arg_run_counter == 2) {
 		if (arg_write_all_scores) {
-			arg_os << arg_ssap_line1 << endl;
-			arg_os << arg_ssap_line2 << endl;
+			arg_os << arg_ssap_line1 << "\n";
+			arg_os << arg_ssap_line2 << "\n";
 		}
 		else {
 			const string best_line = (arg_ssap_score_2 >= arg_ssap_score_1) ? arg_ssap_line2 : arg_ssap_line1;
-			arg_os << best_line << endl;
+			arg_os << best_line << "\n";
 		}
 	}
 	else {

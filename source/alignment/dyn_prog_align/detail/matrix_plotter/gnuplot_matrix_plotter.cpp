@@ -130,9 +130,11 @@ void gnuplot_matrix_plotter::do_finish(const path &arg_output_stem ///< TODOCUME
 
 	gp << preplot_commands.str();
 
-	cerr << "About to plot with size " << scores.size() << endl;
+	cerr << "About to plot with size " << scores.size() << "\n";
 
-	gp << "plot " << gp.file1d(scores, the_data_file.string()) << " matrix with image notitle" << endl;
+	gp << "plot " << gp.file1d(scores, the_data_file.string()) << " matrix with image notitle\n";
+
+	// To check: has removing the final endl from here caused any problems?
 }
 
 /// \brief Ctor for gnuplot_matrix_plotter

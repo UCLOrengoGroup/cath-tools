@@ -85,11 +85,11 @@ BOOST_AUTO_TEST_CASE(check_parsing_of_end_separators) {
 		for (size_t num_between_ends = 1; num_between_ends < MAX_NUM_CONSECUTIVE_ENDS; ++num_between_ends) {
 			for (size_t num_after_ends = 0; num_after_ends < MAX_NUM_CONSECUTIVE_ENDS; ++num_after_ends) {
 				stringstream end_separated_stream;
-				end_separated_stream << join(str_vec(num_before_ends,  "END"), "\n") << endl;
-				end_separated_stream << "ATOM   2952  OXT ALA   385      70.681 -13.748  36.367  1.00 26.84           O" << endl;
-				end_separated_stream << join(str_vec(num_between_ends, "END"), "\n") << endl;
-				end_separated_stream << "ATOM   2968  OXT ARG   387      20.593  77.271 -19.667  1.00  0.00           O" << endl;
-				end_separated_stream << join(str_vec(num_after_ends,   "END"), "\n") << endl;
+				end_separated_stream << join(str_vec(num_before_ends,  "END"), "\n") << "\n";
+				end_separated_stream << "ATOM   2952  OXT ALA   385      70.681 -13.748  36.367  1.00 26.84           O\n";
+				end_separated_stream << join(str_vec(num_between_ends, "END"), "\n") << "\n";
+				end_separated_stream << "ATOM   2968  OXT ARG   387      20.593  77.271 -19.667  1.00  0.00           O\n";
+				end_separated_stream << join(str_vec(num_after_ends,   "END"), "\n") << "\n";
 				check_nums_of_atoms(
 					read_end_separated_pdb_files(end_separated_stream),
 					{ 1_z, 1_z }

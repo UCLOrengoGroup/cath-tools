@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 		BOOST_CHECK( !filename.empty() );
 		ofstream file_stream;
 		open_ofstream(file_stream, filename);
-		file_stream << "string" << endl;
+		file_stream << "string\n";
 		file_stream.close();
 		BOOST_CHECK( exists(filename) );
 	}

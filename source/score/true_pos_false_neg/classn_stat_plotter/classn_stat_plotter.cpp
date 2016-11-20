@@ -195,7 +195,8 @@ set ytics font "Helvetica,18"
 	);
 	gp << "plot "
 	   << boost::algorithm::join( boost::range::join( arg_plot_spec.get_pre_plot_strs(), main_plot_strs ), ", ")
-	   << endl;
+	   << "\n";
+	// To check: has removing the final endl from here caused any problems?
 
 }
 

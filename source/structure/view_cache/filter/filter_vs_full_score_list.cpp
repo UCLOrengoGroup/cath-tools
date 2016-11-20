@@ -345,8 +345,8 @@ void cath::index::filter::gnuplot_data(const filter_vs_full_score_list &arg_filt
 	gp << "plot "
 	   << gp.file1d( values,  the_data_file.string()    ) << " with points notitle linetype rgb \"#555555\" pointtype 7 pointsize 0.1, "
 //	   << gp.file1d( filters, filter_data_file.string() ) << " with points notitle linetype rgb \"#000000\" pointtype 1 pointsize 0.5"
-	   << gp.file1d( filters, filter_data_file.string() ) << " with lines  notitle linestyle 1"
-	   << endl;
+	   << gp.file1d( filters, filter_data_file.string() ) << " with lines  notitle linestyle 1\n";
+	// To check: has removing the final endl from here caused any problems?
 }
 
 /// \brief TODOCUMENT
@@ -402,6 +402,8 @@ void cath::index::filter::gnuplot_classsn_stat_for_recall(const doub_true_false_
 		}
 	);
 
-	gp << "plot " << gp.file1d( values, the_data_file.string() ) << " with lines notitle linestyle 1" << endl;
+	gp << "plot " << gp.file1d( values, the_data_file.string() ) << " with lines notitle linestyle 1\n";
+
+	// To check: has removing the final endl from here caused any problems?
 }
 

@@ -182,7 +182,7 @@ value_list_scaling cath::score::get_scaling(const score_classn_value_list &arg_s
 //	cerr << ", constant is "     << constant;
 //	cerr << ", scaled_best is "  << scale_value_copy( test_scaling, the_best_score  );
 //	cerr << ", scaled_worst is " << scale_value_copy( test_scaling, the_worst_score );
-//	cerr << endl;
+//	cerr << "\n";
 
 	return { multiplier, constant };
 }
@@ -241,24 +241,24 @@ const score_classn_value & cath::score::worst_scoring_actual_negative(const scor
 ostream & cath::score::summarise_score_classn_value_list(ostream                       &arg_ostream,                ///< TODOCUMENT
                                                          const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
 														 ) {
-	arg_ostream << "###############################################" << endl;
-	arg_ostream << "# Summary of score_classn_value_list"            << endl;
-	arg_ostream << "###############################################" << endl;
-	arg_ostream << "# Name                          : " << arg_score_classn_value_list.get_name()              << endl;
-	arg_ostream << "# Higher is better              : " << boolalpha << get_higher_is_better( arg_score_classn_value_list ) << endl;
-	arg_ostream << "# Size                          : " << arg_score_classn_value_list.size()                  << endl;
+	arg_ostream << "###############################################\n";
+	arg_ostream << "# Summary of score_classn_value_list\n";
+	arg_ostream << "###############################################\n";
+	arg_ostream << "# Name                          : " << arg_score_classn_value_list.get_name()              << "\n";
+	arg_ostream << "# Higher is better              : " << boolalpha << get_higher_is_better( arg_score_classn_value_list ) << "\n";
+	arg_ostream << "# Size                          : " << arg_score_classn_value_list.size()                  << "\n";
 
 	if ( ! arg_score_classn_value_list.empty() ) {
-		arg_ostream << "###############################################" << endl;
-		arg_ostream << "# Area under ROC curve          : " << area_under_roc_curve( arg_score_classn_value_list ) << endl;
-		arg_ostream << "# Best score                    : " << front( arg_score_classn_value_list ).get_score_value() << endl;
-		arg_ostream << "# Worst score                   : " << back ( arg_score_classn_value_list ).get_score_value() << endl;
-		arg_ostream << "# Best scoring actual positive  : " << best_scoring_actual_positive ( arg_score_classn_value_list ) << endl;
-		arg_ostream << "# Best scoring actual negative  : " << best_scoring_actual_negative ( arg_score_classn_value_list ) << endl;
-		arg_ostream << "# Worst scoring actual positive : " << worst_scoring_actual_positive( arg_score_classn_value_list ) << endl;
-		arg_ostream << "# Worst scoring actual negative : " << worst_scoring_actual_negative( arg_score_classn_value_list ) << endl;
+		arg_ostream << "###############################################\n";
+		arg_ostream << "# Area under ROC curve          : " << area_under_roc_curve( arg_score_classn_value_list ) << "\n";
+		arg_ostream << "# Best score                    : " << front( arg_score_classn_value_list ).get_score_value() << "\n";
+		arg_ostream << "# Worst score                   : " << back ( arg_score_classn_value_list ).get_score_value() << "\n";
+		arg_ostream << "# Best scoring actual positive  : " << best_scoring_actual_positive ( arg_score_classn_value_list ) << "\n";
+		arg_ostream << "# Best scoring actual negative  : " << best_scoring_actual_negative ( arg_score_classn_value_list ) << "\n";
+		arg_ostream << "# Worst scoring actual positive : " << worst_scoring_actual_positive( arg_score_classn_value_list ) << "\n";
+		arg_ostream << "# Worst scoring actual negative : " << worst_scoring_actual_negative( arg_score_classn_value_list ) << "\n";
 	}
-	arg_ostream << "###############################################" << endl;
+	arg_ostream << "###############################################\n";
 	return arg_ostream;
 }
 

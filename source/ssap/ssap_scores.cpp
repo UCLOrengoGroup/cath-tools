@@ -98,12 +98,12 @@ ostream & cath::operator<<(ostream           &arg_os,         ///< The ostream t
                            const ssap_scores &arg_ssap_scores ///< The ssap_scores to output
                            ) {
 	arg_os << "ssap_scores[";
-	arg_os << "\tget_num_aligned_pairs                    : " << arg_ssap_scores.get_num_aligned_pairs()                    << endl;
-	arg_os << "\tget_percentage_aligned_pairs_over_larger : " << arg_ssap_scores.get_percentage_aligned_pairs_over_larger() << endl;
-	arg_os << "\tget_seq_id                               : " << arg_ssap_scores.get_seq_id()                               << endl;
-	arg_os << "\tget_ssap_score_over_compared             : " << arg_ssap_scores.get_ssap_score_over_compared()             << endl;
-	arg_os << "\tget_ssap_score_over_smaller              : " << arg_ssap_scores.get_ssap_score_over_smaller()              << endl;
-	arg_os << "\tget_ssap_score_over_larger               : " << arg_ssap_scores.get_ssap_score_over_larger()               << endl;
+	arg_os << "\tget_num_aligned_pairs                    : " << arg_ssap_scores.get_num_aligned_pairs()                    << "\n";
+	arg_os << "\tget_percentage_aligned_pairs_over_larger : " << arg_ssap_scores.get_percentage_aligned_pairs_over_larger() << "\n";
+	arg_os << "\tget_seq_id                               : " << arg_ssap_scores.get_seq_id()                               << "\n";
+	arg_os << "\tget_ssap_score_over_compared             : " << arg_ssap_scores.get_ssap_score_over_compared()             << "\n";
+	arg_os << "\tget_ssap_score_over_smaller              : " << arg_ssap_scores.get_ssap_score_over_smaller()              << "\n";
+	arg_os << "\tget_ssap_score_over_larger               : " << arg_ssap_scores.get_ssap_score_over_larger()               << "\n";
 	arg_os << "]";
 	return arg_os;
 }

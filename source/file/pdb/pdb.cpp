@@ -431,7 +431,7 @@ pdb_list cath::file::read_end_separated_pdb_files(istream &arg_in_stream ///< TO
 		}
 		// Otherwise, just add this line to pdb_file_stream
 		else {
-			pdb_file_stream << line_str << endl;
+			pdb_file_stream << line_str << "\n";
 		}
 	}
 

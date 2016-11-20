@@ -154,10 +154,10 @@ namespace cath {
 
 //							const bool contains_key = common::contains( common::cross( close_keys ), the_keyer.make_key( the_res_pair ) );
 //							if ( contains_key ) {
-//								BOOST_LOG_TRIVIAL( warning ) << "\t\t\tDoes contain the central key" << std::endl;
+//								BOOST_LOG_TRIVIAL( warning ) << "\t\t\tDoes contain the central key";
 //							}
 //							else {
-//								BOOST_LOG_TRIVIAL( warning ) << "\t\t\t***** Doesn't contain the central key" << std::endl;
+//								BOOST_LOG_TRIVIAL( warning ) << "\t\t\t***** Doesn't contain the central key";
 //							}
 
 //							size_t counter = 0;

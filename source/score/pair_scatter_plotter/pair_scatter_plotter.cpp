@@ -73,5 +73,6 @@
 //)";
 //
 //
-//	gp << "plot " << gp.file1d( arg_data, the_data_file.string() ) + " with points " << endl;
+//	gp << "plot " << gp.file1d( arg_data, the_data_file.string() ) + " with points \n";
+//	// To check: has removing the final endl from here caused any problems?
 //}

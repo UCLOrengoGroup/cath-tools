@@ -436,7 +436,7 @@ void cath::sup::write_superposition(ostream             &arg_os,           ///< 
 		arg_os << " "  << entry_rotation.get_value<2, 0>();
 		arg_os << " "  << entry_rotation.get_value<2, 1>();
 		arg_os << " "  << entry_rotation.get_value<2, 2>();
-		arg_os << endl;
+		arg_os << "\n";
 	}
 	arg_os.precision(old_precision);
 }

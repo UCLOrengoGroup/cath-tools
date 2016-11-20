@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE(find_file_works) {
 	const path      temp_file_filename = get_filename( temp_file );
 	ofstream temp_file_stream;
 	open_ofstream(temp_file_stream, temp_file_filename);
-	temp_file_stream << "some text" << endl;
+	temp_file_stream << "some text\n";
 	temp_file_stream.close();
 
 	const string full_path = temp_file_filename.parent_path().string() + ":" + EXAMPLE_PATH_STR;

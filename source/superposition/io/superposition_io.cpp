@@ -93,18 +93,18 @@ void cath::sup::write_xml_sup(ostream              &arg_ostream,       ///< TODO
 	}
 
 	arg_ostream << setprecision(6) << fixed;
-	arg_ostream << "<?xml version=\"1.0\"?>" << endl;
-	arg_ostream << "<root>" << endl;
+	arg_ostream << "<?xml version=\"1.0\"?>\n";
+	arg_ostream << "<root>\n";
 
 	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
 		const coord centre_of_gravity = -arg_superposition.get_translation_of_index(entry_ctr);
 		arg_ostream << "  <structure" << entry_ctr+1 << " id=\"" << arg_ids[entry_ctr];
-		arg_ostream << "\">" << endl;
+		arg_ostream << "\">\n";
 		arg_ostream << "    <centre x=\"" << centre_of_gravity.get_x();
 		arg_ostream <<          "\" y=\"" << centre_of_gravity.get_y();
 		arg_ostream <<          "\" z=\"" << centre_of_gravity.get_z();
-		arg_ostream <<          "\" />" << endl;
-		arg_ostream << "  </structure" << entry_ctr+1 << ">" << endl;
+		arg_ostream <<          "\" />\n";
+		arg_ostream << "  </structure" << entry_ctr+1 << ">\n";
 	}
 
 	for (size_t rotation_ctr = 1; rotation_ctr < num_entries; ++rotation_ctr) {
@@ -115,10 +115,10 @@ void cath::sup::write_xml_sup(ostream              &arg_ostream,       ///< TODO
 				// NOTE: transposing the matrix to be consistent with legacy behaviour
 				arg_ostream << " col" << dim_ctr_2+1 << "=\"" << sup_rotn.get_value(dim_ctr_2, dim_ctr_1) << "\"";
 			}
-			arg_ostream << " />" << endl;
+			arg_ostream << " />\n";
 		}
 	}
-	arg_ostream << "</root>" << endl;
+	arg_ostream << "</root>\n";
 }
 
 
@@ -217,15 +217,16 @@ ostream & cath::sup::write_superposed_pdbs_to_ostream(ostream             &arg_o
 	}
 
 	if (arg_write_script) {
-		arg_os << "#!rasmol -script"                        << endl;
-		arg_os << "zap"                                     << endl;
-		arg_os << "load inline"                             << endl;
-		arg_os << "wireframe off"                           << endl;
-		arg_os << "select all"                              << endl;
-		arg_os << "cartoon"                                 << endl;
-		arg_os << "select *"                                << endl;
-		arg_os << "color chain"                             << endl;
-		arg_os << "exit"                                    << endl;
+		arg_os << R"(#!rasmol -script
+zap
+load inline
+wireframe off
+select all
+cartoon
+select *
+color chain
+exit
+)";
 	}
 
 	// Translate each PDB to midpoint, based on CoG of equivalent positions
