@@ -34,9 +34,6 @@ namespace cath {
 			                                           const alignment::size_type &,
 			                                           const alignment::size_type &) const override final;
 			virtual size_vec do_select_common_residues_with_scores(const doub_doub_pair_vec &) const = 0;
-
-		public:
-			virtual ~common_residue_score_based_selection_policy() noexcept = default;
 		};
 	} // namespace align
 } // namespace cath

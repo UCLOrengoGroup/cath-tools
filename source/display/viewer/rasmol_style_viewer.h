@@ -32,9 +32,6 @@ namespace cath {
 		virtual std::string do_default_file_extension() const override final;
 		virtual void do_write_alignment_extras(std::ostream &,
 		                                       const sup::superposition_context &) const override = 0;
-
-	public:
-		virtual ~rasmol_style_viewer() noexcept = default;
 	};
 
 } // namespace cath

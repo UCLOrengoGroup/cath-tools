@@ -66,8 +66,6 @@ namespace cath {
 			virtual const std::string do_description_brackets_string() const override final;
 
 		public:
-			virtual ~protein_only_length_getter() noexcept = default;
-
 			std::unique_ptr<protein_only_length_getter> protein_only_clone() const;
 
 			size_t get_prot_only_length(const protein &,
