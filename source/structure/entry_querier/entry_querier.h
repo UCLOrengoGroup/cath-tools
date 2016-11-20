@@ -55,7 +55,13 @@ namespace cath {
 		virtual bool         do_temp_hacky_is_residue() const = 0;
 
 	public:
+		entry_querier() = default;
 		virtual ~entry_querier() noexcept = default;
+
+		entry_querier(const entry_querier &) = default;
+		entry_querier(entry_querier &&) noexcept = default;
+		entry_querier & operator=(const entry_querier &) = default;
+		entry_querier & operator=(entry_querier &&) noexcept = default;
 
 		size_t       get_length(const cath::protein &) const;
 		double       get_gap_penalty_ratio() const;

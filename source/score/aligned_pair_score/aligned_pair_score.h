@@ -92,8 +92,14 @@ namespace cath {
 			virtual bool do_less_than_with_same_dynamic_type(const aligned_pair_score &) const = 0;
 
 		public:
+			aligned_pair_score() = default;
 			virtual ~aligned_pair_score() noexcept = default;
 			std::unique_ptr<aligned_pair_score> clone() const;
+
+			aligned_pair_score(const aligned_pair_score &) = default;
+			aligned_pair_score(aligned_pair_score &&) noexcept = default;
+			aligned_pair_score & operator=(const aligned_pair_score &) = default;
+			aligned_pair_score & operator=(aligned_pair_score &&) noexcept = default;
 
 			boost::logic::tribool higher_is_better() const;
 			score_value calculate(const align::alignment &,

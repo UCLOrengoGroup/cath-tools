@@ -42,8 +42,14 @@ namespace cath {
 			virtual bool do_involves_display_spec() const = 0;
 
 		public:
+			alignment_outputter() = default;
 			std::unique_ptr<alignment_outputter> clone() const;
 			virtual ~alignment_outputter() noexcept = default;
+
+			alignment_outputter(const alignment_outputter &) = default;
+			alignment_outputter(alignment_outputter &&) noexcept = default;
+			alignment_outputter & operator=(const alignment_outputter &) = default;
+			alignment_outputter & operator=(alignment_outputter &&) noexcept = default;
 
 			void output_alignment(const align::alignment_context &,
 			                      std::ostream &) const;

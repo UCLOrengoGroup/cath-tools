@@ -79,8 +79,14 @@ namespace cath {
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const = 0;
 
 		public:
+			options_block() = default;
 			std::unique_ptr<options_block> clone() const;
 			virtual ~options_block() noexcept = default;
+
+			options_block(const options_block &) = default;
+			options_block(options_block &&) noexcept = default;
+			options_block & operator=(const options_block &) = default;
+			options_block & operator=(options_block &&) noexcept = default;
 
 			boost::program_options::options_description get_all_options_description(const size_t &);
 			boost::program_options::options_description get_visible_options_description(const size_t &);

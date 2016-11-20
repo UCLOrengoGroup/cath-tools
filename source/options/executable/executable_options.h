@@ -128,7 +128,13 @@ namespace cath {
 			                                              const size_t &);
 
 		public:
+			executable_options() = default;
 			virtual ~executable_options() noexcept = default;
+
+			executable_options(const executable_options &) = default;
+			executable_options(executable_options &&) noexcept = default;
+			executable_options & operator=(const executable_options &) = default;
+			executable_options & operator=(executable_options &&) noexcept = default;
 
 			void parse_options(const int &,
 			                   const char * const []);

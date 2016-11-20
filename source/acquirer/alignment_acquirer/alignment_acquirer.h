@@ -58,8 +58,14 @@ namespace cath {
 			static constexpr size_t MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR = 10;
 
 		public:
+			alignment_acquirer() = default;
 			std::unique_ptr<alignment_acquirer> clone() const;
 			virtual ~alignment_acquirer() noexcept = default;
+
+			alignment_acquirer(const alignment_acquirer &) = default;
+			alignment_acquirer(alignment_acquirer &&) noexcept = default;
+			alignment_acquirer & operator=(const alignment_acquirer &) = default;
+			alignment_acquirer & operator=(alignment_acquirer &&) noexcept = default;
 
 			std::pair<align::alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const file::pdb_list &) const;
 		};

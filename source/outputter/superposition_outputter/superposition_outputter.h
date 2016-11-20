@@ -43,8 +43,14 @@ namespace cath {
 			virtual bool do_involves_display_spec() const = 0;
 
 		public:
+			superposition_outputter() = default;
 			std::unique_ptr<superposition_outputter> clone() const;
 			virtual ~superposition_outputter() noexcept = default;
+
+			superposition_outputter(const superposition_outputter &) = default;
+			superposition_outputter(superposition_outputter &&) noexcept = default;
+			superposition_outputter & operator=(const superposition_outputter &) = default;
+			superposition_outputter & operator=(superposition_outputter &&) noexcept = default;
 
 			void output_superposition(const sup::superposition_context &,
 			                          std::ostream &) const;

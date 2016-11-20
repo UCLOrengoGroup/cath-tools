@@ -50,7 +50,13 @@ namespace cath {
 				                              const gap::gap_penalty &) const = 0;
 
 			public:
+				string_aligner() = default;
 				virtual ~string_aligner() noexcept = default;
+
+				string_aligner(const string_aligner &) = default;
+				string_aligner(string_aligner &&) noexcept = default;
+				string_aligner & operator=(const string_aligner &) = default;
+				string_aligner & operator=(string_aligner &&) noexcept = default;
 
 				cath::str_str_score_tpl align(const std::string &,
 				                              const std::string &,

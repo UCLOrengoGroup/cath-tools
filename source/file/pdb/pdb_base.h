@@ -73,7 +73,13 @@ namespace cath {
 			virtual void do_subtract(const geom::coord &) = 0;
 
 		public:
+			pdb_base() = default;
 			virtual ~pdb_base() noexcept = default;
+
+			pdb_base(const pdb_base &) = default;
+			pdb_base(pdb_base &&) noexcept = default;
+			pdb_base & operator=(const pdb_base &) = default;
+			pdb_base & operator=(pdb_base &&) noexcept = default;
 
 			void read_file(const boost::filesystem::path &);
 			void append_to_file(const boost::filesystem::path &) const;

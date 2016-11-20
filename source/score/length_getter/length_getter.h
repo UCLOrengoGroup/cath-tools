@@ -83,7 +83,13 @@ namespace cath {
 			virtual bool do_less_than_with_same_dynamic_type(const length_getter &) const = 0;
 
 		public:
+			length_getter() = default;
 			virtual ~length_getter() noexcept = default;
+
+			length_getter(const length_getter &) = default;
+			length_getter(length_getter &&) noexcept = default;
+			length_getter & operator=(const length_getter &) = default;
+			length_getter & operator=(length_getter &&) noexcept = default;
 
 			std::unique_ptr<length_getter> clone() const;
 

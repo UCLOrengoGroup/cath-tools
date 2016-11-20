@@ -47,8 +47,14 @@ namespace cath {
 			virtual std::pair<cath::file::pdb_list, str_vec> do_get_pdbs_and_names(std::istream &) const = 0;
 
 		public:
+			pdbs_acquirer() = default;
 			std::unique_ptr<pdbs_acquirer> clone() const;
 			virtual ~pdbs_acquirer() noexcept = default;
+
+			pdbs_acquirer(const pdbs_acquirer &) = default;
+			pdbs_acquirer(pdbs_acquirer &&) noexcept = default;
+			pdbs_acquirer & operator=(const pdbs_acquirer &) = default;
+			pdbs_acquirer & operator=(pdbs_acquirer &&) noexcept = default;
 
 			file::pdb_list_str_vec_pair get_pdbs_and_names(std::istream &,
 			                                               const bool &) const;

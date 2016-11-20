@@ -39,7 +39,13 @@ namespace cath {
 			virtual sup::superposition_context do_get_superposition(std::ostream &) const = 0;
 
 		public:
+			superposition_acquirer() = default;
 			virtual ~superposition_acquirer() noexcept = default;
+
+			superposition_acquirer(const superposition_acquirer &) = default;
+			superposition_acquirer(superposition_acquirer &&) noexcept = default;
+			superposition_acquirer & operator=(const superposition_acquirer &) = default;
+			superposition_acquirer & operator=(superposition_acquirer &&) noexcept = default;
 
 			sup::superposition_context get_superposition(std::ostream &) const;
 

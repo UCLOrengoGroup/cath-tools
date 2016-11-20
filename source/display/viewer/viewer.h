@@ -59,7 +59,13 @@ namespace cath {
 		virtual void do_write_end(std::ostream &) const = 0;
 
 	public:
+		viewer() = default;
 		virtual ~viewer() noexcept = default;
+
+		viewer(const viewer &) = default;
+		viewer(viewer &&) noexcept = default;
+		viewer & operator=(const viewer &) = default;
+		viewer & operator=(viewer &&) noexcept = default;
 
 		std::string default_executable() const;
 		std::string default_file_extension() const;

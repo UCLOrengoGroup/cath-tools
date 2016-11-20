@@ -34,7 +34,13 @@ namespace cath {
 			virtual region do_read_region(const std::string &) const = 0;
 
 		public:
+			region_reader() = default;
 			virtual ~region_reader() noexcept = default;
+
+			region_reader(const region_reader &) = default;
+			region_reader(region_reader &&) noexcept = default;
+			region_reader & operator=(const region_reader &) = default;
+			region_reader & operator=(region_reader &&) noexcept = default;
 
 			region read_region(const std::string &) const;
 		};

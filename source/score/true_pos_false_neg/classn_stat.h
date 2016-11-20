@@ -57,7 +57,13 @@ namespace cath {
 			virtual std::string do_get_name() const = 0;
 
 		public:
+			classn_stat() = default;
 			virtual ~classn_stat() noexcept = default;
+
+			classn_stat(const classn_stat &) = default;
+			classn_stat(classn_stat &&) noexcept = default;
+			classn_stat & operator=(const classn_stat &) = default;
+			classn_stat & operator=(classn_stat &&) noexcept = default;
 
 			size_rational calculate(const true_false_pos_neg &) const;
 			std::string get_name() const;

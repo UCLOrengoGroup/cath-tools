@@ -51,8 +51,14 @@ namespace cath {
 			                                      const size_type &) const = 0;
 
 		public:
+			dyn_prog_aligner() = default;
 			std::unique_ptr<dyn_prog_aligner> clone() const;
 			virtual ~dyn_prog_aligner() noexcept = default;
+
+			dyn_prog_aligner(const dyn_prog_aligner &) = default;
+			dyn_prog_aligner(dyn_prog_aligner &&) noexcept = default;
+			dyn_prog_aligner & operator=(const dyn_prog_aligner &) = default;
+			dyn_prog_aligner & operator=(dyn_prog_aligner &&) noexcept = default;
 
 			score_alignment_pair align(const dyn_prog_score_source &,
 			                           const gap::gap_penalty &,

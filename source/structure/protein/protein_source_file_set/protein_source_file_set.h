@@ -56,7 +56,14 @@ namespace cath {
 		                              std::ostream &) const = 0;
 
 	public:
+		protein_source_file_set() = default;
 		virtual ~protein_source_file_set() noexcept = default;
+
+		protein_source_file_set(const protein_source_file_set &) = default;
+		protein_source_file_set(protein_source_file_set &&) noexcept = default;
+		protein_source_file_set & operator=(const protein_source_file_set &) = default;
+		protein_source_file_set & operator=(protein_source_file_set &&) noexcept = default;
+		
 		std::unique_ptr<protein_source_file_set> clone() const;
 
 		file::data_file_vec get_file_set() const;

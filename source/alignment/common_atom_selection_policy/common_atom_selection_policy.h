@@ -74,7 +74,13 @@ namespace cath {
 			virtual bool do_less_than_with_same_dynamic_type(const common_atom_selection_policy &) const = 0;
 
 		public:
+			common_atom_selection_policy() = default;
 			virtual ~common_atom_selection_policy() noexcept = default;
+
+			common_atom_selection_policy(const common_atom_selection_policy &) = default;
+			common_atom_selection_policy(common_atom_selection_policy &&) noexcept = default;
+			common_atom_selection_policy & operator=(const common_atom_selection_policy &) = default;
+			common_atom_selection_policy & operator=(common_atom_selection_policy &&) noexcept = default;
 
 			void append_common_atoms_to_coord_lists(geom::coord_list_coord_list_pair &,
 			                                        const residue &,

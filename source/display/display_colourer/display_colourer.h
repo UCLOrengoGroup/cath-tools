@@ -57,6 +57,11 @@ namespace cath {
 		explicit display_colourer(const detail::score_colour_handler &);
 		virtual ~display_colourer() noexcept = default;
 
+		display_colourer(const display_colourer &) = default;
+		display_colourer(display_colourer &&) noexcept = default;
+		display_colourer & operator=(const display_colourer &) = default;
+		display_colourer & operator=(display_colourer &&) noexcept = default;
+
 		std::unique_ptr<display_colourer> clone() const;
 
 		const detail::score_colour_handler_opt & get_score_colour_handler_opt() const;

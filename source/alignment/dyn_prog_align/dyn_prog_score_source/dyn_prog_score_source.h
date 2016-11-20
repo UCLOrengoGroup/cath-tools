@@ -46,7 +46,13 @@ namespace cath {
 			                                const size_t &) const = 0;
 
 		public:
+			dyn_prog_score_source() = default;
 			virtual ~dyn_prog_score_source() noexcept = default;
+
+			dyn_prog_score_source(const dyn_prog_score_source &) = default;
+			dyn_prog_score_source(dyn_prog_score_source &&) noexcept = default;
+			dyn_prog_score_source & operator=(const dyn_prog_score_source &) = default;
+			dyn_prog_score_source & operator=(dyn_prog_score_source &&) noexcept = default;
 
 			size_t get_length_a() const;
 			size_t get_length_b() const;

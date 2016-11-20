@@ -65,10 +65,16 @@ namespace cath {
 			virtual unique_ptr<clone_ptr_test_abstract_base> do_clone() const = 0;
 
 		public:
+			clone_ptr_test_abstract_base() = default;
 			unique_ptr<clone_ptr_test_abstract_base> clone() const {
 				return check_uptr_clone_against_this( do_clone(), *this );
 			}
 			virtual ~clone_ptr_test_abstract_base() noexcept = default;
+
+			clone_ptr_test_abstract_base(const clone_ptr_test_abstract_base &) = default;
+			clone_ptr_test_abstract_base(clone_ptr_test_abstract_base &&) noexcept = default;
+			clone_ptr_test_abstract_base & operator=(const clone_ptr_test_abstract_base &) = default;
+			clone_ptr_test_abstract_base & operator=(clone_ptr_test_abstract_base &&) noexcept = default;
 
 			virtual size_t method() const = 0;
 		};

@@ -82,6 +82,11 @@ namespace cath {
 				               const size_t &);
 				virtual ~matrix_plotter() noexcept = default;
 
+				matrix_plotter(const matrix_plotter &) = default;
+				matrix_plotter(matrix_plotter &&) noexcept = default;
+				matrix_plotter & operator=(const matrix_plotter &) = default;
+				matrix_plotter & operator=(matrix_plotter &&) noexcept = default;
+
 				void plot_scores(const dyn_prog_score_source &);
 				void plot_return_path_matrix(const return_path_matrix &);
 				void plot_accumulated_scores(const score_accumulation_matrix &);

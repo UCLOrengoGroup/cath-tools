@@ -54,7 +54,13 @@ namespace cath {
 			virtual bool do_less_than_with_same_dynamic_type(const common_residue_selection_policy &) const = 0;
 
 		public:
+			common_residue_selection_policy() = default;
 			virtual ~common_residue_selection_policy() noexcept = default;
+
+			common_residue_selection_policy(const common_residue_selection_policy &) = default;
+			common_residue_selection_policy(common_residue_selection_policy &&) noexcept = default;
+			common_residue_selection_policy & operator=(const common_residue_selection_policy &) = default;
+			common_residue_selection_policy & operator=(common_residue_selection_policy &&) noexcept = default;
 
 			std::vector<alignment::size_type> select_common_residues(const alignment &,
 			                                                         const alignment::size_type &,

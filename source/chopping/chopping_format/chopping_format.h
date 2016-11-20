@@ -41,7 +41,13 @@ namespace cath {
 			virtual domain do_parse_domain(const std::string &) const = 0;
 
 		public:
+			chopping_format() = default;
 			virtual ~chopping_format() noexcept = default;
+
+			chopping_format(const chopping_format &) = default;
+			chopping_format(chopping_format &&) noexcept = default;
+			chopping_format & operator=(const chopping_format &) = default;
+			chopping_format & operator=(chopping_format &&) noexcept = default;
 
 			bool represents_fragments() const;
 

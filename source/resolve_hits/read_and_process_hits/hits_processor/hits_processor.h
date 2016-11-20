@@ -76,6 +76,11 @@ namespace cath {
 				                        const crh_segment_spec &) noexcept;
 				virtual ~hits_processor() noexcept = default;
 
+				hits_processor(const hits_processor &) = default;
+				hits_processor(hits_processor &&) noexcept = default;
+				hits_processor & operator=(const hits_processor &) = default;
+				hits_processor & operator=(hits_processor &&) noexcept = default;
+
 				std::unique_ptr<hits_processor> clone() const;
 
 				void process_hits_for_query(const std::string &,

@@ -40,7 +40,13 @@ namespace cath {
 				                                                                           const protein_list &) const = 0;
 
 			public:
+				scan_type() = default;
 				virtual ~scan_type() noexcept = default;
+
+				scan_type(const scan_type &) = default;
+				scan_type(scan_type &&) noexcept = default;
+				scan_type & operator=(const scan_type &) = default;
+				scan_type & operator=(scan_type &&) noexcept = default;
 
 				std::unique_ptr<scan_type> clone() const;
 
