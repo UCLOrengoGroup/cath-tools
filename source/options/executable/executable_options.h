@@ -134,7 +134,7 @@ namespace cath {
 			executable_options(const executable_options &) = default;
 			executable_options(executable_options &&) noexcept = default;
 			executable_options & operator=(const executable_options &) = default;
-			executable_options & operator=(executable_options &&) noexcept = default;
+			executable_options & operator=(executable_options &&) = default;
 
 			void parse_options(const int &,
 			                   const char * const []);
