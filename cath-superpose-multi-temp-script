@@ -9,6 +9,7 @@ use Data::Dumper;
 use Digest::MD5      qw/ md5_hex        /;
 use English          qw/ -no_match_vars /;
 use feature          qw/ say            /;
+use File::Which      qw/ which          /;
 use IPC::Run3;
 use List::MoreUtils  qw/ uniq           /;
 use Path::Class      qw/ dir file       /;
@@ -46,15 +47,18 @@ foreach my $struc_id1 ( @struc_ids ) {
 			
 			# If both files already exist then say so
 			if ( -s $alignment_file && -s $scores_file ) {
-				warn localtime(time())." : SSAP files already exist for $struc_id1 vs $struc_id2\n";
+				warn localtime(time())." : cath-ssap files already exist for $struc_id1 vs $struc_id2\n";
 			}
-			# Otherwise perform the SSAP and write the scores to a file
+			# Otherwise perform the cath-ssap and write the scores to a file
 			else {
-				warn localtime(time())." : Performing SSAP for $struc_id1 vs $struc_id2\n";
+				warn localtime(time())." : Performing cath-ssap for $struc_id1 vs $struc_id2\n";
+				my $cath_ssap_name = 'cath-ssap';
+				my $cath_ssap_exe = which( $cath_ssap_name )
+					|| confess "Unable to find SSAP executable \"$cath_ssap_name\" - please sure it is executable and located in one of the directories in your PATH";
 				my ($ssap_stdout, $ssap_stderr);
-				run3( [ 'SSAP', $struc_id1, $struc_id2 ], undef, \$ssap_stdout, \$ssap_stderr);
-				if ($CHILD_ERROR) {
-					confess "Error when running SSAP for $struc_id1 vs $struc_id2 (stdout: \"$ssap_stdout\"; stderr: \"$ssap_stderr\")";
+				run3( [ $cath_ssap_exe, $struc_id1, $struc_id2 ], undef, \$ssap_stdout, \$ssap_stderr);
+				if ( $CHILD_ERROR ) {
+					confess "Error when running cath-ssap for $struc_id1 vs $struc_id2 (stdout: \"$ssap_stdout\"; stderr: \"$ssap_stderr\")";
 				}
 				$scores_file->spew($ssap_stdout);
 			}

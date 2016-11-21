@@ -18,8 +18,37 @@ It does this be focusing the superposition on those parts of the alignment that 
 ./cath-superpose --ssap-aln-infile 1cukA1bvsA.list --pdb-infile /global/data/directories/pdb/1cukA --pdb-infile /global/data/directories/pdb/1bvsA --sup-to-pymol
 ~~~~~
 
-(This will attempt to fire up PyMOL to view the superposition; see the usage for different options.)
+(This will attempt to fire up [PyMOL](https://www.pymol.org/) to view the superposition; see the usage for different options.)
 
+
+Multiple Superpositions
+-----------------------
+
+![Screenshot](img/1g5aA03_1r7aA02_1wzaA02_1zjaA02.jpg)
+<br>
+*__Above__: Four similar structures superposed by `cath-superpose` (as rendered by PyMOL)*
+
+
+
+`cath-superpose` can superpose more than two structures (see `--ssap-scores-infile`), but that currently requires you to prepare data for it and that can be a bit fiddly (eg running all-vs-all `cath-ssap`s). Until we make `cath-superpose` a bit friendlier on this front, we provide a simple Perl script `cath-superpose-multi-temp-script` to help you out. To get going: download it ([GitHub page](https://github.com/UCLOrengoGroup/cath-tools/blob/master/cath-superpose-multi-temp-script), [raw](https://raw.githubusercontent.com/UCLOrengoGroup/cath-tools/master/cath-superpose-multi-temp-script)), make it executable (eg `chmod +x cath-superpose-multi-temp-script`) and put it in one of your `PATH` directories or prepend it with `./` whenever executing it.
+
+Also, ensure that `cath-ssap` is in one of your `PATH` directories and that you've set any environment variables to allow it to find the correct input files.
+
+To prepare a new multiple superposition, create a temporary directory for your data and then run `cath-superpose-multi-temp-script` with that directory and a list of structures to superpose as arguments, eg:
+
+~~~~~no-highlight
+mkdir /tmp/my_dir
+cath-superpose-multi-temp-script /tmp/my_dir 1aldA00 1b57A00 1fq0A00 1ok4A00
+~~~~~
+
+This performs the necessary `cath-ssap`s, writes out a file containing the pairwise scores and then prints out two commands: a `cath-superpose` command to use this data to superpose the structures and write out a [PyMOL](https://www.pymol.org/) script file, and a [PyMOL](https://www.pymol.org/) command to view it. Eg:
+
+~~~~~no-highlight
+cath-superpose --ssap-scores-infile /tmp/my_dir/ssap_scores.2ff3bab40f9f9c1659ff8f63ba66baf1 --pdb-infile $PDBDIR/1aldA00 --pdb-infile $PDBDIR/1b57A00 --pdb-infile $PDBDIR/1fq0A00 --pdb-infile $PDBDIR/1ok4A00 --sup-to-pymol-file 2ff3bab40f9f9c1659ff8f63ba66baf1.pml
+pymol 2ff3bab40f9f9c1659ff8f63ba66baf1.pml
+~~~~~
+
+Now, you can customise the `cath-superpose` command to suit your needs.
 
 Usage
 -----
