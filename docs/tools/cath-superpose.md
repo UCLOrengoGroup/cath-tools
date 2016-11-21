@@ -1,6 +1,10 @@
 cath-superpose
 ==============
 
+![Screenshot-small](img/1fi2A00_1j58A01.bad.jpg) ![Screenshot-small](img/1fi2A00_1j58A01.good.jpg)
+<br>
+*__Above__: (**l**) A standard superposition ([1fi2A00](http://www.cathdb.info/version/latest/domain/1fi2A00)/[1j58A01](http://www.cathdb.info/version/latest/domain/1j58A01)), distorted by structurally divergent regions; (**r**) an equivalent `cath-superpose` superposition, which focuses on structurally similar regions, thus increasing RMSD (~17.4&Aring; &rarr; ~22.5&Aring;) but substantially improving the superposition. <sub style="color: grey;">[rendered by PyMOL]</sub>*
+
 The cath-superpose tool makes superpositions that look better (but have higher RMSDs).
 
 It does this be focusing the superposition on those parts of the alignment that align well so that other aligned regions with greater variance don't disrupt the superposition. To use cath-superpose, you need to give it a way to align the structures, which can be any of:
@@ -26,7 +30,7 @@ Multiple Superpositions
 
 ![Screenshot](img/1g5aA03_1r7aA02_1wzaA02_1zjaA02.jpg)
 <br>
-*__Above__: Four similar structures superposed by `cath-superpose` (as rendered by PyMOL)*
+*__Above__: Four similar structures superposed by `cath-superpose` <sub style="color: grey;">[rendered by PyMOL]</sub>*
 
 
 
