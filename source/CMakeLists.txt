@@ -1010,6 +1010,13 @@ set(
 )
 
 set(
+	NORMSOURCES_STRUCTURE_SEC_STRUC_CALC
+		structure/sec_struc_calc/bifur_hbond_list.cpp
+		structure/sec_struc_calc/dssp_dupl_fixture.cpp
+		structure/sec_struc_calc/dssp_h_bond.cpp
+)
+
+set(
 	NORMSOURCES_STRUCTURE_VIEW_CACHE_DETAIL_PLATE
 		structure/view_cache/detail/plate/plate_scan.cpp
 		structure/view_cache/detail/plate/rod_cache.cpp
@@ -1064,6 +1071,7 @@ set(
 		${NORMSOURCES_STRUCTURE_GEOMETRY}
 		${NORMSOURCES_STRUCTURE_PROTEIN}
 		structure/residue_name.cpp
+		${NORMSOURCES_STRUCTURE_SEC_STRUC_CALC}
 		${NORMSOURCES_STRUCTURE_VIEW_CACHE}
 )
 
@@ -1822,6 +1830,12 @@ set(
 )
 
 set(
+	TESTSOURCES_STRUCTURE_SEC_STRUC_CALC
+		structure/sec_struc_calc/bifur_hbond_list_test.cpp
+		structure/sec_struc_calc/dssp_h_bond_test.cpp
+)
+
+set(
 	TESTSOURCES_STRUCTURE_VIEW_CACHE_DETAIL_PLATE
 		structure/view_cache/detail/plate/plate_scan_test.cpp
 		structure/view_cache/detail/plate/rod_cache_test.cpp
@@ -1882,6 +1896,7 @@ set(
 		${TESTSOURCES_STRUCTURE_GEOMETRY}
 		structure/get_residue_names_test.cpp
 		${TESTSOURCES_STRUCTURE_PROTEIN}
+		${TESTSOURCES_STRUCTURE_SEC_STRUC_CALC}
 		${TESTSOURCES_STRUCTURE_VIEW_CACHE}
 )
 
