@@ -5,9 +5,9 @@ The cath-superpose tool makes superpositions that look better (even though they 
 
 ![Screenshot-small](img/1fi2A00_1j58A01.bad.jpg) ![Screenshot-small](img/1fi2A00_1j58A01.good.jpg)
 <br>
-*__Above__: (**Left**) Two structually variable domains superposed according to the optimal (i.e. lowest) RMSD ([1fi2A00](http://www.cathdb.info/version/latest/domain/1fi2A00)/[1j58A01](http://www.cathdb.info/version/latest/domain/1j58A01)); (**Right**) the equivalent domains superposed with `cath-superpose`, which focuses on optimising the RMSD the most structurally similar regions. The total RMSD increases from ~17.4&Aring; to ~22.5&Aring;, however the overall superposition is substantially improved. <sub style="color: grey;">[rendered by PyMOL]</sub>*
+*__Above__: (**Left**) Two structually variable domains superposed according to the optimal (i.e. lowest) RMSD ([1fi2A00](http://www.cathdb.info/version/latest/domain/1fi2A00)/[1j58A01](http://www.cathdb.info/version/latest/domain/1j58A01)); (**Right**) the equivalent domains superposed with `cath-superpose`, which focuses on optimising the RMSD of the most structurally similar regions. The total RMSD increases from ~17.4&Aring; to ~22.5&Aring;, however the overall superposition is substantially improved. <sub style="color: grey;">[rendered by PyMOL]</sub>*
 
-It does this be focusing the superposition on those parts of the alignment that align well so that other aligned regions with greater variance don't disrupt the superposition. To use cath-superpose, you need to give it a way to align the structures, which can be any of:
+It does this by focusing the superposition on those parts of the alignment that align well so that other aligned regions with greater variance don't disrupt the superposition. To use cath-superpose, you need to give it a way to align the structures, which can be any of:
 
  * a SSAP alignment (ie `.list` file) (see [`cath-ssap`](cath-ssap))
  * a FASTA alignment
