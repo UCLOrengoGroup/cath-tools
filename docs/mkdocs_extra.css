@@ -2,7 +2,7 @@ div.wy-nav-content {
 	padding-top: 0;
 }
 
-img[alt="Screenshot"],img[alt="Screenshot-small"] {
+img[alt="Screenshot"], img[alt="Screenshot-half"] {
 	border-color  : black;
 	border-style  : solid;
 	border-width  : 1px;
@@ -11,8 +11,14 @@ img[alt="Screenshot"],img[alt="Screenshot-small"] {
 	width         : 60%;
 }
 
-img[alt="Screenshot-small"] {
+img[alt="Screenshot-half"] {
 	width         : 45%;
+	padding       : 2px;
+}
+
+.figure-caption {
+	color: grey;
+	font-size: 80%;
 }
 
 div.section hr, div.section p, div.section ul {

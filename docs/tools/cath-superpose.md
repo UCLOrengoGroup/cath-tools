@@ -1,11 +1,13 @@
 cath-superpose
 ==============
 
-The cath-superpose tool makes superpositions that look better (even though they may have higher overall RMSDs).
-
-![Screenshot-small](img/1fi2A00_1j58A01.bad.jpg) ![Screenshot-small](img/1fi2A00_1j58A01.good.jpg)
+![Screenshot-half](img/1fi2A00_1j58A01.bad.jpg) ![Screenshot-half](img/1fi2A00_1j58A01.good.jpg)
 <br>
-*__Above__: (**Left**) Two structually variable domains superposed according to the optimal (i.e. lowest) RMSD ([1fi2A00](http://www.cathdb.info/version/latest/domain/1fi2A00)/[1j58A01](http://www.cathdb.info/version/latest/domain/1j58A01)); (**Right**) the equivalent domains superposed with `cath-superpose`, which focuses on optimising the RMSD of the most structurally similar regions. The total RMSD increases from ~17.4&Aring; to ~22.5&Aring;, however the overall superposition is substantially improved. <sub style="color: grey;">[rendered by PyMOL]</sub>*
+<span class="figure-caption">*__Left__: A standard superposition of [1fi2A00](http://www.cathdb.info/version/latest/domain/1fi2A00)/[1j58A01](http://www.cathdb.info/version/latest/domain/1j58A01) is disrupted by divergent regions;<br>__Right__: `cath-superpose` does better by targeting the similar regions (but at the cost of increased RMSD). <sub style="color: grey;">[rendered by PyMOL]</sub>*</span>
+
+-----
+
+The cath-superpose tool makes superpositions that look better (even though they may have higher overall RMSDs).
 
 It does this by focusing the superposition on those parts of the alignment that align well so that other aligned regions with greater variance don't disrupt the superposition. To use cath-superpose, you need to give it a way to align the structures, which can be any of:
 
@@ -30,7 +32,7 @@ Multiple Superpositions
 
 ![Screenshot](img/1g5aA03_1r7aA02_1wzaA02_1zjaA02.jpg)
 <br>
-*__Above__: Four similar structures superposed by `cath-superpose` <sub style="color: grey;">[rendered by PyMOL]</sub>*
+<span class="figure-caption">*Four similar structures superposed by `cath-superpose` <sub style="color: grey;">[rendered by PyMOL]</sub>*</span>
 
 
 

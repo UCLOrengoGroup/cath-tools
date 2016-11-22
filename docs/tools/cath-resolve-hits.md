@@ -5,7 +5,7 @@ A fast, effective way to collapse a list of domain matches to your query sequenc
 
 ![Screenshot](img/cath-resolve-hits.example.jpg)
 <br>
-*__Above__: cath-resolve-hits chooses the hits at the top from the list of possible hits at the bottom*
+<span class="figure-caption">*__Above__: cath-resolve-hits chooses the hits at the top from the list of possible hits at the bottom*</span>
 
 
 Features
