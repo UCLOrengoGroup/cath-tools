@@ -98,7 +98,7 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	const str_vec  &ids_block_ids  = arg_cath_superpose_options.get_ids();
 	const str_vec  &names          = ( ids_block_ids.size() == raw_pdbs.size() ) ? ids_block_ids
 	                                                                             : raw_names;
-	const pdb_list  pdbs           = pdb_list_of_backbone_complete_subset_pdbs( raw_pdbs );
+	const pdb_list  backbone_complete_subset_pdbs = pdb_list_of_backbone_complete_subset_pdbs( raw_pdbs );
 
 	if ( raw_pdbs.empty() ) {
 		logger::log_and_exit(
@@ -112,14 +112,14 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	if ( json_sup_infile ) {
 		return set_pdbs_copy(
 			read_superposition_context_from_json_file( *json_sup_infile ),
-			pdbs
+			raw_pdbs
 		);
 	}
 
 	// Get the alignment and corresponding spanning tree
 	const auto       aln_and_spn_tree = [&] () {
 		try {
-			return get_alignment_and_spanning_tree( arg_cath_superpose_options, pdbs );
+			return get_alignment_and_spanning_tree( arg_cath_superpose_options, backbone_complete_subset_pdbs );
 		}
 		catch (const std::exception &e) {
 			logger::log_and_exit(
@@ -136,10 +136,10 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	const path ssap_scores_file = arg_cath_superpose_options.get_alignment_input_spec().get_ssap_scores_file();
 	if ( ! ssap_scores_file.empty() ) {
 		return superposition_context(
-			raw_pdbs, ///< This should be raw_pdbs, not pdbs, so that superpositions include stripped residues (eg HETATM only residues). /// \todo Consider adding fast, simple test that ssap_scores_file superposition output includes HETATMs.
+			raw_pdbs, ///< This should be raw_pdbs, not backbone_complete_subset_pdbs, so that superpositions include stripped residues (eg HETATM only residues). /// \todo Consider adding fast, simple test that ssap_scores_file superposition output includes HETATMs.
 			names,
 			hacky_multi_ssap_fuction(
-				pdbs,
+				backbone_complete_subset_pdbs,
 				names,
 				spanning_tree,
 				ssap_scores_file.parent_path(),
