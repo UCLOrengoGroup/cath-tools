@@ -22,9 +22,11 @@
 #define _CATH_TOOLS_SOURCE_FILE_PDB_PDB_LIST_H
 
 #include <boost/operators.hpp>
+#include <boost/optional.hpp>
 #include <boost/range.hpp>
 
 #include "common/path_type_aliases.h"
+#include "common/type_aliases.h"
 #include "file/file_type_aliases.h"
 #include "structure/structure_type_aliases.h"
 
@@ -70,7 +72,7 @@ namespace cath {
 		pdb_list make_pdb_list(const pdb_vec &);
 
 		pdb_list pdb_list_of_backbone_complete_subset_pdbs(const pdb_list &,
-		                                                   std::ostream & = std::cerr);
+		                                                   const ostream_ref_opt & = boost::none);
 
 		protein_list build_protein_list_of_pdb_list(const pdb_list &);
 

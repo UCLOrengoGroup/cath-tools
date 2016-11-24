@@ -22,15 +22,18 @@
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 #include <boost/range/irange.hpp>
 
 #include "common/algorithm/copy_build.h"
 #include "common/algorithm/transform_build.h"
+#include "common/boost_addenda/log/log_to_ostream_guard.h"
 #include "common/cpp14/cbegin_cend.h"
 #include "common/file/open_fstream.h"
 #include "common/size_t_literal.h"
@@ -60,9 +63,11 @@ using namespace cath::geom;
 using namespace std;
 
 using boost::adaptors::filtered;
+using boost::adaptors::transformed;
 using boost::algorithm::all;
 using boost::algorithm::any_of;
 using boost::algorithm::is_space;
+using boost::algorithm::join;
 using boost::algorithm::starts_with;
 using boost::irange;
 using boost::lexical_cast;
@@ -554,11 +559,14 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb &arg
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-pdb cath::file::backbone_complete_subset_of_pdb(const pdb &arg_pdb,        ///< TODOCUMENT
-                                                ostream   &/*arg_ostream*/ ///< TODOCUMENT
+pdb cath::file::backbone_complete_subset_of_pdb(const pdb             &arg_pdb,             ///< TODOCUMENT
+                                                const ostream_ref_opt &arg_ostream_ref_opt, ///< An optional reference to an ostream to which any logging should be sent
+                                                const bool            &arg_skip_like_dssp   ///< TODOCUMENT
                                                 ) {
 	// Grab the number of residues
 	const size_t num_residues = arg_pdb.get_num_residues();
+
+	residue_name_vec backbone_skipped_residues;
 
 	// Prepare a vector of the new residues
 	pdb_residue_vec new_pdb_residues;
@@ -569,15 +577,32 @@ pdb cath::file::backbone_complete_subset_of_pdb(const pdb &arg_pdb,        ///< 
 		const pdb_residue &the_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr );
 
 		// If the residue is backbone_complete,then add it to new_pdb_residues
-		if ( is_backbone_complete( the_residue ) ) {
+		const bool     skip_like_dssp_and_ok =   arg_skip_like_dssp && ! dssp_will_skip_residue( the_residue );
+		const bool not_skip_like_dssp_and_ok = ! arg_skip_like_dssp && is_backbone_complete( the_residue );
+		if ( skip_like_dssp_and_ok || not_skip_like_dssp_and_ok ) {
 			new_pdb_residues.push_back( the_residue );
 		}
 		// Else if this is a proper amino acid (not just a bunch of HETATMs), warn
-		else if ( get_amino_acid_letter( the_residue ) ) {
-			BOOST_LOG_TRIVIAL( warning ) << "Ignoring residue "
-			                             << the_residue.get_residue_name()
-			                             << " whilst extracting a protein structure from PDB file data because it doesn't have N, CA and C atoms";
+		else if ( get_amino_acid_letter( the_residue ) && arg_ostream_ref_opt ) {
+			backbone_skipped_residues.push_back( the_residue.get_residue_name() );
 		}
+	}
+
+	if ( ! backbone_skipped_residues.empty() && arg_ostream_ref_opt ) {
+		const bool multiple_skippeds = ( backbone_skipped_residues.size() > 1 );
+		const log_to_ostream_guard ostream_log_guard{ arg_ostream_ref_opt.get().get() };
+
+		BOOST_LOG_TRIVIAL( warning ) << "Ignoring residue"
+		                             << ( multiple_skippeds ? "s"s : ""s )
+		                             << " "
+		                             << join(
+		                             	backbone_skipped_residues
+		                             		| transformed( [] (const residue_name &x) { return to_string( x ); } ),
+		                             	", "
+		                             )
+		                             << " whilst extracting a protein structure from PDB file data because "
+		                             << ( multiple_skippeds ? "they don't"s : "it doesn't"s )
+		                             << " have all of N, CA and C atoms";
 	}
 
 	// Return a new pdb containing these residues
@@ -591,8 +616,8 @@ pdb cath::file::backbone_complete_subset_of_pdb(const pdb &arg_pdb,        ///< 
 /// \relates pdb
 ///
 /// \relates protein
-protein cath::file::build_protein_of_pdb(const pdb &arg_pdb,    ///< TODOCUMENT
-                                         ostream   &arg_ostream ///< TODOCUMENT
+protein cath::file::build_protein_of_pdb(const pdb             &arg_pdb,    ///< TODOCUMENT
+                                         const ostream_ref_opt &arg_ostream ///< An optional reference to an ostream to which any logging should be sent
                                          ) {
 	constexpr size_t DEFAULT_ACCESSIBILITY = 0;
 
@@ -621,9 +646,9 @@ protein cath::file::build_protein_of_pdb(const pdb &arg_pdb,    ///< TODOCUMENT
 /// \relates pdb
 ///
 /// \relates protein
-protein cath::file::build_protein_of_pdb_and_name(const pdb    &arg_pdb,    ///< TODOCUMENT
-                                                  const string &arg_name,   ///< TODOCUMENT
-                                                  ostream      &arg_ostream ///< TODOCUMENT
+protein cath::file::build_protein_of_pdb_and_name(const pdb             &arg_pdb,    ///< TODOCUMENT
+                                                  const string          &arg_name,   ///< TODOCUMENT
+                                                  const ostream_ref_opt &arg_ostream ///< An optional reference to an ostream to which any logging should be sent
                                                   ) {
 	protein new_protein = build_protein_of_pdb( arg_pdb, arg_ostream );
 	new_protein.set_title( arg_name );
@@ -634,8 +659,8 @@ protein cath::file::build_protein_of_pdb_and_name(const pdb    &arg_pdb,    ///<
 ///        that DSSP might be expected to skip
 ///
 /// \relates pdb
-size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb &arg_pdb,    ///< The PDB to query
-                                                                  ostream   &arg_ostream ///< An ostream to which any status messages might be sent
+size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb             &arg_pdb,    ///< The PDB to query
+                                                                  const ostream_ref_opt &arg_ostream ///< An ostream to which any status messages might be sent
                                                                   ) {
 	const pdb    backbone_complete_pdb_subset = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream );
 	const size_t num_residues                 = backbone_complete_pdb_subset.get_num_residues();
@@ -644,15 +669,9 @@ size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb &arg
 	return copy_build<size_set>(
 		irange( 0_z, num_residues )
 			| filtered( [&] (const size_t &x) {
-				const pdb_residue &the_residue = backbone_complete_pdb_subset.get_residue_cref_of_index__backbone_unchecked( x );
-				// Can't require that all_of() are non-standard because then the initial residues of 3f9sB fail
-				return any_of(
-					the_residue,
-					[] (const pdb_atom &y) {
-						return ( y.get_alt_locn() != ' ' && y.get_alt_locn() != 'A' );
-					}
+				return dssp_might_skip_residue(
+					backbone_complete_pdb_subset.get_residue_cref_of_index__backbone_unchecked( x )
 				);
 			} )
 	);
 }
-

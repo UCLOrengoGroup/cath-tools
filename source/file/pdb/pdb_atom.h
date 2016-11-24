@@ -114,6 +114,7 @@ namespace cath {
 		                                    const chain_label &,
 		                                    const residue_name &,
 		                                    const pdb_atom &);
+		bool alt_locn_is_dssp_accepted(const pdb_atom &);
 		std::ostream & operator<<(std::ostream &,
 		                          const pdb_atom &);
 
@@ -142,6 +143,51 @@ namespace cath {
 			}
 		}
 
+		/// \brief TODOCUMENT
+		inline const pdb_record & pdb_atom::get_record_type() const {
+			return record_type;
+		}
+
+		/// \brief TODOCUMENT
+		inline const size_t & pdb_atom::get_atom_serial() const {
+			return atom_serial;
+		}
+
+		/// \brief TODOCUMENT
+		inline const std::string & pdb_atom::get_element_type_untrimmed() const {
+			return the_element_type.get_element_type_untrimmed();
+		}
+
+		/// \brief TODOCUMENT
+		inline const boost::string_ref & pdb_atom::get_element_type() const {
+			return the_element_type.get_element_type();
+		}
+
+		/// \brief TODOCUMENT
+		inline const char & pdb_atom::get_alt_locn() const {
+			return alt_locn;
+		}
+
+		/// \brief TODOCUMENT
+		inline const amino_acid & pdb_atom::get_amino_acid() const {
+			return the_amino_acid;
+		}
+
+		/// \brief TODOCUMENT
+		inline const geom::coord & pdb_atom::get_coord() const {
+			return atom_coord;
+		}
+
+		/// \brief TODOCUMENT
+		inline const double & pdb_atom::get_occupancy() const {
+			return occupancy;
+		}
+
+		/// \brief TODOCUMENT
+		inline const double & pdb_atom::get_temp_factor() const {
+			return temp_factor;
+		}
+
 
 		/// \brief Return whether this line purports to be an record of the specified pdb_record
 		///
@@ -161,6 +207,14 @@ namespace cath {
 					return false; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
 				}
 			}
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// \relates pdb_atom
+		inline bool alt_locn_is_dssp_accepted(const pdb_atom &arg_pdb_atom ///< TODOCUMENT
+		                                      ) {
+			return arg_pdb_atom.get_alt_locn() == ' ' || arg_pdb_atom.get_alt_locn() == 'A';;
 		}
 
 		/// \brief Convert the specified three-letter string and pdb_record to an amino_acid

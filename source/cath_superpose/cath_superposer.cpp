@@ -85,6 +85,9 @@ void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose
 /// \brief TODOCUMENT
 ///
 /// \relates cath_superpose_options
+///
+/// \TODO Consider taking an ostream_ref_opt argument rather than ostream
+///       (fix all errors, *then* provide default of boost::none)
 superposition_context cath_superposer::get_superposition_context(const cath_superpose_options &arg_cath_superpose_options, ///< TODOCUMENT
                                                                  istream                      &arg_istream,                ///< TODOCUMENT
                                                                  ostream                      &arg_stderr                  ///< TODOCUMENT
@@ -98,7 +101,7 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	const str_vec  &ids_block_ids  = arg_cath_superpose_options.get_ids();
 	const str_vec  &names          = ( ids_block_ids.size() == raw_pdbs.size() ) ? ids_block_ids
 	                                                                             : raw_names;
-	const pdb_list  pdbs           = pdb_list_of_backbone_complete_subset_pdbs( raw_pdbs );
+	const pdb_list  pdbs           = pdb_list_of_backbone_complete_subset_pdbs( raw_pdbs, ref( arg_stderr ) );
 
 	if ( raw_pdbs.empty() ) {
 		logger::log_and_exit(

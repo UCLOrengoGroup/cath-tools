@@ -22,6 +22,7 @@
 
 #include <boost/optional.hpp> // ***** TEMPORARY *****
 
+#include "common/boost_addenda/log/log_to_ostream_guard.h"
 #include "common/boost_addenda/test/boost_check_equal_ranges.h"
 #include "common/file/simple_file_read_write.h"
 #include "common/size_t_literal.h"
@@ -34,7 +35,6 @@
 #include "structure/protein/sec_struc.h"
 #include "structure/protein/sec_struc_planar_angles.h"
 #include "test/global_test_constants.h"
-#include "test/log_to_ostream_guard.h"
 
 using namespace boost::filesystem;
 using namespace cath;

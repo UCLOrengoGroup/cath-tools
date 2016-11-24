@@ -108,6 +108,9 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 }
 
 /// \brief TODOCUMENT
+///
+/// \TODO Consider taking an ostream_ref_opt argument rather than ostream
+///       (fix all errors, *then* provide default of boost::none)
 size_size_alignment_tuple_vec ssap_scores_file_alignment_acquirer::get_spanning_alignments(const path               &arg_alignment_dir, ///< TODOCUMENT
                                                                                            const str_vec            &arg_names,         ///< TODOCUMENT
                                                                                            const pdb_list           &arg_pdbs,          ///< TODOCUMENT
@@ -126,8 +129,8 @@ size_size_alignment_tuple_vec ssap_scores_file_alignment_acquirer::get_spanning_
 		const path      alignment_file = arg_alignment_dir / ( first_name + second_name + ".list" );
 		const alignment new_alignment  = read_alignment_from_cath_ssap_legacy_format(
 			alignment_file,
-			build_protein_of_pdb( first_pdb,  arg_stderr ),
-			build_protein_of_pdb( second_pdb, arg_stderr ),
+			build_protein_of_pdb( first_pdb,  ref( arg_stderr ) ),
+			build_protein_of_pdb( second_pdb, ref( arg_stderr ) ),
 			arg_stderr
 		);
 		spanning_alignments.emplace_back(

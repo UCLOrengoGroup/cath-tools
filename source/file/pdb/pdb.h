@@ -22,7 +22,9 @@
 #define _CATH_TOOLS_SOURCE_FILE_PDB_PDB_H
 
 #include <boost/operators.hpp>
+#include <boost/optional.hpp>
 
+#include "common/type_aliases.h"
 #include "file/file_type_aliases.h"
 #include "file/pdb/pdb_base.h"
 #include "structure/structure_type_aliases.h"
@@ -100,17 +102,19 @@ namespace cath {
 		geom::doub_angle_doub_angle_pair_vec get_phi_and_psi_angles(const pdb &);
 
 		pdb backbone_complete_subset_of_pdb(const pdb &,
-		                                    std::ostream & = std::cerr);
+		                                    const ostream_ref_opt & = boost::none,
+		                                    const bool & = false);
 
 		protein build_protein_of_pdb(const pdb &,
-		                             std::ostream & = std::cerr);
+		                             const ostream_ref_opt & = boost::none);
 
 		protein build_protein_of_pdb_and_name(const pdb &,
 		                                      const std::string &,
-		                                      std::ostream & = std::cerr);
+		                                      const ostream_ref_opt & = boost::none);
 
 		size_set get_protein_res_indices_that_dssp_might_skip(const pdb &,
-		                                                      std::ostream & = std::cerr);
+		                                                      const ostream_ref_opt & = boost::none);
+
 	} // namespace file
 } // namespace cath
 

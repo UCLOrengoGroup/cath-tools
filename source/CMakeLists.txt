@@ -291,6 +291,16 @@ set(
 )
 
 set(
+	NORMSOURCES_COMMON_BOOST_ADDENDA_LOG
+		common/boost_addenda/log/log_to_ostream_guard.cpp
+)
+
+set(
+	NORMSOURCES_COMMON_BOOST_ADDENDA
+		${NORMSOURCES_COMMON_BOOST_ADDENDA_LOG}
+)
+
+set(
 	NORMSOURCES_COMMON_CLONE_DETAIL
 		common/clone/detail/make_clone.cpp
 )
@@ -324,6 +334,7 @@ set(
 		${NORMSOURCES_COMMON_ALGORITHM}
 		common/argc_argv_faker.cpp
 		${NORMSOURCES_COMMON_BATCH}
+		${NORMSOURCES_COMMON_BOOST_ADDENDA}
 		${NORMSOURCES_COMMON_CLONE}
 		common/command_executer.cpp
 		${NORMSOURCES_COMMON_FILE}
@@ -1104,7 +1115,6 @@ set(
 		test/alignment_fixture.cpp
 		test/dyn_prog_score_source_fixture.cpp
 		test/global_test_constants.cpp
-		test/log_to_ostream_guard.cpp
 		${NORMSOURCES_TEST_RESOLVE_HITS}
 )
 

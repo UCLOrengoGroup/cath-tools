@@ -22,6 +22,7 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 
+#include "common/boost_addenda/log/log_to_ostream_guard.h"
 #include "common/boost_addenda/test/boost_check_equal_ranges.h"
 #include "common/boost_check_no_throw_diag.h"
 #include "common/size_t_literal.h"
@@ -31,7 +32,6 @@
 #include "file/pdb/pdb_list.h"
 #include "file/pdb/pdb_residue.h"
 #include "test/global_test_constants.h"
-#include "test/log_to_ostream_guard.h"
 
 #include <vector>
 
