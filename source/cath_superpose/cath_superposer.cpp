@@ -117,7 +117,18 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	}
 
 	// Get the alignment and corresponding spanning tree
-	const auto       aln_and_spn_tree = get_alignment_and_spanning_tree( arg_cath_superpose_options, pdbs );
+	const auto       aln_and_spn_tree = [&] () {
+		try {
+			return get_alignment_and_spanning_tree( arg_cath_superpose_options, pdbs );
+		}
+		catch (const std::exception &e) {
+			logger::log_and_exit(
+				logger::return_code::NO_PDB_FILES_LOADED,
+				"Problem building alignment (and spanning tree) : "s + e.what()
+			);
+			exit( 0 ); //< Convince the compiler that this isn't a non-returning path out of the lambda
+		}
+	}();
 	const alignment &the_alignment    = aln_and_spn_tree.first;
 	const auto      &spanning_tree    = aln_and_spn_tree.second;
 

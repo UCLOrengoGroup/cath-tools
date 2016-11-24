@@ -66,6 +66,18 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 	const str_vec                 &names            = ssap_scores_data.first;
 	const size_size_pair_doub_map &scores           = ssap_scores_data.second;
 
+	if ( names.size() != arg_pdbs.size() ) {
+		BOOST_THROW_EXCEPTION(runtime_error_exception(
+			"The number of PDBs is "
+			+ ::std::to_string( arg_pdbs.size()         )
+			+ ", which doesn't match the "
+			+ ::std::to_string( names.size() )
+			+ " structures required for combining with the SSAP scores file \""
+			+ ssap_scores_file.string()
+			+ "\""
+		));
+	}
+
 	// Make a superpose_orderer from the scores
 	const superpose_orderer my_orderer = make_superpose_orderer( scores );
 
