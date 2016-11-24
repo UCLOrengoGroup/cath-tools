@@ -87,8 +87,8 @@ int program_exception_wrapper::run_program(int      arg_c,   ///< The main()-sty
 				stream          << format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S.%f")
 //	                   << "] [" << attr<boost::log::attributes::current_thread_id::value_type >("ThreadID")
 					   << " ["  << do_get_program_name()
-					   << "|"   << left << setw( 7 ) << setfill(' ') << trivial::severity
-					   << "] "  << smessage
+					   << "|\033[1m"  << left << setw( 7 ) << setfill(' ') << trivial::severity
+					   << "\033[0m] " << smessage
 			),
 			keywords::filter = ( severity >= warning )
 		);
