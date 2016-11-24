@@ -211,7 +211,7 @@ void cath::output_superposition_to_viewer(ostream                     &arg_ostre
 	);
 
 	if ( ! arg_superposition_context.has_alignment() ) {
-		const auto message = "Unable to apply a alignment-based coluring scheme to the superposition because it doesn't contain an alignment";
+		const auto message = "Unable to apply an alignment-based coluring scheme to the superposition because it doesn't contain an alignment";
 		if ( arg_only_warn_on_missing_aln ) {
 			BOOST_LOG_TRIVIAL( warning ) << message;
 			colour_viewer(

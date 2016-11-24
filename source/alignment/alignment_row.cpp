@@ -295,7 +295,7 @@ alignment_row cath::align::join(const alignment_row &arg_joinee_a, ///< TODOCUME
 		}
 	}
 
-	// Return a alignment_row based on the positions
+	// Return an alignment_row based on the positions
 	return alignment_row( positions );
 }
 
@@ -382,7 +382,7 @@ const alignment_row cath::align::remove_entry_from_row(const alignment_row &arg_
 		}
 	}
 
-	// Return a alignment_row based on the populated has_positions and positions
+	// Return an alignment_row based on the populated has_positions and positions
 	return alignment_row( positions );
 }
 

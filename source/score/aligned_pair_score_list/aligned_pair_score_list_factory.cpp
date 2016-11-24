@@ -237,7 +237,7 @@ aligned_pair_score_list cath::score::make_default_aligned_pair_score_list() {
 	return results;
 }
 
-/// \brief Factory function for making a aligned_pair_score_list that contains those aligned_pair_scores used in the old SSAP output
+/// \brief Factory function for making an aligned_pair_score_list that contains those aligned_pair_scores used in the old SSAP output
 ///
 /// Note that this does not include the two names that typically appear at the start of the old SSAP scores output
 ///
