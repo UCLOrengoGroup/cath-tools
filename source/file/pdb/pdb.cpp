@@ -207,20 +207,6 @@ size_t pdb::get_index_of_backbone_complete_index(const size_t &arg_backbone_comp
 }
 
 /// \brief TODOCUMENT
-size_t pdb::get_num_residues() const {
-	return pdb_residues.size();
-}
-
-/// \brief TODOCUMENT
-const pdb_residue & pdb::get_residue_cref_of_index__backbone_unchecked(const size_t &arg_index ///< TODOCUMENT
-                                                                       ) const {
-	if ( arg_index >= get_num_residues() ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to get_residue_ca_coord_of_index__backbone_unchecked() for index >= number of residues"));
-	}
-	return pdb_residues[ arg_index ];
-}
-
-/// \brief TODOCUMENT
 const pdb_residue & pdb::get_residue_cref_of_backbone_complete_index(const size_t &arg_backbone_complete_index  ///< TODOCUMENT
                                                                      ) const {
 	const size_t index = get_index_of_backbone_complete_index( arg_backbone_complete_index );
@@ -262,16 +248,6 @@ residue_name_vec pdb::get_backbone_complete_residue_names_of_first_chain(const b
 		}
 	}
 	return residue_names;
-}
-
-/// \brief TODOCUMENT
-pdb::const_iterator pdb::begin() const {
-	return common::cbegin( pdb_residues );
-}
-
-/// \brief TODOCUMENT
-pdb::const_iterator pdb::end() const {
-	return common::cend( pdb_residues );
 }
 
 /// \brief TODOCUMENT
