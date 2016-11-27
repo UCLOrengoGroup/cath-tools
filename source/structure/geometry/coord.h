@@ -263,6 +263,27 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
+		inline double length(const coord &arg_coord ///< TODOCUMENT
+		                     ) {
+			return sqrt( squared_length( arg_coord ) );
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// \relates coord
+		inline double distance_between_points(const coord &arg_coord1, ///< TODOCUMENT
+		                                      const coord &arg_coord2  ///< TODOCUMENT
+		                                      ) {
+			// Equivalently, either :
+			//   length(arg_coord2 - arg_coord1)
+			// or
+			//   sqrt(squared_distance_between_points(arg_coord1, arg_coord2));
+			return length( arg_coord2 - arg_coord1 );
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// \relates coord
 		inline double squared_distance_between_points(const coord &arg_coord1, ///< TODOCUMENT
 		                                              const coord &arg_coord2  ///< TODOCUMENT
 		                                              ) {
