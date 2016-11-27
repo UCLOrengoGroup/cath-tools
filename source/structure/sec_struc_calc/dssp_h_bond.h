@@ -226,14 +226,14 @@ namespace cath {
 		                                             const file::pdb_residue &arg_residue_j_prev, ///< TODOCUMENT
 		                                             const file::pdb_residue &arg_residue_j       ///< TODOCUMENT
 		                                             ) {
-			const geom::coord prev_c_to_o = get_oxygen_coord_of_residue( arg_residue_j_prev )
+			const geom::coord prev_c_to_o = get_oxygen_coord( arg_residue_j_prev )
 			                                -
-			                                get_carbon_coord_of_residue( arg_residue_j_prev );
+			                                get_carbon_coord( arg_residue_j_prev );
 			return get_h_bond_energy(
-				get_carbon_coord_of_residue  ( arg_residue_i ),
-				get_oxygen_coord_of_residue  ( arg_residue_i ),
-				get_nitrogen_coord_of_residue( arg_residue_j ),
-				get_nitrogen_coord_of_residue( arg_residue_j ) - ( prev_c_to_o / length( prev_c_to_o ) )
+				get_carbon_coord  ( arg_residue_i ),
+				get_oxygen_coord  ( arg_residue_i ),
+				get_nitrogen_coord( arg_residue_j ),
+				get_nitrogen_coord( arg_residue_j ) - ( prev_c_to_o / length( prev_c_to_o ) )
 			);
 		}
 
@@ -256,27 +256,27 @@ namespace cath {
 		                                           ) {
 			constexpr double MIN_NO_H_BOND_CA_DIST = 9.0;
 			return (
-				has_carbon_alpha_coord_of_residue( arg_residue_i      )
+				arg_residue_i.has_carbon_alpha()
 				&&
-				has_carbon_alpha_coord_of_residue( arg_residue_j      )
+				arg_residue_j.has_carbon_alpha()
 				&&
 				(
 					distance_between_points(
-						get_carbon_alpha_coord_of_residue( arg_residue_i ),
-						get_carbon_alpha_coord_of_residue( arg_residue_j )
+						get_carbon_alpha_coord( arg_residue_i ),
+						get_carbon_alpha_coord( arg_residue_j )
 					)
 					< MIN_NO_H_BOND_CA_DIST
 				)
 				&&
-				has_carbon_coord_of_residue      ( arg_residue_i      )
+				arg_residue_i.has_carbon()
 				&&
-				has_oxygen_coord_of_residue      ( arg_residue_i      )
+				arg_residue_i.has_oxygen()
 				&&
-				has_carbon_coord_of_residue      ( arg_residue_j_prev )
+				arg_residue_j_prev.has_carbon()
 				&&
-				has_oxygen_coord_of_residue      ( arg_residue_j_prev )
+				arg_residue_j_prev.has_oxygen()
 				&&
-				has_nitrogen_coord_of_residue    ( arg_residue_j      )
+				arg_residue_j.has_nitrogen()
 				&&
 				get_amino_acid( arg_residue_j ).get_letter() != 'P' // Proline has side-chain on N
 			);

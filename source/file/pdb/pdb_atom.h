@@ -95,13 +95,6 @@ namespace cath {
 			void rotate(const geom::rotation &);
 			void operator+=(const geom::coord &);
 			void operator-=(const geom::coord &);
-
-			static const std::string PDB_ID_NITROGEN;
-			static const std::string PDB_ID_CARBON_ALPHA;
-			static const std::string PDB_ID_CARBON;
-
-			static const std::string PDB_ID_CARBON_BETA;
-			static const std::string PDB_ID_OXYGEN;
 		};
 
 		coarse_element_type get_coarse_element_type(const pdb_atom &);

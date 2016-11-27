@@ -43,13 +43,6 @@ using boost::algorithm::trim_right;
 using boost::lexical_cast;
 using boost::string_ref;
 
-const string pdb_atom::PDB_ID_NITROGEN     ( "N"  );
-const string pdb_atom::PDB_ID_CARBON_ALPHA ( "CA" );
-const string pdb_atom::PDB_ID_CARBON       ( "C"  );
-
-const string pdb_atom::PDB_ID_CARBON_BETA  ( "CB" );
-const string pdb_atom::PDB_ID_OXYGEN       ( "O"  );
-
 /// \brief TODOCUMENT
 void pdb_atom::rotate(const rotation &arg_rotation ///< TODOCUMENT
                       ) {

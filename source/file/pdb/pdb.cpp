@@ -142,7 +142,7 @@ residue_name_vec pdb::do_get_residue_names_of_first_chain__backbone_unchecked() 
 /// \brief TODOCUMENT
 coord pdb::do_get_residue_ca_coord_of_index__backbone_unchecked(const size_t &arg_index ///< TODOCUMENT
                                                                 ) const {
-	return get_carbon_alpha_coord_of_residue( get_residue_cref_of_index__backbone_unchecked( arg_index ) );
+	return get_carbon_alpha_coord( get_residue_cref_of_index__backbone_unchecked( arg_index ) );
 }
 
 /// \brief TODOCUMENT
@@ -515,8 +515,8 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb &arg
 		const pdb_residue    &this_pdb_residue      = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr     );
 		const pdb_residue    &next_pdb_residue      = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr + 1 );
 		const double          inter_ca_dist         = distance_between_points(
-			get_carbon_alpha_coord_of_residue( this_pdb_residue ),
-			get_carbon_alpha_coord_of_residue( next_pdb_residue )
+			get_carbon_alpha_coord( this_pdb_residue ),
+			get_carbon_alpha_coord( next_pdb_residue )
 		);
 
 		// If these consecutive residues are a sensible distance apart...
