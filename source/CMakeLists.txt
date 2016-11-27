@@ -499,7 +499,7 @@ set(
 
 set(
 	NORMSOURCES_FILE_PDB
-		file/pdb/element_type_string.cpp
+		file/pdb/coarse_element_type.cpp
 		file/pdb/pdb.cpp
 		file/pdb/pdb_atom.cpp
 		file/pdb/pdb_atom_parse_status.cpp
@@ -1476,6 +1476,7 @@ set(
 
 set(
 	TESTSOURCES_FILE_PDB
+		file/pdb/coarse_element_type_test.cpp
 		file/pdb/element_type_string_test.cpp
 		file/pdb/pdb_atom_test.cpp
 		file/pdb/pdb_base_test.cpp

@@ -24,6 +24,7 @@
 #include <boost/utility/string_ref.hpp>
 
 #include "common/string/string_parse_tools.h"
+#include "file/pdb/coarse_element_type.h"
 
 #include <string>
 
@@ -183,6 +184,44 @@ namespace cath {
 		inline const boost::string_ref & element_type_string::get_element_type() const {
 			return element_type;
 		}
+
+		/// \brief Get the coarse_element_type corresponding to the specified trimmed element string
+		inline coarse_element_type get_coarse_element_type(const boost::string_ref &arg_trimmed_element_str ///< The trimmed element string (as it appears in PDB ATOM records)
+		                                                   ) {
+			if ( arg_trimmed_element_str.empty() || arg_trimmed_element_str.length() > 2 ) {
+				return coarse_element_type::NON_CORE;
+			}
+			else if ( arg_trimmed_element_str.front() == 'C' ) {
+				if      ( arg_trimmed_element_str == "CA" ) {
+					return coarse_element_type::CARBON_ALPHA;
+				}
+				else if ( arg_trimmed_element_str == "C"  ) {
+					return coarse_element_type::CARBON;
+				}
+				else if ( arg_trimmed_element_str == "CB" ) {
+					return coarse_element_type::CARBON_BETA;
+				}
+				else {
+					return coarse_element_type::NON_CORE;
+				}
+			}
+			else if ( arg_trimmed_element_str == "N" ) {
+				return coarse_element_type::NITROGEN;
+			}
+			else if ( arg_trimmed_element_str == "O" ) {
+				return coarse_element_type::OXYGEN;
+			}
+			else {
+				return coarse_element_type::NON_CORE;
+			}
+		}
+
+		/// \brief Get the coarse_element_type corresponding to the specified element_type_string
+		inline coarse_element_type get_coarse_element_type(const element_type_string &arg_element_type_string ///< The element_type_string to query
+		                                                   ) {
+			return get_coarse_element_type( arg_element_type_string.get_element_type() );
+		}
+
 	} // namespace file
 } // namespace cath
 

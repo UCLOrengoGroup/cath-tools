@@ -104,6 +104,7 @@ namespace cath {
 			static const std::string PDB_ID_OXYGEN;
 		};
 
+		coarse_element_type get_coarse_element_type(const pdb_atom &);
 		char get_amino_acid_letter(const pdb_atom &);
 		std::string get_amino_acid_code(const pdb_atom &);
 		std::string get_amino_acid_name(const pdb_atom &);
@@ -188,6 +189,11 @@ namespace cath {
 			return temp_factor;
 		}
 
+		/// \brief Get the coarse_element_type corresponding to the specified pdb_atom
+		inline coarse_element_type get_coarse_element_type(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+		                                                   ) {
+			return get_coarse_element_type( arg_pdb_atom.get_element_type() );
+		}
 
 		/// \brief Return whether this line purports to be an record of the specified pdb_record
 		///
