@@ -113,7 +113,7 @@ namespace cath {
 
 		/// \brief Move-ctor
 		///
-		/// A bit tricker because it seems the C++ standard doesn't guarantee that
+		/// A bit trickier because it seems the C++ standard doesn't guarantee that
 		/// moving a string won't invalidate iterators/pointers/references into the old one
 		inline element_type_string::element_type_string(element_type_string &&arg_rhs ///< The element_type_string from which to move-construct
 		                                                ) noexcept : element_type_string{
@@ -147,7 +147,7 @@ namespace cath {
 
 		/// \brief Move-assignment operator
 		///
-		/// A bit tricker because it seems the C++ standard doesn't guarantee that
+		/// A bit trickier because it seems the C++ standard doesn't guarantee that
 		/// moving a string won't invalidate iterators/pointers/references into the old one
 		inline element_type_string & element_type_string::operator=(element_type_string &&arg_rhs ///< The element_type_string from which to move-assign
 		                                                            ) noexcept {
