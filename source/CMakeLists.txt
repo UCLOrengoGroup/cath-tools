@@ -1023,8 +1023,7 @@ set(
 set(
 	NORMSOURCES_STRUCTURE_SEC_STRUC_CALC
 		structure/sec_struc_calc/bifur_hbond_list.cpp
-		structure/sec_struc_calc/dssp_dupl_fixture.cpp
-		structure/sec_struc_calc/dssp_h_bond.cpp
+		structure/sec_struc_calc/dssp_hbond_calc.cpp
 )
 
 set(
@@ -1106,6 +1105,11 @@ set(
 )
 
 set(
+	NORMSOURCES_TEST_DSSP
+		test/dssp/dssp_dupl_fixture.cpp
+)
+
+set(
 	NORMSOURCES_TEST_RESOLVE_HITS
 		test/resolve_hits/resolve_hits_fixture.cpp
 )
@@ -1113,6 +1117,7 @@ set(
 set(
 	NORMSOURCES_TEST
 		test/alignment_fixture.cpp
+		${NORMSOURCES_TEST_DSSP}
 		test/dyn_prog_score_source_fixture.cpp
 		test/global_test_constants.cpp
 		${NORMSOURCES_TEST_RESOLVE_HITS}
@@ -1843,7 +1848,7 @@ set(
 set(
 	TESTSOURCES_STRUCTURE_SEC_STRUC_CALC
 		structure/sec_struc_calc/bifur_hbond_list_test.cpp
-		structure/sec_struc_calc/dssp_h_bond_test.cpp
+		structure/sec_struc_calc/dssp_hbond_calc_test.cpp
 )
 
 set(
