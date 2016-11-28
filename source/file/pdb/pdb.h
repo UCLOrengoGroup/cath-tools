@@ -22,9 +22,14 @@
 #define _CATH_TOOLS_SOURCE_FILE_PDB_PDB_H
 
 #include <boost/operators.hpp>
+#include <boost/optional.hpp>
 
+#include "common/cpp14/cbegin_cend.h"
+#include "common/type_aliases.h"
+#include "exception/invalid_argument_exception.h"
 #include "file/file_type_aliases.h"
 #include "file/pdb/pdb_base.h"
+#include "file/pdb/pdb_residue.h"
 #include "structure/structure_type_aliases.h"
 
 #include <iostream>
@@ -94,23 +99,51 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const pdb &);
 
-//		const pdb_residue & get_residue_ref_of_index__offset_1(const pdb &,
-//		                                                       const size_t &);
-
 		geom::doub_angle_doub_angle_pair_vec get_phi_and_psi_angles(const pdb &);
 
 		pdb backbone_complete_subset_of_pdb(const pdb &,
-		                                    std::ostream & = std::cerr);
+		                                    const ostream_ref_opt & = boost::none,
+		                                    const bool & = false);
 
 		protein build_protein_of_pdb(const pdb &,
-		                             std::ostream & = std::cerr);
+		                             const ostream_ref_opt & = boost::none);
 
 		protein build_protein_of_pdb_and_name(const pdb &,
 		                                      const std::string &,
-		                                      std::ostream & = std::cerr);
+		                                      const ostream_ref_opt & = boost::none);
 
 		size_set get_protein_res_indices_that_dssp_might_skip(const pdb &,
-		                                                      std::ostream & = std::cerr);
+		                                                      const ostream_ref_opt & = boost::none);
+
+		/// \brief Get the number of residues held in this pdb
+		inline size_t pdb::get_num_residues() const {
+			return pdb_residues.size();
+		}
+
+		/// \brief Get the residue of the specified index
+		///        (with no checking for which residues are backbone-complete)
+		inline const pdb_residue & pdb::get_residue_cref_of_index__backbone_unchecked(const size_t &arg_index ///< The index of the residue to retun
+		                                                                              ) const {
+#ifndef NDEBUG
+			if ( arg_index >= get_num_residues() ) {
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
+					"Unable to get_residue_ca_coord_of_index__backbone_unchecked() for index >= number of residues"
+				));
+			}
+#endif
+			return pdb_residues[ arg_index ];
+		}
+
+		/// \brief Standard const begin method for the range of residues
+		inline auto pdb::begin() const -> const_iterator {
+			return common::cbegin( pdb_residues );
+		}
+
+		/// \brief Standard const end method for the range of residues
+		inline auto pdb::end() const -> const_iterator {
+			return common::cend( pdb_residues );
+		}
+
 	} // namespace file
 } // namespace cath
 

@@ -126,8 +126,8 @@ pdb_list cath::file::make_pdb_list(const pdb_vec &arg_pdbs ///< TODOCUMENT
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_list
-pdb_list cath::file::pdb_list_of_backbone_complete_subset_pdbs(const pdb_list &arg_pdb_list, ///< TODOCUMENT
-                                                               ostream        &arg_ostream   ///< TODOCUMENT
+pdb_list cath::file::pdb_list_of_backbone_complete_subset_pdbs(const pdb_list        &arg_pdb_list, ///< TODOCUMENT
+                                                               const ostream_ref_opt &arg_ostream   ///< An optional reference to an ostream to which any logging should be sent
                                                                ) {
 	pdb_list new_pdb_list;
 	new_pdb_list.reserve( arg_pdb_list.size() );
@@ -142,12 +142,15 @@ pdb_list cath::file::pdb_list_of_backbone_complete_subset_pdbs(const pdb_list &a
 /// \relates pdb_list
 ///
 /// \relates protein_list
+///
+/// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
+///       (fix all errors, *then* provide default of boost::none)
 protein_list cath::file::build_protein_list_of_pdb_list(const pdb_list &arg_pdb_list ///< TODOCUMENT
                                                         ) {
 	protein_list new_protein_list;
 	new_protein_list.reserve(arg_pdb_list.size());
 	for (const pdb &the_pdb : arg_pdb_list) {
-		new_protein_list.push_back( build_protein_of_pdb( the_pdb ) );
+		new_protein_list.push_back( build_protein_of_pdb( the_pdb, ref( cerr ) ) );
 	}
 	return new_protein_list;
 }

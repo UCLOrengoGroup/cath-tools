@@ -43,58 +43,6 @@ using boost::algorithm::trim_right;
 using boost::lexical_cast;
 using boost::string_ref;
 
-const string pdb_atom::PDB_ID_NITROGEN     ( "N"  );
-const string pdb_atom::PDB_ID_CARBON_ALPHA ( "CA" );
-const string pdb_atom::PDB_ID_CARBON       ( "C"  );
-
-const string pdb_atom::PDB_ID_CARBON_BETA  ( "CB" );
-const string pdb_atom::PDB_ID_OXYGEN       ( "O"  );
-
-/// \brief TODOCUMENT
-const pdb_record & pdb_atom::get_record_type() const {
-	return record_type;
-}
-
-/// \brief TODOCUMENT
-const size_t & pdb_atom::get_atom_serial() const {
-	return atom_serial;
-}
-
-/// \brief TODOCUMENT
-const string & pdb_atom::get_element_type_untrimmed() const {
-	return the_element_type.get_element_type_untrimmed();
-}
-
-/// \brief TODOCUMENT
-const string_ref & pdb_atom::get_element_type() const {
-	return the_element_type.get_element_type();
-}
-
-/// \brief TODOCUMENT
-const char & pdb_atom::get_alt_locn() const {
-	return alt_locn;
-}
-
-/// \brief TODOCUMENT
-const amino_acid & pdb_atom::get_amino_acid() const {
-	return the_amino_acid;
-}
-
-/// \brief TODOCUMENT
-const coord & pdb_atom::get_coord() const {
-	return atom_coord;
-}
-
-/// \brief TODOCUMENT
-const double & pdb_atom::get_occupancy() const {
-	return occupancy;
-}
-
-/// \brief TODOCUMENT
-const double & pdb_atom::get_temp_factor() const {
-	return temp_factor;
-}
-
 /// \brief TODOCUMENT
 void pdb_atom::rotate(const rotation &arg_rotation ///< TODOCUMENT
                       ) {

@@ -81,14 +81,17 @@ dssp_file::const_iterator dssp_file::end() const {
 /// \brief Combine a dssp_file and pdb representing the same structure in a sensible protein object
 ///
 /// \relates dssp_file
+///
+/// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
+///       (fix all errors, *then* provide default of boost::none)
 protein cath::file::protein_from_dssp_and_pdb(const dssp_file &arg_dssp_file,                         ///< The dssp_file object for a given structure
-	                                          const pdb       &arg_pdb_file,                          ///< The dssp_file object for a given structure
-	                                          const bool      &arg_exclude_residues_absent_from_dssp, ///< Whether to exclude residues that are in the PDB but not the DSSP
-	                                          const string    &arg_name                               ///< The name to set as the title of the protein
-	                                          ) {
+                                              const pdb       &arg_pdb_file,                          ///< The dssp_file object for a given structure
+                                              const bool      &arg_exclude_residues_absent_from_dssp, ///< Whether to exclude residues that are in the PDB but not the DSSP
+                                              const string    &arg_name                               ///< The name to set as the title of the protein
+                                              ) {
 	// Build a rough protein object from the pdb object
-	const auto pdb_protein       = build_protein_of_pdb( arg_pdb_file );
-	const auto pdb_skip_indices  = get_protein_res_indices_that_dssp_might_skip( arg_pdb_file );
+	const auto pdb_protein       = build_protein_of_pdb( arg_pdb_file, ref( cerr ) );
+	const auto pdb_skip_indices  = get_protein_res_indices_that_dssp_might_skip( arg_pdb_file, ref( cerr ) );
 
 	// Grab the number of residues in the protein and dssp_file objects
 	const auto num_dssp_residues = arg_dssp_file.get_num_residues();

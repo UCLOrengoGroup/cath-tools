@@ -23,6 +23,7 @@
 
 #include <boost/filesystem/path.hpp>
 
+#include "common/boost_addenda/filesystem/replace_extension_copy.h"
 #include "common/third_party_code/gnuplot-iostream.h"
 #include "common/type_aliases.h"
 
@@ -44,9 +45,9 @@ namespace cath {
 			          const std::string             &arg_x_axis_label,     ///< TODOCUMENT
 			          const std::string             &arg_y_axis_label      ///< TODOCUMENT
 			          ) const {
-				const auto gnuplot_file  = arg_output_file_stem.parent_path() / ( boost::filesystem::path(arg_output_file_stem.filename()).string() + ".gnuplot"  );
-				const auto eps_file      = arg_output_file_stem.parent_path() / ( boost::filesystem::path(arg_output_file_stem.filename()).string() + ".eps"      );
-				const auto the_data_file = arg_output_file_stem.parent_path() / ( boost::filesystem::path(arg_output_file_stem.filename()).string() + ".data.txt" );
+				const auto gnuplot_file  = common::replace_extension_copy( arg_output_file_stem, ".gnuplot"  );
+				const auto eps_file      = common::replace_extension_copy( arg_output_file_stem, ".eps"      );
+				const auto the_data_file = common::replace_extension_copy( arg_output_file_stem, ".data.txt" );
 
 				const auto gnuplot_pipe = suppress_execution ? std::string( " > /dev/null " )
 				                                             : std::string( " | gnuplot "   );

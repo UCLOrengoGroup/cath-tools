@@ -291,6 +291,16 @@ set(
 )
 
 set(
+	NORMSOURCES_COMMON_BOOST_ADDENDA_LOG
+		common/boost_addenda/log/log_to_ostream_guard.cpp
+)
+
+set(
+	NORMSOURCES_COMMON_BOOST_ADDENDA
+		${NORMSOURCES_COMMON_BOOST_ADDENDA_LOG}
+)
+
+set(
 	NORMSOURCES_COMMON_CLONE_DETAIL
 		common/clone/detail/make_clone.cpp
 )
@@ -324,6 +334,7 @@ set(
 		${NORMSOURCES_COMMON_ALGORITHM}
 		common/argc_argv_faker.cpp
 		${NORMSOURCES_COMMON_BATCH}
+		${NORMSOURCES_COMMON_BOOST_ADDENDA}
 		${NORMSOURCES_COMMON_CLONE}
 		common/command_executer.cpp
 		${NORMSOURCES_COMMON_FILE}
@@ -488,7 +499,7 @@ set(
 
 set(
 	NORMSOURCES_FILE_PDB
-		file/pdb/element_type_string.cpp
+		file/pdb/coarse_element_type.cpp
 		file/pdb/pdb.cpp
 		file/pdb/pdb_atom.cpp
 		file/pdb/pdb_atom_parse_status.cpp
@@ -1010,6 +1021,12 @@ set(
 )
 
 set(
+	NORMSOURCES_STRUCTURE_SEC_STRUC_CALC
+		structure/sec_struc_calc/bifur_hbond_list.cpp
+		structure/sec_struc_calc/dssp_hbond_calc.cpp
+)
+
+set(
 	NORMSOURCES_STRUCTURE_VIEW_CACHE_DETAIL_PLATE
 		structure/view_cache/detail/plate/plate_scan.cpp
 		structure/view_cache/detail/plate/rod_cache.cpp
@@ -1064,6 +1081,7 @@ set(
 		${NORMSOURCES_STRUCTURE_GEOMETRY}
 		${NORMSOURCES_STRUCTURE_PROTEIN}
 		structure/residue_name.cpp
+		${NORMSOURCES_STRUCTURE_SEC_STRUC_CALC}
 		${NORMSOURCES_STRUCTURE_VIEW_CACHE}
 )
 
@@ -1087,6 +1105,11 @@ set(
 )
 
 set(
+	NORMSOURCES_TEST_DSSP
+		test/dssp/dssp_dupl_fixture.cpp
+)
+
+set(
 	NORMSOURCES_TEST_RESOLVE_HITS
 		test/resolve_hits/resolve_hits_fixture.cpp
 )
@@ -1094,9 +1117,9 @@ set(
 set(
 	NORMSOURCES_TEST
 		test/alignment_fixture.cpp
+		${NORMSOURCES_TEST_DSSP}
 		test/dyn_prog_score_source_fixture.cpp
 		test/global_test_constants.cpp
-		test/log_to_ostream_guard.cpp
 		${NORMSOURCES_TEST_RESOLVE_HITS}
 )
 
@@ -1458,6 +1481,7 @@ set(
 
 set(
 	TESTSOURCES_FILE_PDB
+		file/pdb/coarse_element_type_test.cpp
 		file/pdb/element_type_string_test.cpp
 		file/pdb/pdb_atom_test.cpp
 		file/pdb/pdb_base_test.cpp
@@ -1822,6 +1846,12 @@ set(
 )
 
 set(
+	TESTSOURCES_STRUCTURE_SEC_STRUC_CALC
+		structure/sec_struc_calc/bifur_hbond_list_test.cpp
+		structure/sec_struc_calc/dssp_hbond_calc_test.cpp
+)
+
+set(
 	TESTSOURCES_STRUCTURE_VIEW_CACHE_DETAIL_PLATE
 		structure/view_cache/detail/plate/plate_scan_test.cpp
 		structure/view_cache/detail/plate/rod_cache_test.cpp
@@ -1882,6 +1912,7 @@ set(
 		${TESTSOURCES_STRUCTURE_GEOMETRY}
 		structure/get_residue_names_test.cpp
 		${TESTSOURCES_STRUCTURE_PROTEIN}
+		${TESTSOURCES_STRUCTURE_SEC_STRUC_CALC}
 		${TESTSOURCES_STRUCTURE_VIEW_CACHE}
 )
 

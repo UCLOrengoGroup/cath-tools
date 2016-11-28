@@ -39,6 +39,7 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 
+using std::cerr;
 using std::istream;
 using std::pair;
 using std::unique_ptr;
@@ -50,6 +51,9 @@ unique_ptr<pdbs_acquirer> pdbs_acquirer::clone() const {
 }
 
 /// \brief TODOCUMENT
+///
+/// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
+///       (fix all errors, *then* provide default of boost::none)
 pdb_list_str_vec_pair pdbs_acquirer::get_pdbs_and_names(istream    &arg_istream,                ///< TODOCUMENT
                                                         const bool &arg_remove_partial_residues ///< TODOCUMENT
                                                         ) const {
@@ -71,7 +75,7 @@ pdb_list_str_vec_pair pdbs_acquirer::get_pdbs_and_names(istream    &arg_istream,
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("The number of names doesn't match the number of PDBs"));
 	}
 
-	return arg_remove_partial_residues ? make_pair( pdb_list_of_backbone_complete_subset_pdbs( pdbs ), names )
+	return arg_remove_partial_residues ? make_pair( pdb_list_of_backbone_complete_subset_pdbs( pdbs, ref( cerr ) ), names )
 	                                   : pdbs_and_names;
 }
 

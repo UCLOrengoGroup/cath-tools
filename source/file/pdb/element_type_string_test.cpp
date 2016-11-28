@@ -1,5 +1,5 @@
 /// \file
-
+/// \brief The element_type_string test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -61,6 +61,18 @@ BOOST_AUTO_TEST_CASE(move_assigns) {
 	second = move( *first_ptr );
 	first_ptr.reset();
 	BOOST_CHECK_EQUAL( second.get_element_type(), "me_to_the_bridge" );
+}
+
+BOOST_AUTO_TEST_CASE(get_coarse_element_type_works) {
+	BOOST_CHECK_EQUAL( get_coarse_element_type( "C"   ), coarse_element_type::CARBON       );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( "CA"  ), coarse_element_type::CARBON_ALPHA );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( "CB"  ), coarse_element_type::CARBON_BETA  );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( "N"   ), coarse_element_type::NITROGEN     );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( "O"   ), coarse_element_type::OXYGEN       );
+
+	BOOST_CHECK_EQUAL( get_coarse_element_type( ""    ), coarse_element_type::NON_CORE     );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( "CAA" ), coarse_element_type::NON_CORE     );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( "BR"  ), coarse_element_type::NON_CORE     );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

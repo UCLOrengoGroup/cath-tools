@@ -23,13 +23,13 @@
 #include "acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.h"
 #include "alignment/alignment.h"
 #include "alignment/io/alignment_io.h"
+#include "common/boost_addenda/log/log_to_ostream_guard.h"
 #include "file/pdb/pdb.h"
 #include "file/pdb/pdb_atom.h"
 #include "file/pdb/pdb_list.h"
 #include "file/pdb/pdb_residue.h"
 #include "superposition/superpose_orderer.h"
 #include "test/global_test_constants.h"
-#include "test/log_to_ostream_guard.h"
 
 namespace cath { namespace test { } }
 

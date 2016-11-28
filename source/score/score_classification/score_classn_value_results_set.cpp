@@ -23,26 +23,25 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
-
-
 #include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/sliced.hpp>
 #include <boost/range/adaptor/transformed.hpp>
+#include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm/adjacent_find.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/lower_bound.hpp>
 #include <boost/range/algorithm/set_algorithm.hpp>
 #include <boost/range/algorithm/sort.hpp>
-#include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm_ext/is_sorted.hpp>
 #include <boost/range/irange.hpp>
 
 #include "common/algorithm/contains.h"
 #include "common/algorithm/random_split.h"
 #include "common/algorithm/set_difference_build.h"
+#include "common/algorithm/transform_build.h"
+#include "common/boost_addenda/filesystem/replace_extension_copy.h"
 #include "common/boost_addenda/range/adaptor/limited.h"
 #include "common/boost_addenda/range/front.h"
-#include "common/algorithm/transform_build.h"
 #include "common/cpp14/cbegin_cend.h"
 #include "common/size_t_literal.h"
 #include "exception/invalid_argument_exception.h"
@@ -400,8 +399,8 @@ void cath::score::write_to_svm_light_data_files(const score_classn_value_results
 	for (const size_t &repeat_ctr : irange( 1_z, arg_num_repeats + 1 ) ) {
 		const auto repeat_ctr_str = lexical_cast<string>( repeat_ctr );
 
-		const path train_file  = arg_output_file_stem.parent_path() / ( path( arg_output_file_stem.filename() ).string() + "." + repeat_ctr_str + ".train" );
-		const path test_file   = arg_output_file_stem.parent_path() / ( path( arg_output_file_stem.filename() ).string() + "." + repeat_ctr_str + ".test"  );
+		const path train_file  = replace_extension_copy( arg_output_file_stem, "." + repeat_ctr_str + ".train" );
+		const path test_file   = replace_extension_copy( arg_output_file_stem, "." + repeat_ctr_str + ".test"  );
 
 		const size_vec_size_vec_pair split_indices = random_split( arg_rng, num_instances, arg_fraction_train );
 

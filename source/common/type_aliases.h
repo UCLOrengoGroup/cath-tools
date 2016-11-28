@@ -37,6 +37,9 @@ namespace cath { namespace common {  template <typename T> class vector_of_vecto
 
 namespace cath {
 
+	using ostream_ref                   = std::reference_wrapper<std::ostream>;
+	using ostream_ref_opt               = boost::optional<ostream_ref>;
+
 	using bool_size_str_tpl             = std::tuple<bool, size_t, std::string>;
 	using bool_size_str_tpl_vec         = std::vector<bool_size_str_tpl>;
 	using char_str_str_tpl              = std::tuple<char, std::string, std::string>;

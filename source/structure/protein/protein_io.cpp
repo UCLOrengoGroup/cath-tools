@@ -121,9 +121,9 @@ protein cath::read_protein_from_pdb(const path   &arg_pdb,   ///< A PDB file
                                     ostream      &arg_stderr ///< TODOCUMENT
                                     ) {
 	return build_protein_of_pdb_and_name(
-		read_pdb_file ( arg_pdb  ),
+		read_pdb_file( arg_pdb ),
 		arg_name,
-		arg_stderr
+		ref( arg_stderr )
 	);
 }
 

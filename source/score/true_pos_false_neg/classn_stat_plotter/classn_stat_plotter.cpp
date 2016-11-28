@@ -29,6 +29,7 @@
 #include <boost/range/join.hpp>
 
 #include "common/algorithm/transform_build.h"
+#include "common/boost_addenda/filesystem/replace_extension_copy.h"
 #include "common/size_t_literal.h"
 #include "common/third_party_code/gnuplot-iostream.h"
 #include "score/score_classification/score_classn_value_results_set.h"
@@ -139,9 +140,9 @@ void classn_stat_plotter::plot(const path                         &arg_output_fi
                                const string                       &arg_y_axis_label,     ///< TODOCUMENT
                                const classn_stat_plotter_spec     &arg_plot_spec         ///< TODOCUMENT
                                ) const {
-	const path gnuplot_file  = arg_output_file_stem.parent_path() / ( path(arg_output_file_stem.filename()).string() + ".gnuplot"  );
-	const path eps_file      = arg_output_file_stem.parent_path() / ( path(arg_output_file_stem.filename()).string() + ".eps"      );
-	const path the_data_file = arg_output_file_stem.parent_path() / ( path(arg_output_file_stem.filename()).string() + ".data.txt" );
+	const path gnuplot_file  = replace_extension_copy( arg_output_file_stem, ".gnuplot"  );
+	const path eps_file      = replace_extension_copy( arg_output_file_stem, ".eps"      );
+	const path the_data_file = replace_extension_copy( arg_output_file_stem, ".data.txt" );
 
 	const auto gnuplot_pipe = suppress_execution ? string( " > /dev/null " )
 	                                             : string( " | gnuplot "   );

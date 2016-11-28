@@ -20,6 +20,7 @@
 
 #include "pair_scatter_plotter.h"
 
+//#include "common/boost_addenda/filesystem/replace_extension_copy.h"
 //#include "common/third_party_code/gnuplot-iostream.h"
 
 //using namespace boost::filesystem;
@@ -33,9 +34,9 @@
 //                                const string             &arg_x_axis_label,     ///< TODOCUMENT
 //                                const string             &arg_y_axis_label      ///< TODOCUMENT
 //                                ) const {
-//	const path gnuplot_file  = arg_output_file_stem.parent_path() / ( path(arg_output_file_stem.filename()).string() + ".gnuplot"  );
-//	const path eps_file      = arg_output_file_stem.parent_path() / ( path(arg_output_file_stem.filename()).string() + ".eps"      );
-//	const path the_data_file = arg_output_file_stem.parent_path() / ( path(arg_output_file_stem.filename()).string() + ".data.txt" );
+//	const path gnuplot_file  = replace_extension_copy( arg_output_file_stem, ".gnuplot"  );
+//	const path eps_file      = replace_extension_copy( arg_output_file_stem, ".eps"      );
+//	const path the_data_file = replace_extension_copy( arg_output_file_stem, ".data.txt" );
 //
 //	const auto gnuplot_pipe = suppress_execution ? string( " > /dev/null " )
 //	                                             : string( " | gnuplot "   );

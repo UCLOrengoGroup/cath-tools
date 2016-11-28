@@ -24,8 +24,13 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/math/constants/constants.hpp>
+#include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/irange.hpp>
+#include <boost/range/adaptor/reversed.hpp>
 
+#include "common/boost_addenda/range/front.h"
 #include "common/cpp14/cbegin_cend.h"
+#include "common/size_t_literal.h"
 #include "exception/invalid_argument_exception.h"
 #include "file/pdb/pdb_atom.h"
 #include "structure/protein/residue.h"
@@ -39,89 +44,13 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace std;
 
+using boost::adaptors::reversed;
+using boost::adaptors::filtered;
 using boost::algorithm::any_of;
 using boost::algorithm::join;
+using boost::irange;
 using boost::lexical_cast;
 using boost::none;
-
-/// \brief Ctor for pdb_residue
-pdb_residue::pdb_residue(const chain_label  &arg_chain_label,  ///< TODOCUMENT
-                         const residue_name &arg_residue_name, ///< TODOCUMENT
-                         const pdb_atom_vec &arg_atoms         ///< TODOCUMENT
-                         ) : the_chain_label ( arg_chain_label  ),
-                             the_residue_name( arg_residue_name ),
-                             atoms           ( arg_atoms        ) {
-}
-
-/// \brief Ctor for pdb_residue
-pdb_residue::pdb_residue(const chain_label   &arg_chain_label,  ///< TODOCUMENT
-                         const residue_name  &arg_residue_name, ///< TODOCUMENT
-                         pdb_atom_vec       &&arg_atoms         ///< TODOCUMENT
-                         ) : the_chain_label ( arg_chain_label        ),
-                             the_residue_name( arg_residue_name       ),
-                             atoms           ( std::move( arg_atoms ) ) {
-}
-
-/// \brief TODOCUMENT
-chain_label pdb_residue::get_chain_label() const {
-	return the_chain_label;
-}
-
-/// \brief TODOCUMENT
-residue_name pdb_residue::get_residue_name() const {
-	return the_residue_name;
-}
-
-/// \brief TODOCUMENT
-size_t pdb_residue::get_num_atoms() const {
-	return atoms.size();
-}
-
-/// \brief TODOCUMENT
-const pdb_atom & pdb_residue::get_atom_cref_of_index(const size_t &arg_index ///< TODOCUMENT
-                                                     ) const {
-	return atoms[arg_index];
-}
-
-/// \brief TODOCUMENT
-void pdb_residue::set_chain_label(const chain_label &arg_chain_label ///< TODOCUMENT
-                                  ) {
-	the_chain_label = arg_chain_label;
-}
-
-/// \brief TODOCUMENT
-void pdb_residue::rotate(const rotation &arg_rotation ///< TODOCUMENT
-                         ) {
-	for (pdb_atom &my_pdb_atom : atoms) {
-		my_pdb_atom.rotate(arg_rotation);
-	}
-}
-
-/// \brief TODOCUMENT
-void pdb_residue::operator+=(const coord &arg_coord ///< TODOCUMENT
-                             ) {
-	for (pdb_atom &my_pdb_atom : atoms) {
-		my_pdb_atom += arg_coord;
-	}
-}
-
-/// \brief TODOCUMENT
-void pdb_residue::operator-=(const coord &arg_coord ///< TODOCUMENT
-                             ) {
-	for (pdb_atom &my_pdb_atom : atoms) {
-		my_pdb_atom -= arg_coord;
-	}
-}
-
-/// \brief TODOCUMENT
-pdb_residue::const_iterator pdb_residue::begin() const {
-	return common::cbegin( atoms );
-}
-
-/// \brief TODOCUMENT
-pdb_residue::const_iterator pdb_residue::end() const {
-	return common::cend( atoms );
-}
 
 /// \brief TODOCUMENT
 ///
@@ -167,129 +96,13 @@ string cath::file::get_amino_acid_name(const pdb_residue &arg_residue ///< The p
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_residue
-bool cath::file::has_atom_of_id_of_residue(const pdb_residue &arg_pdb_residue, ///< The residue from which to extract the atom coordinates
-                                           const string      &arg_pdb_atom_id  ///< TODOCUMENT
-                                           ) {
-	return any_of(
-		arg_pdb_residue,
-		[&] (const pdb_atom &x) { return x.get_element_type() == arg_pdb_atom_id; }
-	);
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-bool cath::file::has_nitrogen_coord_of_residue(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
-                                               ) {
-	return has_atom_of_id_of_residue( arg_pdb_residue, pdb_atom::PDB_ID_NITROGEN );
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-bool cath::file::has_carbon_alpha_coord_of_residue(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
-                                                   ) {
-	return has_atom_of_id_of_residue( arg_pdb_residue, pdb_atom::PDB_ID_CARBON_ALPHA );
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-bool cath::file::has_carbon_coord_of_residue(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
-                                             ) {
-	return has_atom_of_id_of_residue( arg_pdb_residue, pdb_atom::PDB_ID_CARBON );
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-bool cath::file::has_carbon_beta_coord_of_residue(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
-                                                  ) {
-	return has_atom_of_id_of_residue( arg_pdb_residue, pdb_atom::PDB_ID_CARBON_BETA );
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-bool cath::file::has_oxygen_coord_of_residue(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
-                                             ) {
-	return has_atom_of_id_of_residue(arg_pdb_residue, pdb_atom::PDB_ID_OXYGEN);
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
 bool cath::file::is_backbone_complete(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
                                       ) {
 	// If the residue has N, CA and C then add it to new_pdb_residues
-	const bool has_n  = has_nitrogen_coord_of_residue     ( arg_pdb_residue );
-	const bool has_ca = has_carbon_alpha_coord_of_residue ( arg_pdb_residue );
-	const bool has_c  = has_carbon_coord_of_residue       ( arg_pdb_residue );
+	const bool has_n  = arg_pdb_residue.has_nitrogen();
+	const bool has_ca = arg_pdb_residue.has_carbon_alpha();
+	const bool has_c  = arg_pdb_residue.has_carbon();
 	return ( has_n && has_ca && has_c );
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-coord cath::file::get_atom_of_id_of_residue(const pdb_residue &arg_pdb_residue, ///< The residue from which to extract the atom coordinates
-                                            const string      &arg_pdb_atom_id  ///< TODOCUMENT
-                                            ) {
-	const size_t num_atoms = arg_pdb_residue.get_num_atoms();
-	for (size_t atom_ctr = 0; atom_ctr < num_atoms; ++atom_ctr) {
-		const pdb_atom the_atom = arg_pdb_residue.get_atom_cref_of_index(atom_ctr);
-		if ( the_atom.get_element_type() == arg_pdb_atom_id ) {
-			return the_atom.get_coord();
-		}
-	}
-	BOOST_THROW_EXCEPTION(invalid_argument_exception(
-		"Cannot find atom of type "
-		+ arg_pdb_atom_id
-		+ " within the "
-		+ lexical_cast<string>( num_atoms )
-		+ " atom(s) of residue "
-		+ lexical_cast<string>( arg_pdb_residue.get_residue_name() )
-	));
-	return coord::ORIGIN_COORD; // To appease Eclipse's syntax parser
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-coord cath::file::get_nitrogen_coord_of_residue(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
-                                                ) {
-	return get_atom_of_id_of_residue(arg_pdb_residue, pdb_atom::PDB_ID_NITROGEN);
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-coord cath::file::get_carbon_alpha_coord_of_residue(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
-                                                    ) {
-	return get_atom_of_id_of_residue(arg_pdb_residue, pdb_atom::PDB_ID_CARBON_ALPHA);
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-coord cath::file::get_carbon_coord_of_residue(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
-                                              ) {
-	return get_atom_of_id_of_residue(arg_pdb_residue, pdb_atom::PDB_ID_CARBON);
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-coord cath::file::get_carbon_beta_coord_of_residue(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
-                                                   ) {
-	return get_atom_of_id_of_residue(arg_pdb_residue, pdb_atom::PDB_ID_CARBON_BETA);
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
-coord cath::file::get_oxygen_coord_of_residue(const pdb_residue &arg_pdb_residue ///< The residue from which to extract the atom coordinates
-                                              ) {
-	return get_atom_of_id_of_residue(arg_pdb_residue, pdb_atom::PDB_ID_OXYGEN);
 }
 
 /// \brief Fake the location of a CB atom, typically used for glycine residues
@@ -306,8 +119,8 @@ coord cath::file::fake_carbon_beta_coord_of_residue(const pdb_residue &arg_resid
 	);
 
 	// Grab the CA position and SSAP frame from this residue
-	const coord    ca               = get_carbon_alpha_coord_of_residue(arg_residue);
-	const rotation ssap_frame       = get_ssap_frame_of_residue(arg_residue);
+	const coord    ca               = get_carbon_alpha_coord   ( arg_residue );
+	const rotation ssap_frame       = get_ssap_frame_of_residue( arg_residue );
 
 	//Rotate the TYPICAL_CA_TO_CB_UNDER_SSAP_FRAME by the inverse of this residue's SSAP frame,
 	// add this residue's CA position and then return the result
@@ -321,8 +134,8 @@ coord cath::file::fake_carbon_beta_coord_of_residue(const pdb_residue &arg_resid
 /// \relates pdb_residue
 coord cath::file::get_or_predict_carbon_beta_coord_of_residue(const pdb_residue &arg_residue ///< TODOCUMENT
                                                               ) {
-	return has_carbon_beta_coord_of_residue(arg_residue) ? get_carbon_beta_coord_of_residue(  arg_residue )
-	                                                     : fake_carbon_beta_coord_of_residue( arg_residue );
+	return arg_residue.has_carbon_beta() ? get_carbon_beta_coord            ( arg_residue )
+	                                     : fake_carbon_beta_coord_of_residue( arg_residue );
 }
 
 /// \brief Get the SSAP-frame of the residue
@@ -333,16 +146,16 @@ coord cath::file::get_or_predict_carbon_beta_coord_of_residue(const pdb_residue 
 rotation cath::file::get_ssap_frame_of_residue(const pdb_residue &arg_residue ///< The residue to query
                                                ) {
 	// Calculate the frame of the residue
-	const coord n_coord  = get_nitrogen_coord_of_residue(     arg_residue );
-	const coord ca_coord = get_carbon_alpha_coord_of_residue( arg_residue );
-	const coord c_coord  = get_carbon_coord_of_residue(       arg_residue );
+	const coord n_coord  = get_nitrogen_coord    ( arg_residue );
+	const coord ca_coord = get_carbon_alpha_coord( arg_residue );
+	const coord c_coord  = get_carbon_coord      ( arg_residue );
 	return construct_residue_frame(n_coord, ca_coord, c_coord);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_residue
-ostream & cath::file::write_pdb_file_entry(ostream           &arg_os,         ///< TODOCUMENT
+ostream & cath::file::write_pdb_file_entry(ostream           &arg_os,     ///< TODOCUMENT
                                            const pdb_residue &arg_residue ///< TODOCUMENT
                                            ) {
 	const size_t num_atoms = arg_residue.get_num_atoms();
@@ -367,14 +180,14 @@ doub_angle_doub_angle_pair cath::file::get_psi_of_this_and_phi_of_next(const pdb
                                                                        const pdb_residue &arg_next_residue  ///< The next residue
                                                                        ) {
 	// Grab the positions of this residue
-	const coord this_n ( get_nitrogen_coord_of_residue    ( arg_this_residue ) );
-	const coord this_ca( get_carbon_alpha_coord_of_residue( arg_this_residue ) );
-	const coord this_c ( get_carbon_coord_of_residue      ( arg_this_residue ) );
+	const coord this_n ( get_nitrogen_coord    ( arg_this_residue ) );
+	const coord this_ca( get_carbon_alpha_coord( arg_this_residue ) );
+	const coord this_c ( get_carbon_coord      ( arg_this_residue ) );
 
 	// ...and the next one
-	const coord next_n ( get_nitrogen_coord_of_residue    ( arg_next_residue ) );
-	const coord next_ca( get_carbon_alpha_coord_of_residue( arg_next_residue ) );
-	const coord next_c ( get_carbon_coord_of_residue      ( arg_next_residue ) );
+	const coord next_n ( get_nitrogen_coord    ( arg_next_residue ) );
+	const coord next_ca( get_carbon_alpha_coord( arg_next_residue ) );
+	const coord next_c ( get_carbon_coord      ( arg_next_residue ) );
 
 	// Compute the angles
 	const auto psi_of_this = dihedral_angle_between_four_points( this_n, this_ca, this_c,  next_n );
@@ -397,7 +210,7 @@ residue cath::file::build_residue_of_pdb_residue(const pdb_residue &arg_residue,
                                                  const size_t      &arg_access   ///< TODOCUMENT
                                                  ) {
 	// Calculate the CA, CB and ssap_frame of the residue
-	const coord    ca_coord   = get_carbon_alpha_coord_of_residue          ( arg_residue );
+	const coord    ca_coord   = get_carbon_alpha_coord( arg_residue );
 	const coord    cb_coord   = get_or_predict_carbon_beta_coord_of_residue( arg_residue );
 	const rotation ssap_frame = get_ssap_frame_of_residue                  ( arg_residue );
 
@@ -414,6 +227,83 @@ residue cath::file::build_residue_of_pdb_residue(const pdb_residue &arg_residue,
 		arg_psi,
 		arg_access
 	);
+}
+
+/// \brief TODOCUMENT
+///
+/// Prefer to use dssp_will_skip_residue()
+///
+/// TODO: This is probably superseded by dssp_will_skip_residue(). It's currently
+///       only used (via cath::file::get_protein_res_indices_that_dssp_might_skip() )
+///       in protein_from_dssp_and_pdb() for tallying PDB and DSSP residues.
+///       Attempt switching to dssp_will_skip_residue(), and perform a bulk load test
+///       over all PDB/DSSP pairs to check that's OK. Then completely remove this.
+///
+/// \relates pdb_residue
+bool cath::file::dssp_might_skip_residue(const pdb_residue &arg_pdb_residue ///< The pdb_residue to test
+                                         ) {
+	// Can't require that all_of() are non-standard because then the initial residues (eg 9?) of 3f9sB fail
+	return any_of(
+		arg_pdb_residue,
+		[&] (const pdb_atom &x) { return ! alt_locn_is_dssp_accepted( x ); }
+	);
+}
+
+/// \brief Whether DSSP will skip this residue
+///
+/// This attempts to match the DSSP criteria for skipping a residue:
+///  * has at least one N, CA, C and O atom that meets
+///    * alt_locn_is_dssp_accepted() if the first atom meets alt_locn_is_dssp_accepted()
+///    * or `( x.get_alt_locn() == ' ' )` otherwise
+///
+/// I've found an issue in DSSP that, for example, causes it to ignore a valid residue with
+/// mixed altlocn of 'A'/'B' ('A' first) to be skipped iff it appears after a residue
+/// with all rejected altlocn (eg 'B'). I'm in contact with the DSSP people about this and
+/// may be sending them a pull-request with a fix soon. I'll see what happens with that
+/// before spending any time trying to replicate that behaviour here.
+///
+/// \relates pdb_residue
+bool cath::file::dssp_will_skip_residue(const pdb_residue &arg_pdb_residue ///< The pdb_residue to test
+                                        ) {
+	// Determine whether there is a first atom with non-standard alt-locn
+	const bool has_nonstd_1st_altloc = ! arg_pdb_residue.empty() && ! alt_locn_is_dssp_accepted( front( arg_pdb_residue ) );
+
+	// Create a closure for checking whether a PDB atom's altlocn is acceptable given has_nonstd_1st_altloc
+	const auto is_accepted_locn = [&] (const pdb_atom &x) {
+		return has_nonstd_1st_altloc
+			? ( x.get_alt_locn() == ' ' )
+			: alt_locn_is_dssp_accepted( x );
+	};
+
+	// Loop over the atoms, detecting whether any of them is a valid N/CA/C/O
+	//
+	// Could probably tidy this up with a bit of metaprogramming
+	bool has_n  = false;
+	bool has_ca = false;
+	bool has_c  = false;
+	bool has_o  = false;
+	for (const pdb_atom &the_atom : arg_pdb_residue | filtered( is_accepted_locn ) ) {
+		const coarse_element_type coarse_element = get_coarse_element_type( the_atom );
+		if ( ! has_n  && coarse_element == coarse_element_type::NITROGEN     ) {
+			has_n  = true;
+			continue;
+		}
+		if ( ! has_ca && coarse_element == coarse_element_type::CARBON_ALPHA ) {
+			has_ca = true;
+			continue;
+		}
+		if ( ! has_c  && coarse_element == coarse_element_type::CARBON       ) {
+			has_c  = true;
+			continue;
+		}
+		if ( ! has_o  && coarse_element == coarse_element_type::OXYGEN       ) {
+			has_o  = true;
+			continue;
+		}
+	}
+
+	// Return whether no acceptable ATOM was found for any of N/CA/C/O
+	return ! ( has_n && has_ca && has_c && has_o );
 }
 
 /// \brief TODOCUMENT
@@ -442,7 +332,7 @@ ostream & cath::file::operator<<(ostream           &arg_os, ///< TODOCUMENT
 	arg_os << ", ";
 	arg_os << arg_pdb_residue.get_residue_name();
 	arg_os << ", ";
-	arg_os << get_carbon_alpha_coord_of_residue(arg_pdb_residue);
+	arg_os << get_carbon_alpha_coord( arg_pdb_residue );
 // 	arg_os << ", ";
 // 	arg_os << arg_pdb_residue.get_amino_acid();
 	arg_os << "]";

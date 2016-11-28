@@ -24,10 +24,12 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "alignment/dyn_prog_align/detail/return_path_matrix.h"
+#include "common/boost_addenda/filesystem/replace_extension_copy.h"
 #include "common/third_party_code/gnuplot-iostream.h"
 
 using namespace boost::filesystem;
 using namespace cath::align::detail;
+using namespace cath::common;
 using namespace std;
 
 using boost::numeric_cast;
@@ -102,9 +104,9 @@ void gnuplot_matrix_plotter::do_write_corner_score(const size_t &arg_x,    ///< 
 /// \brief TODOCUMENT
 void gnuplot_matrix_plotter::do_finish(const path &arg_output_stem ///< TODOCUMENT
                                        ) const {
-	const path gnuplot_file = arg_output_stem.parent_path() / ( path(arg_output_stem.filename()).string() + ".gnuplot"  );
-	const path eps_file     = arg_output_stem.parent_path() / ( path(arg_output_stem.filename()).string() + ".eps"      );
-	const path the_data_file    = arg_output_stem.parent_path() / ( path(arg_output_stem.filename()).string() + ".data.txt" );
+	const path gnuplot_file  = replace_extension_copy( arg_output_stem, ".gnuplot"  );
+	const path eps_file      = replace_extension_copy( arg_output_stem, ".eps"      );
+	const path the_data_file = replace_extension_copy( arg_output_stem, ".data.txt" );
 	Gnuplot gp("tee " + gnuplot_file.string() + " | gnuplot"); // Write to an intermediate gnuplot file
 
 	const size_t length_a   = get_length_a();

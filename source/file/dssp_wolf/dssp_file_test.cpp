@@ -26,6 +26,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/sort.hpp>
 
+#include "common/boost_addenda/log/log_to_ostream_guard.h"
 #include "common/boost_addenda/test/boost_check_equal_ranges.h"
 #include "common/file/simple_file_read_write.h"
 #include "common/size_t_literal.h"
@@ -43,7 +44,6 @@
 #include "structure/protein/sec_struc.h"
 #include "structure/protein/sec_struc_planar_angles.h"
 #include "test/global_test_constants.h"
-#include "test/log_to_ostream_guard.h"
 
 using namespace boost::filesystem;
 using namespace boost::math;
@@ -138,11 +138,15 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_phi_psi_from_wolf_agai
 /// NW code isn't in shape for that use yet so this is a bit hackier.
 void cath::test::dssp_wolf_file_test_suite_fixture::compare_phi_psi_from_pdb_vs_dssp(const string &arg_example_id ///< TODOCUMENT
                                                                                      ) {
+	ostringstream build_prot_warn_stream;
+
 	const auto the_pdb_file      = read_pdb_file(   pdb_file_of_example_id( arg_example_id ) );
 	const auto the_dssp_file     = read_dssp_file( dssp_file_of_example_id( arg_example_id ) );
-	const auto pdb_prot          = build_protein_of_pdb( the_pdb_file      );
+	const auto pdb_prot          = build_protein_of_pdb( the_pdb_file, reference_wrapper<ostream>{ build_prot_warn_stream } );
 	const auto num_dssp_residues = the_dssp_file.get_num_residues();
 	const auto num_pdb_residues  = pdb_prot.get_length();
+
+	BOOST_CHECK_EQUAL( build_prot_warn_stream.str(), "" );
 
 	// Check that the number of residues in each matches to within 10%
 	BOOST_REQUIRE_CLOSE(
@@ -186,11 +190,13 @@ void cath::test::dssp_wolf_file_test_suite_fixture::compare_phi_psi_from_pdb_vs_
 /// \brief TODOCUMENT
 void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_protein(const string &arg_example_id ///< TODOCUMENT
                                                                                      ) {
+	ostringstream build_prot_warn_stream;
 	const auto the_pdb_file               = read_pdb_file (  pdb_file_of_example_id( arg_example_id ) );
 	const auto the_dssp_file              = read_dssp_file( dssp_file_of_example_id( arg_example_id ) );
-	const auto pdb_prot                   = build_protein_of_pdb( the_pdb_file      );
+	const auto pdb_prot                   = build_protein_of_pdb( the_pdb_file, reference_wrapper<ostream>{ build_prot_warn_stream } );
 	const auto num_non_null_dssp_residues = get_num_non_null_residues( the_dssp_file );
 	const auto num_pdb_residues           = pdb_prot.get_length();
+	BOOST_CHECK_EQUAL( build_prot_warn_stream.str(), "" );
 
 	ostringstream test_ss;
 	const log_to_ostream_guard the_guard{ test_ss };
@@ -224,7 +230,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 		const pdb_residue the_pdb_residue = the_pdb_file.get_residue_cref_of_index__backbone_unchecked(pdb_residue_ctr);
 		const residue     built_residue   = combi_prot_with_all_pdb_residues.get_residue_ref_of_index( pdb_residue_ctr );
 		BOOST_CHECK_EQUAL( the_pdb_residue.get_residue_name(),                             built_residue.get_pdb_residue_name()  );
-		BOOST_CHECK_EQUAL( get_carbon_alpha_coord_of_residue( the_pdb_residue ),           built_residue.get_carbon_alpha_coord() );
+		BOOST_CHECK_EQUAL( get_carbon_alpha_coord( the_pdb_residue ),                      built_residue.get_carbon_alpha_coord() );
 		BOOST_CHECK_EQUAL( get_or_predict_carbon_beta_coord_of_residue( the_pdb_residue ), built_residue.get_carbon_beta_coord()  );
 //		cerr << pdb_residue   << endl;
 //		cerr << built_residue << endl;
@@ -235,11 +241,14 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 /// \brief TODOCUMENT
 void cath::test::dssp_wolf_file_test_suite_fixture::compare_residue_frames_from_pdb_vs_wolf(const string &arg_example_id ///< TODOCUMENT
                                                                                             ) {
+	ostringstream build_prot_warn_stream;
 	const wolf_file            the_wolf_file     = read_wolf(     wolf_file_of_example_id( arg_example_id ) );
 	const pdb                  the_pdb_file      = read_pdb_file(  pdb_file_of_example_id( arg_example_id ) );
-	const protein              pdb_prot          = build_protein_of_pdb( the_pdb_file      );
+	const protein              pdb_prot          = build_protein_of_pdb( the_pdb_file, reference_wrapper<ostream>{ build_prot_warn_stream });
 	const wolf_file::size_type num_wolf_residues = the_wolf_file.get_num_residues();
 	const size_t   num_pdb_residues  = pdb_prot.get_length();
+
+	BOOST_CHECK_EQUAL( build_prot_warn_stream.str(), "" );
 
 	BOOST_REQUIRE_EQUAL(num_pdb_residues, num_wolf_residues);
 

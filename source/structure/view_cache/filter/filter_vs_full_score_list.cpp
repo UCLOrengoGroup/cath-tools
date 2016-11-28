@@ -28,6 +28,7 @@
 #include <boost/range/numeric.hpp>
 
 #include "common/algorithm/transform_build.h"
+#include "common/boost_addenda/filesystem/replace_extension_copy.h"
 #include "common/boost_addenda/sorted_insert.h"
 #include "common/cpp14/cbegin_cend.h"
 #include "common/third_party_code/gnuplot-iostream.h"
@@ -304,10 +305,10 @@ void cath::index::filter::gnuplot_data(const filter_vs_full_score_list &arg_filt
                                        const path                      &arg_output_stem,               ///< The stem of the file to generate (ie without the ".gnuplot" or ".eps" suffix)
                                        const filter_vs_full_score_list &arg_filter_attempts            ///< The filter policy to be plotted
                                        ) {
-	const path gnuplot_file     = arg_output_stem.parent_path() / ( path(arg_output_stem.filename()).string() + ".gnuplot"  );
-	const path eps_file         = arg_output_stem.parent_path() / ( path(arg_output_stem.filename()).string() + ".eps"      );
-	const path the_data_file        = arg_output_stem.parent_path() / ( path(arg_output_stem.filename()).string() + ".data.txt" );
-	const path filter_data_file = arg_output_stem.parent_path() / ( path(arg_output_stem.filename()).string() + ".filter_data.txt" );
+	const path gnuplot_file     = replace_extension_copy( arg_output_stem, ".gnuplot"         );
+	const path eps_file         = replace_extension_copy( arg_output_stem, ".eps"             );
+	const path the_data_file    = replace_extension_copy( arg_output_stem, ".data.txt"        );
+	const path filter_data_file = replace_extension_copy( arg_output_stem, ".filter_data.txt" );
 	Gnuplot gp("tee " + gnuplot_file.string() + " | gnuplot"); // Write to an intermediate gnuplot file
 
 	gp << "set   terminal postscript color\n";
@@ -368,9 +369,9 @@ void cath::index::filter::gnuplot_classsn_stat_for_recall(const doub_true_false_
                                                           const path                             &arg_output_stem, ///< TODOCUMENT
                                                           const classn_stat                      &arg_classn_stat  ///< TODOCUMENT
                                                           ) {
-	const path gnuplot_file = arg_output_stem.parent_path() / ( path(arg_output_stem.filename()).string() + ".gnuplot"  );
-	const path eps_file     = arg_output_stem.parent_path() / ( path(arg_output_stem.filename()).string() + ".eps"      );
-	const path the_data_file    = arg_output_stem.parent_path() / ( path(arg_output_stem.filename()).string() + ".data.txt" );
+	const path gnuplot_file  = replace_extension_copy( arg_output_stem, ".gnuplot"  );
+	const path eps_file      = replace_extension_copy( arg_output_stem, ".eps"      );
+	const path the_data_file = replace_extension_copy( arg_output_stem, ".data.txt" );
 	Gnuplot gp("tee " + gnuplot_file.string() + " | gnuplot"); // Write to an intermediate gnuplot file
 
 	gp << "set   terminal postscript color\n";

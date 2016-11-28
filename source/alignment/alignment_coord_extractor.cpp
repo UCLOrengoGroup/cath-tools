@@ -167,7 +167,10 @@ pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const 
 
 /// \brief A static method to get the common coordinates, as defined by an alignment, from two pdb objects.
 ///
-/// See alignment_coord_extractor for more information.
+/// See alignment_coord_extractor for more information
+///
+/// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
+///       (fix all errors, *then* provide default of boost::none)
 pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const alignment                       &arg_alignment,        ///< The alignment to determine which residues should be as close as possible to which
                                                                           const pdb                             &arg_pdb_a,            ///< Coordinates for first structure
                                                                           const pdb                             &arg_pdb_b,            ///< Coordinates for second structure
@@ -178,8 +181,8 @@ pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const 
                                                                           ) {
 	return get_common_coords(
 		arg_alignment,
-		build_protein_of_pdb(arg_pdb_a),
-		build_protein_of_pdb(arg_pdb_b),
+		build_protein_of_pdb( arg_pdb_a, ref( cerr ) ),
+		build_protein_of_pdb( arg_pdb_b, ref( cerr ) ),
 		arg_res_seln_policy,
 		arg_atom_seln_policy,
 		arg_entry_index_a,

@@ -33,6 +33,7 @@
 #include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.h"
 #include "alignment/io/alignment_io.h"
 #include "alignment/residue_score/residue_scorer.h"
+#include "common/boost_addenda/log/log_to_ostream_guard.h"
 #include "common/size_t_literal.h"
 #include "common/test_tools.h"
 #include "file/pdb/pdb.h"
@@ -70,7 +71,6 @@
 #include "structure/protein/sec_struc.h"
 #include "structure/protein/sec_struc_planar_angles.h"
 #include "test/global_test_constants.h"
-#include "test/log_to_ostream_guard.h"
 
 #include <iterator>
 #include <iostream>

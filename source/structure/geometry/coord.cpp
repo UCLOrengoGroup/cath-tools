@@ -88,27 +88,6 @@ coord cath::geom::perpendicular_component_copy(const coord &arg_source_coord, //
 	return arg_source_coord - ( factor * unit_dirn );
 }
 
-/// \brief TODOCUMENT
-///
-/// \relates coord
-double cath::geom::length(const coord &arg_coord ///< TODOCUMENT
-                          ) {
-	return sqrt( squared_length( arg_coord ) );
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates coord
-double cath::geom::distance_between_points(const coord &arg_coord1, ///< TODOCUMENT
-                                           const coord &arg_coord2  ///< TODOCUMENT
-                                           ) {
-	// Equivalently, either :
-	//   length(arg_coord2 - arg_coord1)
-	// or
-	//   sqrt(squared_distance_between_points(arg_coord1, arg_coord2));
-	return length(arg_coord2 - arg_coord1);
-}
-
 /// \brief Compute the angle (in radians) between two vectors (represented as coord objects)
 ///
 /// \relates coord
