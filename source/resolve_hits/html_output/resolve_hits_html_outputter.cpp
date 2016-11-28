@@ -293,9 +293,54 @@ string resolve_hits_html_outputter::html_prefix() {
 
 <style>
 
+)"
+	+ css_string()
+	+ R"(
+</style>
+)";
+}
 
+/* .crh-hit-pill-core:hover {
+	border-width      : 2px;
+	margin-left       : -1px;
+	margin-top        : -4px;
+} */
 
-/* --- Start of simple reset --- */
+/* .crh-hit-pill-ends:hover {
+	border-width      : 2px;
+	margin-left       : -1px;
+	margin-top        : -3px;
+} */
+
+/// \brief Generate the HTML suffix string
+string resolve_hits_html_outputter::html_key() {
+	return R"(
+
+<div class="crh-key-div">
+
+<h3 class="crh-key-header">Key</h3>
+<ul>
+	<li><strong>ends   </strong> : The pale ends of the segments represent the trimmed regions that cath-resolve-hits may let overlap. Segments shorter than the min-seg-length are shown all pale.</li>
+	<li><strong>colours</strong> : The hits' colours represent their calculation score: red is 0; green is the best score in the input hits (which may nevertheless be a &quot;bad&quot; hit).</li>
+	<li><strong>grey</strong>    : Grey hits represent hits with scores that have not met the --worst-permissible-[...] filters.</li>
+</ul>
+</div>
+)";
+}
+
+/// \brief Generate the HTML suffix string
+string resolve_hits_html_outputter::html_suffix() {
+	return R"(
+
+</body>
+
+</html>
+)";
+}
+
+/// \brief Generate the CSS string
+string resolve_hits_html_outputter::css_string() {
+	return R"(/* --- Start of simple reset --- */
 body.crh-body {
 	line-height       : 1.15;
 }
@@ -503,42 +548,6 @@ crh-row-colhead {}
 .crh-key-header {
 	padding-top       : 10px;
 }
-
-</style>
-
-)";
-}
-
-/* .crh-hit-pill-core:hover {
-	border-width      : 2px;
-	margin-left       : -1px;
-	margin-top        : -4px;
-} */
-
-/* .crh-hit-pill-ends:hover {
-	border-width      : 2px;
-	margin-left       : -1px;
-	margin-top        : -3px;
-} */
-
-
-/// \brief Generate the HTML suffix string
-string resolve_hits_html_outputter::html_suffix() {
-	return R"(
-
-<div class="crh-key-div">
-
-<h3 class="crh-key-header">Key</h3>
-<ul>
-	<li><strong>ends   </strong> : The pale ends of the segments represent the trimmed regions that cath-resolve-hits may let overlap. Segments shorter than the min-seg-length are shown all pale.</li>
-	<li><strong>colours</strong> : The hits' colours represent their calculation score: red is 0; green is the best score in the input hits (which may nevertheless be a &quot;bad&quot; hit).</li>
-	<li><strong>grey</strong>    : Grey hits represent hits with scores that have not met the --worst-permissible-[...] filters.</li>
-</ul>
-</div>
-
-</body>
-
-</html>
 )";
 }
 

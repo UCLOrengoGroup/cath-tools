@@ -48,7 +48,9 @@ void write_html_hits_processor::do_process_hits_for_query(const string          
                                                           ) {
 	// If the prefix hasn't already been printed, then do so and record
 	if ( ! printed_prefix ) {
-		get_ostream() << resolve_hits_html_outputter::html_prefix();
+		if ( ! body_only_html ) {
+			get_ostream() << resolve_hits_html_outputter::html_prefix();
+		}
 		printed_prefix = true;
 	}
 
@@ -71,7 +73,10 @@ void write_html_hits_processor::do_process_hits_for_query(const string          
 /// \brief Write the HTML suffix to finish the work (if it has been started)
 void write_html_hits_processor::do_finish_work() {
 	if ( printed_prefix ) {
-		get_ostream() << resolve_hits_html_outputter::html_suffix();
+		get_ostream() << resolve_hits_html_outputter::html_key();
+		if ( ! body_only_html ) {
+			get_ostream() << resolve_hits_html_outputter::html_suffix();
+		}
 	}
 }
 
@@ -81,8 +86,10 @@ bool write_html_hits_processor::do_parse_hits_that_fail_score_filter() const {
 }
 
 /// \brief Ctor for the write_html_hits_processor
-write_html_hits_processor::write_html_hits_processor(ostream                &arg_ostream,     ///< The ostream to which the results should be written
-                                                     const crh_score_spec   &arg_score_spec,  ///< The score_spec to apply to hits
-                                                     const crh_segment_spec &arg_segment_spec ///< The segment_spec to apply to hits
-                                                     ) noexcept : super{ arg_ostream, arg_score_spec, arg_segment_spec } {
+write_html_hits_processor::write_html_hits_processor(ostream                &arg_ostream,       ///< The ostream to which the results should be written
+                                                     const crh_score_spec   &arg_score_spec,    ///< The score_spec to apply to hits
+                                                     const crh_segment_spec &arg_segment_spec,  ///< The segment_spec to apply to hits
+                                                     const bool             &arg_body_only_html ///< Whether the HTML output should be restricted to the contents inside <body>
+                                                     ) noexcept : super         { arg_ostream, arg_score_spec, arg_segment_spec },
+                                                                  body_only_html{ arg_body_only_html                            } {
 }

@@ -29,6 +29,7 @@ using boost::make_optional;
 
 constexpr hit_boundary_output crh_output_spec::DEFAULT_BOUNDARY_OUTPUT;
 constexpr bool                crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;
+constexpr bool                crh_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY;
 constexpr bool                crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN;
 
 /// \brief Getter for the output file to which data should be written
@@ -45,6 +46,16 @@ const hit_boundary_output & crh_output_spec::get_boundary_output() const {
 /// \brief Getter for whether to output HTML describing the hits and the results
 const bool & crh_output_spec::get_generate_html_output() const {
 	return generate_html_output;
+}
+
+/// \brief Getter for whether to restrict HTML output to the contents of the body tag
+const bool & crh_output_spec::get_restrict_html_within_body() const {
+	return restrict_html_within_body;
+}
+
+/// \brief Getter for an optional file to which the cath-resolve-hits CSS should be dumped
+const path_opt & crh_output_spec::get_export_css_file() const {
+	return export_css_file;
 }
 
 /// \brief Getter for whether to output a summary of the hmmsearch output alignment
@@ -71,6 +82,20 @@ crh_output_spec & crh_output_spec::set_generate_html_output(const bool &arg_gene
                                                             ) {
 	generate_html_output = arg_generate_html_output;
 	return *this;
+}
+
+/// \brief Setter for whether to restrict HTML output to the contents of the body tag
+crh_output_spec & crh_output_spec::set_restrict_html_within_body(const bool &arg_restrict_html_within_body ///< Whether to restrict HTML output to the contents of the body tag
+                                                                 ) {
+	restrict_html_within_body = arg_restrict_html_within_body;
+	return  *this;
+}
+
+/// \brief Setter for an optional file to which the cath-resolve-hits CSS should be dumped
+crh_output_spec & crh_output_spec::set_export_css_file(const path_opt &arg_export_css_file ///< An optional file to which the cath-resolve-hits CSS should be dumped
+                                                       ) {
+	export_css_file = arg_export_css_file;
+	return  *this;
 }
 
 /// \brief Setter for whether to output a summary of the hmmsearch output alignment

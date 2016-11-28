@@ -27,6 +27,7 @@
 #include "resolve_hits/calc_hit_list.h"
 #include "resolve_hits/file/hmmer_hmmsearch_domtblout.h"
 #include "resolve_hits/file/hmmer_hmmsearch_out.h"
+#include "resolve_hits/html_output/resolve_hits_html_outputter.h"
 #include "resolve_hits/options/crh_options.h"
 #include "resolve_hits/options/spec/crh_score_spec.h"
 #include "resolve_hits/options/spec/crh_spec.h"
@@ -83,9 +84,28 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
                                       istream        &arg_istream,  ///< The input stream
                                       ostream        &arg_stdout    ///< The output stream
                                       ) {
+	const auto &in_spec         = arg_crh_spec.get_input_spec();
+	const auto &out_spec        = arg_crh_spec.get_output_spec();
+	const auto &score_spec      = arg_crh_spec.get_score_spec();
+	const auto &css_file_opt    = out_spec.get_export_css_file();
+	const auto &input_file_opt  = in_spec.get_input_file();
+	const auto &read_from_stdin = in_spec.get_read_from_stdin();
+
+	// If CSS requested, export it
+	if ( css_file_opt ) {
+		ofstream css_export_file_stream;
+		open_ofstream( css_export_file_stream, *css_file_opt );
+		css_export_file_stream << resolve_hits_html_outputter::css_string();
+		css_export_file_stream.close();
+	}
+
+	// If no input specified, stop here
+	if ( ! input_file_opt && ! read_from_stdin ) {
+		return;
+	}
+
 	// Organise the input stream
 	ifstream input_file_stream;
-	const auto &input_file_opt = arg_crh_spec.get_input_spec().get_input_file();
 	if ( input_file_opt ) {
 		if ( ! exists( *input_file_opt ) ) {
 			logger::log_and_exit(
@@ -95,11 +115,11 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 		}
 		open_ifstream( input_file_stream, *input_file_opt );
 	}
-	istream &the_istream_ref = ( arg_crh_spec.get_input_spec().get_read_from_stdin() ? arg_istream : input_file_stream );
+	istream &the_istream_ref = ( read_from_stdin ? arg_istream : input_file_stream );
 
 	// Organise the output stream
 	ofstream output_file_stream;
-	const auto &output_file_opt = arg_crh_spec.get_output_spec().get_output_file();
+	const auto &output_file_opt = out_spec.get_output_file();
 	if ( output_file_opt ) {
 		open_ofstream( output_file_stream, *output_file_opt );
 	}
@@ -112,12 +132,12 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 	);
 
 	try {
-		switch( arg_crh_spec.get_input_spec().get_input_format() ) {
+		switch( in_spec.get_input_format() ) {
 			case ( hits_input_format_tag::HMMER_DOMTMBLOUT ) :  {
 				parse_domain_hits_table(
 					the_read_and_process_mgr,
 					the_istream_ref,
-					arg_crh_spec.get_score_spec().get_apply_cath_rules()
+					score_spec.get_apply_cath_rules()
 				);
 				break;
 			}
@@ -125,9 +145,9 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 				parse_hmmsearch_out(
 					the_read_and_process_mgr,
 					the_istream_ref,
-					arg_crh_spec.get_score_spec().get_apply_cath_rules(),
-					arg_crh_spec.get_input_spec().get_min_gap_length(),
-					arg_crh_spec.get_output_spec().get_output_hmmsearch_aln()
+					score_spec.get_apply_cath_rules(),
+					in_spec.get_min_gap_length(),
+					out_spec.get_output_hmmsearch_aln()
 				);
 				break;
 			}
@@ -158,7 +178,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 			"Unable to parse/process resolve-hits input data file \""
 				+ ( input_file_opt ? input_file_opt->string() : "<stdin>"s )
 				+ "\" of format "
-				+ to_string( arg_crh_spec.get_input_spec().get_input_format() )
+				+ to_string( in_spec.get_input_format() )
 				+ ". Error was:\n"
 				+ arg_exception.what()
 		);

@@ -67,10 +67,12 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		return detail_help_ob.help_string();
 	}
 
+	const auto &the_in_spec  = the_input_ob.get_crh_input_spec();
+	const auto &the_out_spec = the_output_ob.get_crh_output_spec();
+
 	// If the user has specified neither an input file nor to read from stdin, then return an blank error string
 	// (so the error will just be the basic "See 'cath-resolve-hits --help' for usage." message)
-	const auto &the_spec = the_input_ob.get_crh_input_spec();
-	if ( ! the_spec.get_input_file() && ! the_spec.get_read_from_stdin() ) {
+	if ( ! the_in_spec.get_input_file() && ! the_in_spec.get_read_from_stdin() && ! the_out_spec.get_export_css_file() ) {
 		return string{};
 	}
 
@@ -91,7 +93,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 	}
 
 	// Check that if the output_hmmsearch_aln option's enabled, the input format is HMMSEARCH_OUT
-	if ( the_output_ob.get_crh_output_spec().get_output_hmmsearch_aln() && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
+	if ( the_out_spec.get_output_hmmsearch_aln() && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
 		return "Cannot use the --"
 			+ crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN
 			+ " option if using "

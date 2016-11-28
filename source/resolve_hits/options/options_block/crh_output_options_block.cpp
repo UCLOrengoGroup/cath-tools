@@ -37,16 +37,22 @@ using std::string;
 using std::unique_ptr;
 
 /// \brief The option name for the output file to which data should be written (or unspecified for stdout)
-const string crh_output_options_block::PO_OUTPUT_FILE          { "output-file"          };
+const string crh_output_options_block::PO_OUTPUT_FILE              { "output-file"               };
 
 /// \brief The option name for whether to output the hits starts/stops *after* trimming
-const string crh_output_options_block::PO_OUTPUT_TRIMMED_HITS  { "output-trimmed-hits"  };
+const string crh_output_options_block::PO_OUTPUT_TRIMMED_HITS      { "output-trimmed-hits"       };
 
 /// \brief The option name for whether to output HTML describing the hits and the results
-const string crh_output_options_block::PO_GENERATE_HTML_OUTPUT { "html-output"          };
+const string crh_output_options_block::PO_GENERATE_HTML_OUTPUT     { "html-output"               };
+
+/// \brief The option name for whether to restrict HTML output to the contents of the body tag
+const string crh_output_options_block::PO_RESTRICT_HTML_WITHIN_BODY{ "restrict-html-within-body" };
+
+/// \brief The option name for an optional file to which the cath-resolve-hits CSS should be dumped
+const string crh_output_options_block::PO_EXPORT_CSS_FILE          { "export-css-file"           };
 
 /// \brief The option name for whether to output a summary of the hmmsearch output alignment
-const string crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN { "output-hmmsearch-aln" };
+const string crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN     { "output-hmmsearch-aln"      };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_output_options_block::do_clone() const {
@@ -63,22 +69,24 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
                                                                      ) {
 	const string file_varname   { "<file>"   };
 
-	const auto output_file_notifier          = [&] (const path &x) { the_spec.set_output_file         (           x ); };
-	const auto output_trimmed_hits_notifier  = [&] (const bool &x) {          set_output_trimmed_hits ( the_spec, x ); };
-	const auto generate_html_output_notifier = [&] (const bool &x) { the_spec.set_generate_html_output(           x ); };
+	const auto output_file_notifier                   = [&] (const path &x) { the_spec.set_output_file              (           x ); };
+	const auto output_trimmed_hits_notifier           = [&] (const bool &x) {          set_output_trimmed_hits      ( the_spec, x ); };
+	const auto generate_html_output_notifier          = [&] (const bool &x) { the_spec.set_generate_html_output     (           x ); };
+	const auto set_restrict_html_within_body_notifier = [&] (const bool &x) { the_spec.set_restrict_html_within_body(           x ); };
+	const auto export_css_file_notifier               = [&] (const path &x) { the_spec.set_export_css_file          (           x ); };
 
 	arg_desc.add_options()
 		(
 			PO_OUTPUT_FILE.c_str(),
 			value<path>()
-				->value_name   ( file_varname                                  )
-				->notifier     ( output_file_notifier                          ),
+				->value_name   ( file_varname                                       )
+				->notifier     ( output_file_notifier                               ),
 			( "Write output to file " + file_varname + " (or, if unspecified, to stdout)" ).c_str()
 		)
 		(
 			( PO_OUTPUT_TRIMMED_HITS ).c_str(),
 			bool_switch()
-				->notifier     ( output_trimmed_hits_notifier                              )
+				->notifier     ( output_trimmed_hits_notifier                       )
 				->default_value(
 					means_output_trimmed_hits( crh_output_spec::DEFAULT_BOUNDARY_OUTPUT )
 				),
@@ -87,15 +95,32 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 		(
 			( PO_GENERATE_HTML_OUTPUT ).c_str(),
 			bool_switch()
-				->notifier     ( generate_html_output_notifier                 )
-				->default_value( crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT ),
+				->notifier     ( generate_html_output_notifier                      )
+				->default_value( crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT      ),
 			"Output the results as HTML"
+		)
+		(
+			( PO_RESTRICT_HTML_WITHIN_BODY ).c_str(),
+			bool_switch()
+				->notifier     ( set_restrict_html_within_body_notifier             )
+				->default_value( crh_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY ),
+			( "Restrict HTML output to the contents of the body tag (implies --" + PO_GENERATE_HTML_OUTPUT
+				+ "\nThese should be placed in a body tag of class crh-body" ).c_str()
+		)
+		(
+			( PO_EXPORT_CSS_FILE ).c_str(),
+			value<path>()
+				->value_name   ( file_varname                                       )
+				->notifier     ( export_css_file_notifier                           ),
+			( "Export the CSS used in the HTML output to " + file_varname ).c_str()
 		);
 
 	static_assert( ! means_output_trimmed_hits( crh_output_spec::DEFAULT_BOUNDARY_OUTPUT ),
-		"If crh_segment_spec::DEFAULT_OUTPUT_TRIMMED_HITS isn't false, it might mess up the bool switch in here" );
+		"If crh_segment_spec::DEFAULT_OUTPUT_TRIMMED_HITS      isn't false, it might mess up the bool switch in here" );
 	static_assert( !                            crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT,
-		"If crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT isn't false, it might mess up the bool switch in here" );
+		"If crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT      isn't false, it might mess up the bool switch in here" );
+	static_assert( !                            crh_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY,
+		"If crh_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Add any hidden options to the provided options_description

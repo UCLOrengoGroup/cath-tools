@@ -41,6 +41,9 @@ namespace cath {
 				///        (used to allow hits' HTML to have unique data attributes)
 				size_t batch_counter = 0;
 
+				/// \brief Whether the HTML output should be restricted to the contents inside <body>
+				bool body_only_html;
+
 				virtual std::unique_ptr<hits_processor> do_clone() const override final;
 
 				virtual void do_process_hits_for_query(const std::string &,
@@ -54,7 +57,8 @@ namespace cath {
 			public:
 				explicit write_html_hits_processor(std::ostream &,
 				                                   const crh_score_spec &,
-				                                   const crh_segment_spec &) noexcept;
+				                                   const crh_segment_spec &,
+				                                   const bool &) noexcept;
 			};
 
 

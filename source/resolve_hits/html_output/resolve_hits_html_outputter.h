@@ -62,7 +62,10 @@ namespace cath {
 
 		public:
 			static std::string html_prefix();
+			static std::string html_key();
 			static std::string html_suffix();
+
+			static std::string css_string();
 
 			static size_t step_for_length(const size_t &);
 

@@ -36,11 +36,12 @@ unique_ptr<hits_processor> cath::rslv::detail::make_hits_processor(ostream      
                                                                    const crh_score_spec   &arg_score_spec,  ///< The crh_score_spec defining the type of hits_processor to make
                                                                    const crh_segment_spec &arg_segment_spec ///< The crh_segment_spec defining the type of hits_processor to make
                                                                    ) {
-	if ( arg_output_spec.get_generate_html_output() ) {
+	if ( arg_output_spec.get_generate_html_output() || arg_output_spec.get_restrict_html_within_body() ) {
 		return make_unique<write_html_hits_processor>(
 			arg_ostream,
 			arg_score_spec,
-			arg_segment_spec
+			arg_segment_spec,
+			arg_output_spec.get_restrict_html_within_body()
 		);
 	}
 	else {
