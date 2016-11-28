@@ -52,6 +52,8 @@ using std::numeric_limits;
 //  * Parse and insert in-place with two, producer/consumer threads?
 //  * Skip inserts of already strictly worse hits?
 //  * Remove strictly worse elements?
+//  * Add options to allow categories of matches (eg input file tying match_ids to categories
+//    and options to specify weighting to assign to categories; file could possibly permit regexps for match ID)
 
 /// \brief Return a lambda function that returns whether the hits associated with two
 ///        specified indices have differing stop points
