@@ -52,7 +52,7 @@ namespace cath {
 			static std::string markers_row(const size_t &,
 			                               const str_opt &);
 			static std::string output_html_fragment(const full_hit &,
-			                                        const size_t &,
+			                                        const size_size_pair &,
 			                                        const display_colour &,
 			                                        const crh_segment_spec &,
 			                                        const crh_score_spec &,
@@ -71,21 +71,24 @@ namespace cath {
 			                               const crh_score_spec &,
 			                               const crh_segment_spec &,
 			                               const bool & = true,
-			                               const crh_filter_spec & = make_accept_all_filter_spec());
+			                               const crh_filter_spec & = make_accept_all_filter_spec(),
+			                               const size_t & = 0);
 
 			static std::string output_html(const std::string &,
 			                               const full_hit_list &,
 			                               const crh_score_spec &,
 			                               const crh_segment_spec &,
 			                               const bool & = true,
-			                               const crh_filter_spec & = make_accept_all_filter_spec());
+			                               const crh_filter_spec & = make_accept_all_filter_spec(),
+			                               const size_t & = 0);
 
 			static std::string output_html(const std::string &,
 			                               const calc_hit_list &,
 			                               const crh_score_spec &,
 			                               const crh_segment_spec &,
 			                               const bool & = true,
-			                               const crh_filter_spec & = make_accept_all_filter_spec());
+			                               const crh_filter_spec & = make_accept_all_filter_spec(),
+			                               const size_t & = 0);
 
 			
 		};

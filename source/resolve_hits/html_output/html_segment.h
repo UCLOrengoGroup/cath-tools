@@ -44,7 +44,8 @@ namespace cath {
 
 			static std::string get_html_string(const res_arrow &,
 			                                   const res_arrow_opt &,
-			                                   const str_vec &,
+			                                   const std::string &,
+			                                   const str_str_pair_vec &,
 			                                   const display_colour_opt &,
 			                                   const display_colour &,
 			                                   const size_t &,
@@ -82,9 +83,8 @@ namespace cath {
 			/// \brief The colour in which the hit should be rendered
 			display_colour colour;
 
-			/// \brief The index of the hit
-			///        (could potentially used for Javascript to identify hits)
-			size_t hit_idx;
+			/// \brief A set of key/value pairs to be inserted as data attributes in the span (keys are prefixed with "data-" if not already)
+			str_str_pair_vec data_key_values;
 
 			/// \brief The full length of the sequence on which this hit appears
 			size_t full_seq_length;

@@ -59,9 +59,11 @@ void write_html_hits_processor::do_process_hits_for_query(const string          
 		get_score_spec(),
 		get_segment_spec(),
 		false,
-		arg_filter_spec
+		arg_filter_spec,
+		batch_counter
 	);
-	
+	++batch_counter;
+
 	// Clear the hits
 	arg_full_hits = full_hit_list{};
 }

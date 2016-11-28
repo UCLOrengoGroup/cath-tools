@@ -57,6 +57,7 @@ using boost::format;
 using boost::irange;
 using boost::make_optional;
 using boost::none;
+using std::make_pair;
 using std::string;
 using std::tie;
 
@@ -160,7 +161,7 @@ hit_seg_vec merge_opt_resolved_boundaries(const hit_seg_vec               &arg_s
 
 /// \brief Generate an HTML fragment to describe the specified full_hit with the specified trim_spec applied
 string resolve_hits_html_outputter::output_html_fragment(const full_hit                  &arg_full_hit,          ///< The full_hit to desribe
-                                                         const size_t                    &arg_full_hit_idx,      ///< The index of the full_hit
+                                                         const size_size_pair            &arg_batch_and_hit_idx, ///< The index of the full_hit
                                                          const display_colour            &arg_colour,            ///< The colour in which the full_hit should be rendered
                                                          const crh_segment_spec          &arg_segment_spec,      ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
                                                          const crh_score_spec            &arg_score_spec,        ///< The crh_score_spec to use to calculate the crh-score
@@ -173,6 +174,9 @@ string resolve_hits_html_outputter::output_html_fragment(const full_hit         
 	const string row_class     =   arg_result_boundaries                    ? "crh-row-result"    :
 	                               arg_highlight                            ? "crh-row-highlight" :
 	                                                                          "crh-row-norm";
+
+	const auto resolved_boundaries = merge_opt_resolved_boundaries( arg_full_hit.get_segments(), arg_result_boundaries );
+	const auto boundaries_strs     = transform_build<str_vec>( resolved_boundaries, to_simple_string );
 
 	// For strictly-worse rows, can set: background-color: #ddd; color: #999;
 	return R"(<tr class=")" + row_class + R"(">
@@ -210,7 +214,20 @@ string resolve_hits_html_outputter::output_html_fragment(const full_hit         
 								( arg_result_boundaries ? ( *arg_result_boundaries )[ x_idx ].first  : none ),
 								( arg_result_boundaries ? ( *arg_result_boundaries )[ x_idx ].second : none ),
 								arg_colour,
-								arg_full_hit_idx,
+								// data fields, should allow something like:
+								//
+								//     $(".crh-hit-ill-core").each(function(n) {
+								//         let d = $(n).data();
+								//         d.crh-hit-id;  # batch3-hit11
+								//         d.crh-hit-match-id; # 1cukA01
+								//     })
+								{
+									make_pair( "crh-hit-id"s,         "batch" + ::std::to_string( arg_batch_and_hit_idx.first + 1 ) + "-hit" + ::std::to_string( arg_batch_and_hit_idx.second + 1 ) ),
+									make_pair( "crh-hit-match-id"s,   arg_full_hit.get_label() ),
+									make_pair( "crh-hit-boundaries"s, join( boundaries_strs, ", " ) ),
+									make_pair( "crh-seg-num"s,        ::std::to_string( x_idx + 1 ) ),
+									make_pair( "crh-seg-boundaries"s, to_simple_string( resolved_boundaries[ x_idx ] ) ),
+								},
 								arg_sequence_length
 							}.get_all_span_html_strs(),
 							"\n\t\t"
@@ -236,13 +253,9 @@ string resolve_hits_html_outputter::output_html_fragment(const full_hit         
 		<div class="scan-result-regions">
 			)"
 			+ join(
-				merge_opt_resolved_boundaries( arg_full_hit.get_segments(), arg_result_boundaries )
-					| transformed( [] (const hit_seg &x) {
-						return R"(<span class="crh-chopping-region-text">)"
-							+ ::std::to_string( get_start_res_index( x ) )
-							+ "-"
-							+ ::std::to_string( get_stop_res_index ( x ) )
-							+ "</span>";
+				boundaries_strs
+					| transformed( [] (const string &x) {
+						return R"(<span class="crh-chopping-region-text">)" + x + "</span>";
 					} ),
 				R"(,
 			)"
@@ -568,7 +581,8 @@ string resolve_hits_html_outputter::output_html(const string            &arg_que
                                                 const crh_score_spec    &arg_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
                                                 const crh_segment_spec  &arg_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
                                                 const bool              &arg_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
-                                                const crh_filter_spec   &arg_filter_spec       ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
+                                                const crh_filter_spec   &arg_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
+                                                const size_t            &arg_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
                                                 ) {
 	return output_html(
 		arg_query_id,
@@ -576,7 +590,8 @@ string resolve_hits_html_outputter::output_html(const string            &arg_que
 		arg_score_spec,
 		arg_segment_spec,
 		arg_output_head_tail,
-		arg_filter_spec
+		arg_filter_spec,
+		arg_batch_index
 	);
 }
 
@@ -586,7 +601,8 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
                                                 const crh_score_spec   &arg_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
                                                 const crh_segment_spec &arg_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
                                                 const bool             &arg_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
-                                                const crh_filter_spec  &arg_filter_spec       ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
+                                                const crh_filter_spec  &arg_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
+                                                const size_t           &arg_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
                                                 ) {
 	return output_html(
 		arg_query_id,
@@ -594,7 +610,8 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 		arg_score_spec,
 		arg_segment_spec,
 		arg_output_head_tail,
-		arg_filter_spec
+		arg_filter_spec,
+		arg_batch_index
 	);
 }
 
@@ -604,7 +621,8 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
                                                 const crh_score_spec   &arg_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
                                                 const crh_segment_spec &arg_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
                                                 const bool             &arg_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
-                                                const crh_filter_spec  &arg_filter_spec       ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
+                                                const crh_filter_spec  &arg_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
+                                                const size_t           &arg_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
                                                 ) {
 	const auto  filtered_grey     = display_colour{ 0.666, 0.666, 0.666 };
 	const auto &the_full_hit_list = arg_calc_hit_list.get_full_hits();
@@ -664,7 +682,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 				const auto &the_full_hit = the_full_hit_list[ the_index ];
 				return output_html_fragment(
 					the_full_hit,
-					the_index,
+					make_pair( arg_batch_index, the_index ),
 					score_passes_filter( arg_filter_spec, the_full_hit.get_score(), the_full_hit.get_score_type() )
 						? get_colour_of_fraction(
 							gradient,
@@ -712,7 +730,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 				const auto &hit_x = the_full_hit_list[ x ];
 				return output_html_fragment(
 					hit_x,
-					x,
+					make_pair( arg_batch_index, x ),
 					score_passes_filter( arg_filter_spec, hit_x.get_score(), hit_x.get_score_type() )
 						? get_colour_of_fraction(
 							gradient,

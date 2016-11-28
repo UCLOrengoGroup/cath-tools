@@ -37,6 +37,10 @@ namespace cath {
 				/// \brief Record whether or not the prefix has yet been printed
 				bool printed_prefix = false;
 
+				/// \brief A counter of the batch being processed
+				///        (used to allow hits' HTML to have unique data attributes)
+				size_t batch_counter = 0;
+
 				virtual std::unique_ptr<hits_processor> do_clone() const override final;
 
 				virtual void do_process_hits_for_query(const std::string &,
