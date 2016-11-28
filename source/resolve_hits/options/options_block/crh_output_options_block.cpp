@@ -104,8 +104,8 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 			bool_switch()
 				->notifier     ( set_restrict_html_within_body_notifier             )
 				->default_value( crh_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY ),
-			( "Restrict HTML output to the contents of the body tag (implies --" + PO_GENERATE_HTML_OUTPUT
-				+ "\nThese should be placed in a body tag of class crh-body" ).c_str()
+			( "Restrict HTML output to the contents of the body tag (implies --" + PO_GENERATE_HTML_OUTPUT + ").\n"
+				 + "The contents should be included inside a body tag of class crh-body" ).c_str()
 		)
 		(
 			( PO_EXPORT_CSS_FILE ).c_str(),
