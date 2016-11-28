@@ -18,8 +18,12 @@ Features
 **Powerful**
 
  * Finds the optimal result that maximises the sum of hits' scores
- * Enables visualisation of results via graphical HTML
+ * Handles discontinuous domains
  * Supports tolerance for overlaps between hits; auto-resolves any that occur
+
+**Transparent**
+
+ * Provides visualisation of input data and decisions via graphical HTML
 
 **Simple**
 
