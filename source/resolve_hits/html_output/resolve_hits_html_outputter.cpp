@@ -283,10 +283,10 @@ string resolve_hits_html_outputter::html_prefix() {
 
 
 /* --- Start of simple reset --- */
-body {
+body.crh-body {
 	line-height       : 1.15;
 }
-table {
+body.crh-body table {
 	border-collapse   : separate;
 	border-spacing    : 4px;
 }
