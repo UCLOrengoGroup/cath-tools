@@ -72,7 +72,7 @@ namespace cath {
 			detail::scan_multi_structure_data structures_data;
 
 			/// \brief TODOCUMENT
-			durn_mem_pair structure_build_durn_and_size = make_pair( hrc_duration::zero(), 0 * boost::units::information::bytes );			
+			durn_mem_pair structure_build_durn_and_size = make_pair( hrc_duration::zero(), 0 * boost::units::information::bytes );
 
 			/// \brief TODOCUMENT
 			detail::scan_index_vector_store<key_t> the_store;
