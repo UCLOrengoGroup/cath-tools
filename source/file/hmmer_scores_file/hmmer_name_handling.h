@@ -8,7 +8,7 @@ namespace cath {
 	namespace file {
 
 		/// \brief TODOCUMENT
-		enum class hmmer_name_handling {
+		enum class hmmer_name_handling : bool {
 			STRIP, ///< TODOCUMENT
 			LEAVE  ///< TODOCUMENT
 		};

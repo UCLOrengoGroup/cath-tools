@@ -57,7 +57,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief A simple enum for specifying whether the PDB code or the DSSP code is being tested
-		enum class get_residue_names_test_filetype {
+		enum class get_residue_names_test_filetype : bool {
 			PDB,
 			DSSP
 		};

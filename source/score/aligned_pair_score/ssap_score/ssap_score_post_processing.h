@@ -35,7 +35,7 @@ namespace cath {
 		/// The normalisation steps all use the length getter, which is optionally specified in ssap_score's ctor.
 		///
 		/// All these strategies are followed by a multiplication by 100 to get a score out of 100
-		enum class ssap_score_post_processing {
+		enum class ssap_score_post_processing : char {
 			SIMPLE_NORMLS,          ///< Perform a simple normalisation
 			COMPLX_NORMLS,          ///< Perform a more intricate normalisation (which considers the number of residues not compared)
 			SIMPLE_NORMLS_THEN_LOG, ///< Perform a simple normalisation and then (multiply by 1000 and) log the result

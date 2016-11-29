@@ -28,7 +28,7 @@ namespace cath {
 		namespace detail {
 
 			/// \brief Represent the different options that a data_dirs_options_block supports for each file type
-			enum class data_option {
+			enum class data_option : char {
 				PATH,   ///< Enum value to denote a file type's path option
 				PREFIX, ///< Enum value to denote a file type's prefix option
 				SUFFIX  ///< Enum value to denote a file type's suffix option

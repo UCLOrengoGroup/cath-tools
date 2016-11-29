@@ -31,7 +31,7 @@ namespace cath {
 	namespace common {
 		namespace detail {
 
-			enum class fstream_type {
+			enum class fstream_type : bool {
 				READING,
 				WRITING
 			};

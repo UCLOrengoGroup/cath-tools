@@ -26,7 +26,7 @@ namespace cath {
 		namespace detail {
 
 			/// \brief TODOCUMENT
-			enum class alignment_split_half {
+			enum class alignment_split_half : bool {
 				FIRST, ///< TODOCUMENT
 				SECOND ///< TODOCUMENT
 			};

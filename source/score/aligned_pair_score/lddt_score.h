@@ -28,7 +28,7 @@ namespace cath {
 	namespace score {
 
 		/// \brief Represent the standard distance thresholds that are used in lDDT scores
-		enum class lddt_distance_threshold {
+		enum class lddt_distance_threshold : char {
 			DEFAULT_AVG, ///< The average of the results for 0.5, 1.0, 2.0 and 4.0 angstroms
 			HALF_A,      ///< 0.5 angstroms
 			ONE_A,       ///< 1.0 angstroms

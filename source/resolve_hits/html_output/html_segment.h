@@ -35,7 +35,7 @@ namespace cath {
 		private:
 
 			/// \brief The sides on which a pill should be rounded on
-			enum class pill_rounding {
+			enum class pill_rounding : char {
 				NEITHER,    ///< Round the pill on neither side
 				LEFT_ONLY,  ///< Round the pill on the left side
 				RIGHT_ONLY, ///< Round the pill on the right side

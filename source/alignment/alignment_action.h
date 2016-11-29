@@ -33,7 +33,7 @@ namespace cath {
 
 			using aln_ent_ind_tup_pair = std::pair<aln_ent_ind_tup, aln_ent_ind_tup>;
 
-			enum class glued_row_type {
+			enum class glued_row_type : char {
 				FROM_A,
 				FROM_B,
 				FROM_BOTH

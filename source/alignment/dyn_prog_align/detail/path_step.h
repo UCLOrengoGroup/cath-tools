@@ -28,7 +28,7 @@ namespace cath {
 		class alignment;
 		namespace detail {
 
-			enum class path_step {
+			enum class path_step : char {
 				ALIGN_PAIR,
 				INSERT_INTO_FIRST,
 				INSERT_INTO_SECOND

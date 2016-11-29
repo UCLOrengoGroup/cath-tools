@@ -30,7 +30,7 @@ namespace cath {
 	namespace score {
 
 		/// \brief TODOCUMENT
-		enum class overlap_type {
+		enum class overlap_type : char {
 			SHORTER_OVER_LONGER,      ///< TODOCUMENT
 			NUM_ALIGNED_OVER_SHORTER, ///< TODOCUMENT
 			NUM_ALIGNED_OVER_LONGER   ///< TODOCUMENT

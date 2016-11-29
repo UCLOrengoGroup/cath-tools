@@ -40,7 +40,7 @@ namespace cath {
 		namespace detail {
 
 			/// \brief TODOCUMENT
-			enum class length_getter_enum {
+			enum class length_getter_enum : char {
 				FIRST,          ///< TODOCUMENT
 				GEOMETRIC_MEAN, ///< TODOCUMENT
 				LONGER,         ///< TODOCUMENT

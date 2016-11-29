@@ -30,7 +30,7 @@
 namespace cath {
 
 	/// \brief TODOCUMENT
-	enum class distance_score_formula {
+	enum class distance_score_formula : char {
 		FROM_SSAP_PAPER,       ///< TODOCUMENT
 		USED_IN_PREVIOUS_CODE, ///< TODOCUMENT
 		SIMPLIFIED             ///< TODOCUMENT

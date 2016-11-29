@@ -25,7 +25,7 @@ namespace cath {
 	namespace rslv {
 
 		/// \brief Represent the different formats in which hits can be output
-		enum class hit_output_format {
+		enum class hit_output_format : bool {
 			CLASS, ///< Default format for outputting C++ classes
 			JON    ///< Format in which hits should be output for Jon's use
 		};

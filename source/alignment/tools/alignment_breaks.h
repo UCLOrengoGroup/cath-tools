@@ -29,13 +29,13 @@ namespace cath {
 	namespace align {
 		namespace detail {
 			/// \brief TODOCUMENT
-			enum class break_pair_validity {
+			enum class break_pair_validity : bool {
 				GOOD,
 				BAD
 			};
 
 			/// \brief TODOCUMENT
-			enum class break_pair_future {
+			enum class break_pair_future : bool {
 				NEVER_AGAIN,
 				MAYBE_LATER
 			};

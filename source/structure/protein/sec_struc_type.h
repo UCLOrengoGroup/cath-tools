@@ -26,7 +26,7 @@
 namespace cath {
 
 	/// \brief Represent the possible secondary structure types
-	enum class sec_struc_type {
+	enum class sec_struc_type : char {
 		ALPHA_HELIX,
 		BETA_STRAND,
 		COIL

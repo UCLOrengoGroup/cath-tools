@@ -33,7 +33,7 @@ namespace cath {
 		/// \brief Whether to use high accuracy (floating point numbers; no explicit rounding) or low accuracy (ints)
 		///
 		/// The low accuracy option is mainly provided to permit regression testing against the old SSAP score code.
-		enum class ssap_score_accuracy {
+		enum class ssap_score_accuracy : bool {
 			LOW, ///< Use high accuracy calculations (floating point numbers; no explicit rounding)
 			HIGH ///< Use low accuracy calculations (ints)
 		};

@@ -27,7 +27,7 @@ namespace cath {
 	namespace rslv {
 
 		/// \brief Represent the type of match ID, wrt the CATH-specific scoring that Jon uses
-		enum class cath_id_score_category {
+		enum class cath_id_score_category : char {
 			NORMAL,     ///< A normal match (use this as the default if unsure)
 			DC_TYPE,    ///< An ID like dc_c869189e57e572c71376c2f3dfe7dc9c that is handled differently
 			LATER_ROUND ///< An ID like 2fcwB01_round_2 or 2ezwA00_round_3 (but not 2ffkB00_round_1 because that's first-round)

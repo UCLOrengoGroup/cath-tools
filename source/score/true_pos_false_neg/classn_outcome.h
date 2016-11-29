@@ -27,7 +27,7 @@ namespace cath {
 	namespace score {
 
 		/// \brief The outcome of trying to classify positives/negatives
-		enum class classn_outcome {
+		enum class classn_outcome : char {
 			TRUE_POSITIVE,  ///< A correct    identification of a positive as a positive
 			TRUE_NEGATIVE,  ///< A correct    identification of a negative as a negative
 			FALSE_NEGATIVE, ///< An incorrect identification of a positive as a negative

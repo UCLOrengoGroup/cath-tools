@@ -33,7 +33,7 @@ namespace cath {
 			class scan_metrics final {
 			private:
 				/// \brief TODOCUMENT
-				enum class scan_build_type {
+				enum class scan_build_type : char {
 					QUERY_STRUCS, ///< TODOCUMENT
 					QUERY_INDEX,  ///< TODOCUMENT
 					INDEX_STRUCS, ///< TODOCUMENT

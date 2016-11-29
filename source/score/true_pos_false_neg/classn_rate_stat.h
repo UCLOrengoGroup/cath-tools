@@ -38,7 +38,7 @@ namespace cath {
 	namespace score {
 
 		/// \brief The standard types of classn_rate_stat that are available
-		enum class std_classn_rate_stat {
+		enum class std_classn_rate_stat : char {
 			SENSITIVITY,
 			RECALL,
 			HIT_RATE,

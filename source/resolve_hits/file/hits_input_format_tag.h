@@ -33,7 +33,7 @@ namespace cath {
 	namespace rslv {
 
 		/// \brief Represent the different formats in which resolve-hits input data can be read
-		enum class hits_input_format_tag {
+		enum class hits_input_format_tag : char {
 			HMMER_DOMTMBLOUT, ///< HMMER domtblout format (must assume all hits are continuous)
 			HMMSEARCH_OUT,    ///< HMMer hmmsearch output format (can be used to deduce discontinuous hits)
 			RAW_WITH_SCORES,  ///< "raw" format with scores

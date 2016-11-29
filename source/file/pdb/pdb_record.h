@@ -34,7 +34,7 @@ namespace cath {
 	namespace file {
 
 		/// \brief Represent the type of record of a PDB file line
-		enum class pdb_record {
+		enum class pdb_record : bool {
 			ATOM,  ///< An ATOM record
 			HETATM ///< A HETATM record
 		};

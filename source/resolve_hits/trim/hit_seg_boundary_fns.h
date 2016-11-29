@@ -31,7 +31,7 @@ namespace cath {
 		namespace detail {
 
 			/// \brief Represent which boundary is being requested
-			enum class boundary_wanted {
+			enum class boundary_wanted : bool {
 				START, ///< The start boundary is wanted
 				STOP   ///< The stop boundary is wanted
 			};

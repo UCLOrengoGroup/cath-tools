@@ -33,7 +33,7 @@ namespace cath {
     ///
     /// This is a mirror of the protein_source_file_set class hierarchy that is useful when
     /// handling program_options
-	enum class protein_file_combn {
+	enum class protein_file_combn : char {
 		WOLF_SEC,    ///< Reading a protein from Wolf and sec files
 		PDB,         ///< Reading a protein from PDB file
 		PDB_DSSP_SEC ///< Reading a protein from PDB, DSSP and sec files

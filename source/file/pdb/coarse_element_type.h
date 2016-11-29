@@ -27,7 +27,7 @@ namespace cath {
 	namespace file {
 
 		/// \brief Coarsely represent an element type as one of the PDB core element types (C/CA/CB/N/O) or NON_CORE
-		enum class coarse_element_type {
+		enum class coarse_element_type : char {
 			CARBON,       ///< Represent a carbon atom
 			CARBON_ALPHA, ///< Represent a carbon_alpha atom
 			CARBON_BETA,  ///< Represent a carbon_beta atom

@@ -25,7 +25,7 @@ namespace cath {
 	namespace geom {
 
 		/// \brief TODOCUMENT
-		enum class angle_endpoint_loc {
+		enum class angle_endpoint_loc : char {
 			USE_LOWER, ///< TODOCUMENT
 			USE_UPPER, ///< TODOCUMENT
 			USE_EITHER ///< TODOCUMENT

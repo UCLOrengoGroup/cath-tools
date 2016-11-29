@@ -25,7 +25,7 @@ namespace cath {
 
 	/// \brief The different possible categories of result from comparing the locations of two regions
 	///        that are assumed to annotate the same chain with the same indexing system
-	enum class region_comparison {
+	enum class region_comparison : char {
 		STRICTLY_BEFORE,      ///< The stop  of the first region comes strictly before the start of the second
 		OVERLAPPINGLY_BEFORE, ///< The first region's start comes strictly first but its stop  comes somewhere between the second's first  and penultimate residues
 		THE_SAME_AS,          ///< The first region's start and stop match those of the second region

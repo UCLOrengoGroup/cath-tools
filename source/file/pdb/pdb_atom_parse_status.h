@@ -27,7 +27,7 @@ namespace cath {
 	namespace file {
 
 		/// \brief The status arising from attempting to parse a pdb_atom from a string
-		enum class pdb_atom_parse_status {
+		enum class pdb_atom_parse_status : char {
 			OK,   ///< The record parses correctly
 			SKIP, ///< The record fails with a minor error; skip this record but process further records.
 			ABORT ///< The record fails with a major error; abort parse attempt.

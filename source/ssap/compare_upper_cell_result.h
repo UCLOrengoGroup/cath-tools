@@ -24,7 +24,7 @@
 namespace cath {
 
 	/// \brief The result of a compare_upper_cell() call
-	enum class compare_upper_cell_result {
+	enum class compare_upper_cell_result : char {
 		ZERO,                     ///< The lower alignment scored zero and so won't be added to the upper matrix
 		NON_ZERO_BELOW_THRESHOLD, ///< The lower alignment scored more than zero but not enough to meet the MIN_LOWER_MAT_RES_SCORE threshold,
 		                          ///< so it won't be added to the upper matrix

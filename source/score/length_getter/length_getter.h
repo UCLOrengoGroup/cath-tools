@@ -35,7 +35,7 @@ namespace cath {
 	namespace score {
 
 		/// \brief TODOCUMENT
-		enum class length_getter_category {
+		enum class length_getter_category : char {
 			LONGER,  ///< TODOCUMENT
 			SHORTER, ///< TODOCUMENT
 			OTHER    ///< TODOCUMENT

@@ -41,7 +41,7 @@ namespace cath {
 
 			/// \brief Represent whether a certain alignment position (from hmmsearch output) contains entries from
 			///        the first sequence, the second or both
-			enum class aln_presence {
+			enum class aln_presence : char {
 				A,   ///< Contains only an entry from the first  sequence
 				B,   ///< Contains only an entry from the second sequence
 				BOTH ///< Contains entries from both sequences

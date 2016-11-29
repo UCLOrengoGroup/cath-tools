@@ -25,7 +25,7 @@ namespace cath {
 	namespace common {
 
 		/// \brief TODOCUMENT
-		enum class broken_batch_tol {
+		enum class broken_batch_tol : bool {
 			FORBID, ///< TODOCUMENT
 			PERMIT  ///< TODOCUMENT
 		};

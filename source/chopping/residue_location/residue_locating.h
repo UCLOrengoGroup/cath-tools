@@ -25,7 +25,7 @@ namespace cath {
 	namespace chop {
 
 		/// \brief TODOCUMENT
-		enum class residue_locating {
+		enum class residue_locating : char {
 			INDEX,         ///< TODOCUMENT
 			NAME,          ///< TODOCUMENT
 			NAME_AND_INDEX ///< TODOCUMENT
