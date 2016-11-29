@@ -21,24 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_H
 #define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_H
 
-//#include <boost/range/adaptor/transformed.hpp>                 // ***** TEMPORARY *****
-//#include <boost/algorithm/string/join.hpp>                     // ***** TEMPORARY *****
-//#include <boost/log/trivial.hpp>                               // ***** TEMPORARY *****
-//#include <boost/range/distance.hpp>                            // ***** TEMPORARY *****
-
-//#include "common/algorithm/contains.h"                         // ***** TEMPORARY *****
-//#include "common/boost_addenda/range/adaptor/lexical_casted.h" // ***** TEMPORARY *****
 #include "common/boost_addenda/range/utility/iterator/cross_itr.h"
-//#include "common/cpp14/cbegin_cend.h"                          // ***** TEMPORARY *****
 #include "scan/detail/res_pair/multi_struc_res_rep_pair.h"
 #include "scan/detail/scan_role.h"
 #include "scan/detail/scan_type_aliases.h"
 #include "scan/detail/stride/roled_scan_stride.h"
-//#include "scan/res_pair_keyer/detail/res_pair_keyer_io.h"      // ***** POSSIBLY TEMPORARY? *****
 #include "scan/scan_policy.h"
 #include "structure/protein/protein.h"
-
-//#include <iterator>                                            // ***** TEMPORARY *****
 
 namespace cath {
 	namespace scan {
