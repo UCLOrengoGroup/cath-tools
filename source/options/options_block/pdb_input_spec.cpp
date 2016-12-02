@@ -23,6 +23,7 @@
 #include <boost/algorithm/string/join.hpp>
 
 #include "common/boost_addenda/range/adaptor/lexical_casted.h"
+#include "common/size_t_literal.h"
 #include "common/string/booled_to_string.h"
 
 using namespace cath;
@@ -66,9 +67,9 @@ pdb_input_spec & pdb_input_spec::set_read_from_stdin(const bool &arg_read_from_s
 size_t cath::opts::get_num_acquirers(const pdb_input_spec &arg_pdb_input_spec ///< The pdb_input_spec to query
                                      ) {
 	return
-		( ! arg_pdb_input_spec.get_input_files().empty() ? 1 : 0 )
+		( ! arg_pdb_input_spec.get_input_files().empty() ? 1_z : 0_z )
 		+
-		(   arg_pdb_input_spec.get_read_from_stdin()     ? 1 : 0 );
+		(   arg_pdb_input_spec.get_read_from_stdin()     ? 1_z : 0_z );
 }
 
 /// \brief Generate a string describing the specified pdb_input_spec

@@ -20,6 +20,9 @@
 
 #include "alignment_input_spec.h"
 
+#include "common/size_t_literal.h"
+
+using namespace cath::common;
 using namespace cath::opts;
 
 using boost::filesystem::path;
@@ -94,9 +97,9 @@ alignment_input_spec & alignment_input_spec::set_ssap_scores_file(const path &ar
 size_t cath::opts::get_num_acquirers(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
                                      ) {
 	return
-		+ ( ( ! arg_alignment_input_spec.get_cora_alignment_file().empty()  ) ? 1 : 0 )
-		+ ( (   arg_alignment_input_spec.get_residue_name_align()           ) ? 1 : 0 )
-		+ ( ( ! arg_alignment_input_spec.get_fasta_alignment_file().empty() ) ? 1 : 0 )
-		+ ( ( ! arg_alignment_input_spec.get_ssap_alignment_file().empty()  ) ? 1 : 0 )
-		+ ( ( ! arg_alignment_input_spec.get_ssap_scores_file().empty()     ) ? 1 : 0 );
+		+ ( ( ! arg_alignment_input_spec.get_cora_alignment_file().empty()  ) ? 1_z : 0_z )
+		+ ( (   arg_alignment_input_spec.get_residue_name_align()           ) ? 1_z : 0_z )
+		+ ( ( ! arg_alignment_input_spec.get_fasta_alignment_file().empty() ) ? 1_z : 0_z )
+		+ ( ( ! arg_alignment_input_spec.get_ssap_alignment_file().empty()  ) ? 1_z : 0_z )
+		+ ( ( ! arg_alignment_input_spec.get_ssap_scores_file().empty()     ) ? 1_z : 0_z );
 }
