@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_VECTOR_STORE_H
 #define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_VECTOR_STORE_H
 
-//#include <boost/log/expressions.hpp>
 #include <boost/range/adaptor/map.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/lower_bound.hpp>
@@ -29,11 +28,9 @@
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/information/byte.hpp>
 
+#include "common/boost_addenda/range/range_concept_type_aliases.h"
 #include "common/cpp14/cbegin_cend.h"
 #include "common/size_t_literal.h"
-//#include "exception/not_implemented_exception.h"
-#include "scan/detail/res_pair/multi_struc_res_rep_pair.h"
-#include "scan/detail/res_pair/multi_struc_res_rep_pair_list.h"
 #include "scan/detail/scan_type_aliases.h"
 
 using namespace cath::common::literals;
@@ -43,24 +40,38 @@ namespace cath {
 		namespace detail {
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
+			template <typename Key, typename Cell>
 			class scan_index_vector_store final {
 			private:
 				/// \brief TODOCUMENT
-				key_multi_res_pair_list_pair_vec<KEY> the_store;
+				using key_cell_pair = std::pair<Key, Cell>;
 
 				/// \brief TODOCUMENT
-				multi_struc_res_rep_pair_list empty_cell;
+				using key_cell_pair_vec = std::vector<key_cell_pair>;
 
-				multi_struc_res_rep_pair_list & find_or_create_cell(const KEY &);
+				/// \brief TODOCUMENT
+				using value_t = common::range_value_t<Cell>;
+
+				/// \brief TODOCUMENT
+				key_cell_pair_vec the_store;
+
+				/// \brief TODOCUMENT
+				Cell empty_cell;
+
+				Cell & find_or_create_cell(const Key &);
 
 			public:
 				/// \brief TODOCUMENT
-				using const_iterator = key_multi_res_pair_list_pair_vec_citr<KEY>;
+				using const_iterator = typename key_cell_pair_vec::const_iterator;
 
-				void add_entry(const KEY &,
-				               const multi_struc_res_rep_pair &);
-				const multi_struc_res_rep_pair_list & find_matches(const KEY &) const;
+				void push_back_entry_to_cell(const Key &,
+				                             const value_t &);
+
+				template <typename... Ts>
+				void emplace_back_entry_to_cell(const Key &,
+				                                Ts &&...);
+
+				const Cell & find_matches(const Key &) const;
 
 				const_iterator begin() const;
 				const_iterator end() const;
@@ -69,62 +80,71 @@ namespace cath {
 			};
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
-			inline multi_struc_res_rep_pair_list & scan_index_vector_store<KEY>::find_or_create_cell(const KEY &arg_key ///< TODOCUMENT
-			                                                                                         ) {
+			template <typename Key, typename Cell>
+			inline auto scan_index_vector_store<Key, Cell>::find_or_create_cell(const Key &arg_key ///< TODOCUMENT
+			                                                                    ) -> Cell & {
 				const auto cell_itr = boost::range::lower_bound(
 					the_store,
 					arg_key,
-					[] (const key_multi_res_pair_list_pair<KEY> &x, const KEY &y) { return x.first < y; }
+					[] (const key_multi_res_pair_list_pair<Key> &x, const Key &y) { return x.first < y; }
 				);
 				if ( cell_itr != common::cend( the_store ) && cell_itr->first == arg_key ) {
 					return cell_itr->second;
 				}
 				else {
-					return the_store.insert( cell_itr, make_pair( arg_key, multi_struc_res_rep_pair_list{} ) )->second;
+					return the_store.insert( cell_itr, make_pair( arg_key, Cell{} ) )->second;
 				}
 			}
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
-			inline void scan_index_vector_store<KEY>::add_entry(const KEY                      &arg_key,     ///< TODOCUMENT
-			                                                    const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
-			                                                    ) {
-				find_or_create_cell( arg_key ).push_back( arg_res_pair );
+			template <typename Key, typename Cell>
+			inline void scan_index_vector_store<Key, Cell>::push_back_entry_to_cell(const Key     &arg_key, ///< TODOCUMENT
+			                                                                        const value_t &arg_data ///< TODOCUMENT
+			                                                                        ) {
+				find_or_create_cell( arg_key ).push_back( arg_data );
 			}
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
-			inline const multi_struc_res_rep_pair_list & scan_index_vector_store<KEY>::find_matches(const KEY &arg_key ///< TODOCUMENT
-			                                                                                        ) const {
+			template <typename Key, typename Cell>
+			template <typename... Ts>
+			inline void scan_index_vector_store<Key, Cell>::emplace_back_entry_to_cell(const Key  &    arg_key, ///< TODOCUMENT
+			                                                                           Ts        &&... arg_data ///< TODOCUMENT
+			                                                                           ) {
+				find_or_create_cell( arg_key ).emplace_back( std::forward<Ts>( arg_data )... );
+			}
+
+			/// \brief TODOCUMENT
+			template <typename Key, typename Cell>
+			inline auto scan_index_vector_store<Key, Cell>::find_matches(const Key &arg_key ///< TODOCUMENT
+			                                                             ) const -> const Cell & {
 				const auto cell_itr = boost::range::lower_bound(
 					the_store,
 					arg_key,
-					[] (const key_multi_res_pair_list_pair<KEY> &x, const KEY &y) { return x.first < y; }
+					[] (const key_multi_res_pair_list_pair<Key> &x, const Key &y) { return x.first < y; }
 				);
 				return ( cell_itr == common::cend( the_store ) || cell_itr->first != arg_key ) ? empty_cell
 				                                                                               : cell_itr->second;
 			}
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
-			auto scan_index_vector_store<KEY>::begin() const -> const_iterator {
+			template <typename Key, typename Cell>
+			auto scan_index_vector_store<Key, Cell>::begin() const -> const_iterator {
 				return common::cbegin( the_store );
 			}
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
-			auto scan_index_vector_store<KEY>::end() const -> const_iterator {
+			template <typename Key, typename Cell>
+			auto scan_index_vector_store<Key, Cell>::end() const -> const_iterator {
 				return common::cend( the_store );
 			}
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
-			info_quantity scan_index_vector_store<KEY>::get_info_size() const {
-				const auto num_bytes = sizeof( multi_struc_res_rep_pair ) * boost::accumulate(
+			template <typename Key, typename Cell>
+			info_quantity scan_index_vector_store<Key, Cell>::get_info_size() const {
+				const auto num_bytes = sizeof( value_t ) * boost::accumulate(
 					the_store
 						| boost::adaptors::map_values
-						| boost::adaptors::transformed( [] (const multi_struc_res_rep_pair_list &x) { return x.size(); } ),
+						| boost::adaptors::transformed( [] (const Cell &x) { return x.size(); } ),
 					0_z
 				);
 				return num_bytes * boost::units::information::bytes;

@@ -68,6 +68,10 @@ namespace cath {
 				const res_rep_index_type & get_to_res_rep_index() const;
 			};
 
+			const view_base_type & get_view_x(const multi_struc_res_rep_pair &);
+			const view_base_type & get_view_y(const multi_struc_res_rep_pair &);
+			const view_base_type & get_view_z(const multi_struc_res_rep_pair &);
+
 			/// \brief Ctor from a res_pair_core, the index of the structure and the indices of the from/to residue reps
 			inline multi_struc_res_rep_pair::multi_struc_res_rep_pair(const res_pair_core      &arg_core,               ///< The core properties of the res_pair
 			                                                          const index_type         &arg_structure_index,    ///< The index of the structure in the scan_multi_structure_data (name?)
@@ -140,6 +144,24 @@ namespace cath {
 					arg_from_res_rep_index,
 					arg_to_res_rep_index
 				};
+			}
+
+			/// \brief TODOCUMENT
+			inline const view_base_type & get_view_x(const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
+			                                         ) {
+				return get_view_x( arg_res_pair.get_res_pair_core() );
+			}
+
+			/// \brief TODOCUMENT
+			inline const view_base_type & get_view_y(const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
+			                                         ) {
+				return get_view_y( arg_res_pair.get_res_pair_core() );
+			}
+
+			/// \brief TODOCUMENT
+			inline const view_base_type & get_view_z(const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
+			                                         ) {
+				return get_view_z( arg_res_pair.get_res_pair_core() );
 			}
 
 			std::ostream & operator<<(std::ostream &,

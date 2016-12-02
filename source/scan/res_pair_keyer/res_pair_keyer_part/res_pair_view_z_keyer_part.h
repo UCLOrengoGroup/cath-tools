@@ -24,19 +24,29 @@
 #include "scan/detail/res_pair/multi_struc_res_rep_pair.h"
 #include "scan/detail/res_pair/res_pair_core.h"
 #include "scan/quad_criteria.h"
-#include "scan/res_pair_keyer/res_pair_keyer_part/detail/res_pair_view_axis_keyer_part.h"
+#include "scan/res_pair_keyer/res_pair_keyer_part/detail/axis_keyer_part.h"
 
 namespace cath {
 	namespace scan {
 		namespace detail {
 
 			/// \brief Specification for a res_pair_view_axis_keyer_part for the view's z-dimension
+			template <typename Stored, typename Crit>
 			class res_pair_view_z_keyer_part_spec final {
 			public:
+				/// \brief TODOCUMENT
+				using stored_t   = Stored;
+
+				/// \brief TODOCUMENT
+				using criteria_t = Crit;
+
+				/// \brief TODOCUMENT
+				using value_t    = view_base_type;
+
 				/// \brief Sanity check the specified cell width
-				static void sanity_check_cell_width(const view_base_type &arg_cell_width ///< The cell width to be sanity-checked
-				                                    ) {
-					if ( ! boost::math::isnormal( arg_cell_width ) || arg_cell_width <= 0.0 || arg_cell_width > 16384.0 ) {
+				static constexpr void sanity_check_cell_width(const value_t &arg_cell_width ///< The cell width to be sanity-checked
+				                                              ) {
+					if ( arg_cell_width <= 0.0 || arg_cell_width > 16384.0 ) {
 						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot create an axis-based res_pair keyer_part with a cell_width that isn't a sensible, strictly-positive value"));
 					}
 				}
@@ -47,22 +57,22 @@ namespace cath {
 				}
 
 				/// \brief Extract the relevant value from the specified res_pair
-				static view_base_type get_value(const multi_struc_res_rep_pair &arg_res_pair ///< The res_pair from which the relevant value should be extracted
-				                                ) {
-					return get_view_z( arg_res_pair.get_res_pair_core() );
+				static constexpr value_t get_value(const stored_t &arg_res_pair ///< The res_pair from which the relevant value should be extracted
+				                                   ) {
+					return get_view_z( arg_res_pair );
 				}
 
 				/// \brief Extract the search radius from the specified quad_criteria
-				static view_base_type get_search_radius(const quad_criteria &arg_criteria   ///< The criteria defining what is considered a match
-				                                        ) {
-					return std::sqrt( arg_criteria.get_maximum_squared_distance() );
+				static constexpr value_t get_search_radius(const criteria_t &arg_criteria ///< The criteria defining what is considered a match
+				                                           ) {
+					return get_maximum_distance( arg_criteria );
 				}
 			};
 
 		} // namespace detail
 
 		/// \brief Type alias for keyer_part for z-axis of view
-		using res_pair_view_z_keyer_part = detail::res_pair_view_axis_keyer_part<detail::res_pair_view_z_keyer_part_spec>;
+		using res_pair_view_z_keyer_part = detail::axis_keyer_part<detail::res_pair_view_z_keyer_part_spec< detail::multi_struc_res_rep_pair, quad_criteria > >;
 	} // namespace scan
 } // namespace cath
 

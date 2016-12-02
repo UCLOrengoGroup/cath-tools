@@ -744,12 +744,6 @@ set(
 )
 
 set(
-	NORMSOURCES_SCAN_DETAIL_SCAN_INDEX_STORE
-		scan/detail/scan_index_store/scan_index_hash_store.cpp
-		scan/detail/scan_index_store/scan_index_vector_store.cpp
-)
-
-set(
 	NORMSOURCES_SCAN_DETAIL_STRIDE
 		scan/detail/stride/rep_strider.cpp
 		scan/detail/stride/roled_scan_stride.cpp
@@ -761,7 +755,6 @@ set(
 		${NORMSOURCES_SCAN_DETAIL_RES_PAIR}
 		${NORMSOURCES_SCAN_DETAIL_RES_PAIR_DIRN}
 		${NORMSOURCES_SCAN_DETAIL_SCAN_ACTION}
-		${NORMSOURCES_SCAN_DETAIL_SCAN_INDEX_STORE}
 		scan/detail/scan_structure_data.cpp
 		${NORMSOURCES_SCAN_DETAIL_STRIDE}
 )
@@ -1681,6 +1674,7 @@ set(
 set(
 	TESTSOURCES_SCAN_DETAIL_SCAN_INDEX_STORE
 		scan/detail/scan_index_store/scan_index_hash_store_test.cpp
+		scan/detail/scan_index_store/scan_index_lattice_store_test.cpp
 		scan/detail/scan_index_store/scan_index_vector_store_test.cpp
 )
 

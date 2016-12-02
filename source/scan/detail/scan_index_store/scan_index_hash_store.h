@@ -21,12 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_HASH_STORE_H
 #define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_HASH_STORE_H
 
-//#include <boost/log/trivial.hpp> // ***** TEMPORARY *****
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/information/byte.hpp>
 
-//#include "common/algorithm/transform_tuple.h" // ***** TEMPORARY *****
 #include "common/cpp14/cbegin_cend.h"
 #include "scan/detail/res_pair/multi_struc_res_rep_pair.h"
 #include "scan/detail/res_pair/multi_struc_res_rep_pair_list.h"
@@ -54,14 +52,14 @@ namespace cath {
 			} // namespace detail
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
+			template <typename Key>
 			class scan_index_hash_store final {
 			private:
 				/// \brief TODOCUMENT
-				using key_hash = hash_tuple::hash<KEY>;
+				using key_hash = hash_tuple::hash<Key>;
 
 				/// \brief TODOCUMENT
-				std::unordered_map<KEY, multi_struc_res_rep_pair_list, key_hash> the_store;
+				std::unordered_map<Key, multi_struc_res_rep_pair_list, key_hash> the_store;
 
 				/// \brief TODOCUMENT
 				const multi_struc_res_rep_pair_list empty_cell{};
@@ -70,13 +68,21 @@ namespace cath {
 
 			public:
 				scan_index_hash_store() {
-//					const auto empty_key = common::transform_tuple( KEY(), detail::empty_key_maker() );
+//					const auto empty_key = common::apply( detail::empty_key_maker(), Key() );
 //					the_store.set_empty_key( empty_key );
 					the_store.rehash( 131072 );
+					std::cerr << "scan_index_hash_store's ctor currently uses a hard-coded rehash to 131072 buckets!\n";
 				}
-				void add_entry(const KEY &,
-				               const multi_struc_res_rep_pair &);
-				const multi_struc_res_rep_pair_list & find_matches(const KEY &) const;
+
+				template <typename T>
+				inline void push_back_entry_to_cell(const Key  &,
+				                                    T  &&);
+
+				template <typename... Ts>
+				inline void emplace_back_entry_to_cell(const Key  &,
+				                                       Ts &&...);
+
+				const multi_struc_res_rep_pair_list & find_matches(const Key &) const;
 
 				info_quantity get_info_size() const;
 
@@ -92,25 +98,36 @@ namespace cath {
 			};
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
-			inline void scan_index_hash_store<KEY>::add_entry(const KEY                      &arg_key,     ///< TODOCUMENT
-			                                                  const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
-			                                                  ) {
-				the_store[ arg_key ].emplace_back( arg_res_pair );
+			template <typename Key>
+			template <typename T>
+			inline void scan_index_hash_store<Key>::push_back_entry_to_cell(const Key  &arg_key, ///< TODOCUMENT
+			                                                                T         &&arg_data ///< TODOCUMENT
+			                                                                ) {
+				the_store[ arg_key ].push_back( std::forward<T>( arg_data ) );
 				++num_adds;
 			}
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
-			inline const multi_struc_res_rep_pair_list & scan_index_hash_store<KEY>::find_matches(const KEY &arg_key ///< TODOCUMENT
+			template <typename Key>
+			template <typename... Ts>
+			inline void scan_index_hash_store<Key>::emplace_back_entry_to_cell(const Key  &    arg_key, ///< TODOCUMENT
+			                                                                   Ts        &&... arg_data ///< TODOCUMENT
+			                                                                   ) {
+				the_store[ arg_key ].emplace_back( std::forward<Ts>( arg_data )... );
+				++num_adds;
+			}
+
+			/// \brief TODOCUMENT
+			template <typename Key>
+			inline const multi_struc_res_rep_pair_list & scan_index_hash_store<Key>::find_matches(const Key &arg_key ///< TODOCUMENT
 			                                                                                      ) const {
 				const auto &cell_itr = the_store.find( arg_key );
 				return ( cell_itr == common::cend( the_store ) ) ? empty_cell : cell_itr->second;
 			}
 
 			/// \brief TODOCUMENT
-			template <typename KEY>
-			info_quantity scan_index_hash_store<KEY>::get_info_size() const {
+			template <typename Key>
+			info_quantity scan_index_hash_store<Key>::get_info_size() const {
 
 				const info_value num_bytes = boost::numeric_cast<info_value>( num_adds * sizeof( multi_struc_res_rep_pair ) );
 				return num_bytes * boost::units::information::bytes;

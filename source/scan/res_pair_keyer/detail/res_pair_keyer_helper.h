@@ -45,134 +45,142 @@ namespace cath {
 			using keyer_part_cell_index_list_type_t = typename T::cell_index_list_t;
 
 
+			/// \brief Convenience type alias for metafunction to calculate the key tuple type from key_part types
+			template <typename... KPs>
+			using key_value_tuple_t = std::tuple<keyer_part_value_type_t<KPs>...>;
 
-			/// \brief Use the specified keyer_part to extract a key_part from the specified res_pair
+			/// \brief Convenience type alias for metafunction to calculate the key tuple type from key_part types
+			template <typename... KPs>
+			using key_index_tuple_t = std::tuple<keyer_part_cell_index_type_t<KPs>...>;
+
+			/// \brief Convenience type alias for metafunction to calculate the key tuple type from key_part types
+			template <typename... KPs>
+			using key_ranges_tuple_t = std::tuple<keyer_part_cell_index_list_type_t<KPs>...>;
+
+
+
+			/// \brief Helper for make_value(), below, (via make_keyer_parts_value_maker())
 			///
-			/// This is a helper function for calling keyer_part's key_part() with a
-			/// multi_struc_res_rep_pair (rather than with a value)
-			template <typename KP>
-			auto key_part(const KP                       &arg_keyer_part, ///< The keyer_part with which to extract the key part from the res_pair
-			              const multi_struc_res_rep_pair &arg_res_pair    ///< The res_pair whose key part should be extracted
-			              ) {
-				return arg_keyer_part.key_part( arg_keyer_part.get_value( arg_res_pair ) );
+			/// \todo Come C++17, this can be replaced by a constexpr lambda - see make_value() notes
+			template <typename Data>
+			struct keyer_parts_value_maker final {
+
+				/// \brief Const reference to the data to be passed to the keyer_parts
+				///
+				/// This mustn't attempt to store by rvalue ref and forward because it's
+				/// used in multiple calls for the keyer_parts in the tuple
+				const Data &data;
+				
+				/// \brief Ctor from the data to be passed to the keyer_parts
+				constexpr keyer_parts_value_maker(const Data &arg_data ///< The data to be passed to the keyer_parts
+				                                  ) : data{ arg_data } {
+				}
+				
+				/// \brief Function operator to apply a bunch of keyer_parts to data and return the values in a tuple
+				template <typename... KPs>
+				constexpr auto operator()(const KPs &...arg_keyer_parts ///< The keyer_parts to be used to get the value parts from the data
+				                          ) {
+					return std::make_tuple( arg_keyer_parts.get_value( data )... );
+				}
+			};
+
+			/// \brief Factory function for keyer_parts_value_maker to provide type deduction for construction
+			///
+			/// \todo Come C++17 there are two reasons this is redundant and can be removed:
+			///        * class template deduction means the deduction can just be performed by a call to the ctor
+			///        * keyer_parts_value_maker can be completely replaced with a constexpr lambda
+			template <typename Data>
+			constexpr keyer_parts_value_maker<Data> make_keyer_parts_value_maker(const Data &arg_data ///< The data to be passed to the keyer_parts
+			                                                                     ) {
+				return { arg_data };
 			}
 
-
-			/// \brief Use the specified keyer_part to extract a list of all key parts for
-			///        all conceivable res_pairs that would match the specified res_pair
+			/// \brief Helper for make_key(), below, (via make_key_parts_key_maker())
 			///
-			/// This is a helper function for calling keyer_part's close_key_parts() with a
-			/// multi_struc_res_rep_pair and quad_criteria (rather than with a value and search_radius)
-			template <typename KP>
-			auto close_key_parts(const KP                       &arg_keyer_part, ///< The keyer_part with which to extract the list of key parts from the res_pair
-			                     const multi_struc_res_rep_pair &arg_res_pair,   ///< The res_pair whose matches' key parts should be generated
-			                     const quad_criteria            &arg_criteria    ///< The criteria defining what is considered a match
-			                     ) {
-				return arg_keyer_part.close_key_parts(
-					arg_keyer_part.get_value        ( arg_res_pair ),
-					arg_keyer_part.get_search_radius( arg_criteria )
+			/// \todo Come C++17, this can be replaced by a constexpr lambda - see make_key() notes
+			template <typename Data>
+			struct keyer_parts_key_maker final {
+
+				/// \brief Const reference to the data to be passed to the keyer_parts
+				///
+				/// This mustn't attempt to store by rvalue ref and forward because it's
+				/// used in multiple calls for the keyer_parts in the tuple
+				const Data &data;
+				
+				/// \brief Ctor from the data to be passed to the keyer_parts
+				constexpr keyer_parts_key_maker(const Data &arg_data ///< The data to be passed to the keyer_parts
+				                                ) : data{ arg_data } {
+				}
+				
+				/// \brief Function operator to apply a bunch of keyer_parts to data and return the keys in a tuple
+				template <typename... KPs>
+				constexpr auto operator()(const KPs &...arg_key_parts ///< The keyer_parts to be used to get the key parts from the data
+				                          ) {
+					return std::make_tuple(
+						arg_key_parts.key_part(
+							arg_key_parts.get_value( data )
+						)...
+					);
+				}
+			};
+
+			/// \brief Factory function for keyer_parts_key_maker to provide type deduction for construction
+			///
+			/// \todo Come C++17 there are two reasons this is redundant and can be removed:
+			///        * class template deduction means the deduction can just be performed by a call to the ctor
+			///        * keyer_parts_key_maker can be completely replaced with a constexpr lambda
+			template <typename Data>
+			constexpr keyer_parts_key_maker<Data> make_keyer_parts_key_maker(const Data &arg_data ///< The data to be passed to the key_parts
+			                                                                 ) {
+				return { arg_data };
+			}
+
+			/// \brief Template function to make a value tuple from a tuple of key_parts and an instance of their common data type
+			///
+			/// \todo Come C++17, remove keyer_parts_value_maker and replace the make_keyer_parts_value_maker() call
+			///       below with a constexpr lambda like:
+			///     [&] (const auto &...keyer_parts) { return std::make_tuple( keyer_parts.get_value( arg_data )... ); }
+			///
+			template <typename... KPs, typename Data>
+			constexpr decltype(auto) make_value(const std::tuple<KPs...>  &arg_tuple, ///< The tuple of keyer_parts to be used to make the value
+			                                    const Data                &arg_data   ///< The data to be passed to the key_parts
+			                                    ) {
+				return common::apply( make_keyer_parts_value_maker( arg_data ), arg_tuple );
+			}
+
+			/// \brief Template function to make a key tuple from a tuple of key_parts and an instance of their common data type
+			///
+			/// \todo Come C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
+			///       below with a constexpr lambda like:
+			///
+			///     [&] (const auto &...keyer_parts) { return std::make_tuple( keyer_parts.key_part( keyer_parts.get_value( arg_data ) )... ); }
+			template <typename... KPs, typename Data>
+			constexpr decltype(auto) make_key(const std::tuple<KPs...>  &arg_tuple, ///< The tuple of keyer_parts to be used to make the key
+			                                  const Data                &arg_data   ///< The data to be passed to the key_parts
+			                                  ) {
+				return common::apply( make_keyer_parts_key_maker( arg_data ), arg_tuple );
+			}
+
+			/// \brief Template function to make a close_keys tuple of ranges from a tuple of key_parts and an instance of their common data type
+			///
+			/// Unlike make_value() and make_key(), this just uses a lambda because the return type's won't permit constexpr anyway.
+			///
+			/// This mustn't attempt to store arg_data/arg_crit by rvalue ref and forward because they're being
+			/// forwarded to multiple calls for the key_parts in the tuple
+			template <typename... KPs, typename Data, typename Crit>
+			decltype(auto) make_close_keys(const std::tuple<KPs...>  &arg_tuple, ///< The tuple of key_parts to apply to be used to make the close_keys
+			                               const Data                &arg_data,  ///< The data to be passed to the key_parts
+			                               const Crit                &arg_crit   ///< The criteria defining what is considered a match
+			                               ) {
+				return common::apply(
+					[&] (const auto &...keyer_parts) {
+						return std::make_tuple( keyer_parts.close_key_parts(
+							keyer_parts.get_value        ( arg_data ),
+							keyer_parts.get_search_radius( arg_crit )
+						)... );
+					},
+					arg_tuple
 				);
-			}
-
-
-			/// \brief Metafunction for calculating the key tuple type from a tuple of key_part types
-			///
-			/// This is just a definition of the template to be specialised below
-			template <typename T> struct key_tuple;
-
-			/// \brief Metafunction for calculating the key tuple type from a tuple of key_part types
-			///
-			/// This specialisation of the above template does the real work
-			template <typename... Ts>
-			struct key_tuple<std::tuple<Ts...>> final {
-				using type = std::tuple<keyer_part_cell_index_type_t<Ts>...>;
-			};
-
-			/// \brief Convenience type alias for metafunction to calculate the key tuple type from a tuple of key_part types
-			template <typename T>
-			using key_tuple_t = typename key_tuple<T>::type;
-
-
-
-			/// \brief Metafunction for calculating the key tuple type from a tuple of key_part types
-			///
-			/// This is just a definition of the template to be specialised below
-			template <typename T> struct key_ranges_tuple;
-
-			/// \brief Metafunction for calculating the key tuple type from a tuple of key_part types
-			///
-			/// This specialisation of the above template does the real work
-			template <typename... Ts>
-			struct key_ranges_tuple<std::tuple<Ts...>> final {
-				using type = std::tuple<keyer_part_cell_index_list_type_t<Ts>...>;
-			};
-
-			/// \brief Convenience type alias for metafunction to calculate the key tuple type from a tuple of key_part types
-			template <typename T>
-			using key_ranges_tuple_t = typename key_ranges_tuple<T>::type;
-
-
-
-			/// \brief TODOCUMENT
-			class keyer_part_maker final {
-			private:
-				/// \brief TODOCUMENT
-				const multi_struc_res_rep_pair &the_res_pair;
-
-			public:
-				/// \brief TODOCUMENT
-				keyer_part_maker(const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
-				                 ) : the_res_pair ( arg_res_pair ) {
-				}
-
-				/// \brief TODOCUMENT
-				template <typename... Ts>
-				constexpr auto operator()(const Ts &... arg_keyer_parts ///< TODOCUMENT
-				                          ) {
-					return std::make_tuple( key_part( arg_keyer_parts, the_res_pair )... );
-				}
-			};
-
-			/// \brief TODOCUMENT
-			class keyer_part_range_maker final {
-			private:
-				/// \brief TODOCUMENT
-				const multi_struc_res_rep_pair &the_res_pair;
-
-				/// \brief TODOCUMENT
-				const quad_criteria &the_criteria;
-
-			public:
-				/// \brief TODOCUMENT
-				keyer_part_range_maker(const multi_struc_res_rep_pair &arg_res_pair, ///< TODOCUMENT
-				                       const quad_criteria            &arg_criteria  ///< TODOCUMENT
-				                       ) : the_res_pair ( arg_res_pair ),
-				                           the_criteria ( arg_criteria ) {
-				}
-
-				/// \brief TODOCUMENT
-				template <typename... Ts>
-				constexpr auto operator()(const Ts &... arg_keyer_parts
-				                          ) {
-					return std::make_tuple( close_key_parts( arg_keyer_parts, the_res_pair, the_criteria )... );
-				}
-			};
-
-			/// \brief Template function to make a key from TODOCUMENT
-			template <typename... Ts>
-			auto make_key(const std::tuple<Ts...>        &arg_tuple,   ///< The tuple of keyer_parts to be used to make the key
-			              const multi_struc_res_rep_pair &arg_res_pair ///< The res_pair whose matches' key parts should be generated
-			              ) {
-				return common::apply( keyer_part_maker( arg_res_pair ), arg_tuple );
-			}
-
-			/// \brief TODOCUMENT
-			template <typename... Ts>
-			auto make_close_keys(const std::tuple<Ts...>        &arg_tuple,    ///< TODOCUMENT
-			                     const multi_struc_res_rep_pair &arg_res_pair, ///< The res_pair whose matches' key parts should be generated
-			                     const quad_criteria            &arg_criteria  ///< The criteria defining what is considered a match
-			                     ) {
-				return common::apply( keyer_part_range_maker( arg_res_pair, arg_criteria ), arg_tuple );
 			}
 
 		} // namespace detail

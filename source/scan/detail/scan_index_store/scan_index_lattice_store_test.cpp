@@ -1,5 +1,5 @@
 /// \file
-/// \brief The scan_index_hash_store class definitions
+/// \brief The scan_index_lattice_store test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,7 +18,33 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "scan_index_hash_store.h"
+#include <boost/test/auto_unit_test.hpp>
+
+#include "scan/detail/scan_index_store/scan_index_lattice_store.h"
+
+// #include "test/global_test_constants.h"
 
 using namespace cath::scan::detail;
-// using namespace std;
+//using namespace std;
+
+namespace cath {
+	namespace test {
+
+		/// \brief The scan_index_lattice_store_test_suite_fixture to assist in testing scan_index_lattice_store
+		struct scan_index_lattice_store_test_suite_fixture {
+		protected:
+			~scan_index_lattice_store_test_suite_fixture() noexcept = default;
+		};
+
+	}
+}
+
+/// \brief TODOCUMENT
+BOOST_FIXTURE_TEST_SUITE(scan_index_lattice_store_test_suite, cath::test::scan_index_lattice_store_test_suite_fixture)
+
+/// \brief TODOCUMENT
+BOOST_AUTO_TEST_CASE(basic) {
+	BOOST_CHECK( true );
+}
+
+BOOST_AUTO_TEST_SUITE_END()

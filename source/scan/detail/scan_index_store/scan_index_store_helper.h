@@ -62,7 +62,7 @@ namespace cath {
 								to_rep_index
 							);
 //							BOOST_LOG_TRIVIAL( warning ) << "\t\tTo rep " << to_rep_index << " - the rep : " << the_res_pair;
-							arg_store.add_entry( the_keyer.make_key( the_res_pair ), the_res_pair );
+							arg_store.push_back_entry_to_cell( the_keyer.make_key( the_res_pair ), the_res_pair );
 						}
 					}
 				}
@@ -154,7 +154,7 @@ namespace cath {
 //								if ( ! contains_key ) {
 //									BOOST_LOG_TRIVIAL( warning ) << "\t\t\t\t[" << counter << "] : Adding entry for close key " << output_key( x );
 //								}
-								arg_store.add_entry( x, the_res_pair );
+								arg_store.push_back_entry_to_cell( x, the_res_pair );
 //								++counter;
 							}
 						}

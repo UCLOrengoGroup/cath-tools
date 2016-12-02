@@ -57,7 +57,7 @@ namespace cath {
 		class scan_query_set final {
 		private:
 			/// \brief TODOCUMENT
-			using key_t = typename res_pair_keyer<KPs...>::key_tuple_type;
+			using key_t = typename res_pair_keyer<KPs...>::key_index_tuple_type;
 
 //			/// \brief TODOCUMENT
 //			using store_t = detail::scan_index_vector_store<key_t>;
@@ -75,7 +75,7 @@ namespace cath {
 			durn_mem_pair structure_build_durn_and_size = make_pair( hrc_duration::zero(), 0 * boost::units::information::bytes );
 
 			/// \brief TODOCUMENT
-			detail::scan_index_vector_store<key_t> the_store;
+			detail::scan_index_vector_store<key_t, detail::multi_struc_res_rep_pair_list> the_store;
 
 			/// \brief TODOCUMENT
 			hrc_duration index_build_durn = hrc_duration::zero();

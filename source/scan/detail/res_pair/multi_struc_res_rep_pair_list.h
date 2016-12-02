@@ -45,6 +45,9 @@ namespace cath {
 			public:
 				/// \brief const_iterator type alias at part of making this a range over the multi_struc_res_rep_pairs
 				using const_iterator = multi_struc_res_rep_pair_vec_citr;
+				using iterator       = multi_struc_res_rep_pair_vec_citr;
+
+				using value_type = typename multi_struc_res_rep_pair_vec::value_type;
 
 				/// \brief Default ctor
 				multi_struc_res_rep_pair_list() = default;

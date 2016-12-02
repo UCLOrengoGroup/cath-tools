@@ -134,6 +134,12 @@ namespace cath {
 				return arg_criteria.get_index_direction_criterion() == res_pair_index_dirn_criterion::MUST_MATCH;
 			}
 
+			/// \brief Get the maximum allowed distance implied by the specified quad_criteria
+			inline detail::view_base_type get_maximum_distance(const quad_criteria &arg_quad_criteria ///< The arg_quad_criteria to query
+			                                                   ) {
+				return std::sqrt( arg_quad_criteria.get_maximum_squared_distance() );
+			}
+
 			quad_criteria make_default_quad_criteria();
 			quad_criteria parse_quad_criteria(const std::string &);
 			quad_criteria_vec get_standard_quad_criterias();

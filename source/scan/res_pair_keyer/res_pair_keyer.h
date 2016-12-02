@@ -45,53 +45,70 @@ namespace cath {
 			// static_assert( common::is_tuple<TPL>::value, "ERROR: res_pair_keyer must be instantiated with a type that's a std::tuple" );
 
 			/// \brief TODOCUMENT
-			using keyer_part_tuple_type = std::tuple<KPs...>;
+			using keyer_part_tuple = std::tuple<KPs...>;
 
 			/// \brief TODOCUMENT
-			keyer_part_tuple_type keyer_parts;
+			keyer_part_tuple keyer_parts;
 
 		public:
 			/// \brief TODOCUMENT
-			using key_tuple_type = detail::key_tuple_t<keyer_part_tuple_type>;
+			using key_value_tuple_type = detail::key_value_tuple_t<KPs...>;
 
 			/// \brief TODOCUMENT
-			using key_ranges_tuple_type = detail::key_ranges_tuple_t<keyer_part_tuple_type>;
+			using key_index_tuple_type = detail::key_index_tuple_t<KPs...>;
 
-			res_pair_keyer(const KPs &...);
-			// res_pair_keyer(const keyer_part_tuple_type &);
+			/// \brief TODOCUMENT
+			using key_ranges_tuple_type = detail::key_ranges_tuple_t<KPs...>;
 
-			key_tuple_type make_key(const detail::multi_struc_res_rep_pair &) const;
+			explicit constexpr res_pair_keyer(const KPs &...);
+			// res_pair_keyer(const keyer_part_tuple &);
 
-			key_ranges_tuple_type make_close_keys(const detail::multi_struc_res_rep_pair &,
-			                                      const quad_criteria &) const;
+			template <typename Data>
+			constexpr key_value_tuple_type make_value(Data &&) const;
+
+			template <typename Data>
+			constexpr key_index_tuple_type make_key(Data &&) const;
+
+			template <typename Data, typename Crit>
+			constexpr key_ranges_tuple_type make_close_keys(Data &&,
+			                                                Crit &&) const;
+
 			std::string parts_names() const;
 		};
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		inline res_pair_keyer<KPs...>::res_pair_keyer(const KPs &... arg_keyer_parts ///< TODOCUMENT
-		                                              ) : keyer_parts( arg_keyer_parts... ) {
-		}
-
-		// /// \brief TODOCUMENT
-		// template <typename... KPs>
-		// inline res_pair_keyer<KPs...>::res_pair_keyer(const keyer_part_tuple_type &arg_keyer_parts ///< TODOCUMENT
-		//                                               ) : keyer_parts( arg_keyer_parts ) {
-		// }
-
-		/// \brief TODOCUMENT
-		template <typename... KPs>
-		inline auto res_pair_keyer<KPs...>::make_key(const detail::multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
-		                                             ) const -> key_tuple_type {
-			return detail::make_key( keyer_parts, arg_res_pair );
+		inline constexpr res_pair_keyer<KPs...>::res_pair_keyer(const KPs &... arg_keyer_parts ///< TODOCUMENT
+		                                                        ) : keyer_parts( arg_keyer_parts... ) {
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		inline auto res_pair_keyer<KPs...>::make_close_keys(const detail::multi_struc_res_rep_pair &arg_res_pair, ///< TODOCUMENT
-		                                                    const quad_criteria                    &arg_criteria  ///< The criteria defining what is considered a match
-		                                                    ) const -> key_ranges_tuple_type {
-			return detail::make_close_keys( keyer_parts, arg_res_pair, arg_criteria );
+		template <typename Data>
+		inline constexpr auto res_pair_keyer<KPs...>::make_value(Data &&arg_data ///< TODOCUMENT
+		                                                         ) const -> key_value_tuple_type {
+			return detail::make_value( keyer_parts, std::forward<Data>( arg_data ) );
+		}
+
+		/// \brief TODOCUMENT
+		template <typename... KPs>
+		template <typename Data>
+		inline constexpr auto res_pair_keyer<KPs...>::make_key(Data &&arg_data ///< TODOCUMENT
+		                                                       ) const -> key_index_tuple_type {
+			return detail::make_key( keyer_parts, std::forward<Data>( arg_data ) );
+		}
+
+		/// \brief TODOCUMENT
+		template <typename... KPs>
+		template <typename Data, typename Crit>
+		inline constexpr auto res_pair_keyer<KPs...>::make_close_keys(Data &&arg_data, ///< TODOCUMENT
+		                                                              Crit &&arg_criteria  ///< The criteria defining what is considered a match
+		                                                              ) const -> key_ranges_tuple_type {
+			return detail::make_close_keys(
+				keyer_parts,
+				std::forward<Data>( arg_data ),
+				std::forward<Crit>( arg_criteria )
+			);
 		}
 
 		/// \brief TODOCUMENT
@@ -102,9 +119,10 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		res_pair_keyer<KPs...> make_res_pair_keyer(KPs ... arg_keyer_parts ///< TODOCUMENT
-		                                           ) {
-			return { arg_keyer_parts... };
+		constexpr res_pair_keyer<KPs...> make_res_pair_keyer(KPs ... arg_keyer_parts ///< TODOCUMENT
+		                                                     ) {
+			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+			return res_pair_keyer<KPs...>{ arg_keyer_parts... };
 		}
 
 		/// \brief TODOCUMENT
@@ -116,7 +134,6 @@ namespace cath {
 			return arg_os;
 		}
 
-//		template <typename T> class TD;
 //		auto make_example() {
 //			auto the_example = make_res_pair_keyer(
 //				res_pair_from_phi_keyer_part  ( geom::make_angle_from_degrees<detail::angle_base_type>( 67.5 ) ),

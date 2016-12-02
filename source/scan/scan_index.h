@@ -56,7 +56,7 @@ namespace cath {
 		class scan_index final {
 		private:
 			/// \brief TODOCUMENT
-			using key_t = typename res_pair_keyer<KPs...>::key_tuple_type;
+			using key_t = typename res_pair_keyer<KPs...>::key_index_tuple_type;
 
 			/// \brief TODOCUMENT
 			std::reference_wrapper<const scan_policy<KPs...>> the_policy;
