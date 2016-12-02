@@ -2,8 +2,8 @@
 /// \brief The log_to_ostream_guard class header
 
 /// \copyright
-/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
-/// Copyright (C) 2011, Orengo Group, University College London
+/// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
+/// Copyright (C) 2007, Tony Lewis
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_TEST_LOG_TO_OSTREAM_GUARD_H
-#define _CATH_TOOLS_SOURCE_TEST_LOG_TO_OSTREAM_GUARD_H
+#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_LOG_LOG_TO_OSTREAM_GUARD_H
+#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_LOG_LOG_TO_OSTREAM_GUARD_H
 
 #include <boost/log/utility/setup/console.hpp>
 using sink_t     = boost::log::sinks::synchronous_sink<boost::log::sinks::basic_text_ostream_backend<char>>;

@@ -1,9 +1,9 @@
 /// \file
-
+/// \brief The program_exception_wrapper test file
 
 /// \copyright
-/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
-/// Copyright (C) 2011, Orengo Group, University College London
+/// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
+/// Copyright (C) 2007, Tony Lewis
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #include <boost/test/auto_unit_test.hpp>
 
 #include <boost/algorithm/string/predicate.hpp>

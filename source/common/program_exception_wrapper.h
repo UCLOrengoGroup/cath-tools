@@ -2,8 +2,8 @@
 /// \brief The program_exception_wrapper class header
 
 /// \copyright
-/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
-/// Copyright (C) 2011, Orengo Group, University College London
+/// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
+/// Copyright (C) 2007, Tony Lewis
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU General Public License as published by
