@@ -29,8 +29,8 @@
 #include <boost/range.hpp>
 #include <boost/range/iterator_range.hpp>
 
-#include "common/algorithm/transform_tuple.h"
 #include "common/cpp14/cbegin_cend.h"
+#include "common/cpp17/apply.h"
 #include "common/file/open_fstream.h"
 #include "common/type_aliases.h"
 #include "exception/out_of_range_exception.h"
@@ -44,7 +44,7 @@ namespace cath {
 			/// \brief Stream parts from the ctor-specified istream to the specified argument references
 			///        in the correct order
 			///
-			/// Motivation: to be used in transform_tuple() for populating a tuple from an istream.
+			/// Motivation: to be used in apply() for populating a tuple from an istream.
 			class tuple_parts_istreamer final {
 			private:
 				/// \brief Reference to the istream from which the parts should be read
@@ -120,7 +120,7 @@ namespace cath {
 				static std::tuple<Ts...> read_line(std::istream &arg_is ///< The istream containing the line to be read
 				                                   ) {
 					std::tuple<Ts...> new_tuple;
-					common::transform_tuple( new_tuple, tuple_parts_istreamer( arg_is ) );
+					apply( tuple_parts_istreamer( arg_is ), new_tuple );
 					return new_tuple;
 				}
 			};
@@ -231,7 +231,7 @@ namespace cath {
 				void write_part(std::ostream            &arg_os,   ///< TODOCUMENT
 				                const std::tuple<Ts...> &arg_value ///< TODOCUMENT
 				                ) const {
-					common::transform_tuple( arg_value, tuple_parts_ostreamer( arg_os ) );
+					apply( tuple_parts_ostreamer( arg_os ), arg_value );
 				}
 
 			public:

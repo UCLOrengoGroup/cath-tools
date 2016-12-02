@@ -24,7 +24,7 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "common/algorithm/transform_tuple.h"
+#include "common/cpp17/apply.h"
 #include "common/type_aliases.h"
 
 #include <iomanip>
@@ -71,7 +71,7 @@ namespace cath {
 			template <typename... Ks>
 			std::string output_key(const std::tuple<Ks...> &arg_key ///< TODOCUMENT
 			                       ) {
-				return common::transform_tuple( arg_key, key_parts_outputter() );
+				return common::apply( key_parts_outputter(), arg_key );
 			}
 
 
@@ -91,7 +91,7 @@ namespace cath {
 			template <typename... KPs>
 			std::string output_keyer_parts(const std::tuple<KPs...> &arg_keyer_parts ///< TODOCUMENT
 			                               ) {
-				return common::transform_tuple( arg_keyer_parts, keyer_parts_outputter() );
+				return common::apply( keyer_parts_outputter(), arg_keyer_parts );
 			}
 
 		} // namespace detail

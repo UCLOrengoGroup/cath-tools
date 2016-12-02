@@ -29,7 +29,7 @@
 #include "common/algorithm/copy_build.h"
 #include "common/algorithm/generate_n_build.h"
 #include "common/algorithm/transform_build.h"
-#include "common/algorithm/transform_tuple.h"
+#include "common/cpp17/apply.h"
 #include "common/type_aliases.h"
 #include "scan/scan_tools/scan_metrics.h"
 
@@ -71,7 +71,7 @@ namespace cath {
 			std::string join_string_tuple(const std::tuple<STRs...> &arg_strings,  ///< TODOCUMENT
 			                              const std::string         &arg_separator ///< TODOCUMENT
 			                              ) {
-				return common::transform_tuple( arg_strings, string_joiner( arg_separator ) );
+				return common::apply( string_joiner( arg_separator ), arg_strings );
 			}
 
 			/// \brief TODOCUMENT

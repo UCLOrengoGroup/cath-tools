@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_HELPER_H
 #define _CATH_TOOLS_SOURCE_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_HELPER_H
 
-#include "common/algorithm/transform_tuple.h"
+#include "common/cpp17/apply.h"
 
 namespace cath { namespace scan { namespace detail { class multi_struc_res_rep_pair; } } }
 namespace cath { namespace scan { class quad_criteria; } }
@@ -163,7 +163,7 @@ namespace cath {
 			auto make_key(const std::tuple<Ts...>        &arg_tuple,   ///< The tuple of keyer_parts to be used to make the key
 			              const multi_struc_res_rep_pair &arg_res_pair ///< The res_pair whose matches' key parts should be generated
 			              ) {
-				return common::transform_tuple( arg_tuple, keyer_part_maker( arg_res_pair ) );
+				return common::apply( keyer_part_maker( arg_res_pair ), arg_tuple );
 			}
 
 			/// \brief TODOCUMENT
@@ -172,7 +172,7 @@ namespace cath {
 			                     const multi_struc_res_rep_pair &arg_res_pair, ///< The res_pair whose matches' key parts should be generated
 			                     const quad_criteria            &arg_criteria  ///< The criteria defining what is considered a match
 			                     ) {
-				return common::transform_tuple( arg_tuple, keyer_part_range_maker( arg_res_pair, arg_criteria ) );
+				return common::apply( keyer_part_range_maker( arg_res_pair, arg_criteria ), arg_tuple );
 			}
 
 		} // namespace detail

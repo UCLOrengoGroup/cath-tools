@@ -23,9 +23,9 @@
 
 #include <boost/iterator/iterator_facade.hpp>
 
-#include "common/algorithm/transform_tuple.h"
 #include "common/boost_addenda/iterator/iterator_traits_type_aliases.h"
 #include "common/boost_addenda/range/range_concept_type_aliases.h"
+#include "common/cpp17/apply.h"
 #include "exception/invalid_argument_exception.h"
 
 namespace cath { namespace common { template <typename... RNGs> class cross_itr; } }
@@ -173,7 +173,7 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename... RNGs>
 		auto cross_itr<RNGs...>::dereference() const -> reference_type {
-			return transform_tuple( the_iterators, detail::dereferencer() );
+			return apply( detail::dereferencer(), the_iterators );
 		}
 
 		/// \brief TODOCUMENT
@@ -279,14 +279,14 @@ namespace cath {
 		template <typename... RNGs>
 		cross_itr<std::remove_reference_t<RNGs>...> make_cross_itr(std::tuple<RNGs ...> &arg_tuple ///< The ranges over which this cross_itr should act
 		                                                           ) {
-			return transform_tuple( arg_tuple, detail::cross_itr_maker() );
+			return apply( detail::cross_itr_maker(), arg_tuple );
 		}
 
 		/// \brief Ctor from a tuple of ranges
 		template <typename... RNGs>
 		cross_itr<std::remove_reference_t<RNGs>...> make_end_cross_itr(std::tuple<RNGs ...> &arg_tuple ///< The ranges over which this cross_itr should act
 		                                                               ) {
-			return transform_tuple( arg_tuple, detail::end_cross_itr_maker() );
+			return apply( detail::end_cross_itr_maker(), arg_tuple );
 		}
 
 		/// \brief Ctor from a tuple of ranges
@@ -300,7 +300,7 @@ namespace cath {
 //			//
 //			// So make a local, non-const tuple of references and build from that instead
 //			std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( arg_tuple );
-			return transform_tuple( arg_tuple, detail::const_cross_itr_maker() );
+			return apply( detail::const_cross_itr_maker(), arg_tuple );
 		}
 
 		/// \brief Ctor from a tuple of ranges
@@ -314,7 +314,7 @@ namespace cath {
 //			//
 //			// So make a local, non-const tuple of references and build from that instead
 //			std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( arg_tuple );
-			return transform_tuple( arg_tuple, detail::end_const_cross_itr_maker() );
+			return apply( detail::end_const_cross_itr_maker(), arg_tuple );
 		}
 
 		template <typename... Ts>
