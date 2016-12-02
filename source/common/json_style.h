@@ -33,7 +33,7 @@ namespace cath {
 			COMPACT ///< Suppress superfluous white-space characters to keep the JSON compact
 		};
 
-	} // namespace opts
+	} // namespace common
 } // namespace cath
 
 #endif

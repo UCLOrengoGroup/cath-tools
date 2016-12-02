@@ -223,7 +223,7 @@ namespace cath {
 		}
 
 
-	}
+	} // namespace sec
 } // namespace cath
 
 #endif

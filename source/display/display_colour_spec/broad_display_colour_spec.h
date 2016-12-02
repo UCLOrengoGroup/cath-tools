@@ -68,7 +68,7 @@ namespace cath {
 		                      const viewer &,
 		                      const str_vec &,
 		                      std::ostream &);
-	}
+	} // namespace detail
 
 	void colour_viewer_with_spec(const broad_display_colour_spec &,
 	                             const viewer &,

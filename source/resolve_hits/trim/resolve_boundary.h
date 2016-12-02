@@ -54,7 +54,7 @@ namespace cath {
 				       ( arg_lhs_trim > arg_rhs_trim   ) ? static_cast<residx_t>(       arg_value ) :
 				                                           static_cast<residx_t>( 1.0 + arg_value );
 			}
-		}
+		} // namespace detail
 
 		/// \brief Calculated a resolved boundary for two segments with overlapping trimmed regions
 		///

@@ -231,7 +231,7 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const bifur_hbond_list &);
 
-	}
+	} // namespace sec
 } // namespace cath
 
 #endif

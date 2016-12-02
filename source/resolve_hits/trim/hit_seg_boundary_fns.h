@@ -40,7 +40,7 @@ namespace cath {
 			                                const hit_seg &,
 			                                const hit_seg_vec &,
 			                                const trim_spec &);
-		}
+		} // namespace detail
 
 		res_arrow_opt get_start_boundary(const hit_seg &,
 		                                 const hit_seg_vec &,
