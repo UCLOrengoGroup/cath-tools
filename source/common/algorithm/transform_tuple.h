@@ -30,24 +30,27 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename... Ts, typename F, size_t ...S>
-			constexpr auto transform_tuple_impl(std::tuple<Ts...>         &arg_tuple,  ///< TODOCUMENT
-			                                    F                          arg_fn,     ///< TODOCUMENT
-			                                    std::index_sequence<S...>  /*arg_indices*/ ///< TODOCUMENT
+			constexpr auto transform_tuple_impl(std::tuple<Ts...>         &arg_tuple,      ///< TODOCUMENT
+			                                    F                          arg_fn,         ///< TODOCUMENT
+			                                    std::index_sequence<S...>  /*arg_indices*/ ///< An index_sequence matching the indices of Tpl
 			                                    ) {
 				return arg_fn( std::get<S>( arg_tuple )... );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename... Ts, typename F, size_t ...S>
-			constexpr auto transform_tuple_impl(const std::tuple<Ts...>   &arg_tuple,  ///< TODOCUMENT
-			                                    F                          arg_fn,     ///< TODOCUMENT
-			                                    std::index_sequence<S...>  /*arg_indices*/ ///< TODOCUMENT
+			constexpr auto transform_tuple_impl(const std::tuple<Ts...>   &arg_tuple,      ///< TODOCUMENT
+			                                    F                          arg_fn,         ///< TODOCUMENT
+			                                    std::index_sequence<S...>  /*arg_indices*/ ///< An index_sequence matching the indices of Tpl
 			                                    ) {
 				return arg_fn( std::get<S>( arg_tuple )... );
 			}
 		} // namespace detail
 
 		/// \brief TODOCUMENT
+		///
+		/// \todo Transfer as many uses as possible from this to cath::common::apply()
+		////      (because that's coming in std in C++17) and ideally retire this
 		template <typename... Ts, typename F>
 		constexpr auto transform_tuple(std::tuple<Ts...> &arg_tuple, ///< TODOCUMENT
 		                               F                  arg_fn     ///< TODOCUMENT
@@ -56,21 +59,15 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
+		///
+		/// \todo Transfer as many uses as possible from this to cath::common::apply()
+		////      (because that's coming in std in C++17) and ideally retire this
 		template <typename... Ts, typename F>
 		constexpr auto transform_tuple(const std::tuple<Ts...> &arg_tuple, ///< TODOCUMENT
 		                               F                        arg_fn     ///< TODOCUMENT
 		                               ) {
 			return detail::transform_tuple_impl( arg_tuple, arg_fn, std::index_sequence_for<Ts...>() );
 		}
-
-//		/// \brief TODOCUMENT
-//		struct lvalue_ref_tuple_maker final {
-//			template <typename... RNGs>
-//			std::tuple<std::add_lvalue_reference_t<RNGs>...> operator()(RNGs &... arg_ranges
-//							                                            ) {
-//				return { arg_ranges... };
-//			}
-//		};
 
 	} // namespace common
 } // namespace cath

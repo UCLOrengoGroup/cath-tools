@@ -1328,6 +1328,7 @@ set(
 		common/algorithm/constexpr_modulo_fns_test.cpp
 		common/algorithm/transform_build_test.cpp
 		common/algorithm/transform_tuple_test.cpp
+		common/algorithm/variadic_and_test.cpp
 )
 
 set(
@@ -1362,10 +1363,20 @@ set(
 )
 
 set(
+	TESTSOURCES_COMMON_CPP17
+		common/cpp17/apply_test.cpp
+)
+
+set(
 	TESTSOURCES_COMMON_FILE
 		common/file/open_fstream_test.cpp
 		common/file/simple_file_read_write_test.cpp
 		common/file/temp_file_test.cpp
+)
+
+set(
+	TESTSOURCES_COMMON_FUNCTION
+		common/function/multiply_args_test.cpp
 )
 
 set(
@@ -1382,14 +1393,27 @@ set(
 )
 
 set(
+	TESTSOURCES_COMMON_TUPLE
+		common/tuple/is_tuple_test.cpp
+		common/tuple/tuple_increment_test.cpp
+		common/tuple/tuple_lattice_index_test.cpp
+		common/tuple/tuple_mins_maxs_element_test.cpp
+		common/tuple/tuple_multiply_args_test.cpp
+		common/tuple/tuple_subtract_test.cpp
+		common/tuple/tuple_within_range_test.cpp
+)
+
+set(
 	TESTSOURCES_COMMON
 		${TESTSOURCES_COMMON_ALGORITHM}
 		common/argc_argv_faker_test.cpp
 		${TESTSOURCES_COMMON_BOOST_ADDENDA}
 		${TESTSOURCES_COMMON_CLONE}
 		common/command_executer_test.cpp
+		${TESTSOURCES_COMMON_CPP17}
 		common/difference_test.cpp
 		${TESTSOURCES_COMMON_FILE}
+		${TESTSOURCES_COMMON_FUNCTION}
 		common/invert_permutation_test.cpp
 		common/less_than_helper_test.cpp
 		common/logger_test.cpp
@@ -1397,6 +1421,7 @@ set(
 		${TESTSOURCES_COMMON_STRING}
 		common/temp_check_offset_1_test.cpp
 		${TESTSOURCES_COMMON_TEST_PREDICATE}
+		${TESTSOURCES_COMMON_TUPLE}
 )
 
 set(

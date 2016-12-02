@@ -1,5 +1,5 @@
 /// \file
-/// \brief The is_tuple header
+/// \brief The multiply_args test suite
 
 /// \copyright
 /// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
@@ -18,27 +18,22 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_COMMON_CONCEPT_IS_TUPLE_H
-#define _CATH_TOOLS_SOURCE_COMMON_CONCEPT_IS_TUPLE_H
+#include "multiply_args.h"
 
-#include <tuple>
-#include <type_traits>
+#include <boost/test/unit_test.hpp>
 
-namespace cath {
-	namespace common {
+using namespace cath::common;
 
-		/// \brief A type_trait for checking whether T is a std::tuple<> of zero or more types
-		///
-		/// This is the general case that inherits from false_type
-		template <typename T>       struct is_tuple                      final : std::false_type {};
+BOOST_AUTO_TEST_SUITE(multiply_args_test_suite)
 
-		/// \brief A type_trait for checking whether T is a std::tuple<> of zero or more types
-		///
-		/// This is the specialised case that inherits from true_type when T matches
-		/// std::tuple<ARGS...> for some ...ARGS
-		template <typename... Args> struct is_tuple<std::tuple<Args...>> final : std::true_type  {};
+BOOST_AUTO_TEST_CASE(basic) {
 
-	} // namespace common
-} // namespace cath
+	static_assert( multiply_args( 3,   7,   2   ) == 42,   "Multiplying these arguments should give this answer" );
+	static_assert( multiply_args( 3.0, 7.0, 2.0 ) == 42.0, "Multiplying these arguments should give this answer" );
 
-#endif
+	// static_assert( multiply_args( ) == 0, "" ); // Should give compiler error for having zero arguments
+
+	BOOST_CHECK( true );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
