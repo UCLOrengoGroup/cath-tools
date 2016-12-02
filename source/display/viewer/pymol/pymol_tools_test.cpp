@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/size_t_literal.h"
-#include "display/viewer/pymol/pymol_tools.h"
-#include "test/global_test_constants.h"
+#include "common/size_t_literal.hpp"
+#include "display/viewer/pymol/pymol_tools.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "tuple_mins_maxs_element.h"
+#include "tuple_mins_maxs_element.hpp"
 
 #include <boost/test/unit_test.hpp>
 

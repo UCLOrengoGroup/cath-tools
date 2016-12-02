@@ -21,12 +21,12 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "resolve_hits/full_hit_list.h"
-#include "resolve_hits/html_output/resolve_hits_html_outputter.h"
-#include "resolve_hits/options/spec/crh_segment_spec.h"
-#include "resolve_hits/resolve_hits_type_aliases.h"
-#include "resolve_hits/trim/trim_spec.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "resolve_hits/full_hit_list.hpp"
+#include "resolve_hits/html_output/resolve_hits_html_outputter.hpp"
+#include "resolve_hits/options/spec/crh_segment_spec.hpp"
+#include "resolve_hits/resolve_hits_type_aliases.hpp"
+#include "resolve_hits/trim/trim_spec.hpp"
 
 #include <cmath>
 #include <iostream>

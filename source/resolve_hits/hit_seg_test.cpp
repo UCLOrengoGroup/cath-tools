@@ -21,7 +21,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "resolve_hits/hit_seg.h"
+#include "resolve_hits/hit_seg.hpp"
 
 using namespace cath::rslv;
 

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "display_colour_list.h"
+#include "display_colour_list.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -26,10 +26,10 @@
 #include <boost/log/trivial.hpp>
 #include <boost/optional.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "display_colour/display_colour.h"
-#include "display_colour/display_colour_type_aliases.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "display_colour/display_colour.hpp"
+#include "display_colour/display_colour_type_aliases.hpp"
 
 using namespace boost::algorithm;
 using namespace cath;

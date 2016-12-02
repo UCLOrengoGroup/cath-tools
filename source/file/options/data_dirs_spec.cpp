@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "data_dirs_spec.h"
+#include "data_dirs_spec.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -27,12 +27,12 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/file/find_file.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/runtime_error_exception.h"
+#include "common/algorithm/contains.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/file/find_file.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;

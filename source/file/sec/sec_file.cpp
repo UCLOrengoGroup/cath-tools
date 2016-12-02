@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sec_file.h"
+#include "sec_file.hpp"
 
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/sec/sec_file_record.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/sec/sec_file_record.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath;
 using namespace cath::common;

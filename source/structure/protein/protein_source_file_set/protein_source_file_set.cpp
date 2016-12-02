@@ -18,21 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "protein_source_file_set.h"
+#include "protein_source_file_set.hpp"
 
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/range/algorithm/transform.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/clone/check_uptr_clone_against_this.h"
-#include "file/options/data_dirs_options_block.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/clone/check_uptr_clone_against_this.hpp"
+#include "file/options/data_dirs_options_block.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 #include <map>
 

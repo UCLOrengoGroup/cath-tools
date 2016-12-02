@@ -21,15 +21,15 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.h"
-#include "common/file/temp_file.h"
-#include "score/score_classification/score_classn_value_list.h"
-#include "score/true_pos_false_neg/classn_rate_stat.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series.h"
-#include "score/true_pos_false_neg/classn_stat_plotter/classn_stat_plotter.h"
-#include "score/true_pos_false_neg/classn_stat_plotter/classn_stat_plotter_spec.h"
-#include "score/true_pos_false_neg/named_true_false_pos_neg_list.h"
-#include "test/global_test_constants.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/file/temp_file.hpp"
+#include "score/score_classification/score_classn_value_list.hpp"
+#include "score/true_pos_false_neg/classn_rate_stat.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series.hpp"
+#include "score/true_pos_false_neg/classn_stat_plotter/classn_stat_plotter.hpp"
+#include "score/true_pos_false_neg/classn_stat_plotter/classn_stat_plotter_spec.hpp"
+#include "score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace boost::filesystem;
 using namespace cath::common;

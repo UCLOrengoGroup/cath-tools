@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pdb_atom.h"
+#include "pdb_atom.hpp"
 
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 
-#include "file/pdb/pdb_base.h"
-#include "structure/geometry/rotation.h"
+#include "file/pdb/pdb_base.hpp"
+#include "structure/geometry/rotation.hpp"
 
 #include <iomanip>
 #include <sstream>

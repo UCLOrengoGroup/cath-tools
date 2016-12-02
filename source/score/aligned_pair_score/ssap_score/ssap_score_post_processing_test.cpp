@@ -21,9 +21,9 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "score/aligned_pair_score/ssap_score/ssap_score_post_processing.h"
+#include "score/aligned_pair_score/ssap_score/ssap_score_post_processing.hpp"
 
-#include "test/global_test_constants.h"
+#include "test/global_test_constants.hpp"
 
 using namespace cath::score;
 using namespace std;

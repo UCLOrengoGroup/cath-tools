@@ -25,7 +25,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
 
-#include "common/type_aliases.h"
+#include "common/type_aliases.hpp"
 
 #include <string>
 #include <vector>

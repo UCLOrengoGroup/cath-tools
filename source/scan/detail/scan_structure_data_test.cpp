@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "scan/detail/scan_structure_data.h"
+#include "scan/detail/scan_structure_data.hpp"
 
-#include "test/global_test_constants.h"
+#include "test/global_test_constants.hpp"
 
 using namespace cath::scan::detail;
 //using namespace std;

@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "score_classn_value_better_value.h"
+#include "score_classn_value_better_value.hpp"
 
-#include "score/score_classification/score_classn_value.h"
+#include "score/score_classification/score_classn_value.hpp"
 
 #include <limits>
 

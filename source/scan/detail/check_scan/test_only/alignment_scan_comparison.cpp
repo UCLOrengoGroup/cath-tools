@@ -18,18 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_scan_comparison.h"
+#include "alignment_scan_comparison.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range/adaptor/map.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/sort_uniq_copy.h"
-#include "common/algorithm/transform_build.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/type_aliases.h"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/type_aliases.hpp"
 
 #include <iterator> // for end, inserter
 #include <ostream>  // for ostream, operator<<, etc

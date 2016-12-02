@@ -18,18 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "dyn_prog_score_source.h"
+#include "dyn_prog_score_source.hpp"
 
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/list.hpp>
 
-#include "alignment/dyn_prog_align/dyn_prog_score_source/entry_querier_dyn_prog_score_source.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/mask_dyn_prog_score_source.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/old_matrix_dyn_prog_score_source.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.h"
-#include "common/size_t_literal.h"
-#include "test/dyn_prog_score_source_fixture.h"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/entry_querier_dyn_prog_score_source.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/mask_dyn_prog_score_source.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/old_matrix_dyn_prog_score_source.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.hpp"
+#include "common/size_t_literal.hpp"
+#include "test/dyn_prog_score_source_fixture.hpp"
 
  using namespace cath::align;
  using namespace cath::common;

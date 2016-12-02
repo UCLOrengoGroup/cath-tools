@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sequence_similarity_score.h"
+#include "sequence_similarity_score.hpp"
 
 //#include <boost/archive/xml_iarchive.hpp>
 //#include <boost/archive/xml_oarchive.hpp>
@@ -26,19 +26,19 @@
 #include <boost/range/join.hpp>
 //#include <boost/serialization/export.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/pair_alignment.h"
-#include "common/algorithm/copy_build.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/less_than_helper.h"
-#include "exception/out_of_range_exception.h"
-#include "score/length_getter/length_of_longer_getter.h"
-#include "structure/geometry/coord_list.h"
-#include "structure/protein/amino_acid.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
-#include "structure/structure_type_aliases.h"
-#include "superposition/superposition.h"
+#include "alignment/alignment.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/less_than_helper.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "score/length_getter/length_of_longer_getter.hpp"
+#include "structure/geometry/coord_list.hpp"
+#include "structure/protein/amino_acid.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/structure_type_aliases.hpp"
+#include "superposition/superposition.hpp"
 
 using namespace boost::logic;
 using namespace cath;

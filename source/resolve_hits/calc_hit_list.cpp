@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "calc_hit_list.h"
+#include "calc_hit_list.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/finder.hpp>
@@ -35,17 +35,17 @@
 #include <boost/range/sub_range.hpp>
 #include <boost/spirit/include/qi.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/make_string_ref.h"
-#include "common/boost_addenda/range/adaptor/adjacented.h"
-#include "common/boost_addenda/range/back.h"
-#include "common/boost_addenda/range/front.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/debug_numeric_cast.h"
-#include "common/file/open_fstream.h"
-#include "common/type_aliases.h"
-#include "resolve_hits/full_hit_list.h"
-#include "resolve_hits/read_and_process_hits/read_and_process_mgr.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/make_string_ref.hpp"
+#include "common/boost_addenda/range/adaptor/adjacented.hpp"
+#include "common/boost_addenda/range/back.hpp"
+#include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/debug_numeric_cast.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/type_aliases.hpp"
+#include "resolve_hits/full_hit_list.hpp"
+#include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
 
 #include <chrono>
 #include <fstream>

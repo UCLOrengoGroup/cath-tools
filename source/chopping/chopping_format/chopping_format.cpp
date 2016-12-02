@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "chopping_format.h"
+#include "chopping_format.hpp"
 
-#include "chopping/domain/domain.h"
-#include "common/clone/check_uptr_clone_against_this.h"
+#include "chopping/domain/domain.hpp"
+#include "common/clone/check_uptr_clone_against_this.hpp"
 
 //using namespace cath;
 using namespace cath::common;

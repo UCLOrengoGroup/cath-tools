@@ -18,21 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pdbs_acquirer.h"
+#include "pdbs_acquirer.hpp"
 
-#include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.h"
-#include "acquirer/pdbs_acquirer/istream_pdbs_acquirer.h"
-#include "common/clone/check_uptr_clone_against_this.h"
-#include "common/cpp14/make_unique.h"
-#include "common/logger.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "options/options_block/pdb_input_options_block.h"
-#include "options/options_block/pdb_input_spec.h"
+#include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
+#include "acquirer/pdbs_acquirer/istream_pdbs_acquirer.hpp"
+#include "common/clone/check_uptr_clone_against_this.hpp"
+#include "common/cpp14/make_unique.hpp"
+#include "common/logger.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "options/options_block/pdb_input_options_block.hpp"
+#include "options/options_block/pdb_input_spec.hpp"
 
 using namespace cath;
 using namespace cath::common;

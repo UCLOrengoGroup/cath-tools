@@ -1,7 +1,7 @@
 /// \file
 /// \brief The label_pair_is_positive class definitions
 
-#include "score/score_classification/label_pair_is_positive/label_pair_is_positive.h"
+#include "score/score_classification/label_pair_is_positive/label_pair_is_positive.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/finder.hpp>
@@ -9,10 +9,10 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/file/open_fstream.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/file/open_fstream.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <fstream>
 

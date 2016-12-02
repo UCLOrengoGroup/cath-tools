@@ -21,10 +21,10 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/file/temp_file.h"
-#include "common/test_predicate/files_equal.h"
-#include "outputter/superposition_outputter/json_file_superposition_outputter.h"
-#include "test/superposition_fixture.h"
+#include "common/file/temp_file.hpp"
+#include "common/test_predicate/files_equal.hpp"
+#include "outputter/superposition_outputter/json_file_superposition_outputter.hpp"
+#include "test/superposition_fixture.hpp"
 
 using namespace cath::common;
 using namespace cath::opts;

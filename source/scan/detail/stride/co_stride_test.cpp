@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/size_t_literal.h"
-#include "scan/detail/stride/co_stride.h"
-#include "test/global_test_constants.h"
+#include "common/size_t_literal.hpp"
+#include "scan/detail/stride/co_stride.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace cath::common;
 using namespace cath::scan::detail;

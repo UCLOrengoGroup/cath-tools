@@ -18,27 +18,27 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "residue_name_alignment_acquirer.h"
+#include "residue_name_alignment_acquirer.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/alignment_coord_extractor.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
-#include "alignment/residue_name_align/residue_name_aligner.h"
-#include "alignment/residue_score/residue_scorer.h"
-#include "common/clone/make_uptr_clone.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/geometry/coord_list.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "superposition/superpose_orderer.h"
-#include "superposition/superposition.h"
+#include "alignment/alignment.hpp"
+#include "alignment/alignment_coord_extractor.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
+#include "alignment/residue_name_align/residue_name_aligner.hpp"
+#include "alignment/residue_score/residue_scorer.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/geometry/coord_list.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "superposition/superpose_orderer.hpp"
+#include "superposition/superposition.hpp"
 
 #include <iostream>
 

@@ -21,9 +21,9 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "ssap/distance_score_formula.h"
+#include "ssap/distance_score_formula.hpp"
 
-#include "test/global_test_constants.h"
+#include "test/global_test_constants.hpp"
 
 using namespace cath;
 using namespace std;

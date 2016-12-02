@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "aligned_pair_score_value_list.h"
+#include "aligned_pair_score_value_list.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
@@ -27,12 +27,12 @@
 #include <boost/range/algorithm/adjacent_find.hpp>
 #include <boost/range/irange.hpp>
 
-#include "alignment/alignment.h"
-#include "common/algorithm/sort_uniq_copy.h"
-#include "common/algorithm/transform_build.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "score/aligned_pair_score/aligned_pair_score.h"
+#include "alignment/alignment.hpp"
+#include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "score/aligned_pair_score/aligned_pair_score.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 

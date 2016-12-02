@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "structure/view_cache/detail/plate/plate_scan.h"
+#include "structure/view_cache/detail/plate/plate_scan.hpp"
 
 namespace cath { namespace index { namespace detail { class plate; } } }
 

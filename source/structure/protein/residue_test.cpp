@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "structure/protein/residue.h"
+#include "structure/protein/residue.hpp"
 
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
-#include "common/test_tools.h"
+#include "common/test_tools.hpp"
 
 #include <ostream>
 

@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/algorithm/constexpr_floor.h"
+#include "common/algorithm/constexpr_floor.hpp"
 
 using namespace cath::common;
 using namespace std;

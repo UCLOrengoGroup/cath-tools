@@ -20,10 +20,10 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/protein/amino_acid.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/protein/amino_acid.hpp"
 
 using namespace cath;
 using namespace cath::common;

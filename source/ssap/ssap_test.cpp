@@ -22,19 +22,19 @@
 
 #include <boost/optional.hpp> // ***** TEMPORARY *****
 
-#include "common/boost_addenda/log/log_to_ostream_guard.h"
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/file/simple_file_read_write.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
-#include "file/options/data_dirs_options_block.h"
-#include "ssap/ssap.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "test/global_test_constants.h"
+#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/file/simple_file_read_write.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
+#include "file/options/data_dirs_options_block.hpp"
+#include "ssap/ssap.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace boost::filesystem;
 using namespace cath;

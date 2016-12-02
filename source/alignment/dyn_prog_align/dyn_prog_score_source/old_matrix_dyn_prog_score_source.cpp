@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "old_matrix_dyn_prog_score_source.h"
+#include "old_matrix_dyn_prog_score_source.hpp"
 
-//#include "exception/not_implemented_exception.h" // ***** TEMPORARY *****
-#include "ssap/windowed_matrix.h"
+//#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
+#include "ssap/windowed_matrix.hpp"
 
 using namespace cath;
 using namespace cath::align;

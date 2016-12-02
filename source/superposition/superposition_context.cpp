@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "superposition_context.h"
+#include "superposition_context.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -29,16 +29,16 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm_ext/for_each.hpp>
 
-#include "alignment/alignment_context.h"
-#include "common/algorithm/transform_build.h"
-#include "common/file/open_fstream.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/options/data_dirs_options_block.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/structure_type_aliases.h"
-#include "superposition/io/superposition_io.h"
+#include "alignment/alignment_context.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/file/open_fstream.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/options/data_dirs_options_block.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/structure_type_aliases.hpp"
+#include "superposition/io/superposition_io.hpp"
 
 using namespace cath;
 using namespace cath::align;

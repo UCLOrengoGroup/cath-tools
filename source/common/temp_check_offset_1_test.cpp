@@ -20,10 +20,10 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "temp_check_offset_1.h"
+#include "temp_check_offset_1.hpp"
 
-#include "common/boost_check_no_throw_diag.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;

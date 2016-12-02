@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "gap_penalty.h"
+#include "gap_penalty.hpp"
 
 using namespace cath;
 

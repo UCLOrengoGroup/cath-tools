@@ -18,20 +18,20 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "bioplib_pdb.h"
+#include "bioplib_pdb.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "structure/bioplib_facade/bioplib_interface.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/rotation.h"
-#include "structure/residue_name.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "structure/bioplib_facade/bioplib_interface.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/geometry/rotation.hpp"
+#include "structure/residue_name.hpp"
 
 #include <iostream> // **** TEMPORARY ****
 

@@ -22,13 +22,13 @@
 
 #include <boost/test/output_test_stream.hpp>
 
-#include "common/test_tools.h"
-#include "test/global_test_constants.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/coord_list.h"
-#include "structure/structure_type_aliases.h"
-#include "superposition/superposition.h"
-#include "superposition/io/superposition_io.h"
+#include "common/test_tools.hpp"
+#include "test/global_test_constants.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/geometry/coord_list.hpp"
+#include "structure/structure_type_aliases.hpp"
+#include "superposition/superposition.hpp"
+#include "superposition/io/superposition_io.hpp"
 
 //#include <iostream> // *** TEMPORARY ***
 #include <vector>

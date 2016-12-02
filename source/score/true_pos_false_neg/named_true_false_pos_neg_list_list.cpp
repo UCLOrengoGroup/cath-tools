@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "named_true_false_pos_neg_list_list.h"
+#include "named_true_false_pos_neg_list_list.hpp"
 
-#include "common/algorithm/transform_build.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series_list.h"
-#include "score/true_pos_false_neg/named_true_false_pos_neg_list.h"
-#include "score/true_pos_false_neg/true_false_pos_neg.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
+#include "score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
+#include "score/true_pos_false_neg/true_false_pos_neg.hpp"
 
 using namespace cath;
 using namespace cath::common;

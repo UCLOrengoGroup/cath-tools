@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "std_region_writer.h"
+#include "std_region_writer.hpp"
 
-#include "exception/not_implemented_exception.h" // ***** TEMPORARY *****
+#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
 #include <iostream> // ***** TEMPORARY *****
 

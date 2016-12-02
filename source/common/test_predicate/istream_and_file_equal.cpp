@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "istream_and_file_equal.h"
+#include "istream_and_file_equal.hpp"
 
-#include "common/file/open_fstream.h"
-#include "common/test_predicate/files_equal.h"
+#include "common/file/open_fstream.hpp"
+#include "common/test_predicate/files_equal.hpp"
 
 #include <fstream>
 

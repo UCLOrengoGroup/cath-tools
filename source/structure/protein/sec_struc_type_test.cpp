@@ -22,8 +22,8 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "structure/protein/sec_struc_type.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/protein/sec_struc_type.hpp"
 
 #include <sstream>
 

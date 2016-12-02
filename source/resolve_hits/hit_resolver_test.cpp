@@ -21,11 +21,11 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/test_predicate/istreams_equal.h"
-#include "resolve_hits/hit_resolver.h"
-#include "resolve_hits/options/spec/crh_spec.h"
-#include "resolve_hits/read_and_process_hits/read_and_process_mgr.h"
-#include "test/resolve_hits/resolve_hits_fixture.h"
+#include "common/test_predicate/istreams_equal.hpp"
+#include "resolve_hits/hit_resolver.hpp"
+#include "resolve_hits/options/spec/crh_spec.hpp"
+#include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
+#include "test/resolve_hits/resolve_hits_fixture.hpp"
 
 namespace cath { namespace test { } }
 

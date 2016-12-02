@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common_residue_score_based_selection_policy.h"
+#include "common_residue_score_based_selection_policy.hpp"
 
 
-#include "alignment/alignment.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/runtime_error_exception.h"
+#include "alignment/alignment.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
 
 using namespace cath;
 using namespace cath::align;

@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/test_predicate/istreams_equal.h"
+#include "common/test_predicate/istreams_equal.hpp"
 
 using namespace cath;
 using namespace std;

@@ -20,10 +20,10 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "score/aligned_pair_score/aligned_pair_score.h"
-#include "score/aligned_pair_score_list/aligned_pair_score_list.h"
-#include "score/aligned_pair_score_list/aligned_pair_score_list_factory.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "score/aligned_pair_score/aligned_pair_score.hpp"
+#include "score/aligned_pair_score_list/aligned_pair_score_list.hpp"
+#include "score/aligned_pair_score_list/aligned_pair_score_list_factory.hpp"
 
 using namespace cath::common;
 using namespace cath::score;

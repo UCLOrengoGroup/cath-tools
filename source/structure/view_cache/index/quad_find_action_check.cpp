@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "quad_find_action_check.h"
+#include "quad_find_action_check.hpp"
 
 using namespace cath::index;
 using namespace cath::index::detail;

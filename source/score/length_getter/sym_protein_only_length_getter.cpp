@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sym_protein_only_length_getter.h"
+#include "sym_protein_only_length_getter.hpp"
 
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "score/length_getter/geometric_mean_length_getter.h"
-#include "score/length_getter/length_of_longer_getter.h"
-#include "score/length_getter/length_of_shorter_getter.h"
-#include "score/length_getter/mean_length_getter.h"
+#include "score/length_getter/geometric_mean_length_getter.hpp"
+#include "score/length_getter/length_of_longer_getter.hpp"
+#include "score/length_getter/length_of_shorter_getter.hpp"
+#include "score/length_getter/mean_length_getter.hpp"
 
 using namespace boost::logic;
 using namespace cath::align;

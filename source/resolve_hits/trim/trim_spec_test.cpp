@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "resolve_hits/trim/trim_spec.h"
+#include "resolve_hits/trim/trim_spec.hpp"
 
 using namespace cath::rslv;
 

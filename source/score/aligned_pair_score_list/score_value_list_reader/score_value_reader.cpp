@@ -25,10 +25,10 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 
-#include "common/file/open_fstream.h"
-#include "score/aligned_pair_score/pseudo_string_score.h"
-#include "score/aligned_pair_score_list/aligned_pair_score_value_list.h"
-#include "score/aligned_pair_score_list/score_value_list_reader/score_value_reader.h"
+#include "common/file/open_fstream.hpp"
+#include "score/aligned_pair_score/pseudo_string_score.hpp"
+#include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
+#include "score/aligned_pair_score_list/score_value_list_reader/score_value_reader.hpp"
 
 using namespace cath::common;
 using namespace cath::score;

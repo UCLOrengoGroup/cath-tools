@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "dyn_prog_aligner.h"
+#include "dyn_prog_aligner.hpp"
 
-#include "alignment/alignment.h"
-#include "common/clone/check_uptr_clone_against_this.h"
+#include "alignment/alignment.hpp"
+#include "common/clone/check_uptr_clone_against_this.hpp"
 
 using namespace cath;
 using namespace cath::align;

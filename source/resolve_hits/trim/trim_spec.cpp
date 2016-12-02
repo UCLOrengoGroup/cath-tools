@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "trim_spec.h"
+#include "trim_spec.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/debug_numeric_cast.h"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/debug_numeric_cast.hpp"
 #include "common/program_options/validator.hpp"
-#include "exception/runtime_error_exception.h"
+#include "exception/runtime_error_exception.hpp"
 
 #include <string>
 

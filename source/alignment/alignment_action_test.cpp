@@ -20,18 +20,18 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/alignment_action.h"
+#include "alignment/alignment_action.hpp"
 
-#include "alignment/alignment.h"
-#include "alignment/io/alignment_io.h"
-#include "common/test_predicate/istream_and_file_equal.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_io.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "test/global_test_constants.h"
+#include "alignment/alignment.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "common/test_predicate/istream_and_file_equal.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_io.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace boost::filesystem;
 using namespace cath;

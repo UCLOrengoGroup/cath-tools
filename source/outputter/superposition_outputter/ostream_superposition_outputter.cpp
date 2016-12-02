@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "ostream_superposition_outputter.h"
+#include "ostream_superposition_outputter.hpp"
 
-#include "common/clone/make_uptr_clone.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "superposition/superposition_context.h"
-#include "superposition/io/superposition_io.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "superposition/superposition_context.hpp"
+#include "superposition/io/superposition_io.hpp"
 
 using namespace cath::common;
 using namespace cath::opts;

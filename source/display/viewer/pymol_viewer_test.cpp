@@ -20,8 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "display/viewer/pymol_viewer.h"
-#include "structure/residue_name.h"
+#include "display/viewer/pymol_viewer.hpp"
+#include "structure/residue_name.hpp"
 
 using namespace cath;
 

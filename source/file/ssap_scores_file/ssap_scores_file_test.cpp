@@ -21,13 +21,13 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
-#include "file/ssap_scores_file/ssap_scores_file.h"
-#include "file/ssap_scores_file/ssap_scores_entry.h"
-#include "file/ssap_scores_file/ssap_scores_entry_to_score_classn_value.h"
-#include "score/score_classification/label_pair_is_positive/label_pair_is_positive.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
+#include "file/ssap_scores_file/ssap_scores_file.hpp"
+#include "file/ssap_scores_file/ssap_scores_entry.hpp"
+#include "file/ssap_scores_file/ssap_scores_entry_to_score_classn_value.hpp"
+#include "score/score_classification/label_pair_is_positive/label_pair_is_positive.hpp"
 
 using namespace cath;
 using namespace cath::common;

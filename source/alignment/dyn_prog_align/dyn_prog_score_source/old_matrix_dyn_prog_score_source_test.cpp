@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "old_matrix_dyn_prog_score_source.h"
+#include "old_matrix_dyn_prog_score_source.hpp"
 
 #include <boost/test/unit_test.hpp>
 

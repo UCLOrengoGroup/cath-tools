@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "display_colour_spec.h"
+#include "display_colour_spec.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -27,16 +27,16 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/join.hpp>
 
-#include "alignment/alignment_context.h"
-#include "common/algorithm/contains.h"
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/sort_uniq_build.h"
-#include "common/algorithm/transform_build.h"
-#include "common/size_t_literal.h"
-#include "display/viewer/viewer.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_residue.h"
+#include "alignment/alignment_context.hpp"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/sort_uniq_build.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/size_t_literal.hpp"
+#include "display/viewer/viewer.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_residue.hpp"
 
 using namespace cath;
 using namespace cath::align;

@@ -20,16 +20,16 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.h"
-#include "alignment/alignment.h"
-#include "alignment/io/alignment_io.h"
-#include "common/boost_addenda/log/log_to_ostream_guard.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "superposition/superpose_orderer.h"
-#include "test/global_test_constants.h"
+#include "acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.hpp"
+#include "alignment/alignment.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "superposition/superpose_orderer.hpp"
+#include "test/global_test_constants.hpp"
 
 namespace cath { namespace test { } }
 

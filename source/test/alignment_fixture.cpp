@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_fixture.h"
+#include "alignment_fixture.hpp"
 
-#include "alignment/align_type_aliases.h"
-#include "common/size_t_literal.h"
-#include "structure/entry_querier/residue_querier.h"
+#include "alignment/align_type_aliases.hpp"
+#include "common/size_t_literal.hpp"
+#include "structure/entry_querier/residue_querier.hpp"
 
 using namespace cath;
 using namespace cath::align;

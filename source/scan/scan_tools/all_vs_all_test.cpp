@@ -25,19 +25,19 @@
 #include <boost/range/algorithm/sort.hpp> // ***** TEMPORARY *****
 #include <boost/range/irange.hpp>
 
-#include "common/boost_addenda/range/adaptor/limited.h" // ***** TEMPORARY *****
-#include "common/chrono/duration_to_seconds_string.h"
-#include "common/file/simple_file_read_write.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
-#include "scan/scan_action/record_scores_scan_action.h"
-#include "scan/scan_tools/all_vs_all.h"
-#include "scan/scan_tools/scan_metrics.h"
-#include "score/pair_scatter_plotter/pair_scatter_plotter.h"  // ***** TEMPORARY *****
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "test/global_test_constants.h"
+#include "common/boost_addenda/range/adaptor/limited.hpp" // ***** TEMPORARY *****
+#include "common/chrono/duration_to_seconds_string.hpp"
+#include "common/file/simple_file_read_write.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
+#include "scan/scan_action/record_scores_scan_action.hpp"
+#include "scan/scan_tools/all_vs_all.hpp"
+#include "scan/scan_tools/scan_metrics.hpp"
+#include "score/pair_scatter_plotter/pair_scatter_plotter.hpp"  // ***** TEMPORARY *****
+#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <chrono>
 

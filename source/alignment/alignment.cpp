@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment.h"
+#include "alignment.hpp"
 
 #include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/algorithm/cxx11/any_of.hpp>
@@ -33,11 +33,11 @@
 #include <boost/range/numeric.hpp>
 #include <boost/throw_exception.hpp>
 
-#include "alignment/alignment_row.h"
-#include "common/algorithm/copy_build.h"
-#include "common/size_t_literal.h"
-#include "common/temp_check_offset_1.h"
-#include "exception/invalid_argument_exception.h"
+#include "alignment/alignment_row.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/temp_check_offset_1.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <algorithm>
 #include <ostream>

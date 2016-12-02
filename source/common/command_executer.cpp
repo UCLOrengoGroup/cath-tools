@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "command_executer.h"
+#include "command_executer.hpp"
 
 #include <boost/range/join.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/argc_argv_faker.h"
-#include "exception/runtime_error_exception.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/argc_argv_faker.hpp"
+#include "exception/runtime_error_exception.hpp"
 
 #include <sys/wait.h>
 

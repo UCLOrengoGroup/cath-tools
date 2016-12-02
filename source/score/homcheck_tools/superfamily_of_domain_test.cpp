@@ -3,10 +3,10 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "score/homcheck_tools/superfamily_of_domain.h"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "score/homcheck_tools/superfamily_of_domain.hpp"
 
 using namespace cath::common;
 using namespace cath::homcheck;

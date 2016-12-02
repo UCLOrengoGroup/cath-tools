@@ -18,19 +18,19 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "superposition_output_options_block.h"
+#include "superposition_output_options_block.hpp"
 
 #include <boost/optional.hpp>
 
-#include "common/clone/make_uptr_clone.h"
-#include "exception/not_implemented_exception.h"
-#include "outputter/superposition_outputter/json_file_superposition_outputter.h"
-#include "outputter/superposition_outputter/ostream_superposition_outputter.h"
-#include "outputter/superposition_outputter/pdb_file_superposition_outputter.h"
-#include "outputter/superposition_outputter/pdb_files_superposition_outputter.h"
-#include "outputter/superposition_outputter/pymol_file_superposition_outputter.h"
-#include "outputter/superposition_outputter/pymol_view_superposition_outputter.h"
-#include "outputter/superposition_outputter/superposition_outputter_list.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "outputter/superposition_outputter/json_file_superposition_outputter.hpp"
+#include "outputter/superposition_outputter/ostream_superposition_outputter.hpp"
+#include "outputter/superposition_outputter/pdb_file_superposition_outputter.hpp"
+#include "outputter/superposition_outputter/pdb_files_superposition_outputter.hpp"
+#include "outputter/superposition_outputter/pymol_file_superposition_outputter.hpp"
+#include "outputter/superposition_outputter/pymol_view_superposition_outputter.hpp"
+#include "outputter/superposition_outputter/superposition_outputter_list.hpp"
 
 #include <iostream>
 

@@ -21,8 +21,8 @@
 
 #include <boost/test/output_test_stream.hpp>
 
-#include "alignment/residue_name_align/detail/residue_name_align_map.h"
-#include "exception/invalid_argument_exception.h"
+#include "alignment/residue_name_align/detail/residue_name_align_map.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <vector>
 

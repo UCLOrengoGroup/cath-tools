@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pymol_file_superposition_outputter.h"
+#include "pymol_file_superposition_outputter.hpp"
 
-#include "common/clone/make_uptr_clone.h"
-#include "common/file/open_fstream.h"
-#include "display/viewer/pymol_viewer.h"
-#include "display_colour/display_colour_list.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/file/open_fstream.hpp"
+#include "display/viewer/pymol_viewer.hpp"
+#include "display_colour/display_colour_list.hpp"
 
 #include <fstream>
 

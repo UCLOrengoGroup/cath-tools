@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "gnuplot_matrix_plotter.h"
+#include "gnuplot_matrix_plotter.hpp"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/dyn_prog_align/detail/return_path_matrix.h"
-#include "common/boost_addenda/filesystem/replace_extension_copy.h"
+#include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
+#include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "common/third_party_code/gnuplot-iostream.h"
 
 using namespace boost::filesystem;

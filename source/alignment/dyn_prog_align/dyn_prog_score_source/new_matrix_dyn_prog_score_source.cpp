@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "new_matrix_dyn_prog_score_source.h"
+#include "new_matrix_dyn_prog_score_source.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "ssap/windowed_matrix.h"
+#include "ssap/windowed_matrix.hpp"
 
 using namespace cath;
 using namespace cath::align;

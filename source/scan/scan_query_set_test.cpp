@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "scan/scan_query_set.h"
+#include "scan/scan_query_set.hpp"
 
-// #include "test/global_test_constants.h"
+// #include "test/global_test_constants.hpp"
 
 using namespace cath::scan;
 //using namespace std;

@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "invert_permutation.h"
+#include "invert_permutation.hpp"
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "test/global_test_constants.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -18,21 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "superposition_acquirer.h"
+#include "superposition_acquirer.hpp"
 
 //#include <boost/test/floating_point_comparison.hpp>
 
-//#include "alignment/alignment_coord_extractor.h"
-//#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.h"
-//#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
-//#include "exception/invalid_argument_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-//#include "structure/geometry/coord_list.h"
-#include "superposition/superposition.h"
-#include "superposition/superposition_context.h"
+//#include "alignment/alignment_coord_extractor.hpp"
+//#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+//#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
+//#include "exception/invalid_argument_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+//#include "structure/geometry/coord_list.hpp"
+#include "superposition/superposition.hpp"
+#include "superposition/superposition_context.hpp"
 
 //#include <iostream> // **** TEMPORARY ****
 #include <string>

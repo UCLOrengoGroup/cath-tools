@@ -20,11 +20,11 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "score/aligned_pair_score/substitution_matrix/blosum62_substitution_matrix.h"
-#include "score/aligned_pair_score/substitution_matrix/identity_substitution_matrix.h"
-#include "score/aligned_pair_score/substitution_matrix/substitution_matrix.h"
-#include "structure/protein/amino_acid.h"
-#include "structure/structure_type_aliases.h"
+#include "score/aligned_pair_score/substitution_matrix/blosum62_substitution_matrix.hpp"
+#include "score/aligned_pair_score/substitution_matrix/identity_substitution_matrix.hpp"
+#include "score/aligned_pair_score/substitution_matrix/substitution_matrix.hpp"
+#include "structure/protein/amino_acid.hpp"
+#include "structure/structure_type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::score;

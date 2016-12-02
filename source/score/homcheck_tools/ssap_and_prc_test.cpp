@@ -3,11 +3,11 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/prc_scores_file/prc_scores_entry.h"
-#include "file/ssap_scores_file/ssap_scores_entry.h"
-#include "score/homcheck_tools/ssap_and_prc.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/prc_scores_file/prc_scores_entry.hpp"
+#include "file/ssap_scores_file/ssap_scores_entry.hpp"
+#include "score/homcheck_tools/ssap_and_prc.hpp"
 
 using namespace cath::common;
 using namespace cath::file;

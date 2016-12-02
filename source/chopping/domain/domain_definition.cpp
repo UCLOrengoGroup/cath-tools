@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "domain_definition.h"
+#include "domain_definition.hpp"
 
 #include <boost/filesystem/path.hpp>
 
-#include "file/data_file.h"
-#include "file/options/data_dirs_options_block.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
+#include "file/data_file.hpp"
+#include "file/options/data_dirs_options_block.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
 
 using namespace boost::filesystem;
 using namespace cath;

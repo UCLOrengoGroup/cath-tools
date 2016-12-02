@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "score_common_coord_handler.h"
+#include "score_common_coord_handler.hpp"
 
 #include <boost/test/unit_test.hpp>
 
-#include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
-#include "common/boost_check_no_throw_diag.h"
-#include "common/test_tools.h"
+#include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/test_tools.hpp"
 
 //#include <iostream>
 

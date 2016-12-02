@@ -18,18 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "selection_policy_acquirer.h"
+#include "selection_policy_acquirer.hpp"
 
-#include "alignment/alignment_coord_extractor.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_selection_policy.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_list.h"
-#include "options/options_block/alignment_input_spec.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/coord_list.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
+#include "alignment/alignment_coord_extractor.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "options/options_block/alignment_input_spec.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/geometry/coord_list.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
 
 using namespace cath::align;
 using namespace cath::file;

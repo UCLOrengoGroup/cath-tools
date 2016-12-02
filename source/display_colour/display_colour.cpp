@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "display_colour.h"
+#include "display_colour.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -28,9 +28,9 @@
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <tuple>
 

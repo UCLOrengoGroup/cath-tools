@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "test/global_test_constants.h"
+#include "test/global_test_constants.hpp"
 
-#include "common/test_predicate/files_equal.h"
+#include "common/test_predicate/files_equal.hpp"
 
 using namespace boost::filesystem;
 using namespace cath;

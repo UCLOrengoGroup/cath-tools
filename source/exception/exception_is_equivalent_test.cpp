@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "exception/exception_is_equivalent.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
+#include "exception/exception_is_equivalent.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
 
 using namespace cath::common;
 using namespace cath::test;

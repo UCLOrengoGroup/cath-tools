@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "angle.h"
+#include "angle.hpp"
 
 #include <boost/math/constants/constants.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>

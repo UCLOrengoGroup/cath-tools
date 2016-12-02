@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "score_classn_value_list.h"
+#include "score_classn_value_list.hpp"
 
-//#include "test/global_test_constants.h"
+//#include "test/global_test_constants.hpp"
 
 using namespace cath::score;
 //using namespace std;

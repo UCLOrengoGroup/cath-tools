@@ -18,16 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "score_colour_handler.h"
+#include "score_colour_handler.hpp"
 
 #include <iostream>
 #include <numeric>
 
-#include "alignment/alignment.h"
-#include "common/type_aliases.h"
-#include "display/display_colour_spec/display_colour_spec.h"
-#include "display_colour/display_colour.h"
-#include "display_colour/display_colour_type_aliases.h"
+#include "alignment/alignment.hpp"
+#include "common/type_aliases.hpp"
+#include "display/display_colour_spec/display_colour_spec.hpp"
+#include "display_colour/display_colour.hpp"
+#include "display_colour/display_colour_type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::detail;

@@ -20,21 +20,21 @@
 #include <boost/filesystem.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/io/alignment_io.h"
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/file/open_fstream.h"
-#include "common/pair_insertion_operator.h"
-#include "common/test_predicate/istreams_equal.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "ssap/ssap.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_io.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "test/global_test_constants.h"
+#include "alignment/io/alignment_io.hpp"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/pair_insertion_operator.hpp"
+#include "common/test_predicate/istreams_equal.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "ssap/ssap.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_io.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <fstream>
 #include <iostream>

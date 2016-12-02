@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sec_struc_planar_angles.h"
+#include "sec_struc_planar_angles.hpp"
 
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/throw_exception.hpp>
 
-#include "exception/invalid_argument_exception.h"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;

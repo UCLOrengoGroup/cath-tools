@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/algorithm/constexpr_find.h"
+#include "common/algorithm/constexpr_find.hpp"
 
-//#include "test/global_test_constants.h"
+//#include "test/global_test_constants.hpp"
 
 using namespace cath::common;
 using namespace std;

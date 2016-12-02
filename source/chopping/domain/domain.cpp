@@ -20,11 +20,11 @@
 
 #include <boost/range.hpp>
 
-#include "common/boost_addenda/range/front.h"
-#include "chopping/domain/domain.h"
-#include "chopping/region/region.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/boost_addenda/range/front.hpp"
+#include "chopping/domain/domain.hpp"
+#include "chopping/region/region.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::chop;

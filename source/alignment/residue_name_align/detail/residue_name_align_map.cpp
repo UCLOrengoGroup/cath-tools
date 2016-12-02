@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "residue_name_align_map.h"
+#include "residue_name_align_map.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/residue_name.h"
+#include "common/algorithm/contains.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/residue_name.hpp"
 
 using namespace cath;
 using namespace cath::align::detail;

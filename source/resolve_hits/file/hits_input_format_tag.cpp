@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hits_input_format_tag.h"
+#include "hits_input_format_tag.hpp"
 
 #include <boost/algorithm/string/case_conv.hpp>
 
 #include "common/program_options/validator.hpp"
-#include "exception/out_of_range_exception.h"
+#include "exception/out_of_range_exception.hpp"
 
 #include <map>
 

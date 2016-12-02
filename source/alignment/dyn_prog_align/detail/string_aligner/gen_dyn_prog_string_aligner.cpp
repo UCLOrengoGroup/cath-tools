@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "gen_dyn_prog_string_aligner.h"
+#include "gen_dyn_prog_string_aligner.hpp"
 
 #include <boost/lexical_cast.hpp>
 
-#include "alignment/align_type_aliases.h"
-#include "alignment/alignment.h"
-#include "alignment/dyn_prog_align/dyn_prog_aligner.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.h"
-#include "exception/out_of_range_exception.h"
+#include "alignment/align_type_aliases.hpp"
+#include "alignment/alignment.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_aligner.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.hpp"
+#include "exception/out_of_range_exception.hpp"
 
 #include <string>
 

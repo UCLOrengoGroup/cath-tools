@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "spanning_tree_greater.h"
+#include "spanning_tree_greater.hpp"
 
-#include "superposition/superpose_orderer.h"
+#include "superposition/superpose_orderer.hpp"
 
 using namespace cath::sup::detail;
 using namespace std;

@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "bioplib_interface.h"
+#include "bioplib_interface.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "exception/runtime_error_exception.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/coord_list.h"
-#include "structure/geometry/rotation.h"
+#include "exception/runtime_error_exception.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/geometry/coord_list.hpp"
+#include "structure/geometry/rotation.hpp"
 
 extern "C" {
 	#include "bioplib/fit.h"

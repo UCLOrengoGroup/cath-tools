@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "multi_align_group.h"
+#include "multi_align_group.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -26,12 +26,12 @@
 #include <boost/range/algorithm/remove_copy.hpp>
 #include <boost/range/algorithm_ext/push_back.hpp>
 
-#include "alignment/alignment_action.h"
-#include "alignment/io/alignment_io.h"
-#include "alignment/io/outputter/horiz_align_outputter.h"
-#include "alignment/pair_alignment.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/invalid_argument_exception.h"
+#include "alignment/alignment_action.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "alignment/io/outputter/horiz_align_outputter.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::align;

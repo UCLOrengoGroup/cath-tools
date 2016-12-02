@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "file_list_pdbs_acquirer.h"
+#include "file_list_pdbs_acquirer.hpp"
 
-#include "common/clone/make_uptr_clone.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
 
 using namespace boost::filesystem;
 using namespace cath::common;

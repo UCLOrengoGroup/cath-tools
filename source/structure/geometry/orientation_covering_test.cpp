@@ -23,12 +23,12 @@
 #include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/boost_addenda/range/adaptor/limited.h"
-#include "common/boost_addenda/range/utility/iterator/cross_itr.h"
-#include "structure/geometry/orientation_covering.h"
-#include "structure/geometry/quat_rot.h"
-#include "test/global_test_constants.h"
+#include "common/algorithm/contains.hpp"
+#include "common/boost_addenda/range/adaptor/limited.hpp"
+#include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
+#include "structure/geometry/orientation_covering.hpp"
+#include "structure/geometry/quat_rot.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <random>
 

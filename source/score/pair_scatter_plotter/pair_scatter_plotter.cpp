@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pair_scatter_plotter.h"
+#include "pair_scatter_plotter.hpp"
 
-//#include "common/boost_addenda/filesystem/replace_extension_copy.h"
+//#include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 //#include "common/third_party_code/gnuplot-iostream.h"
 
 //using namespace boost::filesystem;

@@ -18,16 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "score_accumulation_matrix.h"
+#include "score_accumulation_matrix.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/dyn_prog_align/detail/return_path_matrix.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "ssap/windowed_matrix.h"
+#include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "ssap/windowed_matrix.hpp"
 
 using namespace cath;
 using namespace cath::align::detail;

@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "rep_strider.h"
+#include "rep_strider.hpp"
 
-#include "common/algorithm/constexpr_modulo_fns.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/algorithm/constexpr_modulo_fns.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath::common;
 using namespace cath::scan;

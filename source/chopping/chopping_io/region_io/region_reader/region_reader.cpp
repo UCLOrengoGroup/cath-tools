@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "region_reader.h"
+#include "region_reader.hpp"
 
-#include "chopping/region/region.h"
+#include "chopping/region/region.hpp"
 
 using namespace cath::chop;
 using namespace std;

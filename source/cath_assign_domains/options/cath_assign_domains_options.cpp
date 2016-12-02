@@ -18,30 +18,30 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cath_assign_domains_options.h"
+#include "cath_assign_domains_options.hpp"
 
 #include <boost/program_options.hpp>
 
-#include "acquirer/alignment_acquirer/alignment_acquirer.h"
-#include "acquirer/pdbs_acquirer/pdbs_acquirer.h"
-#include "acquirer/selection_policy_acquirer/selection_policy_acquirer.h"
-#include "acquirer/superposition_acquirer/align_based_superposition_acquirer.h"
-#include "alignment/alignment.h"
-#include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.h"
-#include "common/logger.h"
-#include "common/type_aliases.h"
-#include "display/options/display_spec.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "outputter/alignment_outputter/alignment_outputter.h"
-#include "outputter/alignment_outputter/alignment_outputter_list.h"
-#include "outputter/superposition_outputter/superposition_outputter.h"
-#include "outputter/superposition_outputter/superposition_outputter_list.h"
-#include "superposition/superposition_context.h"
+#include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
+#include "acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
+#include "acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
+#include "acquirer/superposition_acquirer/align_based_superposition_acquirer.hpp"
+#include "alignment/alignment.hpp"
+#include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+#include "common/logger.hpp"
+#include "common/type_aliases.hpp"
+#include "display/options/display_spec.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "outputter/alignment_outputter/alignment_outputter.hpp"
+#include "outputter/alignment_outputter/alignment_outputter_list.hpp"
+#include "outputter/superposition_outputter/superposition_outputter.hpp"
+#include "outputter/superposition_outputter/superposition_outputter_list.hpp"
+#include "superposition/superposition_context.hpp"
 
 namespace boost { namespace program_options { class variables_map; } }
 

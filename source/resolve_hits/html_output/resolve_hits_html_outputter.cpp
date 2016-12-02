@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "resolve_hits_html_outputter.h"
+#include "resolve_hits_html_outputter.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/case_conv.hpp>
@@ -28,17 +28,17 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/sort_uniq_build.h"
-#include "common/boost_addenda/range/front.h"
-#include "common/debug_numeric_cast.h"
-#include "display_colour/display_colour_gradient.h"
-#include "resolve_hits/calc_hit_list.h"
-#include "resolve_hits/full_hit_list.h"
-#include "resolve_hits/hit_resolver.h"
-#include "resolve_hits/html_output/html_segment.h"
-#include "resolve_hits/options/spec/crh_segment_spec.h"
-#include "resolve_hits/scored_hit_arch.h"
-#include "resolve_hits/trim/trim_spec.h"
+#include "common/algorithm/sort_uniq_build.hpp"
+#include "common/boost_addenda/range/front.hpp"
+#include "common/debug_numeric_cast.hpp"
+#include "display_colour/display_colour_gradient.hpp"
+#include "resolve_hits/calc_hit_list.hpp"
+#include "resolve_hits/full_hit_list.hpp"
+#include "resolve_hits/hit_resolver.hpp"
+#include "resolve_hits/html_output/html_segment.hpp"
+#include "resolve_hits/options/spec/crh_segment_spec.hpp"
+#include "resolve_hits/scored_hit_arch.hpp"
+#include "resolve_hits/trim/trim_spec.hpp"
 
 #include <string>
 

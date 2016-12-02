@@ -21,9 +21,9 @@
 #include <boost/filesystem.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/io/align_scaffold.h"
-#include "exception/invalid_argument_exception.h"
-#include "test/alignment_fixture.h"
+#include "alignment/io/align_scaffold.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "test/alignment_fixture.hpp"
 
 using namespace cath::align;
 using namespace cath::common;

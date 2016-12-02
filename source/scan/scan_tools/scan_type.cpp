@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "scan_type.h"
+#include "scan_type.hpp"
 
-#include "common/clone/check_uptr_clone_against_this.h"
-#include "scan/scan_action/record_scores_scan_action.h"
-#include "scan/scan_tools/scan_metrics.h"
+#include "common/clone/check_uptr_clone_against_this.hpp"
+#include "scan/scan_action/record_scores_scan_action.hpp"
+#include "scan/scan_tools/scan_metrics.hpp"
 
 using namespace cath::common;
 using namespace cath::scan;

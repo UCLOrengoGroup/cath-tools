@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "check_scan_on_final_alignment.h"
+#include "check_scan_on_final_alignment.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -28,30 +28,30 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/pair_alignment.h"
-#include "common/algorithm/sort_uniq_copy.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/range/utility/iterator/cross_itr.h"
-#include "common/difference.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
-#include "scan/detail/check_scan/test_only/alignment_scan_comparison.h"
-#include "scan/detail/check_scan/test_only/quad_and_rep_criteria_result.h"
-#include "scan/detail/check_scan/test_only/quad_criteria_result.h"
-#include "scan/detail/quad_criteria_are_met_by.h"
-#include "scan/detail/res_pair/functions/res_pair_core_functions.h"
-#include "scan/detail/res_pair/multi_struc_res_rep_pair.h"
-//#include "scan/detail/res_pair/single_struc_res_pair.h"
-#include "scan/detail/scan_type_aliases.h"
-#include "scan/detail/stride/rep_strider.h"
-#include "scan/detail/stride/roled_scan_stride.h"
-#include "scan/quad_criteria.h"
-//#include "scan/scan_stride.h"
-#include "ssap/context_res.h"
-#include "structure/geometry/coord.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
+#include "alignment/alignment.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
+#include "common/difference.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
+#include "scan/detail/check_scan/test_only/alignment_scan_comparison.hpp"
+#include "scan/detail/check_scan/test_only/quad_and_rep_criteria_result.hpp"
+#include "scan/detail/check_scan/test_only/quad_criteria_result.hpp"
+#include "scan/detail/quad_criteria_are_met_by.hpp"
+#include "scan/detail/res_pair/functions/res_pair_core_functions.hpp"
+#include "scan/detail/res_pair/multi_struc_res_rep_pair.hpp"
+//#include "scan/detail/res_pair/single_struc_res_pair.hpp"
+#include "scan/detail/scan_type_aliases.hpp"
+#include "scan/detail/stride/rep_strider.hpp"
+#include "scan/detail/stride/roled_scan_stride.hpp"
+#include "scan/quad_criteria.hpp"
+//#include "scan/scan_stride.hpp"
+#include "ssap/context_res.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
 
 //#include <iomanip>
 #include <iostream>

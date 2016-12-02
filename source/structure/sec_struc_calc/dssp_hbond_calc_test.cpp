@@ -20,20 +20,20 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "dssp_hbond_calc.h"
+#include "dssp_hbond_calc.hpp"
 
 #include <boost/filesystem.hpp>
 #include <boost/optional/optional_io.hpp>
 #include <boost/range/algorithm/sort.hpp>
 
-#include "common/boost_addenda/filesystem/replace_extension_copy.h"
-#include "common/size_t_literal.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "structure/geometry/coord.h"
-#include "structure/sec_struc_calc/bifur_hbond_list.h"
-#include "test/dssp/dssp_dupl_fixture.h"
-#include "test/global_test_constants.h"
+#include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
+#include "common/size_t_literal.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/sec_struc_calc/bifur_hbond_list.hpp"
+#include "test/dssp/dssp_dupl_fixture.hpp"
+#include "test/global_test_constants.hpp"
 
 namespace cath { namespace test { } }
 

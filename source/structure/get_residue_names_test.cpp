@@ -22,13 +22,13 @@
 
 #include <boost/filesystem.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/file/open_fstream.h"
-#include "file/dssp_wolf/dssp_file.h"
-#include "file/dssp_wolf/dssp_file_io.h"
-#include "structure/bioplib_facade/bioplib_pdb.h"
-#include "structure/protein/residue.h"
-#include "test/global_test_constants.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/file/open_fstream.hpp"
+#include "file/dssp_wolf/dssp_file.hpp"
+#include "file/dssp_wolf/dssp_file_io.hpp"
+#include "structure/bioplib_facade/bioplib_pdb.hpp"
+#include "structure/protein/residue.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <fstream>
 #include <string>

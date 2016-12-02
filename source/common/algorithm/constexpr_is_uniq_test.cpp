@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/algorithm/constexpr_is_uniq.h"
+#include "common/algorithm/constexpr_is_uniq.hpp"
 
-#include "test/global_test_constants.h"
+#include "test/global_test_constants.hpp"
 
 #include <array>
 

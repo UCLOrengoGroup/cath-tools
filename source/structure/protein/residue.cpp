@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "residue.h"
+#include "residue.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
@@ -26,9 +26,9 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/throw_exception.hpp>
 
-#include "common/difference.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/protein/sec_struc_type.h"
+#include "common/difference.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/protein/sec_struc_type.hpp"
 
 #include <iomanip>
 #include <map>

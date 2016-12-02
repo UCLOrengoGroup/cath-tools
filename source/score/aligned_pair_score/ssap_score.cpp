@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "ssap_score.h"
+#include "ssap_score.hpp"
 
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
@@ -28,21 +28,21 @@
 #include <boost/range/join.hpp>
 #include <boost/serialization/export.hpp>
 
-#include "alignment/common_atom_selection_policy/common_atom_selection_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_selection_policy.h"
-#include "alignment/gap/alignment_gap.h"
-#include "alignment/gap/gap_penalty.h"
-#include "alignment/pair_alignment.h"
-#include "common/algorithm/copy_build.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/less_than_helper.h"
-#include "score/length_getter/length_of_longer_getter.h"
-#include "score/length_getter/num_aligned_length_getter.h"
-#include "ssap/context_res.h"
+#include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
+#include "alignment/gap/alignment_gap.hpp"
+#include "alignment/gap/gap_penalty.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/less_than_helper.hpp"
+#include "score/length_getter/length_of_longer_getter.hpp"
+#include "score/length_getter/num_aligned_length_getter.hpp"
+#include "ssap/context_res.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 
-#include "ssap/distance_score_formula.h"
+#include "ssap/distance_score_formula.hpp"
 using namespace boost::logic;
 
 using namespace cath;

@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "entry_querier_dyn_prog_score_source.h"
+#include "entry_querier_dyn_prog_score_source.hpp"
 
-#include "structure/entry_querier/entry_querier.h"
+#include "structure/entry_querier/entry_querier.hpp"
 
 using namespace cath;
 using namespace cath::align;

@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "chopping/chopping.h"
-#include "chopping/region/region.h"
-#include "test/global_test_constants.h"
+#include "chopping/chopping.hpp"
+#include "chopping/region/region.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace cath;
 using namespace cath::chop;

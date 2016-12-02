@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "domall_chopping_format.h"
+#include "domall_chopping_format.hpp"
 
-#include "chopping/domain/domain.h"
-#include "common/clone/make_uptr_clone.h"
-#include "exception/not_implemented_exception.h" // ***** TEMPORARY *****
+#include "chopping/domain/domain.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
 #include <iostream> // ***** TEMPORARY *****
 

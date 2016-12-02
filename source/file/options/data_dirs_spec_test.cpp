@@ -22,12 +22,12 @@
 
 #include <boost/filesystem/path.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/file/find_file.h"
-#include "common/file/open_fstream.h"
-#include "common/file/temp_file.h"
-#include "common/type_aliases.h"
-#include "file/options/data_dirs_spec.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/file/find_file.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/file/temp_file.hpp"
+#include "common/type_aliases.hpp"
+#include "file/options/data_dirs_spec.hpp"
 
 #include <fstream>
 

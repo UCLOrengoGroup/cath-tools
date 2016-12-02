@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "score/score_type_aliases.h"
-#include "score/true_pos_false_neg/classn_rate_stat.h"
-#include "score/true_pos_false_neg/true_false_pos_neg.h"
+#include "score/score_type_aliases.hpp"
+#include "score/true_pos_false_neg/classn_rate_stat.hpp"
+#include "score/true_pos_false_neg/true_false_pos_neg.hpp"
 
 using namespace cath;
 using namespace cath::score;

@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "score_classn_value_list_name_less.h"
+#include "score_classn_value_list_name_less.hpp"
 
-#include "score/score_classification/score_classn_value_list.h"
+#include "score/score_classification/score_classn_value_list.hpp"
 
 using namespace cath::score::detail;
 using namespace std;

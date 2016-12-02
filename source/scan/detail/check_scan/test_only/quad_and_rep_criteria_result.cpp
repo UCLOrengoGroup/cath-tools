@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "quad_and_rep_criteria_result.h"
+#include "quad_and_rep_criteria_result.hpp"
 
-#include "common/less_than_helper.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/less_than_helper.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath::common;
 using namespace cath::scan::detail;

@@ -14,8 +14,8 @@ execute_process(
 	OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-configure_file( "source/cath_tools_git_version.h.in"
-                "source/cath_tools_git_version.h"
+configure_file( "source/cath_tools_git_version.hpp.in"
+                "source/cath_tools_git_version.hpp"
                 )
 
 # For useful information on getting CMake to work with Boost, type the following command: cmake --help-module FindBoost

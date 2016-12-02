@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "path_step.h"
+#include "path_step.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/pair_alignment.h"
+#include "alignment/alignment.hpp"
+#include "alignment/pair_alignment.hpp"
 
 #include <iostream>
 

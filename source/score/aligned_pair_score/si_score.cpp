@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "si_score.h"
+#include "si_score.hpp"
 
 //#include <boost/archive/xml_iarchive.hpp>
 //#include <boost/archive/xml_oarchive.hpp>
@@ -26,14 +26,14 @@
 #include <boost/range/join.hpp>
 //#include <boost/serialization/export.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/common_atom_selection_policy/common_atom_selection_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_selection_policy.h"
-#include "common/algorithm/copy_build.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/less_than_helper.h"
-#include "score/length_getter/length_of_longer_getter.h"
-#include "score/length_getter/length_of_shorter_getter.h"
+#include "alignment/alignment.hpp"
+#include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/less_than_helper.hpp"
+#include "score/length_getter/length_of_longer_getter.hpp"
+#include "score/length_getter/length_of_shorter_getter.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 

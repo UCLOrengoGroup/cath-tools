@@ -22,18 +22,18 @@
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/test_tools.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/range/adaptor/adjacented.h"
-#include "common/boost_addenda/range/adaptor/equal_grouped.h"
-#include "common/boost_addenda/range/adaptor/lexical_casted.h"
-#include "common/boost_addenda/range/adaptor/limited.h"
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/pair_insertion_operator.h"
-#include "common/boost_check_no_throw_diag.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/adaptor/adjacented.hpp"
+#include "common/boost_addenda/range/adaptor/equal_grouped.hpp"
+#include "common/boost_addenda/range/adaptor/lexical_casted.hpp"
+#include "common/boost_addenda/range/adaptor/limited.hpp"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/pair_insertion_operator.hpp"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "score/true_pos_false_neg/classn_stat_pair_series_list.h"
+#include "score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
 
-#include "test/global_test_constants.h"
+#include "test/global_test_constants.hpp"
 
 using namespace cath::score;
 //using namespace std;

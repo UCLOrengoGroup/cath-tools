@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "scan/scan_policy.h"
+#include "scan/scan_policy.hpp"
 
-// #include "test/global_test_constants.h"
+// #include "test/global_test_constants.hpp"
 
 using namespace cath::scan;
 //using namespace std;

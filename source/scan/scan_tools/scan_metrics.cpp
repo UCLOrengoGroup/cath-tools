@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "scan_metrics.h"
+#include "scan_metrics.hpp"
 
 #include <boost/units/quantity.hpp>
 
-// #include "scan/detail/scan_type_aliases.h"
-// #include "scan/scan_action/record_scores_scan_action.h"
-// #include "scan/scan_index.h"
-// #include "scan/scan_policy.h"
-// #include "scan/scan_query_set.h"
-// #include "scan/scan_stride.h"
-// #include "structure/geometry/angle.h"
+// #include "scan/detail/scan_type_aliases.hpp"
+// #include "scan/scan_action/record_scores_scan_action.hpp"
+// #include "scan/scan_index.hpp"
+// #include "scan/scan_policy.hpp"
+// #include "scan/scan_query_set.hpp"
+// #include "scan/scan_stride.hpp"
+// #include "structure/geometry/angle.hpp"
 
 // #include <chrono>
 

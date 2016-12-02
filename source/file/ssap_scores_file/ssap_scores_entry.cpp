@@ -1,14 +1,14 @@
 /// \file
 /// \brief The ssap_scores_entry class definitions
 
-#include "ssap_scores_entry.h"
+#include "ssap_scores_entry.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/finder.hpp>
 
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/type_aliases.h"
-#include "exception/runtime_error_exception.h"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/runtime_error_exception.hpp"
 
 #include <string>
 

@@ -18,25 +18,25 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "ssap_aln_file_alignment_acquirer.h"
+#include "ssap_aln_file_alignment_acquirer.hpp"
 
-#include "alignment/alignment.h"
-#include "alignment/io/alignment_io.h"
-#include "alignment/residue_score/residue_scorer.h" // ***** TEMPORARY *****
-#include "common/clone/make_uptr_clone.h"
-#include "common/file/open_fstream.h"
-#include "common/logger.h"
-#include "exception/runtime_error_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/protein/protein.h" // ***** TEMPORARY *****
-#include "structure/protein/protein_list.h" // ***** TEMPORARY *****
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h" // ***** TEMPORARY *****
-#include "structure/protein/sec_struc_planar_angles.h" // ***** TEMPORARY *****
-#include "superposition/superpose_orderer.h"
+#include "alignment/alignment.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "alignment/residue_score/residue_scorer.hpp" // ***** TEMPORARY *****
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/logger.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/protein/protein.hpp" // ***** TEMPORARY *****
+#include "structure/protein/protein_list.hpp" // ***** TEMPORARY *****
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp" // ***** TEMPORARY *****
+#include "structure/protein/sec_struc_planar_angles.hpp" // ***** TEMPORARY *****
+#include "superposition/superpose_orderer.hpp"
 
 #include <fstream>
 

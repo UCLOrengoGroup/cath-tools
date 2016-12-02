@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "view_cache_list.h"
+#include "view_cache_list.hpp"
 
-#include "ssap/context_res.h"
-#include "ssap/ssap.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "structure/view_cache/view_cache.h"
+#include "ssap/context_res.hpp"
+#include "ssap/ssap.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "structure/view_cache/view_cache.hpp"
 
 using namespace cath::index;
 

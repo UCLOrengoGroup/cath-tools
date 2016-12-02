@@ -18,23 +18,23 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "substitution_matrix.h"
+#include "substitution_matrix.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm.hpp>
 
-#include "common/algorithm/sort_uniq_copy.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/invert_permutation.h"
-#include "common/less_than_helper.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/not_implemented_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "score/aligned_pair_score/substitution_matrix/blosum62_substitution_matrix.h"
-#include "score/aligned_pair_score/substitution_matrix/identity_substitution_matrix.h"
-#include "score/aligned_pair_score/substitution_matrix/match_substitution_matrix.h"
-#include "structure/protein/amino_acid.h"
-#include "structure/structure_type_aliases.h"
+#include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/invert_permutation.hpp"
+#include "common/less_than_helper.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "score/aligned_pair_score/substitution_matrix/blosum62_substitution_matrix.hpp"
+#include "score/aligned_pair_score/substitution_matrix/identity_substitution_matrix.hpp"
+#include "score/aligned_pair_score/substitution_matrix/match_substitution_matrix.hpp"
+#include "structure/protein/amino_acid.hpp"
+#include "structure/structure_type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::common;

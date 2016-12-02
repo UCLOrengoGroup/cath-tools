@@ -3,8 +3,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/test_tools.h"
-#include "file/hmmer_scores_file/hmmer_scores_entry.h"
+#include "common/test_tools.hpp"
+#include "file/hmmer_scores_file/hmmer_scores_entry.hpp"
 
 #include <vector>
 

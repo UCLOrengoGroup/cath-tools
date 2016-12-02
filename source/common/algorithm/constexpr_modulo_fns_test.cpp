@@ -24,10 +24,10 @@
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/algorithm/cxx11/none_of.hpp>
 
-#include "common/algorithm/constexpr_modulo_fns.h"
-#include "common/boost_addenda/range/utility/iterator/cross_itr.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
+#include "common/algorithm/constexpr_modulo_fns.hpp"
+#include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
 
 //#include <iostream> // ***** TEMPORARY *****
 

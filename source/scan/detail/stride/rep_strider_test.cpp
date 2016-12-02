@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "scan/detail/stride/rep_strider.h"
+#include "scan/detail/stride/rep_strider.hpp"
 
-// #include "test/global_test_constants.h"
+// #include "test/global_test_constants.hpp"
 
 using namespace cath::scan::detail;
 //using namespace std;

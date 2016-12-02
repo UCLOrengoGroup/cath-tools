@@ -18,18 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sas_score.h"
+#include "sas_score.hpp"
 
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/logic/tribool.hpp>
 #include <boost/serialization/export.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/common_atom_selection_policy/common_atom_selection_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_selection_policy.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/less_than_helper.h"
+#include "alignment/alignment.hpp"
+#include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/less_than_helper.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 

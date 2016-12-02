@@ -20,14 +20,14 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "quad_criteria.h"
+#include "quad_criteria.hpp"
 
-#include "common/size_t_literal.h"
-#include "scan/detail/quad_criteria_are_met_by.h"
-#include "scan/detail/res_pair/single_struc_res_pair.h"
-#include "structure/geometry/angle.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/size_t_literal.hpp"
+#include "scan/detail/quad_criteria_are_met_by.hpp"
+#include "scan/detail/res_pair/single_struc_res_pair.hpp"
+#include "structure/geometry/angle.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath::common;
 using namespace cath::scan;

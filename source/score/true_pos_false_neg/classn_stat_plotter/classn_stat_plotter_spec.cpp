@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "classn_stat_plotter_spec.h"
+#include "classn_stat_plotter_spec.hpp"
 
 #include <boost/optional.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/size_t_literal.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series_list.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/size_t_literal.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
 
 using namespace cath;
 using namespace cath::common;

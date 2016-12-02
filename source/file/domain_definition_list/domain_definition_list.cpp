@@ -18,19 +18,19 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "domain_definition_list.h"
+#include "domain_definition_list.hpp"
 
 #include <boost/algorithm/string/trim.hpp>
 
-#include "chopping/chopping_format/sillitoe_chopping_format.h"
-#include "chopping/domain/domain_definition.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/file/open_fstream.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
+#include "chopping/chopping_format/sillitoe_chopping_format.hpp"
+#include "chopping/domain/domain_definition.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/file/open_fstream.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
 
 #include <fstream>
 

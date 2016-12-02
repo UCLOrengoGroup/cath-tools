@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "coord.h"
+#include "coord.hpp"
 
 #include <boost/algorithm/clamp.hpp>
 #include <boost/lexical_cast.hpp>
@@ -28,9 +28,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "structure/geometry/angle.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "structure/geometry/angle.hpp"
 
 using namespace cath::common;
 using namespace cath::geom;

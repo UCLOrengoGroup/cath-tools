@@ -19,9 +19,9 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/pdb/pdb_atom.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/pdb/pdb_atom.hpp"
 
 #include <iostream>
 

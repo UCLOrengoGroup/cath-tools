@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "aligned_pair_score_list.h"
+#include "aligned_pair_score_list.hpp"
 
 #include <boost/log/trivial.hpp>
 #include <boost/range/algorithm/adjacent_find.hpp>
 
-#include "common/algorithm/sort_uniq_copy.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/ptr_container/unique_ptr_functions.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/not_implemented_exception.h"
-#include "score/aligned_pair_score/aligned_pair_score.h"
+#include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "score/aligned_pair_score/aligned_pair_score.hpp"
 
 using namespace cath;
 using namespace cath::common;

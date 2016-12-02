@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "data_dirs_options_block.h"
+#include "data_dirs_options_block.hpp"
 
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/replace.hpp>
@@ -26,9 +26,9 @@
 #include <boost/optional.hpp>
 #include <boost/program_options.hpp>
 
-#include "common/clone/make_uptr_clone.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/options/data_dirs_spec.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/options/data_dirs_spec.hpp"
 
 using namespace cath;
 using namespace cath::common;

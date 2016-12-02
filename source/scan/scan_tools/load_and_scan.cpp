@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "load_and_scan.h"
+#include "load_and_scan.hpp"
 
-#include "scan/scan_action/record_scores_scan_action.h"
-#include "scan/scan_tools/load_and_scan_metrics.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "scan/scan_action/record_scores_scan_action.hpp"
+#include "scan/scan_tools/load_and_scan_metrics.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath;
 using namespace cath::scan;

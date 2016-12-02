@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "env_var_option_name_handler.h"
+#include "env_var_option_name_handler.hpp"
 
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/erase.hpp>

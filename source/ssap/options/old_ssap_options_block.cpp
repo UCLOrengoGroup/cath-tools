@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "old_ssap_options_block.h"
+#include "old_ssap_options_block.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
 
-#include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.h"
-#include "common/clone/make_uptr_clone.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "structure/protein/protein_source_file_set/protein_source_file_set.h"
+#include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_file_set.hpp"
 
 #include <iostream>
 

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "dssp_file.h"
+#include "dssp_file.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -27,18 +27,18 @@
 #include <boost/range/algorithm/count_if.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/size_t_literal.h"
-#include "file/dssp_wolf/tally_residue_names.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/geometry/coord.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/size_t_literal.hpp"
+#include "file/dssp_wolf/tally_residue_names.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath;
 using namespace cath::common;

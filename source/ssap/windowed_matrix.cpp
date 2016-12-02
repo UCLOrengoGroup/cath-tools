@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "windowed_matrix.h"
+#include "windowed_matrix.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "common/temp_check_offset_1.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/not_implemented_exception.h"
-#include "exception/out_of_range_exception.h"
+#include "common/temp_check_offset_1.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
 
 #include <algorithm>
 

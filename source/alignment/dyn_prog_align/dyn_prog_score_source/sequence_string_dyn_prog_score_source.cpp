@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sequence_string_dyn_prog_score_source.h"
+#include "sequence_string_dyn_prog_score_source.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "exception/invalid_argument_exception.h"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::align;

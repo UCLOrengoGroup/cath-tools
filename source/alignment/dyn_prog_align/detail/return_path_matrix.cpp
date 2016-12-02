@@ -24,13 +24,13 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/max_element.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/dyn_prog_align/detail/return_path_matrix.h"
-#include "alignment/gap/gap_penalty.h"
-//#include "common/algorithm/copy_build.h"
-#include "common/algorithm/transform_build.h"
-#include "exception/invalid_argument_exception.h"
-#include "ssap/windowed_matrix.h"
+#include "alignment/alignment.hpp"
+#include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
+#include "alignment/gap/gap_penalty.hpp"
+//#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "ssap/windowed_matrix.hpp"
 
 using namespace cath;
 using namespace cath::align;

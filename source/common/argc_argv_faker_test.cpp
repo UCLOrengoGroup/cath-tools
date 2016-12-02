@@ -21,9 +21,9 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "common/argc_argv_faker.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/argc_argv_faker.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;

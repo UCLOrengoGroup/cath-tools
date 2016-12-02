@@ -18,16 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_action.h"
+#include "alignment_action.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/alignment_row.h"
-#include "alignment/detail/multi_align_builder.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/not_implemented_exception.h"
+#include "alignment/alignment.hpp"
+#include "alignment/alignment_row.hpp"
+#include "alignment/detail/multi_align_builder.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/not_implemented_exception.hpp"
 
 using namespace boost::log;
 using namespace cath::align;

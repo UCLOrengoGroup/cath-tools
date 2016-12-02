@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "superposition_io.h"
+#include "superposition_io.hpp"
 
 #include <boost/range/adaptor/map.hpp>
 #include <boost/algorithm/cxx11/any_of.hpp>
@@ -27,18 +27,18 @@
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/file/open_fstream.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/not_implemented_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/structure_type_aliases.h"
-#include "superposition/superposition.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/structure_type_aliases.hpp"
+#include "superposition/superposition.hpp"
 
 #include <fstream>
 

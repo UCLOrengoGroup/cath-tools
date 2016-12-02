@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/refiner/alignment_refiner.h"
+#include "alignment/refiner/alignment_refiner.hpp"
 
 using namespace cath::align;
 

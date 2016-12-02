@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "rmsd_score.h"
+#include "rmsd_score.hpp"
 
 #include <boost/test/unit_test.hpp>
 
-#include "alignment/common_atom_selection_policy/common_atom_selection_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_selection_policy.h"
+#include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
 
 namespace cath {
 	namespace test {

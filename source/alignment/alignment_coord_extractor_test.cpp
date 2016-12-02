@@ -19,10 +19,10 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "test/global_test_constants.h"
-#include "structure/bioplib_facade/bioplib_pdb.h"
-#include "structure/geometry/coord.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "test/global_test_constants.hpp"
+#include "structure/bioplib_facade/bioplib_pdb.hpp"
+#include "structure/geometry/coord.hpp"
 
 using namespace boost::filesystem;
 using namespace cath;

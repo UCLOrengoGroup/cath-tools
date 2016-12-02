@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "superposition_outputter_list.h"
+#include "superposition_outputter_list.hpp"
 
-#include "common/boost_addenda/ptr_container/unique_ptr_functions.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "outputter/superposition_outputter/superposition_outputter.h"
+#include "common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "outputter/superposition_outputter/superposition_outputter.hpp"
 
 using namespace cath::opts;
 using namespace cath::sup;

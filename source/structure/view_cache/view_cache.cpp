@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "view_cache.h"
+#include "view_cache.hpp"
 
 #include <boost/range/irange.hpp>
 
-#include "common/size_t_literal.h"
-#include "ssap/context_res.h"
-#include "ssap/ssap.h"
-#include "structure/protein/protein.h"
+#include "common/size_t_literal.hpp"
+#include "ssap/context_res.hpp"
+#include "ssap/ssap.hpp"
+#include "structure/protein/protein.hpp"
 
 using namespace cath::common;
 using namespace cath::geom;

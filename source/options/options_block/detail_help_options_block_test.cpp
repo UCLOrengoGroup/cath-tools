@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "options/options_block/detail_help_options_block.h"
-#include "options/options_block/options_block_tester.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "options/options_block/detail_help_options_block.hpp"
+#include "options/options_block/options_block_tester.hpp"
 
 using namespace boost::program_options;
 using namespace cath::common;

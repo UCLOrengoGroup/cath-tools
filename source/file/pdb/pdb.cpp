@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pdb.h"
+#include "pdb.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
@@ -31,23 +31,23 @@
 #include <boost/range/algorithm/count_if.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/log/log_to_ostream_guard.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/file/open_fstream.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/not_implemented_exception.h" // ***** TEMPORARY *****
-#include "exception/runtime_error_exception.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/geometry/coord.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
+#include "exception/runtime_error_exception.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 #include <fstream>
 #include <iostream>

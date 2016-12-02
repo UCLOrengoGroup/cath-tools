@@ -1,7 +1,7 @@
 /// \file
 /// \brief The rbf_model class definitions
 
-#include "rbf_model.h"
+#include "rbf_model.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
@@ -10,16 +10,16 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/file/open_fstream.h"
-#include "common/size_t_literal.h"
-#include "exception/not_implemented_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "file/prc_scores_file/prc_scores_entry.h"
-#include "file/ssap_scores_file/ssap_scores_entry.h"
-#include "score/homcheck_tools/ssap_and_prc.h"
-#include "score/score_classification/value_list_scaling.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/prc_scores_file/prc_scores_entry.hpp"
+#include "file/ssap_scores_file/ssap_scores_entry.hpp"
+#include "score/homcheck_tools/ssap_and_prc.hpp"
+#include "score/score_classification/value_list_scaling.hpp"
 
 #include <cmath>
 #include <fstream>

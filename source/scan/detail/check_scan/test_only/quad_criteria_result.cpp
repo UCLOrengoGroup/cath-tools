@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "quad_criteria_result.h"
+#include "quad_criteria_result.hpp"
 
-#include "exception/invalid_argument_exception.h"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath::common;
 using namespace cath::scan::detail;

@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pdb_input_spec.h"
+#include "pdb_input_spec.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 
-#include "common/boost_addenda/range/adaptor/lexical_casted.h"
-#include "common/size_t_literal.h"
-#include "common/string/booled_to_string.h"
+#include "common/boost_addenda/range/adaptor/lexical_casted.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/string/booled_to_string.hpp"
 
 using namespace cath;
 using namespace cath::common;

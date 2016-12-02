@@ -18,22 +18,22 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "display_colourer_alignment.h"
+#include "display_colourer_alignment.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/numeric.hpp>
 
-#include "alignment/alignment_context.h"
-#include "alignment/io/outputter/horiz_align_outputter.h"
-#include "common/clone/make_uptr_clone.h"
-#include "display/display_colour_spec/display_colour_spec.h"
-#include "display/viewer/viewer.h"
-#include "display_colour/display_colour.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_residue.h"
-#include "superposition/superposition_context.h"
+#include "alignment/alignment_context.hpp"
+#include "alignment/io/outputter/horiz_align_outputter.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "display/display_colour_spec/display_colour_spec.hpp"
+#include "display/viewer/viewer.hpp"
+#include "display_colour/display_colour.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "superposition/superposition_context.hpp"
 
 #include <iostream>
 #include <numeric>

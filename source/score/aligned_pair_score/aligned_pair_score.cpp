@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "aligned_pair_score.h"
+#include "aligned_pair_score.hpp"
 
 //#include <boost/algorithm/string/join.hpp>
 //#include <boost/algorithm/string/classification.hpp>
@@ -27,20 +27,20 @@
 //#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/find.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/pair_alignment.h"
-#include "common/algorithm/contains.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/ptr_container/unique_ptr_functions.h"
-#include "common/clone/check_uptr_clone_against_this.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "score/aligned_pair_score_list/aligned_pair_score_list.h"
-#include "score/aligned_pair_score_list/aligned_pair_score_list_factory.h"
-#include "score/detail/score_name_helper.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
+#include "alignment/alignment.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
+#include "common/clone/check_uptr_clone_against_this.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "score/aligned_pair_score_list/aligned_pair_score_list.hpp"
+#include "score/aligned_pair_score_list/aligned_pair_score_list_factory.hpp"
+#include "score/detail/score_name_helper.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
 
 using namespace cath;
 using namespace cath::align;

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "load_and_scan_metrics.h"
+#include "load_and_scan_metrics.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -26,9 +26,9 @@
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/information/byte.hpp>
 
-#include "common/chrono/duration_to_seconds_string.h"
-#include "common/file/open_fstream.h"
-#include "common/type_aliases.h"
+#include "common/chrono/duration_to_seconds_string.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/type_aliases.hpp"
 
 #include <fstream>
 

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "program_exception_wrapper.h"
+#include "program_exception_wrapper.hpp"
 
 #include <boost/exception/all.hpp>
 #include <boost/log/expressions.hpp>

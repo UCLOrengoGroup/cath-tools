@@ -22,17 +22,17 @@
 #include <boost/range/join.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/file/simple_file_read_write.h"
-#include "common/file/temp_file.h"
-#include "common/test_predicate/istream_and_file_equal.h"
-#include "resolve_hits/cath_hit_resolver.h"
-#include "resolve_hits/options/options_block/crh_input_options_block.h"
-#include "resolve_hits/options/options_block/crh_output_options_block.h"
-#include "resolve_hits/options/options_block/crh_score_options_block.h"
-#include "resolve_hits/options/options_block/crh_segment_options_block.h"
-#include "test/global_test_constants.h"
-#include "test/resolve_hits/resolve_hits_fixture.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/file/simple_file_read_write.hpp"
+#include "common/file/temp_file.hpp"
+#include "common/test_predicate/istream_and_file_equal.hpp"
+#include "resolve_hits/cath_hit_resolver.hpp"
+#include "resolve_hits/options/options_block/crh_input_options_block.hpp"
+#include "resolve_hits/options/options_block/crh_output_options_block.hpp"
+#include "resolve_hits/options/options_block/crh_score_options_block.hpp"
+#include "resolve_hits/options/options_block/crh_segment_options_block.hpp"
+#include "test/global_test_constants.hpp"
+#include "test/resolve_hits/resolve_hits_fixture.hpp"
 
 namespace cath { namespace test { } }
 

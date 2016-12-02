@@ -21,9 +21,9 @@
 #include <boost/log/expressions.hpp>
 #include <boost/log/trivial.hpp>
 
-#include "common/program_exception_wrapper.h"
-#include "ssap/options/cath_ssap_options.h"
-#include "ssap/ssap.h"
+#include "common/program_exception_wrapper.hpp"
+#include "ssap/options/cath_ssap_options.hpp"
+#include "ssap/ssap.hpp"
 
 using namespace boost::log::trivial;
 using namespace cath::common;

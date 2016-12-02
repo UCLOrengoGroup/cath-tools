@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "options_block.h"
+#include "options_block.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional.hpp>
 
-#include "common/clone/check_uptr_clone_against_this.h"
+#include "common/clone/check_uptr_clone_against_this.hpp"
 
 using namespace boost::filesystem;
 using namespace boost::program_options;

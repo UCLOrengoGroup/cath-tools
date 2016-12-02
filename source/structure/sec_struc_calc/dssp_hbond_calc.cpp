@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "dssp_hbond_calc.h"
+#include "dssp_hbond_calc.hpp"
 
 #include <boost/range/irange.hpp>
 
-#include "common/debug_numeric_cast.h"
-#include "common/size_t_literal.h"
-#include "file/pdb/pdb_atom.h"
-#include "structure/sec_struc_calc/bifur_hbond_list.h"
+#include "common/debug_numeric_cast.hpp"
+#include "common/size_t_literal.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "structure/sec_struc_calc/bifur_hbond_list.hpp"
 
 using namespace cath::common;
 using namespace cath::sec;

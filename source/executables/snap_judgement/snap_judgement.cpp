@@ -20,17 +20,17 @@
 
 #include <boost/units/quantity.hpp>
 
-#include "common/program_exception_wrapper.h"
-#include "scan/scan_tools/all_vs_all.h"
-#include "scan/scan_tools/load_and_scan.h"
-#include "scan/scan_tools/load_and_scan_metrics.h"
-#include "scan/scan_tools/single_pair.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "test/global_test_constants.h"
+#include "common/program_exception_wrapper.hpp"
+#include "scan/scan_tools/all_vs_all.hpp"
+#include "scan/scan_tools/load_and_scan.hpp"
+#include "scan/scan_tools/load_and_scan_metrics.hpp"
+#include "scan/scan_tools/single_pair.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace boost::filesystem;
 using namespace cath::common;

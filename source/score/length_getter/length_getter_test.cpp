@@ -20,21 +20,21 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-//#include "common/algorithm/constexpr_for_n.h"
-#include "common/boost_check_no_throw_diag.h"
-#include "score/length_getter/length_getter_enum.h"
-#include "score/length_getter/length_getter_types.h"
-#include "score/length_getter/geometric_mean_length_getter.h"
-#include "score/length_getter/length_of_first_getter.h"
-#include "score/length_getter/length_of_longer_getter.h"
-#include "score/length_getter/length_of_second_getter.h"
-#include "score/length_getter/length_of_shorter_getter.h"
-#include "score/length_getter/mean_length_getter.h"
-#include "score/length_getter/num_aligned_length_getter.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+//#include "common/algorithm/constexpr_for_n.hpp"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "score/length_getter/length_getter_enum.hpp"
+#include "score/length_getter/length_getter_types.hpp"
+#include "score/length_getter/geometric_mean_length_getter.hpp"
+#include "score/length_getter/length_of_first_getter.hpp"
+#include "score/length_getter/length_of_longer_getter.hpp"
+#include "score/length_getter/length_of_second_getter.hpp"
+#include "score/length_getter/length_of_shorter_getter.hpp"
+#include "score/length_getter/mean_length_getter.hpp"
+#include "score/length_getter/num_aligned_length_getter.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 

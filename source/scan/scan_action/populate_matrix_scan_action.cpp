@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "populate_matrix_scan_action.h"
+#include "populate_matrix_scan_action.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.h"
-#include "exception/invalid_argument_exception.h"
+#include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace boost::filesystem;
 using namespace cath::align;

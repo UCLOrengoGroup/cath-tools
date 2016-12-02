@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "res_pair_index_dirn_criterion.h"
+#include "res_pair_index_dirn_criterion.hpp"
 
-#include "exception/invalid_argument_exception.h"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <iostream>
 

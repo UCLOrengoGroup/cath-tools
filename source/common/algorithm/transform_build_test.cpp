@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "transform_build.h"
+#include "transform_build.hpp"
 
 #include <boost/test/unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/type_aliases.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::common;

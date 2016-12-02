@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "scored_hit_arch.h"
+#include "scored_hit_arch.hpp"
 
-#include "common/algorithm/transform_build.h"
-#include "resolve_hits/calc_hit_list.h"
+#include "common/algorithm/transform_build.hpp"
+#include "resolve_hits/calc_hit_list.hpp"
 
 using namespace cath::common;
 using namespace cath::rslv;

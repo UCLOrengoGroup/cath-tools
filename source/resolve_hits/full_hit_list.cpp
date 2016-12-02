@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "full_hit_list.h"
+#include "full_hit_list.hpp"
 
 #include <boost/range/combine.hpp>
 
-#include "common/algorithm/append.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/range/max_proj_element.h"
-#include "resolve_hits/trim/hit_seg_boundary_fns.h"
+#include "common/algorithm/append.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/max_proj_element.hpp"
+#include "resolve_hits/trim/hit_seg_boundary_fns.hpp"
 
 using namespace cath::common;
 using namespace cath::rslv;

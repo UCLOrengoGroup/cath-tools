@@ -18,25 +18,25 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "structal_score.h"
+#include "structal_score.hpp"
 
 #include <boost/logic/tribool.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/join.hpp>
 #include <boost/range/numeric.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/common_atom_selection_policy/common_atom_selection_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_selection_policy.h"
-#include "alignment/gap/alignment_gap.h"
-#include "common/algorithm/copy_build.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/less_than_helper.h"
-#include "score/length_getter/length_of_shorter_getter.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
-#include "structure/structure_type_aliases.h"
-#include "superposition/superposition.h"
+#include "alignment/alignment.hpp"
+#include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
+#include "alignment/gap/alignment_gap.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/less_than_helper.hpp"
+#include "score/length_getter/length_of_shorter_getter.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/structure_type_aliases.hpp"
+#include "superposition/superposition.hpp"
 
 using namespace boost::logic;
 using namespace cath;

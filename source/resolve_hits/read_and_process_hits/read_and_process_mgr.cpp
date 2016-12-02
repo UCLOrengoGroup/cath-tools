@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "read_and_process_mgr.h"
+#include "read_and_process_mgr.hpp"
 
-#include "common/boost_addenda/range/min_proj_element.h"
-#include "common/boost_addenda/range/range_concept_type_aliases.h"
-#include "common/function/more.h"
-#include "exception/invalid_argument_exception.h"
-#include "resolve_hits/calc_hit_list.h"
-#include "resolve_hits/hit_resolver.h"
-#include "resolve_hits/options/spec/crh_input_spec.h"
-#include "resolve_hits/options/spec/crh_spec.h"
-#include "resolve_hits/scored_hit_arch.h"
+#include "common/boost_addenda/range/min_proj_element.hpp"
+#include "common/boost_addenda/range/range_concept_type_aliases.hpp"
+#include "common/function/more.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "resolve_hits/calc_hit_list.hpp"
+#include "resolve_hits/hit_resolver.hpp"
+#include "resolve_hits/options/spec/crh_input_spec.hpp"
+#include "resolve_hits/options/spec/crh_spec.hpp"
+#include "resolve_hits/scored_hit_arch.hpp"
 
 #include <iostream>
 #include <string>

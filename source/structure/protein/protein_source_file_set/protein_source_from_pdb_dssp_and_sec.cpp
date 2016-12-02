@@ -18,18 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "protein_source_from_pdb_dssp_and_sec.h"
+#include "protein_source_from_pdb_dssp_and_sec.hpp"
 
 #include <boost/filesystem/path.hpp>
 
-#include "common/clone/make_uptr_clone.h"
-#include "file/data_file.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_io.h"
-#include "structure/protein/protein_source_file_set/protein_file_combn.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "file/data_file.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_io.hpp"
+#include "structure/protein/protein_source_file_set/protein_file_combn.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace boost::filesystem;
 using namespace cath;

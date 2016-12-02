@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hit_arch.h"
+#include "hit_arch.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
-#include "common/boost_addenda/range/adaptor/lexical_casted.h"
-#include "resolve_hits/full_hit_list.h"
+#include "common/boost_addenda/range/adaptor/lexical_casted.hpp"
+#include "resolve_hits/full_hit_list.hpp"
 
 #include <string>
 #include <type_traits>

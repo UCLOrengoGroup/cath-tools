@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "temp_file.h"
+#include "temp_file.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <iostream> // *** TEMPORARY ***
 

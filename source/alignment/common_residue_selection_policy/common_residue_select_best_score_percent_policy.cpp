@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common_residue_select_best_score_percent_policy.h"
+#include "common_residue_select_best_score_percent_policy.hpp"
 
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/lexical_cast.hpp>
@@ -29,12 +29,12 @@
 #include <boost/range/algorithm/stable_sort.hpp>
 #include <boost/range.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/sort_uniq_build.h"
-#include "common/algorithm/transform_build.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/sort_uniq_build.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <algorithm>
 #include <numeric>

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "align_scaffold.h"
+#include "align_scaffold.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -26,11 +26,11 @@
 #include <boost/range/irange.hpp>
 #include <boost/algorithm/string/classification.hpp>
 
-#include "alignment/alignment.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
+#include "alignment/alignment.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::align;

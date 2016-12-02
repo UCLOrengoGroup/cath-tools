@@ -18,21 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_coord_extractor.h"
+#include "alignment_coord_extractor.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/throw_exception.hpp>
 
-#include "alignment/align_type_aliases.h"
-#include "alignment/common_atom_selection_policy/common_atom_selection_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_selection_policy.h"
-#include "exception/runtime_error_exception.h"
-#include "file/pdb/pdb.h"
-#include "structure/geometry/coord_list.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "alignment/align_type_aliases.hpp"
+#include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "structure/geometry/coord_list.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath;
 using namespace cath::align;

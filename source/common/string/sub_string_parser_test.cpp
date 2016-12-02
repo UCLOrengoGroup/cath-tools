@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/string/sub_string_parser.h"
+#include "common/string/sub_string_parser.hpp"
 
-#include "test/global_test_constants.h"
+#include "test/global_test_constants.hpp"
 
 using namespace cath::common;
 //using namespace std;

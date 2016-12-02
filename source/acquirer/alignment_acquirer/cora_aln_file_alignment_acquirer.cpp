@@ -18,23 +18,23 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cora_aln_file_alignment_acquirer.h"
+#include "cora_aln_file_alignment_acquirer.hpp"
 
-#include "alignment/alignment.h"
-#include "alignment/io/alignment_io.h"
-#include "alignment/residue_score/residue_scorer.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/file/open_fstream.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "superposition/superpose_orderer.h"
+#include "alignment/alignment.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "alignment/residue_score/residue_scorer.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/file/open_fstream.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "superposition/superpose_orderer.hpp"
 
 #include <fstream>
 

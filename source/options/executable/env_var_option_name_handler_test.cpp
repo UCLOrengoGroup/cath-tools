@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "options/executable/env_var_option_name_handler.h"
+#include "options/executable/env_var_option_name_handler.hpp"
 
 using namespace boost::program_options;
 using namespace cath::opts;

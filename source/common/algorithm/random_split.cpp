@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "random_split.h"
+#include "random_split.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/sort_copy.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/sort_copy.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;

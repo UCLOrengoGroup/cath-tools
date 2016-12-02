@@ -22,13 +22,13 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/align_type_aliases.h"
-#include "alignment/alignment.h"
-#include "alignment/gap/alignment_gap.h"
-#include "alignment/gap/gap_penalty.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
+#include "alignment/align_type_aliases.hpp"
+#include "alignment/alignment.hpp"
+#include "alignment/gap/alignment_gap.hpp"
+#include "alignment/gap/gap_penalty.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace boost::algorithm;
 using namespace cath;

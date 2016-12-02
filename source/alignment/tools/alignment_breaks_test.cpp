@@ -21,15 +21,15 @@
 #include <boost/filesystem.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/io/align_scaffold.h"
-#include "alignment/tools/alignment_breaks.h"
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/pair_insertion_operator.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
-//#include "exception/invalid_argument_exception.h"
-//#include "test/alignment_fixture.h"
+#include "alignment/alignment.hpp"
+#include "alignment/io/align_scaffold.hpp"
+#include "alignment/tools/alignment_breaks.hpp"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/pair_insertion_operator.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
+//#include "exception/invalid_argument_exception.hpp"
+//#include "test/alignment_fixture.hpp"
 
 using namespace cath;
 using namespace cath::align;

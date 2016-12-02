@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_free_display_colourer.h"
+#include "alignment_free_display_colourer.hpp"
 
-#include "alignment/alignment_context.h"
-#include "display/display_colour_spec/display_colour_spec.h"
+#include "alignment/alignment_context.hpp"
+#include "display/display_colour_spec/display_colour_spec.hpp"
 
 using namespace cath;
 using namespace cath::align;

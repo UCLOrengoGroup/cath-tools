@@ -18,24 +18,24 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cath_aln_ostream_alignment_outputter.h"
+#include "cath_aln_ostream_alignment_outputter.hpp"
 
-#include "alignment/alignment_context.h"
-#include "alignment/io/alignment_io.h"
-#include "alignment/pair_alignment.h"
-#include "alignment/residue_score/residue_scorer.h"
-#include "common/clone/make_uptr_clone.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "score/aligned_pair_score_list/aligned_pair_score_list_factory.h"
-#include "score/aligned_pair_score_list/aligned_pair_score_value_list.h"
-#include "score/aligned_pair_score_list/score_value_list_outputter/score_value_list_json_outputter.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "alignment/alignment_context.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "alignment/residue_score/residue_scorer.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "score/aligned_pair_score_list/aligned_pair_score_list_factory.hpp"
+#include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
+#include "score/aligned_pair_score_list/score_value_list_outputter/score_value_list_json_outputter.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath::align;
 using namespace cath::common;

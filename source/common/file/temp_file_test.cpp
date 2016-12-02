@@ -22,9 +22,9 @@
 
 #include <boost/filesystem.hpp>
 
-#include "common/file/open_fstream.h"
-#include "exception/invalid_argument_exception.h"
-#include "common/file/temp_file.h"
+#include "common/file/open_fstream.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "common/file/temp_file.hpp"
 
 #include <fstream>
 

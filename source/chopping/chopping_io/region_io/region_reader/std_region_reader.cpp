@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "std_region_reader.h"
+#include "std_region_reader.hpp"
 
-#include "chopping/region/region.h"
-#include "exception/not_implemented_exception.h" // ***** TEMPORARY *****
+#include "chopping/region/region.hpp"
+#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
 #include <iostream> // ***** TEMPORARY *****
 

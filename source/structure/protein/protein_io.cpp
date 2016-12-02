@@ -17,32 +17,32 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#include "protein_io.h"
+#include "protein_io.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "common/lexical_cast_line.h"
-#include "common/file/open_fstream.h"
-#include "common/type_aliases.h"
-#include "exception/runtime_error_exception.h"
-#include "file/dssp_wolf/dssp_file.h"
-#include "file/dssp_wolf/dssp_file_io.h"
-#include "file/dssp_wolf/wolf_file.h"
-#include "file/dssp_wolf/wolf_file_io.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "file/sec/sec_file_io.h"
-#include "file/sec/sec_file.h"
-#include "file/sec/sec_file_record.h"
-#include "ssap/clique.h"
-#include "ssap/ssap.h"
-#include "structure/entry_querier/entry_querier.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/lexical_cast_line.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/dssp_wolf/dssp_file.hpp"
+#include "file/dssp_wolf/dssp_file_io.hpp"
+#include "file/dssp_wolf/wolf_file.hpp"
+#include "file/dssp_wolf/wolf_file_io.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "file/sec/sec_file_io.hpp"
+#include "file/sec/sec_file.hpp"
+#include "file/sec/sec_file_record.hpp"
+#include "ssap/clique.hpp"
+#include "ssap/ssap.hpp"
+#include "structure/entry_querier/entry_querier.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 #include <iostream>
 #include <string>

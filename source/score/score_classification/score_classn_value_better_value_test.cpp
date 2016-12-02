@@ -20,8 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "score/score_classification/score_classn_value.h"
-#include "score/score_classification/score_classn_value_better_value.h"
+#include "score/score_classification/score_classn_value.hpp"
+#include "score/score_classification/score_classn_value_better_value.hpp"
 
 using namespace cath::score;
 

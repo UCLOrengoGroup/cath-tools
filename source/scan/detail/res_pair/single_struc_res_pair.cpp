@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "single_struc_res_pair.h"
+#include "single_struc_res_pair.hpp"
 
 using namespace cath::scan;
 using namespace cath::scan::detail;

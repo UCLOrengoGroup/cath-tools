@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "score_value_list_json_outputter.h"
+#include "score_value_list_json_outputter.hpp"
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 
-#include "score/aligned_pair_score_list/aligned_pair_score_value_list.h"
+#include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
 
 using namespace boost::property_tree;
 using namespace cath;

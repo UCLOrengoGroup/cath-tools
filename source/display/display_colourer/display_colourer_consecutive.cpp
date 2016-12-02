@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "display_colourer_consecutive.h"
+#include "display_colourer_consecutive.hpp"
 
 #include <boost/range/irange.hpp>
 
-#include "alignment/alignment_context.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/size_t_literal.h"
-#include "display/display_colour_spec/display_colour_spec.h"
-#include "display/viewer/viewer.h"
-#include "display_colour/display_colour.h"
-#include "superposition/superposition_context.h"
+#include "alignment/alignment_context.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/size_t_literal.hpp"
+#include "display/display_colour_spec/display_colour_spec.hpp"
+#include "display/viewer/viewer.hpp"
+#include "display_colour/display_colour.hpp"
+#include "superposition/superposition_context.hpp"
 
 #include <algorithm>
 

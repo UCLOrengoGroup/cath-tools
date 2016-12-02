@@ -18,20 +18,20 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "ssap_code_dyn_prog_aligner.h"
+#include "ssap_code_dyn_prog_aligner.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.h"
-#include "alignment/gap/gap_penalty.h"
-#include "alignment/pair_alignment.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/debug_numeric_cast.h"
-#include "common/type_aliases.h"
-#include "exception/not_implemented_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "ssap/windowed_matrix.h"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
+#include "alignment/gap/gap_penalty.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/debug_numeric_cast.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "ssap/windowed_matrix.hpp"
 
 #include <cassert> // **** TEMPORARY *****
 

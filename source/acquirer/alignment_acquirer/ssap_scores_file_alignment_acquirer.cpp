@@ -18,29 +18,29 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "ssap_scores_file_alignment_acquirer.h"
+#include "ssap_scores_file_alignment_acquirer.hpp"
 
 //#include <boost/log/trivial.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/alignment_action.h"
-#include "alignment/io/alignment_io.h"
-#include "alignment/io/outputter/horiz_align_outputter.h" /// *** TEMPORARY? ***
-#include "alignment/residue_score/residue_scorer.h"
-#include "common/boost_addenda/range/front.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/file/open_fstream.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "file/ssap_scores_file/ssap_scores_file.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"               /// *** TEMPORARY? ***
-#include "structure/protein/sec_struc_planar_angles.h" /// *** TEMPORARY? ***
-#include "superposition/superpose_orderer.h"
+#include "alignment/alignment.hpp"
+#include "alignment/alignment_action.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "alignment/io/outputter/horiz_align_outputter.hpp" /// *** TEMPORARY? ***
+#include "alignment/residue_score/residue_scorer.hpp"
+#include "common/boost_addenda/range/front.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/file/open_fstream.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "file/ssap_scores_file/ssap_scores_file.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"               /// *** TEMPORARY? ***
+#include "structure/protein/sec_struc_planar_angles.hpp" /// *** TEMPORARY? ***
+#include "superposition/superpose_orderer.hpp"
 
 #include <fstream>
 

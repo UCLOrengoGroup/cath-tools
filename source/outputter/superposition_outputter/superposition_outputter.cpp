@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "superposition_outputter.h"
+#include "superposition_outputter.hpp"
 
-#include "common/clone/check_uptr_clone_against_this.h"
+#include "common/clone/check_uptr_clone_against_this.hpp"
 
 #include <cassert>
 #include <typeinfo>

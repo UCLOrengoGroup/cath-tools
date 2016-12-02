@@ -23,9 +23,9 @@
 #include <boost/function.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/less_than_helper.h"
-#include "common/size_t_literal.h"
-#include "test/global_test_constants.h"
+#include "common/less_than_helper.hpp"
+#include "common/size_t_literal.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <tuple>
 #include <utility>

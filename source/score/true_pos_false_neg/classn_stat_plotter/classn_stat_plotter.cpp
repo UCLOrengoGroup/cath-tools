@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "classn_stat_plotter.h"
+#include "classn_stat_plotter.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
@@ -28,16 +28,16 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/join.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/filesystem/replace_extension_copy.h"
-#include "common/size_t_literal.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
+#include "common/size_t_literal.hpp"
 #include "common/third_party_code/gnuplot-iostream.h"
-#include "score/score_classification/score_classn_value_results_set.h"
-#include "score/true_pos_false_neg/classn_rate_stat.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series_list.h"
-#include "score/true_pos_false_neg/classn_stat_plotter/classn_stat_plotter_spec.h"
-#include "score/true_pos_false_neg/named_true_false_pos_neg_list.h"
+#include "score/score_classification/score_classn_value_results_set.hpp"
+#include "score/true_pos_false_neg/classn_rate_stat.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
+#include "score/true_pos_false_neg/classn_stat_plotter/classn_stat_plotter_spec.hpp"
+#include "score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
 
 using namespace cath::common;
 using namespace cath::score;

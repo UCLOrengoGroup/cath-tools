@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "dyn_prog_score_source.h"
+#include "dyn_prog_score_source.hpp"
 
-#include "common/temp_check_offset_1.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/temp_check_offset_1.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::align;

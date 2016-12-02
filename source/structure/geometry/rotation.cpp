@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "rotation.h"
+#include "rotation.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/lexical_cast.hpp>
@@ -28,11 +28,11 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "structure/geometry/angle.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/coord_list.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "structure/geometry/angle.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/geometry/coord_list.hpp"
 
 #include <iostream> // **** TEMPORARY ****
 

@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_gap.h"
+#include "alignment_gap.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/gap/gap_penalty.h"
-#include "alignment/pair_alignment.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
+#include "alignment/gap/gap_penalty.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
 
 using namespace cath;
 using namespace cath::align;

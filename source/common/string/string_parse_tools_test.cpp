@@ -20,10 +20,10 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/size_t_literal.h"
-#include "common/string/string_parse_tools.h"
+#include "common/size_t_literal.hpp"
+#include "common/string/string_parse_tools.hpp"
 
-#include "test/global_test_constants.h"
+#include "test/global_test_constants.hpp"
 
 namespace cath { namespace test { } }
 

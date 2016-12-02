@@ -18,16 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "residue_name_aligner.h"
+#include "residue_name_aligner.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/pair_alignment.h"
-#include "alignment/residue_name_align/detail/residue_name_align_map.h"
-#include "alignment/residue_score/residue_scorer.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/residue_name.h"
+#include "alignment/pair_alignment.hpp"
+#include "alignment/residue_name_align/detail/residue_name_align_map.hpp"
+#include "alignment/residue_score/residue_scorer.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/residue_name.hpp"
 
 #include <string>
 

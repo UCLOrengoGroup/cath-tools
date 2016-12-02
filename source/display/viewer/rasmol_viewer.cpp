@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "rasmol_viewer.h"
+#include "rasmol_viewer.hpp"
 
-#include "exception/not_implemented_exception.h"
-#include "superposition/superposition_context.h"
+#include "exception/not_implemented_exception.hpp"
+#include "superposition/superposition_context.hpp"
 
 using namespace cath;
 using namespace cath::common;

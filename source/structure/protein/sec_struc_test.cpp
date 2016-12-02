@@ -23,11 +23,11 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
-#include "common/boost_check_no_throw_diag.h"
-#include "common/type_aliases.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "test/global_test_constants.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/type_aliases.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <ostream>
 

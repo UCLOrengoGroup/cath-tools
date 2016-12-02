@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "resolve_hits/trim/resolve_boundary.h"
+#include "resolve_hits/trim/resolve_boundary.hpp"
 
 using namespace cath::rslv;
 

@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "true_false_pos_neg.h"
+#include "true_false_pos_neg.hpp"
 
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "score/true_pos_false_neg/true_false_pos_neg.h"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "score/true_pos_false_neg/true_false_pos_neg.hpp"
 
 #include <iomanip>
 #include <sstream>

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "out_of_range_exception.h"
+#include "out_of_range_exception.hpp"
 
 using namespace cath::common;
 using namespace std;

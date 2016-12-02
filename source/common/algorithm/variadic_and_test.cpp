@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "variadic_and.h"
+#include "variadic_and.hpp"
 
 #include <boost/test/auto_unit_test.hpp>
 

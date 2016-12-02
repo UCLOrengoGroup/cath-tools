@@ -18,20 +18,20 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "residue_scorer.h"
+#include "residue_scorer.hpp"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/range/algorithm/set_algorithm.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/io/alignment_io.h"
-#include "alignment/residue_score/alignment_residue_scores.h"
-#include "ssap/context_res.h"
-#include "ssap/ssap.h"
-#include "structure/entry_querier/residue_querier.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/residue.h"
+#include "alignment/alignment.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "alignment/residue_score/alignment_residue_scores.hpp"
+#include "ssap/context_res.hpp"
+#include "ssap/ssap.hpp"
+#include "structure/entry_querier/residue_querier.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/residue.hpp"
 
 #include <algorithm>
 

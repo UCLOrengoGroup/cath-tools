@@ -18,21 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "html_align_outputter.h"
+#include "html_align_outputter.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/round.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/alignment_context.h"
-#include "common/algorithm/contains.h"
-#include "display/display_colour_spec/display_colour_spec.h"
-#include "display/display_colourer/display_colourer.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "superposition/superposition_context.h"
+#include "alignment/alignment.hpp"
+#include "alignment/alignment_context.hpp"
+#include "common/algorithm/contains.hpp"
+#include "display/display_colour_spec/display_colour_spec.hpp"
+#include "display/display_colourer/display_colourer.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "superposition/superposition_context.hpp"
 
 #include <iomanip>
 

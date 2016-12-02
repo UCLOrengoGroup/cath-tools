@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "classn_stat_pair_series_list.h"
+#include "classn_stat_pair_series_list.hpp"
 
 #include <boost/range/algorithm/find_if.hpp>
 
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/invalid_argument_exception.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series.h"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series.hpp"
 
 using namespace cath::common;
 using namespace cath::score;

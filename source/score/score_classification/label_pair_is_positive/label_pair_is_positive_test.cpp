@@ -3,9 +3,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "score/score_classification/label_pair_is_positive/label_pair_is_positive.h"
-//#include "test/global_test_constants.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "score/score_classification/label_pair_is_positive/label_pair_is_positive.hpp"
+//#include "test/global_test_constants.hpp"
 
 using namespace cath::common;
 using namespace cath::score;

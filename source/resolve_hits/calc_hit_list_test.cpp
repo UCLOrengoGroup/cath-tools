@@ -21,9 +21,9 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/range/front.h"
-#include "resolve_hits/calc_hit_list.h"
-#include "resolve_hits/options/spec/crh_segment_spec.h"
+#include "common/boost_addenda/range/front.hpp"
+#include "resolve_hits/calc_hit_list.hpp"
+#include "resolve_hits/options/spec/crh_segment_spec.hpp"
 
 namespace cath { namespace test { } }
 

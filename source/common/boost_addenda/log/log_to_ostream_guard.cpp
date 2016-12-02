@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "log_to_ostream_guard.h"
+#include "log_to_ostream_guard.hpp"
 
 #include <boost/core/null_deleter.hpp>
 #include <boost/shared_ptr.hpp>

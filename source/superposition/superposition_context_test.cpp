@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "file/options/data_dirs_options_block.h"
-#include "test/superposition_fixture.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "file/options/data_dirs_options_block.hpp"
+#include "test/superposition_fixture.hpp"
 
 using namespace cath::common;
 using namespace cath::opts;

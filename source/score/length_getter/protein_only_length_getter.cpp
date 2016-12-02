@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "protein_only_length_getter.h"
+#include "protein_only_length_getter.hpp"
 
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "common/boost_addenda/ptr_container/unique_ptr_functions.h"
-#include "common/clone/make_uptr_clone.h"
-#include "score/length_getter/length_of_longer_getter.h"
-#include "score/length_getter/length_of_shorter_getter.h"
+#include "common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "score/length_getter/length_of_longer_getter.hpp"
+#include "score/length_getter/length_of_shorter_getter.hpp"
 
 using namespace boost::logic;
 using namespace cath;

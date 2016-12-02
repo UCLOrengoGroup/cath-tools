@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sec_struc_querier.h"
+#include "sec_struc_querier.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "ssap/ssap.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
+#include "ssap/ssap.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pymol_viewer.h"
+#include "pymol_viewer.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/replace.hpp>
@@ -27,21 +27,21 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/alignment.h"
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/transform_build.h"
-#include "common/batch/batch_functions.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/size_t_literal.h"
-#include "display/viewer/pymol/pymol_tools.h"
-#include "display_colour/display_colour.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "superposition/io/superposition_io.h"
-#include "superposition/superposition_context.h"
+#include "alignment/alignment.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/batch/batch_functions.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/size_t_literal.hpp"
+#include "display/viewer/pymol/pymol_tools.hpp"
+#include "display_colour/display_colour.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "superposition/io/superposition_io.hpp"
+#include "superposition/superposition_context.hpp"
 
 #include <algorithm>
 

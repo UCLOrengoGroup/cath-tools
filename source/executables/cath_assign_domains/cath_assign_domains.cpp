@@ -28,19 +28,19 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 
-#include "cath_assign_domains/options/cath_assign_domains_options.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/file/open_fstream.h"
-#include "common/file/simple_file_read_write.h"
-#include "common/program_exception_wrapper.h"
-#include "common/type_aliases.h"
-#include "file/prc_scores_file/prc_scores_file.h"
-#include "file/ssap_scores_file/ssap_scores_file.h"
-#include "score/homcheck_tools/first_result_if.h"
-#include "score/homcheck_tools/ssaps_and_prcs_of_query.h"
-#include "score/homcheck_tools/superfamily_of_domain.h"
-#include "score/score_classification/rbf_model.h"
+#include "cath_assign_domains/options/cath_assign_domains_options.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/file/simple_file_read_write.hpp"
+#include "common/program_exception_wrapper.hpp"
+#include "common/type_aliases.hpp"
+#include "file/prc_scores_file/prc_scores_file.hpp"
+#include "file/ssap_scores_file/ssap_scores_file.hpp"
+#include "score/homcheck_tools/first_result_if.hpp"
+#include "score/homcheck_tools/ssaps_and_prcs_of_query.hpp"
+#include "score/homcheck_tools/superfamily_of_domain.hpp"
+#include "score/score_classification/rbf_model.hpp"
 
 #include <fstream>
 

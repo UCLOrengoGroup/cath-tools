@@ -1,14 +1,14 @@
 /// \file
 /// \brief The ssap_and_prc class definitions
 
-#include "ssap_and_prc.h"
+#include "ssap_and_prc.hpp"
 
 #include <boost/lexical_cast.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "file/prc_scores_file/prc_scores_entry.h"
-#include "file/ssap_scores_file/ssap_scores_entry.h"
-#include "score/score_classification/rbf_model.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/prc_scores_file/prc_scores_entry.hpp"
+#include "file/ssap_scores_file/ssap_scores_entry.hpp"
+#include "score/score_classification/rbf_model.hpp"
 
 #include <cmath>
 #include <string>

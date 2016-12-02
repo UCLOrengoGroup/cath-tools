@@ -21,9 +21,9 @@
 #include <boost/math/constants/constants.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "structure/geometry/angle.h"
-#include "structure/geometry/coord.h"
-#include "test/global_test_constants.h"
+#include "structure/geometry/angle.hpp"
+#include "structure/geometry/coord.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace boost::math::constants;
 using namespace cath;

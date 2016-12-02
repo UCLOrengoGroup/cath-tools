@@ -18,18 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "domain_defn_pdbs_acquirer.h"
+#include "domain_defn_pdbs_acquirer.hpp"
 
 #include <boost/log/trivial.hpp>
 
-#include "chopping/domain/domain_definition.h"
-#include "common/clone/make_uptr_clone.h"
-#include "file/domain_definition_list/domain_definition_list.h"
-#include "file/options/data_dirs_spec.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
+#include "chopping/domain/domain_definition.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "file/domain_definition_list/domain_definition_list.hpp"
+#include "file/options/data_dirs_spec.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
 
 using namespace boost::filesystem;
 using namespace boost::log;

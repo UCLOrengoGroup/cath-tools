@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "coord_list.h"
+#include "coord_list.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/numeric.hpp>
 
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/geometry/coord.h"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/geometry/coord.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 #include <numeric>

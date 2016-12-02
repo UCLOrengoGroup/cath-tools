@@ -22,27 +22,27 @@
 
 #include <boost/log/trivial.hpp> /// ***** TEMPORARY *****
 
-#include "common/chrono/duration_to_seconds_string.h"
-//#include "scan/detail/res_pair_dirn/res_pair_dirn.h"
-#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_from_phi_keyer_part.h"
-#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_from_psi_keyer_part.h"
-#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_index_dirn_keyer_part.h"
-//#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_orient_keyer_part.h"
-#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_to_phi_keyer_part.h"
-#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_to_psi_keyer_part.h"
-#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_x_keyer_part.h"
-#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_y_keyer_part.h"
-#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_z_keyer_part.h"
-#include "scan/scan_action/populate_matrix_scan_action.h" // ***** TEMPORARY? *****
-#include "scan/scan_action/record_scores_scan_action.h"   // ***** TEMPORARY? *****
-#include "scan/scan_index.h"
-#include "scan/scan_query_set.h"
-#include "structure/geometry/angle.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "test/global_test_constants.h"
+#include "common/chrono/duration_to_seconds_string.hpp"
+//#include "scan/detail/res_pair_dirn/res_pair_dirn.hpp"
+#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_from_phi_keyer_part.hpp"
+#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_from_psi_keyer_part.hpp"
+#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_index_dirn_keyer_part.hpp"
+//#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_orient_keyer_part.hpp"
+#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_to_phi_keyer_part.hpp"
+#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_to_psi_keyer_part.hpp"
+#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_x_keyer_part.hpp"
+#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_y_keyer_part.hpp"
+#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_z_keyer_part.hpp"
+#include "scan/scan_action/populate_matrix_scan_action.hpp" // ***** TEMPORARY? *****
+#include "scan/scan_action/record_scores_scan_action.hpp"   // ***** TEMPORARY? *****
+#include "scan/scan_index.hpp"
+#include "scan/scan_query_set.hpp"
+#include "structure/geometry/angle.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <chrono> // ***** TEMPORARY? *****
 

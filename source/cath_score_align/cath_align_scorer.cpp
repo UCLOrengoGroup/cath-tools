@@ -18,25 +18,25 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cath_align_scorer.h"
+#include "cath_align_scorer.hpp"
 
-#include "acquirer/alignment_acquirer/alignment_acquirer.h"
-#include "acquirer/pdbs_acquirer/pdbs_acquirer.h"
-#include "alignment/alignment.h"
-#include "cath_score_align/options/cath_score_align_options.h"
-#include "exception/not_implemented_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "score/aligned_pair_score_list/aligned_pair_score_list_factory.h"
-#include "score/aligned_pair_score_list/aligned_pair_score_value_list.h"
-#include "score/aligned_pair_score_list/score_value_list_outputter/score_value_list_json_outputter.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
+#include "acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
+#include "alignment/alignment.hpp"
+#include "cath_score_align/options/cath_score_align_options.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "score/aligned_pair_score_list/aligned_pair_score_list_factory.hpp"
+#include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
+#include "score/aligned_pair_score_list/score_value_list_outputter/score_value_list_json_outputter.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath;
 using namespace cath::align;

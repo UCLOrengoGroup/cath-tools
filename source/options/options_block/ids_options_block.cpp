@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "ids_options_block.h"
+#include "ids_options_block.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/optional.hpp>
 #include <boost/program_options.hpp>
 
-#include "common/clone/make_uptr_clone.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
 
 #include <iostream>
 

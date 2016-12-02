@@ -18,22 +18,22 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sec_file_io.h"
+#include "sec_file_io.hpp"
 
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/file/open_fstream.h"
-#include "common/lexical_cast_line.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "file/sec/sec_file.h"
-#include "file/sec/sec_file_record.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/lexical_cast_line.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/sec/sec_file.hpp"
+#include "file/sec/sec_file_record.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 #include <fstream>
 #include <iostream>

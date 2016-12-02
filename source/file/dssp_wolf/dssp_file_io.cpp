@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "dssp_file_io.h"
+#include "dssp_file_io.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
@@ -26,12 +26,12 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 
-#include "common/file/open_fstream.h"
-#include "common/size_t_literal.h"
-#include "exception/runtime_error_exception.h"
-#include "file/dssp_wolf/dssp_file.h"
-#include "structure/chain_label.h"
-#include "structure/protein/residue.h"
+#include "common/file/open_fstream.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/dssp_wolf/dssp_file.hpp"
+#include "structure/chain_label.hpp"
+#include "structure/protein/residue.hpp"
 
 #include <cmath>
 #include <fstream>

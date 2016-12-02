@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_split_list.h"
+#include "alignment_split_list.hpp"
 
-#include "alignment/alignment.h"
-#include "common/cpp14/cbegin_cend.h"
+#include "alignment/alignment.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
 
 #include <iostream>
 

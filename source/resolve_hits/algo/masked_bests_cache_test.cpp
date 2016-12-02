@@ -21,11 +21,11 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "resolve_hits/algo/discont_hits_index_by_start.h"
-#include "resolve_hits/algo/masked_bests_cache.h"
-#include "resolve_hits/algo/masked_bests_cacher.h"
-#include "resolve_hits/options/spec/crh_segment_spec.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "resolve_hits/algo/discont_hits_index_by_start.hpp"
+#include "resolve_hits/algo/masked_bests_cache.hpp"
+#include "resolve_hits/algo/masked_bests_cacher.hpp"
+#include "resolve_hits/options/spec/crh_segment_spec.hpp"
 
 using namespace cath::common;
 using namespace cath::rslv;

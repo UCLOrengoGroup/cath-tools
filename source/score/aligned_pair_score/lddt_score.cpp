@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "lddt_score.h"
+#include "lddt_score.hpp"
 
 #include <boost/algorithm/cxx11/none_of.hpp>
 #include <boost/archive/xml_iarchive.hpp>
@@ -31,18 +31,18 @@
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/vector.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/common_atom_selection_policy/common_atom_selection_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_selection_policy.h"
-#include "common/algorithm/copy_build.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/difference.h"
-#include "common/less_than_helper.h"
-#include "common/size_t_literal.h"
-#include "exception/not_implemented_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/coord_list.h"
+#include "alignment/alignment.hpp"
+#include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/difference.hpp"
+#include "common/less_than_helper.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/geometry/coord_list.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 #include <numeric>

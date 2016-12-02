@@ -18,18 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "executable_options.h"
+#include "executable_options.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/optional.hpp>
 
-#include "common/argc_argv_faker.h"
-#include "common/file/find_file.h"
-#include "common/file/open_fstream.h"
-#include "exception/invalid_argument_exception.h"
-#include "options/executable/env_var_option_name_handler.h"
-#include "options/options_block/misc_help_version_options_block.h"
+#include "common/argc_argv_faker.hpp"
+#include "common/file/find_file.hpp"
+#include "common/file/open_fstream.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "options/executable/env_var_option_name_handler.hpp"
+#include "options/options_block/misc_help_version_options_block.hpp"
 
 #include <fstream>
 #include <iostream>

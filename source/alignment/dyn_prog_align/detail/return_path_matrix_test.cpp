@@ -20,8 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/dyn_prog_align/detail/return_path_matrix.h"
-#include "test/global_test_constants.h"
+#include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <random>
 

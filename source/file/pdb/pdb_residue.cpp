@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pdb_residue.h"
+#include "pdb_residue.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -28,12 +28,12 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 
-#include "common/boost_addenda/range/front.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/pdb/pdb_atom.h"
-#include "structure/protein/residue.h"
+#include "common/boost_addenda/range/front.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "structure/protein/residue.hpp"
 
 #include <cmath>
 

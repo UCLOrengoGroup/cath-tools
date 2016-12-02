@@ -22,13 +22,13 @@
 #include <boost/math/constants/constants.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "structure/geometry/angle.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/rotation.h"
-#include "test/global_test_constants.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "structure/geometry/angle.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/geometry/rotation.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace boost::math::constants;
 using namespace cath;

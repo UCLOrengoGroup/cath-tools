@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sec_struc.h"
+#include "sec_struc.hpp"
 
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/operators.hpp>
 #include <boost/throw_exception.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "structure/geometry/rotation.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/geometry/rotation.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace boost::math;
 using namespace cath;

@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "difference.h"
+#include "difference.hpp"
 
-#include "common/size_t_literal.h"
+#include "common/size_t_literal.hpp"
 
 #include <cmath>
 

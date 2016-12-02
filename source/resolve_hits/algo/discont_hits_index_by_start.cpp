@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "discont_hits_index_by_start.h"
+#include "discont_hits_index_by_start.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -28,8 +28,8 @@
 #include <boost/range/algorithm/upper_bound.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/sort_uniq_copy.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/sort_uniq_copy.hpp"
 
 using namespace cath::common;
 using namespace cath::rslv;

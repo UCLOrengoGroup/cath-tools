@@ -18,18 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hit_seg_boundary_fns.h"
+#include "hit_seg_boundary_fns.hpp"
 
 #include <boost/algorithm/cxx11/none_of.hpp>
 #include <boost/optional.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/boost_addenda/range/max_proj_element.h"
-#include "resolve_hits/hit_seg.h"
-#include "resolve_hits/res_arrow.h"
-#include "resolve_hits/trim/resolve_boundary.h"
-#include "resolve_hits/trim/trim_spec.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/boost_addenda/range/max_proj_element.hpp"
+#include "resolve_hits/hit_seg.hpp"
+#include "resolve_hits/res_arrow.hpp"
+#include "resolve_hits/trim/resolve_boundary.hpp"
+#include "resolve_hits/trim/trim_spec.hpp"
 
 using namespace cath::common;
 using namespace cath::rslv;

@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pdb_input_options_block.h"
+#include "pdb_input_options_block.hpp"
 
 #include <boost/optional.hpp>
 
-#include "common/clone/make_uptr_clone.h"
+#include "common/clone/make_uptr_clone.hpp"
 
 using namespace cath::common;
 using namespace cath::opts;

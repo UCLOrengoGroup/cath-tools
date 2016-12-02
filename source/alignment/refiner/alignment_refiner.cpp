@@ -18,32 +18,32 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_refiner.h"
+#include "alignment_refiner.hpp"
 
 #include <boost/filesystem/path.hpp> // ***** TEMPORARY *****
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/type_traits/is_same.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.h"
-#include "alignment/dyn_prog_align/detail/matrix_plotter/matrix_plot.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.h"
-#include "alignment/dyn_prog_align/ssap_code_dyn_prog_aligner.h" // ***** TEMPORARY *****
-#include "alignment/dyn_prog_align/std_dyn_prog_aligner.h"
-#include "alignment/io/alignment_io.h"
-#include "alignment/pair_alignment.h"
-#include "alignment/refiner/detail/alignment_split.h"
-#include "alignment/refiner/detail/alignment_split_list.h"
-#include "alignment/refiner/detail/alignment_split_mapping.h"
-#include "alignment/residue_score/residue_scorer.h"
-#include "common/file/open_fstream.h"
-#include "exception/not_implemented_exception.h"
-#include "ssap/ssap.h"
-#include "structure/entry_querier/residue_querier.h" // ***** TEMPORARY *****
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/view_cache/view_cache.h"
-#include "structure/view_cache/view_cache_list.h"
+#include "alignment/alignment.hpp"
+#include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.hpp"
+#include "alignment/dyn_prog_align/detail/matrix_plotter/matrix_plot.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.hpp"
+#include "alignment/dyn_prog_align/ssap_code_dyn_prog_aligner.hpp" // ***** TEMPORARY *****
+#include "alignment/dyn_prog_align/std_dyn_prog_aligner.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "alignment/refiner/detail/alignment_split.hpp"
+#include "alignment/refiner/detail/alignment_split_list.hpp"
+#include "alignment/refiner/detail/alignment_split_mapping.hpp"
+#include "alignment/residue_score/residue_scorer.hpp"
+#include "common/file/open_fstream.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "ssap/ssap.hpp"
+#include "structure/entry_querier/residue_querier.hpp" // ***** TEMPORARY *****
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/view_cache/view_cache.hpp"
+#include "structure/view_cache/view_cache_list.hpp"
 
 #include <fstream>
 

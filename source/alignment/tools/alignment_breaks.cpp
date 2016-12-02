@@ -19,18 +19,18 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "alignment_breaks.h"
+#include "alignment_breaks.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/irange.hpp>
 
-#include "alignment/alignment.h"
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/set_union_build.h"
-#include "common/algorithm/sets_are_disjoint.h"
-#include "common/boost_addenda/range/adaptor/adjacented.h"
-#include "common/size_t_literal.h"
+#include "alignment/alignment.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/set_union_build.hpp"
+#include "common/algorithm/sets_are_disjoint.hpp"
+#include "common/boost_addenda/range/adaptor/adjacented.hpp"
+#include "common/size_t_literal.hpp"
 
 using namespace cath;
 using namespace cath::align;

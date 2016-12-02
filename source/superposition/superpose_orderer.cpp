@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "superpose_orderer.h"
+#include "superpose_orderer.hpp"
 
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/kruskal_min_spanning_tree.hpp>
@@ -26,12 +26,12 @@
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/range/algorithm/sort.hpp>
 
-#include "common/algorithm/sort_copy.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/not_implemented_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "superposition/detail/spanning_tree_greater.h"
+#include "common/algorithm/sort_copy.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "superposition/detail/spanning_tree_greater.hpp"
 
 #include <algorithm>
 

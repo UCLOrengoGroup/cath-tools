@@ -20,8 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "superposition/io/superposition_io.h"
-#include "test/superposition_fixture.h"
+#include "superposition/io/superposition_io.hpp"
+#include "test/superposition_fixture.hpp"
 
 using namespace cath::geom;
 using namespace cath::sup;

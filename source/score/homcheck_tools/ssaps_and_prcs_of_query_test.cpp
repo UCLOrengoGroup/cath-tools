@@ -6,16 +6,16 @@
 #include <boost/algorithm/cxx11/one_of.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/log/log_to_ostream_guard.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/prc_scores_file/prc_scores_entry.h"
-#include "file/prc_scores_file/prc_scores_file.h"
-#include "file/ssap_scores_file/ssap_scores_entry.h"
-#include "file/ssap_scores_file/ssap_scores_file.h"
-#include "score/homcheck_tools/first_result_if.h"
-#include "score/homcheck_tools/ssap_and_prc.h"
-#include "score/homcheck_tools/ssaps_and_prcs_of_query.h"
+#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/prc_scores_file/prc_scores_entry.hpp"
+#include "file/prc_scores_file/prc_scores_file.hpp"
+#include "file/ssap_scores_file/ssap_scores_entry.hpp"
+#include "file/ssap_scores_file/ssap_scores_file.hpp"
+#include "score/homcheck_tools/first_result_if.hpp"
+#include "score/homcheck_tools/ssap_and_prc.hpp"
+#include "score/homcheck_tools/ssaps_and_prcs_of_query.hpp"
 
 using namespace cath::file;
 using namespace cath::homcheck;

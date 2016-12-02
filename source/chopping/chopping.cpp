@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "chopping.h"
+#include "chopping.hpp"
 
 #include <boost/range.hpp>
 
-#include "chopping/domain/domain.h"
-#include "chopping/region/region.h"
-#include "common/cpp14/cbegin_cend.h"
+#include "chopping/domain/domain.hpp"
+#include "chopping/region/region.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
 
 using namespace cath;
 using namespace cath::chop;

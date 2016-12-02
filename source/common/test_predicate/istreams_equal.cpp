@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "istreams_equal.h"
+#include "istreams_equal.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "exception/invalid_argument_exception.h"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <algorithm>
 #include <iostream> // ***** TEMPORARY *****

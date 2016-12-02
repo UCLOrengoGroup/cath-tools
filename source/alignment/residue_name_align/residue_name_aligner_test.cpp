@@ -22,11 +22,11 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/permutation.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/residue_name_align/residue_name_aligner.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/residue_name.h"
+#include "alignment/alignment.hpp"
+#include "alignment/residue_name_align/residue_name_aligner.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/residue_name.hpp"
 
 #include <deque>
 #include <vector>

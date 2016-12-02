@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "string_aligner.h"
+#include "string_aligner.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/find_format.hpp>
@@ -33,13 +33,13 @@
 #include <boost/range/algorithm/count.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.h"
-#include "alignment/gap/gap_penalty.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
+#include "alignment/alignment.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.hpp"
+#include "alignment/gap/gap_penalty.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
 
 #include <algorithm>
 #include <string>

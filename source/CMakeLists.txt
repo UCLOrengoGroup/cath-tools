@@ -301,25 +301,10 @@ set(
 )
 
 set(
-	NORMSOURCES_COMMON_CLONE_DETAIL
-		common/clone/detail/make_clone.cpp
-)
-
-set(
-	NORMSOURCES_COMMON_CLONE
-		${NORMSOURCES_COMMON_CLONE_DETAIL}
-)
-
-set(
 	NORMSOURCES_COMMON_FILE
 		common/file/find_file.cpp
 		common/file/open_fstream.cpp
 		common/file/temp_file.cpp
-)
-
-set(
-	NORMSOURCES_COMMON_STRING
-		common/string/sub_string_parser.cpp
 )
 
 set(
@@ -335,15 +320,11 @@ set(
 		common/argc_argv_faker.cpp
 		${NORMSOURCES_COMMON_BATCH}
 		${NORMSOURCES_COMMON_BOOST_ADDENDA}
-		${NORMSOURCES_COMMON_CLONE}
 		common/command_executer.cpp
 		${NORMSOURCES_COMMON_FILE}
 		common/invert_permutation.cpp
 		common/logger.cpp
-		common/pair_insertion_operator.cpp
 		common/program_exception_wrapper.cpp
-		${NORMSOURCES_COMMON_STRING}
-		common/temp_check_offset_1.cpp
 		${NORMSOURCES_COMMON_TEST_PREDICATE}
 )
 
@@ -726,10 +707,8 @@ set(
 set(
 	NORMSOURCES_SCAN_DETAIL_RES_PAIR
 		scan/detail/res_pair/multi_struc_res_rep_pair.cpp
-		scan/detail/res_pair/multi_struc_res_rep_pair_list.cpp
 		scan/detail/res_pair/res_pair_core.cpp
 		scan/detail/res_pair/single_struc_res_pair.cpp
-		scan/detail/res_pair/single_struc_res_pair_list.cpp
 )
 
 set(
@@ -738,15 +717,8 @@ set(
 )
 
 set(
-	NORMSOURCES_SCAN_DETAIL_SCAN_ACTION
-		scan/detail/scan_action/align_scan_action.cpp
-		scan/detail/scan_action/scan_multi_action.cpp
-)
-
-set(
 	NORMSOURCES_SCAN_DETAIL_STRIDE
 		scan/detail/stride/rep_strider.cpp
-		scan/detail/stride/roled_scan_stride.cpp
 )
 
 set(
@@ -754,20 +726,12 @@ set(
 		${NORMSOURCES_SCAN_DETAIL_CHECK_SCAN}
 		${NORMSOURCES_SCAN_DETAIL_RES_PAIR}
 		${NORMSOURCES_SCAN_DETAIL_RES_PAIR_DIRN}
-		${NORMSOURCES_SCAN_DETAIL_SCAN_ACTION}
-		scan/detail/scan_structure_data.cpp
 		${NORMSOURCES_SCAN_DETAIL_STRIDE}
-)
-
-set(
-	NORMSOURCES_SCAN_RES_PAIR_KEYER
-		scan/res_pair_keyer/res_pair_keyer.cpp
 )
 
 set(
 	NORMSOURCES_SCAN_SCAN_ACTION
 		scan/scan_action/populate_matrix_scan_action.cpp
-		scan/scan_action/record_scores_scan_action.cpp
 )
 
 set(
@@ -785,11 +749,7 @@ set(
 		${NORMSOURCES_SCAN_DETAIL}
 		scan/quad_criteria.cpp
 		scan/res_pair_index_dirn_criterion.cpp
-		${NORMSOURCES_SCAN_RES_PAIR_KEYER}
 		${NORMSOURCES_SCAN_SCAN_ACTION}
-		scan/scan_index.cpp
-		scan/scan_policy.cpp
-		scan/scan_query_set.cpp
 		scan/scan_stride.cpp
 		${NORMSOURCES_SCAN_SCAN_TOOLS}
 )
@@ -980,8 +940,6 @@ set(
 		structure/geometry/angle.cpp
 		structure/geometry/coord.cpp
 		structure/geometry/coord_list.cpp
-		structure/geometry/orientation_covering.cpp
-		structure/geometry/quat_rot.cpp
 		structure/geometry/rotation.cpp
 )
 
@@ -1020,17 +978,6 @@ set(
 )
 
 set(
-	NORMSOURCES_STRUCTURE_VIEW_CACHE_DETAIL_PLATE
-		structure/view_cache/detail/plate/plate_scan.cpp
-		structure/view_cache/detail/plate/rod_cache.cpp
-)
-
-set(
-	NORMSOURCES_STRUCTURE_VIEW_CACHE_DETAIL
-		${NORMSOURCES_STRUCTURE_VIEW_CACHE_DETAIL_PLATE}
-)
-
-set(
 	NORMSOURCES_STRUCTURE_VIEW_CACHE_FILTER_DETAIL
 		structure/view_cache/filter/detail/filter_vs_full_score_less.cpp
 )
@@ -1044,7 +991,6 @@ set(
 
 set(
 	NORMSOURCES_STRUCTURE_VIEW_CACHE_INDEX_DETAIL
-		structure/view_cache/index/detail/pair_scan_action.cpp
 		structure/view_cache/index/detail/vcie_match_criteria.cpp
 )
 
@@ -1059,7 +1005,6 @@ set(
 
 set(
 	NORMSOURCES_STRUCTURE_VIEW_CACHE
-		${NORMSOURCES_STRUCTURE_VIEW_CACHE_DETAIL}
 		${NORMSOURCES_STRUCTURE_VIEW_CACHE_FILTER}
 		${NORMSOURCES_STRUCTURE_VIEW_CACHE_INDEX}
 		structure/view_cache/view_cache.cpp

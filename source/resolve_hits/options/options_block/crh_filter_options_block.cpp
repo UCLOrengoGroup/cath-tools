@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "crh_filter_options_block.h"
+#include "crh_filter_options_block.hpp"
 
 #include <boost/format.hpp>
 
-#include "common/clone/make_uptr_clone.h"
+#include "common/clone/make_uptr_clone.hpp"
 #include "common/program_options/prog_opt_num_range.hpp"
 
 using namespace cath;

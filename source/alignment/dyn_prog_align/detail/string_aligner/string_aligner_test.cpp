@@ -18,21 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "string_aligner.h"
+#include "string_aligner.hpp"
 
 #include <boost/test/unit_test.hpp>
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.h"
-#include "alignment/dyn_prog_align/detail/string_aligner/benchmark_dyn_prog_string_aligner.h"
-#include "alignment/dyn_prog_align/detail/string_aligner/gen_dyn_prog_string_aligner.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.h"
-#include "alignment/gap/gap_penalty.h"
-#include "alignment/dyn_prog_align/ssap_code_dyn_prog_aligner.h"
-#include "alignment/dyn_prog_align/std_dyn_prog_aligner.h"
-#include "common/pair_insertion_operator.h"
-#include "common/size_t_literal.h"
+#include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.hpp"
+#include "alignment/dyn_prog_align/detail/string_aligner/benchmark_dyn_prog_string_aligner.hpp"
+#include "alignment/dyn_prog_align/detail/string_aligner/gen_dyn_prog_string_aligner.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.hpp"
+#include "alignment/gap/gap_penalty.hpp"
+#include "alignment/dyn_prog_align/ssap_code_dyn_prog_aligner.hpp"
+#include "alignment/dyn_prog_align/std_dyn_prog_aligner.hpp"
+#include "common/pair_insertion_operator.hpp"
+#include "common/size_t_literal.hpp"
 
 #include <iostream>
 #include <random>

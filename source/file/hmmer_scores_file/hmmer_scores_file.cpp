@@ -1,7 +1,7 @@
 /// \file
 /// \brief The hmmer_scores_file class definitions
 
-#include "hmmer_scores_file.h"
+#include "hmmer_scores_file.hpp"
 
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/log/trivial.hpp>
@@ -9,12 +9,12 @@
 #include <boost/range/algorithm/remove_copy_if.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/algorithm/transform_build.h"
-#include "common/file/open_fstream.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/hmmer_scores_file/hmmer_scores_entry.h"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/hmmer_scores_file/hmmer_scores_entry.hpp"
 
 #include <fstream>
 #include <iostream> // ***** TEMPORARY *****

@@ -20,12 +20,12 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "display/options/display_spec.h"
-#include "exception/not_implemented_exception.h"
-#include "options/options_block/options_block_tester.h"
-#include "outputter/superposition_output_options/superposition_output_options_block.h"
-#include "outputter/superposition_outputter/superposition_outputter.h"
-#include "outputter/superposition_outputter/superposition_outputter_list.h"
+#include "display/options/display_spec.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "options/options_block/options_block_tester.hpp"
+#include "outputter/superposition_output_options/superposition_output_options_block.hpp"
+#include "outputter/superposition_outputter/superposition_outputter.hpp"
+#include "outputter/superposition_outputter/superposition_outputter_list.hpp"
 
 using namespace cath;
 using namespace cath::common;

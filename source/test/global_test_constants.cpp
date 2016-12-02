@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "global_test_constants.h"
+#include "global_test_constants.hpp"
 
-#include "exception/runtime_error_exception.h"
-#include "ssap/ssap.h" // **** For reset_ssap_global_variables() ****
+#include "exception/runtime_error_exception.hpp"
+#include "ssap/ssap.hpp" // **** For reset_ssap_global_variables() ****
 
 #include <limits>
 

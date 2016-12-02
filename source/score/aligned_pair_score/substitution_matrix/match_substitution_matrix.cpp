@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "match_substitution_matrix.h"
+#include "match_substitution_matrix.hpp"
 
-#include "score/aligned_pair_score/substitution_matrix/substitution_matrix.h"
-#include "structure/protein/amino_acid.h"
+#include "score/aligned_pair_score/substitution_matrix/substitution_matrix.hpp"
+#include "structure/protein/amino_acid.hpp"
 
 using namespace cath;
 using namespace cath::score;

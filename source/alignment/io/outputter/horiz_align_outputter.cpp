@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "horiz_align_outputter.h"
+#include "horiz_align_outputter.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/round.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/alignment.h"
+#include "alignment/alignment.hpp"
 
 #include <iomanip>
 

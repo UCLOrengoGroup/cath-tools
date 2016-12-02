@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sec_file_record.h"
+#include "sec_file_record.hpp"
 
 #include <boost/math/special_functions/fpclassify.hpp>
 
-#include "common/difference.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/difference.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 #include <iostream>
 

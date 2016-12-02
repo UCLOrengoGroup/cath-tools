@@ -22,22 +22,22 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/residue_score/residue_scorer.h"
-#include "scan/detail/check_scan/test_only/alignment_scan_comparison.h"
-#include "scan/detail/check_scan/test_only/check_scan_on_final_alignment.h"
-#include "scan/detail/scan_role.h"
-#include "scan/detail/stride/roled_scan_stride.h"
-#include "scan/quad_criteria.h"
-#include "scan/scan_stride.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/protein_source_file_set/protein_source_file_set.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "test/global_test_constants.h"
+#include "alignment/alignment.hpp"
+#include "alignment/residue_score/residue_scorer.hpp"
+#include "scan/detail/check_scan/test_only/alignment_scan_comparison.hpp"
+#include "scan/detail/check_scan/test_only/check_scan_on_final_alignment.hpp"
+#include "scan/detail/scan_role.hpp"
+#include "scan/detail/stride/roled_scan_stride.hpp"
+#include "scan/quad_criteria.hpp"
+#include "scan/scan_stride.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_file_set.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <iostream>
 

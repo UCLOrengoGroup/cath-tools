@@ -18,20 +18,20 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_split_mapping.h"
+#include "alignment_split_mapping.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/lower_bound.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/alignment_row.h"
-#include "alignment/pair_alignment.h"
-#include "alignment/refiner/detail/alignment_split.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
+#include "alignment/alignment.hpp"
+#include "alignment/alignment_row.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "alignment/refiner/detail/alignment_split.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 #include <iterator>

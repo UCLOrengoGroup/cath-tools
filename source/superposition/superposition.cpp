@@ -18,26 +18,26 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "superposition.h"
+#include "superposition.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "common/algorithm/constexpr_is_uniq.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/not_implemented_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/bioplib_facade/bioplib_interface.h"
-#include "structure/bioplib_facade/bioplib_pdb.h"
-#include "structure/geometry/coord_list.h"
-#include "structure/geometry/rotation.h"
+#include "common/algorithm/constexpr_is_uniq.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/bioplib_facade/bioplib_interface.hpp"
+#include "structure/bioplib_facade/bioplib_pdb.hpp"
+#include "structure/geometry/coord_list.hpp"
+#include "structure/geometry/rotation.hpp"
 
 #include <deque>
 #include <fstream>

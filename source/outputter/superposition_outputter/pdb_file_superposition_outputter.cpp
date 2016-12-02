@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pdb_file_superposition_outputter.h"
+#include "pdb_file_superposition_outputter.hpp"
 
-#include "common/clone/make_uptr_clone.h"
-#include "common/file/open_fstream.h"
-#include "outputter/superposition_outputter/ostream_superposition_outputter.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/file/open_fstream.hpp"
+#include "outputter/superposition_outputter/ostream_superposition_outputter.hpp"
 
 #include <fstream>
 

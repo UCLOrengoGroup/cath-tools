@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/algorithm/constexpr_for_n.h"
-#include "score/true_pos_false_neg/classn_rate_stat.h"
-#include "test/global_test_constants.h"
+#include "common/algorithm/constexpr_for_n.hpp"
+#include "score/true_pos_false_neg/classn_rate_stat.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace cath::common;
 using namespace cath::score;

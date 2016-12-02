@@ -18,23 +18,23 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common_residue_selection_policy.h"
+#include "common_residue_selection_policy.hpp"
 
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/irange.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.h"
-#include "common/algorithm/copy_build.h"
-#include "common/clone/check_uptr_clone_against_this.h"
-#include "common/cpp14/make_unique.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/runtime_error_exception.h"
+#include "alignment/alignment.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/clone/check_uptr_clone_against_this.hpp"
+#include "common/cpp14/make_unique.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
 
 using namespace cath::align;
 using namespace cath::common;

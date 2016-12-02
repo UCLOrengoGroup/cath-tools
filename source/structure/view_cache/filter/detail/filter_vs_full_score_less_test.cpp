@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "structure/view_cache/filter/detail/filter_vs_full_score_less.h"
+#include "structure/view_cache/filter/detail/filter_vs_full_score_less.hpp"
 
 #include <boost/test/auto_unit_test.hpp>
 

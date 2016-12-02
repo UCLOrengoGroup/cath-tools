@@ -19,12 +19,12 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/boost_check_no_throw_diag.h"
-#include "common/pair_insertion_operator.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "superposition/superpose_orderer.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/pair_insertion_operator.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "superposition/superpose_orderer.hpp"
 
 using namespace cath;
 using namespace cath::common;

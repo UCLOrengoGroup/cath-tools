@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "html_segment.h"
+#include "html_segment.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
-#include "common/debug_numeric_cast.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/debug_numeric_cast.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <string>
 

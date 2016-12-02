@@ -20,10 +20,10 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.h"
-#include "common/pair_insertion_operator.h"
-#include "common/size_t_literal.h"
-#include "structure/view_cache/detail/plate/rod_cache.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/pair_insertion_operator.hpp"
+#include "common/size_t_literal.hpp"
+#include "structure/view_cache/detail/plate/rod_cache.hpp"
 
 #include <boost/graph/adjacency_list.hpp>
 

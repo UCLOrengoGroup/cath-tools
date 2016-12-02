@@ -21,7 +21,7 @@
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/utility/string_ref.hpp>
 
-#include "resolve_hits/file/cath_id_score_category.h"
+#include "resolve_hits/file/cath_id_score_category.hpp"
 
 using namespace cath::rslv;
 

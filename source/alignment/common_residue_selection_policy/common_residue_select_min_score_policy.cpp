@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common_residue_select_min_score_policy.h"
+#include "common_residue_select_min_score_policy.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 
-#include "common/clone/make_uptr_clone.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace boost::math;
 using namespace cath;

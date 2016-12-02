@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "broad_display_colour_spec.h"
+#include "broad_display_colour_spec.hpp"
 
 BOOST_AUTO_TEST_SUITE(broad_display_colour_spec_test_suite)
 

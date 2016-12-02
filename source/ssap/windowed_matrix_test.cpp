@@ -18,18 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "windowed_matrix.h"
+#include "windowed_matrix.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/find.hpp>
 #include <boost/test/unit_test.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/boost_check_no_throw_diag.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/algorithm/contains.hpp"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "broad_display_colour_spec.h"
+#include "broad_display_colour_spec.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -27,12 +27,12 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/join.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/sort_uniq_build.h"
-#include "common/size_t_literal.h"
-#include "display/viewer/viewer.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/sort_uniq_build.hpp"
+#include "common/size_t_literal.hpp"
+#include "display/viewer/viewer.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -20,12 +20,12 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/boost_check_no_throw_diag.h"
-#include "common/pair_insertion_operator.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/dssp_wolf/tally_residue_names.h"
-#include "structure/residue_name.h"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/pair_insertion_operator.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/dssp_wolf/tally_residue_names.hpp"
+#include "structure/residue_name.hpp"
 
 using namespace cath;
 using namespace cath::common;

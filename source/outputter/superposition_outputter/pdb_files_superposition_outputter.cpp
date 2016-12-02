@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pdb_files_superposition_outputter.h"
+#include "pdb_files_superposition_outputter.hpp"
 
-#include "common/clone/make_uptr_clone.h"
-#include "superposition/superposition_context.h"
-#include "superposition/io/superposition_io.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "superposition/superposition_context.hpp"
+#include "superposition/io/superposition_io.hpp"
 
 using namespace boost::filesystem;
 using namespace cath::common;

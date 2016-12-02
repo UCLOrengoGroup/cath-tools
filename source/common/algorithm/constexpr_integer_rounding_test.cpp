@@ -20,8 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/algorithm/constexpr_integer_rounding.h"
-#include "common/size_t_literal.h"
+#include "common/algorithm/constexpr_integer_rounding.hpp"
+#include "common/size_t_literal.hpp"
 
 using namespace cath::common;
 

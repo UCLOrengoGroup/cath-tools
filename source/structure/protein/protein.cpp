@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "protein.h"
+#include "protein.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
@@ -26,16 +26,16 @@
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/size_t_literal.h"
-//#include "common/temp_check_offset_1.h"
-#include "exception/invalid_argument_exception.h"
-#include "ssap/context_res.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "structure/residue_name.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/size_t_literal.hpp"
+//#include "common/temp_check_offset_1.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "ssap/context_res.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "structure/residue_name.hpp"
 
 #include <algorithm> // for max, min
 #include <iterator>  // for end, begin, etc

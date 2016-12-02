@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "ssap_score_post_processing.h"
+#include "ssap_score_post_processing.hpp"
 
 #include <iostream>
 

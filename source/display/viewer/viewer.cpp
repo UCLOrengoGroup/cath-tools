@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "viewer.h"
+#include "viewer.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -28,20 +28,20 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 
-#include "alignment/alignment_context.h"
-#include "common/algorithm/transform_build.h"
-#include "common/size_t_literal.h"
-#include "display/display_colourer/display_colourer.h"
-#include "display/display_colourer/display_colourer_consecutive.h"
-#include "display/options/display_spec.h"
-#include "display/viewer/pymol/pymol_tools.h"
-#include "display_colour/display_colour.h"
-#include "display_colour/display_colour_list.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "superposition/superposition_context.h"
+#include "alignment/alignment_context.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/size_t_literal.hpp"
+#include "display/display_colourer/display_colourer.hpp"
+#include "display/display_colourer/display_colourer_consecutive.hpp"
+#include "display/options/display_spec.hpp"
+#include "display/viewer/pymol/pymol_tools.hpp"
+#include "display_colour/display_colour.hpp"
+#include "display_colour/display_colour_list.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "superposition/superposition_context.hpp"
 
 #include <sstream>
 

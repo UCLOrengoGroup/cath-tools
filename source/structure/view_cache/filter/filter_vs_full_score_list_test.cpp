@@ -20,13 +20,13 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/file/simple_file_read_write.h"
-#include "common/size_t_literal.h"
-#include "score/true_pos_false_neg/classn_num_stat.h"
-#include "score/true_pos_false_neg/classn_rate_stat.h"
-#include "score/true_pos_false_neg/true_false_pos_neg.h"
-#include "structure/view_cache/filter/filter_vs_full_score.h"
-#include "structure/view_cache/filter/filter_vs_full_score_list.h"
+#include "common/file/simple_file_read_write.hpp"
+#include "common/size_t_literal.hpp"
+#include "score/true_pos_false_neg/classn_num_stat.hpp"
+#include "score/true_pos_false_neg/classn_rate_stat.hpp"
+#include "score/true_pos_false_neg/true_false_pos_neg.hpp"
+#include "structure/view_cache/filter/filter_vs_full_score.hpp"
+#include "structure/view_cache/filter/filter_vs_full_score_list.hpp"
 
 #include <random>
 

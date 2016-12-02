@@ -22,17 +22,17 @@
 
 #include <boost/mpl/list.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.h"
-#include "alignment/pair_alignment.h"
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/boost_check_no_throw_diag.h"
-#include "common/size_t_literal.h"
-#include "common/test_tools.h"
-#include "exception/invalid_argument_exception.h"
-#include "test/global_test_constants.h"
+#include "alignment/alignment.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/test_tools.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <limits>
 

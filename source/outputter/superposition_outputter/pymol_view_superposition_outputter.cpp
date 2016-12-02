@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pymol_view_superposition_outputter.h"
+#include "pymol_view_superposition_outputter.hpp"
 
 #include <boost/log/trivial.hpp>
 
-#include "common/clone/make_uptr_clone.h"
-#include "common/command_executer.h"
-#include "common/file/temp_file.h"
-#include "outputter/superposition_outputter/pymol_file_superposition_outputter.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/command_executer.hpp"
+#include "common/file/temp_file.hpp"
+#include "outputter/superposition_outputter/pymol_file_superposition_outputter.hpp"
 
 #include <iostream>
 

@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "score_classn_value_list.h"
+#include "score_classn_value_list.hpp"
 
 //#include <boost/algorithm/string/join.hpp>
 #include <boost/filesystem/path.hpp>
@@ -33,20 +33,20 @@
 #include <boost/range/algorithm.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/transform_build.h"
-#include "common/algorithm/sort_uniq_copy.h"
-#include "common/boost_addenda/range/adaptor/equal_grouped.h"
-#include "common/boost_addenda/range/back.h"
-#include "common/boost_addenda/range/front.h"
-#include "common/boost_addenda/sorted_insert.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
-#include "score/score_classification/value_list_scaling.h"
-#include "score/true_pos_false_neg/named_true_false_pos_neg_list.h"
-#include "score/true_pos_false_neg/true_false_pos_neg.h"
-#include "score/true_pos_false_neg/true_false_pos_neg_list.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/boost_addenda/range/adaptor/equal_grouped.hpp"
+#include "common/boost_addenda/range/back.hpp"
+#include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/sorted_insert.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
+#include "score/score_classification/value_list_scaling.hpp"
+#include "score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
+#include "score/true_pos_false_neg/true_false_pos_neg.hpp"
+#include "score/true_pos_false_neg/true_false_pos_neg_list.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 

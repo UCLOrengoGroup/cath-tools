@@ -20,12 +20,12 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "vcie_match_criteria.h"
+#include "vcie_match_criteria.hpp"
 
-#include "common/size_t_literal.h"
-#include "structure/geometry/angle.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/size_t_literal.hpp"
+#include "structure/geometry/angle.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath::common;
 using namespace cath::index;

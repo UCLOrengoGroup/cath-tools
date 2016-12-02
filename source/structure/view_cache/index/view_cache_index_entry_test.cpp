@@ -25,19 +25,19 @@
 #include <boost/range/numeric.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/pair_alignment.h"
-#include "common/algorithm/generate_n_build.h"
-#include "common/algorithm/transform_build.h"
-#include "common/chrono/chrono_type_aliases.h"
-#include "common/random/pick_random_pair.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "structure/view_cache/index/detail/vcie_match_criteria.h"
-#include "structure/view_cache/index/view_cache_index_entry.h"
-#include "test/global_test_constants.h"
+#include "alignment/pair_alignment.hpp"
+#include "common/algorithm/generate_n_build.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/chrono/chrono_type_aliases.hpp"
+#include "common/random/pick_random_pair.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "structure/view_cache/index/detail/vcie_match_criteria.hpp"
+#include "structure/view_cache/index/view_cache_index_entry.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <chrono>
 #include <random>

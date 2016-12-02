@@ -17,13 +17,13 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#include "entry_querier.h"
+#include "entry_querier.hpp"
 
 #include <boost/test/unit_test.hpp>
 
-#include "common/size_t_literal.h"
-#include "structure/entry_querier/residue_querier.h"
-#include "structure/entry_querier/sec_struc_querier.h"
+#include "common/size_t_literal.hpp"
+#include "structure/entry_querier/residue_querier.hpp"
+#include "structure/entry_querier/sec_struc_querier.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "length_getter_make_clone.h"
+#include "length_getter_make_clone.hpp"
 
-#include "score/length_getter/protein_only_length_getter.h"
-#include "score/length_getter/sym_protein_only_length_getter.h"
+#include "score/length_getter/protein_only_length_getter.hpp"
+#include "score/length_getter/sym_protein_only_length_getter.hpp"
 
 using namespace cath::score;
 using namespace std;

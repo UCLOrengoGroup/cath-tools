@@ -24,9 +24,9 @@
 //#include <boost/scoped_array.hpp>
 #include <boost/test/output_test_stream.hpp>
 
-#include "common/argc_argv_faker.h"
-#include "common/program_exception_wrapper.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/argc_argv_faker.hpp"
+#include "common/program_exception_wrapper.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <sstream>
 #include <string>

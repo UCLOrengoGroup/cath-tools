@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hits_processor.h"
+#include "hits_processor.hpp"
 
-#include "resolve_hits/options/spec/crh_output_spec.h"
-#include "resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.h"
-#include "resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.h"
+#include "resolve_hits/options/spec/crh_output_spec.hpp"
+#include "resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.hpp"
+#include "resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.hpp"
 
 using namespace cath::rslv::detail;
 

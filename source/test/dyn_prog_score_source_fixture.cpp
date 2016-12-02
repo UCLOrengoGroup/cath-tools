@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "dyn_prog_score_source_fixture.h"
+#include "dyn_prog_score_source_fixture.hpp"
 
-#include "structure/entry_querier/residue_querier.h"
+#include "structure/entry_querier/residue_querier.hpp"
 
 using namespace cath;
 using namespace cath::align;

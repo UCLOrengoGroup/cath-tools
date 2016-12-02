@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hmmer_hmmsearch_domtblout.h"
+#include "hmmer_hmmsearch_domtblout.hpp"
 
-#include "common/algorithm/contains.h"
-#include "common/boost_addenda/make_string_ref.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/file/open_fstream.h"
-#include "common/string/string_parse_tools.h"
-#include "resolve_hits/read_and_process_hits/read_and_process_mgr.h"
-#include "resolve_hits/resolve_hits_type_aliases.h"
+#include "common/algorithm/contains.hpp"
+#include "common/boost_addenda/make_string_ref.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/string/string_parse_tools.hpp"
+#include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
+#include "resolve_hits/resolve_hits_type_aliases.hpp"
 
 #include <fstream>
 #include <iostream>

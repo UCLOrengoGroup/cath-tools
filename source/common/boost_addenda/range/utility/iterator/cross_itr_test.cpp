@@ -24,10 +24,10 @@
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/test_tools.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/boost_addenda/range/utility/iterator/cross_itr.h"
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/type_aliases.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/type_aliases.hpp"
 
 #include <algorithm>
 #include <tuple>

@@ -6,16 +6,16 @@
 #include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/algorithm/transform_build.h"
-#include "common/file/open_fstream.h"
-#include "common/size_t_literal.h"
-#include "file/prc_scores_file/prc_scores_entry.h"
-#include "file/prc_scores_file/prc_scores_file.h"
-#include "file/ssap_scores_file/ssap_scores_entry.h"
-#include "file/ssap_scores_file/ssap_scores_file.h"
-#include "score/score_classification/rbf_model.h"
-#include "test/global_test_constants.h"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/size_t_literal.hpp"
+#include "file/prc_scores_file/prc_scores_entry.hpp"
+#include "file/prc_scores_file/prc_scores_file.hpp"
+#include "file/ssap_scores_file/ssap_scores_entry.hpp"
+#include "file/ssap_scores_file/ssap_scores_file.hpp"
+#include "score/score_classification/rbf_model.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <fstream>
 #include <utility>

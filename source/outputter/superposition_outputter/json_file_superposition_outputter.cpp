@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "json_file_superposition_outputter.h"
+#include "json_file_superposition_outputter.hpp"
 
-#include "common/clone/make_uptr_clone.h"
-#include "common/file/open_fstream.h"
-#include "superposition/superposition_context.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/file/open_fstream.hpp"
+#include "superposition/superposition_context.hpp"
 
 #include <fstream>
 

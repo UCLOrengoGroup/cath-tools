@@ -21,13 +21,13 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/file/simple_file_read_write.h"
-#include "file/options/data_dirs_spec.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "common/file/simple_file_read_write.hpp"
+#include "file/options/data_dirs_spec.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 #include <iostream>
 #include <random>

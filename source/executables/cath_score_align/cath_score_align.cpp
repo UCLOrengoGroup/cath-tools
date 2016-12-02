@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cath_score_align/cath_align_scorer.h"
-#include "cath_score_align/options/cath_score_align_options.h"
-#include "common/program_exception_wrapper.h"
+#include "cath_score_align/cath_align_scorer.hpp"
+#include "cath_score_align/options/cath_score_align_options.hpp"
+#include "common/program_exception_wrapper.hpp"
 
 using namespace cath::common;
 using namespace cath::opts;

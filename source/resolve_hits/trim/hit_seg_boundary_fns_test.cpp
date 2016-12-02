@@ -21,9 +21,9 @@
 #include <boost/optional/optional_io.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "resolve_hits/hit_seg.h"
-#include "resolve_hits/trim/hit_seg_boundary_fns.h"
-#include "resolve_hits/trim/trim_spec.h"
+#include "resolve_hits/hit_seg.hpp"
+#include "resolve_hits/trim/hit_seg_boundary_fns.hpp"
+#include "resolve_hits/trim/trim_spec.hpp"
 
 using namespace cath::rslv;
 

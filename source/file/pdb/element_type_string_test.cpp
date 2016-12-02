@@ -20,8 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/cpp14/make_unique.h"
-#include "file/pdb/element_type_string.h"
+#include "common/cpp14/make_unique.hpp"
+#include "file/pdb/element_type_string.hpp"
 
 #include <memory>
 

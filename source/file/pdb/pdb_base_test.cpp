@@ -25,17 +25,17 @@
 #include <boost/mpl/list.hpp>
 #include <boost/test/output_test_stream.hpp>
 
-#include "common/boost_check_no_throw_diag.h"
-#include "common/file/open_fstream.h"
-#include "common/size_t_literal.h"
-#include "common/test_predicate/files_equal.h"
-#include "exception/runtime_error_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "test/global_test_constants.h"
-#include "structure/bioplib_facade/bioplib_pdb.h"
-#include "structure/geometry/coord.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/test_predicate/files_equal.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "test/global_test_constants.hpp"
+#include "structure/bioplib_facade/bioplib_pdb.hpp"
+#include "structure/geometry/coord.hpp"
 
 #include <fstream>
 #include <iostream>

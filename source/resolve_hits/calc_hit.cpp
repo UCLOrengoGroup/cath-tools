@@ -22,7 +22,7 @@
 #include <boost/range.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
-#include "resolve_hits/calc_hit.h"
+#include "resolve_hits/calc_hit.hpp"
 
 #include <string>
 

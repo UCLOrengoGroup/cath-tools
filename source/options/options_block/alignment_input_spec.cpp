@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_input_spec.h"
+#include "alignment_input_spec.hpp"
 
-#include "common/size_t_literal.h"
+#include "common/size_t_literal.hpp"
 
 using namespace cath::common;
 using namespace cath::opts;

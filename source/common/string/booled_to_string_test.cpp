@@ -22,7 +22,7 @@
 #include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/string/booled_to_string.h"
+#include "common/string/booled_to_string.hpp"
 
 namespace cath { namespace test {} }
 

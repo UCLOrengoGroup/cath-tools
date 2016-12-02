@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "ssap_scores_file.h"
+#include "ssap_scores_file.hpp"
 
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/trim.hpp>
@@ -27,13 +27,13 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/file/open_fstream.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/ssap_scores_file/ssap_scores_entry.h"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/ssap_scores_file/ssap_scores_entry.hpp"
 
 #include <fstream>
 #include <map>

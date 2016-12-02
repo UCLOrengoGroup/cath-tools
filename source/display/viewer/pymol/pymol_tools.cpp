@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "pymol_tools.h"
+#include "pymol_tools.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/replace.hpp>
@@ -26,8 +26,8 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "structure/residue_name.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/residue_name.hpp"
 
 using namespace cath;
 using namespace cath::common;

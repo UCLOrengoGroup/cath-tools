@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "crh_output_spec.h"
+#include "crh_output_spec.hpp"
 
 using namespace cath;
 using namespace cath::rslv;

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "masked_bests_cacher.h"
+#include "masked_bests_cacher.hpp"
 
 #include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/algorithm/cxx11/any_of.hpp>
@@ -27,11 +27,11 @@
 #include <boost/range/algorithm/max_element.hpp>
 #include <boost/range/algorithm/upper_bound.hpp>
 
-#include "common/algorithm/copy_build.h"
-#include "common/algorithm/sort_uniq_copy.h"
-#include "exception/out_of_range_exception.h"
-#include "resolve_hits/algo/discont_hits_index_by_start.h"
-#include "resolve_hits/calc_hit_list.h"
+#include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/sort_uniq_copy.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "resolve_hits/algo/discont_hits_index_by_start.hpp"
+#include "resolve_hits/calc_hit_list.hpp"
 
 using namespace cath::common;
 using namespace cath::rslv;

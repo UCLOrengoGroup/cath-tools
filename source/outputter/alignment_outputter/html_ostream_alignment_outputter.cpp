@@ -19,22 +19,22 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "html_ostream_alignment_outputter.h"
+#include "html_ostream_alignment_outputter.hpp"
 
-#include "alignment/alignment_context.h"
-#include "alignment/io/alignment_io.h"
-#include "alignment/io/outputter/html_align_outputter.h"
-#include "common/clone/make_uptr_clone.h"
-#include "display/options/display_spec.h"
-#include "display_colour/display_colour.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "alignment/alignment_context.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "alignment/io/outputter/html_align_outputter.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "display/options/display_spec.hpp"
+#include "display_colour/display_colour.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath::align;
 using namespace cath::common;

@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "score/aligned_pair_score_list/aligned_pair_score_list.h"
+#include "score/aligned_pair_score_list/aligned_pair_score_list.hpp"
 
 using namespace cath::score;
 using namespace std;

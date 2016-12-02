@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "options_block_tester.h"
+#include "options_block_tester.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/program_options.hpp>
 
-#include "common/argc_argv_faker.h"
-#include "options/options_block/options_block.h"
+#include "common/argc_argv_faker.hpp"
+#include "options/options_block/options_block.hpp"
 
 using namespace boost::program_options;
 using namespace cath;

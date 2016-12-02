@@ -18,18 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "matrix_plotter.h"
+#include "matrix_plotter.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/irange.hpp>
 
-#include "alignment/dyn_prog_align/detail/return_path_matrix.h"
-#include "alignment/dyn_prog_align/detail/score_accumulation_matrix.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.h"
-#include "common/boost_addenda/range/utility/iterator/cross_itr.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/invalid_argument_exception.h"
-#include "ssap/windowed_matrix.h"
+#include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
+#include "alignment/dyn_prog_align/detail/score_accumulation_matrix.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
+#include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "ssap/windowed_matrix.hpp"
 
 #include <limits>
 

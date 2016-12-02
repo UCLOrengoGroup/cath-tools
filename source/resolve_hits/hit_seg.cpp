@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hit_seg.h"
+#include "hit_seg.hpp"
 
 #include <boost/range/algorithm/adjacent_find.hpp>
 #include <boost/range/algorithm/sort.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/range/adaptor/adjacented.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/adaptor/adjacented.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <iostream>
 

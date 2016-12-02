@@ -18,19 +18,19 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "length_score.h"
+#include "length_score.hpp"
 
 #include <boost/logic/tribool.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/serialization/export.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
-#include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/less_than_helper.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/coord_list.h"
+#include "alignment/alignment.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
+#include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/less_than_helper.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/geometry/coord_list.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 

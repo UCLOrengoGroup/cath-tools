@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "check_pdb_options_block.h"
+#include "check_pdb_options_block.hpp"
 
 #include <boost/optional.hpp>
 
-#include "common/clone/make_uptr_clone.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;

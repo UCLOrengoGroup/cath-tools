@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "html_align_outputter.h"
+#include "html_align_outputter.hpp"
 
-#include "test/alignment_fixture.h"
+#include "test/alignment_fixture.hpp"
 
 using namespace cath;
 using namespace cath::align;

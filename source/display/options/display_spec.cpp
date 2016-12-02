@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "display_spec.h"
+#include "display_spec.hpp"
 
 #include <boost/exception/diagnostic_information.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/optional.hpp>
 
-#include "common/cpp14/make_unique.h"
-#include "display_colour/display_colour.h"
-#include "display_colour/display_colour_list.h"
+#include "common/cpp14/make_unique.hpp"
+#include "display_colour/display_colour.hpp"
+#include "display_colour/display_colour_list.hpp"
 
 using namespace cath;
 using namespace cath::common;

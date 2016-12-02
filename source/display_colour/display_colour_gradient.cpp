@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "display_colour_gradient.h"
+#include "display_colour_gradient.hpp"
 
 #include <boost/algorithm/clamp.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "display_colour/display_colour.h"
-#include "exception/invalid_argument_exception.h"
+#include "display_colour/display_colour.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace boost::algorithm;
 using namespace cath;

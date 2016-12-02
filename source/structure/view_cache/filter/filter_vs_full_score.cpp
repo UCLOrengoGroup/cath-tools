@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "filter_vs_full_score.h"
+#include "filter_vs_full_score.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/finder.hpp>
@@ -26,9 +26,9 @@
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 

@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/file/open_fstream.h"
-#include "common/file/temp_file.h"
-#include "test/global_test_constants.h"
+#include "common/file/open_fstream.hpp"
+#include "common/file/temp_file.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <fstream>
 

@@ -20,14 +20,14 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "cath_refine_align/options/cath_refine_align_options.h"
-#include "cath_superpose/cath_superposer.h"
-#include "common/argc_argv_faker.h"
-#include "common/file/open_fstream.h"
-#include "common/file/temp_file.h"
-#include "common/test_predicate/files_equal.h"
-#include "common/test_predicate/istream_and_file_equal.h"
-#include "test/global_test_constants.h"
+#include "cath_refine_align/options/cath_refine_align_options.hpp"
+#include "cath_superpose/cath_superposer.hpp"
+#include "common/argc_argv_faker.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/file/temp_file.hpp"
+#include "common/test_predicate/files_equal.hpp"
+#include "common/test_predicate/istream_and_file_equal.hpp"
+#include "test/global_test_constants.hpp"
 
 #include <fstream>
 #include <sstream>

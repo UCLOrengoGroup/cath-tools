@@ -18,32 +18,32 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "view_cache_index.h"
+#include "view_cache_index.hpp"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.h"
-#include "alignment/dyn_prog_align/detail/matrix_plotter/matrix_plot.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.h"
-#include "alignment/dyn_prog_align/std_dyn_prog_aligner.h"
-#include "alignment/gap/gap_penalty.h"
-#include "alignment/io/alignment_io.h"
-#include "alignment/pair_alignment.h"
-#include "alignment/refiner/alignment_refiner.h"
-#include "common/difference.h"
-#include "common/file/simple_file_read_write.h"
-#include "ssap/context_res.h"
-#include "structure/geometry/coord.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
-#include "structure/view_cache/index/detail/vcie_match_criteria.h"
-#include "structure/view_cache/index/quad_find_action.h"
-#include "structure/view_cache/index/quad_find_action_check.h"
+#include "alignment/alignment.hpp"
+#include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.hpp"
+#include "alignment/dyn_prog_align/detail/matrix_plotter/matrix_plot.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.hpp"
+#include "alignment/dyn_prog_align/std_dyn_prog_aligner.hpp"
+#include "alignment/gap/gap_penalty.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "alignment/refiner/alignment_refiner.hpp"
+#include "common/difference.hpp"
+#include "common/file/simple_file_read_write.hpp"
+#include "ssap/context_res.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "structure/view_cache/index/detail/vcie_match_criteria.hpp"
+#include "structure/view_cache/index/quad_find_action.hpp"
+#include "structure/view_cache/index/quad_find_action_check.hpp"
 
 #include <chrono>
 #include <iostream>

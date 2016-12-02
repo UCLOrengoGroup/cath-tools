@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "jmol_viewer.h"
+#include "jmol_viewer.hpp"
 
-#include "exception/not_implemented_exception.h"
+#include "exception/not_implemented_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;

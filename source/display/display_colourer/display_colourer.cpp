@@ -18,21 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "display_colourer.h"
+#include "display_colourer.hpp"
 
-#include "alignment/alignment_context.h"
-#include "common/clone/check_uptr_clone_against_this.h"
-#include "common/cpp14/make_unique.h"
-#include "display/display_colourer/detail/score_colour_handler.h"
-#include "display/display_colour_spec/display_colour_spec.h"
-#include "display/display_colourer/display_colourer_alignment.h"
-#include "display/display_colourer/display_colourer_consecutive.h"
-#include "display/options/display_spec.h"
-#include "display/viewer/viewer.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "superposition/superposition_context.h"
+#include "alignment/alignment_context.hpp"
+#include "common/clone/check_uptr_clone_against_this.hpp"
+#include "common/cpp14/make_unique.hpp"
+#include "display/display_colourer/detail/score_colour_handler.hpp"
+#include "display/display_colour_spec/display_colour_spec.hpp"
+#include "display/display_colourer/display_colourer_alignment.hpp"
+#include "display/display_colourer/display_colourer_consecutive.hpp"
+#include "display/options/display_spec.hpp"
+#include "display/viewer/viewer.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "superposition/superposition_context.hpp"
 
 using namespace cath;
 using namespace cath::align;

@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/alignment_row.h"
+#include "alignment/alignment_row.hpp"
 
 using namespace cath::align;
 

@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hmmer_hmmsearch_out.h"
+#include "hmmer_hmmsearch_out.hpp"
 
-#include "common/file/open_fstream.h"
-#include "resolve_hits/file/detail/hmmsearch_parser.h"
-#include "resolve_hits/read_and_process_hits/read_and_process_mgr.h"
+#include "common/file/open_fstream.hpp"
+#include "resolve_hits/file/detail/hmmsearch_parser.hpp"
+#include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
 
 #include <fstream>
 

@@ -18,20 +18,20 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cath_hit_resolver.h"
+#include "cath_hit_resolver.hpp"
 
-#include "common/file/open_fstream.h"
-#include "common/logger.h"
-#include "exception/not_implemented_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "resolve_hits/calc_hit_list.h"
-#include "resolve_hits/file/hmmer_hmmsearch_domtblout.h"
-#include "resolve_hits/file/hmmer_hmmsearch_out.h"
-#include "resolve_hits/html_output/resolve_hits_html_outputter.h"
-#include "resolve_hits/options/crh_options.h"
-#include "resolve_hits/options/spec/crh_score_spec.h"
-#include "resolve_hits/options/spec/crh_spec.h"
-#include "resolve_hits/read_and_process_hits/read_and_process_mgr.h"
+#include "common/file/open_fstream.hpp"
+#include "common/logger.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "resolve_hits/calc_hit_list.hpp"
+#include "resolve_hits/file/hmmer_hmmsearch_domtblout.hpp"
+#include "resolve_hits/file/hmmer_hmmsearch_out.hpp"
+#include "resolve_hits/html_output/resolve_hits_html_outputter.hpp"
+#include "resolve_hits/options/crh_options.hpp"
+#include "resolve_hits/options/spec/crh_score_spec.hpp"
+#include "resolve_hits/options/spec/crh_spec.hpp"
+#include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
 
 #include <fstream>
 

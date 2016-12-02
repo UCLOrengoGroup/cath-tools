@@ -6,8 +6,8 @@
 //#include <boost/log/trivial.hpp> /// ***** TEMPORARY *****
 #include <boost/test/auto_unit_test.hpp>
 
-#include "file/hmmer_scores_file/hmmer_scores_entry.h"
-#include "file/hmmer_scores_file/hmmer_scores_file.h"
+#include "file/hmmer_scores_file/hmmer_scores_entry.hpp"
+#include "file/hmmer_scores_file/hmmer_scores_file.hpp"
 
 //#include <iomanip> /// ***** TEMPORARY *****
 //#include <iostream> /// ***** TEMPORARY *****

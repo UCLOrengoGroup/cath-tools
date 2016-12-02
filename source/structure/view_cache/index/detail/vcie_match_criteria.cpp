@@ -18,16 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "vcie_match_criteria.h"
+#include "vcie_match_criteria.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "structure/geometry/quat_rot.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "structure/geometry/quat_rot.hpp"
 
 using namespace boost::algorithm;
 using namespace cath::common;

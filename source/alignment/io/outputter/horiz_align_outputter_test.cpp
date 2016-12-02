@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "horiz_align_outputter.h"
+#include "horiz_align_outputter.hpp"
 
-#include "test/alignment_fixture.h"
+#include "test/alignment_fixture.hpp"
 
 #include <iostream>
 

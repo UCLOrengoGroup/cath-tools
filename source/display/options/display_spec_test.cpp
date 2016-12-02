@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "display_spec.h"
+#include "display_spec.hpp"
 
 #include <boost/test/unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.h"
-#include "display/display_colourer/display_colourer.h"
-#include "display/options/display_spec.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "display/display_colourer/display_colourer.hpp"
+#include "display/options/display_spec.hpp"
 
 using namespace cath;
 

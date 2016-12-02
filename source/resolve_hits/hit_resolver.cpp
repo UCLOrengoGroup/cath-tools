@@ -18,21 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hit_resolver.h"
+#include "hit_resolver.hpp"
 
 #include <boost/core/ignore_unused.hpp>
 #include <boost/range/algorithm/sort.hpp>
 #include <boost/range/sub_range.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/algorithm/sort_uniq_copy.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/range/adaptor/equal_grouped.h"
-#include "common/boost_addenda/range/front.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "resolve_hits/algo/masked_bests_cacher.h"
-#include "resolve_hits/calc_hit_list.h"
-#include "resolve_hits/scored_hit_arch.h"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/adaptor/equal_grouped.hpp"
+#include "common/boost_addenda/range/front.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "resolve_hits/algo/masked_bests_cacher.hpp"
+#include "resolve_hits/calc_hit_list.hpp"
+#include "resolve_hits/scored_hit_arch.hpp"
 
 #include <map>
 

@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alignment_io.h"
+#include "alignment_io.hpp"
 
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/find_format.hpp>
@@ -31,23 +31,23 @@
 #include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/align_type_aliases.h"
-#include "alignment/pair_alignment.h"
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/file/open_fstream.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/runtime_error_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "alignment/align_type_aliases.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 #include <fstream>
 #include <iostream>

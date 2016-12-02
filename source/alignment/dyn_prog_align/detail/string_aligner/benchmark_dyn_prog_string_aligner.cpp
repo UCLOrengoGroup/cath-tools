@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "benchmark_dyn_prog_string_aligner.h"
+#include "benchmark_dyn_prog_string_aligner.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/reverse.hpp>
 
-#include "alignment/gap/gap_penalty.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/not_implemented_exception.h"
+#include "alignment/gap/gap_penalty.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/not_implemented_exception.hpp"
 
 #include <algorithm>
 #include <string>

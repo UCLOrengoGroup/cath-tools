@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "resolve_hits_fixture.h"
+#include "resolve_hits_fixture.hpp"
 
 using namespace cath::rslv;
 

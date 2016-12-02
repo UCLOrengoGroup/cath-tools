@@ -18,14 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "residue_querier.h"
+#include "residue_querier.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "common/debug_numeric_cast.h"
-#include "ssap/context_res.h"
-#include "ssap/ssap.h"
-#include "structure/protein/protein.h"
+#include "common/debug_numeric_cast.hpp"
+#include "ssap/context_res.hpp"
+#include "ssap/ssap.hpp"
+#include "structure/protein/protein.hpp"
 
 using namespace cath;
 using namespace std;

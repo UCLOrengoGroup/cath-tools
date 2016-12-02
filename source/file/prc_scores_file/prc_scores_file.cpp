@@ -1,7 +1,7 @@
 /// \file
 /// \brief The prc_scores_file class definitions
 
-#include "prc_scores_file.h"
+#include "prc_scores_file.hpp"
 
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/log/trivial.hpp>
@@ -9,15 +9,15 @@
 #include <boost/range/algorithm/remove_copy_if.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/algorithm/transform_build.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/file/open_fstream.h"
-#include "common/hash/pair_hash.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/prc_scores_file/detail/prc_scores_line_parser.h"
-#include "file/prc_scores_file/prc_scores_entry.h"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/hash/pair_hash.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/prc_scores_file/detail/prc_scores_line_parser.hpp"
+#include "file/prc_scores_file/prc_scores_entry.hpp"
 
 #include <fstream>
 #include <iostream> // ***** TEMPORARY *****

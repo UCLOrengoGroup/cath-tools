@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "length_of_first_getter.h"
+#include "length_of_first_getter.hpp"
 
-#include "common/clone/make_uptr_clone.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/residue.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/residue.hpp"
 
 using namespace cath::align;
 using namespace cath::common;

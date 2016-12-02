@@ -18,20 +18,20 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common_atom_selection_policy.h"
+#include "common_atom_selection_policy.hpp"
 
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.h"
-#include "alignment/common_atom_selection_policy/common_atom_select_cb_policy.h"
-#include "common/clone/check_uptr_clone_against_this.h"
-#include "common/cpp14/make_unique.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/coord_list.h"
+#include "alignment/alignment.hpp"
+#include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
+#include "alignment/common_atom_selection_policy/common_atom_select_cb_policy.hpp"
+#include "common/clone/check_uptr_clone_against_this.hpp"
+#include "common/cpp14/make_unique.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/geometry/coord_list.hpp"
 
 using namespace cath;
 using namespace cath::align;

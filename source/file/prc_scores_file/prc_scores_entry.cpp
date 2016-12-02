@@ -1,9 +1,9 @@
 /// \file
 /// \brief The prc_scores_entry class definitions
 
-#include "common/type_aliases.h"
-#include "file/prc_scores_file/detail/prc_scores_line_parser.h"
-#include "file/prc_scores_file/prc_scores_entry.h"
+#include "common/type_aliases.hpp"
+#include "file/prc_scores_file/detail/prc_scores_line_parser.hpp"
+#include "file/prc_scores_file/prc_scores_entry.hpp"
 
 using namespace cath::file;
 using namespace std;

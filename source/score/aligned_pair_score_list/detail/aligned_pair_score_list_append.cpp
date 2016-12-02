@@ -20,20 +20,20 @@
 
 #define BOOST_ASSIGN_MAX_PARAMS 7
 
-#include "aligned_pair_score_list_append.h"
-#include "score/aligned_pair_score/drmsd_score.h"
-#include "score/aligned_pair_score/gsas_score.h"
-#include "score/aligned_pair_score/length_score.h"
-#include "score/aligned_pair_score/lddt_score.h"
-#include "score/aligned_pair_score/mi_score.h"
-#include "score/aligned_pair_score/rmsd_score.h"
-#include "score/aligned_pair_score/sas_score.h"
-#include "score/aligned_pair_score/sequence_similarity_score.h"
-#include "score/aligned_pair_score/si_score.h"
-#include "score/aligned_pair_score/ssap_score.h"
-#include "score/aligned_pair_score/structal_score.h"
-#include "score/aligned_pair_score/tm_score.h"
-#include "structure/protein/amino_acid.h"
+#include "aligned_pair_score_list_append.hpp"
+#include "score/aligned_pair_score/drmsd_score.hpp"
+#include "score/aligned_pair_score/gsas_score.hpp"
+#include "score/aligned_pair_score/length_score.hpp"
+#include "score/aligned_pair_score/lddt_score.hpp"
+#include "score/aligned_pair_score/mi_score.hpp"
+#include "score/aligned_pair_score/rmsd_score.hpp"
+#include "score/aligned_pair_score/sas_score.hpp"
+#include "score/aligned_pair_score/sequence_similarity_score.hpp"
+#include "score/aligned_pair_score/si_score.hpp"
+#include "score/aligned_pair_score/ssap_score.hpp"
+#include "score/aligned_pair_score/structal_score.hpp"
+#include "score/aligned_pair_score/tm_score.hpp"
+#include "structure/protein/amino_acid.hpp"
 
 using namespace cath::score;
 using namespace cath::score::detail;

@@ -23,11 +23,11 @@
 
 //#include <boost/units/systems/si/plane_angle.hpp>
 
-#include "common/boost_check_no_throw_diag.h"
-#include "common/difference.h"
-#include "common/test_tools.h"
-#include "structure/geometry/angle.h"
-#include "test/global_test_constants.h"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/difference.hpp"
+#include "common/test_tools.hpp"
+#include "structure/geometry/angle.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace boost::math::constants;
 using namespace cath;

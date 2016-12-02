@@ -6,10 +6,10 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/type_aliases.h"
-#include "exception/runtime_error_exception.h"
-#include "file/hmmer_scores_file/hmmer_scores_entry.h"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/runtime_error_exception.hpp"
+#include "file/hmmer_scores_file/hmmer_scores_entry.hpp"
 
 #include <iostream> /// ***** TEMPORARY *****
 #include <regex>

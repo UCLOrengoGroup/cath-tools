@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "alnd_rgn.h"
+#include "alnd_rgn.hpp"
 
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/algorithm/string/join.hpp>
 
-#include "resolve_hits/hit_seg.h"
+#include "resolve_hits/hit_seg.hpp"
 
 using namespace cath::rslv;
 

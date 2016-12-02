@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "classn_stat_pair_series.h"
+#include "classn_stat_pair_series.hpp"
 
 #include <boost/range/numeric.hpp>
 
-#include "common/algorithm/adjacent_accumulate.h"
-#include "common/boost_addenda/range/range_concept_type_aliases.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/invalid_argument_exception.h"
-#include "score/true_pos_false_neg/classn_stat.h"
+#include "common/algorithm/adjacent_accumulate.hpp"
+#include "common/boost_addenda/range/range_concept_type_aliases.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "score/true_pos_false_neg/classn_stat.hpp"
 
 using namespace cath;
 using namespace cath::common;

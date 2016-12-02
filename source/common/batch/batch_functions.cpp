@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "batch_functions.h"
+#include "batch_functions.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/range/irange.hpp>
 
-#include "exception/invalid_argument_exception.h"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <algorithm>
 

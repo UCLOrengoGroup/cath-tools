@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "residue_location.h"
+#include "residue_location.hpp"
 
-#include "exception/invalid_argument_exception.h"
-#include "structure/structure_type_aliases.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/structure_type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::common;

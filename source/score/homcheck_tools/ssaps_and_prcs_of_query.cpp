@@ -2,7 +2,7 @@
 /// \brief The ssaps_and_prcs_of_query class definitions
 
 
-#include "ssaps_and_prcs_of_query.h"
+#include "ssaps_and_prcs_of_query.hpp"
 
 #include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/log/trivial.hpp>
@@ -10,19 +10,19 @@
 #include <boost/range/algorithm/max_element.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/range/adaptor/adjacented.h"
-#include "common/boost_addenda/range/front.h"
-#include "common/hash/pair_hash.h"
-#include "common/size_t_literal.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/prc_scores_file/prc_scores_entry.h"
-#include "file/ssap_scores_file/ssap_scores_entry.h"
-#include "score/homcheck_tools/first_result_if.h"
-#include "score/homcheck_tools/ssap_and_prc.h"
-#include "score/homcheck_tools/superfamily_of_domain.h"
-#include "score/score_classification/rbf_model.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/adaptor/adjacented.hpp"
+#include "common/boost_addenda/range/front.hpp"
+#include "common/hash/pair_hash.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/prc_scores_file/prc_scores_entry.hpp"
+#include "file/ssap_scores_file/ssap_scores_entry.hpp"
+#include "score/homcheck_tools/first_result_if.hpp"
+#include "score/homcheck_tools/ssap_and_prc.hpp"
+#include "score/homcheck_tools/superfamily_of_domain.hpp"
+#include "score/score_classification/rbf_model.hpp"
 
 #include <string>
 #include <unordered_map>

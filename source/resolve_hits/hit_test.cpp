@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "resolve_hits/calc_hit.h"
+#include "resolve_hits/calc_hit.hpp"
 
 using namespace cath;
 using namespace cath::rslv;

@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "data_file.h"
+#include "data_file.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/max_element.hpp>
 
-#include "exception/invalid_argument_exception.h"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath::common;
 using namespace cath::file;

@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "display_options_block.h"
+#include "display_options_block.hpp"
 
 #include <boost/optional.hpp>
 
-#include "common/clone/make_uptr_clone.h"
-#include "display_colour/display_colour_list.h"
+#include "common/clone/make_uptr_clone.hpp"
+#include "display_colour/display_colour_list.hpp"
 
 using namespace boost::filesystem;
 using namespace cath;

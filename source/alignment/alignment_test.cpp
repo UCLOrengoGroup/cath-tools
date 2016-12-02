@@ -24,16 +24,16 @@
 #include <boost/optional/optional_io.hpp>
 #include <boost/test/output_test_stream.hpp>
 
-#include "alignment/io/align_scaffold.h"
-#include "alignment/pair_alignment.h"
-#include "common/boost_addenda/test/boost_check_equal_ranges.h"
-#include "common/boost_check_no_throw_diag.h"
-#include "common/pair_insertion_operator.h"
-#include "common/size_t_literal.h"
-#include "common/test_tools.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
-#include "test/alignment_fixture.h"
+#include "alignment/io/align_scaffold.hpp"
+#include "alignment/pair_alignment.hpp"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/boost_check_no_throw_diag.hpp"
+#include "common/pair_insertion_operator.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/test_tools.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "test/alignment_fixture.hpp"
 
 #include <utility>
 

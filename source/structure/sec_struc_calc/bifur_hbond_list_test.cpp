@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "bifur_hbond_list.h"
+#include "bifur_hbond_list.hpp"
 
 namespace cath { namespace test { } }
 

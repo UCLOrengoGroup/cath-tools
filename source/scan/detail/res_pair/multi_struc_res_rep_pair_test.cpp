@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "scan/detail/res_pair/multi_struc_res_rep_pair.h"
+#include "scan/detail/res_pair/multi_struc_res_rep_pair.hpp"
 
-// #include "test/global_test_constants.h"
+// #include "test/global_test_constants.hpp"
 
 using namespace cath::scan::detail;
 //using namespace std;

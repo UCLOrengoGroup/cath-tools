@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "chain_label.h"
+#include "chain_label.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
 
-#include "exception/invalid_argument_exception.h"
+#include "exception/invalid_argument_exception.hpp"
 
 using namespace boost::algorithm;
 using namespace cath;

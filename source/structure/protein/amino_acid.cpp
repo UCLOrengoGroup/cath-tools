@@ -18,16 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "amino_acid.h"
+#include "amino_acid.hpp"
 
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/algorithm/transform_build.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
 
 #include <set>
 

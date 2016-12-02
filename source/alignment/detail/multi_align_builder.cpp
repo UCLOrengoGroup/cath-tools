@@ -18,23 +18,23 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "multi_align_builder.h"
+#include "multi_align_builder.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "alignment/detail/multi_align_group.h"
-#include "alignment/gap/gap_penalty.h"
-#include "alignment/io/outputter/horiz_align_outputter.h" // ***** TEMPORARY *****
-#include "common/cpp14/cbegin_cend.h"
-#include "common/invert_permutation.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "structure/protein/protein.h"
-#include "structure/protein/protein_list.h"
-#include "structure/protein/residue.h"
-#include "structure/protein/sec_struc.h"
-#include "structure/protein/sec_struc_planar_angles.h"
+#include "alignment/detail/multi_align_group.hpp"
+#include "alignment/gap/gap_penalty.hpp"
+#include "alignment/io/outputter/horiz_align_outputter.hpp" // ***** TEMPORARY *****
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/invert_permutation.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/residue.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 

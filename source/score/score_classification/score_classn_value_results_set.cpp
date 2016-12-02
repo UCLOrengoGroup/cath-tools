@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "score_classn_value_results_set.h"
+#include "score_classn_value_results_set.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/filesystem/path.hpp>
@@ -35,26 +35,26 @@
 #include <boost/range/algorithm_ext/is_sorted.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/algorithm/contains.h"
-#include "common/algorithm/random_split.h"
-#include "common/algorithm/set_difference_build.h"
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/filesystem/replace_extension_copy.h"
-#include "common/boost_addenda/range/adaptor/limited.h"
-#include "common/boost_addenda/range/front.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/size_t_literal.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "score/aligned_pair_score_list/aligned_pair_score_value_list.h"
-#include "score/score_classification/detail/score_classn_value_list_name_less.h"
-#include "score/score_classification/value_list_scaling.h"
-#include "score/true_pos_false_neg/classn_rate_stat.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series_list.h"
-#include "score/true_pos_false_neg/named_true_false_pos_neg_list.h"
-#include "score/true_pos_false_neg/named_true_false_pos_neg_list_list.h"
-#include "score/true_pos_false_neg/true_false_pos_neg.h"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/random_split.hpp"
+#include "common/algorithm/set_difference_build.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
+#include "common/boost_addenda/range/adaptor/limited.hpp"
+#include "common/boost_addenda/range/front.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/size_t_literal.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
+#include "score/score_classification/detail/score_classn_value_list_name_less.hpp"
+#include "score/score_classification/value_list_scaling.hpp"
+#include "score/true_pos_false_neg/classn_rate_stat.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
+#include "score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
+#include "score/true_pos_false_neg/named_true_false_pos_neg_list_list.hpp"
+#include "score/true_pos_false_neg/true_false_pos_neg.hpp"
 
 using namespace boost::log::trivial;
 using namespace cath;

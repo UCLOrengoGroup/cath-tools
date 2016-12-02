@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hmmer_hmmsearch_domtblout.h"
+#include "hmmer_hmmsearch_domtblout.hpp"
 
 #include <boost/utility/string_ref.hpp>
 
-#include "common/cpp14/cbegin_cend.h"
-#include "exception/out_of_range_exception.h"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/out_of_range_exception.hpp"
 
 #include <regex>
 

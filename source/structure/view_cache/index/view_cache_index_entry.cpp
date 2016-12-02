@@ -24,7 +24,7 @@
 //#include <boost/geometry/geometries/point.hpp> // ***** TEMPORARY? *****
 //#include <boost/geometry/geometries/geometries.hpp> // ***** TEMPORARY? *****
 
-#include "structure/view_cache/index/view_cache_index_entry.h"
+#include "structure/view_cache/index/view_cache_index_entry.hpp"
 
 using namespace cath::index;
 using namespace cath::index::detail;

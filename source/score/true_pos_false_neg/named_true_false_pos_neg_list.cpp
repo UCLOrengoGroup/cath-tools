@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "named_true_false_pos_neg_list.h"
+#include "named_true_false_pos_neg_list.hpp"
 
-#include "score/true_pos_false_neg/classn_stat.h"
-#include "score/true_pos_false_neg/classn_stat_pair_series.h"
-#include "score/true_pos_false_neg/true_false_pos_neg.h"
+#include "score/true_pos_false_neg/classn_stat.hpp"
+#include "score/true_pos_false_neg/classn_stat_pair_series.hpp"
+#include "score/true_pos_false_neg/true_false_pos_neg.hpp"
 
 using namespace cath;
 using namespace cath::score;

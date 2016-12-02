@@ -18,27 +18,27 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "align_based_superposition_acquirer.h"
+#include "align_based_superposition_acquirer.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/tuple/tuple.hpp>
 
-#include "acquirer/alignment_acquirer/alignment_acquirer.h"
-#include "alignment/alignment.h"
-#include "alignment/alignment_coord_extractor.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.h"
-#include "alignment/io/alignment_io.h"
-#include "common/file/open_fstream.h"
-#include "exception/invalid_argument_exception.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_list.h"
-#include "file/pdb/pdb_residue.h"
-#include "structure/geometry/coord_list.h"
-#include "superposition/superposition.h"
-#include "superposition/superposition_context.h"
+#include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
+#include "alignment/alignment.hpp"
+#include "alignment/alignment_coord_extractor.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+#include "alignment/io/alignment_io.hpp"
+#include "common/file/open_fstream.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "structure/geometry/coord_list.hpp"
+#include "superposition/superposition.hpp"
+#include "superposition/superposition_context.hpp"
 
 #include <fstream>
 #include <iostream> // ***** TEMPORARY *****

@@ -18,16 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "score_common_coord_handler.h"
+#include "score_common_coord_handler.hpp"
 
 #include <boost/lexical_cast.hpp>
 
-#include "alignment/alignment_coord_extractor.h"
-#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.h"
-#include "common/less_than_helper.h"
-#include "exception/out_of_range_exception.h"
-#include "structure/geometry/coord.h"
-#include "structure/geometry/coord_list.h"
+#include "alignment/alignment_coord_extractor.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
+#include "common/less_than_helper.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "structure/geometry/coord.hpp"
+#include "structure/geometry/coord_list.hpp"
 
 using namespace cath;
 using namespace cath::align;

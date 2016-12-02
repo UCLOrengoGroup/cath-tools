@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "protein_file_combn.h"
+#include "protein_file_combn.hpp"
 
-#include "common/cpp14/make_unique.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.h"
-#include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.h"
+#include "common/cpp14/make_unique.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.hpp"
 
 using namespace cath;
 using namespace cath::common;

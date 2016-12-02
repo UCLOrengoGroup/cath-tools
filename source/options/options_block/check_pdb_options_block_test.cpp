@@ -22,10 +22,10 @@
 
 #include <boost/filesystem/path.hpp>
 
-#include "exception/invalid_argument_exception.h"
-#include "common/file/temp_file.h"
-#include "options/options_block/check_pdb_options_block.h"
-#include "options/options_block/options_block_tester.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "common/file/temp_file.hpp"
+#include "options/options_block/check_pdb_options_block.hpp"
+#include "options/options_block/options_block_tester.hpp"
 
 using namespace boost::filesystem;
 using namespace boost::program_options;

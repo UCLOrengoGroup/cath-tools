@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cath_check_pdb_options.h"
+#include "cath_check_pdb_options.hpp"
 
 #include <boost/program_options.hpp>
 #include <boost/shared_array.hpp>
 
-#include "common/argc_argv_faker.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/argc_argv_faker.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <fstream>
 

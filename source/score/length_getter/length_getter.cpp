@@ -18,22 +18,22 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "length_getter.h"
+#include "length_getter.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/join.hpp>
 
-#include "alignment/common_atom_selection_policy/common_atom_selection_policy.h"
-#include "alignment/common_residue_selection_policy/common_residue_selection_policy.h"
-#include "common/algorithm/contains.h"
-#include "common/algorithm/copy_build.h"
-#include "common/boost_addenda/ptr_container/unique_ptr_functions.h"
-#include "common/clone/check_uptr_clone_against_this.h"
-#include "score/detail/score_name_helper.h"
-#include "score/length_getter/num_aligned_length_getter.h"
-#include "score/length_getter/protein_only_length_getter.h"
+#include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
+#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/copy_build.hpp"
+#include "common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
+#include "common/clone/check_uptr_clone_against_this.hpp"
+#include "score/detail/score_name_helper.hpp"
+#include "score/length_getter/num_aligned_length_getter.hpp"
+#include "score/length_getter/protein_only_length_getter.hpp"
 
 #include <cassert>
 #include <iostream> // ***** TEMPORARY *****

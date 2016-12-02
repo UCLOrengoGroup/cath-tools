@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "filter_vs_full_score_list.h"
+#include "filter_vs_full_score_list.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -27,17 +27,17 @@
 #include <boost/range/algorithm/lower_bound.hpp>
 #include <boost/range/numeric.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "common/boost_addenda/filesystem/replace_extension_copy.h"
-#include "common/boost_addenda/sorted_insert.h"
-#include "common/cpp14/cbegin_cend.h"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
+#include "common/boost_addenda/sorted_insert.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
 #include "common/third_party_code/gnuplot-iostream.h"
-#include "exception/invalid_argument_exception.h"
-#include "exception/out_of_range_exception.h"
-#include "score/true_pos_false_neg/classn_rate_stat.h"
-#include "score/true_pos_false_neg/true_false_pos_neg.h"
-#include "structure/view_cache/filter/detail/filter_vs_full_score_less.h"
-#include "structure/view_cache/filter/filter_vs_full_score.h"
+#include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
+#include "score/true_pos_false_neg/classn_rate_stat.hpp"
+#include "score/true_pos_false_neg/true_false_pos_neg.hpp"
+#include "structure/view_cache/filter/detail/filter_vs_full_score_less.hpp"
+#include "structure/view_cache/filter/filter_vs_full_score.hpp"
 
 #include <algorithm>
 #include <numeric>

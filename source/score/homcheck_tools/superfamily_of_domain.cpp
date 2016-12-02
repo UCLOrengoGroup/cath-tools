@@ -1,17 +1,17 @@
 /// \file
 /// \brief The superfamily_of_domain class definitions
 
-#include "superfamily_of_domain.h"
+#include "superfamily_of_domain.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 
-#include "common/boost_addenda/string_algorithm/split_build.h"
-#include "common/cpp14/cbegin_cend.h"
-#include "common/file/open_fstream.h"
-#include "common/type_aliases.h"
-#include "exception/invalid_argument_exception.h"
+#include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
 
 #include <fstream>
 #include <regex>

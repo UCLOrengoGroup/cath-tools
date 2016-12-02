@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "gap_penalty.h"
+#include "gap_penalty.hpp"
 
 using namespace cath;
 //using namespace cath::align;

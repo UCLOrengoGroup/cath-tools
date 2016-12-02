@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cath_assign_domains_options_block.h"
+#include "cath_assign_domains_options_block.hpp"
 
 #include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -26,10 +26,10 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
 
-#include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.h"
-#include "acquirer/pdbs_acquirer/istream_pdbs_acquirer.h"
-#include "common/clone/make_uptr_clone.h"
-#include "score/homcheck_tools/superfamily_of_domain.h"
+#include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
+#include "acquirer/pdbs_acquirer/istream_pdbs_acquirer.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "score/homcheck_tools/superfamily_of_domain.hpp"
 
 using namespace cath;
 using namespace cath::common;

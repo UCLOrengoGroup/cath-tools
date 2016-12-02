@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "misc_help_version_options_block.h"
+#include "misc_help_version_options_block.hpp"
 
 #include <boost/optional.hpp>
 
-#include "cath_tools_git_version.h"
-#include "common/clone/make_uptr_clone.h"
+#include "cath_tools_git_version.hpp"
+#include "common/clone/make_uptr_clone.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "std_dyn_prog_aligner.h"
+#include "std_dyn_prog_aligner.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "alignment/alignment.h"
-#include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.h" // ***** TEMPORARY *****
-#include "alignment/dyn_prog_align/detail/matrix_plotter/matrix_plot.h"
-#include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/difference.h"
-#include "common/type_aliases.h"
+#include "alignment/alignment.hpp"
+#include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.hpp" // ***** TEMPORARY *****
+#include "alignment/dyn_prog_align/detail/matrix_plotter/matrix_plot.hpp"
+#include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/difference.hpp"
+#include "common/type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::align;

@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "filter_vs_full_score_less.h"
+#include "filter_vs_full_score_less.hpp"
 
-#include "structure/view_cache/filter/filter_vs_full_score.h"
+#include "structure/view_cache/filter/filter_vs_full_score.hpp"
 
 using namespace cath::index::filter::detail;
 

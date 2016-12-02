@@ -18,26 +18,26 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cath_superposer.h"
+#include "cath_superposer.hpp"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
-#include "acquirer/alignment_acquirer/alignment_acquirer.h"
-#include "acquirer/pdbs_acquirer/pdbs_acquirer.h"
-#include "acquirer/selection_policy_acquirer/selection_policy_acquirer.h"
-#include "acquirer/superposition_acquirer/align_based_superposition_acquirer.h"
-#include "alignment/alignment_context.h"
-#include "cath_superpose/options/cath_superpose_options.h"
-#include "common/logger.h"
-#include "file/pdb/pdb.h"
-#include "file/pdb/pdb_atom.h"
-#include "file/pdb/pdb_residue.h"
-#include "outputter/alignment_outputter/alignment_outputter.h"
-#include "outputter/alignment_outputter/alignment_outputter_list.h"
-#include "outputter/superposition_outputter/superposition_outputter.h"
-#include "outputter/superposition_outputter/superposition_outputter_list.h"
-#include "superposition/superposition_context.h"
+#include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
+#include "acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
+#include "acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
+#include "acquirer/superposition_acquirer/align_based_superposition_acquirer.hpp"
+#include "alignment/alignment_context.hpp"
+#include "cath_superpose/options/cath_superpose_options.hpp"
+#include "common/logger.hpp"
+#include "file/pdb/pdb.hpp"
+#include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_residue.hpp"
+#include "outputter/alignment_outputter/alignment_outputter.hpp"
+#include "outputter/alignment_outputter/alignment_outputter_list.hpp"
+#include "outputter/superposition_outputter/superposition_outputter.hpp"
+#include "outputter/superposition_outputter/superposition_outputter_list.hpp"
+#include "superposition/superposition_context.hpp"
 
 using namespace cath;
 using namespace cath::align;

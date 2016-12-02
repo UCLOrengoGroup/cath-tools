@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "tally_residue_names.h"
+#include "tally_residue_names.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
@@ -27,12 +27,12 @@
 #include <boost/range/algorithm.hpp>
 #include <boost/range/irange.hpp>
 
-#include "common/size_t_literal.h"
-#include "common/algorithm/contains.h"
-#include "common/algorithm/is_uniq_for_unordered.h"
-#include "common/boost_addenda/range/adaptor/lexical_casted.h"
-#include "exception/invalid_argument_exception.h"
-#include "structure/residue_name.h"
+#include "common/size_t_literal.hpp"
+#include "common/algorithm/contains.hpp"
+#include "common/algorithm/is_uniq_for_unordered.hpp"
+#include "common/boost_addenda/range/adaptor/lexical_casted.hpp"
+#include "exception/invalid_argument_exception.hpp"
+#include "structure/residue_name.hpp"
 
 #include <set>
 

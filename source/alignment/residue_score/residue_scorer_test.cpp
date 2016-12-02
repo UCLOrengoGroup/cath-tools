@@ -20,8 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "alignment/residue_score/residue_scorer.h"
-#include "test/global_test_constants.h"
+#include "alignment/residue_score/residue_scorer.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace cath;
 using namespace cath::align;

@@ -18,15 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "score_name_helper.h"
+#include "score_name_helper.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 
-#include "common/algorithm/transform_build.h"
-#include "exception/out_of_range_exception.h"
+#include "common/algorithm/transform_build.hpp"
+#include "exception/out_of_range_exception.hpp"
 
 using namespace cath::common;
 using namespace cath::score::detail;

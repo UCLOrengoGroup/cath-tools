@@ -33,10 +33,10 @@
 
 #include <boost/serialization/export.hpp>
 
-#include "common/clone/check_uptr_clone_against_this.h"
-#include "common/clone/clone_ptr.h"
-#include "common/clone/make_uptr_clone.h"
-#include "common/size_t_literal.h"
+#include "common/clone/check_uptr_clone_against_this.hpp"
+#include "common/clone/clone_ptr.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/size_t_literal.hpp"
 
 namespace cath { namespace test { } }
 
