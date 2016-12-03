@@ -37,12 +37,12 @@ namespace cath {
 			class res_pair_from_phi_keyer_part_spec final {
 			public:
 				/// \brief Sanity check the specified cell width
-				static void sanity_check_cell_width(const angle_type &arg_cell_width ///< The cell width to be sanity-checked
-				                                    ) {
+				static angle_type sanity_check_cell_width(const angle_type &arg_cell_width ///< The cell width to be sanity-checked
+				                                          ) {
 					/// \todo Create a `bool is_shifted(const angle &, ...)` helper function for angle and use it here
-					if ( arg_cell_width <= geom::zero_angle<angle_base_type>() || arg_cell_width > geom::one_revolution<angle_base_type>() ) {
-						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot create an angle-based res_pair keyer_part with a cell_width that isn't in ( 0, 2pi ]"));
-					}
+					return ( arg_cell_width <= geom::zero_angle<angle_base_type>() || arg_cell_width > geom::one_revolution<angle_base_type>() )
+						? throw std::logic_error( "Cannot create an angle-based res_pair keyer_part with a cell_width that isn't in ( 0, 2pi ]" )
+						: arg_cell_width;
 				}
 
 				/// \brief Get a short name that describes this key part

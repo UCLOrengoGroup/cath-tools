@@ -70,8 +70,7 @@ namespace cath {
 				constexpr auto operator()(const Tpl &arg_indices, ///< The indices of the cell
 				                          const Tpl &arg_sizes    ///< The dimensions of the lattice
 				                          ) const {
-					constexpr size_t the_tuple_size = std::tuple_size< std::decay_t< Tpl > >::value;
-					static_assert( the_tuple_size > 0, "Can't use tuple_lattice_index on tuple with no elements" );
+					static_assert( std::tuple_size< std::decay_t< Tpl > >::value > 0, "Can't use tuple_lattice_index on tuple with no elements" );
 					return tuple_lattice_index_impl<std::tuple_size< std::decay_t< Tpl > >::value - 1>::fn(
 						arg_indices,
 						arg_sizes

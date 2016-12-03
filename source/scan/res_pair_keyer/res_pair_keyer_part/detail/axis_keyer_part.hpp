@@ -60,8 +60,7 @@ namespace cath {
 			public:
 				/// \brief Ctor from cell_width
 				explicit constexpr axis_keyer_part(const value_t &arg_cell_width ///< The cell width to use in keying this part
-				                                   ) : cell_width( arg_cell_width ) {
-					Spec::sanity_check_cell_width( cell_width );
+				                                   ) : cell_width( Spec::sanity_check_cell_width( arg_cell_width ) ) {
 				}
 
 				/// \brief Get a short name that describes this key part

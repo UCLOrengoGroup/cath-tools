@@ -60,6 +60,16 @@ namespace cath {
 			residue_name pdb_residue_name;
 		};
 
+		/// \brief Make a null dssp_dupl_res
+		inline dssp_dupl_res make_null_dssp_dupl_res() {
+			return {
+				std::make_pair( boost::none, boost::none ),
+				std::make_pair( boost::none, boost::none ),
+				0,
+				residue_name{},
+			};
+		}
+
 		/// \brief Type alias for a vector of dssp_dupl_res
 		using dssp_dupl_res_vec = std::vector<dssp_dupl_res>;
 

@@ -58,8 +58,7 @@ namespace cath {
 			public:
 				/// \brief Ctor from cell_width
 				res_pair_phi_psi_angle_keyer_part(const value_t &arg_cell_width ///< The cell width to use in keying this part
-				                                  ) : cell_width( arg_cell_width ) {
-					F::sanity_check_cell_width( cell_width );
+				                                  ) : cell_width( F::sanity_check_cell_width( arg_cell_width ) ) {
 				}
 
 				/// \brief Get a short name that describes this key part

@@ -35,8 +35,7 @@ namespace cath {
 			template <typename T>
 			inline constexpr auto increment_copy(T arg ///< The value from which a copy should be taken, incremented and returned
 			                                     ) {
-				++arg;
-				return arg;
+				return arg + 1;
 			}
 
 			/// \brief Implementation for tuple_increment

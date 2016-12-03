@@ -52,13 +52,14 @@ namespace cath {
 				constexpr auto operator()(const TplA &arg_tuple_a, ///< The tuple from which the other should be subtracted
 				                          const TplB &arg_tuple_b  ///< The tuple to subtract from the other
 				                          ) const {
-					const size_t tuple_a_size = std::tuple_size< std::decay_t< TplA > >::value;
-					const size_t tuple_b_size = std::tuple_size< std::decay_t< TplB > >::value;
-					static_assert( tuple_a_size == tuple_b_size, "tuple_subtract() can only be used on tuples of equal size" );
+					static_assert(
+						std::tuple_size< std::decay_t< TplA > >::value == std::tuple_size< std::decay_t< TplB > >::value,
+						"tuple_subtract() can only be used on tuples of equal size"
+					);
 					return tuple_subtract_impl(
 						arg_tuple_a,
 						arg_tuple_b,
-						std::make_index_sequence<tuple_a_size>{}
+						std::make_index_sequence<std::tuple_size< std::decay_t< TplA > >::value>{}
 					);
 				}
 			};

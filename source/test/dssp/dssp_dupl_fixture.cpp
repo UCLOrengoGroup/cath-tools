@@ -303,7 +303,7 @@ pair<size_t, dssp_dupl_res> dssp_dupl_fixture::parse_dssp_residue_line(const str
 	// try {
 		const bool dssp_entry_is_null = ( arg_dssp_residue_line.at( 13 ) == '!' );
 		if ( dssp_entry_is_null ) {
-			return { 0_z, dssp_dupl_res{} };
+			return { 0_z, make_null_dssp_dupl_res() };
 		}
 		const size_t seq_res_num  =     stoul( arg_dssp_residue_line.substr(  0, 5)) ;  //   1 -   5    sequential resnumber, including chain breaks as extra residues
 		const string res_name_str = trim_copy( arg_dssp_residue_line.substr(  5, 6)) ;  //   6 -  11    original PDB resname, not nec. sequential, may contain letters

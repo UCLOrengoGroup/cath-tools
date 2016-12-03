@@ -44,11 +44,10 @@ namespace cath {
 				using value_t    = view_base_type;
 
 				/// \brief Sanity check the specified cell width
-				static constexpr void sanity_check_cell_width(const value_t &arg_cell_width ///< The cell width to be sanity-checked
-				                                              ) {
-					if ( arg_cell_width <= 0.0 || arg_cell_width > 16384.0 ) {
-						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot create an axis-based res_pair keyer_part with a cell_width that isn't a sensible, strictly-positive value"));
-					}
+				static constexpr value_t sanity_check_cell_width(const value_t &arg_cell_width ///< The cell width to be sanity-checked
+				                                                 ) {
+					return ( arg_cell_width <= 0.0 || arg_cell_width > 16384.0 ) ? throw std::logic_error( "Cannot create an axis-based res_pair keyer_part with a cell_width that isn't a sensible, strictly-positive value" )
+					                                                             : arg_cell_width;
 				}
 
 				/// \brief Get a short name that describes this key part
