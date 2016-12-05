@@ -23,7 +23,7 @@
 
 #include "common/detail/make_static_const.hpp"
 #include "common/detail/tuple_index_sequence.hpp"
-#include "common/tuple/is_tuple.hpp"
+#include "common/type_traits/is_tuple.hpp"
 
 #include <tuple>
 

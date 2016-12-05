@@ -1331,13 +1331,17 @@ set(
 
 set(
 	TESTSOURCES_COMMON_TUPLE
-		common/tuple/is_tuple_test.cpp
 		common/tuple/tuple_increment_test.cpp
 		common/tuple/tuple_lattice_index_test.cpp
 		common/tuple/tuple_mins_maxs_element_test.cpp
 		common/tuple/tuple_multiply_args_test.cpp
 		common/tuple/tuple_subtract_test.cpp
 		common/tuple/tuple_within_range_test.cpp
+)
+
+set(
+	TESTSOURCES_COMMON_TYPE_TRAITS
+		common/type_traits/is_tuple_test.cpp
 )
 
 set(
@@ -1359,6 +1363,7 @@ set(
 		common/temp_check_offset_1_test.cpp
 		${TESTSOURCES_COMMON_TEST_PREDICATE}
 		${TESTSOURCES_COMMON_TUPLE}
+		${TESTSOURCES_COMMON_TYPE_TRAITS}
 )
 
 set(
