@@ -30,7 +30,7 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename DURN>
 		inline double durn_to_seconds_double(const DURN &arg_duration ///< The duration to convert
-		                                ) {
+		                                     ) {
 			return std::chrono::duration_cast<std::chrono::duration<double>>(
 				arg_duration
 			).count();
