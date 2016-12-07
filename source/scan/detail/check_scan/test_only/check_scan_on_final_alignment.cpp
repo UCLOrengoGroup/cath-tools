@@ -304,12 +304,12 @@ alignment_scan_comparison check_scan_on_final_alignment::do_check(const alignmen
 pair<str_vec, str_vec> check_scan_on_final_alignment::get_rep_name_lists(const protein           &arg_protein,          ///< TODOCUMENT
                                                                          const roled_scan_stride &arg_roled_scan_stride ///< TODOCUMENT
                                                                          ) const {
-//	const auto        &num_residues  = arg_protein.get_length();
-	const auto rep_list_indices      = get_rep_index_lists( arg_roled_scan_stride, numeric_cast<index_type>( arg_protein.get_length() ) );
-	const auto residue_name_of_index = [&] (const index_type &x) { return get_pdb_residue_name_string( arg_protein.get_residue_ref_of_index( x ) ); };
+//	const auto &num_residues        = arg_protein.get_length();
+	const auto  rep_list_indices    = get_rep_index_lists( arg_roled_scan_stride, numeric_cast<index_type>( arg_protein.get_length() ) );
+	const auto  residue_id_of_index = [&] (const index_type &x) { return get_pdb_residue_id_string( arg_protein.get_residue_ref_of_index( x ) ); };
 	return make_pair(
-		transform_build<str_vec>( rep_list_indices.first,  residue_name_of_index ),
-		transform_build<str_vec>( rep_list_indices.second, residue_name_of_index )
+		transform_build<str_vec>( rep_list_indices.first,  residue_id_of_index ),
+		transform_build<str_vec>( rep_list_indices.second, residue_id_of_index )
 	);
 }
 

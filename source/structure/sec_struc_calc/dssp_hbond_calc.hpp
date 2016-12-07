@@ -195,7 +195,7 @@ namespace cath {
 					get_amino_acid( arg_residue_i ).get_letter() != 'P' // Proline has side-chain on N
 				)
 				&&
-				arg_residue_i_prev.get_chain_label() == arg_residue_i.get_chain_label()
+				get_chain_label( arg_residue_i_prev ) == get_chain_label( arg_residue_i )
 			);
 		}
 

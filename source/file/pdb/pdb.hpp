@@ -54,7 +54,7 @@ namespace cath {
 			virtual void do_read_file(const boost::filesystem::path &) override final;
 			virtual void do_append_to_file(const boost::filesystem::path &) const override final;
 			virtual void do_set_chain_label(const chain_label &) override final;
-			virtual residue_name_vec do_get_residue_names_of_first_chain__backbone_unchecked() const override final;
+			virtual residue_id_vec do_get_residue_ids_of_first_chain__backbone_unchecked() const override final;
 			virtual geom::coord do_get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const override final;
 			virtual size_t do_get_num_atoms() const override final;
 
@@ -73,7 +73,7 @@ namespace cath {
 
 			const pdb_residue & get_residue_cref_of_backbone_complete_index(const size_t &) const;
 			geom::coord get_residue_ca_coord_of_backbone_complete_index(const size_t &) const;
-			residue_name_vec get_backbone_complete_residue_names_of_first_chain(const bool & = true) const;
+			residue_id_vec get_backbone_complete_residue_ids_of_first_chain(const bool & = true) const;
 
 			/// \brief TODOCUMENT
 			using const_iterator = pdb_residue_vec::const_iterator;
@@ -99,11 +99,12 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const pdb &);
 
-		geom::doub_angle_doub_angle_pair_vec get_phi_and_psi_angles(const pdb &);
+		geom::doub_angle_doub_angle_pair_vec get_phi_and_psi_angles(const pdb &,
+		                                                            const size_vec &);
 
-		pdb backbone_complete_subset_of_pdb(const pdb &,
-		                                    const ostream_ref_opt & = boost::none,
-		                                    const bool & = false);
+		pdb_size_vec_pair backbone_complete_subset_of_pdb(const pdb &,
+		                                                  const ostream_ref_opt & = boost::none,
+		                                                  const bool & = false);
 
 		protein build_protein_of_pdb(const pdb &,
 		                             const ostream_ref_opt & = boost::none);

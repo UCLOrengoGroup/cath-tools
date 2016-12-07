@@ -163,8 +163,7 @@ ostream & cath::file::write_pdb_file_entry(ostream           &arg_os,     ///< T
 		const pdb_atom &atom = arg_residue.get_atom_cref_of_index(atom_ctr);
 		write_pdb_file_entry(
 			arg_os,
-			arg_residue.get_chain_label(),
-			arg_residue.get_residue_name(),
+			arg_residue.get_residue_id(),
 			atom
 		);
 		arg_os << "\n";
@@ -216,7 +215,7 @@ residue cath::file::build_residue_of_pdb_residue(const pdb_residue &arg_residue,
 
 	// Build a residue object and return it
 	return residue(
-		arg_residue.get_residue_name(),
+		arg_residue.get_residue_id(),
 		get_amino_acid( arg_residue ),
 		ca_coord,
 		cb_coord,
@@ -328,11 +327,11 @@ ostream & cath::file::operator<<(ostream           &arg_os, ///< TODOCUMENT
                                  const pdb_residue &arg_pdb_residue ///< TODOCUMENT
                                  ) {
 	arg_os << "Residue[";
-	arg_os << arg_pdb_residue.get_chain_label();
-	arg_os << ", ";
-	arg_os << arg_pdb_residue.get_residue_name();
-	arg_os << ", ";
-	arg_os << get_carbon_alpha_coord( arg_pdb_residue );
+	arg_os << arg_pdb_residue.get_residue_id();
+	if ( arg_pdb_residue.has_carbon_alpha() ) {
+		arg_os << ", ";
+		arg_os << get_carbon_alpha_coord( arg_pdb_residue );
+	}
 // 	arg_os << ", ";
 // 	arg_os << arg_pdb_residue.get_amino_acid();
 	arg_os << "]";

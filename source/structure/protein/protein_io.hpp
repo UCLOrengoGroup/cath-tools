@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_IO_H
 
 #include <boost/filesystem/path.hpp>
+#include <boost/optional.hpp>
 
 #include "common/type_aliases.hpp"
 
@@ -38,19 +39,20 @@ namespace cath {
 	protein read_protein_from_wolf_and_sec_files(const boost::filesystem::path &,
 	                                             const boost::filesystem::path &,
 	                                             const std::string & = "",
-	                                             std::ostream & = std::cerr);
+	                                             const ostream_ref_opt & = std::ref( std::cerr ) );
 
 	protein read_protein_from_dssp_pdb_and_sec_files(const boost::filesystem::path &,
 	                                                 const boost::filesystem::path &,
 	                                                 const boost::filesystem::path &,
 	                                                 const bool &,
 	                                                 const std::string & = "",
-	                                                 std::ostream & = std::cerr);
+	                                                 const ostream_ref_opt & = std::ref( std::cerr ) );
 
 	protein read_protein_from_dssp_and_pdb(const boost::filesystem::path &,
 	                                       const boost::filesystem::path &,
 	                                       const bool &,
-	                                       const std::string & = "");
+	                                       const std::string & = "",
+	                                       const ostream_ref_opt & = boost::none );
 
 	protein read_protein_from_pdb(const boost::filesystem::path &,
 	                              const std::string & = "",
@@ -59,40 +61,40 @@ namespace cath {
 	protein protein_from_wolf_and_sec(const file::wolf_file &,
 	                                  const file::sec_file &,
 	                                  const std::string & = "",
-	                                  std::ostream & = std::cerr);
+	                                  const ostream_ref_opt & = std::ref( std::cerr ) );
 
 	protein protein_from_dssp_pdb_and_sec(const file::dssp_file &,
 	                                      const file::pdb &,
 	                                      const file::sec_file &,
 	                                      const bool &,
 	                                      const std::string & = "",
-	                                      std::ostream & = std::cerr);
+	                                      const ostream_ref_opt & = std::ref( std::cerr ) );
 
 	void add_name_and_paint_sec_file_onto_protein(protein &,
 	                                              const file::sec_file &,
 	                                              const std::string & = "",
-	                                              std::ostream & = std::cerr);
+	                                              const ostream_ref_opt & = std::ref( std::cerr ) );
 
 	protein add_name_and_paint_sec_file_onto_protein_copy(protein,
 	                                                      const file::sec_file &,
 	                                                      const std::string & = "",
-	                                                      std::ostream & = std::cerr);
+	                                                      const ostream_ref_opt & = std::ref( std::cerr ) );
 
 	void paint_sec_file_onto_protein(protein &,
 	                                 const file::sec_file &,
-	                                 std::ostream &);
+	                                 const ostream_ref_opt &);
 
 	protein paint_sec_file_onto_protein_copy(protein,
 	                                         const file::sec_file &,
-	                                         std::ostream &);
+	                                         const ostream_ref_opt &);
 
 	void remove_domin_res(protein &,
 	                      const boost::filesystem::path &,
-	                      std::ostream &);
+	                      const ostream_ref_opt &);
 
 	void remove_domin_res(protein &,
 	                      const size_size_pair_vec &,
-	                      std::ostream &);
+	                      const ostream_ref_opt &);
 } // namespace cath
 
 #endif

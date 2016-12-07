@@ -1,5 +1,5 @@
 /// \file
-/// \brief The pymol_viewer_test test suite
+/// \brief The residue_id test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -20,19 +20,20 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "display/viewer/pymol_viewer.hpp"
-#include "structure/residue_id.hpp"
+#include "residue_id.hpp"
 
 using namespace cath;
 
-BOOST_AUTO_TEST_SUITE(pymol_viewer_test_suite)
+BOOST_AUTO_TEST_SUITE(residue_id_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL(
-		pymol_viewer{}.get_colour_pdb_residues_str( "red", "1cukA", { make_residue_id( 'A', 1 ),
-		                                                              make_residue_id( 'A', 2 ) } ),
-		"colour red, /1cukA//A/1+2/\n"
-	);
-}
-BOOST_AUTO_TEST_SUITE_END()
+	BOOST_CHECK_EQUAL( to_string( make_residue_id( 'A'          ) ), "A:null_res" );
+	BOOST_CHECK_EQUAL( to_string( make_residue_id( 'A', -5      ) ), "A:-5"       );
+	BOOST_CHECK_EQUAL( to_string( make_residue_id( 'A', -5, 'A' ) ), "A:-5A"      );
 
+	BOOST_CHECK_EQUAL( make_residue_id( 'A'          ), make_residue_id( 'A'          ) );
+	BOOST_CHECK_EQUAL( make_residue_id( 'A', -5      ), make_residue_id( 'A', -5      ) );
+	BOOST_CHECK_EQUAL( make_residue_id( 'A', -5, 'A' ), make_residue_id( 'A', -5, 'A' ) );
+}
+
+BOOST_AUTO_TEST_SUITE_END()

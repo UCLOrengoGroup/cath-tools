@@ -50,14 +50,14 @@ namespace cath {
 		                                          const std::string &) const override final;
 		virtual std::string do_get_colour_pdb_residues_str(const std::string &,
 		                                                   const std::string &,
-		                                                   const residue_name_vec &) const override final;
+		                                                   const residue_id_vec &) const override final;
 		virtual void do_write_alignment_extras(std::ostream &,
 		                                       const sup::superposition_context &) const override final;
 		virtual void do_write_end(std::ostream &) const override final;
 
 	public:
-		static std::string parse_residue_name_for_chimera(const residue_name &);
-		static str_vec parse_residue_names_for_chimera(const residue_name_vec &);
+		static std::string parse_residue_id_for_chimera(const residue_id &);
+		static str_vec parse_residue_ids_for_chimera(const residue_id_vec &);
 
 		/// \brief TODOCUMENT
 		static constexpr size_t RESIDUE_BATCH_SIZE = 200;

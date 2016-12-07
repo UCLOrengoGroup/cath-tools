@@ -82,19 +82,20 @@ string cath::file::get_amino_acid_name(const pdb_atom &arg_pdb_atom ///< The pdb
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_atom
-ostream & cath::file::write_pdb_file_entry(ostream            &arg_os,          ///< TODOCUMENT
-                                           const chain_label  &arg_chain_label, ///< TODOCUMENT
-                                           const residue_name &arg_res_name,    ///< TODOCUMENT
-                                           const pdb_atom     &arg_pdb_atom     ///< TODOCUMENT
+ostream & cath::file::write_pdb_file_entry(ostream          &arg_os,      ///< TODOCUMENT
+                                           const residue_id &arg_res_id,  ///< TODOCUMENT
+                                           const pdb_atom   &arg_pdb_atom ///< TODOCUMENT
                                            ) {
 	// Sanity check the inputs
-	if ( arg_res_name.get_is_null_residue_name() ) {
+	if ( arg_res_id.get_residue_name().is_null() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Empty residue_name in cath::write_pdb_file_entry()"));
 	}
 
 	// Grab the necessary data
-	const coord  atom_coord = arg_pdb_atom.get_coord();
-	const string residue_name_with_insert_or_space = make_residue_name_string_with_insert_or_space( arg_res_name );
+	const coord  atom_coord                        = arg_pdb_atom.get_coord();
+	const string residue_name_with_insert_or_space = make_residue_name_string_with_insert_or_space(
+		arg_res_id.get_residue_name()
+	);
 
 	// Output the entry to a temporary ostringstream
 	// (to avoid needlessly messing around with the formatting options of the ostream)
@@ -110,7 +111,7 @@ ostream & cath::file::write_pdb_file_entry(ostream            &arg_os,          
 	atom_ss <<              arg_pdb_atom.get_alt_locn();               // 17             Character     altLoc       Alternate location indicator.
 	atom_ss <<              get_amino_acid_code( arg_pdb_atom );       // 18 - 20        Residue name  resName      Residue name.
 	atom_ss << " ";
-	atom_ss << arg_chain_label;                                        // 22             Character     chainID      Chain identifier.
+	atom_ss << arg_res_id.get_chain_label();                           // 22             Character     chainID      Chain identifier.
 	                                                                   // 23 - 26        Integer       resSeq       Residue sequence number.
 	atom_ss << setw( 5 ) << residue_name_with_insert_or_space;         // 27             AChar         iCode        Code for insertion of residues.
 	atom_ss << "   ";

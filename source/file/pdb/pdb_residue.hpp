@@ -32,7 +32,7 @@
 #include "file/file_type_aliases.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "structure/chain_label.hpp"
-#include "structure/residue_name.hpp"
+#include "structure/residue_id.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 #include <vector>
@@ -56,11 +56,8 @@ namespace cath {
 		/// not be reproduced when outputting the pdb.
 		class pdb_residue final : boost::additive<pdb_residue, geom::coord> {
 		private:
-			/// \brief The residue's chain label
-			chain_label  the_chain_label;
-
 			/// \brief The name of the residue
-			residue_name the_residue_name;
+			residue_id   the_residue_id;
 
 			/// \brief The pdb_atoms making up this residue
 			pdb_atom_vec atoms;
@@ -77,16 +74,13 @@ namespace cath {
 			/// \brief Type alias for the const_iterator type for the range of atoms
 			using const_iterator = pdb_atom_vec::const_iterator;
 
-			pdb_residue(const chain_label &,
-			            const residue_name &,
+			pdb_residue(const residue_id &,
 			            const pdb_atom_vec &);
 
-			pdb_residue(const chain_label &,
-			            const residue_name &,
+			pdb_residue(const residue_id &,
 			            pdb_atom_vec &&);
 
-			chain_label get_chain_label() const;
-			residue_name get_residue_name() const;
+			const residue_id & get_residue_id() const;
 			bool empty() const;
 			size_t get_num_atoms() const;
 			const pdb_atom & get_atom_cref_of_index(const size_t &) const;
@@ -112,6 +106,9 @@ namespace cath {
 			const_iterator begin() const;
 			const_iterator end() const;
 		};
+
+		const chain_label & get_chain_label(const pdb_residue &);
+		const residue_name & get_residue_name(const pdb_residue &);
 
 		const geom::coord & get_nitrogen_coord(const pdb_residue &);
 		const geom::coord & get_carbon_alpha_coord(const pdb_residue &);
@@ -199,33 +196,24 @@ namespace cath {
 		}
 
 		/// \brief Ctor for pdb_residue
-		inline pdb_residue::pdb_residue(const chain_label  &arg_chain_label,  ///< The residue's chain label
-		                                const residue_name &arg_residue_name, ///< The name of the residue
-		                                const pdb_atom_vec &arg_atoms         ///< The pdb_atoms making up this residue
-		                                ) : the_chain_label  ( arg_chain_label                 ),
-		                                    the_residue_name ( arg_residue_name                ),
+		inline pdb_residue::pdb_residue(const residue_id   &arg_residue_id, ///< The name of the residue
+		                                const pdb_atom_vec &arg_atoms       ///< The pdb_atoms making up this residue
+		                                ) : the_residue_id   ( arg_residue_id                  ),
 		                                    atoms            ( arg_atoms                       ),
 		                                    core_atom_indices( make_core_atom_indices( atoms ) ) {
 		}
 
 		/// \brief Ctor for pdb_residue
-		inline pdb_residue::pdb_residue(const chain_label   &arg_chain_label,  ///< The residue's chain label
-		                                const residue_name  &arg_residue_name, ///< The name of the residue
-		                                pdb_atom_vec       &&arg_atoms         ///< The pdb_atoms making up this residue
-		                                ) : the_chain_label  ( arg_chain_label                 ),
-		                                    the_residue_name ( arg_residue_name                ),
+		inline pdb_residue::pdb_residue(const residue_id  &arg_residue_id, ///< The name of the residue
+		                                pdb_atom_vec     &&arg_atoms       ///< The pdb_atoms making up this residue
+		                                ) : the_residue_id   ( arg_residue_id                  ),
 		                                    atoms            ( std::move( arg_atoms )          ),
 		                                    core_atom_indices( make_core_atom_indices( atoms ) ) {
 		}
 
-		/// \brief Getter for the chain label
-		inline chain_label pdb_residue::get_chain_label() const {
-			return the_chain_label;
-		}
-
 		/// \brief Getter for the residue name
-		inline residue_name pdb_residue::get_residue_name() const {
-			return the_residue_name;
+		inline const residue_id & pdb_residue::get_residue_id() const {
+			return the_residue_id;
 		}
 
 		/// \brief Return whether the pdb_residue is empty (ie contains no pdb_atom entries)
@@ -307,7 +295,7 @@ namespace cath {
 		/// \brief Setter for the chain label
 		inline pdb_residue & pdb_residue::set_chain_label(const chain_label &arg_chain_label ///< The new chain label to set
 		                                                  ) {
-			the_chain_label = arg_chain_label;
+			the_residue_id = residue_id{ arg_chain_label, get_residue_name( *this ) };
 			return *this;
 		}
 
@@ -346,6 +334,18 @@ namespace cath {
 		/// \brief Standard const end() method for the range of pdb_atoms
 		inline auto pdb_residue::end() const -> const_iterator {
 			return common::cend  ( atoms );
+		}
+
+		/// \brief Get the chain_label from the specified pdb_residue
+		inline const chain_label & get_chain_label(const pdb_residue &arg_pdb_residue ///< The residue to query
+		                                           ) {
+			return arg_pdb_residue.get_residue_id().get_chain_label();
+		}
+
+		/// \brief Get the residue_name from the specified pdb_residue
+		inline const residue_name & get_residue_name(const pdb_residue &arg_pdb_residue ///< The residue to query
+		                                             ) {
+			return arg_pdb_residue.get_residue_id().get_residue_name();
 		}
 
 		/// \brief Get the coord for the specified residue's nitrogen atom

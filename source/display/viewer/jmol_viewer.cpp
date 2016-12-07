@@ -61,7 +61,7 @@ string jmol_viewer::do_get_colour_pdb_str(const string &,
 /// \brief TODOCUMENT
 string jmol_viewer::do_get_colour_pdb_residues_str(const string &,
                                                    const string &,
-                                                   const residue_name_vec &) const {
+                                                   const residue_id_vec &) const {
 	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_viewer::do_colour_pdb_residues"));
 }
 

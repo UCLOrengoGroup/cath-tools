@@ -70,7 +70,7 @@ namespace cath {
 			virtual void do_read_file(const boost::filesystem::path &) override final;
 			virtual void do_append_to_file(const boost::filesystem::path &) const override final;
 			virtual void do_set_chain_label(const chain_label &) override final;
-			virtual residue_name_vec do_get_residue_names_of_first_chain__backbone_unchecked() const override final;
+			virtual residue_id_vec do_get_residue_ids_of_first_chain__backbone_unchecked() const override final;
 			virtual geom::coord do_get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const override final;
 			virtual size_t do_get_num_atoms() const override final;
 

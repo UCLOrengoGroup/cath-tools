@@ -21,7 +21,7 @@
 #include "pdb_base.hpp"
 
 #include "structure/geometry/coord.hpp"
-#include "structure/residue_name.hpp"
+#include "structure/residue_id.hpp"
 
 using namespace boost::filesystem;
 using namespace cath;
@@ -52,8 +52,8 @@ void pdb_base::set_chain_label(const chain_label &arg_chain_label ///< TODOCUMEN
 }
 
 /// \brief An NVI pass-through to the virtual do_rotate()
-residue_name_vec pdb_base::get_residue_names_of_first_chain__backbone_unchecked() const {
-	return do_get_residue_names_of_first_chain__backbone_unchecked();
+residue_id_vec pdb_base::get_residue_ids_of_first_chain__backbone_unchecked() const {
+	return do_get_residue_ids_of_first_chain__backbone_unchecked();
 }
 
 /// \brief An NVI pass-through to the virtual do_rotate()

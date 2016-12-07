@@ -105,8 +105,8 @@ const path & global_test_constants::TEST_MULTI_SSAP_SUPERPOSE_DIR() {
 }
 
 /// \brief TODOCUMENT
-const path & global_test_constants::TEST_RESIDUE_NAMES_DATA_DIR() {
-	static const path test_residue_names_data_dir   ( TEST_SOURCE_DATA_DIR() / "residue_names"   );
+const path & global_test_constants::TEST_RESIDUE_IDS_DATA_DIR() {
+	static const path test_residue_names_data_dir   ( TEST_SOURCE_DATA_DIR() / "residue_ids"   );
 	return test_residue_names_data_dir;
 }
 

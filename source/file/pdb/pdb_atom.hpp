@@ -37,7 +37,7 @@
 #include "structure/chain_label.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/protein/amino_acid.hpp"
-#include "structure/residue_name.hpp"
+#include "structure/residue_id.hpp"
 
 #include <iosfwd>
 namespace cath { namespace geom { class rotation; } }
@@ -105,8 +105,7 @@ namespace cath {
 		                           const pdb_record &);
 
 		std::ostream & write_pdb_file_entry(std::ostream &,
-		                                    const chain_label &,
-		                                    const residue_name &,
+		                                    const residue_id &,
 		                                    const pdb_atom &);
 		bool alt_locn_is_dssp_accepted(const pdb_atom &);
 		std::ostream & operator<<(std::ostream &,
@@ -316,9 +315,9 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates pdb_atom
-		inline chain_resname_atom_tuple parse_pdb_atom_record(const std::string &arg_pdb_atom_record_string, ///< TODOCUMENT
-		                                                      const amino_acid  &arg_amino_acid
-		                                                      ) {
+		inline resid_atom_pair parse_pdb_atom_record(const std::string &arg_pdb_atom_record_string, ///< TODOCUMENT
+		                                             const amino_acid  &arg_amino_acid
+		                                             ) {
 			if ( isspace( arg_pdb_atom_record_string.at( 25 ) ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("PDB ATOM/HETATOM record malformed: space found in column 26 which should contain the end of a right justified residue number"));
 			}
@@ -342,9 +341,11 @@ namespace cath {
 		//		const std::string      element     =                           trim_copy( arg_pdb_atom_record_string.substr( 76, 3 ));  // 77 - 78        LString(2)    element      Element symbol, right-justified.
 		//		const std::string      charge      =                           trim_copy( arg_pdb_atom_record_string.substr( 78, 2 ));  // 79 - 80        LString(2)    charge       Charge  on the atom.
 
-				return std::make_tuple(
-					chain_label( chain_char ),
-					make_residue_name_with_non_insert_char( res_num, insert_code, ' ' ),
+				return {
+					residue_id{
+						chain_label( chain_char ),
+						make_residue_name_with_non_insert_char( res_num, insert_code, ' ' )
+					},
 					pdb_atom(
 						record_type,
 						serial,
@@ -355,7 +356,7 @@ namespace cath {
 						occupancy,
 						temp_factor
 					)
-				);
+				};
 			}
 			catch (const boost::bad_lexical_cast &) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to cast a column whilst parsing a PDB ATOM record, which probably means it's malformed.\nRecord was \"" + arg_pdb_atom_record_string + "\""));
@@ -371,8 +372,8 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates pdb_atom
-		inline chain_resname_atom_tuple parse_pdb_atom_record(const std::string &arg_pdb_atom_record_string ///< TODOCUMENT
-		                                                      ) {
+		inline resid_atom_pair parse_pdb_atom_record(const std::string &arg_pdb_atom_record_string ///< TODOCUMENT
+		                                             ) {
 			return parse_pdb_atom_record(
 				arg_pdb_atom_record_string,
 				parse_amino_acid_from_pdb_atom_record( arg_pdb_atom_record_string )

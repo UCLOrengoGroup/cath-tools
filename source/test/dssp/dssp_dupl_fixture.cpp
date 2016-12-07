@@ -185,7 +185,7 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &arg_dssp_dupl_res_
 		irange( 0_z, num_dssp_dupl_res )
 			| filtered(
 				[&] (const size_t &x) {
-					return ! arg_dssp_dupl_res_vec[ x ].pdb_residue_name.get_is_null_residue_name();
+					return ! arg_dssp_dupl_res_vec[ x ].pdb_residue_name.is_null();
 				}
 			)
 	);

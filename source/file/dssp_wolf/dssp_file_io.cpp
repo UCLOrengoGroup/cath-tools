@@ -103,10 +103,9 @@ dssp_file cath::file::read_dssp(istream &arg_istream ///< The istream from which
 //		}
 
 //		cerr << "Parse residue " << residue_ctr << " from \"" << dssp_residue_line << "\"" << endl;
-		const size_chain_residue_tuple  residue_details      = parse_dssp_residue_line( dssp_residue_line );
-		const size_t                   &parsed_residue_index = get<0>( residue_details );
-		const chain_label              &the_chain_label      = get<1>( residue_details );
-		const residue                  &parsed_residue       = get<2>( residue_details );
+		const size_residue_pair  residue_details      = parse_dssp_residue_line( dssp_residue_line );
+		const size_t            &parsed_residue_index = residue_details.first;
+		const residue           &parsed_residue       = residue_details.second;
 
 		if ( ! dssp_entry_is_null && parsed_residue_index != residue_ctr ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Error in DSSP sequential residue numbers"));
@@ -119,12 +118,10 @@ dssp_file cath::file::read_dssp(istream &arg_istream ///< The istream from which
 		const bool this_is_not_null = ! dssp_entry_is_null;
 		const bool has_prev         = ! new_residues.empty();
 		const bool prev_is_not_null = ( has_prev && ! is_null_residue( new_residues.back() ) );
-		if ( this_is_not_null && prev_is_not_null && new_residues.back().get_pdb_residue_name() == parsed_residue.get_pdb_residue_name() ) {
+		if ( this_is_not_null && prev_is_not_null && new_residues.back().get_pdb_residue_id() == parsed_residue.get_pdb_residue_id() ) {
 			BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing DSSP file, found conflicting consecutive entries for residue \""
-				<< parsed_residue.get_pdb_residue_name()
-				<< "\" on chain '"
-				<< the_chain_label
-				<< "' (with amino acids \""
+				<< parsed_residue.get_pdb_residue_id()
+				<< "\" (with amino acids \""
 				<< new_residues.back().get_amino_acid().get_code()
 				<< "\" and then \""
 				<< parsed_residue.get_amino_acid().get_code()
@@ -140,12 +137,12 @@ dssp_file cath::file::read_dssp(istream &arg_istream ///< The istream from which
 }
 
 /// \brief TODOCUMENT
-size_chain_residue_tuple cath::file::parse_dssp_residue_line(const string &arg_dssp_residue_line ///< The DSSP residue line to parse
-                                                             ) {
+size_residue_pair cath::file::parse_dssp_residue_line(const string &arg_dssp_residue_line ///< The DSSP residue line to parse
+                                                      ) {
 	try {
 		const bool dssp_entry_is_null = ( arg_dssp_residue_line.at( 13 ) == '!' );
 		if ( dssp_entry_is_null ) {
-			return make_tuple( 0_z, chain_label( ' ' ), residue::NULL_RESIDUE );
+			return { 0_z, residue::NULL_RESIDUE };
 		}
 		                                                                                         // Comments with DSSP format documentation
 		                                                                                         // (http://swift.cmbi.ru.nl/gv/dssp/)
@@ -175,8 +172,8 @@ size_chain_residue_tuple cath::file::parse_dssp_residue_line(const string &arg_d
 		const double        carbon_a_y     =      stod( arg_dssp_residue_line.substr(122, 7)) ;  // 123 - 129    echo of Ca atom coordinates
 		const double        carbon_a_z     =      stod( arg_dssp_residue_line.substr(129, 7)) ;  // 130 - 136    echo of Ca atom coordinates
 
-		// Parse the residue name string into a residue_name
-		const residue_name res_name = make_residue_name( res_name_str );
+		// Parse the residue name string into a residue_id
+		const residue_id res_id{ chain_label( chain_char ), make_residue_name( res_name_str ) };
 
 		// Convert the DSSP secondary structure summary code into a sec_struc_type
 		const sec_struc_type sec_struc = sstruc_code == 'H' ? sec_struc_type::ALPHA_HELIX
@@ -211,11 +208,11 @@ size_chain_residue_tuple cath::file::parse_dssp_residue_line(const string &arg_d
 		const auto shifted_phi = make_angle_from_degrees<double>( round( phi_in_degrees > 0 ? phi_in_degrees : 360.0 + phi_in_degrees) );
 		const auto shifted_psi = make_angle_from_degrees<double>( round( psi_in_degrees > 0 ? psi_in_degrees : 360.0 + psi_in_degrees) );
 
-		return make_tuple(
+		return {
 			seq_res_num,
-			chain_label( chain_char ),
+			
 			residue(
-				res_name,
+				res_id,
 				amino_acid(amino_acid_c),
 				coord( carbon_a_x, carbon_a_y, carbon_a_z ),
 				coord::ORIGIN_COORD,
@@ -226,7 +223,7 @@ size_chain_residue_tuple cath::file::parse_dssp_residue_line(const string &arg_d
 				shifted_psi,
 				solv_access
 			)
-		);
+		};
 	}
 	catch ( const boost::bad_lexical_cast & ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to cast a column whilst parsing a DSSP residue record.\nRecord was \"" + arg_dssp_residue_line + "\""));

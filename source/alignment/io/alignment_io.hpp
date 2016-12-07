@@ -61,8 +61,8 @@ namespace cath {
 		                                                      std::ostream & = std::cerr);
 
 		alignment read_alignment_from_cath_ssap_legacy_format(std::istream &,
-		                                                      const residue_name_vec &,
-		                                                      const residue_name_vec &,
+		                                                      const residue_id_vec &,
+		                                                      const residue_id_vec &,
 		                                                      std::ostream & = std::cerr);
 
 		alignment read_alignment_from_cath_cora_legacy_format(std::istream &,
@@ -109,11 +109,11 @@ namespace cath {
 		                                    const str_vec &,
 		                                    std::ostream & = std::cerr);
 
-		aln_posn_opt search_for_residue_in_residue_names(const size_t &,
-		                                                 const residue_name_vec &,
-		                                                 const char &,
-		                                                 const residue_name &,
-		                                                 std::ostream & = std::cerr);
+		aln_posn_opt search_for_residue_in_residue_ids(const size_t &,
+		                                               const residue_id_vec &,
+		                                               const char &,
+		                                               const residue_name &,
+		                                               std::ostream & = std::cerr);
 
 		void write_alignment_as_cath_ssap_legacy_format(const boost::filesystem::path &,
 		                                                const alignment &,

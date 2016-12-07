@@ -111,9 +111,9 @@ string viewer::get_colour_pdb_str(const string &arg_colour_name, ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-string viewer::get_colour_pdb_residues_str(const string           &arg_colour_name, ///< TODOCUMENT
-                                           const string           &arg_pdb_name,    ///< TODOCUMENT
-                                           const residue_name_vec &arg_residues     ///< TODOCUMENT
+string viewer::get_colour_pdb_residues_str(const string         &arg_colour_name, ///< TODOCUMENT
+                                           const string         &arg_pdb_name,    ///< TODOCUMENT
+                                           const residue_id_vec &arg_residues     ///< TODOCUMENT
                                            ) const {
 	return do_get_colour_pdb_residues_str( arg_colour_name, arg_pdb_name, arg_residues );
 }

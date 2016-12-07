@@ -95,17 +95,17 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &arg_
 	const str_vec        names             = clean_names_for_viewer( arg_superposition_context );
 	
 	// Grab some basic details
-	const alignment::size_type num_entries   = min( the_alignment.num_entries(), names.size() );
-	const alignment::size_type aln_length    = the_alignment.length();
-	const residue_name_vec_vec residue_names = get_backbone_complete_residue_names_of_first_chains( pdbs );
+	const alignment::size_type num_entries = min( the_alignment.num_entries(), names.size() );
+	const alignment::size_type aln_length  = the_alignment.length();
+	const residue_id_vec_vec   residue_ids = get_backbone_complete_residue_ids_of_first_chains( pdbs );
 
 	for (size_t entry_ctr_a = 0; entry_ctr_a < num_entries; ++entry_ctr_a) {
-		const string           &name_a          = names        [ entry_ctr_a ];
-		const residue_name_vec &residue_names_a = residue_names[ entry_ctr_a ];
+		const string         &name_a        = names      [ entry_ctr_a ];
+		const residue_id_vec &residue_ids_a = residue_ids[ entry_ctr_a ];
 
 		for (size_t entry_ctr_b = entry_ctr_a+1; entry_ctr_b < num_entries; ++entry_ctr_b) {
-			const string           &name_b          = names        [ entry_ctr_b ];
-			const residue_name_vec &residue_names_b = residue_names[ entry_ctr_b ];
+			const string         &name_b        = names      [ entry_ctr_b ];
+			const residue_id_vec &residue_ids_b = residue_ids[ entry_ctr_b ];
 
 			bool added_pair_distances(false);
 			for (alignment::size_type aln_posn_ctr = 0; aln_posn_ctr < aln_length; ++aln_posn_ctr) {
@@ -113,33 +113,33 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &arg_
 				const aln_posn_opt position_b = the_alignment.position_of_entry_of_index( entry_ctr_b, aln_posn_ctr );
 				if ( position_a && position_b) {
 					added_pair_distances = true;
-					if ( *position_a >= residue_names_a.size() ) {
+					if ( *position_a >= residue_ids_a.size() ) {
 						BOOST_THROW_EXCEPTION(invalid_argument_exception(
 							"Whilst adding alignment extras in pymol_viewer, residue index "
 							+ lexical_cast<string>( *position_a )
 							+ " is out of range "
-							+ lexical_cast<string>(residue_names_a.size())
+							+ lexical_cast<string>(residue_ids_a.size())
 						));
 					}
-					if ( *position_b >= residue_names_b.size()) {
+					if ( *position_b >= residue_ids_b.size()) {
 						BOOST_THROW_EXCEPTION(invalid_argument_exception(
 							"Whilst adding alignment extras in pymol_viewer, residue index "
 							+ lexical_cast<string>( *position_b )
 							+ " is out of range "
-							+ lexical_cast<string>(residue_names_b.size())
+							+ lexical_cast<string>(residue_ids_b.size())
 						));
 					}
-					const residue_name &residue_name_a = residue_names_a[ *position_a ];
-					const residue_name &residue_name_b = residue_names_b[ *position_b ];
+					const residue_id &residue_id_a = residue_ids_a[ *position_a ];
+					const residue_id &residue_id_b = residue_ids_b[ *position_b ];
 
 					arg_os << "distance "
 						+ name_a
 						+ "_"
 						+ name_b
 						+ "_alignment, "
-						+ pymol_tools::pymol_res_seln_str( name_a, { residue_name_a }, "CA"s )
+						+ pymol_tools::pymol_res_seln_str( name_a, { residue_id_a }, "CA"s )
 						+ ", "
-						+ pymol_tools::pymol_res_seln_str( name_b, { residue_name_b }, "CA"s )
+						+ pymol_tools::pymol_res_seln_str( name_b, { residue_id_b }, "CA"s )
 						+ "\n";
 				}
 			}
@@ -180,9 +180,9 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 	const str_vec        names             = clean_names_for_viewer( arg_superposition_context );
 	
 	// Grab some basic details
-	const alignment::size_type num_entries   = min( the_alignment.num_entries(), names.size() );
-	const alignment::size_type aln_length    = the_alignment.length();
-	const residue_name_vec_vec residue_names = get_backbone_complete_residue_names_of_first_chains( pdbs );
+	const alignment::size_type num_entries = min( the_alignment.num_entries(), names.size() );
+	const alignment::size_type aln_length  = the_alignment.length();
+	const residue_id_vec_vec   residue_ids = get_backbone_complete_residue_ids_of_first_chains( pdbs );
 
 	/// ???
 	bool added_distances(false);
@@ -238,8 +238,8 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 			const aln_posn_type  res_index_b = get_position_of_entry_of_index( the_alignment, entry_b, aln_index );
 			const string        &name_a      = names    [ entry_a ];
 			const string        &name_b      = names    [ entry_b ];
-			const residue_name  &res_name_a  = residue_names[ entry_a ][ res_index_a ];
-			const residue_name  &res_name_b  = residue_names[ entry_b ][ res_index_b ];
+			const residue_id    &res_name_a  = residue_ids[ entry_a ][ res_index_a ];
+			const residue_id    &res_name_b  = residue_ids[ entry_b ][ res_index_b ];
 
 			arg_os << "distance alignment, "
 				+ pymol_tools::pymol_res_seln_str( name_a, { res_name_a }, "CA"s )
@@ -256,21 +256,21 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 	if ( the_alignment.is_scored() ) {
 		using bool_str_str_vec_map_pair = pair<bool, str_str_vec_map>;
 		using bool_str_str_vec_map_map = map <bool, str_str_vec_map>;
-		bool_str_str_vec_map_map core_res_names_of_entry_name;
+		bool_str_str_vec_map_map core_res_ids_of_entry_name;
 		const alignment_residue_scores &the_scores = the_alignment.get_alignment_residue_scores();
 		for (size_t entry = 0; entry < num_entries; ++entry) {
 			const string &entry_name = names[ entry ];
 			for (alignment::size_type index = 0; index < aln_length; ++index) {
 				if ( has_score( the_scores, entry, index ) ) {
-					const float_score_type  the_score  = get_score( the_scores, entry, index, true, true );
-					const bool              is_core    = ( the_score > 0.25 );
-					const aln_posn_type     the_posn   = get_position_of_entry_of_index( the_alignment, entry, index );
-					const residue_name     &res_name   = residue_names[ entry ][ the_posn ];
-					core_res_names_of_entry_name[ is_core ][ entry_name ].push_back( pymol_tools::parse_residue_name_for_pymol( res_name ) );
+					const float_score_type  the_score = get_score( the_scores, entry, index, true, true );
+					const bool              is_core   = ( the_score > 0.25 );
+					const aln_posn_type     the_posn  = get_position_of_entry_of_index( the_alignment, entry, index );
+					const residue_id       &res_id    = residue_ids[ entry ][ the_posn ];
+					core_res_ids_of_entry_name[ is_core ][ entry_name ].push_back( pymol_tools::parse_residue_name_for_pymol( res_id.get_residue_name() ) );
 				}
 			}
 		}
-		for (const bool_str_str_vec_map_pair &core_data : core_res_names_of_entry_name) {
+		for (const bool_str_str_vec_map_pair &core_data : core_res_ids_of_entry_name) {
 			const bool            &is_core                 = core_data.first;
 			const string           core_name               = ( is_core ? "core" : "noncore" );
 			const str_str_vec_map &res_names_of_entry_name = core_data.second;
@@ -373,11 +373,11 @@ string pymol_viewer::do_get_colour_pdb_str(const string &arg_colour_name, ///< T
 ///
 /// This splits the list of residues into batches of RESIDUE_BATCH_SIZE
 /// because PyMOL just ignores a list of residues that's too long
-string pymol_viewer::do_get_colour_pdb_residues_str(const string           &arg_colour_name,  ///< TODOCUMENT
-                                                    const string           &arg_pdb_name,     ///< TODOCUMENT
-                                                    const residue_name_vec &arg_residue_names ///< TODOCUMENT
+string pymol_viewer::do_get_colour_pdb_residues_str(const string         &arg_colour_name, ///< TODOCUMENT
+                                                    const string         &arg_pdb_name,    ///< TODOCUMENT
+                                                    const residue_id_vec &arg_residue_ids  ///< TODOCUMENT
                                                     ) const {
-	const size_t num_res_names   = arg_residue_names.size();
+	const size_t num_res_names   = arg_residue_ids.size();
 	const size_t num_res_batches = num_batches( num_res_names, RESIDUE_BATCH_SIZE, broken_batch_tol::PERMIT );
 	return "colour " + arg_colour_name + ", "
 		+ join(
@@ -386,8 +386,8 @@ string pymol_viewer::do_get_colour_pdb_residues_str(const string           &arg_
 				[&] (const size_t &batch_idx) {
 					return pymol_tools::pymol_res_seln_str(
 						arg_pdb_name,
-						copy_build<residue_name_vec>(
-							batch_subrange( arg_residue_names, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT )
+						copy_build<residue_id_vec>(
+							batch_subrange( arg_residue_ids, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT )
 						)
 					);
 				}

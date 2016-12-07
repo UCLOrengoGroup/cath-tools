@@ -50,13 +50,12 @@ namespace cath {
 			void check_parse_and_write_pdb_atom(const string &arg_input_string
 		// 	                                    const size_t &arg_atom_index
 			                                    ) {
-				const chain_resname_atom_tuple parsed_details( parse_pdb_atom_record( arg_input_string ) );
+				const resid_atom_pair parsed_details( parse_pdb_atom_record( arg_input_string ) );
 				ostringstream pdb_atom_ss;
 				write_pdb_file_entry(
 					pdb_atom_ss,
-					get<0>( parsed_details ),
-					get<1>( parsed_details ),
-					get<2>( parsed_details )
+					parsed_details.first,
+					parsed_details.second
 				);
 				if (arg_input_string != pdb_atom_ss.str()) {
 					cerr << endl;
@@ -74,10 +73,10 @@ BOOST_FIXTURE_TEST_SUITE(pdb_atom_test_suite, cath::test::pdb_atom_test_suite_fi
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(parse_from_simple_line) {
-	const chain_resname_atom_tuple parsed_details( parse_pdb_atom_record(
+	const resid_atom_pair parsed_details( parse_pdb_atom_record(
 		ATOM_RECORD_SIMPLE
 	) );
-	const pdb_atom &my_atom( get<2>( parsed_details ) );
+	const pdb_atom &my_atom( parsed_details.second );
 
 	BOOST_CHECK_EQUAL(   0.041, my_atom.get_coord().get_x() );
 	BOOST_CHECK_EQUAL( 148.800, my_atom.get_coord().get_y() );

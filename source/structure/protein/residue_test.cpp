@@ -45,7 +45,7 @@ namespace cath {
 
 		public:
 			residue get_residue_with_insert_without_ss() {
-				return residue( residue_name( 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), residue::DEFAULT_PHI_PSI(), residue::DEFAULT_PHI_PSI(), 0 );
+				return residue( make_residue_id( 'A', 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), residue::DEFAULT_PHI_PSI(), residue::DEFAULT_PHI_PSI(), 0 );
 			}
 
 			/// \brief A valine amino acid, used as the standard AA in the tests
@@ -74,11 +74,11 @@ BOOST_FIXTURE_TEST_SUITE(residue_test_suite, cath::test::residue_test_suite_fixt
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(invalid_insert_throws) {
 	BOOST_CHECK_THROW(
-		residue( residue_name( 43, '#' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), residue::DEFAULT_PHI_PSI(), residue::DEFAULT_PHI_PSI(), 0 ),
+		residue( make_residue_id( 'A', 43, '#' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), residue::DEFAULT_PHI_PSI(), residue::DEFAULT_PHI_PSI(), 0 ),
 		invalid_argument_exception
 	);
 	BOOST_CHECK_THROW(
-		residue( residue_name( 43, '!' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), residue::DEFAULT_PHI_PSI(), residue::DEFAULT_PHI_PSI(), 0 ),
+		residue( make_residue_id( 'A', 43, '!' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), residue::DEFAULT_PHI_PSI(), residue::DEFAULT_PHI_PSI(), 0 ),
 		invalid_argument_exception
 	);
 }
@@ -86,11 +86,11 @@ BOOST_AUTO_TEST_CASE(invalid_insert_throws) {
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(invalid_amino_acid_throws) {
 	BOOST_CHECK_THROW(
-		residue( residue_name( 43, 'A' ), amino_acid( '!' ), coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), residue::DEFAULT_PHI_PSI(), residue::DEFAULT_PHI_PSI(), 0 ),
+		residue( make_residue_id( 'A', 43, 'A' ), amino_acid( '!' ), coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), residue::DEFAULT_PHI_PSI(), residue::DEFAULT_PHI_PSI(), 0 ),
 		invalid_argument_exception
 	);
 	BOOST_CHECK_THROW(
-		residue( residue_name( 43, 'A' ), amino_acid( 'a' ), coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), residue::DEFAULT_PHI_PSI(), residue::DEFAULT_PHI_PSI(), 0 ),
+		residue( make_residue_id( 'A', 43, 'A' ), amino_acid( 'a' ), coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), residue::DEFAULT_PHI_PSI(), residue::DEFAULT_PHI_PSI(), 0 ),
 		invalid_argument_exception
 	);
 }
@@ -133,17 +133,17 @@ BOOST_AUTO_TEST_CASE(equality_works) {
 	const auto     egt_angle = make_angle_from_degrees<double>( 8.0 );
 	const auto residues = {
 		residue_with_insert_without_ss,
-		residue(residue_name( 44, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
-		residue(residue_name( 43      ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
-		residue(residue_name( 43, 'A' ), saa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
-		residue(residue_name( 43, 'A' ), vaa, coord(2.2, 3.23, 4), coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
-		residue(residue_name( 43, 'A' ), vaa, coord::ORIGIN_COORD, coord(2.2, 3.23, 4), 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
-		residue(residue_name( 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 2, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
-		residue(residue_name( 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::BETA_STRAND, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
-		residue(residue_name( 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, other_rot,                     def_angle, def_angle, 0),
-		residue(residue_name( 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), svn_angle, def_angle, 0),
-		residue(residue_name( 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, egt_angle, 0),
-		residue(residue_name( 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 9)
+		residue(make_residue_id( 'A', 44, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
+		residue(make_residue_id( 'A', 43      ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
+		residue(make_residue_id( 'A', 43, 'A' ), saa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
+		residue(make_residue_id( 'A', 43, 'A' ), vaa, coord(2.2, 3.23, 4), coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
+		residue(make_residue_id( 'A', 43, 'A' ), vaa, coord::ORIGIN_COORD, coord(2.2, 3.23, 4), 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
+		residue(make_residue_id( 'A', 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 2, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
+		residue(make_residue_id( 'A', 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::BETA_STRAND, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 0),
+		residue(make_residue_id( 'A', 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, other_rot,                     def_angle, def_angle, 0),
+		residue(make_residue_id( 'A', 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), svn_angle, def_angle, 0),
+		residue(make_residue_id( 'A', 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, egt_angle, 0),
+		residue(make_residue_id( 'A', 43, 'A' ), vaa, coord::ORIGIN_COORD, coord::ORIGIN_COORD, 3, sec_struc_type::ALPHA_HELIX, rotation::IDENTITY_ROTATION(), def_angle, def_angle, 9)
 	};
 	check_equality_operators_on_diff_vals_range( residues );
 }

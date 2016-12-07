@@ -1,5 +1,5 @@
 /// \file
-/// \brief The tally_residue_names class header
+/// \brief The tally_residue_ids class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -27,16 +27,12 @@
 namespace cath {
 	namespace file {
 
-		size_size_pair_vec tally_residue_names(const residue_name_vec &,
-		                                       const residue_name_vec &,
-		                                       const bool &,
-		                                       const bool & = true,
-		                                       const size_set & = size_set{} );
+		size_size_pair_vec tally_residue_ids(const residue_id_vec &,
+		                                     const residue_id_vec &,
+		                                     const bool &,
+		                                     const bool & = true,
+		                                     const size_set & = size_set{} );
 
-		size_size_pair_vec tally_residue_names_str(const residue_name_vec &,
-		                                           const str_vec &,
-		                                           const bool &,
-		                                           const bool & = true);
 	} // namespace file
 } // namespace cath
 

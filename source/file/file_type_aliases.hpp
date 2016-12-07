@@ -31,8 +31,7 @@
 
 namespace cath { class amino_acid; }
 namespace cath { class chain_label; }
-namespace cath { class residue_name; }
-namespace cath { namespace file { enum class data_file : unsigned int; } }
+namespace cath { class residue_id; }
 namespace cath { namespace file { class hmmer_scores_entry; } }
 namespace cath { namespace file { class pdb; } }
 namespace cath { namespace file { class pdb_atom; } }
@@ -40,6 +39,7 @@ namespace cath { namespace file { class pdb_list; } }
 namespace cath { namespace file { class pdb_residue; } }
 namespace cath { namespace file { class prc_scores_entry; } }
 namespace cath { namespace file { class ssap_scores_entry; } }
+namespace cath { namespace file { enum class data_file : unsigned int; } }
 
 namespace cath {
 	namespace file {
@@ -55,6 +55,9 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		using pdb_vec = std::vector<pdb>;
+
+		/// \brief Type alias for a pair of pdb and size_vec
+		using pdb_size_vec_pair = std::pair<pdb, size_vec>;
 
 
 		/// \brief Type alias for vector of data_files
@@ -86,8 +89,8 @@ namespace cath {
 		/// \brief Type alias for an optional reference_wrapper of a const ssap_scores_entry>
 		using ssap_scores_entry_cref_opt = boost::optional<ssap_scores_entry_cref>;
 
-		/// \brief Type alias for a tuple of chain_label, residue_name and pdb_atom
-		using chain_resname_atom_tuple = std::tuple<chain_label, residue_name, pdb_atom>;
+		/// \brief Type alias for a pair of residue_id and pdb_atom
+		using resid_atom_pair = std::pair<residue_id, pdb_atom>;
 
 		/// \brief Type alias for a tuple of pdb_atom_parse_status, residuestring_name and amino_acid
 		using status_string_aa_tuple = std::tuple<pdb_atom_parse_status, std::string, amino_acid>;

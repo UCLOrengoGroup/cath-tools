@@ -28,11 +28,12 @@
 
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/boost_check_no_throw_diag.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/size_t_literal.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
-#include "file/dssp_wolf/tally_residue_names.hpp"
+#include "file/dssp_wolf/tally_residue_ids.hpp"
 #include "file/dssp_wolf/wolf_file.hpp"
 #include "file/dssp_wolf/wolf_file_io.hpp"
 #include "file/pdb/pdb.hpp"
@@ -43,11 +44,12 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
+#include "structure/residue_id.hpp"
 #include "test/global_test_constants.hpp"
 
 using namespace boost::filesystem;
-using namespace boost::math;
 using namespace boost::math::constants;
+using namespace boost::math;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
@@ -87,25 +89,25 @@ namespace cath {
 /// \brief TODOCUMENT
 const path cath::test::dssp_wolf_file_test_suite_fixture::wolf_file_of_example_id(const string &arg_example_id ///< TODOCUMENT
                                                                                   ) {
-	return TEST_RESIDUE_NAMES_DATA_DIR() / (arg_example_id + EXAMPLE_WOLF_FILE_SUFFIX);
+	return TEST_RESIDUE_IDS_DATA_DIR() / (arg_example_id + EXAMPLE_WOLF_FILE_SUFFIX);
 }
 
 /// \brief TODOCUMENT
 const path cath::test::dssp_wolf_file_test_suite_fixture::dssp_file_of_example_id(const string &arg_example_id ///< TODOCUMENT
                                                                                   ) {
-	return TEST_RESIDUE_NAMES_DATA_DIR() / (arg_example_id + EXAMPLE_DSSP_FILE_SUFFIX);
+	return TEST_RESIDUE_IDS_DATA_DIR() / (arg_example_id + EXAMPLE_DSSP_FILE_SUFFIX);
 }
 
 /// \brief TODOCUMENT
 const path cath::test::dssp_wolf_file_test_suite_fixture::pdb_file_of_example_id(const string &arg_example_id ///< TODOCUMENT
                                                                                  ) {
-	return TEST_RESIDUE_NAMES_DATA_DIR() / (arg_example_id + EXAMPLE_PDB_FILE_SUFFIX);
+	return TEST_RESIDUE_IDS_DATA_DIR() / (arg_example_id + EXAMPLE_PDB_FILE_SUFFIX);
 }
 
 /// \brief TODOCUMENT
 const path cath::test::dssp_wolf_file_test_suite_fixture::expected_wolf_phi_psi_of_example_id(const string &arg_example_id ///< TODOCUMENT
                                                                                               ) {
-	return TEST_RESIDUE_NAMES_DATA_DIR() / (arg_example_id + EXPECTED_WOLF_PHI_PSI_SUFFIX);
+	return TEST_RESIDUE_IDS_DATA_DIR() / (arg_example_id + EXPECTED_WOLF_PHI_PSI_SUFFIX);
 }
 
 /// \brief TODOCUMENT
@@ -120,9 +122,9 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_phi_psi_from_wolf_agai
 	}
 
 //	// To update file, uncomment this, run all tests, then execute:
-//	//    mv build-test-data/residue_names/id.new_got_wolf_phi_psi build-test-data/residue_names/id.expected_wolf_phi_psi
+//	//    mv build-test-data/residue_ids/id.new_got_wolf_phi_psi build-test-data/residue_ids/id.expected_wolf_phi_psi
 //	write_file(
-//		TEST_RESIDUE_NAMES_DATA_DIR() / ( arg_example_id + ".new_got_wolf_phi_psi"),
+//		TEST_RESIDUE_IDS_DATA_DIR() / ( arg_example_id + ".new_got_wolf_phi_psi"),
 //		got_wolf_phi_psi_values
 //	);
 
@@ -156,10 +158,10 @@ void cath::test::dssp_wolf_file_test_suite_fixture::compare_phi_psi_from_pdb_vs_
 	);
 
 	// Grab the residues names from the DSSP and PDB and then tally them up
-	const auto pdb_res_names  = the_pdb_file.get_residue_names_of_first_chain__backbone_unchecked();
-	const auto dssp_res_names = get_residue_names(the_dssp_file, false);
+	const auto pdb_res_ids  = the_pdb_file.get_residue_ids_of_first_chain__backbone_unchecked();
+	const auto dssp_res_ids = get_residue_ids(the_dssp_file, false);
 
-	const auto alignment      = tally_residue_names(pdb_res_names, dssp_res_names, false);
+	const auto alignment    = tally_residue_ids( pdb_res_ids, dssp_res_ids, false );
 
 	// Loop over the tallied residue names
 	for (const size_size_pair &aligned_pair : alignment) {
@@ -171,7 +173,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::compare_phi_psi_from_pdb_vs_
 		const residue &dssp_residue     = the_dssp_file.get_residue_of_index(dssp_res_index);
 		const residue &pdb_prot_residue = pdb_prot.get_residue_ref_of_index( pdb_res_index );
 
-		BOOST_REQUIRE_EQUAL( pdb_prot_residue.get_pdb_residue_name(), dssp_residue.get_pdb_residue_name() );
+		BOOST_REQUIRE_EQUAL( pdb_prot_residue.get_pdb_residue_id(), dssp_residue.get_pdb_residue_id() );
 
 		// The DSSP phi/psi angles get rounded to one decimal place and then an integer
 		// which means that, for example, 10.47 gets rounded to 11
@@ -217,9 +219,9 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 			continue;
 		}
 		const residue built_residue = combi_prot_with_dssp_only_residues.get_residue_ref_of_index( combi_residue_ctr );
-		BOOST_CHECK_EQUAL( dssp_residue.get_pdb_residue_name(),   built_residue.get_pdb_residue_name()   );
-		BOOST_CHECK_EQUAL( dssp_residue.get_sec_struc_number(),   built_residue.get_sec_struc_number()   );
-		BOOST_CHECK_EQUAL( dssp_residue.get_sec_struc_type(),     built_residue.get_sec_struc_type()     );
+		BOOST_CHECK_EQUAL( dssp_residue.get_pdb_residue_id(),   built_residue.get_pdb_residue_id()   );
+		BOOST_CHECK_EQUAL( dssp_residue.get_sec_struc_number(), built_residue.get_sec_struc_number() );
+		BOOST_CHECK_EQUAL( dssp_residue.get_sec_struc_type(),   built_residue.get_sec_struc_type()   );
 //		cerr << dssp_residue  << endl;
 //		cerr << built_residue << endl;
 //		cerr << endl;
@@ -229,7 +231,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 	for (size_t pdb_residue_ctr = 0; pdb_residue_ctr < num_pdb_residues; ++pdb_residue_ctr) {
 		const pdb_residue the_pdb_residue = the_pdb_file.get_residue_cref_of_index__backbone_unchecked(pdb_residue_ctr);
 		const residue     built_residue   = combi_prot_with_all_pdb_residues.get_residue_ref_of_index( pdb_residue_ctr );
-		BOOST_CHECK_EQUAL( the_pdb_residue.get_residue_name(),                             built_residue.get_pdb_residue_name()  );
+		BOOST_CHECK_EQUAL( the_pdb_residue.get_residue_id(),                               built_residue.get_pdb_residue_id()     );
 		BOOST_CHECK_EQUAL( get_carbon_alpha_coord( the_pdb_residue ),                      built_residue.get_carbon_alpha_coord() );
 		BOOST_CHECK_EQUAL( get_or_predict_carbon_beta_coord_of_residue( the_pdb_residue ), built_residue.get_carbon_beta_coord()  );
 //		cerr << pdb_residue   << endl;
@@ -257,7 +259,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::compare_residue_frames_from_
 		const residue &wolf_residue     = the_wolf_file.get_residue_of_index( residue_ctr );
 		const residue &pdb_prot_residue = pdb_prot.get_residue_ref_of_index( residue_ctr );
 
-		BOOST_REQUIRE_EQUAL( pdb_prot_residue.get_pdb_residue_name(), wolf_residue.get_pdb_residue_name() );
+		BOOST_REQUIRE_EQUAL( pdb_prot_residue.get_pdb_residue_id(), wolf_residue.get_pdb_residue_id() );
 
 		const rotation   raw_wolf_frame   = wolf_residue.get_frame();
 		const rotation   wolf_frame       = tidy_copy(raw_wolf_frame, 0.001);
@@ -321,22 +323,20 @@ BOOST_AUTO_TEST_CASE(compare_residue_frames_from_pdb_vs_wolf__1bmv2) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(insert_code) {
-	const size_chain_residue_tuple parsed_line = parse_dssp_residue_line(
+	const size_residue_pair parsed_line = parse_dssp_residue_line(
 		"  250  918AA T              0   0  200     -2,-0.2    -1,-0.2    -3,-0.0    -2,-0.1   0.692 360.0 360.0-115.3 360.0   -7.3   40.4   19.8"
 	);
-	BOOST_CHECK_EQUAL(                   250_z,  get<0>(parsed_line )                        );
-	BOOST_CHECK_EQUAL(      chain_label( 'A' ),  get<1>(parsed_line )                        );
-	BOOST_CHECK_EQUAL( residue_name(918, 'A') ,  get<2>(parsed_line ).get_pdb_residue_name() );
+	BOOST_CHECK_EQUAL(                          250_z, parsed_line.first                       );
+	BOOST_CHECK_EQUAL( make_residue_id('A', 918, 'A'), parsed_line.second.get_pdb_residue_id() );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(null_dssp_residue) {
-	const size_chain_residue_tuple parsed_line = parse_dssp_residue_line(
+	const size_residue_pair parsed_line = parse_dssp_residue_line(
 		"   36        !              0   0    0      0, 0.0     0, 0.0     0, 0.0     0, 0.0   0.000 360.0 360.0 360.0 360.0    0.0    0.0    0.0"
 	);
-	BOOST_CHECK_EQUAL(                    0_z, get<0>( parsed_line ) );
-	BOOST_CHECK_EQUAL(    chain_label( ' ' ), get<1>( parsed_line ) );
-	BOOST_CHECK_EQUAL( residue::NULL_RESIDUE, get<2>( parsed_line ) );
+	BOOST_CHECK_EQUAL(                   0_z, parsed_line.first  );
+	BOOST_CHECK_EQUAL( residue::NULL_RESIDUE, parsed_line.second );
 }
 
 /// \brief TODOCUMENT
@@ -348,5 +348,26 @@ BOOST_AUTO_TEST_CASE(wolf_phi_psi__1a04A02) {
 BOOST_AUTO_TEST_CASE(wolf_phi_psi__1fseB00) {
 	check_phi_psi_from_wolf_against_expected( "1fseB00" );
 }
+
+
+
+BOOST_AUTO_TEST_SUITE(tally_multi_chain)
+
+BOOST_AUTO_TEST_CASE(handles_multi_chains_with_same_residue_ids) {
+	ostringstream warn_ss;
+	BOOST_CHECK_NO_THROW_DIAG(
+		read_protein_from_dssp_and_pdb(
+			path{ "/cath-tools/build-test-data/tally_multi_chain/tally_multi_chain.dssp" },
+			path{ "/cath-tools/build-test-data/tally_multi_chain/tally_multi_chain"      },
+			true,
+			""s,
+			reference_wrapper<ostream>( warn_ss )
+		)
+	);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
 
 BOOST_AUTO_TEST_SUITE_END()

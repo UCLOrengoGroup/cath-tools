@@ -44,10 +44,10 @@ namespace cath {
 		protected:
 			~cath_align_refiner_test_suite_fixture() noexcept = default;
 
-			const path B4DXN4_MULTIPLE_MODELS_FILE    { TEST_RESIDUE_NAMES_DATA_DIR() / "B4DXN4.multiple_END_separated_models.pdb" };
-			const path B4DXN4_CORRECT_STDOUT_SUP_FILE { TEST_RESIDUE_NAMES_DATA_DIR() / "B4DXN4.multiple_superposed_models.pdb"    };
-			const path E9PB15_MULTIPLE_MODELS_FILE    { TEST_RESIDUE_NAMES_DATA_DIR() / "E9PB15.multiple_END_separated_models.pdb" };
-			const path E9PB15_CORRECT_PYMOL_SUP_FILE  { TEST_RESIDUE_NAMES_DATA_DIR() / "E9PB15.multiple_superposed_models.pml"    };
+			const path B4DXN4_MULTIPLE_MODELS_FILE    { TEST_RESIDUE_IDS_DATA_DIR() / "B4DXN4.multiple_END_separated_models.pdb" };
+			const path B4DXN4_CORRECT_STDOUT_SUP_FILE { TEST_RESIDUE_IDS_DATA_DIR() / "B4DXN4.multiple_superposed_models.pdb"    };
+			const path E9PB15_MULTIPLE_MODELS_FILE    { TEST_RESIDUE_IDS_DATA_DIR() / "E9PB15.multiple_END_separated_models.pdb" };
+			const path E9PB15_CORRECT_PYMOL_SUP_FILE  { TEST_RESIDUE_IDS_DATA_DIR() / "E9PB15.multiple_superposed_models.pml"    };
 
 			const temp_file temp_cath_align_refiner_output_file{ ".temp_cath_align_refiner_test_file.%%%%-%%%%-%%%%-%%%%" };
 

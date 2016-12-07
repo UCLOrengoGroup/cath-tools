@@ -60,10 +60,10 @@ using boost::numeric_cast;
 /// \brief Read a wolf and a sec file and build them into a protein
 ///
 /// \relatesalso protein
-protein cath::read_protein_from_wolf_and_sec_files(const path   &arg_wolf_filename, ///< The WOLF file to read
-                                                   const path   &arg_sec_filename,  ///< A sec file
-                                                   const string &arg_name,          ///< The name to set as the title of the protein
-                                                   ostream      &arg_stderr         ///< TODOCUMENT
+protein cath::read_protein_from_wolf_and_sec_files(const path            &arg_wolf_filename, ///< The WOLF file to read
+                                                   const path            &arg_sec_filename,  ///< A sec file
+                                                   const string          &arg_name,          ///< The name to set as the title of the protein
+                                                   const ostream_ref_opt &arg_stderr         ///< TODOCUMENT
                                                    ) {
 	return protein_from_wolf_and_sec(
 		read_wolf( arg_wolf_filename ),
@@ -76,18 +76,20 @@ protein cath::read_protein_from_wolf_and_sec_files(const path   &arg_wolf_filena
 /// \brief Read a DSSP, a PDB and a sec file and build them into a protein
 ///
 /// \relatesalso protein
-protein cath::read_protein_from_dssp_pdb_and_sec_files(const path   &arg_dssp_filename,             ///< A DSSP file
-                                                       const path   &arg_pdb_filename,              ///< A PDB file
-                                                       const path   &arg_sec_filename,              ///< A sec file
-                                                       const bool   &arg_limit_to_residues_in_dssp, ///< Whether to limit the protein to those residues that were present in the DSSP
-                                                       const string &arg_name,                      ///< The name to set as the title of the protein
-                                                       ostream      &arg_stderr                     ///< TODOCUMENT
+protein cath::read_protein_from_dssp_pdb_and_sec_files(const path            &arg_dssp_filename,             ///< A DSSP file
+                                                       const path            &arg_pdb_filename,              ///< A PDB file
+                                                       const path            &arg_sec_filename,              ///< A sec file
+                                                       const bool            &arg_limit_to_residues_in_dssp, ///< Whether to limit the protein to those residues that were present in the DSSP
+                                                       const string          &arg_name,                      ///< The name to set as the title of the protein
+                                                       const ostream_ref_opt &arg_stderr                     ///< TODOCUMENT
                                                        ) {
 	return add_name_and_paint_sec_file_onto_protein_copy(
 		read_protein_from_dssp_and_pdb(
 			arg_dssp_filename,
 			arg_pdb_filename,
-			arg_limit_to_residues_in_dssp
+			arg_limit_to_residues_in_dssp,
+			""s,
+			arg_stderr
 		),
 		read_sec(
 			arg_sec_filename
@@ -100,16 +102,18 @@ protein cath::read_protein_from_dssp_pdb_and_sec_files(const path   &arg_dssp_fi
 /// \brief Read a DSSP and a PDB file and build them into a protein
 ///
 /// \relatesalso protein
-protein cath::read_protein_from_dssp_and_pdb(const path   &arg_dssp,                      ///< A DSSP file
-                                             const path   &arg_pdb,                       ///< A PDB file
-                                             const bool   &arg_limit_to_residues_in_dssp, ///< Whether to limit the protein to those residues that were present in the DSSP
-                                             const string &arg_name                       ///< The name to set as the title of the protein
+protein cath::read_protein_from_dssp_and_pdb(const path            &arg_dssp,                      ///< A DSSP file
+                                             const path            &arg_pdb,                       ///< A PDB file
+                                             const bool            &arg_limit_to_residues_in_dssp, ///< Whether to limit the protein to those residues that were present in the DSSP
+                                             const string          &arg_name,                      ///< The name to set as the title of the protein
+                                             const ostream_ref_opt &arg_ostream                    ///< An optional reference to an ostream to which any logging should be sent
                                              ) {
 	return protein_from_dssp_and_pdb(
 		read_dssp_file( arg_dssp ),
 		read_pdb_file ( arg_pdb  ),
 		arg_limit_to_residues_in_dssp,
-		arg_name
+		arg_name,
+		arg_ostream
 	);
 }
 
@@ -132,10 +136,10 @@ protein cath::read_protein_from_pdb(const path   &arg_pdb,   ///< A PDB file
 /// \relatesalso protein
 /// \relatesalso wolf_file
 /// \relatesalso sec_file
-protein cath::protein_from_wolf_and_sec(const wolf_file &arg_wolf,  ///< The parsed wolf_file object
-                                        const sec_file  &arg_sec,   ///< The parsed sec
-                                        const string    &arg_name,  ///< The name to set as the title of the protein
-                                        ostream         &arg_stderr ///< TODOCUMENT
+protein cath::protein_from_wolf_and_sec(const wolf_file       &arg_wolf,  ///< The parsed wolf_file object
+                                        const sec_file        &arg_sec,   ///< The parsed sec
+                                        const string          &arg_name,  ///< The name to set as the title of the protein
+                                        const ostream_ref_opt &arg_stderr ///< TODOCUMENT
                                         ) {
 	// Create a protein from the wolf file, set its title, paint the sec_file onto it and then return it
 	return add_name_and_paint_sec_file_onto_protein_copy(
@@ -152,12 +156,12 @@ protein cath::protein_from_wolf_and_sec(const wolf_file &arg_wolf,  ///< The par
 /// \relatesalso dssp_file
 /// \relatesalso pdb
 /// \relatesalso sec_file
-protein cath::protein_from_dssp_pdb_and_sec(const dssp_file &arg_dssp,                      ///< The parsed DSSP file
-                                            const pdb       &arg_pdb,                       ///< The parsed PDB file
-                                            const sec_file  &arg_sec,                       ///< The parsed sec file
-                                            const bool      &arg_limit_to_residues_in_dssp, ///< Whether to limit the protein to those residues that were present in the DSSP
-                                            const string    &arg_name,                      ///< The name to set as the title of the protein
-                                            ostream         &arg_stderr                     ///< TODOCUMENT
+protein cath::protein_from_dssp_pdb_and_sec(const dssp_file       &arg_dssp,                      ///< The parsed DSSP file
+                                            const pdb             &arg_pdb,                       ///< The parsed PDB file
+                                            const sec_file        &arg_sec,                       ///< The parsed sec file
+                                            const bool            &arg_limit_to_residues_in_dssp, ///< Whether to limit the protein to those residues that were present in the DSSP
+                                            const string          &arg_name,                      ///< The name to set as the title of the protein
+                                            const ostream_ref_opt &arg_stderr                     ///< TODOCUMENT
                                             ) {
 	// Create a protein from the DSSP and PDB, set its title, paint the sec_file onto it and then return it
 	return add_name_and_paint_sec_file_onto_protein_copy(
@@ -165,7 +169,8 @@ protein cath::protein_from_dssp_pdb_and_sec(const dssp_file &arg_dssp,          
 			arg_dssp,
 			arg_pdb,
 			arg_limit_to_residues_in_dssp,
-			arg_name
+			arg_name,
+			arg_stderr
 		),
 		arg_sec,
 		arg_name,
@@ -177,10 +182,10 @@ protein cath::protein_from_dssp_pdb_and_sec(const dssp_file &arg_dssp,          
 ///
 /// \relatesalso protein
 /// \relatesalso sec_file
-void cath::add_name_and_paint_sec_file_onto_protein(protein        &arg_protein, ///< The protein to be modified (taken by non-const reference to allow it to be modified)
-                                                    const sec_file &arg_sec,     ///< The parsed sec file whose secondary structures should be painted on to the protein
-                                                    const string   &arg_name,    ///< The name to set as the title of the protein
-                                                    ostream        &arg_stderr   ///< TODOCUMENT
+void cath::add_name_and_paint_sec_file_onto_protein(protein               &arg_protein, ///< The protein to be modified (taken by non-const reference to allow it to be modified)
+                                                    const sec_file        &arg_sec,     ///< The parsed sec file whose secondary structures should be painted on to the protein
+                                                    const string          &arg_name,    ///< The name to set as the title of the protein
+                                                    const ostream_ref_opt &arg_stderr   ///< TODOCUMENT
                                                     ) {
 	// Set the protein's title and then paint the sec_file onto it
 	arg_protein.set_title(arg_name);
@@ -191,10 +196,10 @@ void cath::add_name_and_paint_sec_file_onto_protein(protein        &arg_protein,
 ///
 /// \relatesalso protein
 /// \relatesalso sec_file
-protein cath::add_name_and_paint_sec_file_onto_protein_copy(protein         arg_protein, ///< The protein whose copy should be modified (taken by value to allow the compiler to elide copies of rvalues)
-                                                            const sec_file &arg_sec,     ///< The parsed sec file whose secondary structures should be painted on to the protein
-                                                            const string   &arg_name,    ///< The name to set as the title of the protein
-                                                            ostream        &arg_stderr   ///< TODOCUMENT
+protein cath::add_name_and_paint_sec_file_onto_protein_copy(protein                arg_protein, ///< The protein whose copy should be modified (taken by value to allow the compiler to elide copies of rvalues)
+                                                            const sec_file        &arg_sec,     ///< The parsed sec file whose secondary structures should be painted on to the protein
+                                                            const string          &arg_name,    ///< The name to set as the title of the protein
+                                                            const ostream_ref_opt &arg_stderr   ///< TODOCUMENT
                                                             ) {
 	// Using the local copy of the protein, set it's title and paint the sec_file onto it and then return it
 	add_name_and_paint_sec_file_onto_protein( arg_protein, arg_sec, arg_name, arg_stderr );
@@ -205,9 +210,9 @@ protein cath::add_name_and_paint_sec_file_onto_protein_copy(protein         arg_
 ///
 /// \relatesalso protein
 /// \relatesalso sec_file
-void cath::paint_sec_file_onto_protein(protein        &arg_protein,  ///< The protein to be modified (taken by non-const reference to allow it to be modified)
-                                       const sec_file &arg_sec_file, ///< The parsed sec file whose secondary structures should be painted on to the protein
-                                       ostream        &arg_stderr    ///< TODOCUMENT
+void cath::paint_sec_file_onto_protein(protein               &arg_protein,  ///< The protein to be modified (taken by non-const reference to allow it to be modified)
+                                       const sec_file        &arg_sec_file, ///< The parsed sec file whose secondary structures should be painted on to the protein
+                                       const ostream_ref_opt &arg_stderr    ///< TODOCUMENT
                                        ) {
 	const sec_struc_vec new_sec_strucs = make_sec_struc_list(arg_sec_file);
 	arg_protein.set_sec_strucs ( new_sec_strucs );
@@ -220,9 +225,9 @@ void cath::paint_sec_file_onto_protein(protein        &arg_protein,  ///< The pr
 ///
 /// \relatesalso protein
 /// \relatesalso sec_file
-protein cath::paint_sec_file_onto_protein_copy(protein         arg_protein,  ///< The protein whose copy should be modified (taken by value to allow the compiler to elide copies of rvalues)
-                                               const sec_file &arg_sec_file, ///< The parsed sec file whose secondary structures should be painted on to the protein
-                                               ostream        &arg_stderr    ///< TODOCUMENT
+protein cath::paint_sec_file_onto_protein_copy(protein                arg_protein,  ///< The protein whose copy should be modified (taken by value to allow the compiler to elide copies of rvalues)
+                                               const sec_file        &arg_sec_file, ///< The parsed sec file whose secondary structures should be painted on to the protein
+                                               const ostream_ref_opt &arg_stderr    ///< TODOCUMENT
                                                ) {
 	paint_sec_file_onto_protein(arg_protein, arg_sec_file, arg_stderr);
 	return arg_protein;
@@ -231,9 +236,9 @@ protein cath::paint_sec_file_onto_protein_copy(protein         arg_protein,  ///
 /// \brief Remove domin regions to blank out of search chain
 ///
 /// \relatesalso protein
-void cath::remove_domin_res(protein    &arg_protein,        ///< The protein object to modify
-                            const path &arg_domin_filename, ///< A domin file
-                            ostream    &arg_stderr          ///< TODOCUMENT
+void cath::remove_domin_res(protein               &arg_protein,        ///< The protein object to modify
+                            const path            &arg_domin_filename, ///< A domin file
+                            const ostream_ref_opt &arg_stderr          ///< TODOCUMENT
                             ) {
 	// Prepare a vector to contain the starts and ends from the clique data
 	size_size_pair_vec clique_starts_and_ends;
@@ -261,7 +266,7 @@ void cath::remove_domin_res(protein    &arg_protein,        ///< The protein obj
 /// \relatesalso protein
 void cath::remove_domin_res(protein                  &arg_protein,                ///< The protein object to modify
                             const size_size_pair_vec &arg_clique_starts_and_ends, ///< The starts and stops that have been parsed out of a domin file
-                            ostream                  &arg_stderr                  ///< TODOCUMENT
+                            const ostream_ref_opt    &arg_stderr                  ///< TODOCUMENT
                             ) {
 	/////
 	// 1. Process the secondary structures that are to be removed
@@ -384,7 +389,7 @@ void cath::remove_domin_res(protein                  &arg_protein,              
 			///     43 46
 			///
 			/// Perhaps it'd be better if everything used sequential numbers rather than insert codes.
-			if ( get_pdb_name_number( my_residue ) && get_pdb_name_number( my_residue ) >= numeric_cast<int>( a_start ) && get_pdb_name_number( my_residue ) <= numeric_cast<int>( a_end ) ) {
+			if ( pdb_number( my_residue ) && pdb_number( my_residue ) >= numeric_cast<int>( a_start ) && pdb_number( my_residue ) <= numeric_cast<int>( a_end ) ) {
 				found = true;
 				break;
 			}

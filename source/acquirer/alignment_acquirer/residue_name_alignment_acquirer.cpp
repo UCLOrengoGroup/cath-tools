@@ -27,6 +27,7 @@
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "alignment/residue_name_align/residue_name_aligner.hpp"
 #include "alignment/residue_score/residue_scorer.hpp"
+#include "common/algorithm/transform_build.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
@@ -69,7 +70,12 @@ pair<alignment, superpose_orderer> residue_name_alignment_acquirer::do_get_align
 	residue_name_vec_vec residue_names_of_pdbs;
 	residue_names_of_pdbs.reserve( num_pdbs );
 	for (const pdb &my_pdb : arg_pdbs) {
-		residue_names_of_pdbs.push_back( my_pdb.get_residue_names_of_first_chain__backbone_unchecked() );
+		residue_names_of_pdbs.push_back(
+			transform_build<residue_name_vec>(
+				my_pdb.get_residue_ids_of_first_chain__backbone_unchecked(),
+				[] (const residue_id &x) { return x.get_residue_name(); }
+			)
+		);
 
 //		// *** TEMPORARY... ***
 //		const str_vec residue_strings = my_pdb.get_residue_names_of_first_chain();

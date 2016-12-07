@@ -26,17 +26,17 @@
 
 namespace cath {
 
-	/// \brief TODOCUMENT
+	/// \brief Represent a PDB residue name (eg 324A)
 	class residue_name final : private boost::equality_comparable<residue_name> {
 	private:
-		/// \brief TODOCUMENT
+		/// \brief The residue number
+		int res_num = 0;
+
+		/// \brief The (optional insert code)
+		boost::optional<char> insert;
+
+		/// \brief Whether this is a null residue
 		bool is_null_residue_name = true;
-
-		/// \brief TODOCUMENT
-		int residue_number = 0;
-
-		/// \brief TODOCUMENT
-		boost::optional<char> insert_code;
 
 		void sanity_check() const;
 		void sanity_check_is_not_null_residue() const;
@@ -47,10 +47,16 @@ namespace cath {
 		residue_name(const int &,
 		             const char &);
 
-		const bool & get_is_null_residue_name() const;
-		const int & get_residue_number() const;
-		const boost::optional<char> & get_opt_insert_code() const;
+		const bool & is_null() const;
+		const int & residue_number() const;
+		const boost::optional<char> & opt_insert() const;
 	};
+
+
+	bool operator< (const residue_name &, const residue_name &) = delete; // Better to avoid residue_names (except for equality/inequality) because disallowing it avoids anyone mistakenly trying to do that to get the correct order of residues
+	bool operator<=(const residue_name &, const residue_name &) = delete; // Better to avoid residue_names (except for equality/inequality) because disallowing it avoids anyone mistakenly trying to do that to get the correct order of residues
+	bool operator> (const residue_name &, const residue_name &) = delete; // Better to avoid residue_names (except for equality/inequality) because disallowing it avoids anyone mistakenly trying to do that to get the correct order of residues
+	bool operator>=(const residue_name &, const residue_name &) = delete; // Better to avoid residue_names (except for equality/inequality) because disallowing it avoids anyone mistakenly trying to do that to get the correct order of residues
 
 	bool operator==(const residue_name &,
 	                const residue_name &);
@@ -62,9 +68,20 @@ namespace cath {
 	std::istream & operator>>(std::istream &,
 	                          residue_name &);
 
-	bool has_insert_code(const residue_name &);
-	char get_insert_code(const residue_name &);
-	std::string get_insert_code_string(const residue_name &);
+	int residue_number_or_value_if_null(const residue_name &,
+	                                    const int &);
+	boost::optional<char> opt_insert_or_value_if_null(const residue_name &,
+	                                                  const boost::optional<char> &);
+	bool has_insert(const residue_name &);
+	bool has_insert_or_value_if_null(const residue_name &,
+	                                 const bool &);
+	const char & insert(const residue_name &);
+	char insert_or_value_if_null(const residue_name &,
+	                             const char &);
+	char insert_or_value_if_null_or_absent(const residue_name &,
+	                                       const char &);
+
+	std::string insert_string(const residue_name &);
 	std::string make_residue_name_string_with_insert_or_space(const residue_name &);
 	residue_name make_residue_name(const std::string &);
 	residue_name make_residue_name_with_non_insert_char(const int &,

@@ -111,10 +111,8 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 		pdb_name_insert = ' ';
 		sscanf(residue_string,"%d%c", &pdb_name_number, &pdb_name_insert);
 
-		{
-			char chain_char;
-			sscanf( buffer+11, "%c", &chain_char );
-		}
+		char chain_char;
+		sscanf( buffer+11, "%c", &chain_char );
 
 		// Read amino acid
 		char amino_acid_char;
@@ -213,12 +211,15 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 //		dummy_kappa = (dummy_kappa <   0) ? (360 + dummy_kappa) : dummy_kappa;
 //		dummy_kappa = (dummy_kappa > 180) ? (360 - dummy_kappa) : dummy_kappa;
 
-		const residue_name res_name = make_residue_name_with_non_insert_char( pdb_name_number, pdb_name_insert, ' ' );
+		const residue_id res_id{
+			chain_label{ chain_char },
+			make_residue_name_with_non_insert_char( pdb_name_number, pdb_name_insert, ' ' )
+		};
 
 		const int sec_struc_number(0);
 		const sec_struc_type the_sec_struc_type(sec_struc_type::COIL);
 		residues.push_back(residue(
-			res_name,
+			res_id,
 			amino_acid( amino_acid_char ),
 			carbon_alpha_coord,
 			carbon_beta_coord,

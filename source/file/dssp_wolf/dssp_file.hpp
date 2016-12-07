@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_FILE_DSSP_WOLF_DSSP_FILE_H
 #define _CATH_TOOLS_SOURCE_FILE_DSSP_WOLF_DSSP_FILE_H
 
+#include <boost/optional.hpp>
+
 #include "common/type_aliases.hpp"
 #include "structure/structure_type_aliases.hpp"
 
@@ -54,10 +56,11 @@ namespace cath {
 		protein protein_from_dssp_and_pdb(const dssp_file &,
 		                                  const pdb &,
 		                                  const bool &,
-		                                  const std::string & = "");
+		                                  const std::string & = "",
+		                                  const ostream_ref_opt & = boost::none );
 
-		residue_name_vec get_residue_names(const dssp_file &,
-		                                   const bool &);
+		residue_id_vec get_residue_ids(const dssp_file &,
+		                               const bool &);
 
 		size_t get_num_non_null_residues(const dssp_file &);
 

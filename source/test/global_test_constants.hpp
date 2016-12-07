@@ -50,7 +50,7 @@ namespace cath {
 
 		static const boost::filesystem::path              & TEST_BASIC_FILE_TEST_DATA_DIR();
 		static const boost::filesystem::path              & TEST_MULTI_SSAP_SUPERPOSE_DIR();
-		static const boost::filesystem::path              & TEST_RESIDUE_NAMES_DATA_DIR();
+		static const boost::filesystem::path              & TEST_RESIDUE_IDS_DATA_DIR();
 		static const boost::filesystem::path              & TEST_SOURCE_DATA_DIR();
 		static const boost::filesystem::path              & TEST_EXAMPLE_PDBS_DATA_DIR();
 		static const boost::filesystem::path              & TEST_SSAP_REGRESSION_DATA_DIR();

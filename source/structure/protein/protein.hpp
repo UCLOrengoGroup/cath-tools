@@ -36,7 +36,7 @@
 #include <cstddef>
 
 namespace cath { class residue; }
-namespace cath { class residue_name; }
+namespace cath { class residue_id; }
 namespace cath { class sec_struc; }
 
 namespace cath {
@@ -153,14 +153,14 @@ namespace cath {
 	protein build_protein(const residue_vec &,
 	                      const sec_struc_vec &);
 
-	residue_name get_pdb_residue_name_of_index(const protein &,
-	                                           const size_t &);
+	residue_id get_pdb_residue_id_of_index(const protein &,
+	                                       const size_t &);
 
-	std::string get_pdb_residue_name_string_of_index(const protein &,
-	                                                 const size_t &);
+	std::string get_pdb_residue_id_string_of_index(const protein &,
+	                                               const size_t &);
 
-	size_t get_index_of_pdb_residue_name(const protein &,
-	                                     const residue_name &);
+	size_t get_index_of_pdb_residue_id(const protein &,
+	                                   const residue_id &);
 
 	amino_acid_vec get_amino_acid_list(const protein &);
 
@@ -170,12 +170,12 @@ namespace cath {
 	char get_amino_acid_letter_of_index(const protein &,
 	                                    const size_t &);
 
-	residue_name_vec get_residue_names(const protein &);
+	residue_id_vec get_residue_ids(const protein &);
 
 	void wipe_sec_strucs_of_residues(protein &);
 
 	void label_residues_with_sec_strucs(protein &,
-	                                    std::ostream &);
+	                                    const ostream_ref_opt &);
 
 	geom::coord calculate_inter_sec_struc_vector(const protein &,
 	                                             const size_t &,

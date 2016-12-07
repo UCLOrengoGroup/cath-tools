@@ -30,7 +30,7 @@
 #include "common/algorithm/copy_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
-#include "file/dssp_wolf/tally_residue_names.hpp"
+#include "file/dssp_wolf/tally_residue_ids.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
@@ -39,6 +39,7 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
+#include "structure/residue_id.hpp"
 
 using namespace cath;
 using namespace cath::common;
@@ -84,23 +85,24 @@ dssp_file::const_iterator dssp_file::end() const {
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
 ///       (fix all errors, *then* provide default of boost::none)
-protein cath::file::protein_from_dssp_and_pdb(const dssp_file &arg_dssp_file,                         ///< The dssp_file object for a given structure
-                                              const pdb       &arg_pdb_file,                          ///< The dssp_file object for a given structure
-                                              const bool      &arg_exclude_residues_absent_from_dssp, ///< Whether to exclude residues that are in the PDB but not the DSSP
-                                              const string    &arg_name                               ///< The name to set as the title of the protein
+protein cath::file::protein_from_dssp_and_pdb(const dssp_file       &arg_dssp_file,                         ///< The dssp_file object for a given structure
+                                              const pdb             &arg_pdb_file,                          ///< The dssp_file object for a given structure
+                                              const bool            &arg_exclude_residues_absent_from_dssp, ///< Whether to exclude residues that are in the PDB but not the DSSP
+                                              const string          &arg_name,                              ///< The name to set as the title of the protein
+                                              const ostream_ref_opt &arg_ostream                            ///< An optional reference to an ostream to which any logging should be sent
                                               ) {
 	// Build a rough protein object from the pdb object
-	const auto pdb_protein       = build_protein_of_pdb( arg_pdb_file, ref( cerr ) );
-	const auto pdb_skip_indices  = get_protein_res_indices_that_dssp_might_skip( arg_pdb_file, ref( cerr ) );
+	const auto pdb_protein       = build_protein_of_pdb( arg_pdb_file, arg_ostream );
+	const auto pdb_skip_indices  = get_protein_res_indices_that_dssp_might_skip( arg_pdb_file, arg_ostream );
 
 	// Grab the number of residues in the protein and dssp_file objects
 	const auto num_dssp_residues = arg_dssp_file.get_num_residues();
 	const auto num_pdb_residues  = pdb_protein.get_length();
 
 	// Grab the residues names from the DSSP and PDB and then tally them up
-	const auto pdb_res_names     = get_residue_names  ( pdb_protein );
-	const auto dssp_res_names    = get_residue_names  ( arg_dssp_file, false );
-	const auto alignment         = tally_residue_names(
+	const auto pdb_res_names     = get_residue_ids  ( pdb_protein );
+	const auto dssp_res_names    = get_residue_ids  ( arg_dssp_file, false );
+	const auto alignment         = tally_residue_ids(
 		pdb_res_names,
 		dssp_res_names,
 		false,
@@ -143,10 +145,10 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file &arg_dssp_file,   
 /// \relates dssp_file
 ///
 /// \returns A vector of strings, each containing the PDB residue name or an empty string for a null residue record
-residue_name_vec cath::file::get_residue_names(const dssp_file &arg_dssp_file,            ///< The dssp_file object for a given structure
-                                               const bool      &arg_exclude_null_residues ///< Whether to exclude null residues (rather than represent them with empty strings)
-                                               ) {
-	return copy_build<residue_name_vec>(
+residue_id_vec cath::file::get_residue_ids(const dssp_file &arg_dssp_file,            ///< The dssp_file object for a given structure
+                                           const bool      &arg_exclude_null_residues ///< Whether to exclude null residues (rather than represent them with empty strings)
+                                           ) {
+	return copy_build<residue_id_vec>(
 		arg_dssp_file
 			// Include if this isn't a null residue or if null residues aren't to be excluded
 			| filtered(
@@ -157,7 +159,7 @@ residue_name_vec cath::file::get_residue_names(const dssp_file &arg_dssp_file,  
 			// Grab the residue name of the residue (or residue_name() for null residues)
 			| transformed(
 				[] (const residue &x) {
-					return is_null_residue( x ) ? residue_name() : x.get_pdb_residue_name();
+					return is_null_residue( x ) ? residue_id{} : x.get_pdb_residue_id();
 				}
 			)
 	);

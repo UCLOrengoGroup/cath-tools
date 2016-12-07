@@ -28,32 +28,45 @@
 namespace cath {
 
 	/// \brief TODOCUMENT
-	///
-	/// Can much of this be made constexpr?
 	class chain_label final : private boost::equality_comparable<chain_label> {
 	private:
-		friend bool operator==(const chain_label &, const chain_label &);
+		friend constexpr bool operator==(const chain_label &, const chain_label &);
 
 		/// \brief TODOCUMENT
-		char chain_char;
+		char chain_char = 0;
 
-		void sanity_check() const;
-
-		const char & get_char() const;
+		constexpr const char & get_char() const;
 
 	public:
-		explicit chain_label(const char &);
-		
+		constexpr chain_label() noexcept = default;
+		explicit constexpr chain_label(const char &);
+
+		bool is_null() const;
+
 		std::string to_string() const;
 	};
 
 	/// \brief TODOCUMENT
-	inline const char & chain_label::get_char() const {
+	inline constexpr const char & chain_label::get_char() const {
 		return chain_char;
 	}
 
-	bool operator==(const chain_label &,
-	                const chain_label &);
+	/// \brief Ctor for chain_label
+	inline constexpr chain_label::chain_label(const char &arg_chain_char ///< TODOCUMENT
+	                                          ) : chain_char( arg_chain_char ) {
+	}
+
+	/// \brief TODOCUMENT
+	inline bool chain_label::is_null() const {
+		return ( get_char() == 0 );
+	}
+
+	/// \brief TODOCUMENT
+	inline constexpr bool operator==(const chain_label &arg_chain_label_a, ///< TODOCUMENT
+	                                 const chain_label &arg_chain_label_b  ///< TODOCUMENT
+	                                 ) {
+		return ( arg_chain_label_a.get_char() == arg_chain_label_b.get_char() );
+	}
 
 	std::ostream & operator<<(std::ostream &,
 	                          const chain_label &);

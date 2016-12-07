@@ -108,8 +108,8 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
                                                                    ) {
 	return read_alignment_from_cath_ssap_legacy_format(
 		arg_istream,
-		get_residue_names( arg_protein_a ),
-		get_residue_names( arg_protein_b ),
+		get_residue_ids( arg_protein_a ),
+		get_residue_ids( arg_protein_b ),
 		arg_stderr
 	);
 }
@@ -127,8 +127,8 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream   &ar
                                                                    ) {
 	return read_alignment_from_cath_ssap_legacy_format(
 		arg_istream,
-		arg_pdb_a.get_residue_names_of_first_chain__backbone_unchecked(),
-		arg_pdb_b.get_residue_names_of_first_chain__backbone_unchecked(),
+		arg_pdb_a.get_residue_ids_of_first_chain__backbone_unchecked(),
+		arg_pdb_b.get_residue_ids_of_first_chain__backbone_unchecked(),
 		arg_stderr
 	);
 }
@@ -142,12 +142,16 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream   &ar
 /// Should this parse based on:
 ///  - exact column positions (hence breaking if an extra space is added) or
 ///  - whitespace splitting (hence breaking if a column is missing, eg with an insert as a space rather than a 0)
-alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream                &arg_istream,     ///< TODOCUMENT
-                                                                   const residue_name_vec &arg_res_names_a, ///< TODOCUMENT
-                                                                   const residue_name_vec &arg_res_names_b, ///< TODOCUMENT
-                                                                   ostream                &arg_stderr       ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream              &arg_istream,   ///< TODOCUMENT
+                                                                   const residue_id_vec &arg_res_ids_a, ///< TODOCUMENT
+                                                                   const residue_id_vec &arg_res_ids_b, ///< TODOCUMENT
+                                                                   ostream              &arg_stderr     ///< TODOCUMENT
                                                                    ) {
 	arg_istream.exceptions( ios::badbit );
+
+	if ( ! have_consistent_chain_labels( arg_res_ids_a ) || ! have_consistent_chain_labels( arg_res_ids_b ) ) {
+		BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot reliably search for SSAP alignment residues in residue IDs spanning multiple chains because the SSAP alignment format doesn't record chain labels"));
+	}
 
 	alignment new_alignment( alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT );
 
@@ -167,10 +171,10 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 		const int             res_num_b = lexical_cast<int>(    trim_copy( line_string.substr( 23, 4 ))); // Column 9: Protein 2 PDB residue number (excluding insert character)
 
 		// For each side, move the PDB position forward if necessary
-		const residue_name res_name_a = make_residue_name_with_non_insert_char( res_num_a, insert_a, '0');
-		const residue_name res_name_b = make_residue_name_with_non_insert_char( res_num_b, insert_b, '0' );
-		const size_opt find_a_result = search_for_residue_in_residue_names( pos_a, arg_res_names_a, amino_acid_a, res_name_a, arg_stderr );
-		const size_opt find_b_result = search_for_residue_in_residue_names( pos_b, arg_res_names_b, amino_acid_b, res_name_b, arg_stderr );
+		const residue_name res_name_a    = make_residue_name_with_non_insert_char( res_num_a, insert_a, '0');
+		const residue_name res_name_b    = make_residue_name_with_non_insert_char( res_num_b, insert_b, '0' );
+		const size_opt     find_a_result = search_for_residue_in_residue_ids( pos_a, arg_res_ids_a, amino_acid_a, res_name_a, arg_stderr );
+		const size_opt     find_b_result = search_for_residue_in_residue_ids( pos_b, arg_res_ids_b, amino_acid_b, res_name_b, arg_stderr );
 		pos_a = find_a_result.value_or( pos_a );
 		pos_b = find_b_result.value_or( pos_b );
 
@@ -265,9 +269,9 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 
 	arg_istream.exceptions(ios::badbit);
 	try {
-		residue_name_vec_vec residue_names_of_first_chains;
+		residue_id_vec_vec residue_ids_of_first_chains;
 		for (const pdb &arg_pdb : arg_pdbs) {
-			residue_names_of_first_chains.push_back( arg_pdb.get_residue_names_of_first_chain__backbone_unchecked() );
+			residue_ids_of_first_chains.push_back( arg_pdb.get_residue_ids_of_first_chain__backbone_unchecked() );
 		}
 
 		// Check the first line is the file format line
@@ -339,12 +343,18 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 				const char              amino_acid =                                        prot_string.at(      7    )  ; // Column 5 (8,11 etc): Amino Acid Code (c)
 //				const char               sec_struc =                                        prot_string.at(     10    )  ; // Column 6 (9,12 etc): Secondary Structure Assignment (c)
 
-				// Find the residue in the list of this PDB's residue names
-				const residue_name_vec &residues_names = residue_names_of_first_chains[ prot_ctr ];
-				const residue_name      res_name       = make_residue_name_with_non_insert_char( residue_num, insert_code, ' ' );
-				const aln_posn_opt      find_result    = search_for_residue_in_residue_names(
+				// Find the residue name in the list of this PDB's residue IDs
+				// (the CORA format doesn't record chain codes so search_for_residue_in_residue_ids() will check
+				//  that all the residue IDs are on the same chain)
+				const residue_id_vec &residues_ids = residue_ids_of_first_chains[ prot_ctr ];
+				if ( ! have_consistent_chain_labels( residues_ids ) ) {
+					BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot reliably search for CORA alignment residues in residue IDs spanning multiple chains because the CORA alignment format doesn't record chain labels"));
+				}
+
+				const residue_name    res_name     = make_residue_name_with_non_insert_char( residue_num, insert_code, ' ' );
+				const aln_posn_opt    find_result  = search_for_residue_in_residue_ids(
 					posn,
-					residues_names,
+					residues_ids,
 					amino_acid,
 					res_name,
 					arg_stderr
@@ -665,119 +675,125 @@ alignment cath::align::read_alignment_from_fasta(istream                  &arg_i
                                                  const str_vec            &arg_names,            ///< A vector of names, each of which should be found within the corresponding sequence's ID
                                                  ostream                  &arg_stderr            ///< An ostream to which any warnings should be output (currently unused)
                                                  ) {
-		if ( arg_amino_acid_lists.empty() ) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot load a FASTA alignment with 0 PDB entries"));
-		}
-		const size_t num_entries = arg_amino_acid_lists.size();
-		if ( arg_names.size() != num_entries ) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot load a FASTA alignment with a different number of names and PDB entries"));
+	if ( arg_amino_acid_lists.empty() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot load a FASTA alignment with 0 PDB entries"));
+	}
+	const size_t num_entries = arg_amino_acid_lists.size();
+	if ( arg_names.size() != num_entries ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot load a FASTA alignment with a different number of names and PDB entries"));
+	}
+
+	arg_istream.exceptions( ios::badbit );
+
+	try {
+		const str_str_pair_vec sequence_of_id = read_ids_and_sequences_from_fasta( arg_istream );
+		const size_t num_sequences = sequence_of_id.size();
+		if ( num_entries != num_sequences ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception(
+				"Number of sequences parsed from FASTA ("
+				+ lexical_cast<string>( num_sequences )
+				+ ") doesn't match the number of PDBs/names ("
+				+ lexical_cast<string>( num_entries   )
+				+ ")"
+			));
 		}
 
-		arg_istream.exceptions( ios::badbit );
+		const size_t sequence_length = sequence_of_id.front().second.length();
 
-		try {
-			const str_str_pair_vec sequence_of_id = read_ids_and_sequences_from_fasta( arg_istream );
-			const size_t num_sequences = sequence_of_id.size();
-			if ( num_entries != num_sequences ) {
+		aln_posn_opt_vec_vec positions;
+		positions.reserve( num_entries );
+		for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+			const amino_acid_vec &amino_acids     = arg_amino_acid_lists      [ entry_ctr ];
+			const string         &name            = arg_names     [ entry_ctr ];
+			const str_str_pair   &id_and_sequence = sequence_of_id[ entry_ctr ];
+			const string         &id              = id_and_sequence.first;
+			const string         &sequence        = id_and_sequence.second;
+
+			if ( sequence.length() != sequence_length ) {
 				BOOST_THROW_EXCEPTION(runtime_error_exception(
-					"Number of sequences parsed from FASTA ("
-					+ lexical_cast<string>( num_sequences )
-					+ ") doesn't match the number of PDBs/names ("
-					+ lexical_cast<string>( num_entries   )
+					"When attempting to parse entry number "
+					+ lexical_cast<string>( entry_ctr + 1     )
+					+ " of FASTA alignment, the length of the sequence ("
+					+ lexical_cast<string>( sequence.length() )
+					+ ") does not match the length of the first sequence ("
+					+ lexical_cast<string>( sequence_length   )
 					+ ")"
 				));
 			}
 
-			const size_t sequence_length = sequence_of_id.front().second.length();
-
-			aln_posn_opt_vec_vec positions;
-			positions.reserve( num_entries );
-			for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
-				const amino_acid_vec &amino_acids     = arg_amino_acid_lists      [ entry_ctr ];
-				const string         &name            = arg_names     [ entry_ctr ];
-				const str_str_pair   &id_and_sequence = sequence_of_id[ entry_ctr ];
-				const string         &id              = id_and_sequence.first;
-				const string         &sequence        = id_and_sequence.second;
-
-				if ( sequence.length() != sequence_length ) {
-					BOOST_THROW_EXCEPTION(runtime_error_exception(
-						"When attempting to parse entry number "
-						+ lexical_cast<string>( entry_ctr + 1     )
-						+ " of FASTA alignment, the length of the sequence ("
-						+ lexical_cast<string>( sequence.length() )
-						+ ") does not match the length of the first sequence ("
-						+ lexical_cast<string>( sequence_length   )
-						+ ")"
-					));
-				}
-
-				if ( ! icontains( id, name ) ) {
-					BOOST_THROW_EXCEPTION(runtime_error_exception(
-						"When attempting to parse entry number "
-						+ lexical_cast<string>( entry_ctr + 1 )
-						+ " of FASTA alignment, name \""
-						+ name
-						+ "\" could not be found in a case-insensitive search within FASTA header ID \""
-						+ id
-						+ "\""
-					));
-				}
-
-				positions.push_back( align_sequence_to_amino_acids( sequence, amino_acids, name, arg_stderr ) );
+			if ( ! icontains( id, name ) ) {
+				BOOST_THROW_EXCEPTION(runtime_error_exception(
+					"When attempting to parse entry number "
+					+ lexical_cast<string>( entry_ctr + 1 )
+					+ " of FASTA alignment, name \""
+					+ name
+					+ "\" could not be found in a case-insensitive search within FASTA header ID \""
+					+ id
+					+ "\""
+				));
 			}
 
-			return alignment( positions );
+			positions.push_back( align_sequence_to_amino_acids( sequence, amino_acids, name, arg_stderr ) );
 		}
-		// Catch any I/O exceptions
-		catch (const std::exception &ex) {
-			const string error_message(string("Cannot read FASTA legacy alignment file [") + ex.what() + "] ");
-			perror(error_message.c_str());
-			BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
-		};
+
+		return alignment( positions );
 	}
+	// Catch any I/O exceptions
+	catch (const std::exception &ex) {
+		const string error_message(string("Cannot read FASTA legacy alignment file [") + ex.what() + "] ");
+		perror(error_message.c_str());
+		BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
+	};
+}
 
 /// \brief Convenience function for read_alignment_from_cath_ssap_legacy_format() to use
-aln_posn_opt cath::align::search_for_residue_in_residue_names(const size_t           &arg_pos,           ///< TODOCUMENT
-                                                              const residue_name_vec &arg_residue_names, ///< TODOCUMENT
-                                                              const char             &arg_amino_acid,    ///< TODOCUMENT
-                                                              const residue_name     &arg_residue_name,  ///< TODOCUMENT
-                                                              ostream                &/*arg_stderr*/     ///< TODOCUMENT
-                                                              ) {
+aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t         &arg_pos,          ///< TODOCUMENT
+                                                            const residue_id_vec &arg_residue_ids,  ///< TODOCUMENT
+                                                            const char           &arg_amino_acid,   ///< TODOCUMENT
+                                                            const residue_name   &arg_residue_name, ///< TODOCUMENT
+                                                            ostream              &/*arg_stderr*/    ///< TODOCUMENT
+                                                            ) {
+	if ( ! have_consistent_chain_labels( arg_residue_ids ) ) {
+		BOOST_THROW_EXCEPTION(runtime_error_exception(
+			"Cannot reliably search for residue "
+			+ to_string( arg_residue_name )
+			+ " with no chain label within a list of residue IDs that span multiple chains"));
+	}
 	const bool residue_is_present = ( arg_amino_acid != '0' );
 	if ( residue_is_present ) {
-		if (arg_pos >= arg_residue_names.size()) {
+		if (arg_pos >= arg_residue_ids.size()) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Counter has gone past end of list of residues whilst loading alignment"));
 		}
-		const auto res_itr = find(
-			common::cbegin( arg_residue_names ) + numeric_cast<ptrdiff_t>( arg_pos ),
-			common::cend  ( arg_residue_names ),
-			arg_residue_name
+		const auto res_itr = find_if(
+			common::cbegin( arg_residue_ids ) + numeric_cast<ptrdiff_t>( arg_pos ),
+			common::cend  ( arg_residue_ids ),
+			[&] (const residue_id &x) { return x.get_residue_name() == arg_residue_name; }
 		);
-		if ( res_itr == common::cend( arg_residue_names ) ) {
+		if ( res_itr == common::cend( arg_residue_ids ) ) {
 			cerr << "Residue names being searched:\n\n";
-			for (const residue_name &the_res_name : arg_residue_names) {
+			for (const residue_id &the_res_name : arg_residue_ids) {
 				cerr << " " << the_res_name;
 			}
 			cerr << "\n" << endl;
 			BOOST_THROW_EXCEPTION(runtime_error_exception(
 				"Unable to find residue "
-				+ lexical_cast<string>( arg_residue_name )
+				+ to_string( arg_residue_name )
 				+ " from alignment in list of residues, starting from position "
-				+ lexical_cast<string>( arg_pos )
+				+ ::std::to_string( arg_pos )
 			));
 		}
 
-		const size_t new_pos = numeric_cast<size_t>( distance( common::cbegin( arg_residue_names ), res_itr ) );
+		const size_t new_pos = numeric_cast<size_t>( distance( common::cbegin( arg_residue_ids ), res_itr ) );
 		if ( new_pos != arg_pos + 1 && ( new_pos != 0 || arg_pos != 0 ) ) {
 			const size_t jump = new_pos - (arg_pos + 1);
 			BOOST_LOG_TRIVIAL( warning ) << "Missing some residues whilst loading alignment: jumped "
 			                             << jump
 			                             << " position(s) from residue "
-			                             << arg_residue_names[arg_pos]
+			                             << arg_residue_ids[arg_pos]
 			                             << " (in position "
 			                             << arg_pos
 			                             << ") to residue "
-			                             << arg_residue_names[new_pos]
+			                             << arg_residue_ids[new_pos]
 			                             << " (in position "
 			                             << new_pos
 			                             << ")";

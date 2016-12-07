@@ -22,7 +22,8 @@
 #define _CATH_TOOLS_SOURCE_FILE_DSSP_WOLF_DSSP_FILE_IO_H
 
 #include <boost/filesystem/path.hpp>
-#include <boost/tuple/tuple.hpp>
+
+#include <utility>
 
 namespace cath { class chain_label; }
 namespace cath { class dssp_struc_planar_angles; }
@@ -37,8 +38,8 @@ namespace cath {
 		dssp_file read_dssp_file(const boost::filesystem::path &);
 		dssp_file read_dssp(std::istream &);
 
-		using size_chain_residue_tuple = std::tuple<size_t, chain_label, residue>;
-		size_chain_residue_tuple parse_dssp_residue_line(const std::string &);
+		using size_residue_pair = std::pair<size_t, residue>;
+		size_residue_pair parse_dssp_residue_line(const std::string &);
 
 	} // namespace file
 } // namespace cath

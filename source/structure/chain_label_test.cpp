@@ -43,7 +43,11 @@ BOOST_FIXTURE_TEST_SUITE(chain_label_test_suite, cath::test::chain_label_test_su
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK( true );
+	static_assert(     chain_label( 'a' ) == chain_label( 'a' )  , "" );
+	static_assert( ! ( chain_label( 'a' ) == chain_label( 'b' ) ), "" );
+	static_assert( ! ( chain_label( 'a' ) == chain_label( 'A' ) ), "" );
+	BOOST_CHECK_EQUAL( chain_label( 'a' ).to_string(), "a" );
+	BOOST_CHECK_EQUAL( chain_label( 'b' ).to_string(), "b" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

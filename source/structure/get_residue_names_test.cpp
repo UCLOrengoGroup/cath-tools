@@ -57,7 +57,7 @@ namespace cath {
 	namespace test {
 
 		/// \brief A simple enum for specifying whether the PDB code or the DSSP code is being tested
-		enum class get_residue_names_test_filetype : bool {
+		enum class get_residue_ids_test_filetype : bool {
 			PDB,
 			DSSP
 		};
@@ -75,22 +75,22 @@ namespace cath {
 
 		public:
 
-			void check_get_residue_names(const string                          &arg_chain_id,
-			                             const get_residue_names_test_filetype &arg_filetype
-			                             ) const {
-				residue_name_vec got_residue_names;
+			void check_get_residue_ids(const string                        &arg_chain_id,
+			                           const get_residue_ids_test_filetype &arg_filetype
+			                           ) const {
+				residue_id_vec got_residue_ids;
 				switch ( arg_filetype ) {
-					case ( get_residue_names_test_filetype::PDB ) : {
-						const path pdb_file ( TEST_RESIDUE_NAMES_DATA_DIR() / ( arg_chain_id + pdb_extension ) );
+					case ( get_residue_ids_test_filetype::PDB ) : {
+						const path pdb_file ( TEST_RESIDUE_IDS_DATA_DIR() / ( arg_chain_id + pdb_extension ) );
 						bioplib_pdb my_pdb;
 						my_pdb.read_file( pdb_file.string() );
-						got_residue_names = my_pdb.get_residue_names_of_first_chain__backbone_unchecked();
+						got_residue_ids = my_pdb.get_residue_ids_of_first_chain__backbone_unchecked();
 						break;
 					}
-					case ( get_residue_names_test_filetype::DSSP ) : {
-						const path the_dssp_file( TEST_RESIDUE_NAMES_DATA_DIR() / ( arg_chain_id + dssp_extension ) );
+					case ( get_residue_ids_test_filetype::DSSP ) : {
+						const path the_dssp_file( TEST_RESIDUE_IDS_DATA_DIR() / ( arg_chain_id + dssp_extension ) );
 						const dssp_file my_dssp = read_dssp_file( the_dssp_file );
-						got_residue_names = get_residue_names( my_dssp, true );
+						got_residue_ids = get_residue_ids( my_dssp, true );
 						break;
 					}
 				}
@@ -105,18 +105,18 @@ namespace cath {
 				//  * offer a bunch of check tools (eg equals, contains, regexp)
 				//  * optionally load a pattern file as a vector of strings, one per line
 				//  * provide better context information on mismatch
-				const path correct_residue_names_file(TEST_RESIDUE_NAMES_DATA_DIR() / (arg_chain_id + correct_residue_names_extension));
+				const path correct_residue_names_file(TEST_RESIDUE_IDS_DATA_DIR() / (arg_chain_id + correct_residue_names_extension));
 				ifstream expected_stream;
 				open_ifstream( expected_stream, correct_residue_names_file );
-				residue_name_vec expected_values;
+				residue_id_vec expected_values;
 				copy(
-					istream_iterator<residue_name>( expected_stream ),
-					istream_iterator<residue_name>(),
+					istream_iterator<residue_id>( expected_stream ),
+					istream_iterator<residue_id>(),
 					back_inserter( expected_values )
 				);
 				expected_stream.close();
 
-				BOOST_CHECK_EQUAL_RANGES( expected_values, got_residue_names );
+				BOOST_CHECK_EQUAL_RANGES( expected_values, got_residue_ids );
 			}
 		};
 
@@ -132,32 +132,32 @@ BOOST_FIXTURE_TEST_SUITE(get_residue_names_test_suite, get_residue_names_test_su
 
 /// \brief Test the reading of residue names from the pdb for 1bmv2
 BOOST_AUTO_TEST_CASE(pdb_1bmv2) {
-	check_get_residue_names("1bmv2", get_residue_names_test_filetype::PDB);
+	check_get_residue_ids("1bmv2", get_residue_ids_test_filetype::PDB);
 }
 
 /// \brief Test the reading of residue names from the dssp for 1bmv2
 BOOST_AUTO_TEST_CASE(dssp_1bmv2) {
-	check_get_residue_names("1bmv2", get_residue_names_test_filetype::DSSP);
+	check_get_residue_ids("1bmv2", get_residue_ids_test_filetype::DSSP);
 }
 
 /// \brief Test the reading of residue names from the pdb for 1t63A
 BOOST_AUTO_TEST_CASE(pdb_1t63A) {
-	check_get_residue_names("1t63A", get_residue_names_test_filetype::PDB);
+	check_get_residue_ids("1t63A", get_residue_ids_test_filetype::PDB);
 }
 
 /// \brief Test the reading of residue names from the dssp for 1t63A
 BOOST_AUTO_TEST_CASE(dssp_1t63A) {
-	check_get_residue_names("1t63A", get_residue_names_test_filetype::DSSP);
+	check_get_residue_ids("1t63A", get_residue_ids_test_filetype::DSSP);
 }
 
 /// \brief Test the reading of residue names from the pdb for 1x0pJ
 BOOST_AUTO_TEST_CASE(pdb_1x0pJ) {
-	check_get_residue_names("1x0pJ", get_residue_names_test_filetype::PDB);
+	check_get_residue_ids("1x0pJ", get_residue_ids_test_filetype::PDB);
 }
 
 /// \brief Test the reading of residue names from the dssp for 1x0pJ
 BOOST_AUTO_TEST_CASE(dssp_1x0pJ) {
-	check_get_residue_names("1x0pJ", get_residue_names_test_filetype::DSSP);
+	check_get_residue_ids("1x0pJ", get_residue_ids_test_filetype::DSSP);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

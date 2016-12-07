@@ -27,7 +27,8 @@
 #include <boost/range/adaptor/transformed.hpp>
 
 #include "exception/invalid_argument_exception.hpp"
-#include "structure/residue_name.hpp"
+#include "exception/not_implemented_exception.hpp"
+#include "structure/residue_id.hpp"
 
 using namespace cath;
 using namespace cath::common;
@@ -94,19 +95,28 @@ str_vec pymol_tools::parse_residue_names_for_pymol(const residue_name_vec &arg_r
 	return new_residue_names;
 }
 
-
 /// \brief Generate the PyMOL string to select the specified residue(s)/atom(s) in the specified object
-string pymol_tools::pymol_res_seln_str(const string           &arg_name,      ///< The object in which to select residues/atoms
-                                       const residue_name_vec &arg_res_names, ///< The names of the residue(s) to select
-                                       const str_opt          &arg_atom       ///< (optional) The name of the atom type to select (eg "CA")
+///
+/// Examples to keep in mind:
+///  * 1al2 has a chain 0
+string pymol_tools::pymol_res_seln_str(const string         &arg_name,    ///< The object in which to select residues/atoms
+                                       const residue_id_vec &arg_res_ids, ///< The names of the residue(s) to select
+                                       const str_opt        &arg_atom     ///< (optional) The name of the atom type to select (eg "CA")
                                        ) {
+	const chain_label_opt the_chain_label_opt = consistent_chain_label(arg_res_ids);
+	if ( ! the_chain_label_opt ) {
+		BOOST_THROW_EXCEPTION(not_implemented_exception("PyMOL selection generating code pymol_res_seln_str() is currently unable to handle not having a single consistent chain label across the residues to be selected"));
+	}
+	chain_label_opt consistent_chain_label(const residue_id_vec &);
 	return "/"
 		+ arg_name
-		+ "///"
+		+ "//"
+		+ ( ( *the_chain_label_opt == chain_label( ' ' ) ) ? ""s : to_string( *the_chain_label_opt ) )
+		+ "/"
 		+ join(
-			arg_res_names
-				| transformed( [] (const residue_name &x) {
-					return parse_residue_name_for_pymol( x );
+			arg_res_ids
+				| transformed( [] (const residue_id &x) {
+					return parse_residue_name_for_pymol( x.get_residue_name() );
 				} ),
 			"+"
 		)

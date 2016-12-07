@@ -460,7 +460,7 @@ set(
 	NORMSOURCES_FILE_DSSP_WOLF
 		file/dssp_wolf/dssp_file.cpp
 		file/dssp_wolf/dssp_file_io.cpp
-		file/dssp_wolf/tally_residue_names.cpp
+		file/dssp_wolf/tally_residue_ids.cpp
 		file/dssp_wolf/wolf_file.cpp
 		file/dssp_wolf/wolf_file_io.cpp
 )
@@ -1018,6 +1018,7 @@ set(
 		${NORMSOURCES_STRUCTURE_ENTRY_QUERIER}
 		${NORMSOURCES_STRUCTURE_GEOMETRY}
 		${NORMSOURCES_STRUCTURE_PROTEIN}
+		structure/residue_id.cpp
 		structure/residue_name.cpp
 		${NORMSOURCES_STRUCTURE_SEC_STRUC_CALC}
 		${NORMSOURCES_STRUCTURE_VIEW_CACHE}
@@ -1431,7 +1432,7 @@ set(
 set(
 	TESTSOURCES_FILE_DSSP_WOLF
 		file/dssp_wolf/dssp_file_test.cpp
-		file/dssp_wolf/tally_residue_names_test.cpp
+		file/dssp_wolf/tally_residue_ids_test.cpp
 )
 
 set(
@@ -1880,6 +1881,8 @@ set(
 		${TESTSOURCES_STRUCTURE_GEOMETRY}
 		structure/get_residue_names_test.cpp
 		${TESTSOURCES_STRUCTURE_PROTEIN}
+		structure/residue_id_test.cpp
+		structure/residue_name_test.cpp
 		${TESTSOURCES_STRUCTURE_SEC_STRUC_CALC}
 		${TESTSOURCES_STRUCTURE_VIEW_CACHE}
 )

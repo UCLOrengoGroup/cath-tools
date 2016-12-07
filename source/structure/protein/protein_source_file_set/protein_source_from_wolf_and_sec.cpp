@@ -63,7 +63,7 @@ protein protein_source_from_wolf_and_sec::do_read_files(const data_file_path_map
 		wolf_file,
 		sec_file,
 		arg_protein_name,
-		arg_stderr
+		ref( arg_stderr )
 	);
 }
 

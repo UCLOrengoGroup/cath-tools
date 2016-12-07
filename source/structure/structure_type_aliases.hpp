@@ -39,6 +39,7 @@ namespace cath { namespace geom { class rotation; } }
 namespace cath { namespace index { class view_cache; } }
 namespace cath { class protein; }
 namespace cath { class residue_name; }
+namespace cath { class residue_id; }
 namespace cath { class sec_struc_planar_angles; }
 namespace cath { class residue; }
 namespace cath { class sec_struc; }
@@ -137,13 +138,19 @@ namespace cath {
 	using residue_name_vec = std::vector<residue_name>;
 
 	/// \brief TODOCUMENT
-	using residue_name_vec_itr = residue_name_vec::iterator;
+	using residue_name_vec_itr  = residue_name_vec::iterator;
 
 	/// \brief TODOCUMENT
 	using residue_name_vec_citr = residue_name_vec::const_iterator;
 
 	/// \brief TODOCUMENT
-	using residue_name_vec_vec = std::vector<residue_name_vec>;
+	using residue_name_vec_vec  = std::vector<residue_name_vec>;
+
+	/// \brief Type alias for a vector of residue_ids
+	using residue_id_vec        = std::vector<residue_id>;
+
+	/// \brief Type alias for a vector of residue_id_vec
+	using residue_id_vec_vec    = std::vector<residue_id_vec>;
 
 
 	/// \brief TODOCUMENT

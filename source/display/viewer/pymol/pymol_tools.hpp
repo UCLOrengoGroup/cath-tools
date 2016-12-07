@@ -29,7 +29,7 @@
 #include <cstddef>
 #include <string>
 
-namespace cath { class residue_name; }
+namespace cath { class residue_id; }
 
 namespace cath {
 
@@ -49,7 +49,7 @@ namespace cath {
 		static str_vec parse_residue_names_for_pymol(const residue_name_vec &);
 
 		static std::string pymol_res_seln_str(const std::string &,
-		                                      const residue_name_vec &,
+		                                      const residue_id_vec &,
 		                                      const str_opt & = boost::none);
 
 	};

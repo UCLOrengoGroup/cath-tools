@@ -28,6 +28,7 @@
 #include <boost/math/constants/constants.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
+#include <boost/range/algorithm/binary_search.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 #include <boost/range/irange.hpp>
 
@@ -72,6 +73,7 @@ using boost::algorithm::starts_with;
 using boost::irange;
 using boost::lexical_cast;
 using boost::numeric_cast;
+using boost::range::binary_search;
 using boost::range::count_if;
 
 /// \brief TODOCUMENT
@@ -135,8 +137,8 @@ void pdb::do_set_chain_label(const chain_label &arg_chain_label ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-residue_name_vec pdb::do_get_residue_names_of_first_chain__backbone_unchecked() const {
-	return get_backbone_complete_residue_names_of_first_chain( false );
+residue_id_vec pdb::do_get_residue_ids_of_first_chain__backbone_unchecked() const {
+	return get_backbone_complete_residue_ids_of_first_chain( false );
 }
 
 /// \brief TODOCUMENT
@@ -233,21 +235,21 @@ coord pdb::get_residue_ca_coord_of_backbone_complete_index(const size_t &arg_bac
 }
 
 /// \brief TODOCUMENT
-residue_name_vec pdb::get_backbone_complete_residue_names_of_first_chain(const bool &arg_complete_backbone_only  ///< TODOCUMENT
-                                                                         ) const {
-	residue_name_vec residue_names;
-	residue_names.reserve( pdb_residues.size() );
+residue_id_vec pdb::get_backbone_complete_residue_ids_of_first_chain(const bool &arg_complete_backbone_only  ///< TODOCUMENT
+                                                                     ) const {
+	residue_id_vec residue_ids;
+	residue_ids.reserve( pdb_residues.size() );
 	if ( ! pdb_residues.empty() ) {
-		const chain_label first_chain_label = pdb_residues.front().get_chain_label();
+		const chain_label first_chain_label = get_chain_label( pdb_residues.front() );
 		for (const pdb_residue &my_pdb_residue : pdb_residues) {
-			if ( first_chain_label == my_pdb_residue.get_chain_label() ) {
+			if ( first_chain_label == get_chain_label( my_pdb_residue ) ) {
 				if ( is_backbone_complete( my_pdb_residue ) || ! arg_complete_backbone_only ) {
-					residue_names.push_back( my_pdb_residue.get_residue_name() );
+					residue_ids.push_back( my_pdb_residue.get_residue_id() );
 				}
 			}
 		}
 	}
-	return residue_names;
+	return residue_ids;
 }
 
 /// \brief TODOCUMENT
@@ -295,9 +297,8 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 
 	string          line_string;
 
-	chain_label     prev_chain( ' ' );
 	string          prev_amino_acid_3_char_code;
-	residue_name    prev_res_name;
+	residue_id      prev_res_id;
 	pdb_atom_vec    prev_atoms;
 	bool            prev_warned_conflict = false;
 
@@ -330,18 +331,16 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			}
 
 			// Grab the details from parsing this ATOM record
-			const chain_resname_atom_tuple  new_entry              = parse_pdb_atom_record( line_string, parse_aa );
-			const chain_label              &chain                  = get<0>( new_entry );
-			const residue_name             &res_name               = get<1>( new_entry );
-			const pdb_atom                 &atom                   = get<2>( new_entry );
-			const string                    amino_acid_3_char_code = get_amino_acid_code( atom );
+			const auto        new_entry              = parse_pdb_atom_record( line_string, parse_aa );
+			const residue_id &res_id                 = new_entry.first;
+			const pdb_atom   &atom                   = new_entry.second;
+			const string      amino_acid_3_char_code = get_amino_acid_code( atom );
 
-			// If there are previously seen atoms that don't match this chain/res_name,
+			// If there are previously seen atoms that don't match this chain/res_id,
 			// then add those atoms' residue and reset prev_atoms
-			if ( ! prev_atoms.empty() && ( chain != prev_chain || res_name != prev_res_name ) ) {
+			if ( ! prev_atoms.empty() && res_id != prev_res_id ) {
 				residues.emplace_back(
-					prev_chain,
-					prev_res_name,
+					prev_res_id,
 					std::move( prev_atoms )
 				);
 				prev_atoms = pdb_atom_vec{};
@@ -354,10 +353,8 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			if ( ! prev_atoms.empty() && amino_acid_3_char_code != prev_amino_acid_3_char_code ) {
 				if ( ! prev_warned_conflict ) {
 					BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing PDB file, found conflicting consecutive entries for residue \""
-					                             << res_name
-					                             << "\" on chain '"
-					                             << chain
-					                             << "' (with amino acids \""
+					                             << res_id
+					                             << "\" (with amino acids \""
 					                             << prev_amino_acid_3_char_code
 					                             << "\" and then \""
 					                             << amino_acid_3_char_code
@@ -367,9 +364,8 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			}
 			// Otherwise update the records of previously seen atoms
 			else {
-				prev_chain                  = chain;
 				prev_amino_acid_3_char_code = amino_acid_3_char_code;
-				prev_res_name               = res_name;
+				prev_res_id                 = res_id;
 				prev_atoms.push_back( atom );
 			}
 		}
@@ -378,8 +374,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 	// Add any last remaining atoms
 	if ( ! prev_atoms.empty() ) {
 		residues.emplace_back(
-			prev_chain,
-			prev_res_name,
+			prev_res_id,
 			std::move( prev_atoms )
 		);
 	}
@@ -497,34 +492,43 @@ ostream & cath::file::operator<<(ostream   &arg_os,         ///< TODOCUMENT
 /// \relates pdb
 ///
 /// \relates protein
-doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb &arg_pdb ///< TODOCUMENT
+doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb      &arg_pdb,         ///< TODOCUMENT
+                                                                  const size_vec &arg_skip_indices ///< Indices of residues in the pdb that were preceded by residues that have been skipped due to being backbone complete. This may include an index on greater than the index of the last residue in the pdb to indicate that there were residues skipped after the last residue. Phi/psi angles are not set over these skip breaks.
                                                                   ) {
 	// The gap between consecutive residues' carbon-alpha atoms, above which the residues are not treated as neighbours
 	//
 	// To replicate DSSP's behaviour, this must be at least >= 5.01602 so that residues 161 and 162 on chain A of 139l are treated as connected
 	// To replicate DSSP's behaviour, this must be at least >= 6.60324 so that residues  63 and  64 on chain A of 1c8c are treated as connected
-	const double INTER_CA_DIST_FOR_NEIGHBOURS = 6.625; //< 6 + 5/8
-	const auto   DEFAULT_PHI_PSI              = residue::DEFAULT_PHI_PSI();
-	const auto   DEFAULT_PHI_PSI_PAIR         = make_pair( DEFAULT_PHI_PSI, DEFAULT_PHI_PSI );
+	constexpr double INTER_CA_DIST_FOR_NEIGHBOURS = 6.625; //< 6 + 5/8
+	const     auto   DEFAULT_PHI_PSI              = residue::DEFAULT_PHI_PSI();
+	const     auto   DEFAULT_PHI_PSI_PAIR         = make_pair( DEFAULT_PHI_PSI, DEFAULT_PHI_PSI );
 
 	const size_t num_residues = arg_pdb.get_num_residues();
 	doub_angle_doub_angle_pair_vec phi_and_psi_angles( num_residues, DEFAULT_PHI_PSI_PAIR );
 	for (size_t residue_ctr = 0; residue_ctr + 1 < num_residues; ++residue_ctr) {
 
-		// Grab this residue and the next one and calculate this psi and the next phi
-		const pdb_residue    &this_pdb_residue      = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr     );
-		const pdb_residue    &next_pdb_residue      = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr + 1 );
-		const double          inter_ca_dist         = distance_between_points(
-			get_carbon_alpha_coord( this_pdb_residue ),
-			get_carbon_alpha_coord( next_pdb_residue )
-		);
+		// Grab this residue and the next one
+		const pdb_residue &this_pdb_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr     );
+		const pdb_residue &next_pdb_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr + 1 );
 
-		// If these consecutive residues are a sensible distance apart...
-		if ( inter_ca_dist < INTER_CA_DIST_FOR_NEIGHBOURS ) {
-			// Calculate the two angles of these two residue and store them
-			const auto this_psi_and_next_phi = get_psi_of_this_and_phi_of_next( this_pdb_residue, next_pdb_residue );
-			phi_and_psi_angles[ residue_ctr     ].second = this_psi_and_next_phi.first;
-			phi_and_psi_angles[ residue_ctr + 1 ].first  = this_psi_and_next_phi.second;
+		// If these consecutive residues are on the same chain...
+		if ( get_chain_label( this_pdb_residue ) == get_chain_label( next_pdb_residue ) ) {
+
+			// ...and if they're adequately close together...
+			const double          inter_ca_dist         = distance_between_points(
+				get_carbon_alpha_coord( this_pdb_residue ),
+				get_carbon_alpha_coord( next_pdb_residue )
+			);
+			if ( inter_ca_dist < INTER_CA_DIST_FOR_NEIGHBOURS ) {
+
+				// ...and if there weren't any residues between them that have been skipped
+				if ( ! binary_search( arg_skip_indices, residue_ctr + 1 ) ) {
+					// Then calculate the two angles of these two residue and store them
+					const auto this_psi_and_next_phi = get_psi_of_this_and_phi_of_next( this_pdb_residue, next_pdb_residue );
+					phi_and_psi_angles[ residue_ctr     ].second = this_psi_and_next_phi.first;
+					phi_and_psi_angles[ residue_ctr + 1 ].first  = this_psi_and_next_phi.second;
+				}
+			}
 		}
 	}
 
@@ -534,15 +538,22 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb &arg
 
 /// \brief TODOCUMENT
 ///
+/// Returns the backbone complete subset of the PDB along with indices of residues in that pdb that
+/// were preceded by residues that have been skipped due to being backbone complete.
+/// This may include an index on greater than the index of the last residue in the pdb to indicate
+/// that there were residues skipped after the last residue.
+/// This information is useful to return so it can be used to prevent phi/psi angles being set over these skip breaks.
+///
 /// \relates pdb
-pdb cath::file::backbone_complete_subset_of_pdb(const pdb             &arg_pdb,             ///< TODOCUMENT
-                                                const ostream_ref_opt &arg_ostream_ref_opt, ///< An optional reference to an ostream to which any logging should be sent
-                                                const bool            &arg_skip_like_dssp   ///< TODOCUMENT
-                                                ) {
+pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb             &arg_pdb,             ///< TODOCUMENT
+                                                              const ostream_ref_opt &arg_ostream_ref_opt, ///< An optional reference to an ostream to which any logging should be sent
+                                                              const bool            &arg_skip_like_dssp   ///< TODOCUMENT
+                                                              ) {
 	// Grab the number of residues
 	const size_t num_residues = arg_pdb.get_num_residues();
 
-	residue_name_vec backbone_skipped_residues;
+	residue_id_vec backbone_skipped_residues;
+	size_vec indices_in_new_of_skips;
 
 	// Prepare a vector of the new residues
 	pdb_residue_vec new_pdb_residues;
@@ -558,9 +569,14 @@ pdb cath::file::backbone_complete_subset_of_pdb(const pdb             &arg_pdb, 
 		if ( skip_like_dssp_and_ok || not_skip_like_dssp_and_ok ) {
 			new_pdb_residues.push_back( the_residue );
 		}
-		// Else if this is a proper amino acid (not just a bunch of HETATMs), warn
-		else if ( get_amino_acid_letter( the_residue ) && arg_ostream_ref_opt ) {
-			backbone_skipped_residues.push_back( the_residue.get_residue_name() );
+		// Else if this is a proper amino acid (not just a bunch of HETATMs), record it
+		else if ( get_amino_acid_letter( the_residue ) ) {
+			if ( arg_ostream_ref_opt ) {
+				backbone_skipped_residues.push_back( the_residue.get_residue_id() );
+			}
+			if ( indices_in_new_of_skips.empty() || indices_in_new_of_skips.back() != new_pdb_residues.size() ) {
+				indices_in_new_of_skips.push_back( new_pdb_residues.size() );
+			}
 		}
 	}
 
@@ -573,7 +589,7 @@ pdb cath::file::backbone_complete_subset_of_pdb(const pdb             &arg_pdb, 
 		                             << " "
 		                             << join(
 		                             	backbone_skipped_residues
-		                             		| transformed( [] (const residue_name &x) { return to_string( x ); } ),
+		                             		| transformed( [] (const residue_id &x) { return to_string( x ); } ),
 		                             	", "
 		                             )
 		                             << " whilst extracting a protein structure from PDB file data because "
@@ -584,7 +600,7 @@ pdb cath::file::backbone_complete_subset_of_pdb(const pdb             &arg_pdb, 
 	// Return a new pdb containing these residues
 	pdb new_pdb;
 	new_pdb.set_residues( new_pdb_residues );
-	return new_pdb;
+	return { new_pdb, indices_in_new_of_skips };
 }
 
 /// \brief TODOCUMENT
@@ -597,9 +613,11 @@ protein cath::file::build_protein_of_pdb(const pdb             &arg_pdb,    ///<
                                          ) {
 	constexpr size_t DEFAULT_ACCESSIBILITY = 0;
 
-	const pdb    backbone_complete_pdb_subset = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream );
-	const size_t num_residues                 = backbone_complete_pdb_subset.get_num_residues();
-	const auto   phi_and_psi_angles           = get_phi_and_psi_angles( backbone_complete_pdb_subset );
+	const auto     backbone_complete_data       = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream );
+	const pdb      backbone_complete_pdb_subset = backbone_complete_data.first;
+	const size_vec indices_of_skips             = backbone_complete_data.second;
+	const size_t   num_residues                 = backbone_complete_pdb_subset.get_num_residues();
+	const auto     phi_and_psi_angles           = get_phi_and_psi_angles( backbone_complete_pdb_subset, indices_of_skips );
 
 	return build_protein( transform_build<residue_vec>(
 		irange( 0_z, num_residues ),
@@ -638,7 +656,7 @@ protein cath::file::build_protein_of_pdb_and_name(const pdb             &arg_pdb
 size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb             &arg_pdb,    ///< The PDB to query
                                                                   const ostream_ref_opt &arg_ostream ///< An ostream to which any status messages might be sent
                                                                   ) {
-	const pdb    backbone_complete_pdb_subset = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream );
+	const pdb    backbone_complete_pdb_subset = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream ).first;
 	const size_t num_residues                 = backbone_complete_pdb_subset.get_num_residues();
 
 	// Return the indices corresponding to residues with any atoms with non-standard alt_locn values

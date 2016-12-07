@@ -48,12 +48,12 @@ namespace cath {
 			~cath_superposer_test_suite_fixture() noexcept = default;
 
 		public:
-			const path MULTIPLE_B4DXN4_MODELS_FILE          { TEST_RESIDUE_NAMES_DATA_DIR()   / "B4DXN4.multiple_END_separated_models.pdb" };
-			const path CORRECT_B4DXN4_STDOUT_SUP_FILE       { TEST_RESIDUE_NAMES_DATA_DIR()   / "B4DXN4.multiple_superposed_models.pdb"    };
-			const path CORRECT_B4DXN4_SINGLE_GRAD_PYMOL_FILE{ TEST_RESIDUE_NAMES_DATA_DIR()   / "B4DXN4.single_gradient_colour.pml"        };
-			const path MULTIPLE_E9PB15_MODELS_FILE          { TEST_RESIDUE_NAMES_DATA_DIR()   / "E9PB15.multiple_END_separated_models.pdb" };
-			const path CORRECT_E9PB15_PYMOL_SUP_FILE        { TEST_RESIDUE_NAMES_DATA_DIR()   / "E9PB15.multiple_superposed_models.pml"    };
-			const path CORRECT_Q9HAU8_PYMOL_SUP_FILE        { TEST_RESIDUE_NAMES_DATA_DIR()   / "Q9HAU8.multiple_superposed_models.pml"    };
+			const path MULTIPLE_B4DXN4_MODELS_FILE          { TEST_RESIDUE_IDS_DATA_DIR()   / "B4DXN4.multiple_END_separated_models.pdb" };
+			const path CORRECT_B4DXN4_STDOUT_SUP_FILE       { TEST_RESIDUE_IDS_DATA_DIR()   / "B4DXN4.multiple_superposed_models.pdb"    };
+			const path CORRECT_B4DXN4_SINGLE_GRAD_PYMOL_FILE{ TEST_RESIDUE_IDS_DATA_DIR()   / "B4DXN4.single_gradient_colour.pml"        };
+			const path MULTIPLE_E9PB15_MODELS_FILE          { TEST_RESIDUE_IDS_DATA_DIR()   / "E9PB15.multiple_END_separated_models.pdb" };
+			const path CORRECT_E9PB15_PYMOL_SUP_FILE        { TEST_RESIDUE_IDS_DATA_DIR()   / "E9PB15.multiple_superposed_models.pml"    };
+			const path CORRECT_Q9HAU8_PYMOL_SUP_FILE        { TEST_RESIDUE_IDS_DATA_DIR()   / "Q9HAU8.multiple_superposed_models.pml"    };
 			const path CORRECT_3_90_400_10_PYMOL_SUP_FILE   { TEST_MULTI_SSAP_SUPERPOSE_DIR() / "3.90.400.10.pml"                          };
 
 			const temp_file temp_cath_superposer_output_file{ ".temp_cath_superposer_test_file.%%%%-%%%%-%%%%-%%%%" };
@@ -96,9 +96,9 @@ void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_use_c
 		if ( ! exists( output_file ) )  {
 			BOOST_LOG_TRIVIAL( error ) << "cath-superpose command did not produce output file. Got stdout is: \""
 			                           << test_stdout.str()
-									   << "\". Got stderr is: \""
-									   << test_stderr.str()
-									   << "\"";
+			                           << "\". Got stderr is: \""
+			                           << test_stderr.str()
+			                           << "\"";
 		}
 		BOOST_CHECK_FILES_EQUAL(              output_file, arg_expected_output_file );
 //		BOOST_CHECK_FILES_EQUAL_OR_OVERWRITE( output_file, arg_expected_output_file );
@@ -182,7 +182,7 @@ BOOST_AUTO_TEST_CASE(genome3d_single_gradient_colour_alignment_use_case) {
 		  get_filename( temp_cath_superposer_output_file ).string(),
 		  "--res-name-align",
 		  "--gradient-colour-alignment" },
-		TEST_RESIDUE_NAMES_DATA_DIR() / "B4DXN4.DomSerf.1.pdb",
+		TEST_RESIDUE_IDS_DATA_DIR() / "B4DXN4.DomSerf.1.pdb",
 		CORRECT_B4DXN4_SINGLE_GRAD_PYMOL_FILE,
 		true
 	);
@@ -195,13 +195,13 @@ BOOST_AUTO_TEST_CASE(genome3d_big_tails_use_case) {
 		{ "cath-superpose",
 		  "--res-name-align",
 		  "--pdb-infile",
-		  ( TEST_RESIDUE_NAMES_DATA_DIR() / "Q9HAU8.DomSerf.1.pdb"     ).string(),
+		  ( TEST_RESIDUE_IDS_DATA_DIR() / "Q9HAU8.DomSerf.1.pdb"     ).string(),
 		  "--pdb-infile",
-		  ( TEST_RESIDUE_NAMES_DATA_DIR() / "Q9HAU8.PHYRE2.1.pdb"      ).string(),
+		  ( TEST_RESIDUE_IDS_DATA_DIR() / "Q9HAU8.PHYRE2.1.pdb"      ).string(),
 		  "--pdb-infile",
-		  ( TEST_RESIDUE_NAMES_DATA_DIR() / "Q9HAU8.SUPERFAMILY.2.pdb" ).string(),
+		  ( TEST_RESIDUE_IDS_DATA_DIR() / "Q9HAU8.SUPERFAMILY.2.pdb" ).string(),
 		  "--pdb-infile",
-		  ( TEST_RESIDUE_NAMES_DATA_DIR() / "Q9HAU8.VIVACE.1.pdb"      ).string(),
+		  ( TEST_RESIDUE_IDS_DATA_DIR() / "Q9HAU8.VIVACE.1.pdb"      ).string(),
 		  "--sup-to-pymol-file",
 		  get_filename( temp_cath_superposer_output_file ).string(),
 		  "--gradient-colour-alignment" },

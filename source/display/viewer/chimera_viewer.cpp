@@ -89,17 +89,17 @@ void cath::detail::write_chimera_pair_alignments(ostream                     &ar
 	const str_vec        names             = clean_names_for_viewer( arg_superposition_context );
 	
 	// Grab some basic details
-	const alignment::size_type num_entries   = min( the_alignment.num_entries(), names.size() );
-	const alignment::size_type aln_length    = the_alignment.length();
-	const residue_name_vec_vec residue_names = get_backbone_complete_residue_names_of_first_chains( pdbs );
+	const alignment::size_type num_entries = min( the_alignment.num_entries(), names.size() );
+	const alignment::size_type aln_length  = the_alignment.length();
+	const residue_id_vec_vec   residue_ids = get_backbone_complete_residue_ids_of_first_chains( pdbs );
 
 	for (size_t entry_ctr_a = 0; entry_ctr_a < num_entries; ++entry_ctr_a) {
-		const string           &name_a          = names        [ entry_ctr_a ];
-		const residue_name_vec &residue_names_a = residue_names[ entry_ctr_a ];
+		const string         &name_a        = names      [ entry_ctr_a ];
+		const residue_id_vec &residue_ids_a = residue_ids[ entry_ctr_a ];
 
 		for (size_t entry_ctr_b = entry_ctr_a+1; entry_ctr_b < num_entries; ++entry_ctr_b) {
-			const string           &name_b          = names        [ entry_ctr_b ];
-			const residue_name_vec &residue_names_b = residue_names[ entry_ctr_b ];
+			const string         &name_b        = names      [ entry_ctr_b ];
+			const residue_id_vec &residue_ids_b = residue_ids[ entry_ctr_b ];
 
 			bool added_pair_distances(false);
 			for (alignment::size_type aln_posn_ctr = 0; aln_posn_ctr < aln_length; ++aln_posn_ctr) {
@@ -107,24 +107,24 @@ void cath::detail::write_chimera_pair_alignments(ostream                     &ar
 				const aln_posn_opt position_b = the_alignment.position_of_entry_of_index( entry_ctr_b, aln_posn_ctr );
 				if ( position_a && position_b) {
 					added_pair_distances = true;
-					if ( *position_a >= residue_names_a.size() ) {
+					if ( *position_a >= residue_ids_a.size() ) {
 						BOOST_THROW_EXCEPTION(invalid_argument_exception(
 							"Whilst adding alignment extras in chimera_viewer, residue index "
 							+ lexical_cast<string>( *position_a )
 							+ " is out of range "
-							+ lexical_cast<string>(residue_names_a.size())
+							+ lexical_cast<string>(residue_ids_a.size())
 						));
 					}
-					if ( *position_b >= residue_names_b.size()) {
+					if ( *position_b >= residue_ids_b.size()) {
 						BOOST_THROW_EXCEPTION(invalid_argument_exception(
 							"Whilst adding alignment extras in chimera_viewer, residue index "
 							+ lexical_cast<string>( *position_b )
 							+ " is out of range "
-							+ lexical_cast<string>(residue_names_b.size())
+							+ lexical_cast<string>(residue_ids_b.size())
 						));
 					}
-					const residue_name &residue_name_a = residue_names_a[ *position_a ];
-					const residue_name &residue_name_b = residue_names_b[ *position_b ];
+					const residue_id &residue_id_a = residue_ids_a[ *position_a ];
+					const residue_id &residue_id_b = residue_ids_b[ *position_b ];
 
 					arg_os << "distance ";
 					arg_os << name_a;
@@ -133,12 +133,12 @@ void cath::detail::write_chimera_pair_alignments(ostream                     &ar
 					arg_os << "_alignment, /";
 					arg_os << name_a;
 					arg_os << "///";
-					arg_os << chimera_viewer::parse_residue_name_for_chimera( residue_name_a );
+					arg_os << chimera_viewer::parse_residue_id_for_chimera( residue_id_a );
 					arg_os << "/CA/, /";
 					arg_os << name_b;
 					arg_os << "///";
-//					arg_os << residue_name_b;
-					arg_os << chimera_viewer::parse_residue_name_for_chimera( residue_name_b );
+//					arg_os << residue_id_b;
+					arg_os << chimera_viewer::parse_residue_id_for_chimera( residue_id_b );
 					arg_os << "/CA/\n";
 				}
 			}
@@ -179,9 +179,9 @@ void cath::detail::write_chimera_global_alignment(ostream                     &a
 	const str_vec        names             = clean_names_for_viewer( arg_superposition_context );
 	
 	// Grab some basic details
-	const alignment::size_type num_entries   = min( the_alignment.num_entries(), names.size() );
-	const alignment::size_type aln_length    = the_alignment.length();
-	const residue_name_vec_vec residue_names = get_backbone_complete_residue_names_of_first_chains( pdbs );
+	const alignment::size_type num_entries = min( the_alignment.num_entries(), names.size() );
+	const alignment::size_type aln_length  = the_alignment.length();
+	const residue_id_vec_vec   residue_ids = get_backbone_complete_residue_ids_of_first_chains( pdbs );
 
 	/// ???
 	bool added_distances(false);
@@ -237,18 +237,18 @@ void cath::detail::write_chimera_global_alignment(ostream                     &a
 			const aln_posn_type  res_index_b = get_position_of_entry_of_index( the_alignment, entry_b, aln_index );
 			const string        &name_a      = names    [ entry_a ];
 			const string        &name_b      = names    [ entry_b ];
-			const residue_name  &res_name_a  = residue_names[ entry_a ][ res_index_a ];
-			const residue_name  &res_name_b  = residue_names[ entry_b ][ res_index_b ];
+			const residue_id    &res_name_a  = residue_ids[ entry_a ][ res_index_a ];
+			const residue_id    &res_name_b  = residue_ids[ entry_b ][ res_index_b ];
 
 			arg_os << "distance ";
 			arg_os << "alignment, /";
 			arg_os << name_a;
 			arg_os << "///";
-			arg_os << chimera_viewer::parse_residue_name_for_chimera( res_name_a );
+			arg_os << chimera_viewer::parse_residue_id_for_chimera( res_name_a );
 			arg_os << "/CA/, /";
 			arg_os << name_b;
 			arg_os << "///";
-			arg_os << chimera_viewer::parse_residue_name_for_chimera( res_name_b );
+			arg_os << chimera_viewer::parse_residue_id_for_chimera( res_name_b );
 			arg_os << "/CA/\n";
 		}
 	}
@@ -269,8 +269,8 @@ void cath::detail::write_chimera_global_alignment(ostream                     &a
 					const float_score_type  the_score  = get_score( the_scores, entry, index, true, true );
 					const bool              is_core    = ( the_score > 0.25 );
 					const aln_posn_type     the_posn   = get_position_of_entry_of_index( the_alignment, entry, index );
-					const residue_name     &res_name   = residue_names[ entry ][ the_posn ];
-					core_res_names_of_entry_name[ is_core ][ entry_name ].push_back( chimera_viewer::parse_residue_name_for_chimera( res_name ) );
+					const residue_id       &res_name   = residue_ids[ entry ][ the_posn ];
+					core_res_names_of_entry_name[ is_core ][ entry_name ].push_back( chimera_viewer::parse_residue_id_for_chimera( res_name ) );
 				}
 			}
 		}
@@ -377,11 +377,11 @@ string chimera_viewer::do_get_colour_pdb_str(const string &arg_colour_name, ///<
 ///
 /// This splits the list of residues into batches of RESIDUE_BATCH_SIZE
 /// because PyMOL just ignores a list of residues that's too long
-string chimera_viewer::do_get_colour_pdb_residues_str(const string           &arg_colour_name,  ///< TODOCUMENT
-                                                      const string           &arg_pdb_name,     ///< TODOCUMENT
-                                                      const residue_name_vec &arg_residue_names ///< TODOCUMENT
+string chimera_viewer::do_get_colour_pdb_residues_str(const string         &arg_colour_name, ///< TODOCUMENT
+                                                      const string         &arg_pdb_name,    ///< TODOCUMENT
+                                                      const residue_id_vec &arg_residue_ids  ///< TODOCUMENT
                                                       ) const {
-	const size_t num_res_names   = arg_residue_names.size();
+	const size_t num_res_names   = arg_residue_ids.size();
 	const size_t num_res_batches = num_batches( num_res_names, RESIDUE_BATCH_SIZE, broken_batch_tol::PERMIT );
 	return "colour " + arg_colour_name + ", "
 		+ join(
@@ -390,8 +390,8 @@ string chimera_viewer::do_get_colour_pdb_residues_str(const string           &ar
 				[&] (const size_t &batch_idx) {
 					return pymol_tools::pymol_res_seln_str(
 						arg_pdb_name,
-						copy_build<residue_name_vec>(
-							batch_subrange( arg_residue_names, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT )
+						copy_build<residue_id_vec>(
+							batch_subrange( arg_residue_ids, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT )
 						)
 					);
 				}
@@ -427,19 +427,19 @@ void chimera_viewer::do_write_end(ostream &arg_os ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-string chimera_viewer::parse_residue_name_for_chimera(const residue_name &arg_residue_name ///< TODOCUMENT
-                                                      ) {
-	return replace_all_copy( lexical_cast<string>( arg_residue_name ), "-", "\\-" );
+string chimera_viewer::parse_residue_id_for_chimera(const residue_id &arg_residue_id ///< TODOCUMENT
+                                                    ) {
+	return replace_all_copy( to_string( arg_residue_id ), "-", "\\-" );
 }
 
 /// \brief TODOCUMENT
-str_vec chimera_viewer::parse_residue_names_for_chimera(const residue_name_vec &arg_residue_names ///< TODOCUMENT
-                                                        ) {
-	str_vec new_residue_names;
-	new_residue_names.reserve( arg_residue_names.size() );
-	for (const residue_name &the_residue_name : arg_residue_names) {
-		new_residue_names.push_back( parse_residue_name_for_chimera( the_residue_name ) );
+str_vec chimera_viewer::parse_residue_ids_for_chimera(const residue_id_vec &arg_residue_ids ///< TODOCUMENT
+                                                      ) {
+	str_vec new_residue_ids;
+	new_residue_ids.reserve( arg_residue_ids.size() );
+	for (const residue_id &the_residue_id : arg_residue_ids) {
+		new_residue_ids.push_back( parse_residue_id_for_chimera( the_residue_id ) );
 	}
-	return new_residue_names;
+	return new_residue_ids;
 }
 

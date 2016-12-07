@@ -66,7 +66,7 @@ protein protein_source_from_pdb_dssp_and_sec::do_read_files(const data_file_path
 		sec_file,
 		limit_to_residues_in_dssp,
 		arg_protein_name,
-		arg_stderr
+		ref( arg_stderr )
 	);
 }
 

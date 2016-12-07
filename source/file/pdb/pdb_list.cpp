@@ -132,7 +132,7 @@ pdb_list cath::file::pdb_list_of_backbone_complete_subset_pdbs(const pdb_list   
 	pdb_list new_pdb_list;
 	new_pdb_list.reserve( arg_pdb_list.size() );
 	for (const pdb &the_pdb : arg_pdb_list) {
-		new_pdb_list.push_back( backbone_complete_subset_of_pdb( the_pdb, arg_ostream ) );
+		new_pdb_list.push_back( backbone_complete_subset_of_pdb( the_pdb, arg_ostream ).first );
 	}
 	return new_pdb_list;
 }
@@ -190,27 +190,27 @@ amino_acid_vec_vec cath::file::get_amino_acid_lists(const pdb_list &arg_pdb_list
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_list
-residue_name_vec_vec cath::file::get_residue_names_of_first_chains__backbone_unchecked(const pdb_list &arg_pdb_list ///< TODOCUMENT
-                                                                                       ) {
+residue_id_vec_vec cath::file::get_residue_ids_of_first_chains__backbone_unchecked(const pdb_list &arg_pdb_list ///< TODOCUMENT
+                                                                                   ) {
 	const size_t num_pdbs = arg_pdb_list.size();
-	residue_name_vec_vec residue_names;
-	residue_names.reserve( num_pdbs );
+	residue_id_vec_vec residue_ids;
+	residue_ids.reserve( num_pdbs );
 	for (size_t pdb_ctr = 0; pdb_ctr < num_pdbs; ++pdb_ctr) {
-		residue_names.push_back( arg_pdb_list[ pdb_ctr ].get_residue_names_of_first_chain__backbone_unchecked() );
+		residue_ids.push_back( arg_pdb_list[ pdb_ctr ].get_residue_ids_of_first_chain__backbone_unchecked() );
 	}
-	return residue_names;
+	return residue_ids;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_list
-residue_name_vec_vec cath::file::get_backbone_complete_residue_names_of_first_chains(const pdb_list &arg_pdb_list ///< TODOCUMENT
-                                                                                     ) {
+residue_id_vec_vec cath::file::get_backbone_complete_residue_ids_of_first_chains(const pdb_list &arg_pdb_list ///< TODOCUMENT
+                                                                                 ) {
 	const size_t num_pdbs = arg_pdb_list.size();
-	residue_name_vec_vec residue_names;
-	residue_names.reserve( num_pdbs );
+	residue_id_vec_vec residue_ids;
+	residue_ids.reserve( num_pdbs );
 	for (size_t pdb_ctr = 0; pdb_ctr < num_pdbs; ++pdb_ctr) {
-		residue_names.push_back( arg_pdb_list[ pdb_ctr ].get_backbone_complete_residue_names_of_first_chain() );
+		residue_ids.push_back( arg_pdb_list[ pdb_ctr ].get_backbone_complete_residue_ids_of_first_chain() );
 	}
-	return residue_names;
+	return residue_ids;
 }

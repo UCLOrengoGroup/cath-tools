@@ -792,7 +792,7 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 
 	// Re-calculate if there is a domin file
 	if ( arg_domin_file ) {
-		remove_domin_res( new_protein_to_populate, *arg_domin_file, arg_stderr);
+		remove_domin_res( new_protein_to_populate, *arg_domin_file, ref( arg_stderr ) );
 	}
 
 	//	// Return the newly created protein object
@@ -888,9 +888,9 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 					int astart = atoi( clique_data.equivs[k].prota_start ) - boundary;
 					int aend   = atoi( clique_data.equivs[k].prota_end   ) + boundary;
 
-					if (get_pdb_name_number( residue_a )           && get_pdb_name_number( residue_b )         &&
-						get_pdb_name_number( residue_b ) >= bstart && get_pdb_name_number( residue_b ) <= bend &&
-						get_pdb_name_number( residue_a ) >= astart && get_pdb_name_number( residue_a ) <= aend) {
+					if ( pdb_number( residue_a )           && pdb_number( residue_b )         &&
+					     pdb_number( residue_b ) >= bstart && pdb_number( residue_b ) <= bend &&
+					     pdb_number( residue_a ) >= astart && pdb_number( residue_a ) <= aend ) {
 						global_lower_mask_matrix.set( ctr_b, ctr_a, true );
 						break;
 					}
@@ -903,9 +903,9 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 					int astart = atoi( clique_data.equivs[ k + 1 ].prota_start ) + boundary;
 					int aend   = atoi( clique_data.equivs[ k     ].prota_end   ) - boundary;
 
-					if (get_pdb_name_number( residue_a )          && get_pdb_name_number( residue_b )        &&
-						get_pdb_name_number( residue_b ) < bstart && get_pdb_name_number( residue_b ) > bend &&
-						get_pdb_name_number( residue_a ) < astart && get_pdb_name_number( residue_a ) > aend) {
+					if ( pdb_number( residue_a )          && pdb_number( residue_b )        &&
+					     pdb_number( residue_b ) < bstart && pdb_number( residue_b ) > bend &&
+					     pdb_number( residue_a ) < astart && pdb_number( residue_a ) > aend ) {
 						global_lower_mask_matrix.set( ctr_b, ctr_a, true );
 						break;
 					}
@@ -926,11 +926,11 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 				const residue &residue_a = get_residue_ref_of_index__offset_1(arg_protein_a, ctr_a);
 
 				// Tail end of alignment
-				if ( get_pdb_name_number( residue_a ) > lasta  && get_pdb_name_number( residue_b ) > lastb ) {
+				if ( pdb_number( residue_a ) > lasta  && pdb_number( residue_b ) > lastb  ) {
 					global_lower_mask_matrix.set( ctr_b, ctr_a, true );
 				}
 				// Start of alignment
-				if ( get_pdb_name_number( residue_a ) < firsta && get_pdb_name_number( residue_b ) < firstb ) {
+				if ( pdb_number( residue_a ) < firsta && pdb_number( residue_b ) < firstb ) {
 					global_lower_mask_matrix.set( ctr_b, ctr_a, true );
 				}
 			}

@@ -227,10 +227,10 @@ void cath::colour_viewer_with_spec(const display_colour_spec &arg_colour_spec,  
 			arg_os << arg_viewer.get_colour_pdb_residues_str(
 				generate_colour_name( colour_ctr, num_colours ),
 				cleaned_names[ pdb_index ],
-				transform_build<residue_name_vec>(
+				transform_build<residue_id_vec>(
 					pdb_and_res_index.second,
 					[&] (const size_t &x) {
-						return pdbs[ pdb_index ].get_residue_cref_of_backbone_complete_index( x ).get_residue_name();
+						return pdbs[ pdb_index ].get_residue_cref_of_backbone_complete_index( x ).get_residue_id();
 					}
 				)
 			);

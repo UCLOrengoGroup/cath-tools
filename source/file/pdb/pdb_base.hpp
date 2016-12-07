@@ -64,7 +64,7 @@ namespace cath {
 			virtual void do_read_file(const boost::filesystem::path &) = 0;
 			virtual void do_append_to_file(const boost::filesystem::path &) const = 0;
 			virtual void do_set_chain_label(const chain_label &) = 0;
-			virtual residue_name_vec do_get_residue_names_of_first_chain__backbone_unchecked() const = 0;
+			virtual residue_id_vec do_get_residue_ids_of_first_chain__backbone_unchecked() const = 0;
 			virtual geom::coord do_get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const = 0;
 			virtual size_t do_get_num_atoms() const = 0;
 
@@ -84,7 +84,7 @@ namespace cath {
 			void read_file(const boost::filesystem::path &);
 			void append_to_file(const boost::filesystem::path &) const;
 			void set_chain_label(const chain_label &);
-			residue_name_vec get_residue_names_of_first_chain__backbone_unchecked() const;
+			residue_id_vec get_residue_ids_of_first_chain__backbone_unchecked() const;
 			geom::coord get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const;
 			size_t get_num_atoms() const;
 

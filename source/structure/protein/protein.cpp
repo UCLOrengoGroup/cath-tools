@@ -29,13 +29,12 @@
 #include "common/algorithm/transform_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
-//#include "common/temp_check_offset_1.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "ssap/context_res.hpp"
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
-#include "structure/residue_name.hpp"
+#include "structure/residue_id.hpp"
 
 #include <algorithm> // for max, min
 #include <iterator>  // for end, begin, etc
@@ -137,7 +136,7 @@ protein cath::build_protein(const residue_vec &arg_residues ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-protein cath::build_protein(const residue_vec       &arg_residues,  ///< TODOCUMENT
+protein cath::build_protein(const residue_vec   &arg_residues,  ///< TODOCUMENT
                             const sec_struc_vec &arg_sec_strucs ///< TODOCUMENT
                             ) {
 	protein new_protein;
@@ -149,27 +148,27 @@ protein cath::build_protein(const residue_vec       &arg_residues,  ///< TODOCUM
 /// \brief Retrieve the PDB residue name for the residue with the specified index in the specified protein
 ///
 /// \relates protein
-residue_name cath::get_pdb_residue_name_of_index(const protein &arg_protein,      ///< The protein containing the residue whose name should be returned
-                                                 const size_t  &arg_residue_index ///< The index of the residue within the protein
-                                                 ) {
-	return arg_protein.get_residue_ref_of_index( arg_residue_index ).get_pdb_residue_name();
+residue_id cath::get_pdb_residue_id_of_index(const protein &arg_protein,      ///< The protein containing the residue whose name should be returned
+                                             const size_t  &arg_residue_index ///< The index of the residue within the protein
+                                             ) {
+	return arg_protein.get_residue_ref_of_index( arg_residue_index ).get_pdb_residue_id();
 }
 
 /// \brief Retrieve the PDB residue name for the residue with the specified index in the specified protein
 ///
 /// \relates protein
-string cath::get_pdb_residue_name_string_of_index(const protein &arg_protein,      ///< The protein containing the residue whose name should be returned
-                                                  const size_t  &arg_residue_index ///< The index of the residue within the protein
-                                                  ) {
-	return lexical_cast<string>( get_pdb_residue_name_of_index( arg_protein, arg_residue_index ) );
+string cath::get_pdb_residue_id_string_of_index(const protein &arg_protein,      ///< The protein containing the residue whose name should be returned
+                                                const size_t  &arg_residue_index ///< The index of the residue within the protein
+                                                ) {
+	return to_string( get_pdb_residue_id_of_index( arg_protein, arg_residue_index ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates protein
-size_t cath::get_index_of_pdb_residue_name(const protein      &arg_protein,     ///< TODOUCMENT
-                                           const residue_name &arg_residue_name ///< TODOUCMENT
-                                           ) {
+size_t cath::get_index_of_pdb_residue_id(const protein    &arg_protein,   ///< TODOUCMENT
+                                         const residue_id &arg_residue_id ///< TODOUCMENT
+                                         ) {
 	// Return the distance from the start of the protein to the result of finding a residue
 	// that matches the specified residue name
 
@@ -177,13 +176,13 @@ size_t cath::get_index_of_pdb_residue_name(const protein      &arg_protein,     
 		common::cbegin( arg_protein ),
 		find_if(
 			arg_protein,
-			[&] (const residue &x) { return residue_matches_residue_name( x, arg_residue_name ); }
+			[&] (const residue &x) { return residue_matches_residue_id( x, arg_residue_id ); }
 		)
 	) );
 	if ( result_index >= arg_protein.get_length() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Unable to find residue with residue name \""
-			+ lexical_cast<string>( arg_residue_name )
+			+ to_string( arg_residue_id )
 			+ "\" in protein"
 		));
 	}
@@ -222,11 +221,11 @@ char cath::get_amino_acid_letter_of_index(const protein &arg_protein,      ///< 
 /// \brief Retrieve a list of all the PDB residue names of the residues in the specified protein
 ///
 /// \relates protein
-residue_name_vec cath::get_residue_names(const protein &arg_protein ///< The protein containing the residues whose names should be returned
-                                         ) {
-	return transform_build<residue_name_vec>(
+residue_id_vec cath::get_residue_ids(const protein &arg_protein ///< The protein containing the residues whose names should be returned
+                                     ) {
+	return transform_build<residue_id_vec>(
 		arg_protein,
-		[] (const residue &x) { return x.get_pdb_residue_name(); }
+		[] (const residue &x) { return x.get_pdb_residue_id(); }
 	);
 }
 
@@ -243,8 +242,8 @@ void cath::wipe_sec_strucs_of_residues(protein &arg_protein ///< The protein obj
 /// \brief Label residues with appropriate secondary structure numbers
 ///
 /// \relatesalso protein
-void cath::label_residues_with_sec_strucs(protein &arg_protein,   ///< The protein object to modify
-                                          ostream &/*arg_stderr*/ ///< TODOCUMENT
+void cath::label_residues_with_sec_strucs(protein               &arg_protein,   ///< The protein object to modify
+                                          const ostream_ref_opt &/*arg_stderr*/ ///< TODOCUMENT
                                           ) {
 	/// \brief TODOCUMENT
 	const size_t num_residues = arg_protein.get_length();

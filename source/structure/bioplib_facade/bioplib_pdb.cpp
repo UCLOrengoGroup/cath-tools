@@ -31,7 +31,7 @@
 #include "structure/bioplib_facade/bioplib_interface.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/rotation.hpp"
-#include "structure/residue_name.hpp"
+#include "structure/residue_id.hpp"
 
 #include <iostream> // **** TEMPORARY ****
 
@@ -162,24 +162,25 @@ void bioplib_pdb::do_set_chain_label(const chain_label &arg_chain_label ///< TOD
 /// Any whitespace is trimmed off the insert code.
 ///
 /// This is tested in get_residue_names_test.cpp
-residue_name_vec bioplib_pdb::do_get_residue_names_of_first_chain__backbone_unchecked() const {
+residue_id_vec bioplib_pdb::do_get_residue_ids_of_first_chain__backbone_unchecked() const {
 	check_ptr();
-	residue_name_vec residue_names;
+	residue_id_vec residue_ids;
 
 	// Loop over the atom records
 	const size_t my_natoms = get_natoms();
 	const PDB *current = get_ptr();
 	for (size_t atom_ctr = 0; atom_ctr < my_natoms; ++atom_ctr) {
 		// Construct a residue name from a lexical_cast of the resnum and a trim of a string of the insert
-		const string       residue_number   = lexical_cast<string>( current->resnum );
+		const string       residue_number   = ::std::to_string( current->resnum );
 		const string       residue_insert   = trim_copy( string( current->insert ) );
 		const string       residue_name_str = residue_number + residue_insert;
 		const residue_name res_name         = make_residue_name( residue_name_str  );
+		const residue_id   new_res_id       = residue_id{ chain_label{ current->chain[ 0 ] }, res_name };
 
 		// If this is the first atom or of the residue_name is different from the most recent one,
 		// add it to the list
-		if ( residue_names.empty() || residue_names.back() != res_name ) {
-			residue_names.push_back( res_name );
+		if ( residue_ids.empty() || residue_ids.back() != new_res_id ) {
+			residue_ids.push_back( new_res_id );
 		}
 
 		// Step forward
@@ -187,7 +188,7 @@ residue_name_vec bioplib_pdb::do_get_residue_names_of_first_chain__backbone_unch
 	}
 
 	// Return the results
-	return residue_names;
+	return residue_ids;
 }
 
 /// \brief Grab the carbon alpha coordinates of the residue with the specified index

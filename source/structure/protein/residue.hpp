@@ -28,7 +28,7 @@
 #include "structure/geometry/rotation.hpp"
 #include "structure/protein/amino_acid.hpp"
 #include "structure/protein/sec_struc_type.hpp"
-#include "structure/residue_name.hpp"
+#include "structure/residue_id.hpp"
 
 #include <cstddef>
 #include <iosfwd>
@@ -36,8 +36,6 @@
 namespace cath {
 
 	/// \brief TODOCUMENT
-	///
-	/// \todo No chain code?
 	///
 	/// \todo This currently hard-codes the member+getter for two atoms coordinates: CA and CB
 	///       These two should remain and remain mandatory but they should be complemented by
@@ -53,7 +51,7 @@ namespace cath {
 	class residue final : private boost::equality_comparable<residue> {
 	private:
 		/// \brief TODOCUMENT
-		residue_name   the_residue_name;
+		residue_id     the_residue_id;
 
 		/// \brief Single character representing the amino acid ('0' or an upper case letter)
 		amino_acid     the_amino_acid;
@@ -87,7 +85,7 @@ namespace cath {
 		static void check_phi_psi_angle(const geom::doub_angle &);
 
 	public:
-		residue(const residue_name &,
+		residue(const residue_id &,
 		        const amino_acid &,
 		        const geom::coord &,
 		        const geom::coord &,
@@ -104,7 +102,7 @@ namespace cath {
 		void set_residue_sec_struc_number(const size_t &);
 		void set_sec_struc_type(const sec_struc_type &);
 
-		const residue_name & get_pdb_residue_name() const;
+		const residue_id & get_pdb_residue_id() const;
 		amino_acid get_amino_acid() const;
 		inline const geom::coord & get_carbon_alpha_coord() const;
 		inline const geom::coord & get_carbon_beta_coord() const;
@@ -141,12 +139,23 @@ namespace cath {
 	bool operator==(const residue &,
 	                const residue &);
 
-	int get_pdb_name_number(const residue &);
-	bool has_pdb_name_insert(const residue &);
-	char get_pdb_name_insert(const residue &);
+	const chain_label & get_chain_label(const residue &);
+	const residue_name & get_pdb_residue_name(const residue &);
 
-	bool residue_matches_residue_name(const residue &,
-	                                  const residue_name &);
+	const int & pdb_number(const residue &);
+	int pdb_number_or_value_if_null(const residue &,
+	                                const int &);
+	bool has_pdb_insert(const residue &);
+	bool has_pdb_insert_or_value_if_null(const residue &,
+	                                     const bool &);
+	const char & pdb_insert(const residue &);
+	char pdb_insert_or_value_if_null(const residue &,
+	                                 const char &);
+	char pdb_insert_or_value_if_null_or_absent(const residue &,
+	                                           const char &);
+
+	bool residue_matches_residue_id(const residue &,
+	                                const residue_id &);
 
 	char get_amino_acid_letter(const residue &);
 
@@ -162,7 +171,7 @@ namespace cath {
 
 	std::string ssap_legacy_alignment_right_side_gap_string();
 
-	std::string get_pdb_residue_name_string(const residue &);
+	std::string get_pdb_residue_id_string(const residue &);
 
 	int get_accessi_of_residue(const residue &);
 

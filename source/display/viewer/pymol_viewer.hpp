@@ -50,7 +50,7 @@ namespace cath {
 		                                          const std::string &) const override final;
 		virtual std::string do_get_colour_pdb_residues_str(const std::string &,
 		                                                   const std::string &,
-		                                                   const residue_name_vec &) const override final;
+		                                                   const residue_id_vec &) const override final;
 		virtual void do_write_alignment_extras(std::ostream &,
 		                                       const sup::superposition_context &) const override final;
 		virtual void do_write_end(std::ostream &) const override final;

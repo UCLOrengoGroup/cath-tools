@@ -154,8 +154,10 @@ BOOST_AUTO_TEST_SUITE_END()
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(alignment_legacy_input_output) {
-	const protein protein_a = read_protein_from_dssp_and_pdb( EXAMPLE_A_DSSP_FILENAME(), EXAMPLE_A_PDB_FILENAME(), true, EXAMPLE_A_PDB_STEMNAME() );
-	const protein protein_b = read_protein_from_dssp_and_pdb( EXAMPLE_B_DSSP_FILENAME(), EXAMPLE_B_PDB_FILENAME(), true, EXAMPLE_B_PDB_STEMNAME() );
+	ostringstream err_ss;
+
+	const protein protein_a = read_protein_from_dssp_and_pdb( EXAMPLE_A_DSSP_FILENAME(), EXAMPLE_A_PDB_FILENAME(), true, EXAMPLE_A_PDB_STEMNAME(), reference_wrapper<ostream>( err_ss ) );
+	const protein protein_b = read_protein_from_dssp_and_pdb( EXAMPLE_B_DSSP_FILENAME(), EXAMPLE_B_PDB_FILENAME(), true, EXAMPLE_B_PDB_STEMNAME(), reference_wrapper<ostream>( err_ss ) );
 
 	// Read the alignment file into a stringstream which can be used both as expected output
 	// and as the istream for the parsing of the alignment
@@ -180,6 +182,8 @@ BOOST_AUTO_TEST_CASE(alignment_legacy_input_output) {
 
 	// Check that the data in the read+written alignment matches the original
 	BOOST_CHECK_EQUAL( expected_ss.str(), got_ss.str() );
+	BOOST_CHECK_EQUAL( err_ss.str(),      ""s          );
+	
 }
 
 BOOST_AUTO_TEST_SUITE_END()
