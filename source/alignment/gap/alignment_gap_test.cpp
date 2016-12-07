@@ -80,7 +80,7 @@ alignment cath::test::alignment_gap_test_suite_fixture::make_gap_alignment_of_st
 			else {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(
 					"Unable to recognise character "
-					+ string( 1, character )
+					+ string{ character }
 					+ " in gap alignment string"
 				));
 			}

@@ -66,7 +66,7 @@ string upper_first_lower_rest(const string &arg_string
 	return arg_string.empty()
 		? arg_string
 		: (
-			to_upper_copy( string( 1, arg_string.front() ) )
+			to_upper_copy( string{ arg_string.front() } )
 			+ to_lower_copy( string{
 				std::next( common::cbegin( arg_string ) ),
 				           common::cend  ( arg_string )

@@ -53,7 +53,7 @@ namespace cath {
 				for (size_t atom_ctr = 0; atom_ctr < natoms; ++atom_ctr) {
 					BOOST_REQUIRE( ptr != nullptr );
 					assert( ptr != nullptr ); // Post-BOOST_REQUIRE() assert() to appease clang's analyzer
-					BOOST_CHECK_EQUAL( string( 1, arg_char ), string( ptr->chain ) );
+					BOOST_CHECK_EQUAL( string{ arg_char }, string( ptr->chain ) );
 					ptr = ptr->next;
 				}
 			}
@@ -65,7 +65,7 @@ namespace cath {
 				for (size_t atom_ctr = 0; atom_ctr < natoms; ++atom_ctr) {
 					BOOST_REQUIRE( ptr != nullptr );
 					assert( ptr != nullptr ); // Post-BOOST_REQUIRE() assert() to appease clang's analyzer
-					BOOST_CHECK_EQUAL(string(1, arg_char), string(ptr->chain));
+					BOOST_CHECK_EQUAL( string{ arg_char }, string(ptr->chain));
 					ptr = ptr->next;
 				}
 			}
