@@ -192,7 +192,7 @@ BOOST_AUTO_TEST_CASE(handles_mixed_alt_loc) {
 }
 
 BOOST_AUTO_TEST_CASE(handles_residues_dssp_skips_due_to_alt_locs) {
-	use_dssp_file_to_check_hbonds_calcs( global_test_constants::TEST_RESIDUE_NAMES_DATA_DIR() / "1p3cA.dssp" ); // Eg, residue 36
+	use_dssp_file_to_check_hbonds_calcs( global_test_constants::TEST_RESIDUE_IDS_DATA_DIR() / "1p3cA.dssp" ); // Eg, residue 36
 }
 
 BOOST_AUTO_TEST_CASE(handles_incomplete_residues) {

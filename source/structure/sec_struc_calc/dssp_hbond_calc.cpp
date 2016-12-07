@@ -50,7 +50,7 @@ bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_resi
 			arg_pdb,
 			arg_ostream_ref_opt,
 			SKIP_RESIDUES_DSSP_WOULD_SKIP
-		)
+		).first
 	);
 }
 
