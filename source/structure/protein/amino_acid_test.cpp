@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(simple_conversion) {
 		BOOST_CHECK_EQUAL( letter, get_letter_of_amino_acid_code( code   ) );
 
 		// Check that the correct amino acid is constructed from any of the three labels
-		const str_vec all_names_and_codes = { code, string(1, letter), name} ;
+		const str_vec all_names_and_codes = { code, string{ letter }, name} ;
 		for (const string &name_or_code : all_names_and_codes) {
 			const amino_acid the_amino_acid(name_or_code);
 			BOOST_CHECK_EQUAL( the_amino_acid.get_name(),   name   );

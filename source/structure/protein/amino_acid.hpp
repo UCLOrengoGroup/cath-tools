@@ -147,7 +147,7 @@ namespace cath {
 		const auto index_itr = INDEX_OF_LETTER().find( arg_letter );
 		if ( index_itr == common::cend( INDEX_OF_LETTER() ) ) {
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
-				"Amino acid letter \"" + std::string{ 1, arg_letter } + "\" is not a recognised letter (currently case-sensitive)"
+				"Amino acid letter \"" + std::string{ arg_letter } + "\" is not a recognised letter (currently case-sensitive)"
 			));
 		}
 		return index_itr->second;
