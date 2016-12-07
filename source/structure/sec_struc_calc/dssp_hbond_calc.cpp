@@ -25,11 +25,13 @@
 #include "common/debug_numeric_cast.hpp"
 #include "common/size_t_literal.hpp"
 #include "file/pdb/pdb_atom.hpp"
+#include "scan/spatial_index/spatial_index.hpp"
 #include "structure/sec_struc_calc/bifur_hbond_list.hpp"
 
 using namespace cath::common;
-using namespace cath::sec;
 using namespace cath::file;
+using namespace cath::scan;
+using namespace cath::sec;
 
 using boost::irange;
 using std::make_pair;
@@ -63,35 +65,32 @@ bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_resi
 /// with a non backbone-complete PDB
 bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb(const pdb &arg_pdb ///< The PDB to query
                                                                              ) {
+	constexpr float MAX_DIST  =  9.0;
+	constexpr float CELL_SIZE = 18.0;
 	const size_t num_pdb_residues = arg_pdb.get_num_residues();
 
 	bifur_hbond_list results{ num_pdb_residues };
 
-	for (const size_t &i : irange( 0_z, num_pdb_residues ) ) {
+	const auto lattice = make_sparse_lattice( arg_pdb, CELL_SIZE );
 
-		for (const size_t &j : irange( i + 1, num_pdb_residues ) ) {
-
-			for (const auto &indices : { make_pair( i, j ), make_pair( j, i ) } ) {
-				const auto &index_1 = indices.first;
-				const auto &index_2 = indices.second;
-
-				if ( dssp_hbond_calc::has_hbond_energy_asymm( arg_pdb, index_1, index_2 ) ) {
-					const auto energy = dssp_hbond_calc::get_hbond_energy_asymm(
-						arg_pdb,
-						index_1,
-						index_2
+	scan_sparse_lattice(
+		lattice,
+		arg_pdb,
+		CELL_SIZE,
+		MAX_DIST,
+		[&] (const simple_locn_index &x, const simple_locn_index &y) {
+			if ( dssp_hbond_calc::has_hbond_energy_asymm( arg_pdb, x.index, y.index ) ) {
+				const auto energy = dssp_hbond_calc::get_hbond_energy_asymm( arg_pdb, x.index, y.index );
+				if ( energy < 0.0 ) {
+					results.update_with_nh_idx_co_idx_energy(
+						x.index,
+						y.index,
+						energy
 					);
-					if ( energy < 0.0 ) {
-						results.update_with_nh_idx_co_idx_energy(
-							debug_numeric_cast<hbond_partner_t>( index_1  ),
-							debug_numeric_cast<hbond_partner_t>( index_2 ),
-							energy
-						);
-					}
 				}
 			}
 		}
-	}
+	);
 
 	return results;
 }

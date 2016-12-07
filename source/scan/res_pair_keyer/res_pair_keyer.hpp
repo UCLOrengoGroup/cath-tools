@@ -60,6 +60,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			using key_ranges_tuple_type = detail::key_ranges_tuple_t<KPs...>;
 
+
 			explicit constexpr res_pair_keyer(const KPs &...);
 			// res_pair_keyer(const keyer_part_tuple &);
 
@@ -72,6 +73,14 @@ namespace cath {
 			template <typename Data, typename Crit>
 			constexpr key_ranges_tuple_type make_close_keys(Data &&,
 			                                                Crit &&) const;
+
+			template <typename Data, typename Crit>
+			constexpr key_index_tuple_type make_min_close_key(Data &&,
+			                                                  Crit &&) const;
+
+			template <typename Data, typename Crit>
+			constexpr key_index_tuple_type make_max_close_key(Data &&,
+			                                                  Crit &&) const;
 
 			std::string parts_names() const;
 		};
@@ -101,14 +110,32 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename... KPs>
 		template <typename Data, typename Crit>
-		inline constexpr auto res_pair_keyer<KPs...>::make_close_keys(Data &&arg_data, ///< TODOCUMENT
-		                                                              Crit &&arg_criteria  ///< The criteria defining what is considered a match
+		inline constexpr auto res_pair_keyer<KPs...>::make_close_keys(Data &&arg_data,    ///< TODOCUMENT
+		                                                              Crit &&arg_criteria ///< The criteria defining what is considered a match
 		                                                              ) const -> key_ranges_tuple_type {
 			return detail::make_close_keys(
 				keyer_parts,
 				std::forward<Data>( arg_data ),
 				std::forward<Crit>( arg_criteria )
 			);
+		}
+
+		/// \brief TODOCUMENT
+		template <typename... KPs>
+		template <typename Data, typename Crit>
+		inline constexpr auto res_pair_keyer<KPs...>::make_min_close_key(Data &&arg_data,    ///< TODOCUMENT
+		                                                                 Crit &&arg_criteria ///< The criteria defining what is considered a match
+		                                                                 ) const -> key_index_tuple_type {
+			return detail::make_min_close_key( keyer_parts, std::forward<Data>( arg_data ), std::forward<Crit>( arg_criteria ) );
+		}
+
+		/// \brief TODOCUMENT
+		template <typename... KPs>
+		template <typename Data, typename Crit>
+		inline constexpr auto res_pair_keyer<KPs...>::make_max_close_key(Data &&arg_data,    ///< TODOCUMENT
+		                                                                 Crit &&arg_criteria ///< The criteria defining what is considered a match
+		                                                                 ) const -> key_index_tuple_type {
+			return detail::make_max_close_key( keyer_parts, std::forward<Data>( arg_data ), std::forward<Crit>( arg_criteria ) );
 		}
 
 		/// \brief TODOCUMENT

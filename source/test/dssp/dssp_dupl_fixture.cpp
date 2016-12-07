@@ -124,10 +124,17 @@ str_opt cath::sec::difference_string(const string         &arg_context_str,     
 	}
 	if ( arg_dsspfile_hbond_opt && arg_hbond_half_opt ) {
 		if ( arg_dsspfile_hbond_opt->index != arg_hbond_half_opt->index ) {
-			return "DSSP bond destination residue index of "
+			return "DSSP "
+				+ arg_context_str
+				+ " bond destination residue index of "
 				+ ::std::to_string( arg_dsspfile_hbond_opt->index )
-				+ " doesn't match calculated index of "
-				+ ::std::to_string( arg_hbond_half_opt->index );
+				+ " (with bond energy of "
+				+ ::std::to_string( arg_dsspfile_hbond_opt->energy )
+				+ ") doesn't match calculated index of "
+				+ ::std::to_string( arg_hbond_half_opt->index )
+				+ " (with bond energy of "
+				+ ::std::to_string( arg_hbond_half_opt->energy )
+				+ ")";
 		}
 
 		const auto rounded_calc_energy = stod( ( format("%3.1f") % arg_hbond_half_opt->energy ).str() );

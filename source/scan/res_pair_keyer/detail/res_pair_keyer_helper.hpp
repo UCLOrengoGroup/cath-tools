@@ -95,7 +95,11 @@ namespace cath {
 				return { arg_data };
 			}
 
-			/// \brief Helper for make_key(), below, (via make_key_parts_key_maker())
+
+
+
+
+			/// \brief Helper for make_key(), below, (via make_keyer_parts_key_maker())
 			///
 			/// \todo Come C++17, this can be replaced by a constexpr lambda - see make_key() notes
 			template <typename Data>
@@ -114,11 +118,11 @@ namespace cath {
 				
 				/// \brief Function operator to apply a bunch of keyer_parts to data and return the keys in a tuple
 				template <typename... KPs>
-				constexpr auto operator()(const KPs &...arg_key_parts ///< The keyer_parts to be used to get the key parts from the data
+				constexpr auto operator()(const KPs &...arg_keyer_parts ///< The keyer_parts to be used to get the key parts from the data
 				                          ) {
 					return std::make_tuple(
-						arg_key_parts.key_part(
-							arg_key_parts.get_value( data )
+						arg_keyer_parts.key_part(
+							arg_keyer_parts.get_value( data )
 						)...
 					);
 				}
@@ -130,12 +134,126 @@ namespace cath {
 			///        * class template deduction means the deduction can just be performed by a call to the ctor
 			///        * keyer_parts_key_maker can be completely replaced with a constexpr lambda
 			template <typename Data>
-			constexpr keyer_parts_key_maker<Data> make_keyer_parts_key_maker(const Data &arg_data ///< The data to be passed to the key_parts
+			constexpr keyer_parts_key_maker<Data> make_keyer_parts_key_maker(const Data &arg_data ///< The data to be passed to the keyer_parts
 			                                                                 ) {
 				return { arg_data };
 			}
 
-			/// \brief Template function to make a value tuple from a tuple of key_parts and an instance of their common data type
+
+
+
+
+
+			/// \brief Helper for make_min_close_key(), below, (via make_keyer_parts_min_close_key_maker())
+			///
+			/// \todo Come C++17, this can be replaced by a constexpr lambda - see make_min_close_key() notes
+			template <typename Data, typename Crit>
+			struct keyer_parts_min_close_key_maker final {
+
+				/// \brief Const reference to the data to be passed to the keyer_parts
+				///
+				/// This mustn't attempt to store by rvalue ref and forward because it's
+				/// used in multiple calls for the keyer_parts in the tuple
+				const Data &data;
+
+				/// \brief Const reference to the data to be passed to the keyer_parts
+				///
+				/// This mustn't attempt to store by rvalue ref and forward because it's
+				/// used in multiple calls for the keyer_parts in the tuple
+				const Crit &crit;
+				
+				/// \brief Ctor from the data to be passed to the keyer_parts
+				constexpr keyer_parts_min_close_key_maker(const Data &arg_data, ///< The data to be passed to the keyer_parts
+				                                          const Crit &arg_crit  ///< TODOCUMENT
+				                                          ) : data{ arg_data },
+				                                              crit{ arg_crit } {
+				}
+				
+				/// \brief Function operator to apply a bunch of keyer_parts to data and return the keys in a tuple
+				template <typename... KPs>
+				constexpr auto operator()(const KPs &...arg_keyer_parts ///< The keyer_parts to be used to get the key parts from the data
+				                          ) {
+					return std::make_tuple(
+						arg_keyer_parts.min_close_key_part(
+							arg_keyer_parts.get_value        ( data ),
+							arg_keyer_parts.get_search_radius( crit )
+						)...
+					);
+				}
+			};
+
+			/// \brief Factory function for keyer_parts_min_close_key_maker to provide type deduction for construction
+			///
+			/// \todo Come C++17 there are two reasons this is redundant and can be removed:
+			///        * class template deduction means the deduction can just be performed by a call to the ctor
+			///        * keyer_parts_min_close_key_maker can be completely replaced with a constexpr lambda
+			template <typename Data, typename Crit>
+			constexpr keyer_parts_min_close_key_maker<Data, Crit> make_keyer_parts_min_close_key_maker(const Data &arg_data, ///< The data to be passed to the keyer_parts
+			                                                                                           const Crit &arg_crit  ///< TODOCUMENT
+			                                                                                           ) {
+				return { arg_data, arg_crit };
+			}
+
+
+
+
+			/// \brief Helper for make_max_close_key(), below, (via make_keyer_parts_max_close_key_maker())
+			///
+			/// \todo Come C++17, this can be replaced by a constexpr lambda - see make_max_close_key() notes
+			template <typename Data, typename Crit>
+			struct keyer_parts_max_close_key_maker final {
+
+				/// \brief Const reference to the data to be passed to the keyer_parts
+				///
+				/// This mustn't attempt to store by rvalue ref and forward because it's
+				/// used in multiple calls for the keyer_parts in the tuple
+				const Data &data;
+
+				/// \brief Const reference to the data to be passed to the keyer_parts
+				///
+				/// This mustn't attempt to store by rvalue ref and forward because it's
+				/// used in multiple calls for the keyer_parts in the tuple
+				const Crit &crit;
+				
+				/// \brief Ctor from the data to be passed to the keyer_parts
+				constexpr keyer_parts_max_close_key_maker(const Data &arg_data, ///< The data to be passed to the keyer_parts
+				                                          const Crit &arg_crit  ///< TODOCUMENT
+				                                          ) : data{ arg_data },
+				                                              crit{ arg_crit } {
+				}
+				
+				/// \brief Function operator to apply a bunch of keyer_parts to data and return the keys in a tuple
+				template <typename... KPs>
+				constexpr auto operator()(const KPs &...arg_keyer_parts ///< The keyer_parts to be used to get the key parts from the data
+				                          ) {
+					return std::make_tuple(
+						arg_keyer_parts.max_close_key_part(
+							arg_keyer_parts.get_value        ( data ),
+							arg_keyer_parts.get_search_radius( crit )
+						)...
+					);
+				}
+			};
+
+			/// \brief Factory function for keyer_parts_max_close_key_maker to provide type deduction for construction
+			///
+			/// \todo Come C++17 there are two reasons this is redundant and can be removed:
+			///        * class template deduction means the deduction can just be performed by a call to the ctor
+			///        * keyer_parts_max_close_key_maker can be completely replaced with a constexpr lambda
+			template <typename Data, typename Crit>
+			constexpr keyer_parts_max_close_key_maker<Data, Crit> make_keyer_parts_max_close_key_maker(const Data &arg_data, ///< The data to be passed to the keyer_parts
+			                                                                                           const Crit &arg_crit  ///< TODOCUMENT
+			                                                                                           ) {
+				return { arg_data, arg_crit };
+			}
+
+
+
+
+
+
+
+			/// \brief Template function to make a value tuple from a tuple of keyer_parts and an instance of their common data type
 			///
 			/// \todo Come C++17, remove keyer_parts_value_maker and replace the make_keyer_parts_value_maker() call
 			///       below with a constexpr lambda like:
@@ -143,12 +261,12 @@ namespace cath {
 			///
 			template <typename... KPs, typename Data>
 			constexpr decltype(auto) make_value(const std::tuple<KPs...>  &arg_tuple, ///< The tuple of keyer_parts to be used to make the value
-			                                    const Data                &arg_data   ///< The data to be passed to the key_parts
+			                                    const Data                &arg_data   ///< The data to be passed to the keyer_parts
 			                                    ) {
 				return common::apply( make_keyer_parts_value_maker( arg_data ), arg_tuple );
 			}
 
-			/// \brief Template function to make a key tuple from a tuple of key_parts and an instance of their common data type
+			/// \brief Template function to make a key tuple from a tuple of keyer_parts and an instance of their common data type
 			///
 			/// \todo Come C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
 			///       below with a constexpr lambda like:
@@ -156,20 +274,20 @@ namespace cath {
 			///     [&] (const auto &...keyer_parts) { return std::make_tuple( keyer_parts.key_part( keyer_parts.get_value( arg_data ) )... ); }
 			template <typename... KPs, typename Data>
 			constexpr decltype(auto) make_key(const std::tuple<KPs...>  &arg_tuple, ///< The tuple of keyer_parts to be used to make the key
-			                                  const Data                &arg_data   ///< The data to be passed to the key_parts
+			                                  const Data                &arg_data   ///< The data to be passed to the keyer_parts
 			                                  ) {
 				return common::apply( make_keyer_parts_key_maker( arg_data ), arg_tuple );
 			}
 
-			/// \brief Template function to make a close_keys tuple of ranges from a tuple of key_parts and an instance of their common data type
+			/// \brief Template function to make a close_keys tuple of ranges from a tuple of keyer_parts and an instance of their common data type
 			///
 			/// Unlike make_value() and make_key(), this just uses a lambda because the return type's won't permit constexpr anyway.
 			///
 			/// This mustn't attempt to store arg_data/arg_crit by rvalue ref and forward because they're being
-			/// forwarded to multiple calls for the key_parts in the tuple
+			/// forwarded to multiple calls for the keyer_parts in the tuple
 			template <typename... KPs, typename Data, typename Crit>
-			decltype(auto) make_close_keys(const std::tuple<KPs...>  &arg_tuple, ///< The tuple of key_parts to apply to be used to make the close_keys
-			                               const Data                &arg_data,  ///< The data to be passed to the key_parts
+			decltype(auto) make_close_keys(const std::tuple<KPs...>  &arg_tuple, ///< The tuple of keyer_parts to apply to be used to make the close_keys
+			                               const Data                &arg_data,  ///< The data to be passed to the keyer_parts
 			                               const Crit                &arg_crit   ///< The criteria defining what is considered a match
 			                               ) {
 				return common::apply(
@@ -181,6 +299,48 @@ namespace cath {
 					},
 					arg_tuple
 				);
+			}
+
+			/// \brief Template function to make a min-close-key tuple from a tuple of keyer_parts and an instance of their common data type
+			///
+			/// \todo Come C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
+			///       below with a constexpr lambda like:
+			///
+			///     [&] (const auto &...keyer_parts) {
+			///       return std::make_tuple(
+			///         keyer_parts.min_close_key_part(
+			///           keyer_parts.get_value        ( arg_data ),
+			///           keyer_parts.get_search_radius( arg_crit )
+			///         )...
+			///       );
+			///     }
+			template <typename... KPs, typename Data, typename Crit>
+			constexpr decltype(auto) make_min_close_key(const std::tuple<KPs...>  &arg_tuple, ///< The tuple of keyer_parts to be used to make the key
+			                                            const Data                &arg_data,  ///< The data to be passed to the keyer_parts
+			                                            const Crit                &arg_crit   ///< The criteria defining what is considered a match
+			                                            ) {
+				return common::apply( make_keyer_parts_min_close_key_maker( arg_data, arg_crit ), arg_tuple );
+			}
+
+			/// \brief Template function to make a max-close-key tuple from a tuple of keyer_parts and an instance of their common data type
+			///
+			/// \todo Come C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
+			///       below with a constexpr lambda like:
+			///
+			///     [&] (const auto &...keyer_parts) {
+			///       return std::make_tuple(
+			///         keyer_parts.max_close_key_part(
+			///           keyer_parts.get_value        ( arg_data ),
+			///           keyer_parts.get_search_radius( arg_crit )
+			///         )...
+			///       );
+			///     }
+			template <typename... KPs, typename Data, typename Crit>
+			constexpr decltype(auto) make_max_close_key(const std::tuple<KPs...>  &arg_tuple, ///< The tuple of keyer_parts to be used to make the key
+			                                            const Data                &arg_data,  ///< The data to be passed to the keyer_parts
+			                                            const Crit                &arg_crit   ///< The criteria defining what is considered a match
+			                                            ) {
+				return common::apply( make_keyer_parts_max_close_key_maker( arg_data, arg_crit ), arg_tuple );
 			}
 
 		} // namespace detail

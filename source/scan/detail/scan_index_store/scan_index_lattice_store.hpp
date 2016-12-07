@@ -23,17 +23,21 @@
 
 #include <boost/range/adaptor/map.hpp>
 #include <boost/range/adaptor/transformed.hpp>
+#include <boost/range/join.hpp>
 #include <boost/range/numeric.hpp>
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/information/byte.hpp>
 
 #include "common/boost_addenda/range/range_concept_type_aliases.hpp"
+#include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/cpp17/apply.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/size_t_literal.hpp"
+#include "common/tuple/mins_maxs_tuple_pair_mins_maxs_element.hpp"
 #include "common/tuple/tuple_increment.hpp"
 #include "common/tuple/tuple_lattice_index.hpp"
+#include "common/tuple/tuple_mins_maxs_element.hpp"
 #include "common/tuple/tuple_multiply_args.hpp"
 #include "common/tuple/tuple_subtract.hpp"
 #include "common/tuple/tuple_within_range.hpp"
@@ -181,12 +185,15 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			info_quantity scan_index_lattice_store<Key, Cell>::get_info_size() const {
-				const auto num_bytes = sizeof( value_t ) * boost::accumulate(
-					the_store
-						| boost::adaptors::map_values
-						| boost::adaptors::transformed( [] (const Cell &x) { return x.size(); } ),
-					0_z
-				);
+				const auto num_bytes =
+					  sizeof( std::decay_t< decltype( *this ) > )
+					+ sizeof( Cell ) * the_store.size()
+					+ sizeof( value_t ) * boost::accumulate(
+						the_store
+							| boost::adaptors::map_values
+							| boost::adaptors::transformed( [] (const Cell &x) { return x.size(); } ),
+						0_z
+					);
 				return num_bytes * boost::units::information::bytes;
 			}
 
@@ -196,6 +203,70 @@ namespace cath {
 			                                                                  const Key &arg_maxs_key  ///< TODOCUMENT
 			                                                                  ) {
 				return { arg_mins_key, arg_maxs_key };
+			}
+
+			/// \brief TODOCUMENT
+			template <typename Rng, typename Keyer>
+			auto make_sparse_empty_lattice_store(const Rng   &arg_rng,  ///< TODOCUMENT
+			                                     const Keyer &arg_keyer ///< TODOCUMENT
+			                                     ) {
+				using value_t = common::range_value_t< Rng >;
+
+				const auto mins_maxs = common::tuple_mins_maxs_element(
+					arg_rng
+						| boost::adaptors::transformed( [&] (const value_t &value) { return arg_keyer.make_key( value ); } )
+				);
+
+				return make_scan_index_lattice_store< std::vector<value_t> >( mins_maxs.first, mins_maxs.second );
+			}
+
+			/// \brief TODOCUMENT
+			template <typename Rng, typename Keyer, typename Crit>
+			auto make_dense_empty_lattice_store(const Rng   &arg_rng,   ///< TODOCUMENT
+			                                    const Keyer &arg_keyer, ///< TODOCUMENT
+			                                    const Crit  &arg_crit   ///< TODOCUMENT
+			                                    ) {
+				using value_t = common::range_value_t< Rng >;
+
+				const auto mins_maxs = common::mins_maxs_tuple_pair_mins_maxs_element(
+					arg_rng
+						| boost::adaptors::transformed( [&] (const value_t &value) {
+							return std::make_pair(
+								arg_keyer.make_min_close_key( value, arg_crit ),
+								arg_keyer.make_max_close_key( value, arg_crit )
+							);
+						} )
+				);
+
+				return make_scan_index_lattice_store< std::vector<value_t> >( mins_maxs.first, mins_maxs.second );
+			}
+
+			/// \brief TODOCUMENT
+			template <typename Rng, typename Keyer>
+			auto make_sparse_lattice_store(const Rng   &arg_rng,  ///< TODOCUMENT
+			                               const Keyer &arg_keyer ///< TODOCUMENT
+			                               ) {
+				auto the_store = make_sparse_empty_lattice_store( arg_rng, arg_keyer );
+				for (const auto &value : arg_rng) {
+					the_store.push_back_entry_to_cell( arg_keyer.make_key( value ), value );
+				}
+				return the_store;
+			}
+
+			/// \brief TODOCUMENT
+			template <typename Rng, typename Keyer, typename Crit>
+			auto make_dense_lattice_store(const Rng   &arg_rng,   ///< TODOCUMENT
+			                              const Keyer &arg_keyer, ///< TODOCUMENT
+			                              const Crit  &arg_crit   ///< TODOCUMENT
+			                              ) {
+				auto the_store = make_dense_empty_lattice_store( arg_rng, arg_keyer, arg_crit );
+				for (const auto &value : arg_rng) {
+					const auto close_keys = arg_keyer.make_close_keys( value, arg_crit );
+					for (const auto &the_key : common::cross( close_keys ) ) {
+						the_store.push_back_entry_to_cell( the_key, value );
+					}
+				}
+				return the_store;
 			}
 
 		} // namespace detail

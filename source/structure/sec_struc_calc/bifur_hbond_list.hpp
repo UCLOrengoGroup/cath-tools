@@ -62,12 +62,21 @@ namespace cath {
 		}
 
 		/// \brief Return whether the first hbond_half represents a stronger bond than the second
+		///        or has the same strength but an earlier index
 		///
 		/// \relates hbond_half
 		inline constexpr bool is_bondier_than(const hbond_half &arg_lhs, ///< The first  hbond_half to compare
 		                                      const hbond_half &arg_rhs  ///< The second hbond_half to compare
 		                                      ) {
-			return ( arg_lhs.energy < arg_rhs.energy );
+			return (
+				( arg_lhs.energy < arg_rhs.energy )
+				||
+				(
+					( arg_lhs.energy == arg_rhs.energy )
+					&&
+					( arg_lhs.index  <  arg_rhs.index  )
+				)
+			);
 		}
 
 		/// \brief Type alias for an optional hbond_half

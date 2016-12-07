@@ -92,9 +92,27 @@ namespace cath {
 				                                  const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
 				                                  ) const {
 					return boost::irange(
-						key_part( arg_value - arg_search_radius ),
-						debug_numeric_cast<cell_index_t>( key_part( arg_value + arg_search_radius ) + 1 )
+						min_close_key_part( arg_value, arg_search_radius ),
+						static_cast<cell_index_t>( max_close_key_part( arg_value, arg_search_radius ) + 1 )
 					);
+				}
+
+				/// \brief Generate the minimum key part within the specified search radius for the specified value
+				///
+				/// This is an extra that makes this usable for dense storing in a lattice
+				constexpr cell_index_t min_close_key_part(const value_t         &arg_value,        ///< The value for which the key_part should be extracted
+				                                          const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
+				                                          ) const {
+					return key_part( arg_value - arg_search_radius );
+				}
+
+				/// \brief Generate the maximum key part within the specified search radius for the specified value
+				///
+				/// This is an extra that makes this usable for dense storing in a lattice
+				constexpr cell_index_t max_close_key_part(const value_t         &arg_value,        ///< The value for which the key_part should be extracted
+				                                          const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
+				                                          ) const {
+					return key_part( arg_value + arg_search_radius );
 				}
 			};
 

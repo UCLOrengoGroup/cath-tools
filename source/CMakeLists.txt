@@ -745,6 +745,11 @@ set(
 )
 
 set(
+	NORMSOURCES_SCAN_SPATIAL_INDEX
+		scan/spatial_index/spatial_index.cpp
+)
+
+set(
 	NORMSOURCES_SCAN
 		${NORMSOURCES_SCAN_DETAIL}
 		scan/quad_criteria.cpp
@@ -752,6 +757,7 @@ set(
 		${NORMSOURCES_SCAN_SCAN_ACTION}
 		scan/scan_stride.cpp
 		${NORMSOURCES_SCAN_SCAN_TOOLS}
+		${NORMSOURCES_SCAN_SPATIAL_INDEX}
 )
 
 set(
@@ -1660,6 +1666,11 @@ set(
 )
 
 set(
+	TESTSOURCES_SCAN_SPATIAL_INDEX
+		scan/spatial_index/spatial_index_test.cpp
+)
+
+set(
 	TESTSOURCES_SCAN
 		${TESTSOURCES_SCAN_DETAIL}
 		scan/quad_criteria_test.cpp
@@ -1669,6 +1680,7 @@ set(
 		scan/scan_query_set_test.cpp
 		scan/scan_stride_test.cpp
 		${TESTSOURCES_SCAN_SCAN_TOOLS}
+		${TESTSOURCES_SCAN_SPATIAL_INDEX}
 )
 
 set(

@@ -34,6 +34,9 @@
 #include "structure/sec_struc_calc/bifur_hbond_list.hpp"
 #include "test/dssp/dssp_dupl_fixture.hpp"
 #include "test/global_test_constants.hpp"
+// #include "common/chrono/duration_to_seconds_string.hpp"
+
+// #include <chrono>
 
 namespace cath { namespace test { } }
 
@@ -50,6 +53,7 @@ using boost::filesystem::path;
 using boost::irange;
 using boost::none;
 using boost::range::sort;
+// using std::chrono::high_resolution_clock;
 
 namespace cath {
 	namespace test {
@@ -78,11 +82,25 @@ namespace cath {
 		                                                                                    const bool &arg_warn_only_on_diff ///< Whether to only warn on differences
 		                                                                                    ) {
 			BOOST_REQUIRE( exists( arg_pdb_file ) );
+			// const auto read_dssp_start_time = high_resolution_clock::now();
 			const auto dssp_hbonds = parse_dssp_for_calc_testing( arg_dssp_file );
+			// const auto read_dssp_stop_time  = high_resolution_clock::now();
+
 			if ( ! dssp_hbonds.empty() ) {
+				// const auto read_pdb_start_time = high_resolution_clock::now();
+				const auto parsed_pdb          = read_pdb_file( arg_pdb_file );
+				// const auto read_pdb_stop_time  = high_resolution_clock::now();
+
+				// const auto calc_start_time = high_resolution_clock::now();
 				const auto bifur_hbonds = dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_residues(
-					read_pdb_file( arg_pdb_file )
+					parsed_pdb
 				);
+				// const auto calc_stop_time  = high_resolution_clock::now();
+
+				// std::cerr << "Read DSSP   : " << durn_to_seconds_string ( read_dssp_stop_time - read_dssp_start_time ) << "\n";
+				// std::cerr << "Read PDB    : " << durn_to_seconds_string ( read_pdb_stop_time  - read_pdb_start_time  ) << "\n";
+				// std::cerr << "Calc hbonds : " << durn_to_seconds_string ( calc_stop_time      - calc_start_time      ) << "\n";
+
 				// BOOST_TEST_INFO() isn't present in Boost > 1.58.0
 				// BOOST_TEST_INFO  ( "Checking DSSP file \"" + arg_dssp_file.string() + "\"" );
 				if ( arg_warn_only_on_diff ) {
@@ -175,6 +193,10 @@ BOOST_AUTO_TEST_CASE(rounds_energy_value_like_dssp_1) {
 
 BOOST_AUTO_TEST_CASE(rounds_energy_value_like_dssp_2) {
 	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "rounding_2.dssp"                  );
+}
+
+BOOST_AUTO_TEST_CASE(prefers_earlier_bonds_1) {
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "prefer_earlier_bonds_1.dssp"      );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
