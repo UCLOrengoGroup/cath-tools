@@ -357,8 +357,8 @@ BOOST_AUTO_TEST_CASE(handles_multi_chains_with_same_residue_ids) {
 	ostringstream warn_ss;
 	BOOST_CHECK_NO_THROW_DIAG(
 		read_protein_from_dssp_and_pdb(
-			path{ "/cath-tools/build-test-data/tally_multi_chain/tally_multi_chain.dssp" },
-			path{ "/cath-tools/build-test-data/tally_multi_chain/tally_multi_chain"      },
+			path{ TEST_RESIDUE_IDS_DATA_DIR() / "tally_multi_chain.dssp" },
+			path{ TEST_RESIDUE_IDS_DATA_DIR() / "tally_multi_chain"      },
 			true,
 			""s,
 			reference_wrapper<ostream>( warn_ss )
