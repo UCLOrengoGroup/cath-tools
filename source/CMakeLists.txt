@@ -1332,6 +1332,7 @@ set(
 
 set(
 	TESTSOURCES_COMMON_TUPLE
+		common/tuple/mins_maxs_tuple_pair_mins_maxs_element_test.cpp
 		common/tuple/tuple_increment_test.cpp
 		common/tuple/tuple_lattice_index_test.cpp
 		common/tuple/tuple_mins_maxs_element_test.cpp
