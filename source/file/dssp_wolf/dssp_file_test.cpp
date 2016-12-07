@@ -28,7 +28,7 @@
 
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/size_t_literal.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"

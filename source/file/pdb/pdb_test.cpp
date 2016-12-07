@@ -24,7 +24,7 @@
 
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb.hpp"

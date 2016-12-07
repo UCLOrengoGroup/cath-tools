@@ -21,7 +21,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 //#include "common/algorithm/constexpr_for_n.hpp"
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "score/length_getter/length_getter_enum.hpp"
 #include "score/length_getter/length_getter_types.hpp"
 #include "score/length_getter/geometric_mean_length_getter.hpp"

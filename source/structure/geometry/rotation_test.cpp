@@ -22,7 +22,7 @@
 #include <boost/math/constants/constants.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "structure/geometry/angle.hpp"

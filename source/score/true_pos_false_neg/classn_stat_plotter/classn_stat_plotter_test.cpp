@@ -21,7 +21,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/file/temp_file.hpp"
 #include "score/score_classification/score_classn_value_list.hpp"
 #include "score/true_pos_false_neg/classn_rate_stat.hpp"

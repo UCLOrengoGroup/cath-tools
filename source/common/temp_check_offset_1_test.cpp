@@ -22,7 +22,7 @@
 
 #include "temp_check_offset_1.hpp"
 
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;

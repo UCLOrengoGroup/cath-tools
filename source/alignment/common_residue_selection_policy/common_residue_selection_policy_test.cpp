@@ -28,7 +28,7 @@
 #include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/test_tools.hpp"
 #include "exception/invalid_argument_exception.hpp"

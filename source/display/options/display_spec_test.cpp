@@ -22,7 +22,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "display/display_colourer/display_colourer.hpp"
 #include "display/options/display_spec.hpp"
 

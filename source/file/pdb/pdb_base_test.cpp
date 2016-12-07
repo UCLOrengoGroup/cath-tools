@@ -25,7 +25,7 @@
 #include <boost/mpl/list.hpp>
 #include <boost/test/output_test_stream.hpp>
 
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/test_predicate/files_equal.hpp"

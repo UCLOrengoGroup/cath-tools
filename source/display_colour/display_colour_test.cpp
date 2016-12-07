@@ -21,7 +21,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/test_tools.hpp"
 #include "display_colour/display_colour.hpp"
 #include "display_colour/display_colour_type_aliases.hpp"

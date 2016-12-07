@@ -23,7 +23,7 @@
 
 //#include <boost/units/systems/si/plane_angle.hpp>
 
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/difference.hpp"
 #include "common/test_tools.hpp"
 #include "structure/geometry/angle.hpp"

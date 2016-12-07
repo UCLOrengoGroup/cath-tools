@@ -26,7 +26,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include "common/algorithm/contains.hpp"
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"

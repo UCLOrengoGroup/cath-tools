@@ -22,7 +22,7 @@
 
 #include <boost/filesystem.hpp>
 
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
 #include "structure/bioplib_facade/bioplib_pdb.hpp"
 #include "structure/geometry/coord.hpp"

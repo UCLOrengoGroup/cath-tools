@@ -27,7 +27,7 @@
 #include "alignment/io/align_scaffold.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/pair_insertion_operator.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/test_tools.hpp"

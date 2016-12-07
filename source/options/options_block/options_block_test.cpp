@@ -23,7 +23,7 @@
 #include <boost/mpl/list.hpp>
 #include <boost/optional.hpp>
 
-#include "common/boost_check_no_throw_diag.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "options/options_block/alignment_input_options_block.hpp"
 #include "options/options_block/detail_help_options_block.hpp"
 #include "options/options_block/options_block_tester.hpp"

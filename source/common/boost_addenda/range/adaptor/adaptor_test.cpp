@@ -29,9 +29,9 @@
 #include "common/boost_addenda/range/adaptor/lexical_casted.hpp"
 #include "common/boost_addenda/range/adaptor/limited.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/pair_insertion_operator.hpp"
-#include "common/boost_check_no_throw_diag.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 
