@@ -48,9 +48,10 @@ namespace cath {
 			                       const std::ios_base::openmode &arg_mode,        ///< TODOCUMENT
 			                       const fstream_type            &arg_fstream_type ///< TODOCUMENT
 			                       ) {
-				const std::string r_or_w_str              = (arg_fstream_type == fstream_type::READING) ? "reading" : "writing";
-				const std::ios_base::iostate r_or_w_state = (arg_fstream_type == fstream_type::READING) ? (                     std::ios::badbit )
-				                                                                                        : ( std::ios::failbit | std::ios::badbit );
+				const bool is_reading                     = (arg_fstream_type == fstream_type::READING);
+				const std::string r_or_w_str              = is_reading ? "reading" : "writing";
+				const std::ios_base::iostate r_or_w_state = is_reading ? (                     std::ios::badbit )
+				                                                       : ( std::ios::failbit | std::ios::badbit );
 				arg_fstream.exceptions( r_or_w_state );
 				try {
 					arg_fstream.open(arg_filename.string().c_str(), arg_mode);
