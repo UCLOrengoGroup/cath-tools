@@ -44,11 +44,7 @@ namespace cath {
 		/// \todo Consider making each axis into an enum value and changing the getters to one that
 		///       requires an axis argument (and make get_x(),get_y() and get_z() into
 		///       non-member, non-friend functions that call that getter).
-		class coord final : boost::equality_comparable<coord,
-		                      boost::additive<coord,
-		                        boost::multiplicative<coord, double>
-		                      >
-		                    > {
+		class coord final : boost::equality_comparable<coord> {
 		private:
 			/// \brief TODOCUMENT
 			double x;
@@ -78,16 +74,16 @@ namespace cath {
 			/// \brief TODOCUMENT
 			static constexpr double TOLERANCE_FOR_COORD_CLOSENESS_CHECKS = 0.00001;
 
-			coord(const double &,
-			      const double &,
-			      const double &);
+			constexpr coord(const double &,
+			                const double &,
+			                const double &);
 
 			template <typename T>
 			coord(const boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian> &);
 
-			const double & get_x() const;
-			const double & get_y() const;
-			const double & get_z() const;
+			constexpr const double & get_x() const;
+			constexpr const double & get_y() const;
+			constexpr const double & get_z() const;
 
 			coord & operator-=(const coord &);
 			coord & operator+=(const coord &);
@@ -108,17 +104,17 @@ namespace cath {
 		};
 
 		/// \brief Non-default constructor for coord.
-		inline coord::coord(const double &arg_x, ///< TODOCUMENT
-		                    const double &arg_y, ///< TODOCUMENT
-		                    const double &arg_z  ///< TODOCUMENT
-		                    ) : x ( arg_x ),
-		                        y ( arg_y ),
-		                        z ( arg_z ) {
-	#ifndef NDEBUG
-			if ( ! boost::math::isfinite( arg_x ) || ! boost::math::isfinite( arg_y ) || ! boost::math::isfinite( arg_z ) ) {
-				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Arguments x, y and z must be a normal, finite floating-point numbers"));
-			}
-	#endif
+		inline constexpr coord::coord(const double &arg_x, ///< TODOCUMENT
+		                              const double &arg_y, ///< TODOCUMENT
+		                              const double &arg_z  ///< TODOCUMENT
+		                              ) : x ( arg_x ),
+		                                  y ( arg_y ),
+		                                  z ( arg_z ) {
+	// #ifndef NDEBUG
+	// 		if ( ! boost::math::isfinite( arg_x ) || ! boost::math::isfinite( arg_y ) || ! boost::math::isfinite( arg_z ) ) {
+	// 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Arguments x, y and z must be a normal, finite floating-point numbers"));
+	// 		}
+	// #endif
 		}
 
 		/// \brief TODOCUMENT
@@ -132,17 +128,17 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline const double & coord::get_x() const {
+		inline constexpr const double & coord::get_x() const {
 			return x;
 		}
 
 		/// \brief TODOCUMENT
-		inline const double & coord::get_y() const {
+		inline constexpr const double & coord::get_y() const {
 			return y;
 		}
 
 		/// \brief TODOCUMENT
-		inline const double & coord::get_z() const {
+		inline constexpr const double & coord::get_z() const {
 			return z;
 		}
 
@@ -189,8 +185,107 @@ namespace cath {
 			return operator*=( 1.0 / arg_factor );
 		}
 
-		bool operator==(const coord &,
-		                const coord &);
+		/// \brief TODOCUMENT
+		///
+		/// \todo Come constexpr Boost.Operators and relaxed constexpr support in all supported compilers,
+		///       implement this using boost::additive<>
+		///
+		/// \relates coord
+		inline constexpr coord operator-(const coord &arg_coord_lhs, ///< TODOCUMENT
+		                                 const coord &arg_coord_rhs  ///< TODOCUMENT
+		                                 ) {
+			return {
+				arg_coord_lhs.get_x() - arg_coord_rhs.get_x(),
+				arg_coord_lhs.get_y() - arg_coord_rhs.get_y(),
+				arg_coord_lhs.get_z() - arg_coord_rhs.get_z(),
+			};
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// \todo Come constexpr Boost.Operators and relaxed constexpr support in all supported compilers,
+		///       implement this using boost::additive<>
+		///
+		/// \relates coord
+		inline constexpr coord operator+(const coord &arg_coord_lhs, ///< TODOCUMENT
+		                                 const coord &arg_coord_rhs  ///< TODOCUMENT
+		                                 ) {
+			return {
+				arg_coord_lhs.get_x() + arg_coord_rhs.get_x(),
+				arg_coord_lhs.get_y() + arg_coord_rhs.get_y(),
+				arg_coord_lhs.get_z() + arg_coord_rhs.get_z(),
+			};
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// \todo Come constexpr Boost.Operators and relaxed constexpr support in all supported compilers,
+		///       implement this using boost::multiplicative<>
+		///
+		/// \relates coord
+		inline constexpr coord operator*(const coord  &arg_coord, ///< TODOCUMENT
+		                                 const double &arg_factor ///< TODOCUMENT
+		                                 ) {
+			return {
+				arg_coord.get_x() * arg_factor,
+				arg_coord.get_y() * arg_factor,
+				arg_coord.get_z() * arg_factor
+			};
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// \todo Come constexpr Boost.Operators and relaxed constexpr support in all supported compilers,
+		///       implement this using boost::multiplicative<>
+		///
+		/// \relates coord
+		inline constexpr coord operator*(const double &arg_factor, ///< TODOCUMENT
+		                                 const coord  &arg_coord   ///< TODOCUMENT
+		                                 ) {
+			return {
+				arg_coord.get_x() * arg_factor,
+				arg_coord.get_y() * arg_factor,
+				arg_coord.get_z() * arg_factor
+			};
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// \todo Come constexpr Boost.Operators and relaxed constexpr support in all supported compilers,
+		///       implement this using boost::multiplicative<>
+		///
+		/// \relates coord
+		inline constexpr coord operator/(const coord  &arg_coord, ///< TODOCUMENT
+		                                 const double &arg_factor ///< TODOCUMENT
+		                                 ) {
+			return {
+				arg_coord.get_x() / arg_factor,
+				arg_coord.get_y() / arg_factor,
+				arg_coord.get_z() / arg_factor
+			};
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// \todo Come constexpr Boost.Operators and relaxed constexpr support in all supported compilers,
+		///       implement this using boost::multiplicative<>
+		///
+		/// \relates coord
+		inline constexpr coord operator/(const double &arg_factor, ///< TODOCUMENT
+		                                 const coord  &arg_coord   ///< TODOCUMENT
+		                                 ) {
+			return {
+				arg_coord.get_x() / arg_factor,
+				arg_coord.get_y() / arg_factor,
+				arg_coord.get_z() / arg_factor
+			};
+		}
+
+
+
+
+		constexpr bool operator==(const coord &,
+		                          const coord &);
 		coord operator-(const coord &);
 
 		bool not_zero(const coord &);
@@ -251,8 +346,8 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline double squared_length(const coord &arg_coord ///< TODOCUMENT
-		                             ) {
+		inline constexpr double squared_length(const coord &arg_coord ///< TODOCUMENT
+		                                       ) {
 			return (
 				arg_coord.get_x() * arg_coord.get_x() +
 				arg_coord.get_y() * arg_coord.get_y() +
@@ -284,19 +379,23 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline double squared_distance_between_points(const coord &arg_coord1, ///< TODOCUMENT
-		                                              const coord &arg_coord2  ///< TODOCUMENT
-		                                              ) {
+		inline constexpr double squared_distance_between_points(const coord &arg_coord1, ///< TODOCUMENT
+		                                                        const coord &arg_coord2  ///< TODOCUMENT
+		                                                        ) {
 			return squared_length( arg_coord2 - arg_coord1 );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline bool operator==(const coord &arg_coord1, ///< TODOCUMENT
-		                       const coord &arg_coord2  ///< TODOCUMENT
-		                       ) {
-			return ( distance_between_points( arg_coord1, arg_coord2 ) < coord::TOLERANCE_FOR_COORD_CLOSENESS_CHECKS );
+		inline constexpr bool operator==(const coord &arg_coord1, ///< TODOCUMENT
+		                                 const coord &arg_coord2  ///< TODOCUMENT
+		                                 ) {
+			return (
+				squared_distance_between_points( arg_coord1, arg_coord2 )
+				<
+				coord::TOLERANCE_FOR_COORD_CLOSENESS_CHECKS * coord::TOLERANCE_FOR_COORD_CLOSENESS_CHECKS
+			);
 		}
 
 		/// \brief TODOCUMENT
