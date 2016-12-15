@@ -339,6 +339,13 @@ BOOST_AUTO_TEST_CASE(null_dssp_residue) {
 	BOOST_CHECK_EQUAL( residue::NULL_RESIDUE, parsed_line.second );
 }
 
+BOOST_AUTO_TEST_CASE(handles_lower_case_amino_acid_for_disulfide_bridge_between_cysteines) {
+	const string line =
+		"   23   23 L a  E     -AB   6  76A   1     53,-2.0    53,-2.3    -2,-0.3     2,-0.4  -0.993   2.1-168.3-145.9 137.9   15.5   20.4   49.2";
+	BOOST_REQUIRE_NO_THROW_DIAG( parse_dssp_residue_line( line ) );
+	BOOST_CHECK_EQUAL          ( parse_dssp_residue_line( line ).second.get_amino_acid(), amino_acid( 'C' ) );
+}
+
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(wolf_phi_psi__1a04A02) {
 	check_phi_psi_from_wolf_against_expected( "1a04A02" );

@@ -44,6 +44,7 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace std;
 
+using boost::algorithm::is_lower;
 using boost::algorithm::is_space;
 using boost::algorithm::starts_with;
 using boost::algorithm::trim_copy;
@@ -208,12 +209,16 @@ size_residue_pair cath::file::parse_dssp_residue_line(const string &arg_dssp_res
 		const auto shifted_phi = make_angle_from_degrees<double>( round( phi_in_degrees > 0 ? phi_in_degrees : 360.0 + phi_in_degrees) );
 		const auto shifted_psi = make_angle_from_degrees<double>( round( psi_in_degrees > 0 ? psi_in_degrees : 360.0 + psi_in_degrees) );
 
+		// If the letter is lower-case then that's DSSP's way of indicating a disulfide bridge
+		// between cysteine residues so set the amino_acid_letter to 'C'
+		const char amino_acid_letter = ( is_lower()( amino_acid_c ) ? 'C' : amino_acid_c );
+
 		return {
 			seq_res_num,
 			
 			residue(
 				res_id,
-				amino_acid(amino_acid_c),
+				amino_acid{ amino_acid_letter },
 				coord( carbon_a_x, carbon_a_y, carbon_a_z ),
 				coord::ORIGIN_COORD,
 				0,
