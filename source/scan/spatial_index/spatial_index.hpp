@@ -311,7 +311,9 @@ namespace cath {
 
 		namespace detail {
 			template <typename... Ts>
-			constexpr void ignore_unused(const Ts &...) {}
+			constexpr bool ignore_unused(const Ts &...) {
+				return true;
+			}
 		}
 
 		/// \brief Key part generator for simple_locn_index that extracts the index
@@ -352,21 +354,19 @@ namespace cath {
 				return arg_value;
 			}
 
-			
-
 			/// \brief Generate a list of all key parts for all conceivable simple_locn_indexs that would match the specified value
 			///        within the specified search radius
 			constexpr cell_index_list_t close_key_parts(const value_t         &arg_value,        ///< The value for which the key_part should be extracted
 			                                            const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
 			                                            ) const {
+				return
 #ifndef NDEBUG
-				if ( arg_search_radius != 0 ) {
-					BOOST_THROW_EXCEPTION(common::not_implemented_exception("simple_locn_index_keyer_part currently requires that the search radius is 0 (ie requires matching indices)"));
-				}
+					( arg_search_radius == 0 )
 #else
-				detail::ignore_unused( arg_search_radius );
+					detail::ignore_unused( arg_search_radius )
 #endif
-				return { { arg_value } };
+						? cell_index_list_t{ { arg_value } }
+						: throw std::invalid_argument("simple_locn_index_keyer_part currently requires that the search radius is 0 (ie requires matching indices)");
 			}
 		};
 
