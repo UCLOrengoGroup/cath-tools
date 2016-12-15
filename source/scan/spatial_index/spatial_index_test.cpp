@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "spatial_index.hpp"
+
 // #include <boost/algorithm/string/join.hpp>
 // #include <boost/range/adaptor/transformed.hpp>
 // #include <boost/range/irange.hpp>
@@ -35,7 +37,6 @@
 // #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_x_keyer_part.hpp"
 // #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_y_keyer_part.hpp"
 // #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_z_keyer_part.hpp"
-// #include "scan/spatial_index/spatial_index.hpp"
 // #include "ssap/context_res.hpp"
 // #include "structure/geometry/coord.hpp"
 // #include "structure/protein/protein.hpp"
@@ -52,18 +53,18 @@ namespace cath { namespace test { } }
 // using namespace cath;
 // using namespace cath::common;
 // using namespace cath::geom;
-// using namespace cath::scan;
 // using namespace cath::scan::detail;
+using namespace cath::scan;
 using namespace cath::test;
 
 // using boost::adaptors::transformed;
 // using boost::algorithm::join;
 // using boost::irange;
 // using std::chrono::high_resolution_clock;
-// using std::make_tuple;
 // using std::ostream;
 // using std::ostringstream;
 // using std::reference_wrapper;
+using std::make_tuple;
 
 namespace cath {
 	namespace test {
@@ -91,6 +92,22 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(spatial_index_test_suite, spatial_index_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(basic) {
+	constexpr auto index_x_y_z_keyer = make_res_pair_keyer(
+		simple_locn_index_keyer_part{},
+		simple_locn_x_keyer_part{ 10.0 },
+		simple_locn_y_keyer_part{ 10.0 },
+		simple_locn_z_keyer_part{ 10.0 }
+	);
+
+	static_assert(
+		index_x_y_z_keyer.make_value( simple_locn_index{ 12.0, 34.0, -22.0, 4u } ) == make_tuple( 4u, 12.0, 34.0, -22.0 ),
+		""
+	);
+
+	static_assert(
+		index_x_y_z_keyer.make_key  ( simple_locn_index{ 12.0, 34.0, -22.0, 4u } ) == make_tuple( 4u,  1,    3,    -3   ),
+		""
+	);
 
 	// for (const auto &spatial_try_val : { spatial_try::SPARSE_FROM_PROT,
 	//                                      // spatial_try::SPARSE_FROM_SCAN,

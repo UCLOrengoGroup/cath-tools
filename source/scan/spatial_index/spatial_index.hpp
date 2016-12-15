@@ -24,6 +24,7 @@
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/size_t_literal.hpp"
+#include "exception/not_implemented_exception.hpp"
 #include "file/pdb/pdb.hpp"
 #include "scan/detail/scan_index_store/scan_index_lattice_store.hpp"
 #include "scan/detail/scan_type_aliases.hpp"
@@ -307,6 +308,67 @@ namespace cath {
 		locn_index_store make_dense_lattice(const file::pdb &,
 		                                    const float &,
 		                                    const float &);
+
+		namespace detail {
+			template <typename... Ts>
+			constexpr void ignore_unused(const Ts &...) {}
+		}
+
+		/// \brief Key part generator for simple_locn_index that extracts the index
+		class simple_locn_index_keyer_part final {
+		public:
+			/// \brief The type for the value extracted from the simple_locn_index
+			using value_t           = decltype( simple_locn_index::index );
+
+			/// \brief The type for the cell index
+			using cell_index_t      = unsigned int;
+
+			/// \brief The type for the range of indices of close cells
+			using cell_index_list_t = std::array<cell_index_t, 1>;
+
+			/// \brief The type for the search radius
+			using search_radius_t   = unsigned int;
+
+			/// \brief Get a short name that describes this key part
+			std::string get_name() const {
+				return "index";
+			}
+
+			/// \brief Extract the relevant value from the specified simple_locn_index
+			constexpr value_t get_value(const simple_locn_index &arg_locn_index ///< TODOCUMENT
+			                            ) const {
+				return arg_locn_index.index;
+			}
+
+			/// \brief Extract the search radius from the specified criteria
+			constexpr search_radius_t get_search_radius(const simple_locn_crit &/*arg_criteria*/ ///< The criteria defining what is considered a match
+			                                            ) const {
+				return 0;
+			}
+
+			/// \brief Generate the key part for the specified value
+			constexpr cell_index_t key_part(const value_t &arg_value ///< The value for which the key_part should be extracted
+			                                ) const {
+				return arg_value;
+			}
+
+			
+
+			/// \brief Generate a list of all key parts for all conceivable simple_locn_indexs that would match the specified value
+			///        within the specified search radius
+			constexpr cell_index_list_t close_key_parts(const value_t         &arg_value,        ///< The value for which the key_part should be extracted
+			                                            const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
+			                                            ) const {
+#ifndef NDEBUG
+				if ( arg_search_radius != 0 ) {
+					BOOST_THROW_EXCEPTION(common::not_implemented_exception("simple_locn_index_keyer_part currently requires that the search radius is 0 (ie requires matching indices)"));
+				}
+#else
+				detail::ignore_unused( arg_search_radius );
+#endif
+				return { { arg_value } };
+			}
+		};
 
 
 	} // namespace scan
