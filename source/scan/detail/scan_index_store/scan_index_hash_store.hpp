@@ -25,12 +25,12 @@
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/information/byte.hpp>
 
+#include "common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "scan/detail/res_pair/multi_struc_res_rep_pair.hpp"
-#include "scan/detail/res_pair/multi_struc_res_rep_pair_list.hpp"
 #include "scan/detail/scan_index_store/detail/hash_tuple.hpp"
 #include "scan/detail/scan_type_aliases.hpp"
 
+#include <iostream> // ***** TEMPORARY *****
 #include <limits>
 #include <tuple>
 #include <unordered_map>
@@ -52,17 +52,20 @@ namespace cath {
 			} // namespace detail
 
 			/// \brief TODOCUMENT
-			template <typename Key>
+			template <typename Key, typename Cell>
 			class scan_index_hash_store final {
 			private:
 				/// \brief TODOCUMENT
 				using key_hash = hash_tuple::hash<Key>;
 
 				/// \brief TODOCUMENT
-				std::unordered_map<Key, multi_struc_res_rep_pair_list, key_hash> the_store;
+				using value_t = common::range_value_t<Cell>;
 
 				/// \brief TODOCUMENT
-				const multi_struc_res_rep_pair_list empty_cell{};
+				std::unordered_map<Key, Cell, key_hash> the_store;
+
+				/// \brief TODOCUMENT
+				const Cell empty_cell{};
 
 				long long unsigned int num_adds = 0;
 
@@ -82,7 +85,7 @@ namespace cath {
 				inline void emplace_back_entry_to_cell(const Key  &,
 				                                       Ts &&...);
 
-				const multi_struc_res_rep_pair_list & find_matches(const Key &) const;
+				const Cell & find_matches(const Key &) const;
 
 				info_quantity get_info_size() const;
 
@@ -93,43 +96,44 @@ namespace cath {
 					// BOOST_LOG_TRIVIAL( warning )<< "scan_index_hash_store : load_factor is     : " << the_store.load_factor();
 					// BOOST_LOG_TRIVIAL( warning )<< "scan_index_hash_store : max_load_factor is : " << the_store.max_load_factor();
 					// BOOST_LOG_TRIVIAL( warning )<< "scan_index_hash_store : num_adds is        : " << num_adds;
-
 				}
 			};
 
 			/// \brief TODOCUMENT
-			template <typename Key>
+			template <typename Key, typename Cell>
 			template <typename T>
-			inline void scan_index_hash_store<Key>::push_back_entry_to_cell(const Key  &arg_key, ///< TODOCUMENT
-			                                                                T         &&arg_data ///< TODOCUMENT
-			                                                                ) {
+			inline void scan_index_hash_store<Key, Cell>::push_back_entry_to_cell(const Key  &arg_key, ///< TODOCUMENT
+			                                                                      T         &&arg_data ///< TODOCUMENT
+			                                                                      ) {
 				the_store[ arg_key ].push_back( std::forward<T>( arg_data ) );
 				++num_adds;
 			}
 
 			/// \brief TODOCUMENT
-			template <typename Key>
+			template <typename Key, typename Cell>
 			template <typename... Ts>
-			inline void scan_index_hash_store<Key>::emplace_back_entry_to_cell(const Key  &    arg_key, ///< TODOCUMENT
-			                                                                   Ts        &&... arg_data ///< TODOCUMENT
-			                                                                   ) {
+			inline void scan_index_hash_store<Key, Cell>::emplace_back_entry_to_cell(const Key  &    arg_key, ///< TODOCUMENT
+			                                                                         Ts        &&... arg_data ///< TODOCUMENT
+			                                                                         ) {
 				the_store[ arg_key ].emplace_back( std::forward<Ts>( arg_data )... );
 				++num_adds;
 			}
 
 			/// \brief TODOCUMENT
-			template <typename Key>
-			inline const multi_struc_res_rep_pair_list & scan_index_hash_store<Key>::find_matches(const Key &arg_key ///< TODOCUMENT
-			                                                                                      ) const {
+			template <typename Key, typename Cell>
+			inline const Cell & scan_index_hash_store<Key, Cell>::find_matches(const Key &arg_key ///< TODOCUMENT
+			                                                                   ) const {
 				const auto &cell_itr = the_store.find( arg_key );
 				return ( cell_itr == common::cend( the_store ) ) ? empty_cell : cell_itr->second;
 			}
 
 			/// \brief TODOCUMENT
-			template <typename Key>
-			info_quantity scan_index_hash_store<Key>::get_info_size() const {
-
-				const info_value num_bytes = boost::numeric_cast<info_value>( num_adds * sizeof( multi_struc_res_rep_pair ) );
+			template <typename Key, typename Cell>
+			info_quantity scan_index_hash_store<Key, Cell>::get_info_size() const {
+				const auto num_bytes =
+					  sizeof( std::decay_t< decltype( *this ) > )
+					+ sizeof( Cell    ) * the_store.size()
+					+ sizeof( value_t ) * num_adds;
 				return num_bytes * boost::units::information::bytes;
 			}
 

@@ -68,7 +68,7 @@ namespace cath {
 			durn_mem_pair structure_build_durn_and_size = make_pair( hrc_duration::zero(), 0 * boost::units::information::bytes );
 
 			/// \brief TODOCUMENT
-			detail::scan_index_hash_store<key_t> the_store;
+			detail::scan_index_hash_store<key_t, detail::multi_struc_res_rep_pair_list> the_store;
 
 			/// \brief TODOCUMENT
 			hrc_duration index_build_durn = hrc_duration::zero();
