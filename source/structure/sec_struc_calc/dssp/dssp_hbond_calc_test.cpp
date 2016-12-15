@@ -31,7 +31,7 @@
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "structure/geometry/coord.hpp"
-#include "structure/sec_struc_calc/bifur_hbond_list.hpp"
+#include "structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
 #include "test/dssp/dssp_dupl_fixture.hpp"
 #include "test/global_test_constants.hpp"
 // #include "common/chrono/duration_to_seconds_string.hpp"

@@ -978,9 +978,14 @@ set(
 )
 
 set(
+	NORMSOURCES_STRUCTURE_SEC_STRUC_CALC_DSSP
+		structure/sec_struc_calc/dssp/bifur_hbond_list.cpp
+		structure/sec_struc_calc/dssp/dssp_hbond_calc.cpp
+)
+
+set(
 	NORMSOURCES_STRUCTURE_SEC_STRUC_CALC
-		structure/sec_struc_calc/bifur_hbond_list.cpp
-		structure/sec_struc_calc/dssp_hbond_calc.cpp
+		${NORMSOURCES_STRUCTURE_SEC_STRUC_CALC_DSSP}
 )
 
 set(
@@ -1828,9 +1833,14 @@ set(
 )
 
 set(
+	TESTSOURCES_STRUCTURE_SEC_STRUC_CALC_DSSP
+		structure/sec_struc_calc/dssp/bifur_hbond_list_test.cpp
+		structure/sec_struc_calc/dssp/dssp_hbond_calc_test.cpp
+)
+
+set(
 	TESTSOURCES_STRUCTURE_SEC_STRUC_CALC
-		structure/sec_struc_calc/bifur_hbond_list_test.cpp
-		structure/sec_struc_calc/dssp_hbond_calc_test.cpp
+		${TESTSOURCES_STRUCTURE_SEC_STRUC_CALC_DSSP}
 )
 
 set(

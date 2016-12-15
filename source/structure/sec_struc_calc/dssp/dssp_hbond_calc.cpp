@@ -26,7 +26,7 @@
 #include "common/size_t_literal.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "scan/spatial_index/spatial_index.hpp"
-#include "structure/sec_struc_calc/bifur_hbond_list.hpp"
+#include "structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
 
 using namespace cath::common;
 using namespace cath::file;

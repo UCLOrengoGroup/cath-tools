@@ -36,7 +36,7 @@
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "structure/sec_struc_calc/bifur_hbond_list.hpp"
+#include "structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
 #include "test/global_test_constants.hpp"
 
 #include <fstream>
