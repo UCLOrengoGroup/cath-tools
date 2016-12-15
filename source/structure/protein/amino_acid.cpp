@@ -180,7 +180,19 @@ char cath::get_letter_of_amino_acid_code(const string &arg_three_letter_aa ///< 
 	return amino_acid(arg_three_letter_aa).get_letter();
 }
 
+/// \brief Insert a description of the specified amino_acid into the specified ostream
+///
+/// \relates amino_acid
+ostream & cath::operator<<(ostream          &arg_os,        ///< The ostream into which the description should be inserted
+                           const amino_acid &arg_amino_acid ///< The amino_acid to describe
+                           ) {
+	arg_os << arg_amino_acid.get_code();
+	return arg_os;
+}
+
 /// \brief TODOCUMENT
+///
+/// \relates amino_acid
 istream & cath::operator>>(istream    &is,            ///< The istream from which to parse the amino_acid
                            amino_acid &arg_amino_acid ///< The amino acid to populate
                            ) {

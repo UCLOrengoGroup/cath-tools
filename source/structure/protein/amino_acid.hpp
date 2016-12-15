@@ -226,6 +226,9 @@ namespace cath {
 
 	char get_letter_of_amino_acid_code(const std::string &);
 
+	std::ostream & operator<<(std::ostream &,
+	                          const amino_acid &);
+
 	std::istream & operator>>(std::istream &,
 	                          amino_acid &);
 } // namespace cath
