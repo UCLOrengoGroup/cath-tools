@@ -30,6 +30,7 @@
 
 #include <map>
 #include <set>
+#include <unordered_map>
 
 /// \todo Consider adding predicate versions of all contains functions
 namespace cath {
@@ -68,6 +69,14 @@ namespace cath {
 		              const T           &arg_value  ///< TODOCUMENT
 		              ) {
 			return ( arg_set.count( arg_value ) > 0 );
+		}
+
+		/// \brief TODOCUMENT
+		template <typename K, typename V, typename T>
+		bool contains(const std::unordered_map<K, V> &arg_map,   ///< TODOCUMENT
+		              const T                        &arg_value  ///< TODOCUMENT
+		              ) {
+			return ( arg_map.count( arg_value ) > 0 );
 		}
 
 		/// \brief TODOCUMENT

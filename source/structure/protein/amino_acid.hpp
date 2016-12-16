@@ -171,7 +171,7 @@ namespace cath {
 						"Cannot create a HETATM amino acid from a string that is not 3 characters long"
 					));
 				}
-				if ( INDEX_OF_CODE().count( arg_string ) > 0 ) {
+				if ( common::contains( INDEX_OF_CODE(), arg_string ) ) {
 					set_letter_code_or_name( arg_string );
 				}
 				else {
