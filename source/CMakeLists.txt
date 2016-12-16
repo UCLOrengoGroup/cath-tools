@@ -481,6 +481,7 @@ set(
 set(
 	NORMSOURCES_FILE_PDB
 		file/pdb/coarse_element_type.cpp
+		file/pdb/dssp_skip_policy.cpp
 		file/pdb/pdb.cpp
 		file/pdb/pdb_atom.cpp
 		file/pdb/pdb_atom_parse_status.cpp
