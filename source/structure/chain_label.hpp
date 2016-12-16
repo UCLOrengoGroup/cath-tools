@@ -30,7 +30,10 @@ namespace cath {
 	/// \brief TODOCUMENT
 	class chain_label final : private boost::equality_comparable<chain_label> {
 	private:
-		friend constexpr bool operator==(const chain_label &, const chain_label &);
+		friend constexpr bool operator==(const chain_label &,
+		                                 const chain_label &);
+		friend constexpr bool operator<(const chain_label &,
+		                                const chain_label &);
 
 		/// \brief TODOCUMENT
 		char chain_char = 0;
@@ -66,6 +69,13 @@ namespace cath {
 	                                 const chain_label &arg_chain_label_b  ///< TODOCUMENT
 	                                 ) {
 		return ( arg_chain_label_a.get_char() == arg_chain_label_b.get_char() );
+	}
+
+	/// \brief TODOCUMENT
+	inline constexpr bool operator<(const chain_label &arg_chain_label_a, ///< TODOCUMENT
+	                                const chain_label &arg_chain_label_b  ///< TODOCUMENT
+	                                ) {
+		return ( arg_chain_label_a.get_char() < arg_chain_label_b.get_char() );
 	}
 
 	std::ostream & operator<<(std::ostream &,

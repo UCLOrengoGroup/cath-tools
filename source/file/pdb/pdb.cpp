@@ -293,14 +293,24 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
                                     pdb     &arg_pdb       ///< TODOCUMENT
                                     ) {
 	// Variables to store the details of parsed atoms
-	pdb_residue_vec residues;
+	pdb_residue_vec  residues;
 
-	string          line_string;
+	set<chain_label> terminated_chains;
+	string           line_string;
 
-	string          prev_amino_acid_3_char_code;
-	residue_id      prev_res_id;
-	pdb_atom_vec    prev_atoms;
-	bool            prev_warned_conflict = false;
+	string           prev_amino_acid_3_char_code;
+	residue_id       prev_res_id;
+	pdb_atom_vec     prev_atoms;
+	bool             prev_warned_conflict = false;
+
+	const auto add_atoms_and_reset_fn = [&] () {
+		residues.emplace_back(
+			prev_res_id,
+			std::move( prev_atoms )
+		);
+		prev_atoms = pdb_atom_vec{};
+		prev_warned_conflict = false;
+	};
 
 	// Loop over the lines of the file
 	//
@@ -336,50 +346,57 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			const pdb_atom   &atom                   = new_entry.second;
 			const string      amino_acid_3_char_code = get_amino_acid_code( atom );
 
-			// If there are previously seen atoms that don't match this chain/res_id,
-			// then add those atoms' residue and reset prev_atoms
-			if ( ! prev_atoms.empty() && res_id != prev_res_id ) {
-				residues.emplace_back(
-					prev_res_id,
-					std::move( prev_atoms )
-				);
-				prev_atoms = pdb_atom_vec{};
-				prev_warned_conflict = false;
-			}
+			// If this isn't a terminated chain then continue processing
+			if ( ! contains( terminated_chains, res_id.get_chain_label() ) ) {
 
-			// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.
-			// Though that's a bit rubbish, it shouldn't break the whole comparison
-			// so if that's detected, just warn and move on (without appending to new_residues).
-			if ( ! prev_atoms.empty() && amino_acid_3_char_code != prev_amino_acid_3_char_code ) {
-				if ( ! prev_warned_conflict ) {
-					BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing PDB file, found conflicting consecutive entries for residue \""
-					                             << res_id
-					                             << "\" (with amino acids \""
-					                             << prev_amino_acid_3_char_code
-					                             << "\" and then \""
-					                             << amino_acid_3_char_code
-					                             << "\") - ignoring latter entry (and any further entries)";
-					prev_warned_conflict = true;
+				// If there are previously seen atoms that don't match this chain/res_id,
+				// then add those atoms' residue and reset prev_atoms
+				if ( ! prev_atoms.empty() && res_id != prev_res_id ) {
+					add_atoms_and_reset_fn();
 				}
-			}
-			// Otherwise update the records of previously seen atoms
-			else {
-				prev_amino_acid_3_char_code = amino_acid_3_char_code;
-				prev_res_id                 = res_id;
-				prev_atoms.push_back( atom );
+
+				// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.
+				// Though that's a bit rubbish, it shouldn't break the whole comparison
+				// so if that's detected, just warn and move on (without appending to new_residues).
+				if ( ! prev_atoms.empty() && amino_acid_3_char_code != prev_amino_acid_3_char_code ) {
+					if ( ! prev_warned_conflict ) {
+						BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing PDB file, found conflicting consecutive entries for residue \""
+						                             << res_id
+						                             << "\" (with amino acids \""
+						                             << prev_amino_acid_3_char_code
+						                             << "\" and then \""
+						                             << amino_acid_3_char_code
+						                             << "\") - ignoring latter entry (and any further entries)";
+						prev_warned_conflict = true;
+					}
+				}
+				// Otherwise update the records of previously seen atoms
+				else {
+					prev_amino_acid_3_char_code = amino_acid_3_char_code;
+					prev_res_id                 = res_id;
+					prev_atoms.push_back( atom );
+				}
 			}
 		}
 		else if ( boost::algorithm::starts_with( line_string, "ENDMDL" ) ) {
 			break;
 		}
+		else if ( boost::algorithm::starts_with( line_string, "TER" ) ) {
+			if ( line_string.length() >= 22 ) {
+				terminated_chains.insert( chain_label( line_string.at( 21 ) ) );
+			}
+			else if ( ! is_null( prev_res_id ) ) {
+				terminated_chains.insert( prev_res_id.get_chain_label() );
+			}
+			if ( ! prev_atoms.empty() ) {
+				add_atoms_and_reset_fn();
+			}
+		}
 	};
 
 	// Add any last remaining atoms
 	if ( ! prev_atoms.empty() ) {
-		residues.emplace_back(
-			prev_res_id,
-			std::move( prev_atoms )
-		);
+		add_atoms_and_reset_fn();
 	}
 
 	arg_pdb.set_residues( std::move( residues ) );

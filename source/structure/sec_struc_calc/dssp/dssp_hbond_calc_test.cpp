@@ -174,6 +174,11 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(engineered_test_examples)
 
+
+BOOST_AUTO_TEST_CASE(heeds_ter_record_blocking_bonds) {
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "ter_record_blocks_bonds_1.dssp"   );
+}
+
 BOOST_AUTO_TEST_CASE(rejects_residue_with_nonstd_first_altlocn) {
 	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "nonstd_first_altlocn_1.dssp"      );
 }
