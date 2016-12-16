@@ -28,9 +28,14 @@
 
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "common/size_t_literal.hpp"
+#include "file/dssp_wolf/dssp_file.hpp"
+#include "file/dssp_wolf/dssp_file_io.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "structure/geometry/coord.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 #include "structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
 #include "test/dssp/dssp_dupl_fixture.hpp"
 #include "test/global_test_constants.hpp"
@@ -90,6 +95,8 @@ namespace cath {
 				// const auto read_pdb_start_time = high_resolution_clock::now();
 				const auto parsed_pdb          = read_pdb_file( arg_pdb_file );
 				// const auto read_pdb_stop_time  = high_resolution_clock::now();
+
+				protein_from_dssp_and_pdb( read_dssp_file( arg_dssp_file ), parsed_pdb, dssp_skip_policy::DONT_SKIP__BREAK_ANGLES );
 
 				// const auto calc_start_time = high_resolution_clock::now();
 				const auto bifur_hbonds = dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_residues(
