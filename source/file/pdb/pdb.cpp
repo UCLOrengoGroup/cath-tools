@@ -369,6 +369,9 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 				prev_atoms.push_back( atom );
 			}
 		}
+		else if ( boost::algorithm::starts_with( line_string, "ENDMDL" ) ) {
+			break;
+		}
 	};
 
 	// Add any last remaining atoms
