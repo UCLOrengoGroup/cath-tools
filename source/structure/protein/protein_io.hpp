@@ -28,11 +28,12 @@
 
 #include <iostream>
 
+namespace cath { class protein; }
 namespace cath { namespace file { class dssp_file; } }
 namespace cath { namespace file { class pdb; } }
 namespace cath { namespace file { class sec_file; } }
 namespace cath { namespace file { class wolf_file; } }
-namespace cath { class protein; }
+namespace cath { namespace file { enum class dssp_skip_policy : char; } }
 
 namespace cath {
 
@@ -44,13 +45,13 @@ namespace cath {
 	protein read_protein_from_dssp_pdb_and_sec_files(const boost::filesystem::path &,
 	                                                 const boost::filesystem::path &,
 	                                                 const boost::filesystem::path &,
-	                                                 const bool &,
+	                                                 const file::dssp_skip_policy &,
 	                                                 const std::string & = "",
 	                                                 const ostream_ref_opt & = std::ref( std::cerr ) );
 
 	protein read_protein_from_dssp_and_pdb(const boost::filesystem::path &,
 	                                       const boost::filesystem::path &,
-	                                       const bool &,
+	                                       const file::dssp_skip_policy &,
 	                                       const std::string & = "",
 	                                       const ostream_ref_opt & = boost::none );
 
@@ -66,7 +67,7 @@ namespace cath {
 	protein protein_from_dssp_pdb_and_sec(const file::dssp_file &,
 	                                      const file::pdb &,
 	                                      const file::sec_file &,
-	                                      const bool &,
+	                                      const file::dssp_skip_policy &,
 	                                      const std::string & = "",
 	                                      const ostream_ref_opt & = std::ref( std::cerr ) );
 

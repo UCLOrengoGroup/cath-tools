@@ -64,14 +64,14 @@ protein protein_source_from_pdb_dssp_and_sec::do_read_files(const data_file_path
 		dssp_file,
 		pdb_file,
 		sec_file,
-		limit_to_residues_in_dssp,
+		the_dssp_skip_policy,
 		arg_protein_name,
 		ref( arg_stderr )
 	);
 }
 
 /// \brief Ctor for protein_source_from_pdb_dssp_and_sec
-protein_source_from_pdb_dssp_and_sec::protein_source_from_pdb_dssp_and_sec(const bool &arg_limit_to_residues_in_dssp ///< Whether or not to limit to the residues in the DSSP file
-                                                                           ) : limit_to_residues_in_dssp( arg_limit_to_residues_in_dssp ) {
+protein_source_from_pdb_dssp_and_sec::protein_source_from_pdb_dssp_and_sec(const dssp_skip_policy &arg_dssp_skip_policy ///< Whether or not to limit to the residues in the DSSP file
+                                                                           ) : the_dssp_skip_policy( arg_dssp_skip_policy ) {
 }
 

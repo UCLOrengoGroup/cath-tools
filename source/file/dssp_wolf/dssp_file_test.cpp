@@ -203,8 +203,8 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 	ostringstream test_ss;
 	const log_to_ostream_guard the_guard{ test_ss };
 
-	const protein      combi_prot_with_all_pdb_residues   = protein_from_dssp_and_pdb(the_dssp_file, the_pdb_file, false );
-	const protein      combi_prot_with_dssp_only_residues = protein_from_dssp_and_pdb(the_dssp_file, the_pdb_file, true  );
+	const protein      combi_prot_with_all_pdb_residues   = protein_from_dssp_and_pdb(the_dssp_file, the_pdb_file, dssp_skip_policy::DONT_SKIP__BREAK_ANGLES );
+	const protein      combi_prot_with_dssp_only_residues = protein_from_dssp_and_pdb(the_dssp_file, the_pdb_file, dssp_skip_policy::SKIP__BREAK_ANGLES      );
 
 	BOOST_REQUIRE_EQUAL( num_non_null_dssp_residues, combi_prot_with_dssp_only_residues.get_length() );
 	BOOST_REQUIRE_EQUAL( num_pdb_residues,           combi_prot_with_all_pdb_residues.get_length()   );
@@ -366,7 +366,7 @@ BOOST_AUTO_TEST_CASE(handles_multi_chains_with_same_residue_ids) {
 		read_protein_from_dssp_and_pdb(
 			path{ TEST_RESIDUE_IDS_DATA_DIR() / "tally_multi_chain.dssp" },
 			path{ TEST_RESIDUE_IDS_DATA_DIR() / "tally_multi_chain"      },
-			true,
+			dssp_skip_policy::SKIP__BREAK_ANGLES,
 			""s,
 			reference_wrapper<ostream>( warn_ss )
 		)

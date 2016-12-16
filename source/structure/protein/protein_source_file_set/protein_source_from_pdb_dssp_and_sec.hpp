@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FROM_PDB_DSSP_AND_SEC_H
 
 #include "structure/protein/protein_source_file_set/protein_source_file_set.hpp"
+#include "file/pdb/dssp_skip_policy.hpp"
 
 namespace cath {
 
@@ -29,7 +30,7 @@ namespace cath {
 	class protein_source_from_pdb_dssp_and_sec final : public protein_source_file_set {
 	private:
 		/// \brief Whether or not to limit the protein to residues that are found in the DSSP file
-		bool limit_to_residues_in_dssp;
+		file::dssp_skip_policy the_dssp_skip_policy;
 
 		virtual std::unique_ptr<protein_source_file_set> do_clone() const override final;
 
@@ -42,7 +43,7 @@ namespace cath {
 		                              std::ostream &) const override final;
 
 	public:
-		explicit protein_source_from_pdb_dssp_and_sec(const bool & = false);
+		explicit protein_source_from_pdb_dssp_and_sec(const file::dssp_skip_policy & = file::dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES);
 	};
 
 } // namespace cath

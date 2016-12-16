@@ -29,9 +29,10 @@
 #include <string>
 #include <vector>
 
-namespace cath { namespace file { class pdb; } }
 namespace cath { class protein; }
 namespace cath { class residue; }
+namespace cath { namespace file { class pdb; } }
+namespace cath { namespace file { enum class dssp_skip_policy : char; } }
 
 namespace cath {
 	namespace file {
@@ -55,7 +56,7 @@ namespace cath {
 
 		protein protein_from_dssp_and_pdb(const dssp_file &,
 		                                  const pdb &,
-		                                  const bool &,
+		                                  const dssp_skip_policy &,
 		                                  const std::string & = "",
 		                                  const ostream_ref_opt & = boost::none );
 

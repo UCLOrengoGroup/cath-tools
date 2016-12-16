@@ -492,14 +492,16 @@ ostream & cath::file::operator<<(ostream   &arg_os,         ///< TODOCUMENT
 /// \relates pdb
 ///
 /// \relates protein
-doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb      &arg_pdb,         ///< TODOCUMENT
-                                                                  const size_vec &arg_skip_indices ///< Indices of residues in the pdb that were preceded by residues that have been skipped due to being backbone complete. This may include an index on greater than the index of the last residue in the pdb to indicate that there were residues skipped after the last residue. Phi/psi angles are not set over these skip breaks.
+doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb                      &arg_pdb,                ///< TODOCUMENT
+                                                                  const size_vec                 &arg_skip_indices,       ///< Indices of residues in the pdb that were preceded by residues that have been skipped due to being backbone complete. This may include an index on greater than the index of the last residue in the pdb to indicate that there were residues skipped after the last residue. Phi/psi angles are not set over these skip breaks.
+                                                                  const dssp_skip_angle_skipping &arg_dssp_angle_skipping ///< TODOCUMENT
                                                                   ) {
 	// The gap between consecutive residues' carbon-alpha atoms, above which the residues are not treated as neighbours
 	//
 	// To replicate DSSP's behaviour, this must be at least >= 5.01602 so that residues 161 and 162 on chain A of 139l are treated as connected
 	// To replicate DSSP's behaviour, this must be at least >= 6.60324 so that residues  63 and  64 on chain A of 1c8c are treated as connected
 	constexpr double INTER_CA_DIST_FOR_NEIGHBOURS = 6.625; //< 6 + 5/8
+	
 	const     auto   DEFAULT_PHI_PSI              = residue::DEFAULT_PHI_PSI();
 	const     auto   DEFAULT_PHI_PSI_PAIR         = make_pair( DEFAULT_PHI_PSI, DEFAULT_PHI_PSI );
 
@@ -519,15 +521,23 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 				get_carbon_alpha_coord( this_pdb_residue ),
 				get_carbon_alpha_coord( next_pdb_residue )
 			);
-			if ( inter_ca_dist < INTER_CA_DIST_FOR_NEIGHBOURS ) {
 
-				// ...and if there weren't any residues between them that have been skipped
-				if ( ! binary_search( arg_skip_indices, residue_ctr + 1 ) ) {
-					// Then calculate the two angles of these two residue and store them
-					const auto this_psi_and_next_phi = get_psi_of_this_and_phi_of_next( this_pdb_residue, next_pdb_residue );
-					phi_and_psi_angles[ residue_ctr     ].second = this_psi_and_next_phi.first;
-					phi_and_psi_angles[ residue_ctr + 1 ].first  = this_psi_and_next_phi.second;
-				}
+			// If:
+			//  * they're close enough and
+			//  * there weren't any residues between them that have been skipped and
+			//  * they're not to be skipped due to either being residues DSSP would skip
+			const bool close_enough           = inter_ca_dist <= INTER_CA_DIST_FOR_NEIGHBOURS;
+			const bool not_straddling_skipped = ! binary_search( arg_skip_indices, residue_ctr + 1 );
+			const bool not_dssp_skip          = (
+				( arg_dssp_angle_skipping == dssp_skip_angle_skipping::DONT_BREAK_ANGLES )
+				||
+				! ( dssp_will_skip_residue( this_pdb_residue ) || dssp_will_skip_residue( next_pdb_residue ) )
+			);
+			if ( close_enough && not_straddling_skipped && not_dssp_skip ) {
+				// Then calculate the two angles of these two residue and store them
+				const auto this_psi_and_next_phi = get_psi_of_this_and_phi_of_next( this_pdb_residue, next_pdb_residue );
+				phi_and_psi_angles[ residue_ctr     ].second = this_psi_and_next_phi.first;
+				phi_and_psi_angles[ residue_ctr + 1 ].first  = this_psi_and_next_phi.second;
 			}
 		}
 	}
@@ -545,9 +555,9 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 /// This information is useful to return so it can be used to prevent phi/psi angles being set over these skip breaks.
 ///
 /// \relates pdb
-pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb             &arg_pdb,             ///< TODOCUMENT
-                                                              const ostream_ref_opt &arg_ostream_ref_opt, ///< An optional reference to an ostream to which any logging should be sent
-                                                              const bool            &arg_skip_like_dssp   ///< TODOCUMENT
+pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb                    &arg_pdb,             ///< TODOCUMENT
+                                                              const ostream_ref_opt        &arg_ostream_ref_opt, ///< An optional reference to an ostream to which any logging should be sent
+                                                              const dssp_skip_res_skipping &arg_skip_like_dssp   ///< TODOCUMENT
                                                               ) {
 	// Grab the number of residues
 	const size_t num_residues = arg_pdb.get_num_residues();
@@ -564,9 +574,10 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 		const pdb_residue &the_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr );
 
 		// If the residue is backbone_complete,then add it to new_pdb_residues
-		const bool     skip_like_dssp_and_ok =   arg_skip_like_dssp && ! dssp_will_skip_residue( the_residue );
-		const bool not_skip_like_dssp_and_ok = ! arg_skip_like_dssp && is_backbone_complete( the_residue );
-		if ( skip_like_dssp_and_ok || not_skip_like_dssp_and_ok ) {
+		const bool ok_to_process = ( arg_skip_like_dssp == dssp_skip_res_skipping::SKIP )
+			? ! dssp_will_skip_residue( the_residue )
+			:   is_backbone_complete  ( the_residue );
+		if ( ok_to_process ) {
 			new_pdb_residues.push_back( the_residue );
 		}
 		// Else if this is a proper amino acid (not just a bunch of HETATMs), record it
@@ -608,16 +619,21 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 /// \relates pdb
 ///
 /// \relates protein
-protein cath::file::build_protein_of_pdb(const pdb             &arg_pdb,    ///< TODOCUMENT
-                                         const ostream_ref_opt &arg_ostream ///< An optional reference to an ostream to which any logging should be sent
+protein cath::file::build_protein_of_pdb(const pdb              &arg_pdb,        ///< TODOCUMENT
+                                         const ostream_ref_opt  &arg_ostream,    ///< An optional reference to an ostream to which any logging should be sent
+                                         const dssp_skip_policy &arg_skip_policy ///< TODOCUMENT
                                          ) {
 	constexpr size_t DEFAULT_ACCESSIBILITY = 0;
 
-	const auto     backbone_complete_data       = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream );
+	const auto     backbone_complete_data       = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream, res_skipping_of_dssp_skip_policy( arg_skip_policy ) );
 	const pdb      backbone_complete_pdb_subset = backbone_complete_data.first;
 	const size_vec indices_of_skips             = backbone_complete_data.second;
 	const size_t   num_residues                 = backbone_complete_pdb_subset.get_num_residues();
-	const auto     phi_and_psi_angles           = get_phi_and_psi_angles( backbone_complete_pdb_subset, indices_of_skips );
+	const auto     phi_and_psi_angles           = get_phi_and_psi_angles(
+		backbone_complete_pdb_subset,
+		indices_of_skips,
+		angle_skipping_of_dssp_skip_policy( arg_skip_policy )
+	);
 
 	return build_protein( transform_build<residue_vec>(
 		irange( 0_z, num_residues ),

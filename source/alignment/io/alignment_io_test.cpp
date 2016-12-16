@@ -43,6 +43,7 @@ using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
+using namespace cath::file;
 using namespace std;
 
 //namespace std {
@@ -156,8 +157,8 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_CASE(alignment_legacy_input_output) {
 	ostringstream err_ss;
 
-	const protein protein_a = read_protein_from_dssp_and_pdb( EXAMPLE_A_DSSP_FILENAME(), EXAMPLE_A_PDB_FILENAME(), true, EXAMPLE_A_PDB_STEMNAME(), reference_wrapper<ostream>( err_ss ) );
-	const protein protein_b = read_protein_from_dssp_and_pdb( EXAMPLE_B_DSSP_FILENAME(), EXAMPLE_B_PDB_FILENAME(), true, EXAMPLE_B_PDB_STEMNAME(), reference_wrapper<ostream>( err_ss ) );
+	const protein protein_a = read_protein_from_dssp_and_pdb( EXAMPLE_A_DSSP_FILENAME(), EXAMPLE_A_PDB_FILENAME(), dssp_skip_policy::SKIP__BREAK_ANGLES, EXAMPLE_A_PDB_STEMNAME(), reference_wrapper<ostream>( err_ss ) );
+	const protein protein_b = read_protein_from_dssp_and_pdb( EXAMPLE_B_DSSP_FILENAME(), EXAMPLE_B_PDB_FILENAME(), dssp_skip_policy::SKIP__BREAK_ANGLES, EXAMPLE_B_PDB_STEMNAME(), reference_wrapper<ostream>( err_ss ) );
 
 	// Read the alignment file into a stringstream which can be used both as expected output
 	// and as the istream for the parsing of the alignment

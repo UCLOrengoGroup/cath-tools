@@ -76,18 +76,18 @@ protein cath::read_protein_from_wolf_and_sec_files(const path            &arg_wo
 /// \brief Read a DSSP, a PDB and a sec file and build them into a protein
 ///
 /// \relatesalso protein
-protein cath::read_protein_from_dssp_pdb_and_sec_files(const path            &arg_dssp_filename,             ///< A DSSP file
-                                                       const path            &arg_pdb_filename,              ///< A PDB file
-                                                       const path            &arg_sec_filename,              ///< A sec file
-                                                       const bool            &arg_limit_to_residues_in_dssp, ///< Whether to limit the protein to those residues that were present in the DSSP
-                                                       const string          &arg_name,                      ///< The name to set as the title of the protein
-                                                       const ostream_ref_opt &arg_stderr                     ///< TODOCUMENT
+protein cath::read_protein_from_dssp_pdb_and_sec_files(const path             &arg_dssp_filename,    ///< A DSSP file
+                                                       const path             &arg_pdb_filename,     ///< A PDB file
+                                                       const path             &arg_sec_filename,     ///< A sec file
+                                                       const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to limit the protein to those residues that were present in the DSSP
+                                                       const string           &arg_name,             ///< The name to set as the title of the protein
+                                                       const ostream_ref_opt  &arg_stderr            ///< TODOCUMENT
                                                        ) {
 	return add_name_and_paint_sec_file_onto_protein_copy(
 		read_protein_from_dssp_and_pdb(
 			arg_dssp_filename,
 			arg_pdb_filename,
-			arg_limit_to_residues_in_dssp,
+			arg_dssp_skip_policy,
 			""s,
 			arg_stderr
 		),
@@ -102,16 +102,16 @@ protein cath::read_protein_from_dssp_pdb_and_sec_files(const path            &ar
 /// \brief Read a DSSP and a PDB file and build them into a protein
 ///
 /// \relatesalso protein
-protein cath::read_protein_from_dssp_and_pdb(const path            &arg_dssp,                      ///< A DSSP file
-                                             const path            &arg_pdb,                       ///< A PDB file
-                                             const bool            &arg_limit_to_residues_in_dssp, ///< Whether to limit the protein to those residues that were present in the DSSP
-                                             const string          &arg_name,                      ///< The name to set as the title of the protein
-                                             const ostream_ref_opt &arg_ostream                    ///< An optional reference to an ostream to which any logging should be sent
+protein cath::read_protein_from_dssp_and_pdb(const path             &arg_dssp,             ///< A DSSP file
+                                             const path             &arg_pdb,              ///< A PDB file
+                                             const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to limit the protein to those residues that were present in the DSSP
+                                             const string           &arg_name,             ///< The name to set as the title of the protein
+                                             const ostream_ref_opt  &arg_ostream           ///< An optional reference to an ostream to which any logging should be sent
                                              ) {
 	return protein_from_dssp_and_pdb(
 		read_dssp_file( arg_dssp ),
 		read_pdb_file ( arg_pdb  ),
-		arg_limit_to_residues_in_dssp,
+		arg_dssp_skip_policy,
 		arg_name,
 		arg_ostream
 	);
@@ -156,19 +156,19 @@ protein cath::protein_from_wolf_and_sec(const wolf_file       &arg_wolf,  ///< T
 /// \relatesalso dssp_file
 /// \relatesalso pdb
 /// \relatesalso sec_file
-protein cath::protein_from_dssp_pdb_and_sec(const dssp_file       &arg_dssp,                      ///< The parsed DSSP file
-                                            const pdb             &arg_pdb,                       ///< The parsed PDB file
-                                            const sec_file        &arg_sec,                       ///< The parsed sec file
-                                            const bool            &arg_limit_to_residues_in_dssp, ///< Whether to limit the protein to those residues that were present in the DSSP
-                                            const string          &arg_name,                      ///< The name to set as the title of the protein
-                                            const ostream_ref_opt &arg_stderr                     ///< TODOCUMENT
+protein cath::protein_from_dssp_pdb_and_sec(const dssp_file        &arg_dssp,             ///< The parsed DSSP file
+                                            const pdb              &arg_pdb,              ///< The parsed PDB file
+                                            const sec_file         &arg_sec,              ///< The parsed sec file
+                                            const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to limit the protein to those residues that were present in the DSSP
+                                            const string           &arg_name,             ///< The name to set as the title of the protein
+                                            const ostream_ref_opt  &arg_stderr            ///< TODOCUMENT
                                             ) {
 	// Create a protein from the DSSP and PDB, set its title, paint the sec_file onto it and then return it
 	return add_name_and_paint_sec_file_onto_protein_copy(
 		protein_from_dssp_and_pdb(
 			arg_dssp,
 			arg_pdb,
-			arg_limit_to_residues_in_dssp,
+			arg_dssp_skip_policy,
 			arg_name,
 			arg_stderr
 		),

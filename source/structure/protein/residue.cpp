@@ -40,6 +40,7 @@
 using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::common;
+using namespace cath::file;
 using namespace cath::geom;
 
 using boost::lexical_cast;
@@ -452,8 +453,9 @@ rotation cath::construct_residue_frame(const coord &arg_nitrogen_position,     /
 /// \brief Combine two residue objects representing the same residue as parsed from a DSSP file and PDB file
 ///
 /// This populates the accessibility and secondary structure from the DSSP and everything else from the PDB
-residue cath::combine_residues_from_dssp_and_pdb(const residue &arg_dssp_residue, ///< The residue that has been parsed from a DSSP file,
-                                                 const residue &arg_pdb_residue   ///< An equivalent residue that has been parsed from a pdb file (and converted to a protein object via)
+residue cath::combine_residues_from_dssp_and_pdb(const residue                  &arg_dssp_residue,      ///< The residue that has been parsed from a DSSP file,
+                                                 const residue                  &arg_pdb_residue,       ///< An equivalent residue that has been parsed from a pdb file (and converted to a protein object via)
+                                                 const dssp_skip_angle_skipping &arg_pdb_skipped_angles ///< Whether the PDB tried to break PHI/PSI angles like DSSP (so it's worth printing info where that's failed)
                                                  ) {
 	// Check that these residues match (or that the DSSP residue is an error residue)
 	const residue_id &dssp_residue_id = arg_dssp_residue.get_pdb_residue_id();
@@ -520,15 +522,17 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue &arg_dssp_residue
 		const doub_angle &dssp_angle = get<2>( phi_psi_entry );
 		if ( angle_in_degrees( wrapped_difference( pdb_angle, dssp_angle ) ) > 1.0 ) {
 			if ( angle_in_degrees( dssp_angle ) == 360.0 ) {
-				BOOST_LOG_TRIVIAL( info ) << "The "
-					<< angle_name
-					<< " angle calculated for residue "
-					<< pdb_residue_id
-					<< " ("
-					<< pdb_angle
-					<< ") from the PDB conflicts with the DSSP angle of 360.0"
-					<< ", which is typically used by DSSP where it detects a"
-					<< " break in the chain (perhaps because it has rejected a neighbouring residue)";
+				if ( arg_pdb_skipped_angles == dssp_skip_angle_skipping::BREAK_ANGLES ) {
+					BOOST_LOG_TRIVIAL( info ) << "The "
+						<< angle_name
+						<< " angle calculated for residue "
+						<< pdb_residue_id
+						<< " ("
+						<< pdb_angle
+						<< ") from the PDB conflicts with the DSSP angle of 360.0"
+						<< ", which is typically used by DSSP where it detects a"
+						<< " break in the chain (perhaps because it has rejected a neighbouring residue)";
+				}
 			}
 			else {
 				BOOST_LOG_TRIVIAL( warning ) << "Whilst combining PDB and DSSP files, at residue "

@@ -31,6 +31,7 @@
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
 #include "file/dssp_wolf/tally_residue_ids.hpp"
+#include "file/pdb/dssp_skip_policy.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
@@ -85,14 +86,20 @@ dssp_file::const_iterator dssp_file::end() const {
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
 ///       (fix all errors, *then* provide default of boost::none)
-protein cath::file::protein_from_dssp_and_pdb(const dssp_file       &arg_dssp_file,                         ///< The dssp_file object for a given structure
-                                              const pdb             &arg_pdb_file,                          ///< The dssp_file object for a given structure
-                                              const bool            &arg_exclude_residues_absent_from_dssp, ///< Whether to exclude residues that are in the PDB but not the DSSP
-                                              const string          &arg_name,                              ///< The name to set as the title of the protein
-                                              const ostream_ref_opt &arg_ostream                            ///< An optional reference to an ostream to which any logging should be sent
+protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_file,        ///< The dssp_file object for a given structure
+                                              const pdb              &arg_pdb_file,         ///< The dssp_file object for a given structure
+                                              const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to exclude residues that are in the PDB but not the DSSP
+                                              const string           &arg_name,             ///< The name to set as the title of the protein
+                                              const ostream_ref_opt  &arg_ostream           ///< An optional reference to an ostream to which any logging should be sent
                                               ) {
 	// Build a rough protein object from the pdb object
-	const auto pdb_protein       = build_protein_of_pdb( arg_pdb_file, arg_ostream );
+	const auto pdb_protein       = build_protein_of_pdb(
+		arg_pdb_file,
+		arg_ostream,
+		( arg_dssp_skip_policy == dssp_skip_policy::SKIP__BREAK_ANGLES )
+			? dssp_skip_policy::DONT_SKIP__BREAK_ANGLES
+			: arg_dssp_skip_policy
+	);
 	const auto pdb_skip_indices  = get_protein_res_indices_that_dssp_might_skip( arg_pdb_file, arg_ostream );
 
 	// Grab the number of residues in the protein and dssp_file objects
@@ -112,7 +119,7 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file       &arg_dssp_fi
 
 	// Prepare a list of new residue to populate
 	residue_vec new_residues;
-	new_residues.reserve( arg_exclude_residues_absent_from_dssp ? num_dssp_residues : num_pdb_residues );
+	new_residues.reserve( ( arg_dssp_skip_policy == dssp_skip_policy::SKIP__BREAK_ANGLES ) ? num_dssp_residues : num_pdb_residues );
 
 	// Loop over the residues
 	size_t alignment_ctr = 0;
@@ -125,13 +132,17 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file       &arg_dssp_fi
 			// Combine the two residues and add them to the back
 			const residue &the_dssp_residue = arg_dssp_file.get_residue_of_index( alignment[alignment_ctr].second );
 			new_residues.push_back(
-				combine_residues_from_dssp_and_pdb( the_dssp_residue, the_pdb_residue )
+				combine_residues_from_dssp_and_pdb(
+					the_dssp_residue,
+					the_pdb_residue,
+					angle_skipping_of_dssp_skip_policy( arg_dssp_skip_policy )
+				)
 			);
 
 			// Increment the alignment counter
 			++alignment_ctr;
 		}
-		else if ( ! arg_exclude_residues_absent_from_dssp ) {
+		else if ( res_skipping_of_dssp_skip_policy( arg_dssp_skip_policy ) == dssp_skip_res_skipping::DONT_SKIP ) {
 			new_residues.push_back( the_pdb_residue );
 		}
 	}

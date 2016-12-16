@@ -28,6 +28,7 @@
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/file_type_aliases.hpp"
+#include "file/pdb/dssp_skip_policy.hpp"
 #include "file/pdb/pdb_base.hpp"
 #include "file/pdb/pdb_residue.hpp"
 #include "structure/structure_type_aliases.hpp"
@@ -100,14 +101,16 @@ namespace cath {
 		                          const pdb &);
 
 		geom::doub_angle_doub_angle_pair_vec get_phi_and_psi_angles(const pdb &,
-		                                                            const size_vec &);
+		                                                            const size_vec &,
+		                                                            const dssp_skip_angle_skipping &);
 
 		pdb_size_vec_pair backbone_complete_subset_of_pdb(const pdb &,
 		                                                  const ostream_ref_opt & = boost::none,
-		                                                  const bool & = false);
+		                                                  const dssp_skip_res_skipping & = dssp_skip_res_skipping::DONT_SKIP);
 
 		protein build_protein_of_pdb(const pdb &,
-		                             const ostream_ref_opt & = boost::none);
+		                             const ostream_ref_opt & = boost::none,
+		                             const dssp_skip_policy & = dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES);
 
 		protein build_protein_of_pdb_and_name(const pdb &,
 		                                      const std::string &,

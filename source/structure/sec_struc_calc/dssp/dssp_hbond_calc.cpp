@@ -45,13 +45,11 @@ using std::make_pair;
 bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_residues(const pdb             &arg_pdb,            ///< The PDB to query
                                                                                      const ostream_ref_opt &arg_ostream_ref_opt ///< An optional reference to an ostream to which any logging should be sent
                                                                                      ) {
-	// constexpr bool SKIP_RESIDUES_DSSP_WOULD_SKIP = false;
-	constexpr bool SKIP_RESIDUES_DSSP_WOULD_SKIP = true;
 	return calc_bifur_hbonds_of_backbone_complete_pdb(
 		backbone_complete_subset_of_pdb(
 			arg_pdb,
 			arg_ostream_ref_opt,
-			SKIP_RESIDUES_DSSP_WOULD_SKIP
+			dssp_skip_res_skipping::SKIP
 		).first
 	);
 }
