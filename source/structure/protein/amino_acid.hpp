@@ -52,7 +52,7 @@ namespace cath {
 		static const string_size_unordered_map & INDEX_OF_CODE();
 		static const string_size_unordered_map & INDEX_OF_NAME();
 
-		/// \brief TODOCUMENT
+		/// \brief The optional raw string for amino acids from HETATM records
 		str_opt raw_string;
 
 		/// \brief TODOCUMENT
@@ -73,6 +73,8 @@ namespace cath {
 		explicit amino_acid(const char &);
 
 		bool is_proper_amino_acid() const;
+
+		const str_opt & get_raw_string() const;
 
 		char        get_letter() const;
 		std::string get_code() const;
@@ -191,6 +193,11 @@ namespace cath {
 		return static_cast<bool>( index );
 	}
 
+	/// \brief Getter for the optional raw string for amino acids from HETATM records
+	inline const str_opt & amino_acid::get_raw_string() const {
+		return raw_string;
+	}
+
 	/// \brief TODOCUMENT
 	inline char amino_acid::get_letter() const {
 		check_is_proper_amino_acid();
@@ -213,13 +220,27 @@ namespace cath {
 	///
 	/// This can be helpful for ordering amino acids (eg as a key to a map in sequence_similarity_score).
 	///
+	/// This evaluates:
+	///  * proper amino acids as less than HETATM amino acids
+	///  * proper amino acids as less than each other based on their single letters
+	///  * non-proper amino acids as less than each other based on their raw strings
+	///
 	/// This is extended to the full range of <=, ==, !=, >, >= with Boost Operators (equivalent and totally_ordered).
 	///
 	/// \relates amino_acid
-	inline bool operator<(const amino_acid &arg_amino_acid_1, ///< The first amino acid to compare
+	inline bool operator<(const amino_acid &arg_amino_acid_1, ///< The first  amino acid to compare
 	                      const amino_acid &arg_amino_acid_2  ///< The second amino acid to compare
 	                      ) {
-		return ( arg_amino_acid_1.get_letter() < arg_amino_acid_2.get_letter() );
+		const auto is_proper_and_opt_letter_1 = arg_amino_acid_1.is_proper_amino_acid()
+			? std::make_pair( 0u, boost::make_optional( arg_amino_acid_1.get_letter() ) )
+			: std::make_pair( 1u, boost::none );
+		const auto is_proper_and_opt_letter_2 = arg_amino_acid_2.is_proper_amino_acid()
+			? std::make_pair( 0u, boost::make_optional( arg_amino_acid_2.get_letter() ) )
+			: std::make_pair( 1u, boost::none );
+		return
+			std::tie( is_proper_and_opt_letter_1, arg_amino_acid_1.get_raw_string() )
+			<
+			std::tie( is_proper_and_opt_letter_2, arg_amino_acid_2.get_raw_string() );
 	}
 
 	std::string get_code_of_amino_acid_letter(const char &);

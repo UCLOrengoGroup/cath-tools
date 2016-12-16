@@ -27,6 +27,7 @@
 
 using namespace cath;
 using namespace cath::common;
+using namespace cath::file;
 using namespace std;
 
 /// \brief The sequence of 1cjn0, 1cjo0, 1roeA, 2cjnA and 2cjoA (prepended with HMWX) in names
@@ -84,6 +85,23 @@ BOOST_AUTO_TEST_CASE(dna_and_rna_pseudo_residue_names_throw) {
 	for (const string &dna_and_rna_pseudo_residue_name : dna_and_rna_pseudo_residue_names) {
 		BOOST_CHECK_THROW( amino_acid the_amino_acid(dna_and_rna_pseudo_residue_name), invalid_argument_exception );
 	}
+}
+
+BOOST_AUTO_TEST_CASE(less_than_works) {
+	// AOP in 1b3a
+	// MSP in 1pfy
+	// PCP in 1ap5
+	// SIS in 4f8u
+	// TIY in 3tiy
+	BOOST_CHECK_LT   ( amino_acid( 'F'                       ), amino_acid( 'G'                       ) );
+	BOOST_CHECK_LT   ( amino_acid( 'G'                       ), amino_acid( "AOP", pdb_record::HETATM ) );
+	BOOST_CHECK_LT   ( amino_acid( "AOP", pdb_record::HETATM ), amino_acid( "MSP", pdb_record::HETATM ) );
+	BOOST_CHECK_LT   ( amino_acid( "MSP", pdb_record::HETATM ), amino_acid( "PCP", pdb_record::HETATM ) );
+	BOOST_CHECK_LT   ( amino_acid( "PCP", pdb_record::HETATM ), amino_acid( "SIS", pdb_record::HETATM ) );
+	BOOST_CHECK_LT   ( amino_acid( "SIS", pdb_record::HETATM ), amino_acid( "TIY", pdb_record::HETATM ) );
+
+	BOOST_CHECK_EQUAL( amino_acid( 'G'                       ), amino_acid( 'G'                       ) );
+	BOOST_CHECK_EQUAL( amino_acid( "MSP", pdb_record::HETATM ), amino_acid( "MSP", pdb_record::HETATM ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
