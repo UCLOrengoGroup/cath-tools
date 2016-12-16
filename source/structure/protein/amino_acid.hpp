@@ -25,6 +25,7 @@
 #include <boost/optional.hpp>
 #include <boost/throw_exception.hpp>
 
+#include "common/algorithm/contains.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb_record.hpp"
@@ -170,7 +171,12 @@ namespace cath {
 						"Cannot create a HETATM amino acid from a string that is not 3 characters long"
 					));
 				}
-				raw_string = arg_string;
+				if ( INDEX_OF_CODE().count( arg_string ) > 0 ) {
+					set_letter_code_or_name( arg_string );
+				}
+				else {
+					raw_string = arg_string;
+				}
 				break;
 			}
 			default : {

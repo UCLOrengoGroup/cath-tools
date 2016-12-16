@@ -100,6 +100,8 @@ BOOST_AUTO_TEST_CASE(less_than_works) {
 	BOOST_CHECK_LT   ( amino_acid( "PCP", pdb_record::HETATM ), amino_acid( "SIS", pdb_record::HETATM ) );
 	BOOST_CHECK_LT   ( amino_acid( "SIS", pdb_record::HETATM ), amino_acid( "TIY", pdb_record::HETATM ) );
 
+	BOOST_CHECK_EQUAL( amino_acid( "GLU", pdb_record::HETATM ), amino_acid( "GLU"                     ) );
+
 	BOOST_CHECK_EQUAL( amino_acid( 'G'                       ), amino_acid( 'G'                       ) );
 	BOOST_CHECK_EQUAL( amino_acid( "MSP", pdb_record::HETATM ), amino_acid( "MSP", pdb_record::HETATM ) );
 }
