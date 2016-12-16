@@ -474,16 +474,27 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 	const amino_acid dssp_amino_acid = arg_dssp_residue.get_amino_acid();
 	const amino_acid pdb_amino_acid  = arg_pdb_residue.get_amino_acid();
 	if ( dssp_amino_acid != pdb_amino_acid ) {
-		// If DSSP is UNK/X and PDB is ASX/B, GLX/Z, PYL/O or SEC/U, then just accept it
-		// (and go with the PDB decision)
+		// If DSSP is UNK/X and PDB is ASX/B, GLX/Z, PYL/O or SEC/U or a non-proper amino acid from
+		// HETATM records, then just accept it (and go with the PDB decision)
 		//
 		// \todo Should this also handle XLE/J in the same way?
-		const bool dssp_is_unk = ( dssp_amino_acid == amino_acid{ 'X' } );
-		const bool pdb_is_asx  = ( pdb_amino_acid  == amino_acid{ 'B' } );
-		const bool pdb_is_glx  = ( pdb_amino_acid  == amino_acid{ 'Z' } );
-		const bool pdb_is_pyl  = ( pdb_amino_acid  == amino_acid{ 'O' } );
-		const bool pdb_is_sec  = ( pdb_amino_acid  == amino_acid{ 'U' } );
-		if ( dssp_is_unk && ( pdb_is_pyl || pdb_is_sec || pdb_is_asx || pdb_is_glx ) ) {
+		const bool dssp_is_unk   = ( dssp_amino_acid == amino_acid{ 'X' } );
+		const bool pdb_is_proper =   pdb_amino_acid.is_proper_amino_acid();
+		const bool pdb_is_asx    = ( pdb_amino_acid  == amino_acid{ 'B' } );
+		const bool pdb_is_glx    = ( pdb_amino_acid  == amino_acid{ 'Z' } );
+		const bool pdb_is_pyl    = ( pdb_amino_acid  == amino_acid{ 'O' } );
+		const bool pdb_is_sec    = ( pdb_amino_acid  == amino_acid{ 'U' } );
+
+		if ( dssp_is_unk && ! pdb_is_proper ) {
+			BOOST_LOG_TRIVIAL( debug ) << "The amino acid \""
+				<< pdb_amino_acid.get_code()
+				<< "\" parsed from a PDB for residue \""
+				<< to_string( pdb_residue_id )
+				<< "\" does not match amino acid \""
+				<< dssp_amino_acid.get_code()
+				<< "\" parsed from a DSSP but this is fine because it's a HETATM amino acid";
+		}
+		else if ( dssp_is_unk && ( pdb_is_pyl || pdb_is_sec || pdb_is_asx || pdb_is_glx ) ) {
 			BOOST_LOG_TRIVIAL( warning ) << "The amino acid \""
 				<< pdb_amino_acid.get_code()
 				<< "\" parsed from a PDB for residue \""
