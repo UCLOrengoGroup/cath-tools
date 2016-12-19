@@ -66,7 +66,7 @@ namespace cath {
 			                                       const geom::coord &,
 			                                       const geom::coord &);
 
-			static hbond_energy_t get_hbond_energy(const file::pdb_residue &,
+			static hbond_energy_t get_hbond_energy(const boost::optional<file::pdb_residue> &,
 			                                       const file::pdb_residue &,
 			                                       const file::pdb_residue &);
 
@@ -74,7 +74,7 @@ namespace cath {
 			                                             const size_t &,
 			                                             const size_t &);
 
-			static bool has_hbond_energy(const file::pdb_residue &,
+			static bool has_hbond_energy(const boost::optional<file::pdb_residue> &,
 			                             const file::pdb_residue &,
 			                             const file::pdb_residue &);
 
@@ -126,16 +126,24 @@ namespace cath {
 
 		/// \brief Calculate the DSSP hbond energy between the specified two residues (with supporting info
 		///        from the residue that precedes the first one)
-		inline hbond_energy_t dssp_hbond_calc::get_hbond_energy(const file::pdb_residue &arg_residue_i_prev, ///< The residue that precedes the first residue
-		                                                        const file::pdb_residue &arg_residue_i,      ///< The first residue
-		                                                        const file::pdb_residue &arg_residue_j       ///< The second residue
+		inline hbond_energy_t dssp_hbond_calc::get_hbond_energy(const boost::optional<file::pdb_residue> &arg_residue_i_prev, ///< The residue that precedes the first residue
+		                                                        const file::pdb_residue                  &arg_residue_i,      ///< The first residue
+		                                                        const file::pdb_residue                  &arg_residue_j       ///< The second residue
 		                                                        ) {
-			const geom::coord prev_c_to_o = get_oxygen_coord( arg_residue_i_prev )
-			                                -
-			                                get_carbon_coord( arg_residue_i_prev );
+			const auto pseudo_h = [&] () {
+				if ( arg_residue_i_prev ) {
+					const auto prev_c_to_o = get_oxygen_coord( *arg_residue_i_prev )
+					                         -
+					                         get_carbon_coord( *arg_residue_i_prev );
+					return get_nitrogen_coord( arg_residue_i ) - ( prev_c_to_o / length( prev_c_to_o ) );
+				}
+				else {
+					return get_nitrogen_coord( arg_residue_i );
+				}
+			} ();
 			return get_hbond_energy(
 				get_nitrogen_coord( arg_residue_i ),
-				get_nitrogen_coord( arg_residue_i ) - ( prev_c_to_o / length( prev_c_to_o ) ),
+				pseudo_h,
 				get_carbon_coord  ( arg_residue_j ),
 				get_oxygen_coord  ( arg_residue_j )
 			);
@@ -149,8 +157,18 @@ namespace cath {
 		                                                              const size_t    &arg_i,   ///< The index of the first  residue in the PDB
 		                                                              const size_t    &arg_j    ///< The index of the second residue in the PDB
 		                                                              ) {
+			const bool use_prev_i =
+				( arg_i >= 1 )
+				&&
+				(
+					get_chain_label( arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i - 1 ) )
+					==
+					get_chain_label( arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i     ) )
+				);
 			return get_hbond_energy(
-				arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i - 1 ),
+				use_prev_i
+					? boost::make_optional( arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i - 1 ) )
+					: boost::none,
 				arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i     ),
 				arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_j     )
 			);
@@ -161,11 +179,12 @@ namespace cath {
 		///
 		/// If calling with a PDB and indices, prefer to use the wrapper function below because that can
 		/// make additional checks on the indices
-		inline bool dssp_hbond_calc::has_hbond_energy(const file::pdb_residue &arg_residue_i_prev, ///< The residue that precedes the first residue
-		                                              const file::pdb_residue &arg_residue_i,      ///< The first residue
-		                                              const file::pdb_residue &arg_residue_j       ///< The second residue
+		inline bool dssp_hbond_calc::has_hbond_energy(const boost::optional<file::pdb_residue> &arg_residue_i_prev, ///< The residue that precedes the first residue
+		                                              const file::pdb_residue                  &arg_residue_i,      ///< The first residue
+		                                              const file::pdb_residue                  &arg_residue_j       ///< The second residue
 		                                              ) {
 			constexpr double MIN_NO_HBOND_CA_DIST = 9.0;
+
 			return (
 				arg_residue_i.has_carbon_alpha()
 				&&
@@ -179,9 +198,15 @@ namespace cath {
 					< MIN_NO_HBOND_CA_DIST
 				)
 				&&
-				arg_residue_i_prev.has_carbon()
-				&&
-				arg_residue_i_prev.has_oxygen()
+				(
+					! arg_residue_i_prev
+					||
+					(
+						arg_residue_i_prev->has_carbon()
+						&&
+						arg_residue_i_prev->has_oxygen()
+					)
+				)
 				&&
 				arg_residue_i.has_nitrogen()
 				&&
@@ -194,8 +219,6 @@ namespace cath {
 					||
 					get_amino_acid( arg_residue_i ).get_letter() != 'P' // Proline has side-chain on N
 				)
-				&&
-				get_chain_label( arg_residue_i_prev ) == get_chain_label( arg_residue_i )
 			);
 		}
 
@@ -206,8 +229,6 @@ namespace cath {
 		                                                    const size_t    &arg_j    ///< The index of the second residue in the PDB
 		                                                    ) {
 			return (
-				arg_i >= 1
-				&&
 				(
 					arg_i < arg_j
 					||
@@ -215,7 +236,9 @@ namespace cath {
 				)
 				&&
 				has_hbond_energy(
-					arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i - 1 ),
+					( arg_i >= 1 )
+						? boost::make_optional( arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i - 1 ) )
+						: boost::none,
 					arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i     ),
 					arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_j     )
 				)

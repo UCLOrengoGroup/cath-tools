@@ -215,6 +215,10 @@ BOOST_AUTO_TEST_CASE(calculates_distance_within_cutoff_using_double_precision) {
 	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "bonded_residues_almost_nine_angstroms_apart.dssp" );
 }
 
+BOOST_AUTO_TEST_CASE(prob_hbond_to_residue_at_start_of_chain_1) {
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "hbond_to_residue_at_start_of_chain_1.dssp"        );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 
