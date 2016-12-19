@@ -63,7 +63,13 @@ bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_resi
 /// with a non backbone-complete PDB
 bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb(const pdb &arg_pdb ///< The PDB to query
                                                                              ) {
-	constexpr float MAX_DIST  =  9.0;
+	// Note that this is set a little bit higher because sometimes float rounding
+	// errors take the answer over the cutoff. This can be fixed using doubles
+	// in the distance calculation (along with cast_pdb_coord_float_to_double() )
+	// but it's simpler to just increase this number slightly, which wont break
+	// results because they'll still all be checked against the correct value of
+	// MIN_NO_HBOND_CA_DIST in has_hbond_energy()
+	constexpr float MAX_DIST  =  9.03125; // 9 + 1/32
 	constexpr float CELL_SIZE = 18.0;
 	const size_t num_pdb_residues = arg_pdb.get_num_residues();
 
