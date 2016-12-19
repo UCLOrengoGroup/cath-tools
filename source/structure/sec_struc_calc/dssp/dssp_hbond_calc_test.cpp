@@ -176,39 +176,39 @@ BOOST_AUTO_TEST_SUITE(engineered_test_examples)
 
 
 BOOST_AUTO_TEST_CASE(heeds_ter_record_blocking_bonds) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "ter_record_blocks_bonds_1.dssp"   );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "ter_record_blocks_bonds_1.dssp"                   );
 }
 
 BOOST_AUTO_TEST_CASE(rejects_residue_with_nonstd_first_altlocn) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "nonstd_first_altlocn_1.dssp"      );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "nonstd_first_altlocn_1.dssp"                      );
 }
 
 BOOST_AUTO_TEST_CASE(prevents_nhbond_for_first_residue_after_chain_break) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "chain_break_1.dssp"               );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "chain_break_1.dssp"                               );
 }
 
 BOOST_AUTO_TEST_CASE(sets_energy_to_minimum_when_very_close) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "very_close_1.dssp"                );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "very_close_1.dssp"                                );
 }
 
 BOOST_AUTO_TEST_CASE(takes_last_of_each_atom_for_multifold_residues) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "multifold_residue_1.dssp"         );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "multifold_residue_1.dssp"                         );
 }
 
 BOOST_AUTO_TEST_CASE(works_with_non_std_amino_acid_hetatm) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "non_std_amino_acid_hetatm_1.dssp" );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "non_std_amino_acid_hetatm_1.dssp"                 );
 }
 
 BOOST_AUTO_TEST_CASE(rounds_energy_value_like_dssp_1) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "rounding_1.dssp"                  );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "rounding_1.dssp"                                  );
 }
 
 BOOST_AUTO_TEST_CASE(rounds_energy_value_like_dssp_2) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "rounding_2.dssp"                  );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "rounding_2.dssp"                                  );
 }
 
 BOOST_AUTO_TEST_CASE(prefers_earlier_bonds_1) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "prefer_earlier_bonds_1.dssp"      );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "prefer_earlier_bonds_1.dssp"                      );
 }
 
 BOOST_AUTO_TEST_CASE(calculates_distance_within_cutoff_using_double_precision) {
