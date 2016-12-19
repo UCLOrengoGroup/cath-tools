@@ -1330,6 +1330,14 @@ set(
 )
 
 set(
+	TESTSOURCES_COMMON_METAPROGRAMMING
+		common/metaprogramming/append_template_params_into_first_wrapper_test.cpp
+		common/metaprogramming/change_template_subwrappers_test.cpp
+		common/metaprogramming/change_template_wrapper_test.cpp
+		common/metaprogramming/combine_params_lists_with_template_list_test.cpp
+)
+
+set(
 	TESTSOURCES_COMMON_STRING
 		common/string/booled_to_string_test.cpp
 		common/string/string_parse_tools_test.cpp
@@ -1372,6 +1380,7 @@ set(
 		common/invert_permutation_test.cpp
 		common/less_than_helper_test.cpp
 		common/logger_test.cpp
+		${TESTSOURCES_COMMON_METAPROGRAMMING}
 		common/program_exception_wrapper_test.cpp
 		${TESTSOURCES_COMMON_STRING}
 		common/temp_check_offset_1_test.cpp
