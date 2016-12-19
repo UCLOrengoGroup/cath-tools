@@ -228,26 +228,6 @@ residue cath::file::build_residue_of_pdb_residue(const pdb_residue &arg_residue,
 	);
 }
 
-/// \brief TODOCUMENT
-///
-/// Prefer to use dssp_will_skip_residue()
-///
-/// TODO: This is probably superseded by dssp_will_skip_residue(). It's currently
-///       only used (via cath::file::get_protein_res_indices_that_dssp_might_skip() )
-///       in protein_from_dssp_and_pdb() for tallying PDB and DSSP residues.
-///       Attempt switching to dssp_will_skip_residue(), and perform a bulk load test
-///       over all PDB/DSSP pairs to check that's OK. Then completely remove this.
-///
-/// \relates pdb_residue
-bool cath::file::dssp_might_skip_residue(const pdb_residue &arg_pdb_residue ///< The pdb_residue to test
-                                         ) {
-	// Can't require that all_of() are non-standard because then the initial residues (eg 9?) of 3f9sB fail
-	return any_of(
-		arg_pdb_residue,
-		[&] (const pdb_atom &x) { return ! alt_locn_is_dssp_accepted( x ); }
-	);
-}
-
 /// \brief Whether DSSP will skip this residue
 ///
 /// This attempts to match the DSSP criteria for skipping a residue:

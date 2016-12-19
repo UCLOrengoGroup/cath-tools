@@ -697,7 +697,7 @@ size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb     
 	return copy_build<size_set>(
 		irange( 0_z, num_residues )
 			| filtered( [&] (const size_t &x) {
-				return dssp_might_skip_residue(
+				return dssp_will_skip_residue(
 					backbone_complete_pdb_subset.get_residue_cref_of_index__backbone_unchecked( x )
 				);
 			} )

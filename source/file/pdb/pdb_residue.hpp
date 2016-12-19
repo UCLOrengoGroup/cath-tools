@@ -138,8 +138,6 @@ namespace cath {
 		                                     const geom::doub_angle &,
 		                                     const size_t &);
 
-		bool dssp_might_skip_residue(const pdb_residue &);
-
 		bool dssp_will_skip_residue(const pdb_residue &);
 
 		std::ostream & operator<<(std::ostream &,
