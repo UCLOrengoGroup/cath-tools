@@ -24,15 +24,15 @@
 
 #include "common/metaprogramming/template_list.hpp"
 
-#include <list>
+#include <deque>
 #include <tuple>
 #include <type_traits>
 #include <vector>
 
 using namespace cath::common;
 
+using std::deque;
 using std::is_same;
-using std::list;
 using std::tuple;
 using std::vector;
 
@@ -43,9 +43,9 @@ BOOST_AUTO_TEST_CASE(basic) {
 		is_same<
 			combine_params_lists_with_template_list_t<
 				tuple< tuple<int>, tuple<double> >,
-				template_list<vector, list>
+				template_list<vector, deque>
 			>,
-			tuple< vector<int>, vector<double>, list<int>, list<double> >
+			tuple< vector<int>, vector<double>, deque<int>, deque<double> >
 		>::value,
 		"combine_params_lists_with_template_list_t should combine typelists with a template_list"
 	);
