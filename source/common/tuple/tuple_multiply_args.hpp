@@ -32,22 +32,6 @@ namespace cath {
 	namespace common {
 		namespace detail {
 
-			/// \brief Return an multiply_argsed copy of the argument
-			template <typename T>
-			inline constexpr auto multiply_args_copy(T arg ///< The value from which a copy should be taken, multiply_argsed and returned
-			                                         ) {
-				++arg;
-				return arg;
-			}
-
-			/// \brief Implementation for tuple_multiply_args
-			template <typename Tpl, size_t... Index>
-			constexpr auto tuple_multiply_args_impl(const Tpl &arg_tuple,         ///< The tuple to be multiply_argsed
-			                                        std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
-			                                        ) {
-				return multiply_args( std::get<Index>( arg_tuple )... );
-			}
-
 			/// \brief Function object to return the result of multiply_argsing all the members of the specified tuple
 			struct tuple_multiply_args_fn final {
 
