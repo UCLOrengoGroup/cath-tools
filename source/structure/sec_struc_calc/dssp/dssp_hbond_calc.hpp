@@ -157,17 +157,10 @@ namespace cath {
 		                                                              const size_t    &arg_i,   ///< The index of the first  residue in the PDB
 		                                                              const size_t    &arg_j    ///< The index of the second residue in the PDB
 		                                                              ) {
-			const bool use_prev_i =
-				( arg_i >= 1 )
-				&&
-				(
-					get_chain_label( arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i - 1 ) )
-					==
-					get_chain_label( arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i     ) )
-				);
+			const auto prev_index = index_of_preceding_residue_in_same_chain( arg_pdb, arg_i );
 			return get_hbond_energy(
-				use_prev_i
-					? boost::make_optional( arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i - 1 ) )
+				prev_index
+					? boost::make_optional( arg_pdb.get_residue_cref_of_index__backbone_unchecked( *prev_index ) )
 					: boost::none,
 				arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i     ),
 				arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_j     )
@@ -228,6 +221,7 @@ namespace cath {
 		                                                    const size_t    &arg_i,   ///< The index of the first  residue in the PDB
 		                                                    const size_t    &arg_j    ///< The index of the second residue in the PDB
 		                                                    ) {
+			const auto prev_index = index_of_preceding_residue_in_same_chain( arg_pdb, arg_i );
 			return (
 				(
 					arg_i < arg_j
@@ -236,8 +230,8 @@ namespace cath {
 				)
 				&&
 				has_hbond_energy(
-					( arg_i >= 1 )
-						? boost::make_optional( arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i - 1 ) )
+					prev_index
+						? boost::make_optional( arg_pdb.get_residue_cref_of_index__backbone_unchecked( *prev_index ) )
 						: boost::none,
 					arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i     ),
 					arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_j     )

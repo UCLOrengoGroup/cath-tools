@@ -148,6 +148,23 @@ namespace cath {
 			return common::cend( pdb_residues );
 		}
 
+		/// \brief Find the index of preceding residue in the same chain of the specified PDB
+		///        as the residue at the specified index, or return none if there is none
+		///
+		/// \relates pdb
+		inline size_opt index_of_preceding_residue_in_same_chain(const pdb    &arg_pdb,  ///< The PDB containing the residues in question
+		                                                         const size_t &arg_index ///< The index of the query residue
+		                                                         ) {
+			const auto &chain = get_chain_label( arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_index ) );
+			for (const size_t &index : boost::irange( 0_z, arg_index ) | boost::adaptors::reversed ) {
+				if ( chain == get_chain_label( arg_pdb.get_residue_cref_of_index__backbone_unchecked( index ) ) ) {
+					return index;
+				}
+			}
+			return boost::none;
+		}
+
+
 	} // namespace file
 } // namespace cath
 

@@ -83,14 +83,16 @@ bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb(con
 		CELL_SIZE,
 		MAX_DIST,
 		[&] (const simple_locn_index &x, const simple_locn_index &y) {
-			if ( dssp_hbond_calc::has_hbond_energy_asymm( arg_pdb, x.index, y.index ) ) {
-				const auto energy = dssp_hbond_calc::get_hbond_energy_asymm( arg_pdb, x.index, y.index );
-				if ( energy < 0.0 ) {
-					results.update_with_nh_idx_co_idx_energy(
-						x.index,
-						y.index,
-						energy
-					);
+			if ( x.index != y.index ) {
+				if ( dssp_hbond_calc::has_hbond_energy_asymm( arg_pdb, x.index, y.index ) ) {
+					const auto energy = dssp_hbond_calc::get_hbond_energy_asymm( arg_pdb, x.index, y.index );
+					if ( energy < 0.0 ) {
+						results.update_with_nh_idx_co_idx_energy(
+							x.index,
+							y.index,
+							energy
+						);
+					}
 				}
 			}
 		}

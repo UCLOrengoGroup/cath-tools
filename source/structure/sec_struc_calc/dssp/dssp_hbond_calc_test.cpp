@@ -155,6 +155,11 @@ BOOST_FIXTURE_TEST_SUITE(dssp_hbond_calc_test_suite, dssp_hbond_calc_test_suite_
 
 BOOST_AUTO_TEST_SUITE(engineered_test_examples)
 
+
+BOOST_AUTO_TEST_CASE(prob_interspersed_chains) {
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "interspersed_chains.dssp"                         );
+}
+
 BOOST_AUTO_TEST_CASE(dssp_previously_ignored_valid_residue_1) {
 	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "dssp_previously_ignored_valid_residue_1.dssp"     );
 }
