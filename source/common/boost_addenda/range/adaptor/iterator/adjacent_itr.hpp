@@ -36,8 +36,8 @@ namespace cath {
 
 			/// \brief Convenience type alias for a pair of references to the elements in a range of type RNG
 			template <typename RNG>
-			using range_adjacent_ref_pair = std::pair<range_reference_t<RNG> &,
-			                                          range_reference_t<RNG> &>;
+			using range_adjacent_ref_pair = std::pair<range_reference_t<RNG>,
+			                                          range_reference_t<RNG>>;
 
 			/// \brief Convenience type alias for the iterator_adaptor through which adjacent_itr is implemented
 			template <typename RNG>

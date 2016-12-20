@@ -19,6 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/range/algorithm.hpp>
+#include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/test_tools.hpp>
 
@@ -39,6 +40,7 @@ using namespace cath;
 using namespace cath::common;
 using namespace std;
 
+using boost::irange;
 using boost::range::for_each;
 using boost::sub_range;
 
@@ -146,6 +148,13 @@ BOOST_AUTO_TEST_CASE(adjacented_works) {
 	BOOST_CHECK_EQUAL_RANGES(
 		copy_build<size_size_pair_vec>( numbers | adjacented ),
 		adjacented_numbers
+	);
+}
+
+BOOST_AUTO_TEST_CASE(adjacented_of_irange_works) {
+	BOOST_CHECK_EQUAL_RANGES(
+		copy_build<size_size_pair_vec>( irange( 0_z, 4_z ) | adjacented ),
+		size_size_pair_vec{ { 0, 1 }, { 1, 2 }, { 2, 3 } }
 	);
 }
 
