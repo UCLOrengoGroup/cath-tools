@@ -1,4 +1,4 @@
-==== Secondary Structure Definition by the program DSSP, CMBI version ==== DATE=2016-11-28                                     .
+==== Secondary Structure Definition by the program DSSP, CMBI version 2.0                          ==== DATE=2016-12-20        .
 REFERENCE W. KABSCH AND C.SANDER, BIOPOLYMERS 22 (1983) 2577-2637                                                              .
                                                                                                                                .
 COMPND                                                                                                                         .
@@ -25,7 +25,7 @@ AUTHOR                                                                          
   0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0    PARALLEL BRIDGES PER LADDER      .
   0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0    ANTIPARALLEL BRIDGES PER LADDER  .
   0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0    LADDERS PER SHEET                .
-  #  RESIDUE AA STRUCTURE BP1 BP2  ACC     N-H-->O    O-->H-N    N-H-->O    O-->H-N    TCO  KAPPA ALPHA  PHI   PSI    X-CA   Y-CA   Z-CA 
-    1    2 A D              0   0  111      0, 0.0     2,-9.9     0, 0.0     0, 0.0   0.000 360.0 360.0 360.0  85.5   27.9   19.8   25.2
-    2    3 A A              0   0  108      1,-0.8     0, 0.0     0, 0.0     0, 0.0   0.648 360.0 360.0 -51.2  21.0   24.2   19.8   26.1
-    3    4 A R              0   0   84     -2,-9.9    -1,-0.8     0, 0.0     0, 0.0   0.896 360.0 360.0 -99.0 360.0   25.1   20.4   24.1
+  #  RESIDUE AA STRUCTURE BP1 BP2  ACC     N-H-->O    O-->H-N    N-H-->O    O-->H-N    TCO  KAPPA ALPHA  PHI   PSI    X-CA   Y-CA   Z-CA            CHAIN
+    1    2 A D              0   0  111      0, 0.0     2,-9.9     0, 0.0     0, 0.0   0.000 360.0 360.0 360.0  85.5   27.9   19.8   25.2               
+    2    3 A A              0   0  108      1,-0.8     0, 0.0     0, 0.0     0, 0.0   0.648 360.0 360.0 -51.2  21.0   24.2   19.8   26.1               
+    3    4 A R              0   0   84     -2,-9.9    -1,-0.8     0, 0.0     0, 0.0   0.896 360.0 360.0 -99.0 360.0   25.1   20.4   24.1               

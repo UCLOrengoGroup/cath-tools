@@ -69,11 +69,9 @@ namespace cath {
 			~dssp_hbond_calc_test_suite_fixture() noexcept = default;
 
 			void use_dssp_file_to_check_hbonds_calcs(const path &,
-			                                         const path &,
-			                                         const bool & = false);
+			                                         const path &);
 
-			void use_dssp_file_to_check_hbonds_calcs(const path &,
-			                                         const bool & = false);
+			void use_dssp_file_to_check_hbonds_calcs(const path &);
 
 			void use_dir_of_dssp_files_to_check_hbonds_calcs(const path &,
 			                                                 const path &);
@@ -82,9 +80,8 @@ namespace cath {
 		/// \brief Use the specified DSSP file to check the hbond calculations for the specified PDB file
 		///
 		/// \todo Remove the arg_warn_only_on_diff argument if dssp_ignores_valid_residue_1 is resolved
-		inline void dssp_hbond_calc_test_suite_fixture::use_dssp_file_to_check_hbonds_calcs(const path &arg_dssp_file,        ///< The DSSP file to compare against
-		                                                                                    const path &arg_pdb_file,         ///< The PDB file to check
-		                                                                                    const bool &arg_warn_only_on_diff ///< Whether to only warn on differences
+		inline void dssp_hbond_calc_test_suite_fixture::use_dssp_file_to_check_hbonds_calcs(const path &arg_dssp_file, ///< The DSSP file to compare against
+		                                                                                    const path &arg_pdb_file   ///< The PDB file to check
 		                                                                                    ) {
 			BOOST_REQUIRE( exists( arg_pdb_file ) );
 			// const auto read_dssp_start_time = high_resolution_clock::now();
@@ -110,22 +107,16 @@ namespace cath {
 
 				// BOOST_TEST_INFO() isn't present in Boost > 1.58.0
 				// BOOST_TEST_INFO  ( "Checking DSSP file \"" + arg_dssp_file.string() + "\"" );
-				if ( arg_warn_only_on_diff ) {
-					BOOST_WARN_EQUAL ( difference_string( dssp_hbonds, bifur_hbonds ), none );
-				}
-				else {
-					BOOST_CHECK_EQUAL( difference_string( dssp_hbonds, bifur_hbonds ), none );
-				}
+				BOOST_CHECK_EQUAL( difference_string( dssp_hbonds, bifur_hbonds ), none );
 			}
 		}
 
 		/// \brief Use the specified DSSP file to check the hbond calculations for the PDB file with the same filename but with the extension stripped off
 		///
 		/// \todo Remove the arg_warn_only_on_diff argument if dssp_ignores_valid_residue_1 is resolved
-		inline void dssp_hbond_calc_test_suite_fixture::use_dssp_file_to_check_hbonds_calcs(const path &arg_dssp_file,        ///< The DSSP file to compare against
-		                                                                                    const bool &arg_warn_only_on_diff ///< Whether to only warn on differences
+		inline void dssp_hbond_calc_test_suite_fixture::use_dssp_file_to_check_hbonds_calcs(const path &arg_dssp_file ///< The DSSP file to compare against
 		                                                                                    ) {
-			use_dssp_file_to_check_hbonds_calcs( arg_dssp_file, replace_extension_copy( arg_dssp_file ), arg_warn_only_on_diff );
+			use_dssp_file_to_check_hbonds_calcs( arg_dssp_file, replace_extension_copy( arg_dssp_file ) );
 		}
 
 		/// \brief Use the specified directory of DSSP files to check the hbond calculations on the corresponding PDB files
@@ -161,19 +152,12 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(dssp_hbond_calc_test_suite, dssp_hbond_calc_test_suite_fixture)
 
 
-BOOST_AUTO_TEST_SUITE(issues)
-
-/// \brief This appears to be a minor error in DSSP that can cause a valid residue (eg A124 in 1sx2) to be ignored
-///        depending on the residue that precedes it. I've contacted the DSSP people and we hope to resolve this in DSSP.
-BOOST_AUTO_TEST_CASE(dssp_ignores_valid_residue_1) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "dssp_ignores_valid_residue_1.dssp", true );
-}
-
-BOOST_AUTO_TEST_SUITE_END()
-
 
 BOOST_AUTO_TEST_SUITE(engineered_test_examples)
 
+BOOST_AUTO_TEST_CASE(dssp_previously_ignored_valid_residue_1) {
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "dssp_previously_ignored_valid_residue_1.dssp"     );
+}
 
 BOOST_AUTO_TEST_CASE(heeds_ter_record_blocking_bonds) {
 	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "ter_record_blocks_bonds_1.dssp"                   );
