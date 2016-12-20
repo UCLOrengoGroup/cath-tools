@@ -106,12 +106,35 @@ namespace cath {
 			return ( this->base() == end_itr );
 		}
 
+		/// A simplified version of std::next to workaround an apparent bug in libc++
+		/// that's fixed in recent versions but was present around versions 3.6 / 3.7.
+		///
+		/// The basic problem can be reproduced with:
+		///
+		///     #include <boost/range/adaptor/filtered.hpp>
+		///     #include <boost/range/irange.hpp>
+		///     
+		///     #include <iterator>
+		///     
+		///     int main() {
+		///       auto bob = boost::irange( 0, 10 )
+		///         | boost::adaptors::filtered( [] (const int &x) { return ( x % 2 == 0 ); } );
+		///       auto next_itr = std::next( std::cbegin( bob ) );
+		///     }
+		///
+		/// \todo Come libc++ >= 3.8, drop this fn and replace all calls with std::next()
+		template <typename T>
+		inline T pseudo_std_next_to_workaround_libcpp_bug(T arg) {
+			++arg;
+			return arg;
+		}
+
 		/// \brief Private method for advancing this iterator to the end if it's currently one off
 		///        (because the
 		template <class RNG>
 		void adjacent_itr<RNG>::advance_to_end_if_one_off() {
 			if ( ! is_at_end() ) {
-				if ( std::next( this->base() ) == end_itr ) {
+				if ( pseudo_std_next_to_workaround_libcpp_bug( this->base() ) == end_itr ) {
 					++( *this );
 				}
 			}
@@ -122,8 +145,8 @@ namespace cath {
 		typename adjacent_itr<RNG>::adjacent_pair_type adjacent_itr<RNG>::dereference() const {
 			using return_type = typename adjacent_itr<RNG>::adjacent_pair_type;
 			return return_type(
-				*            this->base(),
-				* std::next( this->base() )
+				*                                           this->base(),
+				* pseudo_std_next_to_workaround_libcpp_bug( this->base() )
 			);
 		}
 
