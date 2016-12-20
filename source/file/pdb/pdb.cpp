@@ -35,6 +35,7 @@
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/range/adaptor/adjacented.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
@@ -501,6 +502,25 @@ ostream & cath::file::operator<<(ostream   &arg_os,         ///< TODOCUMENT
 
 /// \brief Get the list of phi/psi angle pairs for each residue, in radians within (0, 2 * pi]
 ///
+/// There are two different possible causes for potentially skipping residues
+/// ( and so possibly causing breaks in the phi/psi angles):
+///  * the residue may not have a complete set of backbone atoms (N, CA, C, O)
+///  * the residue may be complete but its alt-locn specifications may not be to DSSP's liking
+///
+/// In the first case, we would expect the residues to already have been stripped out before
+/// this code is called. But not necessarily in the latter case.
+///
+/// It turns out that DSSP just uses distance from one residue's C to the next residue's N
+/// to check for chain breaks. In some cases, that can mean that it doesn't assign a break
+/// even when that means calculating phi/psi angles between residues that just happen to
+/// be close enough even though they straddle a residue that DSSP has rejected
+/// (see https://github.com/cmbi/xssp/issues/86). That functionality has been duplicated here.
+///
+/// \todo Depending on the outcome of https://github.com/cmbi/xssp/issues/86, either
+///       change this code to do smarter break detection (see commented parts) or
+///       remove that commented code and remove the second indices_in_new_of_skips part
+///       of the return type of backbone_complete_subset_of_pdb().
+///
 /// At present, undetermined angles are set to 2 * pi
 ///
 /// \todo Shouldn't the undetermined angles be handled more explicitly?
@@ -513,7 +533,7 @@ ostream & cath::file::operator<<(ostream   &arg_os,         ///< TODOCUMENT
 ///
 /// \relates protein
 doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb                      &arg_pdb,                ///< TODOCUMENT
-                                                                  const size_vec                 &arg_skip_indices,       ///< Indices of residues in the pdb that were preceded by residues that have been skipped due to being backbone complete. This may include an index on greater than the index of the last residue in the pdb to indicate that there were residues skipped after the last residue. Phi/psi angles are not set over these skip breaks.
+                                                                  // const size_vec                 &/*arg_skip_indices*/,   ///< Indices of residues in the pdb that were preceded by residues that have been skipped due to being backbone complete. This may include an index on greater than the index of the last residue in the pdb to indicate that there were residues skipped after the last residue. Phi/psi angles are not set over these skip breaks.
                                                                   const dssp_skip_angle_skipping &arg_dssp_angle_skipping ///< TODOCUMENT
                                                                   ) {
 	// The gap between consecutive residues' carbon and nitrogen atoms respectively,
@@ -522,14 +542,31 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 	
 	const     auto   DEFAULT_PHI_PSI              = residue::DEFAULT_PHI_PSI();
 	const     auto   DEFAULT_PHI_PSI_PAIR         = make_pair( DEFAULT_PHI_PSI, DEFAULT_PHI_PSI );
+	const     size_t num_residues                 = arg_pdb.get_num_residues();
 
-	const size_t num_residues = arg_pdb.get_num_residues();
+	// Build a range of indices of the residues to be considered
+	//
+	// It isn't good enough to check pairs of consecutive indices because
+	// this should replicate DSSP and that requires checking between pairs of
+	// consecutive *non-skipped* residues (stradding any gaps in indices where necessary)
+	const auto non_skipped_residues_indices = irange( 0_z, num_residues )
+		| filtered( [&] (const size_t &x) {
+			return (
+				( arg_dssp_angle_skipping == dssp_skip_angle_skipping::DONT_BREAK_ANGLES )
+				||
+				! dssp_will_skip_residue( arg_pdb.get_residue_cref_of_index__backbone_unchecked( x ) )
+			);
+		} );
+
+	// Prepare a data structure of phi/psi angles
 	doub_angle_doub_angle_pair_vec phi_and_psi_angles( num_residues, DEFAULT_PHI_PSI_PAIR );
-	for (size_t residue_ctr = 0; residue_ctr + 1 < num_residues; ++residue_ctr) {
 
-		// Grab this residue and the next one
-		const pdb_residue &this_pdb_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr     );
-		const pdb_residue &next_pdb_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr + 1 );
+	// Loop over pairs of consecutive *non-skipped* residues
+	for (const size_size_pair &adj_indices : non_skipped_residues_indices | adjacented) {
+
+		// Grab this residue and the next non-skipped one
+		const pdb_residue &this_pdb_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( adj_indices.first  );
+		const pdb_residue &next_pdb_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( adj_indices.second );
 
 		// If these consecutive residues are on the same chain...
 		if ( get_chain_label( this_pdb_residue ) == get_chain_label( next_pdb_residue ) ) {
@@ -545,17 +582,19 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 			//  * there weren't any residues between them that have been skipped and
 			//  * they're not to be skipped due to either being residues DSSP would skip
 			const bool close_enough           = inter_c_to_n_dist <= INTER_C_TO_N_DIST_FOR_NEIGHBOURS;
-			const bool not_straddling_skipped = ! binary_search( arg_skip_indices, residue_ctr + 1 );
-			const bool not_dssp_skip          = (
-				( arg_dssp_angle_skipping == dssp_skip_angle_skipping::DONT_BREAK_ANGLES )
-				||
-				! ( dssp_will_skip_residue( this_pdb_residue ) || dssp_will_skip_residue( next_pdb_residue ) )
-			);
-			if ( close_enough && not_straddling_skipped && not_dssp_skip ) {
+
+			// const bool not_straddling_skipped = ! binary_search( arg_skip_indices, residue_ctr + 1 );
+			// const bool not_dssp_skip          = (
+			// 	( arg_dssp_angle_skipping == dssp_skip_angle_skipping::DONT_BREAK_ANGLES )
+			// 	||
+			// 	! ( dssp_will_skip_residue( this_pdb_residue ) || dssp_will_skip_residue( next_pdb_residue ) )
+			// );
+			// if ( close_enough && not_straddling_skipped && not_dssp_skip ) {
+			if ( close_enough ) {
 				// Then calculate the two angles of these two residue and store them
 				const auto this_psi_and_next_phi = get_psi_of_this_and_phi_of_next( this_pdb_residue, next_pdb_residue );
-				phi_and_psi_angles[ residue_ctr     ].second = this_psi_and_next_phi.first;
-				phi_and_psi_angles[ residue_ctr + 1 ].first  = this_psi_and_next_phi.second;
+				phi_and_psi_angles[ adj_indices.first  ].second = this_psi_and_next_phi.first;
+				phi_and_psi_angles[ adj_indices.second ].first  = this_psi_and_next_phi.second;
 			}
 		}
 	}
@@ -645,11 +684,11 @@ protein cath::file::build_protein_of_pdb(const pdb              &arg_pdb,       
 
 	const auto     backbone_complete_data       = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream, res_skipping_of_dssp_skip_policy( arg_skip_policy ) );
 	const pdb      backbone_complete_pdb_subset = backbone_complete_data.first;
-	const size_vec indices_of_skips             = backbone_complete_data.second;
+	// const size_vec indices_of_skips             = backbone_complete_data.second;
 	const size_t   num_residues                 = backbone_complete_pdb_subset.get_num_residues();
 	const auto     phi_and_psi_angles           = get_phi_and_psi_angles(
 		backbone_complete_pdb_subset,
-		indices_of_skips,
+		// indices_of_skips,
 		angle_skipping_of_dssp_skip_policy( arg_skip_policy )
 	);
 

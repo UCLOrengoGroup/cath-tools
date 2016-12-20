@@ -375,6 +375,19 @@ BOOST_AUTO_TEST_CASE(handles_multi_chains_with_same_residue_ids) {
 
 BOOST_AUTO_TEST_SUITE_END()
 
+// See https://github.com/cmbi/xssp/issues/86
+BOOST_AUTO_TEST_CASE(dssp_disregards_break_from_dropped_residue) {
+	ostringstream warn_ss;
+	BOOST_CHECK_NO_THROW_DIAG(
+		read_protein_from_dssp_and_pdb(
+			path{ TEST_RESIDUE_IDS_DATA_DIR() / "dssp_disregards_break_from_dropped_residue.dssp" },
+			path{ TEST_RESIDUE_IDS_DATA_DIR() / "dssp_disregards_break_from_dropped_residue"      },
+			dssp_skip_policy::SKIP__BREAK_ANGLES,
+			""s,
+			reference_wrapper<ostream>( warn_ss )
+		)
+	);
+}
 
 
 BOOST_AUTO_TEST_SUITE_END()

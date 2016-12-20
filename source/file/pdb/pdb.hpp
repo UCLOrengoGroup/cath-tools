@@ -101,7 +101,7 @@ namespace cath {
 		                          const pdb &);
 
 		geom::doub_angle_doub_angle_pair_vec get_phi_and_psi_angles(const pdb &,
-		                                                            const size_vec &,
+		                                                            // const size_vec &,
 		                                                            const dssp_skip_angle_skipping &);
 
 		pdb_size_vec_pair backbone_complete_subset_of_pdb(const pdb &,
