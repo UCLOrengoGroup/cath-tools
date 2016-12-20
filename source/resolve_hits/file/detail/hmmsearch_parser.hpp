@@ -86,6 +86,9 @@ namespace cath {
 				/// \brief The current alignment being parsed
 				hmmsearch_aln the_aln;
 
+				/// \brief Whether a hit has already been skipped for having a negative bitscore
+				bool skipped_for_negtv_bitscore = false;
+
 			public:
 				explicit hmmsearch_parser(std::istream &);
 				hmmsearch_parser(const std::istream &&) = delete;
@@ -275,32 +278,47 @@ namespace cath {
 				);
 
 				const auto     &summ          = summaries[ summary_ctr ];
-				const auto      id_score_cat  = cath_score_category_of_id( id_a, arg_apply_cath_policies );
-				const bool      apply_dc_cat  = ( id_score_cat == cath_id_score_category::DC_TYPE );
-				const residx_t &start         = apply_dc_cat ? summ.ali_from : summ.env_from;
-				const residx_t &stop          = apply_dc_cat ? summ.ali_to   : summ.env_to;
 
-				// If applying the CATH discontinuous policy, erase any segments after the first
-				if ( apply_dc_cat ) {
-					segs.erase(
-						std::next( common::cbegin( segs ) ),
-						           common::cend  ( segs )
+				if ( summ.bitscore <= 0 ) {
+					if ( ! skipped_for_negtv_bitscore ) {
+						BOOST_LOG_TRIVIAL( warning ) << "Skipping at least one hit (eg between \""
+							<< query_id
+							<< "\" and \""
+							<< id_a
+							<< "\" with bitscore "
+							<< summ.bitscore
+							<< ") for having a negative bitscore, which cannot currently be handled.";
+						skipped_for_negtv_bitscore = true;
+					}
+				}
+				else {
+					const auto      id_score_cat  = cath_score_category_of_id( id_a, arg_apply_cath_policies );
+					const bool      apply_dc_cat  = ( id_score_cat == cath_id_score_category::DC_TYPE );
+					const residx_t &start         = apply_dc_cat ? summ.ali_from : summ.env_from;
+					const residx_t &stop          = apply_dc_cat ? summ.ali_to   : summ.env_to;
+
+					// If applying the CATH discontinuous policy, erase any segments after the first
+					if ( apply_dc_cat ) {
+						segs.erase(
+							std::next( common::cbegin( segs ) ),
+							           common::cend  ( segs )
+						);
+					}
+
+					// Overwrite the final start/stop with those parsed from the summary
+					// (env_from/env_to normally; ali_from/ali_to when applying the CATH discontinuous policy)
+					segs.front().set_start_arrow( arrow_before_res( start ) );
+					segs.back ().set_stop_arrow ( arrow_after_res ( stop  ) );
+
+					arg_read_and_process_mgr.add_hit(
+						query_id,
+						segs,
+						std::move( id_a ),
+						summ.bitscore / bitscore_divisor( arg_apply_cath_policies, id_score_cat, summ.evalues_are_susp ),
+						hit_score_type::BITSCORE,
+						std::move( alnd_rngs_opt )
 					);
 				}
-
-				// Overwrite the final start/stop with those parsed from the summary
-				// (env_from/env_to normally; ali_from/ali_to when applying the CATH discontinuous policy)
-				segs.front().set_start_arrow( arrow_before_res( start ) );
-				segs.back ().set_stop_arrow ( arrow_after_res ( stop  ) );
-
-				arg_read_and_process_mgr.add_hit(
-					query_id,
-					segs,
-					std::move( id_a ),
-					summ.bitscore / bitscore_divisor( arg_apply_cath_policies, id_score_cat, summ.evalues_are_susp ),
-					hit_score_type::BITSCORE,
-					std::move( alnd_rngs_opt )
-				);
 
 				++summary_ctr;
 				the_aln.reset();

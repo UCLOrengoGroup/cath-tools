@@ -122,7 +122,7 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 			parse_double_from_field( indp_evalue_field_itrs.first, indp_evalue_field_itrs.second )
 		);
 
-		if ( bitscore < 0 ) {
+		if ( bitscore <= 0 ) {
 			if ( ! skipped_for_negtv_bitscore ) {
 				BOOST_LOG_TRIVIAL( warning ) << "Skipping at least one hit (eg between \""
 					<< target_id_str_ref
