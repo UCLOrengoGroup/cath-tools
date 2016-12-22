@@ -174,9 +174,9 @@ scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(con
 
 /// \brief Ctor for hit_resolver
 hit_resolver::hit_resolver(const calc_hit_list &arg_hits ///< The hits to resolve
-                           ) : hits     ( arg_hits                  ),
-                               max_stop ( *get_max_stop( arg_hits ) ),
-                               the_dhibs( arg_hits                  ) {
+                           ) : hits     ( arg_hits                               ),
+                               max_stop ( get_max_stop( arg_hits ).value_or( 0 ) ),
+                               the_dhibs( arg_hits                               ) {
 	constexpr hitidx_t max = numeric_limits<hitidx_t>::max();
 	if ( arg_hits.size() + 2 > max ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(

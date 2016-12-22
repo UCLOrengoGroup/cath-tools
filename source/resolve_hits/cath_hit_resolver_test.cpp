@@ -23,6 +23,8 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/algorithm/copy_build.hpp"
+#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/file/temp_file.hpp"
 #include "common/test_predicate/istream_and_file_equal.hpp"
@@ -276,5 +278,14 @@ BOOST_AUTO_TEST_CASE(rejects_output_hmmsearch_aln_for_non_hmmsearch_format) {
 	BOOST_CHECK_NE( error_ss.str(), "" );
 }
 
+BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scores) {
+	ostringstream test_ss;
+	const log_to_ostream_guard the_guard{ test_ss };
+	BOOST_CHECK_NO_THROW_DIAG( execute_perform_resolve_hits( {
+		(CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.negatives_scores.in" ).string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		"--" + crh_output_options_block::PO_GENERATE_HTML_OUTPUT
+	} ) );
+}
 
 BOOST_AUTO_TEST_SUITE_END()

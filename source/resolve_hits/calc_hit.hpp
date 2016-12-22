@@ -150,7 +150,11 @@ namespace cath {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Start index must not be greater than the stop index"));
 			}
 			if ( score <= 0 ) {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("score must be strictly greater than 0 else the algorithm doesn't work (because there's no way to no how to trade scores off against empty space)"));
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
+					"Hit cannot be processed because its score of "
+					+ ::std::to_string( get_score() )
+					+ " isn't greater than 0, which is required for the algorithm to work (because otherwise there's no way to know how to trade scores off against empty space)"
+				));
 			}
 		}
 

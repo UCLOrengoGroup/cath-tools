@@ -1,0 +1,52 @@
+# hmmsearch :: search profile(s) against a sequence database
+# HMMER 3.1b2 (February 2015); http://hmmer.org/
+# Copyright (C) 2015 Howard Hughes Medical Institute.
+# Freely distributed under the GNU General Public License (GPLv3).
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query HMM file:                  package/gene3d_14_hmms/main.hmms
+# target sequence database:        zn56_human.fa
+# output directed to file:         zn56_human.fa.out.hmmsearch
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Domain annotation for each sequence (and alignments):
+>> zn56_human  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?   -3.1   0.0      0.36      0.36       4      13 ..       9      18 ..       9      23 .. 0.81
+   2 ?    0.2   1.4     0.034     0.034       3      10 ..      48      55 ..      46      57 .. 0.87
+
+  Alignments for each domain:
+  == domain 1  score: -3.1 bits;  conditional E-value: 0.36
+                     xxxxxxxxxx RF
+  4qiwP00_round_1  4 kCpkCgaeve 13
+                     +C++C +++ 
+       zn56_human  9 SCSDCQRHFP 18
+                     5****99985 PP
+
+  == domain 2  score: 0.2 bits;  conditional E-value: 0.034
+                     xxxxxxxx RF
+  4qiwP00_round_1  3 YkCpkCga 10
+                     Y+C++Cg+
+       zn56_human 48 YRCQQCGR 55
+                     99999995 PP
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                              1  (44 nodes)
+Target sequences:                            1  (1829 residues searched)
+Passed MSV filter:                         1  (1); expected 0.0 (0.02)
+Passed bias filter:                        1  (1); expected 0.0 (0.02)
+Passed Vit filter:                         1  (1); expected 0.0 (0.001)
+Passed Fwd filter:                         1  (1); expected 0.0 (1e-05)
+Initial search space (Z):                  1  [actual number of targets]
+Domain search space  (domZ):               1  [number of targets reported over threshold]
+# CPU time: 0.00u 0.00s 00:00:00.00 Elapsed: 00:00:00.00
+# Mc/sec: inf
+//
+Query:       4hyfA00_round_3  [M=134]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
