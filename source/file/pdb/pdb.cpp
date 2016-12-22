@@ -73,6 +73,7 @@ using boost::algorithm::join;
 using boost::algorithm::starts_with;
 using boost::irange;
 using boost::lexical_cast;
+using boost::none;
 using boost::numeric_cast;
 using boost::range::binary_search;
 using boost::range::count_if;
@@ -299,9 +300,9 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 	set<chain_label> terminated_chains;
 	string           line_string;
 
-	string           prev_amino_acid_3_char_code;
-	residue_id       prev_res_id;
+	str_opt          prev_amino_acid_3_char_code;
 	pdb_atom_vec     prev_atoms;
+	residue_id       prev_res_id;
 	bool             prev_warned_conflict = false;
 
 	const auto add_atoms_and_reset_fn = [&] () {
@@ -309,8 +310,9 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			prev_res_id,
 			std::move( prev_atoms )
 		);
-		prev_atoms = pdb_atom_vec{};
-		prev_warned_conflict = false;
+		prev_amino_acid_3_char_code = none;
+		prev_atoms                  = pdb_atom_vec{};
+		prev_warned_conflict        = false;
 	};
 
 	// Loop over the lines of the file
@@ -322,6 +324,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 	while ( getline( input_stream, line_string ) ) {
 		// If this line is an ATOM or HETATM record
 		if ( is_pdb_record_of_type( line_string, pdb_record::ATOM ) || is_pdb_record_of_type( line_string, pdb_record::HETATM ) ) {
+			const bool is_atom                 = is_pdb_record_of_type( line_string, pdb_record::ATOM );
 			const auto parse_status_str_and_aa = pdb_record_parse_problem( line_string );
 			const auto &parse_status = get<0>( parse_status_str_and_aa );
 			const auto &parse_string = get<1>( parse_status_str_and_aa );
@@ -359,12 +362,12 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 				// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.
 				// Though that's a bit rubbish, it shouldn't break the whole comparison
 				// so if that's detected, just warn and move on (without appending to new_residues).
-				if ( ! prev_atoms.empty() && amino_acid_3_char_code != prev_amino_acid_3_char_code ) {
+				if ( is_atom && ! prev_atoms.empty() && prev_amino_acid_3_char_code && amino_acid_3_char_code != prev_amino_acid_3_char_code ) {
 					if ( ! prev_warned_conflict ) {
 						BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing PDB file, found conflicting consecutive entries for residue \""
 						                             << res_id
 						                             << "\" (with amino acids \""
-						                             << prev_amino_acid_3_char_code
+						                             << *prev_amino_acid_3_char_code
 						                             << "\" and then \""
 						                             << amino_acid_3_char_code
 						                             << "\") - ignoring latter entry (and any further entries)";
@@ -373,8 +376,10 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 				}
 				// Otherwise update the records of previously seen atoms
 				else {
-					prev_amino_acid_3_char_code = amino_acid_3_char_code;
-					prev_res_id                 = res_id;
+					if ( is_atom ) {
+						prev_amino_acid_3_char_code = amino_acid_3_char_code;
+					}
+					prev_res_id = res_id;
 					prev_atoms.push_back( atom );
 				}
 			}
