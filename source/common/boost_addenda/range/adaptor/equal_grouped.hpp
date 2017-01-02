@@ -21,9 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_H
 #define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_H
 
-#include "common/boost_addenda/range/adaptor/detail/gen_forwarder.hpp"
 #include "common/boost_addenda/range/adaptor/detail/equal_grouped_holder.hpp"
+#include "common/boost_addenda/range/adaptor/detail/gen_forwarder.hpp"
 #include "common/boost_addenda/range/adaptor/range/equal_grouped_range.hpp"
+#include "common/detail/make_static_const.hpp"
 
 namespace cath {
 	namespace common {
@@ -78,12 +79,9 @@ namespace cath {
 
 namespace cath {
 	namespace common {
-		namespace {
 
-			/// \brief Following Boost Range's adaptor implementations, create a static forwarder
-			///        whose function operator constructs an equal_grouped_holder
-			static const equal_grouped_forwarder equal_grouped = equal_grouped_forwarder{};
-		} // namespace
+		MAKE_STATIC_CONST( equal_grouped_forwarder, equal_grouped )
+
 	} // namespace common
 } // namespace cath
 

@@ -26,6 +26,7 @@
 #include "common/boost_addenda/range/adaptor/detail/gen_forwarder.hpp"
 #include "common/boost_addenda/range/adaptor/detail/limited_holder.hpp"
 #include "common/boost_addenda/range/adaptor/range/limited_range.hpp"
+#include "common/detail/make_static_const.hpp"
 
 namespace cath {
 	namespace common {
@@ -58,20 +59,9 @@ namespace cath {
 
 namespace cath {
 	namespace common {
-		namespace {
 
-			/// \brief Following Boost Range's adaptor implementations, create a static forwarder
-			///        whose function operator constructs an limited_holder
-			static cath::common::detail::gen_forwarder<detail::limited_holder> limited
-				= cath::common::detail::gen_forwarder<detail::limited_holder>();
+		MAKE_STATIC_CONST( cath::common::detail::gen_forwarder<detail::limited_holder>, limited )
 
-
-			namespace ignore_unused_detail {
-				void ignore_unused_limited_function_b();
-				void ignore_unused_limited_function_a() { ignore_unused_limited_function_b(); boost::ignore_unused( limited ); }
-				void ignore_unused_limited_function_b() { ignore_unused_limited_function_a(); boost::ignore_unused( limited ); }
-			} // namespace ignore_unused_detail
-		} // namespace
 	} // namespace common
 } // namespace cath
 

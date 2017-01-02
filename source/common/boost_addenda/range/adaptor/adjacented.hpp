@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ADJACENTED_H
 
 #include "common/boost_addenda/range/adaptor/range/adjacented_range.hpp"
+#include "common/detail/make_static_const.hpp"
 
 namespace cath {
 	namespace common {
@@ -50,12 +51,9 @@ namespace cath {
 
 namespace cath {
 	namespace common {
-		namespace {
 
-			/// \brief Following Boost Range's adaptor implementations, create a static forwarder
-			///        that identifies the correct operator| to use
-			static const detail::adjacented_forwarder adjacented = detail::adjacented_forwarder();
-		} // namespace
+		MAKE_STATIC_CONST( detail::adjacented_forwarder, adjacented )
+
 	} // namespace common
 } // namespace cath
 
