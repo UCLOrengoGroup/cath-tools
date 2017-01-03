@@ -1,5 +1,4 @@
-# CATH Tools [![Build Status](https://travis-ci.org/UCLOrengoGroup/cath-tools.svg?branch=master)](https://travis-ci.org/UCLOrengoGroup/cath-tools) [![Documentation Status](https://readthedocs.org/projects/cath-tools/badge/?version=latest)](https://readthedocs.org/projects/cath-tools/?badge=latest)
-
+# CATH Tools [![Build Status](https://travis-ci.org/UCLOrengoGroup/cath-tools.svg?branch=master)](https://travis-ci.org/UCLOrengoGroup/cath-tools) [![Documentation Status](https://readthedocs.org/projects/cath-tools/badge/?version=latest)](https://readthedocs.org/projects/cath-tools/?badge=latest) <iframe src="https://ghbtns.com/github-btn.html?user=UCLOrengoGroup&repo=cath-tools&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px" style="vertical-align: middle;"></iframe>
 
 Protein structure comparison tools such as SSAP, as used by the [Orengo Group](https://www.ucl.ac.uk/orengo-group "Orengo Group website") in curating [CATH](http://www.cathdb.info/ "CATH website").
 
@@ -64,4 +63,4 @@ Feedback
 
 Please tell us about your cath-tools bugs/suggestions [here](https://github.com/UCLOrengoGroup/cath-tools/issues/new).
 
-
+If you find this useful, please spread the work and star the [GitHub repo](https://github.com/UCLOrengoGroup/cath-tools). <iframe src="https://ghbtns.com/github-btn.html?user=UCLOrengoGroup&repo=cath-tools&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px" style="vertical-align: middle;"></iframe>
