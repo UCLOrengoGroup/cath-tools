@@ -50,7 +50,7 @@ pair<protein_list, hrc_duration> protein_list_loader::load_proteins(ostream &arg
 		*source_file_set_ptr,
 		data_dir,
 		protein_names,
-		arg_stderr
+		ref( arg_stderr )
 	);
 	return make_pair(
 		the_proteins,

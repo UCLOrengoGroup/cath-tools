@@ -65,13 +65,12 @@ BOOST_FIXTURE_TEST_SUITE(view_cache_index_test_suite, cath::test::view_cache_ind
 
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(basic) {
-//	ostringstream parse_ss;
 //	// const double cell_width = 0.5 * sqrt( 40.0 );
 //	const double cell_width =       sqrt( 40.0 );
 ////	const double cell_width = 2.0 * sqrt( 40.0 );
 //
-////	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1a04A02", parse_ss );
-////	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1fseB00", parse_ss );
+////	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1a04A02" );
+////	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1fseB00" );
 //////    const alignment correct_alignment = read_alignment_from_fasta_file(
 //////    	TEST_SOURCE_DATA_DIR() / "1a04A02_1fseB00.fa",
 //////		make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1a04A02" ),
@@ -80,8 +79,8 @@ BOOST_FIXTURE_TEST_SUITE(view_cache_index_test_suite, cath::test::view_cache_ind
 //////	);
 //
 ////	//	1n3lA01  1h3fA01  209  195  84.91  186   88   26   2.68
-////	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01", parse_ss );
-////	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1h3fA01", parse_ss );
+////	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01" );
+////	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1h3fA01" );
 //////    const alignment correct_alignment = read_alignment_from_fasta_file(
 //////    	TEST_SOURCE_DATA_DIR() / "1n3lA01_1h3fA01.fa",
 //////		make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1n3lA01" ),
@@ -90,8 +89,8 @@ BOOST_FIXTURE_TEST_SUITE(view_cache_index_test_suite, cath::test::view_cache_ind
 //////	);
 //
 //	//	1n3lA01  1r6xA02  209  213  69.28  129   60    5   6.02
-//	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01", parse_ss );
-//	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1r6xA02", parse_ss );
+//	const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01" );
+//	const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1r6xA02" );
 ////    const alignment correct_alignment = read_alignment_from_fasta_file(
 ////    	TEST_SOURCE_DATA_DIR() / "1n3lA01_1r6xA02.fa",
 ////		make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1n3lA01" ),

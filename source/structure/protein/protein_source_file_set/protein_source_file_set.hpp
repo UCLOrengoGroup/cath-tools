@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FILE_SET_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FILE_SET_H
 
+#include <boost/optional.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
 #include "file/file_type_aliases.hpp"
@@ -76,12 +77,12 @@ namespace cath {
 	protein read_protein_from_files(const protein_source_file_set &,
 	                                const boost::filesystem::path &,
 	                                const std::string &,
-	                                std::ostream &);
+	                                const ostream_ref_opt & = boost::none);
 
 	protein_list read_proteins_from_files(const protein_source_file_set &,
 	                                      const boost::filesystem::path &,
 	                                      const str_vec &,
-	                                      std::ostream &);
+	                                      const ostream_ref_opt & = boost::none);
 
 	file::data_file_path_map get_filename_of_data_file(const protein_source_file_set &,
 	                                                   const opts::data_dirs_spec &,

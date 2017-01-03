@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 ////	const auto the_scan_stride = scan_stride{ 0, 0, 0, 0 };
 //	//                                             0          1          2          3          4          5          6          7
 //	const auto ids                  = str_vec{ "1a04A02", "1a1hA01", "1au7A02", "1cf7B00", "1fseB00", "1rr7A02", "1ufmA00", "2j7jA03" };
-//	const auto proteins             = read_proteins_from_files( protein_source_from_pdb(), TEST_EXAMPLE_PDBS_DATA_DIR(), ids, parse_ss );
+//	const auto proteins             = read_proteins_from_files( protein_source_from_pdb(), TEST_EXAMPLE_PDBS_DATA_DIR(), ids );
 //	const auto prot_1ufmA00         = proteins[ 6 ];
 //	const auto prot_1cf7B00         = proteins[ 3 ];
 //	const auto prot_1ufmA00_1cf7B00 = make_protein_list( { prot_1ufmA00, prot_1cf7B00 } );

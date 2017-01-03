@@ -82,12 +82,13 @@ protein protein_source_file_set::read_files(const data_dirs_spec &arg_data_dirs,
 protein cath::read_protein_from_files(const protein_source_file_set &arg_source_file_set, /// The protein_source_file_set specifying which set of files should be used to build the protein
                                       const path                    &arg_data_dir,        ///< The directory from which the files should be read
                                       const string                  &arg_protein_name,    ///< The name of the protein that is to be read from files
-                                      ostream                       &arg_stderr           ///< The ostream to which any warnings/errors should be written
+                                      const ostream_ref_opt         &arg_ostream          ///< An optional reference to an ostream to which any warnings/errors should be written
                                       ) {
+	ostringstream parse_ss;
 	return arg_source_file_set.read_files(
 		build_data_dirs_spec_of_dir( arg_data_dir ),
 		arg_protein_name,
-		arg_stderr
+		( arg_ostream ? arg_ostream->get() : parse_ss )
 	);
 }
 
@@ -97,16 +98,24 @@ protein cath::read_protein_from_files(const protein_source_file_set &arg_source_
 protein_list cath::read_proteins_from_files(const protein_source_file_set &arg_source_file_set, /// The protein_source_file_set specifying which set of files should be used to build the protein
                                             const path                    &arg_data_dir,        ///< The directory from which the files should be read
                                             const str_vec                 &arg_protein_names,   ///< The name of the protein that is to be read from files
-                                            ostream                       &arg_stderr           ///< The ostream to which any warnings/errors should be written
+                                            const ostream_ref_opt         &arg_ostream          ///< An optional reference to an ostream to which any warnings/errors should be written
                                             ) {
 	protein_list the_proteins;
 	transform(
 		arg_protein_names,
 		back_inserter( the_proteins ),
-		[&] (const string &x) { return read_protein_from_files( arg_source_file_set, arg_data_dir, x, arg_stderr ); }
+		[&] (const string &x) {
+			return read_protein_from_files(
+				arg_source_file_set,
+				arg_data_dir,
+				x,
+				arg_ostream
+			);
+		}
 	);
 	return the_proteins;
 }
+
 
 /// \brief For each file type required by the specified protein_source_file_set, get the filenames associated with
 ///        the specified protein name in the specified data_dirs_spec
