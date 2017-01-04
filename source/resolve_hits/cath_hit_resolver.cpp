@@ -48,27 +48,24 @@ using std::ofstream;
 /// \brief Perform resolve-hits according to the specified arguments strings with the specified i/o streams
 void cath::rslv::perform_resolve_hits(const str_vec &args,        ///< The arguments strings specifying the resolve-hits action to perform
                                       istream       &arg_istream, ///< The input stream
-                                      ostream       &arg_stdout,  ///< The output stream
-                                      ostream       &arg_stderr   ///< The error stream
+                                      ostream       &arg_stdout   ///< The output stream
                                       ) {
 	perform_resolve_hits(
 		make_and_parse_options<crh_options>( args ),
 		arg_istream,
-		arg_stdout,
-		arg_stderr
+		arg_stdout
 	);
 }
 
 /// \brief Perform resolve-hits according to the specified crh_options with the specified i/o streams
 void cath::rslv::perform_resolve_hits(const crh_options &arg_opts,    ///< The crh_options specifying the resolve-hits action to perform
                                       istream           &arg_istream, ///< The input stream
-                                      ostream           &arg_stdout,  ///< The output stream
-                                      ostream           &arg_stderr   ///< The error stream
+                                      ostream           &arg_stdout   ///< The output stream
                                       ) {
 	// If the options are invalid or specify to do_nothing, then just return
 	const auto error_or_help_string = arg_opts.get_error_or_help_string();
 	if ( error_or_help_string ) {
-		arg_stderr << *error_or_help_string << "\n";
+		arg_stdout << *error_or_help_string << "\n";
 		return;
 	}
 

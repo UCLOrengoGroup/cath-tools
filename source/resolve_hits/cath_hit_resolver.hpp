@@ -33,13 +33,11 @@ namespace cath {
 
 		void perform_resolve_hits(const str_vec &,
 		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout,
-		                          std::ostream & = std::cerr);
+		                          std::ostream & = std::cout);
 
 		void perform_resolve_hits(const crh_options &,
 		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout,
-		                          std::ostream & = std::cerr);
+		                          std::ostream & = std::cout);
 
 		void perform_resolve_hits(const crh_spec &,
 		                          std::istream & = std::cin,

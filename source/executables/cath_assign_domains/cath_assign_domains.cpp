@@ -242,7 +242,7 @@ namespace cath {
 			// If the options are invalid or specify to do_nothing, then just return
 			const auto error_or_help_string = the_cath_assign_domains_options.get_error_or_help_string();
 			if ( error_or_help_string ) {
-				cerr << *error_or_help_string << "\n";
+				cout << *error_or_help_string << "\n";
 				return;
 			}
 
