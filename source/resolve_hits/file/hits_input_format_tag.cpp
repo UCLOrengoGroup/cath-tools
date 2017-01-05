@@ -110,8 +110,8 @@ string cath::rslv::description_of_input_format(const hits_input_format_tag &arg_
 	switch ( arg_format_tag ) {
 		case ( hits_input_format_tag::HMMER_DOMTBLOUT  ) : { return "HMMER domtblout format (must assume all hits are continuous)"             ; }
 		case ( hits_input_format_tag::HMMSEARCH_OUT    ) : { return "HMMer hmmsearch output format (can be used to deduce discontinuous hits)" ; }
-		case ( hits_input_format_tag::RAW_WITH_SCORES  ) : { return "\"raw\" format with scores"                                              ; }
-		case ( hits_input_format_tag::RAW_WITH_EVALUES ) : { return "\"raw\" format with evalues"                                             ; }
+		case ( hits_input_format_tag::RAW_WITH_SCORES  ) : { return "\"raw\" format with scores"                                               ; }
+		case ( hits_input_format_tag::RAW_WITH_EVALUES ) : { return "\"raw\" format with evalues"                                              ; }
 		default : {
 			BOOST_THROW_EXCEPTION(out_of_range_exception("hits_input_format_tag value not recognised"));
 			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax parser

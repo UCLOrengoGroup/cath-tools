@@ -130,7 +130,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 
 	try {
 		switch( in_spec.get_input_format() ) {
-			case ( hits_input_format_tag::HMMER_DOMTBLOUT ) :  {
+			case ( hits_input_format_tag::HMMER_DOMTBLOUT ) : {
 				parse_domain_hits_table(
 					the_read_and_process_mgr,
 					the_istream_ref,
@@ -138,7 +138,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 				);
 				break;
 			}
-			case ( hits_input_format_tag::HMMSEARCH_OUT ) :  {
+			case ( hits_input_format_tag::HMMSEARCH_OUT ) : {
 				parse_hmmsearch_out(
 					the_read_and_process_mgr,
 					the_istream_ref,
@@ -148,7 +148,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 				);
 				break;
 			}
-			case ( hits_input_format_tag::RAW_WITH_SCORES ) :  {
+			case ( hits_input_format_tag::RAW_WITH_SCORES ) : {
 				read_hit_list_from_istream(
 					the_read_and_process_mgr,
 					the_istream_ref,
@@ -156,7 +156,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 				);
 				break;
 			}
-			case ( hits_input_format_tag::RAW_WITH_EVALUES ) :  {
+			case ( hits_input_format_tag::RAW_WITH_EVALUES ) : {
 				read_hit_list_from_istream(
 					the_read_and_process_mgr,
 					the_istream_ref,
