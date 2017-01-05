@@ -66,7 +66,7 @@ str_vec all_hits_input_format_tag_names::get() {
 string cath::rslv::to_string(const hits_input_format_tag &arg_format_tag ///< The hits_input_format_tag to describe in a string
                              ) {
 	switch ( arg_format_tag ) {
-		case ( hits_input_format_tag::HMMER_DOMTMBLOUT ) : { return "hmmer_domtmblout" ; }
+		case ( hits_input_format_tag::HMMER_DOMTBLOUT  ) : { return "hmmer_domtblout"  ; }
 		case ( hits_input_format_tag::HMMSEARCH_OUT    ) : { return "hmmsearch_out"    ; }
 		case ( hits_input_format_tag::RAW_WITH_SCORES  ) : { return "raw_with_scores"  ; }
 		case ( hits_input_format_tag::RAW_WITH_EVALUES ) : { return "raw_with_evalues" ; }
@@ -108,7 +108,7 @@ istream & cath::rslv::operator>>(istream               &arg_is,        ///< The 
 string cath::rslv::description_of_input_format(const hits_input_format_tag &arg_format_tag ///< The hits_input_format_tag to describe
                                                ) {
 	switch ( arg_format_tag ) {
-		case ( hits_input_format_tag::HMMER_DOMTMBLOUT ) : { return "HMMER domtblout format (must assume all hits are continuous)"             ; }
+		case ( hits_input_format_tag::HMMER_DOMTBLOUT  ) : { return "HMMER domtblout format (must assume all hits are continuous)"             ; }
 		case ( hits_input_format_tag::HMMSEARCH_OUT    ) : { return "HMMer hmmsearch output format (can be used to deduce discontinuous hits)" ; }
 		case ( hits_input_format_tag::RAW_WITH_SCORES  ) : { return "\"raw\" format with scores"                                              ; }
 		case ( hits_input_format_tag::RAW_WITH_EVALUES ) : { return "\"raw\" format with evalues"                                             ; }

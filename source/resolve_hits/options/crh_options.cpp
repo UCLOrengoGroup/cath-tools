@@ -79,13 +79,13 @@ str_opt crh_options::do_get_error_or_help_string() const {
 	const variables_map &vm           = get_variables_map();
 	const auto          &input_format = get_crh_input_spec().get_input_format();
 	if ( vm.count( crh_score_options_block::PO_APPLY_CATH_RULES ) && ! vm[ crh_score_options_block::PO_APPLY_CATH_RULES ].defaulted() ) {
-		if ( input_format != hits_input_format_tag::HMMER_DOMTMBLOUT && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
+		if ( input_format != hits_input_format_tag::HMMER_DOMTBLOUT && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
 			return "The --"
 				+ crh_score_options_block::PO_APPLY_CATH_RULES
 				+ " option cannot be used with the input format "
 				+ to_string( input_format )
 				+ "; CATH-Gene3D rules are only applied for "
-				+ to_string( hits_input_format_tag::HMMER_DOMTMBLOUT )
+				+ to_string( hits_input_format_tag::HMMER_DOMTBLOUT )
 				+ " and "
 				+ to_string( hits_input_format_tag::HMMSEARCH_OUT )
 				+ " formats.";
@@ -111,9 +111,9 @@ str_opt crh_options::do_get_error_or_help_string() const {
 
 	// Store a map from the score type to the valid formats for which that "--worst-permissible-[...]" option may be specified
 	const auto formats_for_worst_perm_opt_of_score = map< hit_score_type, hits_input_format_tag_vec >{
-		{ hit_score_type::FULL_EVALUE, { hits_input_format_tag::RAW_WITH_EVALUES,                                       }, },
-		{ hit_score_type::BITSCORE,    { hits_input_format_tag::HMMER_DOMTMBLOUT, hits_input_format_tag::HMMSEARCH_OUT, }, },
-		{ hit_score_type::CRH_SCORE,   { hits_input_format_tag::RAW_WITH_SCORES                                         }, },
+		{ hit_score_type::FULL_EVALUE, { hits_input_format_tag::RAW_WITH_EVALUES,                                      }, },
+		{ hit_score_type::BITSCORE,    { hits_input_format_tag::HMMER_DOMTBLOUT, hits_input_format_tag::HMMSEARCH_OUT, }, },
+		{ hit_score_type::CRH_SCORE,   { hits_input_format_tag::RAW_WITH_SCORES                                        }, },
 	};
 	//
 
@@ -278,7 +278,7 @@ string cath::rslv::get_crh_cath_rules_help_string() {
 The --)"
 	+ crh_score_options_block::PO_APPLY_CATH_RULES
 	+ R"( option applies the following CATH-Gene3D specific rules when parsing from )"
-	+ to_string( hits_input_format_tag::HMMER_DOMTMBLOUT )
+	+ to_string( hits_input_format_tag::HMMER_DOMTBLOUT )
 	+ R"( or )"
 	+ to_string( hits_input_format_tag::HMMSEARCH_OUT )
 	+ R"( files.

@@ -130,7 +130,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 
 	try {
 		switch( in_spec.get_input_format() ) {
-			case ( hits_input_format_tag::HMMER_DOMTMBLOUT ) :  {
+			case ( hits_input_format_tag::HMMER_DOMTBLOUT ) :  {
 				parse_domain_hits_table(
 					the_read_and_process_mgr,
 					the_istream_ref,
