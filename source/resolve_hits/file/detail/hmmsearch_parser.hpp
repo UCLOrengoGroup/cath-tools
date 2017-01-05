@@ -287,7 +287,8 @@ namespace cath {
 							<< id_a
 							<< "\" with bitscore "
 							<< summ.bitscore
-							<< ") for having a negative bitscore, which cannot currently be handled.";
+							<< ") for having a negative bitscore, which cannot currently be handled."
+							<< " It's typically not a problem to exclude such weak hits.";
 						skipped_for_negtv_bitscore = true;
 					}
 				}

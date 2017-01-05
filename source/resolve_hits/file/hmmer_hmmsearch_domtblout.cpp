@@ -130,7 +130,8 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 					<< query_id_str_ref
 					<< "\" with bitscore "
 					<< bitscore
-					<< ") for having a negative bitscore, which cannot currently be handled.";
+					<< ") for having a negative bitscore, which cannot currently be handled."
+					<< " It's typically not a problem to exclude such weak hits.";
 				skipped_for_negtv_bitscore = true;
 			}
 			continue;
