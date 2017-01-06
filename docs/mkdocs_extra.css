@@ -2,6 +2,10 @@ div.wy-nav-content {
 	padding-top: 0;
 }
 
+div[aria-label="breadcrumbs navigation"][role="navigation"] {
+	height: 60px;
+}
+
 img[alt="Screenshot"], img[alt="Screenshot-half"] {
 	border-color  : black;
 	border-style  : solid;
