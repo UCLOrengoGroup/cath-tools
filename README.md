@@ -4,8 +4,8 @@ Protein structure comparison tools such as SSAP, as used by the [Orengo Group](h
 
 | Resources | | | |
 |:-- |:-- |:-- |:-- |
-| [**Executable DOWNLOADS**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "Downloads for the latest CATH Tools release") <br> <sup> (for 64-bit Linux; chmod them to be executable)</sup> | [**Docs**](http://cath-tools.readthedocs.io/en/latest/ "CATH Tools user documentation at Read the Docs") | [**Code**](https://github.com/UCLOrengoGroup/cath-tools "CATH Tools GitHub repository") | |
-| [secmake](http://github.com/UCLOrengoGroup/secmake) <br> <sup>(makes sec files, required by cath-ssap) </sup> | [Builds](https://travis-ci.org/UCLOrengoGroup/cath-tools "CATH Tools Travis-CI builds") | [Extras repo](https://github.com/UCLOrengoGroup/cath-tools-supplementary "CATH Tools Supplementary GitHub repository") | [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage")<br> <sup>(used to execute the superpositions)</sup> |
+| [**Executable DOWNLOADS**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "Downloads for the latest CATH Tools release") <br> <sup> (for 64-bit Linux; chmod them to be executable)</sup> | [**Docs**](http://cath-tools.readthedocs.io/en/latest/ "CATH Tools user documentation at Read the Docs") <br> <sup> &nbsp; </sup> | [**Code**](https://github.com/UCLOrengoGroup/cath-tools "CATH Tools GitHub repository") <br> <sup> &nbsp; </sup> | |
+| [secmake](http://github.com/UCLOrengoGroup/secmake) <br> <sup>(makes sec files, required by cath-ssap) </sup> | [Builds](https://travis-ci.org/UCLOrengoGroup/cath-tools "CATH Tools Travis-CI builds") <br> <sup> &nbsp; </sup> | [Extras repo](https://github.com/UCLOrengoGroup/cath-tools-supplementary "CATH Tools Supplementary GitHub repository") <br> <sup> &nbsp; </sup> | [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage")<br> <sup>(used to execute the superpositions)</sup> |
 
 
 ### Tools
