@@ -40,11 +40,11 @@ namespace cath {
 
 		} // namespace detail
 
-	/// \brief The type created by wrapping the specified type's template parameters in the template wrapper
-	///
-	/// Eg Given `tuple<int>` and `vector` this returns `vector<int>`
-	template <typename T, template <typename...> class NewWrppr>
-	using change_template_wrapper_t = typename detail::change_template_wrapper<T, NewWrppr>::type;
+		/// \brief The type created by wrapping the specified type's template parameters in the template wrapper
+		///
+		/// Eg Given `tuple<int>` and `vector` this returns `vector<int>`
+		template <typename T, template <typename...> class NewWrppr>
+		using change_template_wrapper_t = typename detail::change_template_wrapper<T, NewWrppr>::type;
 
 	} // namespace common
 } // namespace cath
