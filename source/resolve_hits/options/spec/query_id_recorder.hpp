@@ -109,13 +109,13 @@ namespace cath {
 // workaround absence of hetergeneous lookup in old libstdc++
 #ifdef __GLIBCXX__
 #if __GLIBCXX__ < 20160801
-				std::string{
+				static_cast<std::string>(
 #endif
 #endif
 				arg_query_id
 #ifdef __GLIBCXX__
 #if __GLIBCXX__ < 20160801
-				}
+				)
 #endif
 #endif
 			);
