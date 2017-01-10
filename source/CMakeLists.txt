@@ -131,6 +131,7 @@ set(
 	NORMSOURCES_ALIGNMENT_REFINER
 		alignment/refiner/alignment_refiner.cpp
 		${NORMSOURCES_ALIGNMENT_REFINER_DETAIL}
+		alignment/refiner/indexed_refiner.cpp
 )
 
 set(
@@ -1175,6 +1176,7 @@ set(
 	TESTSOURCES_ALIGNMENT_REFINER
 		alignment/refiner/alignment_refiner_test.cpp
 		${TESTSOURCES_ALIGNMENT_REFINER_DETAIL}
+		alignment/refiner/indexed_refiner_test.cpp
 )
 
 set(

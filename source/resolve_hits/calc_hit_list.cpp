@@ -184,6 +184,9 @@ void cath::rslv::read_hit_list_from_istream(read_and_process_mgr &arg_read_and_p
 
 	const auto bounds_pusher = [&] (const residx_t &x) { bounds.push_back( x ); };
 
+	// Store the query IDs seen so far if the crh_filter_spec specifies a limit on the number of queries
+	query_id_recorder seen_query_ids;
+
 	while ( getline( arg_istream, line ) ) {
 		const auto line_begin_itr        = common::cbegin ( line );
 		const auto line_end_itr          = common::cend   ( line );
@@ -191,8 +194,9 @@ void cath::rslv::read_hit_list_from_istream(read_and_process_mgr &arg_read_and_p
 		const auto end_of_query_id_itr   = find_space     ( line_begin_itr,        line_end_itr        );
 		const auto query_id_str_ref      = make_string_ref( line_begin_itr,        end_of_query_id_itr );
 
-		// If there are filter query IDs but this isn't amongst them, then skip this entry
-		if ( should_skip_query_id( arg_read_and_process_mgr, query_id_str_ref ) ) {
+		// If this query ID should be skipped, then skip this entry.
+		// The function also updates seen_query_ids if not skipping this query ID
+		if ( should_skip_query_and_update( arg_read_and_process_mgr, query_id_str_ref, seen_query_ids ) ) {
 			continue;
 		}
 

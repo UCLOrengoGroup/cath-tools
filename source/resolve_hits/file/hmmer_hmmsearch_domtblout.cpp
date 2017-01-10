@@ -75,6 +75,9 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 
 	arg_read_and_process_mgr.process_all_outstanding();
 
+	// Store the query IDs seen so far if the crh_filter_spec specifies a limit on the number of queries
+	query_id_recorder seen_query_ids;
+
 	while ( getline( arg_input_stream, line_string ) ) {
 		// Skip comment lines
 		if ( line_string.front() == '#' ) {
@@ -94,8 +97,9 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 		const auto     target_field_itrs      = find_field_itrs( line_string, TARGET_FIELD_IDX                                                                );
 		const auto     target_id_str_ref      = make_string_ref( target_field_itrs.first, target_field_itrs.second );
 
-		// If there are filter query IDs but this isn't amongst them, then skip this entry
-		if ( should_skip_query_id( arg_read_and_process_mgr, target_id_str_ref ) ) {
+		// If this query ID should be skipped, then skip this entry.
+		// The function also updates seen_query_ids if not skipping this query ID
+		if ( should_skip_query_and_update( arg_read_and_process_mgr, target_id_str_ref, seen_query_ids) ) {
 			continue;
 		}
 

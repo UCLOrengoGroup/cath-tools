@@ -31,6 +31,7 @@
 #include "resolve_hits/calc_hit.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
 #include "resolve_hits/options/spec/crh_filter_spec.hpp"
+#include "resolve_hits/options/spec/should_skip_query.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/hits_processor.hpp"
 
 #include <future>
@@ -165,11 +166,13 @@ namespace cath {
 
 		const str_vec & get_filter_query_ids(const read_and_process_mgr &);
 
-		bool should_skip_query_id(const read_and_process_mgr &,
-		                          const std::string &);
+		bool should_skip_query(const read_and_process_mgr &,
+		                       const std::string &,
+		                       const query_id_recorder &);
 
-		bool should_skip_query_id(const read_and_process_mgr &,
-		                          const boost::string_ref &);
+		bool should_skip_query(const read_and_process_mgr &,
+		                       const boost::string_ref &,
+		                       const query_id_recorder &);
 
 		read_and_process_mgr make_read_and_process_mgr(const detail::hits_processor &,
 		                                               const crh_spec &);
@@ -344,19 +347,59 @@ namespace cath {
 		/// \brief Whether the specified query ID should be skipped according to the crh_filter_spec in the specified read_and_process_mgr
 		///
 		/// \relates read_and_process_mgr
-		inline bool should_skip_query_id(const read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to query
-		                                 const std::string          &arg_query_id              ///< The query ID to test
-		                                 ) {
-			return should_skip_query_id( arg_read_and_process_mgr.get_filter_spec(), arg_query_id );
+		inline bool should_skip_query(const read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to query
+		                              const std::string          &arg_query_id,             ///< The query ID to test
+		                              const query_id_recorder    &arg_seen_queries          ///< The query IDs that have already been seen
+		                              ) {
+			return should_skip_query(
+				arg_read_and_process_mgr.get_filter_spec(),
+				arg_query_id,
+				arg_seen_queries
+			);
 		}
 
 		/// \brief Whether the specified query ID should be skipped according to the crh_filter_spec in the specified read_and_process_mgr
 		///
 		/// \relates read_and_process_mgr
-		inline bool should_skip_query_id(const read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to query
-		                                 const boost::string_ref    &arg_query_id              ///< The query ID to test
-		                                 ) {
-			return should_skip_query_id( arg_read_and_process_mgr.get_filter_spec(), arg_query_id );
+		inline bool should_skip_query(const read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to query
+		                              const boost::string_ref    &arg_query_id,             ///< The query ID to test
+		                              const query_id_recorder    &arg_seen_queries          ///< The query IDs that have already been seen
+		                              ) {
+			return should_skip_query(
+				arg_read_and_process_mgr.get_filter_spec(),
+				arg_query_id,
+				arg_seen_queries
+			);
+		}
+
+		/// \brief Return whether the specified query ID should be skipped given the specified read_and_process_mgr
+		///        and, if appropriate, update the specified list of seen query IDs
+		///
+		/// \relates read_and_process_mgr
+		inline bool should_skip_query_and_update(const read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to query
+		                                         const std::string          &arg_query_id,             ///< The query ID to test
+		                                         query_id_recorder          &arg_seen_queries          ///< The query IDs that have already been seen
+		                                         ) {
+			return should_skip_query_and_update(
+				arg_read_and_process_mgr.get_filter_spec(),
+				arg_query_id,
+				arg_seen_queries
+			);
+		}
+
+		/// \brief Return whether the specified query ID should be skipped given the specified read_and_process_mgr
+		///        and, if appropriate, update the specified list of seen query IDs
+		///
+		/// \relates read_and_process_mgr
+		inline bool should_skip_query_and_update(const read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to query
+		                                         const boost::string_ref    &arg_query_id,             ///< The query ID to test
+		                                         query_id_recorder          &arg_seen_queries          ///< The query IDs that have already been seen
+		                                         ) {
+			return should_skip_query_and_update(
+				arg_read_and_process_mgr.get_filter_spec(),
+				arg_query_id,
+				arg_seen_queries
+			);
 		}
 
 	} // namespace rslv

@@ -278,6 +278,12 @@ const path & global_test_constants::CRH_EG_DOMTBL_OUT_FILENAME() {
 }
 
 /// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME() {
+	static const path crh_eg_domtbl_lim2_out_filename( CRH_TEST_DATA_DIR() / "eg_domtblout.limit_2.out"            );
+	return crh_eg_domtbl_lim2_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
 const path & global_test_constants::CRH_EG_HMMSEARCH_IN_FILENAME() {
 	static const path crh_eg_hmmsearch_in_filename   ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.in"                 );
 	return crh_eg_hmmsearch_in_filename;
@@ -287,6 +293,12 @@ const path & global_test_constants::CRH_EG_HMMSEARCH_IN_FILENAME() {
 const path & global_test_constants::CRH_EG_HMMSEARCH_OUT_FILENAME() {
 	static const path crh_eg_hmmsearch_out_filename              ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.out"                    );
 	return crh_eg_hmmsearch_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME() {
+	static const path crh_eg_hmmsearch_lim2_out_filename         ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.limit_2.out"            );
+	return crh_eg_hmmsearch_lim2_out_filename;
 }
 
 /// \brief Test constant for a cath-resolve-hits test file
@@ -332,6 +344,12 @@ const path & global_test_constants::CRH_EG_RAW_EVALUE_OUT_FILENAME() {
 }
 
 /// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME() {
+	static const path crh_eg_raw_eva_lim2_out_filename( CRH_TEST_DATA_DIR() / "eg_raw_evalue.limit_2.out"          );
+	return crh_eg_raw_eva_lim2_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
 const path & global_test_constants::CRH_EG_RAW_SCORE_IN_FILENAME() {
 	static const path crh_eg_raw_sc_in_filename      ( CRH_TEST_DATA_DIR() / "eg_raw_score.in"                     );
 	return crh_eg_raw_sc_in_filename;
@@ -341,6 +359,12 @@ const path & global_test_constants::CRH_EG_RAW_SCORE_IN_FILENAME() {
 const path & global_test_constants::CRH_EG_RAW_SCORE_OUT_FILENAME() {
 	static const path crh_eg_raw_sc_out_filename     ( CRH_TEST_DATA_DIR() / "eg_raw_score.out"                    );
 	return crh_eg_raw_sc_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME() {
+	static const path crh_eg_raw_sc_lim2_out_filename( CRH_TEST_DATA_DIR() / "eg_raw_score.limit_2.out"            );
+	return crh_eg_raw_sc_lim2_out_filename;
 }
 
 /// \brief TODOCUMENT

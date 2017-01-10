@@ -67,6 +67,9 @@ void cath::rslv::parse_hmmsearch_out(read_and_process_mgr &arg_read_and_process_
 
 	arg_read_and_process_mgr.process_all_outstanding();
 
+	// Store the query IDs seen so far if the crh_filter_spec specifies a limit on the number of queries
+	query_id_recorder seen_query_ids;
+
 	while ( ! parser.end_of_istream() ) {
 		parser.advance_line_to_block();
 
@@ -76,8 +79,9 @@ void cath::rslv::parse_hmmsearch_out(read_and_process_mgr &arg_read_and_process_
 
 		parser.advance_line();
 
-		// If there are filter query IDs but this isn't amongst them, then skip this entry
-		if ( should_skip_query_id( arg_read_and_process_mgr, parser.get_query_id() ) ) {
+		// If this query ID should be skipped, then skip this entry.
+		// The function also updates seen_query_ids if not skipping this query ID
+		if ( should_skip_query_and_update( arg_read_and_process_mgr, parser.get_query_id(), seen_query_ids ) ) {
 			continue;
 		}
 

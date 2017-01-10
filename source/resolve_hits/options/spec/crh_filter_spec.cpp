@@ -46,6 +46,11 @@ const str_vec & crh_filter_spec::get_filter_query_ids() const {
 	return filter_query_ids;
 }
 
+/// \brief Getter for the (optional) maximum number of queries to process
+const size_opt & crh_filter_spec::get_limit_queries() const {
+	return limit_queries;
+}
+
 /// \brief Setter for the worst permissible evalue before a hit is ignored
 crh_filter_spec & crh_filter_spec::set_worst_permissible_evalue(const resscr_t &arg_worst_permissible_evalue ///< The worst permissible evalue before a hit is ignored
                                                                 ) {
@@ -71,6 +76,13 @@ crh_filter_spec & crh_filter_spec::set_worst_permissible_score(const resscr_opt 
 crh_filter_spec & crh_filter_spec::set_filter_query_ids(const str_vec &arg_filter_query_ids ///< The query IDs on which to filter the input, if any are present
                                                         ) {
 	filter_query_ids = arg_filter_query_ids;
+	return *this;
+}
+
+/// \brief Setter for the (optional) maximum number of queries to process
+crh_filter_spec & crh_filter_spec::set_limit_queries(const size_opt &arg_limit_queries ///< The (optional) maximum number of queries to process
+                                                     ) {
+	limit_queries = arg_limit_queries;
 	return *this;
 }
 

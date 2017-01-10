@@ -45,6 +45,7 @@ namespace cath {
 			static const std::string PO_WORST_PERMISSIBLE_BITSCORE;
 			static const std::string PO_WORST_PERMISSIBLE_SCORE;
 			static const std::string PO_FILTER_QUERY_ID;
+			static const std::string PO_LIMIT_QUERIES;
 
 			const crh_filter_spec & get_crh_filter_spec() const;
 		};

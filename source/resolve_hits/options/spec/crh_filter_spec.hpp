@@ -51,6 +51,9 @@ namespace cath {
 			/// \brief The query IDs on which to filter the input, if any are present
 			str_vec    filter_query_ids;
 
+			/// \brief The (optional) maximum number of queries to process
+			size_opt   limit_queries;
+
 		public:
 			/// \brief The default value for the worst permissible evalue before a hit is ignored
 			static constexpr resscr_t DEFAULT_WORST_PERMISSIBLE_EVALUE   = static_cast<resscr_t>( 0.001 );
@@ -62,11 +65,13 @@ namespace cath {
 			const resscr_t & get_worst_permissible_bitscore() const;
 			const resscr_opt & get_worst_permissible_score() const;
 			const str_vec & get_filter_query_ids() const;
+			const size_opt & get_limit_queries() const;
 
 			crh_filter_spec & set_worst_permissible_evalue(const resscr_t &);
 			crh_filter_spec & set_worst_permissible_bitscore(const resscr_t &);
 			crh_filter_spec & set_worst_permissible_score(const resscr_opt &);
 			crh_filter_spec & set_filter_query_ids(const str_vec &);
+			crh_filter_spec & set_limit_queries(const size_opt &);
 		};
 
 		crh_filter_spec make_accept_all_filter_spec();
@@ -115,25 +120,6 @@ namespace cath {
 				! common::contains( arg_filter_query_ids, arg_query_id )
 			);
 		}
-
-		/// \brief Whether the data for the specified query ID should be specified given the specified filter query IDs
-		///
-		/// \relates crh_filter_spec
-		inline bool should_skip_query_id(const crh_filter_spec &arg_filter_spec, ///< The filter_spec to apply
-		                                 const std::string     &arg_query_id     ///< The query ID string to check
-		                                 ) {
-			return should_skip_query_id( arg_filter_spec.get_filter_query_ids(), arg_query_id );
-		}
-
-		/// \brief Whether the data for the specified query ID should be specified given the specified filter query IDs
-		///
-		/// \relates crh_filter_spec
-		inline bool should_skip_query_id(const crh_filter_spec   &arg_filter_spec, ///< The filter_spec to apply
-		                                 const boost::string_ref &arg_query_id     ///< The query ID string_ref to check
-		                                 ) {
-			return should_skip_query_id( arg_filter_spec.get_filter_query_ids(), arg_query_id );
-		}
-		
 
 	} // namespace rslv
 } // namespace cath

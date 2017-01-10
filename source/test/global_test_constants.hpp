@@ -89,8 +89,10 @@ namespace cath {
 
 		static const boost::filesystem::path              & CRH_EG_DOMTBL_IN_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_DOMTBL_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_IN_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME();
@@ -98,8 +100,10 @@ namespace cath {
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_IN_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_RAW_SCORE_IN_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_RAW_SCORE_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME();
 
 		static const double                               & LOOSER_ACCURACY_PERCENTAGE();
 		static const double                               & ACCURACY_PERCENTAGE();

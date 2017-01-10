@@ -30,6 +30,7 @@
 #include "common/file/temp_file.hpp"
 #include "common/test_predicate/istream_and_file_equal.hpp"
 #include "resolve_hits/cath_hit_resolver.hpp"
+#include "resolve_hits/options/options_block/crh_filter_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_input_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_output_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_score_options_block.hpp"
@@ -40,13 +41,15 @@
 namespace cath { namespace test { } }
 
 using namespace cath;
-using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::test;
 
 using boost::algorithm::contains;
 using boost::filesystem::path;
 using boost::range::join;
+using cath::common::copy_build;
+using cath::common::temp_file;
+using cath::common::write_file;
 using std::istringstream;
 using std::ostringstream;
 using std::string;
@@ -275,5 +278,57 @@ BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scor
 		"--" + crh_output_options_block::PO_GENERATE_HTML_OUTPUT
 	} ) );
 }
+
+
+
+BOOST_AUTO_TEST_SUITE(limit)
+
+BOOST_AUTO_TEST_CASE(file_domtbl) {
+	execute_perform_resolve_hits( {
+		CRH_EG_DOMTBL_IN_FILENAME().string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
+		"--" + crh_filter_options_block::PO_LIMIT_QUERIES + "=2"
+	} );
+	istringstream istream_of_output{ output_ss.str() };
+	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME() );
+}
+
+BOOST_AUTO_TEST_CASE(file_hmmsearch) {
+	execute_perform_resolve_hits( {
+		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		"--" + crh_filter_options_block::PO_LIMIT_QUERIES + "=2"
+	} );
+	istringstream istream_of_output{ output_ss.str() };
+	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME() );
+}
+
+BOOST_AUTO_TEST_CASE(file_raw_evalue) {
+	execute_perform_resolve_hits( {
+		CRH_EG_RAW_EVALUE_IN_FILENAME().string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_EVALUES ),
+		"--" + crh_filter_options_block::PO_LIMIT_QUERIES + "=2"
+	} );
+	istringstream istream_of_output{ output_ss.str() };
+	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME() );
+}
+
+BOOST_AUTO_TEST_CASE(file_raw_score) {
+	execute_perform_resolve_hits( {
+		CRH_EG_RAW_SCORE_IN_FILENAME().string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_SCORES ),
+		"--" + crh_filter_options_block::PO_LIMIT_QUERIES + "=2"
+	} );
+	istringstream istream_of_output{ output_ss.str() };
+	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME() );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
 
 BOOST_AUTO_TEST_SUITE_END()
