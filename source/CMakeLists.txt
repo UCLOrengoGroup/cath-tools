@@ -1387,6 +1387,7 @@ set(
 		common/temp_check_offset_1_test.cpp
 		${TESTSOURCES_COMMON_TEST_PREDICATE}
 		${TESTSOURCES_COMMON_TUPLE}
+		common/type_to_string_test.cpp
 		${TESTSOURCES_COMMON_TYPE_TRAITS}
 )
 
