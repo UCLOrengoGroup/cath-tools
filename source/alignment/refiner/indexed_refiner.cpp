@@ -22,7 +22,7 @@
 
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/algorithm/string/replace.hpp>
-#include <boost/container/small_vector.hpp>
+// #include <boost/container/small_vector.hpp> // ***** small_vector was only added in Boost 1.58.0 *****
 #include <boost/filesystem/path.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
@@ -47,7 +47,7 @@ using boost::adaptors::transformed;
 using boost::algorithm::erase_all;
 using boost::algorithm::replace_all;
 using boost::algorithm::replace_all_copy;
-using boost::container::small_vector;
+// using boost::container::small_vector;
 using boost::filesystem::path;
 using boost::irange;
 using boost::lexical_cast;
@@ -58,12 +58,12 @@ using std::tuple;
 using std::vector;
 
 using cell_type_list = tuple<
-                              tuple< vector      <simple_locn_index>     >,
+                              tuple< vector      <simple_locn_index>     >
                               // tuple< small_vector<simple_locn_index,  1> >,
-                              tuple< small_vector<simple_locn_index,  2> >,
+                              // tuple< small_vector<simple_locn_index,  2> >,
                               // tuple< small_vector<simple_locn_index,  4> >,
-                              tuple< small_vector<simple_locn_index, 10> >,
-                              tuple< small_vector<simple_locn_index, 20> >
+                              // tuple< small_vector<simple_locn_index, 10> >,
+                              // tuple< small_vector<simple_locn_index, 20> >,
                               // tuple< small_vector<simple_locn_index, 40> >
                               >;
 
