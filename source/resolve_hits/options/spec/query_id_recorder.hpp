@@ -88,16 +88,16 @@ namespace cath {
 			return *this;
 		}
 
-#define STR_HELPER(x) #x
-#define STR(x) STR_HELPER(x)
+// #define STR_HELPER(x) #x
+// #define STR(x) STR_HELPER(x)
 
-#ifdef __GLIBCPP__
-#pragma message "content of __GLIBCPP__: " STR(__GLIBCPP__)
-#endif
+// #ifdef __GLIBCPP__
+// #pragma message "content of __GLIBCPP__: " STR(__GLIBCPP__)
+// #endif
 
-#ifdef __GLIBCXX__
-#pragma message "content of __GLIBCXX__: " STR(__GLIBCXX__)
-#endif
+// #ifdef __GLIBCXX__
+// #pragma message "content of __GLIBCXX__: " STR(__GLIBCXX__)
+// #endif
 
 		/// \brief Add the specified query ID to those that have been seen
 		///
@@ -108,13 +108,13 @@ namespace cath {
 			const auto lower_bound_itr = seen_query_ids.lower_bound(
 // workaround absence of hetergeneous lookup in old libstdc++
 #ifdef __GLIBCXX__
-#if __GLIBCXX__ < 20150422
+#if __GLIBCXX__ < 20160801
 				std::string{
 #endif
 #endif
 				arg_query_id
 #ifdef __GLIBCXX__
-#if __GLIBCXX__ < 20150422
+#if __GLIBCXX__ < 20160801
 				}
 #endif
 #endif
