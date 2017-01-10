@@ -139,7 +139,7 @@ ls -l ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
 Other Bioplib versions
 ----------------------
 
-At present, cath-tools uses [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage") v2.1.2. If you want to try using ge;v3.0, be sure to comment out the line in the Makefile that switches on the use of libxml2:
+At present, cath-tools uses [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage") v2.1.2. If you want to try using &ge;v3.0, be sure to comment out the line in the Makefile that switches on the use of libxml2:
 
 ~~~~~no-highlight
 # Include libxml2
