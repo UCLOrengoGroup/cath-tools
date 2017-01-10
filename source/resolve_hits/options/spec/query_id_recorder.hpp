@@ -88,6 +88,17 @@ namespace cath {
 			return *this;
 		}
 
+#define STR_HELPER(x) #x
+#define STR(x) STR_HELPER(x)
+
+#ifdef __GLIBCPP__
+#pragma message "content of __GLIBCPP__: " STR(__GLIBCPP__)
+#endif
+
+#ifdef __GLIBCXX__
+#pragma message "content of __GLIBCXX__: " STR(__GLIBCXX__)
+#endif
+
 		/// \brief Add the specified query ID to those that have been seen
 		///
 		/// Consider using should_skip_query_and_update() rather than calling this method directly
