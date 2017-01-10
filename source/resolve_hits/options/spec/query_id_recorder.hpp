@@ -94,7 +94,20 @@ namespace cath {
 		inline query_id_recorder & query_id_recorder::add_query_id(const boost::string_ref &arg_query_id ///< The query ID to add
 		                                                           ) {
 			// Find the place where query ID would go
-			const auto lower_bound_itr = seen_query_ids.lower_bound( arg_query_id );
+			const auto lower_bound_itr = seen_query_ids.lower_bound(
+// workaround absence of hetergeneous lookup in old libstdc++
+#ifdef __GLIBCXX__
+#if __GLIBCXX__ < 20150422
+				std::string{
+#endif
+#endif
+				arg_query_id
+#ifdef __GLIBCXX__
+#if __GLIBCXX__ < 20150422
+				}
+#endif
+#endif
+			);
 
 			// If the query ID should be added, then emplace directly
 			if ( lower_bound_itr == common::cend( seen_query_ids ) || *lower_bound_itr != arg_query_id ) {
