@@ -31,10 +31,11 @@ namespace cath {
 
 		/// \brief A type to indicate an element should be skipped in a call to make_tuple_with_skips()
 		struct tpl_elmnt_skip_t {
-			tpl_elmnt_skip_t            (const tpl_elmnt_skip_t & ) = delete;
-			tpl_elmnt_skip_t            (      tpl_elmnt_skip_t &&) = delete;
-			tpl_elmnt_skip_t & operator=(const tpl_elmnt_skip_t & ) = delete;
-			tpl_elmnt_skip_t & operator=(      tpl_elmnt_skip_t &&) = delete;
+			tpl_elmnt_skip_t()                                      noexcept = default;
+			tpl_elmnt_skip_t            (const tpl_elmnt_skip_t & ) noexcept = default;
+			tpl_elmnt_skip_t            (      tpl_elmnt_skip_t &&) noexcept = default;
+			tpl_elmnt_skip_t & operator=(const tpl_elmnt_skip_t & ) noexcept = default;
+			tpl_elmnt_skip_t & operator=(      tpl_elmnt_skip_t &&) noexcept = default;
 		};
 
 		namespace detail {

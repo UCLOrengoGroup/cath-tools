@@ -88,14 +88,15 @@ namespace cath {
 			constexpr cell_index_t min_close_key_part(const value_t         &/*arg_value*/,    ///< The value for which the key_part should be extracted
 			                                          const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
 			                                          ) const {
+				return
 #ifndef NDEBUG
-				if ( arg_search_radius != 0 ) {
-					BOOST_THROW_EXCEPTION(common::not_implemented_exception("res_pair_from_to_index_keyer_part currently requires that the search radius is 0"));
-				}
+					( arg_search_radius != 0 )
+					? throw std::logic_error("res_pair_from_to_index_keyer_part currently requires that the search radius is 0")
 #else
-				common::constexpr_ignore_unused( arg_search_radius );
+					common::constexpr_ignore_unused( arg_search_radius )
+					? cell_index_t{}
 #endif
-				return {};
+					: cell_index_t{};
 			}
 
 			/// \brief Generate the maximum key part within the specified search radius for the specified value
@@ -104,14 +105,15 @@ namespace cath {
 			constexpr cell_index_t max_close_key_part(const value_t         &/*arg_value*/,    ///< The value for which the key_part should be extracted
 			                                          const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
 			                                          ) const {
+				return
 #ifndef NDEBUG
-				if ( arg_search_radius != 0 ) {
-					BOOST_THROW_EXCEPTION(common::not_implemented_exception("res_pair_from_to_index_keyer_part currently requires that the search radius is 0"));
-				}
+					( arg_search_radius != 0 )
+					? throw std::logic_error("res_pair_from_to_index_keyer_part currently requires that the search radius is 0")
 #else
-				common::constexpr_ignore_unused( arg_search_radius );
+					common::constexpr_ignore_unused( arg_search_radius )
+					? cell_index_t{}
 #endif
-				return {};
+					: cell_index_t{};
 			}
 		};
 
