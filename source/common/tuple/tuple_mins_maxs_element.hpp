@@ -38,10 +38,10 @@ namespace cath {
 
 			/// \brief Update a min and max with a new value
 			template <typename T>
-			int update_min_max_with_value_impl(T       &arg_min,  ///< The min value
-			                                   T       &arg_max,  ///< The max value
-			                                   const T &arg_value ///< The new value
-			                                   ) {
+			inline int update_min_max_with_value_impl(T       &arg_min,  ///< The min value
+			                                          T       &arg_max,  ///< The max value
+			                                          const T &arg_value ///< The new value
+			                                          ) {
 				if ( arg_value < arg_min ) { arg_min = arg_value; }
 				if ( arg_value > arg_max ) { arg_max = arg_value; }
 				return 0;
@@ -49,11 +49,11 @@ namespace cath {
 
 			/// \brief Implementation for update_mins_maxs_with_value
 			template <typename Tpl, size_t... Index>
-			void update_mins_maxs_with_value_impl(Tpl       &arg_mins,          ///< The min tuple
-			                                      Tpl       &arg_maxs,          ///< The max tuple
-			                                      const Tpl &arg_value,         ///< The new tuple
-			                                      std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
-			                                      ) {
+			inline void update_mins_maxs_with_value_impl(Tpl       &arg_mins,          ///< The min tuple
+			                                             Tpl       &arg_maxs,          ///< The max tuple
+			                                             const Tpl &arg_value,         ///< The new tuple
+			                                             std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
+			                                             ) {
 				auto dummy_list = {
 					update_min_max_with_value_impl(
 						std::get<Index>( arg_mins  ),
@@ -66,10 +66,10 @@ namespace cath {
 
 			/// \brief Element-wise update a min tuple and a max tuple with a new tuple
 			template <typename Tpl>
-			void update_mins_maxs_with_value(Tpl       &arg_mins, ///< The min tuple
-			                                 Tpl       &arg_maxs, ///< The max tuple
-			                                 const Tpl &arg_value ///< The new tuple
-			                                 ) {
+			inline void update_mins_maxs_with_value(Tpl       &arg_mins, ///< The min tuple
+			                                        Tpl       &arg_maxs, ///< The max tuple
+			                                        const Tpl &arg_value ///< The new tuple
+			                                        ) {
 				return update_mins_maxs_with_value_impl(
 					arg_mins,
 					arg_maxs,
@@ -83,8 +83,8 @@ namespace cath {
 
 				/// \brief Find the element-wise mins and maxs tuples of a range of tuples
 				template <typename Rng>
-				auto operator()(Rng &&arg_rng ///< A range of tuples
-				                ) const {
+				inline auto operator()(Rng &&arg_rng ///< A range of tuples
+				                       ) const {
 					using value_t = common::range_value_t<Rng>;
 
 					static_assert( is_tuple< value_t >::value, "tuple_mins_maxs_element requires a range of tuples" );

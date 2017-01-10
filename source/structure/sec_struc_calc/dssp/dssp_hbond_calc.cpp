@@ -75,7 +75,7 @@ bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb(con
 
 	bifur_hbond_list results{ num_pdb_residues };
 
-	const auto lattice = make_sparse_lattice( arg_pdb, CELL_SIZE );
+	const auto lattice = make_sparse_lattice( arg_pdb, CELL_SIZE, MAX_DIST );
 
 	scan_sparse_lattice(
 		lattice,

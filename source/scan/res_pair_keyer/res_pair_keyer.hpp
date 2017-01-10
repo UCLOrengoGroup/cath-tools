@@ -64,6 +64,11 @@ namespace cath {
 			explicit constexpr res_pair_keyer(const KPs &...);
 			// res_pair_keyer(const keyer_part_tuple &);
 
+			template <typename Store, typename Key, typename Data>
+			void store_emplace_value(Store &,
+			                         const Key &,
+			                         Data &&) const;
+
 			template <typename Data>
 			constexpr key_value_tuple_type make_value(Data &&) const;
 
@@ -89,6 +94,21 @@ namespace cath {
 		template <typename... KPs>
 		inline constexpr res_pair_keyer<KPs...>::res_pair_keyer(const KPs &... arg_keyer_parts ///< TODOCUMENT
 		                                                        ) : keyer_parts( arg_keyer_parts... ) {
+		}
+
+		/// \brief TODOCUMENT
+		template <typename... KPs>
+		template <typename Store, typename Key, typename Data>
+		inline void res_pair_keyer<KPs...>::store_emplace_value(Store      &arg_store, ///< The store in which to emplace_back the value components
+		                                                        const Key  &arg_key,   ///< The key under which the value should be recorded
+		                                                        Data      &&arg_data   ///< The data to be passed to the keyer_parts
+		                                                        ) const {
+			detail::store_emplace_value(
+				arg_store,
+				arg_key,
+				keyer_parts,
+				std::forward<Data>( arg_data )
+			);
 		}
 
 		/// \brief TODOCUMENT

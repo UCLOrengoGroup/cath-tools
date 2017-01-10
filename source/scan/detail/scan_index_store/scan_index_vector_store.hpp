@@ -58,6 +58,7 @@ namespace cath {
 				/// \brief TODOCUMENT
 				Cell empty_cell;
 
+				/// \brief TODOCUMENT
 				Cell & find_or_create_cell(const Key &);
 
 			public:
@@ -86,7 +87,7 @@ namespace cath {
 				const auto cell_itr = boost::range::lower_bound(
 					the_store,
 					arg_key,
-					[] (const key_multi_res_pair_list_pair<Key> &x, const Key &y) { return x.first < y; }
+					[] (const std::pair<Key, Cell> &x, const Key &y) {/* TD< decltype( x ) > fred; */return x.first < y; }
 				);
 				if ( cell_itr != common::cend( the_store ) && cell_itr->first == arg_key ) {
 					return cell_itr->second;

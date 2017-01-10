@@ -22,126 +22,23 @@
 #define _CATH_TOOLS_SOURCE_SCAN_SPATIAL_INDEX_SPATIAL_INDEX_H
 
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
-#include "common/debug_numeric_cast.hpp"
+#include "common/constexpr_ignore_unused.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/not_implemented_exception.hpp"
 #include "file/pdb/pdb.hpp"
 #include "scan/detail/scan_index_store/scan_index_lattice_store.hpp"
-#include "scan/detail/scan_type_aliases.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer.hpp"
+#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_from_to_index_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_x_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_y_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_z_keyer_part.hpp"
-#include "structure/geometry/coord.hpp"
+#include "scan/spatial_index/simple_locn_index.hpp"
 #include "structure/protein/residue.hpp"
 
 using namespace cath::common::literals;
 
 namespace cath {
 	namespace scan {
-
-		/// \brief TODOCUMENT
-		struct simple_locn_index final {
-			using view_t = detail::view_base_type;
-
-			/// \brief TODOCUMENT
-			detail::view_base_type view_x;
-
-			/// \brief TODOCUMENT
-			detail::view_base_type view_y;
-
-			/// \brief TODOCUMENT
-			detail::view_base_type view_z;
-
-			/// \brief TODOCUMENT
-			unsigned int index;
-		};
-
-		/// \brief Convenience function to get the x component of the view in the specified simple_locn_index
-		///
-		/// \relates simple_locn_index
-		inline constexpr const detail::view_base_type & get_view_x(const simple_locn_index &arg_locn_index ///< The simple_locn_index to query
-		                                                           ) {
-		        return arg_locn_index.view_x;
-		}
-
-		/// \brief Convenience function to get the y component of the view in the specified simple_locn_index
-		///
-		/// \relates simple_locn_index
-		inline constexpr const detail::view_base_type & get_view_y(const simple_locn_index &arg_locn_index ///< The simple_locn_index to query
-		                                                           ) {
-		        return arg_locn_index.view_y;
-		}
-
-		/// \brief Convenience function to get the z component of the view in the specified simple_locn_index
-		///
-		/// \relates simple_locn_index
-		inline constexpr const detail::view_base_type & get_view_z(const simple_locn_index &arg_locn_index ///< The simple_locn_index to query
-		                                                           ) {
-		        return arg_locn_index.view_z;
-		}
-
-		inline detail::view_base_type get_squared_distance(const simple_locn_index &arg_locn_index_a, ///< The simple_locn_index to query
-		                                                   const simple_locn_index &arg_locn_index_b  ///< The simple_locn_index to query
-		                                                   ) {
-			return (
-				(
-					( get_view_x( arg_locn_index_a ) - get_view_x( arg_locn_index_b ) )
-					*
-					( get_view_x( arg_locn_index_a ) - get_view_x( arg_locn_index_b ) )
-				)
-				+
-				(
-					( get_view_y( arg_locn_index_a ) - get_view_y( arg_locn_index_b ) )
-					*
-					( get_view_y( arg_locn_index_a ) - get_view_y( arg_locn_index_b ) )
-				)
-				+
-				(
-					( get_view_z( arg_locn_index_a ) - get_view_z( arg_locn_index_b ) )
-					*
-					( get_view_z( arg_locn_index_a ) - get_view_z( arg_locn_index_b ) )
-				)
-			);
-		}
-
-		inline bool are_within_distance(const simple_locn_index &arg_locn_index_a, ///< The simple_locn_index to query
-		                                const simple_locn_index &arg_locn_index_b, ///< The simple_locn_index to query
-		                                const float &arg_max_dist,                 ///< TODOCUMENT
-		                                const float &arg_max_squared_dist          ///< TODOCUMENT
-		                                ) {
-			const auto dist_x = get_view_x( arg_locn_index_a ) - get_view_x( arg_locn_index_b );
-			if ( dist_x > arg_max_dist ) {
-				return false;
-			}
-			const auto dist_y = get_view_y( arg_locn_index_a ) - get_view_y( arg_locn_index_b );
-			if ( dist_y > arg_max_dist ) {
-				return false;
-			}
-			const auto dist_z = get_view_z( arg_locn_index_a ) - get_view_z( arg_locn_index_b );
-			if ( dist_z > arg_max_dist ) {
-				return false;
-			}
-			return (
-				( dist_x * dist_x )
-				+
-				( dist_y * dist_y )
-				+
-				( dist_z * dist_z )
-			) < arg_max_squared_dist;
-		}
-
-		/// \brief TODOCUMENT
-		inline simple_locn_index make_simple_locn_index(const geom::coord  &arg_coord, ///< TODOCUMENT
-		                                                const unsigned int &arg_index  ///< TODOCUMENT
-		                                                ) {
-			return {
-				debug_numeric_cast< detail::view_base_type>( arg_coord.get_x() ),
-				debug_numeric_cast< detail::view_base_type>( arg_coord.get_y() ),
-				debug_numeric_cast< detail::view_base_type>( arg_coord.get_z() ),
-				arg_index
-			};
-		}
 
 		/// \brief TODOCUMENT
 		inline simple_locn_index make_simple_locn_index_of_ca(const residue      &arg_res,   ///< TODOCUMENT
@@ -164,33 +61,16 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		struct simple_locn_crit final {
-
-			/// \brief TODOCUMENT
-			detail::view_base_type maximum_squared_distance;
-		};
-
-		inline std::string to_string(const simple_locn_index &arg_simple_locn_index
-		                             ) {
-			return "simple_locn_index[ ("
-				+ ::std::to_string( arg_simple_locn_index.view_x )
-				+ ", "
-				+ ::std::to_string( arg_simple_locn_index.view_y )
-				+ ", "
-				+ ::std::to_string( arg_simple_locn_index.view_z )
-				+ "), "
-				+ ::std::to_string( arg_simple_locn_index.index )
-				+ "]";
-		}
-
-		/// \brief TODOCUMENT
-		inline detail::view_base_type get_maximum_distance(const simple_locn_crit &arg_crit ///< TODOCUMENT
-		                                                   ) {
-			return std::sqrt( arg_crit.maximum_squared_distance );
-		}
-
-		/// \brief TODOCUMENT
 		using locn_index_store = detail::scan_index_lattice_store<std::tuple<short, short, short>, std::vector<simple_locn_index> >;
+
+		// temporarily, from simple_locn_index, need:
+		//    * key: tpl_elmnt_skip_t{}, value: index
+
+		// then, from fuller_locn_index, need:
+		//    * key:  tpl_elmnt_skip_t{}, value: from_index // vec<stores>
+		//    * key:  tpl_elmnt_skip_t{}, value: to_index   // vec<stores>
+		//    * key:  to_index,           value: from_index // store<>
+		//    * key:  from_index,         value: to_index   // store<>
 
 		/// \brief TODOCUMENT
 		using simple_locn_x_keyer_part = detail::axis_keyer_part< detail::res_pair_view_x_keyer_part_spec< simple_locn_index, simple_locn_crit > >;
@@ -211,7 +91,8 @@ namespace cath {
 			const auto the_keyer = make_res_pair_keyer(
 				simple_locn_x_keyer_part{ arg_cell_size },
 				simple_locn_y_keyer_part{ arg_cell_size },
-				simple_locn_z_keyer_part{ arg_cell_size }
+				simple_locn_z_keyer_part{ arg_cell_size },
+				res_pair_from_to_index_keyer_part{}
 			);
 
 			const float max_squared_dist = arg_max_dist * arg_max_dist;
@@ -243,7 +124,8 @@ namespace cath {
 			const auto the_keyer = make_res_pair_keyer(
 				simple_locn_x_keyer_part{ arg_cell_size },
 				simple_locn_y_keyer_part{ arg_cell_size },
-				simple_locn_z_keyer_part{ arg_cell_size }
+				simple_locn_z_keyer_part{ arg_cell_size },
+				res_pair_from_to_index_keyer_part{}
 			);
 
 			const float max_squared_dist = arg_max_dist * arg_max_dist;
@@ -295,6 +177,7 @@ namespace cath {
 		}
 
 		locn_index_store make_sparse_lattice(const protein &,
+		                                     const float &,
 		                                     const float &);
 
 		locn_index_store make_dense_lattice(const protein &,
@@ -303,18 +186,13 @@ namespace cath {
 
 
 		locn_index_store make_sparse_lattice(const file::pdb &,
+		                                     const float &,
 		                                     const float &);
 
 		locn_index_store make_dense_lattice(const file::pdb &,
 		                                    const float &,
 		                                    const float &);
 
-		namespace detail {
-			template <typename... Ts>
-			constexpr bool ignore_unused(const Ts &...) {
-				return true;
-			}
-		}
 
 		/// \brief Key part generator for simple_locn_index that extracts the index
 		class simple_locn_index_keyer_part final {
@@ -363,7 +241,7 @@ namespace cath {
 #ifndef NDEBUG
 					( arg_search_radius == 0 )
 #else
-					detail::ignore_unused( arg_search_radius )
+					common::constexpr_ignore_unused( arg_search_radius )
 #endif
 						? cell_index_list_t{ { arg_value } }
 						: throw std::invalid_argument("simple_locn_index_keyer_part currently requires that the search radius is 0 (ie requires matching indices)");

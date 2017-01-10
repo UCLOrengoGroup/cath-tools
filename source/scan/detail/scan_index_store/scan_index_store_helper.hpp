@@ -22,16 +22,175 @@
 #define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_H
 
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
+#include "exception/invalid_argument_exception.hpp"
 #include "scan/detail/res_pair/multi_struc_res_rep_pair.hpp"
+#include "scan/detail/scan_index_store/scan_index_lattice_store.hpp"
 #include "scan/detail/scan_role.hpp"
 #include "scan/detail/scan_type_aliases.hpp"
 #include "scan/detail/stride/roled_scan_stride.hpp"
 #include "scan/scan_policy.hpp"
 #include "structure/protein/protein.hpp"
 
+using namespace std::literals::string_literals;
+
 namespace cath {
 	namespace scan {
+
+		/// \brief TODOCUMENT
+		enum class sod {
+			SPARSE,
+			DENSE
+		};
+
+		/// \brief TODOCUMENT
+		inline std::string to_string(const sod &arg_sod ///< TODOCUMENT
+		                             ) {
+			switch ( arg_sod ) {
+				case ( sod::SPARSE ) : { return "sparse"s; }
+				case ( sod::DENSE  ) : { return "dense"s;  }
+				default : {
+					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of sod not recognised whilst converting to_string()"));
+					return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
+				}
+			}
+		}
+
 		namespace detail {
+
+			/// \brief TODOCUMENT
+			template <sod Sod,
+			          typename Store>
+			struct empty_store_maker final {
+				template <typename Rng,
+				          typename Keyer,
+				          typename Crit>
+				Store operator()(const Rng   &/*arg_rng*/,   ///< TODOCUMENT
+				                 const Keyer &/*arg_keyer*/, ///< TODOCUMENT
+				                 const Crit  &/*arg_crit*/   ///< TODOCUMENT
+				                 ) {
+					return Store{};
+				}
+			};
+
+			// template <typename T> class TD;
+
+			/// \brief TODOCUMENT
+			template <typename Key,
+			          typename Cell>
+			struct empty_store_maker<sod::SPARSE, scan_index_lattice_store<Key, Cell>> final {
+
+				template <typename Rng,
+				          typename Keyer,
+				          typename Crit>
+				auto operator()(const Rng   &arg_rng,     ///< TODOCUMENT
+				                const Keyer &arg_keyer,   ///< TODOCUMENT
+				                const Crit  &/*arg_crit*/ ///< TODOCUMENT
+				                ) {
+					using value_t = common::range_value_t< Rng >;
+
+					const auto mins_maxs = common::tuple_mins_maxs_element(
+						arg_rng
+							| boost::adaptors::transformed( [&] (const value_t &value) { return arg_keyer.make_key( value ); } )
+					);
+
+					// TD< value_t > value_t_obj;
+					// TD< decltype( mins_maxs.first  ) > first_obj;
+
+					// static_assert( std::is_same< decltype( mins_maxs.first  ), value_t >::value, "" );
+					// static_assert( std::is_same< decltype( mins_maxs.second ), value_t >::value, "" );
+
+					return scan_index_lattice_store<Key, Cell>( mins_maxs.first, mins_maxs.second );
+				}
+			};
+
+			/// \brief TODOCUMENT
+			template <typename Key,
+			          typename Cell>
+			struct empty_store_maker<sod::DENSE, scan_index_lattice_store<Key, Cell>> final {
+
+				template <typename Rng,
+				          typename Keyer,
+				          typename Crit>
+				auto operator()(const Rng   &arg_rng,   ///< TODOCUMENT
+				                const Keyer &arg_keyer, ///< TODOCUMENT
+				                const Crit  &arg_crit   ///< TODOCUMENT
+				                ) {
+					using value_t = common::range_value_t< Rng >;
+
+					const auto mins_maxs = common::mins_maxs_tuple_pair_mins_maxs_element(
+						arg_rng
+							| boost::adaptors::transformed( [&] (const value_t &value) {
+								return std::make_pair(
+									arg_keyer.make_min_close_key( value, arg_crit ),
+									arg_keyer.make_max_close_key( value, arg_crit )
+								);
+							} )
+					);
+
+					// static_assert(std::is_same< decltype( mins_maxs.first  ), value_t >::value, "" );
+					// static_assert(std::is_same< decltype( mins_maxs.second ), value_t >::value, "" );
+
+					return scan_index_lattice_store<Key, Cell>( mins_maxs.first, mins_maxs.second );
+				}
+			};
+
+
+
+			/// \brief TODOCUMENT
+			template <sod Sod,
+			          typename Store>
+			struct store_maker final {};
+
+			/// \brief TODOCUMENT
+			template <typename Store>
+			struct store_maker<sod::SPARSE, Store> final {
+
+				template <typename Rng,
+				          typename Keyer,
+				          typename Crit>
+				/// \brief TODOCUMENT
+				auto operator()(const Rng   &arg_rng,   ///< TODOCUMENT
+				                const Keyer &arg_keyer, ///< TODOCUMENT
+				                const Crit  &arg_crit   ///< TODOCUMENT
+				                ) {
+					Store the_store = empty_store_maker<sod::SPARSE, Store>{}( arg_rng, arg_keyer, arg_crit );
+					for (const auto &data : arg_rng) {
+						arg_keyer.store_emplace_value(
+							the_store,
+							arg_keyer.make_key( data ),
+							data
+						);
+					}
+					return the_store;
+				}
+			};
+
+			/// \brief TODOCUMENT
+			template <typename Store>
+			struct store_maker<sod::DENSE, Store> final {
+
+				/// \brief TODOCUMENT
+				template <typename Rng,
+				          typename Keyer,
+				          typename Crit>
+				auto operator()(const Rng   &arg_rng,   ///< TODOCUMENT
+				                const Keyer &arg_keyer, ///< TODOCUMENT
+				                const Crit  &arg_crit   ///< TODOCUMENT
+				                ) {
+					Store the_store = empty_store_maker<sod::DENSE, Store>{}( arg_rng, arg_keyer, arg_crit );
+					for (const auto &data : arg_rng) {
+						const auto close_keys = arg_keyer.make_close_keys( data, arg_crit );
+						for (const auto &the_key : common::cross( close_keys ) ) {
+							arg_keyer.store_emplace_value(
+								the_store,
+								the_key,
+								data
+							);
+						}
+					}
+					return the_store;
+				}
+			};
 
 			/// \brief TODOCUMENT
 			///
@@ -109,14 +268,70 @@ namespace cath {
 //							                             << " keys close to "
 //							                             << output_key( the_keyer.make_key( the_res_pair ) );
 
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tRange 0 : \"" << boost::algorithm::join ( std::get<0>( close_keys ) | boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ) , "\", \"") << "\"";
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tRange 1 : \"" << boost::algorithm::join ( std::get<1>( close_keys ) | boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ) , "\", \"") << "\"";
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tRange 2 : \"" << boost::algorithm::join ( std::get<2>( close_keys ) | boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ) , "\", \"") << "\"";
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tRange 3 : \"" << boost::algorithm::join ( std::get<3>( close_keys ) | boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ) , "\", \"") << "\"";
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tRange 4 : \"" << boost::algorithm::join ( std::get<4>( close_keys ) | common::lexical_casted<std::string>() , "\", \"") << "\"";
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tRange 5 : \"" << boost::algorithm::join ( std::get<5>( close_keys ) | common::lexical_casted<std::string>() , "\", \"") << "\"";
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tRange 6 : \"" << boost::algorithm::join ( std::get<6>( close_keys ) | common::lexical_casted<std::string>() , "\", \"") << "\"";
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tRange 7 : \"" << boost::algorithm::join ( std::get<7>( close_keys ) | common::lexical_casted<std::string>() , "\", \"") << "\"";
+							// BOOST_LOG_TRIVIAL( warning )
+							// 	<< "\t\tRange 0 : \""
+							// 	<< boost::algorithm::join (
+							// 		std::get<0>( close_keys )
+							// 			| boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ),
+							// 		"\", \""
+							// 	)
+							// 	<< "\"";
+							// BOOST_LOG_TRIVIAL( warning )
+							// 	<< "\t\tRange 1 : \""
+							// 	<< boost::algorithm::join (
+							// 		std::get<1>( close_keys )
+							// 			| boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ),
+							// 		"\", \""
+							// 	)
+							// 	<< "\"";
+							// BOOST_LOG_TRIVIAL( warning )
+							// 	<< "\t\tRange 2 : \""
+							// 	<< boost::algorithm::join (
+							// 		std::get<2>( close_keys )
+							// 			| boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ),
+							// 		"\", \""
+							// 	)
+							// 	<< "\"";
+							// BOOST_LOG_TRIVIAL( warning )
+							// 	<< "\t\tRange 3 : \""
+							// 	<< boost::algorithm::join (
+							// 		std::get<3>( close_keys )
+							// 			| boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ),
+							// 		"\", \""
+							// 	)
+							// 	<< "\"";
+							// BOOST_LOG_TRIVIAL( warning )
+							// 	<< "\t\tRange 4 : \""
+							// 	<< boost::algorithm::join (
+							// 		std::get<4>( close_keys )
+							// 			| common::lexical_casted<std::string>(),
+							// 		"\", \""
+							// 	)
+							// 	<< "\"";
+							// BOOST_LOG_TRIVIAL( warning )
+							// 	<< "\t\tRange 5 : \""
+							// 	<< boost::algorithm::join (
+							// 		std::get<5>( close_keys )
+							// 			| common::lexical_casted<std::string>(),
+							// 		"\", \""
+							// 	)
+							// 	<< "\"";
+							// BOOST_LOG_TRIVIAL( warning )
+							// 	<< "\t\tRange 6 : \""
+							// 	<< boost::algorithm::join (
+							// 		std::get<6>( close_keys )
+							// 			| common::lexical_casted<std::string>(),
+							// 		"\", \""
+							// 	)
+							// 	<< "\"";
+							// BOOST_LOG_TRIVIAL( warning )
+							// 	<< "\t\tRange 7 : \""
+							// 	<< boost::algorithm::join (
+							// 		std::get<7>( close_keys )
+							// 			| common::lexical_casted<std::string>(),
+							// 		"\", \""
+							// 	)
+							// 	<< "\"";
 
 //							KEYER_PARTS: tuple<
 //								res_pair_phi_psi_angle_keyer_part<res_pair_from_phi_keyer_part_spec>,

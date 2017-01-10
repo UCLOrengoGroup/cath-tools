@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_HELPER_H
 
 #include "common/cpp17/apply.hpp"
+#include "common/tuple/make_tuple_with_skips.hpp"
 
 namespace cath { namespace scan { namespace detail { class multi_struc_res_rep_pair; } } }
 namespace cath { namespace scan { class quad_criteria; } }
@@ -47,15 +48,15 @@ namespace cath {
 
 			/// \brief Convenience type alias for metafunction to calculate the key tuple type from key_part types
 			template <typename... KPs>
-			using key_value_tuple_t = std::tuple<keyer_part_value_type_t<KPs>...>;
+			using key_value_tuple_t = common::tuple_with_skips_t<keyer_part_value_type_t<KPs>...>;
 
 			/// \brief Convenience type alias for metafunction to calculate the key tuple type from key_part types
 			template <typename... KPs>
-			using key_index_tuple_t = std::tuple<keyer_part_cell_index_type_t<KPs>...>;
+			using key_index_tuple_t = common::tuple_with_skips_t<keyer_part_cell_index_type_t<KPs>...>;
 
 			/// \brief Convenience type alias for metafunction to calculate the key tuple type from key_part types
 			template <typename... KPs>
-			using key_ranges_tuple_t = std::tuple<keyer_part_cell_index_list_type_t<KPs>...>;
+			using key_ranges_tuple_t = common::tuple_with_skips_t<keyer_part_cell_index_list_type_t<KPs>...>;
 
 
 
@@ -80,7 +81,7 @@ namespace cath {
 				template <typename... KPs>
 				constexpr auto operator()(const KPs &...arg_keyer_parts ///< The keyer_parts to be used to get the value parts from the data
 				                          ) {
-					return std::make_tuple( arg_keyer_parts.get_value( data )... );
+					return common::make_tuple_with_skips( arg_keyer_parts.get_value( data )... );
 				}
 			};
 
@@ -120,7 +121,7 @@ namespace cath {
 				template <typename... KPs>
 				constexpr auto operator()(const KPs &...arg_keyer_parts ///< The keyer_parts to be used to get the key parts from the data
 				                          ) {
-					return std::make_tuple(
+					return common::make_tuple_with_skips(
 						arg_keyer_parts.key_part(
 							arg_keyer_parts.get_value( data )
 						)...
@@ -173,7 +174,7 @@ namespace cath {
 				template <typename... KPs>
 				constexpr auto operator()(const KPs &...arg_keyer_parts ///< The keyer_parts to be used to get the key parts from the data
 				                          ) {
-					return std::make_tuple(
+					return common::make_tuple_with_skips(
 						arg_keyer_parts.min_close_key_part(
 							arg_keyer_parts.get_value        ( data ),
 							arg_keyer_parts.get_search_radius( crit )
@@ -226,7 +227,7 @@ namespace cath {
 				template <typename... KPs>
 				constexpr auto operator()(const KPs &...arg_keyer_parts ///< The keyer_parts to be used to get the key parts from the data
 				                          ) {
-					return std::make_tuple(
+					return common::make_tuple_with_skips(
 						arg_keyer_parts.max_close_key_part(
 							arg_keyer_parts.get_value        ( data ),
 							arg_keyer_parts.get_search_radius( crit )
@@ -266,6 +267,29 @@ namespace cath {
 				return common::apply( make_keyer_parts_value_maker( arg_data ), arg_tuple );
 			}
 
+			/// \brief Template function to emplace_back in a store the value components from a tuple of keyer_parts and an instance of their common data type
+			///
+			/// Unlike make_value() and make_key(), this just uses a lambda because the return type's won't permit constexpr anyway.
+			///
+			/// This mustn't attempt to store arg_data by rvalue ref and forward because it's being
+			/// forwarded to multiple calls for the keyer_parts in the tuple
+			template <typename Store, typename Key, typename... KPs, typename Data>
+			inline void store_emplace_value(Store                     &arg_store, ///< The store in which to emplace_back the value components
+			                                const Key                 &arg_key,   ///< The key under which the value should be recorded
+			                                const std::tuple<KPs...>  &arg_tuple, ///< The tuple of keyer_parts to apply to be used to make the close_keys
+			                                const Data                &arg_data   ///< The data to be passed to the keyer_parts
+			                                ) {
+				common::apply(
+					[&] (const auto &...keyer_parts) {
+						arg_store.emplace_back_entry_to_cell(
+							arg_key,
+							keyer_parts.get_value( arg_data )...
+						);
+					},
+					arg_tuple
+				);
+			}
+
 			/// \brief Template function to make a key tuple from a tuple of keyer_parts and an instance of their common data type
 			///
 			/// \todo Come C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
@@ -292,7 +316,7 @@ namespace cath {
 			                               ) {
 				return common::apply(
 					[&] (const auto &...keyer_parts) {
-						return std::make_tuple( keyer_parts.close_key_parts(
+						return common::make_tuple_with_skips( keyer_parts.close_key_parts(
 							keyer_parts.get_value        ( arg_data ),
 							keyer_parts.get_search_radius( arg_crit )
 						)... );

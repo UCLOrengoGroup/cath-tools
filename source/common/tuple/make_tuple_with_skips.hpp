@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_COMMON_TUPLE_MAKE_TUPLE_WITH_SKIPS_H
 #define _CATH_TOOLS_SOURCE_COMMON_TUPLE_MAKE_TUPLE_WITH_SKIPS_H
 
+#include "common/metaprogramming/append_template_params_into_first_wrapper.hpp"
+
 #include <tuple>
 #include <type_traits>
 
@@ -36,6 +38,30 @@ namespace cath {
 		};
 
 		namespace detail {
+
+			/// \brief Primary template for recursive implementation of tuple_with_skips_t
+			template <typename... Ts>
+			struct tuple_with_skips_type final {};
+
+			/// \brief No-parameter specialisation of recursive implementation of tuple_with_skips_t
+			template <>
+			struct tuple_with_skips_type<> final {
+				using type = std::tuple<>;
+			};
+
+			/// \brief One-or-more-parameter specialisation of recursive implementation of tuple_with_skips_t
+			template <typename T, typename... Ts>
+			struct tuple_with_skips_type<T, Ts...> final {
+				using type = std::conditional_t<
+					std::is_same< std::decay_t<T>, tpl_elmnt_skip_t>::value,
+					typename tuple_with_skips_type< Ts... >::type,
+					append_template_params_into_first_wrapper_t<
+						std::tuple< T >,
+						typename tuple_with_skips_type< Ts... >::type
+					>
+				>;
+			};
+
 
 			/// \brief End-of-recursion implementation function for make_tuple_with_skips()
 			template <typename... Ts>
@@ -95,10 +121,14 @@ namespace cath {
 
 		} // namespace detail
 
+		/// \brief Type alias for the std::tuple of the template parameters excluding any that decay to tpl_elmnt_skip_t
+		template <typename... Ts>
+		using tuple_with_skips_t = typename detail::tuple_with_skips_type< Ts... >::type;
+
 		/// \brief Do the same as std::make_tuple() but skip any elements of type tpl_elmnt_skip_t
 		template <typename... Vs>
-		constexpr auto make_tuple_with_skips(Vs &&...arg_vs ///< The arguments from which to make the tuple
-		                                     ) {
+		constexpr tuple_with_skips_t<Vs...> make_tuple_with_skips(Vs &&...arg_vs ///< The arguments from which to make the tuple
+		                                                          ) {
 			return detail::make_tuple_with_skips_recursive(
 				std::make_tuple(),
 				std::forward<Vs>( arg_vs )...

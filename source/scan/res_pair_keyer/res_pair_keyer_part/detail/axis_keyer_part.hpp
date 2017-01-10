@@ -83,7 +83,8 @@ namespace cath {
 				/// \brief Generate the key part for the specified value
 				constexpr cell_index_t key_part(const value_t &arg_value ///< The value for which the key_part should be extracted
 				                                ) const {
-					return static_cast<cell_index_t>( common::constexpr_floor( arg_value / cell_width ) );
+					// return static_cast<cell_index_t>( common::constexpr_floor( arg_value / cell_width ) );
+					return static_cast<cell_index_t>( floor( arg_value / cell_width ) );
 				}
 
 				/// \brief Generate a list of all key parts for all conceivable res_pairs that would match the specified value

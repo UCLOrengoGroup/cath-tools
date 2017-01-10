@@ -65,7 +65,7 @@ namespace cath {
 				std::unordered_map<Key, Cell, key_hash> the_store;
 
 				/// \brief TODOCUMENT
-				const Cell empty_cell{};
+				Cell empty_cell{};
 
 				long long unsigned int num_adds = 0;
 
@@ -73,8 +73,9 @@ namespace cath {
 				scan_index_hash_store() {
 //					const auto empty_key = common::apply( detail::empty_key_maker(), Key() );
 //					the_store.set_empty_key( empty_key );
-					the_store.rehash( 131072 );
-					std::cerr << "scan_index_hash_store's ctor currently uses a hard-coded rehash to 131072 buckets!\n";
+
+					// the_store.rehash( 131072 );
+					// std::cerr << "scan_index_hash_store's ctor currently uses a hard-coded rehash to 131072 buckets!\n";
 				}
 
 				template <typename T>

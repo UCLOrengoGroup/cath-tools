@@ -20,51 +20,21 @@
 
 #include "spatial_index.hpp"
 
-// #include <boost/algorithm/string/join.hpp>
-// #include <boost/range/adaptor/transformed.hpp>
-// #include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-// #include "common/boost_addenda/range/front.hpp"
-// #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
-// #include "common/chrono/duration_to_seconds_string.hpp"
-// #include "common/size_t_literal.hpp"
-// #include "common/tuple/tuple_mins_maxs_element.hpp"
-// #include "scan/detail/scan_index_store/scan_index_lattice_store.hpp"
-// #include "scan/detail/scan_type_aliases.hpp"
-// #include "scan/res_pair_keyer/res_pair_keyer.hpp"
-// #include "scan/res_pair_keyer/res_pair_keyer_part/detail/axis_keyer_part.hpp"
-// #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_x_keyer_part.hpp"
-// #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_y_keyer_part.hpp"
-// #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_z_keyer_part.hpp"
-// #include "ssap/context_res.hpp"
-// #include "structure/geometry/coord.hpp"
-// #include "structure/protein/protein.hpp"
-// #include "structure/protein/protein_io.hpp"
-// #include "structure/protein/sec_struc.hpp"
-// #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/global_test_constants.hpp"
 
 namespace cath { namespace test { } }
 
-// #include <chrono>
-// #include <utility>
-
-// using namespace cath;
-// using namespace cath::common;
-// using namespace cath::geom;
-// using namespace cath::scan::detail;
 using namespace cath::scan;
 using namespace cath::test;
 
-// using boost::adaptors::transformed;
-// using boost::algorithm::join;
-// using boost::irange;
-// using std::chrono::high_resolution_clock;
-// using std::ostream;
-// using std::ostringstream;
-// using std::reference_wrapper;
 using std::make_tuple;
+using std::tuple;
+
+using short_short_short_tuple = tuple<short int, short int, short int>;
+
+BOOST_TEST_DONT_PRINT_LOG_VALUE( short_short_short_tuple )
 
 namespace cath {
 	namespace test {
@@ -73,17 +43,7 @@ namespace cath {
 		struct spatial_index_test_suite_fixture : protected global_test_constants {
 		protected:
 			~spatial_index_test_suite_fixture() noexcept = default;
-
-			// ostringstream warn_ss;
-
-			// const protein protein_a = read_protein_from_pdb( boost::filesystem::path{ "/cath-tools/dssp_stuff/4uwe" }, ""s, reference_wrapper<ostream>( warn_ss ) );
-
-			// static constexpr float CELL_SIZE = 18.0;
-			// static constexpr float MAX_DIST  =  9.0;
 		};
-
-		// constexpr float                    spatial_index_test_suite_fixture::CELL_SIZE;
-		// constexpr float                    spatial_index_test_suite_fixture::MAX_DIST;
 
 	} // namespace test
 } // namespace cath
@@ -93,21 +53,25 @@ BOOST_FIXTURE_TEST_SUITE(spatial_index_test_suite, spatial_index_test_suite_fixt
 
 BOOST_AUTO_TEST_CASE(basic) {
 	constexpr auto index_x_y_z_keyer = make_res_pair_keyer(
-		simple_locn_index_keyer_part{},
 		simple_locn_x_keyer_part{ 10.0 },
 		simple_locn_y_keyer_part{ 10.0 },
-		simple_locn_z_keyer_part{ 10.0 }
+		simple_locn_z_keyer_part{ 10.0 },
+		res_pair_from_to_index_keyer_part{}
 	);
 
 	static_assert(
-		index_x_y_z_keyer.make_value( simple_locn_index{ 12.0, 34.0, -22.0, 4u } ) == make_tuple( 4u, 12.0, 34.0, -22.0 ),
+		index_x_y_z_keyer.make_value( simple_locn_index{ 12.0, 34.0, -22.0, 4u } ) == make_tuple( 12.0, 34.0, -22.0, 4u ),
 		""
 	);
 
-	static_assert(
-		index_x_y_z_keyer.make_key  ( simple_locn_index{ 12.0, 34.0, -22.0, 4u } ) == make_tuple( 4u,  1,    3,    -3   ),
-		""
-	);
+	// Making this test a static_assert means that a floor() has to be switched for a constexpr_floor() which
+	// appears to be quite a bit slower
+	// static_assert(
+	// 	index_x_y_z_keyer.make_key  ( simple_locn_index{ 12.0, 34.0, -22.0, 4u } ) == make_tuple(  1,    3,    -3       ),
+	// 	""
+	// );
+
+	BOOST_CHECK_EQUAL( index_x_y_z_keyer.make_key  ( simple_locn_index{ 12.0, 34.0, -22.0, 4u } ), short_short_short_tuple(  1,    3,    -3       ) );
 
 	// for (const auto &spatial_try_val : { spatial_try::SPARSE_FROM_PROT,
 	//                                      // spatial_try::SPARSE_FROM_SCAN,
