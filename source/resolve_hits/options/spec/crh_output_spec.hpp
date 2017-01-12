@@ -30,6 +30,24 @@
 namespace cath {
 	namespace rslv {
 
+		/// \brief Represent the different cath-resolve-hits output formats
+		enum class crh_out_format {
+			STANDARD,
+			SUMMARY,
+			HTML
+		};
+
+		/// \brief Type alias for an optional crh_out_format
+		using crh_out_format_vec = std::vector<crh_out_format>;
+
+		/// \brief Type alias for an optional crh_out_format
+		using crh_out_format_opt = boost::optional<crh_out_format>;
+
+		/// \brief Type alias for a vector of crh_out_format_opt
+		using crh_out_format_opt_vec = std::vector<crh_out_format_opt>;
+
+		std::string to_string(const crh_out_format &);
+
 		/// \brief Specify the output for cath-resolve-hits
 		class crh_output_spec final {
 		private:
@@ -38,6 +56,9 @@ namespace cath {
 
 			/// \brief Whether to output the hits starts/stops *after* trimming
 			hit_boundary_output boundary_output           = DEFAULT_BOUNDARY_OUTPUT;
+
+			/// \brief Whether to output a summary of the input data
+			bool                summarise                 = DEFAULT_SUMMARISE;
 
 			/// \brief Whether to output HTML describing the hits and the results
 			bool                generate_html_output      = DEFAULT_GENERATE_HTML_OUTPUT;
@@ -55,6 +76,9 @@ namespace cath {
 			/// \brief The default value for whether to output the hits starts/stops *after* trimming
 			static constexpr hit_boundary_output DEFAULT_BOUNDARY_OUTPUT           = hit_boundary_output::ORIG;
 
+			/// \brief The default value for whether to output a summary of the input data
+			static constexpr bool                DEFAULT_SUMMARISE                 = false;
+
 			/// \brief The default value for whether to output HTML describing the hits and the results
 			static constexpr bool                DEFAULT_GENERATE_HTML_OUTPUT      = false;
 
@@ -66,6 +90,7 @@ namespace cath {
 
 			const path_opt & get_output_file() const;
 			const hit_boundary_output & get_boundary_output() const;
+			const bool & get_summarise() const;
 			const bool & get_generate_html_output() const;
 			const bool & get_restrict_html_within_body() const;
 			const path_opt & get_export_css_file() const;
@@ -73,11 +98,14 @@ namespace cath {
 
 			crh_output_spec & set_output_file(const boost::filesystem::path &);
 			crh_output_spec & set_boundary_output(const hit_boundary_output &);
+			crh_output_spec & set_summarise(const bool &);
 			crh_output_spec & set_generate_html_output(const bool &);
 			crh_output_spec & set_restrict_html_within_body(const bool &);
 			crh_output_spec & set_export_css_file(const path_opt &);
 			crh_output_spec & set_output_hmmsearch_aln(const bool &);
 		};
+
+		crh_out_format get_out_format(const crh_output_spec &);
 
 		str_opt get_invalid_description(const crh_output_spec &);
 

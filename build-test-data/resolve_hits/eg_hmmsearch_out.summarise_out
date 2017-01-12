@@ -1,0 +1,12 @@
+Summary of input data
+---------------------
+ * Number of queries :      6 (excludes any queries with no hits)
+ * Number of hits    :     58 (ie an average of 9.66667 per query)
+ * Minimum max-stop  :    185
+ * Median  max-stop  :    600.5
+ * Maximum max-stop  :    933
+ * Example hit       :
+    * Query ID : 443cb81e8e280e529de69ef113974208
+    * Match ID : 4b8jA00_round_3
+    * Score    : 22.1
+    * Segments : 138-168,226-325,383-463

@@ -20,10 +20,13 @@
 
 #include "hits_processor.hpp"
 
+#include "exception/invalid_argument_exception.hpp"
 #include "resolve_hits/options/spec/crh_output_spec.hpp"
+#include "resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.hpp"
 
+using namespace cath::common;
 using namespace cath::rslv::detail;
 
 using std::make_unique;
@@ -36,20 +39,33 @@ unique_ptr<hits_processor> cath::rslv::detail::make_hits_processor(ostream      
                                                                    const crh_score_spec   &arg_score_spec,  ///< The crh_score_spec defining the type of hits_processor to make
                                                                    const crh_segment_spec &arg_segment_spec ///< The crh_segment_spec defining the type of hits_processor to make
                                                                    ) {
-	if ( arg_output_spec.get_generate_html_output() || arg_output_spec.get_restrict_html_within_body() ) {
-		return make_unique<write_html_hits_processor>(
-			arg_ostream,
-			arg_score_spec,
-			arg_segment_spec,
-			arg_output_spec.get_restrict_html_within_body()
-		);
-	}
-	else {
-		return make_unique<write_results_hits_processor>(
-			arg_ostream,
-			arg_score_spec,
-			arg_segment_spec,
-			arg_output_spec.get_boundary_output()
-		);
+	switch ( get_out_format( arg_output_spec ) ) {
+		case ( crh_out_format::HTML ) : {
+			return make_unique<write_html_hits_processor>(
+				arg_ostream,
+				arg_score_spec,
+				arg_segment_spec,
+				arg_output_spec.get_restrict_html_within_body()
+			);
+		}
+		case ( crh_out_format::SUMMARY ) : {
+			return make_unique<summarise_hits_processor>(
+				arg_ostream,
+				arg_score_spec,
+				arg_segment_spec
+			);
+		}
+		case ( crh_out_format::STANDARD ) : {
+			return make_unique<write_results_hits_processor>(
+				arg_ostream,
+				arg_score_spec,
+				arg_segment_spec,
+				arg_output_spec.get_boundary_output()
+			);
+		}
+		default : {
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of crh_out_format not recognised whilst converting to_string()"));
+			return {}; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
+		}
 	}
 }

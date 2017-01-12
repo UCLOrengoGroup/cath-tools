@@ -42,6 +42,9 @@ const string crh_output_options_block::PO_OUTPUT_FILE              { "output-fil
 /// \brief The option name for whether to output the hits starts/stops *after* trimming
 const string crh_output_options_block::PO_OUTPUT_TRIMMED_HITS      { "output-trimmed-hits"       };
 
+/// \brief The option name for whether to output a summary of the input data
+const string crh_output_options_block::PO_SUMMARISE                { "summarise"                 };
+
 /// \brief The option name for whether to output HTML describing the hits and the results
 const string crh_output_options_block::PO_GENERATE_HTML_OUTPUT     { "html-output"               };
 
@@ -71,8 +74,10 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 
 	const auto output_file_notifier                   = [&] (const path &x) { the_spec.set_output_file              (           x ); };
 	const auto output_trimmed_hits_notifier           = [&] (const bool &x) {          set_output_trimmed_hits      ( the_spec, x ); };
+	const auto summarise_notifier                     = [&] (const bool &x) { the_spec.set_summarise                (           x ); };
 	const auto generate_html_output_notifier          = [&] (const bool &x) { the_spec.set_generate_html_output     (           x ); };
-	const auto set_restrict_html_within_body_notifier = [&] (const bool &x) { the_spec.set_restrict_html_within_body(           x ); };
+	const auto set_restrict_html_within_body_notifier = [&] (const bool &x) { the_spec.set_restrict_html_within_body(           x );
+		                                                           if ( x ) { the_spec.set_generate_html_output     (        true ); } };
 	const auto export_css_file_notifier               = [&] (const path &x) { the_spec.set_export_css_file          (           x ); };
 
 	arg_desc.add_options()
@@ -91,6 +96,13 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 					means_output_trimmed_hits( crh_output_spec::DEFAULT_BOUNDARY_OUTPUT )
 				),
 			"When writing out the final hits, output the hits' starts/stop as they are *after trimming*"
+		)
+		(
+			( PO_SUMMARISE ).c_str(),
+			bool_switch()
+				->notifier     ( summarise_notifier                                 )
+				->default_value( crh_output_spec::DEFAULT_SUMMARISE                 ),
+			"Output a brief text summary of the input data (rather than processing it)"
 		)
 		(
 			( PO_GENERATE_HTML_OUTPUT ).c_str(),

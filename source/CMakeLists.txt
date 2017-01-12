@@ -656,6 +656,7 @@ set(
 set(
 	NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR
 		resolve_hits/read_and_process_hits/hits_processor/hits_processor.cpp
+		resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.cpp
 		resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.cpp
 		resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.cpp
 )
