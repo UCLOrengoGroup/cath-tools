@@ -89,7 +89,7 @@ Miscellaneous:
 
 Input:
   --input-format <format> (=raw_with_scores)     Parse the input data from <format>, one of available formats:
-                                                    hmmer_domtmblout - HMMER domtblout format (must assume all hits are continuous)
+                                                    hmmer_domtblout  - HMMER domtblout format (must assume all hits are continuous)
                                                     hmmsearch_out    - HMMer hmmsearch output format (can be used to deduce discontinuous hits)
                                                     raw_with_scores  - "raw" format with scores
                                                     raw_with_evalues - "raw" format with evalues
@@ -118,16 +118,23 @@ Hit filtering:
   --worst-permissible-score <score>              Ignore any hits with a score worse than <score>
   --filter-query-id <id>                         Ignore all input data except that for query protein(s) <id>
                                                  (may be specified multiple times for multiple query proteins)
+  --limit-queries [=<num>(=1)]                   Only process the first <num> query protein(s) encountered in the input data
 
 Output:
   --output-file <file>                           Write output to file <file> (or, if unspecified, to stdout)
   --output-trimmed-hits                          When writing out the final hits, output the hits' starts/stop as they are *after trimming*
+  --summarise                                    Output a brief text summary of the input data (rather than processing it)
   --html-output                                  Output the results as HTML
+  --restrict-html-within-body                    Restrict HTML output to the contents of the body tag (implies --html-output).
+                                                 The contents should be included inside a body tag of class crh-body
+  --export-css-file <file>                       Export the CSS used in the HTML output to <file>
 
 Detailed help:
   --cath-rules-help                              Show help on the rules activated by the --apply-cath-rules option
   --raw-format-help                              Show help about the raw input formats (raw_with_scores and raw_with_evalues)
 
+The standard output is one line per selected hit. Each line contains the following space-separated fields: `query_protein_id`, `match_id`, `score`, `starts_stops` `resolved_starts_stops` (where `resolved_starts_stops` is like `starts_stops` but may include adjustments made to resolve overlaps between hits.
+)
 Please tell us your cath-tools bugs/suggestions : https://github.com/UCLOrengoGroup/cath-tools/issues/new
 ~~~~~
 
