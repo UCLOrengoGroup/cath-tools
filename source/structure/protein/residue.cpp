@@ -536,7 +536,7 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 				<< "\" parsed from a DSSP but this is fine because it's a HETATM amino acid";
 		}
 		else if ( dssp_is_unk && ( pdb_is_pyl || pdb_is_sec || pdb_is_asx || pdb_is_glx ) ) {
-			BOOST_LOG_TRIVIAL( warning ) << "The amino acid \""
+			BOOST_LOG_TRIVIAL( info ) << "The amino acid \""
 				<< pdb_amino_acid.get_code()
 				<< "\" parsed from a PDB for residue \""
 				<< to_string( pdb_residue_id )
