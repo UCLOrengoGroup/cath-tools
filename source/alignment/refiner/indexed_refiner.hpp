@@ -47,6 +47,11 @@ namespace cath {
 			TO
 		};
 
+		struct indexed_refiner_constants final {
+			static constexpr float MAX_DIST    = 7.0;
+			static constexpr float MAX_SQ_DIST = MAX_DIST * MAX_DIST;
+		};
+
 		// namespace detail {
 		// 	template <typename Idx,
 		// 	          typename Keyer>
@@ -57,7 +62,7 @@ namespace cath {
 		// 	                  const Keyer     &arg_keyer            ///< TODOCUMENT
 		// 	                  ) {
 		// 		constexpr float MAX_DIST = 7.0; // ??????????????????????
-		// 		constexpr scan::simple_locn_crit the_crit{ MAX_DIST * MAX_DIST };
+		// 		constexpr scan::simple_locn_crit the_crit{ indexed_refiner_constants::MAX_SQ_DIST };
 
 		// 		const auto the_range = boost::irange( 0_z, arg_protein.get_length() )
 		// 			| transformed( [&] (const size_t &x) {
@@ -106,6 +111,9 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
+		///
+		/// Note that the range this returns uses references to all of the arguments so it
+		/// mustn't be used beyond the end of any of their lifetimes.
 		inline auto make_range_of_index(const std::vector<geom::rotation> &arg_rotns,      ///< TODOCUMENT
 		                                const std::vector<geom::coord>    &arg_coords,     ///< TODOCUMENT
 		                                const fot                         &arg_from_or_to, ///< TODOCUMENT
@@ -157,20 +165,6 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline auto make_range_of_index(const protein &arg_protein,    ///< TODOCUMENT
-		                                const fot     &arg_from_or_to, ///< TODOCUMENT
-		                                const size_t  &arg_index       ///< TODOCUMENT
-		                                ) {
-			const auto rotns_and_coords = make_rotns_and_coords( arg_protein );
-			return make_range_of_index(
-				rotns_and_coords.first,
-				rotns_and_coords.second,
-				arg_from_or_to,
-				arg_index
-			);
-		}
-
-		/// \brief TODOCUMENT
 		inline auto make_range_of_all(const protein &arg_protein,   ///< TODOCUMENT
 		                              const fot     &arg_from_or_to ///< TODOCUMENT
 		                              ) {
@@ -180,6 +174,52 @@ namespace cath {
 				rotns_and_coords.second,
 				arg_from_or_to
 			);
+		}
+
+		/// \brief TODOCUMENT
+		template <scan::sod Sod,
+		          typename T,
+		          typename Keyer>
+		std::vector<T> prepare_vec_based_simple_locn_index_store(const protein &arg_protein,    ///< TODOCUMENT
+		                                                         const fot     &arg_from_or_to, ///< TODOCUMENT
+		                                                         const Keyer   &arg_keyer       ///< TODOCUMENT
+		                                                         ) {
+			const auto    rotns_and_coords = make_rotns_and_coords( arg_protein );
+			const size_t &length           = arg_protein.get_length();
+
+			std::vector<T> result;
+			result.reserve( length );
+
+			std::vector<scan::simple_locn_index> lists;
+			lists.reserve( length );
+
+			for (const size_t &outer_index : boost::irange( 0_z, length ) ) {
+				lists.clear();
+				for (const size_t &inner_index : boost::irange( 0u, debug_numeric_cast<unsigned int>( length ) ) ) {
+					const auto the_view = view_vector_of_rotns_coords_and_indices(
+						rotns_and_coords.first,
+						rotns_and_coords.second,
+						( ( arg_from_or_to == fot::FROM ) ? outer_index : inner_index ),
+						( ( arg_from_or_to == fot::FROM ) ? inner_index : outer_index )
+					);
+					lists.emplace_back(
+						debug_numeric_cast< scan::detail::view_base_type>( the_view.get_x() ),
+						debug_numeric_cast< scan::detail::view_base_type>( the_view.get_y() ),
+						debug_numeric_cast< scan::detail::view_base_type>( the_view.get_z() ),
+						inner_index
+					);
+				}
+
+				result.push_back(
+					scan::detail::store_maker<Sod, T>{}(
+						lists,
+						arg_keyer,
+						scan::simple_locn_crit{ indexed_refiner_constants::MAX_SQ_DIST }
+					)
+				);
+			}
+
+			return result;
 		}
 
 		// Expect Cell to be something like std::vector<scan::simple_locn_index> or a small-size-optimized version of that
@@ -199,9 +239,6 @@ namespace cath {
 			store_type the_store;
 
 			/// \brief TODOCUMENT
-			static constexpr scan::detail::view_base_type MAX_DIST = 7.0;
-
-			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			vector_refine_index(const std::integral_constant<scan::sod, Sod> &,               ///< TODOCUMENT
 			                    const protein                                &arg_protein,    ///< TODOCUMENT
@@ -218,7 +255,7 @@ namespace cath {
 			                        the_store{ scan::detail::store_maker<Sod, store_type>{}(
 			                        	make_range_of_all( arg_protein, arg_from_or_to ),
 			                        	the_keyer,
-			                        	scan::simple_locn_crit{ MAX_DIST * MAX_DIST }
+			                        	scan::simple_locn_crit{ indexed_refiner_constants::MAX_SQ_DIST }
 			                        ) } {
 			}
 
@@ -245,9 +282,6 @@ namespace cath {
 			std::vector<store_type> the_store;
 
 			/// \brief TODOCUMENT
-			static constexpr scan::detail::view_base_type MAX_DIST = 7.0;
-
-			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			vec_of_vectors_refine_index(const std::integral_constant<scan::sod, Sod> &,               ///< TODOCUMENT
 			                            const protein                                &arg_protein,    ///< TODOCUMENT
@@ -261,20 +295,13 @@ namespace cath {
 			                                		scan::res_pair_from_to_index_keyer_part{}
 			                                	)
 			                                },
-			                                the_store{ common::transform_build<std::vector<store_type>>(
-			                                	boost::irange( 0_z, arg_protein.get_length() ),
-			                                	[&] (const size_t &x) {
-			                                		return scan::detail::store_maker<Sod, store_type>{}(
-			                                			make_range_of_index(
-			                                				arg_protein,
-			                                				arg_from_or_to,
-			                                				x
-			                                			),
-			                                			the_keyer,
-			                                			scan::simple_locn_crit{ MAX_DIST * MAX_DIST }
-			                                		);
-			                                	}
-			                                ) } {
+			                                the_store{
+			                                	prepare_vec_based_simple_locn_index_store<Sod, store_type>(
+			                                		arg_protein,
+			                                		arg_from_or_to,
+			                                		the_keyer
+			                                	)
+			                                } {
 			}
 
 			/// \brief TODOCUMENT
@@ -309,9 +336,6 @@ namespace cath {
 			store_type the_store;
 
 			/// \brief TODOCUMENT
-			static constexpr scan::detail::view_base_type MAX_DIST = 7.0;
-
-			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			hash_refine_index(const std::integral_constant<scan::sod, Sod> &,               ///< TODOCUMENT
 			                  const protein                                &arg_protein,    ///< TODOCUMENT
@@ -328,7 +352,7 @@ namespace cath {
 			                      the_store{ scan::detail::store_maker<Sod, store_type>{}(
 			                      	make_range_of_all( arg_protein, arg_from_or_to ),
 			                      	the_keyer,
-			                      	scan::simple_locn_crit{ MAX_DIST * MAX_DIST }
+			                      	scan::simple_locn_crit{ indexed_refiner_constants::MAX_SQ_DIST }
 			                      ) } {
 			}
 
@@ -357,9 +381,6 @@ namespace cath {
 			std::vector< store_type > the_store;
 
 			/// \brief TODOCUMENT
-			static constexpr scan::detail::view_base_type MAX_DIST = 7.0;
-
-			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			vec_of_hashes_refine_index(const std::integral_constant<scan::sod, Sod> &,               ///< TODOCUMENT
 			                           const protein                                &arg_protein,    ///< TODOCUMENT
@@ -373,20 +394,13 @@ namespace cath {
 			                               		scan::res_pair_from_to_index_keyer_part{}
 			                               	)
 			                               },
-			                               the_store{ common::transform_build<std::vector<store_type>>(
-			                               	boost::irange( 0_z, arg_protein.get_length() ),
-			                               	[&] (const size_t &x) {
-			                               		return scan::detail::store_maker<Sod, store_type>{}(
-			                               			make_range_of_index(
-			                               				arg_protein,
-			                               				arg_from_or_to,
-			                               				x
-			                               			),
-			                               			the_keyer,
-			                               			scan::simple_locn_crit{ MAX_DIST * MAX_DIST }
-			                               		);
-			                               	}
-			                               ) } {
+			                               the_store{
+			                               	prepare_vec_based_simple_locn_index_store<Sod, store_type>(
+			                               		arg_protein,
+			                               		arg_from_or_to,
+			                               		the_keyer
+			                               	)
+			                               } {
 			}
 
 			/// \brief TODOCUMENT
@@ -421,9 +435,6 @@ namespace cath {
 			store_type the_store;
 
 			/// \brief TODOCUMENT
-			static constexpr scan::detail::view_base_type MAX_DIST = 7.0;
-
-			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			lattice_refine_index(const std::integral_constant<scan::sod, Sod> &,               ///< TODOCUMENT
 			                     const protein                                &arg_protein,    ///< TODOCUMENT
@@ -440,7 +451,7 @@ namespace cath {
 			                         the_store{ scan::detail::store_maker<Sod, store_type>{}(
 			                         	make_range_of_all( arg_protein, arg_from_or_to ),
 			                         	the_keyer,
-			                         	scan::simple_locn_crit{ MAX_DIST * MAX_DIST }
+			                         	scan::simple_locn_crit{ indexed_refiner_constants::MAX_SQ_DIST }
 			                         ) } {
 				// if ( arg_sparse_or_dense == scan::sod::SPARSE ) {
 				// 	// locn_index_store cath::scan::
@@ -484,9 +495,6 @@ namespace cath {
 			std::vector< store_type > the_store;
 
 			/// \brief TODOCUMENT
-			static constexpr scan::detail::view_base_type MAX_DIST = 7.0;
-
-			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			vec_of_lattices_refine_index(const std::integral_constant<scan::sod, Sod> &, ///< TODOCUMENT
 			                             const protein &arg_protein,                     ///< TODOCUMENT
@@ -500,20 +508,13 @@ namespace cath {
 			                                 		scan::res_pair_from_to_index_keyer_part{}
 			                                 	)
 			                                 },
-			                                 the_store{ common::transform_build<std::vector<store_type>>(
-			                                 	boost::irange( 0_z, arg_protein.get_length() ),
-			                                 	[&] (const size_t &x) {
-			                                 		return scan::detail::store_maker<Sod, store_type>{}(
-			                                 			make_range_of_index(
-			                                 				arg_protein,
-			                                 				arg_from_or_to,
-			                                 				x
-			                                 			),
-			                                 			the_keyer,
-			                                 			scan::simple_locn_crit{ MAX_DIST * MAX_DIST }
-			                                 		);
-			                                 	}
-			                                 ) } {
+			                                 the_store{
+			                                 	prepare_vec_based_simple_locn_index_store<Sod, store_type>(
+			                                 		arg_protein,
+			                                 		arg_from_or_to,
+			                                 		the_keyer
+			                                 	)
+			                                 } {
 			}
 
 			/// \brief TODOCUMENT

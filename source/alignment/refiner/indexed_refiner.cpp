@@ -78,6 +78,9 @@ using index_template_list = template_list<
 
 using combined_list = combine_params_lists_with_template_list_t< cell_type_list, index_template_list >;
 
+constexpr float indexed_refiner_constants::MAX_DIST;
+constexpr float indexed_refiner_constants::MAX_SQ_DIST;
+
 inline void simplify_name(std::string &arg) {
 	erase_all  ( arg, "cath::align::"            );
 	erase_all  ( arg, "cath::scan::"             );
