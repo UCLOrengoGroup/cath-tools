@@ -207,4 +207,47 @@ ATOM    461  HE2 GLU A  23       1.108 -11.273  13.151  1.00  9.48           H)"
 
 	BOOST_CHECK_EQUAL( the_pdb.get_num_residues(), 3 );
 }
+
+BOOST_AUTO_TEST_CASE(accepts_different_aa_in_hetatm_records_without_warning) {
+	const string input_string = R"(ATOM   1228  N   PHE A 165     -10.430  20.141  87.926  1.00 15.18           N  
+ATOM   1229  CA  PHE A 165      -9.247  19.371  87.531  1.00 13.79           C  
+ATOM   1230  C   PHE A 165      -9.033  18.252  88.537  1.00 12.81           C  
+ATOM   1231  O   PHE A 165      -8.794  18.510  89.709  1.00 14.71           O  
+HETATM 1239  O  AKPI A 166      -7.321  14.931  87.441  0.62 14.69           O  
+HETATM 1240  N  AKPI A 166      -9.130  17.009  88.079  0.62 14.06           N  
+HETATM 1241  CA AKPI A 166      -8.936  15.841  88.945  0.62 13.79           C  
+HETATM 1242  CB AKPI A 166     -10.092  14.834  88.791  0.62 14.28           C  
+HETATM 1243  CG AKPI A 166      -9.940  13.524  89.605  0.62 15.44           C  
+HETATM 1244  CD AKPI A 166     -11.043  12.492  89.267  0.62 17.06           C  
+HETATM 1245  CE AKPI A 166     -10.908  11.202  90.094  0.62 16.87           C  
+HETATM 1246  NZ AKPI A 166     -11.829  10.079  89.676  0.62 17.67           N  
+HETATM 1247  C  AKPI A 166      -7.608  15.179  88.604  0.62 14.38           C  
+HETATM 1248  CX1AKPI A 166     -11.966   8.842  90.115  0.62 17.79           C  
+HETATM 1249  C1 AKPI A 166     -11.040   8.345  91.186  0.62 21.96           C  
+HETATM 1250  CX2AKPI A 166     -12.913   8.001  89.548  0.62 14.57           C  
+HETATM 1251  O1 AKPI A 166     -13.275   6.876  90.123  0.62 16.54           O  
+HETATM 1252  O2 AKPI A 166     -13.453   8.361  88.423  0.62 14.70           O  
+ATOM   1253  N  BLYS A 166      -9.130  17.009  88.079  0.38 14.06           N  
+ATOM   1254  CA BLYS A 166      -8.927  15.864  88.948  0.38 13.81           C  
+ATOM   1255  C  BLYS A 166      -7.608  15.179  88.604  0.38 14.38           C  
+ATOM   1256  O  BLYS A 166      -7.321  14.931  87.441  0.38 14.69           O  
+ATOM   1257  CB BLYS A 166     -10.103  14.903  88.811  0.38 14.30           C  
+ATOM   1258  CG BLYS A 166     -10.119  13.772  89.806  0.38 15.34           C  
+ATOM   1259  CD BLYS A 166     -11.385  12.962  89.626  0.38 16.71           C  
+ATOM   1260  CE BLYS A 166     -11.511  11.920  90.705  0.38 17.24           C  
+ATOM   1261  NZ BLYS A 166     -11.704  12.533  92.029  0.38 16.94           N  
+ATOM   1262  N   ASP A 167      -6.797  14.889  89.619  1.00 14.05           N  
+ATOM   1263  CA  ASP A 167      -5.513  14.245  89.363  1.00 14.38           C  
+ATOM   1264  C   ASP A 167      -5.469  12.788  89.749  1.00 14.39           C  
+ATOM   1265  O   ASP A 167      -5.724  12.440  90.910  1.00 15.07           O  )";
+	ostringstream test_ss;
+	istringstream input_ss{ input_string };
+	const log_to_ostream_guard the_guard{ test_ss };
+
+	const pdb the_pdb = read_pdb_file( input_ss );
+
+	BOOST_CHECK_EQUAL( the_pdb.get_num_residues(), 3  );
+	BOOST_CHECK_EQUAL( test_ss.str(),              "" );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
