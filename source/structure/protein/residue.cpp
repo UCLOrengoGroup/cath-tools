@@ -56,6 +56,46 @@ using std::setw;
 using std::string;
 using std::tuple;
 
+#include "structure/geometry/quat_rot.hpp"
+
+// {
+// 	// Useful information breaking down the 232/240 bytes currently required for a residue
+// 	template <size_t T> class SD;
+
+// 	struct backward_residue_id final {
+// 		residue_name a;
+// 		chain_label b;
+// 	};
+
+// 	struct broken_residue_id final {
+// 		int res_num = 0;
+// 		boost::optional<char> insert;
+// 		bool is_null_residue_name;
+// 		chain_label b;
+// 	};
+
+// 	using boost::optional;
+
+// 	SD< sizeof( residue               ) > size_of_residue;
+// 	SD< sizeof( residue_id            ) > size_of_residue_id;
+// 	SD< sizeof( amino_acid            ) > size_of_amino_acid;
+// 	SD< sizeof( geom::coord           ) > size_of_coord;
+// 	SD< sizeof( size_t                ) > size_of_size_t;
+// 	SD< sizeof( sec_struc_type        ) > size_of_sec_struc_type;
+// 	SD< sizeof( rotation              ) > size_of_rotation;
+// 	SD< sizeof( doub_angle            ) > size_of_doub_angle;
+
+// 	SD< sizeof( quat_rot_impl<double> ) > size_of_doub_quat_rot;
+
+// 	SD< sizeof( residue_name          ) > size_of_residue_name;
+// 	SD< sizeof( chain_label           ) > size_of_chain_label;
+// 	SD< sizeof( int                   ) > size_of_int;
+// 	SD< sizeof( optional<char>        ) > size_of_char_opt;
+// 	SD< sizeof( bool                  ) > size_of_bool;
+// 	SD< sizeof( backward_residue_id   ) > size_of_backward_residue_id;
+// 	SD< sizeof( broken_residue_id     ) > size_of_broken_residue_id;
+// }
+
 /// \brief TODOCUMENT
 ///
 /// Total solvent accessible surface areas
