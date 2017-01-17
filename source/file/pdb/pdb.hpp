@@ -36,10 +36,11 @@
 #include <iostream>
 #include <vector>
 
-namespace cath { namespace chop { class domain; } }
-namespace cath { namespace file { class pdb_residue; } }
-namespace cath { namespace file { class pdb_list; } }
 namespace cath { class protein; }
+namespace cath { namespace chop { class domain; } }
+namespace cath { namespace file { class pdb_list; } }
+namespace cath { namespace file { class pdb_residue; } }
+namespace cath { namespace file { struct protein_info; } }
 
 namespace cath {
 	namespace file {
@@ -108,9 +109,9 @@ namespace cath {
 		                                                  const ostream_ref_opt & = boost::none,
 		                                                  const dssp_skip_res_skipping & = dssp_skip_res_skipping::DONT_SKIP);
 
-		protein build_protein_of_pdb(const pdb &,
-		                             const ostream_ref_opt & = boost::none,
-		                             const dssp_skip_policy & = dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES);
+		std::pair<protein, protein_info> build_protein_of_pdb(const pdb &,
+		                                                      const ostream_ref_opt & = boost::none,
+		                                                      const dssp_skip_policy & = dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES);
 
 		protein build_protein_of_pdb_and_name(const pdb &,
 		                                      const std::string &,

@@ -24,6 +24,7 @@
 #include <boost/operators.hpp>
 
 #include "file/pdb/dssp_skip_policy.hpp"
+#include "file/pdb/residue_makeup.hpp"
 #include "structure/geometry/angle.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/rotation.hpp"
@@ -185,7 +186,8 @@ namespace cath {
 
 	residue combine_residues_from_dssp_and_pdb(const residue &,
 	                                           const residue &,
-	                                           const file::dssp_skip_angle_skipping & = file::dssp_skip_angle_skipping::BREAK_ANGLES);
+	                                           const file::dssp_skip_angle_skipping & = file::dssp_skip_angle_skipping::BREAK_ANGLES,
+	                                           const file::residue_makeup           & = file::residue_makeup::ALL_PROPER_AMINO_ACIDS);
 
 	bool is_null_residue(const residue &);
 

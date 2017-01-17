@@ -453,9 +453,10 @@ rotation cath::construct_residue_frame(const coord &arg_nitrogen_position,     /
 /// \brief Combine two residue objects representing the same residue as parsed from a DSSP file and PDB file
 ///
 /// This populates the accessibility and secondary structure from the DSSP and everything else from the PDB
-residue cath::combine_residues_from_dssp_and_pdb(const residue                  &arg_dssp_residue,      ///< The residue that has been parsed from a DSSP file,
-                                                 const residue                  &arg_pdb_residue,       ///< An equivalent residue that has been parsed from a pdb file (and converted to a protein object via)
-                                                 const dssp_skip_angle_skipping &arg_pdb_skipped_angles ///< Whether the PDB tried to break PHI/PSI angles like DSSP (so it's worth printing info where that's failed)
+residue cath::combine_residues_from_dssp_and_pdb(const residue                  &arg_dssp_residue,       ///< The residue that has been parsed from a DSSP file,
+                                                 const residue                  &arg_pdb_residue,        ///< An equivalent residue that has been parsed from a pdb file (and converted to a protein object via)
+                                                 const dssp_skip_angle_skipping &arg_pdb_skipped_angles, ///< Whether the PDB tried to break PHI/PSI angles like DSSP (so it's worth printing info where that's failed)
+                                                 const residue_makeup           &arg_residue_makeup      ///< The makeup of the PDB residue (so that when this is residue_makeup::SOME_NON_PROPER_AMINO_ACIDS the function knows to silently tolerate a DSSP AA of 'X' where the residue from the PDB has a sensible AA)
                                                  ) {
 	// Check that these residues match (or that the DSSP residue is an error residue)
 	const residue_id &dssp_residue_id = arg_dssp_residue.get_pdb_residue_id();
@@ -504,7 +505,7 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 				<< "\" parsed from a DSSP - continuing because it looks "
 				<< "like nothing worse than DSSP not recognising a non-standard amino-acid code";
 		}
-		else {
+		else if ( ! dssp_is_unk || arg_residue_makeup == residue_makeup::ALL_PROPER_AMINO_ACIDS ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(
 				"Amino acid \""
 				+ dssp_amino_acid.get_code()

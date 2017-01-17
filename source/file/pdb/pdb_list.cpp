@@ -27,6 +27,7 @@
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "file/pdb/protein_info.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_list.hpp"
 #include "structure/protein/residue.hpp"
@@ -150,7 +151,7 @@ protein_list cath::file::build_protein_list_of_pdb_list(const pdb_list &arg_pdb_
 	protein_list new_protein_list;
 	new_protein_list.reserve(arg_pdb_list.size());
 	for (const pdb &the_pdb : arg_pdb_list) {
-		new_protein_list.push_back( build_protein_of_pdb( the_pdb, ref( cerr ) ) );
+		new_protein_list.push_back( build_protein_of_pdb( the_pdb, ref( cerr ) ).first );
 	}
 	return new_protein_list;
 }

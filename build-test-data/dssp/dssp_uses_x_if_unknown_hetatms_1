@@ -1,0 +1,10 @@
+HETATM    1  N  ACSD A   1      14.951  50.672   7.287  0.60 10.41           N  
+HETATM    2  CA ACSD A   1      13.530  50.632   6.921  0.60 22.56           C  
+HETATM    3  C  ACSD A   1      12.602  50.101   8.026  0.60 14.09           C  
+HETATM    4  O  ACSD A   1      12.546  51.002   8.873  0.60 16.11           O  
+ATOM      5  N  BCYS A   1      14.951  50.672   7.287  0.40 10.41           N  
+ATOM      6  CA BCYS A   1      13.530  50.632   6.921  0.40 22.56           C  
+ATOM      7  C  BCYS A   1      12.602  50.101   8.026  0.40 14.09           C  
+ATOM      8  O  BCYS A   1      12.546  51.002   8.873  0.40 16.11           O  
+TER       9      CYS A   1                                                      
+END                                                                             

@@ -20,8 +20,6 @@
 
 #include "ssap_scores_file_alignment_acquirer.hpp"
 
-//#include <boost/log/trivial.hpp>
-
 #include "alignment/alignment.hpp"
 #include "alignment/alignment_action.hpp"
 #include "alignment/io/alignment_io.hpp"
@@ -34,6 +32,7 @@
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "file/pdb/protein_info.hpp"
 #include "file/ssap_scores_file/ssap_scores_file.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_list.hpp"
@@ -141,8 +140,8 @@ size_size_alignment_tuple_vec ssap_scores_file_alignment_acquirer::get_spanning_
 		const path      alignment_file = arg_alignment_dir / ( first_name + second_name + ".list" );
 		const alignment new_alignment  = read_alignment_from_cath_ssap_legacy_format(
 			alignment_file,
-			build_protein_of_pdb( first_pdb,  ref( arg_stderr ) ),
-			build_protein_of_pdb( second_pdb, ref( arg_stderr ) ),
+			build_protein_of_pdb( first_pdb,  ref( arg_stderr ) ).first,
+			build_protein_of_pdb( second_pdb, ref( arg_stderr ) ).first,
 			arg_stderr
 		);
 		spanning_alignments.emplace_back(

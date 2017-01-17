@@ -31,6 +31,7 @@
 #include "exception/invalid_argument_exception.hpp"
 #include "file/file_type_aliases.hpp"
 #include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/residue_makeup.hpp"
 #include "structure/chain_label.hpp"
 #include "structure/residue_id.hpp"
 #include "structure/structure_type_aliases.hpp"
@@ -120,6 +121,8 @@ namespace cath {
 		char_opt get_amino_acid_letter(const pdb_residue &);
 		std::string get_amino_acid_code(const pdb_residue &);
 		std::string get_amino_acid_name(const pdb_residue &);
+
+		residue_makeup contains_non_proper_amino_acids(const pdb_residue &);
 
 		bool is_backbone_complete(const pdb_residue &);
 

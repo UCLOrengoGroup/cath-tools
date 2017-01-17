@@ -40,10 +40,14 @@ namespace cath { namespace file { class pdb_residue; } }
 namespace cath { namespace file { class prc_scores_entry; } }
 namespace cath { namespace file { class ssap_scores_entry; } }
 namespace cath { namespace file { enum class data_file : unsigned int; } }
+namespace cath { namespace file { enum class residue_makeup : bool; } }
 
 namespace cath {
 	namespace file {
-		
+
+		/// \brief Type alias for a vector of residue_makeup values
+		using residue_makeup_vec = std::vector<residue_makeup>;
+
 		/// \brief TODOCUMENT
 		using pdb_atom_vec = std::vector<pdb_atom>;
 

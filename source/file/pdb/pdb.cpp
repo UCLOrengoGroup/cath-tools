@@ -45,6 +45,7 @@
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "file/pdb/protein_info.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/residue.hpp"
@@ -681,10 +682,10 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 /// \relates pdb
 ///
 /// \relates protein
-protein cath::file::build_protein_of_pdb(const pdb              &arg_pdb,        ///< TODOCUMENT
-                                         const ostream_ref_opt  &arg_ostream,    ///< An optional reference to an ostream to which any logging should be sent
-                                         const dssp_skip_policy &arg_skip_policy ///< TODOCUMENT
-                                         ) {
+pair<protein, protein_info> cath::file::build_protein_of_pdb(const pdb              &arg_pdb,        ///< TODOCUMENT
+                                                             const ostream_ref_opt  &arg_ostream,    ///< An optional reference to an ostream to which any logging should be sent
+                                                             const dssp_skip_policy &arg_skip_policy ///< TODOCUMENT
+                                                             ) {
 	constexpr size_t DEFAULT_ACCESSIBILITY = 0;
 
 	const auto     backbone_complete_data       = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream, res_skipping_of_dssp_skip_policy( arg_skip_policy ) );
@@ -697,20 +698,30 @@ protein cath::file::build_protein_of_pdb(const pdb              &arg_pdb,       
 		angle_skipping_of_dssp_skip_policy( arg_skip_policy )
 	);
 
-	return build_protein( transform_build<residue_vec>(
-		irange( 0_z, num_residues ),
-		[&] (const size_t &x) {
-			const pdb_residue &the_residue = backbone_complete_pdb_subset.get_residue_cref_of_index__backbone_unchecked( x );
-			const auto        &phi         = phi_and_psi_angles[ x ].first;
-			const auto        &psi         = phi_and_psi_angles[ x ].second;
-			return build_residue_of_pdb_residue(
-				the_residue,
-				phi,
-				psi,
-				DEFAULT_ACCESSIBILITY
-			);
+	return {
+		build_protein( transform_build<residue_vec>(
+			irange( 0_z, num_residues ),
+			[&] (const size_t &x) {
+				const pdb_residue &the_residue = backbone_complete_pdb_subset.get_residue_cref_of_index__backbone_unchecked( x );
+				const auto        &phi         = phi_and_psi_angles[ x ].first;
+				const auto        &psi         = phi_and_psi_angles[ x ].second;
+				return build_residue_of_pdb_residue(
+					the_residue,
+					phi,
+					psi,
+					DEFAULT_ACCESSIBILITY
+				);
+			}
+		) ),
+		protein_info{
+			transform_build<residue_makeup_vec>(
+				backbone_complete_pdb_subset,
+				[] (const pdb_residue &x) {
+					return contains_non_proper_amino_acids( x );
+				}
+			)
 		}
-	) );
+	};
 }
 
 /// \brief TODOCUMENT
@@ -722,7 +733,7 @@ protein cath::file::build_protein_of_pdb_and_name(const pdb             &arg_pdb
                                                   const string          &arg_name,   ///< TODOCUMENT
                                                   const ostream_ref_opt &arg_ostream ///< An optional reference to an ostream to which any logging should be sent
                                                   ) {
-	protein new_protein = build_protein_of_pdb( arg_pdb, arg_ostream );
+	protein new_protein = build_protein_of_pdb( arg_pdb, arg_ostream ).first;
 	new_protein.set_title( arg_name );
 	return new_protein;
 }

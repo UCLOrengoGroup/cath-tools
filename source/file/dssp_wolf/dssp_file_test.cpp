@@ -39,6 +39,7 @@
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "file/pdb/protein_info.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_io.hpp"
 #include "structure/protein/residue.hpp"
@@ -144,7 +145,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::compare_phi_psi_from_pdb_vs_
 
 	const auto the_pdb_file      = read_pdb_file(   pdb_file_of_example_id( arg_example_id ) );
 	const auto the_dssp_file     = read_dssp_file( dssp_file_of_example_id( arg_example_id ) );
-	const auto pdb_prot          = build_protein_of_pdb( the_pdb_file, reference_wrapper<ostream>{ build_prot_warn_stream } );
+	const auto pdb_prot          = build_protein_of_pdb( the_pdb_file, reference_wrapper<ostream>{ build_prot_warn_stream } ).first;
 	const auto num_dssp_residues = the_dssp_file.get_num_residues();
 	const auto num_pdb_residues  = pdb_prot.get_length();
 
@@ -195,7 +196,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 	ostringstream build_prot_warn_stream;
 	const auto the_pdb_file               = read_pdb_file (  pdb_file_of_example_id( arg_example_id ) );
 	const auto the_dssp_file              = read_dssp_file( dssp_file_of_example_id( arg_example_id ) );
-	const auto pdb_prot                   = build_protein_of_pdb( the_pdb_file, reference_wrapper<ostream>{ build_prot_warn_stream } );
+	const auto pdb_prot                   = build_protein_of_pdb( the_pdb_file, reference_wrapper<ostream>{ build_prot_warn_stream } ).first;
 	const auto num_non_null_dssp_residues = get_num_non_null_residues( the_dssp_file );
 	const auto num_pdb_residues           = pdb_prot.get_length();
 	BOOST_CHECK_EQUAL( build_prot_warn_stream.str(), "" );
@@ -246,7 +247,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::compare_residue_frames_from_
 	ostringstream build_prot_warn_stream;
 	const wolf_file            the_wolf_file     = read_wolf(     wolf_file_of_example_id( arg_example_id ) );
 	const pdb                  the_pdb_file      = read_pdb_file(  pdb_file_of_example_id( arg_example_id ) );
-	const protein              pdb_prot          = build_protein_of_pdb( the_pdb_file, reference_wrapper<ostream>{ build_prot_warn_stream });
+	const protein              pdb_prot          = build_protein_of_pdb( the_pdb_file, reference_wrapper<ostream>{ build_prot_warn_stream }).first;
 	const wolf_file::size_type num_wolf_residues = the_wolf_file.get_num_residues();
 	const size_t   num_pdb_residues  = pdb_prot.get_length();
 
@@ -389,5 +390,18 @@ BOOST_AUTO_TEST_CASE(dssp_disregards_break_from_dropped_residue) {
 	);
 }
 
+BOOST_AUTO_TEST_CASE(handles_dssp_using_x_if_any_unknown_hetatm_records) {
+	ostringstream test_ss;
+	const log_to_ostream_guard the_guard{ test_ss };
+	BOOST_CHECK_NO_THROW_DIAG(
+		read_protein_from_dssp_and_pdb(
+			path{ TEST_SOURCE_DATA_DIR() / "dssp" / "dssp_uses_x_if_unknown_hetatms_1.dssp" },
+			path{ TEST_SOURCE_DATA_DIR() / "dssp" / "dssp_uses_x_if_unknown_hetatms_1"      },
+			dssp_skip_policy::SKIP__BREAK_ANGLES,
+			""s
+		)
+	);
+	BOOST_CHECK_EQUAL( test_ss.str(), "" );
+}
 
 BOOST_AUTO_TEST_SUITE_END()

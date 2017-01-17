@@ -93,6 +93,23 @@ string cath::file::get_amino_acid_name(const pdb_residue &arg_residue ///< The p
 	return get_amino_acid(arg_residue).get_name();
 }
 
+/// \brief Whether the specified pdb_residue contains any pdb_atoms that aren't proper amino-acids
+///        (eg from HETATM records)
+///
+/// \relates pdb_residue
+residue_makeup cath::file::contains_non_proper_amino_acids(const pdb_residue &arg_residue ///< The pdb_residue to query
+                                                           ) {
+	return
+		any_of(
+			arg_residue,
+			[] (const pdb_atom &x) {
+				return ! x.get_amino_acid().is_proper_amino_acid();
+			}
+		)
+		? residue_makeup::SOME_NON_PROPER_AMINO_ACIDS
+		: residue_makeup::ALL_PROPER_AMINO_ACIDS;
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_residue

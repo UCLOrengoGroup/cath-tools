@@ -35,6 +35,7 @@
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "file/pdb/protein_info.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/residue.hpp"
@@ -93,23 +94,25 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_f
                                               const ostream_ref_opt  &arg_ostream           ///< An optional reference to an ostream to which any logging should be sent
                                               ) {
 	// Build a rough protein object from the pdb object
-	const auto pdb_protein       = build_protein_of_pdb(
+	const auto  built_protein     = build_protein_of_pdb(
 		arg_pdb_file,
 		arg_ostream,
 		( arg_dssp_skip_policy == dssp_skip_policy::SKIP__BREAK_ANGLES )
 			? dssp_skip_policy::DONT_SKIP__BREAK_ANGLES
 			: arg_dssp_skip_policy
 	);
-	const auto pdb_skip_indices  = get_protein_res_indices_that_dssp_might_skip( arg_pdb_file, arg_ostream );
+	const auto &pdb_protein       = built_protein.first;
+	const auto &pdb_prot_info     = built_protein.second;
+	const auto  pdb_skip_indices  = get_protein_res_indices_that_dssp_might_skip( arg_pdb_file, arg_ostream );
 
 	// Grab the number of residues in the protein and dssp_file objects
-	const auto num_dssp_residues = arg_dssp_file.get_num_residues();
-	const auto num_pdb_residues  = pdb_protein.get_length();
+	const auto  num_dssp_residues = arg_dssp_file.get_num_residues();
+	const auto  num_pdb_residues  = pdb_protein.get_length();
 
 	// Grab the residues names from the DSSP and PDB and then tally them up
-	const auto pdb_res_names     = get_residue_ids  ( pdb_protein );
-	const auto dssp_res_names    = get_residue_ids  ( arg_dssp_file, false );
-	const auto alignment         = tally_residue_ids(
+	const auto  pdb_res_names     = get_residue_ids  ( pdb_protein );
+	const auto  dssp_res_names    = get_residue_ids  ( arg_dssp_file, false );
+	const auto  alignment         = tally_residue_ids(
 		pdb_res_names,
 		dssp_res_names,
 		false,
@@ -124,7 +127,8 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_f
 	// Loop over the residues
 	size_t alignment_ctr = 0;
 	for (const size_t &pdb_residue_ctr : irange( 0_z, num_pdb_residues ) ) {
-		const residue &the_pdb_residue = pdb_protein.get_residue_ref_of_index( pdb_residue_ctr );
+		const residue        &the_pdb_residue = pdb_protein.get_residue_ref_of_index( pdb_residue_ctr );
+		const residue_makeup &res_makeup      = pdb_prot_info.residue_makeups[ pdb_residue_ctr ];
 
 		// If this PDB residue is in the alignment then it can be combined with the equivalent DSSP residue
 		const bool is_in_alignment     = ( (alignment_ctr < alignment.size() ) && ( alignment[alignment_ctr].first == pdb_residue_ctr ) );
@@ -135,7 +139,8 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_f
 				combine_residues_from_dssp_and_pdb(
 					the_dssp_residue,
 					the_pdb_residue,
-					angle_skipping_of_dssp_skip_policy( arg_dssp_skip_policy )
+					angle_skipping_of_dssp_skip_policy( arg_dssp_skip_policy ),
+					res_makeup
 				)
 			);
 

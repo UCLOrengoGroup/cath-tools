@@ -28,6 +28,7 @@
 #include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "file/pdb/pdb.hpp"
+#include "file/pdb/protein_info.hpp"
 #include "structure/geometry/coord_list.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/residue.hpp"
@@ -181,8 +182,8 @@ pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const 
                                                                           ) {
 	return get_common_coords(
 		arg_alignment,
-		build_protein_of_pdb( arg_pdb_a, ref( cerr ) ),
-		build_protein_of_pdb( arg_pdb_b, ref( cerr ) ),
+		build_protein_of_pdb( arg_pdb_a, ref( cerr ) ).first,
+		build_protein_of_pdb( arg_pdb_b, ref( cerr ) ).first,
 		arg_res_seln_policy,
 		arg_atom_seln_policy,
 		arg_entry_index_a,
