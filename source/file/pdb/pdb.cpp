@@ -363,7 +363,17 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 				// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.
 				// Though that's a bit rubbish, it shouldn't break the whole comparison
 				// so if that's detected, just warn and move on (without appending to new_residues).
-				if ( is_atom && ! prev_atoms.empty() && prev_amino_acid_3_char_code && amino_acid_3_char_code != prev_amino_acid_3_char_code ) {
+				if (
+					is_atom
+					&&
+					! prev_atoms.empty()
+					&&
+					prev_amino_acid_3_char_code
+					&&
+					amino_acid_3_char_code != prev_amino_acid_3_char_code
+					&&
+					atom.get_alt_locn() == ' '
+					) {
 					if ( ! prev_warned_conflict ) {
 						BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing PDB file, found conflicting consecutive entries for residue \""
 						                             << res_id

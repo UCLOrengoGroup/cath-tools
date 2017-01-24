@@ -27,6 +27,7 @@
 #include <boost/range/algorithm/sort.hpp>
 
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
+#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/size_t_literal.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
@@ -58,7 +59,7 @@ using boost::filesystem::path;
 using boost::irange;
 using boost::none;
 using boost::range::sort;
-// using std::chrono::high_resolution_clock;
+using std::ostringstream;
 
 namespace cath {
 	namespace test {
@@ -211,6 +212,13 @@ BOOST_AUTO_TEST_CASE(calculates_distance_within_cutoff_using_double_precision) {
 
 BOOST_AUTO_TEST_CASE(prob_hbond_to_residue_at_start_of_chain_1) {
 	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "hbond_to_residue_at_start_of_chain_1.dssp"        );
+}
+
+BOOST_AUTO_TEST_CASE(accepts_residue_with_diff_aas_in_altlocs) {
+	ostringstream test_ss;
+	const log_to_ostream_guard the_guard{ test_ss };
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "residue_with_diff_aas_in_altlocs.dssp" );
+	BOOST_CHECK_EQUAL( test_ss.str(), "" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
