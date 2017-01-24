@@ -55,24 +55,9 @@ using boost::none;
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_residue
-const amino_acid & cath::file::get_amino_acid(const pdb_residue &arg_residue ///< The pdb_residue to query
-                                              ) {
-	// If any proper amino acids can be found, then return the first such one
-	for (const pdb_atom &the_atom : arg_residue) {
-		if ( the_atom.get_amino_acid().is_proper_amino_acid() ) {
-			return the_atom.get_amino_acid();
-		}
-	}
-	// Otherwise, return the amino acid of the first
-	return arg_residue.get_atom_cref_of_index( 0 ).get_amino_acid();
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_residue
 char_opt cath::file::get_amino_acid_letter(const pdb_residue &arg_residue ///< The pdb_residue to query
                                            ) {
-	const amino_acid &the_amino_acid = get_amino_acid( arg_residue );
+	const amino_acid &the_amino_acid = arg_residue.get_amino_acid();
 	return the_amino_acid.is_proper_amino_acid() ? char_opt( the_amino_acid.get_letter() )
 	                                             : none;
 }
@@ -82,7 +67,7 @@ char_opt cath::file::get_amino_acid_letter(const pdb_residue &arg_residue ///< T
 /// \relates pdb_residue
 string cath::file::get_amino_acid_code(const pdb_residue &arg_residue ///< The pdb_residue to query
                                        ) {
-	return get_amino_acid(arg_residue).get_code();
+	return arg_residue.get_amino_acid().get_code();
 }
 
 /// \brief TODOCUMENT
@@ -90,7 +75,7 @@ string cath::file::get_amino_acid_code(const pdb_residue &arg_residue ///< The p
 /// \relates pdb_residue
 string cath::file::get_amino_acid_name(const pdb_residue &arg_residue ///< The pdb_residue to query
                                        ) {
-	return get_amino_acid(arg_residue).get_name();
+	return arg_residue.get_amino_acid().get_name();
 }
 
 /// \brief Whether the specified pdb_residue contains any pdb_atoms that aren't proper amino-acids
@@ -233,7 +218,7 @@ residue cath::file::build_residue_of_pdb_residue(const pdb_residue &arg_residue,
 	// Build a residue object and return it
 	return residue(
 		arg_residue.get_residue_id(),
-		get_amino_acid( arg_residue ),
+		arg_residue.get_amino_acid(),
 		ca_coord,
 		cb_coord,
 		0,

@@ -155,6 +155,11 @@ BOOST_FIXTURE_TEST_SUITE(dssp_hbond_calc_test_suite, dssp_hbond_calc_test_suite_
 
 BOOST_AUTO_TEST_SUITE(engineered_test_examples)
 
+BOOST_AUTO_TEST_CASE(uses_core_atoms_for_amino_acid) {
+	// This affects the hbond calculation because it affects whether the amino acid is
+	// determined to be proline, which is handled differently due to its side-chain on N
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "hetatms_in_altloc_a_then_proline_atoms_in_b.dssp" );
+}
 
 BOOST_AUTO_TEST_CASE(prob_interspersed_chains) {
 	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "interspersed_chains.dssp"                         );

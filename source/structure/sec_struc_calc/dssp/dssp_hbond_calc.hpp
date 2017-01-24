@@ -208,9 +208,9 @@ namespace cath {
 				arg_residue_j.has_oxygen()
 				&&
 				(
-					! get_amino_acid( arg_residue_i ).is_proper_amino_acid()
+					! arg_residue_i.get_amino_acid().is_proper_amino_acid()
 					||
-					get_amino_acid( arg_residue_i ).get_letter() != 'P' // Proline has side-chain on N
+					arg_residue_i.get_amino_acid().get_letter() != 'P' // Proline has side-chain on N
 				)
 			);
 		}

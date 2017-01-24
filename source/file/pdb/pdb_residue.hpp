@@ -25,6 +25,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/operators.hpp>
 #include <boost/range/adaptor/reversed.hpp>
+#include <boost/range/algorithm/find_if.hpp>
 
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
@@ -65,7 +66,7 @@ namespace cath {
 
 			/// \brief An array of the indices of the core element atoms (N/CA/C/CB/O) within atoms, above,
 			///        or none for any core element atoms not present in this residue
-			std::array<boost::optional<size_t>, 5> core_atom_indices;
+			std::array<size_opt, 5> core_atom_indices;
 
 			static constexpr size_t get_core_atom_index_ref_index(const coarse_element_type &);
 			const boost::optional<size_t> & get_core_atom_index_ref(const coarse_element_type &) const;
@@ -98,6 +99,8 @@ namespace cath {
 			const pdb_atom & get_carbon_beta() const;
 			const pdb_atom & get_oxygen() const;
 
+			const amino_acid & get_amino_acid() const;
+
 			pdb_residue & set_chain_label(const chain_label &);
 
 			pdb_residue & rotate(const geom::rotation &);
@@ -117,7 +120,6 @@ namespace cath {
 		const geom::coord & get_carbon_beta_coord(const pdb_residue &);
 		const geom::coord & get_oxygen_coord(const pdb_residue &);
 
-		const amino_acid & get_amino_acid(const pdb_residue &);
 		char_opt get_amino_acid_letter(const pdb_residue &);
 		std::string get_amino_acid_code(const pdb_residue &);
 		std::string get_amino_acid_name(const pdb_residue &);
@@ -291,6 +293,33 @@ namespace cath {
 		/// \pre `has_oxygen()`
 		inline const pdb_atom & pdb_residue::get_oxygen() const {
 			return get_atom_cref_of_index( *get_core_atom_index_ref( coarse_element_type::OXYGEN       ) );
+		}
+
+		/// \brief Return the amino acid for this PDB residue
+		///
+		/// \pre `! empty()` else this throws an invalid_argument_exception
+		///
+		/// This returns the amino acid for the first present core atom
+		/// or the amino acid of the first atom if there are no core atoms
+		inline const amino_acid & pdb_residue::get_amino_acid() const {
+			// Find the first present core atom
+			const auto first_present_core_itr = boost::range::find_if(
+				core_atom_indices,
+				[] (const size_opt &x) { return static_cast<bool>( x ); }
+			);
+
+			// If there was one, return its amino acid
+			if ( first_present_core_itr != common::cend( core_atom_indices ) ) {
+				return get_atom_cref_of_index( first_present_core_itr->get() ).get_amino_acid();
+			}
+
+			// If there are no atoms, throw an exception
+			if ( empty() ) {
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Can't get amino acid for empty pdb_residue"));
+			}
+
+			// Otherwise, just return the first atom's amino acid
+			return get_atom_cref_of_index( 0 ).get_amino_acid();
 		}
 
 		/// \brief Setter for the chain label

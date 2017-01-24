@@ -474,7 +474,7 @@ amino_acid_vec cath::file::get_amino_acid_list(const pdb &arg_pdb ///< TODOCUMEN
 	amino_acid_vec amino_acids;
 	amino_acids.reserve( arg_pdb.get_num_residues() );
 	for (const pdb_residue &the_pdb_residue : arg_pdb) {
-		amino_acids.push_back( get_amino_acid( the_pdb_residue ) );
+		amino_acids.push_back( the_pdb_residue.get_amino_acid() );
 	}
 	return amino_acids;
 }
