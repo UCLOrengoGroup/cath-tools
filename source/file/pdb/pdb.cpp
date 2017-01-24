@@ -635,6 +635,8 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 	// Grab the number of residues
 	const size_t num_residues = arg_pdb.get_num_residues();
 
+	vector<residue_id> seen_residue_ids;
+
 	residue_id_vec backbone_skipped_residues;
 	size_vec indices_in_new_of_skips;
 
@@ -645,12 +647,16 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 	// Loop over the residues in the input pdb
 	for (size_t residue_ctr = 0; residue_ctr < num_residues; ++residue_ctr) {
 		const pdb_residue &the_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr );
+		const bool seen_res_id = common::contains( seen_residue_ids, the_residue.get_residue_id() );
+		if ( ! seen_res_id ) {
+			seen_residue_ids.push_back( the_residue.get_residue_id() );
+		}
 
 		// If the residue is backbone_complete,then add it to new_pdb_residues
 		const bool ok_to_process = ( arg_skip_like_dssp == dssp_skip_res_skipping::SKIP )
 			? ! dssp_will_skip_residue( the_residue )
 			:   is_backbone_complete  ( the_residue );
-		if ( ok_to_process ) {
+		if ( ok_to_process && ! seen_res_id ) {
 			new_pdb_residues.push_back( the_residue );
 		}
 		// Else if this is a proper amino acid (not just a bunch of HETATMs), record it
@@ -678,7 +684,7 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 		                             )
 		                             << " whilst extracting a protein structure from PDB file data because "
 		                             << ( multiple_skippeds ? "they don't"s : "it doesn't"s )
-		                             << " have all of N, CA and C atoms";
+		                             << " have all of N, CA and C atoms (or because of duplicate residue IDs)";
 	}
 
 	// Return a new pdb containing these residues

@@ -221,6 +221,14 @@ BOOST_AUTO_TEST_CASE(accepts_residue_with_diff_aas_in_altlocs) {
 	BOOST_CHECK_EQUAL( test_ss.str(), "" );
 }
 
+BOOST_AUTO_TEST_CASE(residue_name_reused_later_on_1) {
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "residue_name_reused_later_on_1.dssp" );
+}
+
+BOOST_AUTO_TEST_CASE(residue_name_reused_later_on_2) {
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "residue_name_reused_later_on_2.dssp" );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 
