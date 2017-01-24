@@ -258,6 +258,24 @@ BOOST_AUTO_TEST_SUITE_END()
 // BOOST_AUTO_TEST_SUITE_END()
 
 
+// Current outstanding issues:
+//
+// 10mh and many others
+// DNA chains in ATOM records
+// See https://github.com/UCLOrengoGroup/cath-tools/issues/23
+//
+// 1en2.dssp and many others
+// Have conflicting consecutive entries for a residue:
+// A:10 (SER & then GLY), A:14 (GLY & then ALA), A:16 (ARG & then TRP), A:80 (GLY & then SER), A:81 (ASN & then LYS)
+// Currently ignores latter entry (and any further entries) but should perhaps should load them into the pdb
+// and strip out the later ones when converting to a protein
+//
+// 4aph chain P
+// Repeats residues: 1,2,3,4,5,6,2,3,4,5,6,7
+// which causes a throw in file/dssp_wolf/tally_residue_ids.cpp(82): Throw in function cath::size_size_pair_vec cath::file::tally_residue_ids(const residue_id_vec&, const residue_id_vec&, const bool&, const bool&, const size_set&)
+// & 4uu7 chain D
+// Repeats residues: 1,2,3,4,5,6,7,8
+
 
 // BOOST_AUTO_TEST_SUITE(speed_test)
 
