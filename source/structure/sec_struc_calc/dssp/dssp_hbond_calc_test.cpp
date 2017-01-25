@@ -142,6 +142,7 @@ namespace cath {
 			} ();
 
 			for (const path &dssp_file : sorted_dssp_files ) {
+				// std::cerr << dssp_file << "\n";
 				const path pdb_file = replace_extension_copy( arg_pdb_dir / dssp_file.filename() );
 				use_dssp_file_to_check_hbonds_calcs( dssp_file, pdb_file );
 			}
@@ -260,8 +261,11 @@ BOOST_AUTO_TEST_SUITE_END()
 // // Testcase for checking all DSSP instances in a directory against the equivalent PDBs in another directory
 // BOOST_AUTO_TEST_CASE(whole_dssp_directory_tc) {
 // 	use_dir_of_dssp_files_to_check_hbonds_calcs(
-// 		"/cath/mothra-data1/people/ucbctnl/temp_tony_20160601/dssp",
-// 		"/cath/mothra-data1/people/ucbctnl/temp_tony_20160601/pdb"
+// 		// "/cath/mothra-data1/people/ucbctnl/temp_tony_20160601/dssp",
+// 		// "/cath/mothra-data1/people/ucbctnl/temp_tony_20160601/pdb"
+
+// 		"/cath/mothra-data1/people/ucbctnl/dssp-20161211-v4_1_0-after",
+// 		"/cath/data/v4_1_0/wholepdb"
 
 // 		// "/cath/data/v4_1_0/wholedssp/",
 // 		// "/cath/data/v4_1_0/wholepdb/"
