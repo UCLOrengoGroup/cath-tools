@@ -139,3 +139,11 @@ find src/   -iname '*.h' | sort | grep third_party_code -v | xargs -P 4 -I VAR c
 rm -f src
 ~~~~~
 
+
+Dumping class/struct memory layouts
+-----------------------------------
+
+~~~~~no-highlight
+clomp source/file/pdb/pdb_atom.hpp -Xclang -fdump-record-layouts > /tmp/clang_pdb_atom_layout.txt
+grep pdb_atom -A60 /tmp/clang_pdb_atom_layout.txt
+~~~~~
