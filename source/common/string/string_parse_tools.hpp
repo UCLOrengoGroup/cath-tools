@@ -152,12 +152,34 @@ namespace cath {
 		/// This can sensibly be called with a string argument.
 		///
 		/// This is dumb about whitespace (explicitly compares to ' ' and '\t'; ignores locale) for the sake of speed
+		///
+		/// \todo Fix: this given a string of all whitespace chars, this would currently cross over the begin/end pointers
+		///       so should maybe calculated end pointer first and then restrict calculation for start pointer within
+		///       range up to that end.
 		inline boost::string_ref dumb_trim_string_ref(const boost::string_ref &arg_substring ///< The string_ref to trim
 		                                              ) {
 			return make_string_ref(
 				find_itr_before_first_non_space( arg_substring ),
 				find_itr_after_last_non_space  ( arg_substring )
 			);
+		}
+
+		/// \brief Return a pair of offsets to the section of the specified string_ref after trimming
+		///
+		/// This can sensibly be called with a string argument.
+		///
+		/// This is dumb about whitespace (explicitly compares to ' ' and '\t'; ignores locale) for the sake of speed
+		///
+		/// \todo Fix: this given a string of all whitespace chars, this would currently cross over the begin/end pointers
+		///       so should maybe calculated end pointer first and then restrict calculation for start pointer within
+		///       range up to that end.
+		template <typename T>
+		std::pair<T, T> dumb_trim_string_ref_to_offsets(const boost::string_ref &arg_substring ///< The string_ref to trim
+		                                                ) {
+			return {
+				static_cast<T>( std::distance( common::cbegin( arg_substring ), find_itr_before_first_non_space( arg_substring ) ) ),
+				static_cast<T>( std::distance( common::cbegin( arg_substring ), find_itr_after_last_non_space  ( arg_substring ) ) )
+			};
 		}
 
 		/// \brief Parse a double from the field between the two specified string iterators
@@ -193,6 +215,24 @@ namespace cath {
 			);
 		}
 
+		/// \brief Parse a (possibly space-padded) float from the specified region of string
+		///
+		/// Note: please benchmark any changes to these functions to ensure they stay fast
+		inline float parse_float_from_substring(const std::string &arg_string, ///< The string containing the region to parse
+		                                        const size_t      &arg_start,  ///< The index of the start of the region to parse
+		                                        const size_t      &arg_length  ///< The length of the region to parse
+		                                        ) {
+			const auto begin_itr = std::next( arg_string.begin(), static_cast<ptrdiff_t>( arg_start  ) );
+			const auto end_itr   = std::next( begin_itr,          static_cast<ptrdiff_t>( arg_length ) );
+			return detail::do_spirit_parse<float>(
+				begin_itr,
+				end_itr,
+				   boost::spirit::omit[ *boost::spirit::qi::space ]
+				>> boost::spirit::float_
+				>> boost::spirit::omit[ *boost::spirit::qi::space ]
+			);
+		}
+
 		/// \brief Parse a (possibly space-padded) double from the specified region of string
 		///
 		/// Note: please benchmark any changes to these functions to ensure they stay fast
@@ -211,7 +251,7 @@ namespace cath {
 			);
 		}
 
-		/// \brief Parse a (possibly space-padded) double from the specified region of string
+		/// \brief Parse a (possibly space-padded) int from the specified region of string
 		///
 		/// Note: please benchmark any changes to these functions to ensure they stay fast
 		inline int parse_int_from_substring(const std::string &arg_string, ///< The string containing the region to parse
@@ -229,7 +269,25 @@ namespace cath {
 			);
 		}
 
-		/// \brief Parse a (possibly space-padded) double from the specified region of string
+		/// \brief Parse a (possibly space-padded) unsigned int from the specified region of string
+		///
+		/// Note: please benchmark any changes to these functions to ensure they stay fast
+		inline unsigned int parse_uint_from_substring(const std::string &arg_string, ///< The string containing the region to parse
+		                                              const size_t      &arg_start,  ///< The index of the start of the region to parse
+		                                              const size_t      &arg_length  ///< The length of the region to parse
+		                                              ) {
+			const auto begin_itr = std::next( arg_string.begin(), static_cast<ptrdiff_t>( arg_start  ) );
+			const auto end_itr   = std::next( begin_itr,          static_cast<ptrdiff_t>( arg_length ) );
+			return detail::do_spirit_parse<unsigned int>(
+				begin_itr,
+				end_itr,
+				   boost::spirit::omit[ *boost::spirit::qi::space ]
+				>> boost::spirit::uint_
+				>> boost::spirit::omit[ *boost::spirit::qi::space ]
+			);
+		}
+
+		/// \brief Parse a (possibly space-padded) unsigned long from the specified region of string
 		///
 		/// Note: please benchmark any changes to these functions to ensure they stay fast
 		inline unsigned long int parse_ulong_from_substring(const std::string &arg_string, ///< The string containing the region to parse
@@ -285,6 +343,37 @@ namespace cath {
 				arg_field_index,
 				0,
 				common::cbegin( arg_string )
+			);
+		}
+
+		/// \brief Return an array<char, N> populated with N of the chars of the specified range of chars,
+		///        (filling with 0s if the string isn't long enough)
+		template <size_t N, typename Itr>
+		inline std::array<char, N> get_char_arr_of_char_range(const Itr &arg_begin_itr, ///< The start of the range of characters to copy
+		                                                      const Itr &arg_end_itr    ///< The end of the range of characters to copy
+		                                                      ) {
+			std::array<char, N> result;
+			const auto end_at_n_itr = std::next( arg_begin_itr, N );
+			const auto result_copied_itr = std::copy(
+				arg_begin_itr,
+				std::min( arg_end_itr, end_at_n_itr ),
+				std::begin( result )
+			);
+			std::fill( result_copied_itr, std::end( result ), 0 );
+			return result;
+		}
+
+		/// \brief Return an array<char, N> populated with N of the chars of the specified string starting from the
+		///        specified index, (filling with 0s if the string isn't long enough)
+		template <size_t N>
+		inline std::array<char, N> get_char_arr_of_substring(const std::string &arg_string,     ///< The string from which to copy the characters
+		                                                     const size_t      &arg_begin_index ///< The index at which to start copying characters from the string
+		                                                     ) {
+			const auto start_itr = std::next( common::cbegin( arg_string ), static_cast<ptrdiff_t>( arg_begin_index ) );
+			const auto end_itr   = common::cend( arg_string );
+			return get_char_arr_of_char_range<N>(
+				std::min( start_itr, end_itr ),
+				end_itr
 			);
 		}
 
