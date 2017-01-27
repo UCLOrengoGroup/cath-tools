@@ -25,8 +25,30 @@ namespace cath {
 
 	/// \brief Represent the different types of DNA/RNA nucleotide atom that are possible in PDB files
 	enum class dna_atom : char {
-		DA, DC, DG, DT, DU,
-		 A,  C,  G,  N,  U
+		A,
+		C,
+		G,
+		I,       // eg in 1xnr
+		N,
+		T,       // eg in 3dpv
+		U,
+
+		DA,
+		DC,
+		DG,
+		DI,      // eg in 3rzl
+		DT,
+		DU,
+
+		PLUS_A,  // eg in 1hp6
+		PLUS_C,  // eg in 356d
+		PLUS_G,  // eg in 1gpg
+		PLUS_U,  // eg in 1hp6
+
+		A_SPACE, // eg in 3zvp
+		C_SPACE, // eg in 3zvp
+		G_SPACE, // eg in 4a1d
+		U_SPACE  // eg in 4a1d
 	};
 
 	std::string to_three_char_str(const dna_atom &);

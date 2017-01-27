@@ -51,26 +51,34 @@ constexpr size_t amino_acid::NUM_HETATM_CHARS;
 ///  * PDBs 1eg0, 1fjf, 2i82 and 3u5f all contain
 ///    ATOM records with each of the residue names: A, C, G, N and U
 const map<string, dna_atom> DNA_RNA_RESIDUE_NAMES = {
-	{ "  A",  dna_atom::A  },
-	{ "  C",  dna_atom::C  },
-	{ "  G",  dna_atom::G  },
-	{ "  N",  dna_atom::N  },
-	{ "  U",  dna_atom::U  },
-	{ " DA", dna_atom::DA },
-	{ " DC", dna_atom::DC },
-	{ " DG", dna_atom::DG },
-	{ " DT", dna_atom::DT },
-	{ " DU", dna_atom::DU }
+	{ "  A", dna_atom::A       },
+	{ "  C", dna_atom::C       },
+	{ "  G", dna_atom::G       },
+	{ "  I", dna_atom::I       }, // eg in 1xnr
+	{ "  N", dna_atom::N       },
+	{ "  T", dna_atom::T       }, // eg in 3dpv
+	{ "  U", dna_atom::U       },
+
+	{ " DA", dna_atom::DA      },
+	{ " DC", dna_atom::DC      },
+	{ " DG", dna_atom::DG      },
+	{ " DI", dna_atom::DI      }, // eg in 3rzl
+	{ " DT", dna_atom::DT      },
+	{ " DU", dna_atom::DU      },
+
+	{ " +A", dna_atom::PLUS_A  }, // eg in 1hp6
+	{ " +C", dna_atom::PLUS_C  }, // eg in 356d
+	{ " +G", dna_atom::PLUS_G  }, // eg in 1gpg
+	{ " +U", dna_atom::PLUS_U  }, // eg in 1hp6
+
+	{ " A ", dna_atom::A_SPACE }, // eg in 3zvp
+	{ " C ", dna_atom::C_SPACE }, // eg in 3zvp
+	{ " G ", dna_atom::G_SPACE }, // eg in 4a1d
+	{ " U ", dna_atom::U_SPACE }  // eg in 4a1d
 };
 
 /// \brief TODOCUMENT
 //const string amino_acid::UNKNOWN_AMINO_ACID_NAME("Unknown");
-
-/// \todo What about ACE and NH2 (eg PDB 2yjd)
-///       From http://deposit.rcsb.org/format-faq-v1.html :
-///
-/// > Noteworthy exceptions to the above treatment of modified residues are the cases of
-/// > acetylation of the N-terminus (residue ACE) and amidation of the C-terminus (residue NH2).
 
 ///// \brief TODOCUMENT
 //const string & global_test_constants::EXAMPLE_B_PDB_STEMNAME() {
@@ -127,9 +135,19 @@ void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name /
 	if ( arg_letter_code_or_name.length() == 3 ) {
 		if ( contains( DNA_RNA_RESIDUE_NAMES, arg_letter_code_or_name ) ) {
 			data = DNA_RNA_RESIDUE_NAMES.at( arg_letter_code_or_name );
-			return;
 		}
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Amino acid string \"" + arg_letter_code_or_name + "\" has three characters but is not a recognised code (currently case-sensitive)"));
+		// Hacks to handle erroneous ATOM AA in versions of 2yjd from before it was fixed in January 2017
+		//
+		// From http://deposit.rcsb.org/format-faq-v1.html :
+		//
+		// > Noteworthy exceptions to the above treatment of modified residues are the cases of
+		// > acetylation of the N-terminus (residue ACE) and amidation of the C-terminus (residue NH2).
+		else if ( arg_letter_code_or_name == "ACE" ) { data = hetatm_variant_t{ { 'A', 'C', 'E' } }; }
+		else if ( arg_letter_code_or_name == "NH2" ) { data = hetatm_variant_t{ { 'N', 'H', '2' } }; }
+		else {
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("Amino acid string \"" + arg_letter_code_or_name + "\" has three characters but is not a recognised code (currently case-sensitive)"));
+		}
+		return;
 	}
 
 	// No code or name has been recognised so throw a wobbly

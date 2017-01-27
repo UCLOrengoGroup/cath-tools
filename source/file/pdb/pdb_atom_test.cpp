@@ -102,6 +102,73 @@ BOOST_AUTO_TEST_CASE(parsing_and_writing_with_charge_recreates_orig) {
 	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( ATOM_RECORD_HAS_CHARGE       ), ATOM_RECORD_HAS_CHARGE       );
 }
 
+BOOST_AUTO_TEST_CASE(prob_3rzl_aa_is_space_DI) {
+	const auto eg = "ATOM   1991  P    DI C 279      -3.647  -0.709  25.597  1.00 74.32           P  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+BOOST_AUTO_TEST_CASE(prob_1xnr_aa_is_space_space_I) {
+	const auto eg = "ATOM  32465  P     I X  34     204.990 105.714   5.000  1.00103.21           P  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+BOOST_AUTO_TEST_CASE(prob_3dpv_aa_is_space_space_T) {
+	const auto eg = "ATOM     14  P     T D   2      27.504 -19.224  78.514  1.00 55.76           P  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+BOOST_AUTO_TEST_CASE(prob_1hp6_aa_is_space_plus_A) {
+	const auto eg = "ATOM    231  P    +A A  12      83.066  18.237  30.962  1.00 87.96           P  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+BOOST_AUTO_TEST_CASE(prob_356d_aa_is_space_plus_C) {
+	const auto eg = "ATOM     60  P    +C A   4     -13.733  -1.949  43.855  1.00131.77           P  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+BOOST_AUTO_TEST_CASE(prob_1gpg_aa_is_space_plus_G) {
+	const auto eg = "ATOM    103  P    +G A   6      19.564  20.304  20.798  1.00 19.23           P  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+BOOST_AUTO_TEST_CASE(prob_1hp6_aa_is_space_plus_U) {
+	const auto eg = "ATOM    337  O1P  +U A  17      64.074  32.147  28.234  1.00 80.53           O  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+BOOST_AUTO_TEST_CASE(prob_3zvp_aa_is_space_A_space) {
+	const auto eg = "ATOM  24975  O2'  A  A 887      17.091  72.217 152.494  1.00185.33           O  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+BOOST_AUTO_TEST_CASE(prob_3zvp_aa_is_space_C_space) {
+	const auto eg = "ATOM  24947  P    C  A 886      20.235  82.538 148.238  1.00201.87           P  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+BOOST_AUTO_TEST_CASE(prob_4a1d_aa_is_space_G_space) {
+	const auto eg = "ATOM  44287  O6   G  12241     -68.655-262.663  42.932  1.00 88.05           O  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+BOOST_AUTO_TEST_CASE(prob_4a1d_aa_is_space_U_space) {
+	const auto eg = "ATOM  44462  O2   U  12249     -93.007-280.490  66.838  1.00307.96           O  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+// The PDB for 2yjd has been fixed in January 2017; this tests that the code will handle the cases before that
+BOOST_AUTO_TEST_CASE(prob_2yjd_old_version_has_aa_ACE) {
+	const auto eg = "ATOM   3523  C   ACE C   0       0.643 -30.156  -7.677  1.00 55.57           C  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
+// The PDB for 2yjd has been fixed in January 2017; this tests that the code will handle the cases before that
+BOOST_AUTO_TEST_CASE(prob_2yjd_old_version_has_aa_NH2) {
+	const auto eg = "ATOM   3619  N   NH2 C  12      -3.194 -44.176   7.219  1.00 87.94           N  "s;
+	BOOST_CHECK_EQUAL( parse_and_write_pdb_line( eg ), eg );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 
