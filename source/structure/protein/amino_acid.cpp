@@ -41,6 +41,8 @@ using boost::algorithm::is_print;
 using boost::algorithm::to_upper_copy;
 using boost::algorithm::trim_copy;
 
+constexpr size_t amino_acid::NUM_HETATM_CHARS;
+
 /// \brief TODOCUMENT
 ///
 /// Examples:
@@ -48,7 +50,18 @@ using boost::algorithm::trim_copy;
 ///    ATOM records with each of the residue names: DA, DC, DG, DT and DU
 ///  * PDBs 1eg0, 1fjf, 2i82 and 3u5f all contain
 ///    ATOM records with each of the residue names: A, C, G, N and U
-const set<string> DNA_RNA_RESIDUE_NAMES = { "A", "C", "G", "N", "U", "DA", "DC", "DG", "DT", "DU" };
+const map<string, dna_atom> DNA_RNA_RESIDUE_NAMES = {
+	{ "  A",  dna_atom::A  },
+	{ "  C",  dna_atom::C  },
+	{ "  G",  dna_atom::G  },
+	{ "  N",  dna_atom::N  },
+	{ "  U",  dna_atom::U  },
+	{ " DA", dna_atom::DA },
+	{ " DC", dna_atom::DC },
+	{ " DG", dna_atom::DG },
+	{ " DT", dna_atom::DT },
+	{ " DU", dna_atom::DU }
+};
 
 /// \brief TODOCUMENT
 //const string amino_acid::UNKNOWN_AMINO_ACID_NAME("Unknown");
@@ -84,30 +97,20 @@ auto amino_acid::INDEX_OF_NAME() -> const string_size_unordered_map & {
 }
 
 /// \brief TODOCUMENT
-void amino_acid::check_is_proper_amino_acid() const {
-	if ( ! is_proper_amino_acid() ) {
-		BOOST_THROW_EXCEPTION(out_of_range_exception(
-			"Cannot use a generic amino_acid \""
-			+ ( raw_string.value_or( ""s ) )
-			+ "\" as a proper, ATOM-record amino acid"));
-	}
-}
-
-/// \brief TODOCUMENT
 void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name ///< The 1 letter code, three letter code or name to which the amino_acid should be set
                                          ) {
 	// If the argument matches any names, then set to the corresponding index and return
 	if ( arg_letter_code_or_name.length() > 3 ) {
 		const auto index_itr = INDEX_OF_NAME().find( arg_letter_code_or_name );
 		if ( index_itr != common::cend( INDEX_OF_NAME() ) ) {
-			index = index_itr->second;
+			data = index_itr->second;
 			return;
 		}
 	}
 
 	// If the argument has one character and matches any of the LETTERS, then set to the corresponding index and return
 	if ( arg_letter_code_or_name.length() == 1 ) {
-		index = get_letter_index( arg_letter_code_or_name.front() );
+		data = get_letter_index( arg_letter_code_or_name.front() );
 		return;
 	}
 
@@ -115,31 +118,19 @@ void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name /
 	if ( arg_letter_code_or_name.length() == 3 ) {
 		const auto index_itr = INDEX_OF_CODE().find( arg_letter_code_or_name );
 		if ( index_itr != common::cend( INDEX_OF_CODE() ) ) {
-			index = index_itr->second;
+			data = index_itr->second;
 			return;
 		}
 	}
 
-	// Check whether a trimmed, upper-cased version of this string is actually a residue name storing a DNA/RNA base
-	//
-	// Note: this has to come after the 1-letter check so that, for example, this doesn't reject "A"
-	//        before it gets handled as a valid alanine
-	//
-	// Note: this has to come before the throw at the end of the 3-letter-code check, so that this more informative
-	//       exception gets thrown for three letter strings like " DG"
-	const string upper_trimmed_copy = to_upper_copy(trim_copy(arg_letter_code_or_name));
-	if ( contains( DNA_RNA_RESIDUE_NAMES, upper_trimmed_copy ) ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception(
-			"Amino acid name is actually a DNA/RNA base (\""
-			+ upper_trimmed_copy
-			+ "\") rather than a valid amino acid"
-		));
-	}
-
+	// Check whether the string represents a DNA/RNA base
 	if ( arg_letter_code_or_name.length() == 3 ) {
+		if ( contains( DNA_RNA_RESIDUE_NAMES, arg_letter_code_or_name ) ) {
+			data = DNA_RNA_RESIDUE_NAMES.at( arg_letter_code_or_name );
+			return;
+		}
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Amino acid string \"" + arg_letter_code_or_name + "\" has three characters but is not a recognised code (currently case-sensitive)"));
 	}
-
 
 	// No code or name has been recognised so throw a wobbly
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Amino acid name not recognised"));

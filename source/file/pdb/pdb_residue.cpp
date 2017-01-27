@@ -58,8 +58,8 @@ using boost::none;
 char_opt cath::file::get_amino_acid_letter(const pdb_residue &arg_residue ///< The pdb_residue to query
                                            ) {
 	const amino_acid &the_amino_acid = arg_residue.get_amino_acid();
-	return the_amino_acid.is_proper_amino_acid() ? char_opt( the_amino_acid.get_letter() )
-	                                             : none;
+	return is_proper_amino_acid( the_amino_acid ) ? char_opt( the_amino_acid.get_letter() )
+	                                              : none;
 }
 
 /// \brief TODOCUMENT
@@ -88,7 +88,7 @@ residue_makeup cath::file::contains_non_proper_amino_acids(const pdb_residue &ar
 		any_of(
 			arg_residue,
 			[] (const pdb_atom &x) {
-				return ! x.get_amino_acid().is_proper_amino_acid();
+				return ! is_proper_amino_acid( x.get_amino_acid() );
 			}
 		)
 		? residue_makeup::SOME_NON_PROPER_AMINO_ACIDS

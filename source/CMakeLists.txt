@@ -969,6 +969,7 @@ set(
 set(
 	NORMSOURCES_STRUCTURE_PROTEIN
 		structure/protein/amino_acid.cpp
+		structure/protein/dna_atom.cpp
 		structure/protein/protein.cpp
 		structure/protein/protein_io.cpp
 		structure/protein/protein_list.cpp

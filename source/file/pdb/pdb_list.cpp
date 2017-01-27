@@ -40,7 +40,7 @@ using namespace cath::file;
 using namespace std;
 
 using boost::filesystem::path;
-
+using boost::irange;
 
 /// \brief Ctor from a vector<pdb>
 pdb_list::pdb_list(const pdb_vec &arg_pdbs ///< The pdbs from which this pdb_list should be constructed
@@ -202,16 +202,28 @@ residue_id_vec_vec cath::file::get_residue_ids_of_first_chains__backbone_uncheck
 	return residue_ids;
 }
 
-/// \brief TODOCUMENT
+/// \brief Get the lists of residue IDs for all chains of each of the PDBs in the specified pdb_list
 ///
 /// \relates pdb_list
-residue_id_vec_vec cath::file::get_backbone_complete_residue_ids_of_first_chains(const pdb_list &arg_pdb_list ///< TODOCUMENT
+residue_id_vec_vec cath::file::get_backbone_complete_residue_ids(const pdb_list &arg_pdb_list ///< The PDBs to query
+                                                                 ) {
+	return transform_build<residue_id_vec_vec>(
+		irange( 0_z, arg_pdb_list.size() ),
+		[&] (const size_t &x) {
+			return get_backbone_complete_residue_ids( arg_pdb_list[ x ] );
+		}
+	);
+}
+
+/// \brief Get the lists of residue IDs for the first chains of each of the PDBs in the specified pdb_list
+///
+/// \relates pdb_list
+residue_id_vec_vec cath::file::get_backbone_complete_residue_ids_of_first_chains(const pdb_list &arg_pdb_list ///< The PDBs to query
                                                                                  ) {
-	const size_t num_pdbs = arg_pdb_list.size();
-	residue_id_vec_vec residue_ids;
-	residue_ids.reserve( num_pdbs );
-	for (size_t pdb_ctr = 0; pdb_ctr < num_pdbs; ++pdb_ctr) {
-		residue_ids.push_back( arg_pdb_list[ pdb_ctr ].get_backbone_complete_residue_ids_of_first_chain() );
-	}
-	return residue_ids;
+	return transform_build<residue_id_vec_vec>(
+		irange( 0_z, arg_pdb_list.size() ),
+		[&] (const size_t &x) {
+			return get_backbone_complete_residue_ids_of_first_chain( arg_pdb_list[ x ] );
+		}
+	);
 }

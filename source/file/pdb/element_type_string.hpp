@@ -23,7 +23,10 @@
 
 #include <boost/utility/string_ref.hpp>
 
+#include "common/boost_addenda/string_ref_of_char_arr.hpp"
+#include "common/char_arr_type_aliases.hpp"
 #include "common/string/string_parse_tools.hpp"
+#include "exception/out_of_range_exception.hpp"
 #include "file/pdb/coarse_element_type.hpp"
 
 #include <string>
@@ -47,142 +50,55 @@ namespace cath {
 			/// \brief The untrimmed string describing the element type of this atom.
 			///
 			/// This is whitespace-untrimmed so that the correct whitespace can be returned whilst writing
-			std::string element_type_untrimmed;
+			char_4_arr element_type_untrimmed;
 
 			/// \brief The trimmed string describing the element type of this atom.
 			///
 			/// \todo Come C++17, replace boost::string_ref with std::string_view
-			boost::string_ref element_type;
-
-			element_type_string(const element_type_string &&,
-			                    const ptrdiff_t &,
-			                    const size_t &);
+			std::pair<char, char> trim_offsets;
 
 		public:
-			element_type_string(const std::string &);
-			element_type_string(const std::string &&);
+			element_type_string(const char_4_arr &);
 
-			element_type_string(const element_type_string &);
-			element_type_string(element_type_string &&) noexcept;
-			element_type_string & operator=(const element_type_string &);
-			element_type_string & operator=(element_type_string &&) noexcept;
+			element_type_string(const element_type_string &) = default;
+			element_type_string(element_type_string &&) noexcept = default;
+			element_type_string & operator=(const element_type_string &) = default;
+			element_type_string & operator=(element_type_string &&) noexcept = default;
 
-			const std::string & get_element_type_untrimmed() const;
-			const boost::string_ref & get_element_type() const;
+			const char_4_arr & get_element_type_untrimmed() const;
+			boost::string_ref get_element_type() const;
 		};
 
-		/// \brief Private delegation-ctor used to implement the move-ctor properly
-		inline element_type_string::element_type_string(const element_type_string &&arg_rhs,   ///< The element_type_string from which to move-construct
-		                                                const ptrdiff_t            &arg_start, ///< The start offset of the string_ref
-		                                                const size_t               &arg_length ///< The length of the string_ref
-		                                                ) : element_type_untrimmed{ std::move( arg_rhs.element_type_untrimmed ) },
-		                                                    element_type          {
-		                                                    	std::next(
-		                                                    		element_type_untrimmed.data(),
-		                                                    		arg_start
-		                                                    	),
-		                                                    	arg_length
-		                                                    } {
-		}
-
 		/// \brief Constructor from lvalue string
-		inline element_type_string::element_type_string(const std::string &arg_string ///< The source string
-		                                                ) : element_type_untrimmed{ arg_string                                             },
-		                                                    element_type          { common::dumb_trim_string_ref( element_type_untrimmed ) } {
-		}
-
-		/// \brief Constructor from rvalue string
-		inline element_type_string::element_type_string(const std::string &&arg_string ///< The source string
-		                                                ) : element_type_untrimmed{ std::move( arg_string )                                },
-		                                                    element_type          { common::dumb_trim_string_ref( element_type_untrimmed ) } {
-		}
-
-		/// \brief Copy-ctor
-		inline element_type_string::element_type_string(const element_type_string &arg_rhs ///< The element_type_string from which to copy-construct
-		                                                ) : element_type_untrimmed{ arg_rhs.element_type_untrimmed },
-		                                                    element_type          {
-		                                                    	std::next(
-		                                                    		element_type_untrimmed.data(),
-		                                                    		std::distance(
-		                                                    			arg_rhs.element_type_untrimmed.data(),
-		                                                    			arg_rhs.element_type.data()
-		                                                    		)
-		                                                    	),
-		                                                    	arg_rhs.element_type.length()
+		inline element_type_string::element_type_string(const char_4_arr &arg_string ///< The source string
+		                                                ) : element_type_untrimmed { arg_string },
+		                                                    trim_offsets {
+		                                                    	common::dumb_trim_string_ref_to_offsets<char>(
+		                                                    		common::string_of_char_arr( element_type_untrimmed )
+		                                                    	)
 		                                                    } {
-		}
-
-		/// \brief Move-ctor
-		///
-		/// A bit trickier because it seems the C++ standard doesn't guarantee that
-		/// moving a string won't invalidate iterators/pointers/references into the old one
-		inline element_type_string::element_type_string(element_type_string &&arg_rhs ///< The element_type_string from which to move-construct
-		                                                ) noexcept : element_type_string{
-		                                                              	std::move( arg_rhs ),
-		                                                              	std::distance(
-		                                                              		arg_rhs.element_type_untrimmed.data(),
-		                                                              		arg_rhs.element_type.data()
-		                                                              	),
-		                                                              	arg_rhs.element_type.length()
-		                                                              } {
-		}
-
-		/// \brief Copy-assignment operator
-		inline element_type_string & element_type_string::operator=(const element_type_string &arg_rhs ///< The element_type_string from which to copy-assign
-		                                                            ) {
-			element_type_untrimmed = arg_rhs.element_type_untrimmed;
-			element_type           = boost::string_ref{
-				std::next(
-					element_type_untrimmed.data(),
-					std::distance(
-						arg_rhs.element_type_untrimmed.data(),
-						arg_rhs.element_type.data()
-					)
-				),
-				arg_rhs.element_type.length()
-			};
-
-			// Return a reference to this element_type_string
-			return *this;
-		}
-
-		/// \brief Move-assignment operator
-		///
-		/// A bit trickier because it seems the C++ standard doesn't guarantee that
-		/// moving a string won't invalidate iterators/pointers/references into the old one
-		inline element_type_string & element_type_string::operator=(element_type_string &&arg_rhs ///< The element_type_string from which to move-assign
-		                                                            ) noexcept {
-			// Grab the start and length of the string_ref
-			const ptrdiff_t start = std::distance(
-				arg_rhs.element_type_untrimmed.data(),
-				arg_rhs.element_type.data()
-			);
-			const size_t length = arg_rhs.element_type.length();
-
-			// Move the string
-			element_type_untrimmed = std::move( arg_rhs.element_type_untrimmed );
-
-			// Update the string_ref from the newly moved string with the start and length 
-			element_type           = boost::string_ref{
-				std::next(
-					element_type_untrimmed.data(),
-					start
-				),
-				length
-			};
-
-			// Return a reference to this element_type_string
-			return *this;
+			if ( trim_offsets.first > trim_offsets.second ) {
+				BOOST_THROW_EXCEPTION(common::out_of_range_exception("Error trimming of element_type_string"));
+			}
 		}
 
 		/// \brief Getter for the original trimmed string
-		inline const std::string & element_type_string::get_element_type_untrimmed() const {
+		inline const char_4_arr & element_type_string::get_element_type_untrimmed() const {
 			return element_type_untrimmed;
 		}
 
 		/// \brief Getter for the trimmed element type string (as a string_ref)
-		inline const boost::string_ref & element_type_string::get_element_type() const {
-			return element_type;
+		inline boost::string_ref element_type_string::get_element_type() const {
+			return {
+				std::next( common::cbegin( element_type_untrimmed ), trim_offsets.first ),
+				debug_numeric_cast<size_t>( trim_offsets.second ) - debug_numeric_cast<size_t>( trim_offsets.first )
+			};
+		}
+
+		/// \brief Get the untrimmed string_ref for the specified element_type_string
+		inline boost::string_ref get_element_type_untrimmed_str_ref(const element_type_string &arg_element_type_string ///< The element_type_string to query
+		                                                            ) {
+			return common::string_ref_of_char_arr( arg_element_type_string.get_element_type_untrimmed() );
 		}
 
 		/// \brief Get the coarse_element_type corresponding to the specified trimmed element string

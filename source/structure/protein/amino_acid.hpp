@@ -23,49 +23,74 @@
 
 #include <boost/operators.hpp>
 #include <boost/optional.hpp>
+#include <boost/range/irange.hpp>
 #include <boost/throw_exception.hpp>
+#include <boost/utility/string_ref.hpp>
+#include <boost/variant.hpp>
 
 #include "common/algorithm/contains.hpp"
+#include "common/char_arr_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
 #include "file/pdb/pdb_record.hpp"
+#include "structure/protein/dna_atom.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 #include <iosfwd>
-// #include <map>
 #include <tuple>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
 namespace cath {
+	namespace detail { struct aa_code_getter; }
+	namespace detail { struct aa_type_getter; }
+
+	/// \brief Represent the type of amino_acid record
+	enum class amino_acid_type {
+		AA,      ///< A standard amino_acid amino acid record (!)
+		HETATOM, ///< A HETATM amino acid record
+		DNA      ///< A DNA/RNA amino acid record
+	};
 
 	/// \brief TODOCUMENT
 	class amino_acid final : private boost::equivalent      < amino_acid,
 	                                 boost::totally_ordered < amino_acid > > {
 	private:
+		friend detail::aa_code_getter;
+		friend detail::aa_type_getter;
+
+		/// \brief The number of chars used to store a HETATM
+		static constexpr size_t NUM_HETATM_CHARS = 3;
+
 		static const char_str_str_tpl_vec & LETTER_CODE_AND_NAME_LIST();
 
-		using char_size_unordered_map   = std::unordered_map<char,        size_t>;
-		using string_size_unordered_map = std::unordered_map<std::string, size_t>;
+		using char_size_unordered_map   = std::unordered_map<char,        uint>;
+		using string_size_unordered_map = std::unordered_map<std::string, uint>;
 
 		static const char_size_unordered_map   & INDEX_OF_LETTER();
 		static const string_size_unordered_map & INDEX_OF_CODE();
 		static const string_size_unordered_map & INDEX_OF_NAME();
 
-		/// \brief The optional raw string for amino acids from HETATM records
-		str_opt raw_string;
+		using aa_variant_t     = uint;
+		using hetatm_variant_t = std::array<char, NUM_HETATM_CHARS>;
+		using dna_variant_t    = dna_atom;
 
-		/// \brief TODOCUMENT
-		size_opt index;
+		/// \brief The data for the amino acid, one of three different types in the variant
+		boost::variant<
+			aa_variant_t,
+			hetatm_variant_t,
+			dna_variant_t
+		> data;
 
-		template <typename T, size_t I> static std::unordered_map<T, size_t> build_index_unordered_map();
+		template <typename T, size_t I> static std::unordered_map<T, uint> build_index_unordered_map();
 		template <typename T, size_t I> static T get_label(const size_t &);
 
-		size_t get_letter_index(const char &);
+		static uint get_letter_index(const char &);
 		void set_letter_code_or_name(const std::string &);
 
-		void check_is_proper_amino_acid() const;
+		const aa_variant_t & check_is_proper_amino_acid() const;
 
 	public:
 		amino_acid(const std::string &,
@@ -73,9 +98,9 @@ namespace cath {
 		explicit amino_acid(const std::string &);
 		explicit amino_acid(const char &);
 
-		bool is_proper_amino_acid() const;
+		amino_acid_type get_type() const;
 
-		const str_opt & get_raw_string() const;
+		const char_3_arr & get_hetatm_chars() const;
 
 		char        get_letter() const;
 		std::string get_code() const;
@@ -125,9 +150,9 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	template <typename T, size_t I>
-	inline std::unordered_map<T, size_t> amino_acid::build_index_unordered_map() {
-		std::unordered_map<T, size_t> index_map;
-		for (size_t amino_acid_ctr = 0; amino_acid_ctr < LETTER_CODE_AND_NAME_LIST().size(); ++amino_acid_ctr) {
+	inline std::unordered_map<T, uint> amino_acid::build_index_unordered_map() {
+		std::unordered_map<T, uint> index_map;
+		for (const uint &amino_acid_ctr : boost::irange( 0u, static_cast<uint>( LETTER_CODE_AND_NAME_LIST().size() ) ) ) {
 			const T &amino_acid_label = std::get<I>( LETTER_CODE_AND_NAME_LIST()[ amino_acid_ctr ] );
 			index_map.insert( std::make_pair( amino_acid_label, amino_acid_ctr ) );
 		}
@@ -145,8 +170,8 @@ namespace cath {
 	}
 
 	/// \brief TODOCUMENT
-	inline size_t amino_acid::get_letter_index(const char &arg_letter ///< The 1 letter code
-	                                           ) {
+	inline uint amino_acid::get_letter_index(const char &arg_letter ///< The 1 letter code
+	                                         ) {
 		const auto index_itr = INDEX_OF_LETTER().find( arg_letter );
 		if ( index_itr == common::cend( INDEX_OF_LETTER() ) ) {
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
@@ -154,6 +179,16 @@ namespace cath {
 			));
 		}
 		return index_itr->second;
+	}
+
+	/// \brief Check that this is a proper amino acid (rather than a HETATM record or DNA/RNA pseudo-amino-acid)
+	///        and throw an exception if not, otherwise return the index value
+	inline auto amino_acid::check_is_proper_amino_acid() const -> const aa_variant_t & {
+		const aa_variant_t * const aa_ptr = boost::get<aa_variant_t>( &data );
+		if ( aa_ptr == nullptr ) {
+			BOOST_THROW_EXCEPTION(common::out_of_range_exception("Cannot use a generic HETATM amino_acid or DNA value as a proper, ATOM-record amino acid"));
+		}
+		return *aa_ptr;
 	}
 
 	/// \brief Ctor for amino_acid
@@ -175,7 +210,11 @@ namespace cath {
 					set_letter_code_or_name( arg_string );
 				}
 				else {
-					raw_string = arg_string;
+					data = char_3_arr{ {
+						arg_string[ 0 ],
+						arg_string[ 1 ],
+						arg_string[ 2 ]
+					} };
 				}
 				break;
 			}
@@ -185,41 +224,92 @@ namespace cath {
 				));
 			}
 		}
-		assert(   raw_string ||   index );
-		assert( ! raw_string || ! index );
 	}
 
 	/// \brief Ctor for amino_acid
 	inline amino_acid::amino_acid(const char &arg_letter ///< The 1 letter code
-	                              ) : index{ get_letter_index( arg_letter ) } {
+	                              ) : data{ get_letter_index( arg_letter ) } {
 	}
 
-	/// \brief TODOCUMENT
-	inline bool amino_acid::is_proper_amino_acid() const {
-		return static_cast<bool>( index );
+	namespace detail {
+
+		/// \brief A visitor to get the amino_acid_type from the variant in amino_acid
+		struct aa_type_getter : public boost::static_visitor<amino_acid_type> {
+			amino_acid_type operator()(const amino_acid::aa_variant_t     &) const {
+				return amino_acid_type::AA;
+			}
+			amino_acid_type operator()(const amino_acid::hetatm_variant_t &) const {
+				return amino_acid_type::HETATOM;
+			}
+			amino_acid_type operator()(const amino_acid::dna_variant_t    &) const {
+				return amino_acid_type::DNA;
+			}
+		};
+
+		/// \brief A visitor to get the three-letter code from the variant in amino_acid
+		struct aa_code_getter : public boost::static_visitor<std::string> {
+			std::string operator()(const amino_acid::aa_variant_t     &x) const {
+				return amino_acid::get_label<std::string, 1>( x );
+			}
+			std::string operator()(const amino_acid::hetatm_variant_t &x) const {
+				return { common::cbegin( x ), common::cend( x ) };
+			}
+			std::string operator()(const amino_acid::dna_variant_t    &x) const {
+				return to_three_char_str( x );
+			}
+		};
 	}
 
-	/// \brief Getter for the optional raw string for amino acids from HETATM records
-	inline const str_opt & amino_acid::get_raw_string() const {
-		return raw_string;
+	/// \brief Get the amino_acid_type of this amino_acid
+	inline amino_acid_type amino_acid::get_type() const {
+		return boost::apply_visitor( detail::aa_type_getter{}, data );
+	}
+
+	/// \brief Getter for the raw string for HETATM amino_acids
+	inline const char_3_arr & amino_acid::get_hetatm_chars() const {
+		const hetatm_variant_t * const raw_string_ptr = boost::get<hetatm_variant_t>( &data );
+		if ( raw_string_ptr == nullptr ) {
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to get raw_string from non-HETATM amino_acid"));
+		}
+		return *raw_string_ptr;
 	}
 
 	/// \brief TODOCUMENT
 	inline char amino_acid::get_letter() const {
-		check_is_proper_amino_acid();
-		return get_label<char, 0>( *index );
+		return get_label<char, 0>( check_is_proper_amino_acid() );
 	}
 
 	/// \brief TODOCUMENT
 	inline std::string amino_acid::get_code() const {
-		return is_proper_amino_acid() ? get_label<std::string, 1>( *index )
-		                              : *raw_string;
+		return boost::apply_visitor( detail::aa_code_getter{}, data );
 	}
 
 	/// \brief TODOCUMENT
 	inline std::string amino_acid::get_name() const {
-		check_is_proper_amino_acid();
-		return get_label<std::string, 2>( *index );
+		return get_label<std::string, 2>( check_is_proper_amino_acid() );
+	}
+
+	namespace detail {
+
+		/// \brief Make a less-than comparator for the specified amino_acid
+		inline std::tuple<uint8_t, char, char_3_arr> make_amino_acid_lt_comparator(const amino_acid &arg_aa ///< The amino_acid to query
+		                                                                           ) {
+			switch ( arg_aa.get_type() ) {
+				case ( amino_acid_type::AA ) : {
+					return { 0, arg_aa.get_letter(), char_3_arr{ { 0, 0, 0 } } };
+				}
+				case ( amino_acid_type::HETATOM ) : {
+					return { 1, 0,                   arg_aa.get_hetatm_chars()          };
+				}
+				case ( amino_acid_type::DNA ) : {
+					return { 2, 0,                   char_3_arr{ { 0, 0, 0 } } };
+				}
+				default : {
+					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of arg_aa.get_type() not recognised whilst in make_amino_acid_lt_comparator()"));
+					return {}; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
+				}
+			}
+		}
 	}
 
 	/// \brief Simple less-than operator for amino-acid
@@ -237,16 +327,17 @@ namespace cath {
 	inline bool operator<(const amino_acid &arg_amino_acid_1, ///< The first  amino acid to compare
 	                      const amino_acid &arg_amino_acid_2  ///< The second amino acid to compare
 	                      ) {
-		const auto is_proper_and_opt_letter_1 = arg_amino_acid_1.is_proper_amino_acid()
-			? std::make_pair( 0u, boost::make_optional( arg_amino_acid_1.get_letter() ) )
-			: std::make_pair( 1u, boost::none );
-		const auto is_proper_and_opt_letter_2 = arg_amino_acid_2.is_proper_amino_acid()
-			? std::make_pair( 0u, boost::make_optional( arg_amino_acid_2.get_letter() ) )
-			: std::make_pair( 1u, boost::none );
-		return
-			std::tie( is_proper_and_opt_letter_1, arg_amino_acid_1.get_raw_string() )
+		return (
+			detail::make_amino_acid_lt_comparator( arg_amino_acid_1 )
 			<
-			std::tie( is_proper_and_opt_letter_2, arg_amino_acid_2.get_raw_string() );
+			detail::make_amino_acid_lt_comparator( arg_amino_acid_2 )
+		);
+	}
+
+	/// \brief Return whether the specified amino_acid is a proper amino_acid (rather than a HETATM record or DNA/RNA pseudo-amino-acid)
+	inline bool is_proper_amino_acid(const amino_acid &arg_amino_acid ///< The amino_acid to query
+	                                 ) {
+		return ( arg_amino_acid.get_type() == amino_acid_type::AA );
 	}
 
 	std::string get_code_of_amino_acid_letter(const char &);

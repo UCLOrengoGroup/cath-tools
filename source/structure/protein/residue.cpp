@@ -520,7 +520,7 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 		//
 		// \todo Should this also handle XLE/J in the same way?
 		const bool dssp_is_unk   = ( dssp_amino_acid == amino_acid{ 'X' } );
-		const bool pdb_is_proper =   pdb_amino_acid.is_proper_amino_acid();
+		const bool pdb_is_proper = is_proper_amino_acid( pdb_amino_acid );
 		const bool pdb_is_asx    = ( pdb_amino_acid  == amino_acid{ 'B' } );
 		const bool pdb_is_glx    = ( pdb_amino_acid  == amino_acid{ 'Z' } );
 		const bool pdb_is_pyl    = ( pdb_amino_acid  == amino_acid{ 'O' } );

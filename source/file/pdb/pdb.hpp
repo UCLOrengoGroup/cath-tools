@@ -68,6 +68,7 @@ namespace cath {
 			size_t get_num_backbone_complete_residues() const;
 			size_t get_index_of_backbone_complete_index(const size_t &) const;
 
+			bool empty() const;
 			size_t get_num_residues() const;
 			const pdb_residue & get_residue_cref_of_index__backbone_unchecked(const size_t &) const;
 			void set_residues(const pdb_residue_vec &);
@@ -75,7 +76,6 @@ namespace cath {
 
 			const pdb_residue & get_residue_cref_of_backbone_complete_index(const size_t &) const;
 			geom::coord get_residue_ca_coord_of_backbone_complete_index(const size_t &) const;
-			residue_id_vec get_backbone_complete_residue_ids_of_first_chain(const bool & = true) const;
 
 			/// \brief TODOCUMENT
 			using const_iterator = pdb_residue_vec::const_iterator;
@@ -83,6 +83,10 @@ namespace cath {
 			const_iterator begin() const;
 			const_iterator end() const;
 		};
+
+		residue_id_vec get_backbone_complete_residue_ids_of_first_chain(const pdb &,
+		                                                                const bool & = true);
+		residue_id_vec get_backbone_complete_residue_ids(const pdb &);
 
 		pdb read_pdb_file(const boost::filesystem::path &);
 
@@ -119,6 +123,12 @@ namespace cath {
 
 		size_set get_protein_res_indices_that_dssp_might_skip(const pdb &,
 		                                                      const ostream_ref_opt & = boost::none);
+
+		/// \brief Get whether this PDB is empty of residues
+		inline bool pdb::empty() const {
+			return pdb_residues.empty();
+		}
+
 
 		/// \brief Get the number of residues held in this pdb
 		inline size_t pdb::get_num_residues() const {

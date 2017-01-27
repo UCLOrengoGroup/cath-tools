@@ -83,6 +83,8 @@ namespace cath {
 
 		residue_id_vec_vec get_residue_ids_of_first_chains__backbone_unchecked(const pdb_list &);
 
+		residue_id_vec_vec get_backbone_complete_residue_ids(const pdb_list &);
+
 		residue_id_vec_vec get_backbone_complete_residue_ids_of_first_chains(const pdb_list &);
 	} // namespace file
 } // namespace cath

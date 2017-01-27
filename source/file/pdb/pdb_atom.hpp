@@ -49,54 +49,65 @@ namespace cath {
 		class pdb_atom final {
 		private:
 			/// \brief TODOCUMENT
-			pdb_record  record_type;
+			geom::coord         atom_coord;
 
 			/// \brief TODOCUMENT
-			size_t      atom_serial;
+			amino_acid          the_amino_acid;
 
 			/// \brief TODOCUMENT
 			element_type_string the_element_type;
 
 			/// \brief TODOCUMENT
-			char        alt_locn;
+			pdb_record          record_type;
 
 			/// \brief TODOCUMENT
-			amino_acid  the_amino_acid;
+			char                alt_locn;
 
 			/// \brief TODOCUMENT
-			geom::coord atom_coord;
+			uint                atom_serial;
 
 			/// \brief TODOCUMENT
-			double      occupancy;
+			float               occupancy;
 
 			/// \brief TODOCUMENT
-			double      temp_factor;
+			float               temp_factor;
+
+			/// \brief TODOCUMENT
+			char_2_arr          element_symbol;
+
+			/// \brief TODOCUMENT
+			char_2_arr          charge;
 
 		public:
 			pdb_atom(const pdb_record &,
-			         const size_t &,
-			         const std::string &&,
+			         const uint &,
+			         const char_4_arr &,
 			         const char &,
 			         const amino_acid &,
 			         const geom::coord &,
-			         const double &,
-			         const double &);
+			         const float &,
+			         const float &,
+			         const char_2_arr &,
+			         const char_2_arr &);
 
 			const pdb_record & get_record_type() const;
-			const size_t & get_atom_serial() const;
-			const std::string & get_element_type_untrimmed() const;
-			const boost::string_ref & get_element_type() const;
+			const uint & get_atom_serial() const;
+			const char_4_arr & get_element_type_untrimmed() const;
+			boost::string_ref get_element_type() const;
 			const char & get_alt_locn() const;
 			const amino_acid & get_amino_acid() const;
 			const geom::coord & get_coord() const;
-			const double & get_occupancy() const;
-			const double & get_temp_factor() const;
+			const float & get_occupancy() const;
+			const float & get_temp_factor() const;
+			const char_2_arr & get_element_symbol() const;
+			const char_2_arr & get_charge() const;
 
 			void rotate(const geom::rotation &);
 			void operator+=(const geom::coord &);
 			void operator-=(const geom::coord &);
 		};
 
+		boost::string_ref get_element_type_untrimmed_str_ref(const pdb_atom &);
 		coarse_element_type get_coarse_element_type(const pdb_atom &);
 		char get_amino_acid_letter(const pdb_atom &);
 		std::string get_amino_acid_code(const pdb_atom &);
@@ -107,27 +118,35 @@ namespace cath {
 		std::ostream & write_pdb_file_entry(std::ostream &,
 		                                    const residue_id &,
 		                                    const pdb_atom &);
+		std::string to_pdb_file_entry(const residue_id &,
+		                              const pdb_atom &);
 		bool alt_locn_is_dssp_accepted(const pdb_atom &);
 		std::ostream & operator<<(std::ostream &,
 		                          const pdb_atom &);
+		boost::string_ref get_element_symbol_str_ref(const pdb_atom &);
+		boost::string_ref get_charge_str_ref(const pdb_atom &);
 
 		/// \brief Ctor for pdb_atom
-		inline pdb_atom::pdb_atom(const pdb_record   &arg_record_type,  ///< TODOCUMENT
-		                          const size_t       &arg_atom_serial,  ///< TODOCUMENT
-		                          const std::string &&arg_element_type, ///< TODOCUMENT
-		                          const char         &arg_alt_locn,     ///< TODOCUMENT
-		                          const amino_acid   &arg_amino_acid,   ///< TODOCUMENT
-		                          const geom::coord  &arg_coord,        ///< TODOCUMENT
-		                          const double       &arg_occupancy,    ///< TODOCUMENT
-		                          const double       &arg_temp_factor   ///< TODOCUMENT
-		                          ) : record_type     ( arg_record_type               ),
-		                              atom_serial     ( arg_atom_serial               ),
-		                              the_element_type( std::move( arg_element_type ) ),
-		                              alt_locn        ( arg_alt_locn                  ),
-		                              the_amino_acid  ( arg_amino_acid                ),
-		                              atom_coord      ( arg_coord                     ),
-		                              occupancy       ( arg_occupancy                 ),
-		                              temp_factor     ( arg_temp_factor               ) {
+		inline pdb_atom::pdb_atom(const pdb_record   &arg_record_type,    ///< TODOCUMENT
+		                          const uint         &arg_atom_serial,    ///< TODOCUMENT
+		                          const char_4_arr   &arg_element_type,   ///< TODOCUMENT
+		                          const char         &arg_alt_locn,       ///< TODOCUMENT
+		                          const amino_acid   &arg_amino_acid,     ///< TODOCUMENT
+		                          const geom::coord  &arg_coord,          ///< TODOCUMENT
+		                          const float        &arg_occupancy,      ///< TODOCUMENT
+		                          const float        &arg_temp_factor,    ///< TODOCUMENT
+		                          const char_2_arr   &arg_element_symbol, ///< TODOCUMENT
+		                          const char_2_arr   &arg_charge          ///< TODOCUMENT
+		                          ) : atom_coord      ( arg_coord          ),
+		                              the_amino_acid  ( arg_amino_acid     ),
+		                              the_element_type( arg_element_type   ),
+		                              record_type     ( arg_record_type    ),
+		                              alt_locn        ( arg_alt_locn       ),
+		                              atom_serial     ( arg_atom_serial    ),
+		                              occupancy       ( arg_occupancy      ),
+		                              temp_factor     ( arg_temp_factor    ),
+		                              element_symbol  ( arg_element_symbol ),
+		                              charge          ( arg_charge         ) {
 			if ( ! boost::math::isfinite( occupancy ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Argument occupancy must be a normal, finite floating-point number"));
 			}
@@ -142,17 +161,17 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline const size_t & pdb_atom::get_atom_serial() const {
+		inline const uint & pdb_atom::get_atom_serial() const {
 			return atom_serial;
 		}
 
 		/// \brief TODOCUMENT
-		inline const std::string & pdb_atom::get_element_type_untrimmed() const {
+		inline const char_4_arr & pdb_atom::get_element_type_untrimmed() const {
 			return the_element_type.get_element_type_untrimmed();
 		}
 
 		/// \brief TODOCUMENT
-		inline const boost::string_ref & pdb_atom::get_element_type() const {
+		inline boost::string_ref pdb_atom::get_element_type() const {
 			return the_element_type.get_element_type();
 		}
 
@@ -172,13 +191,29 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline const double & pdb_atom::get_occupancy() const {
+		inline const float & pdb_atom::get_occupancy() const {
 			return occupancy;
 		}
 
 		/// \brief TODOCUMENT
-		inline const double & pdb_atom::get_temp_factor() const {
+		inline const float & pdb_atom::get_temp_factor() const {
 			return temp_factor;
+		}
+
+		/// \brief Getter for the element symbol characters
+		inline const char_2_arr & pdb_atom::get_element_symbol() const {
+			return element_symbol;
+		}
+
+		/// \brief Getter for the charge characters
+		inline const char_2_arr & pdb_atom::get_charge() const {
+			return charge;
+		}
+
+		/// \brief Get a string_ref for the untrimmed element type of the specified pdb_atom
+		inline boost::string_ref get_element_type_untrimmed_str_ref(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+		                                                            ) {
+			return common::string_ref_of_char_arr( arg_pdb_atom.get_element_type_untrimmed() );
 		}
 
 		/// \brief Get the coarse_element_type corresponding to the specified pdb_atom
@@ -325,21 +360,21 @@ namespace cath {
 			try {
 				                                                                                                                       // Comments with PDB format documentation
 				                                                                                                                       // (http://www.wwpdb.org/documentation/format33/sect9.html#ATOM)
-				const pdb_record       record_type =      pdb_rec_of_six_chars_in_string( arg_pdb_atom_record_string                ); //  1 -  6        Record name   "ATOM  "
-				const size_t           serial      =  common::parse_ulong_from_substring( arg_pdb_atom_record_string,         6, 5  ); //  7 - 11        Integer       serial       Atom  serial number.
-				      std::string      element     =                                      arg_pdb_atom_record_string.substr( 12, 4  ); // 13 - 16        Atom          name         Atom name.
-				const char            &alt_locn    =                                      arg_pdb_atom_record_string.at(     16     ); // 17             Character     altLoc       Alternate location indicator.
-		//		const std::string      the_a_a     =                                      arg_pdb_atom_record_string.substr( 17, 3  ); // 18 - 20        Residue name  resName      Residue name.
-				const char            &chain_char  =                                      arg_pdb_atom_record_string.at(     21     ); // 22             Character     chainID      Chain identifier.
-				const int              res_num     =    common::parse_int_from_substring( arg_pdb_atom_record_string,        22, 4  ); // 23 - 26        Integer       resSeq       Residue sequence number.
-				const char            &insert_code =                                      arg_pdb_atom_record_string.at    ( 26     ); // 27             AChar         iCode        Code for insertion of residues.
-				const double           coord_x     = common::parse_double_from_substring( arg_pdb_atom_record_string,        30, 8  ); // 31 - 38        Real(8.3)     x            Orthogonal coordinates for X in Angstroms.
-				const double           coord_y     = common::parse_double_from_substring( arg_pdb_atom_record_string,        38, 8  ); // 39 - 46        Real(8.3)     y            Orthogonal coordinates for Y in Angstroms.
-				const double           coord_z     = common::parse_double_from_substring( arg_pdb_atom_record_string,        46, 8  ); // 47 - 54        Real(8.3)     z            Orthogonal coordinates for Z in Angstroms.
-				const double           occupancy   = common::parse_double_from_substring( arg_pdb_atom_record_string,        54, 6  ); // 55 - 60        Real(6.2)     occupancy    Occupancy.
-				const double           temp_factor = common::parse_double_from_substring( arg_pdb_atom_record_string,        60, 6  ); // 61 - 66        Real(6.2)     tempFactor   Temperature  factor.
-		//		const std::string      element     =                           trim_copy( arg_pdb_atom_record_string.substr( 76, 3 ));  // 77 - 78        LString(2)    element      Element symbol, right-justified.
-		//		const std::string      charge      =                           trim_copy( arg_pdb_atom_record_string.substr( 78, 2 ));  // 79 - 80        LString(2)    charge       Charge  on the atom.
+				const pdb_record       record_type =       pdb_rec_of_six_chars_in_string( arg_pdb_atom_record_string                ); //  1 -  6        Record name   "ATOM  "
+				const uint             serial      =    common::parse_uint_from_substring( arg_pdb_atom_record_string,         6, 5  ); //  7 - 11        Integer       serial       Atom  serial number.
+				const char_4_arr       element     = common::get_char_arr_of_substring<4>( arg_pdb_atom_record_string,        12     ); // 13 - 16        Atom          name         Atom name.
+				const char            &alt_locn    =                                       arg_pdb_atom_record_string.at(     16     ); // 17             Character     altLoc       Alternate location indicator.
+		//		const std::string      the_a_a     =                                       arg_pdb_atom_record_string.substr( 17, 3  ); // 18 - 20        Residue name  resName      Residue name.
+				const char            &chain_char  =                                       arg_pdb_atom_record_string.at(     21     ); // 22             Character     chainID      Chain identifier.
+				const int              res_num     =     common::parse_int_from_substring( arg_pdb_atom_record_string,        22, 4  ); // 23 - 26        Integer       resSeq       Residue sequence number.
+				const char            &insert_code =                                       arg_pdb_atom_record_string.at    ( 26     ); // 27             AChar         iCode        Code for insertion of residues.
+				const double           coord_x     =  common::parse_double_from_substring( arg_pdb_atom_record_string,        30, 8  ); // 31 - 38        Real(8.3)     x            Orthogonal coordinates for X in Angstroms.
+				const double           coord_y     =  common::parse_double_from_substring( arg_pdb_atom_record_string,        38, 8  ); // 39 - 46        Real(8.3)     y            Orthogonal coordinates for Y in Angstroms.
+				const double           coord_z     =  common::parse_double_from_substring( arg_pdb_atom_record_string,        46, 8  ); // 47 - 54        Real(8.3)     z            Orthogonal coordinates for Z in Angstroms.
+				const float            occupancy   =  common::parse_float_from_substring ( arg_pdb_atom_record_string,        54, 6  ); // 55 - 60        Real(6.2)     occupancy    Occupancy.
+				const float            temp_factor =  common::parse_float_from_substring ( arg_pdb_atom_record_string,        60, 6  ); // 61 - 66        Real(6.2)     tempFactor   Temperature  factor.
+				const char_2_arr       element_sym = common::get_char_arr_of_substring<2>( arg_pdb_atom_record_string,        76     ); // 77 - 78        LString(2)    element      Element symbol, right-justified.
+				const char_2_arr       charge      = common::get_char_arr_of_substring<2>( arg_pdb_atom_record_string,        78     ); // 79 - 80        LString(2)    charge       Charge  on the atom.
 
 				return {
 					residue_id{
@@ -349,12 +384,14 @@ namespace cath {
 					pdb_atom(
 						record_type,
 						serial,
-						std::move( element ),
+						element,
 						alt_locn,
 						arg_amino_acid,
 						geom::coord{ coord_x, coord_y, coord_z },
 						occupancy,
-						temp_factor
+						temp_factor,
+						element_sym,
+						charge
 					)
 				};
 			}
@@ -378,6 +415,22 @@ namespace cath {
 				arg_pdb_atom_record_string,
 				parse_amino_acid_from_pdb_atom_record( arg_pdb_atom_record_string )
 			);
+		}
+
+		/// \brief Get a string_ref to (the non-null part of) the specified pdb_atom's element_symbol string
+		///
+		/// \relates pdb_atom
+		inline boost::string_ref get_element_symbol_str_ref(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+		                                                    ) {
+			return common::string_ref_of_null_term_char_arr( arg_pdb_atom.get_element_symbol() );
+		}
+
+		/// \brief Get a string_ref to (the non-null part of) the specified pdb_atom's charge string
+		///
+		/// \relates pdb_atom
+		inline boost::string_ref get_charge_str_ref(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+		                                            ) {
+			return common::string_ref_of_null_term_char_arr( arg_pdb_atom.get_charge() );
 		}
 
 	} // namespace file

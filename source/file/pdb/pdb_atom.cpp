@@ -100,35 +100,58 @@ ostream & cath::file::write_pdb_file_entry(ostream          &arg_os,      ///< T
 	// Output the entry to a temporary ostringstream
 	// (to avoid needlessly messing around with the formatting options of the ostream)
 	ostringstream atom_ss;
-                                                                       // Comments with PDB format documentation
-                                                                       // (http://www.wwpdb.org/documentation/format33/sect9.html#ATOM)
+                                                                                // Comments with PDB format documentation
+                                                                                // (http://www.wwpdb.org/documentation/format33/sect9.html#ATOM)
 	atom_ss << left;
-	atom_ss << setw( 6 ) << arg_pdb_atom.get_record_type();            //  1 -  6        Record name   "ATOM  " or "HETATM"
+	atom_ss << setw( 6 ) << arg_pdb_atom.get_record_type();                     //  1 -  6        Record name   "ATOM  " or "HETATM"
 	atom_ss << right;
-	atom_ss << setw( 5 ) << arg_pdb_atom.get_atom_serial();            //  7 - 11        Integer       serial       Atom  serial number.
+	atom_ss << setw( 5 ) << arg_pdb_atom.get_atom_serial();                     //  7 - 11        Integer       serial       Atom  serial number.
 	atom_ss << " ";
-	atom_ss << setw( 4 ) << arg_pdb_atom.get_element_type_untrimmed(); // 13 - 16        Atom          name         Atom name.
-	atom_ss <<              arg_pdb_atom.get_alt_locn();               // 17             Character     altLoc       Alternate location indicator.
-	atom_ss <<              get_amino_acid_code( arg_pdb_atom );       // 18 - 20        Residue name  resName      Residue name.
+	atom_ss << setw( 4 ) << get_element_type_untrimmed_str_ref( arg_pdb_atom ); // 13 - 16        Atom          name         Atom name.
+	atom_ss <<              arg_pdb_atom.get_alt_locn();                        // 17             Character     altLoc       Alternate location indicator.
+	atom_ss <<              get_amino_acid_code( arg_pdb_atom );                // 18 - 20        Residue name  resName      Residue name.
 	atom_ss << " ";
-	atom_ss << arg_res_id.get_chain_label();                           // 22             Character     chainID      Chain identifier.
-	                                                                   // 23 - 26        Integer       resSeq       Residue sequence number.
-	atom_ss << setw( 5 ) << residue_name_with_insert_or_space;         // 27             AChar         iCode        Code for insertion of residues.
+	atom_ss << arg_res_id.get_chain_label();                                    // 22             Character     chainID      Chain identifier.
+	                                                                            // 23 - 26        Integer       resSeq       Residue sequence number.
+	atom_ss << setw( 5 ) << residue_name_with_insert_or_space;                  // 27             AChar         iCode        Code for insertion of residues.
 	atom_ss << "   ";
 	atom_ss << fixed     << setprecision( 3 );
-	atom_ss << setw( 8 ) << atom_coord.get_x();                        // 31 - 38        Real(8.3)     x            Orthogonal coordinates for X in Angstroms.
-	atom_ss << setw( 8 ) << atom_coord.get_y();                        // 39 - 46        Real(8.3)     y            Orthogonal coordinates for Y in Angstroms.
-	atom_ss << setw( 8 ) << atom_coord.get_z();                        // 47 - 54        Real(8.3)     z            Orthogonal coordinates for Z in Angstroms.
+	atom_ss << setw( 8 ) << atom_coord.get_x();                                 // 31 - 38        Real(8.3)     x            Orthogonal coordinates for X in Angstroms.
+	atom_ss << setw( 8 ) << atom_coord.get_y();                                 // 39 - 46        Real(8.3)     y            Orthogonal coordinates for Y in Angstroms.
+	atom_ss << setw( 8 ) << atom_coord.get_z();                                 // 47 - 54        Real(8.3)     z            Orthogonal coordinates for Z in Angstroms.
 	atom_ss << fixed     << setprecision( 2 );
-	atom_ss << setw( 6 ) << arg_pdb_atom.get_occupancy();              // 55 - 60        Real(6.2)     occupancy    Occupancy.
-	atom_ss << setw( 6 ) << arg_pdb_atom.get_temp_factor();            // 61 - 66        Real(6.2)     tempFactor   Temperature  factor.
-	                                                                   // 77 - 78        LString(2)    element      Element symbol, right-justified.
-	                                                                   // 79 - 80        LString(2)    charge       Charge  on the atom.
+	atom_ss << setw( 6 ) << arg_pdb_atom.get_occupancy();                       // 55 - 60        Real(6.2)     occupancy    Occupancy.
+	atom_ss << setw( 6 ) << arg_pdb_atom.get_temp_factor();                     // 61 - 66        Real(6.2)     tempFactor   Temperature  factor.
+	const auto element_sym_strref = get_element_symbol_str_ref( arg_pdb_atom ); // 77 - 78        LString(2)    element      Element symbol, right-justified.
+	const auto charge_strref      = get_charge_str_ref        ( arg_pdb_atom ); // 79 - 80        LString(2)    charge       Charge  on the atom.
+
+	if ( ! element_sym_strref.empty() || ! charge_strref.empty() ) {
+		atom_ss << "          ";
+		atom_ss << right << setw( 2 ) << ( element_sym_strref.empty() ? "  "s : element_sym_strref.to_string() );
+		if ( ! charge_strref.empty() ) {
+			atom_ss << charge_strref;
+		}
+	}
 
 	// Output the result to the ostream and return it
 	arg_os << atom_ss.str();
 	return arg_os;
 }
+
+
+/// \brief Generate a PDB file entry string for the specified residue_id and pdb_atom
+///
+/// \todo Change so that write_pdb_file_entry() calls this rather than vice versa
+///
+/// \relates pdb_atom
+std::string cath::file::to_pdb_file_entry(const residue_id &arg_res_id,  ///< The residue_id to use in the PDB file entry string
+                                          const pdb_atom   &arg_pdb_atom ///< The pdb_atom to use in the PDB file entry string
+                                          ) {
+	std::ostringstream output_ss;
+	write_pdb_file_entry( output_ss, arg_res_id, arg_pdb_atom );
+	return output_ss.str();
+}
+
 
 /// \brief TODOCUMENT
 ///

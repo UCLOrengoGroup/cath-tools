@@ -33,36 +33,6 @@ using std::string;
 
 BOOST_AUTO_TEST_SUITE(element_type_string_test_suite)
 
-BOOST_AUTO_TEST_CASE(copy_constructs) {
-	auto first_ptr = common::make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
-	element_type_string second{ *first_ptr };
-	first_ptr.reset();
-	BOOST_CHECK_EQUAL( second.get_element_type(), "me_to_the_bridge" );
-}
-
-BOOST_AUTO_TEST_CASE(move_constructs) {
-	auto first_ptr = common::make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
-	element_type_string second{ move( *first_ptr ) };
-	first_ptr.reset();
-	BOOST_CHECK_EQUAL( second.get_element_type(), "me_to_the_bridge" );
-}
-
-BOOST_AUTO_TEST_CASE(copy_assigns) {
-	auto first_ptr = common::make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
-	element_type_string second{ string{ "  so_long_my_fatal_friend  "} };
-	second = *first_ptr;
-	first_ptr.reset();
-	BOOST_CHECK_EQUAL( second.get_element_type(), "me_to_the_bridge" );
-}
-
-BOOST_AUTO_TEST_CASE(move_assigns) {
-	auto first_ptr = common::make_unique<element_type_string>( string{ "  me_to_the_bridge  " } );
-	element_type_string second{ string{ "  so_long_my_fatal_friend  "} };
-	second = move( *first_ptr );
-	first_ptr.reset();
-	BOOST_CHECK_EQUAL( second.get_element_type(), "me_to_the_bridge" );
-}
-
 BOOST_AUTO_TEST_CASE(get_coarse_element_type_works) {
 	BOOST_CHECK_EQUAL( get_coarse_element_type( "C"   ), coarse_element_type::CARBON       );
 	BOOST_CHECK_EQUAL( get_coarse_element_type( "CA"  ), coarse_element_type::CARBON_ALPHA );
@@ -73,6 +43,19 @@ BOOST_AUTO_TEST_CASE(get_coarse_element_type_works) {
 	BOOST_CHECK_EQUAL( get_coarse_element_type( ""    ), coarse_element_type::NON_CORE     );
 	BOOST_CHECK_EQUAL( get_coarse_element_type( "CAA" ), coarse_element_type::NON_CORE     );
 	BOOST_CHECK_EQUAL( get_coarse_element_type( "BR"  ), coarse_element_type::NON_CORE     );
+}
+
+BOOST_AUTO_TEST_CASE(get_coarse_element_type_of_element_type_string) {
+	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', 'A', ' ' } } } ), coarse_element_type::CARBON_ALPHA );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', 'A', ' ' } } } ), coarse_element_type::CARBON_ALPHA );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', ' ', ' ' } } } ), coarse_element_type::CARBON       );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', 'A', ' ' } } } ), coarse_element_type::CARBON_ALPHA );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', 'B', ' ' } } } ), coarse_element_type::CARBON_BETA  );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'N', ' ', ' ' } } } ), coarse_element_type::NITROGEN     );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'O', ' ', ' ' } } } ), coarse_element_type::OXYGEN       );
+
+	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', 'A', 'A' } } } ), coarse_element_type::NON_CORE     );
+	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'B', 'R', ' ' } } } ), coarse_element_type::NON_CORE     );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

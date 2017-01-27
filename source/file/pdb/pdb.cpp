@@ -36,6 +36,7 @@
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/range/adaptor/adjacented.hpp"
+#include "common/boost_addenda/range/front.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
@@ -141,7 +142,7 @@ void pdb::do_set_chain_label(const chain_label &arg_chain_label ///< TODOCUMENT
 
 /// \brief TODOCUMENT
 residue_id_vec pdb::do_get_residue_ids_of_first_chain__backbone_unchecked() const {
-	return get_backbone_complete_residue_ids_of_first_chain( false );
+	return get_backbone_complete_residue_ids_of_first_chain( *this, false );
 }
 
 /// \brief TODOCUMENT
@@ -237,22 +238,37 @@ coord pdb::get_residue_ca_coord_of_backbone_complete_index(const size_t &arg_bac
 	return get_residue_ca_coord_of_index__backbone_unchecked( index );
 }
 
-/// \brief TODOCUMENT
-residue_id_vec pdb::get_backbone_complete_residue_ids_of_first_chain(const bool &arg_complete_backbone_only  ///< TODOCUMENT
-                                                                     ) const {
-	residue_id_vec residue_ids;
-	residue_ids.reserve( pdb_residues.size() );
-	if ( ! pdb_residues.empty() ) {
-		const chain_label first_chain_label = get_chain_label( pdb_residues.front() );
-		for (const pdb_residue &my_pdb_residue : pdb_residues) {
-			if ( first_chain_label == get_chain_label( my_pdb_residue ) ) {
-				if ( is_backbone_complete( my_pdb_residue ) || ! arg_complete_backbone_only ) {
-					residue_ids.push_back( my_pdb_residue.get_residue_id() );
-				}
-			}
-		}
+/// \brief Get the list of residues IDs for the backbone-complete residues on first chain of the specified PDB
+residue_id_vec cath::file::get_backbone_complete_residue_ids_of_first_chain(const pdb  &arg_pdb,                   ///< The PDB to query
+                                                                            const bool &arg_complete_backbone_only ///< Whether to restrict to the backbone-complete residues
+                                                                            ) {
+	if ( arg_pdb.empty() ) {
+		return {};
 	}
-	return residue_ids;
+
+	const chain_label first_chain_label = get_chain_label( front( arg_pdb ) );
+	return transform_build<residue_id_vec>(
+		arg_pdb
+			| filtered( [&] (const pdb_residue &x) {
+				return (
+					( get_chain_label( x ) == first_chain_label )
+					&&
+					( ! arg_complete_backbone_only || is_backbone_complete( x ) )
+				);
+			} ),
+		[] (const pdb_residue &x) { return x.get_residue_id(); }
+	);
+}
+
+/// \brief Get the list of residues IDs for the backbone-complete residues on all chains of the specified PDB
+residue_id_vec cath::file::get_backbone_complete_residue_ids(const pdb &arg_pdb ///< The PDB to query
+                                                             ) {
+	return arg_pdb.empty()
+		? residue_id_vec{}
+		: transform_build<residue_id_vec>(
+			arg_pdb | filtered( is_backbone_complete ),
+			[] (const pdb_residue &x) { return x.get_residue_id(); }
+		);
 }
 
 /// \brief TODOCUMENT

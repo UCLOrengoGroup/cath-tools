@@ -182,7 +182,7 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 	// Grab some basic details
 	const alignment::size_type num_entries = min( the_alignment.num_entries(), names.size() );
 	const alignment::size_type aln_length  = the_alignment.length();
-	const residue_id_vec_vec   residue_ids = get_backbone_complete_residue_ids_of_first_chains( pdbs );
+	const residue_id_vec_vec   residue_ids = get_backbone_complete_residue_ids( pdbs );
 
 	/// ???
 	bool added_distances(false);

@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_STRING_REF_OF_CHAR_ARR_H
 #define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_STRING_REF_OF_CHAR_ARR_H
 
+#include <boost/range/algorithm/find_if.hpp>
 #include <boost/utility/string_ref.hpp>
 
 #include "common/cpp14/cbegin_cend.hpp"
@@ -35,6 +36,23 @@ namespace cath {
 		inline boost::string_ref string_ref_of_char_arr(const std::array<char, N> &arg_char_arr ///< The array of chars from which to make the string_ref
 		                                                ) {
 			return { common::cbegin( arg_char_arr ), N };
+		}
+
+		/// \brief Make a string from the specified array of chars that
+		///        may use a null to specify the end of the string
+		template <size_t N>
+		inline boost::string_ref string_ref_of_null_term_char_arr(const std::array<char, N> &arg_char_arr ///< The array of chars from which to make the string
+		                                                          ) {
+			return {
+				common::cbegin( arg_char_arr ),
+				static_cast<size_t>( std::distance(
+					common::cbegin( arg_char_arr ),
+					boost::range::find_if(
+						arg_char_arr,
+						[] (const char &x) { return ( x == 0 ); }
+					)
+				) )
+			};
 		}
 
 		/// \brief Make a string from the specified array of chars

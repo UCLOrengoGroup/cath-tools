@@ -80,10 +80,10 @@ BOOST_AUTO_TEST_CASE(throws_on_invalid_conversion) {
 }
 
 /// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(dna_and_rna_pseudo_residue_names_throw) {
+BOOST_AUTO_TEST_CASE(dna_and_rna_pseudo_residue_names_do_not_throw) {
 	const str_vec dna_and_rna_pseudo_residue_names = { "  A", "  C", "  G", "  N", "  U", " DA", " DC", " DG", " DT", " DU" };
 	for (const string &dna_and_rna_pseudo_residue_name : dna_and_rna_pseudo_residue_names) {
-		BOOST_CHECK_THROW( amino_acid the_amino_acid(dna_and_rna_pseudo_residue_name), invalid_argument_exception );
+		BOOST_CHECK_NO_THROW_DIAG( amino_acid the_amino_acid(dna_and_rna_pseudo_residue_name) );
 	}
 }
 

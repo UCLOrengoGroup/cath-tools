@@ -218,16 +218,20 @@ BOOST_AUTO_TEST_CASE(prob_hbond_to_residue_at_start_of_chain_1) {
 BOOST_AUTO_TEST_CASE(accepts_residue_with_diff_aas_in_altlocs) {
 	ostringstream test_ss;
 	const log_to_ostream_guard the_guard{ test_ss };
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "residue_with_diff_aas_in_altlocs.dssp" );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "residue_with_diff_aas_in_altlocs.dssp"            );
 	BOOST_CHECK_EQUAL( test_ss.str(), "" );
 }
 
 BOOST_AUTO_TEST_CASE(residue_name_reused_later_on_1) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "residue_name_reused_later_on_1.dssp" );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "residue_name_reused_later_on_1.dssp"              );
 }
 
 BOOST_AUTO_TEST_CASE(residue_name_reused_later_on_2) {
-	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "residue_name_reused_later_on_2.dssp" );
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "residue_name_reused_later_on_2.dssp"              );
+}
+
+BOOST_AUTO_TEST_CASE(handles_dna_records) {
+	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "has_dna_records_1.dssp"                           );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -276,15 +280,6 @@ BOOST_AUTO_TEST_SUITE_END()
 // }
 
 // BOOST_AUTO_TEST_SUITE_END()
-
-
-// Current outstanding issues:
-//
-// 10mh and many others
-// DNA chains in ATOM records
-// See https://github.com/UCLOrengoGroup/cath-tools/issues/23
-
-
 
 // BOOST_AUTO_TEST_SUITE(speed_test)
 
