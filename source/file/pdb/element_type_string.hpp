@@ -71,10 +71,10 @@ namespace cath {
 
 		/// \brief Constructor from lvalue string
 		inline element_type_string::element_type_string(const char_4_arr &arg_string ///< The source string
-		                                                ) : element_type_untrimmed { arg_string },
+		                                                ) : element_type_untrimmed( arg_string ),
 		                                                    trim_offsets {
 		                                                    	common::dumb_trim_string_ref_to_offsets<char>(
-		                                                    		common::string_of_char_arr( element_type_untrimmed )
+		                                                    		common::string_ref_of_char_arr( element_type_untrimmed )
 		                                                    	)
 		                                                    } {
 			if ( trim_offsets.first > trim_offsets.second ) {

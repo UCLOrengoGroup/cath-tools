@@ -294,15 +294,17 @@ namespace cath {
 		/// \brief Make a less-than comparator for the specified amino_acid
 		inline std::tuple<uint8_t, char, char_3_arr> make_amino_acid_lt_comparator(const amino_acid &arg_aa ///< The amino_acid to query
 		                                                                           ) {
+			/// \todo Come GCC 6 as oldest compiler, remove this type alias and just return using braces
+			using uint8_char_char_3_arr_tpl = std::tuple<uint8_t, char, char_3_arr>;
 			switch ( arg_aa.get_type() ) {
 				case ( amino_acid_type::AA ) : {
-					return { 0, arg_aa.get_letter(), char_3_arr{ { 0, 0, 0 } } };
+					return uint8_char_char_3_arr_tpl{ 0, arg_aa.get_letter(), char_3_arr{ { 0, 0, 0 } } };
 				}
 				case ( amino_acid_type::HETATOM ) : {
-					return { 1, 0,                   arg_aa.get_hetatm_chars()          };
+					return uint8_char_char_3_arr_tpl{ 1, 0,                   arg_aa.get_hetatm_chars() };
 				}
 				case ( amino_acid_type::DNA ) : {
-					return { 2, 0,                   char_3_arr{ { 0, 0, 0 } } };
+					return uint8_char_char_3_arr_tpl{ 2, 0,                   char_3_arr{ { 0, 0, 0 } } };
 				}
 				default : {
 					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of arg_aa.get_type() not recognised whilst in make_amino_acid_lt_comparator()"));
