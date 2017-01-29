@@ -96,7 +96,7 @@ residue_locating cath::chop::get_residue_locating(const residue_location &arg_re
 ///      (ie has_residue_name( arg_residue_location_a) and has_residue_name( arg_residue_location_b) )
 bool cath::chop::operator<(const residue_location &arg_residue_location_a, ///< TODOCUMENT
                            const residue_location &arg_residue_location_b  ///< TODOCUMENT
-						   ) {
+                           ) {
 	// Check pre-condition that the both residue_locations have indices
 	const bool has_residue_index_a = has_residue_index( arg_residue_location_a );
 	const bool has_residue_index_b = has_residue_index( arg_residue_location_b );

@@ -34,10 +34,10 @@ namespace cath {
 		class domain_definition;
 		class region;
 
-    	/// \brief TODOCUMENT
+		/// \brief TODOCUMENT
 		using domain_vec = std::vector<domain>;
 
-    	/// \brief TODOCUMENT
+		/// \brief TODOCUMENT
 		using region_vec = std::vector<region>;
 
 
