@@ -35,8 +35,8 @@
 #include "resolve_hits/options/options_block/crh_output_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_score_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_segment_options_block.hpp"
+#include "resolve_hits/test/resolve_hits_fixture.hpp"
 #include "test/global_test_constants.hpp"
-#include "test/resolve_hits/resolve_hits_fixture.hpp"
 
 namespace cath { namespace test { } }
 

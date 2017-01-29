@@ -490,6 +490,7 @@ set(
 		file/pdb/pdb_list.cpp
 		file/pdb/pdb_record.cpp
 		file/pdb/pdb_residue.cpp
+		file/pdb/read_domain_def_from_pdb.cpp
 )
 
 set(
@@ -1059,22 +1060,8 @@ set(
 )
 
 set(
-	NORMSOURCES_TEST_DSSP
-		test/dssp/dssp_dupl_fixture.cpp
-)
-
-set(
-	NORMSOURCES_TEST_RESOLVE_HITS
-		test/resolve_hits/resolve_hits_fixture.cpp
-)
-
-set(
 	NORMSOURCES_TEST
-		test/alignment_fixture.cpp
-		${NORMSOURCES_TEST_DSSP}
-		test/dyn_prog_score_source_fixture.cpp
 		test/global_test_constants.cpp
-		${NORMSOURCES_TEST_RESOLVE_HITS}
 )
 
 set(
@@ -1141,11 +1128,17 @@ set(
 )
 
 set(
+	TESTSOURCES_ALIGNMENT_DYN_PROG_ALIGN_TEST
+		alignment/dyn_prog_align/test/dyn_prog_score_source_fixture.cpp
+)
+
+set(
 	TESTSOURCES_ALIGNMENT_DYN_PROG_ALIGN
 		${TESTSOURCES_ALIGNMENT_DYN_PROG_ALIGN_DETAIL}
 		${TESTSOURCES_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE}
 		alignment/dyn_prog_align/ssap_code_dyn_prog_aligner_test.cpp
 		alignment/dyn_prog_align/std_dyn_prog_aligner_test.cpp
+		${TESTSOURCES_ALIGNMENT_DYN_PROG_ALIGN_TEST}
 )
 
 set(
@@ -1199,6 +1192,11 @@ set(
 )
 
 set(
+	TESTSOURCES_ALIGNMENT_TEST
+		alignment/test/alignment_fixture.cpp
+)
+
+set(
 	TESTSOURCES_ALIGNMENT_TOOLS
 		alignment/tools/alignment_breaks_test.cpp
 )
@@ -1217,6 +1215,7 @@ set(
 		${TESTSOURCES_ALIGNMENT_REFINER}
 		${TESTSOURCES_ALIGNMENT_RESIDUE_NAME_ALIGN}
 		${TESTSOURCES_ALIGNMENT_RESIDUE_SCORE}
+		${TESTSOURCES_ALIGNMENT_TEST}
 		${TESTSOURCES_ALIGNMENT_TOOLS}
 )
 
@@ -1603,6 +1602,11 @@ set(
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS_TEST
+		resolve_hits/test/resolve_hits_fixture.cpp
+)
+
+set(
 	TESTSOURCES_RESOLVE_HITS_TRIM
 		resolve_hits/trim/hit_seg_boundary_fns_test.cpp
 		resolve_hits/trim/resolve_boundary_test.cpp
@@ -1622,6 +1626,7 @@ set(
 		resolve_hits/hit_test.cpp
 		${TESTSOURCES_RESOLVE_HITS_HTML_OUTPUT}
 		${TESTSOURCES_RESOLVE_HITS_OPTIONS}
+		${TESTSOURCES_RESOLVE_HITS_TEST}
 		${TESTSOURCES_RESOLVE_HITS_TRIM}
 )
 
@@ -1849,9 +1854,15 @@ set(
 )
 
 set(
+	TESTSOURCES_STRUCTURE_SEC_STRUC_CALC_DSSP_TEST
+		structure/sec_struc_calc/dssp/test/dssp_dupl_fixture.cpp
+)
+
+set(
 	TESTSOURCES_STRUCTURE_SEC_STRUC_CALC_DSSP
 		structure/sec_struc_calc/dssp/bifur_hbond_list_test.cpp
 		structure/sec_struc_calc/dssp/dssp_hbond_calc_test.cpp
+		${TESTSOURCES_STRUCTURE_SEC_STRUC_CALC_DSSP_TEST}
 )
 
 set(
@@ -2081,6 +2092,12 @@ add_executable(
 		${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}
 )
 
+add_executable(
+	mod-test-chopping
+		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+		${TESTSOURCES_CHOPPING}
+)
+
 # add_executable(
 # 	mod-test-common
 # 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
@@ -2104,6 +2121,7 @@ target_link_libraries( cath-score-align    normsources_cath_score_align         
 target_link_libraries( cath-ssap                                                                                std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-superpose      normsources_cath_superpose                                           std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 
+target_link_libraries( mod-test-chopping                                     normsources_test                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 # target_link_libraries( mod-test-common                                     normsources_test                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 # target_link_libraries( mod-test-exception                                  normsources_test                                           normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 

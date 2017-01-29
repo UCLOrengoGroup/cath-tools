@@ -46,9 +46,6 @@ namespace cath {
 			const std::string & get_pdb_name() const;
 		};
 
-		file::pdb read_domain_from_pdb(const domain_definition &,
-		                               const opts::data_dirs_spec &);
-
 	} // namespace chop
 } // namespace cath
 

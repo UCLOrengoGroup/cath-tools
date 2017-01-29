@@ -31,6 +31,7 @@
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "file/pdb/read_domain_def_from_pdb.hpp"
 
 #include <fstream>
 

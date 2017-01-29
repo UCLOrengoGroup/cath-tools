@@ -90,9 +90,6 @@ namespace cath {
 
 		pdb read_pdb_file(const boost::filesystem::path &);
 
-		pdb read_domain_from_pdb_file(const boost::filesystem::path &,
-		                              const chop::domain &);
-
 		pdb read_pdb_file(std::istream &);
 		std::istream & read_pdb_file(std::istream &,
 		                             pdb &);

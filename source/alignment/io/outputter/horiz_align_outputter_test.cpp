@@ -22,7 +22,7 @@
 
 #include "horiz_align_outputter.hpp"
 
-#include "test/alignment_fixture.hpp"
+#include "alignment/test/alignment_fixture.hpp"
 
 #include <iostream>
 

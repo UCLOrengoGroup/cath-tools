@@ -24,8 +24,7 @@
 #include <boost/filesystem.hpp>
 
 #include "common/path_type_aliases.hpp"
-#include "structure/entry_querier/residue_querier.hpp"
-#include "structure/entry_querier/sec_struc_querier.hpp"
+#include "common/type_aliases.hpp"
 
 namespace cath {
 
@@ -45,9 +44,6 @@ namespace cath {
 		global_test_constants & operator=(const global_test_constants &) = delete;
 
 	public:
-		static const cath::residue_querier                & EXAMPLE_RESIDUE_QUERIER();
-		static const cath::sec_struc_querier              & EXAMPLE_SEC_STRUC_QUERIER();
-
 		static const boost::filesystem::path              & TEST_BASIC_FILE_TEST_DATA_DIR();
 		static const boost::filesystem::path              & TEST_MULTI_SSAP_SUPERPOSE_DIR();
 		static const boost::filesystem::path              & TEST_RESIDUE_IDS_DATA_DIR();

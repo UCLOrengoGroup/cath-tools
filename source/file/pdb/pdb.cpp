@@ -284,20 +284,6 @@ pdb cath::file::read_pdb_file(const path &arg_pdb_filename ///< TODOCUMENT
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-///
-/// \relatesalso domain
-pdb cath::file::read_domain_from_pdb_file(const path   &arg_pdb_filename, ///< TODOCUMENT
-                                          const domain &/*arg_domain*/    ///< TODOCUMENT
-                                          ) {
-	BOOST_THROW_EXCEPTION(not_implemented_exception("This is not implemented this here"));
-	pdb new_pdb;
-	new_pdb.read_file( arg_pdb_filename );
-	return new_pdb;
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb
 pdb cath::file::read_pdb_file(istream &arg_input_stream ///< TODOCUMENT
                               ) {
 	pdb new_pdb;

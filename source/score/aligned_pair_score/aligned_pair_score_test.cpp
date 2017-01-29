@@ -64,6 +64,7 @@
 #include "score/length_getter/num_aligned_length_getter.hpp"
 #include "ssap/ssap.hpp"
 #include "ssap/ssap_scores.hpp"
+#include "structure/entry_querier/residue_querier.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_list.hpp"
 #include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"

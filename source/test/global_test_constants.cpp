@@ -68,7 +68,6 @@ void global_test_constants::cleanup_temporary_files() {
 global_test_constants::global_test_constants() {
 	check_required_files_exist();
 	cleanup_temporary_files();
-	reset_ssap_global_variables();
 }
 
 /// \brief Virtual empty destructor for global_test_constants.
@@ -80,17 +79,17 @@ global_test_constants::~global_test_constants() noexcept {
 	}
 }
 
-/// \brief Provide access to a static example residue_querier
-const residue_querier & global_test_constants::EXAMPLE_RESIDUE_QUERIER() {
-	static const residue_querier example_residue_querier{};
-	return example_residue_querier;
-}
+// /// \brief Provide access to a static example residue_querier
+// const residue_querier & global_test_constants::EXAMPLE_RESIDUE_QUERIER() {
+// 	static const residue_querier example_residue_querier{};
+// 	return example_residue_querier;
+// }
 
-/// \brief Provide access to a static example sec_struc_querier
-const sec_struc_querier & global_test_constants::EXAMPLE_SEC_STRUC_QUERIER() {
-	static const sec_struc_querier example_sec_struc_querier{};
-	return example_sec_struc_querier;
-}
+// /// \brief Provide access to a static example sec_struc_querier
+// const sec_struc_querier & global_test_constants::EXAMPLE_SEC_STRUC_QUERIER() {
+// 	static const sec_struc_querier example_sec_struc_querier{};
+// 	return example_sec_struc_querier;
+// }
 
 /// \brief TODOCUMENT
 const path & global_test_constants::TEST_BASIC_FILE_TEST_DATA_DIR() {

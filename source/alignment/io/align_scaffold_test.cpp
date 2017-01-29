@@ -22,8 +22,8 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "alignment/io/align_scaffold.hpp"
+#include "alignment/test/alignment_fixture.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "test/alignment_fixture.hpp"
 
 using namespace cath::align;
 using namespace cath::common;

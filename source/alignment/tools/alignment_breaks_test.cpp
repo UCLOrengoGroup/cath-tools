@@ -29,7 +29,7 @@
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 //#include "exception/invalid_argument_exception.hpp"
-//#include "test/alignment_fixture.hpp"
+//#include "alignment/test/alignment_fixture.hpp"
 
 using namespace cath;
 using namespace cath::align;

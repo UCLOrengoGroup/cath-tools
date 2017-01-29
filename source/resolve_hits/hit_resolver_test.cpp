@@ -25,7 +25,7 @@
 #include "resolve_hits/hit_resolver.hpp"
 #include "resolve_hits/options/spec/crh_spec.hpp"
 #include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
-#include "test/resolve_hits/resolve_hits_fixture.hpp"
+#include "resolve_hits/test/resolve_hits_fixture.hpp"
 
 namespace cath { namespace test { } }
 

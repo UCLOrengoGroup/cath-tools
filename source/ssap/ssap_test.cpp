@@ -53,6 +53,9 @@ namespace cath {
 		/// setup for these tests calls reset_ssap_global_variables()
 		struct ssap_test_suite_fixture : protected global_test_constants {
 		protected:
+			ssap_test_suite_fixture() {
+				reset_ssap_global_variables();
+			}
 			~ssap_test_suite_fixture() noexcept = default;
 
 		public:

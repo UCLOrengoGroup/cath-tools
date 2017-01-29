@@ -140,6 +140,12 @@ add_executable(
 		${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}
 )
 
+add_executable(
+	mod-test-chopping
+		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+		${TESTSOURCES_CHOPPING}
+)
+
 # add_executable(
 # 	mod-test-common
 # 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
@@ -163,6 +169,7 @@ target_link_libraries( cath-score-align    normsources_cath_score_align         
 target_link_libraries( cath-ssap                                                                                std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-superpose      normsources_cath_superpose                                           std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 
+target_link_libraries( mod-test-chopping                                     normsources_test                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 # target_link_libraries( mod-test-common                                     normsources_test                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 # target_link_libraries( mod-test-exception                                  normsources_test                                           normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 

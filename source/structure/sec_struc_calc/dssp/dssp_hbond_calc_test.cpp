@@ -38,7 +38,7 @@
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
-#include "test/dssp/dssp_dupl_fixture.hpp"
+#include "structure/sec_struc_calc/dssp/test/dssp_dupl_fixture.hpp"
 #include "test/global_test_constants.hpp"
 // #include "common/chrono/duration_to_seconds_string.hpp"
 

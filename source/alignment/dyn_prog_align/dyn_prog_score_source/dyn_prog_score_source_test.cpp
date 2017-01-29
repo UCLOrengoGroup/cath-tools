@@ -28,8 +28,8 @@
 #include "alignment/dyn_prog_align/dyn_prog_score_source/mask_dyn_prog_score_source.hpp"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/old_matrix_dyn_prog_score_source.hpp"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.hpp"
+#include "alignment/dyn_prog_align/test/dyn_prog_score_source_fixture.hpp"
 #include "common/size_t_literal.hpp"
-#include "test/dyn_prog_score_source_fixture.hpp"
 
  using namespace cath::align;
  using namespace cath::common;

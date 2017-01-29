@@ -1,5 +1,5 @@
 /// \file
-/// \brief The domain_definition class definitions
+/// \brief The read_domain_def_from_pdb header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,30 +18,27 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "domain_definition.hpp"
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_DOMAIN_READ_DOMAIN_DEF_FROM_PDB_H
+#define _CATH_TOOLS_SOURCE_CHOPPING_DOMAIN_READ_DOMAIN_DEF_FROM_PDB_H
 
 #include <boost/filesystem/path.hpp>
 
-using namespace boost::filesystem;
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::file;
-using namespace cath::opts;
-using namespace std;
+#include "chopping/domain/domain.hpp"
 
-/// \brief Ctor for domain_definition
-domain_definition::domain_definition(const domain &arg_domain,  ///< TODOCUMENT
-                                     const string &arg_pdb_name ///< TODOCUMENT
-                                     ) : the_domain( arg_domain   ),
-                                         pdb_name  ( arg_pdb_name ) {
-}
+namespace cath { namespace chop { class domain_definition; } }
+namespace cath { namespace opts { class data_dirs_spec; } }
+namespace cath { namespace file { class pdb; } }
 
-/// \brief TODOCUMENT
-const domain & domain_definition::get_domain() const {
-	return the_domain;
-}
+namespace cath {
+	namespace file {
 
-/// \brief TODOCUMENT
-const string & domain_definition::get_pdb_name() const {
-	return pdb_name;
-}
+		pdb read_domain_from_pdb(const chop::domain_definition &,
+		                         const opts::data_dirs_spec &);
+
+		pdb read_domain_from_pdb_file(const boost::filesystem::path &,
+		                              const chop::domain &);
+
+	} // namespace chop
+} // namespace cath
+
+#endif
