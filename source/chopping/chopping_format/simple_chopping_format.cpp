@@ -107,7 +107,7 @@ residue_name simple_chopping_format::parse_residue(const string_ref &arg_string_
 
 	const auto length = arg_string_ref.length();
 	if ( length < MIN_INS_CODE_CHARS || arg_string_ref.back() != INS_CODE_CLOSE_BR ) {
-		return residue_name{ stoi( string{ arg_string_ref } ) };
+		return residue_name{ stoi( arg_string_ref.to_string() ) };
 	}
 
 	if ( arg_string_ref[ length - CHAIN_OPEN_BR_END_NEG_OFFSET ] != INS_CODE_OPEN_BR ) {
