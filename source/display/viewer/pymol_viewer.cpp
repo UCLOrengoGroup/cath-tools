@@ -408,17 +408,20 @@ void pymol_viewer::do_write_alignment_extras(ostream                     &arg_os
 /// \brief TODOCUMENT
 void pymol_viewer::do_write_end(ostream &arg_os ///< TODOCUMENT
                                 ) const {
-	arg_os << "show cartoon\n";
-	arg_os << "set cartoon_smooth_loops,1\n";
-	arg_os << "reset\n";
-	arg_os << "set field_of_view, 25\n";
-	arg_os << "set label_size, -0.6\n";
-	arg_os << "set line_width,  6\n";
-	arg_os << "set dash_width,  0.7\n";
-	arg_os << "set dash_radius, 0.02\n";
-	arg_os << "set seq_view_label_mode, 1\n";
-	arg_os << "set ribbon_width, 1.5\n";
-	arg_os << "orient\n";
-	arg_os << "feedback enable,all,output\n";
+	arg_os << R"(show cartoon
+set cartoon_smooth_loops,1
+show_as sticks, organic
+colour black, organic
+reset
+set field_of_view, 25
+set label_size, -0.6
+set line_width,  6
+set dash_width,  0.7
+set dash_radius, 0.02
+set seq_view_label_mode, 1
+set ribbon_width, 1.5
+orient
+feedback enable,all,output
+)";
 }
 
