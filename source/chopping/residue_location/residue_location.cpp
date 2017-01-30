@@ -58,30 +58,40 @@ const size_opt & residue_location::get_opt_residue_index() const {
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates residue_location
 bool cath::chop::has_residue_name(const residue_location &arg_residue_location ///< TODOCUMENT
                                   ) {
 	return static_cast<bool>( arg_residue_location.get_opt_residue_name() );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates residue_location
 bool cath::chop::has_residue_index(const residue_location &arg_residue_location ///< TODOCUMENT
                                    ) {
 	return static_cast<bool>( arg_residue_location.get_opt_residue_index() );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates residue_location
 residue_name cath::chop::get_residue_name(const residue_location &arg_residue_location ///< TODOCUMENT
                                           ) {
 	return *arg_residue_location.get_opt_residue_name();
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates residue_location
 size_t cath::chop::get_residue_index(const residue_location &arg_residue_location ///< TODOCUMENT
                                      ) {
 	return *arg_residue_location.get_opt_residue_index();
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates residue_location
 residue_locating cath::chop::get_residue_locating(const residue_location &arg_residue_location ///< TODOCUMENT
                                                   ) {
 	return make_residue_locating_of_has_name_and_has_index(
@@ -104,6 +114,8 @@ bool cath::chop::operator==(const residue_location &arg_lhs, ///< The first  res
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates residue_location
 ///
 /// \pre Both residues must have index information
 ///      (ie has_residue_name( arg_residue_location_a) and has_residue_name( arg_residue_location_b) )

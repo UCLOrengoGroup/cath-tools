@@ -108,18 +108,24 @@ domain::const_iterator domain::end() const {
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates domain
 bool cath::chop::has_domain_id(const domain &arg_domain ///< TODOCUMENT
                                ) {
 	return static_cast<bool>( arg_domain.get_opt_domain_id() );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates domain
 string cath::chop::get_domain_id(const domain &arg_domain ///< TODOCUMENT
                                  ) {
 	return *arg_domain.get_opt_domain_id();
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates domain
 residue_locating_opt cath::chop::get_residue_locating(const domain &arg_domain ///< TODOCUMENT
                                                       ) {
 	// If there are no segments then this domain doesn't locate any residues so return none

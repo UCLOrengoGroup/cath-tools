@@ -26,6 +26,8 @@ using namespace cath::chop;
 using namespace cath::common;
 
 /// \brief TODOCUMENT
+///
+/// \relates residue_locating
 residue_locating cath::chop::make_residue_locating_of_has_name_and_has_index(const bool &arg_has_name, ///< TODOCUMENT
                                                                              const bool &arg_has_index ///< TODOCUMENT
                                                                              ) {

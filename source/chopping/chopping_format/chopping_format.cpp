@@ -25,6 +25,8 @@ using namespace cath::chop;
 using namespace std;
 
 /// \brief TODOCUMENT
+///
+/// \relates chopping_format
 domain cath::chop::parse_domain(const chopping_format &arg_chopping_format,        ///< TODOCUMENT
                                 const string          &arg_domain_chopping_string, ///< TODOCUMENT
                                 const string          &arg_domain_id               ///< TODOCUMENT
