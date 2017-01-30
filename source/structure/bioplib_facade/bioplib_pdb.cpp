@@ -25,13 +25,13 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
+#include "biocore/residue_id.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/out_of_range_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "structure/bioplib_facade/bioplib_interface.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/rotation.hpp"
-#include "structure/residue_id.hpp"
 
 #include <iostream> // **** TEMPORARY ****
 

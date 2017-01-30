@@ -27,12 +27,12 @@
 #include <boost/range/algorithm/find.hpp>
 #include <boost/range/irange.hpp>
 
+#include "biocore/residue_id.hpp"
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/is_uniq_for_unordered.hpp"
 #include "common/boost_addenda/range/adaptor/lexical_casted.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "structure/residue_id.hpp"
 
 #include <set>
 

@@ -20,8 +20,8 @@
 
 #include "pdb_base.hpp"
 
+#include "biocore/residue_id.hpp"
 #include "structure/geometry/coord.hpp"
-#include "structure/residue_id.hpp"
 
 using namespace boost::filesystem;
 using namespace cath;

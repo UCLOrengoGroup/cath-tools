@@ -27,14 +27,14 @@
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 
+#include "biocore/chain_label.hpp"
+#include "biocore/residue_id.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/file_type_aliases.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/residue_makeup.hpp"
-#include "structure/chain_label.hpp"
-#include "structure/residue_id.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 #include <vector>

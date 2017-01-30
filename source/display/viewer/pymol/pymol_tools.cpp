@@ -26,9 +26,9 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
+#include "biocore/residue_id.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/not_implemented_exception.hpp"
-#include "structure/residue_id.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -21,9 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CHOPPING_REGION_REGION_H
 #define _CATH_TOOLS_SOURCE_CHOPPING_REGION_REGION_H
 
+#include "biocore/chain_label.hpp"
 #include "chopping/region/region_comparison.hpp"
 #include "chopping/residue_location/residue_location.hpp"
-#include "structure/chain_label.hpp"
 
 #include <cstddef>
 

@@ -23,6 +23,7 @@
 
 #include <boost/operators.hpp>
 
+#include "biocore/residue_id.hpp"
 #include "file/pdb/dssp_skip_policy.hpp"
 #include "file/pdb/residue_makeup.hpp"
 #include "structure/geometry/angle.hpp"
@@ -30,7 +31,6 @@
 #include "structure/geometry/rotation.hpp"
 #include "structure/protein/amino_acid.hpp"
 #include "structure/protein/sec_struc_type.hpp"
-#include "structure/residue_id.hpp"
 
 #include <cstddef>
 #include <iosfwd>

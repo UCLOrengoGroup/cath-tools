@@ -24,7 +24,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
 
-#include "structure/residue_name.hpp"
+#include "biocore/residue_name.hpp"
 #include "common/type_aliases.hpp"
 
 #include <utility>

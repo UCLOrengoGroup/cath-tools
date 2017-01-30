@@ -49,12 +49,18 @@ add_library(
 		${NORMSOURCES_TEST}
 )
 
+add_library(
+	normsources_chopping
+		${NORMSOURCES_CHOPPING}
+)
+
 #####################################################################
 
 add_library(
 	std_normsources_remain
 		${NORMSOURCES_ACQUIRER}
 		${NORMSOURCES_ALIGNMENT}
+		${NORMSOURCES_BIOCORE}
 		${NORMSOURCES_CHOPPING}
 		${NORMSOURCES_DISPLAY}
 		${NORMSOURCES_DISPLAY_COLOUR}
@@ -119,7 +125,6 @@ add_executable(
 add_executable(
 	cath-resolve-hits
 		${NORMSOURCES_EXECUTABLES_CATH_RESOLVE_HITS}
-		${NORMSOURCES_COMMON}
 		${NORMSOURCES_DISPLAY_COLOUR}
 		${NORMSOURCES_EXCEPTION}
 		${NORMSOURCES_OPTIONS}
@@ -144,6 +149,7 @@ add_executable(
 	mod-test-chopping
 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
 		${TESTSOURCES_CHOPPING}
+		${NORMSOURCES_BIOCORE}
 )
 
 # add_executable(
@@ -164,12 +170,12 @@ add_executable(
 target_link_libraries( build-test          normsources_cath_superpose normsources_resolve_hits normsources_test std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-assign-domains normsources_cath_assign_domains                                      std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-refine-align   normsources_cath_refine_align                                        std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                                                       normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                                    normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-score-align    normsources_cath_score_align                                         std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-ssap                                                                                std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 target_link_libraries( cath-superpose      normsources_cath_superpose                                           std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 
-target_link_libraries( mod-test-chopping                                     normsources_test                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( mod-test-chopping                                     normsources_test normsources_chopping   normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 # target_link_libraries( mod-test-common                                     normsources_test                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 # target_link_libraries( mod-test-exception                                  normsources_test                                           normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
 

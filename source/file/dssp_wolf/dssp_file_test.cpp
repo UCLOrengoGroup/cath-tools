@@ -26,6 +26,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/sort.hpp>
 
+#include "biocore/residue_id.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
@@ -45,7 +46,6 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
-#include "structure/residue_id.hpp"
 #include "test/global_test_constants.hpp"
 
 using namespace boost::filesystem;

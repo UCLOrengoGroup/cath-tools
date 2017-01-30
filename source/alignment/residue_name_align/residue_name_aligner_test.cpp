@@ -24,9 +24,9 @@
 
 #include "alignment/alignment.hpp"
 #include "alignment/residue_name_align/residue_name_aligner.hpp"
+#include "biocore/residue_name.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "structure/residue_name.hpp"
 
 #include <deque>
 #include <vector>

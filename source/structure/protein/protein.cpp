@@ -26,6 +26,7 @@
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/irange.hpp>
 
+#include "biocore/residue_id.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
@@ -34,7 +35,6 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
-#include "structure/residue_id.hpp"
 
 #include <algorithm> // for max, min
 #include <iterator>  // for end, begin, etc

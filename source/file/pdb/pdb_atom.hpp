@@ -26,6 +26,8 @@
 #include <boost/tuple/tuple.hpp>
 #include <boost/utility/string_ref.hpp>
 
+#include "biocore/chain_label.hpp"
+#include "biocore/residue_id.hpp"
 #include "common/algorithm/contains.hpp"
 #include "common/string/string_parse_tools.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -34,10 +36,8 @@
 #include "file/pdb/pdb_atom_parse_status.hpp"
 #include "file/pdb/pdb_base.hpp"
 #include "file/pdb/pdb_record.hpp"
-#include "structure/chain_label.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/protein/amino_acid.hpp"
-#include "structure/residue_id.hpp"
 
 #include <iosfwd>
 namespace cath { namespace geom { class rotation; } }

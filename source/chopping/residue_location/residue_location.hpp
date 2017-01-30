@@ -24,9 +24,9 @@
 #include <boost/operators.hpp>
 #include <boost/optional.hpp>
 
+#include "biocore/residue_name.hpp"
 #include "chopping/residue_location/residue_locating.hpp"
 #include "common/type_aliases.hpp"
-#include "structure/residue_name.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 namespace cath {

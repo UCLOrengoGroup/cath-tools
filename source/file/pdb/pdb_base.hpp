@@ -23,8 +23,8 @@
 
 #include <boost/filesystem.hpp>
 
+#include "biocore/chain_label.hpp"
 #include "common/type_aliases.hpp"
-#include "structure/chain_label.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 #include <iosfwd>

@@ -26,11 +26,11 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 
+#include "biocore/chain_label.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
-#include "structure/chain_label.hpp"
 #include "structure/protein/residue.hpp"
 
 #include <cmath>

@@ -21,8 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_RESIDUE_ID_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_RESIDUE_ID_H
 
-#include "structure/chain_label.hpp"
-#include "structure/residue_name.hpp"
+#include "biocore/chain_label.hpp"
+#include "biocore/residue_name.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 namespace cath {

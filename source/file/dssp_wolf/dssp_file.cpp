@@ -27,6 +27,7 @@
 #include <boost/range/algorithm/count_if.hpp>
 #include <boost/range/irange.hpp>
 
+#include "biocore/residue_id.hpp"
 #include "common/algorithm/copy_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
@@ -41,7 +42,6 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
-#include "structure/residue_id.hpp"
 
 using namespace cath;
 using namespace cath::common;

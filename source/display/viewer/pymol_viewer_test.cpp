@@ -20,8 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "biocore/residue_id.hpp"
 #include "display/viewer/pymol_viewer.hpp"
-#include "structure/residue_id.hpp"
 
 using namespace cath;
 

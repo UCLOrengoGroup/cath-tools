@@ -23,10 +23,10 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
+#include "biocore/residue_name.hpp"
 #include "common/algorithm/contains.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "structure/residue_name.hpp"
 
 using namespace cath;
 using namespace cath::align::detail;

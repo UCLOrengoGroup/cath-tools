@@ -26,8 +26,8 @@
 #include "alignment/pair_alignment.hpp"
 #include "alignment/residue_name_align/detail/residue_name_align_map.hpp"
 #include "alignment/residue_score/residue_scorer.hpp"
+#include "biocore/residue_name.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "structure/residue_name.hpp"
 
 #include <string>
 
