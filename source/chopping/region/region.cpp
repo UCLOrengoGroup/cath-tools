@@ -88,54 +88,72 @@ const residue_location & region::get_stop_residue() const {
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 bool cath::chop::has_chain_label(const region &arg_region ///< TODOCUMENT
                                   ) {
 	return static_cast<bool>( arg_region.get_opt_chain_label() );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 chain_label cath::chop::get_chain_label(const region &arg_region ///< TODOCUMENT
                                         ) {
 	return *arg_region.get_opt_chain_label();
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 const residue_name_opt & cath::chop::get_opt_start_name(const region &arg_region ///< TODOCUMENT
                                                         ) {
 	return arg_region.get_start_residue().get_opt_residue_name();
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 const residue_name_opt & cath::chop::get_opt_stop_name(const region &arg_region ///< TODOCUMENT
                                                        ) {
 	return arg_region.get_stop_residue().get_opt_residue_name();
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 const size_opt & cath::chop::get_opt_start_index(const region &arg_region ///< TODOCUMENT
                                                  ) {
 	return arg_region.get_start_residue().get_opt_residue_index();
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 const size_opt & cath::chop::get_opt_stop_index(const region &arg_region ///< TODOCUMENT
                                                 ) {
 	return arg_region.get_stop_residue().get_opt_residue_index();
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 bool cath::chop::has_names(const region &arg_region ///< TODOCUMENT
                            ) {
 	return static_cast<bool>( get_opt_start_name( arg_region ) );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 bool cath::chop::has_indices(const region &arg_region ///< TODOCUMENT
                              ) {
 	return static_cast<bool>( get_opt_start_index( arg_region ) );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 void cath::chop::check_has_names(const region &arg_region ///< TODOCUMENT
                                  ) {
 	if ( ! has_names ( arg_region ) ) {
@@ -144,6 +162,8 @@ void cath::chop::check_has_names(const region &arg_region ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 void cath::chop::check_has_indices(const region &arg_region ///< TODOCUMENT
                                    ) {
 	if ( ! has_indices( arg_region ) ) {
@@ -152,36 +172,48 @@ void cath::chop::check_has_indices(const region &arg_region ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 residue_name_opt cath::chop::get_start_name(const region &arg_region ///< TODOCUMENT
                                             ) {
 	return *get_opt_start_name( arg_region );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 residue_name_opt cath::chop::get_stop_name(const region &arg_region ///< TODOCUMENT
                                            ) {
 	return *get_opt_stop_name( arg_region );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 size_t cath::chop::get_start_index(const region &arg_region ///< TODOCUMENT
                                    ) {
 	return *get_opt_start_index( arg_region );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 size_t cath::chop::get_stop_index(const region &arg_region ///< TODOCUMENT
                                   ) {
 	return *get_opt_stop_index( arg_region );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 residue_locating cath::chop::get_residue_locating(const region &arg_region ///< TODOCUMENT
                                       ) {
 	return get_residue_locating( arg_region.get_start_residue() );
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 size_t cath::chop::get_length(const region &arg_region ///< TODOCUMENT
                               ) {
 	check_has_indices( arg_region );
@@ -190,6 +222,8 @@ size_t cath::chop::get_length(const region &arg_region ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
+///
+/// \relates region
 region_comparison cath::chop::compare_locations(const region &arg_region_a, ///< TODOCUMENT
                                                 const region &arg_region_b  ///< TODOCUMENT
 												) {
