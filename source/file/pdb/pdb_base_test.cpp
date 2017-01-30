@@ -146,6 +146,7 @@ namespace cath {
 					// Loop over each of the files after the first and compare them with the first
 					for (size_t file_ctr = 1; file_ctr < compare_files.size(); ++file_ctr) {
 						BOOST_CHECK_FILES_EQUAL( compare_files.front(), compare_files[ file_ctr ] );
+						// BOOST_CHECK_FILES_EQUAL_OR_OVERWRITE( compare_files.front(), compare_files[ file_ctr ] );
 					}
 				}
 		//		return !any_files_differed;
@@ -157,15 +158,11 @@ namespace cath {
 
 BOOST_FIXTURE_TEST_SUITE(pdb_base_test_suite, pdb_base_test_suite_fixture)
 
-/// \brief A type-list containing pairs of matching comparator functor types.
-///
-/// Note that I attempted to implement this without type-lists by storing
-/// binary_function<> objects but this was because I had forgotten
-/// the lesson that binary_function<> doesn't actually contain a declaration for
-/// the operator() method (pure virtual or otherwise).
-///
-/// This means that you can't call operator() on a binary_function reference.
+/// \brief A type-list containing all the PDB types
 using all_pdb_types = boost::mpl::list<pdb, bioplib_pdb>;
+
+/// \brief A type-list containing the PDB types that preserve the end of a PDB atom record
+using end_preserving_pdb_types = boost::mpl::list<pdb>;
 
 /// \brief Check that the constructor and destructor of bioplib_pdb don't throw
 BOOST_AUTO_TEST_CASE_TEMPLATE(ctor_and_dtor_does_not_throw, pdb_type, all_pdb_types) {
@@ -196,7 +193,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(read_modify_write_pdb, pdb_type, all_pdb_types) {
 /// \brief Check that all_pdb_types produce the same result if asked to read and write an example PDB file
 BOOST_AUTO_TEST_CASE(read_write_example_pdb) {
 	pdb_read_write_comparer the_comparer(EXAMPLE_A_PDB_FILENAME());
-	boost::mpl::for_each<all_pdb_types>( ref( the_comparer ) );
+	boost::mpl::for_each<end_preserving_pdb_types>( ref( the_comparer ) );
 	the_comparer.compare_all_files();
 }
 

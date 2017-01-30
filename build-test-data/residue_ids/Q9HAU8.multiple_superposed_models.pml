@@ -3911,7 +3911,8 @@ ATOM   3909  CB  ALA   494     432.778 -40.604 -16.943  1.00 18.82\
 ATOM   3910  C   ALA   494     435.189 -40.601 -16.418  1.00 18.82\
 ATOM   3911  O   ALA   494     436.180 -40.377 -17.163  1.00 18.82\
 ATOM   3912  OXT ALA   494     435.146 -41.522 -15.560  1.00 18.82\
-TER   \
+TER    3913      ALA   494                                                      \
+END   \
 ""","Q9HAU8DomSerf1")
 cmd.read_pdbstr("""ATOM      1  N   LEU    35      49.031  21.410 -24.131  1.00  0.00           N  \
 ATOM      2  CA  LEU    35      49.342  21.834 -22.770  1.00  0.00           C  \
@@ -5983,7 +5984,8 @@ ATOM   2067  CB  LEU   292      30.289  28.325  14.990  1.00  0.00           C  
 ATOM   2068  CG  LEU   292      30.008  26.960  14.358  1.00  0.00           C  \
 ATOM   2069  CD1 LEU   292      29.097  26.990  13.133  1.00  0.00           C  \
 ATOM   2070  CD2 LEU   292      31.245  26.212  13.861  1.00  0.00           C  \
-TER   \
+TER    2071      LEU   292                                                      \
+END   \
 ""","Q9HAU8PHYRE21")
 cmd.read_pdbstr("""ATOM      1  N   ILE    40      50.630  19.005 -22.708  1.00 20.48           N\
 ATOM      2  CA  ILE    40      50.638  19.606 -21.356  1.00 20.48           C\
@@ -7996,7 +7998,8 @@ ATOM   2008  OE2 GLU   289      33.234  21.432  17.808  1.00 43.27           O\
 ATOM   2009  C   GLU   289      28.360  23.528  18.475  1.00 43.27           C\
 ATOM   2010  O   GLU   289      28.145  24.417  17.610  1.00 43.27           O\
 ATOM   2011  OXT GLU   289      28.221  23.699  19.716  1.00 43.27           O\
-TER   \
+TER    2012      GLU   289                                                      \
+END   \
 ""","Q9HAU8SUPERFAMILY2")
 cmd.read_pdbstr("""ATOM      1  N   LEU    35      49.724  21.394 -24.137  1.00 67.34           N  \
 ATOM      2  CA  LEU    35      49.738  22.035 -22.803  1.00 67.34           C  \
@@ -10069,7 +10072,8 @@ ATOM   2068  CD2 LEU   292      28.849  28.783  14.304  1.00 35.02           C  
 ATOM   2069  C   LEU   292      32.250  28.302  17.099  1.00 35.02           C  \
 ATOM   2070  O   LEU   292      32.256  28.898  18.206  1.00 35.02           O  \
 ATOM   2071  OXT LEU   292      33.268  27.796  16.555  1.00 35.02           O  \
-TER   \
+TER    2072      LEU   292                                                      \
+END   \
 ""","Q9HAU8VIVACE1")
 hide all
 set cartoon_rect_length  = 1.1366
@@ -11870,6 +11874,8 @@ set dash_color, black
 set dash_radius, 0.05
 show cartoon
 set cartoon_smooth_loops,1
+show_as sticks, organic
+colour black, organic
 reset
 set field_of_view, 25
 set label_size, -0.6

@@ -1001,7 +1001,8 @@ ATOM    999  CA  GLY   310      37.020  19.972 -16.022  1.00  8.79          1000
 ATOM   1000  C   GLY   310      38.505  20.214 -15.803  1.00  8.79          1001\
 ATOM   1001  O   GLY   310      38.928  20.267 -14.618  1.00  8.79          1002\
 ATOM   1002  OXT GLY   310      39.238  20.345 -16.820  1.00  8.79          1003\
-TER   \
+TER    1003      GLY   310                                                      \
+END   \
 ""","PDB_1_from_stdin_with_1002_atoms")
 hide all
 set cartoon_rect_length  = 1.78543
@@ -1282,6 +1283,8 @@ set dash_color, black
 set dash_radius, 0.05
 show cartoon
 set cartoon_smooth_loops,1
+show_as sticks, organic
+colour black, organic
 reset
 set field_of_view, 25
 set label_size, -0.6

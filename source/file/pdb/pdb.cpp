@@ -36,6 +36,7 @@
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/range/adaptor/adjacented.hpp"
+#include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/file/open_fstream.hpp"
@@ -75,6 +76,7 @@ using boost::algorithm::join;
 using boost::algorithm::starts_with;
 using boost::irange;
 using boost::lexical_cast;
+using boost::make_optional;
 using boost::none;
 using boost::numeric_cast;
 using boost::range::binary_search;
@@ -166,6 +168,9 @@ void pdb::do_rotate(const rotation &arg_rotation ///< TODOCUMENT
 	for (pdb_residue &my_pdb_residue : pdb_residues) {
 		my_pdb_residue.rotate( arg_rotation );
 	}
+	for (pdb_residue &my_pdb_residue : post_ter_residues) {
+		my_pdb_residue.rotate( arg_rotation );
+	}
 }
 
 /// \brief TODOCUMENT
@@ -174,12 +179,18 @@ void pdb::do_add(const coord &arg_coord ///< TODOCUMENT
 	for (pdb_residue &my_pdb_residue : pdb_residues) {
 		my_pdb_residue += arg_coord;
 	}
+	for (pdb_residue &my_pdb_residue : post_ter_residues) {
+		my_pdb_residue += arg_coord;
+	}
 }
 
 /// \brief TODOCUMENT
 void pdb::do_subtract(const coord &arg_coord ///< TODOCUMENT
                       ) {
 	for (pdb_residue &my_pdb_residue : pdb_residues) {
+		my_pdb_residue -= arg_coord;
+	}
+	for (pdb_residue &my_pdb_residue : post_ter_residues) {
 		my_pdb_residue -= arg_coord;
 	}
 }
@@ -231,11 +242,28 @@ void pdb::set_residues(pdb_residue_vec &&arg_pdb_residues ///< TODOCUMENT
 	pdb_residues = std::move( arg_pdb_residues );
 }
 
+/// \brief Setter for the residues that appear after a TER record in their respective chains
+void pdb::set_post_ter_residues(const pdb_residue_vec &arg_post_ter_residues ///< The residues that appear after a TER record in their respective chains
+                                ) {
+	post_ter_residues  = arg_post_ter_residues;
+}
+
+/// \brief Rvalue-reference setter for the residues that appear after a TER record in their respective chains
+void pdb::set_post_ter_residues(pdb_residue_vec &&arg_post_ter_residues ///< The residues that appear after a TER record in their respective chains
+                                ) {
+	post_ter_residues  = std::move( arg_post_ter_residues );
+}
+
 /// \brief TODOCUMENT
 coord pdb::get_residue_ca_coord_of_backbone_complete_index(const size_t &arg_backbone_complete_index ///< TODOCUMENT
                                                            ) const {
 	const size_t index = get_index_of_backbone_complete_index( arg_backbone_complete_index );
 	return get_residue_ca_coord_of_index__backbone_unchecked( index );
+}
+
+/// \brief Getter for the residues that appear after a TER record in their respective chains
+const pdb_residue_vec & pdb::get_post_ter_residues() const {
+	return post_ter_residues;
 }
 
 /// \brief Get the list of residues IDs for the backbone-complete residues on first chain of the specified PDB
@@ -299,6 +327,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
                                     ) {
 	// Variables to store the details of parsed atoms
 	pdb_residue_vec  residues;
+	pdb_residue_vec  post_ter_residues;
 
 	set<chain_label> terminated_chains;
 	string           line_string;
@@ -308,8 +337,13 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 	residue_id       prev_res_id;
 	bool             prev_warned_conflict = false;
 
-	const auto add_atoms_and_reset_fn = [&] () {
-		residues.emplace_back(
+	const auto add_atoms_and_reset_fn = [&] (const chain_label &x) {
+		// if ( ! prev_atoms.empty() ) {
+		// 	prev_atoms.last()
+		// }
+		pdb_residue_vec &write_residues = contains( terminated_chains, x ) ? post_ter_residues
+		                                                                   : residues;
+		write_residues.emplace_back(
 			prev_res_id,
 			std::move( prev_atoms )
 		);
@@ -353,72 +387,70 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			const pdb_atom   &atom                   = new_entry.second;
 			const string      amino_acid_3_char_code = get_amino_acid_code( atom );
 
-			// If this isn't a terminated chain then continue processing
-			if ( ! contains( terminated_chains, res_id.get_chain_label() ) ) {
+			// If there are previously seen atoms that don't match this chain/res_id,
+			// then add those atoms' residue and reset prev_atoms
+			if ( ! prev_atoms.empty() && res_id != prev_res_id ) {
+				add_atoms_and_reset_fn( res_id.get_chain_label() );
+			}
 
-				// If there are previously seen atoms that don't match this chain/res_id,
-				// then add those atoms' residue and reset prev_atoms
-				if ( ! prev_atoms.empty() && res_id != prev_res_id ) {
-					add_atoms_and_reset_fn();
+			// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.
+			// Though that's a bit rubbish, it shouldn't break the whole comparison
+			// so if that's detected, just warn and move on (without appending to new_residues).
+			if (
+				is_atom
+				&&
+				! prev_atoms.empty()
+				&&
+				prev_amino_acid_3_char_code
+				&&
+				amino_acid_3_char_code != prev_amino_acid_3_char_code
+				&&
+				atom.get_alt_locn() == ' '
+				) {
+				if ( ! prev_warned_conflict ) {
+					BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing PDB file, found conflicting consecutive entries for residue \""
+					                             << res_id
+					                             << "\" (with amino acids \""
+					                             << *prev_amino_acid_3_char_code
+					                             << "\" and then \""
+					                             << amino_acid_3_char_code
+					                             << "\") - ignoring latter entry (and any further entries)";
+					prev_warned_conflict = true;
 				}
-
-				// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.
-				// Though that's a bit rubbish, it shouldn't break the whole comparison
-				// so if that's detected, just warn and move on (without appending to new_residues).
-				if (
-					is_atom
-					&&
-					! prev_atoms.empty()
-					&&
-					prev_amino_acid_3_char_code
-					&&
-					amino_acid_3_char_code != prev_amino_acid_3_char_code
-					&&
-					atom.get_alt_locn() == ' '
-					) {
-					if ( ! prev_warned_conflict ) {
-						BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing PDB file, found conflicting consecutive entries for residue \""
-						                             << res_id
-						                             << "\" (with amino acids \""
-						                             << *prev_amino_acid_3_char_code
-						                             << "\" and then \""
-						                             << amino_acid_3_char_code
-						                             << "\") - ignoring latter entry (and any further entries)";
-						prev_warned_conflict = true;
-					}
+			}
+			// Otherwise update the records of previously seen atoms
+			else {
+				if ( is_atom ) {
+					prev_amino_acid_3_char_code = amino_acid_3_char_code;
 				}
-				// Otherwise update the records of previously seen atoms
-				else {
-					if ( is_atom ) {
-						prev_amino_acid_3_char_code = amino_acid_3_char_code;
-					}
-					prev_res_id = res_id;
-					prev_atoms.push_back( atom );
-				}
+				prev_res_id = res_id;
+				prev_atoms.push_back( atom );
 			}
 		}
 		else if ( boost::algorithm::starts_with( line_string, "ENDMDL" ) ) {
 			break;
 		}
 		else if ( boost::algorithm::starts_with( line_string, "TER" ) ) {
+			if ( ! prev_atoms.empty() ) {
+				add_atoms_and_reset_fn( prev_res_id.get_chain_label() );
+			}
 			if ( line_string.length() >= 22 ) {
 				terminated_chains.insert( chain_label( line_string.at( 21 ) ) );
 			}
 			else if ( ! is_null( prev_res_id ) ) {
 				terminated_chains.insert( prev_res_id.get_chain_label() );
 			}
-			if ( ! prev_atoms.empty() ) {
-				add_atoms_and_reset_fn();
-			}
 		}
 	};
 
 	// Add any last remaining atoms
 	if ( ! prev_atoms.empty() ) {
-		add_atoms_and_reset_fn();
+		add_atoms_and_reset_fn( prev_res_id.get_chain_label() );
 	}
 
-	arg_pdb.set_residues( std::move( residues ) );
+	arg_pdb.set_residues         ( std::move( residues          ) );
+	arg_pdb.set_post_ter_residues( std::move( post_ter_residues ) );
+
 	return input_stream;
 }
 
@@ -466,15 +498,38 @@ pdb_list cath::file::read_end_separated_pdb_files(istream &arg_in_stream ///< TO
 ostream & cath::file::write_pdb_file(ostream   &arg_os,     ///< TODOCUMENT
                                      const pdb &arg_pdb ///< TODOCUMENT
                                      ) {
-	const size_t num_residues = arg_pdb.get_num_residues();
+	const auto &num_residues = arg_pdb.get_num_residues();
 //	size_t atom_ctr = 1;
-	for (size_t residue_ctr = 0; residue_ctr < num_residues; ++residue_ctr) {
-		const pdb_residue &residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr );
-		write_pdb_file_entry( arg_os, residue );
-//		write_pdb_file_entry( arg_os, residue, atom_ctr );
-//		atom_ctr += residue.get_num_atoms();
+	for (const size_t &residue_ctr : irange( 0_z, num_residues ) ) {
+		const pdb_residue &the_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr );
+		write_pdb_file_entry( arg_os, the_residue );
+
+		const auto &the_chain_label = get_chain_label( the_residue );
+
+		if ( residue_ctr + 1 == num_residues
+		     || get_chain_label( arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr + 1 ) ) != the_chain_label
+		     ) {
+			const auto last_atom = the_residue.empty() ? none : make_optional( back( the_residue ) );
+			const string residue_name_with_insert_or_space = make_residue_name_string_with_insert_or_space(
+				get_residue_name( the_residue )
+			);
+			arg_os << pdb_base::PDB_RECORD_STRING_TER
+				<< right
+				<< setw( 5 ) << ( last_atom ? ( last_atom->get_atom_serial() + 1u ) : 0u )
+				<< "      "
+				<<              ( last_atom ?   last_atom->get_amino_acid() : amino_acid{ 'X' } )
+				<< " "
+				<< the_chain_label
+				<< setw( 5 ) << residue_name_with_insert_or_space
+				<< "                                                     \n";
+		}
 	}
-	arg_os << pdb_base::PDB_RECORD_STRING_TER << "\n";
+
+	for (const pdb_residue &the_residue : arg_pdb.get_post_ter_residues() ) {
+		write_pdb_file_entry( arg_os, the_residue );
+	}
+	arg_os << "END   \n";
+
 	return arg_os;
 }
 

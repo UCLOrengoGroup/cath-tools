@@ -622,7 +622,8 @@ ATOM   2138  CB  ASN A 258      67.616  41.586   5.981  1.00 13.98\
 ATOM   2139  CG  ASN A 258      67.226  41.697   4.528  1.00 14.30\
 ATOM   2140  OD1 ASN A 258      67.805  41.038   3.665  1.00 14.45\
 ATOM   2141  ND2 ASN A 258      66.244  42.550   4.243  1.00 14.84\
-TER   \
+TER    2142      ASN A 258                                                      \
+END   \
 ""","1g5aA03")
 cmd.read_pdbstr("""ATOM    674  N   VAL A  86      72.850  32.294  13.142  1.00  7.08\
 ATOM    675  CA  VAL A  86      72.922  33.108  11.939  1.00  7.26\
@@ -1283,7 +1284,8 @@ ATOM   1331  CB  ASP A 166      72.209  38.449   1.145  1.00 24.54\
 ATOM   1332  CG  ASP A 166      73.120  38.449  -0.070  1.00 30.30\
 ATOM   1333  OD1 ASP A 166      74.336  38.208   0.095  1.00 32.09\
 ATOM   1334  OD2 ASP A 166      72.617  38.674  -1.191  1.00 34.15\
-TER   \
+TER    1335      ASP A 166                                                      \
+END   \
 ""","1r7aA02")
 cmd.read_pdbstr("""ATOM    851  N   HIS A 133      69.076  34.797  12.864  1.00 16.87\
 ATOM    852  CA  HIS A 133      68.033  35.656  13.416  1.00 16.43\
@@ -1829,7 +1831,8 @@ ATOM   1391  CB  ASN A 196      67.141  41.626   5.769  1.00 18.24\
 ATOM   1392  CG  ASN A 196      67.069  41.892   4.283  1.00 19.61\
 ATOM   1393  OD1 ASN A 196      66.987  40.960   3.481  1.00 20.06\
 ATOM   1394  ND2 ASN A 196      67.085  43.169   3.905  1.00 20.91\
-TER   \
+TER    1395      ASN A 196                                                      \
+END   \
 ""","1wzaA02")
 cmd.read_pdbstr("""ATOM    874  N   SER A 106      67.076  37.676  18.600  1.00  8.03\
 ATOM    875  CA  SER A 106      65.924  37.721  19.493  1.00  7.15\
@@ -2430,7 +2433,8 @@ ATOM   1469  O   THR A 175      73.260  44.152   5.054  1.00  7.72\
 ATOM   1470  CB  THR A 175      70.539  45.191   4.925  1.00  7.62\
 ATOM   1471  OG1 THR A 175      69.173  45.254   4.527  1.00 10.14\
 ATOM   1472  CG2 THR A 175      70.960  46.576   5.476  1.00 12.82\
-TER   \
+TER    1473      THR A 175                                                      \
+END   \
 ""","1zjaA02")
 hide all
 set cartoon_rect_length  = 1.1366
@@ -2655,6 +2659,8 @@ set dash_color, black
 set dash_radius, 0.05
 show cartoon
 set cartoon_smooth_loops,1
+show_as sticks, organic
+colour black, organic
 reset
 set field_of_view, 25
 set label_size, -0.6

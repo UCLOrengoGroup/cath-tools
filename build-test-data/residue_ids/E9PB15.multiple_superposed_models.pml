@@ -1041,7 +1041,8 @@ ATOM   1039  ND2 ASN   166     -18.376 -11.661  18.098  1.00168.39          1040
 ATOM   1040  C   ASN   166     -21.486 -14.534  15.689  1.00168.39          1041\
 ATOM   1041  O   ASN   166     -20.806 -14.475  14.631  1.00168.39          1042\
 ATOM   1042  OXT ASN   166     -22.460 -15.315  15.863  1.00168.39          1043\
-TER   \
+TER    1043      ASN   166                                                      \
+END   \
 ""","PDB_1_from_stdin_with_1042_atoms")
 cmd.read_pdbstr("""ATOM      1  N   ARG    46       1.181   4.386  22.317  1.00  0.00           N  \
 ATOM      2  CA  ARG    46       1.566   4.544  20.918  1.00  0.00           C  \
@@ -1879,7 +1880,8 @@ ATOM    833  O   THR   143     -34.318 -13.508  27.758  1.00  0.00           O  
 ATOM    834  CB  THR   143     -34.039 -10.323  26.564  1.00  0.00           C  \
 ATOM    835  OG1 THR   143     -33.900  -9.613  25.342  1.00  0.00           O  \
 ATOM    836  CG2 THR   143     -32.645 -10.633  27.133  1.00  0.00           C  \
-TER   \
+TER     837      THR   143                                                      \
+END   \
 ""","PDB_2_from_stdin_with_836_atoms")
 cmd.read_pdbstr("""ATOM      1  N   GLN    47      10.300  -2.731   3.674  1.00 73.79           N\
 ATOM      2  CA  GLN    47       9.283  -2.976   4.717  1.00 73.79           C\
@@ -2700,7 +2702,8 @@ ATOM    816  OG  SER   142     -51.094  -9.882  31.038  1.00 46.00           O\
 ATOM    817  C   SER   142     -47.529 -10.101  32.122  1.00 46.00           C\
 ATOM    818  O   SER   142     -47.089 -10.365  33.273  1.00 46.00           O\
 ATOM    819  OXT SER   142     -46.900  -9.428  31.263  1.00 46.00           O\
-TER   \
+TER     820      SER   142                                                      \
+END   \
 ""","PDB_3_from_stdin_with_819_atoms")
 hide all
 set cartoon_rect_length  = 1.29326
@@ -3302,6 +3305,8 @@ set dash_color, black
 set dash_radius, 0.05
 show cartoon
 set cartoon_smooth_loops,1
+show_as sticks, organic
+colour black, organic
 reset
 set field_of_view, 25
 set label_size, -0.6

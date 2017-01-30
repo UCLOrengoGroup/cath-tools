@@ -53,6 +53,9 @@ namespace cath {
 			/// \brief TODOCUMENT
 			pdb_residue_vec pdb_residues;
 
+			/// \brief The residues that appeared after a TER record in their respective chains
+			pdb_residue_vec post_ter_residues;
+
 			virtual void do_read_file(const boost::filesystem::path &) override final;
 			virtual void do_append_to_file(const boost::filesystem::path &) const override final;
 			virtual void do_set_chain_label(const chain_label &) override final;
@@ -73,9 +76,13 @@ namespace cath {
 			const pdb_residue & get_residue_cref_of_index__backbone_unchecked(const size_t &) const;
 			void set_residues(const pdb_residue_vec &);
 			void set_residues(pdb_residue_vec &&);
+			void set_post_ter_residues(const pdb_residue_vec &);
+			void set_post_ter_residues(pdb_residue_vec &&);
 
 			const pdb_residue & get_residue_cref_of_backbone_complete_index(const size_t &) const;
 			geom::coord get_residue_ca_coord_of_backbone_complete_index(const size_t &) const;
+
+			const pdb_residue_vec & get_post_ter_residues() const;
 
 			/// \brief TODOCUMENT
 			using const_iterator = pdb_residue_vec::const_iterator;
