@@ -23,7 +23,8 @@
 #include "chopping/region/region.hpp"
 
 using namespace cath::chop;
-using namespace std;
+
+using std::string;
 
 /// \brief TODOCUMENT
 region region_reader::read_region(const string &arg_region_string ///< TODOCUMENT

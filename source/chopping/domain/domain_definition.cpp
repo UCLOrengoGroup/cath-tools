@@ -22,12 +22,12 @@
 
 #include <boost/filesystem/path.hpp>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::file;
 using namespace cath::opts;
-using namespace std;
+
+using std::string;
 
 /// \brief Ctor for domain_definition
 domain_definition::domain_definition(const domain &arg_domain,  ///< TODOCUMENT

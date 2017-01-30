@@ -27,12 +27,14 @@
 
 using namespace cath::chop;
 using namespace cath::common;
-using namespace std;
+
+using std::cerr; // ***** TEMPORARY *****
+using std::string;
 
 /// \brief TODOCUMENT
 region std_region_reader::do_read_region(const string &arg_region_string ///< TODOCUMENT
                                          ) const {
-	cerr << "arg_region_string is " << arg_region_string << endl;
+	cerr << "arg_region_string is " << arg_region_string << "\n";
 
 	BOOST_THROW_EXCEPTION(not_implemented_exception("std_region_reader::do_read_region()"));
 

@@ -22,7 +22,8 @@
 
 using namespace cath::common;
 using namespace cath::chop;
-using namespace std;
+
+using std::string;
 
 /// \brief TODOCUMENT
 ///

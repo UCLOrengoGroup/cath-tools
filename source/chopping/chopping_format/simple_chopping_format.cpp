@@ -34,7 +34,7 @@ using namespace cath::chop;
 using namespace cath::common;
 
 using boost::string_ref;
-using std::cerr;
+using std::cerr; // ***** TEMPORARY *****
 using std::next;
 using std::string;
 using std::unique_ptr;

@@ -29,9 +29,9 @@
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
-using namespace std;
 
 using boost::none;
+using std::string;
 
 /// \brief TODOCUMENT
 void domain::sanity_check() const {

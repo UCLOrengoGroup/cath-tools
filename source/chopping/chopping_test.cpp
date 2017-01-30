@@ -26,7 +26,6 @@
 
 using namespace cath;
 using namespace cath::chop;
-//using namespace std;
 
 // Chopping types: domall, new_to_jmol_selection, new_to_string, scop, simple
 

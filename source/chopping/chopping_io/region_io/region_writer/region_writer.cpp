@@ -21,7 +21,8 @@
 #include "region_writer.hpp"
 
 using namespace cath::chop;
-using namespace std;
+
+using std::string;
 
 /// \brief TODOCUMENT
 string region_writer::write_region(const region &arg_region ///< TODOCUMENT
