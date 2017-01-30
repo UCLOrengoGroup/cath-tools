@@ -226,7 +226,7 @@ size_t cath::chop::get_length(const region &arg_region ///< TODOCUMENT
 /// \relates region
 region_comparison cath::chop::compare_locations(const region &arg_region_a, ///< TODOCUMENT
                                                 const region &arg_region_b  ///< TODOCUMENT
-												) {
+                                                ) {
 	// Check that both regions have indices
 	check_has_indices( arg_region_a );
 	check_has_indices( arg_region_b );
