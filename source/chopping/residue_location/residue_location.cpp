@@ -90,6 +90,19 @@ residue_locating cath::chop::get_residue_locating(const residue_location &arg_re
 	);
 }
 
+/// \brief Non-member equality operator for residue_location
+///
+/// \relates residue_location
+bool cath::chop::operator==(const residue_location &arg_lhs, ///< The first  residue_location to compare
+                            const residue_location &arg_rhs  ///< The second residue_location to compare
+                            ) {
+	return (
+		arg_lhs.get_opt_residue_name()  == arg_rhs.get_opt_residue_name()
+		&&
+		arg_lhs.get_opt_residue_index() == arg_rhs.get_opt_residue_index()
+	);
+}
+
 /// \brief TODOCUMENT
 ///
 /// \pre Both residues must have index information

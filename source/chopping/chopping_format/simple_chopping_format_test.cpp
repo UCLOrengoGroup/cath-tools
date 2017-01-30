@@ -1,5 +1,5 @@
 /// \file
-/// \brief The chopping_format class definitions
+/// \brief The simple_chopping_format test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,19 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "chopping_format.hpp"
+#include <boost/test/auto_unit_test.hpp>
 
-using namespace cath::common;
+#include "chopping/chopping_format/simple_chopping_format.hpp"
+
+using namespace cath;
 using namespace cath::chop;
-using namespace std;
 
-/// \brief TODOCUMENT
-domain cath::chop::parse_domain(const chopping_format &arg_chopping_format,        ///< TODOCUMENT
-                                const string          &arg_domain_chopping_string, ///< TODOCUMENT
-                                const string          &arg_domain_id               ///< TODOCUMENT
-                                ) {
-	domain new_domain = arg_chopping_format.parse_domain( arg_domain_chopping_string );
-	new_domain.set_opt_domain_id( arg_domain_id );
-	return new_domain;
+BOOST_AUTO_TEST_SUITE(simple_chopping_format_test_suite)
+
+BOOST_AUTO_TEST_CASE(basic) {
+	BOOST_CHECK_EQUAL( simple_chopping_format{}.parse_segment( "121-232[K]"    ), make_simple_region( 'K', 121,      232      ) );
+	BOOST_CHECK_EQUAL( simple_chopping_format{}.parse_segment( "1(B)-99(C)[S]" ), make_simple_region( 'S',   1, 'B',  99, 'C' ) );
 }
 
+BOOST_AUTO_TEST_SUITE_END()

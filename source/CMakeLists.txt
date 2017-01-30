@@ -1276,12 +1276,19 @@ set(
 set(
 	TESTSOURCES_CHOPPING_CHOPPING_FORMAT
 		chopping/chopping_format/chopping_format_test.cpp
+		chopping/chopping_format/simple_chopping_format_test.cpp
+)
+
+set(
+	TESTSOURCES_CHOPPING_REGION
+		chopping/region/region_test.cpp
 )
 
 set(
 	TESTSOURCES_CHOPPING
 		${TESTSOURCES_CHOPPING_CHOPPING_FORMAT}
 		chopping/chopping_test.cpp
+		${TESTSOURCES_CHOPPING_REGION}
 )
 
 set(

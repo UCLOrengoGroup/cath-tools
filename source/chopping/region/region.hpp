@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CHOPPING_REGION_REGION_H
 #define _CATH_TOOLS_SOURCE_CHOPPING_REGION_REGION_H
 
+#include <boost/operators.hpp>
+
 #include "biocore/chain_label.hpp"
 #include "chopping/region/region_comparison.hpp"
 #include "chopping/residue_location/residue_location.hpp"
@@ -45,7 +47,7 @@ namespace cath {
 		/// The first two invariants are checked in sanity_check().
 		///
 		/// The last three invariants are maintained through limited ctors and no modifiers.
-		class region final {
+		class region final : private boost::equality_comparable<region> {
 		private:
 			/// \brief TODOCUMENT
 			chain_label_opt the_chain_label;
@@ -76,8 +78,11 @@ namespace cath {
 			const residue_location & get_stop_residue() const;
 		};
 
+		bool operator==(const region &,
+		                const region &);
+
 		bool has_chain_label(const region &);
-		chain_label get_chain_label(const region &);
+		const chain_label & get_chain_label(const region &);
 
 		const residue_name_opt & get_opt_start_name(const region &);
 		const residue_name_opt & get_opt_stop_name(const region &);
@@ -90,10 +95,10 @@ namespace cath {
 		void check_has_names(const region &);
 		void check_has_indices(const region &);
 
-		residue_name_opt get_start_name(const region &);
-		residue_name_opt get_stop_name(const region &);
-		size_t get_start_index(const region &);
-		size_t get_stop_index(const region &);
+		const residue_name & get_start_name(const region &);
+		const residue_name & get_stop_name(const region &);
+		const size_t & get_start_index(const region &);
+		const size_t & get_stop_index(const region &);
 
 		residue_locating get_residue_locating(const region &);
 
@@ -101,6 +106,21 @@ namespace cath {
 
 		region_comparison compare_locations(const region &,
 		                                    const region &);
+
+		region make_simple_region(const char &,
+		                          const int &,
+		                          const int &);
+
+		region make_simple_region(const char &,
+		                          const int &,
+		                          const char &,
+		                          const int &,
+		                          const char &);
+
+		std::string to_string(const region &);
+
+		std::ostream & operator<<(std::ostream &,
+		                          const region &);
 
 	} // namespace chop
 } // namespace cath

@@ -21,6 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_CHOPPING_FORMAT_H
 #define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_CHOPPING_FORMAT_H
 
+#include "chopping/domain/domain.hpp"
+#include "common/clone/check_uptr_clone_against_this.hpp"
+
 #include <memory>
 #include <string>
 
@@ -55,6 +58,22 @@ namespace cath {
 
 			std::unique_ptr<chopping_format> clone() const;
 		};
+
+		/// \brief TODOCUMENT
+		inline bool chopping_format::represents_fragments() const {
+			return do_represents_fragments();
+		}
+
+		/// \brief TODOCUMENT
+		inline domain chopping_format::parse_domain(const std::string &arg_domain_chopping_string ///< TODOCUMENT
+		                                            ) const {
+			return do_parse_domain( arg_domain_chopping_string );
+		}
+
+		/// \brief Standard approach to achieving a virtual copy-ctor
+		inline std::unique_ptr<chopping_format> chopping_format::clone() const {
+		 return common::check_uptr_clone_against_this( do_clone(), *this );
+		}
 
 		domain parse_domain(const chopping_format &,
 		                    const std::string &,

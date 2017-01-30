@@ -20,12 +20,17 @@
 
 #include "region.hpp"
 
+#include <boost/algorithm/string/join.hpp>
+
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
-using namespace std;
+
+using boost::algorithm::join;
+using std::ostream;
+using std::string;
 
 /// \brief TODOCUMENT
 void region::sanity_check() const {
@@ -87,6 +92,21 @@ const residue_location & region::get_stop_residue() const {
 	return stop_residue;
 }
 
+/// \brief Non-member equality operator for region
+///
+/// \relates region
+bool cath::chop::operator==(const region &arg_lhs, ///< The first  region to compare
+                            const region &arg_rhs  ///< The second region to compare
+                            ) {
+	return (
+		arg_lhs.get_opt_chain_label() == arg_rhs.get_opt_chain_label()
+		&&
+		arg_lhs.get_start_residue()   == arg_rhs.get_start_residue()
+		&&
+		arg_lhs.get_stop_residue()    == arg_rhs.get_stop_residue()
+	);
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates region
@@ -98,9 +118,9 @@ bool cath::chop::has_chain_label(const region &arg_region ///< TODOCUMENT
 /// \brief TODOCUMENT
 ///
 /// \relates region
-chain_label cath::chop::get_chain_label(const region &arg_region ///< TODOCUMENT
-                                        ) {
-	return *arg_region.get_opt_chain_label();
+const chain_label & cath::chop::get_chain_label(const region &arg_region ///< TODOCUMENT
+                                                ) {
+	return arg_region.get_opt_chain_label().get();
 }
 
 /// \brief TODOCUMENT
@@ -174,32 +194,32 @@ void cath::chop::check_has_indices(const region &arg_region ///< TODOCUMENT
 /// \brief TODOCUMENT
 ///
 /// \relates region
-residue_name_opt cath::chop::get_start_name(const region &arg_region ///< TODOCUMENT
-                                            ) {
+const residue_name & cath::chop::get_start_name(const region &arg_region ///< TODOCUMENT
+                                                ) {
 	return *get_opt_start_name( arg_region );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates region
-residue_name_opt cath::chop::get_stop_name(const region &arg_region ///< TODOCUMENT
-                                           ) {
+const residue_name & cath::chop::get_stop_name(const region &arg_region ///< TODOCUMENT
+                                               ) {
 	return *get_opt_stop_name( arg_region );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates region
-size_t cath::chop::get_start_index(const region &arg_region ///< TODOCUMENT
-                                   ) {
+const size_t & cath::chop::get_start_index(const region &arg_region ///< TODOCUMENT
+                                           ) {
 	return *get_opt_start_index( arg_region );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates region
-size_t cath::chop::get_stop_index(const region &arg_region ///< TODOCUMENT
-                                  ) {
+const size_t & cath::chop::get_stop_index(const region &arg_region ///< TODOCUMENT
+                                          ) {
 	return *get_opt_stop_index( arg_region );
 }
 
@@ -251,4 +271,62 @@ region_comparison cath::chop::compare_locations(const region &arg_region_a, ///<
 	else                          { return ( start_a > stop_b  ) ? region_comparison::STRICTLY_AFTER  : region_comparison::OVERLAPPINGLY_AFTER  ; }
 }
 
+/// \brief Make a simple region from a chain label char and a start & stop res name num
+///
+/// \relates region
+region cath::chop::make_simple_region(const char &arg_chain_label_char,   ///< The chain label char for the new region
+                                      const int  &arg_start_res_name_num, ///< The num for the start residue name
+                                      const int  &arg_stop_res_name_num   ///< The num for the stop  residue name
+                                      ) {
+	return {
+		chain_label { arg_chain_label_char   },
+		residue_name{ arg_start_res_name_num },
+		residue_name{ arg_stop_res_name_num  }
+	};
+}
 
+/// \brief Make a simple region from a chain label char and a start & stop res name num with insert code chars
+///
+/// \relates region
+region cath::chop::make_simple_region(const char &arg_chain_label_char,   ///< The chain label char for the new region
+                                      const int  &arg_start_res_name_num, ///< The num for the start residue name
+                                      const char &arg_start_res_name_ins, ///< The insert code char for the start  residue name
+                                      const int  &arg_stop_res_name_num,  ///< The num for the stop  residue name
+                                      const char &arg_stop_res_name_ins   ///< The insert code char for the stop  residue name
+                                      ) {
+	return {
+		chain_label { arg_chain_label_char   },
+		residue_name{ arg_start_res_name_num, arg_start_res_name_ins },
+		residue_name{ arg_stop_res_name_num,  arg_stop_res_name_ins  }
+	};
+}
+
+/// \brief Generate a string describing the specified region
+///
+/// \relates region
+string cath::chop::to_string(const region &arg_region ///< The region to describe
+                             ) {
+	str_vec parts;
+	if ( has_chain_label( arg_region ) ) {
+		parts.push_back( "chain:"      +      to_string( get_chain_label( arg_region ) ) );
+	}
+	if ( has_names( arg_region ) ) {
+		parts.push_back( "start_name:" +      to_string( get_start_name ( arg_region ) ) );
+		parts.push_back( "stop_name:"  +      to_string( get_stop_name  ( arg_region ) ) );
+	}
+	if ( has_indices( arg_region ) ) {
+		parts.push_back( "start_idx:"  + std::to_string( get_start_index ( arg_region ) ) );
+		parts.push_back( "stop_idx:"   + std::to_string( get_stop_index  ( arg_region ) ) );
+	}
+	return "region{ " + join( parts, ", " ) + " }";
+}
+
+/// \brief Insert a description of the specified region into the specified ostream
+///
+/// \relates region
+ostream & cath::chop::operator<<(ostream      &arg_os,    ///< The ostream into which the description should be inserted
+                                 const region &arg_region ///< The region to describe
+                                 ) {
+	arg_os << to_string( arg_region );
+	return arg_os;
+}

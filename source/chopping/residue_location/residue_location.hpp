@@ -33,8 +33,7 @@ namespace cath {
 	namespace chop {
 
 		/// \brief TODOCUMENT
-		class residue_location final : private boost::totally_ordered<residue_location,
-		                                       boost::equivalent<residue_location> > {
+		class residue_location final : private boost::totally_ordered<residue_location> {
 			/// \brief TODOCUMENT
 			residue_name_opt the_residue_name;
 
@@ -59,6 +58,8 @@ namespace cath {
 
 		residue_locating get_residue_locating(const residue_location &);
 
+		bool operator==(const residue_location &,
+		                const residue_location &);
 		bool operator<(const residue_location &,
 		               const residue_location &);
 	} // namespace chop

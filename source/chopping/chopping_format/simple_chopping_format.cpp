@@ -22,14 +22,22 @@
 
 #include "chopping/domain/domain.hpp"
 #include "common/clone/make_uptr_clone.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
+#include "common/debug_numeric_cast.hpp"
+#include "exception/invalid_argument_exception.hpp"
 #include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
 #include <iostream> // ***** TEMPORARY *****
 
-
+using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
-using namespace std;
+
+using boost::string_ref;
+using std::cerr;
+using std::next;
+using std::string;
+using std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<chopping_format> simple_chopping_format::do_clone() const {
@@ -44,9 +52,73 @@ bool simple_chopping_format::do_represents_fragments() const {
 /// \brief TODOCUMENT
 domain simple_chopping_format::do_parse_domain(const string &arg_domain_chopping_string ///< TODOCUMENT
                                                ) const {
-	cerr << "domain_chopping_string is " << arg_domain_chopping_string << endl;
+	cerr << "domain_chopping_string is " << arg_domain_chopping_string << "\n";
 
 	BOOST_THROW_EXCEPTION(not_implemented_exception("simple_chopping_format::do_parse_domain()"));
 
 	return domain( region_vec() );
+}
+
+/// \brief Parse a segment from the specified segment string
+region simple_chopping_format::parse_segment(const string &arg_segment_string ///< The string from which to parse the segment
+                                             ) const {
+	constexpr char   CHAIN_OPEN_SQ_BR                = '[';
+	constexpr char   CHAIN_CLOSE_SQ_BR               = ']';
+	constexpr char   RESIDUE_NAME_DELIM              = '-';
+	constexpr size_t MIN_VALID_CHARS                 = 6;
+	constexpr size_t CHAIN_NEG_OFFSET                = 2;
+	constexpr size_t CHAIN_OPEN_SQ_BR_END_NEG_OFFSET = 3;
+
+	const auto length = arg_segment_string.length();
+	if ( length < MIN_VALID_CHARS ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh"));
+	}
+	if ( arg_segment_string.back() != CHAIN_CLOSE_SQ_BR || arg_segment_string[ length - CHAIN_OPEN_SQ_BR_END_NEG_OFFSET ] != CHAIN_OPEN_SQ_BR ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh two"));
+	}
+
+	const auto begin_itr          = common::cbegin( arg_segment_string );
+	const auto end_itr            = common::cend  ( arg_segment_string );
+	const auto begin_plus_one_itr = next( begin_itr );
+	const auto res_end_itr        = next( end_itr, 0 - static_cast<int>( CHAIN_OPEN_SQ_BR_END_NEG_OFFSET ) );
+	const auto dash_itr           = find( begin_plus_one_itr, res_end_itr, RESIDUE_NAME_DELIM );
+
+	if ( dash_itr == res_end_itr ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh again"));
+	}
+
+	const auto dash_plus_one_itr = next( dash_itr );
+
+	return {
+		chain_label{ arg_segment_string[ length - CHAIN_NEG_OFFSET ] },
+		parse_residue( string_ref{ &*begin_itr,         debug_numeric_cast<size_t>( distance( begin_itr,         dash_itr    ) ) } ),
+		parse_residue( string_ref{ &*dash_plus_one_itr, debug_numeric_cast<size_t>( distance( dash_plus_one_itr, res_end_itr ) ) } )
+	};
+}
+
+/// \brief Parse a residue from the specified residue string
+residue_name simple_chopping_format::parse_residue(const string_ref &arg_string_ref ///< The string from which to parse the residue
+                                                   ) const {
+	constexpr char   INS_CODE_OPEN_BR             = '(';
+	constexpr char   INS_CODE_CLOSE_BR            = ')';
+	constexpr size_t MIN_INS_CODE_CHARS           = 4;
+	constexpr size_t INS_CODE_OFFSET              = 2;
+	constexpr size_t CHAIN_OPEN_BR_END_NEG_OFFSET = 3;
+
+	const auto length = arg_string_ref.length();
+	if ( length < MIN_INS_CODE_CHARS || arg_string_ref.back() != INS_CODE_CLOSE_BR ) {
+		return residue_name{ stoi( string{ arg_string_ref } ) };
+	}
+
+	if ( arg_string_ref[ length - CHAIN_OPEN_BR_END_NEG_OFFSET ] != INS_CODE_OPEN_BR ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh yet again"));
+	}
+	const auto begin_itr   = common::cbegin( arg_string_ref );
+	const auto end_itr     = common::cend  ( arg_string_ref );
+	const auto res_end_itr = next( end_itr, 0 - static_cast<int>( CHAIN_OPEN_BR_END_NEG_OFFSET ) );
+
+	return {
+		stoi( string{ begin_itr, res_end_itr } ),
+		arg_string_ref[ length - INS_CODE_OFFSET ]
+	};
 }
