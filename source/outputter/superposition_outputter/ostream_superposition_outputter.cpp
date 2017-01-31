@@ -45,8 +45,8 @@ void ostream_superposition_outputter::do_output_superposition(const superpositio
 		arg_ostream,
 		arg_superposition_context.get_superposition_cref(),
 		arg_superposition_context.get_pdbs_cref(),
-		false,
-		true
+		sup_pdbs_script_policy::LEAVE_RAW_PDBS,
+		chain_relabel_policy::RELABEL
 	);
 }
 

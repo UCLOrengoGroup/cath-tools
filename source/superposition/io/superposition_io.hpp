@@ -25,6 +25,7 @@
 
 #include "chopping/region/regions_limiter.hpp"
 #include "common/path_type_aliases.hpp"
+#include "superposition/io/sup_pdbs_script_policy.hpp"
 #include "superposition/superposition.hpp"
 
 #include <iosfwd>
@@ -49,6 +50,11 @@ namespace cath {
 
 		} // namespace detail
 
+		enum class chain_relabel_policy : bool {
+			RELABEL,
+			LEAVE
+		};
+
 		void write_xml_sup(std::ostream &,
 		                   const superposition &,
 		                   const str_vec &);
@@ -61,35 +67,35 @@ namespace cath {
 		                                               const superposition &,
 		                                               file::pdb,
 		                                               const size_t &,
-		                                               const bool & = false,
+		                                               const chain_relabel_policy & = chain_relabel_policy::LEAVE,
 		                                               const chop::regions_limiter & = chop::regions_limiter{} );
 
 		std::ostream & write_superposed_pdbs_to_ostream(std::ostream &,
 		                                               const superposition &,
 		                                               const file::pdb_list,
-		                                               const bool &,
-		                                               const bool & = false,
+		                                               const sup_pdbs_script_policy &,
+		                                               const chain_relabel_policy & = chain_relabel_policy::LEAVE,
 		                                               const chop::regions_limiter & = chop::regions_limiter{});
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const boost::filesystem::path &,
 		                                  const file::pdb &,
 		                                  const size_t &,
-		                                  const bool & = false,
+		                                  const chain_relabel_policy & = chain_relabel_policy::LEAVE,
 		                                  const chop::regions_limiter & = chop::regions_limiter{});
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const boost::filesystem::path &,
 		                                  const file::pdb_list &,
-		                                  const bool &,
-		                                  const bool & = false,
+		                                  const sup_pdbs_script_policy &,
+		                                  const chain_relabel_policy & = chain_relabel_policy::LEAVE,
 		                                  const chop::regions_limiter & = chop::regions_limiter{});
 
 		void write_superposed_pdb_from_files(const superposition &,
 		                                     const boost::filesystem::path &,
 		                                     const path_vec &,
-		                                     const bool &,
-		                                     const bool & = false,
+		                                     const sup_pdbs_script_policy &,
+		                                     const chain_relabel_policy & = chain_relabel_policy::LEAVE,
 		                                     const chop::regions_limiter & = chop::regions_limiter{});
 
 		superposition superposition_from_ptree(const boost::property_tree::ptree &);

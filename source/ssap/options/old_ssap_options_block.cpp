@@ -39,6 +39,7 @@ using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::opts;
+using namespace cath::sup;
 using namespace std;
 
 using boost::algorithm::join;
@@ -99,6 +100,8 @@ void old_ssap_options_block::do_add_visible_options_to_description(options_descr
 	const string score_varname{ "<score>" };
 	const string set_varname  { "<set>"   };
 
+	const auto write_rasmol_script_notifier = [&] (const bool &x) { set_write_rasmol_script( x ? sup_pdbs_script_policy::WRITE_RASMOL_SCRIPT : sup_pdbs_script_policy::LEAVE_RAW_PDBS ); };
+
 	const string protein_file_combns_str = join( get_all_protein_file_combn_strings(), ", " );
 	arg_desc.add_options()
 		( PO_DEBUG.c_str(),                bool_switch              ( &debug                        )                           ->default_value(DEF_BOOL      ),   "Output debugging information"                                                                                          )
@@ -119,7 +122,7 @@ void old_ssap_options_block::do_add_visible_options_to_description(options_descr
 		( PO_ALIGN_DIR.c_str(),            value<path>              ( &alignment_dir                )->value_name( dir_varname )->default_value( path(".")    ), ( "Write alignment to directory " + dir_varname ).c_str()                                                                 )
 		( PO_MIN_OUT_SCORE.c_str(),        value<double>            ( &min_score_for_writing_files  )->value_name(score_varname)->default_value(DEF_FILE_SC   ), ( "Only output alignment/superposition files if the SSAP score exceeds " + score_varname ).c_str()                        )
 		( PO_MIN_SUP_SCORE.c_str(),        value<double>            ( &min_score_for_superposition  )->value_name(score_varname)->default_value(DEF_SUP       ), ( "[DEPRECATED] Calculate superposition based on the residue-pairs with scores greater than " + score_varname ).c_str()   )
-		( PO_RASMOL_SCRIPT.c_str(),        bool_switch              ( &write_rasmol_script          )                           ->default_value(DEF_BOOL      ),   "[DEPRECATED] Write a rasmol superposition script to load and colour the superposed structures"                         )
+		( PO_RASMOL_SCRIPT.c_str(),        bool_switch()->notifier  ( write_rasmol_script_notifier  ),                                                             "[DEPRECATED] Write a rasmol superposition script to load and colour the superposed structures"                         )
 		( PO_XML_SUP.c_str(),              bool_switch              ( &write_xml_sup                )                           ->default_value(DEF_BOOL      ),   "[DEPRECATED] Write a small xml superposition file, from which a larger superposition file can be reconstructed"        );
 }
 
@@ -287,13 +290,20 @@ double old_ssap_options_block::get_min_score_for_superposition() const {
 }
 
 /// \brief Getter for write_script
-bool old_ssap_options_block::get_write_rasmol_script() const {
+sup_pdbs_script_policy old_ssap_options_block::get_write_rasmol_script() const {
 	return write_rasmol_script;
 }
 
 /// \brief Getter for write_xml_sup
 bool old_ssap_options_block::get_write_xml_sup() const {
 	return write_xml_sup;
+}
+
+/// \brief Setter for write_script
+old_ssap_options_block & old_ssap_options_block::set_write_rasmol_script(const sup_pdbs_script_policy &arg_write_rasmol_script ///< The new policy for writing a script for superposition PDBs
+                                                                         ) {
+	write_rasmol_script = arg_write_rasmol_script;
+	return *this;
 }
 
 /// \brief Getter for whether a clique_file has been specified

@@ -28,6 +28,7 @@
 #include "common/type_aliases.hpp"
 #include "options/options_block/options_block.hpp"
 #include "structure/protein/protein_source_file_set/protein_file_combn.hpp"
+#include "superposition/io/sup_pdbs_script_policy.hpp"
 
 #include <fstream>
 #include <string>
@@ -50,37 +51,38 @@ namespace cath {
 		private:
 			using super = options_block;
 
-			static constexpr bool               DEF_BOOL      { false };    ///< (Default) default for bool_switch options
-			static constexpr protein_file_combn DEF_PROT_SRCS { protein_file_combn::PDB_DSSP_SEC }; ///< (Default) default for protein_source_files options
-			static constexpr double             DEF_REFAST    { 65.0  };    ///< Default maximum fast SSAP score to trigger running a second fast SSAP with looser cutoffs
-			static constexpr double             DEF_RESLOW    { 75.0  };    ///< Default maximum (best) fast SSAP score to trigger running a slow SSAP
-			static constexpr double             DEF_FILE_SC   { 0.0   };    ///< Default minimum final SSAP score for outputting alignment/superposition files
-			static constexpr double             DEF_SUP       {
+			static constexpr bool                        DEF_BOOL     { false                                       }; ///< (Default) default for bool_switch options
+			static constexpr sup::sup_pdbs_script_policy DEF_SCRIPT   { sup::sup_pdbs_script_policy::LEAVE_RAW_PDBS }; ///< (Default) default for whether to write a short Rasmol script with superposed PDBs
+			static constexpr protein_file_combn          DEF_PROT_SRCS{ protein_file_combn::PDB_DSSP_SEC            }; ///< (Default) default for protein_source_files options
+			static constexpr double                      DEF_REFAST   { 65.0                                        }; ///< Default maximum fast SSAP score to trigger running a second fast SSAP with looser cutoffs
+			static constexpr double                      DEF_RESLOW   { 75.0                                        }; ///< Default maximum (best) fast SSAP score to trigger running a slow SSAP
+			static constexpr double                      DEF_FILE_SC  { 0.0                                         }; ///< Default minimum final SSAP score for outputting alignment/superposition files
+			static constexpr double                      DEF_SUP      {
 				align::common_residue_select_min_score_policy::MIN_CUTOFF
 			}; 
 
-			str_vec                 names;                                        ///< The names of the structures to compare
-	     
-			bool                    debug                        = DEF_BOOL;      ///< Whether debug level run information has been requested
-			boost::filesystem::path output_filename;                              ///< A file to which all output should be written, or empty if stdout should be used
-	     
-			boost::filesystem::path clique_file;                                  ///< A file from which to read clique information
-			boost::filesystem::path domin_file;                                   ///< A file from which to read domin information
-	   
-			double                  max_score_to_fast_ssap_rerun = DEF_REFAST;    ///< Maximum fast SSAP score to trigger running a second fast SSAP with looser cutoffs
-			double                  max_score_to_slow_ssap_rerun = DEF_RESLOW;    ///< Maximum (best) fast SSAP score to trigger running a slow SSAP
-			bool                    slow_ssap_only               = DEF_BOOL;      ///< Whether to only run a slow SSAP (and skip all fast SSAPs)
-	   
-			bool                    use_local_ssap_score         = DEF_BOOL;      ///< Use local score normalised over smallest protein
-			bool                    write_all_scores             = DEF_BOOL;      ///< Whether to output all SSAP scores, rather than just the best
-			protein_file_combn      protein_source_files         = DEF_PROT_SRCS; ///< The files from which to read the protein (WOLF_SEC or PDB_DSSP_SEC)
-	  
-			boost::filesystem::path superposition_dir;                            ///< A directory to which a superposition should be written, or empty if none should be written
-			boost::filesystem::path alignment_dir                = ".";           ///< A directory to which the alignment file should be written
-			double                  min_score_for_writing_files  = DEF_FILE_SC;   ///< Minimum final SSAP score for outputting alignment/superposition files
-			double                  min_score_for_superposition  = DEF_SUP;       ///< Minimum residue-pair score for inclusion in superposition calculation
-			bool                    write_rasmol_script          = DEF_BOOL;      ///< Whether to write a Rasmol superposition script file
-			bool                    write_xml_sup                = DEF_BOOL;      ///< Whether to write an XML superposition file
+			str_vec                     names;                                        ///< The names of the structures to compare
+
+			bool                        debug                        = DEF_BOOL;      ///< Whether debug level run information has been requested
+			boost::filesystem::path     output_filename;                              ///< A file to which all output should be written, or empty if stdout should be used
+
+			boost::filesystem::path     clique_file;                                  ///< A file from which to read clique information
+			boost::filesystem::path     domin_file;                                   ///< A file from which to read domin information
+
+			double                      max_score_to_fast_ssap_rerun = DEF_REFAST;    ///< Maximum fast SSAP score to trigger running a second fast SSAP with looser cutoffs
+			double                      max_score_to_slow_ssap_rerun = DEF_RESLOW;    ///< Maximum (best) fast SSAP score to trigger running a slow SSAP
+			bool                        slow_ssap_only               = DEF_BOOL;      ///< Whether to only run a slow SSAP (and skip all fast SSAPs)
+
+			bool                        use_local_ssap_score         = DEF_BOOL;      ///< Use local score normalised over smallest protein
+			bool                        write_all_scores             = DEF_BOOL;      ///< Whether to output all SSAP scores, rather than just the best
+			protein_file_combn          protein_source_files         = DEF_PROT_SRCS; ///< The files from which to read the protein (WOLF_SEC or PDB_DSSP_SEC)
+
+			boost::filesystem::path     superposition_dir;                            ///< A directory to which a superposition should be written, or empty if none should be written
+			boost::filesystem::path     alignment_dir                = ".";           ///< A directory to which the alignment file should be written
+			double                      min_score_for_writing_files  = DEF_FILE_SC;   ///< Minimum final SSAP score for outputting alignment/superposition files
+			double                      min_score_for_superposition  = DEF_SUP;       ///< Minimum residue-pair score for inclusion in superposition calculation
+			sup::sup_pdbs_script_policy write_rasmol_script          = DEF_SCRIPT;    ///< Whether to write a Rasmol superposition script file
+			bool                        write_xml_sup                = DEF_BOOL;      ///< Whether to write an XML superposition file
 
 			virtual std::unique_ptr<options_block> do_clone() const override final;
 			virtual std::string do_get_block_name() const override final;
@@ -113,8 +115,10 @@ namespace cath {
 			boost::filesystem::path get_alignment_dir() const;
 			double get_min_score_for_writing_files() const;
 			double get_min_score_for_superposition() const;
-			bool get_write_rasmol_script() const;
+			sup::sup_pdbs_script_policy get_write_rasmol_script() const;
 			bool get_write_xml_sup() const;
+
+			old_ssap_options_block & set_write_rasmol_script(const sup::sup_pdbs_script_policy &);
 
 			static const std::string PO_NAME;
 

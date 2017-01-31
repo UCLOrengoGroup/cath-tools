@@ -1904,11 +1904,18 @@ size_doub_pair cath::superpose(const protein                 &arg_protein_a,    
 		write_xml_sup_filename( my_superposition, xml_outname, { arg_protein_a.get_title(), arg_protein_b.get_title() } );
 	}
 
+	const auto sup_file_extension_fn = [] (const sup_pdbs_script_policy &x) {
+		switch ( x ) {
+			case ( sup_pdbs_script_policy::WRITE_RASMOL_SCRIPT ) : { return ".rasc"; }
+			case ( sup_pdbs_script_policy::LEAVE_RAW_PDBS      ) : { return ".sup";  }
+		}
+	};
+
 	// If a sup file has been requested, write one
 	if ( arg_score_is_high_enough && has_superposition_dir( arg_ssap_options ) ) {
 		const auto pdb1_filename   = find_file( arg_data_dirs, data_file::PDB,  arg_protein_a.get_title() );
 		const auto pdb2_filename   = find_file( arg_data_dirs, data_file::PDB,  arg_protein_b.get_title() );
-		const auto sup_file_suffix = string( arg_ssap_options.get_write_rasmol_script() ? ".rasc" : ".sup" );
+		const auto sup_file_suffix = sup_file_extension_fn( arg_ssap_options.get_write_rasmol_script() );
 		const auto basename        = ( arg_protein_a.get_title() + arg_protein_b.get_title() + sup_file_suffix );
 		const auto outname         = get_superposition_dir( arg_ssap_options ) / basename;
 
@@ -1918,7 +1925,7 @@ size_doub_pair cath::superpose(const protein                 &arg_protein_a,    
 			outname,
 			{ pdb1_filename, pdb2_filename },
 			arg_ssap_options.get_write_rasmol_script(),
-			true
+			chain_relabel_policy::RELABEL
 		);
 	}
 
