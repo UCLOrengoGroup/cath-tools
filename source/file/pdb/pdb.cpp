@@ -495,14 +495,18 @@ pdb_list cath::file::read_end_separated_pdb_files(istream &arg_in_stream ///< TO
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-ostream & cath::file::write_pdb_file(ostream   &arg_os,     ///< TODOCUMENT
-                                     const pdb &arg_pdb ///< TODOCUMENT
+ostream & cath::file::write_pdb_file(ostream               &arg_os,             ///< TODOCUMENT
+                                     const pdb             &arg_pdb,            ///< TODOCUMENT
+                                     const regions_limiter &arg_regions_limiter ///< Optional specification of regions to which the written records should be restricted
                                      ) {
+	regions_limiter the_regions_limiter{ arg_regions_limiter };
 	const auto &num_residues = arg_pdb.get_num_residues();
 //	size_t atom_ctr = 1;
 	for (const size_t &residue_ctr : irange( 0_z, num_residues ) ) {
 		const pdb_residue &the_residue = arg_pdb.get_residue_cref_of_index__backbone_unchecked( residue_ctr );
-		write_pdb_file_entry( arg_os, the_residue );
+		if ( the_regions_limiter.update_residue_is_included( the_residue.get_residue_id() ) ) {
+			write_pdb_file_entry( arg_os, the_residue );
+		}
 
 		const auto &the_chain_label = get_chain_label( the_residue );
 

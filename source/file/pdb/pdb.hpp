@@ -24,6 +24,7 @@
 #include <boost/operators.hpp>
 #include <boost/optional.hpp>
 
+#include "chopping/region/regions_limiter.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -37,7 +38,6 @@
 #include <vector>
 
 namespace cath { class protein; }
-namespace cath { namespace chop { class domain; } }
 namespace cath { namespace file { class pdb_list; } }
 namespace cath { namespace file { class pdb_residue; } }
 namespace cath { namespace file { struct protein_info; } }
@@ -102,7 +102,8 @@ namespace cath {
 		                             pdb &);
 		pdb_list read_end_separated_pdb_files(std::istream &);
 		std::ostream & write_pdb_file(std::ostream &,
-		                              const pdb &);
+		                              const pdb &,
+		                              const chop::regions_limiter & = {} );
 
 		amino_acid_vec get_amino_acid_list(const pdb &);
 

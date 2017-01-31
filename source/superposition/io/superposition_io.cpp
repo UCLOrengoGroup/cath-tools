@@ -27,6 +27,7 @@
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/range/irange.hpp>
 
+#include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
@@ -43,6 +44,7 @@
 #include <fstream>
 
 using namespace boost::filesystem;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
@@ -166,11 +168,12 @@ void cath::sup::write_xml_sup_filename(const superposition  &arg_superposition, 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-ostream & cath::sup::write_superposed_pdb_to_ostream(ostream             &arg_os,            ///< TODOCUMENT
-	                                                 const superposition &arg_superposition, ///< TODOCUMENT
-	                                                 pdb                  arg_pdb,           ///< TODOCUMENT
-	                                                 const size_t        &arg_chain_index,   ///< TODOCUMENT
-	                                                 const bool          &arg_relabel_chain  ///< TODOCUMENT
+ostream & cath::sup::write_superposed_pdb_to_ostream(ostream               &arg_os,             ///< TODOCUMENT
+	                                                 const superposition   &arg_superposition,  ///< TODOCUMENT
+	                                                 pdb                    arg_pdb,            ///< TODOCUMENT
+	                                                 const size_t          &arg_chain_index,    ///< TODOCUMENT
+	                                                 const bool            &arg_relabel_chain,  ///< TODOCUMENT
+	                                                 const regions_limiter &arg_regions_limiter ///< Optional specification of regions to which the written records should be restricted
 	                                                 ) {
 	// Translate PDB
 	arg_pdb += arg_superposition.get_translation_of_index( arg_chain_index );
@@ -194,18 +197,19 @@ ostream & cath::sup::write_superposed_pdb_to_ostream(ostream             &arg_os
 		arg_pdb.set_chain_label( superposition::SUPERPOSITION_CHAIN_LABELS[ arg_chain_index ] );
 	}
 
-	write_pdb_file(arg_os, arg_pdb);
+	write_pdb_file( arg_os, arg_pdb, arg_regions_limiter );
 	return arg_os;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-ostream & cath::sup::write_superposed_pdbs_to_ostream(ostream             &arg_os,            ///< TODOCUMENT
-                                                      const superposition &arg_superposition, ///< TODOCUMENT
-                                                      const pdb_list       arg_pdbs,          ///< TODOCUMENT
-                                                      const bool          &arg_write_script,  ///< TODOCUMENT
-                                                      const bool          &arg_relabel_chain  ///< TODOCUMENT
+ostream & cath::sup::write_superposed_pdbs_to_ostream(ostream               &arg_os,             ///< TODOCUMENT
+                                                      const superposition   &arg_superposition,  ///< TODOCUMENT
+                                                      const pdb_list         arg_pdbs,           ///< TODOCUMENT
+                                                      const bool            &arg_write_script,   ///< TODOCUMENT
+                                                      const bool            &arg_relabel_chain,  ///< TODOCUMENT
+                                                      const regions_limiter &arg_regions_limiter ///< Optional specification of regions to which the written records should be restricted
                                                       ) {
 	// Sanity check inputs
 	const size_t num_entries = arg_superposition.get_num_entries();
@@ -232,7 +236,7 @@ exit
 	// Translate each PDB to midpoint, based on CoG of equivalent positions
 	// (This is important for structures with low overlap)
 	for (size_t pdb_ctr = 0; pdb_ctr < num_entries; ++pdb_ctr) {
-		write_superposed_pdb_to_ostream( arg_os, arg_superposition, arg_pdbs[pdb_ctr], pdb_ctr, arg_relabel_chain );
+		write_superposed_pdb_to_ostream( arg_os, arg_superposition, arg_pdbs[pdb_ctr], pdb_ctr, arg_relabel_chain, arg_regions_limiter );
 	}
 
 	return arg_os;
@@ -281,11 +285,12 @@ exit
 /// \relates superposition
 ///
 /// \todo Refactor out common file-opening/exception-handling functionality from these file readers/writers
-void cath::sup::write_superposed_pdb_to_file(const superposition &arg_superposition, ///< TODOCUMENT
-                                             const path          &arg_filename,      ///< TODOCUMENT
-                                             const pdb           &arg_pdb,           ///< TODOCUMENT
-                                             const size_t        &arg_chain_index,   ///< TODOCUMENT
-                                             const bool          &arg_relabel_chain ///< TODOCUMENT
+void cath::sup::write_superposed_pdb_to_file(const superposition   &arg_superposition,  ///< TODOCUMENT
+                                             const path            &arg_filename,       ///< TODOCUMENT
+                                             const pdb             &arg_pdb,            ///< TODOCUMENT
+                                             const size_t          &arg_chain_index,    ///< TODOCUMENT
+                                             const bool            &arg_relabel_chain,  ///< TODOCUMENT
+                                             const regions_limiter &arg_regions_limiter ///< Optional specification of regions to which the written records should be restricted
                                              ) {
 	ofstream superposition_ostream;
 	open_ofstream(superposition_ostream, arg_filename);
@@ -297,7 +302,8 @@ void cath::sup::write_superposed_pdb_to_file(const superposition &arg_superposit
 			arg_superposition,
 			arg_pdb,
 			arg_chain_index,
-			arg_relabel_chain
+			arg_relabel_chain,
+			arg_regions_limiter
 		);
 
 		// Close the file
@@ -321,11 +327,12 @@ void cath::sup::write_superposed_pdb_to_file(const superposition &arg_superposit
 /// \relates superposition
 ///
 /// \todo Refactor out common file-opening/exception-handling functionality from these file readers/writers
-void cath::sup::write_superposed_pdb_to_file(const superposition &arg_superposition, ///< TODOCUMENT
-                                             const path          &arg_filename,      ///< TODOCUMENT
-                                             const pdb_list      &arg_pdbs,          ///< TODOCUMENT
-                                             const bool          &arg_write_script,  ///< TODOCUMENT
-                                             const bool          &arg_relabel_chain  ///< TODOCUMENT
+void cath::sup::write_superposed_pdb_to_file(const superposition   &arg_superposition,  ///< TODOCUMENT
+                                             const path            &arg_filename,       ///< TODOCUMENT
+                                             const pdb_list        &arg_pdbs,           ///< TODOCUMENT
+                                             const bool            &arg_write_script,   ///< TODOCUMENT
+                                             const bool            &arg_relabel_chain,  ///< TODOCUMENT
+                                             const regions_limiter &arg_regions_limiter ///< Optional specification of regions to which the written records should be restricted
                                              ) {
 	ofstream superposition_ostream;
 	open_ofstream(superposition_ostream, arg_filename);
@@ -337,7 +344,8 @@ void cath::sup::write_superposed_pdb_to_file(const superposition &arg_superposit
 			arg_superposition,
 			arg_pdbs,
 			arg_write_script,
-			arg_relabel_chain
+			arg_relabel_chain,
+			arg_regions_limiter
 		);
 
 		// Close the file
@@ -359,11 +367,12 @@ void cath::sup::write_superposed_pdb_to_file(const superposition &arg_superposit
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-void cath::sup::write_superposed_pdb_from_files(const superposition &arg_superposition, ///< TODOCUMENT
-                                                const path          &arg_filename,      ///< TODOCUMENT
-                                                const path_vec      &arg_pdb_filenames, ///< TODOCUMENT
-                                                const bool          &arg_write_script,  ///< TODOCUMENT
-                                                const bool          &arg_relabel_chain  ///< TODOCUMENT
+void cath::sup::write_superposed_pdb_from_files(const superposition   &arg_superposition,  ///< TODOCUMENT
+                                                const path            &arg_filename,       ///< TODOCUMENT
+                                                const path_vec        &arg_pdb_filenames,  ///< TODOCUMENT
+                                                const bool            &arg_write_script,   ///< TODOCUMENT
+                                                const bool            &arg_relabel_chain,  ///< TODOCUMENT
+                                                const regions_limiter &arg_regions_limiter ///< Optional specification of regions to which the written records should be restricted
                                                 ) {
 	// Read the PDBs
 	pdb_list pdbs;
@@ -374,7 +383,7 @@ void cath::sup::write_superposed_pdb_from_files(const superposition &arg_superpo
 		pdbs.push_back(new_pdb);
 	}
 
-	write_superposed_pdb_to_file( arg_superposition, arg_filename, pdbs, arg_write_script, arg_relabel_chain );
+	write_superposed_pdb_to_file( arg_superposition, arg_filename, pdbs, arg_write_script, arg_relabel_chain, arg_regions_limiter );
 }
 
 /// \brief Build a superposition from a superposition-populated ptree

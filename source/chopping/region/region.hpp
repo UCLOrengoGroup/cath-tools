@@ -53,14 +53,16 @@ namespace cath {
 			chain_label_opt the_chain_label;
 
 			/// \brief TODOCUMENT
-			residue_location start_residue;
+			boost::optional<std::pair<residue_location, residue_location> > residues;
+			// residue_location start_residue;
 
-			/// \brief TODOCUMENT
-			residue_location stop_residue;
+			// /// \brief TODOCUMENT
+			// residue_location stop_residue;
 
 			void sanity_check() const;
 
 		public:
+			explicit region(const chain_label &);
 			region(const chain_label &,
 			       const residue_name &,
 			       const residue_name &);
@@ -73,6 +75,8 @@ namespace cath {
 			       const size_t &);
 
 			const chain_label_opt & get_opt_chain_label() const;
+
+			bool has_starts_stops() const;
 
 			const residue_location & get_start_residue() const;
 			const residue_location & get_stop_residue() const;
@@ -106,6 +110,8 @@ namespace cath {
 
 		region_comparison compare_locations(const region &,
 		                                    const region &);
+
+		region make_simple_region(const char &);
 
 		region make_simple_region(const char &,
 		                          const int &,

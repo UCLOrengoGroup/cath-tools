@@ -23,6 +23,7 @@
 
 #include <boost/filesystem.hpp>
 
+#include "chopping/region/regions_limiter.hpp"
 #include "common/path_type_aliases.hpp"
 #include "superposition/superposition.hpp"
 
@@ -60,31 +61,36 @@ namespace cath {
 		                                               const superposition &,
 		                                               file::pdb,
 		                                               const size_t &,
-		                                               const bool & = false);
+		                                               const bool & = false,
+		                                               const chop::regions_limiter & = chop::regions_limiter{} );
 
 		std::ostream & write_superposed_pdbs_to_ostream(std::ostream &,
 		                                               const superposition &,
 		                                               const file::pdb_list,
 		                                               const bool &,
-		                                               const bool & = false);
+		                                               const bool & = false,
+		                                               const chop::regions_limiter & = chop::regions_limiter{});
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const boost::filesystem::path &,
 		                                  const file::pdb &,
 		                                  const size_t &,
-		                                  const bool & = false);
+		                                  const bool & = false,
+		                                  const chop::regions_limiter & = chop::regions_limiter{});
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const boost::filesystem::path &,
 		                                  const file::pdb_list &,
 		                                  const bool &,
-		                                  const bool & = false);
+		                                  const bool & = false,
+		                                  const chop::regions_limiter & = chop::regions_limiter{});
 
 		void write_superposed_pdb_from_files(const superposition &,
 		                                     const boost::filesystem::path &,
 		                                     const path_vec &,
 		                                     const bool &,
-		                                     const bool & = false);
+		                                     const bool & = false,
+		                                     const chop::regions_limiter & = chop::regions_limiter{});
 
 		superposition superposition_from_ptree(const boost::property_tree::ptree &);
 

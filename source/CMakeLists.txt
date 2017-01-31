@@ -270,6 +270,7 @@ set(
 set(
 	NORMSOURCES_CHOPPING_REGION
 		chopping/region/region.cpp
+		chopping/region/regions_limiter.cpp
 )
 
 set(
@@ -1282,6 +1283,7 @@ set(
 set(
 	TESTSOURCES_CHOPPING_REGION
 		chopping/region/region_test.cpp
+		chopping/region/regions_limiter_test.cpp
 )
 
 set(

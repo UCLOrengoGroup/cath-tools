@@ -31,6 +31,7 @@ using namespace cath::common;
 using boost::algorithm::join;
 using std::ostream;
 using std::string;
+using std::make_pair;
 
 /// \brief TODOCUMENT
 void region::sanity_check() const {
@@ -47,13 +48,20 @@ void region::sanity_check() const {
 	}
 }
 
+/// \brief Ctor for a whole-chain region
+region::region(const chain_label &arg_chain_label ///< The chain_label for the whole-chain region to construct
+               ) : the_chain_label( arg_chain_label ) {
+}
+
 /// \brief Ctor for region
 region::region(const chain_label  &arg_chain_label,        ///<TODOCUMENT
                const residue_name &arg_start_residue_name, ///<TODOCUMENT
                const residue_name &arg_stop_residue_name   ///<TODOCUMENT
                ) : the_chain_label( arg_chain_label        ),
-                   start_residue  ( arg_start_residue_name ),
-                   stop_residue   ( arg_stop_residue_name  ) {
+                   residues       { make_pair(
+                   	residue_location{ arg_start_residue_name },
+                   	residue_location{ arg_stop_residue_name  }
+                   ) } {
 	sanity_check();
 }
 
@@ -64,16 +72,20 @@ region::region(const chain_label  &arg_chain_label,        ///<TODOCUMENT
                const residue_name &arg_stop_residue_name,  ///<TODOCUMENT
                const size_t       &arg_stop_index          ///<TODOCUMENT
                ) : the_chain_label( arg_chain_label                         ),
-                   start_residue  ( arg_start_residue_name, arg_start_index ),
-                   stop_residue   ( arg_stop_residue_name,  arg_stop_index  ) {
+                   residues       { make_pair(
+                   	residue_location{ arg_start_residue_name, arg_start_index },
+                   	residue_location{ arg_stop_residue_name,  arg_stop_index  }
+                   ) } {
 	sanity_check();
 }
 
 /// \brief Ctor for region
 region::region(const size_t &arg_start_index, ///<TODOCUMENT
                const size_t &arg_stop_index   ///<TODOCUMENT
-               ) : start_residue( arg_start_index ),
-                   stop_residue ( arg_stop_index  ) {
+               ) : residues{ make_pair(
+                   	residue_location{ arg_start_index },
+                   	residue_location{ arg_stop_index  }
+                   ) } {
 	sanity_check();
 }
 
@@ -82,14 +94,19 @@ const chain_label_opt & region::get_opt_chain_label() const {
 	return the_chain_label;
 }
 
+/// \brief Return whether this region specified the start and stop (or is a whole-chain region)
+bool region::has_starts_stops() const {
+	return static_cast<bool>( residues );
+}
+
 /// \brief TODOCUMENT
 const residue_location & region::get_start_residue() const {
-	return start_residue;
+	return residues->first;
 }
 
 /// \brief TODOCUMENT
 const residue_location & region::get_stop_residue() const {
-	return stop_residue;
+	return residues->second;
 }
 
 /// \brief Non-member equality operator for region
@@ -99,11 +116,17 @@ bool cath::chop::operator==(const region &arg_lhs, ///< The first  region to com
                             const region &arg_rhs  ///< The second region to compare
                             ) {
 	return (
-		arg_lhs.get_opt_chain_label() == arg_rhs.get_opt_chain_label()
+		( arg_lhs.get_opt_chain_label() == arg_rhs.get_opt_chain_label() )
 		&&
-		arg_lhs.get_start_residue()   == arg_rhs.get_start_residue()
+		( arg_lhs.has_starts_stops()    == arg_rhs.has_starts_stops() )
 		&&
-		arg_lhs.get_stop_residue()    == arg_rhs.get_stop_residue()
+		arg_lhs.has_starts_stops()
+			? (
+				arg_lhs.get_start_residue()   == arg_rhs.get_start_residue()
+				&&
+				arg_lhs.get_stop_residue()    == arg_rhs.get_stop_residue()
+			)
+			: true
 	);
 }
 
@@ -160,7 +183,7 @@ const size_opt & cath::chop::get_opt_stop_index(const region &arg_region ///< TO
 /// \relates region
 bool cath::chop::has_names(const region &arg_region ///< TODOCUMENT
                            ) {
-	return static_cast<bool>( get_opt_start_name( arg_region ) );
+	return arg_region.has_starts_stops() && static_cast<bool>( get_opt_start_name( arg_region ) );
 }
 
 /// \brief TODOCUMENT
@@ -168,7 +191,7 @@ bool cath::chop::has_names(const region &arg_region ///< TODOCUMENT
 /// \relates region
 bool cath::chop::has_indices(const region &arg_region ///< TODOCUMENT
                              ) {
-	return static_cast<bool>( get_opt_start_index( arg_region ) );
+	return arg_region.has_starts_stops() && static_cast<bool>( get_opt_start_index( arg_region ) );
 }
 
 /// \brief TODOCUMENT
@@ -270,6 +293,16 @@ region_comparison cath::chop::compare_locations(const region &arg_region_a, ///<
 	// Else the second is earlier, so...  If the first starts after  the second stops  : STRICTLY_AFTER  else region_comparison::OVERLAPPINGLY_AFTER
 	else                          { return ( start_a > stop_b  ) ? region_comparison::STRICTLY_AFTER  : region_comparison::OVERLAPPINGLY_AFTER  ; }
 }
+
+/// \brief Make a simple, whole-chain region from a chain label char
+///
+/// \relates region
+region cath::chop::make_simple_region(const char &arg_chain_label_char ///< The chain label char for the new region
+                                      ) {
+	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+	return region{ chain_label { arg_chain_label_char } };
+}
+
 
 /// \brief Make a simple region from a chain label char and a start & stop res name num
 ///
