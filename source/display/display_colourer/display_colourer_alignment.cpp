@@ -46,6 +46,7 @@ using namespace cath::sup;
 
 using boost::accumulate;
 using boost::lexical_cast;
+using std::string;
 using std::unique_ptr;
 
 /// \brief A standard do_clone method.
@@ -94,6 +95,11 @@ display_colour_spec display_colourer_alignment::do_get_colour_spec(const alignme
 		}
 	}
 	return new_spec;
+}
+
+/// \brief Return the label for this display_colourer
+string display_colourer_alignment::do_get_label() const {
+	return "Colour by alignbow";
 }
 
 /// \brief Get the gradient with which this display_colourer_alignment should colour alignments

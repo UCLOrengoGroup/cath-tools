@@ -39,6 +39,7 @@ using namespace cath::detail;
 using namespace cath::sup;
 
 using boost::irange;
+using std::string;
 using std::unique_ptr;
 
 /// \brief A standard do_clone method
@@ -60,6 +61,11 @@ broad_display_colour_spec display_colourer_consecutive::do_get_colour_spec_from_
 
 	// Return the generated display_colour_spec
 	return new_spec;
+}
+
+/// \brief Return the label for this display_colourer
+string display_colourer_consecutive::do_get_label() const {
+	return "Colour by structure";
 }
 
 /// \brief Getter for the list of colours with which the structures should be coloured

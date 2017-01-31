@@ -84,6 +84,9 @@ namespace cath {
 		void set_normalise_scores(const bool &);
 	};
 
+	bool requires_alignment(const display_spec &);
+	bool is_consecutive(const display_spec &);
+
 	bool has_display_colours_string(const display_spec &);
 	str_opt invalid_string(const display_spec &);
 	display_colour_list get_colour_list(const display_spec &);

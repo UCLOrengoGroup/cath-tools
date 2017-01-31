@@ -117,6 +117,18 @@ void display_spec::set_normalise_scores(const bool &arg_normalise_scores ///< Wh
 	normalise_scores = arg_normalise_scores;
 }
 
+/// \brief Return whether the specified display_spec implies the need for an alignment
+bool cath::requires_alignment(const display_spec &arg_display_spec ///< The display_spec to query
+                              ) {
+	return arg_display_spec.get_gradient_colour_alignment();
+}
+
+/// \brief Return whether the specified display_spec implies a display_colourer_consecutive
+bool cath::is_consecutive(const display_spec &arg_display_spec ///< The display_spec to query
+                          ) {
+	return ! arg_display_spec.get_gradient_colour_alignment();
+}
+
 /// \brief Private getter of whether a display_colours_string has been set
 bool cath::has_display_colours_string(const display_spec &arg_display_spec ///< TODOCUMENT
                                       ) {

@@ -42,6 +42,7 @@ using namespace cath::file;
 using namespace cath::sup;
 
 using std::ostream;
+using std::reference_wrapper;
 using std::unique_ptr;
 
 /// \brief Ctor from specification for post-modifying the colouring based on scores
@@ -140,15 +141,49 @@ unique_ptr<const display_colourer> cath::get_display_colourer(const display_spec
 	}
 }
 
+/// \brier Helper guard to notify a viewer at the start and end of a colouring with a display_colourer
+class viewer_colour_notifier_guard final {
+private:
+	/// \brier Const-reference to the display_colourer that will be colouring the viewer
+	reference_wrapper<const display_colourer> the_colourer;
+
+	/// \brier Reference to the stream to which the viewer data is to be written
+	reference_wrapper<ostream> the_os;
+
+	/// \brier Reference to the viewer to notify
+	reference_wrapper<viewer> the_viewer;
+
+public:
+	/// \brief Ctor, which calls begin_colouring() on the viewer
+	viewer_colour_notifier_guard(const display_colourer &arg_display_colourer, ///< The display_colourer that will be colouring the viewer
+	                             ostream                &arg_os,               ///< The stream to which the viewer data is to be written
+	                             viewer                 &arg_viewer            ///< The viewer to notify
+	                             ) : the_colourer{ arg_display_colourer },
+	                                 the_os      { arg_os               },
+	                                 the_viewer  { arg_viewer           } {
+		the_viewer.get().begin_colouring( the_os.get(), the_colourer.get() );
+	}
+
+	/// \brief Dtor, which calls end_colouring() on the viewer
+	~viewer_colour_notifier_guard() {
+		try {
+			the_viewer.get().end_colouring( the_os.get(), the_colourer.get() );
+		}
+		catch (...) {
+		}
+	}
+};
+
 /// \brief Write instructions for the specified viewer to the specified ostream
 ///        to represent the specified display_colourer in the context of the specified alignment_context
 ///
 /// \relates display_colourer
 void cath::colour_viewer(const display_colourer  &arg_colourer, ///< The display_colourer to write to the ostream
                          ostream                 &arg_os,       ///< The ostream to which the instructions should be written
-                         const viewer            &arg_viewer,   ///< The viewer defining the instructions to be written
+                         viewer                  &arg_viewer,   ///< The viewer defining the instructions to be written
                          const alignment_context &arg_aln_con   ///< The alignment_context providing the context for the display_colourer
                          ) {
+	const viewer_colour_notifier_guard the_guard{ arg_colourer, arg_os, arg_viewer };
 	colour_viewer_with_spec(
 		arg_colourer.get_colour_spec( arg_aln_con ),
 		arg_viewer,
@@ -164,9 +199,10 @@ void cath::colour_viewer(const display_colourer  &arg_colourer, ///< The display
 /// \relates display_colourer
 void cath::colour_viewer(const alignment_free_display_colourer &arg_colourer,                ///< The alignment_free_display_colourer to write to the ostream
                          ostream                               &arg_os,                      ///< The ostream to which the instructions should be written
-                         const viewer                          &arg_viewer,                  ///< The viewer defining the instructions to be written
+                         viewer                                &arg_viewer,                  ///< The viewer defining the instructions to be written
                          const str_vec                         &arg_cleaned_names_for_viewer ///< The names of the structures (cleaned for the viewer)
                          ) {
+	const viewer_colour_notifier_guard the_guard{ arg_colourer, arg_os, arg_viewer };
 	colour_viewer_with_spec(
 		arg_colourer.get_colour_spec_from_num_entries( arg_cleaned_names_for_viewer.size() ),
 		arg_viewer,

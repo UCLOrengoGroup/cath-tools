@@ -52,6 +52,8 @@ namespace cath {
 
 		virtual display_colour_spec do_get_colour_spec(const align::alignment_context &) const = 0;
 
+		virtual std::string do_get_label() const = 0;
+
 	public:
 		display_colourer() noexcept = default;
 		explicit display_colourer(const detail::score_colour_handler &);
@@ -66,7 +68,14 @@ namespace cath {
 
 		const detail::score_colour_handler_opt & get_score_colour_handler_opt() const;
 		display_colour_spec get_colour_spec(const align::alignment_context &) const;
+
+		std::string get_label() const;
 	};
+
+	/// \brief NVI pass-through to the virtual do_get_label() method
+	inline std::string display_colourer::get_label() const {
+		return do_get_label();
+	}
 
 	bool has_score_colour_handler(const display_colourer &);
 	const detail::score_colour_handler & get_score_colour_handler(const display_colourer &);
@@ -81,13 +90,13 @@ namespace cath {
 
 	void colour_viewer(const display_colourer &,
 	                   std::ostream &,
-	                   const viewer &,
+	                   viewer &,
 	                   const align::alignment_context &);
 
 	void colour_viewer(const alignment_free_display_colourer &,
-                       std::ostream &,
-                       const viewer &,
-                       const str_vec &);
+	                   std::ostream &,
+	                   viewer &,
+	                   const str_vec &);
 
 } // namespace cath
 

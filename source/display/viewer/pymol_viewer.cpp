@@ -33,6 +33,7 @@
 #include "common/batch/batch_functions.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
+#include "display/display_colourer/display_colourer.hpp"
 #include "display/viewer/pymol/pymol_tools.hpp"
 #include "display_colour/display_colour.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -304,6 +305,19 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 	arg_os << "set dash_radius, 0.05\n";
 }
 
+/// \brief Write PyMOL commands to store the current scene under the specified label to the specified ostream
+void pymol_viewer::record_scene(ostream           &arg_os,             ///< The ostream to which to write the PyMOL commands
+                                const std::string &arg_colouring_label ///< The label under which the scene should be stored
+                                ) {
+	arg_os
+		<< "colour black, organic\n"
+		<< "scene F"
+		<< scene_count
+		<< ", store, message=\""
+		<< arg_colouring_label
+		<< "\", color=1, view=0, active=0, rep=0, frame=0\n";
+	++scene_count;
+}
 
 /// \brief TODOCUMENT
 string pymol_viewer::do_default_executable() const {
@@ -348,7 +362,7 @@ void pymol_viewer::do_write_load_pdbs(ostream             &arg_os,            //
 
 /// \brief TODOCUMENT
 void pymol_viewer::do_define_colour(ostream              &arg_os,         ///< TODOCUMENT
-                                    const display_colour &arg_colour,    ///< TODOCUMENT
+                                    const display_colour &arg_colour,     ///< TODOCUMENT
                                     const string         &arg_colour_name ///< TODOCUMENT
                                     ) const {
 	arg_os << "set_color "
@@ -356,6 +370,25 @@ void pymol_viewer::do_define_colour(ostream              &arg_os,         ///< T
 		+ ", ["
 		+ comma_separated_string_of_display_colour( arg_colour )
 		+ "]\n";
+}
+
+/// \brief Specify that pymol_view does accept multiple colourings (because it can store them as scenes)
+bool pymol_viewer::do_accepts_multiple_colourings() const {
+	return true;
+}
+
+/// \brief Write PyMOL commands to the specified ostream to prepare for a new, specified colouring
+void pymol_viewer::do_begin_colouring(ostream                &arg_os,          ///< The ostream to which the PyMOL commands should be written
+                                      const display_colourer &/*arg_colourer*/ ///< The display_colourer to be used for the colouring that is beginning
+                                      ) {
+	// If this is the first colouring, precede it by colouring by secondary structure and storing that as the first scene
+	if ( scene_count == 1 ) {
+		arg_os << R"(color black
+color density, ss s
+color rutherfordium, ss h
+)";
+		record_scene( arg_os, "Colour by secondary structure" );
+	}
 }
 
 /// \brief TODOCUMENT
@@ -397,6 +430,14 @@ string pymol_viewer::do_get_colour_pdb_residues_str(const string         &arg_co
 		+ "\n";
 }
 
+/// \brief Write PyMOL commands to the specified ostream to finish the specified colouring
+void pymol_viewer::do_end_colouring(ostream                &arg_os,      ///< The ostream to which the PyMOL commands should be written
+                                    const display_colourer &arg_colourer ///< The display_colourer to be used for the colouring that is ending
+                                    ) {
+	// Store the scene
+	record_scene( arg_os, arg_colourer.get_label() );
+}
+
 /// \brief TODOCUMENT
 void pymol_viewer::do_write_alignment_extras(ostream                     &arg_os,                   ///< TODOCUMENT
                                              const superposition_context &arg_superposition_context ///< TODOCUMENT
@@ -408,7 +449,9 @@ void pymol_viewer::do_write_alignment_extras(ostream                     &arg_os
 /// \brief TODOCUMENT
 void pymol_viewer::do_write_end(ostream &arg_os ///< TODOCUMENT
                                 ) const {
-	arg_os << R"(show cartoon
+
+	arg_os << R"(scene F)" << scene_count << R"(, store, message="Colour me badd", color=0, view=0, active=0, rep=0, frame=0
+show cartoon
 set cartoon_smooth_loops,1
 show_as sticks, organic
 colour black, organic

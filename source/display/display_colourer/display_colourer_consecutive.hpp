@@ -45,6 +45,8 @@ namespace cath {
 
 		virtual broad_display_colour_spec do_get_colour_spec_from_num_entries(const size_t &) const override final;
 
+		virtual std::string do_get_label() const override final;
+
 		const display_colour_list & get_colours() const;
 
 	public:

@@ -53,6 +53,8 @@ namespace cath {
 
 		virtual display_colour_spec do_get_colour_spec(const align::alignment_context &) const override final;
 
+		virtual std::string do_get_label() const override final;
+
 		const display_colour_gradient & get_gradient() const;
 
 	public:

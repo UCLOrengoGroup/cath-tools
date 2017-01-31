@@ -2445,6 +2445,11 @@ set cartoon_loop_radius  = 0.182988
 set cartoon_helix_radius = 1.51546
 bg_color white
 color    black
+color black
+color density, ss s
+color rutherfordium, ss h
+colour black, organic
+scene F1, store, message="Colour by secondary structure", color=1, view=0, active=0, rep=0, frame=0
 set_color cath_tools_defined_colour_0, [0,0,1]
 set_color cath_tools_defined_colour_1, [0,1,0]
 set_color cath_tools_defined_colour_2, [1,0,0]
@@ -2453,6 +2458,8 @@ colour cath_tools_defined_colour_0, 1g5aA03
 colour cath_tools_defined_colour_1, 1wzaA02
 colour cath_tools_defined_colour_2, 1r7aA02
 colour cath_tools_defined_colour_3, 1zjaA02
+colour black, organic
+scene F2, store, message="Colour by structure", color=1, view=0, active=0, rep=0, frame=0
 distance alignment, /1g5aA03//A/187/CA, /1r7aA02//A/88/CA
 distance alignment, /1g5aA03//A/188/CA, /1r7aA02//A/89/CA
 distance alignment, /1wzaA02//A/135/CA, /1zjaA02//A/106/CA
@@ -2657,6 +2664,7 @@ hide labels
 set dash_gap, 0.0
 set dash_color, black
 set dash_radius, 0.05
+scene F3, store, message="Colour me badd", color=0, view=0, active=0, rep=0, frame=0
 show cartoon
 set cartoon_smooth_loops,1
 show_as sticks, organic

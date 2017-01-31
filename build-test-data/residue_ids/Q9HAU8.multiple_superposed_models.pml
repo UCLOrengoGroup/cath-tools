@@ -10084,6 +10084,21 @@ set cartoon_loop_radius  = 0.182988
 set cartoon_helix_radius = 1.51546
 bg_color white
 color    black
+color black
+color density, ss s
+color rutherfordium, ss h
+colour black, organic
+scene F1, store, message="Colour by secondary structure", color=1, view=0, active=0, rep=0, frame=0
+set_color cath_tools_defined_colour_0, [0,0,1]
+set_color cath_tools_defined_colour_1, [0,1,0]
+set_color cath_tools_defined_colour_2, [1,0,0]
+set_color cath_tools_defined_colour_3, [1,1,0]
+colour cath_tools_defined_colour_0, Q9HAU8DomSerf1
+colour cath_tools_defined_colour_1, Q9HAU8SUPERFAMILY2
+colour cath_tools_defined_colour_2, Q9HAU8PHYRE21
+colour cath_tools_defined_colour_3, Q9HAU8VIVACE1
+colour black, organic
+scene F2, store, message="Colour by structure", color=1, view=0, active=0, rep=0, frame=0
 set_color cath_tools_defined_colour_000, [0,0,1]
 set_color cath_tools_defined_colour_001, [0,0.015625,1]
 set_color cath_tools_defined_colour_002, [0,0.03125,1]
@@ -11098,6 +11113,8 @@ colour cath_tools_defined_colour_203, /Q9HAU8DomSerf1///233/
 colour cath_tools_defined_colour_203, /Q9HAU8PHYRE21///233/
 colour cath_tools_defined_colour_203, /Q9HAU8SUPERFAMILY2///233/
 colour cath_tools_defined_colour_203, /Q9HAU8VIVACE1///233/
+colour black, organic
+scene F3, store, message="Colour by alignbow", color=1, view=0, active=0, rep=0, frame=0
 distance alignment, /Q9HAU8PHYRE21///35/CA, /Q9HAU8VIVACE1///35/CA
 distance alignment, /Q9HAU8DomSerf1///35/CA, /Q9HAU8VIVACE1///35/CA
 distance alignment, /Q9HAU8PHYRE21///36/CA, /Q9HAU8VIVACE1///36/CA
@@ -11872,6 +11889,7 @@ hide labels
 set dash_gap, 0.0
 set dash_color, black
 set dash_radius, 0.05
+scene F4, store, message="Colour me badd", color=0, view=0, active=0, rep=0, frame=0
 show cartoon
 set cartoon_smooth_loops,1
 show_as sticks, organic

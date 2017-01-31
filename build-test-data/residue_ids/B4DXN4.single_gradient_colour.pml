@@ -1013,6 +1013,15 @@ set cartoon_loop_radius  = 0.20975
 set cartoon_helix_radius = 2.38057
 bg_color white
 color    black
+color black
+color density, ss s
+color rutherfordium, ss h
+colour black, organic
+scene F1, store, message="Colour by secondary structure", color=1, view=0, active=0, rep=0, frame=0
+set_color cath_tools_defined_colour_0, [0,0,1]
+colour cath_tools_defined_colour_0, PDB_1_from_stdin_with_1002_atoms
+colour black, organic
+scene F2, store, message="Colour by structure", color=1, view=0, active=0, rep=0, frame=0
 set_color cath_tools_defined_colour_000, [0,0,1]
 set_color cath_tools_defined_colour_001, [0,0.015625,1]
 set_color cath_tools_defined_colour_002, [0,0.046875,1]
@@ -1277,10 +1286,13 @@ colour cath_tools_defined_colour_128, /PDB_1_from_stdin_with_1002_atoms///280/
 colour cath_tools_defined_colour_129, /PDB_1_from_stdin_with_1002_atoms///279/
 colour cath_tools_defined_colour_130, /PDB_1_from_stdin_with_1002_atoms///278/
 colour cath_tools_defined_colour_131, /PDB_1_from_stdin_with_1002_atoms///277/
+colour black, organic
+scene F3, store, message="Colour by alignbow", color=1, view=0, active=0, rep=0, frame=0
 hide labels
 set dash_gap, 0.0
 set dash_color, black
 set dash_radius, 0.05
+scene F4, store, message="Colour me badd", color=0, view=0, active=0, rep=0, frame=0
 show cartoon
 set cartoon_smooth_loops,1
 show_as sticks, organic

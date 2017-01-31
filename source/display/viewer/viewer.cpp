@@ -65,6 +65,23 @@ using std::setw;
 using std::string;
 using std::unique_ptr;
 
+/// \brief Default is to no accept multiple colourings
+bool viewer::do_accepts_multiple_colourings() const {
+	return false;
+}
+
+/// \brief Default to writing no commands to the specified ostream when beginning a colouring with the specified colourer
+void viewer::do_begin_colouring(ostream                &/*arg_ostream*/, ///< The ostream to which the PyMOL commands should be written
+                                const display_colourer &/*arg_colourer*/ ///< The display_colourer to be used for the colouring that is beginning
+                                ) {
+}
+
+/// \brief Default to writing no commands to the specified ostream when ending a colouring with the specified colourer
+void viewer::do_end_colouring(ostream                &/*arg_ostream*/, ///< The ostream to which the PyMOL commands should be written
+                              const display_colourer &/*arg_colourer*/ ///< The display_colourer to be used for the colouring that is ending
+                              ) {
+}
+
 /// \brief TODOCUMENT
 string viewer::default_executable() const {
 	return do_default_executable();
@@ -194,7 +211,7 @@ str_vec cath::clean_names_for_viewer(const alignment_context &arg_alignment_cont
 ///
 /// \relates viewer
 void cath::output_superposition_to_viewer(ostream                     &arg_ostream,                 ///< The ostream to which the data should be written
-                                          const viewer                &arg_viewer,                  ///< The viewer defining the instructions to be written
+                                          viewer                      &arg_viewer,                  ///< The viewer defining the instructions to be written
                                           const display_spec          &arg_display_spec,            ///< The specification for how to display the superposition
                                           const superposition_context &arg_superposition_context,   ///< The superposition_context to output
                                           const bool                  &arg_only_warn_on_missing_aln ///< Whether to only warn (rather than throwing) if no alignment is present
@@ -210,22 +227,33 @@ void cath::output_superposition_to_viewer(ostream                     &arg_ostre
 		clean_names_for_viewer( arg_superposition_context )
 	);
 
-	if ( ! arg_superposition_context.has_alignment() ) {
-		const auto message = "Unable to apply an alignment-based coluring scheme to the superposition because it doesn't contain an alignment";
-		if ( arg_only_warn_on_missing_aln ) {
-			BOOST_LOG_TRIVIAL( warning ) << message;
-			colour_viewer(
-				display_colourer_consecutive{ get_colour_list( arg_display_spec ) },
-				arg_ostream,
-				arg_viewer,
-				clean_names_for_viewer( arg_superposition_context )
-			);
+	const bool spec_is_consecutive            = is_consecutive( arg_display_spec );
+	const bool spec_requires_alignment        = requires_alignment( arg_display_spec );
+	const bool supn_has_alignment             = arg_superposition_context.has_alignment();
+	const bool missing_wanted_alignment       = spec_requires_alignment && ! supn_has_alignment;
+	const bool would_accept_extra_consecutive = arg_viewer.accepts_multiple_colourings() && ! spec_is_consecutive;
+
+	if ( missing_wanted_alignment || would_accept_extra_consecutive) {
+		if ( missing_wanted_alignment ) {
+			const auto message = "Unable to apply an alignment-based coluring scheme to the superposition because it doesn't contain an alignment";
+			if ( arg_only_warn_on_missing_aln ) {
+				BOOST_LOG_TRIVIAL( warning ) << message;
+			}
+			else {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception(message));
+			}
 		}
-		else {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception(message));
-		}
+		const display_colourer_consecutive the_colourer{ get_colour_list( arg_display_spec ) };
+
+		colour_viewer(
+			the_colourer,
+			arg_ostream,
+			arg_viewer,
+			clean_names_for_viewer( arg_superposition_context )
+		);
 	}
-	else {
+
+	if ( arg_superposition_context.has_alignment() ) {
 		// Apply the colour
 		const unique_ptr<const display_colourer> display_colourer_ptr = get_display_colourer( arg_display_spec );
 

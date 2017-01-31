@@ -35,6 +35,14 @@ namespace cath {
 	/// \brief TODOCUMENT
 	class pymol_viewer final : public viewer {
 	private:
+		/// \brief A counter for the scenes that get stored
+		///
+		/// This implies the F key (eg F1, F2, ...) under which the scene is stored
+		size_t scene_count = 1;
+
+		void record_scene(std::ostream &,
+		                  const std::string &);
+
 		virtual std::string do_default_executable() const override final;
 		virtual std::string do_default_file_extension() const override final;
 
@@ -46,11 +54,18 @@ namespace cath {
 		virtual void do_define_colour(std::ostream &,
 		                              const display_colour &,
 		                              const std::string &) const override final;
+		virtual bool do_accepts_multiple_colourings() const override final;
+
+		virtual void do_begin_colouring(std::ostream &,
+		                                const display_colourer &) override final;
 		virtual std::string do_get_colour_pdb_str(const std::string &,
 		                                          const std::string &) const override final;
 		virtual std::string do_get_colour_pdb_residues_str(const std::string &,
 		                                                   const std::string &,
 		                                                   const residue_id_vec &) const override final;
+		virtual void do_end_colouring(std::ostream &,
+		                              const display_colourer &) override final;
+
 		virtual void do_write_alignment_extras(std::ostream &,
 		                                       const sup::superposition_context &) const override final;
 		virtual void do_write_end(std::ostream &) const override final;
