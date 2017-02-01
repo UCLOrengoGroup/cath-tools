@@ -29,7 +29,6 @@
 using namespace cath::chop;
 using namespace cath::common;
 
-using std::cerr; // ***** TEMPORARY *****
 using std::string;
 using std::unique_ptr;
 
@@ -46,7 +45,7 @@ bool sillitoe_chopping_format::do_represents_fragments() const {
 /// \brief TODOCUMENT
 domain sillitoe_chopping_format::do_parse_domain(const string &arg_domain_chopping_string ///< TODOCUMENT
                                                  ) const {
-	cerr << "domain_chopping_string is " << arg_domain_chopping_string << "\n";
+	std::cerr << "domain_chopping_string is " << arg_domain_chopping_string << "\n";
 
 	BOOST_THROW_EXCEPTION(not_implemented_exception("sillitoe_chopping_format::do_parse_domain()"));
 

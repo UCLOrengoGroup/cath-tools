@@ -27,7 +27,6 @@
 using namespace cath::chop;
 using namespace cath::common;
 
-using std::cerr; // ***** TEMPORARY *****
 using std::string;
 
 /// \brief Ctor for std_region_writer
@@ -38,7 +37,7 @@ std_region_writer::std_region_writer(const std_region_io_spec &arg_region_io_spe
 /// \brief TODOCUMENT
 string std_region_writer::do_write_region(const region &/*arg_region*/ ///< TODOCUMENT
                                           ) const {
-	cerr << "Writing region, but not yet implemented"<< "\n";
+	std::cerr << "Writing region, but not yet implemented"<< "\n";
 
 	BOOST_THROW_EXCEPTION(not_implemented_exception("std_region_writer::do_write_region()"));
 
