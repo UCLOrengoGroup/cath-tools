@@ -2669,6 +2669,8 @@ show cartoon
 set cartoon_smooth_loops,1
 show_as sticks, organic
 colour black, organic
+select organic, organic
+deselect
 reset
 set field_of_view, 25
 set label_size, -0.6
@@ -2678,4 +2680,5 @@ set dash_radius, 0.02
 set seq_view_label_mode, 1
 set ribbon_width, 1.5
 orient
+cmd.wizard("message", "Use functions keys F1 - F2 to switch between colouring schemes")
 feedback enable,all,output
