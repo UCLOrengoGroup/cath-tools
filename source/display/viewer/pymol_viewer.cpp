@@ -455,6 +455,8 @@ show cartoon
 set cartoon_smooth_loops,1
 show_as sticks, organic
 colour black, organic
+select organic, organic
+deselect
 reset
 set field_of_view, 25
 set label_size, -0.6
@@ -464,7 +466,10 @@ set dash_radius, 0.02
 set seq_view_label_mode, 1
 set ribbon_width, 1.5
 orient
-feedback enable,all,output
 )";
+	if ( scene_count > 2 ) {
+		arg_os << R"(cmd.wizard("message", "Use functions keys F1 - F)" << ( scene_count - 1 ) << " to switch between colouring schemes\")\n";
+	}
+	arg_os << "feedback enable,all,output\n";
 }
 
