@@ -1277,6 +1277,7 @@ set(
 set(
 	TESTSOURCES_CHOPPING_CHOPPING_FORMAT
 		chopping/chopping_format/chopping_format_test.cpp
+		chopping/chopping_format/sillitoe_chopping_format_test.cpp
 		chopping/chopping_format/simple_chopping_format_test.cpp
 )
 

@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_SILLITOE_CHOPPING_FORMAT_H
 #define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_SILLITOE_CHOPPING_FORMAT_H
 
+#include <boost/utility/string_ref.hpp>
+
 #include "chopping/chopping_format/chopping_format.hpp"
 
 namespace cath {
@@ -34,6 +36,11 @@ namespace cath {
 			virtual bool do_represents_fragments() const override final;
 
 			virtual domain do_parse_domain(const std::string &) const override final;
+
+		public:
+			region parse_segment(const boost::string_ref &) const;
+
+			residue_name parse_residue(const boost::string_ref &) const;
 		};
 
 	} // namespace chop
