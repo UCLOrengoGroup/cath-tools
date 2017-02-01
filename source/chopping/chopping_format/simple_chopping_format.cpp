@@ -21,6 +21,7 @@
 #include "simple_chopping_format.hpp"
 
 #include "chopping/domain/domain.hpp"
+#include "common/boost_addenda/make_string_ref.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/debug_numeric_cast.hpp"
@@ -34,6 +35,8 @@ using namespace cath::chop;
 using namespace cath::common;
 
 using boost::string_ref;
+using std::distance;
+using std::find;
 using std::next;
 using std::string;
 using std::unique_ptr;
@@ -59,7 +62,7 @@ domain simple_chopping_format::do_parse_domain(const string &arg_domain_chopping
 }
 
 /// \brief Parse a segment from the specified segment string
-region simple_chopping_format::parse_segment(const string &arg_segment_string ///< The string from which to parse the segment
+region simple_chopping_format::parse_segment(const string_ref &arg_segment_string ///< The string from which to parse the segment
                                              ) const {
 	constexpr char   CHAIN_OPEN_SQ_BR                = '[';
 	constexpr char   CHAIN_CLOSE_SQ_BR               = ']';
@@ -90,8 +93,8 @@ region simple_chopping_format::parse_segment(const string &arg_segment_string //
 
 	return {
 		chain_label{ arg_segment_string[ length - CHAIN_NEG_OFFSET ] },
-		parse_residue( string_ref{ &*begin_itr,         debug_numeric_cast<size_t>( distance( begin_itr,         dash_itr    ) ) } ),
-		parse_residue( string_ref{ &*dash_plus_one_itr, debug_numeric_cast<size_t>( distance( dash_plus_one_itr, res_end_itr ) ) } )
+		parse_residue( make_string_ref( begin_itr,         dash_itr    ) ),
+		parse_residue( make_string_ref( dash_plus_one_itr, res_end_itr ) )
 	};
 }
 

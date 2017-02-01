@@ -38,7 +38,7 @@ namespace cath {
 			virtual domain do_parse_domain(const std::string &) const override final;
 
 		public:
-			region parse_segment(const std::string &) const;
+			region parse_segment(const boost::string_ref &) const;
 
 			residue_name parse_residue(const boost::string_ref &) const;
 		};
