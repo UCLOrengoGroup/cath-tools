@@ -20,9 +20,13 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "chopping/chopping_type_aliases.hpp"
 #include "chopping/region/region.hpp"
+#include "common/test_tools.hpp"
 
+using namespace cath;
 using namespace cath::chop;
+using namespace cath::common::test;
 
 BOOST_AUTO_TEST_SUITE(region_test_suite)
 
@@ -31,6 +35,14 @@ BOOST_AUTO_TEST_CASE(to_string_works) {
 	BOOST_CHECK_EQUAL( to_string( region            ( 121, 232      ) ), "region{ start_idx:121, stop_idx:232 }"            );
 
 	BOOST_CHECK_EQUAL( to_string( make_simple_region( 'A'           ) ), "region{ chain:A }"                                );
+}
+
+BOOST_AUTO_TEST_CASE(equality_works) {
+	check_equality_operators_on_diff_vals_range( region_vec{
+		region{ chain_label{ 'K' } },
+		region{ 121, 232 },
+		make_simple_region( 'K', 121, 232 )
+	} );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

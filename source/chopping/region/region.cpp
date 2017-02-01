@@ -120,13 +120,15 @@ bool cath::chop::operator==(const region &arg_lhs, ///< The first  region to com
 		&&
 		( arg_lhs.has_starts_stops()    == arg_rhs.has_starts_stops() )
 		&&
-		arg_lhs.has_starts_stops()
-			? (
-				arg_lhs.get_start_residue()   == arg_rhs.get_start_residue()
-				&&
-				arg_lhs.get_stop_residue()    == arg_rhs.get_stop_residue()
-			)
-			: true
+		(
+			arg_lhs.has_starts_stops()
+				? (
+					arg_lhs.get_start_residue()   == arg_rhs.get_start_residue()
+					&&
+					arg_lhs.get_stop_residue()    == arg_rhs.get_stop_residue()
+				)
+				: true
+		)
 	);
 }
 
