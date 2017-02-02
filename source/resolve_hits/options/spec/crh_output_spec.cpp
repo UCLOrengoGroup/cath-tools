@@ -47,7 +47,6 @@ using std::vector;
 constexpr hit_boundary_output crh_output_spec::DEFAULT_BOUNDARY_OUTPUT;
 constexpr bool                crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;
 constexpr bool                crh_output_spec::DEFAULT_SUMMARISE;
-constexpr bool                crh_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY;
 constexpr bool                crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN;
 
 /// \brief Generate a string describing the specified crh_out_format
@@ -87,11 +86,6 @@ const bool & crh_output_spec::get_summarise() const {
 	return summarise;
 }
 
-/// \brief Getter for whether to restrict HTML output to the contents of the body tag
-const bool & crh_output_spec::get_restrict_html_within_body() const {
-	return restrict_html_within_body;
-}
-
 /// \brief Getter for an optional file to which the cath-resolve-hits CSS should be dumped
 const path_opt & crh_output_spec::get_export_css_file() const {
 	return export_css_file;
@@ -128,13 +122,6 @@ crh_output_spec & crh_output_spec::set_summarise(const bool &arg_summarise ///< 
                                                  ) {
 	summarise = arg_summarise;
 	return *this;
-}
-
-/// \brief Setter for whether to restrict HTML output to the contents of the body tag
-crh_output_spec & crh_output_spec::set_restrict_html_within_body(const bool &arg_restrict_html_within_body ///< Whether to restrict HTML output to the contents of the body tag
-                                                                 ) {
-	restrict_html_within_body = arg_restrict_html_within_body;
-	return  *this;
 }
 
 /// \brief Setter for an optional file to which the cath-resolve-hits CSS should be dumped
@@ -208,10 +195,6 @@ str_opt cath::rslv::get_invalid_description(const crh_output_spec &arg_output_sp
 
 	if ( means_output_trimmed_hits( arg_output_spec.get_boundary_output() ) && out_format != crh_out_format::STANDARD ) {
 		return "Cannot output trimmed boundaries if output format is " + out_format_str;
-	}
-
-	if ( arg_output_spec.get_restrict_html_within_body() && out_format != crh_out_format::HTML ) {
-		return "Cannot specify HTML options if output format is " + out_format_str;
 	}
 
 	return none;

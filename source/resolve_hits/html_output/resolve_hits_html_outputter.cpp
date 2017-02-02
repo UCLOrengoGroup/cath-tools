@@ -25,6 +25,7 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/format.hpp>
+#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/irange.hpp>
 
@@ -37,6 +38,7 @@
 #include "resolve_hits/hit_resolver.hpp"
 #include "resolve_hits/html_output/html_hit.hpp"
 #include "resolve_hits/html_output/html_segment.hpp"
+#include "resolve_hits/options/options_block/crh_html_options_block.hpp"
 #include "resolve_hits/options/spec/crh_segment_spec.hpp"
 #include "resolve_hits/scored_hit_arch.hpp"
 #include "resolve_hits/trim/trim_spec.hpp"
@@ -48,6 +50,7 @@ using namespace cath::common;
 using namespace cath::rslv;
 using namespace std::literals::string_literals;
 
+using boost::adaptors::filtered;
 using boost::adaptors::transformed;
 using boost::algorithm::any_of;
 using boost::algorithm::join;
@@ -640,6 +643,12 @@ crh-row-colhead {}
 	right             : -6px;
 	top               : -6px;
 }
+
+.crh-exclusion-note {
+	color             : #777;
+	font-size         : 80%;
+	padding           : 15px 0 0 40px;
+}
 )";
 }
 
@@ -681,6 +690,7 @@ string resolve_hits_html_outputter::output_html(const string            &arg_que
                                                 full_hit_list          &&arg_full_hit_list,    ///< The full_hit_list to describe
                                                 const crh_score_spec    &arg_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
                                                 const crh_segment_spec  &arg_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                                const crh_html_spec     &arg_html_spec,        ///< The specification for how to render the HTML
                                                 const bool              &arg_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
                                                 const crh_filter_spec   &arg_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
                                                 const size_t            &arg_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
@@ -690,6 +700,7 @@ string resolve_hits_html_outputter::output_html(const string            &arg_que
 		calc_hit_list{ std::move( arg_full_hit_list ), arg_score_spec, arg_segment_spec, arg_filter_spec },
 		arg_score_spec,
 		arg_segment_spec,
+		arg_html_spec,
 		arg_output_head_tail,
 		arg_filter_spec,
 		arg_batch_index
@@ -701,6 +712,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
                                                 const full_hit_list    &arg_full_hit_list,    ///< The full_hit_list to describe
                                                 const crh_score_spec   &arg_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
                                                 const crh_segment_spec &arg_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                                const crh_html_spec    &arg_html_spec,        ///< The specification for how to render the HTML
                                                 const bool             &arg_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
                                                 const crh_filter_spec  &arg_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
                                                 const size_t           &arg_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
@@ -710,6 +722,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 		calc_hit_list{ arg_full_hit_list, arg_score_spec, arg_segment_spec, arg_filter_spec },
 		arg_score_spec,
 		arg_segment_spec,
+		arg_html_spec,
 		arg_output_head_tail,
 		arg_filter_spec,
 		arg_batch_index
@@ -721,6 +734,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
                                                 const calc_hit_list    &arg_calc_hit_list,    ///< The calc_hit_list to describe
                                                 const crh_score_spec   &arg_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
                                                 const crh_segment_spec &arg_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                                const crh_html_spec    &arg_html_spec,        ///< The specification for how to render the HTML
                                                 const bool             &arg_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
                                                 const crh_filter_spec  &arg_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
                                                 const size_t           &arg_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
@@ -759,7 +773,12 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 	const size_t seq_length     = max_stop.value_or( 0_z );
 	const auto   orig_score_str = the_full_hit_list.empty() ? "Score"s
 	                                                        : upper_first_lower_rest( to_string( front( the_full_hit_list ).get_score_type() ) );
-	return ( arg_output_head_tail ? html_prefix() : string{} ) + R"(
+
+	// Variable to keep track of exclusions
+	size_set non_soln_hit_indices;
+	size_set excluded_non_soln_hit_indices;
+
+	const string main_return_string = ( arg_output_head_tail ? html_prefix() : string{} ) + R"(
 <div class="crh-results-wrapper">
 
 <div class="crh-advert-div">
@@ -880,21 +899,35 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 	+ join(
 		sorted_indices
 			| transformed( [&] (const size_t &x) {
-				const auto &hit_x                   = the_full_hit_list[ x ];
-				const bool  in_result               = any_of( best_result.get_arch(), [&] (const calc_hit &y) { return y.get_label_idx() == x; } );
-				const       hit_row_context context = in_result ? hit_row_context::HIGHLIGHT
-				                                                : hit_row_context::NORMAL;
+				const auto            &hit_x     = the_full_hit_list[ x ];
+				const bool             in_result = any_of( best_result.get_arch(), [&] (const calc_hit &y) { return y.get_label_idx() == x; } );
+				const hit_row_context  context   = in_result ? hit_row_context::HIGHLIGHT
+				                                             : hit_row_context::NORMAL;
+				const bool             rejected  = ! score_passes_filter( arg_filter_spec, hit_x.get_score(), hit_x.get_score_type() );
+
+				if ( rejected && arg_html_spec.get_exclude_rejected_hits() ) {
+					return ""s;
+				}
+				if ( ! in_result ) {
+					if ( ! contains( non_soln_hit_indices, x ) ) {
+						if ( non_soln_hit_indices.size() >= arg_html_spec.get_max_num_non_soln_hits() ) {
+							excluded_non_soln_hit_indices.insert( x );
+							return ""s;
+						}
+						non_soln_hit_indices.insert( x );
+					}
+				}
 				return hits_row_html(
 					{ html_hit{
 						hit_x,
 						arg_batch_index,
 						x,
-						score_passes_filter( arg_filter_spec, hit_x.get_score(), hit_x.get_score_type() )
-							? get_colour_of_fraction(
+						rejected
+							? filtered_grey
+							: get_colour_of_fraction(
 								gradient,
 								get_crh_score( hit_x, arg_score_spec ) / *best_crh_score
-							)
-							: filtered_grey,
+							),
 						none
 					} },
 					arg_segment_spec,
@@ -902,13 +935,34 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 					seq_length,
 					context
 				);
-			} ),
+			} )
+			| filtered( [] (const string &x) { return ! x.empty() ; } ),
 		"\n"
 	)
 	+ R"(
 </table>
-
+)";
+	// Have to fully calculate main_return_string and then concatenate extra stuff here
+	// because otherwise C++'s order of evaluation rules don't guarantee that the code above
+	// has run and potentially populated excluded_non_soln_hit_indices before it's used below.
+	// I have seen this issue exhibited in code compiled by GCC (but not by Clang).
+	return
+		main_return_string
+		+ (
+			excluded_non_soln_hit_indices.empty()
+				? ""s
+				: (
+					R"(<div class="crh-exclusion-note">...hiding another )"
+					+ std::to_string( excluded_non_soln_hit_indices.size() )
+					+ R"( non-solution results (current limit is )"
+					+ std::to_string( arg_html_spec.get_max_num_non_soln_hits() )
+					+ R"(; use <code>--)"
+					+ crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS
+					+ R"(</code> to change)</div>)"
+				)
+		)
+		+ R"(
 </div>
 )"
-	+ ( arg_output_head_tail ? html_suffix() : string{} );
+		+ ( arg_output_head_tail ? html_suffix() : string{} );
 }

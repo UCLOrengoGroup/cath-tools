@@ -76,8 +76,6 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 	const auto output_trimmed_hits_notifier           = [&] (const bool &x) {          set_output_trimmed_hits      ( the_spec, x ); };
 	const auto summarise_notifier                     = [&] (const bool &x) { the_spec.set_summarise                (           x ); };
 	const auto generate_html_output_notifier          = [&] (const bool &x) { the_spec.set_generate_html_output     (           x ); };
-	const auto set_restrict_html_within_body_notifier = [&] (const bool &x) { the_spec.set_restrict_html_within_body(           x );
-		                                                           if ( x ) { the_spec.set_generate_html_output     (        true ); } };
 	const auto export_css_file_notifier               = [&] (const path &x) { the_spec.set_export_css_file          (           x ); };
 
 	arg_desc.add_options()
@@ -112,14 +110,6 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 			"Output the results as HTML"
 		)
 		(
-			( PO_RESTRICT_HTML_WITHIN_BODY ).c_str(),
-			bool_switch()
-				->notifier     ( set_restrict_html_within_body_notifier             )
-				->default_value( crh_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY ),
-			( "Restrict HTML output to the contents of the body tag (implies --" + PO_GENERATE_HTML_OUTPUT + ").\n"
-				 + "The contents should be included inside a body tag of class crh-body" ).c_str()
-		)
-		(
 			( PO_EXPORT_CSS_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                                       )
@@ -131,8 +121,6 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 		"If crh_segment_spec::DEFAULT_OUTPUT_TRIMMED_HITS      isn't false, it might mess up the bool switch in here" );
 	static_assert( !                            crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT,
 		"If crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT      isn't false, it might mess up the bool switch in here" );
-	static_assert( !                            crh_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY,
-		"If crh_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Add any hidden options to the provided options_description
@@ -163,4 +151,12 @@ str_opt crh_output_options_block::do_invalid_string(const variables_map &/*arg_v
 /// \brief Getter for the crh_output_spec that the crh_output_options_block configures
 const crh_output_spec & crh_output_options_block::get_crh_output_spec() const {
 	return the_spec;
+}
+
+/// \brief Get the crh_out_format for the crh_output_spec of the specified crh_output_options_block
+///
+/// \relates crh_output_options_block
+crh_out_format cath::rslv::get_out_format(const crh_output_options_block &arg_crh_output_options_block ///< The crh_output_options_block to query
+                                          ) {
+	return get_out_format( arg_crh_output_options_block.get_crh_output_spec() );
 }

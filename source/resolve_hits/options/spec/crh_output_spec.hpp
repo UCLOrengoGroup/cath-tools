@@ -63,9 +63,6 @@ namespace cath {
 			/// \brief Whether to output HTML describing the hits and the results
 			bool                generate_html_output      = DEFAULT_GENERATE_HTML_OUTPUT;
 
-			/// \brief Whether to restrict HTML output to the contents of the body tag
-			bool                restrict_html_within_body = DEFAULT_GENERATE_HTML_OUTPUT;
-
 			/// \brief An optional file to which the cath-resolve-hits CSS should be dumped
 			path_opt            export_css_file;
 
@@ -82,9 +79,6 @@ namespace cath {
 			/// \brief The default value for whether to output HTML describing the hits and the results
 			static constexpr bool                DEFAULT_GENERATE_HTML_OUTPUT      = false;
 
-			/// \brief The default value for whether to restrict HTML output to the contents of the body tag
-			static constexpr bool                DEFAULT_RESTRICT_HTML_WITHIN_BODY = false;
-
 			/// \brief The default value for whether to output a summary of the hmmsearch output alignment
 			static constexpr bool                DEFAULT_OUTPUT_HMMSEARCH_ALN      = false;
 
@@ -92,7 +86,6 @@ namespace cath {
 			const hit_boundary_output & get_boundary_output() const;
 			const bool & get_summarise() const;
 			const bool & get_generate_html_output() const;
-			const bool & get_restrict_html_within_body() const;
 			const path_opt & get_export_css_file() const;
 			const bool & get_output_hmmsearch_aln() const;
 
@@ -100,7 +93,6 @@ namespace cath {
 			crh_output_spec & set_boundary_output(const hit_boundary_output &);
 			crh_output_spec & set_summarise(const bool &);
 			crh_output_spec & set_generate_html_output(const bool &);
-			crh_output_spec & set_restrict_html_within_body(const bool &);
 			crh_output_spec & set_export_css_file(const path_opt &);
 			crh_output_spec & set_output_hmmsearch_aln(const bool &);
 		};

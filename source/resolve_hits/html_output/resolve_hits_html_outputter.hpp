@@ -23,6 +23,7 @@
 
 #include "common/type_aliases.hpp"
 #include "resolve_hits/options/spec/crh_filter_spec.hpp"
+#include "resolve_hits/options/spec/crh_html_spec.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 
 #include <iosfwd>
@@ -85,6 +86,7 @@ namespace cath {
 			                               full_hit_list &&,
 			                               const crh_score_spec &,
 			                               const crh_segment_spec &,
+			                               const crh_html_spec & = crh_html_spec{},
 			                               const bool & = true,
 			                               const crh_filter_spec & = make_accept_all_filter_spec(),
 			                               const size_t & = 0);
@@ -93,6 +95,7 @@ namespace cath {
 			                               const full_hit_list &,
 			                               const crh_score_spec &,
 			                               const crh_segment_spec &,
+			                               const crh_html_spec & = crh_html_spec{},
 			                               const bool & = true,
 			                               const crh_filter_spec & = make_accept_all_filter_spec(),
 			                               const size_t & = 0);
@@ -101,6 +104,7 @@ namespace cath {
 			                               const calc_hit_list &,
 			                               const crh_score_spec &,
 			                               const crh_segment_spec &,
+			                               const crh_html_spec & = crh_html_spec{},
 			                               const bool & = true,
 			                               const crh_filter_spec & = make_accept_all_filter_spec(),
 			                               const size_t & = 0);

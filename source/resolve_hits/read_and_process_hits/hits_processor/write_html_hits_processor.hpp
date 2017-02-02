@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR_WRITE_HTML_HITS_PROCESSOR_H
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR_WRITE_HTML_HITS_PROCESSOR_H
 
+#include "resolve_hits/options/spec/crh_html_spec.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/hits_processor.hpp"
 
 namespace cath {
@@ -41,8 +42,8 @@ namespace cath {
 				///        (used to allow hits' HTML to have unique data attributes)
 				size_t batch_counter = 0;
 
-				/// \brief Whether the HTML output should be restricted to the contents inside <body>
-				bool body_only_html;
+				/// \brief The specification for how to render the HTML
+				crh_html_spec html_spec;
 
 				virtual std::unique_ptr<hits_processor> do_clone() const override final;
 
@@ -58,7 +59,7 @@ namespace cath {
 				explicit write_html_hits_processor(std::ostream &,
 				                                   const crh_score_spec &,
 				                                   const crh_segment_spec &,
-				                                   const bool &) noexcept;
+				                                   const crh_html_spec &) noexcept;
 			};
 
 

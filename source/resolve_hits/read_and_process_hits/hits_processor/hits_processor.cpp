@@ -21,6 +21,7 @@
 #include "hits_processor.hpp"
 
 #include "exception/invalid_argument_exception.hpp"
+#include "resolve_hits/options/spec/crh_html_spec.hpp"
 #include "resolve_hits/options/spec/crh_output_spec.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.hpp"
@@ -34,10 +35,11 @@ using std::ostream;
 using std::unique_ptr;
 
 /// \brief Make the hits_processor implied by the specified spec object and the specified ostream
-unique_ptr<hits_processor> cath::rslv::detail::make_hits_processor(ostream                &arg_ostream,     ///< The ostream to which the new hits_processor should write
-                                                                   const crh_output_spec  &arg_output_spec, ///< The crh_output_spec defining the type of hits_processor to make
-                                                                   const crh_score_spec   &arg_score_spec,  ///< The crh_score_spec defining the type of hits_processor to make
-                                                                   const crh_segment_spec &arg_segment_spec ///< The crh_segment_spec defining the type of hits_processor to make
+unique_ptr<hits_processor> cath::rslv::detail::make_hits_processor(ostream                &arg_ostream,      ///< The ostream to which the new hits_processor should write
+                                                                   const crh_output_spec  &arg_output_spec,  ///< The crh_output_spec defining the type of hits_processor to make
+                                                                   const crh_score_spec   &arg_score_spec,   ///< The crh_score_spec how to handle scores
+                                                                   const crh_segment_spec &arg_segment_spec, ///< The crh_segment_spec how to handle segments
+                                                                   const crh_html_spec    &arg_html_spec     ///< The crh_html_spec defining how to render any HTML
                                                                    ) {
 	switch ( get_out_format( arg_output_spec ) ) {
 		case ( crh_out_format::HTML ) : {
@@ -45,7 +47,7 @@ unique_ptr<hits_processor> cath::rslv::detail::make_hits_processor(ostream      
 				arg_ostream,
 				arg_score_spec,
 				arg_segment_spec,
-				arg_output_spec.get_restrict_html_within_body()
+				arg_html_spec
 			);
 		}
 		case ( crh_out_format::SUMMARY ) : {

@@ -1,5 +1,5 @@
 /// \file
-/// \brief The crh_output_options_block class header
+/// \brief The crh_html_options_block class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,42 +18,39 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_OUTPUT_OPTIONS_BLOCK_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_OUTPUT_OPTIONS_BLOCK_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_HTML_OPTIONS_BLOCK_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_HTML_OPTIONS_BLOCK_H
 
 #include "options/options_block/options_block.hpp"
-#include "resolve_hits/options/spec/crh_output_spec.hpp"
+#include "resolve_hits/options/spec/crh_html_spec.hpp"
 
 namespace cath {
 	namespace rslv {
 
-		/// \brief Define an options_block for options specifying how cath-resolve-hits should write the output
-		class crh_output_options_block final : public opts::options_block {
+		/// \brief Define an options_block for options specifying how cath-resolve-hits should read the input
+		class crh_html_options_block final : public opts::options_block {
 		private:
 			using super = opts::options_block;
 
 			/// \brief The spec this options_block configures
-			crh_output_spec the_spec;
+			crh_html_spec the_spec;
 
 			virtual std::unique_ptr<opts::options_block> do_clone() const override final;
 			virtual std::string do_get_block_name() const override final;
 			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
-			virtual void do_add_hidden_options_to_description(boost::program_options::options_description &) override final;
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
 
 		public:
-			static const std::string PO_OUTPUT_FILE;
-			static const std::string PO_OUTPUT_TRIMMED_HITS;
-			static const std::string PO_SUMMARISE;
-			static const std::string PO_GENERATE_HTML_OUTPUT;
 			static const std::string PO_RESTRICT_HTML_WITHIN_BODY;
-			static const std::string PO_EXPORT_CSS_FILE;
-			static const std::string PO_OUTPUT_HMMSEARCH_ALN;
+			static const std::string PO_MAX_NUM_NON_SOLN_HITS;
+			static const std::string PO_EXCLUDE_REJECTED_HITS;
 
-			const crh_output_spec & get_crh_output_spec() const;
+			static const str_vec ALL_BLOCK_POS;
+
+			const crh_html_spec & get_crh_html_spec() const;
 		};
 
-		crh_out_format get_out_format(const crh_output_options_block &);
+		bool has_specified_crh_html_options(const boost::program_options::variables_map &arg_vm);
 
 	} // namespace rslv
 } // namespace cath

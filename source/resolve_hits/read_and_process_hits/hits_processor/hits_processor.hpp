@@ -30,6 +30,7 @@
 #include <string>
 
 namespace cath { namespace rslv { class crh_filter_spec; } }
+namespace cath { namespace rslv { class crh_html_spec; } }
 namespace cath { namespace rslv { class crh_output_spec; } }
 namespace cath { namespace rslv { class full_hit_list; } }
 
@@ -146,7 +147,8 @@ namespace cath {
 			std::unique_ptr<hits_processor> make_hits_processor(std::ostream &,
 			                                                    const crh_output_spec &,
 			                                                    const crh_score_spec &,
-			                                                    const crh_segment_spec &);
+			                                                    const crh_segment_spec &,
+			                                                    const crh_html_spec &);
 
 		} // namespace detail
 	} // namespace rslv

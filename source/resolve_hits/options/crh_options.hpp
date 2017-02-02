@@ -24,6 +24,7 @@
 #include "options/executable/executable_options.hpp"
 #include "options/options_block/detail_help_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_filter_options_block.hpp"
+#include "resolve_hits/options/options_block/crh_html_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_input_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_output_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_score_options_block.hpp"
@@ -58,6 +59,9 @@ namespace cath {
 			/// \brief The cath-resolve-hits output options_block
 			crh_output_options_block        the_output_ob;
 
+			/// \brief The cath-resolve-hits html options_block
+			crh_html_options_block          the_html_ob;
+
 			/// \brief The detailed help options_block
 			opts::detail_help_options_block detail_help_ob;
 
@@ -81,6 +85,7 @@ namespace cath {
 			const crh_score_spec & get_crh_score_spec() const;
 			const crh_filter_spec & get_crh_filter_spec() const;
 			const crh_output_spec & get_crh_output_spec() const;
+			const crh_html_spec & get_crh_html_spec() const;
 
 			static const std::string PROGRAM_NAME;
 		};

@@ -31,6 +31,7 @@
 #include "common/test_predicate/istream_and_file_equal.hpp"
 #include "resolve_hits/cath_hit_resolver.hpp"
 #include "resolve_hits/options/options_block/crh_filter_options_block.hpp"
+#include "resolve_hits/options/options_block/crh_html_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_input_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_output_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_score_options_block.hpp"
@@ -355,7 +356,10 @@ BOOST_AUTO_TEST_CASE(html) {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
 		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
 		"--" + crh_segment_options_block::PO_OVERLAP_TRIM_SPEC, "150/90",
-		"--" + crh_output_options_block::PO_GENERATE_HTML_OUTPUT
+		"--" + crh_output_options_block::PO_GENERATE_HTML_OUTPUT,
+		"--" + crh_filter_options_block::PO_WORST_PERMISSIBLE_BITSCORE, "14",
+		"--" + crh_html_options_block::PO_EXCLUDE_REJECTED_HITS,
+		"--" + crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS, "10"
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );

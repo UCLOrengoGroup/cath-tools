@@ -138,6 +138,13 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		}
 	}
 
+	if ( has_specified_crh_html_options( vm ) && ( get_out_format( the_output_ob ) != crh_out_format::HTML ) ) {
+		return
+			"Cannot specify HTML options without setting the output format to HTML (with --"
+			+ crh_output_options_block::PO_GENERATE_HTML_OUTPUT
+			+ ")";
+	}
+
 	// If no error or help string, then return none
 	return none;
 }
@@ -207,6 +214,7 @@ crh_options::crh_options() : detail_help_ob{ detail_help_spec() } {
 	super::add_options_block( the_score_ob   );
 	super::add_options_block( the_filter_ob  );
 	super::add_options_block( the_output_ob  );
+	super::add_options_block( the_html_ob    );
 	super::add_options_block( detail_help_ob );
 }
 
@@ -218,7 +226,8 @@ crh_spec crh_options::get_crh_spec() const {
 		the_segment_ob.get_crh_segment_spec(),
 		the_score_ob.get_crh_score_spec(),
 		the_filter_ob.get_crh_filter_spec(),
-		the_output_ob.get_crh_output_spec()
+		the_output_ob.get_crh_output_spec(),
+		the_html_ob.get_crh_html_spec()
 	};
 }
 
@@ -245,6 +254,11 @@ const crh_filter_spec & crh_options::get_crh_filter_spec() const {
 /// \brief Getter for the cath-resolve-hits output options_block
 const crh_output_spec & crh_options::get_crh_output_spec() const {
 	return the_output_ob.get_crh_output_spec();
+}
+
+/// \brief Getter for the cath-resolve-hits html options_block
+const crh_html_spec & crh_options::get_crh_html_spec() const {
+	return the_html_ob.get_crh_html_spec();
 }
 
 /// \brief Get the text for the raw format help

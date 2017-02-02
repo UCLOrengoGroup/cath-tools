@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_SPEC_H
 
 #include "resolve_hits/options/spec/crh_filter_spec.hpp"
+#include "resolve_hits/options/spec/crh_html_spec.hpp"
 #include "resolve_hits/options/spec/crh_input_spec.hpp"
 #include "resolve_hits/options/spec/crh_output_spec.hpp"
 #include "resolve_hits/options/spec/crh_score_spec.hpp"
@@ -48,13 +49,17 @@ namespace cath {
 			/// \brief The output spec
 			crh_output_spec  the_output_spec;
 
+			/// \brief The html spec
+			crh_html_spec    the_html_spec;
+
 		public:
 			crh_spec() = default;
 			explicit crh_spec(const crh_input_spec &,
 			                  const crh_segment_spec & = crh_segment_spec{},
 			                  const crh_score_spec & = crh_score_spec{},
 			                  const crh_filter_spec & = crh_filter_spec{},
-			                  const crh_output_spec & = crh_output_spec{});
+			                  const crh_output_spec & = crh_output_spec{},
+			                  const crh_html_spec & = crh_html_spec{});
 
 			crh_input_spec & get_input_spec();
 			const crh_input_spec & get_input_spec() const;
@@ -66,12 +71,15 @@ namespace cath {
 			const crh_filter_spec & get_filter_spec() const;
 			crh_output_spec & get_output_spec();
 			const crh_output_spec & get_output_spec() const;
+			crh_html_spec & get_html_spec();
+			const crh_html_spec & get_html_spec() const;
 
 			crh_spec & set_input_spec(const crh_input_spec &);
 			crh_spec & set_segment_spec(const crh_segment_spec &);
 			crh_spec & set_score_spec(const crh_score_spec &);
 			crh_spec & set_filter_spec(const crh_filter_spec &);
 			crh_spec & set_output_spec(const crh_output_spec &);
+			crh_spec & set_html_spec(const crh_html_spec &);
 		};
 
 

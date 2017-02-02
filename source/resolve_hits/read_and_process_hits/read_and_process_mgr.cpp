@@ -145,7 +145,8 @@ read_and_process_mgr cath::rslv::make_read_and_process_mgr(ostream        &arg_o
 			arg_ostream,
 			arg_crh_spec.get_output_spec(),
 			arg_crh_spec.get_score_spec(),
-			arg_crh_spec.get_segment_spec()
+			arg_crh_spec.get_segment_spec(),
+			arg_crh_spec.get_html_spec()
 		),
 		arg_crh_spec
 	);

@@ -27,12 +27,14 @@ crh_spec::crh_spec(const crh_input_spec   &arg_input_spec,   ///< The input spec
                    const crh_segment_spec &arg_segment_spec, ///< The segment spec
                    const crh_score_spec   &arg_score_spec,   ///< The score spec
                    const crh_filter_spec  &arg_filter_spec,  ///< The filter spec
-                   const crh_output_spec  &arg_output_spec   ///< The output spec
+                   const crh_output_spec  &arg_output_spec,  ///< The output spec
+                   const crh_html_spec    &arg_html_spec     ///< The html spec
                    ) : the_input_spec   { arg_input_spec   },
                        the_segment_spec { arg_segment_spec },
                        the_score_spec   { arg_score_spec   },
                        the_filter_spec  { arg_filter_spec  },
-                       the_output_spec  { arg_output_spec  } {
+                       the_output_spec  { arg_output_spec  },
+                       the_html_spec    { arg_html_spec    } {
 }
 
 /// \brief Non-const overload of getter for input_spec
@@ -85,6 +87,16 @@ const crh_output_spec & crh_spec::get_output_spec() const {
 	return the_output_spec;
 }
 
+/// \brief Non-const overload of getter for html_spec
+crh_html_spec & crh_spec::get_html_spec() {
+	return the_html_spec;
+}
+
+/// \brief Const overload of getter for html_spec
+const crh_html_spec & crh_spec::get_html_spec() const {
+	return the_html_spec;
+}
+
 /// \brief Setter for the input spec
 crh_spec & crh_spec::set_input_spec(const crh_input_spec &arg_input_spec ///< The input spec
                                     ) {
@@ -117,5 +129,12 @@ crh_spec & crh_spec::set_filter_spec(const crh_filter_spec &arg_filter_spec ///<
 crh_spec & crh_spec::set_output_spec(const crh_output_spec &arg_output_spec ///< The output spec
                                      ) {
 	get_output_spec() = arg_output_spec;
+	return *this;
+}
+
+/// \brief Setter for the html spec
+crh_spec & crh_spec::set_html_spec(const crh_html_spec &arg_html_spec ///< The html spec
+                                   ) {
+	get_html_spec() = arg_html_spec;
 	return *this;
 }
