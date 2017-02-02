@@ -20,6 +20,7 @@
 
 #include "display_options_block.hpp"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/optional.hpp>
 
 #include "common/clone/make_uptr_clone.hpp"
@@ -31,6 +32,7 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 
+using boost::algorithm::any_of;
 using boost::program_options::bool_switch;
 using boost::program_options::options_description;
 using boost::program_options::value;
@@ -134,10 +136,8 @@ display_spec display_options_block::get_display_spec() const {
 /// \brief Return whether or not the specified variables_map has specified any of the options in this block
 bool display_options_block::has_specified_options(const variables_map &arg_vm ///< The variables_map to examine
                                                   ) const {
-	for (const string &block_po : ALL_BLOCK_POS) {
-		if ( arg_vm.count( block_po ) && ! arg_vm[ block_po ].defaulted() ) {
-			return true;
-		}
-	}
-	return false;
+	return any_of(
+		ALL_BLOCK_POS,
+		[&] (const string &x) { return ( arg_vm.count( x ) && ! arg_vm[ x ].defaulted() ); }
+	);
 }
