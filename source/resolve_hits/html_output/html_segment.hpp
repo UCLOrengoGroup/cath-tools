@@ -91,9 +91,10 @@ namespace cath {
 
 			std::string get_grey_back_html_string() const;
 			std::string get_lightened_back_html_string() const;
+			std::string get_full_result_html_string() const;
 			std::string get_strong_front_html_string() const;
 
-			str_vec get_all_span_html_strs() const;
+			str_vec get_all_span_html_strs(const bool & = true) const;
 		};
 
 	} // namespace rslv

@@ -22,8 +22,10 @@
 
 using namespace cath::rslv;
 
-constexpr trim_spec           crh_segment_spec::DEFAULT_OVERLAP_TRIM_SPEC;
-constexpr residx_t            crh_segment_spec::DEFAULT_MIN_SEG_LENGTH;
+using boost::none;
+
+constexpr trim_spec crh_segment_spec::DEFAULT_OVERLAP_TRIM_SPEC;
+constexpr residx_t  crh_segment_spec::DEFAULT_MIN_SEG_LENGTH;
 
 /// \brief Getter for the specification for trimming hits' segments to allow some overlap
 const trim_spec & crh_segment_spec::get_overlap_trim_spec() const {
@@ -62,11 +64,11 @@ crh_segment_spec cath::rslv::make_no_action_crh_segment_spec() {
 ///        a trimmed version if the segment's length meets the min-seg-length, or none otherwise
 ///
 /// \relates crh_segment_spec
-hit_seg_opt cath::rslv::apply_spec_to_seg_copy(const hit_seg          &arg_seg,         ///< The hit_seg to copy
-                                               const crh_segment_spec &arg_segment_spec ///< The crh_segment_spec to apply
+hit_seg_opt cath::rslv::apply_spec_to_seg_copy(const hit_seg              &arg_seg,         ///< The hit_seg to copy
+                                               const crh_segment_spec_opt &arg_segment_spec ///< The crh_segment_spec to apply
                                                ) {
-	return make_optional(
-		get_length( arg_seg ) >= arg_segment_spec.get_min_seg_length(),
-		trim_hit_seg_copy( arg_seg, arg_segment_spec.get_overlap_trim_spec() )
-	);
+	return 
+		( arg_segment_spec && get_length( arg_seg ) >= arg_segment_spec->get_min_seg_length() )
+			? make_optional( trim_hit_seg_copy( arg_seg, arg_segment_spec->get_overlap_trim_spec() ) )
+			: none;
 }

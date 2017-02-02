@@ -38,6 +38,17 @@ namespace cath { namespace rslv { class trim_spec; } }
 namespace cath {
 	namespace rslv {
 
+		/// \brief The context in which a hit is being rendered into an HTML row
+		enum hit_row_context {
+			HIGHLIGHT,    ///< An input data row that is being highlighted as containing a hit that appears in the results
+			NORMAL,       ///< A normal input data row
+			RESULT,       ///< A result row
+			RESULT_FULL   ///< A full-result row, combining all the result hits in one row
+		};
+
+		std::string row_css_class_of_hit_row_context(const hit_row_context &);
+		std::string first_cell_css_class_of_hit_row_context(const hit_row_context &);
+
 		/// \brief Contain functions for generating HTML to describe cath-resolve hits such as hits, architectures etc
 		///
 		/// Possible new functions/options
@@ -51,14 +62,15 @@ namespace cath {
 			static std::string total_score_row(const resscr_t &);
 			static std::string markers_row(const size_t &,
 			                               const str_opt &);
-			static std::string output_html_fragment(const full_hit &,
-			                                        const size_size_pair &,
-			                                        const display_colour &,
-			                                        const crh_segment_spec &,
-			                                        const crh_score_spec &,
-			                                        const size_t &,
-			                                        const seg_boundary_pair_vec_opt &,
-			                                        const bool &);
+
+			static std::string hit_html(const html_hit &,
+			                            const crh_segment_spec_opt &,
+			                            const size_t &);
+			static std::string hits_row_html(const html_hit_vec &,
+			                                 const crh_segment_spec &,
+			                                 const crh_score_spec &,
+			                                 const size_t &,
+			                                 const hit_row_context &);
 
 		public:
 			static std::string html_prefix();

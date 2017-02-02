@@ -26,14 +26,19 @@
 #include <vector>
 
 namespace cath { namespace rslv { class calc_hit; } }
+namespace cath { namespace rslv { class crh_segment_spec; } }
 namespace cath { namespace rslv { class full_hit; } }
 namespace cath { namespace rslv { class hit_seg; } }
 namespace cath { namespace rslv { class res_arrow; } }
 namespace cath { namespace rslv { class scored_arch_proxy; } }
 namespace cath { namespace rslv { struct alnd_rgn; } }
+namespace cath { namespace rslv { struct html_hit; } }
 
 namespace cath {
 	namespace rslv {
+
+		/// \brief Type alias for an optional crh_segment_spec
+		using crh_segment_spec_opt = boost::optional<crh_segment_spec>;
 
 		/// \brief Type alias for a vector of alnd_rgn
 		using alnd_rgn_vec = std::vector<alnd_rgn>;
@@ -116,6 +121,9 @@ namespace cath {
 
 		/// \brief The initial score before any hits have been added
 		constexpr resscr_t INIT_SCORE = 0.0;
+
+		/// \brief Type alias for a vector of html_hits
+		using html_hit_vec = std::vector<html_hit>;
 
 	} // namespace rslv
 } // namespace cath

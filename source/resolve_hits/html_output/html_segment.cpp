@@ -145,6 +145,22 @@ string html_segment::get_lightened_back_html_string() const {
 	);
 }
 
+/// \brief Get a strong front pill HTML string for use in a full result
+string html_segment::get_full_result_html_string() const {
+	return get_html_string(
+		resolved_start.value_or( start ),
+		resolved_stop .value_or( stop  ),
+		"crh-hit-pill-core",
+		data_key_values,
+		darken_by_fraction ( colour, 0.60 ),
+		colour,
+		full_seq_length,
+		resolved_start
+			? ( resolved_stop ? pill_rounding::NEITHER   : pill_rounding::RIGHT_ONLY )
+			: ( resolved_stop ? pill_rounding::LEFT_ONLY : pill_rounding::BOTH       )
+	);
+}
+
 /// \brief Get a strong front pill HTML string
 ///
 /// This is used to show the region of the trimmed segment
@@ -164,7 +180,11 @@ string html_segment::get_strong_front_html_string() const {
 }
 
 /// \brief Get the list of HTML span strings to represent this segment
-str_vec html_segment::get_all_span_html_strs() const {
+str_vec html_segment::get_all_span_html_strs(const bool &arg_do_layers ///< Whether or not render multiple layers or a single layer as in a full result
+                                             ) const {
+	if ( ! arg_do_layers ) {
+		return { get_full_result_html_string() };
+	}
 	if ( ! trimmed_start || ! trimmed_stop ) {
 		if ( resolved_start || resolved_stop ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("A segment for HTML rendering shouldn't have result-resolved-boundaries if it hasn't got a trimmed core"));

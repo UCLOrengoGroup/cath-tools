@@ -49,10 +49,12 @@ namespace cath {
 			crh_segment_spec & set_min_seg_length(const residx_t &);
 		};
 
+		using crh_segment_spec_opt = boost::optional<crh_segment_spec>;
+
 		crh_segment_spec make_no_action_crh_segment_spec();
 
 		hit_seg_opt apply_spec_to_seg_copy(const hit_seg &,
-		                                   const crh_segment_spec &);
+		                                   const crh_segment_spec_opt &);
 	} // namespace rslv
 } // namespace cath
 
