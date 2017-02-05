@@ -176,9 +176,24 @@ private:
 					};
 					memory_usage = store_wrapper_a.get_info_size() + store_wrapper_b.get_info_size();
 
+
+
 					for (const auto &aln_index : irange( 0_z, arg_alignment.length() ) ) {
 						if ( has_both_positions_of_index( arg_alignment, aln_index ) ) {
-							
+							const auto &a_posn = get_a_position_of_index( arg_alignment, aln_index );
+							const auto &b_posn = get_b_position_of_index( arg_alignment, aln_index );
+							const auto &cells_a = store_wrapper_a.the_store[ a_posn ];
+							const auto &cells_b = store_wrapper_b.the_store[ b_posn ];
+
+							for (const auto &the_cell_a : cells_a ) {
+								for (const simple_locn_index &the_entry_a : the_cell_a.second ) {
+									for (const simple_locn_index &candidate_b : cells_b.find_matches( store_wrapper_a.the_keyer.make_key( the_entry_a ) ) ) {
+										if ( get_squared_distance( candidate_b, the_entry_a ) < indexed_refiner_constants::MAX_SQ_DIST ) {
+											std::cerr << to_string( the_entry_a ) << ", " << to_string( candidate_b ) << "\n";
+										}
+									}
+								}
+							}
 						}
 					}
 				}

@@ -121,7 +121,7 @@ namespace cath {
 				const auto cell_itr = boost::range::lower_bound(
 					the_store,
 					arg_key,
-					[] (const key_multi_res_pair_list_pair<Key> &x, const Key &y) { return x.first < y; }
+					[] (const std::pair<Key, Cell> &x, const Key &y) { return x.first < y; }
 				);
 				return ( cell_itr == common::cend( the_store ) || cell_itr->first != arg_key ) ? empty_cell
 				                                                                               : cell_itr->second;

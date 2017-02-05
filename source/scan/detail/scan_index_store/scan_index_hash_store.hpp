@@ -70,6 +70,8 @@ namespace cath {
 				long long unsigned int num_adds = 0;
 
 			public:
+				using const_iterator = typename std::unordered_map<Key, Cell, key_hash>::const_iterator;
+
 				scan_index_hash_store() {
 //					const auto empty_key = common::apply( detail::empty_key_maker(), Key() );
 //					the_store.set_empty_key( empty_key );
@@ -89,6 +91,9 @@ namespace cath {
 				const Cell & find_matches(const Key &) const;
 
 				info_quantity get_info_size() const;
+
+				const_iterator begin() const;
+				const_iterator end() const;
 
 				void summarize() const {
 					// BOOST_LOG_TRIVIAL( warning )<< "scan_index_hash_store : size is            : " << the_store.size();
@@ -136,6 +141,18 @@ namespace cath {
 					+ sizeof( Cell    ) * the_store.size()
 					+ sizeof( value_t ) * num_adds;
 				return num_bytes * boost::units::information::bytes;
+			}
+
+			/// \brief TODOCUMENT
+			template <typename Key, typename Cell>
+			auto scan_index_hash_store<Key, Cell>::begin() const -> const_iterator {
+				return common::cbegin( the_store );
+			}
+
+			/// \brief TODOCUMENT
+			template <typename Key, typename Cell>
+			auto scan_index_hash_store<Key, Cell>::end() const -> const_iterator {
+				return common::cend  ( the_store );
 			}
 
 		} // namespace detail
