@@ -21,6 +21,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
+// #include "common/file/spew.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "resolve_hits/full_hit_list.hpp"
 #include "resolve_hits/html_output/resolve_hits_html_outputter.hpp"
@@ -116,10 +117,16 @@ BOOST_AUTO_TEST_CASE(basic) {
 	const auto html_string = resolve_hits_html_outputter::output_html(
 		"my_query_sequence_id"s,
 		eg_full_hit_list,
-		crh_score_spec{},
+		crh_score_spec{
+			crh_score_spec::DEFAULT_APPLY_CATH_RULES,
+			crh_score_spec::DEFAULT_LONG_DOMAINS_PREFERENCE,
+			1.0
+		},
 		crh_segment_spec{}
 	);
 	BOOST_CHECK( boost::algorithm::contains( html_string, R"(<html)" ) );
+
+	// spew( "example.cath-resolve-hits.output.html", html_string );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
