@@ -88,7 +88,7 @@ if( GSL_USE_PKGCONFIG )
   pkg_check_modules( GSL QUIET gsl )
 
   if( EXISTS "${GSL_INCLUDEDIR}" )
-    get_filename_component( GSL_ROOT_DIR "${GSL_INCLUDEDIR}" DIRECTORY CACHE)
+    get_filename_component( GSL_ROOT_DIR "${GSL_INCLUDEDIR}" PATH CACHE)
   endif()
 endif()
 
