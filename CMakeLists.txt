@@ -18,6 +18,10 @@ configure_file( "source/cath_tools_git_version.hpp.in"
                 "source/cath_tools_git_version.hpp"
                 )
 
+set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/" )
+
+FIND_PACKAGE(GSL REQUIRED)
+
 # For useful information on getting CMake to work with Boost, type the following command: cmake --help-module FindBoost
 
 if( BUILD_SHARED_LIBS )
@@ -54,6 +58,8 @@ MESSAGE( STATUS "Using CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS} )
 # Add handling of includes and library links for Boost
 # 'SYSTEM' tells the compiler it's a system include directory so warnings should be suppressed
 include_directories( SYSTEM ${Boost_INCLUDE_DIR} )
+include_directories( SYSTEM ${GSL_INCLUDE_DIR}   )
+link_directories   (        ${Boost_LIBRARYDIR}  )
 link_directories   (        ${Boost_LIBRARYDIR}  )
 
 # Add handling of includes and library links for bioplib

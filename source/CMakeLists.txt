@@ -285,6 +285,7 @@ set(
 		${NORMSOURCES_CHOPPING_CHOPPING_FORMAT}
 		${NORMSOURCES_CHOPPING_CHOPPING_IO}
 		${NORMSOURCES_CHOPPING_DOMAIN}
+		chopping/eigen.cpp
 		${NORMSOURCES_CHOPPING_REGION}
 		${NORMSOURCES_CHOPPING_RESIDUE_LOCATION}
 )
@@ -2140,17 +2141,17 @@ add_executable(
 #####################################################################
 #####################################################################
 
-target_link_libraries( build-test          normsources_cath_superpose normsources_resolve_hits normsources_test std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-assign-domains normsources_cath_assign_domains                                      std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-refine-align   normsources_cath_refine_align                                        std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                                    normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-score-align    normsources_cath_score_align                                         std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-ssap                                                                                std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-target_link_libraries( cath-superpose      normsources_cath_superpose                                           std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( build-test          normsources_cath_superpose normsources_resolve_hits normsources_test std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
+target_link_libraries( cath-assign-domains normsources_cath_assign_domains                                      std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
+target_link_libraries( cath-refine-align   normsources_cath_refine_align                                        std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
+target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                                    normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
+target_link_libraries( cath-score-align    normsources_cath_score_align                                         std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
+target_link_libraries( cath-ssap                                                                                std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
+target_link_libraries( cath-superpose      normsources_cath_superpose                                           std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
 
-target_link_libraries( mod-test-chopping                                     normsources_test normsources_chopping   normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-# target_link_libraries( mod-test-common                                     normsources_test                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-# target_link_libraries( mod-test-exception                                  normsources_test                                           normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+target_link_libraries( mod-test-chopping                                     normsources_test normsources_chopping   normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
+# target_link_libraries( mod-test-common                                     normsources_test                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
+# target_link_libraries( mod-test-exception                                  normsources_test                                           normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
 
 add_dependencies( build-test          built_bioplib_libraries )
 add_dependencies( cath-assign-domains built_bioplib_libraries )
@@ -2215,9 +2216,9 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 #			# structure/geometry/quat_rot.cpp
 #	)
 
-	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-	target_link_libraries( check-pdb                                 std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
-#	target_link_libraries( develtest                                                                                                                  pthread ${Boost_LIBRARIES} ${RT_LIBRARY} )
+	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
+	target_link_libraries( check-pdb                                 std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
+#	target_link_libraries( develtest                                                                                                                  pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIBRARIES} )
 
 	add_dependencies( snap-judgement built_bioplib_libraries )
 	add_dependencies( check-pdb      built_bioplib_libraries )
