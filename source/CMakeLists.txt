@@ -285,7 +285,6 @@ set(
 		${NORMSOURCES_CHOPPING_CHOPPING_FORMAT}
 		${NORMSOURCES_CHOPPING_CHOPPING_IO}
 		${NORMSOURCES_CHOPPING_DOMAIN}
-		chopping/eigen.cpp
 		${NORMSOURCES_CHOPPING_REGION}
 		${NORMSOURCES_CHOPPING_RESIDUE_LOCATION}
 )
@@ -961,6 +960,7 @@ set(
 		structure/geometry/angle.cpp
 		structure/geometry/coord.cpp
 		structure/geometry/coord_list.cpp
+		structure/geometry/pca.cpp
 		structure/geometry/rotation.cpp
 )
 
@@ -1857,6 +1857,7 @@ set(
 		structure/geometry/coord_list_test.cpp
 		structure/geometry/coord_test.cpp
 		structure/geometry/orientation_covering_test.cpp
+		structure/geometry/pca_test.cpp
 		structure/geometry/quat_rot_test.cpp
 		structure/geometry/rotation_test.cpp
 )
