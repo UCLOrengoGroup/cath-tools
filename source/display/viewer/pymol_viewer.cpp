@@ -254,6 +254,9 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 	}
 
 	// ????
+	// \todo Improve this code:
+	//        * keep as residue_ids rather than converting to strings residue_ids
+	//        * then use pymol_res_seln_str() rather than generating the selection string independently here
 	if ( the_alignment.is_scored() ) {
 		using bool_str_str_vec_map_pair = pair<bool, str_str_vec_map>;
 		using bool_str_str_vec_map_map = map <bool, str_str_vec_map>;
@@ -283,7 +286,7 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 				const size_t num_res_names   = res_names.size();
 				const size_t num_res_batches = num_batches( num_res_names, pymol_viewer::RESIDUE_BATCH_SIZE, broken_batch_tol::PERMIT );
 				for (size_t batch_ctr = 0; batch_ctr < num_res_batches; ++batch_ctr) {
-					string batch_string( "/" + entry_name + "///" );
+					string batch_string( R"(/")" + entry_name + R"("///)" );
 					const size_size_pair begin_and_end = batch_begin_and_end( num_res_names, pymol_viewer::RESIDUE_BATCH_SIZE, batch_ctr, broken_batch_tol::PERMIT );
 					for (size_t res_index = begin_and_end.first; res_index < begin_and_end.second; ++res_index) {
 						batch_string += ( res_index > 0 ? "+" : "" );
@@ -397,9 +400,9 @@ string pymol_viewer::do_get_colour_pdb_str(const string &arg_colour_name, ///< T
                                            ) const {
 	return "colour "
 		+ arg_colour_name
-		+ ", "
+		+ R"(, ")"
 		+ arg_pdb_name
-		+ "\n";
+		+ "\"\n";
 }
 
 /// \brief TODOCUMENT

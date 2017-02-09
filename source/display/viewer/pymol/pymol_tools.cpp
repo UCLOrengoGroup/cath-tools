@@ -108,9 +108,9 @@ string pymol_tools::pymol_res_seln_str(const string         &arg_name,    ///< T
 		BOOST_THROW_EXCEPTION(not_implemented_exception("PyMOL selection generating code pymol_res_seln_str() is currently unable to handle not having a single consistent chain label across the residues to be selected"));
 	}
 	chain_label_opt consistent_chain_label(const residue_id_vec &);
-	return "/"
+	return R"(/")"
 		+ arg_name
-		+ "//"
+		+ R"("//)"
 		+ ( ( *the_chain_label_opt == chain_label( ' ' ) ) ? ""s : to_string( *the_chain_label_opt ) )
 		+ "/"
 		+ join(

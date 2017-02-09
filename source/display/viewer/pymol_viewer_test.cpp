@@ -25,13 +25,15 @@
 
 using namespace cath;
 
+using namespace std::literals::string_literals;
+
 BOOST_AUTO_TEST_SUITE(pymol_viewer_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK_EQUAL(
 		pymol_viewer{}.get_colour_pdb_residues_str( "red", "1cukA", { make_residue_id( 'A', 1 ),
 		                                                              make_residue_id( 'A', 2 ) } ),
-		"colour red, /1cukA//A/1+2/\n"
+		R"(colour red, /"1cukA"//A/1+2/)"s + "\n"
 	);
 }
 BOOST_AUTO_TEST_SUITE_END()
