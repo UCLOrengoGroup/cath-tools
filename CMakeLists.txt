@@ -22,6 +22,11 @@ set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/"
 
 FIND_PACKAGE(GSL REQUIRED)
 
+LIST                  ( GET GSL_LIBRARIES 0 FIRST_GSL_LIBRARY                 )
+GET_FILENAME_COMPONENT( FIRST_GSL_LIBDIR ${FIRST_GSL_LIBRARY} DIRECTORY       )
+SET                   ( GSL_STATIC_LIB      ${FIRST_GSL_LIBDIR}/libgsl.a      )
+SET                   ( GSLCBLAS_STATIC_LIB ${FIRST_GSL_LIBDIR}/libgslcblas.a )
+
 # For useful information on getting CMake to work with Boost, type the following command: cmake --help-module FindBoost
 
 if( BUILD_SHARED_LIBS )
