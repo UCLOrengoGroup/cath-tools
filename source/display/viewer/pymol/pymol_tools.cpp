@@ -49,11 +49,11 @@ using std::string;
 /// c =         (x_1.y_1 - x_2.y_2) / (y_2 - y_1)
 ///
 /// k = y_1.y_2.(x_1     - x_2    ) / (y_2 - y_1)
-double pymol_tools::pymol_size(const size_t &arg_x_1,
-                               const double       &arg_y_1,
-                               const size_t &arg_x_2,
-                               const double       &arg_y_2,
-                               const size_t       &arg_x
+double pymol_tools::pymol_size(const size_t &arg_x_1, ///< TODOCUMENT
+                               const double &arg_y_1, ///< TODOCUMENT
+                               const size_t &arg_x_2, ///< TODOCUMENT
+                               const double &arg_y_2, ///< TODOCUMENT
+                               const size_t &arg_x    ///< TODOCUMENT
                                ) {
 	// Sanity check the inputs
 	using boost::math::isfinite;
