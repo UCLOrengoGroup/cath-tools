@@ -24,6 +24,7 @@
 #include <boost/optional.hpp>
 
 #include "common/type_aliases.hpp"
+#include "file/pdb/dssp_skip_policy.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 #include <string>
@@ -32,7 +33,6 @@
 namespace cath { class protein; }
 namespace cath { class residue; }
 namespace cath { namespace file { class pdb; } }
-namespace cath { namespace file { enum class dssp_skip_policy : char; } }
 
 namespace cath {
 	namespace file {
@@ -56,7 +56,7 @@ namespace cath {
 
 		protein protein_from_dssp_and_pdb(const dssp_file &,
 		                                  const pdb &,
-		                                  const dssp_skip_policy &,
+		                                  const dssp_skip_policy & = dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES,
 		                                  const std::string & = "",
 		                                  const ostream_ref_opt & = boost::none );
 
