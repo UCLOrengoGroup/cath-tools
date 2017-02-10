@@ -1,5 +1,11 @@
 cmake_minimum_required (VERSION 2.8.8)
 
+# If on Ubuntu, get the Ubuntu release codename
+find_program   ( LSB_RELEASE lsb_release )
+execute_process( COMMAND ${LSB_RELEASE} -cs OUTPUT_VARIABLE LSB_RELEASE_CODE OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+
+
 execute_process(
 	COMMAND git describe --tags --long
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
@@ -20,20 +26,29 @@ configure_file( "source/cath_tools_git_version.hpp.in"
 
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/" )
 
-FIND_PACKAGE(GSL REQUIRED)
+find_package( GSL REQUIRED )
 
-LIST                  ( GET GSL_LIBRARIES 0 FIRST_GSL_LIBRARY                 )
-GET_FILENAME_COMPONENT( FIRST_GSL_LIBDIR ${FIRST_GSL_LIBRARY} PATH            )
-SET                   ( GSL_STATIC_LIB      ${FIRST_GSL_LIBDIR}/libgsl.a      )
-SET                   ( GSLCBLAS_STATIC_LIB ${FIRST_GSL_LIBDIR}/libgslcblas.a )
+list                  ( GET GSL_LIBRARIES 0 FIRST_GSL_LIBRARY                 )
+get_filename_component( FIRST_GSL_LIBDIR ${FIRST_GSL_LIBRARY} PATH            )
+set                   ( GSL_STATIC_LIB      ${FIRST_GSL_LIBDIR}/libgsl.a      )
+set                   ( GSLCBLAS_STATIC_LIB ${FIRST_GSL_LIBDIR}/libgslcblas.a )
+foreach (loop_var RANGE ${GSL_LIBRARIES})
+  list(APPEND GSL_DYN_LINK_FLAGS "-l${loop_var}")
+endforeach(loop_var)
 
 # For useful information on getting CMake to work with Boost, type the following command: cmake --help-module FindBoost
 
 if( BUILD_SHARED_LIBS )
 	add_definitions( -DBOOST_ALL_DYN_LINK )
 	add_definitions( -DBOOST_LOG_DYN_LINK )
+	set( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 else()
 	set( Boost_USE_STATIC_LIBS ON )
+	SET( GSL_LIB_SUFFIX "${GSL_STATIC_LIB}" "${GSLCBLAS_STATIC_LIB}" )
+endif()
+
+if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
+	set( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 endif()
 
 find_library( RT_LIBRARY rt )
