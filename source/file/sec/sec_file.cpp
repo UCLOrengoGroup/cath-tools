@@ -87,7 +87,7 @@ sec_file::const_iterator sec_file::end() const {
 ///
 /// \relates sec_file
 sec_struc_vec cath::file::make_sec_struc_list(const sec_file &arg_sec_file ///< The sec_file to convert
-                                                  ) {
+                                              ) {
 	// Build a vector of sec_strucs from the vector of sec_file_records
 	sec_struc_vec new_sec_strucs;
 	new_sec_strucs.reserve(arg_sec_file.size());
