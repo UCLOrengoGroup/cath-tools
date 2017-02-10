@@ -32,6 +32,8 @@ namespace cath {
 		COIL
 	};
 
+	std::string to_string(const sec_struc_type &);
+
 	std::istream & operator>>(std::istream &,
 	                          sec_struc_type &);
 

@@ -22,6 +22,7 @@
 
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
+#include "structure/geometry/line.hpp"
 #include "structure/geometry/pca.hpp"
 #include "structure/structure_type_aliases.hpp"
 
@@ -40,8 +41,8 @@ BOOST_AUTO_TEST_CASE(basic) {
 
 	const auto lobf = line_of_best_fit( example_coords );
 
-	BOOST_CHECK_EQUAL( lobf.first,  coord(  0.2,      2.0, 0.3      ) );
-	BOOST_CHECK_EQUAL( lobf.second, coord( -0.707107, 0.0, 0.707107 ) );
+	BOOST_CHECK_EQUAL( lobf.get_point_on_line(), coord(  0.2,      2.0, 0.3      ) );
+	BOOST_CHECK_EQUAL( lobf.get_dirn         (), coord( -0.707107, 0.0, 0.707107 ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

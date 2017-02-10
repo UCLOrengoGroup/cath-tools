@@ -27,6 +27,7 @@
 #include "common/size_t_literal.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
+#include "structure/geometry/line.hpp"
 
 #include <gsl/gsl_linalg.h>
 
@@ -54,8 +55,8 @@ doub_vec cath::geom::detail::build_matrix_of_coords(const coord_list &arg_coords
 }
 
 /// \brief Get a line-of-best-fit through the specified points
-coord_coord_pair cath::geom::line_of_best_fit(const coord_list &arg_coords ///< The list of points through which to put a line-of-best-fit
-                                              ) {
+line cath::geom::line_of_best_fit(const coord_list &arg_coords ///< The list of points through which to put a line-of-best-fit
+                                  ) {
 	const auto      cog    = centre_of_gravity     ( arg_coords );
 	doub_vec        matrix = build_matrix_of_coords( arg_coords, cog );
 	gsl_matrix_view A      = gsl_matrix_view_array ( &matrix.front(), arg_coords.size(), 3 );

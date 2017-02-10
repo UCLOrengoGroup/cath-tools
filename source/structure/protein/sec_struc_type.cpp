@@ -51,25 +51,28 @@ istream & cath::operator>>(istream        &arg_istream,       ///< The istream f
 	return arg_istream;
 }
 
+/// \brief Generate a string describing the specified sec_struc_type
+///
+/// \relates sec_struc_type
+string cath::to_string(const sec_struc_type &arg_sec_struc_type ///< The sec_struc_type to describe
+                       ) {
+	switch ( arg_sec_struc_type ) {
+		case ( sec_struc_type::ALPHA_HELIX ) : { return "H"; }
+		case ( sec_struc_type::BETA_STRAND ) : { return "S"; }
+		case ( sec_struc_type::COIL        ) : { return " "; }
+		default : {
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of sec_struc_type not recognised whilst converting to_string()"));
+			return "";
+		}
+	}
+}
+
 /// \brief Simple insertion operator for sec_struc_type that outputs H or S
 ///
 /// \relates sec_struc_type
 ostream & cath::operator<<(ostream              &arg_ostream,       ///< The ostream to which to output the sec_struc_type
                            const sec_struc_type &arg_sec_struc_type ///< The sec_struc_type to output
                            ) {
-	switch(arg_sec_struc_type) {
-		case(sec_struc_type::ALPHA_HELIX) : {
-			arg_ostream << "H";
-			break;
-		}
-		case(sec_struc_type::BETA_STRAND) : {
-			arg_ostream << "S";
-			break;
-		}
-		case(sec_struc_type::COIL) : {
-			arg_ostream << " ";
-			break;
-		}
-	}
+	arg_ostream << to_string( arg_sec_struc_type );
 	return arg_ostream;
 }

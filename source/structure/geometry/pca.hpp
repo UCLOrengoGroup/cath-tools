@@ -25,6 +25,7 @@
 
 namespace cath { namespace geom { class coord; } }
 namespace cath { namespace geom { class coord_list; } }
+namespace cath { namespace geom { class line; } }
 namespace cath { namespace geom { namespace detail { class gsl_matrix_wrp; } } }
 namespace cath { namespace geom { using coord_coord_pair = std::pair<coord, coord>; } } ///< \todo Move into structure/structure_type_aliases.hpp
 
@@ -36,7 +37,7 @@ namespace cath {
 			                                const coord &);
 		}
 
-		coord_coord_pair line_of_best_fit(const coord_list &);
+		line line_of_best_fit(const coord_list &);
 
 	} // namespace chop
 } // namespace cath
