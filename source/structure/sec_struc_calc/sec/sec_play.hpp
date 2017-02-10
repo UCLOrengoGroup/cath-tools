@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_SEC_SEC_PLAY_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_SEC_SEC_PLAY_H
 
+#include "common/type_aliases.hpp"
 #include "structure/geometry/coord.hpp"
 
 namespace cath { class protein; }
@@ -99,6 +100,7 @@ namespace cath {
 		geom::coord prosec_axis_point_of_residue_triple(const protein &,
 		                                                const size_t &);
 
+		size_size_pair_vec get_sec_starts_and_stops(const protein &);
 
 	} // namespace sec
 } // namespace cath

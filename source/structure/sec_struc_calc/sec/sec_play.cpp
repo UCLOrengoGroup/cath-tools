@@ -21,8 +21,12 @@
 #include "sec_play.hpp"
 
 #include <boost/format.hpp>
+#include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
+#include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/adaptor/equal_grouped.hpp"
 #include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
 #include "common/size_t_literal.hpp"
@@ -31,13 +35,19 @@
 #include "structure/geometry/pca.hpp"
 #include "structure/protein/protein.hpp"
 
+using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::sec;
 
+using boost::adaptors::filtered;
+using boost::adaptors::transformed;
 using boost::format;
+using boost::integer_range;
 using boost::irange;
+using boost::sub_range;
+using std::make_pair;
 
 /// \brief Round a coord in the way they are in sec files to allow for tests to compare
 ///
@@ -155,6 +165,36 @@ coord cath::sec::prosec_axis_point_of_residue_triple(const protein &arg_protein,
 		arg_protein.get_residue_ref_of_index( arg_mid_residue_index - 1_z ),
 		arg_protein.get_residue_ref_of_index( arg_mid_residue_index       ),
 		arg_protein.get_residue_ref_of_index( arg_mid_residue_index + 1_z )
+	);
+}
+
+/// \brief Get the start/stop residue indices of the secondary structures of length >= MIN_SEC_STRUC_LENGTH
+size_size_pair_vec cath::sec::get_sec_starts_and_stops(const protein &arg_protein ///< The protein to query
+                                                       ) {
+	constexpr size_t MIN_SEC_STRUC_LENGTH = 4_z;
+
+	return copy_build<size_size_pair_vec>(
+		irange( 0_z, arg_protein.get_length() )
+			// Group according to secondary structure corresponding to index in protein
+			| equal_grouped( [&] (const size_t &x, const size_t &y) {
+				return (
+					arg_protein.get_residue_ref_of_index( x ).get_sec_struc_type()
+					!=
+					arg_protein.get_residue_ref_of_index( y ).get_sec_struc_type()
+				);
+			} )
+			// Remove entries that are coil or less than MIN_SEC_STRUC_LENGTH residues long
+			| filtered( [&] (const sub_range<integer_range<size_t>> &x) {
+				return (
+					back( x ) + 1_z - front( x ) >= MIN_SEC_STRUC_LENGTH
+					&&
+					arg_protein.get_residue_ref_of_index( front( x ) ).get_sec_struc_type() != sec_struc_type::COIL
+				);
+			} )
+			// Convert to a pair of start/stop indices
+			| transformed( [] (const sub_range<integer_range<size_t>> &x) {
+				return make_pair( front( x ), back( x ) );
+			} )
 	);
 }
 

@@ -89,6 +89,8 @@ namespace cath {
 			void increment();
 
 		public:
+			equal_group_itr() = default;
+
 			template <typename FN>
 			equal_group_itr(const base_iterator_type &,
 			                const base_iterator_type &,

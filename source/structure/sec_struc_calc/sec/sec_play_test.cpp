@@ -23,6 +23,8 @@
 #include "sec_play.hpp"
 
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/pair_insertion_operator.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
 #include "file/pdb/pdb.hpp"
@@ -77,6 +79,32 @@ BOOST_AUTO_TEST_CASE(get_correct_for_example_b_1hdoA00_later_helix) {
 	const sec_file_record got_sec      = calculate_sec_record( the_protein, 57, 64 );
 	const sec_file_record expected_sec = *next( common::cbegin( read_sec( EXAMPLE_B_SEC_FILENAME() ) ), 4 );
 	BOOST_CHECK_EQUAL( round_like_sec_file_copy( got_sec ), expected_sec );
+}
+
+BOOST_AUTO_TEST_CASE(get_sec_starts_and_stops_works) {
+	const protein the_protein = protein_from_dssp_and_pdb(
+		read_dssp_file( EXAMPLE_B_DSSP_FILENAME() ),
+		read_pdb_file ( EXAMPLE_B_PDB_FILENAME()  )
+	);
+	const auto got_starts_stops = get_sec_starts_and_stops( the_protein );
+	const size_size_pair_vec expected_starts_stops = {
+		{   4,   8 },
+		{  13,  24 },
+		{  28,  33 },
+		{  48,  51 },
+		{  57,  64 },
+		{  69,  72 },
+		{  85, 100 },
+		{ 104, 108 },
+		{ 125, 140 },
+		{ 144, 148 },
+		// { 152, 154 }, // The sec file differs here, it has: { 151, 155 },
+		// { 163, 165 }, // The sec file differs here, it has: { 162, 166 },
+		// { 174, 176 }, // The sec file differs here, it has: { 173, 177 },
+		{ 177, 186 },
+		{ 197, 201 },
+	};
+	BOOST_CHECK_EQUAL_RANGES( got_starts_stops, expected_starts_stops );
 }
 
 BOOST_AUTO_TEST_CASE(prosec_axis_point_gets_beta_strand_example_correct) {
