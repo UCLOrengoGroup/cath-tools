@@ -61,6 +61,13 @@ namespace cath {
 			geom::coord    get_unit_dirn() const;
 		};
 
+		bool operator==(const sec_file_record &,
+		                const sec_file_record &);
+
+		std::string to_string(const sec_file_record &);
+		std::ostream & operator<<(std::ostream &,
+		                          const sec_file_record &);
+
 		sec_struc make_sec_struc(const sec_file_record &);
 
 	} // namespace file

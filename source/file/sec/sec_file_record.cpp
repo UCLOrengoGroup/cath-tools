@@ -93,6 +93,54 @@ coord sec_file_record::get_unit_dirn() const {
 	return unit_dirn;
 }
 
+/// \brief Return whether the two specified sec_file_records are identical
+///
+/// \relates sec_file_record
+bool cath::file::operator==(const sec_file_record &arg_lhs, ///< The first  sec_file_record to compare
+                            const sec_file_record &arg_rhs  ///< The second sec_file_record to compare
+                            ) {
+	return (
+		arg_lhs.get_start_residue_num() == arg_rhs.get_start_residue_num()
+		&&
+		arg_lhs.get_stop_residue_num()  == arg_rhs.get_stop_residue_num()
+		&&
+		arg_lhs.get_type()              == arg_rhs.get_type()
+		&&
+		arg_lhs.get_midpoint()          == arg_rhs.get_midpoint()
+		&&
+		arg_lhs.get_unit_dirn()         == arg_rhs.get_unit_dirn()
+	);
+}
+
+/// \brief Generate a string describing the specified sec_file_record
+///
+/// \relates sec_file_record
+string cath::file::to_string(const sec_file_record &arg_sec_file_record ///< The sec_file_record to describe
+                             ) {
+	return
+		  "sec_file_record["
+		+ std::to_string( arg_sec_file_record.get_start_residue_num() )
+		+ ", "
+		+ std::to_string( arg_sec_file_record.get_stop_residue_num()  )
+		+ ", "
+		+ to_string     ( arg_sec_file_record.get_type()              )
+		+ ", "
+		+ to_string     ( arg_sec_file_record.get_midpoint()          )
+		+ ", "
+		+ to_string     ( arg_sec_file_record.get_unit_dirn()         )
+		+ "]";
+}
+
+/// \brief Insert a description of the specified sec_file_record into the specified ostream
+///
+/// \relates sec_file_record
+ostream & cath::file::operator<<(ostream               &arg_os,             ///< The ostream into which the description should be inserted
+                                 const sec_file_record &arg_sec_file_record ///< The sec_file_record to describe
+                                 ) {
+	arg_os << to_string( arg_sec_file_record );
+	return arg_os;
+}
+
 /// \brief Convert a sec_file_record to a sec_struc
 ///
 /// \relates sec_file_record

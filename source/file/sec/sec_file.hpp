@@ -50,8 +50,9 @@ namespace cath {
 			sec_file(const std::vector<sec_file_record> &,
 			         const sec_struc_planar_angles_vec_vec &);
 
+			using iterator       = record_list_type::const_iterator;
 			using const_iterator = record_list_type::const_iterator;
-			using size_type = record_list_type::size_type;
+			using size_type      = record_list_type::size_type;
 
 			size_type size() const;
 			const sec_struc_planar_angles & get_planar_angles_of_indices(const size_t &,
