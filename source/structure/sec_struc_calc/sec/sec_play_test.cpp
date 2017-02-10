@@ -18,6 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
 #include "sec_play.hpp"
@@ -105,6 +106,15 @@ BOOST_AUTO_TEST_CASE(get_sec_starts_and_stops_works) {
 		{ 197, 201 },
 	};
 	BOOST_CHECK_EQUAL_RANGES( got_starts_stops, expected_starts_stops );
+}
+
+BOOST_AUTO_TEST_CASE(pymol_of_get_sec_records_works) {
+	const protein the_protein = protein_from_dssp_and_pdb(
+		read_dssp_file( EXAMPLE_B_DSSP_FILENAME() ),
+		read_pdb_file ( EXAMPLE_B_PDB_FILENAME()  )
+	);
+	BOOST_CHECK( boost::algorithm::contains( get_pymol_script_text( the_protein, get_sec_records( the_protein ) ), "show_as" ) );
+	// std::cout << "\n\n" << get_pymol_script_text( the_protein, get_sec_records( the_protein ) ) << "\n\n";
 }
 
 BOOST_AUTO_TEST_CASE(prosec_axis_point_gets_beta_strand_example_correct) {

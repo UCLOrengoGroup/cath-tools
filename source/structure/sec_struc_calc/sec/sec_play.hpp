@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_SEC_SEC_PLAY_H
 
 #include "common/type_aliases.hpp"
+#include "file/file_type_aliases.hpp"
 #include "structure/geometry/coord.hpp"
 
 namespace cath { class protein; }
@@ -101,6 +102,14 @@ namespace cath {
 		                                                const size_t &);
 
 		size_size_pair_vec get_sec_starts_and_stops(const protein &);
+
+		file::sec_file_record_vec get_sec_records(const protein &);
+
+		std::string get_pymol_script_text(const protein &,
+		                                  const file::sec_file_record &,
+		                                  const size_t &);
+		std::string get_pymol_script_text(const protein &,
+		                                  const file::sec_file_record_vec &);
 
 	} // namespace sec
 } // namespace cath

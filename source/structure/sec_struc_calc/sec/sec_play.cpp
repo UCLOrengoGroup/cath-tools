@@ -20,6 +20,7 @@
 
 #include "sec_play.hpp"
 
+#include <boost/algorithm/string/join.hpp>
 #include <boost/format.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -40,14 +41,17 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::sec;
+using namespace std::literals::string_literals;
 
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
+using boost::algorithm::join;
 using boost::format;
 using boost::integer_range;
 using boost::irange;
 using boost::sub_range;
 using std::make_pair;
+using std::string;
 
 /// \brief Round a coord in the way they are in sec files to allow for tests to compare
 ///
@@ -95,6 +99,7 @@ sec_file_record cath::sec::calculate_sec_record(const protein &arg_protein,     
 	// for (const coord &core_coord : core_coords) {
 	// 	std::cerr << "Core coord : " << core_coord << "\n";
 	// }
+	// std::cerr << "\n";
 
 	const auto lobf = line_of_best_fit( core_coords );
 	const auto line_approach_first = closest_point_on_line_to_point( lobf, front( core_coords ) );
@@ -198,6 +203,76 @@ size_size_pair_vec cath::sec::get_sec_starts_and_stops(const protein &arg_protei
 	);
 }
 
+/// \brief Generate a vector of sec_file_record objects for the specified protein
+sec_file_record_vec cath::sec::get_sec_records(const protein &arg_protein ///< The protein to analyze
+                                               ) {
+	return transform_build<sec_file_record_vec>(
+		get_sec_starts_and_stops( arg_protein ),
+		[&] (const size_size_pair &x) {
+			return calculate_sec_record( arg_protein, x.first, x.second );
+		}
+	);
+}
+
+/// \brief Get some simple PyMOL script text to draw the specified sec_file_record on the specified protein
+///
+/// An index is required to differentiate pseudo-atoms
+string cath::sec::get_pymol_script_text(const protein         &arg_protein,         ///< The protein on which the secondary structure belongs
+                                        const sec_file_record &arg_sec_file_record, ///< The sec_file_record to represent in PyMOL script
+                                        const size_t          &arg_index            ///< The index of the sec_file_record (arbitrary but must be unique within a run of PyMOL)
+                                        ) {
+	const auto &midpoint         = arg_sec_file_record.get_midpoint();
+	const line  the_line         = { midpoint, arg_sec_file_record.get_unit_dirn() };
+	const auto &start_coord      = arg_protein.get_residue_ref_of_index( arg_sec_file_record.get_start_residue_num() ).get_carbon_alpha_coord();
+	const auto &stop_coord       = arg_protein.get_residue_ref_of_index( arg_sec_file_record.get_stop_residue_num () ).get_carbon_alpha_coord();
+	const auto  closest_to_start = closest_point_on_line_to_point( the_line, start_coord );
+	const auto  closest_to_stop  = closest_point_on_line_to_point( the_line, stop_coord  );
+	const auto &the_ss           = arg_sec_file_record.get_type();
+	const auto  ss_str           = to_string( the_ss );
+	const auto  colour_str       = ( the_ss == sec_struc_type::ALPHA_HELIX ) ? "orange"s    :
+	                               ( the_ss == sec_struc_type::BETA_STRAND ) ? "pink"s      :
+	                                                                           "chocolate"s ;
+
+	const auto id_str            = std::to_string( midpoint.get_x() * midpoint.get_y() * midpoint.get_z() );
+
+	return
+	      "pseudoatom " + ss_str + "start, resi=" + std::to_string( arg_index ) + ", color=black, pos=["
+		+ std::to_string( closest_to_start.get_x() ) + ", " + std::to_string( closest_to_start.get_y() ) + ", " + std::to_string( closest_to_start.get_z() ) + "]\n"
+		+ "pseudoatom " + ss_str + "end,   resi=" + std::to_string( arg_index ) + ", color=" + colour_str + ", pos=["
+		+ std::to_string( closest_to_stop .get_x() ) + ", " + std::to_string( closest_to_stop .get_y() ) + ", " + std::to_string( closest_to_stop .get_z() ) + "]\n"
+		+ "distance " + ss_str + "line, " + ss_str + "start///" + std::to_string( arg_index ) + "/, " + ss_str + "end///" + std::to_string( arg_index ) + "/";
+}
+
+/// \brief Get some simple PyMOL script text to draw the specified sec_file_records on the specified protein
+///
+/// An index is required to differentiate pseudo-atoms
+string cath::sec::get_pymol_script_text(const protein             &arg_protein,         ///< The protein on which the secondary structures belong
+                                        const sec_file_record_vec &arg_sec_file_records ///< The sec_file_records to represent in PyMOL script
+                                        ) {
+	return join(
+		irange( 0_z, arg_sec_file_records.size() )
+			| transformed( [&] (const size_t &x) {
+				return get_pymol_script_text( arg_protein, arg_sec_file_records[ x ], x );
+			} ),
+		"\n" ) + R"(
+hide
+show_as lines, ( name n,ca,c )
+show_as spheres,  Hstart
+show_as spheres,  Hend
+show_as spheres,  Sstart
+show_as spheres,  Send
+show_as dashes,   Hline
+show_as dashes,   Sline
+set sphere_scale, 0.5
+set line_width,   2.5
+set dash_width,   0.7
+set dash_radius,  0.1
+set dash_gap,     0.0
+set dash_color,   black
+set label_size,   25
+label n. CA, resi
+)";
+}
 
 // Notes:
 // sec_struc_type (structure/protein/sec_struc_type.hpp) currently has three types:
