@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_FILE_SEC_SEC_FILE_H
 #define _CATH_TOOLS_SOURCE_FILE_SEC_SEC_FILE_H
 
+#include "file/file_type_aliases.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 #include <cstddef>
@@ -36,10 +37,8 @@ namespace cath {
 		/// \brief Represent the data parsed out of a sec file
 		class sec_file final {
 		private:
-			using record_list_type = std::vector<sec_file_record>;
-
 			/// \brief The list of sec_file_records
-			record_list_type records;
+			sec_file_record_vec records;
 
 			/// \brief The list of planar_angle_lists
 			///        (as in the sec file, each entry contains the angles between that secondary structure and
@@ -47,12 +46,12 @@ namespace cath {
 			sec_struc_planar_angles_vec_vec inter_planar_angles;
 
 		public:
-			sec_file(const std::vector<sec_file_record> &,
+			sec_file(const sec_file_record_vec &,
 			         const sec_struc_planar_angles_vec_vec &);
 
-			using iterator       = record_list_type::const_iterator;
-			using const_iterator = record_list_type::const_iterator;
-			using size_type      = record_list_type::size_type;
+			using iterator       = sec_file_record_vec::const_iterator;
+			using const_iterator = sec_file_record_vec::const_iterator;
+			using size_type      = sec_file_record_vec::size_type;
 
 			size_type size() const;
 			const sec_struc_planar_angles & get_planar_angles_of_indices(const size_t &,

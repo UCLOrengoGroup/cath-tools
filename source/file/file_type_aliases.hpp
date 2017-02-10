@@ -38,6 +38,7 @@ namespace cath { namespace file { class pdb_atom; } }
 namespace cath { namespace file { class pdb_list; } }
 namespace cath { namespace file { class pdb_residue; } }
 namespace cath { namespace file { class prc_scores_entry; } }
+namespace cath { namespace file { class sec_file_record; } }
 namespace cath { namespace file { class ssap_scores_entry; } }
 namespace cath { namespace file { enum class data_file : unsigned int; } }
 namespace cath { namespace file { enum class residue_makeup : bool; } }
@@ -98,6 +99,11 @@ namespace cath {
 
 		/// \brief Type alias for a tuple of pdb_atom_parse_status, residuestring_name and amino_acid
 		using status_string_aa_tuple = std::tuple<pdb_atom_parse_status, std::string, amino_acid>;
+
+
+		/// \brief Type alias for a vector of sec_file_record objects
+		using sec_file_record_vec = std::vector<sec_file_record>;
+
 	} // namespace file
 } // namespace cath
 

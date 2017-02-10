@@ -99,7 +99,7 @@ sec_file cath::file::read_sec(istream &arg_istream ///< The istream from which t
 	}
 
 	// Prepare vectors of sec_file_record and sec_struc_planar_angles_vec to populate
-	vector<sec_file_record> new_sec_records;
+	sec_file_record_vec new_sec_records;
 	new_sec_records.reserve(num_sec_strucs);
 
 	sec_struc_planar_angles_vec_vec new_planar_angles;
