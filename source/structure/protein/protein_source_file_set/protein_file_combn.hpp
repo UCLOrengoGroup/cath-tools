@@ -34,9 +34,10 @@ namespace cath {
     /// This is a mirror of the protein_source_file_set class hierarchy that is useful when
     /// handling program_options
 	enum class protein_file_combn : char {
-		WOLF_SEC,    ///< Reading a protein from Wolf and sec files
-		PDB,         ///< Reading a protein from PDB file
-		PDB_DSSP_SEC ///< Reading a protein from PDB, DSSP and sec files
+		WOLF_SEC,     ///< Reading a protein from Wolf and sec files
+		PDB,          ///< Reading a protein from PDB file
+		PDB_DSSP_SEC, ///< Reading a protein from PDB, DSSP and sec files
+		PDB_DSSP      ///< Reading a protein from PDB and DSSP (currently experimental)
 	};
 
 	std::unique_ptr<const protein_source_file_set> get_protein_source_file_set(const protein_file_combn &);

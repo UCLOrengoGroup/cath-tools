@@ -49,6 +49,12 @@ namespace cath {
 	                                                 const std::string & = "",
 	                                                 const ostream_ref_opt & = std::ref( std::cerr ) );
 
+	protein read_protein_from_dssp_and_pdb_and_calc_sec(const boost::filesystem::path &,
+	                                                    const boost::filesystem::path &,
+	                                                    const file::dssp_skip_policy &,
+	                                                    const std::string & = "",
+	                                                    const ostream_ref_opt & = std::ref( std::cerr ) );
+
 	protein read_protein_from_dssp_and_pdb(const boost::filesystem::path &,
 	                                       const boost::filesystem::path &,
 	                                       const file::dssp_skip_policy &,
@@ -88,6 +94,12 @@ namespace cath {
 	protein paint_sec_file_onto_protein_copy(protein,
 	                                         const file::sec_file &,
 	                                         const ostream_ref_opt &);
+
+	void calc_and_paint_sec_file_onto_protein(protein &,
+	                                          const ostream_ref_opt &);
+
+	protein calc_and_paint_sec_file_onto_protein_copy(protein,
+	                                                  const ostream_ref_opt &);
 
 	void remove_domin_res(protein &,
 	                      const boost::filesystem::path &,

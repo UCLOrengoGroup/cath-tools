@@ -24,13 +24,18 @@
 #include <boost/throw_exception.hpp>
 
 #include "exception/invalid_argument_exception.hpp"
+#include "file/sec/sec_file_record.hpp"
+#include "structure/geometry/coord.hpp"
 
 using namespace cath;
 using namespace cath::common;
+using namespace cath::file;
+using namespace cath::geom;
+using std::string;
 
 const sec_struc_planar_angles sec_struc_planar_angles::NULL_SEC_STRUC_PLANAR_ANGLES(0.0, 0.0, 0.0);
 
-/// \brief Ctor for sec_struc_planar_angles.
+/// \brief Ctor for sec_struc_planar_angles
 sec_struc_planar_angles::sec_struc_planar_angles(const double &arg_angle_x,       ///< The angle on the plane defined by the x-axis
                                                  const double &arg_angle_minus_y, ///< The angle on the plane defined by the negative y-axis
                                                  const double &arg_angle_z        ///< The angle on the plane defined by the z-axis
@@ -56,4 +61,33 @@ double sec_struc_planar_angles::get_planar_angle_minus_y() const {
 /// \brief Getter for the angle on the plane defined by the z-axis
 double sec_struc_planar_angles::get_planar_angle_z() const {
 	return planar_angle_z;
+}
+
+/// \brief Generate a string describing the specified sec_struc_planar_angles
+///
+/// \relates sec_struc_planar_angles
+string cath::to_string(const sec_struc_planar_angles &arg_sec_struc_planar_angles ///< The sec_struc_planar_angles to describe
+                       ) {
+	return "sec_struc_planar_angles[ "
+		+ std::to_string( arg_sec_struc_planar_angles.get_planar_angle_x()       )
+		+ ", "
+		+ std::to_string( arg_sec_struc_planar_angles.get_planar_angle_minus_y() )
+		+ ", "
+		+ std::to_string( arg_sec_struc_planar_angles.get_planar_angle_z()       )
+		+ " ]";
+}
+
+/// \brief Calculate the planar angles between the two specified sec_file_records
+///
+/// \relates sec_struc_planar_angles
+///
+/// \relatesalso sec_file_record
+sec_struc_planar_angles cath::make_planar_angles(const sec_file_record &arg_sec_1, ///< The first  sec_file_record
+                                                 const sec_file_record &arg_sec_2  ///< The second sec_file_record
+                                                 ) {
+	return {
+		angle_in_degrees( planar_angle_between( coord{  1,  0,  0 }, arg_sec_1.get_unit_dirn(), arg_sec_2.get_unit_dirn() ) ),
+		angle_in_degrees( planar_angle_between( coord{  0, -1,  0 }, arg_sec_1.get_unit_dirn(), arg_sec_2.get_unit_dirn() ) ),
+		angle_in_degrees( planar_angle_between( coord{  0,  0,  1 }, arg_sec_1.get_unit_dirn(), arg_sec_2.get_unit_dirn() ) )
+	};
 }

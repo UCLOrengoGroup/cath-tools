@@ -974,6 +974,7 @@ set(
 		structure/protein/protein_source_file_set/protein_file_combn.cpp
 		structure/protein/protein_source_file_set/protein_source_file_set.cpp
 		structure/protein/protein_source_file_set/protein_source_from_pdb.cpp
+		structure/protein/protein_source_file_set/protein_source_from_pdb_and_dssp.cpp
 		structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.cpp
 		structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.cpp
 )
@@ -1001,7 +1002,7 @@ set(
 
 set(
 	NORMSOURCES_STRUCTURE_SEC_STRUC_CALC_SEC
-		structure/sec_struc_calc/sec/sec_play.cpp
+		structure/sec_struc_calc/sec/sec_calc.cpp
 )
 
 set(
@@ -1899,7 +1900,7 @@ set(
 
 set(
 	TESTSOURCES_STRUCTURE_SEC_STRUC_CALC_SEC
-		structure/sec_struc_calc/sec/sec_play_test.cpp
+		structure/sec_struc_calc/sec/sec_calc_test.cpp
 )
 
 set(

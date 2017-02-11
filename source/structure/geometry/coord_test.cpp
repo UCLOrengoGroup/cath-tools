@@ -193,6 +193,11 @@ BOOST_AUTO_TEST_CASE(dihedral_angle_between_four_points_handles_float_difficulti
 	);
 }
 
+BOOST_AUTO_TEST_CASE(planar_angles) {
+	BOOST_CHECK_EQUAL( planar_angle_between( coord{ 0, 0, 1 }, coord{ 1, 0, 0 }, coord{ 0, 1, 0 } ), make_angle_from_degrees<double>( -90 ) );
+	BOOST_CHECK_EQUAL( planar_angle_between( coord{ 0, 0, 1 }, coord{ 0, 1, 0 }, coord{ 1, 0, 0 } ), make_angle_from_degrees<double>(  90 ) );
+}
+
 BOOST_AUTO_TEST_SUITE(json)
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_origin) {

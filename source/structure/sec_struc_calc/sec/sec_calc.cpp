@@ -1,5 +1,5 @@
 /// \file
-/// \brief The sec_play definitions
+/// \brief The sec_calc definitions
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sec_play.hpp"
+#include "sec_calc.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/format.hpp>
@@ -31,10 +31,12 @@
 #include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
 #include "common/size_t_literal.hpp"
+#include "file/sec/sec_file.hpp"
 #include "file/sec/sec_file_record.hpp"
 #include "structure/geometry/line.hpp"
 #include "structure/geometry/pca.hpp"
 #include "structure/protein/protein.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath;
 using namespace cath::common;
@@ -45,6 +47,7 @@ using namespace std::literals::string_literals;
 
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
+using boost::algorithm::clamp;
 using boost::algorithm::join;
 using boost::format;
 using boost::integer_range;
@@ -212,6 +215,12 @@ sec_file_record_vec cath::sec::get_sec_records(const protein &arg_protein ///< T
 			return calculate_sec_record( arg_protein, x.first, x.second );
 		}
 	);
+}
+
+/// \brief Generate a vector of sec_file_record objects for the specified protein
+sec_file cath::sec::get_sec_file(const protein &arg_protein ///< The protein to analyze
+                                 ) {
+	return make_sec_file_with_calced_planar_angles( get_sec_records( arg_protein ) );
 }
 
 /// \brief Get some simple PyMOL script text to draw the specified sec_file_record on the specified protein

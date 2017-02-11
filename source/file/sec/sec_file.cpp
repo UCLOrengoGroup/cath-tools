@@ -20,7 +20,11 @@
 
 #include "sec_file.hpp"
 
+#include <boost/range/irange.hpp>
+
+#include "common/algorithm/transform_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
+#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/sec/sec_file_record.hpp"
 #include "structure/protein/sec_struc.hpp"
@@ -29,7 +33,10 @@
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
-using namespace std;
+
+using boost::irange;
+using std::max;
+using std::min;
 
 /// \brief Ctor to populate the sec_file_records and planar_angles_lists
 sec_file::sec_file(const sec_file_record_vec             &arg_sec_file_records,   ///< The list of sec_file_records
@@ -42,7 +49,13 @@ sec_file::sec_file(const sec_file_record_vec             &arg_sec_file_records, 
 		}
 	}
 	else if ( inter_planar_angles.size() + 1 != records.size() ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Number of inter_planar_angles does not match one less than the number of sec file records"));
+		BOOST_THROW_EXCEPTION(invalid_argument_exception(
+			"Number of inter_planar_angles ("
+			+ std::to_string( inter_planar_angles.size() )
+			+ ") does not match one less than the number of sec file records ("
+			+ std::to_string( records.size() )
+			+ ")"
+		));
 	}
 	for (size_t planar_ctr = 0; planar_ctr < inter_planar_angles.size(); ++planar_ctr) {
 		if ( inter_planar_angles.size() - planar_ctr != inter_planar_angles[planar_ctr].size() ) {
@@ -122,4 +135,43 @@ sec_struc_vec cath::file::make_sec_struc_list(const sec_file &arg_sec_file ///< 
 	}
 
 	return new_sec_strucs;
+}
+
+
+/// \brief Calculate the planar angles corresponding to the specified vector of sec_file_records
+///
+/// The resulting data structure is as in sec_file, ie for each sec_file_record, there is a vector
+/// of the angles between that sec_file_record and each of the following sec_file_records.
+///
+/// \relates sec_file
+sec_struc_planar_angles_vec_vec cath::file::calc_planar_angles(const sec_file_record_vec &arg_sec_file_records ///< The sec_file_records for which to calculate the planar_angles
+                                                               ) {
+	if ( arg_sec_file_records.empty() ) {
+		return {};
+	}
+	return transform_build<sec_struc_planar_angles_vec_vec>(
+		irange( 0_z, arg_sec_file_records.size() - 1 ),
+		[&] (const size_t &x) {
+			return transform_build<sec_struc_planar_angles_vec>(
+				irange( x + 1_z, arg_sec_file_records.size() ),
+				[&] (const size_t &y) {
+					return make_planar_angles(
+						arg_sec_file_records[ x ],
+						arg_sec_file_records[ y ]
+					);
+				}
+			);
+		}
+	);
+}
+
+/// \brief Make a sec_file from the specified vector of sec_file_records by calculating the planar_angles
+///
+/// \relates sec_file
+sec_file cath::file::make_sec_file_with_calced_planar_angles(const sec_file_record_vec &arg_sec_file_records ///< The sec_file_records from which to build the sec_file
+                                                             ) {
+	return {
+		arg_sec_file_records,
+		calc_planar_angles( arg_sec_file_records )
+	};
 }

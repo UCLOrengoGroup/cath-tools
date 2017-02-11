@@ -243,7 +243,7 @@ void cath::wipe_sec_strucs_of_residues(protein &arg_protein ///< The protein obj
 ///
 /// \relatesalso protein
 void cath::label_residues_with_sec_strucs(protein               &arg_protein,   ///< The protein object to modify
-                                          const ostream_ref_opt &/*arg_stderr*/ ///< TODOCUMENT
+                                          const ostream_ref_opt &/*arg_stderr*/ ///< An optional referece to an ostream to which any logging should be performed
                                           ) {
 	/// \brief TODOCUMENT
 	const size_t num_residues = arg_protein.get_length();

@@ -1,5 +1,5 @@
 /// \file
-/// \brief The sec_play header
+/// \brief The sec_calc header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_SEC_SEC_PLAY_H
-#define _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_SEC_SEC_PLAY_H
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_SEC_SEC_CALC_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_SEC_SEC_CALC_H
 
 #include "common/type_aliases.hpp"
 #include "file/file_type_aliases.hpp"
@@ -28,6 +28,7 @@
 namespace cath { class protein; }
 namespace cath { class residue; }
 namespace cath { enum class sec_struc_type : char; }
+namespace cath { namespace file { class sec_file; } }
 namespace cath { namespace file { class sec_file_record; } }
 
 namespace cath {
@@ -104,6 +105,8 @@ namespace cath {
 		size_size_pair_vec get_sec_starts_and_stops(const protein &);
 
 		file::sec_file_record_vec get_sec_records(const protein &);
+
+		file::sec_file get_sec_file(const protein &);
 
 		std::string get_pymol_script_text(const protein &,
 		                                  const file::sec_file_record &,

@@ -1,5 +1,5 @@
 /// \file
-/// \brief The sec_play test suite
+/// \brief The sec_calc test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -21,7 +21,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "sec_play.hpp"
+#include "sec_calc.hpp"
 
 #include "common/boost_addenda/range/front.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
@@ -43,24 +43,7 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::sec;
 
-BOOST_FIXTURE_TEST_SUITE(sec_play_test_suite, global_test_constants)
-
-// Starts and stops on 1hdoA
-// {   5,   9 },
-// {  14,  25 },
-// {  29,  34 },
-// {  49,  52 },
-// {  58,  65 },
-// {  70,  73 },
-// {  86, 101 },
-// { 105, 109 },
-// { 126, 141 },
-// { 145, 149 },
-// { 152, 156 },
-// { 163, 167 },
-// { 174, 178 },
-// { 178, 187 },
-// { 198, 202 },
+BOOST_FIXTURE_TEST_SUITE(sec_calc_test_suite, global_test_constants)
 
 BOOST_AUTO_TEST_CASE(get_correct_for_example_b_1hdoA00_first_strand) {
 	const protein the_protein = protein_from_dssp_and_pdb(
@@ -114,7 +97,6 @@ BOOST_AUTO_TEST_CASE(pymol_of_get_sec_records_works) {
 		read_pdb_file ( EXAMPLE_B_PDB_FILENAME()  )
 	);
 	BOOST_CHECK( boost::algorithm::contains( get_pymol_script_text( the_protein, get_sec_records( the_protein ) ), "show_as" ) );
-	// std::cout << "\n\n" << get_pymol_script_text( the_protein, get_sec_records( the_protein ) ) << "\n\n";
 }
 
 BOOST_AUTO_TEST_CASE(prosec_axis_point_gets_beta_strand_example_correct) {

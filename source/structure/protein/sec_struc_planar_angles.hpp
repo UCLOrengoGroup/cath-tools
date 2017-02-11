@@ -21,6 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_SEC_STRUC_PLANAR_ANGLES_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_SEC_STRUC_PLANAR_ANGLES_H
 
+namespace cath { namespace file { class sec_file_record; } }
+
+#include <string>
+
 namespace cath {
 
 	// Planar angles between secondary structures as used in sec files
@@ -50,6 +54,11 @@ namespace cath {
 
 		static const sec_struc_planar_angles NULL_SEC_STRUC_PLANAR_ANGLES;
 	};
+
+	std::string to_string(const sec_struc_planar_angles &);
+
+	sec_struc_planar_angles make_planar_angles(const file::sec_file_record &,
+	                                           const file::sec_file_record &);
 
 } // namespace cath
 

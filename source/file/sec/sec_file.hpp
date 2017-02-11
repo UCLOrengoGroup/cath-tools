@@ -62,6 +62,8 @@ namespace cath {
 		};
 
 		sec_struc_vec make_sec_struc_list(const sec_file &);
+		sec_struc_planar_angles_vec_vec calc_planar_angles(const sec_file_record_vec &);
+		sec_file make_sec_file_with_calced_planar_angles(const sec_file_record_vec &);
 
 	} // namespace file
 } // namespace cath

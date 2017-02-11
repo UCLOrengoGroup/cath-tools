@@ -330,6 +330,11 @@ namespace cath {
 		                                            const coord &,
 		                                            const coord &,
 		                                            const coord &);
+
+		doub_angle planar_angle_between(const coord &,
+		                                const coord &,
+		                                const coord &);
+
 		std::ostream & operator<<(std::ostream &,
 		                          const coord &);
 
@@ -461,6 +466,36 @@ namespace cath {
 			);
 			return arg_coord;
 		}
+
+		/// \brief Return the scalar component of the first specified coord in the direction of the second
+		///
+		/// \relates coord
+		inline double scalar_component(const coord &arg_source_coord, ///< The coord of which to return the scalar component
+		                               const coord &arg_dirn          ///< The direction in which the component should be taken (does not have to be normalised)
+		                               ) {
+			return dot_product( arg_source_coord, normalise_copy( arg_dirn ) );
+		}
+
+		/// \brief Return the parallel component of the first specified coord in the direction of the second
+		///
+		/// \relates coord
+		inline coord parallel_component_copy(const coord &arg_source_coord, ///< The coord of which to return the parallel component
+		                                     const coord &arg_dirn          ///< The direction in which the component should be taken (does not have to be normalised)
+		                                     ) {
+			return scalar_component( arg_source_coord, arg_dirn ) * normalise_copy( arg_dirn );
+		}
+
+		/// \brief Return the perpendicular component of the first specified coord in the direction perpendicular to the second
+		///
+		/// \relates coord
+		inline coord perpendicular_component_copy(const coord &arg_source_coord, ///< The coord of which to return the perpendicular component
+		                                          const coord &arg_dirn          ///< The direction perpendicular to which the component should be taken (does not have to be normalised)
+		                                          ) {
+			const coord  unit_dirn = normalise_copy( arg_dirn );
+			const double factor    = dot_product   ( arg_source_coord, unit_dirn );
+			return arg_source_coord - ( factor * unit_dirn );
+		}
+
 
 	} // namespace geom
 } // namespace cath

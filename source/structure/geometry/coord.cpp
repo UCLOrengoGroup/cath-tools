@@ -65,27 +65,6 @@ coord cath::geom::normalise_copy(const coord &arg_coord ///< TODOCUMENT
 	return ( arg_coord / coord_length );
 }
 
-/// \brief TODOCUMENT
-///
-/// \relates coord
-coord cath::geom::parallel_component_copy(const coord &arg_source_coord, ///< TODOCUMENT
-                                          const coord &arg_dirn          ///< TODOCUMENT
-                                          ) {
-	const coord  unit_dirn = normalise_copy( arg_dirn );
-	const double factor    = dot_product   ( arg_source_coord, unit_dirn );
-	return factor * unit_dirn;
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates coord
-coord cath::geom::perpendicular_component_copy(const coord &arg_source_coord, ///< TODOCUMENT
-                                               const coord &arg_dirn          ///< TODOCUMENT
-                                               ) {
-	const coord  unit_dirn = normalise_copy( arg_dirn );
-	const double factor    = dot_product   ( arg_source_coord, unit_dirn );
-	return arg_source_coord - ( factor * unit_dirn );
-}
 
 /// \brief Compute the angle (in radians) between two vectors (represented as coord objects)
 ///
@@ -147,6 +126,29 @@ doub_angle cath::geom::dihedral_angle_between_four_points(const coord &arg_coord
 	const double sign      = dot_product( vector_2_to_3, cross_product( unit_perp_vect_at_2, unit_perp_vect_at_3 ) );
 
 	return ( ( sign >= 0) ? the_angle : -the_angle );
+}
+
+/// \brief Calculate the angle between two specified coords when projected onto a plane orthogoanl to a specified coord
+///
+/// When looking at the plane along the direction of arg_plane_ortho, the angle
+/// is from the projection of arg_coord1 to the projection of arg_coord2,
+/// where (like on the complex plane) anti-clockwise is positive.
+///
+/// This is used to produces sec files
+///
+/// \relates coord
+doub_angle cath::geom::planar_angle_between(const coord &arg_plane_ortho, ///< The coord defining the plane
+                                            const coord &arg_coord1,      ///< The first  angle to compare
+                                            const coord &arg_coord2       ///< The second angle to compare
+                                            ) {
+	const coord      in_plane1 = normalise_copy( perpendicular_component_copy( arg_coord1, arg_plane_ortho ) );
+	const coord      in_plane2 = normalise_copy( perpendicular_component_copy( arg_coord2, arg_plane_ortho ) );
+	const double     sign      = dot_product( cross_product( in_plane2, in_plane1 ), normalise_copy( arg_plane_ortho ) );
+	const doub_angle ang_rads  = angle_between_two_vectors(
+		perpendicular_component_copy( arg_coord1, arg_plane_ortho ),
+		perpendicular_component_copy( arg_coord2, arg_plane_ortho )
+	);
+	return ( sign >= 0.0 ) ? ang_rads : -ang_rads;
 }
 
 /// \brief TODOCUMENT

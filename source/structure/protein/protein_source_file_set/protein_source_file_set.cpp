@@ -28,6 +28,7 @@
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "file/options/data_dirs_options_block.hpp"
 #include "structure/protein/protein.hpp"
+#include "structure/protein/protein_source_file_set/protein_source_from_pdb_and_dssp.hpp"
 #include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.hpp"
 #include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.hpp"
 #include "structure/protein/residue.hpp"
@@ -143,6 +144,7 @@ protein_source_file_set_pvec cath::get_all_protein_source_file_sets() {
 	protein_source_file_set_pvec file_sets;
 	ptr_push_back< protein_source_from_pdb_dssp_and_sec >( file_sets )( );
 	ptr_push_back< protein_source_from_wolf_and_sec     >( file_sets )( );
+	ptr_push_back< protein_source_from_pdb_and_dssp     >( file_sets )( );
 	return file_sets;
 }
 
