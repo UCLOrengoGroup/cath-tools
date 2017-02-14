@@ -998,6 +998,7 @@ set(
 	NORMSOURCES_STRUCTURE_SEC_STRUC_CALC_DSSP
 		structure/sec_struc_calc/dssp/bifur_hbond_list.cpp
 		structure/sec_struc_calc/dssp/dssp_hbond_calc.cpp
+		structure/sec_struc_calc/dssp/dssp_ss_calc.cpp
 )
 
 set(
@@ -1895,6 +1896,7 @@ set(
 	TESTSOURCES_STRUCTURE_SEC_STRUC_CALC_DSSP
 		structure/sec_struc_calc/dssp/bifur_hbond_list_test.cpp
 		structure/sec_struc_calc/dssp/dssp_hbond_calc_test.cpp
+		structure/sec_struc_calc/dssp/dssp_ss_calc_test.cpp
 		${TESTSOURCES_STRUCTURE_SEC_STRUC_CALC_DSSP_TEST}
 )
 

@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(bifur_hbond_updates_correctly) {
 }
 
 BOOST_AUTO_TEST_CASE(bifur_hbond_list_to_strings_correctly) {
-	BOOST_CHECK_EQUAL( to_string( bifur_hbond_list{ 2 } ), "bifur_hbond_list[\n\tbifur_hbond[nh_1st:-, nh_2nd-, co_1st:-, co_2nd:-]\n\tbifur_hbond[nh_1st:-, nh_2nd-, co_1st:-, co_2nd:-]]" );
+	BOOST_CHECK_EQUAL( to_string( bifur_hbond_list{ 2 } ), "bifur_hbond_list[\n\tbifur_hbond[nh_1st:(             ), nh_2nd(             ), co_1st:(             ), co_2nd:(             )]\n\tbifur_hbond[nh_1st:(             ), nh_2nd(             ), co_1st:(             ), co_2nd:(             )]]" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

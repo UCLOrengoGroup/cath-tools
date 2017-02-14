@@ -31,20 +31,22 @@
 
 namespace cath { class amino_acid; }
 namespace cath { class chain_label; }
-namespace cath { namespace geom { template <typename T> class angle; } }
+namespace cath { class protein; }
+namespace cath { class residue; }
+namespace cath { class residue_id; }
+namespace cath { class residue_name; }
+namespace cath { class sec_struc; }
+namespace cath { class sec_struc_planar_angles; }
+namespace cath { enum class sec_struc_type : char; }
 namespace cath { namespace geom { class coord; } }
 namespace cath { namespace geom { class coord_list; } }
-namespace cath { namespace geom { template <typename T> class quat_rot_impl; } }
 namespace cath { namespace geom { class rotation; } }
+namespace cath { namespace geom { template <typename T> class angle; } }
+namespace cath { namespace geom { template <typename T> class quat_rot_impl; } }
 namespace cath { namespace index { class view_cache; } }
-namespace cath { class protein; }
-namespace cath { class residue_name; }
-namespace cath { class residue_id; }
-namespace cath { class sec_struc_planar_angles; }
-namespace cath { class residue; }
-namespace cath { class sec_struc; }
 
 namespace cath {
+	using sec_struc_type_vec = std::vector<sec_struc_type>;
 
 	namespace index {
 		namespace detail {

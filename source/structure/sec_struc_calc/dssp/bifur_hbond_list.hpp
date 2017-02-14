@@ -46,6 +46,9 @@ namespace cath {
 
 			/// \brief The energy of the hbond
 			hbond_energy_t energy;
+
+			/// The energy cutoff below which DSSP considers a candidate to be a true hbond
+			static constexpr hbond_energy_t HBOND_ENERGY_CUTOFF = -0.5;
 		};
 
 		/// \brief Equality operator for hbond_half
@@ -84,6 +87,28 @@ namespace cath {
 
 		std::string to_string(const hbond_half_opt &);
 
+		/// \brief Whether the specified hbond_half has a strong enough energy to be considered a true hbond
+		inline bool is_bondy_enough(const hbond_half &arg_hbond_half ///< The hbond_half to consider
+		                            ) {
+			return arg_hbond_half.energy < hbond_half::HBOND_ENERGY_CUTOFF ;
+		}
+
+		/// \brief Whether the specified hbond_half_opt is present and has a strong enough energy to be considered a true hbond
+		inline bool is_bondy_enough(const hbond_half_opt &arg_hbond_half_opt ///< The hbond_half_opt to consider
+		                            ) {
+			return ( arg_hbond_half_opt && is_bondy_enough( *arg_hbond_half_opt ) );
+		}
+
+		/// \brief Wipe the specified hbond_half_opt to none if 
+		///         * (a) it isn't already and
+		///         * (b) it isn't strong enough to be considered a true hbond
+		inline void remove_not_bondy_enough(hbond_half_opt &arg_hbond_half_opt ///< The hbond_half_opt to examine (and potentially wipe)
+		                                    ) {
+			if ( arg_hbond_half_opt && ! is_bondy_enough( *arg_hbond_half_opt ) ) {
+				arg_hbond_half_opt = boost::none;
+			}
+		}
+
 		/// \brief Type alias for a pair of hbond_half_opts
 		///
 		/// This is used to represent a pair of hbond_halfs of the same type from the same residue
@@ -119,6 +144,19 @@ namespace cath {
 			return arg_hbond_pair;
 		}
 
+		/// \brief Wipe each half of the specified hbond_half_opt_pair to none if 
+		///         * (a) it isn't already and
+		///         * (b) it isn't strong enough to be considered a true hbond
+		///
+		/// \pre If only one bond is present, it must be the first
+		///
+		/// \pre If both bonds are present, the first mustn't be weaker
+		inline void remove_not_bondy_enough(hbond_half_opt_pair &arg_hbond_pair ///< The hbond_half_opt_pair to examine (and potentially wipe)
+		                                    ) {
+			remove_not_bondy_enough( arg_hbond_pair.first  );
+			remove_not_bondy_enough( arg_hbond_pair.second );
+		}
+
 		/// \brief Represent a possibly-bifurcating set of bonds from a given residue
 		class bifur_hbond final {
 		private:
@@ -131,6 +169,8 @@ namespace cath {
 		public:
 			bifur_hbond & update_for_this_nh(const hbond_half &);
 			bifur_hbond & update_for_this_co(const hbond_half &);
+
+			bifur_hbond & remove_not_bondy_enough();
 
 			const hbond_half_opt_pair & get_bound_pair_for_this_nh() const;
 			const hbond_half_opt_pair & get_bound_pair_for_this_co() const;
@@ -147,6 +187,13 @@ namespace cath {
 		inline bifur_hbond & bifur_hbond::update_for_this_co(const hbond_half &arg_hbond ///< The new hbond_half with which to update
 		                                                     ) {
 			update_half_bond_pair( for_this_co, arg_hbond );
+			return *this;
+		}
+
+		/// \brief Remove any parts of the bifur_hbond that aren't strong enough to be considered a true hbond
+		inline bifur_hbond & bifur_hbond::remove_not_bondy_enough() {
+			cath::sec::remove_not_bondy_enough( for_this_nh );
+			cath::sec::remove_not_bondy_enough( for_this_co );
 			return *this;
 		}
 
@@ -185,6 +232,8 @@ namespace cath {
 
 			const bifur_hbond & operator[](const size_t &) const;
 
+			bifur_hbond_list & remove_not_bondy_enough();
+
 			bifur_hbond_list & update_with_nh_idx_co_idx_energy(const hbond_partner_t &,
 			                                                    const hbond_partner_t &,
 			                                                    const hbond_energy_t &);
@@ -214,6 +263,14 @@ namespace cath {
 			return bifur_hbonds[ arg_index ];
 		}
 
+		/// \brief Remove any candidate bonds that aren't strong enough to be considered true hbonds
+		inline bifur_hbond_list & bifur_hbond_list::remove_not_bondy_enough() {
+			for (bifur_hbond &the_bifur_hbond : bifur_hbonds) {
+				the_bifur_hbond.remove_not_bondy_enough();
+			}
+			return *this;
+		}
+
 		/// \brief Update the bifur_hbond_list with the specified h-bond energy between
 		///        the residues of specified indices
 		inline bifur_hbond_list & bifur_hbond_list::update_with_nh_idx_co_idx_energy(const hbond_partner_t &arg_nh_index, ///< The index of the residue at the NH side of the h-bond
@@ -233,6 +290,13 @@ namespace cath {
 		/// \brief Standard end() method to allow iteration over the bifur_hbonds
 		inline auto bifur_hbond_list::end() const -> const_iterator {
 			return common::cend  ( bifur_hbonds );
+		}
+
+		/// \brief Remove any candidate bonds that aren't strong enough to be considered true hbonds
+		///        in a copy of the specified bifur_hbond_list and then return the copy
+		inline bifur_hbond_list & remove_not_bondy_enough_copy(bifur_hbond_list arg_bifur_hbond_list ///< The bifur_hbond_list from which a copy should be taken, stripped and returned
+		                                                       ) {
+			return arg_bifur_hbond_list.remove_not_bondy_enough();
 		}
 
 		std::string to_string(const bifur_hbond_list &);

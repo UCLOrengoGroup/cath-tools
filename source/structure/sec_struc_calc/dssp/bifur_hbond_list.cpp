@@ -21,6 +21,7 @@
 #include "bifur_hbond_list.hpp"
 
 #include <boost/algorithm/string/join.hpp>
+#include <boost/format.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
 #include <string>
@@ -29,6 +30,7 @@ using namespace cath::sec;
 
 using boost::adaptors::transformed;
 using boost::algorithm::join;
+using boost::format;
 using std::ostream;
 using std::string;
 
@@ -40,12 +42,12 @@ string cath::sec::to_string(const hbond_half_opt &arg_hbond_half_opt ///< The hb
 	return arg_hbond_half_opt
 		? (
 			  "("
-			+ ::std::to_string( arg_hbond_half_opt->index )
+			+ ( format( "%5g" ) % arg_hbond_half_opt->index ).str()
 			+ ", "
-			+ ::std::to_string( arg_hbond_half_opt->energy )
+			+ ( format( "%3.3f" ) % arg_hbond_half_opt->energy ).str()
 			+ ")"
 		)
-		: "-";
+		: "(             )";
 }
 
 /// \brief Generate a string describing the specified bifur_hbond
