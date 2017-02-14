@@ -368,6 +368,8 @@ beta_bridge_vec cath::sec::detail::has_antiparallel_beta_bridge(const bifur_hbon
 		}
 	};
 
+	const auto sz = arg_bifur_hbond_list.size();
+
 	const auto to_src_fn    = [&] (const size_t &x) { cnsdr_res_fn( has_antiparallel_beta_bridge_bonds_to_src        ( arg_bifur_hbond_list, arg_index, x ) ); };
 	const auto strdl_src_fn = [&] (const size_t &x) { cnsdr_res_fn( has_antiparallel_beta_bridge_bonds_straddling_src( arg_bifur_hbond_list, arg_index, x ) ); };
 
