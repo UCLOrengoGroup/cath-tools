@@ -362,8 +362,20 @@ dsspfile_hbond_opt dssp_dupl_fixture::parse_dsspfile_bond(const string &arg_hbon
 	}
 }
 
+/// \brief Test constant for the DSSP root test data subdirectory
+const path & dssp_dupl_fixture::DSSP_ROOT_TEST_DATA_DIR() {
+	static const path dssp_root_test_data_dir( global_test_constants::TEST_SOURCE_DATA_DIR() / "dssp" );
+	return dssp_root_test_data_dir;
+}
+
 /// \brief Test constant for the DSSP hbond test data subdirectory
 const path & dssp_dupl_fixture::DSSP_HBOND_TEST_DATA_DIR() {
-	static const path dssp_hbond_test_data_dir( global_test_constants::TEST_SOURCE_DATA_DIR() / "dssp" / "hbond" );
+	static const path dssp_hbond_test_data_dir( DSSP_ROOT_TEST_DATA_DIR() / "hbond" );
 	return dssp_hbond_test_data_dir;
+}
+
+/// \brief Test constant for the DSSP SS test data subdirectory
+const path & dssp_dupl_fixture::DSSP_SS_TEST_DATA_DIR() {
+	static const path dssp_ss_test_data_dir( DSSP_ROOT_TEST_DATA_DIR() / "sec_struc" );
+	return dssp_ss_test_data_dir;
 }

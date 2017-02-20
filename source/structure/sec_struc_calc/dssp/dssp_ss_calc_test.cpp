@@ -138,6 +138,22 @@ BOOST_AUTO_TEST_CASE(gets_correct_ss_on_example_b) {
 }
 
 
+BOOST_AUTO_TEST_SUITE(engineered_examples)
+
+BOOST_AUTO_TEST_CASE(beta_bridge_still_lone_if_neighbours_very_diff) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bridge_still_lone_if_neighbours_very_diff.dssp" );
+}
+
+BOOST_AUTO_TEST_CASE(beta_bonded_residues_must_be_ge_3_apart) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bonded_residues_must_be_ge_3_apart.dssp"        );
+}
+
+BOOST_AUTO_TEST_CASE(not_4_helix_if_5_helix) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "not_4_helix_if_5_helix.dssp"                         );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 // BOOST_AUTO_TEST_SUITE(whole_dssp_directory)
 
 // // Testcase for checking all DSSP instances in a directory against the equivalent PDBs in another directory

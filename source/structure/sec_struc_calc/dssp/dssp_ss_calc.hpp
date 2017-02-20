@@ -39,6 +39,22 @@ namespace cath {
 	namespace sec {
 		namespace detail {
 
+			/// \brief A struct for containing some useful constants
+			struct sec_struc_consts final {
+
+				/// \brief The minimum allowable difference between residues for them to be ends of a beta bridge
+				static constexpr size_t MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE = 3;
+
+				/// \brief The maximum allowed difference between source residues for two beta bridges to
+				///        be considered to enclose a beta-bulge
+				static constexpr size_t BETA_BULGE_MAX_DIFF_SOURCE             = 2;
+
+				/// \brief The maximum allowed difference between destination residues for two beta bridges to
+				///        be considered to enclose a beta-bulge
+				static constexpr size_t BETA_BULGE_MAX_DIFF_DEST               = 5;
+
+			};
+
 			/// \brief Represent the type of a beta-bridge
 			enum class beta_bridge_type : bool {
 				PARALLEL,     ///< Parallel beta-bridge
@@ -49,6 +65,16 @@ namespace cath {
 			std::ostream & operator<<(std::ostream &,
 			                          const beta_bridge_type &);
 
+			/// \brief Represent the context of a beta-bridge
+			enum class beta_bridge_context : bool {
+				LONE_BRIDGE, ///< The beta-bridge isn't in a beta-sheet (or that hasn't been calculated yet)
+				IN_SHEET     ///< The bridge appears in a beta-sheet
+			};
+
+			std::string to_string(const beta_bridge_context &);
+			std::ostream & operator<<(std::ostream &,
+			                          const beta_bridge_context &);
+
 			/// \brief Hold the information associated with a beta-bridge from a particular source residue
 			struct beta_bridge {
 				/// \brief The index of the residue on the other side of this beta-bridge
@@ -56,6 +82,12 @@ namespace cath {
 
 				/// \brief The type of this beta-bridge (parallel or anti-parallel)
 				beta_bridge_type type;
+
+				/// \brief The context of this beta-bridge (alone or in a sheet)
+				///
+				/// Note that this is initially set to LONE_BRIDGE and the is updated
+				/// to IN_SHEET depending on calculations
+				beta_bridge_context context = beta_bridge_context::LONE_BRIDGE;
 			};
 
 			bool operator==(const beta_bridge &,
@@ -66,10 +98,13 @@ namespace cath {
 			                          const beta_bridge &);
 
 			/// \brief Type alias for an optional beta_bridge
-			using beta_bridge_opt = boost::optional<beta_bridge>;
+			using beta_bridge_opt     = boost::optional<beta_bridge>;
 
 			/// \brief Type alias for a vector of beta_bridge values
-			using beta_bridge_vec = std::vector<beta_bridge>;
+			using beta_bridge_vec     = std::vector<beta_bridge>;
+
+			/// \brief Type alias for a vector of beta_bridge_vecs
+			using beta_bridge_vec_vec = std::vector<beta_bridge_vec>;
 
 			/// \brief Represent whether a residue is 4-helix bonded to the residue 4 before this one,
 			///        4 after this one, or both
@@ -85,12 +120,15 @@ namespace cath {
 			bool is_bonded_to(const hbond_half_opt_pair &,
 			                  const size_t &);
 
-			boost::optional<helix_category> four_helix_cat(const bifur_hbond &,
-			                                               const size_t &);
-			boost::optional<helix_category> four_helix_cat(const bifur_hbond_list &,
-			                                               const size_t &);
-			bool is_four_helix(const bifur_hbond_list &,
-			                   const size_t &);
+			boost::optional<helix_category> n_helix_cat(const bifur_hbond &,
+			                                            const size_t &,
+			                                            const size_t & = 4);
+			boost::optional<helix_category> n_helix_cat(const bifur_hbond_list &,
+			                                            const size_t &,
+			                                            const size_t & = 4);
+			bool is_n_helix(const bifur_hbond_list &,
+			                const size_t &,
+			                const size_t & = 4);
 			bool beta_index_in_range(const bifur_hbond_list &,
 			                         const size_t &);
 			beta_bridge_opt has_parallel_beta_bridge_bonds_to_src(const bifur_hbond_list &,
@@ -122,6 +160,14 @@ namespace cath {
 			void add_beta_bulge(sec_struc_type_vec &,
 			                    const size_t &,
 			                    const size_t &);
+
+
+			bool are_consecutive_bridges_in_sheet(const beta_bridge &,
+			                                      const beta_bridge &);
+
+			void set_bridges_contexts(beta_bridge_vec_vec &);
+
+			beta_bridge_vec_vec set_bridges_contexts_copy(beta_bridge_vec_vec);
 
 		} // namespace detail
 

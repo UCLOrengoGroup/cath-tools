@@ -97,7 +97,9 @@ namespace cath {
 
 			dsspfile_hbond_opt parse_dsspfile_bond(const std::string &);
 
+			static const boost::filesystem::path & DSSP_ROOT_TEST_DATA_DIR();
 			static const boost::filesystem::path & DSSP_HBOND_TEST_DATA_DIR();
+			static const boost::filesystem::path & DSSP_SS_TEST_DATA_DIR();
 		};
 
 	} // namespace sec

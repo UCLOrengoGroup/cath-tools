@@ -21,6 +21,7 @@
 #include "dssp_ss_calc.hpp"
 
 #include <boost/algorithm/clamp.hpp>
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/format.hpp>
 #include <boost/optional/optional_io.hpp>
@@ -44,6 +45,7 @@ using namespace cath::sec;
 using namespace cath::sec::detail;
 
 using boost::adaptors::reversed;
+using boost::algorithm::any_of;
 using boost::algorithm::clamp;
 using boost::algorithm::join;
 using boost::format;
@@ -56,6 +58,10 @@ using std::min;
 using std::ostream;
 using std::string;
 using std::vector;
+
+constexpr size_t sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE;
+constexpr size_t sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE;
+constexpr size_t sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST;
 
 /// \brief Generate a string describing the specified beta_bridge_type
 ///
@@ -82,6 +88,31 @@ ostream & cath::sec::detail::operator<<(ostream                &arg_os,         
 	return arg_os;
 }
 
+/// \brief Generate a string describing the specified beta_bridge_context
+///
+/// \relates beta_bridge_context
+string cath::sec::detail::to_string(const beta_bridge_context &arg_beta_bridge_context ///< The beta_bridge_context to describe
+                                    ) {
+	switch ( arg_beta_bridge_context ) {
+		case ( beta_bridge_context::LONE_BRIDGE ) : { return "BRDGE"; };
+		case ( beta_bridge_context::IN_SHEET    ) : { return "SHEET"; };
+		default : {
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of beta_bridge_context not recognised whilst converting to_string()"));
+			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
+		}
+	}
+}
+
+/// \brief Insert a description of the specified beta_bridge_context into the specified ostream
+///
+/// \relates beta_bridge_context
+ostream & cath::sec::detail::operator<<(ostream                   &arg_os,                 ///< The ostream into which the description should be inserted
+                                        const beta_bridge_context &arg_beta_bridge_context ///< The beta_bridge_context to describe
+                                        ) {
+	arg_os << to_string( arg_beta_bridge_context );
+	return arg_os;
+}
+
 /// \brief Return whether the two specified beta_bridges are identical
 ///
 /// \relates beta_bridge
@@ -104,6 +135,8 @@ string cath::sec::detail::to_string(const beta_bridge &arg_beta_bridge ///< The 
 		+ ( format( "%5g") % arg_beta_bridge.partner_idx ).str()
 		+ ", type:"
 		+ to_string( arg_beta_bridge.type )
+		+ ", context:"
+		+ to_string( arg_beta_bridge.context )
 		+ "]";
 }
 
@@ -153,15 +186,15 @@ bool cath::sec::detail::is_bonded_to(const hbond_half_opt_pair &arg_bound_pair, 
 	);
 }
 
-/// \brief Get the four-helix category of the specified bifur_hbond at the specified index
-optional<helix_category> cath::sec::detail::four_helix_cat(const bifur_hbond &arg_bifur_hbond, ///< The bifur_hbond to query
-                                                           const size_t      &arg_index        ///< The index of the bifur_hbond
-                                                           ) {
-	constexpr size_t IDX_OFFSET = 4;
-	const bool bonded_to_later   = is_bonded_to( arg_bifur_hbond.get_bound_pair_for_this_co(), arg_index + IDX_OFFSET );
-	const bool bonded_to_earlier = ( arg_index >= IDX_OFFSET
+/// \brief Get the n-helix category of the specified bifur_hbond at the specified index
+optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond &arg_bifur_hbond, ///< The bifur_hbond to query
+                                                        const size_t      &arg_index,       ///< The index of the bifur_hbond
+                                                        const size_t      &arg_helix_num    ///< "n", the difference between bonded residues
+                                                        ) {
+	const bool bonded_to_later   = is_bonded_to( arg_bifur_hbond.get_bound_pair_for_this_co(), arg_index + arg_helix_num );
+	const bool bonded_to_earlier = ( arg_index >= arg_helix_num
 	                               &&
-	                               is_bonded_to( arg_bifur_hbond.get_bound_pair_for_this_nh(), arg_index - IDX_OFFSET ) );
+	                               is_bonded_to( arg_bifur_hbond.get_bound_pair_for_this_nh(), arg_index - arg_helix_num ) );
 
 	if ( bonded_to_later ) {
 		return { bonded_to_earlier ? helix_category::BONDED_TO_BOTH : helix_category::BONDED_TO_LATER_ONLY };
@@ -172,27 +205,28 @@ optional<helix_category> cath::sec::detail::four_helix_cat(const bifur_hbond &ar
 }
 
 /// \brief Get the four-helix category of the bifur_hbond at the specified index of the specified bifur_hbond_list
-optional<helix_category> cath::sec::detail::four_helix_cat(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
-                                                           const size_t           &arg_index             ///< The index of the bifur_hbond in question
-                                                           ) {
-	return four_helix_cat( arg_bifur_hbond_list[ arg_index ], arg_index );
+optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                                        const size_t           &arg_index,            ///< The index of the bifur_hbond in question
+                                                        const size_t           &arg_helix_num         ///< "n", the difference between bonded residues
+                                                        ) {
+	return n_helix_cat( arg_bifur_hbond_list[ arg_index ], arg_index, arg_helix_num );
 }
 
 /// \brief Return whether the residue at the specified index is within a four-helix according to the specified bifur_hbond_list
-bool cath::sec::detail::is_four_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
-                                      const size_t           &arg_index             ///< The index of the residue in question
-                                      ) {
-	constexpr size_t IDX_OFFSET = 4_z;
-	for (const size_t &second_index : irange( max( IDX_OFFSET, arg_index ) - ( IDX_OFFSET - 1_z ), arg_index + 1_z ) | reversed ) {
-		const auto first_cat  = four_helix_cat( arg_bifur_hbond_list, second_index - 1 );
-		const auto second_cat = four_helix_cat( arg_bifur_hbond_list, second_index     );
+bool cath::sec::detail::is_n_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                   const size_t           &arg_index,            ///< The index of the residue in question
+                                   const size_t           &arg_helix_num         ///< "n", the difference between bonded residues
+                                   ) {
+	for (const size_t &second_index : irange( max( arg_helix_num, arg_index ) - ( arg_helix_num - 1_z ), arg_index + 1_z ) | reversed ) {
+		const auto first_cat  = n_helix_cat( arg_bifur_hbond_list, second_index - 1, arg_helix_num );
+		const auto second_cat = n_helix_cat( arg_bifur_hbond_list, second_index,     arg_helix_num );
 		if ( first_cat && is_bonded_to_later( *first_cat ) && second_cat && is_bonded_to_later( *second_cat ) ) {
 			return true;
 		}
 	}
 	return false;
 	// // Grab the helix_category of the specified index in the specified bifur_hbond_list
-	// const auto fhc = four_helix_cat( arg_bifur_hbond_list, arg_index );
+	// const auto fhc = n_helix_cat( arg_bifur_hbond_list, arg_index );
 	// if ( fhc ) {
 	// 	// If bonded to both, then true
 	// 	if ( *fhc == helix_category::BONDED_TO_BOTH ) {
@@ -200,14 +234,14 @@ bool cath::sec::detail::is_four_helix(const bifur_hbond_list &arg_bifur_hbond_li
 	// 	}
 	// 	// If bonded to later then true if followed by another that's bonded to later
 	// 	else if ( *fhc == helix_category::BONDED_TO_LATER_ONLY && arg_index > 0 ) {
-	// 		const auto prev_cat = four_helix_cat( arg_bifur_hbond_list, arg_index - 1 );
+	// 		const auto prev_cat = n_helix_cat( arg_bifur_hbond_list, arg_index - 1 );
 	// 		if ( prev_cat && ( *prev_cat == *fhc || *prev_cat == helix_category::BONDED_TO_BOTH ) ) {
 	// 			return true;
 	// 		}
 	// 	}
 	// 	// If bonded to earlier then true if preceded by another that's bonded to earlier
 	// 	else if ( *fhc == helix_category::BONDED_TO_EARLIER_ONLY && arg_index + 1 < arg_bifur_hbond_list.size() ) {
-	// 		const auto next_cat = four_helix_cat( arg_bifur_hbond_list, arg_index + 1 );
+	// 		const auto next_cat = n_helix_cat( arg_bifur_hbond_list, arg_index + 1 );
 	// 		if ( next_cat && ( *next_cat == *fhc || *next_cat == helix_category::BONDED_TO_BOTH ) ) {
 	// 			return true;
 	// 		}
@@ -235,7 +269,7 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_to_src(const b
                                                                          ) {
 	return make_optional(
 		(
-			arg_src_index != arg_dest_index
+			difference( arg_src_index, arg_dest_index ) >= sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE
 			&&
 			beta_index_in_range( arg_bifur_hbond_list, arg_src_index  )
 			&&
@@ -257,7 +291,7 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_straddling_src
                                                                                  ) {
 	return make_optional(
 		(
-			arg_src_index != arg_dest_index
+			difference( arg_src_index, arg_dest_index ) >= sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE
 			&&
 			beta_index_in_range( arg_bifur_hbond_list, arg_src_index  )
 			&&
@@ -279,7 +313,7 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_to_src(con
                                                                              ) {
 	return make_optional(
 		(
-			arg_src_index != arg_dest_index
+			difference( arg_src_index, arg_dest_index ) >= sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE
 			&&
 			arg_src_index  < arg_bifur_hbond_list.size()
 			&&
@@ -301,7 +335,7 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_straddling
                                                                                      ) {
 	return make_optional(
 		(
-			arg_src_index != arg_dest_index
+			difference( arg_src_index, arg_dest_index ) >= sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE
 			&&
 			beta_index_in_range( arg_bifur_hbond_list, arg_src_index  )
 			&&
@@ -421,9 +455,9 @@ bool cath::sec::detail::is_beta_bulge(const beta_bridge &arg_bridge_1, ///< The 
 	return (
 		arg_bridge_1.type == arg_bridge_2.type
 		&&
-		clamp( src_index_diff,  1, 2 ) == src_index_diff
+		clamp( src_index_diff,  1, sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE ) == src_index_diff
 		&&
-		clamp( dest_index_diff, 1, 5 ) == dest_index_diff
+		clamp( dest_index_diff, 1, sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST   ) == dest_index_diff
 		&&
 		src_index_diff != dest_index_diff
 		&&
@@ -442,30 +476,78 @@ void cath::sec::detail::add_beta_bulge(sec_struc_type_vec &arg_secs, ///< The ve
                                        const size_t       &arg_from, ///< The index of the residue at one end of the bulge
                                        const size_t       &arg_to    ///< The index of the residue at the other end of the bulge
                                        ) {
-	for (const size_t &x : irange( min( arg_from, arg_to ), max( arg_from, arg_to ) ) ) {
+	for (const size_t &x : irange( min( arg_from, arg_to ), max( arg_from, arg_to ) + 1_z ) ) {
 		arg_secs[ x ] = sec_struc_type::BETA_STRAND;
 	}
+}
+
+/// \brief Return whether the two specified beta bridges are consecutive bridges in a beta sheet
+///        (assuming the first's residue immediately follows the second's)
+bool cath::sec::detail::are_consecutive_bridges_in_sheet(const beta_bridge &arg_beta_bridge_1, ///< The first  bridge to query
+                                                         const beta_bridge &arg_beta_bridge_2  ///< The second bridge to query
+                                                         ) {
+	return (
+		( arg_beta_bridge_1.type == arg_beta_bridge_2.type )
+		&&
+		( arg_beta_bridge_1.type != beta_bridge_type::PARALLEL      || arg_beta_bridge_1.partner_idx < arg_beta_bridge_2.partner_idx )
+		&&
+		( arg_beta_bridge_1.type != beta_bridge_type::ANTI_PARALLEL || arg_beta_bridge_1.partner_idx > arg_beta_bridge_2.partner_idx )
+		&&
+		( difference( arg_beta_bridge_1.partner_idx, arg_beta_bridge_2.partner_idx ) == 1 )
+	);
+}
+
+/// \brief Set the contexts for the specified beta-bridges
+void cath::sec::detail::set_bridges_contexts(beta_bridge_vec_vec &arg_beta_bridges ///< The beta-bridges to update
+                                             ) {
+	for (const size_t &beta_bridges_ctr : irange( 1_z, max( 2_z, arg_beta_bridges.size() ) - 1_z ) ) {
+		const beta_bridge_vec &prev_res_bridges = arg_beta_bridges[ beta_bridges_ctr - 1 ];
+		beta_bridge_vec       &this_res_bridges = arg_beta_bridges[ beta_bridges_ctr     ];
+		const beta_bridge_vec &next_res_bridges = arg_beta_bridges[ beta_bridges_ctr + 1 ];
+
+		for (beta_bridge &this_res_bridge : this_res_bridges) {
+			const bool has_neighbour_bridge = (
+				any_of( prev_res_bridges, [&] (const beta_bridge &prev_res_bridge) {
+					return are_consecutive_bridges_in_sheet( prev_res_bridge, this_res_bridge );
+				} )
+				||
+				any_of( next_res_bridges, [&] (const beta_bridge &next_res_bridge) {
+					return are_consecutive_bridges_in_sheet( this_res_bridge, next_res_bridge );
+				} )
+			);
+
+			this_res_bridge.context = has_neighbour_bridge ? beta_bridge_context::IN_SHEET
+			                                               : beta_bridge_context::LONE_BRIDGE;
+		}
+	}
+}
+
+/// \brief Set the contexts for a copy of the specified beta-bridges and return the copy
+beta_bridge_vec_vec cath::sec::detail::set_bridges_contexts_copy(beta_bridge_vec_vec arg_beta_bridges ///< The original beta-bridges
+                                                                 ) {
+	set_bridges_contexts( arg_beta_bridges );
+	return arg_beta_bridges;
 }
 
 /// \brief Calculate the sec_struc_type values for the specified bifur_hbond_list
 ///
 /// \relates bifur_hbond_list
-sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_hbond_list ///< The bifur_hbond_list to query
+sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_hbond_list_raw ///< The bifur_hbond_list to query
                                               ) {
-	const auto copy = remove_not_bondy_enough_copy( arg_bifur_hbond_list );
+	const auto arg_bifur_hbond_list = remove_not_bondy_enough_copy( arg_bifur_hbond_list_raw );
 
-	const auto beta_bridges = transform_build<vector<beta_bridge_vec>>(
-		irange( 0_z, copy.size() ),
+	const auto beta_bridges = set_bridges_contexts_copy( transform_build<beta_bridge_vec_vec>(
+		irange( 0_z, arg_bifur_hbond_list.size() ),
 		[&] (const size_t &x) {
-			return has_beta_bridge( copy, x );
+			return has_beta_bridge( arg_bifur_hbond_list, x );
 		}
-	);
+	) );
 
 	// for (const size_t &beta_bridges_ctr : irange( 0_z, beta_bridges.size() ) ) {
 	// 	std::cerr << beta_bridges_ctr << "\t" << join ( beta_bridges[ beta_bridges_ctr ] | lexical_casted<string>(), ", " ) << "\n";
 	// }
 
-	sec_struc_type_vec results( copy.size(), sec_struc_type::COIL );
+	sec_struc_type_vec results( arg_bifur_hbond_list.size(), sec_struc_type::COIL );
 	for (const size_t &beta_bridge_idx_1 : irange( 0_z, beta_bridges.size() ) ) {
 		for (const size_t &beta_bridge_idx_2 : irange( beta_bridge_idx_1 + 1, min( beta_bridges.size(), beta_bridge_idx_1 + 3 ) ) ) {
 			for (const auto &bridge_1 : beta_bridges[ beta_bridge_idx_1 ] ) {
@@ -481,25 +563,17 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 		}
 	}
 
-	
-	for (const size_t &bifur_bond_ctr : irange( 0_z, copy.size() ) ) {
-		// std::cerr << bifur_bond_ctr << "\t" << copy [ bifur_bond_ctr ] << "\n";
+	// Label the residues
+	for (const size_t &bifur_bond_ctr : irange( 0_z, arg_bifur_hbond_list.size() ) ) {
+		// std::cerr << bifur_bond_ctr << "\t" << arg_bifur_hbond_list [ bifur_bond_ctr ] << "\n";
 
-		if ( is_four_helix( copy, bifur_bond_ctr ) ) {
+		// If this residue is part of a 4-helix (and not a 5-helix), label with alpha-helix
+		if ( is_n_helix( arg_bifur_hbond_list, bifur_bond_ctr, 4 ) && ! is_n_helix( arg_bifur_hbond_list, bifur_bond_ctr, 5 ) ) {
 			results[ bifur_bond_ctr ] = sec_struc_type::ALPHA_HELIX;
 		}
-		if ( ! beta_bridges[ bifur_bond_ctr ].empty() ) {
+		// If this residue has any beta-bridges that are in beta-sheets, label with beta-strand
+		if ( any_of( beta_bridges[ bifur_bond_ctr ], [] (const beta_bridge &x) { return x.context == beta_bridge_context::IN_SHEET; } ) ) {
 			results[ bifur_bond_ctr ] = sec_struc_type::BETA_STRAND;
-		}
-	}
-
-	// Remove single-residue beta-bridge
-	for (const size_t &bifur_bond_ctr : irange( 1_z, max( 2_z, copy.size() ) - 1_z ) ) {
-		const bool prev_is_strand = results[ bifur_bond_ctr - 1 ] == sec_struc_type::BETA_STRAND;
-		const bool this_is_strand = results[ bifur_bond_ctr     ] == sec_struc_type::BETA_STRAND;
-		const bool next_is_strand = results[ bifur_bond_ctr + 1 ] == sec_struc_type::BETA_STRAND;
-		if ( this_is_strand && ! prev_is_strand && ! next_is_strand ) {
-			results[ bifur_bond_ctr ] = sec_struc_type::COIL;
 		}
 	}
 
