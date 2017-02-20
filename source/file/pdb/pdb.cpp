@@ -625,7 +625,7 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 	//
 	// It isn't good enough to check pairs of consecutive indices because
 	// this should replicate DSSP and that requires checking between pairs of
-	// consecutive *non-skipped* residues (stradding any gaps in indices where necessary)
+	// consecutive *non-skipped* residues (straddling any gaps in indices where necessary)
 	const auto non_skipped_residues_indices = irange( 0_z, num_residues )
 		| filtered( [&] (const size_t &x) {
 			return (

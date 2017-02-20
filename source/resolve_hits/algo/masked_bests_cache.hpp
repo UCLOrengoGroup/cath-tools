@@ -83,7 +83,7 @@ namespace cath {
 				}
 
 				// If the stop point is *strictly* after the previously handled segment's stop, add a record for the gap
-				// (this happens in all cases except those where there is a mask segment stopping-at or stradding arg_arrow)
+				// (this happens in all cases except those where there is a mask segment stopping-at or straddling arg_arrow)
 				if ( arg_arrow > prev_stop ) {
 					results.emplace_back( prev_stop, arg_arrow );
 				}

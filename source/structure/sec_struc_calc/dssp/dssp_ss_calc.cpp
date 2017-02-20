@@ -191,7 +191,7 @@ bool cath::sec::detail::is_four_helix(const bifur_hbond_list &arg_bifur_hbond_li
 		}
 	}
 	return false;
-	// // Grab the helix_category of the specifified index in the specified bifur_hbond_list
+	// // Grab the helix_category of the specified index in the specified bifur_hbond_list
 	// const auto fhc = four_helix_cat( arg_bifur_hbond_list, arg_index );
 	// if ( fhc ) {
 	// 	// If bonded to both, then true
@@ -250,7 +250,7 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_to_src(const b
 }
 
 /// \brief Return whether there are parallel-beta-bridge bonds between the specified indices
-///        that bond to the residues stradding the source residue
+///        that bond to the residues straddling the source residue
 beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_straddling_src(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
                                                                                  const size_t           &arg_src_index,        ///< The index of the source residue to query
                                                                                  const size_t           &arg_dest_index        ///< The index of the destination residue to query
@@ -294,7 +294,7 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_to_src(con
 }
 
 /// \brief Return whether there are antiparallel-beta-bridge bonds between the specified indices
-///        that bond to the residues stradding the source residue
+///        that bond to the residues straddling the source residue
 beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_straddling_src(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
                                                                                      const size_t           &arg_src_index,        ///< The index of the source residue to query
                                                                                      const size_t           &arg_dest_index        ///< The index of the destination residue to query
@@ -510,7 +510,7 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 ///
 /// \relates pdb
 sec_struc_type_vec cath::sec::calc_sec_strucs_of_pdb__recalc_backbone_residues(const pdb             &arg_pdb,   ///< The pdb to query
-                                                                               const ostream_ref_opt &arg_stderr ///< An optional referece to an ostream to which any logging should be performed
+                                                                               const ostream_ref_opt &arg_stderr ///< An optional reference to an ostream to which any logging should be performed
                                                                                ) {
 	return calc_sec_strucs( dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_residues(
 		arg_pdb,
