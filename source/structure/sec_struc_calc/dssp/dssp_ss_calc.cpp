@@ -279,7 +279,7 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_to_src(const b
 			&&
 			is_bonded_to( arg_bifur_hbond_list[ arg_src_index     ].get_bound_pair_for_this_co(), arg_dest_index + 1 )
 		),
-		beta_bridge{ arg_dest_index, beta_bridge_type::PARALLEL }
+		beta_bridge{ arg_dest_index, beta_bridge_type::PARALLEL, beta_bridge_context::LONE_BRIDGE }
 	);
 }
 
@@ -301,7 +301,7 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_straddling_src
 			&&
 			is_bonded_to( arg_bifur_hbond_list[ arg_src_index + 1 ].get_bound_pair_for_this_nh(), arg_dest_index    )
 		),
-		beta_bridge{ arg_dest_index, beta_bridge_type::PARALLEL }
+		beta_bridge{ arg_dest_index, beta_bridge_type::PARALLEL, beta_bridge_context::LONE_BRIDGE }
 	);
 }
 
@@ -323,7 +323,7 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_to_src(con
 			&&
 			is_bonded_to( arg_bifur_hbond_list[ arg_src_index     ].get_bound_pair_for_this_co(), arg_dest_index     )
 		),
-		beta_bridge{ arg_dest_index, beta_bridge_type::ANTI_PARALLEL }
+		beta_bridge{ arg_dest_index, beta_bridge_type::ANTI_PARALLEL, beta_bridge_context::LONE_BRIDGE }
 	);
 }
 
@@ -345,7 +345,7 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_straddling
 			&&
 			is_bonded_to( arg_bifur_hbond_list[ arg_src_index + 1 ].get_bound_pair_for_this_nh(), arg_dest_index - 1 )
 		),
-		beta_bridge{ arg_dest_index, beta_bridge_type::ANTI_PARALLEL }
+		beta_bridge{ arg_dest_index, beta_bridge_type::ANTI_PARALLEL, beta_bridge_context::LONE_BRIDGE }
 	);
 }
 
