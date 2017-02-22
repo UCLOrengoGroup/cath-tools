@@ -63,7 +63,7 @@ namespace cath {
 			                                const path &arg_pdb_file   ///< The PDB file to check
 			                                ) {
 				const auto parsed_pdb   = read_pdb_file( arg_pdb_file );
-				const auto the_protein  = protein_from_dssp_and_pdb( read_dssp_file( arg_dssp_file ), parsed_pdb );
+				const auto the_protein  = protein_from_dssp_and_pdb( read_dssp_file( arg_dssp_file ), parsed_pdb, dssp_skip_policy::SKIP__BREAK_ANGLES );
 				const auto expected_sss = get_sec_strucs( the_protein );
 
 				const auto got_sss      = calc_sec_strucs_of_pdb__recalc_backbone_residues( parsed_pdb );
@@ -138,7 +138,18 @@ BOOST_AUTO_TEST_CASE(gets_correct_ss_on_example_b) {
 }
 
 
-BOOST_AUTO_TEST_SUITE(engineered_examples_beta)
+
+BOOST_AUTO_TEST_SUITE(engineered_examples)
+
+
+
+BOOST_AUTO_TEST_CASE(test_without_residues_that_dssp_ignores) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "test_without_residues_that_dssp_ignores.dssp" );
+}
+
+
+
+BOOST_AUTO_TEST_SUITE(beta)
 
 BOOST_AUTO_TEST_CASE(ok_consider_beta_bridge_bonds_from_both_sides) {
 	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "consider_beta_bridge_bonds_from_both_sides.dssp"     );
@@ -159,7 +170,8 @@ BOOST_AUTO_TEST_CASE(beta_bonded_residues_must_be_ge_3_apart) {
 BOOST_AUTO_TEST_SUITE_END()
 
 
-BOOST_AUTO_TEST_SUITE(engineered_examples_helix)
+
+BOOST_AUTO_TEST_SUITE(helix)
 
 BOOST_AUTO_TEST_CASE(check_helix_bonds_at_both_ends) {
 	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "check_helix_bonds_at_both_ends.dssp"                 );
@@ -170,6 +182,11 @@ BOOST_AUTO_TEST_CASE(not_4_helix_if_5_helix) {
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+
+
+
+BOOST_AUTO_TEST_SUITE_END()
+
 
 
 // BOOST_AUTO_TEST_SUITE(whole_dssp_directory)
