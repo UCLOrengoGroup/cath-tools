@@ -135,9 +135,14 @@ namespace cath {
 			bool is_bonded_to(const hbond_half_opt_pair &,
 			                  const size_t &);
 
-			boost::optional<helix_category> n_helix_cat(const bifur_hbond &,
-			                                            const size_t &,
-			                                            const size_t & = 4);
+			bool are_nh_to_co_bonded(const bifur_hbond_list &,
+			                         const size_t &,
+			                         const size_t &);
+
+			bool are_co_to_nh_bonded(const bifur_hbond_list &,
+			                         const size_t &,
+			                         const size_t &);
+
 			boost::optional<helix_category> n_helix_cat(const bifur_hbond_list &,
 			                                            const size_t &,
 			                                            const size_t & = 4);

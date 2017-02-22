@@ -187,15 +187,51 @@ bool cath::sec::detail::is_bonded_to(const hbond_half_opt_pair &arg_bound_pair, 
 	);
 }
 
+/// \brief Return whether there is an adequate bond between the NH of the residue at the first specified
+///        index and the CO of the residue at the second
+///
+/// This will accept the bond being found at either side alone
+bool cath::sec::detail::are_nh_to_co_bonded(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                            const size_t           &arg_nh_res_idx,       ///< The index of the residue at the NH side of the required bond
+                                            const size_t           &arg_co_res_idx        ///< The index of the residue at the CO side of the required bond
+                                            ) {
+	return (
+		is_bonded_to( arg_bifur_hbond_list[ arg_nh_res_idx ].get_bound_pair_for_this_nh(), arg_co_res_idx )
+		||
+		is_bonded_to( arg_bifur_hbond_list[ arg_co_res_idx ].get_bound_pair_for_this_co(), arg_nh_res_idx )
+	);
+}
+
+/// \brief Return whether there is an adequate bond between the CO of the residue at the first specified
+///        index and the NH of the residue at the second
+///
+/// This will accept the bond being found at either side alone
+bool cath::sec::detail::are_co_to_nh_bonded(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                            const size_t           &arg_co_res_idx,       ///< The index of the residue at the CO side of the required bond
+                                            const size_t           &arg_nh_res_idx        ///< The index of the residue at the NH side of the required bond
+                                            ) {
+	return (
+		is_bonded_to( arg_bifur_hbond_list[ arg_co_res_idx ].get_bound_pair_for_this_co(), arg_nh_res_idx )
+		||
+		is_bonded_to( arg_bifur_hbond_list[ arg_nh_res_idx ].get_bound_pair_for_this_nh(), arg_co_res_idx )
+	);
+}
+
 /// \brief Get the n-helix category of the specified bifur_hbond at the specified index
-optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond &arg_bifur_hbond, ///< The bifur_hbond to query
-                                                        const size_t      &arg_index,       ///< The index of the bifur_hbond
-                                                        const size_t      &arg_helix_num    ///< "n", the difference between bonded residues
+optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond to query
+                                                        const size_t           &arg_index,            ///< The index of the bifur_hbond
+                                                        const size_t           &arg_helix_num         ///< "n", the difference between bonded residues
                                                         ) {
-	const bool bonded_to_later   = is_bonded_to( arg_bifur_hbond.get_bound_pair_for_this_co(), arg_index + arg_helix_num );
-	const bool bonded_to_earlier = ( arg_index >= arg_helix_num
-	                               &&
-	                               is_bonded_to( arg_bifur_hbond.get_bound_pair_for_this_nh(), arg_index - arg_helix_num ) );
+	const bool bonded_to_later   = (
+		arg_index + arg_helix_num < arg_bifur_hbond_list.size()
+		&&
+		are_co_to_nh_bonded( arg_bifur_hbond_list, arg_index,                 arg_index + arg_helix_num )
+	);
+	const bool bonded_to_earlier = (
+		arg_index >= arg_helix_num
+		&&
+		are_co_to_nh_bonded( arg_bifur_hbond_list, arg_index - arg_helix_num, arg_index                 )
+	);
 
 	if ( bonded_to_later ) {
 		return { bonded_to_earlier ? helix_category::BONDED_TO_BOTH : helix_category::BONDED_TO_LATER_ONLY };
@@ -203,14 +239,6 @@ optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond &arg_b
 	else {
 		return make_optional( bonded_to_earlier, helix_category::BONDED_TO_EARLIER_ONLY );
 	}
-}
-
-/// \brief Get the four-helix category of the bifur_hbond at the specified index of the specified bifur_hbond_list
-optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
-                                                        const size_t           &arg_index,            ///< The index of the bifur_hbond in question
-                                                        const size_t           &arg_helix_num         ///< "n", the difference between bonded residues
-                                                        ) {
-	return n_helix_cat( arg_bifur_hbond_list[ arg_index ], arg_index, arg_helix_num );
 }
 
 /// \brief Return whether the residue at the specified index is within a four-helix according to the specified bifur_hbond_list
@@ -276,9 +304,9 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_to_src(const b
 			&&
 			beta_index_in_range( arg_bifur_hbond_list, arg_dest_index )
 			&&
-			is_bonded_to( arg_bifur_hbond_list[ arg_src_index     ].get_bound_pair_for_this_nh(), arg_dest_index - 1 )
+			are_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index,    arg_dest_index - 1 )
 			&&
-			is_bonded_to( arg_bifur_hbond_list[ arg_src_index     ].get_bound_pair_for_this_co(), arg_dest_index + 1 )
+			are_co_to_nh_bonded( arg_bifur_hbond_list, arg_src_index,    arg_dest_index + 1 )
 		),
 		beta_bridge{ arg_dest_index, beta_bridge_type::PARALLEL }
 	);
@@ -298,9 +326,9 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_straddling_src
 			&&
 			beta_index_in_range( arg_bifur_hbond_list, arg_dest_index )
 			&&
-			is_bonded_to( arg_bifur_hbond_list[ arg_src_index - 1 ].get_bound_pair_for_this_co(), arg_dest_index    )
+			are_co_to_nh_bonded( arg_bifur_hbond_list, arg_src_index - 1, arg_dest_index    )
 			&&
-			is_bonded_to( arg_bifur_hbond_list[ arg_src_index + 1 ].get_bound_pair_for_this_nh(), arg_dest_index    )
+			are_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index + 1, arg_dest_index    )
 		),
 		beta_bridge{ arg_dest_index, beta_bridge_type::PARALLEL }
 	);
@@ -316,13 +344,13 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_to_src(con
 		(
 			difference( arg_src_index, arg_dest_index ) >= sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE
 			&&
-			arg_src_index  < arg_bifur_hbond_list.size()
+			arg_src_index  + 1 < arg_bifur_hbond_list.size()
 			&&
-			arg_dest_index < arg_bifur_hbond_list.size()
+			arg_dest_index + 1 < arg_bifur_hbond_list.size()
 			&&
-			is_bonded_to( arg_bifur_hbond_list[ arg_src_index     ].get_bound_pair_for_this_nh(), arg_dest_index     )
+			are_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index,    arg_dest_index    )
 			&&
-			is_bonded_to( arg_bifur_hbond_list[ arg_src_index     ].get_bound_pair_for_this_co(), arg_dest_index     )
+			are_co_to_nh_bonded( arg_bifur_hbond_list, arg_src_index,    arg_dest_index    )
 		),
 		beta_bridge{ arg_dest_index, beta_bridge_type::ANTI_PARALLEL }
 	);
@@ -342,9 +370,9 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_straddling
 			&&
 			beta_index_in_range( arg_bifur_hbond_list, arg_dest_index )
 			&&
-			is_bonded_to( arg_bifur_hbond_list[ arg_src_index - 1 ].get_bound_pair_for_this_co(), arg_dest_index + 1 )
+			are_co_to_nh_bonded( arg_bifur_hbond_list, arg_src_index - 1, arg_dest_index + 1 )
 			&&
-			is_bonded_to( arg_bifur_hbond_list[ arg_src_index + 1 ].get_bound_pair_for_this_nh(), arg_dest_index - 1 )
+			are_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index + 1, arg_dest_index - 1 )
 		),
 		beta_bridge{ arg_dest_index, beta_bridge_type::ANTI_PARALLEL }
 	);
@@ -370,7 +398,7 @@ beta_bridge_vec cath::sec::detail::has_parallel_beta_bridge(const bifur_hbond_li
 	const auto strdl_src_fn = [&] (const size_t &x) { cnsdr_res_fn( has_parallel_beta_bridge_bonds_straddling_src( arg_bifur_hbond_list, arg_index, x ) ); };
 
 	const auto prev_co_fn   = [&] (const auto   &x) { if ( is_bondy_enough( x )                     ) { strdl_src_fn( x->index     ); } };
-	const auto this_co_fn   = [&] (const auto   &x) { if ( is_bondy_enough( x ) && ( x->index > 1 ) ) { to_src_fn   ( x->index - 1 ); } };
+	const auto this_fn      = [&] (const auto   &x) { if ( is_bondy_enough( x ) && ( x->index > 1 ) ) { to_src_fn   ( x->index - 1 ); } };
 	const auto next_nh_fn   = [&] (const auto   &x) { if ( is_bondy_enough( x )                     ) { strdl_src_fn( x->index     ); } };
 
 	const auto &prev_co = arg_bifur_hbond_list[ arg_index - 1 ].get_bound_pair_for_this_co();
@@ -379,8 +407,8 @@ beta_bridge_vec cath::sec::detail::has_parallel_beta_bridge(const bifur_hbond_li
 
 	prev_co_fn( prev_co.first  );
 	prev_co_fn( prev_co.second );
-	this_co_fn( this_co.first  );
-	this_co_fn( this_co.second );
+	this_fn   ( this_co.first  );
+	this_fn   ( this_co.second );
 	next_nh_fn( next_nh.first  );
 	next_nh_fn( next_nh.second );
 	return results;
@@ -410,17 +438,20 @@ beta_bridge_vec cath::sec::detail::has_antiparallel_beta_bridge(const bifur_hbon
 
 	/// \todo Come GCCs all > 5.2.1, use a generic lambda here (causes ICE in GCC 5.2.1)
 	const auto prev_co_fn   = [&] (const hbond_half_opt &x) { if ( is_bondy_enough( x ) && (   x->index       > 1  ) ) { strdl_src_fn( x->index - 1 ); } };
-	const auto this_co_fn   = [&] (const hbond_half_opt &x) { if ( is_bondy_enough( x )                              ) { to_src_fn   ( x->index     ); } };
+	const auto this_fn      = [&] (const hbond_half_opt &x) { if ( is_bondy_enough( x )                              ) { to_src_fn   ( x->index     ); } };
 	const auto next_nh_fn   = [&] (const hbond_half_opt &x) { if ( is_bondy_enough( x ) && ( ( x->index + 1 ) < sz ) ) { strdl_src_fn( x->index + 1 ); } };
 
 	const auto &prev_co = arg_bifur_hbond_list[ arg_index - 1 ].get_bound_pair_for_this_co();
+	const auto &this_nh = arg_bifur_hbond_list[ arg_index     ].get_bound_pair_for_this_nh();
 	const auto &this_co = arg_bifur_hbond_list[ arg_index     ].get_bound_pair_for_this_co();
 	const auto &next_nh = arg_bifur_hbond_list[ arg_index + 1 ].get_bound_pair_for_this_nh();
 
 	prev_co_fn( prev_co.first  );
 	prev_co_fn( prev_co.second );
-	this_co_fn( this_co.first  );
-	this_co_fn( this_co.second );
+	this_fn   ( this_nh.first  );
+	this_fn   ( this_nh.second );
+	this_fn   ( this_co.first  );
+	this_fn   ( this_co.second );
 	next_nh_fn( next_nh.first  );
 	next_nh_fn( next_nh.second );
 	return results;
