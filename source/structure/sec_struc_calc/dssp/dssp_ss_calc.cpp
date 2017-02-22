@@ -62,6 +62,7 @@ using std::vector;
 constexpr size_t sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE;
 constexpr size_t sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE;
 constexpr size_t sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST;
+constexpr size_t sec_struc_consts::DEFAULT_HELIX_N;
 constexpr beta_bridge_context beta_bridge::DEFAULT_CONTEXT;
 
 /// \brief Generate a string describing the specified beta_bridge_type
@@ -242,41 +243,43 @@ optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond_list &
 }
 
 /// \brief Return whether the residue at the specified index is within a four-helix according to the specified bifur_hbond_list
-bool cath::sec::detail::is_n_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
-                                   const size_t           &arg_index,            ///< The index of the residue in question
-                                   const size_t           &arg_helix_num         ///< "n", the difference between bonded residues
-                                   ) {
-	for (const size_t &second_index : irange( max( arg_helix_num, arg_index ) - ( arg_helix_num - 1_z ), arg_index + 1_z ) | reversed ) {
-		const auto first_cat  = n_helix_cat( arg_bifur_hbond_list, second_index - 1, arg_helix_num );
-		const auto second_cat = n_helix_cat( arg_bifur_hbond_list, second_index,     arg_helix_num );
-		if ( first_cat && is_bonded_to_later( *first_cat ) && second_cat && is_bonded_to_later( *second_cat ) ) {
-			return true;
-		}
+bool cath::sec::detail::starts_n_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                       const size_t           &arg_index,            ///< The index of the residue in question
+                                       const size_t           &arg_helix_num         ///< "n", the difference between bonded residues
+                                       ) {
+	if ( arg_index == 0 ) {
+		return false;
 	}
-	return false;
-	// // Grab the helix_category of the specified index in the specified bifur_hbond_list
-	// const auto fhc = n_helix_cat( arg_bifur_hbond_list, arg_index );
-	// if ( fhc ) {
-	// 	// If bonded to both, then true
-	// 	if ( *fhc == helix_category::BONDED_TO_BOTH ) {
-	// 		return true;
-	// 	}
-	// 	// If bonded to later then true if followed by another that's bonded to later
-	// 	else if ( *fhc == helix_category::BONDED_TO_LATER_ONLY && arg_index > 0 ) {
-	// 		const auto prev_cat = n_helix_cat( arg_bifur_hbond_list, arg_index - 1 );
-	// 		if ( prev_cat && ( *prev_cat == *fhc || *prev_cat == helix_category::BONDED_TO_BOTH ) ) {
-	// 			return true;
-	// 		}
-	// 	}
-	// 	// If bonded to earlier then true if preceded by another that's bonded to earlier
-	// 	else if ( *fhc == helix_category::BONDED_TO_EARLIER_ONLY && arg_index + 1 < arg_bifur_hbond_list.size() ) {
-	// 		const auto next_cat = n_helix_cat( arg_bifur_hbond_list, arg_index + 1 );
-	// 		if ( next_cat && ( *next_cat == *fhc || *next_cat == helix_category::BONDED_TO_BOTH ) ) {
-	// 			return true;
-	// 		}
-	// 	}
-	// }
-	// return false;
+	const auto first_cat  = n_helix_cat( arg_bifur_hbond_list, arg_index - 1, arg_helix_num );
+	const auto second_cat = n_helix_cat( arg_bifur_hbond_list, arg_index,     arg_helix_num );
+	return ( first_cat && is_bonded_to_later( *first_cat ) && second_cat && is_bonded_to_later( *second_cat ) );
+}
+
+/// \brief Return whether the residue at the specified index is within a four-helix but not five-helix according to the specified bifur_hbond_list
+bool cath::sec::detail::is_in_4_helix_not_costarting_with_5_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                                                  const size_t           &arg_index             ///< The index of the residue in question
+                                                                  ) {
+	return any_of(
+		irange( max( 4_z, arg_index ) - ( 3_z ), arg_index + 1_z ) | reversed,
+		[&] (const size_t &x) {
+			return (
+				  starts_n_helix( arg_bifur_hbond_list, x, 4_z )
+				&&
+				! starts_n_helix( arg_bifur_hbond_list, x, 5_z )
+			);
+		}
+	);
+}
+
+/// \brief Return whether the residue at the specified index is within a four-helix according to the specified bifur_hbond_list
+bool cath::sec::detail::is_in_n_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                      const size_t           &arg_index,            ///< The index of the residue in question
+                                      const size_t           &arg_helix_num         ///< "n", the difference between bonded residues
+                                      ) {
+	return any_of(
+		irange( max( arg_helix_num, arg_index ) - ( arg_helix_num - 1_z ), arg_index + 1_z ) | reversed,
+		[&] (const size_t &x) { return starts_n_helix( arg_bifur_hbond_list, x, arg_helix_num ); }
+	);
 }
 
 /// \brief Return whether the specified index is within range to be the middle of a beta triplet
@@ -601,7 +604,7 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 		// std::cerr << bifur_bond_ctr << "\t" << arg_bifur_hbond_list [ bifur_bond_ctr ] << "\n";
 
 		// If this residue is part of a 4-helix (and not a 5-helix), label with alpha-helix
-		if ( is_n_helix( arg_bifur_hbond_list, bifur_bond_ctr, 4 ) && ! is_n_helix( arg_bifur_hbond_list, bifur_bond_ctr, 5 ) ) {
+		if ( is_in_4_helix_not_costarting_with_5_helix( arg_bifur_hbond_list, bifur_bond_ctr ) ) {
 			results[ bifur_bond_ctr ] = sec_struc_type::ALPHA_HELIX;
 		}
 		// If this residue has any beta-bridges that are in beta-sheets, label with beta-strand

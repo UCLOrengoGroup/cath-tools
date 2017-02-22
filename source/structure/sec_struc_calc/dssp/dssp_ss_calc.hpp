@@ -53,6 +53,9 @@ namespace cath {
 				///        be considered to enclose a beta-bulge
 				static constexpr size_t BETA_BULGE_MAX_DIFF_DEST               = 5;
 
+				/// \brief The default type of helix
+				static constexpr size_t DEFAULT_HELIX_N                        = 4;
+
 			};
 
 			/// \brief Represent the type of a beta-bridge
@@ -145,10 +148,19 @@ namespace cath {
 
 			boost::optional<helix_category> n_helix_cat(const bifur_hbond_list &,
 			                                            const size_t &,
-			                                            const size_t & = 4);
-			bool is_n_helix(const bifur_hbond_list &,
-			                const size_t &,
-			                const size_t & = 4);
+			                                            const size_t & = sec_struc_consts::DEFAULT_HELIX_N);
+
+			bool starts_n_helix(const bifur_hbond_list &,
+			                    const size_t &,
+			                    const size_t & = sec_struc_consts::DEFAULT_HELIX_N);
+
+			bool is_in_4_helix_not_costarting_with_5_helix(const bifur_hbond_list &,
+			                                               const size_t &);
+
+			bool is_in_n_helix(const bifur_hbond_list &,
+			                   const size_t &,
+			                   const size_t & = sec_struc_consts::DEFAULT_HELIX_N);
+
 			bool beta_index_in_range(const bifur_hbond_list &,
 			                         const size_t &);
 			beta_bridge_opt has_parallel_beta_bridge_bonds_to_src(const bifur_hbond_list &,
