@@ -212,9 +212,16 @@ namespace cath {
 
 			beta_bridge_vec_vec set_bridges_contexts_copy(beta_bridge_vec_vec);
 
+			void remove_bridges_to_chain_break_residues(beta_bridge_vec_vec &,
+			                                            const size_vec &);
+
+			beta_bridge_vec_vec remove_bridges_to_chain_break_residues_copy(beta_bridge_vec_vec,
+			                                                                const size_vec &);
+
 		} // namespace detail
 
-		sec_struc_type_vec calc_sec_strucs(const bifur_hbond_list &);
+		sec_struc_type_vec calc_sec_strucs(const bifur_hbond_list &,
+		                                   const size_vec &);
 
 		sec_struc_type_vec calc_sec_strucs_of_pdb__recalc_backbone_residues(const file::pdb &,
 		                                                                    const ostream_ref_opt & = boost::none);

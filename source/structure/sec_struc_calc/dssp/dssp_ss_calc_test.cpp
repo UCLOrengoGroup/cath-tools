@@ -167,6 +167,10 @@ BOOST_AUTO_TEST_CASE(beta_bonded_residues_must_be_ge_3_apart) {
 	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bonded_residues_must_be_ge_3_apart.dssp"        );
 }
 
+BOOST_AUTO_TEST_CASE(do_not_beta_bridge_to_side_of_chain_break) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "do_not_beta_bridge_to_side_of_chain_break.dssp"      );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 

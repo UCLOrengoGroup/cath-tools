@@ -107,6 +107,8 @@ namespace cath {
 
 		amino_acid_vec get_amino_acid_list(const pdb &);
 
+		size_vec indices_of_residues_following_chain_breaks(const pdb &);
+
 		std::ostream & operator<<(std::ostream &,
 		                          const pdb &);
 

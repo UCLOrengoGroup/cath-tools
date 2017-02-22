@@ -26,6 +26,8 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/format.hpp>
 #include <boost/optional/optional_io.hpp>
+#include <boost/range/algorithm/binary_search.hpp>
+#include <boost/range/algorithm/remove_if.hpp>
 #include <boost/range/irange.hpp>
 
 #include "common/algorithm/append.hpp"
@@ -55,6 +57,8 @@ using boost::irange;
 using boost::make_optional;
 using boost::none;
 using boost::optional;
+using boost::range::binary_search;
+using boost::remove_if;
 using std::max;
 using std::min;
 using std::ostream;
@@ -602,18 +606,70 @@ beta_bridge_vec_vec cath::sec::detail::set_bridges_contexts_copy(beta_bridge_vec
 	return arg_beta_bridges;
 }
 
+/// \brief Remove any of the specified bridges to/from any residues on either side of a chain break, according to the specified list
+///
+/// \pre `arg_break_indices` must be sorted in ascending order
+void cath::sec::detail::remove_bridges_to_chain_break_residues(beta_bridge_vec_vec &arg_beta_bridges, ///< The original beta-bridges
+                                                               const size_vec      &arg_break_indices ///< A list of the residues that are preceded by a chain break in ascending order
+                                                               ) {
+	// For each break index, remove all lists of beta bridges on either side of the chain break
+	for (const size_t &x : arg_break_indices) {
+		arg_beta_bridges[ x                   ].clear();
+		arg_beta_bridges[ max( 1_z, x ) - 1_z ].clear();
+	}
+
+	// For each residue's worth of bridges...
+	for (beta_bridge_vec &res_bridges : arg_beta_bridges) {
+		// Remove any bridges to either side of any of the breaks
+		res_bridges.erase(
+			remove_if(
+				res_bridges,
+				[&] (const beta_bridge &x) {
+					return (
+						binary_search( arg_break_indices, x.partner_idx )
+						||
+						(
+							x.partner_idx + 1 < arg_beta_bridges.size()
+							&&
+							binary_search( arg_break_indices, x.partner_idx + 1 )
+						)
+					);
+				}
+			),
+			common::cend( res_bridges )
+		);
+	}
+}
+
+/// \brief Take a copy of the specified bridges, remove any to/from any residues on either side of a chain break, according to the specified list
+///        and return the copy
+///
+/// \pre `arg_break_indices` must be sorted in ascending order
+beta_bridge_vec_vec cath::sec::detail::remove_bridges_to_chain_break_residues_copy(beta_bridge_vec_vec  arg_beta_bridges, ///< The original beta-bridges
+                                                                                   const size_vec      &arg_break_indices ///< A list of the residues that are preceded by a chain break in ascending order
+                                                                                   ) {
+	remove_bridges_to_chain_break_residues( arg_beta_bridges, arg_break_indices );
+	return arg_beta_bridges;
+}
+
 /// \brief Calculate the sec_struc_type values for the specified bifur_hbond_list
 ///
+/// \pre `arg_break_indices` must be sorted in ascending order
+///
 /// \relates bifur_hbond_list
-sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_hbond_list_raw ///< The bifur_hbond_list to query
+sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_hbond_list_raw, ///< The bifur_hbond_list to query
+                                              const size_vec         &arg_break_indices         ///< A list of the residues that are preceded by a chain break in ascending order
                                               ) {
 	const auto arg_bifur_hbond_list = remove_not_bondy_enough_copy( arg_bifur_hbond_list_raw );
 
-	const auto beta_bridges = set_bridges_contexts_copy( transform_build<beta_bridge_vec_vec>(
-		irange( 0_z, arg_bifur_hbond_list.size() ),
-		[&] (const size_t &x) {
-			return has_beta_bridge( arg_bifur_hbond_list, x );
-		}
+	const auto beta_bridges = set_bridges_contexts_copy( remove_bridges_to_chain_break_residues_copy(
+		transform_build<beta_bridge_vec_vec>(
+			irange( 0_z, arg_bifur_hbond_list.size() ),
+			[&] (const size_t &x) {
+				return has_beta_bridge( arg_bifur_hbond_list, x );
+			}
+		),
+		arg_break_indices
 	) );
 
 	// for (const size_t &beta_bridges_ctr : irange( 0_z, beta_bridges.size() ) ) {
@@ -666,10 +722,15 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 sec_struc_type_vec cath::sec::calc_sec_strucs_of_pdb__recalc_backbone_residues(const pdb             &arg_pdb,   ///< The pdb to query
                                                                                const ostream_ref_opt &arg_stderr ///< An optional reference to an ostream to which any logging should be performed
                                                                                ) {
-	return calc_sec_strucs( dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_residues(
+	const auto backbone_pdb = backbone_complete_subset_of_pdb(
 		arg_pdb,
-		arg_stderr
-	) );
+		arg_stderr,
+		dssp_skip_res_skipping::SKIP
+	).first;
+	return calc_sec_strucs(
+		dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb( backbone_pdb ),
+		indices_of_residues_following_chain_breaks( backbone_pdb )
+	);
 }
 
 /// \brief Calculate the sec_struc_type values for the specified pdb
@@ -677,9 +738,10 @@ sec_struc_type_vec cath::sec::calc_sec_strucs_of_pdb__recalc_backbone_residues(c
 /// \relates pdb
 sec_struc_type_vec cath::sec::calc_sec_strucs_of_backbone_complete_pdb(const pdb &arg_pdb ///< The pdb to query
                                                                        ) {
-	return calc_sec_strucs( dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb(
-		arg_pdb
-	) );
+	return calc_sec_strucs(
+		dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb( arg_pdb ),
+		indices_of_residues_following_chain_breaks( arg_pdb )
+	);
 }
 
 /// \brief Calculate the sec_struc_type values for the specified protein

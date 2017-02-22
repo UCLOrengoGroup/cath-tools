@@ -550,6 +550,36 @@ amino_acid_vec cath::file::get_amino_acid_list(const pdb &arg_pdb ///< TODOCUMEN
 	return amino_acids;
 }
 
+/// \brief Calculate the (ascending) list of indices of the residues that follow a chain break in the specified PDB
+///
+/// \relates pdb
+size_vec cath::file::indices_of_residues_following_chain_breaks(const pdb &arg_pdb /// The PDB to query
+                                                                ) {
+	// The gap between consecutive residues' carbon and nitrogen atoms respectively,
+	// above which the residues are not treated as neighbours
+	constexpr double INTER_C_TO_N_DIST_FOR_NEIGHBOURS = 2.5;
+
+	return copy_build<size_vec>(
+		irange( 0_z, arg_pdb.get_num_residues() )
+			| filtered( [&] (const size_t &x) {
+				if ( x == 0 ) {
+					return false;
+				}
+				const auto &prev_res = arg_pdb.get_residue_cref_of_index__backbone_unchecked( x - 1 );
+				const auto &this_res = arg_pdb.get_residue_cref_of_index__backbone_unchecked( x     );
+				return (
+					( get_chain_label( prev_res ) != get_chain_label( this_res ) )
+					||
+					(
+						distance_between_points( get_carbon_coord( prev_res ), get_nitrogen_coord( this_res ) )
+						>
+						INTER_C_TO_N_DIST_FOR_NEIGHBOURS
+					)
+				);
+			} )
+	);
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
