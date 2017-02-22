@@ -150,12 +150,23 @@ namespace cath {
 			                                            const size_t &,
 			                                            const size_t & = sec_struc_consts::DEFAULT_HELIX_N);
 
-			bool starts_n_helix(const bifur_hbond_list &,
-			                    const size_t &,
-			                    const size_t & = sec_struc_consts::DEFAULT_HELIX_N);
+			bool is_n_helix_bonded_to_later(const bifur_hbond_list &,
+			                                const size_t &,
+			                                const size_t &);
 
-			bool is_in_4_helix_not_costarting_with_5_helix(const bifur_hbond_list &,
-			                                               const size_t &);
+			bool could_start_n_helix(const bifur_hbond_list &,
+			                         const size_t &,
+			                         const size_t & = sec_struc_consts::DEFAULT_HELIX_N);
+
+			bool starts_5_helix(const bifur_hbond_list &,
+			                    const size_t &);
+
+			bool in_5_helix(const bifur_hbond_list &,
+			                const size_t &);
+
+
+			bool is_in_4_helix_not_conflicting_with_5_helix(const bifur_hbond_list &,
+			                                                const size_t &);
 
 			bool is_in_n_helix(const bifur_hbond_list &,
 			                   const size_t &,

@@ -22,6 +22,7 @@
 
 #include <boost/algorithm/clamp.hpp>
 #include <boost/algorithm/cxx11/any_of.hpp>
+#include <boost/algorithm/cxx11/none_of.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/format.hpp>
 #include <boost/optional/optional_io.hpp>
@@ -48,6 +49,7 @@ using boost::adaptors::reversed;
 using boost::algorithm::any_of;
 using boost::algorithm::clamp;
 using boost::algorithm::join;
+using boost::algorithm::none_of;
 using boost::format;
 using boost::irange;
 using boost::make_optional;
@@ -242,32 +244,67 @@ optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond_list &
 	}
 }
 
-/// \brief Return whether the residue at the specified index is within a four-helix according to the specified bifur_hbond_list
-bool cath::sec::detail::starts_n_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
-                                       const size_t           &arg_index,            ///< The index of the residue in question
-                                       const size_t           &arg_helix_num         ///< "n", the difference between bonded residues
-                                       ) {
+/// \brief Return whether the residue at the specified is n-helix bonded to the relevant later residue
+bool cath::sec::detail::is_n_helix_bonded_to_later(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond to query
+                                                   const size_t           &arg_index,            ///< The index of the residue to query
+                                                   const size_t           &arg_helix_num         ///< "n", the difference between bonded residues
+                                                   ) {
+	const auto cat_opt = n_helix_cat( arg_bifur_hbond_list, arg_index, arg_helix_num );
+	return ( cat_opt && is_bonded_to_later( *cat_opt ) );
+}
+
+/// \brief Return whether the residue at the specified index could potentially start n-helix according to the specified bifur_hbond_list
+///        (not considering clashes with other types of helix)
+bool cath::sec::detail::could_start_n_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                            const size_t           &arg_index,            ///< The index of the residue in question
+                                            const size_t           &arg_helix_num         ///< "n", the difference between bonded residues
+                                            ) {
 	if ( arg_index == 0 ) {
 		return false;
 	}
-	const auto first_cat  = n_helix_cat( arg_bifur_hbond_list, arg_index - 1, arg_helix_num );
-	const auto second_cat = n_helix_cat( arg_bifur_hbond_list, arg_index,     arg_helix_num );
-	return ( first_cat && is_bonded_to_later( *first_cat ) && second_cat && is_bonded_to_later( *second_cat ) );
+	return (
+		is_n_helix_bonded_to_later( arg_bifur_hbond_list, arg_index - 1, arg_helix_num )
+		&&
+		is_n_helix_bonded_to_later( arg_bifur_hbond_list, arg_index,     arg_helix_num )
+	);
+}
+
+/// \brief Return whether the residue at the specified index is at the start of a 5-helix according to the specified bifur_hbond_list
+bool cath::sec::detail::starts_5_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                       const size_t           &arg_index             ///< The index of the residue in question
+                                       ) {
+	return (
+		could_start_n_helix( arg_bifur_hbond_list, arg_index, 5 )
+		&&
+		none_of(
+			irange( arg_index, arg_index + 5 ),
+			[&] (const size_t &x) { return could_start_n_helix( arg_bifur_hbond_list, x, 3 ); }
+		)
+	);
+
+}
+
+/// \brief Return whether the residue at the specified index is within a 5-helix according to the specified bifur_hbond_list
+bool cath::sec::detail::in_5_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                   const size_t           &arg_index             ///< The index of the residue in question
+                                   ) {
+	return any_of(
+		irange( max( 5_z, arg_index ) - 4_z, arg_index + 1_z ) | reversed,
+		[&] (const size_t &x) { return starts_5_helix( arg_bifur_hbond_list, x ); }
+	);
 }
 
 /// \brief Return whether the residue at the specified index is within a four-helix but not five-helix according to the specified bifur_hbond_list
-bool cath::sec::detail::is_in_4_helix_not_costarting_with_5_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
-                                                                  const size_t           &arg_index             ///< The index of the residue in question
-                                                                  ) {
-	return any_of(
-		irange( max( 4_z, arg_index ) - ( 3_z ), arg_index + 1_z ) | reversed,
-		[&] (const size_t &x) {
-			return (
-				  starts_n_helix( arg_bifur_hbond_list, x, 4_z )
-				&&
-				! starts_n_helix( arg_bifur_hbond_list, x, 5_z )
-			);
-		}
+bool cath::sec::detail::is_in_4_helix_not_conflicting_with_5_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                                                   const size_t           &arg_index             ///< The index of the residue in question
+                                                                   ) {
+	return (
+		any_of(
+			irange( max( 4_z, arg_index ) - 3_z, arg_index + 1_z ) | reversed,
+			[&] (const size_t &x) { return could_start_n_helix( arg_bifur_hbond_list, x, 4_z ); }
+		)
+		&&
+		! in_5_helix( arg_bifur_hbond_list, arg_index )
 	);
 }
 
@@ -278,7 +315,7 @@ bool cath::sec::detail::is_in_n_helix(const bifur_hbond_list &arg_bifur_hbond_li
                                       ) {
 	return any_of(
 		irange( max( arg_helix_num, arg_index ) - ( arg_helix_num - 1_z ), arg_index + 1_z ) | reversed,
-		[&] (const size_t &x) { return starts_n_helix( arg_bifur_hbond_list, x, arg_helix_num ); }
+		[&] (const size_t &x) { return could_start_n_helix( arg_bifur_hbond_list, x, arg_helix_num ); }
 	);
 }
 
@@ -601,10 +638,17 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 
 	// Label the residues
 	for (const size_t &bifur_bond_ctr : irange( 0_z, arg_bifur_hbond_list.size() ) ) {
-		// std::cerr << bifur_bond_ctr << "\t" << arg_bifur_hbond_list [ bifur_bond_ctr ] << "\n";
+		// std::cerr << bifur_bond_ctr << "\t" << arg_bifur_hbond_list [ bifur_bond_ctr ];
+		// std::cerr <<  "  [";
+		// std::cerr << ( is_n_helix_bonded_to_later( arg_bifur_hbond_list, bifur_bond_ctr, 3 ) ? "4"s : " "s );
+		// std::cerr <<  "] [";
+		// std::cerr << ( is_n_helix_bonded_to_later( arg_bifur_hbond_list, bifur_bond_ctr, 4 ) ? "3"s : " "s );
+		// std::cerr <<  "] [";
+		// std::cerr << ( is_n_helix_bonded_to_later( arg_bifur_hbond_list, bifur_bond_ctr, 5 ) ? "5"s : " "s );
+		// std::cerr <<  "]\n";
 
 		// If this residue is part of a 4-helix (and not a 5-helix), label with alpha-helix
-		if ( is_in_4_helix_not_costarting_with_5_helix( arg_bifur_hbond_list, bifur_bond_ctr ) ) {
+		if ( is_in_4_helix_not_conflicting_with_5_helix( arg_bifur_hbond_list, bifur_bond_ctr ) ) {
 			results[ bifur_bond_ctr ] = sec_struc_type::ALPHA_HELIX;
 		}
 		// If this residue has any beta-bridges that are in beta-sheets, label with beta-strand

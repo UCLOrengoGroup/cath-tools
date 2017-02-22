@@ -181,8 +181,12 @@ BOOST_AUTO_TEST_CASE(not_4_helix_if_5_helix) {
 	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "not_4_helix_if_5_helix.dssp"                         );
 }
 
-BOOST_AUTO_TEST_CASE(still_4_helix_if_5_helix_does_not_costart) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "still_4_helix_if_5_helix_does_not_costart.dssp"      );
+BOOST_AUTO_TEST_CASE(no_5_helix_to_disrupt_4_if_hits_a_3) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "no_5_helix_to_disrupt_4_if_hits_a_3.dssp"            );
+}
+
+BOOST_AUTO_TEST_CASE(non_costarting_5_helix_still_disrupts_4_helix) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "non_costarting_5_helix_still_disrupts_4_helix.dssp"  );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
