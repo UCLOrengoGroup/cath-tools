@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_SUITE(engineered_examples)
 
 
 BOOST_AUTO_TEST_CASE(test_without_residues_that_dssp_ignores) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "test_without_residues_that_dssp_ignores.dssp" );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "test_without_residues_that_dssp_ignores.dssp"        );
 }
 
 
