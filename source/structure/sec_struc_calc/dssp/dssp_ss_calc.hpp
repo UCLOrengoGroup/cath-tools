@@ -225,6 +225,10 @@ namespace cath {
 			beta_bridge_vec_vec remove_bridges_to_chain_break_residues_copy(beta_bridge_vec_vec,
 			                                                                const size_vec &);
 
+			bool indices_straddle_break(const size_vec &,
+			                            const size_t &,
+			                            const size_t &);
+
 		} // namespace detail
 
 		sec_struc_type_vec calc_sec_strucs(const bifur_hbond_list &,

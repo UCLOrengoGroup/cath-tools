@@ -28,6 +28,7 @@
 #include <boost/optional/optional_io.hpp>
 #include <boost/range/algorithm/binary_search.hpp>
 #include <boost/range/algorithm/remove_if.hpp>
+#include <boost/range/algorithm/upper_bound.hpp>
 #include <boost/range/irange.hpp>
 
 #include "common/algorithm/append.hpp"
@@ -58,6 +59,7 @@ using boost::make_optional;
 using boost::none;
 using boost::optional;
 using boost::range::binary_search;
+using boost::range::upper_bound;
 using boost::remove_if;
 using std::max;
 using std::min;
@@ -681,6 +683,20 @@ beta_bridge_vec_vec cath::sec::detail::remove_bridges_to_chain_break_residues_co
 	return arg_beta_bridges;
 }
 
+/// \brief Return whether the specified indices straddle any of the breaks represented by the specified list
+///
+/// \pre `arg_break_indices` must be sorted in ascending order
+bool cath::sec::detail::indices_straddle_break(const size_vec &arg_break_indices, ///< A list of the indices of the residues that are preceded by a chain break in ascending order
+                                               const size_t   &arg_index_a,       ///< The first  index to examine
+                                               const size_t   &arg_index_b        ///< The second index to examine
+                                               ) {
+	return (
+		upper_bound( arg_break_indices, arg_index_a )
+		!=
+		upper_bound( arg_break_indices, arg_index_b )
+	);
+}
+
 /// \brief Calculate the sec_struc_type values for the specified bifur_hbond_list
 ///
 /// \pre `arg_break_indices` must be sorted in ascending order
@@ -710,7 +726,14 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 		for (const size_t &beta_bridge_idx_2 : irange( beta_bridge_idx_1 + 1, min( beta_bridges.size(), beta_bridge_idx_1 + 3 ) ) ) {
 			for (const auto &bridge_1 : beta_bridges[ beta_bridge_idx_1 ] ) {
 				for (const auto &bridge_2 : beta_bridges[ beta_bridge_idx_2 ] ) {
-					if ( is_beta_bulge( bridge_1, beta_bridge_idx_1, bridge_2, beta_bridge_idx_2 ) ) {
+					const bool is_beta_bulge_decn = (
+						! indices_straddle_break( arg_break_indices, beta_bridge_idx_1,    beta_bridge_idx_2    )
+						&&
+						! indices_straddle_break( arg_break_indices, bridge_1.partner_idx, bridge_2.partner_idx )
+						&&
+						is_beta_bulge( bridge_1, beta_bridge_idx_1, bridge_2, beta_bridge_idx_2 )
+					);
+					if ( is_beta_bulge_decn ) {
 						// std::cerr << "Adding beta bulge from " << beta_bridge_idx_1 << " to " << beta_bridge_idx_2 << "\n";
 						add_beta_bulge( results, beta_bridge_idx_1, beta_bridge_idx_2 );
 						// std::cerr << "Adding beta bulge from " << bridge_1.partner_idx << " to " << bridge_2.partner_idx << "\n";
