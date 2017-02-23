@@ -390,7 +390,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			// If there are previously seen atoms that don't match this chain/res_id,
 			// then add those atoms' residue and reset prev_atoms
 			if ( ! prev_atoms.empty() && res_id != prev_res_id ) {
-				add_atoms_and_reset_fn( res_id.get_chain_label() );
+				add_atoms_and_reset_fn( prev_res_id.get_chain_label() );
 			}
 
 			// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.

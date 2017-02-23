@@ -250,4 +250,27 @@ ATOM   1265  O   ASP A 167      -5.724  12.440  90.910  1.00 15.07           O  
 	BOOST_CHECK_EQUAL( test_ss.str(),              "" );
 }
 
+BOOST_AUTO_TEST_CASE(handle_chain_change_correctly) {
+	const string input_string = R"(ATOM      1  N   LEU A   1      19.951  -0.078  26.341  1.00 74.36           N  
+ATOM      2  CA  LEU A   1      20.671  -1.248  26.845  1.00 77.32           C  
+ATOM      3  C   LEU A   1      20.314  -2.462  25.964  1.00 81.33           C  
+ATOM      4  O   LEU A   1      19.481  -2.327  25.056  1.00 82.44           O  
+TER       5      LEU A   1                                                      
+HETATM    6  N   GLU H   2      41.172  36.192  51.348  1.00 17.41           N  
+HETATM    7  CA  GLU H   2      40.491  35.926  50.091  1.00 15.21           C  
+HETATM    8  C   GLU H   2      40.029  34.469  50.052  1.00 16.31           C  
+HETATM    9  O   GLU H   2      40.630  33.666  50.805  1.00 17.29           O  
+HETATM   10  C   ACT A   3      18.687   4.315  47.169  1.00 39.67           C  
+END                                                                             
+)";
+	ostringstream test_ss;
+	istringstream input_ss{ input_string };
+	const log_to_ostream_guard the_guard{ test_ss };
+
+	const pdb the_pdb = read_pdb_file( input_ss );
+
+	BOOST_CHECK_EQUAL( the_pdb.get_num_residues(), 2  );
+	BOOST_CHECK_EQUAL( test_ss.str(),              "" );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
