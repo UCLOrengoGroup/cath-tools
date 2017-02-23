@@ -193,6 +193,10 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(helix)
 
+BOOST_AUTO_TEST_CASE(helix_bonds_must_exist_from_nh_side) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix_bonds_must_exist_from_nh_side.dssp"            );
+}
+
 BOOST_AUTO_TEST_CASE(check_helix_bonds_at_both_ends) {
 	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "check_helix_bonds_at_both_ends.dssp"                 );
 }

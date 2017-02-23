@@ -243,12 +243,12 @@ optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond_list &
 	const bool bonded_to_later   = (
 		arg_index + arg_helix_num < arg_bifur_hbond_list.size()
 		&&
-		are_co_to_nh_bonded( arg_bifur_hbond_list, arg_index,                 arg_index + arg_helix_num )
+		are_strictly_nh_to_co_bonded( arg_bifur_hbond_list, arg_index + arg_helix_num, arg_index                 )
 	);
 	const bool bonded_to_earlier = (
 		arg_index >= arg_helix_num
 		&&
-		are_co_to_nh_bonded( arg_bifur_hbond_list, arg_index - arg_helix_num, arg_index                 )
+		are_strictly_nh_to_co_bonded( arg_bifur_hbond_list, arg_index,                 arg_index - arg_helix_num )
 	);
 
 	if ( bonded_to_later ) {
