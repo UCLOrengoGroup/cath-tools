@@ -524,6 +524,7 @@ bool cath::sec::detail::is_beta_bulge(const beta_bridge &arg_bridge_1, ///< The 
                                       const beta_bridge &arg_bridge_2, ///< The second beta-bridge
                                       const size_t      &arg_index_2   ///< The source index of the second beta-bridge
                                       ) {
+
 	const size_t src_index_diff  = difference( arg_index_1,              arg_index_2              );
 	const size_t dest_index_diff = difference( arg_bridge_1.partner_idx, arg_bridge_2.partner_idx );
 	const bool   src_ascending   = ( arg_index_2              > arg_index_1              );
@@ -536,7 +537,7 @@ bool cath::sec::detail::is_beta_bulge(const beta_bridge &arg_bridge_1, ///< The 
 		&&
 		clamp( dest_index_diff, 1, sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST   ) == dest_index_diff
 		&&
-		min( src_index_diff, dest_index_diff ) > 1
+		max( src_index_diff, dest_index_diff ) > 1
 		&&
 		(
 			( arg_bridge_1.type == beta_bridge_type::PARALLEL      &&   dirns_match )
