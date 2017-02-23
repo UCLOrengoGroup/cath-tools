@@ -536,7 +536,7 @@ bool cath::sec::detail::is_beta_bulge(const beta_bridge &arg_bridge_1, ///< The 
 		&&
 		clamp( dest_index_diff, 1, sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST   ) == dest_index_diff
 		&&
-		src_index_diff != dest_index_diff
+		min( src_index_diff, dest_index_diff ) > 1
 		&&
 		(
 			( arg_bridge_1.type == beta_bridge_type::PARALLEL      &&   dirns_match )

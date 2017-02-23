@@ -151,6 +151,10 @@ BOOST_AUTO_TEST_CASE(test_without_residues_that_dssp_ignores) {
 
 BOOST_AUTO_TEST_SUITE(beta)
 
+BOOST_AUTO_TEST_CASE(beta_bulges_can_have_equal_gaps) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bulges_can_have_equal_gaps.dssp"                );
+}
+
 BOOST_AUTO_TEST_CASE(ok_consider_beta_bridge_bonds_from_both_sides) {
 	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "consider_beta_bridge_bonds_from_both_sides.dssp"     );
 }
