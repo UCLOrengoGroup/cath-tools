@@ -147,6 +147,10 @@ BOOST_AUTO_TEST_CASE(test_without_residues_that_dssp_ignores) {
 	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "test_without_residues_that_dssp_ignores.dssp"        );
 }
 
+BOOST_AUTO_TEST_CASE(prefer_helix_over_strand) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "prefer_helix_over_strand.dssp"                       );
+}
+
 
 
 BOOST_AUTO_TEST_SUITE(beta)

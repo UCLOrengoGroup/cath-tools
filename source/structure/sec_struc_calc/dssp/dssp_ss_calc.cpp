@@ -788,7 +788,7 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 			results[ bifur_bond_ctr ] = sec_struc_type::ALPHA_HELIX;
 		}
 		// If this residue has any beta-bridges that are in beta-sheets, label with beta-strand
-		if ( any_of( beta_bridges[ bifur_bond_ctr ], [] (const beta_bridge &x) { return x.context == beta_bridge_context::IN_SHEET; } ) ) {
+		else if ( any_of( beta_bridges[ bifur_bond_ctr ], [] (const beta_bridge &x) { return x.context == beta_bridge_context::IN_SHEET; } ) ) {
 			results[ bifur_bond_ctr ] = sec_struc_type::BETA_STRAND;
 		}
 	}
