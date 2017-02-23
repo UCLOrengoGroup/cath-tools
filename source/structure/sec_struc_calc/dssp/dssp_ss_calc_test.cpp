@@ -208,6 +208,10 @@ BOOST_AUTO_TEST_CASE(not_4_if_5_because_no_3_because_4_helix) {
 	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "not_4_if_5_because_no_3_because_4_helix.dssp"        );
 }
 
+BOOST_AUTO_TEST_CASE(tricky_3_4_5_boundaries) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "tricky_3_4_5_boundaries.dssp"                        );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 

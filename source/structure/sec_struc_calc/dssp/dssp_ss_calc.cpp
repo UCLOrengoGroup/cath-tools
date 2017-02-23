@@ -292,7 +292,7 @@ bool cath::sec::detail::starts_3_helix(const bifur_hbond_list &arg_bifur_hbond_l
 		could_start_n_helix( arg_bifur_hbond_list, arg_index, 3 )
 		&&
 		none_of(
-			irange( max( 3_z, arg_index ) - 3_z, min( arg_index + 4_z, arg_bifur_hbond_list.size() ) ),
+			irange( max( 3_z, arg_index ) - 3_z, min( arg_index + 3_z, arg_bifur_hbond_list.size() ) ),
 			[&] (const size_t &x) { return could_start_n_helix( arg_bifur_hbond_list, x, 4 ); }
 		)
 	);
@@ -309,7 +309,7 @@ bool cath::sec::detail::starts_5_helix(const bifur_hbond_list &arg_bifur_hbond_l
 		could_start_n_helix( arg_bifur_hbond_list, arg_index, 5 )
 		&&
 		none_of(
-			irange( arg_index, arg_index + 6 ),
+			irange( max( arg_index, 2_z) - 2_z, min( arg_index + 5_z, arg_bifur_hbond_list.size() ) ),
 			[&] (const size_t &x) { return starts_3_helix( arg_bifur_hbond_list, x ); }
 		)
 	);
