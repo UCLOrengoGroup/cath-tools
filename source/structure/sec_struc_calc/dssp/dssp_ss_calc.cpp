@@ -282,16 +282,35 @@ bool cath::sec::detail::could_start_n_helix(const bifur_hbond_list &arg_bifur_hb
 	);
 }
 
+/// \brief Return whether the residue at the specified index is at the start of a 3-helix according to the specified bifur_hbond_list
+bool cath::sec::detail::starts_3_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                       const size_t           &arg_index             ///< The index of the residue in question
+                                       ) {
+	return (
+		! arg_bifur_hbond_list.empty()
+		&&
+		could_start_n_helix( arg_bifur_hbond_list, arg_index, 3 )
+		&&
+		none_of(
+			irange( max( 3_z, arg_index ) - 3_z, min( arg_index + 4_z, arg_bifur_hbond_list.size() ) ),
+			[&] (const size_t &x) { return could_start_n_helix( arg_bifur_hbond_list, x, 4 ); }
+		)
+	);
+
+}
+
 /// \brief Return whether the residue at the specified index is at the start of a 5-helix according to the specified bifur_hbond_list
 bool cath::sec::detail::starts_5_helix(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
                                        const size_t           &arg_index             ///< The index of the residue in question
                                        ) {
 	return (
+		! arg_bifur_hbond_list.empty()
+		&&
 		could_start_n_helix( arg_bifur_hbond_list, arg_index, 5 )
 		&&
 		none_of(
-			irange( arg_index, arg_index + 5 ),
-			[&] (const size_t &x) { return could_start_n_helix( arg_bifur_hbond_list, x, 3 ); }
+			irange( arg_index, arg_index + 6 ),
+			[&] (const size_t &x) { return starts_3_helix( arg_bifur_hbond_list, x ); }
 		)
 	);
 

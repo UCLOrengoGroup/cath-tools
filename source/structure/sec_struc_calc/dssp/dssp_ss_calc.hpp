@@ -162,6 +162,9 @@ namespace cath {
 			                         const size_t &,
 			                         const size_t & = sec_struc_consts::DEFAULT_HELIX_N);
 
+			bool starts_3_helix(const bifur_hbond_list &,
+			                    const size_t &);
+
 			bool starts_5_helix(const bifur_hbond_list &,
 			                    const size_t &);
 
