@@ -725,9 +725,9 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 	for (const size_t &bifur_bond_ctr : irange( 0_z, arg_bifur_hbond_list.size() ) ) {
 		// std::cerr << bifur_bond_ctr << "\t" << arg_bifur_hbond_list [ bifur_bond_ctr ];
 		// std::cerr <<  "  [";
-		// std::cerr << ( is_n_helix_bonded_to_later( arg_bifur_hbond_list, bifur_bond_ctr, 3 ) ? "4"s : " "s );
+		// std::cerr << ( is_n_helix_bonded_to_later( arg_bifur_hbond_list, bifur_bond_ctr, 4 ) ? "4"s : " "s );
 		// std::cerr <<  "] [";
-		// std::cerr << ( is_n_helix_bonded_to_later( arg_bifur_hbond_list, bifur_bond_ctr, 4 ) ? "3"s : " "s );
+		// std::cerr << ( is_n_helix_bonded_to_later( arg_bifur_hbond_list, bifur_bond_ctr, 3 ) ? "3"s : " "s );
 		// std::cerr <<  "] [";
 		// std::cerr << ( is_n_helix_bonded_to_later( arg_bifur_hbond_list, bifur_bond_ctr, 5 ) ? "5"s : " "s );
 		// std::cerr <<  "]\n";
