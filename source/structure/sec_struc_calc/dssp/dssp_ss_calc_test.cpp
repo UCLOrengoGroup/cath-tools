@@ -221,6 +221,10 @@ BOOST_AUTO_TEST_CASE(tricky_3_4_5_boundaries) {
 	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "tricky_3_4_5_boundaries.dssp"                        );
 }
 
+BOOST_AUTO_TEST_CASE(helix_bond_cannot_straddle_break) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix_bond_cannot_straddle_break.dssp"               );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 
