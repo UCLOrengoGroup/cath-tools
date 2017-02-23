@@ -138,6 +138,10 @@ namespace cath {
 			bool is_bonded_to(const hbond_half_opt_pair &,
 			                  const size_t &);
 
+			bool are_strictly_nh_to_co_bonded(const bifur_hbond_list &,
+			                                  const size_t &,
+			                                  const size_t &);
+
 			bool are_nh_to_co_bonded(const bifur_hbond_list &,
 			                         const size_t &,
 			                         const size_t &);

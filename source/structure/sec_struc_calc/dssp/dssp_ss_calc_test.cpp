@@ -150,6 +150,10 @@ BOOST_AUTO_TEST_CASE(test_without_residues_that_dssp_ignores) {
 
 BOOST_AUTO_TEST_SUITE(beta)
 
+BOOST_AUTO_TEST_CASE(beta_bonds_must_exist_from_nh_side) {
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bonds_must_exist_from_nh_side.dssp"            );
+}
+
 BOOST_AUTO_TEST_CASE(another_beta_bulge) {
 	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "another_beta_bulge.dssp"                             );
 }

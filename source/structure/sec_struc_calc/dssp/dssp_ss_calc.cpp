@@ -195,6 +195,15 @@ bool cath::sec::detail::is_bonded_to(const hbond_half_opt_pair &arg_bound_pair, 
 }
 
 /// \brief Return whether there is an adequate bond between the NH of the residue at the first specified
+///        index and the CO of the residue at the second, and in that direction.
+bool cath::sec::detail::are_strictly_nh_to_co_bonded(const bifur_hbond_list &arg_bifur_hbond_list, ///< The bifur_hbond_list to query
+                                                     const size_t           &arg_nh_res_idx,       ///< The index of the residue at the NH side of the required bond
+                                                     const size_t           &arg_co_res_idx        ///< The index of the residue at the CO side of the required bond
+                                                     ) {
+	return ( is_bonded_to( arg_bifur_hbond_list[ arg_nh_res_idx ].get_bound_pair_for_this_nh(), arg_co_res_idx ) );
+}
+
+/// \brief Return whether there is an adequate bond between the NH of the residue at the first specified
 ///        index and the CO of the residue at the second
 ///
 /// This will accept the bond being found at either side alone
@@ -348,9 +357,9 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_to_src(const b
 			&&
 			beta_index_in_range( arg_bifur_hbond_list, arg_dest_index )
 			&&
-			are_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index,    arg_dest_index - 1 )
+			are_strictly_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index,      arg_dest_index - 1 )
 			&&
-			are_co_to_nh_bonded( arg_bifur_hbond_list, arg_src_index,    arg_dest_index + 1 )
+			are_strictly_nh_to_co_bonded( arg_bifur_hbond_list, arg_dest_index + 1, arg_src_index      )
 		),
 		beta_bridge{ arg_dest_index, beta_bridge_type::PARALLEL }
 	);
@@ -370,9 +379,9 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_straddling_src
 			&&
 			beta_index_in_range( arg_bifur_hbond_list, arg_dest_index )
 			&&
-			are_co_to_nh_bonded( arg_bifur_hbond_list, arg_src_index - 1, arg_dest_index    )
+			are_strictly_nh_to_co_bonded( arg_bifur_hbond_list, arg_dest_index,    arg_src_index - 1 )
 			&&
-			are_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index + 1, arg_dest_index    )
+			are_strictly_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index + 1, arg_dest_index    )
 		),
 		beta_bridge{ arg_dest_index, beta_bridge_type::PARALLEL }
 	);
@@ -392,9 +401,9 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_to_src(con
 			&&
 			arg_dest_index + 1 < arg_bifur_hbond_list.size()
 			&&
-			are_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index,    arg_dest_index    )
+			are_strictly_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index,  arg_dest_index )
 			&&
-			are_co_to_nh_bonded( arg_bifur_hbond_list, arg_src_index,    arg_dest_index    )
+			are_strictly_nh_to_co_bonded( arg_bifur_hbond_list, arg_dest_index, arg_src_index  )
 		),
 		beta_bridge{ arg_dest_index, beta_bridge_type::ANTI_PARALLEL }
 	);
@@ -414,9 +423,9 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_straddling
 			&&
 			beta_index_in_range( arg_bifur_hbond_list, arg_dest_index )
 			&&
-			are_co_to_nh_bonded( arg_bifur_hbond_list, arg_src_index - 1, arg_dest_index + 1 )
+			are_strictly_nh_to_co_bonded( arg_bifur_hbond_list, arg_dest_index + 1, arg_src_index  - 1 )
 			&&
-			are_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index + 1, arg_dest_index - 1 )
+			are_strictly_nh_to_co_bonded( arg_bifur_hbond_list, arg_src_index  + 1, arg_dest_index - 1 )
 		),
 		beta_bridge{ arg_dest_index, beta_bridge_type::ANTI_PARALLEL }
 	);
