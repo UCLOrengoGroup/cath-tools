@@ -582,7 +582,9 @@ bool cath::sec::detail::is_beta_bulge(const beta_bridge &arg_bridge_1, ///< The 
                                       const beta_bridge &arg_bridge_2, ///< The second beta-bridge
                                       const size_t      &arg_index_2   ///< The source index of the second beta-bridge
                                       ) {
-
+	const size_t smaller_1       = min( arg_index_1, arg_bridge_1.partner_idx );
+	const size_t smaller_2       = min( arg_index_2, arg_bridge_2.partner_idx );
+	const size_t smaller_diff    = difference( smaller_1, smaller_2 );
 	const size_t src_index_diff  = difference( arg_index_1,              arg_index_2              );
 	const size_t dest_index_diff = difference( arg_bridge_1.partner_idx, arg_bridge_2.partner_idx );
 	const bool   src_ascending   = ( arg_index_2              > arg_index_1              );
@@ -594,6 +596,8 @@ bool cath::sec::detail::is_beta_bulge(const beta_bridge &arg_bridge_1, ///< The 
 		clamp( src_index_diff,  0, sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE ) == src_index_diff
 		&&
 		clamp( dest_index_diff, 0, sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST   ) == dest_index_diff
+		&&
+		smaller_diff > 0
 		&&
 		max( src_index_diff, dest_index_diff ) > 1
 		&&
@@ -754,7 +758,7 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 		for (const size_t &beta_bridge_idx_2 : irange( beta_bridge_idx_1, min( beta_bridges.size(), beta_bridge_idx_1 + 3 ) ) ) {
 			for (const auto &bridge_1 : beta_bridges[ beta_bridge_idx_1 ] ) {
 				for (const auto &bridge_2 : beta_bridges[ beta_bridge_idx_2 ] ) {
-					if ( bridge_1 == bridge_2 ) {
+					if ( beta_bridge_idx_1 == beta_bridge_idx_2 && bridge_1 == bridge_2 ) {
 						continue;
 					}
 					const bool is_beta_bulge_decn = (
