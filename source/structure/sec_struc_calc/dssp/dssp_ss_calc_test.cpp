@@ -192,7 +192,7 @@ BOOST_AUTO_TEST_CASE(do_not_beta_bridge_to_side_of_chain_break) {
 }
 
 BOOST_AUTO_TEST_CASE(ok_beta_bulge_bonds_can_be_to_same_res) {
-	check_dssp_ss_against_file( "/cath-tools/beta_bulge_bonds_can_be_to_same_res.dssp"        );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bulge_bonds_can_be_to_same_res.dssp"            );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
