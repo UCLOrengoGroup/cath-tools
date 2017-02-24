@@ -156,47 +156,47 @@ BOOST_AUTO_TEST_CASE(prefer_helix_over_strand) {
 BOOST_AUTO_TEST_SUITE(beta)
 
 BOOST_AUTO_TEST_CASE(beta_bulge_cannot_straddle_break) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bulge_cannot_straddle_break.dssp"                );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/beta_bulge_cannot_straddle_break.dssp"                );
 }
 
 BOOST_AUTO_TEST_CASE(beta_bonds_must_exist_from_nh_side) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bonds_must_exist_from_nh_side.dssp"              );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/beta_bonds_must_exist_from_nh_side.dssp"              );
 }
 
 BOOST_AUTO_TEST_CASE(another_beta_bulge) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "another_beta_bulge.dssp"                              );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/another_beta_bulge.dssp"                              );
 }
 
 BOOST_AUTO_TEST_CASE(beta_bulges_can_have_equal_gaps) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bulges_can_have_equal_gaps.dssp"                 );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/beta_bulges_can_have_equal_gaps.dssp"                 );
 }
 
 BOOST_AUTO_TEST_CASE(ok_consider_beta_bridge_bonds_from_both_sides) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "consider_beta_bridge_bonds_from_both_sides.dssp"      );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/consider_beta_bridge_bonds_from_both_sides.dssp"      );
 }
 
 BOOST_AUTO_TEST_CASE(beta_bridges_forbidden_at_end) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bridges_forbidden_at_end.dssp"                   );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/beta_bridges_forbidden_at_end.dssp"                   );
 }
 
 BOOST_AUTO_TEST_CASE(beta_bridge_still_lone_if_neighbours_very_diff) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bridge_still_lone_if_neighbours_very_diff.dssp"  );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/beta_bridge_still_lone_if_neighbours_very_diff.dssp"  );
 }
 
 BOOST_AUTO_TEST_CASE(beta_bonded_residues_must_be_ge_3_apart) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bonded_residues_must_be_ge_3_apart.dssp"         );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/beta_bonded_residues_must_be_ge_3_apart.dssp"         );
 }
 
 BOOST_AUTO_TEST_CASE(do_not_beta_bridge_to_side_of_chain_break) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "do_not_beta_bridge_to_side_of_chain_break.dssp"       );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/do_not_beta_bridge_to_side_of_chain_break.dssp"       );
 }
 
 BOOST_AUTO_TEST_CASE(beta_bulge_bonds_can_be_to_same_res_at_end) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bulge_bonds_can_be_to_same_res_at_end.dssp"             );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/beta_bulge_bonds_can_be_to_same_res_at_end.dssp"      );
 }
 
 BOOST_AUTO_TEST_CASE(beta_bulge_bonds_cannot_be_to_same_res_at_start) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta_bulge_bonds_cannot_be_to_same_res_at_start.dssp" );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "beta/beta_bulge_bonds_cannot_be_to_same_res_at_start.dssp" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -206,35 +206,35 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(helix)
 
 BOOST_AUTO_TEST_CASE(helix_bonds_must_exist_from_nh_side) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix_bonds_must_exist_from_nh_side.dssp"            );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix/helix_bonds_must_exist_from_nh_side.dssp"            );
 }
 
 BOOST_AUTO_TEST_CASE(check_helix_bonds_at_both_ends) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "check_helix_bonds_at_both_ends.dssp"                 );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix/check_helix_bonds_at_both_ends.dssp"                 );
 }
 
 BOOST_AUTO_TEST_CASE(not_4_helix_if_5_helix) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "not_4_helix_if_5_helix.dssp"                         );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix/not_4_helix_if_5_helix.dssp"                         );
 }
 
 BOOST_AUTO_TEST_CASE(no_5_helix_to_disrupt_4_if_hits_a_3) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "no_5_helix_to_disrupt_4_if_hits_a_3.dssp"            );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix/no_5_helix_to_disrupt_4_if_hits_a_3.dssp"            );
 }
 
 BOOST_AUTO_TEST_CASE(non_costarting_5_helix_still_disrupts_4_helix) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "non_costarting_5_helix_still_disrupts_4_helix.dssp"  );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix/non_costarting_5_helix_still_disrupts_4_helix.dssp"  );
 }
 
 BOOST_AUTO_TEST_CASE(not_4_if_5_because_no_3_because_4_helix) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "not_4_if_5_because_no_3_because_4_helix.dssp"        );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix/not_4_if_5_because_no_3_because_4_helix.dssp"        );
 }
 
 BOOST_AUTO_TEST_CASE(tricky_3_4_5_boundaries) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "tricky_3_4_5_boundaries.dssp"                        );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix/tricky_3_4_5_boundaries.dssp"                        );
 }
 
 BOOST_AUTO_TEST_CASE(helix_bond_cannot_straddle_break) {
-	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix_bond_cannot_straddle_break.dssp"               );
+	check_dssp_ss_against_file( DSSP_SS_TEST_DATA_DIR() / "helix/helix_bond_cannot_straddle_break.dssp"               );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
