@@ -591,9 +591,9 @@ bool cath::sec::detail::is_beta_bulge(const beta_bridge &arg_bridge_1, ///< The 
 	return (
 		arg_bridge_1.type == arg_bridge_2.type
 		&&
-		clamp( src_index_diff,  1, sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE ) == src_index_diff
+		clamp( src_index_diff,  0, sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE ) == src_index_diff
 		&&
-		clamp( dest_index_diff, 1, sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST   ) == dest_index_diff
+		clamp( dest_index_diff, 0, sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST   ) == dest_index_diff
 		&&
 		max( src_index_diff, dest_index_diff ) > 1
 		&&
@@ -751,9 +751,12 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 
 	sec_struc_type_vec results( arg_bifur_hbond_list.size(), sec_struc_type::COIL );
 	for (const size_t &beta_bridge_idx_1 : irange( 0_z, beta_bridges.size() ) ) {
-		for (const size_t &beta_bridge_idx_2 : irange( beta_bridge_idx_1 + 1, min( beta_bridges.size(), beta_bridge_idx_1 + 3 ) ) ) {
+		for (const size_t &beta_bridge_idx_2 : irange( beta_bridge_idx_1, min( beta_bridges.size(), beta_bridge_idx_1 + 3 ) ) ) {
 			for (const auto &bridge_1 : beta_bridges[ beta_bridge_idx_1 ] ) {
 				for (const auto &bridge_2 : beta_bridges[ beta_bridge_idx_2 ] ) {
+					if ( bridge_1 == bridge_2 ) {
+						continue;
+					}
 					const bool is_beta_bulge_decn = (
 						! indices_straddle_break( arg_break_indices, beta_bridge_idx_1,    beta_bridge_idx_2    )
 						&&
