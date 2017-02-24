@@ -943,6 +943,11 @@ set(
 )
 
 set(
+	NORMSOURCES_STRUCTURE_ACCESSIBILITY_CALC
+		structure/accessibility_calc/dssp_accessibility.cpp
+)
+
+set(
 	NORMSOURCES_STRUCTURE_BIOPLIB_FACADE
 		structure/bioplib_facade/bioplib_interface.cpp
 		structure/bioplib_facade/bioplib_pdb.cpp
@@ -1048,6 +1053,7 @@ set(
 
 set(
 	NORMSOURCES_STRUCTURE
+		${NORMSOURCES_STRUCTURE_ACCESSIBILITY_CALC}
 		${NORMSOURCES_STRUCTURE_BIOPLIB_FACADE}
 		${NORMSOURCES_STRUCTURE_ENTRY_QUERIER}
 		${NORMSOURCES_STRUCTURE_GEOMETRY}
@@ -1850,6 +1856,11 @@ set(
 )
 
 set(
+	TESTSOURCES_STRUCTURE_ACCESSIBILITY_CALC
+		structure/accessibility_calc/dssp_accessibility_test.cpp
+)
+
+set(
 	TESTSOURCES_STRUCTURE_BIOPLIB_FACADE
 		structure/bioplib_facade/bioplib_pdb_test.cpp
 )
@@ -1966,6 +1977,7 @@ set(
 
 set(
 	TESTSOURCES_STRUCTURE
+		${TESTSOURCES_STRUCTURE_ACCESSIBILITY_CALC}
 		${TESTSOURCES_STRUCTURE_BIOPLIB_FACADE}
 		${TESTSOURCES_STRUCTURE_ENTRY_QUERIER}
 		${TESTSOURCES_STRUCTURE_GEOMETRY}
