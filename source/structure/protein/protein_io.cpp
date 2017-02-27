@@ -38,11 +38,13 @@
 #include "file/sec/sec_file_record.hpp"
 #include "ssap/clique.hpp"
 #include "ssap/ssap.hpp"
+#include "structure/accessibility_calc/dssp_accessibility.hpp"
 #include "structure/entry_querier/entry_querier.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
+#include "structure/sec_struc_calc/dssp/dssp_ss_calc.hpp"
 #include "structure/sec_struc_calc/sec/sec_calc.hpp"
 
 #include <iostream>
@@ -157,6 +159,51 @@ protein cath::read_protein_from_pdb(const path   &arg_pdb,   ///< A PDB file
 		arg_name,
 		ref( arg_stderr )
 	);
+}
+
+/// \brief Read a DSSP and a PDB file and build them into a protein
+///
+/// \relatesalso protein
+protein cath::read_protein_from_pdb_and_calc_dssp(const path            &arg_pdb,    ///< A PDB file
+                                                  const string          &arg_name,   ///< The name to set as the title of the protein
+                                                  const ostream_ref_opt &arg_ostream ///< An optional reference to an ostream to which any logging should be sent
+                                                  ) {
+	const pdb the_pdb = backbone_complete_subset_of_pdb(
+		read_pdb_file( arg_pdb ),
+		arg_ostream
+	).first;
+	protein the_protein = build_protein_of_pdb_and_name(
+		the_pdb,
+		arg_name,
+		arg_ostream
+	);
+
+	// build_protein_of_pdb_and_name() already does phi/psi angles
+	// so now do the sec_struc types and accessibilities
+	set_sec_struc_types( the_protein, calc_sec_strucs_of_backbone_complete_pdb( the_pdb ) );
+	set_accessibilities( the_protein, calc_accessibilities_with_scanning      ( the_pdb ) );
+	return the_protein;
+}
+
+/// \brief Read a DSSP and a PDB file and build them into a protein
+///
+/// \relatesalso protein
+protein cath::read_protein_from_pdb_and_calc_dssp_and_sec(const path            &arg_pdb,    ///< A PDB file
+                                                          const string          &arg_name,   ///< The name to set as the title of the protein
+                                                          const ostream_ref_opt &arg_ostream ///< An optional reference to an ostream to which any logging should be sent
+                                                          ) {
+	protein the_protein = read_protein_from_pdb_and_calc_dssp(
+		arg_pdb,
+		arg_name,
+		arg_ostream
+	);
+	add_name_and_paint_sec_file_onto_protein(
+		the_protein,
+		get_sec_file( the_protein ),
+		arg_name,
+		arg_ostream
+	);
+	return the_protein;
 }
 
 /// \brief Construct a protein object from parsed WOLF and sec files

@@ -977,11 +977,12 @@ set(
 set(
 	NORMSOURCES_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET
 		structure/protein/protein_source_file_set/protein_file_combn.cpp
+		structure/protein/protein_source_file_set/protein_from_pdb.cpp
+		structure/protein/protein_source_file_set/protein_from_pdb_and_calc.cpp
+		structure/protein/protein_source_file_set/protein_from_pdb_and_dssp_and_calc.cpp
+		structure/protein/protein_source_file_set/protein_from_pdb_dssp_and_sec.cpp
+		structure/protein/protein_source_file_set/protein_from_wolf_and_sec.cpp
 		structure/protein/protein_source_file_set/protein_source_file_set.cpp
-		structure/protein/protein_source_file_set/protein_source_from_pdb.cpp
-		structure/protein/protein_source_file_set/protein_source_from_pdb_and_dssp.cpp
-		structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.cpp
-		structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.cpp
 )
 
 set(

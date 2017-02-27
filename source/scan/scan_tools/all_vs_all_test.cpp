@@ -34,7 +34,7 @@
 #include "scan/scan_tools/all_vs_all.hpp"
 #include "scan/scan_tools/scan_metrics.hpp"
 #include "score/pair_scatter_plotter/pair_scatter_plotter.hpp"  // ***** TEMPORARY *****
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/global_test_constants.hpp"
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 ////	const auto ids             = str_vec{ "1a04A01", "1a2pA00", "1a2xB00", "1a34A00", "1a7jA00", "1aooA00", "1avyA00", "1b25A01", "1b4pA01", "1be3I00", "1d0cA01", "1devB00", "1f8vE00", "1fcyA00", "1g3jD00", "1g8kA02", "1hfeL02", "1i4oC00", "1i7wD00", "1kyiS02", "1ncqD00", "1ojjA00", "1p9oA00", "1rqgA04", "1sqjB02", "1u7lA01", "1vsgA01", "1vyrA00", "1w6gA03", "1wkqB00", "1x6mA00", "1y8qB01", "1zodA02", "2c4jA01", "2gy5A03", "2ieeA01", "2jn4A00", "2nv0A00", "2o01N01", "2odkA00", "2ph1A00", "2pw9A02", "2qcvA01", "2qjpB02", "2qjyB02", "2rh0A01", "2uzyB02", "2vglB00", "2vpzC00", "2xw9A02", "3c2uA01", "3cjwA00", "3f94A02", "3g02B00", "3iauB01", "3laeA00", "3nwnA00", "3o2zH00", "1a04A02", "1fseB00" };
 //	const auto ids             = str_vec{ "1my7A00", "1my5A00", "2qjyB02", "2qjpB02", "2pw9A02", "2pw9C02", "2c4jA01", "1b4pA01", "2fmpA04", "2vanA03", "1okiA01", "1ytqA01", "1b06A01", "1ma1B01", "1a7sA02", "2xw9A02", "1avyB00", "1avyA00", "1m2tA02", "1hwmA02", "1d0cA01", "1m7vA01", "1a1hA01", "2j7jA03", "1a04A02", "1fseB00", "1fcyA00", "1pzlA00", "1avcA07", "1dk5B01", "1bd8A00", "1s70B01", "1atgA01", "1pc3A01", "1a2oA01", "2ayzA00", "1au7A02", "1rr7A02", "1arbA01", "1si5H01", "1ufmA00", "1a9xB02", "2nv0A00", "1aepA00", "1h6gA02", "1a4iB01", "1sc6A01", "2y1eA01", "1cf7B00", "1a32A00", "1go3F02", "3broD00", "1tnsA00", "2xblD00", "1a3qA01", "1g4mA01", "1a04A01", "2wjwA01", "1a02F00", "1mslA02" };
 ////	const auto load_files_starttime = high_resolution_clock::now();
-//	const auto proteins             = read_proteins_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), ids );
+//	const auto proteins             = read_proteins_from_files( protein_from_pdb(), TEST_SOURCE_DATA_DIR(), ids );
 ////	const auto load_files_duration  = high_resolution_clock::now() - load_files_starttime;
 //
 //	const auto query_length_min_max = min_max_protein_length( proteins );

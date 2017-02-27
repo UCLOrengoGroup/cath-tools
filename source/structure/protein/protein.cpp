@@ -20,10 +20,12 @@
 
 #include "protein.hpp"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/find_if.hpp>
+#include <boost/range/algorithm_ext/for_each.hpp>
 #include <boost/range/irange.hpp>
 
 #include "biocore/residue_id.hpp"
@@ -46,10 +48,12 @@ using namespace cath::common;
 using namespace cath::geom;
 using namespace std;
 
+using boost::algorithm::any_of;
 using boost::irange;
+using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::find_if;
-using boost::lexical_cast;
+using boost::range::for_each;
 
 /// \brief TODOCUMENT
 protein::protein(const string      &arg_title,   ///< TODOCUMENT
@@ -226,6 +230,73 @@ residue_id_vec cath::get_residue_ids(const protein &arg_protein ///< The protein
 	return transform_build<residue_id_vec>(
 		arg_protein,
 		[] (const residue &x) { return x.get_pdb_residue_id(); }
+	);
+}
+
+/// \brief Set the specified accessibility values in the specified protein
+///
+/// \relates protein
+void cath::set_accessibilities(protein        &arg_protein,        ///< The protein to modify
+                               const size_vec &arg_accessibilities ///< The accessibilities to set
+                               ) {
+	if ( arg_accessibilities.size() != arg_protein.get_length() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception(
+			"Cannot set "
+			+ std::to_string( arg_accessibilities.size() )
+			+ " accessibility values for a protein of length "
+			+ std::to_string( arg_protein.get_length() )
+		));
+	}
+	for_each(
+		arg_protein,
+		arg_accessibilities,
+		[] (residue &the_residue, const size_t &accessibility) {
+			the_residue.set_access( accessibility );
+		}
+	);
+}
+
+/// \brief Set the specified accessibility values in the specified protein,
+///        converting them to unsigned integer values first
+///
+/// \relates protein
+void cath::set_accessibilities(protein        &arg_protein,        ///< The protein to modify
+                               const doub_vec &arg_accessibilities ///< The accessibilities to set
+                               ) {
+	if ( any_of( arg_accessibilities, [] (const double &x) { return ! boost::math::isfinite( x ) || x < 0; } ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot set accessibilities given negative/infinite/NaN values"));
+	}
+	set_accessibilities(
+		arg_protein,
+		transform_build<size_vec>(
+			arg_accessibilities,
+			[] (const double &x) {
+				return numeric_cast<size_t>( round( x ) );
+			}
+		)
+	);
+}
+
+/// \brief Set the specified sec_struc_type values in the specified protein
+///
+/// \relates protein
+void cath::set_sec_struc_types(protein                  &arg_protein,        ///< The protein to modify
+                               const sec_struc_type_vec &arg_sec_struc_types ///< The sec_struc_type values to set
+                               ) {
+	if ( arg_sec_struc_types.size() != arg_protein.get_length() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception(
+			"Cannot set "
+			+ std::to_string( arg_sec_struc_types.size() )
+			+ " sec_struc types for a protein of length "
+			+ std::to_string( arg_protein.get_length() )
+		));
+	}
+	for_each(
+		arg_protein,
+		arg_sec_struc_types,
+		[] (residue &the_residue, const sec_struc_type &the_sec_struc) {
+			the_residue.set_sec_struc_type( the_sec_struc );
+		}
 	);
 }
 

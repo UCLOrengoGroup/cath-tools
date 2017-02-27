@@ -32,7 +32,7 @@
 #include "common/random/pick_random_pair.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "structure/view_cache/index/detail/vcie_match_criteria.hpp"
@@ -237,8 +237,8 @@ BOOST_FIXTURE_TEST_SUITE(view_cache_index_entry_test_suite, cath::test::view_cac
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(basic) {
 //	mt19937 rng( random_device{}() );
-//	const protein protein_a      = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01" );
-//	const protein protein_b      = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1r6xA02" );
+//	const protein protein_a      = read_protein_from_files( protein_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01" );
+//	const protein protein_b      = read_protein_from_files( protein_from_pdb(), TEST_SOURCE_DATA_DIR(), "1r6xA02" );
 //	const auto random_vcies_pair = build_random_vcies_pair( NUM_ENTRIES, protein_a, protein_b, rng );
 //	const auto durns             = time_comparisons( random_vcies_pair, NUM_REPEATS );
 //	const auto rates             = transform_build<doub_vec>(

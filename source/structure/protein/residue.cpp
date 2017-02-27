@@ -172,22 +172,32 @@ residue::residue(const residue_id     &arg_residue_id,         ///< TODOCUMENT
 	check_phi_psi_angle( get_psi_angle() );
 }
 
-/// \brief TODOCUMENT
-void residue::set_amino_acid(const amino_acid &arg_amino_acid ///< TODOCUMENT
-                             ) {
+/// \brief Setter for the amino acid
+residue & residue::set_amino_acid(const amino_acid &arg_amino_acid ///< The amino acid to set
+                                  ) {
 	the_amino_acid = arg_amino_acid;
+	return *this;
 }
 
-/// \brief TODOCUMENT
-void residue::set_residue_sec_struc_number(const size_t &arg_sec_struc_number ///< TODOCUMENT
-                                           ) {
+/// \brief Setter for the residue sec_struc number
+residue & residue::set_residue_sec_struc_number(const size_t &arg_sec_struc_number ///< The residue sec_struc number to set
+                                                ) {
 	sec_struc_number = arg_sec_struc_number;
+	return *this;
 }
 
-/// \brief TODOCUMENT
-void residue::set_sec_struc_type(const sec_struc_type &arg_sec_struc_type ///< TODOCUMENT
-                                 ) {
+/// \brief Setter for the sec_struc_type
+residue & residue::set_sec_struc_type(const sec_struc_type &arg_sec_struc_type ///< The sec_struc_type to set
+                                      ) {
 	the_sec_struc_type = arg_sec_struc_type;
+	return *this;
+}
+
+/// \brief Setter for the accessibility (calculated in a DSSP/wolf manner)
+residue & residue::set_access(const size_t &arg_accessibility ///< The accessibility (calculated in a DSSP/wolf manner) to set
+                              ) {
+	access = arg_accessibility;
+	return *this;
 }
 
 /// \brief TODOCUMENT

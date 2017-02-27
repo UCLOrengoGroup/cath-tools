@@ -102,7 +102,7 @@ void old_ssap_options_block::do_add_visible_options_to_description(options_descr
 
 	const auto write_rasmol_script_notifier = [&] (const bool &x) { set_write_rasmol_script( x ? sup_pdbs_script_policy::WRITE_RASMOL_SCRIPT : sup_pdbs_script_policy::LEAVE_RAW_PDBS ); };
 
-	const string protein_file_combns_str = join( get_all_protein_file_combn_strings(), ", " );
+	const string protein_file_combns_str = join( get_ssap_ready_protein_file_combn_strings(), ", " );
 	arg_desc.add_options()
 		( PO_DEBUG.c_str(),                bool_switch              ( &debug                        )                           ->default_value(DEF_BOOL      ),   "Output debugging information"                                                                                          )
 		((PO_OUT_FILE+",o").c_str(),       value<path>              ( &output_filename              )->value_name(file_varname ),                                ( "[DEPRECATED] Output scores to " + file_varname + " rather than to stdout" ).c_str()                                    )

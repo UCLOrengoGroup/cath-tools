@@ -24,7 +24,7 @@
 
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/refiner/indexed_refiner.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/global_test_constants.hpp"
@@ -53,8 +53,8 @@ BOOST_FIXTURE_TEST_SUITE(indexed_refiner_test_suite, cath::test::indexed_refiner
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	// const protein prot_1qbkB00 = read_protein_from_files( protein_source_from_pdb(), "refine_stuff/really_long", "1qbkB00" );
-	// const protein prot_1u6gC00 = read_protein_from_files( protein_source_from_pdb(), "refine_stuff/really_long", "1u6gC00" );
+	// const protein prot_1qbkB00 = read_protein_from_files( protein_from_pdb(), "refine_stuff/really_long", "1qbkB00" );
+	// const protein prot_1u6gC00 = read_protein_from_files( protein_from_pdb(), "refine_stuff/really_long", "1u6gC00" );
 	// const alignment the_aln = read_alignment_from_cath_ssap_legacy_format( "refine_stuff/really_long/1qbkB001u6gC00.list", prot_1qbkB00, prot_1u6gC00 );
 
 	// do_some_gubbins( prot_1qbkB00, prot_1u6gC00, the_aln );

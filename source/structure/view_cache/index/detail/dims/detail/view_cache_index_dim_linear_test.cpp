@@ -29,7 +29,7 @@
 // #include "ssap/ssap.hpp"
 // #include "structure/geometry/angle.hpp"
 // #include "structure/protein/protein.hpp"
-// #include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+// #include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
 // #include "structure/protein/sec_struc.hpp"
 // #include "structure/protein/sec_struc_planar_angles.hpp"
 // #include "structure/view_cache/index/detail/vcie_match_criteria.hpp"

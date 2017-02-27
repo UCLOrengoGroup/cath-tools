@@ -50,6 +50,10 @@ namespace cath {
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the equivalent protein_file_combn value
 		virtual protein_file_combn do_get_protein_file_combn() const = 0;
 
+		/// \brief Pure virtual method with which each concrete protein_source_file_set must define whether it
+		///        makes proteins that are SSAP-ready (with data loaded for sec, phi/psi accessibility etc)
+		virtual bool do_makes_ssap_ready_protein() const = 0;
+
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the behaviour to read the specified files
 		///        from a data_file_path_map that is pre-populated with the file types the concrete protein_source_file_set requires
 		virtual protein do_read_files(const file::data_file_path_map &,
@@ -69,6 +73,7 @@ namespace cath {
 
 		file::data_file_vec get_file_set() const;
 		protein_file_combn get_protein_file_combn() const;
+		bool makes_ssap_ready_protein() const;
 		protein read_files(const opts::data_dirs_spec &,
 		                   const std::string &,
 		                   std::ostream &) const;
@@ -92,9 +97,12 @@ namespace cath {
 	using protein_file_combn_vec = std::vector<protein_file_combn>;
 
 	protein_source_file_set_pvec get_all_protein_source_file_sets();
+	protein_file_combn_vec get_ssap_ready_protein_file_combns(const protein_source_file_set_pvec &);
 	protein_file_combn_vec get_protein_file_combns(const protein_source_file_set_pvec &);
 	protein_file_combn_vec get_all_protein_file_combns();
+	protein_file_combn_vec get_ssap_ready_protein_file_combns();
 	str_vec get_protein_file_combn_strings(const protein_file_combn_vec &);
+	str_vec get_ssap_ready_protein_file_combn_strings();
 	str_vec get_all_protein_file_combn_strings();
 
  	/// \brief Function to make protein_source_file_set meet the Clonable concept (used in ptr_container)

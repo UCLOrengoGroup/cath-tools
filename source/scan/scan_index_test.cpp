@@ -39,7 +39,7 @@
 #include "scan/scan_query_set.hpp"
 #include "structure/geometry/angle.hpp"
 #include "structure/protein/protein.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/global_test_constants.hpp"
@@ -74,14 +74,14 @@ BOOST_AUTO_TEST_CASE(basic) {
 //
 //	// 1fseB00 has 70 residues so the best possible score should be something like 70*70*2
 //	const auto read_pdbs_starttime = high_resolution_clock::now();
-////	const protein  protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1fseB00" );
+////	const protein  protein_a = read_protein_from_files( protein_from_pdb(), TEST_SOURCE_DATA_DIR(), "1fseB00" );
 ////	const protein &protein_b = protein_a;
 //
-//	// const protein protein_a = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01" );
-//	// const protein protein_b = read_protein_from_files( protein_source_from_pdb(), TEST_SOURCE_DATA_DIR(), "1r6xA02" );
+//	// const protein protein_a = read_protein_from_files( protein_from_pdb(), TEST_SOURCE_DATA_DIR(), "1n3lA01" );
+//	// const protein protein_b = read_protein_from_files( protein_from_pdb(), TEST_SOURCE_DATA_DIR(), "1r6xA02" );
 //
-//	const protein protein_a   = read_protein_from_files( protein_source_from_pdb(), TEST_EXAMPLE_PDBS_DATA_DIR(), "1fseB00" );
-//	const protein protein_b   = read_protein_from_files( protein_source_from_pdb(), TEST_EXAMPLE_PDBS_DATA_DIR(), "1avyA00" );
+//	const protein protein_a   = read_protein_from_files( protein_from_pdb(), TEST_EXAMPLE_PDBS_DATA_DIR(), "1fseB00" );
+//	const protein protein_b   = read_protein_from_files( protein_from_pdb(), TEST_EXAMPLE_PDBS_DATA_DIR(), "1avyA00" );
 //
 //	const auto read_pdbs_durn = high_resolution_clock::now() - read_pdbs_starttime;
 //

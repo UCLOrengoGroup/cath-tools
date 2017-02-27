@@ -1,5 +1,5 @@
 /// \file
-/// \brief The protein_source_from_wolf_and_sec class header
+/// \brief The protein_from_pdb class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,21 +18,26 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FROM_WOLF_AND_SEC_H
-#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FROM_WOLF_AND_SEC_H
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FROM_PDB_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FROM_PDB_H
 
 #include "structure/protein/protein_source_file_set/protein_source_file_set.hpp"
 
 namespace cath {
 
-	/// \brief Concrete protein_source_file_set for reading each protein from a wolf file and a sec file
-	class protein_source_from_wolf_and_sec final : public protein_source_file_set {
+	/// \brief Concrete protein_source_file_set for reading each protein from a PDB file
+	///
+	/// This does no extra calculations for DSSP/sec/phi/psi data. If you require that,
+	/// use protein_from_pdb_and_calc instead.
+	class protein_from_pdb final : public protein_source_file_set {
 	private:
 		virtual std::unique_ptr<protein_source_file_set> do_clone() const override final;
 
 		virtual file::data_file_vec do_get_file_set() const override final;
 
 		virtual protein_file_combn do_get_protein_file_combn() const override final;
+
+		virtual bool do_makes_ssap_ready_protein() const override final;
 
 		virtual protein do_read_files(const file::data_file_path_map &,
 		                              const std::string &,

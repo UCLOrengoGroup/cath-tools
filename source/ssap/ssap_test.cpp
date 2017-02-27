@@ -30,7 +30,7 @@
 #include "file/options/data_dirs_options_block.hpp"
 #include "ssap/ssap.hpp"
 #include "structure/protein/protein.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_wolf_and_sec.hpp"
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
@@ -93,7 +93,7 @@ namespace cath {
 			const string id1 = { *ID1 };
 			const string id2 = { *ID2 };
 			const data_dirs_spec data_dirs       = build_data_dirs_spec_of_dir( TEST_SSAP_REGRESSION_DATA_DIR() );
-			const prot_prot_pair parsed_proteins = read_protein_pair( id1, id2, data_dirs, protein_source_from_wolf_and_sec(), none );
+			const prot_prot_pair parsed_proteins = read_protein_pair( id1, id2, data_dirs, protein_from_wolf_and_sec(), none );
 			const protein &prot1 = parsed_proteins.first;
 			const protein &prot2 = parsed_proteins.second;
 			

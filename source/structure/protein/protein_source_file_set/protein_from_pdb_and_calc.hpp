@@ -1,5 +1,5 @@
 /// \file
-/// \brief The protein_source_from_pdb_and_dssp class header
+/// \brief The protein_from_pdb_and_calc class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,33 +18,30 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FROM_PDB_AND_DSSP_H
-#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FROM_PDB_AND_DSSP_H
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FROM_PDB_AND_CALC_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FROM_PDB_AND_CALC_H
 
 #include "structure/protein/protein_source_file_set/protein_source_file_set.hpp"
-#include "file/pdb/dssp_skip_policy.hpp"
 
 namespace cath {
 
-	/// \brief Concrete protein_source_file_set for reading each protein from a PDB file and a DDSP file
-	///        (and then calculating the sec_file information)
-	class protein_source_from_pdb_and_dssp final : public protein_source_file_set {
+	/// \brief Concrete protein_source_file_set for reading each protein from a PDB file
+	///        (and then calculating the DSSP/sec_file information)
+	///
+	/// If you don't need the extra calculations, you can just use protein_from_pdb
+	class protein_from_pdb_and_calc final : public protein_source_file_set {
 	private:
-		/// \brief Whether or not to limit the protein to residues that are found in the DSSP file
-		file::dssp_skip_policy the_dssp_skip_policy;
-
 		virtual std::unique_ptr<protein_source_file_set> do_clone() const override final;
 
 		virtual file::data_file_vec do_get_file_set() const override final;
 
 		virtual protein_file_combn do_get_protein_file_combn() const override final;
 
+		virtual bool do_makes_ssap_ready_protein() const override final;
+
 		virtual protein do_read_files(const file::data_file_path_map &,
 		                              const std::string &,
 		                              std::ostream &) const override final;
-
-	public:
-		explicit protein_source_from_pdb_and_dssp(const file::dssp_skip_policy & = file::dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES);
 	};
 
 } // namespace cath

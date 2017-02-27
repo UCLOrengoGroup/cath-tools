@@ -22,15 +22,19 @@
 
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/transform.hpp>
 
 #include "common/algorithm/transform_build.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "file/options/data_dirs_options_block.hpp"
 #include "structure/protein/protein.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb_and_dssp.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.hpp"
+
+#include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb_and_calc.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb_and_dssp_and_calc.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb_dssp_and_sec.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_wolf_and_sec.hpp"
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
@@ -44,6 +48,7 @@ using namespace cath::file;
 using namespace cath::opts;
 using namespace std;
 
+using boost::adaptors::filtered;
 using boost::assign::ptr_push_back;
 using boost::lexical_cast;
 using boost::ptr_vector;
@@ -62,6 +67,12 @@ data_file_vec protein_source_file_set::get_file_set() const {
 /// \brief An NVI pass-through method to get the equivalent protein_file_combn value
 protein_file_combn protein_source_file_set::get_protein_file_combn() const {
 	return do_get_protein_file_combn();
+}
+
+/// \brief An NVI pass-through method to return whether this makes proteins that are SSAP-ready
+///        (with data loaded for sec, phi/psi accessibility etc)
+bool protein_source_file_set::makes_ssap_ready_protein() const {
+	return do_makes_ssap_ready_protein();
 }
 
 /// \brief An NVI pass-through method to read the files that have been specified
@@ -142,10 +153,24 @@ data_file_path_map cath::get_filename_of_data_file(const protein_source_file_set
 /// \relates protein_source_file_set
 protein_source_file_set_pvec cath::get_all_protein_source_file_sets() {
 	protein_source_file_set_pvec file_sets;
-	ptr_push_back< protein_source_from_pdb_dssp_and_sec >( file_sets )( );
-	ptr_push_back< protein_source_from_wolf_and_sec     >( file_sets )( );
-	ptr_push_back< protein_source_from_pdb_and_dssp     >( file_sets )( );
+	ptr_push_back< protein_from_pdb                   >( file_sets )();
+	ptr_push_back< protein_from_pdb_and_calc          >( file_sets )();
+	ptr_push_back< protein_from_pdb_and_dssp_and_calc >( file_sets )();
+	ptr_push_back< protein_from_pdb_dssp_and_sec      >( file_sets )();
+	ptr_push_back< protein_from_wolf_and_sec          >( file_sets )();
 	return file_sets;
+}
+
+/// \brief Convert a ptr_vector of protein_source_file_sets to a vector<protein_file_combn>
+///
+/// \relates protein_source_file_set
+protein_file_combn_vec cath::get_ssap_ready_protein_file_combns(const protein_source_file_set_pvec &arg_protein_source_file_sets ///< The ptr_vector of protein_source_file_sets to convert
+                                                                ) {
+	return transform_build<protein_file_combn_vec>(
+		arg_protein_source_file_sets
+			| filtered( [] (const auto &x) { return x.makes_ssap_ready_protein(); } ),
+		[] (const protein_source_file_set &x) { return x.get_protein_file_combn(); }
+	);
 }
 
 /// \brief Convert a ptr_vector of protein_source_file_sets to a vector<protein_file_combn>
@@ -158,6 +183,14 @@ protein_file_combn_vec cath::get_protein_file_combns(const protein_source_file_s
 		[] (const protein_source_file_set &x) { return x.get_protein_file_combn(); }
 	);
 }
+
+/// \brief Get all types of protein_source_file_set, converted to a vector<protein_file_combn>
+///
+/// \relates protein_source_file_set
+protein_file_combn_vec cath::get_ssap_ready_protein_file_combns() {
+	return get_ssap_ready_protein_file_combns( get_all_protein_source_file_sets() );
+}
+
 
 /// \brief Get all types of protein_source_file_set, converted to a vector<protein_file_combn>
 ///
@@ -177,6 +210,13 @@ str_vec cath::get_protein_file_combn_strings(const protein_file_combn_vec &arg_p
 		arg_protein_file_combns,
 		[] (const protein_file_combn &x) { return lexical_cast<string>( x ); }
 	);
+}
+
+/// \brief Get all types of protein_source_file_set, converted to a vector<protein_file_combn> and then to a str_vec
+///
+/// \relates protein_source_file_set
+str_vec cath::get_ssap_ready_protein_file_combn_strings() {
+	return get_protein_file_combn_strings( get_ssap_ready_protein_file_combns() );
 }
 
 /// \brief Get all types of protein_source_file_set, converted to a vector<protein_file_combn> and then to a str_vec

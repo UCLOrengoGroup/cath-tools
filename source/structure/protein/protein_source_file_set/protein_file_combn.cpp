@@ -22,10 +22,11 @@
 
 #include "common/cpp14/make_unique.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb_and_dssp.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_wolf_and_sec.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb_and_dssp_and_calc.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb_dssp_and_sec.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_wolf_and_sec.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb_and_calc.hpp"
 
 using namespace cath;
 using namespace cath::common;
@@ -37,13 +38,14 @@ using namespace std;
 unique_ptr<const protein_source_file_set> cath::get_protein_source_file_set(const protein_file_combn &arg_protein_file_combn /// The protein_file_combn to be converted
                                                                           ) {
 	switch ( arg_protein_file_combn ) {
-		case( protein_file_combn::WOLF_SEC     ) : { return { common::make_unique< protein_source_from_wolf_and_sec     >() }; break; }
-		case( protein_file_combn::PDB          ) : { return { common::make_unique< protein_source_from_pdb              >() }; break; }
-		case( protein_file_combn::PDB_DSSP_SEC ) : { return { common::make_unique< protein_source_from_pdb_dssp_and_sec >() }; break; }
-		case( protein_file_combn::PDB_DSSP     ) : { return { common::make_unique< protein_source_from_pdb_and_dssp     >() }; break; }
+		case( protein_file_combn::WOLF_SEC          ) : { return { common::make_unique< protein_from_wolf_and_sec          >() }; break; }
+		case( protein_file_combn::PDB               ) : { return { common::make_unique< protein_from_pdb                   >() }; break; }
+		case( protein_file_combn::PDB_DSSP_SEC      ) : { return { common::make_unique< protein_from_pdb_dssp_and_sec      >() }; break; }
+		case( protein_file_combn::PDB_DSSP_AND_CALC ) : { return { common::make_unique< protein_from_pdb_and_dssp_and_calc >() }; break; }
+		case( protein_file_combn::PDB_AND_CALC      ) : { return { common::make_unique< protein_from_pdb_and_calc          >() }; break; }
 		default : {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("protein_file_combn is not recognised"));
-			return { common::make_unique<protein_source_from_pdb_dssp_and_sec>() };
+			return { common::make_unique<protein_from_pdb_dssp_and_sec>() };
 		}
 	}
 }
@@ -59,14 +61,17 @@ istream & cath::operator>>(istream            &arg_is,                ///< The i
 	if ( input_string == "WOLF_SEC" ) {
 		arg_protein_file_combn = protein_file_combn::WOLF_SEC;
 	}
-	else if ( input_string == "PDB" ) {
+	else if ( input_string == "PDB_SIMPLE" ) {
 		arg_protein_file_combn = protein_file_combn::PDB;
 	}
 	else if ( input_string == "PDB_DSSP_SEC" ) {
 		arg_protein_file_combn = protein_file_combn::PDB_DSSP_SEC;
 	}
 	else if ( input_string == "PDB_DSSP" ) {
-		arg_protein_file_combn = protein_file_combn::PDB_DSSP;
+		arg_protein_file_combn = protein_file_combn::PDB_DSSP_AND_CALC;
+	}
+	else if ( input_string == "PDB" ) {
+		arg_protein_file_combn = protein_file_combn::PDB_AND_CALC;
 	}
 	else {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to recognise protein_file_combn type " + input_string));
@@ -86,15 +91,19 @@ ostream & cath::operator<<(ostream                  &arg_os,                ///<
 			break;
 		}
 		case( protein_file_combn::PDB ) : {
-			arg_os << "PDB";
+			arg_os << "PDB_SIMPLE";
 			break;
 		}
 		case( protein_file_combn::PDB_DSSP_SEC ) : {
 			arg_os << "PDB_DSSP_SEC";
 			break;
 		}
-		case( protein_file_combn::PDB_DSSP ) : {
+		case( protein_file_combn::PDB_DSSP_AND_CALC ) : {
 			arg_os << "PDB_DSSP (**EXPERIMENTAL**)";
+			break;
+		}
+		case( protein_file_combn::PDB_AND_CALC ) : {
+			arg_os << "PDB (**EXPERIMENTAL**)";
 			break;
 		}
 	}

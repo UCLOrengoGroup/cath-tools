@@ -67,7 +67,7 @@
 #include "structure/entry_querier/residue_querier.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_list.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
@@ -138,11 +138,11 @@ namespace cath {
 			ostringstream              parse_ss;
 			const log_to_ostream_guard parse_log_guard      { parse_ss };
 
-			const protein        protein_1c55A        { read_protein_from_files( protein_source_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1c55A" ) };
-			const protein        protein_1c56A        { read_protein_from_files( protein_source_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1c56A" ) };
-			const protein        protein_1hykA        { read_protein_from_files( protein_source_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1hykA" ) };
-			const protein        protein_1wmtA        { read_protein_from_files( protein_source_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1wmtA" ) };
-			const protein        protein_1wt7A        { read_protein_from_files( protein_source_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1wt7A" ) };
+			const protein        protein_1c55A        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1c55A" ) };
+			const protein        protein_1c56A        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1c56A" ) };
+			const protein        protein_1hykA        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1hykA" ) };
+			const protein        protein_1wmtA        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1wmtA" ) };
+			const protein        protein_1wt7A        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1wt7A" ) };
 			const protein_list   prot_list_1c55A_1c55A{ make_protein_list( { protein_1c55A, protein_1c55A } ) };
 			const protein_list   prot_list_1c55A_1c56A{ make_protein_list( { protein_1c55A, protein_1c56A } ) };
 			const protein_list   prot_list_1c55A_1hykA{ make_protein_list( { protein_1c55A, protein_1hykA } ) };

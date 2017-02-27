@@ -26,7 +26,7 @@
 #include "scan/scan_tools/load_and_scan_metrics.hpp"
 #include "scan/scan_tools/single_pair.hpp"
 #include "structure/protein/protein.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
@@ -64,15 +64,15 @@ namespace cath {
 			const string &name_b  = "1r6xA02";
 
 			const auto single_pair_lasm = load_and_scan{
-				protein_list_loader{ protein_source_from_pdb(), the_dir, { name_a } },
-				protein_list_loader{ protein_source_from_pdb(), the_dir, { name_b } },
+				protein_list_loader{ protein_from_pdb(), the_dir, { name_a } },
+				protein_list_loader{ protein_from_pdb(), the_dir, { name_b } },
 				single_pair{}
 			}.get_load_and_scan_metrics();
 
 			const auto all_vs_all_ids = str_vec{ "1my7A00", "1my5A00", "2qjyB02", "2qjpB02", "2pw9A02", "2pw9C02", "2c4jA01", "1b4pA01", "2fmpA04", "2vanA03", "1okiA01", "1ytqA01", "1b06A01", "1ma1B01", "1a7sA02", "2xw9A02", "1avyB00", "1avyA00", "1m2tA02", "1hwmA02", "1d0cA01", "1m7vA01", "1a1hA01", "2j7jA03", "1a04A02", "1fseB00", "1fcyA00", "1pzlA00", "1avcA07", "1dk5B01", "1bd8A00", "1s70B01", "1atgA01", "1pc3A01", "1a2oA01", "2ayzA00", "1au7A02", "1rr7A02", "1arbA01", "1si5H01", "1ufmA00", "1a9xB02", "2nv0A00", "1aepA00", "1h6gA02", "1a4iB01", "1sc6A01", "2y1eA01", "1cf7B00", "1a32A00", "1go3F02", "3broD00", "1tnsA00", "2xblD00", "1a3qA01", "1g4mA01", "1a04A01", "2wjwA01", "1a02F00", "1mslA02" };
 			const auto all_vs_all_lasm = load_and_scan{
-				protein_list_loader{ protein_source_from_pdb(), the_dir, all_vs_all_ids },
-				protein_list_loader{ protein_source_from_pdb(), the_dir, all_vs_all_ids },
+				protein_list_loader{ protein_from_pdb(), the_dir, all_vs_all_ids },
+				protein_list_loader{ protein_from_pdb(), the_dir, all_vs_all_ids },
 				all_vs_all{}
 			}.get_load_and_scan_metrics();
 

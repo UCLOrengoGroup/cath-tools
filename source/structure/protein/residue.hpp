@@ -100,9 +100,10 @@ namespace cath {
 
 		void initialise();
 
-		void set_amino_acid(const amino_acid &);
-		void set_residue_sec_struc_number(const size_t &);
-		void set_sec_struc_type(const sec_struc_type &);
+		residue & set_amino_acid(const amino_acid &);
+		residue & set_residue_sec_struc_number(const size_t &);
+		residue & set_sec_struc_type(const sec_struc_type &);
+		residue & set_access(const size_t &);
 
 		const residue_id & get_pdb_residue_id() const;
 		amino_acid get_amino_acid() const;

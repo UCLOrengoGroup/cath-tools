@@ -172,6 +172,15 @@ namespace cath {
 
 	residue_id_vec get_residue_ids(const protein &);
 
+	void set_accessibilities(protein &,
+	                         const size_vec &);
+
+	void set_accessibilities(protein &,
+	                         const doub_vec &);
+
+	void set_sec_struc_types(protein &,
+	                         const sec_struc_type_vec &);
+
 	void wipe_sec_strucs_of_residues(protein &);
 
 	void label_residues_with_sec_strucs(protein &,

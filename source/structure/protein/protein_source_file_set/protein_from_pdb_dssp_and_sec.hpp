@@ -1,5 +1,5 @@
 /// \file
-/// \brief The protein_source_from_pdb_dssp_and_sec class header
+/// \brief The protein_from_pdb_dssp_and_sec class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -27,7 +27,7 @@
 namespace cath {
 
 /// \brief Concrete protein_source_file_set for reading each protein from a PDB file, a DDSP file and a sec file
-	class protein_source_from_pdb_dssp_and_sec final : public protein_source_file_set {
+	class protein_from_pdb_dssp_and_sec final : public protein_source_file_set {
 	private:
 		/// \brief Whether or not to limit the protein to residues that are found in the DSSP file
 		file::dssp_skip_policy the_dssp_skip_policy;
@@ -38,12 +38,14 @@ namespace cath {
 
 		virtual protein_file_combn do_get_protein_file_combn() const override final;
 
+		virtual bool do_makes_ssap_ready_protein() const override final;
+
 		virtual protein do_read_files(const file::data_file_path_map &,
 		                              const std::string &,
 		                              std::ostream &) const override final;
 
 	public:
-		explicit protein_source_from_pdb_dssp_and_sec(const file::dssp_skip_policy & = file::dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES);
+		explicit protein_from_pdb_dssp_and_sec(const file::dssp_skip_policy & = file::dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES);
 	};
 
 } // namespace cath

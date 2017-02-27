@@ -24,7 +24,7 @@
 #include "common/file/simple_file_read_write.hpp"
 #include "file/options/data_dirs_spec.hpp"
 #include "structure/protein/protein.hpp"
-#include "structure/protein/protein_source_file_set/protein_source_from_pdb_dssp_and_sec.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb_dssp_and_sec.hpp"
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 ////		std::mt19937 rng{ std::random_device{}() };
 ////		std::shuffle( ::std::begin( ids ), ::std::end( ids ), rng );
 //		cerr << "Attempting to load PDB, DSSP and SEC for " << id << "\n";
-//		protein_source_from_pdb_dssp_and_sec{}.read_files(
+//		protein_from_pdb_dssp_and_sec{}.read_files(
 //			the_data_dirs,
 //			id,
 //			cerr
