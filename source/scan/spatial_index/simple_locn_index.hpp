@@ -80,6 +80,38 @@ namespace cath {
 		        return arg_locn_index.view_z;
 		}
 
+		/// \brief Make a coord from the specified simple_locn_index
+		///
+		/// \relates simple_locn_index
+		inline geom::coord get_coord(const simple_locn_index &arg_locn_index ///< The simple_locn_index to query
+		                             ) {
+			return {
+				get_view_x( arg_locn_index ),
+				get_view_y( arg_locn_index ),
+				get_view_z( arg_locn_index )
+			};
+		}
+
+		/// \brief Return whether the two specified full_hits are identical
+		///
+		/// \relates simple_locn_index
+		inline bool operator==(const simple_locn_index &arg_locn_index_lhs, ///< The first  simple_locn_index to compare
+		                       const simple_locn_index &arg_locn_index_rhs  ///< The second simple_locn_index to compare
+		                       ) {
+			return (
+				get_view_x( arg_locn_index_lhs ) == get_view_x( arg_locn_index_rhs )
+				&&
+				get_view_y( arg_locn_index_lhs ) == get_view_y( arg_locn_index_rhs )
+				&&
+				get_view_z( arg_locn_index_lhs ) == get_view_z( arg_locn_index_rhs )
+				&&
+				arg_locn_index_lhs.index         == arg_locn_index_rhs.index
+			);
+		}
+
+		/// \brief Get the squared distance between the two specified simple_locn_index values
+		///
+		/// \relates simple_locn_index
 		inline detail::view_base_type get_squared_distance(const simple_locn_index &arg_locn_index_a, ///< The simple_locn_index to query
 		                                                   const simple_locn_index &arg_locn_index_b  ///< The simple_locn_index to query
 		                                                   ) {
@@ -104,20 +136,24 @@ namespace cath {
 			);
 		}
 
-		inline bool are_within_distance(const simple_locn_index &arg_locn_index_a, ///< The simple_locn_index to query
-		                                const simple_locn_index &arg_locn_index_b, ///< The simple_locn_index to query
-		                                const float &arg_max_dist,                 ///< TODOCUMENT
-		                                const float &arg_max_squared_dist          ///< TODOCUMENT
-		                                ) {
-			const auto dist_x = get_view_x( arg_locn_index_a ) - get_view_x( arg_locn_index_b );
+		/// \brief Return whether the two specified simple_locn_index values are within the specified distance
+		///        (and associated squared distance)
+		///
+		/// \relates simple_locn_index
+		inline bool are_within_distance_doub(const simple_locn_index &arg_locn_index_a,    ///< The simple_locn_index to query
+		                                     const simple_locn_index &arg_locn_index_b,    ///< The simple_locn_index to query
+		                                     const double            &arg_max_dist,        ///< The distance to which to compare
+		                                     const double            &arg_max_squared_dist ///< The squared distance to which to compare
+		                                     ) {
+			const auto dist_x = debug_numeric_cast<double>( get_view_x( arg_locn_index_a ) ) - debug_numeric_cast<double>( get_view_x( arg_locn_index_b ) );
 			if ( dist_x > arg_max_dist ) {
 				return false;
 			}
-			const auto dist_y = get_view_y( arg_locn_index_a ) - get_view_y( arg_locn_index_b );
+			const auto dist_y = debug_numeric_cast<double>( get_view_y( arg_locn_index_a ) ) - debug_numeric_cast<double>( get_view_y( arg_locn_index_b ) );
 			if ( dist_y > arg_max_dist ) {
 				return false;
 			}
-			const auto dist_z = get_view_z( arg_locn_index_a ) - get_view_z( arg_locn_index_b );
+			const auto dist_z = debug_numeric_cast<double>( get_view_z( arg_locn_index_a ) ) - debug_numeric_cast<double>( get_view_z( arg_locn_index_b ) );
 			if ( dist_z > arg_max_dist ) {
 				return false;
 			}
@@ -131,6 +167,8 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
+		///
+		/// \relates simple_locn_index
 		inline simple_locn_index make_simple_locn_index(const geom::coord  &arg_coord, ///< TODOCUMENT
 		                                                const unsigned int &arg_index  ///< TODOCUMENT
 		                                                ) {

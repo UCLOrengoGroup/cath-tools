@@ -58,6 +58,8 @@ namespace cath {
 				/// \brief The radius to use in DSSP accessibility calculations for a water atom
 				static constexpr double RADIUS_WATER     = 1.40;
 
+				/// \brief The maximum distance between two atoms that could possible affect each other's accessibilities
+				static constexpr double MAX_ATOM_DIST    = RADIUS_CA + RADIUS_CA + RADIUS_WATER + RADIUS_WATER;
 			};
 
 		} // namespace detail
@@ -94,6 +96,8 @@ namespace cath {
 
 		doub_vec calc_accessibilities(const file::pdb &,
 		                              const size_t & = detail::dssp_ball_constants::NUMBER);
+
+		doub_vec calc_accessibilities_with_scanning(const file::pdb &);
 
 	} // namespace sec
 } // namespace cath

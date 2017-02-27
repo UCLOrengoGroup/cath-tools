@@ -89,37 +89,39 @@ BOOST_AUTO_TEST_CASE(gets_eg_res_accessibility_surface_area_correct) {
 	BOOST_CHECK_EQUAL  ( round( get_accessibility_surface_area( the_res, parsed_pdb ) ), 138 );
 }
 
-// // Too slow at present....
-// BOOST_AUTO_TEST_CASE(gets_pdb_accessibility_surface_area_correct) {
-// 	const auto     parsed_pdb        = read_pdb_file( global_test_constants::EXAMPLE_A_PDB_FILENAME() );
-	
-// 	const size_vec expected_accesses = {
-// 		 231, 150, 190, 138,  58, 177,  74, 137,   2,   3,
-// 		   0,  16,   8,   3,  12,   4,  17,   0,   0,   0,
-// 		   0,   0,   3,  16,   0,  11, 149,  85,  46,  15,
-// 		  50,   4,  45,   0,   1,   5, 120,  14,  10,   9,
-// 		 116,  32,  69,  93,  25, 178,  80,  37,  77,  15,
-// 		  14, 134,  39,  80,  38, 115,  94,  54,  61, 117,
-// 		  87,  79, 127, 131, 118,   0,  81,  84,  13,  22,
-// 		 105,   1,  10, 124,  23,  30, 147, 194, 140,
-// 		   2,  25, 123,  76,   6,  56,  99,   2,  13, 126,
-// 		  40,   0, 131, 145,  81,  51,   9,  76,  59,  71,
-// 		 123,  60,  81,  38,  82,  12,  32,  73,  54,   0,
-// 		   7,  82,  42,   7,  92,   1,   0,   0,  13,  11,
-// 		  40,  41, 169,  39,  37, 190, 106, 291,  86,  43,
-// 		  13,  77,  21,  94,  46,  50,  66,   8,  61,   3,
-// 		  63,  31,  41,  87, 119, 103,  28, 114,  98,  12,
-// 		 100,  68, 200,  31,  84,  48, 202,  82,  68, 210,
-// 		 137,  96, 105,   0,   0,   6,   0,   6,   1,  50,
-// 		  37,  17, 121,  84,   6,  11,  30,   8,   7,   0,
-// 		  52,   1,   0,   0,  84,  42,   0,   0, 107,  52,
-// 		   0,  37,  79,   4,  18, 124, 159, 101,  41, 130,
-// 	};
-// 	const size_vec get_accesses_raw  = transform_build<size_vec>(
-// 		calc_accessibilities( parsed_pdb ),
-// 		[] (const double &x) { return numeric_cast<size_t>( round( x ) ); }
-// 	);
-// 	BOOST_CHECK_EQUAL_RANGES( get_accesses_raw, expected_accesses );
-// }
+BOOST_AUTO_TEST_CASE(gets_pdb_accessibility_surface_area_correct) {
+	const auto     parsed_pdb        = read_pdb_file( global_test_constants::EXAMPLE_A_PDB_FILENAME() );
+	const size_vec expected_accesses = {
+		 231, 150, 190, 138,  58, 177,  74, 137,   2,   3,
+		   0,  16,   8,   3,  12,   4,  17,   0,   0,   0,
+		   0,   0,   3,  16,   0,  11, 149,  85,  46,  15,
+		  50,   4,  45,   0,   1,   5, 120,  14,  10,   9,
+		 116,  32,  69,  93,  25, 178,  80,  37,  77,  15,
+		  14, 134,  39,  80,  38, 115,  94,  54,  61, 117,
+		  87,  79, 127, 131, 118,   0,  81,  84,  13,  22,
+		 105,   1,  10, 124,  23,  30, 147, 194, 140,
+		   2,  25, 123,  76,   6,  56,  99,   2,  13, 126,
+		  40,   0, 131, 145,  81,  51,   9,  76,  59,  71,
+		 123,  60,  81,  38,  82,  12,  32,  73,  54,   0,
+		   7,  82,  42,   7,  92,   1,   0,   0,  13,  11,
+		  40,  41, 169,  39,  37, 190, 106, 291,  86,  43,
+		  13,  77,  21,  94,  46,  50,  66,   8,  61,   3,
+		  63,  31,  41,  87, 119, 103,  28, 114,  98,  12,
+		 100,  68, 200,  31,  84,  48, 202,  82,  68, 210,
+		 137,  96, 105,   0,   0,   6,   0,   6,   1,  50,
+		  37,  17, 121,  84,   6,  11,  30,   8,   7,   0,
+		  52,   1,   0,   0,  84,  42,   0,   0, 107,  52,
+		   0,  37,  79,   4,  18, 124, 159, 101,  41, 130,
+	};
+
+	// const auto     parsed_pdb        = read_pdb_file( "/cath-tools/refine_stuff/really_long/1u6gC00" );
+	// const size_vec expected_accesses = { 1 };
+
+	const size_vec get_accesses_raw  = transform_build<size_vec>(
+		calc_accessibilities_with_scanning( parsed_pdb ),
+		[] (const double &x) { return numeric_cast<size_t>( round( x ) ); }
+	);
+	BOOST_CHECK_EQUAL_RANGES( get_accesses_raw, expected_accesses );
+}
 
 BOOST_AUTO_TEST_SUITE_END()

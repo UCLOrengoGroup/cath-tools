@@ -21,6 +21,8 @@
 #include "dssp_accessibility.hpp"
 
 #include <boost/math/constants/constants.hpp>
+#include <boost/range/algorithm/count.hpp>
+#include <boost/range/algorithm_ext/for_each.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
@@ -29,6 +31,8 @@
 #include "common/debug_numeric_cast.hpp"
 #include "common/size_t_literal.hpp"
 #include "file/pdb/pdb.hpp"
+#include "scan/detail/scan_index_store/scan_index_store_helper.hpp"
+#include "scan/spatial_index/spatial_index.hpp"
 #include "structure/geometry/coord.hpp"
 
 #include <cmath>
@@ -37,13 +41,19 @@ using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
+using namespace cath::scan;
+using namespace cath::scan::detail;
 using namespace cath::sec::detail;
 
 using boost::irange;
 using boost::math::constants::pi;
+using boost::none;
+using boost::numeric_cast;
+using boost::range::count;
 using std::pair;
 using std::plus;
 using std::sqrt;
+using std::vector;
 
 constexpr size_t dssp_ball_constants::NUMBER;
 constexpr double dssp_ball_constants::RADIUS_N;
@@ -52,6 +62,7 @@ constexpr double dssp_ball_constants::RADIUS_C;
 constexpr double dssp_ball_constants::RADIUS_O;
 constexpr double dssp_ball_constants::RADIUS_SIDE_ATOM;
 constexpr double dssp_ball_constants::RADIUS_WATER;
+constexpr double dssp_ball_constants::MAX_ATOM_DIST;
 
 /// \brief Make a load of points on teh surface of a unit sphere for accessibility calculations
 coord_vec cath::sec::make_dssp_ball_points(const size_t &arg_number ///< The input number (just copying DSSP code here; the actual number of points is 2 * this + 1)
@@ -200,5 +211,129 @@ doub_vec cath::sec::calc_accessibilities(const pdb    &arg_pdb,   ///< The PDB i
 	return transform_build<doub_vec>(
 		arg_pdb,
 		[&] (const pdb_residue &x) { return get_accessibility_surface_area( x, arg_pdb, arg_number ); }
+	);
+}
+
+// /// \brief TODOCUMENT
+// enum class access_point_result : bool {
+// 	VACANT, ///< TODOCUMENT
+// 	OVERLAP ///< TODOCUMENT
+// };
+
+/// \brief Make a vector of all simple_locn_index values corresponding to the specified PDB
+vector<simple_locn_index> make_all_atom_entries(const pdb &arg_pdb ///< The PDB to query
+                                                ) {
+	vector<simple_locn_index> results;
+	for (const pdb_residue &the_residue : arg_pdb) {
+		for (const pdb_atom &the_atom : the_residue) {
+			results.push_back(
+				make_simple_locn_index(
+					the_atom.get_coord(),
+					static_cast<unsigned int>( get_coarse_element_type( the_atom ) )
+				)
+			);
+		}
+	}
+	return results;
+}
+
+/// \brief Build a lattice of the specified PDB's atoms using the specified cell size and maximum distance
+template <sod Sod>
+auto make_access_atom_lattice(const pdb   &arg_pdb,       ///< The PDB for which the atom should be indesxed
+                              const float &arg_cell_size, ///< The cell size of the lattice
+                              const float &arg_max_dist   ///< The maximum distance between points that lattic should be used to find
+                              ) {
+	const auto keyer = make_res_pair_keyer(
+		simple_locn_x_keyer_part{ arg_cell_size },
+		simple_locn_y_keyer_part{ arg_cell_size },
+		simple_locn_z_keyer_part{ arg_cell_size }
+	);
+
+	const auto all_atom_entries = make_all_atom_entries( arg_pdb );
+
+	using cell_type  = vector< simple_locn_index >;
+	using store_type = scan_index_lattice_store<decltype( keyer )::key_index_tuple_type, cell_type>;
+	auto the_store = empty_store_maker<sod::SPARSE, store_type>{}( all_atom_entries, keyer, simple_locn_crit{ arg_max_dist * arg_max_dist } );
+	for (const auto &data : all_atom_entries) {
+		the_store.push_back_entry_to_cell(
+			keyer.make_key( data ),
+			data
+		);
+	}
+	return the_store;
+}
+
+/// \brief Calculate the accessibilities using scanning
+doub_vec cath::sec::calc_accessibilities_with_scanning(const pdb &arg_pdb ///< The PDB to query
+                                                       ) {
+	constexpr float MAX_DIST  = static_cast<float>( dssp_ball_constants::MAX_ATOM_DIST ); // 6.54
+	constexpr float CELL_SIZE = 13.0;
+	const auto the_store = make_access_atom_lattice<sod::SPARSE>( arg_pdb, CELL_SIZE, MAX_DIST );
+
+	const auto keyer = make_res_pair_keyer(
+		simple_locn_x_keyer_part{ CELL_SIZE },
+		simple_locn_y_keyer_part{ CELL_SIZE },
+		simple_locn_z_keyer_part{ CELL_SIZE }
+	);
+
+	const coord_vec dssp_ball_points = make_dssp_ball_points();
+	using coord_opt = boost::optional<coord>;
+	using coord_opt_vec = std::vector<coord_opt>;
+	coord_opt_vec ball_points( dssp_ball_points.size() );
+
+	return transform_build<doub_vec>(
+		arg_pdb,
+		[&] (const pdb_residue &this_residue) {
+			return accumulate_proj(
+				this_residue,
+				0.0,
+				plus<>{},
+				[&] (const pdb_atom &this_atom) {
+					const coord  &this_coord          = this_atom.get_coord();
+					const double  this_radius         = get_dssp_access_radius_with_water( this_atom );
+					const double  sphere_surface_area = 4.0 * pi<double>() * this_radius * this_radius;
+
+					transform(
+						dssp_ball_points,
+						std::begin( ball_points ),
+						[&] (const coord &x) { return make_optional( this_coord + ( this_radius * x ) ); }
+					);
+
+					const auto data = make_simple_locn_index(
+						this_atom.get_coord(),
+						static_cast<unsigned int>( get_coarse_element_type( this_atom ) )
+					);
+
+					for (const auto &key : common::cross( keyer.make_close_keys( data, simple_locn_crit{ MAX_DIST * MAX_DIST } ) ) ) {
+						if ( the_store.has_matches( key ) ) {
+							for (const simple_locn_index &eg : the_store.find_matches( key ) ) {
+								if ( data == eg ) {
+									continue;
+								}
+								const double  that_radius     = get_dssp_access_radius_with_water( static_cast<coarse_element_type>( eg.index ) );
+								const double  that_radius_sq  = that_radius * that_radius;
+								const double  total_radius    = this_radius + that_radius;
+								const double  total_radius_sq = total_radius * total_radius;
+								if ( are_within_distance_doub( data, eg, total_radius, total_radius_sq ) ) {
+									const coord that_point = get_coord( eg );
+									for (auto &ball_point : ball_points) {
+										if ( ball_point ) {
+											if ( squared_distance_between_points( *ball_point, that_point ) < that_radius_sq ) {
+												ball_point = none;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					return
+						  sphere_surface_area
+						* ( numeric_cast<double>( ball_points.size() ) - numeric_cast<double>( count( ball_points, none ) ) )
+						/ numeric_cast<double>( ball_points.size() );
+				}
+			);
+		}
 	);
 }
