@@ -22,7 +22,6 @@
 
 #include <boost/math/constants/constants.hpp>
 #include <boost/range/algorithm/count.hpp>
-#include <boost/range/algorithm_ext/for_each.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
