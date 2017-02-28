@@ -99,11 +99,11 @@ ostream & cath::operator<<(ostream                  &arg_os,                ///<
 			break;
 		}
 		case( protein_file_combn::PDB_DSSP_AND_CALC ) : {
-			arg_os << "PDB_DSSP (**EXPERIMENTAL**)";
+			arg_os << "PDB_DSSP";
 			break;
 		}
 		case( protein_file_combn::PDB_AND_CALC ) : {
-			arg_os << "PDB (**EXPERIMENTAL**)";
+			arg_os << "PDB";
 			break;
 		}
 	}

@@ -53,7 +53,7 @@ namespace cath {
 
 			static constexpr bool                        DEF_BOOL     { false                                       }; ///< (Default) default for bool_switch options
 			static constexpr sup::sup_pdbs_script_policy DEF_SCRIPT   { sup::sup_pdbs_script_policy::LEAVE_RAW_PDBS }; ///< (Default) default for whether to write a short Rasmol script with superposed PDBs
-			static constexpr protein_file_combn          DEF_PROT_SRCS{ protein_file_combn::PDB_DSSP_SEC            }; ///< (Default) default for protein_source_files options
+			static constexpr protein_file_combn          DEF_PROT_SRCS{ protein_file_combn::PDB_AND_CALC            }; ///< (Default) default for protein_source_files options
 			static constexpr double                      DEF_REFAST   { 65.0                                        }; ///< Default maximum fast SSAP score to trigger running a second fast SSAP with looser cutoffs
 			static constexpr double                      DEF_RESLOW   { 75.0                                        }; ///< Default maximum (best) fast SSAP score to trigger running a slow SSAP
 			static constexpr double                      DEF_FILE_SC  { 0.0                                         }; ///< Default minimum final SSAP score for outputting alignment/superposition files
