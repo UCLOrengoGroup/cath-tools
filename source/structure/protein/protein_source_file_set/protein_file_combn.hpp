@@ -29,10 +29,10 @@ namespace cath { class protein_source_file_set; }
 namespace cath {
 	class protein_source_file_set;
 
-    /// \brief Represent the different sets of files from which proteins can be read
-    ///
-    /// This is a mirror of the protein_source_file_set class hierarchy that is useful when
-    /// handling program_options
+	/// \brief Represent the different sets of files from which proteins can be read
+	///
+	/// This is a mirror of the protein_source_file_set class hierarchy that is useful when
+	/// handling program_options
 	enum class protein_file_combn : char {
 		WOLF_SEC,          ///< Reading a protein from Wolf and sec files
 		PDB,               ///< Reading a protein from PDB file
@@ -43,11 +43,11 @@ namespace cath {
 
 	std::unique_ptr<const protein_source_file_set> get_protein_source_file_set(const protein_file_combn &);
 
-    std::istream & operator>>(std::istream &,
-                              protein_file_combn &);
+	std::istream & operator>>(std::istream &,
+	                          protein_file_combn &);
 
-    std::ostream & operator<<(std::ostream &,
-                              const protein_file_combn &);
+	std::ostream & operator<<(std::ostream &,
+	                          const protein_file_combn &);
 } // namespace cath
 
 #endif

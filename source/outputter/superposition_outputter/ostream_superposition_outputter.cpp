@@ -39,8 +39,8 @@ unique_ptr<superposition_outputter> ostream_superposition_outputter::do_clone() 
 
 /// \brief TODOCUMENT
 void ostream_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-		                                                      ostream                     &arg_ostream                ///< TODOCUMENT
-		                                                      ) const {
+                                                              ostream                     &arg_ostream                ///< TODOCUMENT
+                                                              ) const {
 	write_superposed_pdbs_to_ostream(
 		arg_ostream,
 		arg_superposition_context.get_superposition_cref(),
