@@ -32,6 +32,7 @@
 #include "file/pdb/dssp_skip_policy.hpp"
 #include "file/pdb/pdb_base.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "file/pdb/pdb_write_mode.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 #include <iostream>
@@ -103,7 +104,8 @@ namespace cath {
 		pdb_list read_end_separated_pdb_files(std::istream &);
 		std::ostream & write_pdb_file(std::ostream &,
 		                              const pdb &,
-		                              const chop::regions_limiter & = {} );
+		                              const chop::regions_limiter & = {},
+		                              const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
 
 		amino_acid_vec get_amino_acid_list(const pdb &);
 

@@ -25,6 +25,7 @@
 
 #include "chopping/region/regions_limiter.hpp"
 #include "common/path_type_aliases.hpp"
+#include "file/pdb/pdb_write_mode.hpp"
 #include "superposition/io/sup_pdbs_script_policy.hpp"
 #include "superposition/superposition.hpp"
 
@@ -68,14 +69,15 @@ namespace cath {
 		                                               file::pdb,
 		                                               const size_t &,
 		                                               const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                               const chop::regions_limiter & = chop::regions_limiter{} );
+		                                               const chop::regions_limiter & = chop::regions_limiter{},
+		                                               const file::pdb_write_mode & = file::pdb_write_mode::ONLY_OR_LAST_PDB);
 
 		std::ostream & write_superposed_pdbs_to_ostream(std::ostream &,
-		                                               const superposition &,
-		                                               const file::pdb_list,
-		                                               const sup_pdbs_script_policy &,
-		                                               const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                               const chop::regions_limiter & = chop::regions_limiter{});
+		                                                const superposition &,
+		                                                const file::pdb_list,
+		                                                const sup_pdbs_script_policy &,
+		                                                const chain_relabel_policy & = chain_relabel_policy::LEAVE,
+		                                                const chop::regions_limiter & = chop::regions_limiter{});
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const boost::filesystem::path &,

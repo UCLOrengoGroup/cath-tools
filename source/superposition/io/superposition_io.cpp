@@ -168,13 +168,14 @@ void cath::sup::write_xml_sup_filename(const superposition  &arg_superposition, 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-ostream & cath::sup::write_superposed_pdb_to_ostream(ostream                    &arg_os,             ///< TODOCUMENT
-	                                                 const superposition        &arg_superposition,  ///< TODOCUMENT
-	                                                 pdb                         arg_pdb,            ///< TODOCUMENT
-	                                                 const size_t               &arg_chain_index,    ///< TODOCUMENT
-	                                                 const chain_relabel_policy &arg_relabel_chain,  ///< TODOCUMENT
-	                                                 const regions_limiter      &arg_regions_limiter ///< Optional specification of regions to which the written records should be restricted
-	                                                 ) {
+ostream & cath::sup::write_superposed_pdb_to_ostream(ostream                    &arg_os,              ///< TODOCUMENT
+                                                     const superposition        &arg_superposition,   ///< TODOCUMENT
+                                                     pdb                         arg_pdb,             ///< TODOCUMENT
+                                                     const size_t               &arg_chain_index,     ///< TODOCUMENT
+                                                     const chain_relabel_policy &arg_relabel_chain,   ///< TODOCUMENT
+                                                     const regions_limiter      &arg_regions_limiter, ///< Optional specification of regions to which the written records should be restricted
+                                                     const pdb_write_mode       &arg_pdb_write_mode   ///< Whether this is the only/last part of the PDB file
+                                                     ) {
 	// Translate PDB
 	arg_pdb += arg_superposition.get_translation_of_index( arg_chain_index );
 
@@ -197,7 +198,7 @@ ostream & cath::sup::write_superposed_pdb_to_ostream(ostream                    
 		arg_pdb.set_chain_label( superposition::SUPERPOSITION_CHAIN_LABELS[ arg_chain_index ] );
 	}
 
-	write_pdb_file( arg_os, arg_pdb, arg_regions_limiter );
+	write_pdb_file( arg_os, arg_pdb, arg_regions_limiter, arg_pdb_write_mode );
 	return arg_os;
 }
 
@@ -235,8 +236,16 @@ exit
 
 	// Translate each PDB to midpoint, based on CoG of equivalent positions
 	// (This is important for structures with low overlap)
-	for (size_t pdb_ctr = 0; pdb_ctr < num_entries; ++pdb_ctr) {
-		write_superposed_pdb_to_ostream( arg_os, arg_superposition, arg_pdbs[pdb_ctr], pdb_ctr, arg_relabel_chain, arg_regions_limiter );
+	for (const size_t pdb_ctr : irange( 0_z, num_entries ) ) {
+		write_superposed_pdb_to_ostream(
+			arg_os,
+			arg_superposition,
+			arg_pdbs[pdb_ctr],
+			pdb_ctr,
+			arg_relabel_chain,
+			arg_regions_limiter,
+			( ( pdb_ctr + 1 == num_entries ) ? pdb_write_mode::ONLY_OR_LAST_PDB : pdb_write_mode::MORE_TO_FOLLOW )
+		);
 	}
 
 	return arg_os;

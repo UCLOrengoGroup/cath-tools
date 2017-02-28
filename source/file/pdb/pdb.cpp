@@ -495,9 +495,10 @@ pdb_list cath::file::read_end_separated_pdb_files(istream &arg_in_stream ///< TO
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-ostream & cath::file::write_pdb_file(ostream               &arg_os,             ///< TODOCUMENT
-                                     const pdb             &arg_pdb,            ///< TODOCUMENT
-                                     const regions_limiter &arg_regions_limiter ///< Optional specification of regions to which the written records should be restricted
+ostream & cath::file::write_pdb_file(ostream               &arg_os,              ///< TODOCUMENT
+                                     const pdb             &arg_pdb,             ///< TODOCUMENT
+                                     const regions_limiter &arg_regions_limiter, ///< Optional specification of regions to which the written records should be restricted
+                                     const pdb_write_mode  &arg_pdb_write_mode   ///< Whether this is the only/last part of the PDB file
                                      ) {
 	regions_limiter the_regions_limiter{ arg_regions_limiter };
 	const auto &num_residues = arg_pdb.get_num_residues();
@@ -532,7 +533,11 @@ ostream & cath::file::write_pdb_file(ostream               &arg_os,             
 	for (const pdb_residue &the_residue : arg_pdb.get_post_ter_residues() ) {
 		write_pdb_file_entry( arg_os, the_residue );
 	}
-	arg_os << "END   \n";
+
+	// If this is the only or last PDB then "END   " the file
+	if ( arg_pdb_write_mode == pdb_write_mode::ONLY_OR_LAST_PDB ) {
+		arg_os << "END   \n";
+	}
 
 	return arg_os;
 }
