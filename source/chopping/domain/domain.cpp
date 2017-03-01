@@ -18,19 +18,28 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/range.hpp>
+#include <boost/algorithm/string/join.hpp>
+#include <boost/range/adaptor/transformed.hpp>
+#include <boost/range/algorithm/equal.hpp>
 
-#include "common/boost_addenda/range/front.hpp"
 #include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
+#include "common/boost_addenda/range/front.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
-using namespace cath;
+#include <string>
+
 using namespace cath::chop;
 using namespace cath::common;
+using namespace cath;
+using namespace std::literals::string_literals;
 
+using boost::adaptors::transformed;
+using boost::algorithm::join;
 using boost::none;
+using boost::range::equal;
+using std::ostream;
 using std::string;
 
 /// \brief TODOCUMENT
@@ -107,6 +116,19 @@ domain::const_iterator domain::end() const {
 	return common::cend( segments );
 }
 
+/// \brief Return whether the two specified domains are identical
+///
+/// \relates domain
+bool cath::chop::operator==(const domain &arg_lhs, ///, The first  domain to compare
+                            const domain &arg_rhs  ///, The second domain to compare
+                            ) {
+	return (
+		arg_lhs.get_opt_domain_id() == arg_rhs.get_opt_domain_id()
+		&&
+		equal( arg_lhs, arg_rhs )
+	);
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates domain
@@ -134,5 +156,35 @@ residue_locating_opt cath::chop::get_residue_locating(const domain &arg_domain /
 	}
 	// Otherwise return the residue_locating method of the first segment
 	return get_residue_locating( front( arg_domain ) );
+}
+
+
+/// \brief Generate a string describing the specified domain
+///
+/// \relates domain
+string cath::chop::to_string(const domain &arg_domain ///< The domain to describe
+                             ) {
+	return "domain["
+		+ (
+			has_domain_id( arg_domain )
+			? ( "name:" + get_domain_id( arg_domain ) + ", " )
+			: ""s
+		)
+		+ join(
+			arg_domain
+				| transformed( [] (const region &x) { return to_string( x ); } ),
+			","
+		)
+		+ "]";
+}
+
+/// \brief Insert a description of the specified domain into the specified ostream
+///
+/// \relates domain
+ostream & cath::chop::operator<<(ostream      &arg_os,    ///< The ostream into which the description should be inserted
+                                 const domain &arg_domain ///< The domain to describe
+                                 ) {
+	arg_os << to_string( arg_domain );
+	return arg_os;
 }
 

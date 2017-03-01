@@ -1300,6 +1300,11 @@ set(
 )
 
 set(
+	TESTSOURCES_CHOPPING_DOMAIN
+		chopping/domain/domain_test.cpp
+)
+
+set(
 	TESTSOURCES_CHOPPING_REGION
 		chopping/region/region_test.cpp
 		chopping/region/regions_limiter_test.cpp
@@ -1309,6 +1314,7 @@ set(
 	TESTSOURCES_CHOPPING
 		${TESTSOURCES_CHOPPING_CHOPPING_FORMAT}
 		chopping/chopping_test.cpp
+		${TESTSOURCES_CHOPPING_DOMAIN}
 		${TESTSOURCES_CHOPPING_REGION}
 )
 

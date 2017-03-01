@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CHOPPING_DOMAIN_DOMAIN_H
 #define _CATH_TOOLS_SOURCE_CHOPPING_DOMAIN_DOMAIN_H
 
+#include <boost/operators.hpp>
 #include <boost/optional.hpp>
 
 #include "chopping/chopping_type_aliases.hpp"
@@ -35,7 +36,7 @@ namespace cath {
 		/// Invariants:
 		///  * all segments must have the same residue_locating
 		///     (ie whether they locate their residues by names and/or indices)
-		class domain final {
+		class domain final : private boost::equality_comparable<domain>  {
 		private:
 			/// \brief TODOCUMENT
 			region_vec segments;
@@ -66,10 +67,17 @@ namespace cath {
 			const_iterator end() const;
 		};
 
+		bool operator==(const domain &,
+		                const domain &);
+
 		bool has_domain_id(const domain &);
 		std::string get_domain_id(const domain &);
 
 		residue_locating_opt get_residue_locating(const domain &);
+
+		std::string to_string(const domain &);
+		std::ostream & operator<<(std::ostream &,
+		                          const domain &);
 
 	} // namespace chop
 } // namespace cath
