@@ -365,7 +365,7 @@ string cath::chop::to_string(const region &arg_region ///< The region to describ
 		parts.push_back( "start_idx:"  + std::to_string( get_start_index ( arg_region ) ) );
 		parts.push_back( "stop_idx:"   + std::to_string( get_stop_index  ( arg_region ) ) );
 	}
-	return "region{ " + join( parts, ", " ) + " }";
+	return "region[ " + join( parts, ", " ) + " ]";
 }
 
 /// \brief Insert a description of the specified region into the specified ostream

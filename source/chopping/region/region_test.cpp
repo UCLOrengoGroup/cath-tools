@@ -31,10 +31,10 @@ using namespace cath::common::test;
 BOOST_AUTO_TEST_SUITE(region_test_suite)
 
 BOOST_AUTO_TEST_CASE(to_string_works) {
-	BOOST_CHECK_EQUAL( to_string( make_simple_region( 'A', 121, 232 ) ), "region{ chain:A, start_name:121, stop_name:232 }" );
-	BOOST_CHECK_EQUAL( to_string( make_simple_region( 121, 232      ) ), "region{ start_idx:121, stop_idx:232 }"            );
+	BOOST_CHECK_EQUAL( to_string( make_simple_region( 'A', 121, 232 ) ), "region[ chain:A, start_name:121, stop_name:232 ]" );
+	BOOST_CHECK_EQUAL( to_string( make_simple_region( 121, 232      ) ), "region[ start_idx:121, stop_idx:232 ]"            );
 
-	BOOST_CHECK_EQUAL( to_string( make_simple_region( 'A'           ) ), "region{ chain:A }"                                );
+	BOOST_CHECK_EQUAL( to_string( make_simple_region( 'A'           ) ), "region[ chain:A ]"                                );
 }
 
 BOOST_AUTO_TEST_CASE(equality_works) {
