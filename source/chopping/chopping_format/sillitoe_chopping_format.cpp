@@ -26,10 +26,8 @@
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
 #include <cctype>
-#include <iostream> // ***** TEMPORARY *****
 
 using namespace cath;
 using namespace cath::chop;
@@ -39,6 +37,7 @@ using boost::string_ref;
 using std::find;
 using std::isdigit;
 using std::next;
+using std::pair;
 using std::prev;
 using std::string;
 using std::unique_ptr;
@@ -48,19 +47,80 @@ unique_ptr<chopping_format> sillitoe_chopping_format::do_clone() const {
 	return { make_uptr_clone( *this ) };
 }
 
-/// \brief TODOCUMENT
+/// \brief Return whether this format represents fragments
 bool sillitoe_chopping_format::do_represents_fragments() const {
 	return false;
+}
+
+/// \brief Parse a domain string to the start of the regions information
+///
+/// \returns A pair of:
+///           * a (possibly empty) string_ref containing any name
+///           * an iterator to the start of the regions part of the string
+pair<string_ref, str_citr> sillitoe_chopping_format::parse_to_start_of_regions(const string &arg_domain_chopping_string ///< The domain chopping string to parse
+                                                                               ) {
+	const auto begin_itr = common::cbegin( arg_domain_chopping_string );
+	const auto end_itr   = common::cend  ( arg_domain_chopping_string );
+
+	// Check the first character and return if not 'D'
+	if ( arg_domain_chopping_string.empty() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format domain from an empty"));
+	}
+	if ( arg_domain_chopping_string.front() != 'D' ) {
+		return make_pair( string_ref{}, begin_itr );
+	}
+
+	// Check the second character and return if not '['
+	if ( arg_domain_chopping_string.size() <= 1 ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format domain from a 'D'-prefixed string with no other characters"));
+	}
+	const auto begin_plus_one_itr = next( begin_itr );
+	if ( *begin_plus_one_itr != '[' ) {
+		return make_pair( string_ref{}, begin_plus_one_itr );
+	}
+
+	// Check the name
+	if ( arg_domain_chopping_string.size() <= 2 ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format domain from a 'D['-prefixed string with no other characters"));
+	}
+	const auto begin_plus_two_itr = next( begin_plus_one_itr );
+	const auto end_of_name_itr = find( begin_plus_two_itr, end_itr, ']' );
+	if ( end_of_name_itr == end_itr ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format domain from a 'D['-prefixed string that has no ']' character to terminate the name"));
+	}
+	const auto start_of_regions_itr = next( end_of_name_itr );
+	if ( start_of_regions_itr == end_itr ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format domain from a 'D['-prefixed string that has no ']' character to terminate the name"));
+	}
+
+	// Return the name and the start of regions part of the string
+	return make_pair( make_string_ref( begin_plus_two_itr, end_of_name_itr ), start_of_regions_itr);
 }
 
 /// \brief TODOCUMENT
 domain sillitoe_chopping_format::do_parse_domain(const string &arg_domain_chopping_string ///< TODOCUMENT
                                                  ) const {
-	std::cerr << "domain_chopping_string is " << arg_domain_chopping_string << "\n";
+	// Parse up to the start of the regions
+	const auto  parsed_start      = parse_to_start_of_regions( arg_domain_chopping_string );
+	const auto &name_str_ref      = parsed_start.first;
+	const auto &regions_begin_itr = parsed_start.second;
+	const auto  end_itr           = common::cend    ( arg_domain_chopping_string );
+	
 
-	BOOST_THROW_EXCEPTION(not_implemented_exception("sillitoe_chopping_format::do_parse_domain()"));
+	// Parse each of the regions
+	region_vec segments;
+	auto region_begin_itr = regions_begin_itr;
+	auto region_end_itr   = find( region_begin_itr, end_itr, ',' );
+	while ( region_begin_itr != end_itr ) {
+		segments.push_back( parse_segment( make_string_ref( region_begin_itr, region_end_itr ) ) );
+		region_begin_itr = ( region_end_itr == end_itr ) ? region_end_itr : next( region_end_itr );
+		region_end_itr   = find( region_begin_itr, end_itr, ',' );
+	}
 
-	return domain( region_vec() );
+	// Return a domain with the parsed segments and the name if one was parsed
+	return name_str_ref.empty()
+		? domain{ segments }
+		: domain{ segments, name_str_ref.to_string() };
 }
 
 /// \brief Parse a segment from the specified segment string

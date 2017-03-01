@@ -38,11 +38,51 @@ BOOST_AUTO_TEST_CASE(throws_on_attempt_to_parse_invalid_segment) {
 	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_segment( "3-C:A" ), invalid_argument_exception );
 }
 
-BOOST_AUTO_TEST_CASE(parses_valid_segment_correctly) {
-	// 1qdm D[1qdmC01]1-191:C  D[1qdmC02]192-247:C,103S-104S:C,248-318:C  F319-1318:C
+BOOST_AUTO_TEST_CASE(parses_valid_segment) {
 	BOOST_CHECK_EQUAL( sillitoe_chopping_format{}.parse_segment( ":R"       ), make_simple_region( 'R'                   ) );
 	BOOST_CHECK_EQUAL( sillitoe_chopping_format{}.parse_segment( "7-232:K"  ), make_simple_region( 'K', 7,      232      ) );
 	BOOST_CHECK_EQUAL( sillitoe_chopping_format{}.parse_segment( "1B-99C:S" ), make_simple_region( 'S', 1, 'B',  99, 'C' ) );
 }
+
+BOOST_AUTO_TEST_CASE(throws_on_attempt_to_parse_invalid_domain) {
+	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_domain( ""     ), invalid_argument_exception );
+	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_domain( "D"    ), invalid_argument_exception );
+	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_domain( "D["   ), invalid_argument_exception );
+	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_domain( "D[A"  ), invalid_argument_exception );
+	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_domain( "D[A]" ), invalid_argument_exception );
+}
+
+BOOST_AUTO_TEST_CASE(parses_single_segment_domain) {
+	const domain expected{ { make_simple_region( 'C', 1, 191 ) } };
+	BOOST_CHECK_EQUAL( sillitoe_chopping_format{}.parse_domain( "1-191:C"  ), expected );
+	BOOST_CHECK_EQUAL( sillitoe_chopping_format{}.parse_domain( "D1-191:C" ), expected );
+}
+
+BOOST_AUTO_TEST_CASE(parses_multi_segment_domain) {
+	const domain expected{ {
+		make_simple_region( 'C', 192,      247      ),
+		make_simple_region( 'C', 103, 'S', 104, 'S' ),
+		make_simple_region( 'C', 248,      318      ),
+	} };
+	BOOST_CHECK_EQUAL( sillitoe_chopping_format{}.parse_domain( "192-247:C,103S-104S:C,248-318:C"  ), expected );
+	BOOST_CHECK_EQUAL( sillitoe_chopping_format{}.parse_domain( "D192-247:C,103S-104S:C,248-318:C" ), expected );
+}
+
+BOOST_AUTO_TEST_CASE(parses_domain_name) {
+	const domain expected{
+		{
+			make_simple_region( 'C', 192,      247      ),
+			make_simple_region( 'C', 103, 'S', 104, 'S' ),
+			make_simple_region( 'C', 248,      318      ),
+		},
+		"1qdmC02"
+	};
+	BOOST_CHECK_EQUAL( sillitoe_chopping_format{}.parse_domain( "D[1qdmC02]192-247:C,103S-104S:C,248-318:C" ), expected );
+}
+
+// Example:
+// 1qdm D[1qdmC01]1-191:C  D[1qdmC02]192-247:C,103S-104S:C,248-318:C  F319-1318:C
+
+/// \todo Include functionality to specify an "all" domain
 
 BOOST_AUTO_TEST_SUITE_END()
