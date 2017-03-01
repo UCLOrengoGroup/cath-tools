@@ -113,6 +113,9 @@ namespace cath {
 
 		region make_simple_region(const char &);
 
+		region make_simple_region(const size_t &,
+		                          const size_t &);
+
 		region make_simple_region(const char &,
 		                          const int &,
 		                          const int &);

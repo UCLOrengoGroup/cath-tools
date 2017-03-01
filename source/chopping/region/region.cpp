@@ -305,6 +305,18 @@ region cath::chop::make_simple_region(const char &arg_chain_label_char ///< The 
 	return region{ chain_label { arg_chain_label_char } };
 }
 
+/// \brief Make a simple region from a start index and stop index
+///
+/// This is a direct pass-through to one of the region ctors and is just
+/// present so that the make_simple_region() overload set covers all the
+/// simple argument combinations.
+///
+/// \relates region
+region cath::chop::make_simple_region(const size_t &arg_start_index, ///< The start index
+                                      const size_t &arg_stop_index   ///< The stop index
+                                      ) {
+	return { arg_start_index, arg_stop_index };
+}
 
 /// \brief Make a simple region from a chain label char and a start & stop res name num
 ///
