@@ -36,6 +36,9 @@ namespace cath {
 		/// Invariants:
 		///  * all segments must have the same residue_locating
 		///     (ie whether they locate their residues by names and/or indices)
+		///
+		/// \todo Should a domain be allowed to have no segments and if so, should that mean
+		///       that the domain covers everything (eg the whole PDB)?
 		class domain final : private boost::equality_comparable<domain>  {
 		private:
 			/// \brief TODOCUMENT
