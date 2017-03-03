@@ -209,7 +209,7 @@ void cath::colour_viewer_with_spec(const display_colour_spec &arg_colour_spec,  
 	const display_colour_vec colours       = get_all_colours( arg_colour_spec );
 	const str_vec            cleaned_names = clean_names_for_viewer( arg_alignment_context );
 
-	detail::colour_pdbs_impl(
+	detail::colour_base_and_pdbs_impl(
 		colours,
 		arg_colour_spec.get_broad_spec(),
 		arg_viewer,

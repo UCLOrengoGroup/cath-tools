@@ -2717,15 +2717,15 @@ color    black
 color black
 color density, ss s
 color rutherfordium, ss h
-colour black, organic
 scene F1, store, message="Colour by secondary structure", color=1, view=0, active=0, rep=0, frame=0
 set_color cath_tools_defined_colour_0, [0,0,1]
 set_color cath_tools_defined_colour_1, [0,1,0]
 set_color cath_tools_defined_colour_2, [1,0,0]
+set_color base_colour, [0,0,0]
+colour base_colour
 colour cath_tools_defined_colour_0, "PDB_1_from_stdin_with_1042_atoms"
 colour cath_tools_defined_colour_1, "PDB_3_from_stdin_with_819_atoms"
 colour cath_tools_defined_colour_2, "PDB_2_from_stdin_with_836_atoms"
-colour black, organic
 scene F2, store, message="Colour by structure", color=1, view=0, active=0, rep=0, frame=0
 set_color cath_tools_defined_colour_00, [0,0,1]
 set_color cath_tools_defined_colour_01, [0,0.015625,1]
@@ -2824,6 +2824,8 @@ set_color cath_tools_defined_colour_93, [1,0.890625,0]
 set_color cath_tools_defined_colour_94, [1,0.921875,0]
 set_color cath_tools_defined_colour_95, [1,0.96875,0]
 set_color cath_tools_defined_colour_96, [1,1,0]
+set_color base_colour, [0,0,0]
+colour base_colour
 colour cath_tools_defined_colour_00, /"PDB_1_from_stdin_with_1042_atoms"///39+40+41+42+43+44+45+46/
 colour cath_tools_defined_colour_00, /"PDB_2_from_stdin_with_836_atoms"///46/
 colour cath_tools_defined_colour_01, /"PDB_1_from_stdin_with_1042_atoms"///47/
@@ -3114,7 +3116,6 @@ colour cath_tools_defined_colour_95, /"PDB_3_from_stdin_with_819_atoms"///108/
 colour cath_tools_defined_colour_96, /"PDB_1_from_stdin_with_1042_atoms"///107/
 colour cath_tools_defined_colour_96, /"PDB_2_from_stdin_with_836_atoms"///107/
 colour cath_tools_defined_colour_96, /"PDB_3_from_stdin_with_819_atoms"///107/
-colour black, organic
 scene F3, store, message="Colour by alignbow", color=1, view=0, active=0, rep=0, frame=0
 distance alignment, /"PDB_1_from_stdin_with_1042_atoms"///46/CA, /"PDB_2_from_stdin_with_836_atoms"///46/CA
 distance alignment, /"PDB_1_from_stdin_with_1042_atoms"///47/CA, /"PDB_3_from_stdin_with_819_atoms"///47/CA

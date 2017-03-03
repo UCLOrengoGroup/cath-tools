@@ -52,6 +52,10 @@ namespace cath {
 		const size_display_colour_map & get_clr_of_pdb() const;
 	};
 
+	bool has_base_colour(const broad_display_colour_spec &);
+	
+	display_colour get_base_colour(const broad_display_colour_spec &);
+
 	display_colour_opt get_clr_of_pdb_index(const broad_display_colour_spec &,
 	                                        const size_t &);
 
@@ -63,11 +67,11 @@ namespace cath {
 	str_vec generate_colour_names(const size_t &);
 
 	namespace detail {
-		void colour_pdbs_impl(const display_colour_vec &,
-		                      const broad_display_colour_spec &,
-		                      const viewer &,
-		                      const str_vec &,
-		                      std::ostream &);
+		void colour_base_and_pdbs_impl(const display_colour_vec &,
+		                               const broad_display_colour_spec &,
+		                               const viewer &,
+		                               const str_vec &,
+		                               std::ostream &);
 	} // namespace detail
 
 	void colour_viewer_with_spec(const broad_display_colour_spec &,

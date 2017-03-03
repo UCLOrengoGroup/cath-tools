@@ -58,6 +58,7 @@ namespace cath {
 
 		virtual void do_begin_colouring(std::ostream &,
 		                                const display_colourer &) override final;
+		virtual std::string do_get_colour_base_str(const std::string &) const override final;
 		virtual std::string do_get_colour_pdb_str(const std::string &,
 		                                          const std::string &) const override final;
 		virtual std::string do_get_colour_pdb_residues_str(const std::string &,

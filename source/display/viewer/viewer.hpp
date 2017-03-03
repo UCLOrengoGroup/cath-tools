@@ -53,6 +53,7 @@ namespace cath {
 		virtual bool do_accepts_multiple_colourings() const;
 		virtual void do_begin_colouring(std::ostream &,
 		                                const display_colourer &);
+		virtual std::string do_get_colour_base_str(const std::string &) const = 0;
 		virtual std::string do_get_colour_pdb_str(const std::string &,
 		                                          const std::string &) const = 0;
 		virtual std::string do_get_colour_pdb_residues_str(const std::string &,
@@ -87,6 +88,7 @@ namespace cath {
 		bool accepts_multiple_colourings() const;
 		void begin_colouring(std::ostream &,
 		                     const display_colourer &);
+		std::string get_colour_base_str(const std::string &) const;
 		std::string get_colour_pdb_str(const std::string &,
 		                               const std::string &) const;
 		std::string get_colour_pdb_residues_str(const std::string &,

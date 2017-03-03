@@ -73,6 +73,8 @@ display_colour_spec display_colourer_alignment::do_get_colour_spec(const alignme
 	double scores_so_far = 0.0;
 	display_colour_spec new_spec;
 
+	new_spec.colour_base( display_colour::BLACK );
+
 	// Loop along the length of the alignment
 	for (size_t index = 0; index < aln_length; ++index) {
 		// If this isn't the first index in the alignment, then increment scores_so_far

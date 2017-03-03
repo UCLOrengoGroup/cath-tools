@@ -84,6 +84,24 @@ const size_display_colour_map & broad_display_colour_spec::get_clr_of_pdb() cons
 	return clr_of_pdb;
 }
 
+/// \brief Return whether the specified broad_display_colour_spec has a base colour
+///
+/// relates broad_display_colour_spec
+bool cath::has_base_colour(const broad_display_colour_spec &arg_colour_spec ///< The broad_display_colour_spec to query
+                           ) {
+	return static_cast<bool>( arg_colour_spec.get_base_clr() );
+}
+
+/// \brief Get the base colour of the specified broad_display_colour_spec
+///
+/// \pre `has_base_colour( arg_colour_spec )`
+///
+/// relates broad_display_colour_spec
+display_colour cath::get_base_colour(const broad_display_colour_spec &arg_colour_spec ///< The broad_display_colour_spec to query
+                                     ) {
+	return *arg_colour_spec.get_base_clr();
+}
+
 /// \brief Get the (optional) colour for the structure of the specified index
 ///
 /// relates broad_display_colour_spec
@@ -124,12 +142,12 @@ size_vec cath::get_pdbs_of_colour(const broad_display_colour_spec &arg_colour_sp
 ///        in the context of the specified list of colours
 ///
 /// relates broad_display_colour_spec
-void cath::detail::colour_pdbs_impl(const display_colour_vec        &arg_colours,                  ///< The list of colours
-                                    const broad_display_colour_spec &arg_colour_spec,              ///< The broad_display_colour_spec to use
-                                    const viewer                    &arg_viewer,                   ///< The viewer to specify how to render the instructions
-                                    const str_vec                   &arg_cleaned_names_for_viewer, ///< The (viewer-cleaned) names for the structures to be coloured
-                                    ostream                         &arg_os                        ///< The ostream to which the instructions should be written
-                                    ) {
+void cath::detail::colour_base_and_pdbs_impl(const display_colour_vec        &arg_colours,                  ///< The list of colours
+                                             const broad_display_colour_spec &arg_colour_spec,              ///< The broad_display_colour_spec to use
+                                             const viewer                    &arg_viewer,                   ///< The viewer to specify how to render the instructions
+                                             const str_vec                   &arg_cleaned_names_for_viewer, ///< The (viewer-cleaned) names for the structures to be coloured
+                                             ostream                         &arg_os                        ///< The ostream to which the instructions should be written
+                                             ) {
 	const size_t num_colours = arg_colours.size();
 
 	for (const size_t &colour_ctr : irange( 0_z, num_colours ) ) {
@@ -138,6 +156,12 @@ void cath::detail::colour_pdbs_impl(const display_colour_vec        &arg_colours
 			arg_colours[ colour_ctr ],
 			generate_colour_name( colour_ctr, num_colours )
 		);
+	}
+
+	if ( has_base_colour( arg_colour_spec ) ) {
+		const string base_colour_name = "base_colour";
+		arg_viewer.define_colour( arg_os, get_base_colour( arg_colour_spec ), base_colour_name );
+		arg_os << arg_viewer.get_colour_base_str( base_colour_name );
 	}
 
 	for (const size_t colour_ctr : irange( 0_z, num_colours ) ) {
@@ -160,7 +184,7 @@ void cath::colour_viewer_with_spec(const broad_display_colour_spec &arg_broad_sp
                                    const str_vec                   &arg_cleaned_names_for_viewer, ///< The (viewer-cleaned) names for the structures to be coloured
                                    ostream                         &arg_os                        ///< The ostream to which the instructions should be written
                                    ) {
-	detail::colour_pdbs_impl(
+	detail::colour_base_and_pdbs_impl(
 		get_pdb_colours( arg_broad_spec ),
 		arg_broad_spec,
 		arg_viewer,

@@ -362,6 +362,12 @@ void chimera_viewer::do_define_colour(ostream              &arg_os,         ///<
 	       << "]\n";
 }
 
+/// \brief Get a string for colouring the base (ie everything) in the colour that has previously been defined with the specified name
+string chimera_viewer::do_get_colour_base_str(const string &arg_colour_name ///< The previously-defined colour with which to colour the base
+                                              ) const {
+	return "colour " + arg_colour_name + "\n";
+}
+
 /// \brief TODOCUMENT
 string chimera_viewer::do_get_colour_pdb_str(const string &arg_colour_name, ///< TODOCUMENT
                                              const string &arg_pdb_name     ///< TODOCUMENT

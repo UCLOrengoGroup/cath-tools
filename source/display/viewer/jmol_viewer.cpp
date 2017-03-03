@@ -52,6 +52,12 @@ void jmol_viewer::do_define_colour(ostream &,
 	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_viewer::do_define_colour"));
 }
 
+/// \brief Get a string for colouring the base (ie everything) in the colour that has previously been defined with the specified name
+string jmol_viewer::do_get_colour_base_str(const string &
+                                           ) const {
+	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_viewer::do_get_colour_base_str"));
+}
+
 /// \brief TODOCUMENT
 string jmol_viewer::do_get_colour_pdb_str(const string &,
                                           const string &) const {

@@ -52,6 +52,7 @@ broad_display_colour_spec display_colourer_consecutive::do_get_colour_spec_from_
                                                                                             ) const {
 	// Create a new display_colour_spec and populate it for the entries with colours
 	broad_display_colour_spec new_spec;
+	new_spec.colour_base( display_colour::BLACK );
 	for (const size_t entry_ctr : irange( 0_z, arg_num_entries ) ) {
 		new_spec.colour_pdb(
 			entry_ctr,

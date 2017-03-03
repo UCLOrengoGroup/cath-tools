@@ -113,11 +113,17 @@ void viewer::write_load_pdbs(ostream             &arg_ostream,       ///< TODOCU
 }
 
 /// \brief TODOCUMENT
-void viewer::define_colour(ostream             &arg_ostream,    ///< TODOCUMENT
+void viewer::define_colour(ostream              &arg_ostream,    ///< TODOCUMENT
                            const display_colour &arg_colour,     ///< TODOCUMENT
-                           const string        &arg_colour_name ///< TODOCUMENT
+                           const string         &arg_colour_name ///< TODOCUMENT
                            ) const {
-	do_define_colour(arg_ostream, arg_colour, arg_colour_name);
+	do_define_colour( arg_ostream, arg_colour, arg_colour_name );
+}
+
+/// \brief Get a string for colouring the base (ie everything) in the colour that has previously been defined with the specified name
+string viewer::get_colour_base_str(const string &arg_colour_name ///< The previously-defined colour with which to colour the base
+                                   ) const {
+	return do_get_colour_base_str( arg_colour_name );
 }
 
 /// \brief TODOCUMENT

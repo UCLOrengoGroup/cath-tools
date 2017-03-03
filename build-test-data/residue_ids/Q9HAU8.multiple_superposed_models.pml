@@ -10087,17 +10087,17 @@ color    black
 color black
 color density, ss s
 color rutherfordium, ss h
-colour black, organic
 scene F1, store, message="Colour by secondary structure", color=1, view=0, active=0, rep=0, frame=0
 set_color cath_tools_defined_colour_0, [0,0,1]
 set_color cath_tools_defined_colour_1, [0,1,0]
 set_color cath_tools_defined_colour_2, [1,0,0]
 set_color cath_tools_defined_colour_3, [1,1,0]
+set_color base_colour, [0,0,0]
+colour base_colour
 colour cath_tools_defined_colour_0, "Q9HAU8DomSerf1"
 colour cath_tools_defined_colour_1, "Q9HAU8SUPERFAMILY2"
 colour cath_tools_defined_colour_2, "Q9HAU8PHYRE21"
 colour cath_tools_defined_colour_3, "Q9HAU8VIVACE1"
-colour black, organic
 scene F2, store, message="Colour by structure", color=1, view=0, active=0, rep=0, frame=0
 set_color cath_tools_defined_colour_000, [0,0,1]
 set_color cath_tools_defined_colour_001, [0,0.015625,1]
@@ -10303,6 +10303,8 @@ set_color cath_tools_defined_colour_200, [1,0.921875,0]
 set_color cath_tools_defined_colour_201, [1,0.953125,0]
 set_color cath_tools_defined_colour_202, [1,0.96875,0]
 set_color cath_tools_defined_colour_203, [1,1,0]
+set_color base_colour, [0,0,0]
+colour base_colour
 colour cath_tools_defined_colour_000, /"Q9HAU8DomSerf1"///1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+21+22+23+24+25+26+27+28+29+30+31+32+33+34+35+36/
 colour cath_tools_defined_colour_000, /"Q9HAU8PHYRE21"///35+36/
 colour cath_tools_defined_colour_000, /"Q9HAU8VIVACE1"///35+36/
@@ -11113,7 +11115,6 @@ colour cath_tools_defined_colour_203, /"Q9HAU8DomSerf1"///233/
 colour cath_tools_defined_colour_203, /"Q9HAU8PHYRE21"///233/
 colour cath_tools_defined_colour_203, /"Q9HAU8SUPERFAMILY2"///233/
 colour cath_tools_defined_colour_203, /"Q9HAU8VIVACE1"///233/
-colour black, organic
 scene F3, store, message="Colour by alignbow", color=1, view=0, active=0, rep=0, frame=0
 distance alignment, /"Q9HAU8PHYRE21"///35/CA, /"Q9HAU8VIVACE1"///35/CA
 distance alignment, /"Q9HAU8DomSerf1"///35/CA, /"Q9HAU8VIVACE1"///35/CA

@@ -313,7 +313,6 @@ void pymol_viewer::record_scene(ostream           &arg_os,             ///< The 
                                 const std::string &arg_colouring_label ///< The label under which the scene should be stored
                                 ) {
 	arg_os
-		<< "colour black, organic\n"
 		<< "scene F"
 		<< scene_count
 		<< ", store, message=\""
@@ -392,6 +391,12 @@ color rutherfordium, ss h
 )";
 		record_scene( arg_os, "Colour by secondary structure" );
 	}
+}
+
+/// \brief Get a string for colouring the base (ie everything) in the colour that has previously been defined with the specified name
+string pymol_viewer::do_get_colour_base_str(const string &arg_colour_name ///< The previously-defined colour with which to colour the base
+                                            ) const {
+	return "colour " + arg_colour_name + "\n";
 }
 
 /// \brief TODOCUMENT
