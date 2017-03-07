@@ -25,7 +25,7 @@ git submodule update --init --recursive
 ~~~~~
 
 
-There are two further dependencies/prerequisites...
+There are three further dependencies/prerequisites...
 
 ### Boost ( &ge; v1.58.0 )
 
@@ -53,6 +53,12 @@ cmake: error while loading shared libraries: libssl.so.6: cannot open shared obj
 ~~~~~
 
 You probably mixing local/network binaries and libraries so try explicitly running /usr/bin/cmake.
+
+### GSL
+
+The [GNU Scientific Library](https://www.gnu.org/software/gsl/) is used for its Singular Value Decomposition function (`gsl_linalg_SV_decomp()`).
+
+`apt-get install gsl-bin libgsl2:amd64 libgsl-dbg:amd64 libgsl-dev`
 
 Building the Code
 -----------------
