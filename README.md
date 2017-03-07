@@ -46,6 +46,13 @@ Since then, many people have contributed to this code, most notably:
   * James E Bray, [Ian Sillitoe](https://github.com/sillitoe) (~2000 - 2003)
   * [Andrew C R Martin](https://github.com/AndrewCRMartin)    (considerable edits around 2001)
 
+Acknowledgements
+----------------
+
+Superpositions are currently performed using the [bioplib](https://github.com/ACRMGroup/bioplib) library.
+
+`cath-ssap` typically uses [DSSP](https://github.com/cmbi/xssp), either by reading DSSP files or via its own implementation of the DSSP algorithms.
+
 Feedback
 --------
 
