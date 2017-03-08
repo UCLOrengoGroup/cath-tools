@@ -611,6 +611,7 @@ set(
 	NORMSOURCES_RESOLVE_HITS_ALGO
 		resolve_hits/algo/discont_hits_index_by_start.cpp
 		resolve_hits/algo/masked_bests_cacher.cpp
+		resolve_hits/algo/scored_arch_proxy.cpp
 )
 
 set(

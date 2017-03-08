@@ -114,6 +114,10 @@ namespace cath {
 			return arg_scored_arch_proxy;
 		}
 
+		std::string to_string(const scored_arch_proxy &);
+		std::ostream & operator<<(std::ostream &,
+		                          const scored_arch_proxy &);
+
 	} // namespace rslv
 } // namespace cath
 

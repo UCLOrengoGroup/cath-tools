@@ -139,6 +139,8 @@ namespace cath {
 
 		std::string get_segments_string(const calc_hit &);
 		std::string to_string(const calc_hit &);
+		std::ostream & operator<<(std::ostream &,
+		                          const calc_hit &);
 		bool operator==(const calc_hit &,
 		                const calc_hit &);
 		bool any_interaction(const calc_hit &,

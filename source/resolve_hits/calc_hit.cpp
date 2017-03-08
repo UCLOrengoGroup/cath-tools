@@ -63,6 +63,16 @@ string cath::rslv::to_string(const calc_hit &arg_hit ///< The calc_hit to descri
 	return "calc_hit[" + get_segments_string( arg_hit ) + "]";
 }
 
+/// \brief Insert a description of the specified calc_hit into the specified ostream
+///
+/// \relates calc_hit
+ostream & cath::rslv::operator<<(ostream        &arg_os,      ///< The ostream into which the description should be inserted
+                                 const calc_hit &arg_calc_hit ///< The calc_hit to describe
+                                 ) {
+	arg_os << to_string( arg_calc_hit );
+	return arg_os;
+}
+
 /// \brief Return whether the two specified hits are identical
 ///
 /// \relates calc_hit
