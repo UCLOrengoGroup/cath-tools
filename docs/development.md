@@ -4,7 +4,6 @@ Development
 
 This page contains extra information that may be useful for anyone working on the development of cath-tools. For information on how to set up a standard build of the code, see [Build](build).
 
-
 Doxygen Code Documentation
 --------------------------
 
@@ -147,3 +146,13 @@ Dumping class/struct memory layouts
 clomp source/file/pdb/pdb_atom.hpp -Xclang -fdump-record-layouts > /tmp/clang_pdb_atom_layout.txt
 grep pdb_atom -A60 /tmp/clang_pdb_atom_layout.txt
 ~~~~~
+
+
+Simplifying hmmsearch output files for cath-resolve-hits
+--------------------------------------------------------
+
+~~~~~no-highlight
+grep -A500 '>> O27798_698e555d8cb2c0ea3979641198e527bf' temp_0.hmmsearch.evalcoff0.001 | tr '\n' '@' | sed 's/@>>/\n>>/g' | sed 's/@Internal pipeline statistics summary/\nInternal pipeline statistics summary/g' | grep -v 'Internal pipeline statistics summary' | grep O27798_698e555d8cb2c0ea3979641198e527bf | tr '@' '\n' > bob
+echo '\n\nInternal pipeline statistics summary:\n[ok]\n' >> bob
+~~~~~
+
