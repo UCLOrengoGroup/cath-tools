@@ -263,7 +263,7 @@ namespace cath {
 				advance_line_to_nonempty();
 			}
 
-			/// \brief Finishe the current alignment
+			/// \brief Finish the current alignment
 			inline void hmmsearch_parser::finish_alignment(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which complete hits should be added
 			                                               const bool           &arg_apply_cath_policies,  ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
 			                                               const residx_t       &arg_min_gap_length,       ///< The minimum length for a gap to be considered a gap
