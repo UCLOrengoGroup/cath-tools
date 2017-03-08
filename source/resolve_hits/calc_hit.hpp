@@ -52,7 +52,7 @@ namespace cath {
 		/// This is structured to be a reasonably compact 40 bytes:
 		///  * 4 x  4-byte numbers
 		///  * 1 x 24-byte vector
-		/// ...so that it can be processed effieciently in a vector
+		/// ...so that it can be processed efficiently in a vector
 		class calc_hit final {
 		private:
 			/// \brief The boundary at the start of the first segment
