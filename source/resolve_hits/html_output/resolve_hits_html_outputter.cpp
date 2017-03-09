@@ -289,7 +289,7 @@ string resolve_hits_html_outputter::hits_row_html(const html_hit_vec     &arg_fu
 	);
 
 	if ( isnt_full_result && arg_full_hits_data.size() != 1 ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot generate an HTML row of hits data for multiple hits when not genererating a full result"));
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot generate an HTML row of hits data for multiple hits when not generating a full result"));
 	}
 
 	// For strictly-worse rows, can set: background-color: #ddd; color: #999;
