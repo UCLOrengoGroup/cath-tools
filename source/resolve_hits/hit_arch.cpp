@@ -25,6 +25,7 @@
 
 #include "common/boost_addenda/range/adaptor/lexical_casted.hpp"
 #include "resolve_hits/full_hit_list.hpp"
+#include "resolve_hits/options/spec/crh_segment_spec.hpp"
 
 #include <string>
 #include <type_traits>
@@ -48,15 +49,15 @@ static_assert( std::is_nothrow_move_constructible<hit_arch>::value, "" );
 ///
 /// This is deliberately separated from a normal to_string() function because
 /// the interface requirements of this may change (eg to demand that the client
-/// passes the crh_score_spec, trim_spec, hits_boundary_output)
+/// passes the crh_score_spec, crh_segment_spec, hits_boundary_output)
 ///
 /// \relates hit_arch
-string cath::rslv::to_output_string(const hit_arch            &arg_hit_arch,       ///< The hit_arch to describe
-                                    const full_hit_list       &arg_full_hits,      ///< The list of labels corresponding to the hit
-                                    const trim_spec           &arg_trim_spec,      ///< The trim_spec specifying any trimming that should be performed on the output segments
-                                    const hit_output_format   &arg_format,         ///< The format in which the hit_arch should be described
-                                    const string              &arg_prefix,         ///< Any prefix that should come before the hit in hit_output_format::JON
-                                    const hit_boundary_output &arg_boundary_output ///< Whether to output the trimmed or original boundaries
+string cath::rslv::to_output_string(const hit_arch            &arg_hit_arch,         ///< The hit_arch to describe
+                                    const full_hit_list       &arg_full_hits,        ///< The list of labels corresponding to the hit
+                                    const crh_segment_spec    &arg_crh_segment_spec, ///< The crh_segment_spec specifying any trimming that should be performed on the output segments
+                                    const hit_output_format   &arg_format,           ///< The format in which the hit_arch should be described
+                                    const string              &arg_prefix,           ///< Any prefix that should come before the hit in hit_output_format::JON
+                                    const hit_boundary_output &arg_boundary_output   ///< Whether to output the trimmed or original boundaries
                                     ) {
 	const bool is_jon = ( arg_format == hit_output_format::JON );
 	const string prefix    = is_jon ? ""   : "hit_arch[\n\t";
@@ -76,11 +77,11 @@ string cath::rslv::to_output_string(const hit_arch            &arg_hit_arch,    
 						x,
 						arg_format,
 						arg_prefix,
-						make_optional( arg_boundary_output == hit_boundary_output::TRIMMED, arg_trim_spec )
+						make_optional( arg_boundary_output == hit_boundary_output::TRIMMED, arg_crh_segment_spec.get_overlap_trim_spec() )
 					)
 					+ (
 						is_jon
-						? " " + get_all_resolved_segments_string( x, arch_full_hits, arg_trim_spec )
+						? " " + get_all_resolved_segments_string( x, arch_full_hits, arg_crh_segment_spec )
 						: ""s
 					)
 					+ (

@@ -85,6 +85,9 @@ namespace cath {
 		std::string get_segments_string(const hit_seg_vec &,
 		                                const boost::optional<trim_spec> &);
 
+		std::string get_segments_string(const hit_seg_opt_vec &,
+		                                const boost::optional<trim_spec> &);
+
 		void validate(boost::any &,
 		              const str_vec &,
 		              trim_spec*,

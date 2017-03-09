@@ -81,7 +81,7 @@ namespace cath {
 
 		std::string to_output_string(const hit_arch &,
 		                             const full_hit_list &,
-		                             const trim_spec &,
+		                             const crh_segment_spec &,
 		                             const hit_output_format & = hit_output_format::CLASS,
 		                             const std::string & = std::string{},
 		                             const hit_boundary_output & = hit_boundary_output::ORIG);

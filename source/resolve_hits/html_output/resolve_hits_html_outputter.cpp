@@ -185,24 +185,33 @@ string resolve_hits_html_outputter::markers_row(const size_t  &arg_sequence_leng
 
 /// \brief Merge the original segment boundaries with an optional set of resolved
 ///        boundaries, replacing originals with resolveds if they exist
-hit_seg_vec merge_opt_resolved_boundaries(const hit_seg_vec               &arg_segs,             ///< The original boundaries
-                                          const seg_boundary_pair_vec_opt &arg_result_boundaries ///< The optional resolved boundaries, where that has been required
-                                          ) {
+hit_seg_opt_vec merge_opt_resolved_boundaries(const hit_seg_vec               &arg_segs,              ///< The original boundaries
+                                              const seg_boundary_pair_vec_opt &arg_result_boundaries, ///< The optional resolved boundaries, where that has been required
+                                              const crh_segment_spec          &arg_segment_spec       ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                              ) {
 	return arg_result_boundaries
-		? merge_boundaries( arg_segs, *arg_result_boundaries )
-		: arg_segs;
+		? merge_boundaries( arg_segs, *arg_result_boundaries, arg_segment_spec )
+		: transform_build<hit_seg_opt_vec>(
+			arg_segs,
+			[] (const hit_seg &x) { return make_optional( x ); }
+		);
 }
 
 /// \brief Generate a HTML to describe the specified full_hit
-string resolve_hits_html_outputter::hit_html(const html_hit             &arg_html_hit,       ///< The hit to render in HTML
-                                             const crh_segment_spec_opt &arg_segment_spec,   ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
-                                             const size_t               &arg_sequence_length ///< The length of the full sequence on which this full_hit appears
+string resolve_hits_html_outputter::hit_html(const html_hit         &arg_html_hit,        ///< The hit to render in HTML
+                                             const crh_segment_spec &arg_segment_spec,    ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                             const size_t           &arg_sequence_length, ///< The length of the full sequence on which this full_hit appears
+                                             const hit_row_context  &arg_row_context      ///< The context of the hits
                                              ) {
 	const full_hit                  &the_full_hit          = arg_html_hit.hit_ref.get();
 	const seg_boundary_pair_vec_opt &the_result_boundaries = arg_html_hit.result_boundaries;
 
-	const auto resolved_boundaries = merge_opt_resolved_boundaries( the_full_hit.get_segments(), the_result_boundaries );
-	const auto boundaries_strs     = transform_build<str_vec>( resolved_boundaries, to_simple_string );
+	const auto resolved_boundaries = merge_opt_resolved_boundaries( the_full_hit.get_segments(), the_result_boundaries, arg_segment_spec );
+	const auto boundaries_strs     = transform_build<str_vec>(
+		resolved_boundaries
+			| filtered( [] (const hit_seg_opt &x) { return static_cast<bool>( x ); } ),
+		[] (const hit_seg_opt &x) { return to_simple_string( x ); }
+	);
 
 	return join(
 		irange( 0_z, the_full_hit.get_segments().size() )
@@ -242,7 +251,7 @@ string resolve_hits_html_outputter::hit_html(const html_hit             &arg_htm
 								make_pair( "crh-seg-boundaries"s, to_simple_string( resolved_boundaries[ x_idx ] ) ),
 							},
 							arg_sequence_length
-						}.get_all_span_html_strs( static_cast<bool>( arg_segment_spec ) ),
+						}.get_all_span_html_strs( arg_row_context != hit_row_context::RESULT_FULL ),
 						"\n\t\t"
 					)
 					+ "\n";
@@ -251,7 +260,7 @@ string resolve_hits_html_outputter::hit_html(const html_hit             &arg_htm
 	);
 }
 
-/// \brief Generate an HTML fragment to describe the specified full_hit with the specified trim_spec applied
+/// \brief Generate an HTML fragment to describe the specified full_hit with the specified crh_segment_spec applied
 string resolve_hits_html_outputter::hits_row_html(const html_hit_vec     &arg_full_hits_data,    ///< The detail of the hit(s) to render in the row (maybe more than one if the row is combining all result hits)
                                                   const crh_segment_spec &arg_segment_spec,      ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
                                                   const crh_score_spec   &arg_score_spec,        ///< The crh_score_spec to use to calculate the crh-score
@@ -271,9 +280,10 @@ string resolve_hits_html_outputter::hits_row_html(const html_hit_vec     &arg_fu
 			? transform_build<str_vec>(
 				merge_opt_resolved_boundaries(
 					first_hit.get_segments(),
-					first_result_boundaries
-				),
-				to_simple_string
+					first_result_boundaries,
+					arg_segment_spec
+				) | filtered( [] (const hit_seg_opt &x) { return static_cast<bool>( x ); } ),
+				[] (const hit_seg_opt &x) { return to_simple_string( x ); }
 			)
 			: str_vec{}
 	);
@@ -304,8 +314,9 @@ string resolve_hits_html_outputter::hits_row_html(const html_hit_vec     &arg_fu
 				| transformed( [&] (const html_hit &x) {
 					return hit_html(
 						x,
-						make_optional( isnt_full_result, arg_segment_spec ),
-						arg_sequence_length
+						arg_segment_spec,
+						arg_sequence_length,
+						arg_row_context
 					);
 				} ),
 			""
@@ -821,7 +832,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 					make_optional( resolved_boundaries(
 						the_full_hit,
 						chosen_full_hits,
-						arg_segment_spec.get_overlap_trim_spec()
+						arg_segment_spec
 					) )
 				};
 			}
@@ -863,7 +874,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 						make_optional( resolved_boundaries(
 							the_full_hit,
 							chosen_full_hits,
-							arg_segment_spec.get_overlap_trim_spec()
+							arg_segment_spec
 						) )
 					} },
 					arg_segment_spec,

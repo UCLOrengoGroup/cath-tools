@@ -280,7 +280,30 @@ BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scor
 	} ) );
 }
 
+BOOST_AUTO_TEST_CASE(handles_overlap_being_valid_only_once_short_seg_gone) {
+	// Given: an input stream containing two hits that can both be included in the results
+	// but only because the second hit's second segment is removed due to being shorter than
+	// the min_seg_length (and not because of trimming)
+	const string input_hits_str =
+		"the_query match_1 1 21-122\n"
+		"the_query match_2 1 0-20,94-95\n";
+	input_ss.str( input_hits_str );
 
+	// When: calling perform_resolve_hits with options to read from the input stream,
+	// remove segments shorter than 7 and perform no trimming
+	execute_perform_resolve_hits( {
+		"-",
+		"--" + crh_segment_options_block::PO_MIN_SEG_LENGTH,    "7",
+		"--" + crh_segment_options_block::PO_OVERLAP_TRIM_SPEC, "1/0",
+	} );
+
+	// Then: expect the results to have included both hits but to have removed
+	// the short segment from the final results
+	const string output_hits_str =
+		"the_query match_2 1 0-20,94-95 0-20\n"
+		"the_query match_1 1 21-122 21-122\n";
+	BOOST_CHECK_EQUAL( output_ss.str(), output_hits_str );
+}
 
 BOOST_AUTO_TEST_SUITE(limit)
 

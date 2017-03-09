@@ -39,20 +39,20 @@ namespace cath {
 			res_arrow_opt get_boundary_impl(const boundary_wanted &,
 			                                const hit_seg &,
 			                                const hit_seg_vec &,
-			                                const trim_spec &);
+			                                const crh_segment_spec &);
 		} // namespace detail
 
 		res_arrow_opt get_start_boundary(const hit_seg &,
 		                                 const hit_seg_vec &,
-		                                 const trim_spec &);
+		                                 const crh_segment_spec &);
 
 		res_arrow_opt get_stop_boundary(const hit_seg &,
 		                                const hit_seg_vec &,
-		                                const trim_spec &);
+		                                const crh_segment_spec &);
 
 		seg_boundary_pair get_boundary_pair(const hit_seg &,
 		                                    const hit_seg_vec &,
-		                                    const trim_spec &);
+		                                    const crh_segment_spec &);
 
 		res_arrow_opt calc_resolved_boundary(const hit_seg &,
 		                                     const hit_seg &,

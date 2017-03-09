@@ -56,7 +56,7 @@ void write_results_hits_processor::do_process_hits_for_query(const string       
 	get_ostream() << to_output_string(
 		best_result.get_arch(),
 		the_calc_hit_list.get_full_hits(),
-		get_segment_spec().get_overlap_trim_spec(),
+		get_segment_spec(),
 		hit_output_format::JON,
 		arg_query_id,
 		boundary_output

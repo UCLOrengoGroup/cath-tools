@@ -109,6 +109,16 @@ string cath::rslv::to_simple_string(const hit_seg &arg_hit_seg ///< The hit_seg 
 		+ ::std::to_string( get_stop_res_index ( arg_hit_seg ) );
 }
 
+/// \brief Generate a string describing the specified hit_seg_opt
+///
+/// \relates hit_seg_opt
+string cath::rslv::to_simple_string(const hit_seg_opt &arg_hit_seg_opt ///< The hit_seg_opt to describe
+                                    ) {
+	return arg_hit_seg_opt
+		? to_simple_string( *arg_hit_seg_opt )
+		: "absent";
+}
+
 /// \brief Generate a string describing a segment between the two specified positions
 ///
 /// \relates hit_seg

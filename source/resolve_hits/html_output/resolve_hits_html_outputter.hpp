@@ -40,7 +40,7 @@ namespace cath {
 	namespace rslv {
 
 		/// \brief The context in which a hit is being rendered into an HTML row
-		enum hit_row_context {
+		enum class hit_row_context {
 			HIGHLIGHT,    ///< An input data row that is being highlighted as containing a hit that appears in the results
 			NORMAL,       ///< A normal input data row
 			RESULT,       ///< A result row
@@ -65,8 +65,9 @@ namespace cath {
 			                               const str_opt &);
 
 			static std::string hit_html(const html_hit &,
-			                            const crh_segment_spec_opt &,
-			                            const size_t &);
+			                            const crh_segment_spec &,
+			                            const size_t &,
+			                            const hit_row_context &);
 			static std::string hits_row_html(const html_hit_vec &,
 			                                 const crh_segment_spec &,
 			                                 const crh_score_spec &,

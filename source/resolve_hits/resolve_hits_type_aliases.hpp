@@ -52,6 +52,9 @@ namespace cath {
 		/// \brief Type alias for an optional hit_seg
 		using hit_seg_opt = boost::optional<hit_seg>;
 
+		/// \brief Type alias for a vector of hit_seg_opt
+		using hit_seg_opt_vec = std::vector<hit_seg_opt>;
+
 		/// \brief Type alias for the type to be used to index hits
 		using hitidx_t = unsigned int;
 
