@@ -967,6 +967,7 @@ set(
 		structure/geometry/coord.cpp
 		structure/geometry/coord_list.cpp
 		structure/geometry/pca.cpp
+		structure/geometry/restrict_to_single_linkage_extension.cpp
 		structure/geometry/rotation.cpp
 )
 
@@ -1886,6 +1887,7 @@ set(
 		structure/geometry/orientation_covering_test.cpp
 		structure/geometry/pca_test.cpp
 		structure/geometry/quat_rot_test.cpp
+		structure/geometry/restrict_to_single_linkage_extension_test.cpp
 		structure/geometry/rotation_test.cpp
 )
 

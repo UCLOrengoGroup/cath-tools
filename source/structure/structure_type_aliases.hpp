@@ -74,8 +74,12 @@ namespace cath {
 	} // namespace index
 
 	namespace geom {
-		/// \brief TODOCUMENT
+
+		/// \brief Type alias for a vector of coords
 		using coord_vec = std::vector<coord>;
+
+		/// \brief Type alias for coord_vec's iterator type
+		using coord_vec_itr = coord_vec::iterator;
 
 		/// \brief TODOCUMENT
 		using coord_vec_vec = std::vector<coord_vec>;
