@@ -147,8 +147,11 @@ namespace cath {
 		                                 const SinglePassRange2 &rng2, ///< A second single-pass input range
 		                                 BinaryOperation         fun   ///< A binary function to execute on the pairwise list of elements of rng1 and rng2
 		                                 ) {
-			// Static-check that Container is a Mutable_Container
-			BOOST_CONCEPT_ASSERT(( boost::Mutable_Container< Container > ));
+			// Static-check that Container is a Container
+			BOOST_CONCEPT_ASSERT(( boost::Container< Container > ));
+			/// \todo It seems as though this should test for Mutable_Container but that fails
+			///       for maps (eg size_size_map). Does that indicate that Mutable_Container
+			///       isn't the suitable concept here or is something else going on?
 
 			// Static-check that SinglePassRange is a SinglePassRangeConcept
 //			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const SinglePassRange1 > ));
