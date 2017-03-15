@@ -222,7 +222,7 @@ ostream & cath::sup::write_superposed_pdbs_to_ostream(ostream                   
 	}
 
 	if ( arg_script_policy == sup_pdbs_script_policy::WRITE_RASMOL_SCRIPT ) {
-		arg_os << R"(#!rasmol -scri  pt
+		arg_os << R"(#!rasmol -script
 zap  
 load inline
 wireframe off
