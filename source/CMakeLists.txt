@@ -1081,6 +1081,7 @@ set(
 		${NORMSOURCES_SUPERPOSITION_IO}
 		superposition/superpose_orderer.cpp
 		superposition/superposition.cpp
+		superposition/superposition_content_spec.cpp
 		superposition/superposition_context.cpp
 )
 
