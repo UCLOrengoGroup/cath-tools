@@ -37,23 +37,27 @@ namespace cath {
 	namespace common {
 
 		// prototypes to help anyone skimming this file
-		template <typename R            > R           sort_copy      ( R    );
-		template <typename R, typename P> R           sort_copy      ( R, P );
+		template <typename R            > R           sort_copy      ( R      );
+		template <typename R, typename P> R           sort_copy      ( R,   P );
 
-		template <typename R            > R    stable_sort_copy      ( R    );
-		template <typename R, typename P> R    stable_sort_copy      ( R, P );
+		template <typename R            > R    stable_sort_copy      ( R      );
+		template <typename R, typename P> R    stable_sort_copy      ( R,   P );
 
-		template <typename R            > void        uniq           ( R &  );
+		template <typename R            > void        uniq           ( R &    );
 
-		template <typename R            > R           uniq_copy      ( R    );
+		template <typename R            > R           uniq_copy      ( R      );
 
-		template <typename R            > void        sort_uniq      ( R &  );
+		template <typename R            > void        sort_uniq      ( R &    );
 
-		template <typename R            > void stable_sort_uniq      ( R &  );
+		template <typename R, typename P> void        sort_uniq      ( R &, P );
 
-		template <typename R            > R           sort_uniq_copy ( R    );
+		template <typename R            > void stable_sort_uniq      ( R &    );
 
-		template <typename R            > R    stable_sort_uniq_copy ( R    );
+		template <typename R            > R           sort_uniq_copy ( R      );
+
+		template <typename R, typename P> R           sort_uniq_copy ( R,   P );
+
+		template <typename R            > R    stable_sort_uniq_copy ( R      );
 
 		/// \brief Convenience function for making a sorted copy of a range
 		///
@@ -153,6 +157,16 @@ namespace cath {
 			uniq( arg_range );
 		}
 
+		/// \brief Convenience function for sorting+uniquing a range and
+		///        (unlike the std/boost unique() functions) erasing leftover elements
+		template <typename R, typename P>
+		void sort_uniq(R &arg_range,  ///< The range to sort and unique(-erase)
+		               P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		               ) {
+			boost::range::sort( arg_range, arg_bin_pred );
+			uniq( arg_range );
+		}
+
 		/// \brief Convenience function for stable_sorting+uniquing a range and
 		///        (unlike the std/boost unique() functions) erasing leftover elements
 		template <typename R>
@@ -171,6 +185,15 @@ namespace cath {
 		R sort_uniq_copy(R arg_range ///< The range on which the sorted, uniqued copy should be based
 		                 ) {
 			sort_uniq( arg_range );
+			return arg_range;
+		}
+
+		/// \overload
+		template <typename R, typename P>
+		R sort_uniq_copy(R arg_range,   ///< The range on which the sorted, uniqued copy should be based
+		                 P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		                 ) {
+			sort_uniq( arg_range, arg_bin_pred );
 			return arg_range;
 		}
 

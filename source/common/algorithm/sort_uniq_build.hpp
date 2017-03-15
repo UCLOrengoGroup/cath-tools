@@ -183,6 +183,25 @@ namespace cath {
 			);
 		}
 
+		/// \brief Convenience function for making a sorted, uniqued copy of a range
+		///
+		/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
+		///
+		/// \copydetails sort_build()
+		template <typename Container, typename R, typename P>
+		Container sort_uniq_build(R arg_range,   ///< The range on which the sorted, uniqued copy should be based
+		                          P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		                          ) {
+			return sort_uniq_copy(
+				Container(
+					common::cbegin( arg_range ),
+					common::cend  ( arg_range )
+				),
+				arg_bin_pred
+			);
+		}
+
+
 		/// \brief Convenience function for making a stable_sorted, uniqued copy of a range
 		///
 		/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
