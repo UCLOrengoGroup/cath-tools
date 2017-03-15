@@ -111,6 +111,8 @@ namespace cath {
 		region_comparison compare_locations(const region &,
 		                                    const region &);
 
+		region expand_to_chain(const region &);
+
 		region make_simple_region(const char &);
 
 		region make_simple_region(const size_t &,

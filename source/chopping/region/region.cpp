@@ -296,6 +296,18 @@ region_comparison cath::chop::compare_locations(const region &arg_region_a, ///<
 	else                          { return ( start_a > stop_b  ) ? region_comparison::STRICTLY_AFTER  : region_comparison::OVERLAPPINGLY_AFTER  ; }
 }
 
+/// \brief Expand the specified region to the whole chain of the region
+///
+/// `has_chain_label( arg_region )`
+region cath::chop::expand_to_chain(const region &arg_region ///< The region to expand
+                                   ) {
+	if ( ! has_chain_label( arg_region ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot expand_to_chain() a region that doesn't have a chain label"));
+	}
+	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+	return region{ get_chain_label( arg_region ) };
+}
+
 /// \brief Make a simple, whole-chain region from a chain label char
 ///
 /// \relates region
