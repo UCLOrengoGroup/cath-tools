@@ -2010,6 +2010,11 @@ set(
 		superposition/superposition_context_test.cpp
 		superposition/superposition_test.cpp
 )
+
+set(
+	TESTSOURCES_TEST
+		test/superposition_fixture.cpp
+)
 ##### END OF AUTO-GENERATED #####
 
 #####################################################################

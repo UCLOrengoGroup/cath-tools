@@ -35,9 +35,11 @@ namespace cath {
 		/// \brief A test fixture for superposition tests that adds some extras to global_test_constants
 		class superposition_fixture : protected global_test_constants {
 		protected:
+			static constexpr size_t NUM_ENTRIES = 2;
+
 			const geom::coord_list      coord_list_1{ { geom::coord{  1.0,  0.0,  0.0 }, geom::coord{  2.0,   0.0,   0.0 } } };
 			const geom::coord_list      coord_list_2{ { geom::coord{  0.0, -1.0,  0.0 }, geom::coord{  0.0,  -2.0,   0.0 } } };
-			const file::pdb_list        pdbs{ file::pdb_vec{ 2, file::pdb{} } };
+			const file::pdb_list        pdbs{ file::pdb_vec{ NUM_ENTRIES, file::pdb{} } };
 			const str_vec               names{ "1c0pA01", "1hdoA00" };
 			const superposition         the_sup{ create_pairwise_superposition( coord_list_1, coord_list_2 ) };
 			const superposition_context the_sup_con{ pdbs, names, the_sup };
