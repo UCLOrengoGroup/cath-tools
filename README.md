@@ -18,7 +18,7 @@ Protein structure comparison tools such as SSAP, as used by the [Orengo Group](h
 
 ### Extra Tools
 
- * `build-test`          Perform the cath-tools tests (which should all pass, abeit with a few warnings)
+ * `build-test`          Perform the cath-tools tests (which should all pass, albeit with a few warnings)
  * `cath-assign-domains` Use an SVM model on SSAP+PRC data to form a plan for assigning the domains to CATH superfamilies/folds
  * `cath-refine-align`   Iteratively refine an existing alignment by attempting to optimise SSAP score
  * `cath-score-align`    Score an existing alignment using structural data
