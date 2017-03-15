@@ -115,7 +115,7 @@ Checking headers compile independently
 --------------------------------------
 
 ~~~~~no-highlight
-find source -iname '*.h' | grep third_party_code -v | xargs -P 4 -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -I source VAR
+find source -iname '*.hpp' | grep third_party_code -v | xargs -P 4 -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -I source VAR
 ~~~~~
 
 
@@ -124,7 +124,7 @@ Fixing trailing namespace comments
 ----------------------------------
 
 ~~~~~no-highlight
-find source -iname '*.h' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-namespace-comment VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
+find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-namespace-comment VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
 ~~~~~
 
 
@@ -134,7 +134,7 @@ Fixing header guards
 
 ~~~~~no-highlight
 ln -s source src
-find src/   -iname '*.h' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-header-guard      VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
+find src/   -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-header-guard      VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
 rm -f src
 ~~~~~
 
