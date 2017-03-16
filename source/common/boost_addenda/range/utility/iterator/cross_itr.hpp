@@ -37,7 +37,7 @@ namespace cath {
 			/// \brief Convenience type alias for the iterator_facade through which cross_itr is implemented
 			///
 			/// \todo This currently requires all inputs to meet forward t all inputs to provide forward traversal.
-			///       Conversely, it does't provide bidirectional/random-access where the inputs would allow.
+			///       Conversely, it doesn't provide bidirectional/random-access where the inputs would allow.
 			///       Consider finding a way to set the traversal to the weakest traversal from the inputs
 			///       and add bidirectional/random-access functionality where it'd be useful
 			template <typename... RNGs>
