@@ -107,7 +107,7 @@ namespace cath {
 						+ ">";
 				}
 			};
-		}
+		} // namespace detail
 
 		/// \brief Generate a string containing a name of the type T
 		template <typename T>

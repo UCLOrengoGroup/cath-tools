@@ -73,7 +73,7 @@ namespace cath {
 				);
 		}
 
-	} // namespace chop
+	} // namespace geom
 } // namespace cath
 
 #endif

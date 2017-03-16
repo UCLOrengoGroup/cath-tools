@@ -79,7 +79,7 @@ namespace cath {
 			};
 
 		} // namespace detail
-	} // namespace chop
+	} // namespace geom
 } // namespace cath
 
 #endif

@@ -74,7 +74,7 @@ namespace cath {
 			superposition_content_spec & set_include_organic_within_distance(const doub_opt &);
 		};
 
-	} // namespace rslv
+	} // namespace sup
 } // namespace cath
 
 #endif

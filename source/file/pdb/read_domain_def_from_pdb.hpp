@@ -38,7 +38,7 @@ namespace cath {
 		pdb read_domain_from_pdb_file(const boost::filesystem::path &,
 		                              const chop::domain &);
 
-	} // namespace chop
+	} // namespace file
 } // namespace cath
 
 #endif

@@ -35,11 +35,11 @@ namespace cath {
 		namespace detail {
 			doub_vec build_matrix_of_coords(const coord_list &,
 			                                const coord &);
-		}
+		} // namespace detail
 
 		line line_of_best_fit(const coord_list &);
 
-	} // namespace chop
+	} // namespace geom
 } // namespace cath
 
 #endif

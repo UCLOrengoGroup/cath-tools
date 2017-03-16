@@ -78,8 +78,8 @@ namespace cath {
 				}
 			};
 
-		} // namspace detail
-	} // namespace chop
+		} // namespace detail
+	} // namespace geom
 } // namespace cath
 
 #endif

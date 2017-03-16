@@ -258,7 +258,7 @@ namespace cath {
 				return to_three_char_str( x );
 			}
 		};
-	}
+	} // namespace detail
 
 	/// \brief Get the amino_acid_type of this amino_acid
 	inline amino_acid_type amino_acid::get_type() const {
@@ -312,7 +312,7 @@ namespace cath {
 				}
 			}
 		}
-	}
+	} // namespace detail
 
 	/// \brief Simple less-than operator for amino-acid
 	///
