@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_GSL_GSL_MATRIX_WRP_H
-#define _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_GSL_GSL_MATRIX_WRP_H
+#ifndef _CATH_TOOLS_SOURCE_COMMON_GSL_GSL_MATRIX_WRP_H
+#define _CATH_TOOLS_SOURCE_COMMON_GSL_GSL_MATRIX_WRP_H
 
 #include "exception/runtime_error_exception.hpp"
 

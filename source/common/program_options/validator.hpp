@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef VALIDATOR_H_INCLUDED
-#define VALIDATOR_H_INCLUDED
+#ifndef _CATH_TOOLS_SOURCE_COMMON_PROGRAM_OPTIONS_VALIDATOR_H
+#define _CATH_TOOLS_SOURCE_COMMON_PROGRAM_OPTIONS_VALIDATOR_H
 
 #include <boost/any.hpp>
 #include <boost/lexical_cast.hpp>

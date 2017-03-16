@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_BIFUR_HBOND_LIST_H
-#define _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_BIFUR_HBOND_LIST_H
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_DSSP_BIFUR_HBOND_LIST_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_SEC_STRUC_CALC_DSSP_BIFUR_HBOND_LIST_H
 
 #include <boost/optional.hpp>
 

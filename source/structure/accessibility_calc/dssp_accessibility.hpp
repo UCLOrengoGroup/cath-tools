@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_ACCESSIBILITY_CALC_DSSP_ACCESSIBLITY_H
-#define _CATH_TOOLS_SOURCE_STRUCTURE_ACCESSIBILITY_CALC_DSSP_ACCESSIBLITY_H
+#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_ACCESSIBILITY_CALC_DSSP_ACCESSIBILITY_H
+#define _CATH_TOOLS_SOURCE_STRUCTURE_ACCESSIBILITY_CALC_DSSP_ACCESSIBILITY_H
 
 #include "structure/structure_type_aliases.hpp"
 

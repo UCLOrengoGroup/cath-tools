@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CHOPPING_DOMAIN_READ_DOMAIN_DEF_FROM_PDB_H
-#define _CATH_TOOLS_SOURCE_CHOPPING_DOMAIN_READ_DOMAIN_DEF_FROM_PDB_H
+#ifndef _CATH_TOOLS_SOURCE_FILE_PDB_READ_DOMAIN_DEF_FROM_PDB_H
+#define _CATH_TOOLS_SOURCE_FILE_PDB_READ_DOMAIN_DEF_FROM_PDB_H
 
 #include <boost/filesystem/path.hpp>
 
