@@ -294,9 +294,10 @@ namespace cath {
 
 		/// \brief Remove any candidate bonds that aren't strong enough to be considered true hbonds
 		///        in a copy of the specified bifur_hbond_list and then return the copy
-		inline bifur_hbond_list & remove_not_bondy_enough_copy(bifur_hbond_list arg_bifur_hbond_list ///< The bifur_hbond_list from which a copy should be taken, stripped and returned
-		                                                       ) {
-			return arg_bifur_hbond_list.remove_not_bondy_enough();
+		inline bifur_hbond_list remove_not_bondy_enough_copy(bifur_hbond_list arg_bifur_hbond_list ///< The bifur_hbond_list from which a copy should be taken, stripped and returned
+		                                                     ) {
+			arg_bifur_hbond_list.remove_not_bondy_enough();
+			return arg_bifur_hbond_list;
 		}
 
 		std::string to_string(const bifur_hbond_list &);

@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_DNA_ATOM_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_DNA_ATOM_H
 
+#include <string>
+
 namespace cath {
 
 	/// \brief Represent the different types of DNA/RNA nucleotide atom that are possible in PDB files

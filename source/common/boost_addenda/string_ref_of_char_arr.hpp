@@ -26,6 +26,7 @@
 
 #include "common/cpp14/cbegin_cend.hpp"
 
+#include <array>
 #include <string>
 
 namespace cath {
