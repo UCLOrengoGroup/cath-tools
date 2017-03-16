@@ -46,7 +46,7 @@ namespace cath {
 			static view_cache_vec build_caches(const protein_list &);
 
 		public:
-			view_cache_list(const protein_list &);
+			explicit view_cache_list(const protein_list &);
 			
 			const view_cache & get_view_cache(const size_t &) const;
 		};

@@ -42,7 +42,7 @@ namespace cath {
 			virtual bool do_involves_display_spec() const override final;
 
 		public:
-			html_ostream_alignment_outputter(const display_colourer &);
+			explicit html_ostream_alignment_outputter(const display_colourer &);
 		};
 
 		html_ostream_alignment_outputter make_html_ostream_alignment_outputter(const display_spec &);

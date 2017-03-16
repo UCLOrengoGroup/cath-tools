@@ -54,8 +54,8 @@ namespace cath {
 
 			public:
 				/// \brief TODOCUMENT
-				string_joiner(const std::string &arg_separator
-				              ) : separator ( arg_separator ) {
+				explicit string_joiner(const std::string &arg_separator
+				                       ) : separator ( arg_separator ) {
 				}
 
 				/// \brief TODOCUMENT

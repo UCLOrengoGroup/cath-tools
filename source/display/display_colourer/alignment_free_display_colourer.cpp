@@ -33,7 +33,8 @@ using namespace cath::detail;
 /// with the number of entries
 display_colour_spec alignment_free_display_colourer::do_get_colour_spec(const alignment_context &arg_alignment_context ///< The alignment_context to use to colour this alignment
                                                                         ) const {
-	return {
+	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+	return display_colour_spec{
 		do_get_colour_spec_from_num_entries(
 			arg_alignment_context.get_alignment().num_entries()
 		)

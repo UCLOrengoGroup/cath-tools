@@ -39,7 +39,7 @@ namespace cath {
 
 		public:
 			coord_list() = default;
-			coord_list(const coord_vec &);
+			explicit coord_list(const coord_vec &);
 
 			void reserve(const size_t &);
 			bool empty() const noexcept;

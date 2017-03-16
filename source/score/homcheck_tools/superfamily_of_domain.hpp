@@ -58,7 +58,7 @@ namespace cath {
 			static const std::string NEW_SF_CORE_STRING;
 
 			superfamily_of_domain() = default;
-			superfamily_of_domain(const str_str_pair_vec &);
+			explicit superfamily_of_domain(const str_str_pair_vec &);
 
 			size_t size() const;
 

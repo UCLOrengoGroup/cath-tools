@@ -52,7 +52,7 @@ namespace cath {
 				                 const size_t &);
 
 			public:
-				multi_align_group(const size_t &);
+				explicit multi_align_group(const size_t &);
 				multi_align_group(const alignment &,
 				                  const size_t &,
 				                  const size_t &);

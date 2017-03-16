@@ -42,8 +42,8 @@ namespace cath {
 
 		public:
 			template <typename FN>
-			equal_grouped_range(const RNG &,
-			                    FN = std::not_equal_to<range_value_t<RNG>>() );
+			explicit equal_grouped_range(const RNG &,
+			                             FN = std::not_equal_to<range_value_t<RNG>>() );
 		 };
 
 		/// \brief Ctor from a range and a flag indicating whether it can be assumed that range is sorted

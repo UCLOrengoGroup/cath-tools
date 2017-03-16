@@ -63,10 +63,10 @@ namespace cath {
 		public:
 			using indices_and_coord_lists_type = std::tuple<size_t, geom::coord_list, size_t, geom::coord_list>;
 
-			superposition(const std::vector<indices_and_coord_lists_type> &,
-			              const size_t         & = 0,
-			              const geom::coord    & = geom::coord::ORIGIN_COORD,
-			              const geom::rotation & = geom::rotation::IDENTITY_ROTATION());
+			explicit superposition(const std::vector<indices_and_coord_lists_type> &,
+			                       const size_t         & = 0,
+			                       const geom::coord    & = geom::coord::ORIGIN_COORD,
+			                       const geom::rotation & = geom::rotation::IDENTITY_ROTATION());
 			superposition(const geom::coord_vec &,
 			              const geom::rotation_vec &);
 

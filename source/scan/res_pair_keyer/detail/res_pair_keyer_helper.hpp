@@ -73,8 +73,8 @@ namespace cath {
 				const Data &data;
 				
 				/// \brief Ctor from the data to be passed to the keyer_parts
-				constexpr keyer_parts_value_maker(const Data &arg_data ///< The data to be passed to the keyer_parts
-				                                  ) : data{ arg_data } {
+				explicit constexpr keyer_parts_value_maker(const Data &arg_data ///< The data to be passed to the keyer_parts
+				                                           ) : data{ arg_data } {
 				}
 				
 				/// \brief Function operator to apply a bunch of keyer_parts to data and return the values in a tuple
@@ -93,7 +93,8 @@ namespace cath {
 			template <typename Data>
 			constexpr keyer_parts_value_maker<Data> make_keyer_parts_value_maker(const Data &arg_data ///< The data to be passed to the keyer_parts
 			                                                                     ) {
-				return { arg_data };
+				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+				return keyer_parts_value_maker<Data>{ arg_data };
 			}
 
 
@@ -113,8 +114,8 @@ namespace cath {
 				const Data &data;
 				
 				/// \brief Ctor from the data to be passed to the keyer_parts
-				constexpr keyer_parts_key_maker(const Data &arg_data ///< The data to be passed to the keyer_parts
-				                                ) : data{ arg_data } {
+				explicit constexpr keyer_parts_key_maker(const Data &arg_data ///< The data to be passed to the keyer_parts
+				                                         ) : data{ arg_data } {
 				}
 				
 				/// \brief Function operator to apply a bunch of keyer_parts to data and return the keys in a tuple
@@ -137,7 +138,8 @@ namespace cath {
 			template <typename Data>
 			constexpr keyer_parts_key_maker<Data> make_keyer_parts_key_maker(const Data &arg_data ///< The data to be passed to the keyer_parts
 			                                                                 ) {
-				return { arg_data };
+				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+				return keyer_parts_key_maker<Data>{ arg_data };
 			}
 
 

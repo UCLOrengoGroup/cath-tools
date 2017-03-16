@@ -39,7 +39,7 @@ namespace cath {
 			static geom::coord_vec_vec build_views(const protein &);
 
 		public:
-			view_cache(const protein &);
+			explicit view_cache(const protein &);
 			
 			const geom::coord & get_view(const size_t &,
 			                             const size_t &) const;

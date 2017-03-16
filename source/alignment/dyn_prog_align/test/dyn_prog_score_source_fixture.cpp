@@ -32,7 +32,7 @@ const string dyn_prog_score_source_fixture::sequence_string_a( "CC" );
 const string dyn_prog_score_source_fixture::sequence_string_b( "ACCD" );
 
 /// \brief An example score matrix for making an example old_matrix_dyn_prog_score_source
-const score_vec_of_vec dyn_prog_score_source_fixture::example_old_score_matrix = {
+const score_vec_of_vec dyn_prog_score_source_fixture::example_old_score_matrix{
 	{ 0, 0, 0, 0, 0 },
 	{ 0, 2, 6, 7, 1 },
 	{ 0, 8, 4, 3, 9 }
@@ -45,7 +45,7 @@ const float_score_vec_vec dyn_prog_score_source_fixture::example_new_score_matri
 };
 
 /// \brief An example mask matrix for making an example mask_dyn_prog_score_source
-const bool_vec_of_vec dyn_prog_score_source_fixture::example_mask_matrix = {
+const bool_vec_of_vec dyn_prog_score_source_fixture::example_mask_matrix{
 	{ false, false, false, false, false },
 	{ false,  true, false,  true, false },
 	{ false, false,  true, false,  true }

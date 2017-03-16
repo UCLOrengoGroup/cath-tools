@@ -46,7 +46,7 @@ namespace cath {
 
 				/// \brief Default ctor
 				single_struc_res_pair_list() = default;
-				single_struc_res_pair_list(const single_struc_res_pair_vec &);
+				explicit single_struc_res_pair_list(const single_struc_res_pair_vec &);
 
 				void reserve(const size_t &);
 				bool empty() const;

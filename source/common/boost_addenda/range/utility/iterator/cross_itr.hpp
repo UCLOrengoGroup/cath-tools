@@ -167,7 +167,7 @@ namespace cath {
 			cross_itr();
 			cross_itr(const iterator_type &,
 			          const iterator_type &);
-			cross_itr(RNGs &...);
+			explicit cross_itr(RNGs &...);
 		};
 
 		/// \brief TODOCUMENT

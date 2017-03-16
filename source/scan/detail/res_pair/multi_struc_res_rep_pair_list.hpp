@@ -51,7 +51,7 @@ namespace cath {
 
 				/// \brief Default ctor
 				multi_struc_res_rep_pair_list() = default;
-				multi_struc_res_rep_pair_list(const multi_struc_res_rep_pair_vec &);
+				explicit multi_struc_res_rep_pair_list(const multi_struc_res_rep_pair_vec &);
 
 				bool empty() const;
 				size_t size() const;

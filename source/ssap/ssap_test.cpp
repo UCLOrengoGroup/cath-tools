@@ -89,7 +89,7 @@ namespace cath {
 
 		public:
 			ostringstream log_output_ss;
-			log_to_ostream_guard log_output_guard = { log_output_ss };
+			log_to_ostream_guard log_output_guard{ log_output_ss };
 			const string id1 = { *ID1 };
 			const string id2 = { *ID2 };
 			const data_dirs_spec data_dirs       = build_data_dirs_spec_of_dir( TEST_SSAP_REGRESSION_DATA_DIR() );

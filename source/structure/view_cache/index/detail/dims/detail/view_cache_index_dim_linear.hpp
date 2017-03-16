@@ -148,7 +148,7 @@ namespace cath {
 					                                                 const value_type &) const;
 
 				public:
-					view_cache_index_dim_linear(const value_type &);
+					explicit view_cache_index_dim_linear(const value_type &);
 
 					int cell_index_of_value_in_current(const value_type &) const;
 					value_type min_value_in_cell_of_index_in_current(const size_t &) const;
@@ -288,7 +288,7 @@ namespace cath {
 				                                           ) {
 					// Grab the value in question and TODOCUMENT
 					const value_type &value = T().get_index_value( arg_entry );
-					cell_at_value( arg_cells, arg_defaults.get_head(), value ).store(
+					cell_at_value( arg_cells, typename CELLS::value_type{ arg_defaults.get_head() }, value ).store(
 						arg_entry,
 						arg_defaults.get_tail()
 					);

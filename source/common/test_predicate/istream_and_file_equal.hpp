@@ -42,8 +42,8 @@ namespace cath {
 		str_size_type diff_half_width;
 
 	public:
-		istream_and_file_equal(const bool &,
-		                       const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
+		explicit istream_and_file_equal(const bool &,
+		                                const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
 		explicit istream_and_file_equal(const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
 		boost::test_tools::predicate_result operator()(std::istream &,
 		                                               const std::string &,

@@ -97,7 +97,7 @@ namespace cath {
 		public:
 			adjacent_itr(const base_iterator_type &,
 			             const base_iterator_type &);
-			adjacent_itr(RNG &);
+			explicit adjacent_itr(RNG &);
 			adjacent_itr() = default;
 		};
 

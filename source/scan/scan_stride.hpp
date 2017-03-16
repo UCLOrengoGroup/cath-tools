@@ -47,10 +47,10 @@ namespace cath {
 			detail::rep_strider index_to_strider   { DEFAULT_STRIDE };
 
 		public:
-			constexpr scan_stride(const index_type & = DEFAULT_STRIDE,
-			                      const index_type & = DEFAULT_STRIDE,
-			                      const index_type & = DEFAULT_STRIDE,
-			                      const index_type & = DEFAULT_STRIDE);
+			explicit constexpr scan_stride(const index_type & = DEFAULT_STRIDE,
+			                               const index_type & = DEFAULT_STRIDE,
+			                               const index_type & = DEFAULT_STRIDE,
+			                               const index_type & = DEFAULT_STRIDE);
 
 			constexpr const detail::rep_strider & get_query_from_strider() const;
 			constexpr const detail::rep_strider & get_query_to_strider() const;

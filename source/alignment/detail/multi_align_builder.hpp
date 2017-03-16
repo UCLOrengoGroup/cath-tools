@@ -57,7 +57,7 @@ namespace cath {
 				void update_group_index_of_entry(const size_t &);
 
 			public:
-				multi_align_builder(const size_t &);
+				explicit multi_align_builder(const size_t &);
 
 				size_set get_active_groups() const;
 				const multi_align_group & get_group_of_index(const size_t &) const;

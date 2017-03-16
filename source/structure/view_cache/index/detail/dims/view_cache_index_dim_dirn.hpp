@@ -142,7 +142,7 @@ namespace cath {
 			                                             const DEFAULTS               &arg_defaults ///< TODOCUMENT
 			                                             ) {
 				const bool increases = get_increases( arg_entry );
-				cell_at_value( arg_cells, arg_defaults.get_head(), increases ).store(
+				cell_at_value( arg_cells, typename CELLS::value_type{ arg_defaults.get_head() }, increases ).store(
 					arg_entry,
 					arg_defaults.get_tail()
 				);

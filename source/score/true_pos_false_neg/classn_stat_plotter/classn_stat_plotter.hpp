@@ -47,7 +47,7 @@ namespace cath {
 
 		public:
 			classn_stat_plotter() = default;
-			classn_stat_plotter(const bool &);
+			explicit classn_stat_plotter(const bool &);
 
 			void plot(const boost::filesystem::path &,
 			          const score_classn_value_list_vec &,

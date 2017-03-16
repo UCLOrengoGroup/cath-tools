@@ -49,7 +49,7 @@ namespace cath {
 				                              const gap::gap_penalty &) const override final;
 
 			public:
-				gen_dyn_prog_string_aligner(const dyn_prog_aligner &);
+				explicit gen_dyn_prog_string_aligner(const dyn_prog_aligner &);
 			};
 
 		} // namespace detail

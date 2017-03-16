@@ -158,7 +158,9 @@ superfamily_of_domain cath::homcheck::parse_superfamily_of_domain(istream &arg_s
 			line_string_pairs.emplace_back( domain_id, superfamily_id );
 		}
 	}
-	return { line_string_pairs };
+
+	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+	return superfamily_of_domain{ line_string_pairs };
 }
 
 /// \brief Parse the superfamily_of_domain information from the specified file

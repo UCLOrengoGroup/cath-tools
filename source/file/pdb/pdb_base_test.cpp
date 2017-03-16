@@ -106,11 +106,11 @@ namespace cath {
 			path_vec compare_files;
 
 		public:
-			pdb_read_write_comparer(const path &arg_source_pdb
-			                        ) : orig_source_pdb(arg_source_pdb),
-			                            test_dir(pdb_base_test_suite_fixture::TEST_OUTPUT_DIRECTORY()), // This is more robust
-		//	                            test_dir( path() / "dev" / "shm" ), // This is a bit naughty but is very fast for full_read_write_comparison
-			                            test_source_pdb(test_dir / orig_source_pdb.filename()) {
+			explicit pdb_read_write_comparer(const path &arg_source_pdb
+			                                 ) : orig_source_pdb(arg_source_pdb),
+			                                     test_dir(pdb_base_test_suite_fixture::TEST_OUTPUT_DIRECTORY()), // This is more robust
+		//	                                     test_dir( path() / "dev" / "shm" ), // This is a bit naughty but is very fast for full_read_write_comparison
+			                                     test_source_pdb(test_dir / orig_source_pdb.filename()) {
 				if (exists(test_source_pdb)) {
 					remove(test_source_pdb);
 				}

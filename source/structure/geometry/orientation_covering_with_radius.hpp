@@ -75,7 +75,7 @@ namespace cath {
 			uint8_vec_vec cell_neighbours;
 
 		public:
-			orientation_covering_with_radius(const angle<T> &);
+			explicit orientation_covering_with_radius(const angle<T> &);
 
 			uint8_t get_closest_neighbour(const quat_rot_impl<T> &) const;
 			uint8_vec get_closest_neighbours(const quat_rot_impl<T> &) const;

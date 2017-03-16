@@ -40,8 +40,8 @@ namespace cath {
 				gsl_vector_wrp() = delete;
 
 				/// \brief Ctor that wraps call to gsl_vector_alloc()
-				gsl_vector_wrp(const size_t &arg_n ///< The dimension of the vector
-				               ) : ptr{ gsl_vector_alloc( arg_n ) } {
+				explicit gsl_vector_wrp(const size_t &arg_n ///< The dimension of the vector
+				                        ) : ptr{ gsl_vector_alloc( arg_n ) } {
 
 					if ( ptr == nullptr ) {
 						BOOST_THROW_EXCEPTION(common::runtime_error_exception("Was unable to allocate gsl_vector"));

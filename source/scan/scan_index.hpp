@@ -76,7 +76,7 @@ namespace cath {
 			void populate_index_from_structures_data();
 
 		public:
-			scan_index(const scan_policy<KPs...> &);
+			explicit scan_index(const scan_policy<KPs...> &);
 
 			/// \brief Prevent construction from a temporary scan_policy
 			scan_index(const scan_policy<KPs...> &&) = delete;
@@ -209,7 +209,8 @@ namespace cath {
 		template <typename... KPs>
 		scan_index<KPs...> make_scan_index(const scan_policy<KPs...> &arg_policy ///< TODOCUMENT
 		                                   ) {
-			return { arg_policy };
+			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+			return scan_index<KPs...>{ arg_policy };
 		}
 
 		/// \brief Prevent factory building from a temporary scan_policy

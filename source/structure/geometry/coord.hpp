@@ -79,7 +79,7 @@ namespace cath {
 			                const double &);
 
 			template <typename T>
-			coord(const boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian> &);
+			explicit coord(const boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian> &);
 
 			constexpr const double & get_x() const;
 			constexpr const double & get_y() const;

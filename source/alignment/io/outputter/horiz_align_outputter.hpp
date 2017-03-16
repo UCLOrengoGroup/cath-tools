@@ -50,7 +50,7 @@ namespace cath {
 			const alignment &the_alignment;
 
 		public:
-			horiz_align_outputter(const alignment &);
+			explicit horiz_align_outputter(const alignment &);
 
 			const alignment & get_alignment() const;
 		};

@@ -48,7 +48,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			using result_type          = bool;
 
-			score_classn_value_better_value(const bool &);
+			explicit score_classn_value_better_value(const bool &);
 
 			const bool & get_higher_is_better() const;
 

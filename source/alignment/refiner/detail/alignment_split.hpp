@@ -43,7 +43,7 @@ namespace cath {
 				size_set first_half_entries;
 
 			public:
-				alignment_split(const size_t &);
+				explicit alignment_split(const size_t &);
 
 				size_t get_num_entries() const;
 				void add_first_half_entry(const size_t &);

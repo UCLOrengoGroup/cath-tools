@@ -43,7 +43,7 @@ namespace cath {
 				using super               = boost::iterator_range<lex_casted_iterator>;
 
 			public:
-				lexical_casted_range(const RNG &);
+				explicit lexical_casted_range(const RNG &);
 			 };
 
 			/// \brief Ctor from a range

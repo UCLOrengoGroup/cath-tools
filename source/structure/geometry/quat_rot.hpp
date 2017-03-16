@@ -54,7 +54,7 @@ namespace cath {
 			                       const T &,
 			                       const T &,
 			                       const T &);
-			quat_rot_impl(const boost::math::quaternion<T> &);
+			explicit quat_rot_impl(const boost::math::quaternion<T> &);
 		};
 
 		/// \brief Ctor for quat_rot_impl
@@ -76,7 +76,8 @@ namespace cath {
 		template <typename T>
 		quat_rot_impl<T> operator-(const quat_rot_impl<T> &arg_quaternion ///< TODOCUMENT
 		                           ) {
-			return { quat_rot_impl<T>( 0.0, 0.0, 0.0, 0.0 ) - arg_quaternion };
+			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+			return quat_rot_impl<T>{ quat_rot_impl<T>( 0.0, 0.0, 0.0, 0.0 ) - arg_quaternion };
 		}
 
 		/// \brief Make the identity quat_rot
@@ -238,10 +239,10 @@ namespace cath {
 		inline quat_rot_impl<T> rotation_between_rotations(const quat_rot_impl<T> &arg_quat_rot_a, ///< The first quat_rot
 		                                                   const quat_rot_impl<T> &arg_quat_rot_b  ///< The second quat_rot
 		                                                   ) {
-			// return conj( arg_quat_rot_a ) *       arg_quat_rot_b;
-			// return       arg_quat_rot_a   * conj( arg_quat_rot_b );
-			// return conj( arg_quat_rot_b ) *       arg_quat_rot_a;
-			return       arg_quat_rot_b   * conj( arg_quat_rot_a );
+			// return quat_rot_impl<T>{ conj( arg_quat_rot_a ) *       arg_quat_rot_b   };
+			// return quat_rot_impl<T>{       arg_quat_rot_a   * conj( arg_quat_rot_b ) };
+			// return quat_rot_impl<T>{ conj( arg_quat_rot_b ) *       arg_quat_rot_a   };
+			return quat_rot_impl<T>{       arg_quat_rot_b   * conj( arg_quat_rot_a ) };
 		}
 
 		/// \brief TODOCUMENT

@@ -118,8 +118,8 @@ namespace cath {
 			         const double &, const double &, const double &,
 			         const double &, const double &, const double &,
 			         const double & = DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
-			rotation(const doub_vec &,
-			         const double & = DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
+			explicit rotation(const doub_vec &,
+			                  const double & = DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS);
 
 			const double & get_value(const size_t &, const size_t &) const;
 

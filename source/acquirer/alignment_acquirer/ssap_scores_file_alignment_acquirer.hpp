@@ -47,7 +47,7 @@ namespace cath {
 			                                                             std::ostream &) const;
 
 		public:
-			ssap_scores_file_alignment_acquirer(const boost::filesystem::path &);
+			explicit ssap_scores_file_alignment_acquirer(const boost::filesystem::path &);
 
 			boost::filesystem::path get_ssap_scores_file() const;
 		};

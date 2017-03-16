@@ -57,7 +57,7 @@ namespace cath {
 
 			public:
 				filter_vs_full_score_list();
-				filter_vs_full_score_list(const filter_vs_full_score_vec &);
+				explicit filter_vs_full_score_list(const filter_vs_full_score_vec &);
 
 				void add_filter_vs_full_score(const filter_vs_full_score &);
 				size_t size() const;

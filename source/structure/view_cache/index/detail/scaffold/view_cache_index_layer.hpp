@@ -60,7 +60,7 @@ namespace cath {
 				int cell_index_of_value_in_current(const double &) const;
 
 			public:
-				view_cache_index_layer(const DIM &);
+				explicit view_cache_index_layer(const DIM &);
 
 				// const double & get_cell_width() const;
 				bool empty() const;

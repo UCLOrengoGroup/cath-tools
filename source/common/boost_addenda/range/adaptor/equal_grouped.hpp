@@ -42,12 +42,14 @@ namespace cath {
 		template <typename FN>
 		detail::equal_grouped_holder<FN> equal_grouped_forwarder::operator()(FN arg_unequal_function
 		                                                                     ) const {
-			return { arg_unequal_function };
+			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+			return detail::equal_grouped_holder<FN>{ arg_unequal_function };
 		}
 
 		/// \brief TODOCUMENT
 		inline detail::equal_grouped_holder<std::nullptr_t> equal_grouped_forwarder::operator()() const {
-			return { nullptr };
+			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+			return detail::equal_grouped_holder<std::nullptr_t>{ nullptr };
 		}
 
 		namespace detail {
@@ -57,7 +59,8 @@ namespace cath {
 			inline equal_grouped_range<RNG> operator|(RNG                            &arg_range, ///< The range to which the equal_grouped adaptor should be applied
 			                                          const equal_grouped_holder<FN> &arg_holder ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
 			                                          ) {
-				return {
+				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+				return equal_grouped_range<RNG>{
 					arg_range,
 					arg_holder.template get_function<RNG>()
 				};
@@ -68,7 +71,8 @@ namespace cath {
 			inline equal_grouped_range<const RNG> operator|(const RNG                      &arg_range, ///< The range to which the equal_grouped adaptor should be applied
 			                                                const equal_grouped_holder<FN> &arg_holder ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
 			                                                ) {
-				return {
+				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+				return equal_grouped_range<const RNG>{
 					arg_range,
 					arg_holder.template get_function<const RNG>()
 				};

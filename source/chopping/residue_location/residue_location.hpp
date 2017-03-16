@@ -41,10 +41,10 @@ namespace cath {
 			size_opt         residue_index;
 
 		public:
-			residue_location(const residue_name &);
+			explicit residue_location(const residue_name &);
 			residue_location(const residue_name &,
 			                 const size_t &);
-			residue_location(const size_t &);
+			explicit residue_location(const size_t &);
 
 			const residue_name_opt & get_opt_residue_name() const;
 			const size_opt & get_opt_residue_index() const;

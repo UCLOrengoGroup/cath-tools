@@ -114,10 +114,17 @@ To get parallel compilation, you can append ` -j #` to the `scan-build make` (wh
 Checking headers compile independently
 --------------------------------------
 
+Clang:
+
 ~~~~~no-highlight
-find source -iname '*.hpp' | grep third_party_code -v | xargs -P 4 -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -I source VAR
+find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -I source VAR
 ~~~~~
 
+GCC:
+
+~~~~~no-highlight
+find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR g++     -x c++ -DBOOST_LOG -std=c++1y                -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_gcc.dummy.header.o   -isystem /opt/boost_1_58_0_gcc_build/include   -I source VAR
+~~~~~
 
 
 Fixing trailing namespace comments
@@ -132,10 +139,27 @@ find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR
 Fixing header guards
 --------------------
 
+Whilst the header guards start with one underscore (contrary to clang-tidy's preference):
+
 ~~~~~no-highlight
-ln -s source src
-find src/   -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -fix -checks=llvm-header-guard      VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
-rm -f src
+find $PWD/source -type f -iname '*.hpp' | sort | grep -vw 'third_party_code' | sed 's/\.hpp$//g' | xargs -I VAR -P 8 ln -s VAR.hpp VAR.h
+find $PWD/source -type l -iname '*.h'   | sort | xargs -I VAR -P 4 clang-tidy -fix -checks=llvm-header-guard VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
+find $PWD/source -type l -iname '*.h'   | sort | xargs rm -f
+find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | xargs sed -i 's/#ifndef __CATH_TOOLS_SOURCE_/#ifndef _CATH_TOOLS_SOURCE_/g'
+find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | xargs sed -i 's/#define __CATH_TOOLS_SOURCE_/#define _CATH_TOOLS_SOURCE_/g'
+find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | sed 's/\.h$//g' | xargs -I VAR diff -C1 VAR.hpp VAR.h
+find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | sed 's/\.h$//g' | xargs -I VAR diff -C1 VAR.hpp VAR.h -q | awk '{print $4}' | xargs -I VAR mv VAR VARpp
+find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | xargs rm -f
+~~~~~
+
+...or once all the header guards have been changed to start with two underscores...
+
+~~~~~no-highlight
+find $PWD/source -type f -iname '*.hpp' | sort | grep -vw 'third_party_code' | sed 's/\.hpp$//g' | xargs -I VAR -P 8 ln -s VAR.hpp VAR.h
+find $PWD/source -type l -iname '*.h'   | sort | xargs -I VAR -P 4 clang-tidy -fix -checks=llvm-header-guard VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
+find $PWD/source -type l -iname '*.h'   | sort | xargs rm -f
+find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | sed 's/\.h$//g' | xargs -I VAR diff -C1 VAR.hpp VAR.h
+find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | sed 's/\.h$//g' | xargs -I VAR mv       VAR.h   VAR.hpp
 ~~~~~
 
 

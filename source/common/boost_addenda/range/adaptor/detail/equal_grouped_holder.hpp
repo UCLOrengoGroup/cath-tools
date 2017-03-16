@@ -37,7 +37,7 @@ namespace cath {
 				FN unequal_function;
 
 			public:
-				equal_grouped_holder(FN);
+				explicit equal_grouped_holder(FN);
 				equal_grouped_holder() = default;
 
 				template <typename RNG>

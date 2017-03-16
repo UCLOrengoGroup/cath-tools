@@ -36,7 +36,7 @@ namespace cath {
 		sink_bsptr boost_log_sink_bsptr;
 
 	public:
-		log_to_ostream_guard(std::ostream &);
+		explicit log_to_ostream_guard(std::ostream &);
 		~log_to_ostream_guard() noexcept;
 
 		/// \brief Specify that the copy-ctor shouldn't be used

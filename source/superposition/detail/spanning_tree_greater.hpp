@@ -35,7 +35,7 @@ namespace cath {
 				const superpose_orderer &the_superpose_orderer;
 
 			public:
-				spanning_tree_greater(const superpose_orderer &);
+				explicit spanning_tree_greater(const superpose_orderer &);
 
 				bool operator()(const size_size_pair &,
 				                const size_size_pair &) const;

@@ -256,35 +256,35 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotation_between_quat_rots, quat_rot_type, all_qua
 
 				cerr << "\n";
 
-				cerr << "Rot eg first       : " <<                                       rotate_copy( get<0>( x ), coord::UNIT_X )     << "\t"
-				                                <<                                       rotate_copy( get<0>( x ), coord::UNIT_Y )     << "\t"
-				                                <<                                       rotate_copy( get<0>( x ), coord::UNIT_Z )     << "\n";
+				cerr << "Rot eg first       : " <<                                              rotate_copy( get<0>( x ), coord::UNIT_X )       << "\t"
+				                                <<                                              rotate_copy( get<0>( x ), coord::UNIT_Y )       << "\t"
+				                                <<                                              rotate_copy( get<0>( x ), coord::UNIT_Z )       << "\n";
 
-				cerr << "Rot eg second      : " <<                                       rotate_copy( get<1>( x ), coord::UNIT_X )     << "\t"
-				                                <<                                       rotate_copy( get<1>( x ), coord::UNIT_Y )     << "\t"
-				                                <<                                       rotate_copy( get<1>( x ), coord::UNIT_Z )     << "\n";
+				cerr << "Rot eg second      : " <<                                              rotate_copy( get<1>( x ), coord::UNIT_X )       << "\t"
+				                                <<                                              rotate_copy( get<1>( x ), coord::UNIT_Y )       << "\t"
+				                                <<                                              rotate_copy( get<1>( x ), coord::UNIT_Z )       << "\n";
 
-				cerr << "Rot answer direct  : " << rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), coord::UNIT_X )   ) << "\t"
-				                                << rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), coord::UNIT_Y )   ) << "\t"
-				                                << rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), coord::UNIT_Z )   ) << "\n";
+				cerr << "Rot answer direct  : " <<        rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), coord::UNIT_X )   )   << "\t"
+				                                <<        rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), coord::UNIT_Y )   )   << "\t"
+				                                <<        rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), coord::UNIT_Z )   )   << "\n";
 
-				cerr << "Rotn answer        : " << rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_X ) ) ) << "\t"
-				                                << rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Y ) ) ) << "\t"
-				                                << rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Z ) ) ) << "\n";
+				cerr << "Rotn answer        : " << coord{ rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_X ) ) ) } << "\t"
+				                                << coord{ rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Y ) ) ) } << "\t"
+				                                << coord{ rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Z ) ) ) } << "\n";
 
 				cerr << "\n";
 
-				cerr << "Rot eg first       : " <<                                       rotate_copy( get<0>( x ), coord::UNIT_X )     << "\t"
-				                                <<                                       rotate_copy( get<0>( x ), coord::UNIT_Y )     << "\t"
-				                                <<                                       rotate_copy( get<0>( x ), coord::UNIT_Z )     << "\n";
+				cerr << "Rot eg first       : " <<                                              rotate_copy( get<0>( x ), coord::UNIT_X )       << "\t"
+				                                <<                                              rotate_copy( get<0>( x ), coord::UNIT_Y )       << "\t"
+				                                <<                                              rotate_copy( get<0>( x ), coord::UNIT_Z )       << "\n";
 
-				cerr << "Rot eg second      : " <<                                       rotate_copy( get<1>( x ), coord::UNIT_X )     << "\t"
-				                                <<                                       rotate_copy( get<1>( x ), coord::UNIT_Y )     << "\t"
-				                                <<                                       rotate_copy( get<1>( x ), coord::UNIT_Z )     << "\n";
+				cerr << "Rot eg second      : " <<                                              rotate_copy( get<1>( x ), coord::UNIT_X )       << "\t"
+				                                <<                                              rotate_copy( get<1>( x ), coord::UNIT_Y )       << "\t"
+				                                <<                                              rotate_copy( get<1>( x ), coord::UNIT_Z )       << "\n";
 
-				cerr << "Quat answer        : " << rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_X ) ) ) << "\t"
-				                                << rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Y ) ) ) << "\t"
-				                                << rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Z ) ) ) << "\n";
+				cerr << "Quat answer        : " << coord{ rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_X ) ) ) } << "\t"
+				                                << coord{ rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Y ) ) ) } << "\t"
+				                                << coord{ rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Z ) ) ) } << "\n";
 
 				cerr << "Distance           : " << distance << "\n";
 				cerr << "\n";
@@ -391,11 +391,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotate_point_by_quat_rots, quat_rot_type, all_quat
 				const auto bg_coord = point<quat_rot_type, 3, cartesian>( the_coord );
 				const auto rotn_answer = rotate_copy( x, the_coord );
 				const auto quat_answer = rotate_copy( y, bg_coord  );
-				const auto distance    = distance_between_points( rotn_answer, quat_answer );
+				const auto distance    = distance_between_points( rotn_answer, coord{ quat_answer } );
 				if ( distance >= LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() ) {
 					cerr << rotn_answer << "\n";
-					cerr << quat_answer << "\n";
-					cerr << distance_between_points( rotn_answer, quat_answer ) << "\n";
+					cerr << coord{ quat_answer } << "\n";
+					cerr << distance_between_points( rotn_answer, coord{ quat_answer } ) << "\n";
 					cerr << "\n";
 				}
 				BOOST_CHECK_LT( distance, LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() );

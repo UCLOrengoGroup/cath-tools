@@ -39,7 +39,7 @@ namespace cath {
 			virtual std::pair<align::alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const override final;
 
 		public:
-			ssap_aln_file_alignment_acquirer(const boost::filesystem::path &);
+			explicit ssap_aln_file_alignment_acquirer(const boost::filesystem::path &);
 
 			boost::filesystem::path get_ssap_alignment_file() const;
 		};

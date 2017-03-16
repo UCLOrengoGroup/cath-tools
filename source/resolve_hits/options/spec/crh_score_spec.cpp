@@ -76,5 +76,6 @@ crh_score_spec & crh_score_spec::set_apply_cath_rules(const bool &arg_apply_cath
 ///
 /// \relates crh_score_spec
 crh_score_spec cath::rslv::make_neutral_score_spec() {
-	return { false, 0.0, 0.0 };
+	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+	return crh_score_spec{ false, 0.0, 0.0 };
 }

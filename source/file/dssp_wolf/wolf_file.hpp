@@ -40,7 +40,7 @@ namespace cath {
 		public:
 			using size_type = residue_vec::size_type;
 
-			wolf_file(const residue_vec &);
+			explicit wolf_file(const residue_vec &);
 
 			size_type get_num_residues() const;
 			const residue & get_residue_of_index(const size_type &) const;

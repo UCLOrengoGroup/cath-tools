@@ -165,12 +165,12 @@ void cath::sup::load_pdbs_from_names(superposition_context &arg_supn_context, //
                                      const data_dirs_spec  &arg_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
                                      ) {
 	arg_supn_context.set_pdbs(
-		transform_build<pdb_vec>(
+		pdb_list{ transform_build<pdb_vec>(
 			arg_supn_context.get_names_cref(),
 			[&] (const string &name) {
 				return read_pdb_file( find_file( arg_data_dirs, data_file::PDB, name ) );
 			}
-		)
+		) }
 	);
 }
 

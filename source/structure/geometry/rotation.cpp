@@ -273,7 +273,8 @@ rotation cath::geom::rotation_from_ptree(const ptree &arg_ptree ///< The ptree f
 			values.push_back( row_col.second.get<double>( "" ) );
 		}
 	}
-	return { values };
+	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+	return rotation{ values };
 }
 
 /// \brief Save the specified rotation to the specified Boost Property Tree ptree

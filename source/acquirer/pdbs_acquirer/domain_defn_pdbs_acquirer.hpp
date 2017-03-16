@@ -38,7 +38,7 @@ namespace cath {
 			virtual file::pdb_list_str_vec_pair do_get_pdbs_and_names(std::istream &) const override final;
 
 		public:
-			domain_defn_pdbs_acquirer(const boost::filesystem::path &);
+			explicit domain_defn_pdbs_acquirer(const boost::filesystem::path &);
 		};
 
 	} // namespace opts

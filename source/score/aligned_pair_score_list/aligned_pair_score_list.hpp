@@ -44,7 +44,7 @@ namespace cath {
 
 			/// @{
 			aligned_pair_score_list() = default;
-			aligned_pair_score_list(const boost::ptr_vector<aligned_pair_score> &);
+			explicit aligned_pair_score_list(const boost::ptr_vector<aligned_pair_score> &);
 			/// @}
 
 			void add_aligned_pair_score(const aligned_pair_score &);

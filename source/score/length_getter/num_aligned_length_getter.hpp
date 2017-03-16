@@ -71,7 +71,7 @@ namespace cath {
 
 		public:
 			num_aligned_length_getter() = default;
-			num_aligned_length_getter(const align::common_residue_selection_policy &);
+			explicit num_aligned_length_getter(const align::common_residue_selection_policy &);
 		};
 
 		bool operator<(const num_aligned_length_getter &,

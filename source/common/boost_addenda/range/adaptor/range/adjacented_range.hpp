@@ -46,7 +46,7 @@ namespace cath {
 			using super               = boost::iterator_range<adjacented_iterator>;
 
 		public:
-			adjacented_range(const RNG &);
+			explicit adjacented_range(const RNG &);
 		 };
 
 		/// \brief Ctor from a range

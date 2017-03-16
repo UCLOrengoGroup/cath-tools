@@ -56,9 +56,9 @@ namespace cath {
 
 			crh_score_spec() noexcept = default;
 
-			crh_score_spec(const bool &,
-			               const resscr_t & = DEFAULT_LONG_DOMAINS_PREFERENCE,
-			               const resscr_t & = DEFAULT_HIGH_SCORES_PREFERENCE);
+			explicit crh_score_spec(const bool &,
+			                        const resscr_t & = DEFAULT_LONG_DOMAINS_PREFERENCE,
+			                        const resscr_t & = DEFAULT_HIGH_SCORES_PREFERENCE);
 
 			const resscr_t & get_long_domains_preference() const;
 			const resscr_t & get_high_scores_preference() const;

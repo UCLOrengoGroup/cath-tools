@@ -59,8 +59,8 @@ namespace cath {
 
 			public:
 				/// \brief Ctor from istream from which the parts should be read
-				tuple_parts_istreamer(std::istream &arg_istream ///< The istream from which the parts should be read
-				                      ) : the_istream( arg_istream ) {
+				explicit tuple_parts_istreamer(std::istream &arg_istream ///< The istream from which the parts should be read
+				                               ) : the_istream( arg_istream ) {
 				}
 
 				/// \brief Populate the arguments from the_istream
@@ -180,8 +180,8 @@ namespace cath {
 
 			public:
 				/// \brief TODOCUMENT
-				tuple_parts_ostreamer(std::ostream &arg_ostream
-				                      ) : the_ostream ( arg_ostream ) {
+				explicit tuple_parts_ostreamer(std::ostream &arg_ostream
+				                               ) : the_ostream ( arg_ostream ) {
 				}
 
 				/// \brief TODOCUMENT

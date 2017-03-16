@@ -97,8 +97,8 @@ namespace cath {
 			                FN = std::not_equal_to<orig_value_type>() );
 
 			template <typename FN>
-			equal_group_itr(RNG &,
-			                FN = std::not_equal_to<orig_value_type>() );
+			explicit equal_group_itr(RNG &,
+			                         FN = std::not_equal_to<orig_value_type>() );
 
 			base_iterator_type get_begin_itr() const;
 		};

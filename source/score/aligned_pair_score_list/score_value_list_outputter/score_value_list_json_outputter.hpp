@@ -52,8 +52,8 @@ namespace cath {
 			const common::json_style the_json_style = DEFAULT_JSON_STYLE;
 
 		public:
-			score_value_list_json_outputter(const aligned_pair_score_value_list &,
-			                                const common::json_style & = DEFAULT_JSON_STYLE);
+			explicit score_value_list_json_outputter(const aligned_pair_score_value_list &,
+			                                         const common::json_style & = DEFAULT_JSON_STYLE);
 
 			/// \brief Default value for the style in which to output the JSON
 			static constexpr common::json_style DEFAULT_JSON_STYLE = common::json_style::PRETTY;

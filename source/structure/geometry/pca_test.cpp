@@ -31,7 +31,7 @@ using namespace cath::geom;
 BOOST_AUTO_TEST_SUITE(pca_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	const coord_list example_coords = { coord_vec{
+	const coord_list example_coords{ coord_vec{
 		coord{ 10.2, 2.0, -9.7 },
 		coord{  5.2, 2.0, -4.7 },
 		coord{ -1.8, 2.0,  2.3 },

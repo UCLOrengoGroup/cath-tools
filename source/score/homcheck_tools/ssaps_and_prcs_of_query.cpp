@@ -270,12 +270,13 @@ ssaps_and_prcs_of_query cath::homcheck::make_ssaps_and_prcs_of_query(const ssap_
 	const auto num_ssaps = arg_ssaps.size();
 	const auto num_prcs  = arg_prcs.size();
 	const auto num_comb  = ssap_and_prc_entries.size();
-	const string query_id_str        = ( ! ssap_and_prc_entries.empty() ) ? ( " (query: " + get_query_id( ssap_and_prc_entries ) + ")" ) : "";
+	const string query_id_str        = ( ! ssap_and_prc_entries.empty() ) ? ( " (query: " + get_query_id( ssaps_and_prcs_of_query{ ssap_and_prc_entries } ) + ")" ) : "";
 	const string unmatched_ssaps_str = ( num_ssaps > num_comb           ) ? ( std::to_string( num_ssaps - num_comb ) + " unmatched SSAP results from " + std::to_string( num_ssaps ) ) : "";
 	const string unmatched_prcs_str  = ( num_prcs  > num_comb           ) ? ( std::to_string( num_prcs  - num_comb ) + " unmatched PRC results from "  + std::to_string( num_prcs  ) ) : "";
 	const string conjuction_str      = ( unmatched_ssaps_str.empty() || unmatched_prcs_str.empty() ) ? "" : " and ";
 	if ( ! unmatched_ssaps_str.empty() || ! unmatched_prcs_str.empty() ) {
 		BOOST_LOG_TRIVIAL( warning ) << "After parsing " << num_comb << " ssaps_and_prcs_of_query" << query_id_str << ", was left with " << unmatched_ssaps_str << conjuction_str << unmatched_prcs_str;
 	}
-	return { ssap_and_prc_entries };
+	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+	return ssaps_and_prcs_of_query{ ssap_and_prc_entries };
 }

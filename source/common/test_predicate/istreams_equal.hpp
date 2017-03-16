@@ -40,7 +40,7 @@ namespace cath {
 		                                               const std::string &);
 
 	public:
-		istreams_equal(const str_size_type & = DEFAULT_DIFF_HALF_WIDTH);
+		explicit istreams_equal(const str_size_type & = DEFAULT_DIFF_HALF_WIDTH);
 
 		boost::test_tools::predicate_result operator()(std::istream &,
 		                                               const std::string &,

@@ -58,7 +58,7 @@ namespace cath {
 			std::pair<char, char> trim_offsets;
 
 		public:
-			element_type_string(const char_4_arr &);
+			explicit element_type_string(const char_4_arr &);
 
 			element_type_string(const element_type_string &) = default;
 			element_type_string(element_type_string &&) noexcept = default;

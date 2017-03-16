@@ -36,7 +36,7 @@ namespace cath {
 				size_t max_num_elements;
 
 			public:
-				limited_holder(const size_t &);
+				explicit limited_holder(const size_t &);
 
 				const size_t & get_max_num_elements() const;
 			};

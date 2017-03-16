@@ -20,10 +20,11 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "roled_scan_stride.hpp"
+#include "scan/detail/stride/roled_scan_stride.hpp"
 
 //#include "test/global_test_constants.hpp"
 
+using namespace cath::scan;
 using namespace cath::scan::detail;
 //using namespace std;
 
@@ -45,33 +46,33 @@ BOOST_FIXTURE_TEST_SUITE(roled_scan_stride_test_suite, cath::test::roled_scan_st
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(ctor_and_getters_work) {
 	BOOST_CHECK( true );
-	static_assert( get_this_from_stride ( roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } ) == 1, "roled_scan_stride's ctor and getter should return the relevant value back" );
-	static_assert( get_this_to_stride   ( roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } ) == 2, "roled_scan_stride's ctor and getter should return the relevant value back" );
-	static_assert( get_other_from_stride( roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } ) == 3, "roled_scan_stride's ctor and getter should return the relevant value back" );
-	static_assert( get_other_to_stride  ( roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } ) == 4, "roled_scan_stride's ctor and getter should return the relevant value back" );
-	static_assert( get_this_from_stride ( roled_scan_stride{ scan_role::INDEX, { 1, 2, 3, 4 } } ) == 3, "roled_scan_stride's ctor and getter should return the relevant value back" );
-	static_assert( get_this_to_stride   ( roled_scan_stride{ scan_role::INDEX, { 1, 2, 3, 4 } } ) == 4, "roled_scan_stride's ctor and getter should return the relevant value back" );
-	static_assert( get_other_from_stride( roled_scan_stride{ scan_role::INDEX, { 1, 2, 3, 4 } } ) == 1, "roled_scan_stride's ctor and getter should return the relevant value back" );
-	static_assert( get_other_to_stride  ( roled_scan_stride{ scan_role::INDEX, { 1, 2, 3, 4 } } ) == 2, "roled_scan_stride's ctor and getter should return the relevant value back" );
+	static_assert( get_this_from_stride ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 2, 3, 4 } } ) == 1, "roled_scan_stride's ctor and getter should return the relevant value back" );
+	static_assert( get_this_to_stride   ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 2, 3, 4 } } ) == 2, "roled_scan_stride's ctor and getter should return the relevant value back" );
+	static_assert( get_other_from_stride( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 2, 3, 4 } } ) == 3, "roled_scan_stride's ctor and getter should return the relevant value back" );
+	static_assert( get_other_to_stride  ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 2, 3, 4 } } ) == 4, "roled_scan_stride's ctor and getter should return the relevant value back" );
+	static_assert( get_this_from_stride ( roled_scan_stride{ scan_role::INDEX, scan_stride{ 1, 2, 3, 4 } } ) == 3, "roled_scan_stride's ctor and getter should return the relevant value back" );
+	static_assert( get_this_to_stride   ( roled_scan_stride{ scan_role::INDEX, scan_stride{ 1, 2, 3, 4 } } ) == 4, "roled_scan_stride's ctor and getter should return the relevant value back" );
+	static_assert( get_other_from_stride( roled_scan_stride{ scan_role::INDEX, scan_stride{ 1, 2, 3, 4 } } ) == 1, "roled_scan_stride's ctor and getter should return the relevant value back" );
+	static_assert( get_other_to_stride  ( roled_scan_stride{ scan_role::INDEX, scan_stride{ 1, 2, 3, 4 } } ) == 2, "roled_scan_stride's ctor and getter should return the relevant value back" );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(equality_comparison_works) {
 	BOOST_CHECK( true );
-	static_assert(     roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } == roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } },   "scan_stride's operator== should work" );
-	static_assert(     roled_scan_stride{ scan_role::INDEX, { 1, 2, 3, 4 } } == roled_scan_stride{ scan_role::INDEX, { 1, 2, 3, 4 } },   "scan_stride's operator== should work" );
+	static_assert(     roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 2, 3, 4 } } == roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 2, 3, 4 } },   "scan_stride's operator== should work" );
+	static_assert(     roled_scan_stride{ scan_role::INDEX, scan_stride{ 1, 2, 3, 4 } } == roled_scan_stride{ scan_role::INDEX, scan_stride{ 1, 2, 3, 4 } },   "scan_stride's operator== should work" );
 
-	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } == roled_scan_stride{ scan_role::INDEX, { 1, 2, 3, 4 } } ), "scan_stride's operator== should work" );
-	static_assert( ! ( roled_scan_stride{ scan_role::INDEX, { 1, 2, 3, 4 } } == roled_scan_stride{ scan_role::QUERY, { 1, 2, 3, 4 } } ), "scan_stride's operator== should work" );
+	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 2, 3, 4 } } == roled_scan_stride{ scan_role::INDEX, scan_stride{ 1, 2, 3, 4 } } ), "scan_stride's operator== should work" );
+	static_assert( ! ( roled_scan_stride{ scan_role::INDEX, scan_stride{ 1, 2, 3, 4 } } == roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 2, 3, 4 } } ), "scan_stride's operator== should work" );
 
-	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, { 2, 1, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, { 1, 1, 1, 1 } } ), "scan_stride's operator== should work" );
-	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, { 1, 2, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, { 1, 1, 1, 1 } } ), "scan_stride's operator== should work" );
-	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, { 1, 1, 2, 1 } } == roled_scan_stride{ scan_role::QUERY, { 1, 1, 1, 1 } } ), "scan_stride's operator== should work" );
-	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, { 1, 1, 1, 2 } } == roled_scan_stride{ scan_role::QUERY, { 1, 1, 1, 1 } } ), "scan_stride's operator== should work" );
-	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, { 1, 1, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, { 2, 1, 1, 1 } } ), "scan_stride's operator== should work" );
-	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, { 1, 1, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, { 1, 2, 1, 1 } } ), "scan_stride's operator== should work" );
-	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, { 1, 1, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, { 1, 1, 2, 1 } } ), "scan_stride's operator== should work" );
-	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, { 1, 1, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, { 1, 1, 1, 2 } } ), "scan_stride's operator== should work" );
+	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 2, 1, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 1, 1 } } ), "scan_stride's operator== should work" );
+	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 2, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 1, 1 } } ), "scan_stride's operator== should work" );
+	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 2, 1 } } == roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 1, 1 } } ), "scan_stride's operator== should work" );
+	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 1, 2 } } == roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 1, 1 } } ), "scan_stride's operator== should work" );
+	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, scan_stride{ 2, 1, 1, 1 } } ), "scan_stride's operator== should work" );
+	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 2, 1, 1 } } ), "scan_stride's operator== should work" );
+	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 2, 1 } } ), "scan_stride's operator== should work" );
+	static_assert( ! ( roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 1, 1 } } == roled_scan_stride{ scan_role::QUERY, scan_stride{ 1, 1, 1, 2 } } ), "scan_stride's operator== should work" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

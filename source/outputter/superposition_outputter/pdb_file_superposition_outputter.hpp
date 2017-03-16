@@ -39,7 +39,7 @@ namespace cath {
 			virtual bool do_involves_display_spec() const override final;
 
 		public:
-			pdb_file_superposition_outputter(const boost::filesystem::path &);
+			explicit pdb_file_superposition_outputter(const boost::filesystem::path &);
 		};
 
 	} // namespace opts

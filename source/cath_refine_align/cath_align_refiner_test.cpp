@@ -34,6 +34,7 @@
 
 using namespace boost::filesystem;
 using namespace cath::common;
+using namespace cath::opts;
 using namespace std;
 
 namespace cath {
@@ -80,7 +81,7 @@ void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner
 		stringstream test_ostream;
 
 		// Perform the superposition and then close the input file
-		cath_superposer::superpose( my_cath_refine_align_options, arg_istream, test_ostream );
+		cath_superposer::superpose( cath_superpose_options{ my_cath_refine_align_options }, arg_istream, test_ostream );
 
 		if (arg_outputs_to_temp_file) {
 			BOOST_CHECK_FILES_EQUAL( get_filename( temp_cath_align_refiner_output_file ), arg_expected_output_file);
