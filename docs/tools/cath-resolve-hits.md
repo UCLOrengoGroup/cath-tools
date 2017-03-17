@@ -125,9 +125,13 @@ Output:
   --output-trimmed-hits                          When writing out the final hits, output the hits' starts/stop as they are *after trimming*
   --summarise                                    Output a brief text summary of the input data (rather than processing it)
   --html-output                                  Output the results as HTML
-  --restrict-html-within-body                    Restrict HTML output to the contents of the body tag (implies --html-output).
-                                                 The contents should be included inside a body tag of class crh-body
   --export-css-file <file>                       Export the CSS used in the HTML output to <file>
+
+HTML:
+  --restrict-html-within-body                    Restrict HTML output to the contents of the body tag.
+                                                 The contents should be included inside a body tag of class crh-body
+  --html-max-num-non-soln-hits <num> (=80)       Only display up to <num> non-solution hits in the HTML
+  --html-exclude-rejected-hits                   Exclude hits rejected by the score filters from the HTML
 
 Detailed help:
   --cath-rules-help                              Show help on the rules activated by the --apply-cath-rules option
