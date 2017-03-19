@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 
 BOOST_AUTO_TEST_CASE(get_supn_content_pdb_works) {
-	const path pdb_file = "/cath-tools/build-test-data/supn_content/1bdh";
+	const path pdb_file = TEST_SOURCE_DATA_DIR() / "supn_content" / "1bdh";
 	const auto the_pdb = read_pdb_file( pdb_file );
 
 	const region_vec regions_1bdhA01 = { make_simple_region( 'A',   3,  59 )                                      };
