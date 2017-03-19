@@ -273,7 +273,6 @@ void cath::output_superposition_to_viewer(ostream                          &arg_
 			arg_viewer,
 			make_alignment_context( arg_superposition_context )
 		);
-		// allow_this_to_do_something_useful_with_rainbow_colouring_here(); // TODONOW
 
 		// If there is an alignment then do magic with it
 		// if ( arg_superposition_context.has_alignment() ) {
