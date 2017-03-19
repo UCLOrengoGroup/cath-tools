@@ -53,9 +53,9 @@ namespace cath {
 			bool get_scores_to_equivs() const;
 			bool get_normalise_scores() const;
 
-			float_score_type get_score_of_postion(const align::alignment &,
-			                                      const size_t &,
-			                                      const size_t &) const;
+			float_score_type get_score_of_position(const align::alignment &,
+			                                       const size_t &,
+			                                       const size_t &) const;
 		};
 
 		using score_colour_handler_opt = boost::optional<score_colour_handler>;

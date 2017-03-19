@@ -59,10 +59,10 @@ bool score_colour_handler::get_normalise_scores() const {
 }
 
 /// \brief TODOCUMENT
-float_score_type score_colour_handler::get_score_of_postion(const alignment &arg_alignment, ///< TODOCUMENT
-                                                            const size_t    &arg_entry,     ///< TODOCUMENT
-                                                            const size_t    &arg_index      ///< TODOCUMENT
-                                                            ) const {
+float_score_type score_colour_handler::get_score_of_position(const alignment &arg_alignment, ///< TODOCUMENT
+                                                             const size_t    &arg_entry,     ///< TODOCUMENT
+                                                             const size_t    &arg_index      ///< TODOCUMENT
+                                                             ) const {
 	const bool using_scores     = show_scores_if_present && arg_alignment.is_scored();
 	const bool using_this_score = using_scores && has_score( arg_alignment.get_alignment_residue_scores(), arg_entry, arg_index );
 	return using_this_score ? get_score( arg_alignment.get_alignment_residue_scores(), arg_entry, arg_index, ! scores_to_equivs, normalise_scores )
@@ -78,7 +78,7 @@ void cath::detail::score_colour(const score_colour_handler &arg_score_colour_han
                                 const size_t               &arg_index,                ///< TODOCUMENT
                                 display_colour             &arg_colour                ///< TODOCUMENT
                                 ) {
-	const float_score_type score = arg_score_colour_handler.get_score_of_postion( arg_alignment, arg_entry, arg_index );
+	const float_score_type score = arg_score_colour_handler.get_score_of_position( arg_alignment, arg_entry, arg_index );
 	arg_colour = rgb_mid_point( display_colour::WHITE, arg_colour, score );
 }
 
