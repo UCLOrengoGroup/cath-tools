@@ -38,13 +38,13 @@ unique_ptr<superposition_outputter> ostream_superposition_outputter::do_clone() 
 }
 
 /// \brief TODOCUMENT
-void ostream_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-                                                              ostream                     &arg_ostream                ///< TODOCUMENT
+void ostream_superposition_outputter::do_output_superposition(const superposition_context &arg_supn_context, ///< TODOCUMENT
+                                                              ostream                     &arg_ostream       ///< TODOCUMENT
                                                               ) const {
 	write_superposed_pdbs_to_ostream(
 		arg_ostream,
-		arg_superposition_context.get_superposition_cref(),
-		arg_superposition_context.get_pdbs_cref(),
+		arg_supn_context.get_superposition(),
+		get_supn_content_pdbs( arg_supn_context, content_spec ),
 		sup_pdbs_script_policy::LEAVE_RAW_PDBS,
 		chain_relabel_policy::RELABEL
 	);
@@ -55,3 +55,7 @@ bool ostream_superposition_outputter::do_involves_display_spec() const {
 	return false;
 }
 
+/// \brief Ctor for ostream_superposition_outputter
+ostream_superposition_outputter::ostream_superposition_outputter(const superposition_content_spec &arg_content_spec ///< The specification of what should be included in the superposition
+                                                                 ) : content_spec { arg_content_spec } {
+}

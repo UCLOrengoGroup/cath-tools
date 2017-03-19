@@ -27,7 +27,6 @@
 #include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
 #include "acquirer/pdbs_acquirer/istream_pdbs_acquirer.hpp"
 #include "acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
-#include "acquirer/superposition_acquirer/align_based_superposition_acquirer.hpp"
 #include "alignment/alignment.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"

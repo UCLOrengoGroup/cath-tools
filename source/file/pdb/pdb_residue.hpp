@@ -132,6 +132,9 @@ namespace cath {
 		geom::coord get_or_predict_carbon_beta_coord_of_residue(const pdb_residue &);
 		geom::rotation get_ssap_frame_of_residue(const pdb_residue &);
 
+		double max_dist_from_coord(const pdb_residue &,
+		                           const geom::coord &);
+
 		std::ostream & write_pdb_file_entry(std::ostream &,
 		                                    const pdb_residue &);
 
@@ -144,6 +147,8 @@ namespace cath {
 		                                     const size_t &);
 
 		bool dssp_will_skip_residue(const pdb_residue &);
+
+		geom::coord_vec get_all_coords(const pdb_residue_vec &);
 
 		std::ostream & operator<<(std::ostream &,
 		                          const pdb_residue_vec &);

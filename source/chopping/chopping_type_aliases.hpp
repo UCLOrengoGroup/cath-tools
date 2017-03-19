@@ -34,11 +34,14 @@ namespace cath {
 		class domain_definition;
 		class region;
 
-		/// \brief TODOCUMENT
+		/// \brief Type alias for a vector of domains
 		using domain_vec            = std::vector<domain>;
 
-		/// \brief TODOCUMENT
+		/// \brief Type alias for a vector of regions
 		using region_vec            = std::vector<region>;
+
+		/// \brief Type alias for an optional region_vec
+		using region_vec_opt        = boost::optional<region_vec>;
 
 		/// \brief Type alias for a reference_wrapper of const region_vec
 		using region_vec_cref       = std::reference_wrapper<const region_vec>;
@@ -46,11 +49,17 @@ namespace cath {
 		/// \brief Type alias for an optional region_vec_cref
 		using region_vec_cref_opt   = boost::optional<region_vec_cref>;
 
-		/// \brief TODOCUMENT
+		/// \brief Type alias for a vector of region_vecs
+		using region_vec_vec        = std::vector<region_vec>;
+
+		/// \brief Type alias for a vector of region_vec_opts
+		using region_vec_opt_vec    = std::vector<region_vec_opt>;
+
+		/// \brief Type alias for a vector of domain_definitions
 		using domain_definition_vec = std::vector<domain_definition>;
 
 
-		/// \brief TODOCUMENT
+		/// \brief Type alias for an optional residue_locating
 		using residue_locating_opt  = boost::optional<residue_locating>;
 	} // namespace chop
 } // namespace cath

@@ -25,6 +25,7 @@
 
 using namespace cath;
 using namespace cath::align;
+using namespace cath::chop;
 using namespace cath::detail;
 
 /// \brief Implementation of getting the colour spec from the alignment
@@ -35,8 +36,8 @@ display_colour_spec alignment_free_display_colourer::do_get_colour_spec(const al
                                                                         ) const {
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return display_colour_spec{
-		do_get_colour_spec_from_num_entries(
-			arg_alignment_context.get_alignment().num_entries()
+		do_get_colour_spec_from_regions(
+			arg_alignment_context.get_regions()
 		)
 	};
 }
@@ -46,8 +47,8 @@ alignment_free_display_colourer::alignment_free_display_colourer(const score_col
                                                                  ) : super( arg_score_handler ) {
 }
 
-/// \brief NVI wrapper to get colouring based on the number of entries (structures)
-broad_display_colour_spec alignment_free_display_colourer::get_colour_spec_from_num_entries(const size_t &arg_num_entries ///< The number of entries (structures) to colour
-                                                                                            ) const {
-	return do_get_colour_spec_from_num_entries( arg_num_entries );
+/// \brief NVI wrapper to get colouring based on the regions
+broad_display_colour_spec alignment_free_display_colourer::get_colour_spec_from_regions(const region_vec_opt_vec &arg_regions ///< The key regions of the structures
+                                                                                        ) const {
+	return do_get_colour_spec_from_regions( arg_regions );
 }

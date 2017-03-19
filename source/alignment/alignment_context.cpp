@@ -20,22 +20,27 @@
 
 #include "alignment_context.hpp"
 
+#include "chopping/region/region.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "superposition/superposition_context.hpp"
 
 using namespace cath;
 using namespace cath::align;
+using namespace cath::chop;
 using namespace cath::file;
 using namespace cath::sup;
 
 /// \brief Ctor for alignment_context
-alignment_context::alignment_context(const pdb_list  &arg_pdbs,
-                                     const str_vec   &arg_names,
-                                     const alignment &arg_alignment
-                                     ) : pdbs         ( arg_pdbs      ),
-                                         names        ( arg_names     ),
-                                         the_alignment( arg_alignment ) {
+alignment_context::alignment_context(const pdb_list           &arg_pdbs,      ///< TODOCUMENT
+                                     const str_vec            &arg_names,     ///< TODOCUMENT
+                                     const alignment          &arg_alignment, ///< TODOCUMENT
+                                     const region_vec_opt_vec &arg_regions    ///< The specification of the regions of the PDBs to which the alignment refers
+                                     ) : pdbs          { arg_pdbs      },
+                                         names         { arg_names     },
+                                         the_alignment { arg_alignment },
+                                         regions       { arg_regions   } {
 }
 
 /// \brief TODOCUMENT
@@ -53,6 +58,11 @@ const alignment & alignment_context::get_alignment() const {
 	return the_alignment;
 }
 
+/// \brief Getter for the specification of the regions of the PDBs to which the alignment refers
+const region_vec_opt_vec & alignment_context::get_regions() const {
+	return regions;
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_context
@@ -65,6 +75,7 @@ superposition_context cath::align::make_superposition_context(const alignment_co
 		arg_alignment_context.get_pdbs(),
 		arg_alignment_context.get_names(),
 		arg_superposition,
-		arg_alignment_context.get_alignment()
+		arg_alignment_context.get_alignment(),
+		arg_alignment_context.get_regions()
 	);
 }

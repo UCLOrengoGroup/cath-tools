@@ -39,13 +39,13 @@ unique_ptr<superposition_outputter> pdb_file_superposition_outputter::do_clone()
 
 /// \brief TODOCUMENT
 void pdb_file_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-                                                               ostream                     &/*arg_ostream*/ ///< TODOCUMENT
+                                                               ostream                     &/*arg_ostream*/            ///< TODOCUMENT
                                                                ) const {
 	ofstream pdb_ostream;
-	open_ofstream(pdb_ostream, output_file);
+	open_ofstream( pdb_ostream, output_file );
 
-	ostream_superposition_outputter stream_outputter;
-	stream_outputter.output_superposition(arg_superposition_context, pdb_ostream);
+	ostream_superposition_outputter stream_outputter{ content_spec };
+	stream_outputter.output_superposition( arg_superposition_context, pdb_ostream );
 
 	pdb_ostream << flush;
 	pdb_ostream.close();
@@ -56,7 +56,9 @@ bool pdb_file_superposition_outputter::do_involves_display_spec() const {
 	return false;
 }
 
-/// \brief Ctor for pdb_file_superposition_outputter.
-pdb_file_superposition_outputter::pdb_file_superposition_outputter(const path &arg_output_file
-                                                                   ) : output_file(arg_output_file) {
+/// \brief Ctor for pdb_file_superposition_outputter
+pdb_file_superposition_outputter::pdb_file_superposition_outputter(const path                       &arg_output_file, ///< TODOCUMENT
+                                                                   const superposition_content_spec &arg_content_spec ///< The specification of what should be included in the superposition
+                                                                   ) : output_file  { arg_output_file  },
+                                                                       content_spec { arg_content_spec } {
 }

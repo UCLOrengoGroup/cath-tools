@@ -83,9 +83,9 @@ void cath::detail::write_chimera_pair_alignments(ostream                     &ar
 	if ( ! arg_superposition_context.has_alignment() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot write PyMOL pair alignments for superposition_context with no alignment"));
 	}
-	const alignment     &the_alignment     = arg_superposition_context.get_alignment_cref();
-// 	const superposition &the_superposition = arg_superposition_context.get_superposition_cref();
-	const pdb_list      &pdbs              = arg_superposition_context.get_pdbs_cref();
+	const alignment     &the_alignment     = arg_superposition_context.get_alignment();
+// 	const superposition &the_superposition = arg_superposition_context.get_superposition();
+	const pdb_list       pdbs              = get_restricted_pdbs( arg_superposition_context );
 	const str_vec        names             = clean_names_for_viewer( arg_superposition_context );
 	
 	// Grab some basic details
@@ -173,9 +173,9 @@ void cath::detail::write_chimera_global_alignment(ostream                     &a
 	if ( ! arg_superposition_context.has_alignment() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot write PyMOL global alignment for superposition_context with no alignment"));
 	}
-	const alignment     &the_alignment     = arg_superposition_context.get_alignment_cref();
-	const superposition &the_superposition = arg_superposition_context.get_superposition_cref();
-	const pdb_list      &pdbs              = arg_superposition_context.get_pdbs_cref();
+	const alignment     &the_alignment     = arg_superposition_context.get_alignment();
+	const superposition &the_superposition = arg_superposition_context.get_superposition();
+	const pdb_list       pdbs              = get_restricted_pdbs( arg_superposition_context );
 	const str_vec        names             = clean_names_for_viewer( arg_superposition_context );
 	
 	// Grab some basic details

@@ -498,6 +498,7 @@ set(
 		file/pdb/pdb_list.cpp
 		file/pdb/pdb_record.cpp
 		file/pdb/pdb_residue.cpp
+		file/pdb/proximity_calculator.cpp
 		file/pdb/read_domain_def_from_pdb.cpp
 )
 
@@ -1083,6 +1084,7 @@ set(
 		superposition/superposition.cpp
 		superposition/superposition_content_spec.cpp
 		superposition/superposition_context.cpp
+		superposition/supn_regions_context.cpp
 )
 
 set(
@@ -1531,6 +1533,7 @@ set(
 		file/pdb/pdb_list_test.cpp
 		file/pdb/pdb_residue_test.cpp
 		file/pdb/pdb_test.cpp
+		file/pdb/proximity_calculator_test.cpp
 )
 
 set(

@@ -29,6 +29,7 @@
 #include "common/algorithm/contains.hpp"
 #include "display/display_colour_spec/display_colour_spec.hpp"
 #include "display/display_colourer/display_colourer.hpp"
+#include "display/viewer/viewer.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
@@ -38,6 +39,7 @@
 
 using namespace cath;
 using namespace cath::align;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::sup;
@@ -46,14 +48,16 @@ using namespace std;
 using boost::lexical_cast;
 
 /// \brief Ctor for html_align_outputter
-html_align_outputter::html_align_outputter(const alignment        &arg_alignment, ///< The alignment to be output
-                                           const pdb_list         &arg_pdbs,      ///< TODOCUMENT
-                                           const str_vec          &arg_names,     ///< TODOCUMENT
-                                           const display_colourer &arg_colourer   ///< TODOCUMENT
-                                           ) : the_alignment ( arg_alignment ),
-                                               pdbs          ( arg_pdbs      ),
-                                               names         ( arg_names     ),
-                                               colourer      ( arg_colourer  ) {
+html_align_outputter::html_align_outputter(const alignment          &arg_alignment, ///< The alignment to be output
+                                           const pdb_list           &arg_pdbs,      ///< TODOCUMENT
+                                           const str_vec            &arg_names,     ///< TODOCUMENT
+                                           const region_vec_opt_vec &arg_regions,   ///< The specification of the regions of the PDBs to which the alignment refers
+                                           const display_colourer   &arg_colourer   ///< TODOCUMENT
+                                           ) : the_alignment { arg_alignment },
+                                               pdbs          { arg_pdbs      },
+                                               names         { arg_names     },
+                                               regions       { arg_regions   },
+                                               colourer      { arg_colourer  } {
 }
 
 /// \brief Getter for the const reference to the alignment
@@ -71,9 +75,29 @@ const str_vec & html_align_outputter::get_names() const {
 	return names;
 }
 
+/// \brief The specification of the regions of the PDBs to which the alignment refers
+const region_vec_opt_vec & html_align_outputter::get_regions() const {
+	return regions;
+}
+
 /// \brief TODOCUMENT
 const display_colourer & html_align_outputter::get_display_colourer() const {
 	return colourer;
+}
+
+/// \brief Make an html_align_outputter from the specified alignment_context and display_colourer
+///
+/// \relates html_align_outputter
+html_align_outputter cath::align::make_html_align_outputter(const alignment_context &arg_alignment_context, ///< The alignment_context from which to build the html_align_outputter
+                                                            const display_colourer  &arg_display_colourer   ///< The display_colourer from which to build the html_align_outputter
+                                                            ) {
+	return {
+		arg_alignment_context.get_alignment(),
+		arg_alignment_context.get_pdbs(),
+		arg_alignment_context.get_names(),
+		arg_alignment_context.get_regions(),
+		arg_display_colourer
+	};
 }
 
 /// \brief Output the alignment to the ostream in horizontal format
@@ -92,10 +116,11 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 	const alignment           &the_alignment   = arg_html_align_outputter.get_alignment();
 	const pdb_list            &pdbs            = arg_html_align_outputter.get_pdbs();
 	const str_vec             &names           = arg_html_align_outputter.get_names();
+	const region_vec_opt_vec  &regions         = arg_html_align_outputter.get_regions();
 	const display_colourer    &colourer        = arg_html_align_outputter.get_display_colourer();
 	const alignment::size_type length          = the_alignment.length();
 	const alignment::size_type num_entries     = the_alignment.num_entries();
-	const display_colour_spec  colour_spec     = get_colour_spec( colourer, pdbs, names, the_alignment );
+	const display_colour_spec  colour_spec     = get_colour_spec( colourer, pdbs, names, the_alignment, regions );
 	const display_colour_vec   colours         = get_all_colours( colour_spec );
 	const size_t               num_colours     = colours.size();
 	const str_vec              colour_names    = generate_colour_names( num_colours );

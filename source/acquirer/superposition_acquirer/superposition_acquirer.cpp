@@ -20,27 +20,20 @@
 
 #include "superposition_acquirer.hpp"
 
-//#include <boost/test/floating_point_comparison.hpp>
-
-//#include "alignment/alignment_coord_extractor.hpp"
-//#include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
-//#include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
-//#include "exception/invalid_argument_exception.hpp"
+#include "chopping/region/region.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
-//#include "structure/geometry/coord_list.hpp"
 #include "superposition/superposition.hpp"
 #include "superposition/superposition_context.hpp"
 
-//#include <iostream> // **** TEMPORARY ****
 #include <string>
 
-//using namespace boost;
 using namespace cath::opts;
 using namespace cath::sup;
-using namespace std;
+
+using std::ostream;
 
 constexpr double superposition_acquirer::PERCENT_TOLERANCE_FOR_EQUAL_RMSDS;
 

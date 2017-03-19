@@ -23,19 +23,14 @@
 
 #include <boost/optional.hpp>
 
+#include "superposition/supn_regions_context.hpp"
+
 namespace cath {
 
 	/// \todo Move this to common/type_aliases.hpp
 	using doub_opt = boost::optional<double>;
 
 	namespace sup {
-
-		/// \brief The context to include in superpositions when showing the specified region(s) of structure
-		enum class supn_regions_context : char {
-			ALONE,    ///< Only include the specified region(s) of structure
-			IN_CHAIN, ///< Include the full chain of the specified region(s) of structure
-			IN_PDB    ///< Include the full PDB of the specified region(s) of structure
-		};
 
 		/// \brief Specify what should be included in superpositions other than the specified region(s) of structure
 		class superposition_content_spec final {

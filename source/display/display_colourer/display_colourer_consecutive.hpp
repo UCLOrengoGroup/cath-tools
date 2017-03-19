@@ -43,7 +43,7 @@ namespace cath {
 
 		virtual std::unique_ptr<display_colourer> do_clone() const override final;
 
-		virtual broad_display_colour_spec do_get_colour_spec_from_num_entries(const size_t &) const override final;
+		virtual broad_display_colour_spec do_get_colour_spec_from_regions(const chop::region_vec_opt_vec &) const override final;
 
 		virtual std::string do_get_label() const override final;
 

@@ -25,6 +25,7 @@
 
 #include "acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
 #include "acquirer/superposition_acquirer/superposition_acquirer.hpp"
+#include "chopping/chopping_type_aliases.hpp"
 
 namespace cath { namespace align { class alignment; } }
 namespace cath { namespace file { class pdb_list; } }
@@ -37,15 +38,33 @@ namespace cath {
 		/// \brief TODOCUMENT
 		class align_based_superposition_acquirer final : public cath::opts::superposition_acquirer {
 		private:
-			const file::pdb_list     &pdbs;
-			const str_vec            &names;
-			const align::alignment   &the_alignment;
-			const size_size_pair_vec &spanning_tree;
+			/// \brief TODOCUMENT
+			std::reference_wrapper<const file::pdb_list> pdbs_ref;
 
+			/// \brief TODOCUMENT
+			std::reference_wrapper<const str_vec> names_ref;
+
+			/// \brief TODOCUMENT
+			std::reference_wrapper<const align::alignment> the_alignment_ref;
+
+			/// \brief TODOCUMENT
+			std::reference_wrapper<const size_size_pair_vec> spanning_tree_ref;
+
+			/// \brief TODOCUMENT
 			selection_policy_acquirer the_selection_policy_acquirer;
 
-			const file::pdb_list & get_pdbs_cref() const;
-			const str_vec & get_names_cref() const;
+			/// \brief For each PDB: the regions of the PDB to which the alignment refers,
+			///        or none if it refers to all of it
+			///
+			/// \todo Should this be a reference too?
+			chop::region_vec_opt_vec regions;
+
+			const file::pdb_list & get_pdbs() const;
+			const str_vec & get_names() const;
+			const align::alignment & get_alignment() const;
+			const size_size_pair_vec & get_spanning_tree() const;
+			const selection_policy_acquirer & get_selection_policy_acquirer() const;
+			const chop::region_vec_opt_vec & get_regions() const;
 
 			virtual sup::superposition_context do_get_superposition(std::ostream &) const override final;
 
@@ -54,7 +73,8 @@ namespace cath {
 			                                   const str_vec &,
 			                                   const align::alignment &,
 			                                   const size_size_pair_vec &,
-			                                   const selection_policy_acquirer &);
+			                                   const selection_policy_acquirer &,
+			                                   const chop::region_vec_opt_vec &);
 		};
 
 		sup::superposition hacky_multi_ssap_fuction(const file::pdb_list &,

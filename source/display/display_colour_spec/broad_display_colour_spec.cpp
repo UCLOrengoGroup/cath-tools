@@ -36,6 +36,7 @@
 
 using namespace cath;
 using namespace cath::common;
+using namespace cath::file;
 
 using boost::adaptors::filtered;
 using boost::adaptors::map_keys;
@@ -53,26 +54,37 @@ using std::setw;
 using std::string;
 
 /// \brief Specify the base colour to use
-void broad_display_colour_spec::colour_base(const display_colour &arg_colour,   ///< The colour to use
-                                            const bool           &arg_overwrite ///< Whether to allow any previous base value to be overwritten without throwing
-                                            ) {
+broad_display_colour_spec & broad_display_colour_spec::colour_base(const display_colour &arg_colour,   ///< The colour to use
+                                                                   const bool           &arg_overwrite ///< Whether to allow any previous base value to be overwritten without throwing
+                                                                   ) {
 	if ( ! arg_overwrite && base_clr ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Attempt to re-specify base colour"));
 	}
 	base_clr = arg_colour;
+	return *this;
 }
 
 /// \brief Specify the colour to use for a specific structure
-void broad_display_colour_spec::colour_pdb(const size_t         &arg_pdb_index, ///< The index of the structure for which the colour should be set
-		                                   const display_colour &arg_colour,    ///< The colour to use
-		                                   const bool           &arg_overwrite  ///< Whether to allow any previous base value to be overwritten without throwing
-		                                   ) {
+broad_display_colour_spec & broad_display_colour_spec::colour_pdb(const size_t         &arg_pdb_index, ///< The index of the structure for which the colour should be set
+		                                                          const display_colour &arg_colour,    ///< The colour to use
+		                                                          const bool           &arg_overwrite  ///< Whether to allow any previous base value to be overwritten without throwing
+		                                                          ) {
 	if ( ! arg_overwrite && contains ( clr_of_pdb, arg_pdb_index ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Attempt to re-specify colour of structure"));
 	}
 //	clr_of_pdb.insert( make_pair( arg_pdb_index, arg_colour ) );
 	clr_of_pdb[ arg_pdb_index ] = arg_colour;
+	return *this;
 }
+
+// /// \brief Specify a region and colour to apply to that region in a specific structure
+// broad_display_colour_spec & broad_display_colour_spec::colour_region(const size_t         &arg_pdb_index, ///< The index of the structure for which the colour should be set
+//                                                                      const region         &arg_region,    ///< The region to colour
+//                                                                      const display_colour &arg_colour     ///< The colour to use
+//                                                                      ) {
+// 	clr_of_region[ arg_region ].emplace_back( arg_region, arg_colour );
+// 	return *this;
+// }
 
 /// \brief Getter for the base colour
 const display_colour_opt & broad_display_colour_spec::get_base_clr() const {
@@ -83,6 +95,11 @@ const display_colour_opt & broad_display_colour_spec::get_base_clr() const {
 const size_display_colour_map & broad_display_colour_spec::get_clr_of_pdb() const {
 	return clr_of_pdb;
 }
+
+// /// \brief Get the region/colour pairs by structure index
+// const size_region_display_colour_pair_vec_map & broad_display_colour_spec::get_clr_of_regions() const {
+// 	return clr_of_region;
+// }
 
 /// \brief Return whether the specified broad_display_colour_spec has a base colour
 ///
@@ -145,6 +162,7 @@ size_vec cath::get_pdbs_of_colour(const broad_display_colour_spec &arg_colour_sp
 void cath::detail::colour_base_and_pdbs_impl(const display_colour_vec        &arg_colours,                  ///< The list of colours
                                              const broad_display_colour_spec &arg_colour_spec,              ///< The broad_display_colour_spec to use
                                              const viewer                    &arg_viewer,                   ///< The viewer to specify how to render the instructions
+                                             const pdb_list                  &/*arg_pdbs*/,                 ///< The key regions of the structures
                                              const str_vec                   &arg_cleaned_names_for_viewer, ///< The (viewer-cleaned) names for the structures to be coloured
                                              ostream                         &arg_os                        ///< The ostream to which the instructions should be written
                                              ) {
@@ -181,6 +199,7 @@ void cath::detail::colour_base_and_pdbs_impl(const display_colour_vec        &ar
 /// relates broad_display_colour_spec
 void cath::colour_viewer_with_spec(const broad_display_colour_spec &arg_broad_spec,               ///< The specification of colours to use
                                    const viewer                    &arg_viewer,                   ///< The viewer to specify how to render the instructions
+                                   const pdb_list                  &arg_pdbs,                     ///< The key regions of the structures
                                    const str_vec                   &arg_cleaned_names_for_viewer, ///< The (viewer-cleaned) names for the structures to be coloured
                                    ostream                         &arg_os                        ///< The ostream to which the instructions should be written
                                    ) {
@@ -188,6 +207,7 @@ void cath::colour_viewer_with_spec(const broad_display_colour_spec &arg_broad_sp
 		get_pdb_colours( arg_broad_spec ),
 		arg_broad_spec,
 		arg_viewer,
+		arg_pdbs,
 		arg_cleaned_names_for_viewer,
 		arg_os
 	);

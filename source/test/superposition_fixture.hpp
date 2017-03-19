@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_TEST_SUPERPOSITION_FIXTURE_H
 #define _CATH_TOOLS_SOURCE_TEST_SUPERPOSITION_FIXTURE_H
 
+#include "chopping/chopping_type_aliases.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
@@ -42,7 +43,7 @@ namespace cath {
 			const file::pdb_list        pdbs{ file::pdb_vec{ NUM_ENTRIES, file::pdb{} } };
 			const str_vec               names{ "1c0pA01", "1hdoA00" };
 			const superposition         the_sup{ create_pairwise_superposition( coord_list_1, coord_list_2 ) };
-			const superposition_context the_sup_con{ pdbs, names, the_sup };
+			const superposition_context the_sup_con{ pdbs, names, the_sup, cath::chop::region_vec_opt_vec( NUM_ENTRIES ) };
 
 			const std::string sup_json_str = R"({"transformations":[{"translation":)"
 				R"({"x":"0","y":"0","z":"0"},)"

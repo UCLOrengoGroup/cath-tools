@@ -43,12 +43,13 @@ unique_ptr<superposition_outputter> pymol_view_superposition_outputter::do_clone
 
 /// \brief TODOCUMENT
 void pymol_view_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-                                                                 ostream                     &arg_ostream ///< TODOCUMENT
+                                                                 ostream                     &arg_ostream                ///< TODOCUMENT
                                                                  ) const {
 	const temp_file pymol_script_filename(".%%%%-%%%%-%%%%-%%%%.pml");
 	const pymol_file_superposition_outputter pymol_file_outputter(
 		get_filename( pymol_script_filename ),
-		the_display_spec
+		the_display_spec,
+		content_spec
 	);
 	pymol_file_outputter.output_superposition(arg_superposition_context, arg_ostream);
 
@@ -66,11 +67,11 @@ bool pymol_view_superposition_outputter::do_involves_display_spec() const {
 	return true;
 }
 
-/// \brief Ctor for pymol_view_superposition_outputter.
-pymol_view_superposition_outputter::pymol_view_superposition_outputter(const path         &arg_pymol_program, ///< TODOCUMENT
-                                                                       const display_spec &arg_display_spec   ///< TODOCUMENT
-                                                                       ) : pymol_program   ( arg_pymol_program ),
-                                                                           the_display_spec( arg_display_spec  ) {
+/// \brief Ctor for pymol_view_superposition_outputter
+pymol_view_superposition_outputter::pymol_view_superposition_outputter(const path                       &arg_pymol_program, ///< TODOCUMENT
+                                                                       const display_spec               &arg_display_spec,  ///< TODOCUMENT
+                                                                       const superposition_content_spec &arg_content_spec   ///< The specification of what should be included in the superposition
+                                                                       ) : pymol_program    { arg_pymol_program },
+                                                                           the_display_spec { arg_display_spec  },
+                                                                           content_spec     { arg_content_spec  } {
 }
-
-

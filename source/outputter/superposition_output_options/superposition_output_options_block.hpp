@@ -24,12 +24,14 @@
 #include <boost/ptr_container/ptr_vector.hpp>
 
 #include "options/options_block/options_block.hpp"
+#include "superposition/superposition_content_spec.hpp"
 
 #include <iosfwd>
 
+namespace cath { class display_spec; }
 namespace cath { namespace opts { class superposition_outputter; } }
 namespace cath { namespace opts { class superposition_outputter_list; } }
-namespace cath { class display_spec; }
+namespace cath { namespace sup { class superposition_content_spec; } }
 
 namespace superposition_output_options_block_test_suite { struct parses_option_for_to_json_file; }
 namespace superposition_output_options_block_test_suite { struct unparsed_has_no_json_file; }
@@ -77,9 +79,10 @@ namespace cath {
 			boost::filesystem::path get_json_file() const;
 
 		public:
-			/// \todo Consider adding a sister get_superposition_outputters() for getting non-display outputters
-			///       without having to specify a display_spec
-			superposition_outputter_list get_superposition_outputters(const display_spec &) const;
+			/// \todo Consider adding a sister get_superposition_outputters() for getting outputters
+			///       that don't require a display_spec / superposition_content_spec
+			superposition_outputter_list get_superposition_outputters(const display_spec &,
+			                                                          const sup::superposition_content_spec & = sup::superposition_content_spec{}) const;
 			bool outputs_to_stdout() const;
 		};
 	} // namespace opts

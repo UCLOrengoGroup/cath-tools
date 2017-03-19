@@ -47,9 +47,13 @@ namespace cath {
 			/// \brief The currently active region, or none if none is active
 			size_opt active_region_idx;
 
+			void sanity_check() const;
+
 		public:
 			regions_limiter() = default;
 			explicit regions_limiter(const region_vec &);
+			explicit regions_limiter(const region_vec_opt &);
+			explicit regions_limiter(const region_vec_opt &&) = delete;
 
 			/// \brief Prevent construction from an rvalue because the region_vec is stored by reference
 			regions_limiter(const region_vec &&) = delete;

@@ -29,6 +29,7 @@
 #include <boost/range/adaptor/reversed.hpp>
 
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/range/max_proj_element.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -152,6 +153,25 @@ rotation cath::file::get_ssap_frame_of_residue(const pdb_residue &arg_residue //
 	const coord ca_coord = get_carbon_alpha_coord( arg_residue );
 	const coord c_coord  = get_carbon_coord      ( arg_residue );
 	return construct_residue_frame(n_coord, ca_coord, c_coord);
+}
+
+/// \brief Return the maximum distance between the specified pdb_residue's atoms and the specified coord
+///        or 0.0 if the pdb_residue is empty
+///
+/// \relates pdb_residue
+double cath::file::max_dist_from_coord(const pdb_residue &arg_pdb_residue, ///< The pdb_residue to query
+                                       const coord       &arg_coord        ///< The coord to which the distances should be measured
+                                       ) {
+	if ( arg_pdb_residue.empty() ) {
+		return 0.0;
+	}
+	return max_proj(
+		arg_pdb_residue,
+		less<>{},
+		[&] (const pdb_atom &atom) {
+			return distance_between_points( arg_coord, atom.get_coord() );
+		}
+	);
 }
 
 /// \brief TODOCUMENT
@@ -285,6 +305,20 @@ bool cath::file::dssp_will_skip_residue(const pdb_residue &arg_pdb_residue ///< 
 
 	// Return whether no acceptable ATOM was found for any of N/CA/C/O
 	return ! ( has_n && has_ca && has_c && has_o );
+}
+
+/// \brief Get all coordinates of all the pdb_atoms in the specified pdb_residues
+///
+/// \relates pdb_residue
+coord_vec cath::file::get_all_coords(const pdb_residue_vec &arg_pdb_residues ///< The pdb_residues to query
+                                     ) {
+	coord_vec results;
+	for (const pdb_residue &res : arg_pdb_residues) {
+		for (const pdb_atom &atom : res) {
+			results.push_back( atom.get_coord() );
+		}
+	}
+	return results;
 }
 
 /// \brief TODOCUMENT

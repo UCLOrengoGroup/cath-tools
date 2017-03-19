@@ -33,6 +33,7 @@ namespace cath { namespace align { class alignment; } }
 namespace cath { namespace align { class alignment_context; } }
 namespace cath { namespace file { class pdb_list; } }
 namespace cath { namespace sup { class superposition; } }
+namespace cath { namespace sup { class superposition_content_spec; } }
 namespace cath { namespace sup { class superposition_context; } }
 
 namespace cath {
@@ -109,11 +110,18 @@ namespace cath {
 
 	str_vec clean_names_for_viewer(const align::alignment_context &);
 
+	/// \brief Policy for handling a missing alignment where a display_spec requires one for the colouring
+	enum class missing_aln_policy : bool {
+		WARN_AND_COLOUR_CONSECUTIVELY, ///< Warn on encountering a missing alignment and just use consecutive colouring
+		THROW                          ///< Throw on encountering a missing alignment
+	};
+
 	void output_superposition_to_viewer(std::ostream &,
 	                                    viewer &,
 	                                    const display_spec &,
 	                                    const sup::superposition_context &,
-	                                    const bool & = false);
+	                                    const sup::superposition_content_spec &,
+	                                    const missing_aln_policy & = missing_aln_policy::THROW);
 
 	std::string colour_of_index_from_colours_string(const size_t &,
 	                                                const std::string &);

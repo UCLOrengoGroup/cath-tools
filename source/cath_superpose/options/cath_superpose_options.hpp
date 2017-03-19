@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CATH_SUPERPOSE_OPTIONS_CATH_SUPERPOSE_OPTIONS_H
 #define _CATH_TOOLS_SOURCE_CATH_SUPERPOSE_OPTIONS_CATH_SUPERPOSE_OPTIONS_H
 
+#include "chopping/chopping_type_aliases.hpp"
 #include "display/options/display_options_block.hpp"
 #include "file/file_type_aliases.hpp"
 #include "options/executable/executable_options.hpp"
@@ -79,6 +80,9 @@ namespace cath {
 			/// \brief The options_block for the display options
 			display_options_block              the_display_ob;
 
+			/// \brief The specification of what should be included in the superposition
+			sup::superposition_content_spec    the_content_spec;
+
 			virtual std::string do_get_program_name() const override final;
 			virtual str_opt do_get_error_or_help_string() const override final;
 
@@ -101,6 +105,8 @@ namespace cath {
 
 			alignment_outputter_list get_alignment_outputters() const;
 			superposition_outputter_list get_superposition_outputters() const;
+
+			chop::region_vec_opt_vec get_regions(const size_t &) const;
 
 			static const std::string PROGRAM_NAME;
 		};

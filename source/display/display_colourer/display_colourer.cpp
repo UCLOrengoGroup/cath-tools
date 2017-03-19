@@ -21,6 +21,7 @@
 #include "display_colourer.hpp"
 
 #include "alignment/alignment_context.hpp"
+#include "chopping/region/region.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "common/cpp14/make_unique.hpp"
 #include "display/display_colour_spec/display_colour_spec.hpp"
@@ -36,6 +37,7 @@
 
 using namespace cath;
 using namespace cath::align;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::detail;
 using namespace cath::file;
@@ -69,10 +71,11 @@ display_colour_spec display_colourer::get_colour_spec(const alignment_context &a
 /// \brief TODOCUMENT
 ///
 /// \relates display_colourer
-display_colour_spec cath::get_colour_spec(const display_colourer &arg_colourer, ///< TODOCUMENT
-                                          const pdb_list         &arg_pdbs,     ///< TODOCUMENT
-                                          const str_vec          &arg_names,    ///< TODOCUMENT
-                                          const alignment        &arg_alignment ///< TODOCUMENT
+display_colour_spec cath::get_colour_spec(const display_colourer   &arg_colourer,  ///< TODOCUMENT
+                                          const pdb_list           &arg_pdbs,      ///< TODOCUMENT
+                                          const str_vec            &arg_names,     ///< TODOCUMENT
+                                          const alignment          &arg_alignment, ///< TODOCUMENT
+                                          const region_vec_opt_vec &arg_regions    ///< The key regions of the structures
                                           ) {
 	const alignment::size_type num_entries   = arg_alignment.num_entries();
 	const alignment::size_type aln_length    = arg_alignment.length();
@@ -86,11 +89,12 @@ display_colour_spec cath::get_colour_spec(const display_colourer &arg_colourer, 
 	if ( num_entries != arg_names.size() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to colour the alignment_context because the number of entries doesn't match the number of names"));
 	}
-	auto &&result_spec = arg_colourer.get_colour_spec( alignment_context(
+	auto &&result_spec = arg_colourer.get_colour_spec( alignment_context{
 		arg_pdbs,
 		arg_names,
-		arg_alignment
-	) );
+		arg_alignment,
+		arg_regions
+	} );
 
 	return has_score_colour_handler( arg_colourer )
 		? adjust_display_colour_spec_copy(
@@ -177,6 +181,8 @@ public:
 /// \brief Write instructions for the specified viewer to the specified ostream
 ///        to represent the specified display_colourer in the context of the specified alignment_context
 ///
+/// This is the version where there *is* an alignment that can be used for the colouring.
+///
 /// \relates display_colourer
 void cath::colour_viewer(const display_colourer  &arg_colourer, ///< The display_colourer to write to the ostream
                          ostream                 &arg_os,       ///< The ostream to which the instructions should be written
@@ -196,16 +202,21 @@ void cath::colour_viewer(const display_colourer  &arg_colourer, ///< The display
 ///        to represent the specified alignment_free_display_colourer in the context of
 ///        the specified cleaned structure names
 ///
+/// This is the version where there *isn't* any alignment that can be used for the colouring.
+///
 /// \relates display_colourer
-void cath::colour_viewer(const alignment_free_display_colourer &arg_colourer,                ///< The alignment_free_display_colourer to write to the ostream
-                         ostream                               &arg_os,                      ///< The ostream to which the instructions should be written
-                         viewer                                &arg_viewer,                  ///< The viewer defining the instructions to be written
-                         const str_vec                         &arg_cleaned_names_for_viewer ///< The names of the structures (cleaned for the viewer)
+void cath::colour_viewer(const alignment_free_display_colourer &arg_colourer,                 ///< The alignment_free_display_colourer to write to the ostream
+                         ostream                               &arg_os,                       ///< The ostream to which the instructions should be written
+                         viewer                                &arg_viewer,                   ///< The viewer defining the instructions to be written
+                         const pdb_list                        &arg_pdbs,                     ///< The structures to be coloured
+                         const str_vec                         &arg_cleaned_names_for_viewer, ///< The names of the structures (cleaned for the viewer)
+                         const region_vec_opt_vec              &arg_regions                   ///< The key regions of the structures
                          ) {
 	const viewer_colour_notifier_guard the_guard{ arg_colourer, arg_os, arg_viewer };
 	colour_viewer_with_spec(
-		arg_colourer.get_colour_spec_from_num_entries( arg_cleaned_names_for_viewer.size() ),
+		arg_colourer.get_colour_spec_from_regions( arg_regions ),
 		arg_viewer,
+		arg_pdbs,
 		arg_cleaned_names_for_viewer,
 		arg_os
 	);
@@ -221,7 +232,7 @@ void cath::colour_viewer(const alignment_free_display_colourer &arg_colourer,   
 //	const display_colour_spec the_spec = arg_colourer.get_colour_spec( arg_sup_con );
 //	colour_alignment_with_spec(
 //		the_spec,
-//		arg_sup_con.get_alignment_cref(),
+//		arg_sup_con.get_alignment(),
 //		arg_sup_con.get_pdbs_cref(),
 //		clean_names_for_viewer( arg_sup_con ),
 //		arg_os

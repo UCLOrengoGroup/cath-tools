@@ -29,6 +29,7 @@
 #include "acquirer/superposition_acquirer/align_based_superposition_acquirer.hpp"
 #include "alignment/alignment_context.hpp"
 #include "cath_superpose/options/cath_superpose_options.hpp"
+#include "chopping/region/region.hpp"
 #include "common/logger.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
@@ -70,11 +71,12 @@ void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose
 
 	// If there is an alignment, then for each of the alignment_outputters specified by the cath_superpose_options, output it
 	if ( the_sup_context.has_alignment() ) {
-		const pdb_list                 &pdbs           = the_sup_context.get_pdbs_cref();
-		const str_vec                  &names          = the_sup_context.get_names_cref();
-		const alignment                &the_aln        = the_sup_context.get_alignment_cref();
-		const alignment_outputter_list  aln_outputters = arg_cath_superpose_options.get_alignment_outputters();
-		use_all_alignment_outputters( aln_outputters, alignment_context( pdbs, names, the_aln ), arg_stdout, arg_stderr );
+		use_all_alignment_outputters(
+			arg_cath_superpose_options.get_alignment_outputters(),
+			make_alignment_context( the_sup_context ),
+			arg_stdout,
+			arg_stderr
+		);
 	}
 
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
@@ -88,17 +90,18 @@ void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than ostream
 ///       (fix all errors, *then* provide default of boost::none)
-superposition_context cath_superposer::get_superposition_context(const cath_superpose_options &arg_cath_superpose_options, ///< TODOCUMENT
-                                                                 istream                      &arg_istream,                ///< TODOCUMENT
-                                                                 ostream                      &arg_stderr                  ///< TODOCUMENT
+superposition_context cath_superposer::get_superposition_context(const cath_superpose_options &arg_cath_sup_opts, ///< TODOCUMENT
+                                                                 istream                      &arg_istream,       ///< TODOCUMENT
+                                                                 ostream                      &arg_stderr         ///< TODOCUMENT
                                                                  ) {
-	arg_cath_superpose_options.check_ok_to_use();
+	arg_cath_sup_opts.check_ok_to_use();
 
 	// Grab the PDBs and their IDs
-	const auto      pdbs_and_names = get_pdbs_and_names( arg_cath_superpose_options, arg_istream, false );
+	const auto      pdbs_and_names = get_pdbs_and_names( arg_cath_sup_opts, arg_istream, false );
 	const pdb_list &raw_pdbs       = pdbs_and_names.first;
 	const str_vec  &raw_names      = pdbs_and_names.second;
-	const str_vec  &ids_block_ids  = arg_cath_superpose_options.get_ids();
+	const auto      regions        = arg_cath_sup_opts.get_regions( raw_pdbs.size() );
+	const str_vec  &ids_block_ids  = arg_cath_sup_opts.get_ids();
 	const str_vec  &names          = ( ids_block_ids.size() == raw_pdbs.size() ) ? ids_block_ids
 	                                                                             : raw_names;
 	const pdb_list  backbone_complete_subset_pdbs = pdb_list_of_backbone_complete_subset_pdbs( raw_pdbs, ref( arg_stderr ) );
@@ -110,8 +113,8 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 		);
 	}
 
-	// If a JSON superposition file has ben specified, return that
-	const path_opt json_sup_infile = arg_cath_superpose_options.get_json_sup_infile();
+	// If a JSON superposition file has been specified, return that
+	const path_opt json_sup_infile = arg_cath_sup_opts.get_json_sup_infile();
 	if ( json_sup_infile ) {
 		return set_pdbs_copy(
 			read_superposition_context_from_json_file( *json_sup_infile ),
@@ -122,7 +125,7 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	// Get the alignment and corresponding spanning tree
 	const auto       aln_and_spn_tree = [&] () {
 		try {
-			return get_alignment_and_spanning_tree( arg_cath_superpose_options, backbone_complete_subset_pdbs );
+			return get_alignment_and_spanning_tree( arg_cath_sup_opts, backbone_complete_subset_pdbs );
 		}
 		catch (const std::exception &e) {
 			logger::log_and_exit(
@@ -136,9 +139,9 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	const auto      &spanning_tree    = aln_and_spn_tree.second;
 
 	// \todo Remove this hacky code and fix it
-	const path ssap_scores_file = arg_cath_superpose_options.get_alignment_input_spec().get_ssap_scores_file();
+	const path ssap_scores_file = arg_cath_sup_opts.get_alignment_input_spec().get_ssap_scores_file();
 	if ( ! ssap_scores_file.empty() ) {
-		return superposition_context(
+		return {
 			raw_pdbs, ///< This should be raw_pdbs, not backbone_complete_subset_pdbs, so that superpositions include stripped residues (eg HETATM only residues). /// \todo Consider adding fast, simple test that ssap_scores_file superposition output includes HETATMs.
 			names,
 			hacky_multi_ssap_fuction(
@@ -146,11 +149,12 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 				names,
 				spanning_tree,
 				ssap_scores_file.parent_path(),
-				arg_cath_superpose_options.get_selection_policy_acquirer(),
+				arg_cath_sup_opts.get_selection_policy_acquirer(),
 				arg_stderr
 			),
-			the_alignment
-		);
+			the_alignment,
+			regions
+		};
 	}
 
 	// Construct an align_based_superposition_acquirer from the data and return the superposition it generates
@@ -159,7 +163,8 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 		names,
 		the_alignment,
 		spanning_tree,
-		arg_cath_superpose_options.get_selection_policy_acquirer()
+		arg_cath_sup_opts.get_selection_policy_acquirer(),
+		regions
 	);
 	return aln_based_sup_acq.get_superposition( arg_stderr );
 }

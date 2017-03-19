@@ -21,6 +21,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
+#include "chopping/region/region.hpp"
 #include "common/file/temp_file.hpp"
 #include "common/test_predicate/files_equal.hpp"
 #include "outputter/superposition_outputter/json_file_superposition_outputter.hpp"

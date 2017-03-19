@@ -102,10 +102,18 @@ namespace cath {
 		std::istream & read_pdb_file(std::istream &,
 		                             pdb &);
 		pdb_list read_end_separated_pdb_files(std::istream &);
+
+		std::string to_pdb_file_string(const pdb &,
+		                               const chop::regions_limiter & = {},
+		                               const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
 		std::ostream & write_pdb_file(std::ostream &,
 		                              const pdb &,
 		                              const chop::regions_limiter & = {},
 		                              const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
+		void write_pdb_file(const boost::filesystem::path &,
+		                    const pdb &,
+		                    const chop::regions_limiter & = {},
+		                    const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
 
 		amino_acid_vec get_amino_acid_list(const pdb &);
 
@@ -132,6 +140,9 @@ namespace cath {
 
 		size_set get_protein_res_indices_that_dssp_might_skip(const pdb &,
 		                                                      const ostream_ref_opt & = boost::none);
+
+		pdb get_regions_limited_pdb(const chop::region_vec_opt &,
+		                            const pdb &);
 
 		/// \brief Get whether this PDB is empty of residues
 		inline bool pdb::empty() const {

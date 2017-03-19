@@ -35,17 +35,38 @@ using boost::algorithm::any_of;
 using boost::irange;
 using boost::none;
 
-/// \brief Ctor from a vector of regions to which
+/// \brief Sanity check this regions_limiter and throw if there's a problem
 ///
-/// \pre arg_regions must be non-overlapping in the context of the residue_ids they will be used to limit
-regions_limiter::regions_limiter(const region_vec &arg_regions ///< The regions to which a series of residue_ids should be restricted
-                                 ) : regions{ arg_regions } {
+/// Checks:
+///  * if there are any regions without a chain label, throw
+void regions_limiter::sanity_check() const {
 	// If regions have been specified, check they all have chain labels
 	if ( regions ) {
 		if ( any_of( regions->get(), [] (const region &x) { return ! has_chain_label( x ); } ) ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot use regions_limiter for regions that don't have a chain_label"));
 		}
 	}
+}
+
+/// \brief Ctor from a vector of regions to which processing should be limited
+///
+/// \pre arg_regions must be non-overlapping in the context of the residue_ids they will be used to limit
+regions_limiter::regions_limiter(const region_vec &arg_regions ///< The regions to which a series of residue_ids should be restricted
+                                 ) : regions{ arg_regions } {
+	sanity_check();
+}
+
+/// \brief Ctor from a vector of regions to which processing should be limited
+///        or none to not limit
+///
+/// \pre arg_regions must be non-overlapping in the context of the residue_ids they will be used to limit
+regions_limiter::regions_limiter(const region_vec_opt &arg_regions
+                                 ) : regions{
+                                     	arg_regions
+                                     	? make_optional( std::cref( *arg_regions ) )
+                                     	: none
+                                     } {
+	sanity_check();
 }
 
 /// \brief Update state to reflect the specified residue_id as the current and return

@@ -23,6 +23,7 @@
 
 #include <boost/optional.hpp>
 
+#include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "display/display_colourer/detail/score_colour_handler.hpp"
 #include "display_colour/display_colour_gradient.hpp"
@@ -86,7 +87,8 @@ namespace cath {
 	display_colour_spec get_colour_spec(const display_colourer &,
 	                                    const file::pdb_list &,
 	                                    const str_vec &,
-	                                    const align::alignment &);
+	                                    const align::alignment &,
+	                                    const chop::region_vec_opt_vec &);
 
 	void colour_viewer(const display_colourer &,
 	                   std::ostream &,
@@ -96,7 +98,9 @@ namespace cath {
 	void colour_viewer(const alignment_free_display_colourer &,
 	                   std::ostream &,
 	                   viewer &,
-	                   const str_vec &);
+	                   const file::pdb_list &,
+	                   const str_vec &,
+	                   const chop::region_vec_opt_vec &);
 
 } // namespace cath
 

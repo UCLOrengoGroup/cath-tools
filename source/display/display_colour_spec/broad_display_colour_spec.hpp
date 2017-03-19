@@ -27,29 +27,49 @@
 #include "display_colour/display_colour.hpp"
 
 namespace cath { class viewer; }
+namespace cath { namespace file { class pdb_list; } }
 
 namespace cath {
+
+	// /// \brief TODOCUMENT
+	// using region_display_colour_pair              = std::pair<region, display_colour>;
+
+	// /// \brief TODOCUMENT
+	// using region_display_colour_pair_vec          = std::vector<region_display_colour_pair>;
+
+	// /// \brief TODOCUMENT
+	// using size_region_display_colour_pair_vec_map = std::map<size_t, region_display_colour_pair_vec>;
+
 
 	/// \brief Represent the colouring of structures at a broad (ie not residue-specific) level
 	class broad_display_colour_spec final {
 	private:
 		/// \brief The main overall colour to use
-		display_colour_opt           base_clr;
+		display_colour_opt                      base_clr;
 
 		/// \brief The colours to use for the individual PDBs
-		size_display_colour_map      clr_of_pdb;
+		size_display_colour_map                 clr_of_pdb;
+
+		// /// \brief The colours to use for regions of individual PDBs
+		// size_region_display_colour_pair_vec_map clr_of_region;
 
 	public:
-		void colour_base(const display_colour &,
-		                 const bool & = false);
+		broad_display_colour_spec & colour_base(const display_colour &,
+		                                        const bool & = false);
 
-		void colour_pdb(const size_t &,
-		                const display_colour &,
-		                const bool & = false);
+		broad_display_colour_spec & colour_pdb(const size_t &,
+		                                       const display_colour &,
+		                                       const bool & = false);
+
+		// broad_display_colour_spec & colour_region(const size_t &,
+		//                                           const region &,
+		//                                           const display_colour &);
 
 		const display_colour_opt & get_base_clr() const;
 
 		const size_display_colour_map & get_clr_of_pdb() const;
+
+		// const size_region_display_colour_pair_vec_map & get_clr_of_regions() const;
 	};
 
 	bool has_base_colour(const broad_display_colour_spec &);
@@ -64,18 +84,18 @@ namespace cath {
 	size_vec get_pdbs_of_colour(const broad_display_colour_spec &,
 	                            const display_colour &);
 
-	str_vec generate_colour_names(const size_t &);
-
 	namespace detail {
 		void colour_base_and_pdbs_impl(const display_colour_vec &,
 		                               const broad_display_colour_spec &,
 		                               const viewer &,
+		                               const file::pdb_list &,
 		                               const str_vec &,
 		                               std::ostream &);
 	} // namespace detail
 
 	void colour_viewer_with_spec(const broad_display_colour_spec &,
 	                             const viewer &,
+	                             const file::pdb_list &,
 	                             const str_vec &,
 	                             std::ostream &);
 

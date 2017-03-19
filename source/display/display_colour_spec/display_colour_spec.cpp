@@ -213,6 +213,7 @@ void cath::colour_viewer_with_spec(const display_colour_spec &arg_colour_spec,  
 		colours,
 		arg_colour_spec.get_broad_spec(),
 		arg_viewer,
+		arg_alignment_context.get_pdbs(),
 		cleaned_names,
 		arg_os
 	);

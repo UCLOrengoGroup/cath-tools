@@ -42,7 +42,6 @@
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 #include "exception/runtime_error_exception.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
@@ -492,11 +491,30 @@ pdb_list cath::file::read_end_separated_pdb_files(istream &arg_in_stream ///< TO
 	return pdbs;
 }
 
-/// \brief TODOCUMENT
+/// \brief Write the specified PDB to a pdb file string,
+///        restricted to the specified regions and written in the specified mode
 ///
 /// \relates pdb
-ostream & cath::file::write_pdb_file(ostream               &arg_os,              ///< TODOCUMENT
-                                     const pdb             &arg_pdb,             ///< TODOCUMENT
+string cath::file::to_pdb_file_string(const pdb             &arg_pdb,             ///< The pdb to describe
+                                      const regions_limiter &arg_regions_limiter, ///< Optional specification of regions to which the written records should be restricted
+                                      const pdb_write_mode  &arg_pdb_write_mode   ///< Whether this is the only/last part of the PDB file
+                                      ) {
+	ostringstream output_ss;
+	write_pdb_file(
+		output_ss,
+		arg_pdb,
+		arg_regions_limiter,
+		arg_pdb_write_mode
+	);
+	return output_ss.str();
+}
+
+/// \brief Insert a PDB file of the specified pdb into the specified ostream,
+///        restricted to the specified regions and written in the specified mode
+///
+/// \relates pdb
+ostream & cath::file::write_pdb_file(ostream               &arg_os,              ///< The ostream into which the PDB file should be inserted
+                                     const pdb             &arg_pdb,             ///< The pdb to describe
                                      const regions_limiter &arg_regions_limiter, ///< Optional specification of regions to which the written records should be restricted
                                      const pdb_write_mode  &arg_pdb_write_mode   ///< Whether this is the only/last part of the PDB file
                                      ) {
@@ -540,6 +558,26 @@ ostream & cath::file::write_pdb_file(ostream               &arg_os,             
 	}
 
 	return arg_os;
+}
+
+/// \brief Write a PDB file of the specified pdb to the specified file,
+///        restricted to the specified regions and written in the specified mode
+///
+/// \relates pdb
+void cath::file::write_pdb_file(const path            &arg_filename,        ///< The file to which the PDB file should be written
+                                const pdb             &arg_pdb,             ///< The pdb to describe
+                                const regions_limiter &arg_regions_limiter, ///< Optional specification of regions to which the written records should be restricted
+                                const pdb_write_mode  &arg_pdb_write_mode   ///< Whether this is the only/last part of the PDB file
+                                ) {
+	ofstream out_ofstream;
+	open_ofstream( out_ofstream, arg_filename );
+	write_pdb_file(
+		out_ofstream,
+		arg_pdb,
+		arg_regions_limiter,
+		arg_pdb_write_mode
+	);
+	out_ofstream.close();
 }
 
 /// \brief TODOCUMENT
@@ -869,4 +907,32 @@ size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb     
 				);
 			} )
 	);
+}
+
+/// \brief Get a copy of the specified PDB restricted to the specified regions
+///
+/// This does a similar job to get_supn_content_pdb() but that also handles a
+/// superposition_content_spec parameter.
+///
+/// \relates pdb
+pdb cath::file::get_regions_limited_pdb(const region_vec_opt &arg_regions, ///< The regions to which the resulting PDB should be restricted
+                                        const pdb            &arg_pdb      ///< The source PDB
+                                        ) {
+	if ( ! arg_regions ) {
+		return arg_pdb;
+	}
+
+	// *arg_regions is guaranteed to outlive this regions_limiter
+	regions_limiter the_limiter{ *arg_regions };
+	pdb_residue_vec residues;
+	residues.reserve( arg_pdb.get_num_residues() );
+	for (const pdb_residue &the_residue : arg_pdb) {
+		if ( the_limiter.update_residue_is_included( the_residue.get_residue_id() ) ) {
+			residues.push_back( the_residue );
+		}
+	}
+
+	pdb result_pdb;
+	result_pdb.set_residues( std::move( residues ) );
+	return result_pdb;
 }

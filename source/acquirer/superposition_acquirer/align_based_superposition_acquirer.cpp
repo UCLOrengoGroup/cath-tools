@@ -20,7 +20,6 @@
 
 #include "align_based_superposition_acquirer.hpp"
 
-#include <boost/lexical_cast.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/tuple/tuple.hpp>
 
@@ -30,6 +29,7 @@
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
 #include "alignment/io/alignment_io.hpp"
+#include "chopping/region/region.hpp"
 #include "common/file/open_fstream.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb.hpp"
@@ -41,46 +41,73 @@
 #include "superposition/superposition_context.hpp"
 
 #include <fstream>
-#include <iostream> // ***** TEMPORARY *****
 
-using namespace boost::filesystem;
-using namespace boost::test_tools;
 using namespace cath;
 using namespace cath::align;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::opts;
 using namespace cath::sup;
-using namespace std;
 
-using boost::lexical_cast;
+using boost::filesystem::path;
+using boost::test_tools::check_is_close;
+using boost::test_tools::percent_tolerance;
+using std::endl;
+using std::ifstream;
+using std::ostream;
+using std::pair;
+using std::string;
+using std::vector;
 
-const pdb_list & align_based_superposition_acquirer::get_pdbs_cref() const {
-	return pdbs;
-}
-
-const str_vec & align_based_superposition_acquirer::get_names_cref() const {
-	return names;
+/// \brief TODOCUMENT
+const pdb_list & align_based_superposition_acquirer::get_pdbs() const {
+	return pdbs_ref.get();
 }
 
 /// \brief TODOCUMENT
-superposition_context align_based_superposition_acquirer::do_get_superposition(ostream &arg_stderr
+const str_vec & align_based_superposition_acquirer::get_names() const {
+	return names_ref.get();
+}
+
+/// \brief TODOCUMENT
+const align::alignment & align_based_superposition_acquirer::get_alignment() const {
+	return the_alignment_ref.get();
+}
+
+/// \brief TODOCUMENT
+const size_size_pair_vec & align_based_superposition_acquirer::get_spanning_tree() const {
+	return spanning_tree_ref.get();
+}
+
+/// \brief TODOCUMENT
+const selection_policy_acquirer & align_based_superposition_acquirer::get_selection_policy_acquirer() const {
+	return the_selection_policy_acquirer;
+}
+
+/// \brief Getter for the specification of the regions of the PDBs to which the alignment refers
+const chop::region_vec_opt_vec & align_based_superposition_acquirer::get_regions() const {
+	return regions;
+}
+
+/// \brief TODOCUMENT
+superposition_context align_based_superposition_acquirer::do_get_superposition(ostream &arg_stderr ///< TODOCMENT
                                                                                ) const {
 	// Loop over all the PDBs after the first one and grab the common coords between it and the one before
 	// and push these onto the data structure that's required for making a superposition
 	vector <superposition::indices_and_coord_lists_type> indices_and_coord_lists;
-	indices_and_coord_lists.reserve(spanning_tree.size());
-	for (const size_size_pair &tree_edge : spanning_tree) {
+	indices_and_coord_lists.reserve( get_spanning_tree().size() );
+	for (const size_size_pair &tree_edge : get_spanning_tree() ) {
 		const size_t &index_1 = tree_edge.first;
 		const size_t &index_2 = tree_edge.second;
-		const string &name_1  = names[ index_1 ];
-		const string &name_2  = names[ index_2 ];
-		if (name_1.empty()) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("No name available for " + lexical_cast<string>( index_1 ) ));
+		const string &name_1   = get_names()[ index_1 ];
+		const string &name_2   = get_names()[ index_2 ];
+		if ( name_1.empty() ) {
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("No name available for " + std::to_string( index_1 ) ));
 		}
-		if (name_2.empty()) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("No name available for " + lexical_cast<string>( index_2 ) ));
+		if ( name_2.empty() ) {
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("No name available for " + std::to_string( index_2 ) ));
 		}
 
 //		arg_stderr << "Extracting common coords between " << name_1 << " and " << name_2 << endl;
@@ -90,9 +117,9 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 //		arg_stderr << "index_1                     is " << index_1                       << endl;
 //		arg_stderr << "index_2                     is " << index_2                       << endl;
 		const pair<coord_list, coord_list> all_common_coords = alignment_coord_extractor::get_common_coords(
-			the_alignment,
-			pdbs[ index_1 ],
-			pdbs[ index_2 ],
+			get_alignment(),
+			get_pdbs()[ index_1 ],
+			get_pdbs()[ index_2 ],
 			common_residue_select_all_policy(),
 			common_atom_select_ca_policy(),
 			index_1,
@@ -132,8 +159,8 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 //		const selection_policy_acquirer the_selection_policy_acquirer = arg_cath_superpose_options.get_selection_policy_acquirer();
 		const pair<coord_list, coord_list> common_coords = get_common_coords(
 			the_selection_policy_acquirer,
-			the_alignment,
-			pdbs,
+			get_alignment(),
+			get_pdbs(),
 			index_1,
 			index_2
 		);
@@ -152,28 +179,36 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 			superposition::INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION,  all_common_coords.first,
 			superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION, all_common_coords.second
 		);
-		if (!check_is_close(actual_full_rmsd, standard_rmsd, percent_tolerance(PERCENT_TOLERANCE_FOR_EQUAL_RMSDS))) {
+		if ( ! check_is_close(actual_full_rmsd, standard_rmsd, percent_tolerance(PERCENT_TOLERANCE_FOR_EQUAL_RMSDS))) {
 			arg_stderr << "Superposed using " << the_selection_policy_acquirer.get_descriptive_name() << " and actual full RMSD is : " << actual_full_rmsd << endl;
 		}
 	}
 
 	// Construct a superposition and use it to output the PDBs
-	const superposition the_superposition(indices_and_coord_lists);
+	const superposition the_superposition{ indices_and_coord_lists };
 
-	return superposition_context(pdbs, names, the_superposition, the_alignment);
+	return {
+		get_pdbs(),
+		get_names(),
+		the_superposition,
+		get_alignment(),
+		get_regions()
+	};
 }
 
 /// \brief Ctor for align_based_superposition_acquirer
-align_based_superposition_acquirer::align_based_superposition_acquirer(const pdb_list                  &arg_pdbs,                     ///< TODOCUMENT
-                                                                       const str_vec                   &arg_names,                    ///< TODOCUMENT
-                                                                       const alignment                 &arg_alignment,                ///< TODOCUMENT
-                                                                       const size_size_pair_vec        &arg_spanning_tree,            ///< TODOCUMENT
-                                                                       const selection_policy_acquirer &arg_selection_policy_acquirer ///< TODOCUMENT
-                                                                       ) : pdbs(arg_pdbs),
-                                                                           names(arg_names),
-                                                                           the_alignment(arg_alignment),
-                                                                           spanning_tree(arg_spanning_tree),
-                                                                           the_selection_policy_acquirer(arg_selection_policy_acquirer) {
+align_based_superposition_acquirer::align_based_superposition_acquirer(const pdb_list                  &arg_pdbs,                      ///< TODOCUMENT
+                                                                       const str_vec                   &arg_names,                     ///< TODOCUMENT
+                                                                       const alignment                 &arg_alignment,                 ///< TODOCUMENT
+                                                                       const size_size_pair_vec        &arg_spanning_tree,             ///< TODOCUMENT
+                                                                       const selection_policy_acquirer &arg_selection_policy_acquirer, ///< TODOCUMENT
+                                                                       const region_vec_opt_vec        &arg_regions                    ///< The specification of the regions of the PDBs to which the alignment refers
+                                                                       ) : pdbs_ref                      { arg_pdbs                      },
+                                                                           names_ref                     { arg_names                     },
+                                                                           the_alignment_ref             { arg_alignment                 },
+                                                                           spanning_tree_ref             { arg_spanning_tree             },
+                                                                           the_selection_policy_acquirer { arg_selection_policy_acquirer },
+                                                                           regions                       { arg_regions                   } {
 }
 
 /// \relates align_based_superposition_acquirer
@@ -199,10 +234,10 @@ superposition cath::opts::hacky_multi_ssap_fuction(const pdb_list               
 		const string &name_1     = arg_names[ index_1 ];
 		const string &name_2     = arg_names[ index_2 ];
 		if ( name_1.empty() ) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("No name available for " + lexical_cast<string>( index_1 ) ));
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("No name available for " + std::to_string( index_1 ) ));
 		}
 		if ( name_2.empty() ) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("No name available for " + lexical_cast<string>( index_2 ) ));
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("No name available for " + std::to_string( index_2 ) ));
 		}
 
 		const path ssap_aln_filename(arg_ssap_align_dir / (name_1 + name_2 + ".list"));

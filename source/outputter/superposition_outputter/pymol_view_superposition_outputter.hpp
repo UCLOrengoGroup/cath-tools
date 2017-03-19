@@ -25,8 +25,7 @@
 
 #include "display/options/display_spec.hpp"
 #include "outputter/superposition_outputter/superposition_outputter.hpp"
-
-namespace cath { class display_spec; }
+#include "superposition/superposition_content_spec.hpp"
 
 namespace cath {
 	namespace opts {
@@ -34,8 +33,14 @@ namespace cath {
 		/// \brief TODOCUMENT
 		class pymol_view_superposition_outputter final : public superposition_outputter {
 		private:
+			/// \brief TODOCUMENT
 			boost::filesystem::path pymol_program;
+
+			/// \brief TODOCUMENT
 			display_spec the_display_spec;
+
+			/// \brief The specification of what should be included in the superposition
+			sup::superposition_content_spec content_spec;
 
 			virtual std::unique_ptr<superposition_outputter> do_clone() const override final;
 			virtual void do_output_superposition(const sup::superposition_context &,
@@ -44,7 +49,8 @@ namespace cath {
 
 		public:
 			pymol_view_superposition_outputter(const boost::filesystem::path &,
-			                                   const display_spec &);
+			                                   const display_spec &,
+			                                   const sup::superposition_content_spec &);
 		};
 
 	} // namespace opts

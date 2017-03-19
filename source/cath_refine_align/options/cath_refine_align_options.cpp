@@ -27,11 +27,11 @@
 #include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
 #include "acquirer/pdbs_acquirer/istream_pdbs_acquirer.hpp"
 #include "acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
-#include "acquirer/superposition_acquirer/align_based_superposition_acquirer.hpp"
 #include "alignment/alignment.hpp"
 #include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+#include "chopping/region/region.hpp"
 #include "common/argc_argv_faker.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -50,6 +50,7 @@ using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath;
 using namespace cath::align;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::opts;
 
@@ -81,11 +82,10 @@ string cath_refine_align_options::do_get_program_name() const {
 ///          or an empty string if there aren't any
 str_opt cath_refine_align_options::do_get_error_or_help_string() const {
 	// Grab the objects from the options blocks
-	const size_t                       num_aln_acquirers = get_num_acquirers( the_alignment_input_options_block );
-	const size_t                       num_pdb_acquirers = get_num_acquirers( the_pdb_input_options_block );
-	const display_spec                 the_display_spec  = the_display_options_block.get_display_spec();
-	const alignment_outputter_list     aln_outputters    = the_alignment_output_options_block.get_alignment_outputters( the_display_spec );
-	const superposition_outputter_list sup_outputters    = the_superposition_output_options_block.get_superposition_outputters( the_display_spec );
+	const size_t num_aln_acquirers = get_num_acquirers( the_alignment_input_options_block );
+	const size_t num_pdb_acquirers = get_num_acquirers( the_pdb_input_options_block );
+	const auto   aln_outputters    = get_alignment_outputters();
+	const auto   sup_outputters    = get_superposition_outputters();
 
 	// If there are no objects then no options were specified so just output the standard usage error string
 	if ( ( num_aln_acquirers == 0 ) && ( num_pdb_acquirers == 0 ) && sup_outputters.empty()) {
@@ -180,8 +180,22 @@ alignment_outputter_list cath_refine_align_options::get_alignment_outputters() c
 /// \brief TODOCUMENT
 superposition_outputter_list cath_refine_align_options::get_superposition_outputters() const {
 	check_ok_to_use();
-	const display_spec the_display_spec = the_display_options_block.get_display_spec();
-	return the_superposition_output_options_block.get_superposition_outputters( the_display_spec );
+	return the_superposition_output_options_block.get_superposition_outputters(
+		the_display_options_block.get_display_spec(),
+		the_content_spec
+	);
+}
+
+/// \brief Get the regions to which the PDBs in the superposition should be restricted
+///
+/// For now, this just generates a list of none entries, indicating that no PDB
+/// should be restricted.
+///
+/// \todo Add superposition regions options that are stored in cath_refine_align_options
+///       and have this method return the results
+region_vec_opt_vec cath_refine_align_options::get_regions(const size_t &arg_num_entries ///< The number of entries for which the regions are required
+                                                          ) const {
+	return region_vec_opt_vec( arg_num_entries );
 }
 
 /// \brief Get the single alignment_acquirer implied by the specified cath_refine_align_options

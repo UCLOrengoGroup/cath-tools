@@ -29,6 +29,7 @@
 #include "alignment/refiner/alignment_refiner.hpp"
 #include "alignment/residue_score/residue_scorer.hpp"
 #include "cath_refine_align/options/cath_refine_align_options.hpp"
+#include "chopping/region/region.hpp"
 #include "exception/not_implemented_exception.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
@@ -79,6 +80,7 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 	const auto          pdbs_and_names    = pdbs_acquirer_ptr->get_pdbs_and_names( arg_istream, true );
 	const pdb_list     &pdbs              = pdbs_and_names.first;
 	const str_vec      &names             = pdbs_and_names.second;
+	const auto          regions           = arg_cath_refine_align_options.get_regions( pdbs.size() );
 	const protein_list  proteins          = build_protein_list_of_pdb_list_and_names( pdbs, names );
 
 	// An alignment is required but this should have been checked elsewhere
@@ -126,12 +128,13 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 		names,
 		scored_refined_alignment,
 		spanning_tree,
-		get_selection_policy_acquirer( arg_cath_refine_align_options )
+		get_selection_policy_acquirer( arg_cath_refine_align_options ),
+		regions
 	);
 
 	// For each of the alignment_outputters specified by the cath_superpose_options, output the alignment
 	const alignment_outputter_list aln_outputters = arg_cath_refine_align_options.get_alignment_outputters();
-	use_all_alignment_outputters( aln_outputters, alignment_context( pdbs, names, scored_refined_alignment ), arg_stdout, arg_stderr );
+	use_all_alignment_outputters( aln_outputters, alignment_context{ pdbs, names, scored_refined_alignment, regions }, arg_stdout, arg_stderr );
 
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
 	const superposition_outputter_list sup_outputters = arg_cath_refine_align_options.get_superposition_outputters();

@@ -29,6 +29,7 @@
 #include <boost/log/trivial.hpp>
 
 #include "alignment/alignment_context.hpp"
+#include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/size_t_literal.hpp"
 #include "display/display_colourer/display_colourer.hpp"
@@ -201,7 +202,7 @@ str_vec cath::clean_names_for_viewer(const str_vec &arg_names
 /// \relates viewer
 str_vec cath::clean_names_for_viewer(const superposition_context &arg_superposition_context ///< TODOCUMENT
                                      ) {
-	return clean_names_for_viewer( arg_superposition_context.get_names_cref() );
+	return clean_names_for_viewer( arg_superposition_context.get_names() );
 }
 
 /// \brief TODOCUMENT
@@ -216,11 +217,12 @@ str_vec cath::clean_names_for_viewer(const alignment_context &arg_alignment_cont
 ///        the specified ostream, using the specified display_spec and only_warn flat
 ///
 /// \relates viewer
-void cath::output_superposition_to_viewer(ostream                     &arg_ostream,                 ///< The ostream to which the data should be written
-                                          viewer                      &arg_viewer,                  ///< The viewer defining the instructions to be written
-                                          const display_spec          &arg_display_spec,            ///< The specification for how to display the superposition
-                                          const superposition_context &arg_superposition_context,   ///< The superposition_context to output
-                                          const bool                  &arg_only_warn_on_missing_aln ///< Whether to only warn (rather than throwing) if no alignment is present
+void cath::output_superposition_to_viewer(ostream                          &arg_ostream,                 ///< The ostream to which the data should be written
+                                          viewer                           &arg_viewer,                  ///< The viewer defining the instructions to be written
+                                          const display_spec               &arg_display_spec,            ///< The specification for how to display the superposition
+                                          const superposition_context      &arg_superposition_context,   ///< The superposition_context to output
+                                          const superposition_content_spec &arg_content_spec,            ///< The specification of what should be included in the superposition
+                                          const missing_aln_policy         &arg_missing_aln_policy       ///< Whether to warn or throw if no alignment is present
                                           ) {
 	// Write the start of the viewer output
 	arg_viewer.write_start(arg_ostream);
@@ -228,8 +230,8 @@ void cath::output_superposition_to_viewer(ostream                     &arg_ostre
 	// Write the text to load the PDBs
 	arg_viewer.write_load_pdbs(
 		arg_ostream,
-		arg_superposition_context.get_superposition_cref(),
-		arg_superposition_context.get_pdbs_cref(),
+		arg_superposition_context.get_superposition(),
+		get_supn_content_pdbs( arg_superposition_context, arg_content_spec ),
 		clean_names_for_viewer( arg_superposition_context )
 	);
 
@@ -242,7 +244,7 @@ void cath::output_superposition_to_viewer(ostream                     &arg_ostre
 	if ( missing_wanted_alignment || would_accept_extra_consecutive) {
 		if ( missing_wanted_alignment ) {
 			const auto message = "Unable to apply an alignment-based coluring scheme to the superposition because it doesn't contain an alignment";
-			if ( arg_only_warn_on_missing_aln ) {
+			if ( arg_missing_aln_policy == missing_aln_policy::WARN_AND_COLOUR_CONSECUTIVELY ) {
 				BOOST_LOG_TRIVIAL( warning ) << message;
 			}
 			else {
@@ -255,7 +257,9 @@ void cath::output_superposition_to_viewer(ostream                     &arg_ostre
 			the_colourer,
 			arg_ostream,
 			arg_viewer,
-			clean_names_for_viewer( arg_superposition_context )
+			arg_superposition_context.get_pdbs(),
+			clean_names_for_viewer( arg_superposition_context ),
+			arg_superposition_context.get_regions()
 		);
 	}
 
@@ -269,6 +273,7 @@ void cath::output_superposition_to_viewer(ostream                     &arg_ostre
 			arg_viewer,
 			make_alignment_context( arg_superposition_context )
 		);
+		// allow_this_to_do_something_useful_with_rainbow_colouring_here(); // TODONOW
 
 		// If there is an alignment then do magic with it
 		// if ( arg_superposition_context.has_alignment() ) {

@@ -25,7 +25,6 @@
 #include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 #include "acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
-#include "acquirer/superposition_acquirer/align_based_superposition_acquirer.hpp"
 #include "alignment/alignment.hpp"
 #include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"

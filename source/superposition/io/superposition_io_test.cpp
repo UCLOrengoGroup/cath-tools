@@ -20,6 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "chopping/region/region.hpp"
 #include "superposition/io/superposition_io.hpp"
 #include "test/superposition_fixture.hpp"
 

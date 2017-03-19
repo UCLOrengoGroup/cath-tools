@@ -25,12 +25,14 @@
 #include <boost/optional.hpp>
 
 #include "alignment/alignment.hpp"
+#include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "superposition/superposition.hpp"
 
 namespace cath { namespace align { class alignment_context; } }
 namespace cath { namespace opts { class data_dirs_spec; } }
+namespace cath { namespace sup { class superposition_content_spec; } }
 
 namespace cath {
 	namespace sup {
@@ -53,23 +55,38 @@ namespace cath {
 			/// \brief An optional alignment corresponding to the superposition
 			boost::optional<align::alignment> any_alignment;
 
+			/// \brief For each structure, the key regions of the structure or none if this refers to all of the structure
+			chop::region_vec_opt_vec regions;
+
 		public:
 			superposition_context(const file::pdb_list &,
 			                      const str_vec &,
-			                      const superposition &);
+			                      const superposition &,
+			                      const chop::region_vec_opt_vec &);
 			superposition_context(const file::pdb_list &,
 			                      const str_vec &,
 			                      const superposition &,
-			                      const align::alignment &);
+			                      const align::alignment &,
+			                      const chop::region_vec_opt_vec &);
 
-			const file::pdb_list &   get_pdbs_cref()          const;
-			const str_vec &          get_names_cref()         const;
-			const superposition &    get_superposition_cref() const;
+			const file::pdb_list & get_pdbs() const;
+			const str_vec & get_names() const;
+			const superposition & get_superposition() const;
 			bool has_alignment() const;
-			const align::alignment & get_alignment_cref() const;
+			const align::alignment & get_alignment() const;
+			const chop::region_vec_opt_vec & get_regions() const;
 
 			void set_pdbs(const file::pdb_list &);
 		};
+
+		file::pdb_list get_restricted_pdbs(const superposition_context &);
+
+		file::pdb get_supn_content_pdb(const file::pdb &,
+		                               const chop::region_vec_opt &,
+		                               const superposition_content_spec &);
+
+		file::pdb_list get_supn_content_pdbs(const superposition_context &,
+		                                     const superposition_content_spec &);
 
 		superposition_context set_pdbs_copy(superposition_context,
 		                                    const file::pdb_list &);

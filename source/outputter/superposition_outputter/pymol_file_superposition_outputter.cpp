@@ -24,6 +24,7 @@
 #include "common/file/open_fstream.hpp"
 #include "display/viewer/pymol_viewer.hpp"
 #include "display_colour/display_colour_list.hpp"
+#include "superposition/superposition_context.hpp"
 
 #include <fstream>
 
@@ -43,7 +44,7 @@ void pymol_file_superposition_outputter::do_output_superposition(const superposi
                                                                  ostream                     &/*arg_ostream*/            ///< TODOCUMENT
                                                                  ) const {
 	ofstream pymol_file_ostream;
-	open_ofstream(pymol_file_ostream, output_file);
+	open_ofstream( pymol_file_ostream, output_file );
 
 	pymol_viewer the_viewer{};
 
@@ -52,7 +53,8 @@ void pymol_file_superposition_outputter::do_output_superposition(const superposi
 		the_viewer,
 		the_display_spec,
 		arg_superposition_context,
-		true
+		content_spec,
+		missing_aln_policy::WARN_AND_COLOUR_CONSECUTIVELY
 	);
 	pymol_file_ostream << flush;
 	pymol_file_ostream.close();
@@ -63,10 +65,12 @@ bool pymol_file_superposition_outputter::do_involves_display_spec() const {
 	return true;
 }
 
-/// \brief Ctor for pymol_file_superposition_outputter.
-pymol_file_superposition_outputter::pymol_file_superposition_outputter(const path         &arg_output_file, ///< TODOCUMENT
-                                                                       const display_spec &arg_display_spec ///< TODOCUMENT
-                                                                       ) : output_file      ( arg_output_file  ),
-                                                                           the_display_spec ( arg_display_spec ) {
+/// \brief Ctor for pymol_file_superposition_outputter
+pymol_file_superposition_outputter::pymol_file_superposition_outputter(const path                       &arg_output_file,  ///< TODOCUMENT
+                                                                       const display_spec               &arg_display_spec, ///< TODOCUMENT
+                                                                       const superposition_content_spec &arg_content_spec  ///< The specification of what should be included in the superposition
+                                                                       ) : output_file      { arg_output_file  },
+                                                                           the_display_spec { arg_display_spec },
+                                                                           content_spec     { arg_content_spec } {
 }
 

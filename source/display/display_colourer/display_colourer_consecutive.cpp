@@ -23,6 +23,7 @@
 #include <boost/range/irange.hpp>
 
 #include "alignment/alignment_context.hpp"
+#include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/size_t_literal.hpp"
 #include "display/display_colour_spec/display_colour_spec.hpp"
@@ -34,6 +35,7 @@
 
 using namespace cath;
 using namespace cath::align;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::detail;
 using namespace cath::sup;
@@ -48,12 +50,14 @@ unique_ptr<display_colourer> display_colourer_consecutive::do_clone() const {
 }
 
 /// \brief TODOCUMENT
-broad_display_colour_spec display_colourer_consecutive::do_get_colour_spec_from_num_entries(const size_t &arg_num_entries ///< The number of structures to be coloured
-                                                                                            ) const {
+broad_display_colour_spec display_colourer_consecutive::do_get_colour_spec_from_regions(const region_vec_opt_vec &arg_regions ///< The key regions of the structures
+                                                                                        ) const {
 	// Create a new display_colour_spec and populate it for the entries with colours
 	broad_display_colour_spec new_spec;
 	new_spec.colour_base( display_colour::BLACK );
-	for (const size_t entry_ctr : irange( 0_z, arg_num_entries ) ) {
+	for (const size_t entry_ctr : irange( 0_z, arg_regions.size() ) ) {
+		// const auto entry_regions = arg_regions[ entry_ctr ];
+		// if ( entry_regions ) {
 		new_spec.colour_pdb(
 			entry_ctr,
 			colour_of_mod_index( colours, entry_ctr )

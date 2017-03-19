@@ -34,14 +34,19 @@
 
 #include <iostream>
 
-using namespace boost::filesystem;
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
-using namespace std;
+using namespace cath::sup;
 
+using boost::filesystem::path;
 using boost::none;
+using boost::program_options::bool_switch;
+using boost::program_options::options_description;
+using boost::program_options::value;
+using boost::program_options::variables_map;
+using std::string;
+using std::unique_ptr;
 
 const string superposition_output_options_block::PO_SUP_FILE         ( "sup-to-pdb-file"      );
 const string superposition_output_options_block::PO_SUP_FILES_DIR    ( "sup-to-pdb-files-dir" );
@@ -136,26 +141,27 @@ path superposition_output_options_block::get_json_file() const {
 }
 
 /// Get a list of superposition_outputter_list that will perform the outputs specified in this options_block
-superposition_outputter_list superposition_output_options_block::get_superposition_outputters(const display_spec &arg_display_spec ///< TODOCUMENT
+superposition_outputter_list superposition_output_options_block::get_superposition_outputters(const display_spec               &arg_display_spec, ///< The specification of how to display (colour) the structures
+                                                                                              const superposition_content_spec &arg_content_spec  ///< The specification of what should be included in the superposition
                                                                                               ) const {
 	superposition_outputter_list superposition_outputters;
 	if ( ! get_sup_to_pdb_file().empty() ) {
-		superposition_outputters.push_back( pdb_file_superposition_outputter ( get_sup_to_pdb_file() ) );
+		superposition_outputters.push_back( pdb_file_superposition_outputter   { get_sup_to_pdb_file(),                        arg_content_spec } );
 	}
 	if ( ! get_sup_to_pdb_files_dir().empty() ) {
-		superposition_outputters.push_back( pdb_files_superposition_outputter( get_sup_to_pdb_files_dir() ) );
+		superposition_outputters.push_back( pdb_files_superposition_outputter  { get_sup_to_pdb_files_dir(),                   arg_content_spec } );
 	}
 	if ( get_sup_to_stdout() ) {
-		superposition_outputters.push_back( ostream_superposition_outputter() );
+		superposition_outputters.push_back( ostream_superposition_outputter    {                                               arg_content_spec } );
 	}
 	if ( get_sup_to_pymol() ) {
-		superposition_outputters.push_back( pymol_view_superposition_outputter( get_pymol_program(), arg_display_spec ) );
+		superposition_outputters.push_back( pymol_view_superposition_outputter { get_pymol_program(),        arg_display_spec, arg_content_spec } );
 	}
 	if ( ! get_sup_to_pymol_file().empty() ) {
-		superposition_outputters.push_back( pymol_file_superposition_outputter( get_sup_to_pymol_file(), arg_display_spec ) );
+		superposition_outputters.push_back( pymol_file_superposition_outputter { get_sup_to_pymol_file(),    arg_display_spec, arg_content_spec } );
 	}
 	if ( ! get_json_file().empty() ) {
-		superposition_outputters.push_back( json_file_superposition_outputter( get_json_file() ) );
+		superposition_outputters.push_back( json_file_superposition_outputter  { get_json_file()                                                } );
 	}
 
 	return superposition_outputters;

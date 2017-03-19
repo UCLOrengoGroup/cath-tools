@@ -128,8 +128,11 @@ namespace cath {
 
 
 
-	/// \brief TODOCUMENT
+	/// \brief Type alias for a vector of chain_label objects
 	using chain_label_vec = std::vector<chain_label>;
+
+	/// \brief Type alias for a set of chain_label objects
+	using chain_label_set = std::set<chain_label>;
 
 	/// \brief TODOCUMENT
 	using chain_label_opt = boost::optional<chain_label>;

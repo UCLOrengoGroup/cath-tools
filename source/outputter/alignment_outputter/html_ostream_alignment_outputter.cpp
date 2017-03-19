@@ -50,12 +50,7 @@ unique_ptr<alignment_outputter> html_ostream_alignment_outputter::do_clone() con
 void html_ostream_alignment_outputter::do_output_alignment(const alignment_context &arg_alignment_context, ///< TODOCUMENT
                                                            ostream                 &arg_ostream            ///< TODOCUMENT
                                                            ) const {
-	arg_ostream << html_align_outputter(
-		arg_alignment_context.get_alignment(),
-		arg_alignment_context.get_pdbs(),
-		arg_alignment_context.get_names(),
-		*colourer_ptr
-	) << flush;
+	arg_ostream << make_html_align_outputter( arg_alignment_context, *colourer_ptr ) << flush;
 }
 
 /// \brief TODOCUMENT
