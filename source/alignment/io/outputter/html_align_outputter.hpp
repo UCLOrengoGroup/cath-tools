@@ -26,8 +26,8 @@
 
 #include <iosfwd>
 
-namespace cath { namespace align { class alignment; } }
 namespace cath { class display_colourer; }
+namespace cath { namespace align { class alignment; } }
 namespace cath { namespace file { class pdb_list; } }
 namespace cath { namespace align { class alignment_context; } }
 
