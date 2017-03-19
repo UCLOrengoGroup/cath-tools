@@ -523,6 +523,7 @@ crh-row-colhead {}
 }
 
 .crh-cell-data {
+	font-family       : Courier, "Lucida Console", monospace;
 	font-size         : 85%;
 }
 
