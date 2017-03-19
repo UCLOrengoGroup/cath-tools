@@ -55,6 +55,8 @@ namespace cath {
 	};
 
 	/// \brief TODOCUMENT
+	///
+	/// \todo Make get_code() return char_3_arr and make LETTER_CODE_AND_NAME_LIST store char_3_arr
 	class amino_acid final : private boost::equivalent      < amino_acid,
 	                                 boost::totally_ordered < amino_acid > > {
 	private:
