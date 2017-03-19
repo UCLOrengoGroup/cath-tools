@@ -197,7 +197,7 @@ size_size_vec_map cath::get_residues_of_colour(const display_colour_spec &arg_co
 	return residues;
 }
 
-/// \brief Write (possibly residue-specifiec) colouring instructions for the specified viewer to the specified ostream
+/// \brief Write (possibly residue-specific) colouring instructions for the specified viewer to the specified ostream
 ///        using the specified display_colour_spec and (viewer-cleaned) names
 ///
 /// relates display_colour_spec

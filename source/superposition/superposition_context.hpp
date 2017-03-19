@@ -37,7 +37,7 @@ namespace cath { namespace sup { class superposition_content_spec; } }
 namespace cath {
 	namespace sup {
 
-		/// \brief Store a superposition along with the context of the pdbs and ids of the actual structures being superposed
+		/// \brief Store a superposition along with the context of the PDBs and ids of the actual structures being superposed
 		///
 		/// ATM, this is little more than a tuple<pdb_list, str_vec, superposition> with nice names and extra functionality
 		/// of optionally storing an alignment

@@ -243,7 +243,7 @@ void cath::output_superposition_to_viewer(ostream                          &arg_
 
 	if ( missing_wanted_alignment || would_accept_extra_consecutive) {
 		if ( missing_wanted_alignment ) {
-			const auto message = "Unable to apply an alignment-based coluring scheme to the superposition because it doesn't contain an alignment";
+			const auto message = "Unable to apply an alignment-based colouring scheme to the superposition because it doesn't contain an alignment";
 			if ( arg_missing_aln_policy == missing_aln_policy::WARN_AND_COLOUR_CONSECUTIVELY ) {
 				BOOST_LOG_TRIVIAL( warning ) << message;
 			}

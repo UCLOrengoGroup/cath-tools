@@ -154,7 +154,7 @@ size_vec cath::get_pdbs_of_colour(const broad_display_colour_spec &arg_colour_sp
 	);
 }
 
-/// \brief Write broad-level (ie not residue-specifiec) colouring instructions for the specified viewer to the specified ostream
+/// \brief Write broad-level (ie not residue-specific) colouring instructions for the specified viewer to the specified ostream
 ///        using the specified broad_display_colour_spec and (viewer-cleaned) names
 ///        in the context of the specified list of colours
 ///
@@ -193,7 +193,7 @@ void cath::detail::colour_base_and_pdbs_impl(const display_colour_vec        &ar
 	}
 }
 
-/// \brief Write broad-level (ie not residue-specifiec) colouring instructions for the specified viewer to the specified ostream
+/// \brief Write broad-level (ie not residue-specific) colouring instructions for the specified viewer to the specified ostream
 ///        using the specified broad_display_colour_spec and (viewer-cleaned) names
 ///
 /// relates broad_display_colour_spec
