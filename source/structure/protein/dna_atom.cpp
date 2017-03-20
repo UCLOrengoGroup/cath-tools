@@ -55,10 +55,9 @@ char_3_arr cath::to_three_char_arr(const dna_atom &arg_dna_atom ///< The dna_ato
 		case (dna_atom::U_SPACE ) : { return {{ ' ','U',' ' }}; } // eg in 4a1d
 		default : {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of dna_atom not recognised whilst converting to_three_char_str()"));
-			return {}; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
 		}
 	}
-	 return {{ 'D','N','A' }};
+	return {{ 'D','N','A' }};
 }
 
 /// \brief Convert the specified dna_atom back to the three character string that represents it in PDBs
