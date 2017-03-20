@@ -1067,18 +1067,12 @@ set(
 )
 
 set(
-	NORMSOURCES_SUPERPOSITION_DETAIL
-		superposition/detail/spanning_tree_greater.cpp
-)
-
-set(
 	NORMSOURCES_SUPERPOSITION_IO
 		superposition/io/superposition_io.cpp
 )
 
 set(
 	NORMSOURCES_SUPERPOSITION
-		${NORMSOURCES_SUPERPOSITION_DETAIL}
 		${NORMSOURCES_SUPERPOSITION_IO}
 		superposition/superpose_orderer.cpp
 		superposition/superposition.cpp

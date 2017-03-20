@@ -27,18 +27,17 @@
 #include <boost/range/algorithm/sort.hpp>
 
 #include "common/algorithm/sort_copy.hpp"
+#include "common/boost_addenda/range/sort_proj.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/not_implemented_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
-#include "superposition/detail/spanning_tree_greater.hpp"
 
 #include <algorithm>
 
 using namespace cath;
 using namespace cath::common;
 using namespace cath::sup;
-using namespace cath::sup::detail;
 using namespace std;
 
 using boost::adjacency_list;
@@ -217,10 +216,18 @@ size_size_pair_vec cath::sup::order_spanning_tree_by_desc_score(const superpose_
                                                                 const size_size_pair_vec &arg_spanning_tree      ///< TODOCUMENT
                                                                 ) {
 	size_size_pair_vec new_spanning_tree = arg_spanning_tree;
-	sort(
+
+	sort_proj(
 		new_spanning_tree,
-		spanning_tree_greater( arg_superpose_orderer )
+		std::greater<>{},
+		[&] (const size_size_pair &x) {
+			return arg_superpose_orderer.get_score(
+				max( x.first, x.second ),
+				min( x.first, x.second )
+			);
+		}
 	);
+
 	return new_spanning_tree;
 }
 
