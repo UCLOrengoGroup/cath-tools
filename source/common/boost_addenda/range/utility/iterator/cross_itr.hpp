@@ -193,8 +193,7 @@ namespace cath {
 		/// \brief Ctor of singular iterator
 		/// \brief TODOCUMENT
 		template <typename... RNGs>
-		cross_itr<RNGs...>::cross_itr() {
-		}
+		cross_itr<RNGs...>::cross_itr() = default;
 
 		/// \brief Ctor from iterators
 		template <typename... RNGs>

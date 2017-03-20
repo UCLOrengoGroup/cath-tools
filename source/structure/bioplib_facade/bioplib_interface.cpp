@@ -21,7 +21,9 @@
 #include "bioplib_interface.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/irange.hpp>
 
+#include "common/size_t_literal.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
@@ -36,6 +38,7 @@ using namespace cath::common;
 using namespace cath::geom;
 using namespace std;
 
+using boost::irange;
 using boost::numeric_cast;
 
 /// \brief Access to bioplib's matfit() superposing subroutine as used by cath::superposition
@@ -68,8 +71,8 @@ rotation cath::bioplib_fit(const coord_list &arg_coord_list_1, ///< TODOCUMENT
 
 	doub_vec untransposed_rotation_matrix;
 	untransposed_rotation_matrix.reserve(coord::NUM_DIMS * coord::NUM_DIMS);
-	for (size_t ctr1 = 0; ctr1 < coord::NUM_DIMS; ++ctr1) {
-		for (size_t ctr2 = 0; ctr2 < coord::NUM_DIMS; ++ctr2) {
+	for (const size_t &ctr1 : irange( 0_z, coord::NUM_DIMS ) ) {
+		for (const size_t &ctr2 : irange( 0_z, coord::NUM_DIMS ) ) {
 			// NOTE: Switching indices here because bioplib appears to index in the opposite way
 			untransposed_rotation_matrix.push_back(temp_superposition_matrix[ctr2][ctr1]);
 		}
