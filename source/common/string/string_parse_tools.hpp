@@ -52,8 +52,8 @@ namespace cath {
 			///
 			/// Note: please benchmark any changes to these functions to ensure they stay fast
 			template <typename T, typename QiParse>
-			inline T do_spirit_parse(str_citr         arg_begin_itr, ///< The iterator to the start of the strecth of string to parse (passed-by-value to allow efficient modification)
-			                         const str_citr  &arg_end_itr,   ///< The iterator to the end of the strecth of string to parse
+			inline T do_spirit_parse(str_citr         arg_begin_itr, ///< The iterator to the start of the stretch of string to parse (passed-by-value to allow efficient modification)
+			                         const str_citr  &arg_end_itr,   ///< The iterator to the end of the stretch of string to parse
 			                         QiParse        &&arg_qi_parse   ///< The boost::spirit parser
 			                         ) {
 				T value;

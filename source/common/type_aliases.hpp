@@ -181,7 +181,7 @@ namespace cath {
 
 	/// \brief The type of the scores used in aligning with dynamic-programming etc
 	///
-	/// \todo Switch this to float/double; if thats too broad-brush then templatise on score_type where appropriate
+	/// \todo Switch this to float/double; if that's too broad-brush then templatise on score_type where appropriate
 	using score_type                   = int;
 	using score_vec                    = std::vector<score_type>;
 	using score_vec_vec                = std::vector<score_vec>;
