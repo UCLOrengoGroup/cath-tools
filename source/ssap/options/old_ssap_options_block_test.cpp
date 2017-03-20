@@ -30,7 +30,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(old_ssap_options_block_test_suite, cath::test::old_ssap_options_block_test_suite_fixture)
 

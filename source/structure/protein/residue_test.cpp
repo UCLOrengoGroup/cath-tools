@@ -61,8 +61,8 @@ namespace cath {
 			const residue residue_with_insert_without_ss = { get_residue_with_insert_without_ss() };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 //
 //const residue residue_test_suite_fixture::residue_with_insert_without_ss(

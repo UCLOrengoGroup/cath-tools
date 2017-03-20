@@ -45,8 +45,8 @@ namespace cath {
 			                     const size_t &) const;
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 ///// \brief TODOCUMENT
 //void plate_scan_test_suite_fixture::test_plate_scan(const size_t &arg_from_index,     ///< TODOCUMENT

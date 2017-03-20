@@ -84,8 +84,8 @@ namespace cath {
 			}
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(alignment_io_test_suite, cath::test::alignment_io_test_suite_fixture)
 

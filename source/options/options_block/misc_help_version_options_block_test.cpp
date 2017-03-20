@@ -40,8 +40,8 @@ namespace cath {
 			const string IGNORE_OPT = { "positional-that-should-be-ignored" };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(misc_help_version_options_block_test_suite, cath::test::misc_help_version_options_block_test_suite_fixture)
 

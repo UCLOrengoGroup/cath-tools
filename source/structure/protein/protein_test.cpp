@@ -32,7 +32,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(protein_test_suite, cath::test::protein_test_suite_fixture)
 

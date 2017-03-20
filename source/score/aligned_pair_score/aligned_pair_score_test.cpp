@@ -155,8 +155,8 @@ namespace cath {
 			const alignment      aln_1c55A_1wt7A      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1WT7A, prot_list_1c55A_1wt7A, residue_scorer(), parse_ss ) };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 void cath::test::aligned_pair_score_fixture::check_ssap_scores(const alignment   &arg_alignment,                      ///< TODOCUMENT

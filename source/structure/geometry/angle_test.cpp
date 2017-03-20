@@ -45,7 +45,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief Test suite for the angle
 BOOST_FIXTURE_TEST_SUITE(angle_test_suite, cath::test::angle_test_suite_fixture)

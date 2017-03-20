@@ -77,8 +77,8 @@ namespace cath {
 			};
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(display_colour_test_suite, cath::test::display_colour_test_suite_fixture)
 

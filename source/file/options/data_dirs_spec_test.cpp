@@ -49,8 +49,8 @@ namespace cath {
 			const path_vec EXAMPLE_DIRECTORIES = { "/usr", "/var" };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(data_dirs_spec_test_suite, cath::test::data_dirs_spec_test_suite_fixture)
 

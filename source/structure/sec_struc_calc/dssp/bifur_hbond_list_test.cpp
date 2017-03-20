@@ -65,8 +65,8 @@ namespace cath {
 		constexpr hbond_half bifur_hbond_list_test_suite_fixture::b;
 		constexpr hbond_half bifur_hbond_list_test_suite_fixture::c;
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(bifur_hbond_list_test_suite, bifur_hbond_list_test_suite_fixture)
 

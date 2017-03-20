@@ -573,8 +573,8 @@ namespace cath {
 			// SSAP score plus gubbins
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 
 

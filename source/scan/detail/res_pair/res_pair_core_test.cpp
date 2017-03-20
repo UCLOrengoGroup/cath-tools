@@ -37,7 +37,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(res_pair_core_test_suite, cath::test::res_pair_core_test_suite_fixture)

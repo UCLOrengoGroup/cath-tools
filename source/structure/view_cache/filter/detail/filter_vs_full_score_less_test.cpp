@@ -34,7 +34,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(filter_vs_full_score_less_test_suite, cath::test::filter_vs_full_score_less_test_suite_fixture)

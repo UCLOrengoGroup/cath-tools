@@ -97,8 +97,8 @@ namespace cath {
 			);
 		}
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(tally_residue_ids_test_suite, cath::test::tally_residue_ids_test_suite_fixture)
 

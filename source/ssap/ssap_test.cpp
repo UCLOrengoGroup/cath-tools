@@ -63,8 +63,8 @@ namespace cath {
 			static const string id_1fseB00;
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief A string containing the ID for 1a04A02 to be used in a ssap_pair_fixture
 const string cath::test::ssap_test_suite_fixture::id_1a04A02("1a04A02");
@@ -102,8 +102,8 @@ namespace cath {
 			void check_residues_have_similar_area_angle_props() const;
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 template < const string * const ID1, const string * const ID2 >

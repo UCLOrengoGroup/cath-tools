@@ -73,5 +73,5 @@ namespace cath {
 			// static_assert( get<0>( constexpr_find<1>( num_to_num, 18u ) ) ==  7u, "Failure in static_assert test of constexpr_find()" ); ///< Should fail to compile
 
 		};
-	}
-}
+	}  // namespace test
+}  // namespace cath

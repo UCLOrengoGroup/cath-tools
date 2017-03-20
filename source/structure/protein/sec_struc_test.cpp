@@ -47,7 +47,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(sec_struc_test_suite, cath::test::sec_struc_test_suite_fixture)
 

@@ -88,8 +88,8 @@ namespace cath {
 			const log_to_ostream_guard the_guard{ test_ss };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(ssaps_and_prcs_of_query_test_suite, cath::test::ssaps_and_prcs_of_query_test_suite_fixture)
 

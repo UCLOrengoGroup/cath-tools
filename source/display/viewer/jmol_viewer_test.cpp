@@ -30,7 +30,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(jmol_viewer_test_suite, cath::test::jmol_viewer_test_suite_fixture)
 

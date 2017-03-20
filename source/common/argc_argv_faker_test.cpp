@@ -42,8 +42,8 @@ namespace cath {
 			void test_args(const str_vec &) const;
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief A method to test that argc_argv_faker does what it should for a given list of arguments
 void cath::test::argc_argv_faker_test_suite_fixture::test_args(const str_vec &arg_args ///< The vector of arguments to be tested

@@ -155,8 +155,8 @@ namespace cath {
 			}
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Check the consecutive position functions get the same result for the specified alignment as specified
 void cath::test::alignment_test_suite_fixture::check_consecutive_position(const alignment          &arg_alignment, ///< The alignment to search

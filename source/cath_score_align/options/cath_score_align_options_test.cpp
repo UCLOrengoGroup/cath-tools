@@ -29,7 +29,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(cath_score_align_options_test_suite, cath::test::cath_score_align_options_test_suite_fixture)
 

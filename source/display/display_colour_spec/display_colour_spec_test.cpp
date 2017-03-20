@@ -48,8 +48,8 @@ namespace cath {
 			const size_vec            pdb_two_residues{ { 4, 6 } };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 display_colour_spec cath::test::display_colour_spec_test_suite_fixture::get_spec() const {

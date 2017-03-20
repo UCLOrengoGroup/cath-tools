@@ -37,7 +37,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief Test suite to test the functionality of rep_strider
 BOOST_FIXTURE_TEST_SUITE(rep_strider_test_suite, cath::test::rep_strider_test_suite_fixture)

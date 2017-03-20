@@ -35,7 +35,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(aligned_pair_score_list_test_suite, cath::test::aligned_pair_score_list_test_suite_fixture)

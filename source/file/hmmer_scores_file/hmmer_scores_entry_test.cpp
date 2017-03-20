@@ -24,8 +24,8 @@ namespace cath {
 			const hmmer_scores_entry eg_entry{ "102mA00", "-", "3ixfA00", "-", 5.4e-09, 34.1, 0.1, 1.1e-08, 33.1, 0.1, 1.4, 1, 1, 0, 1, 1, 1, 1, "-" };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(hmmer_scores_entry_test_suite, cath::test::hmmer_scores_entry_test_suite_fixture)
 

@@ -57,8 +57,8 @@ namespace cath {
 			};
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(residue_name_align_map_test_suite, cath::test::residue_name_align_map_test_suite_fixture)
 

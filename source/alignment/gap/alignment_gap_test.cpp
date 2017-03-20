@@ -56,8 +56,8 @@ namespace cath {
 			gap_penalty the_gap_penalty = { open_penalty, extend_penalty };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Build an alignment from strings of 'x's for positions and '-'s for gaps (and ignored spaces for formatting)
 alignment cath::test::alignment_gap_test_suite_fixture::make_gap_alignment_of_strings(const str_vec &arg_strings ///< The strings from which to make the alignment entries

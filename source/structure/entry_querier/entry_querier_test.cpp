@@ -41,8 +41,8 @@ namespace cath {
 			const sec_struc_querier example_sec_struc_querier{};
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(entry_querier_test_suite, cath::test::entry_querier_test_suite_fixture)
 

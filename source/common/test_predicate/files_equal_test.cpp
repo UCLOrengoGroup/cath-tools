@@ -46,8 +46,8 @@ namespace cath {
 			const path compare_file_diff   = { TEST_BASIC_FILE_TEST_DATA_DIR() / "compare_file_diff"   };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(files_equal_test_suite, cath::test::files_equal_test_suite_fixture)
 

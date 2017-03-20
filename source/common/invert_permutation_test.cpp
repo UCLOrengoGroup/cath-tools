@@ -43,8 +43,8 @@ namespace cath {
 			const size_vec permutation_backward = { 2, 1, 4, 3, 0 };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(invert_permutation_test_suite, cath::test::invert_permutation_test_suite_fixture)
 

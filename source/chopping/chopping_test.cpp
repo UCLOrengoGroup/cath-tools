@@ -77,7 +77,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(chopping_test_suite, cath::test::chopping_test_suite_fixture)

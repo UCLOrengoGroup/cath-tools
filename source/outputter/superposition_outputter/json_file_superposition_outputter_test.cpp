@@ -55,8 +55,8 @@ namespace cath {
 
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(json_file_superposition_outputter_test_suite, cath::test::json_file_superposition_outputter_test_suite_fixture)
 

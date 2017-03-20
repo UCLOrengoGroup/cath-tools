@@ -62,7 +62,7 @@ namespace std {
 		arg_os << ")";
 		return arg_os;
 	}
-}
+}  // namespace std
 
 
 namespace cath {
@@ -92,8 +92,8 @@ namespace cath {
 			};
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Some basic unit tests for the simple read_file()/write_file() functions
 BOOST_FIXTURE_TEST_SUITE(simple_file_read_write_test_suite, cath::test::simple_file_read_write_test_suite_fixture)

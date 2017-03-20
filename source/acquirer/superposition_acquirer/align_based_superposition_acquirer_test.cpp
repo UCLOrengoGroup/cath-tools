@@ -30,7 +30,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(align_based_superposition_acquirer_test_suite, cath::test::align_based_superposition_acquirer_test_suite_fixture)
 

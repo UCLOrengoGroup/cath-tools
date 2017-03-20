@@ -44,8 +44,8 @@ namespace cath {
 			                                                  const size_t &) const;
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 path_step cath::test::return_path_matrix_test_suite_fixture::make_random_step() const {

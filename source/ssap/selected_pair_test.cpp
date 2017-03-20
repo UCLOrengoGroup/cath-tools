@@ -40,8 +40,8 @@ namespace cath {
 			const score_type TEST_HIGHER_SCORE = 20;
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(selected_pair_test_suite, cath::test::selected_pair_test_suite_fixture)
 

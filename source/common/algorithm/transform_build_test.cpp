@@ -47,8 +47,8 @@ namespace cath {
 			const size_vec      zero_to_thirty_step_three_vec   = { 0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30 };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(transform_build_test_suite, cath::test::transform_build_fixture)
 

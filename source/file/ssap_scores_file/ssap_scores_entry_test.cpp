@@ -24,8 +24,8 @@ namespace cath {
 			const ssap_scores_entry eg_entry{ "1cukA03", "1hjpA03", 48, 44, 94.92, 44, 91, 97, 0.71 };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(ssap_scores_entry_test_suite, cath::test::ssap_scores_entry_test_suite_fixture)
 

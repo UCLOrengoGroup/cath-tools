@@ -120,8 +120,8 @@ namespace cath {
 			}
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief A test suite to check that getting a list of residue names from a pdb or a dssp works as expected
 ///

@@ -63,7 +63,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(view_cache_index_dim_linear_test_suite, cath::test::view_cache_index_dim_linear_test_suite_fixture)

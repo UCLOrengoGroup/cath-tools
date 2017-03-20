@@ -47,8 +47,8 @@ namespace cath {
 			const path TEST_INPUT_FILE            = { ALIGNMENT_FILE() };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(open_fstream_test_suite, cath::test::open_fstream_test_suite_fixture)
 

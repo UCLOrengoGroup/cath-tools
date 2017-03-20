@@ -43,7 +43,7 @@ namespace cath {
 		                                                      long int,
 		                                                      long unsigned int>;
 	}
-}
+}  // namespace cath
 
 BOOST_AUTO_TEST_SUITE(booled_to_string_test_suite)
 

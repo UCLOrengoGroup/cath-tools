@@ -26,8 +26,8 @@ namespace cath {
             istringstream example_istream{ EXAMPLE_INPUT};
         };
 
-    }
-}
+    }  // namespace test
+}  // namespace cath
 
 
 BOOST_FIXTURE_TEST_SUITE(label_pair_is_positive_test_suite, cath::test::label_pair_is_positive_test_suite_fixture)

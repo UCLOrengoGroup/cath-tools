@@ -49,8 +49,8 @@ namespace cath {
 			};
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Check that alignment_coord_extractor does as expected
 ///

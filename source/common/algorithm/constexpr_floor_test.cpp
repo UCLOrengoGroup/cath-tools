@@ -55,5 +55,5 @@ namespace cath {
 			static_assert( constexpr_floor(  2.00 ) ==  2.00, "constexpr_floor(  2.00 ) should return  2.00" );
 
 		};
-	}
-}
+	}  // namespace test
+}  // namespace cath

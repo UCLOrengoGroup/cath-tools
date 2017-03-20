@@ -57,8 +57,8 @@ namespace cath {
 			                         const size_vec &) const;
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Check that the number of atoms in a vector of PDBs matches the expected numbers
 void cath::test::pdb_test_suite_fixture::check_nums_of_atoms(const pdb_list &arg_pdbs,                  ///< TODOCUMENT

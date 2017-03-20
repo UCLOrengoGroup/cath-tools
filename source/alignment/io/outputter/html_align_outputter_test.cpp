@@ -40,7 +40,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(html_align_outputter_test_suite, cath::test::html_align_outputter_test_suite_fixture)
 

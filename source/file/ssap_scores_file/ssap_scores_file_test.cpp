@@ -81,8 +81,8 @@ namespace cath {
 			istringstream ssap_scores_iss{ DEFAULT_SSAP_SCORE_STRING };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(ssap_scores_file_test_suite, cath::test::ssap_scores_file_test_suite_fixture)
 

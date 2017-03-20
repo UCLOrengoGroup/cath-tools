@@ -53,8 +53,8 @@ namespace cath {
 
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Check that the code which converts indices to rod and/or notch throws as expected for the specified indices/sizes
 ///

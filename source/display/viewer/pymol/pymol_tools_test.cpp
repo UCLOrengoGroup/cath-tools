@@ -47,8 +47,8 @@ namespace cath {
 			}
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(pymol_tools_test_suite, cath::test::pymol_tools_test_suite_fixture)
 

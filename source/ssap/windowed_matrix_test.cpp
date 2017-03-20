@@ -186,8 +186,8 @@ namespace cath {
 			};
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 
 

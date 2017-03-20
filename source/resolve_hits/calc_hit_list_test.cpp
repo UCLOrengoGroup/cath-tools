@@ -65,8 +65,8 @@ namespace cath {
 			const calc_hit_list eg_hit_list = make_eg_hit_list();
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(hit_list_test_suite, hit_list_test_suite_fixture)
 

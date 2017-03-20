@@ -69,8 +69,8 @@ namespace cath {
 			pdb_base_test_suite_fixture & operator=(const pdb_base_test_suite_fixture &) = delete;
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 cath::test::pdb_base_test_suite_fixture::pdb_base_test_suite_fixture() {
@@ -153,8 +153,8 @@ namespace cath {
 			}
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(pdb_base_test_suite, pdb_base_test_suite_fixture)
 

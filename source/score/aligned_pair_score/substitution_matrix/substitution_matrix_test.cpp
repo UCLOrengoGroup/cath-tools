@@ -47,8 +47,8 @@ namespace cath {
 			const amino_acid     amino_acid_x{ amino_acid( 'X' ) };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Suite of tests to unit test substitution_matrix
 BOOST_FIXTURE_TEST_SUITE(substitution_matrix_test_suite, cath::test::substitution_matrix_test_suite_fixture)

@@ -53,8 +53,8 @@ namespace cath {
 			filter_vs_full_score std_score_pair = { STD_FILTER_SCORE, STD_FULL_SCORE };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 constexpr double cath::test::filter_vs_full_score_test_suite_fixture::STD_FILTER_SCORE;
 constexpr double cath::test::filter_vs_full_score_test_suite_fixture::STD_FULL_SCORE;

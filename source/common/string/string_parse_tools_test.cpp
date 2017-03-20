@@ -43,8 +43,8 @@ namespace cath {
 			const string pdb_line = "ATOM    189  CZ2 TRP A 584       5.401  40.241  -4.793  1.00 10.59";
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(string_parse_tool_test_suite, string_parse_tool_test_suite_fixture)
 

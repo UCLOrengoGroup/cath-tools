@@ -71,8 +71,8 @@ namespace cath {
 			catch (...) { /// Prevent the destructor throwing any exceptions
 			}
 		}
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(alignment_action_test_suite, cath::test::alignment_action_test_suite_fixture)
 

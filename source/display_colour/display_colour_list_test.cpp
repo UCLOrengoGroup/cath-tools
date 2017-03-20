@@ -37,8 +37,8 @@ namespace cath {
 			const size_t NUM_COLOURS_IN_DEFAULT_COLOURS_STRING = 23;
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(display_colour_list_test_suite, cath::test::display_colour_list_test_suite_fixture)
 

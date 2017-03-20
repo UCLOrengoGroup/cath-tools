@@ -30,7 +30,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(fasta_aln_file_alignment_acquirer_test_suite, cath::test::fasta_aln_file_alignment_acquirer_test_suite_fixture)
 

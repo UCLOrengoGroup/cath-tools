@@ -70,8 +70,8 @@ namespace cath {
 			const gen_dyn_prog_string_aligner       std_dyn_prog_string_aligner{ the_std_dyn_prog_aligner       };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 string cath::test::string_aligner_fixture::make_random_sequence(const size_t &arg_min_length, ///< TODOCUMENT

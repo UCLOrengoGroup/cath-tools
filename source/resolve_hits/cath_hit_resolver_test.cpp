@@ -90,8 +90,8 @@ namespace cath {
 			const path      TEMP_TEST_FILE_FILENAME = get_filename( TEMP_TEST_FILE );
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(cath_hit_resolver_test_suite, hit_resolver_test_suite_fixture)
 

@@ -107,8 +107,8 @@ namespace cath {
 			}
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(dssp_ss_calc_test_suite, dssp_ss_calc_test_suite_fixture)
 

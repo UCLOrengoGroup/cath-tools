@@ -85,8 +85,8 @@ namespace cath {
 			return examples;
 		}
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(less_than_helper_test_suite, cath::test::less_than_helper_test_suite_fixture)

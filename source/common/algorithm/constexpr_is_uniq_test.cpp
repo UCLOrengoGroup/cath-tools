@@ -66,5 +66,5 @@ namespace cath {
 			static_assert( constexpr_is_uniq( split_match_multi      ) == false, "Failure in static_assert() test of constexpr_is_uniq()" );
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath

@@ -84,8 +84,8 @@ namespace cath {
 			const string EXPECTED_WOLF_PHI_PSI_SUFFIX { ".expected_wolf_phi_psi" };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 const path cath::test::dssp_wolf_file_test_suite_fixture::wolf_file_of_example_id(const string &arg_example_id ///< TODOCUMENT

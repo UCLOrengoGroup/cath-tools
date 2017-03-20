@@ -68,8 +68,8 @@ namespace cath {
 
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(classn_stat_plotter_test_suite, cath::test::classn_stat_plotter_test_suite_fixture)

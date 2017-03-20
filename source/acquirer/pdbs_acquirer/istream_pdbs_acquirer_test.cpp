@@ -30,7 +30,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(istream_pdbs_acquirer_test_suite, cath::test::istream_pdbs_acquirer_test_suite_fixture)
 

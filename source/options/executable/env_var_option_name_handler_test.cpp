@@ -54,8 +54,8 @@ namespace cath {
 			const env_var_option_name_handler TEST_HANDLER_FALSE = { PREFIX, false, OPTS };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(env_var_option_name_handler_test_suite, cath::test::env_var_option_name_handler_test_suite_fixture)
 

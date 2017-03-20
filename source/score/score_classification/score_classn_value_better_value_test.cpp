@@ -38,8 +38,8 @@ namespace cath {
 			const score_classn_value one_true_b  = { 1.0, true,  "b"};
 			const score_classn_value two_true_b  = { 2.0, true,  "b"};
 		};
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(score_classn_value_better_value_test_suite, cath::test::score_classn_value_better_value_test_suite_fixture)

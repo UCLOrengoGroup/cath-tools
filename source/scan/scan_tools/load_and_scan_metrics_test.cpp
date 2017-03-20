@@ -37,7 +37,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(load_and_scan_metrics_test_suite, cath::test::load_and_scan_metrics_test_suite_fixture)

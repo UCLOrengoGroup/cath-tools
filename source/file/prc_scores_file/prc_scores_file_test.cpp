@@ -67,8 +67,8 @@ namespace cath {
             istringstream the_iss{ example_file_string };
         };
 
-    }
-}
+    }  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(prc_scores_file_test_suite, cath::test::prc_scores_file_test_suite_fixture)
 

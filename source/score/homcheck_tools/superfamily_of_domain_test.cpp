@@ -48,8 +48,8 @@ namespace cath {
 			};
 
 		};
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(superfamily_of_domain_test_suite, cath::test::superfamily_of_domain_test_suite_fixture)
 

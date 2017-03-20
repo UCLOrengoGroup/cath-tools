@@ -54,8 +54,8 @@ namespace cath {
 			OB construct_options_block_for_testing();
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Template method for constructing options_blocks
 ///
@@ -75,7 +75,7 @@ namespace cath {
 			return detail_help_options_block( TEST_DESC_AND_HELP_OF_OPTION_NAME() );
 		}
 	}
-}
+}  // namespace cath
 
 
 BOOST_FIXTURE_TEST_SUITE(options_block_test_suite, cath::test::options_block_test_suite_fixture)

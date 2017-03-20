@@ -30,7 +30,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(pymol_file_superposition_outputter_test_suite, cath::test::pymol_file_superposition_outputter_test_suite_fixture)
 

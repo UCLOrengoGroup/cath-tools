@@ -43,8 +43,8 @@ namespace cath {
 		    const angle_type the_zero_angle = zero_angle<angle_base_type>();
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Unit test vcie_match_criteria
 BOOST_FIXTURE_TEST_SUITE(vcie_match_criteria_test_suite, cath::test::vcie_match_criteria_test_suite_fixture)

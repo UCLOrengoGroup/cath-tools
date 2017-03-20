@@ -34,7 +34,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(gap_penalty_test_suite, cath::test::gap_penalty_test_suite_fixture)

@@ -88,8 +88,8 @@ namespace cath {
 			}
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(all_vs_all_test_suite, cath::test::all_vs_all_test_suite_fixture)

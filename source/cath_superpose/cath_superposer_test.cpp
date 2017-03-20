@@ -69,8 +69,8 @@ namespace cath {
 			                                           const bool &);
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_use_case(const str_vec &arg_command_line_args,    ///< TODOCUMENT
                                                                                     istream       &arg_istream,              ///< TODOCUMENT

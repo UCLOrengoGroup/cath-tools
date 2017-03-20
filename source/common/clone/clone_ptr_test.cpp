@@ -117,8 +117,8 @@ namespace cath {
 			}
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 //bool operator==(const clone_ptr_test_abstract_base &arg_obj1, ///< TODOCUMENT
 //                const clone_ptr_test_abstract_base &arg_obj2  ///< TODOCUMENT

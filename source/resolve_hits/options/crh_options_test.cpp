@@ -29,7 +29,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(crh_options_test_suite, cath::test::crh_options_test_suite_fixture)
 

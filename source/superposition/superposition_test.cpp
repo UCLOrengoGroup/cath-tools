@@ -75,8 +75,8 @@ namespace cath {
 
 			const double rmsd_between_1_and_2 = { 0.12978869963736103 };
 		};
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(superposition_test_suite, cath::test::superposition_test_suite_fixture)
 

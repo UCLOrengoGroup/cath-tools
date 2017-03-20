@@ -43,7 +43,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(superposition_output_options_block_test_suite, cath::test::superposition_output_options_block_test_suite_fixture)
 

@@ -38,7 +38,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(alignment_context_test_suite, cath::test::alignment_context_test_suite_fixture)

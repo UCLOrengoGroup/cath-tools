@@ -49,7 +49,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(hit_resolver_test_suite, hit_resolver_test_suite_fixture)
 

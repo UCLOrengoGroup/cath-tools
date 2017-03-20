@@ -39,8 +39,8 @@ namespace cath {
 			/// \brief The correct magic function value for the_prc and the_ssap
 			static constexpr double MAGIC_FUNCTION_VALUE = 89.095880017344072;
 		};
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 constexpr double cath::test::ssap_and_prc_test_suite_fixture::MAGIC_FUNCTION_VALUE;
 

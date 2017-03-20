@@ -49,8 +49,8 @@ namespace cath {
 		    filter_vs_full_score_list generate_random_filter_vs_full_score_list(const size_t &) const;
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Generate some data with random noise that can be used in other tests
 ///

@@ -49,8 +49,8 @@ namespace cath {
 			const coord b = { 8, 5, 1 };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(rotation_test_suite, cath::test::rotation_test_suite_fixture)
 

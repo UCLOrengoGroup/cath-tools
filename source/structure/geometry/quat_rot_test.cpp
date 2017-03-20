@@ -108,8 +108,8 @@ namespace cath {
 
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 rotation_vec cath::test::quat_rot_test_suite_fixture::make_all_rotations_between_coords() const {

@@ -225,8 +225,8 @@ namespace cath {
 				[&] () { return time_comparison( arg_vcies_pair ); }
 			);
 		}
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 constexpr size_t cath::test::view_cache_index_entry_test_suite_fixture::NUM_ENTRIES;
 constexpr size_t cath::test::view_cache_index_entry_test_suite_fixture::NUM_REPEATS;

@@ -60,7 +60,7 @@ namespace std {
 		arg_os << ")";
 		return arg_os;
 	}
-}
+}  // namespace std
 
 namespace cath {
 	namespace test {
@@ -138,8 +138,8 @@ namespace cath {
 			}
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief Test suite to perform basic checks of the cross_itr
 BOOST_FIXTURE_TEST_SUITE(cross_itr_test_suite, cath::test::cross_itr_test_suite_fixture)

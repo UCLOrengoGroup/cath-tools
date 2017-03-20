@@ -36,7 +36,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(chain_label_test_suite, cath::test::chain_label_test_suite_fixture)

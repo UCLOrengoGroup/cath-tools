@@ -60,8 +60,8 @@ namespace cath {
 
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(pdb_atom_test_suite, cath::test::pdb_atom_test_suite_fixture)
 

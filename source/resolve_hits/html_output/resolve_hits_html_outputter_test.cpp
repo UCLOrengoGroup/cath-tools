@@ -78,8 +78,8 @@ namespace cath {
 			const full_hit_list eg_full_hit_list = make_eg_full_hit_list();
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(resolve_hits_html_outputter_test_suite, resolve_hits_html_outputter_test_suite_fixture)
 

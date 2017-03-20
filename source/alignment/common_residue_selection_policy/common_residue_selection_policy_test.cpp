@@ -68,8 +68,8 @@ namespace cath {
 			alignment              scored_aln       = { set_pair_alignment_duplicate_scores_copy(unscored_aln, alignment_scores) };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 /// \brief TODOCUMENT
 void cath::test::common_residue_selection_policy_test_suite_fixture::check_policy_on_score_aln(const common_residue_selection_policy &arg_policy,          ///< TODOCUMENT

@@ -60,8 +60,8 @@ cath|4_0_0|1tk1A00/8-265-i5                                   -          cath|4_
             istringstream the_iss{ example_file_string };
         };
 
-    }
-}
+    }  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(hmmer_scores_file_test_suite, cath::test::hmmer_scores_file_test_suite_fixture)
 

@@ -24,8 +24,8 @@ namespace cath {
 			const prc_scores_entry eg_entry{ "1i4dA00", 4, 199, 201, 1, "3cazA00", 15, 209, 219, 25.3, 16.3, 1.6e-11 };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(prc_scores_entry_test_suite, cath::test::prc_scores_entry_test_suite_fixture)
 

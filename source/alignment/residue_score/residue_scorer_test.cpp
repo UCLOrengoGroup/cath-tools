@@ -36,7 +36,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(residue_scorer_test_suite, cath::test::residue_scorer_test_suite_fixture)

@@ -49,8 +49,8 @@ namespace cath {
 			} };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(coord_list_test_suite, cath::test::coord_list_test_suite_fixture)
 

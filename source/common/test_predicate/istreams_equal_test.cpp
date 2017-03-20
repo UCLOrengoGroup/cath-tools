@@ -64,8 +64,8 @@ namespace cath {
 			compare_ss_diff.str   ( compare_str_diff   );
 		}
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(istreams_equal_test_suite, cath::test::istreams_equal_test_suite_fixture)
 

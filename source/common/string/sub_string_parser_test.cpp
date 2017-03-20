@@ -37,7 +37,7 @@ protected:
 };
 
 }
-}
+}  // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(sub_string_parser_test_suite, cath::test::sub_string_parser_test_suite_fixture)

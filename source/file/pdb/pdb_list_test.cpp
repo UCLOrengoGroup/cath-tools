@@ -30,7 +30,7 @@ namespace cath {
 		};
 
 	}
-}
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(pdb_list_test_suite, cath::test::pdb_list_test_suite_fixture)
 

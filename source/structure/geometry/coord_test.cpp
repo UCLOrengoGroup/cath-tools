@@ -44,8 +44,8 @@ namespace cath {
 			const coord double_coord1 = {  1.419183560973214408562625976630, -1.316178356792917503170770032740,  0.503579738843096258449349988950 };
 		};
 
-	}
-}
+	}  // namespace test
+}  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(coord_test_suite, cath::test::coord_test_suite_fixture)
 
