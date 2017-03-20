@@ -23,13 +23,10 @@
 
 #include <boost/optional.hpp>
 
+#include "common/type_aliases.hpp"
 #include "superposition/supn_regions_context.hpp"
 
 namespace cath {
-
-	/// \todo Move this to common/type_aliases.hpp
-	using doub_opt = boost::optional<double>;
-
 	namespace sup {
 
 		/// \brief Specify what should be included in superpositions other than the specified region(s) of structure

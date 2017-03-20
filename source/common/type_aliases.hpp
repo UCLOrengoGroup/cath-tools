@@ -73,6 +73,9 @@ namespace cath {
 	using doub_vec                      = std::vector<double>;
 	using doub_vec_vec                  = std::vector<doub_vec>;
 
+	/// \brief Type alias for an optional double
+	using doub_opt                      = boost::optional<double>;
+
 	using diff_vec                      = std::vector<ptrdiff_t>;
 	using diff_vec_vec                  = std::vector<diff_vec>;
 
@@ -124,6 +127,9 @@ namespace cath {
 	using size_doub_pair                = std::pair<size_t, double>;
 
 	using str_citr                      = std::string::const_iterator;
+
+	/// \brief A type alias for a pair of str_ctirs
+	using str_citr_str_citr_pair        = std::pair<str_citr, str_citr>;
 
 	using str_vec                       = std::vector<std::string>;
 	using str_vec_citr                  = str_vec::const_iterator;

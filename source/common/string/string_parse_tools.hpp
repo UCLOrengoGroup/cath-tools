@@ -45,11 +45,6 @@ namespace cath {
 	/// \brief Type alias for boost::string_ref's const_iterator
 	using str_ref_citr = boost::string_ref::const_iterator;
 
-	/// \brief A type alias for a pair of str_ctirs
-	///
-	/// \todo Should this be moved into common/type_aliases.hpp?
-	using str_citr_str_citr_pair = std::pair<str_citr, str_citr>;
-
 	namespace common {
 		namespace detail {
 

@@ -33,12 +33,6 @@
 
 namespace cath { namespace file { class pdb; } }
 namespace cath { namespace file { class pdb_residue; } }
-namespace cath {
-	/// \brief Type alias for an optional double
-	///
-	/// \todo Move this (and any equivalent TAs into common/type_aliases.hpp)
-	using doub_opt = boost::optional<double>;
-} // namespace cath
 
 namespace cath {
 	namespace file {
