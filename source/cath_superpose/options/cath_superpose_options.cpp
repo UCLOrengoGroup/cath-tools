@@ -31,6 +31,7 @@
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "file/strucs_context.hpp"
 #include "outputter/alignment_outputter/alignment_outputter.hpp"
 #include "outputter/superposition_outputter/superposition_outputter.hpp"
 
@@ -247,9 +248,21 @@ unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_superpo
 /// throw an invalid_argument_exception if the cath_superpose_options isn't configured to read PDBs
 ///
 /// \relates cath_superpose_options
-pdb_list_str_vec_pair cath::opts::get_pdbs_and_names(const cath_superpose_options &arg_cath_sup_opts,          ///< The options to specify how to get the PDBs and names
-                                                     istream                      &arg_istream,                ///< The istream, which may contain PDB data
-                                                     const bool                   &arg_remove_partial_residues ///< Whether to remove partial residues from the PDB data
-                                                     ) {
-	return get_pdbs_acquirer( arg_cath_sup_opts )->get_pdbs_and_names( arg_istream, arg_remove_partial_residues );
+strucs_context cath::opts::get_pdbs_and_names(const cath_superpose_options &arg_cath_sup_opts,          ///< The options to specify how to get the PDBs and names
+                                              istream                      &arg_istream,                ///< The istream, which may contain PDB data
+                                              const bool                   &arg_remove_partial_residues ///< Whether to remove partial residues from the PDB data
+                                              ) {
+	// Grab the PDBs and names
+	const auto   pdbs_acquireer_ptr = get_pdbs_acquirer( arg_cath_sup_opts );
+	auto         pdbs_and_names     = pdbs_acquireer_ptr->get_pdbs_and_names( arg_istream, arg_remove_partial_residues );
+
+	// It's a good idea to get this num_pdbs now, before pdbs_and_names.first gets moved from
+	const size_t num_pdbs           = pdbs_and_names.first.size();
+
+	return combine_acquired_pdbs_and_names_with_ids_and_regions(
+		std::move( pdbs_and_names.first  ),
+		std::move( pdbs_and_names.second ),
+		str_vec{ arg_cath_sup_opts.get_ids() },
+		arg_cath_sup_opts.get_regions( num_pdbs )
+	);
 }

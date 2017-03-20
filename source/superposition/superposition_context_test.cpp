@@ -53,16 +53,16 @@ BOOST_FIXTURE_TEST_SUITE(superposition_context_test_suite, cath::test::superposi
 
 BOOST_AUTO_TEST_CASE(load_pdbs_from_names_copy_leaves_orig_empty_pdbs) {
 	const auto loaded_sup_con = load_pdbs_from_names_copy( the_sup_con, build_data_dirs_spec_of_dir( TEST_SOURCE_DATA_DIR() ) );
-	BOOST_REQUIRE_EQUAL( the_sup_con.get_pdbs().size(), 2 );
-	BOOST_CHECK_EQUAL  ( the_sup_con.get_pdbs()[ 0 ].get_num_residues(), 0 );
-	BOOST_CHECK_EQUAL  ( the_sup_con.get_pdbs()[ 1 ].get_num_residues(), 0 );
+	BOOST_REQUIRE_EQUAL( get_pdbs( the_sup_con ).size(), 2 );
+	BOOST_CHECK_EQUAL  ( get_pdbs( the_sup_con )[ 0 ].get_num_residues(), 0 );
+	BOOST_CHECK_EQUAL  ( get_pdbs( the_sup_con )[ 1 ].get_num_residues(), 0 );
 }
 
 BOOST_AUTO_TEST_CASE(load_pdbs_from_names_copy_sets_two_pdbs_with_199_and_205_residues) {
 	const auto loaded_sup_con = load_pdbs_from_names_copy( the_sup_con, build_data_dirs_spec_of_dir( TEST_SOURCE_DATA_DIR() ) );
-	BOOST_REQUIRE_EQUAL( loaded_sup_con.get_pdbs().size(), 2 );
-	BOOST_CHECK_EQUAL  ( loaded_sup_con.get_pdbs()[ 0 ].get_num_residues(), 199 );
-	BOOST_CHECK_EQUAL  ( loaded_sup_con.get_pdbs()[ 1 ].get_num_residues(), 205 );
+	BOOST_REQUIRE_EQUAL( get_pdbs( loaded_sup_con ).size(), 2 );
+	BOOST_CHECK_EQUAL  ( get_pdbs( loaded_sup_con )[ 0 ].get_num_residues(), 199 );
+	BOOST_CHECK_EQUAL  ( get_pdbs( loaded_sup_con )[ 1 ].get_num_residues(), 205 );
 }
 
 BOOST_AUTO_TEST_SUITE(json)
@@ -76,15 +76,15 @@ BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup_con) {
 
 BOOST_AUTO_TEST_CASE(from_json_string_works) {
 	const auto from_json_string = superposition_context_from_json_string( sup_context_json_str );
-	BOOST_REQUIRE_EQUAL     ( from_json_string.get_pdbs().size(),   2       );
-	BOOST_CHECK_EQUAL       ( from_json_string.get_pdbs()[ 0 ].get_num_residues(), 0 );
-	BOOST_CHECK_EQUAL       ( from_json_string.get_pdbs()[ 1 ].get_num_residues(), 0 );
+	BOOST_REQUIRE_EQUAL     ( get_pdbs ( from_json_string ).size(),                  2       );
+	BOOST_CHECK_EQUAL       ( get_pdbs ( from_json_string )[ 0 ].get_num_residues(), 0       );
+	BOOST_CHECK_EQUAL       ( get_pdbs ( from_json_string )[ 1 ].get_num_residues(), 0       );
 
-	BOOST_CHECK_EQUAL_RANGES( from_json_string.get_names(),         names   );
+	BOOST_CHECK_EQUAL_RANGES( get_names( from_json_string ),                         names   );
 
-	BOOST_CHECK_EQUAL       ( from_json_string.get_superposition(), the_sup );
+	BOOST_CHECK_EQUAL       ( from_json_string.get_superposition(),                  the_sup );
 
-	BOOST_CHECK_EQUAL       ( from_json_string.has_alignment(),     false   );
+	BOOST_CHECK_EQUAL       ( from_json_string.has_alignment(),                      false   );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

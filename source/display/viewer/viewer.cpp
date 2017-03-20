@@ -202,7 +202,7 @@ str_vec cath::clean_names_for_viewer(const str_vec &arg_names
 /// \relates viewer
 str_vec cath::clean_names_for_viewer(const superposition_context &arg_superposition_context ///< TODOCUMENT
                                      ) {
-	return clean_names_for_viewer( arg_superposition_context.get_names() );
+	return clean_names_for_viewer( get_names( arg_superposition_context ) );
 }
 
 /// \brief TODOCUMENT
@@ -210,7 +210,7 @@ str_vec cath::clean_names_for_viewer(const superposition_context &arg_superposit
 /// \relates viewer
 str_vec cath::clean_names_for_viewer(const alignment_context &arg_alignment_context ///< TODOCUMENT
                                      ) {
-	return clean_names_for_viewer( arg_alignment_context.get_names() );
+	return clean_names_for_viewer( get_names( arg_alignment_context ) );
 }
 
 /// \brief Output instructions from the specified viewer for the specified superposition_context to
@@ -257,9 +257,9 @@ void cath::output_superposition_to_viewer(ostream                          &arg_
 			the_colourer,
 			arg_ostream,
 			arg_viewer,
-			arg_superposition_context.get_pdbs(),
+			get_pdbs              ( arg_superposition_context ),
 			clean_names_for_viewer( arg_superposition_context ),
-			arg_superposition_context.get_regions()
+			get_regions           ( arg_superposition_context )
 		);
 	}
 

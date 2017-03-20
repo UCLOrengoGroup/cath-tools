@@ -20,12 +20,13 @@
 
 #include "ostream_superposition_outputter.hpp"
 
+#include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
-#include "superposition/superposition_context.hpp"
 #include "superposition/io/superposition_io.hpp"
+#include "superposition/superposition_context.hpp"
 
 using namespace cath::common;
 using namespace cath::opts;

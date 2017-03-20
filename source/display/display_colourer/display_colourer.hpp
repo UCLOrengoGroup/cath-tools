@@ -38,6 +38,7 @@ namespace cath { class viewer; }
 namespace cath { namespace align { class alignment; } }
 namespace cath { namespace align { class alignment_context; } }
 namespace cath { namespace file { class pdb_list; } }
+namespace cath { namespace file { class strucs_context; } }
 namespace cath { namespace sup { class superposition_context; } }
 
 namespace cath {
@@ -85,10 +86,8 @@ namespace cath {
 	                                                             const display_colour_gradient & = make_default_colour_gradient() );
 
 	display_colour_spec get_colour_spec(const display_colourer &,
-	                                    const file::pdb_list &,
-	                                    const str_vec &,
-	                                    const align::alignment &,
-	                                    const chop::region_vec_opt_vec &);
+	                                    const file::strucs_context &,
+	                                    const align::alignment &);
 
 	void colour_viewer(const display_colourer &,
 	                   std::ostream &,

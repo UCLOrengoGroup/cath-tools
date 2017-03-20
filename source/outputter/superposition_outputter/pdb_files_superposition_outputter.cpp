@@ -22,6 +22,7 @@
 
 #include <boost/range/irange.hpp>
 
+#include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/size_t_literal.hpp"
 #include "file/pdb/pdb.hpp"
@@ -49,7 +50,7 @@ void pdb_files_superposition_outputter::do_output_superposition(const superposit
                                                                 ostream                     &/*arg_ostream*/   ///< TODOCUMENT
                                                                 ) const {
 	const pdb_list  pdbs  = get_supn_content_pdbs( arg_supn_context, content_spec );
-	const str_vec  &names = arg_supn_context.get_names();
+	const str_vec  &names = get_names( arg_supn_context );
 
 	for (const size_t &pdb_ctr : irange( 0_z, pdbs.size() ) ) {
 		write_superposed_pdb_to_file(

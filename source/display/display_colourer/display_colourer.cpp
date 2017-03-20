@@ -71,11 +71,9 @@ display_colour_spec display_colourer::get_colour_spec(const alignment_context &a
 /// \brief TODOCUMENT
 ///
 /// \relates display_colourer
-display_colour_spec cath::get_colour_spec(const display_colourer   &arg_colourer,  ///< TODOCUMENT
-                                          const pdb_list           &arg_pdbs,      ///< TODOCUMENT
-                                          const str_vec            &arg_names,     ///< TODOCUMENT
-                                          const alignment          &arg_alignment, ///< TODOCUMENT
-                                          const region_vec_opt_vec &arg_regions    ///< The key regions of the structures
+display_colour_spec cath::get_colour_spec(const display_colourer   &arg_colourer, ///< TODOCUMENT
+                                          const strucs_context     &arg_context,  ///< TODOCUMENT
+                                          const alignment          &arg_alignment ///< TODOCUMENT
                                           ) {
 	const alignment::size_type num_entries   = arg_alignment.num_entries();
 	const alignment::size_type aln_length    = arg_alignment.length();
@@ -83,17 +81,12 @@ display_colour_spec cath::get_colour_spec(const display_colourer   &arg_colourer
 	if ( aln_length <= 0 || num_entries <= 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to colour the alignment_context because the alignment is empty"));
 	}
-	if ( num_entries != arg_pdbs.size()  ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to colour the alignment_context because the number of entries doesn't match the number of PDBs"));
-	}
-	if ( num_entries != arg_names.size() ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to colour the alignment_context because the number of entries doesn't match the number of names"));
+	if ( num_entries != get_num_entries( arg_context ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to colour the alignment_context because the number of entries doesn't match the number in the structures context"));
 	}
 	auto &&result_spec = arg_colourer.get_colour_spec( alignment_context{
-		arg_pdbs,
-		arg_names,
 		arg_alignment,
-		arg_regions
+		arg_context
 	} );
 
 	return has_score_colour_handler( arg_colourer )

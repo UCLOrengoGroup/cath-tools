@@ -62,36 +62,6 @@ using std::string;
 using std::vector;
 
 /// \brief TODOCUMENT
-const pdb_list & align_based_superposition_acquirer::get_pdbs() const {
-	return pdbs_ref.get();
-}
-
-/// \brief TODOCUMENT
-const str_vec & align_based_superposition_acquirer::get_names() const {
-	return names_ref.get();
-}
-
-/// \brief TODOCUMENT
-const align::alignment & align_based_superposition_acquirer::get_alignment() const {
-	return the_alignment_ref.get();
-}
-
-/// \brief TODOCUMENT
-const size_size_pair_vec & align_based_superposition_acquirer::get_spanning_tree() const {
-	return spanning_tree_ref.get();
-}
-
-/// \brief TODOCUMENT
-const selection_policy_acquirer & align_based_superposition_acquirer::get_selection_policy_acquirer() const {
-	return the_selection_policy_acquirer;
-}
-
-/// \brief Getter for the specification of the regions of the PDBs to which the alignment refers
-const chop::region_vec_opt_vec & align_based_superposition_acquirer::get_regions() const {
-	return regions;
-}
-
-/// \brief TODOCUMENT
 superposition_context align_based_superposition_acquirer::do_get_superposition(ostream &arg_stderr ///< TODOCMENT
                                                                                ) const {
 	// Loop over all the PDBs after the first one and grab the common coords between it and the one before
@@ -101,8 +71,8 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 	for (const size_size_pair &tree_edge : get_spanning_tree() ) {
 		const size_t &index_1 = tree_edge.first;
 		const size_t &index_2 = tree_edge.second;
-		const string &name_1   = get_names()[ index_1 ];
-		const string &name_2   = get_names()[ index_2 ];
+		const string &name_1   = get_names( *this )[ index_1 ];
+		const string &name_2   = get_names( *this )[ index_2 ];
 		if ( name_1.empty() ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("No name available for " + std::to_string( index_1 ) ));
 		}
@@ -118,8 +88,8 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 //		arg_stderr << "index_2                     is " << index_2                       << endl;
 		const pair<coord_list, coord_list> all_common_coords = alignment_coord_extractor::get_common_coords(
 			get_alignment(),
-			get_pdbs()[ index_1 ],
-			get_pdbs()[ index_2 ],
+			get_pdbs( *this )[ index_1 ],
+			get_pdbs( *this )[ index_2 ],
 			common_residue_select_all_policy(),
 			common_atom_select_ca_policy(),
 			index_1,
@@ -160,7 +130,7 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 		const pair<coord_list, coord_list> common_coords = get_common_coords(
 			the_selection_policy_acquirer,
 			get_alignment(),
-			get_pdbs(),
+			get_pdbs( *this ),
 			index_1,
 			index_2
 		);
@@ -188,27 +158,67 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 	const superposition the_superposition{ indices_and_coord_lists };
 
 	return {
-		get_pdbs(),
-		get_names(),
 		the_superposition,
-		get_alignment(),
-		get_regions()
+		get_pdbs   ( *this ),
+		get_names  ( *this ),
+		get_regions( *this ),
+		get_alignment()
 	};
 }
 
 /// \brief Ctor for align_based_superposition_acquirer
-align_based_superposition_acquirer::align_based_superposition_acquirer(const pdb_list                  &arg_pdbs,                      ///< TODOCUMENT
-                                                                       const str_vec                   &arg_names,                     ///< TODOCUMENT
-                                                                       const alignment                 &arg_alignment,                 ///< TODOCUMENT
-                                                                       const size_size_pair_vec        &arg_spanning_tree,             ///< TODOCUMENT
-                                                                       const selection_policy_acquirer &arg_selection_policy_acquirer, ///< TODOCUMENT
-                                                                       const region_vec_opt_vec        &arg_regions                    ///< The specification of the regions of the PDBs to which the alignment refers
-                                                                       ) : pdbs_ref                      { arg_pdbs                      },
-                                                                           names_ref                     { arg_names                     },
-                                                                           the_alignment_ref             { arg_alignment                 },
+align_based_superposition_acquirer::align_based_superposition_acquirer(const alignment                 &arg_alignment,                ///< TODOCUMENT
+                                                                       const size_size_pair_vec        &arg_spanning_tree,            ///< TODOCUMENT
+                                                                       const strucs_context            &arg_strucs_context,           ///< TODOCUMENT
+                                                                       const selection_policy_acquirer &arg_selection_policy_acquirer ///< TODOCUMENT
+                                                                       ) : the_alignment_ref             { arg_alignment                 },
                                                                            spanning_tree_ref             { arg_spanning_tree             },
-                                                                           the_selection_policy_acquirer { arg_selection_policy_acquirer },
-                                                                           regions                       { arg_regions                   } {
+                                                                           context_ref                   { arg_strucs_context            },
+                                                                           the_selection_policy_acquirer { arg_selection_policy_acquirer } {
+}
+
+/// \brief TODOCUMENT
+const align::alignment & align_based_superposition_acquirer::get_alignment() const {
+	return the_alignment_ref.get();
+}
+
+/// \brief TODOCUMENT
+const size_size_pair_vec & align_based_superposition_acquirer::get_spanning_tree() const {
+	return spanning_tree_ref.get();
+}
+
+/// \brief TODOCUMENT
+const strucs_context & align_based_superposition_acquirer::get_strucs_context() const {
+	return context_ref.get();
+}
+
+/// \brief TODOCUMENT
+const selection_policy_acquirer & align_based_superposition_acquirer::get_selection_policy_acquirer() const {
+	return the_selection_policy_acquirer;
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates align_based_superposition_acquirer
+const pdb_list & cath::opts::get_pdbs(const align_based_superposition_acquirer &arg_align_based_superposition_acquirer ///< TODOCUMENT
+                                      ) {
+	return arg_align_based_superposition_acquirer.get_strucs_context().get_pdbs();
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates align_based_superposition_acquirer
+const str_vec & cath::opts::get_names(const align_based_superposition_acquirer &arg_align_based_superposition_acquirer ///< TODOCUMENT
+                                      ) {
+	return arg_align_based_superposition_acquirer.get_strucs_context().get_names();
+}
+
+/// \brief Getter for the specification of the regions of the PDBs to which the alignment refers
+///
+/// \relates align_based_superposition_acquirer
+const chop::region_vec_opt_vec & cath::opts::get_regions(const align_based_superposition_acquirer &arg_align_based_superposition_acquirer ///< TODOCUMENT
+                                                         ) {
+	return arg_align_based_superposition_acquirer.get_strucs_context().get_regions();
 }
 
 /// \relates align_based_superposition_acquirer

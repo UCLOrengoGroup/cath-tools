@@ -28,6 +28,7 @@
 #include <boost/range/join.hpp>
 
 #include "alignment/alignment_context.hpp"
+#include "chopping/region/region.hpp"
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_uniq_build.hpp"
@@ -213,12 +214,12 @@ void cath::colour_viewer_with_spec(const display_colour_spec &arg_colour_spec,  
 		colours,
 		arg_colour_spec.get_broad_spec(),
 		arg_viewer,
-		arg_alignment_context.get_pdbs(),
+		get_pdbs( arg_alignment_context ),
 		cleaned_names,
 		arg_os
 	);
 
-	const pdb_list &pdbs         = arg_alignment_context.get_pdbs();
+	const pdb_list &pdbs         = get_pdbs( arg_alignment_context );
 	const size_t    num_colours  = colours.size();
 
 	for (const size_t &colour_ctr : irange( 0_z, num_colours ) ) {

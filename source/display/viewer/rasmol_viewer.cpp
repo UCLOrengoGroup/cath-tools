@@ -20,7 +20,9 @@
 
 #include "rasmol_viewer.hpp"
 
+#include "chopping/region/region.hpp"
 #include "exception/not_implemented_exception.hpp"
+#include "file/pdb/pdb.hpp"
 #include "superposition/superposition_context.hpp"
 
 using namespace cath;

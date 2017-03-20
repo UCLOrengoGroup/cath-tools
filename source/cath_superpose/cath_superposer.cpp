@@ -97,14 +97,8 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	arg_cath_sup_opts.check_ok_to_use();
 
 	// Grab the PDBs and their IDs
-	const auto      pdbs_and_names = get_pdbs_and_names( arg_cath_sup_opts, arg_istream, false );
-	const pdb_list &raw_pdbs       = pdbs_and_names.first;
-	const str_vec  &raw_names      = pdbs_and_names.second;
-	const auto      regions        = arg_cath_sup_opts.get_regions( raw_pdbs.size() );
-	const str_vec  &ids_block_ids  = arg_cath_sup_opts.get_ids();
-	const str_vec  &names          = ( ids_block_ids.size() == raw_pdbs.size() ) ? ids_block_ids
-	                                                                             : raw_names;
-	const pdb_list  backbone_complete_subset_pdbs = pdb_list_of_backbone_complete_subset_pdbs( raw_pdbs, ref( arg_stderr ) );
+	const strucs_context  context  = get_pdbs_and_names( arg_cath_sup_opts, arg_istream, false );
+	const pdb_list       &raw_pdbs = context.get_pdbs();
 
 	if ( raw_pdbs.empty() ) {
 		logger::log_and_exit(
@@ -123,6 +117,7 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	}
 
 	// Get the alignment and corresponding spanning tree
+	const pdb_list backbone_complete_subset_pdbs = pdb_list_of_backbone_complete_subset_pdbs( raw_pdbs, ref( arg_stderr ) );
 	const auto       aln_and_spn_tree = [&] () {
 		try {
 			return get_alignment_and_spanning_tree( arg_cath_sup_opts, backbone_complete_subset_pdbs );
@@ -142,29 +137,25 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	const path ssap_scores_file = arg_cath_sup_opts.get_alignment_input_spec().get_ssap_scores_file();
 	if ( ! ssap_scores_file.empty() ) {
 		return {
-			raw_pdbs, ///< This should be raw_pdbs, not backbone_complete_subset_pdbs, so that superpositions include stripped residues (eg HETATM only residues). /// \todo Consider adding fast, simple test that ssap_scores_file superposition output includes HETATMs.
-			names,
 			hacky_multi_ssap_fuction(
 				backbone_complete_subset_pdbs,
-				names,
+				context.get_names(),
 				spanning_tree,
 				ssap_scores_file.parent_path(),
 				arg_cath_sup_opts.get_selection_policy_acquirer(),
 				arg_stderr
 			),
-			the_alignment,
-			regions
+			context, ///< Importantly, this contains the raw_pdbs, not backbone_complete_subset_pdbs, so that superpositions include stripped residues (eg HETATM only residues). /// \todo Consider adding fast, simple test that ssap_scores_file superposition output includes HETATMs.
+			the_alignment
 		};
 	}
 
 	// Construct an align_based_superposition_acquirer from the data and return the superposition it generates
 	const align_based_superposition_acquirer aln_based_sup_acq(
-		raw_pdbs,
-		names,
 		the_alignment,
 		spanning_tree,
-		arg_cath_sup_opts.get_selection_policy_acquirer(),
-		regions
+		context,
+		arg_cath_sup_opts.get_selection_policy_acquirer()
 	);
 	return aln_based_sup_acq.get_superposition( arg_stderr );
 }

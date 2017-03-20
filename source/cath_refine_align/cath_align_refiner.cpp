@@ -76,16 +76,15 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 		return;
 	}
 
-	const auto          pdbs_acquirer_ptr = get_pdbs_acquirer( arg_cath_refine_align_options );
-	const auto          pdbs_and_names    = pdbs_acquirer_ptr->get_pdbs_and_names( arg_istream, true );
-	const pdb_list     &pdbs              = pdbs_and_names.first;
-	const str_vec      &names             = pdbs_and_names.second;
-	const auto          regions           = arg_cath_refine_align_options.get_regions( pdbs.size() );
-	const protein_list  proteins          = build_protein_list_of_pdb_list_and_names( pdbs, names );
+	// Grab the PDBs and their IDs
+	const strucs_context  context  = get_pdbs_and_names( arg_cath_refine_align_options, arg_istream, true );
+	const pdb_list       &raw_pdbs = context.get_pdbs();
+
+	const protein_list    proteins = build_protein_list_of_pdb_list_and_names( raw_pdbs, context.get_names() );
 
 	// An alignment is required but this should have been checked elsewhere
 	const auto                aln_acq_ptr        = get_alignment_acquirer( arg_cath_refine_align_options );
-	const auto                alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree( pdbs );
+	const auto                alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree( raw_pdbs );
 	const alignment          &the_alignment      = alignment_and_tree.first;
 	const size_size_pair_vec &spanning_tree      = alignment_and_tree.second;
 
@@ -124,17 +123,15 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 
 	// Construct an align_based_superposition_acquirer from the data and return the superposition it generates
 	const align_based_superposition_acquirer aln_based_sup_acq(
-		pdbs,
-		names,
 		scored_refined_alignment,
 		spanning_tree,
-		get_selection_policy_acquirer( arg_cath_refine_align_options ),
-		regions
+		context,
+		get_selection_policy_acquirer( arg_cath_refine_align_options )
 	);
 
 	// For each of the alignment_outputters specified by the cath_superpose_options, output the alignment
 	const alignment_outputter_list aln_outputters = arg_cath_refine_align_options.get_alignment_outputters();
-	use_all_alignment_outputters( aln_outputters, alignment_context{ pdbs, names, scored_refined_alignment, regions }, arg_stdout, arg_stderr );
+	use_all_alignment_outputters( aln_outputters, alignment_context{ scored_refined_alignment, context }, arg_stdout, arg_stderr );
 
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
 	const superposition_outputter_list sup_outputters = arg_cath_refine_align_options.get_superposition_outputters();

@@ -24,6 +24,7 @@
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "alignment/residue_score/residue_scorer.hpp"
+#include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
@@ -56,8 +57,8 @@ void cath_aln_ostream_alignment_outputter::do_output_alignment(const alignment_c
 	check_alignment_is_a_pair( arg_alignment_context.get_alignment() );
 
 	const alignment    &the_alignment = arg_alignment_context.get_alignment();
-	const str_vec      &names         = arg_alignment_context.get_names();
-	const pdb_list     &pdbs          = arg_alignment_context.get_pdbs();
+	const str_vec      &names         = get_names( arg_alignment_context );
+	const pdb_list     &pdbs          = get_pdbs ( arg_alignment_context );
 	const protein_list  proteins      = build_protein_list_of_pdb_list_and_names( pdbs, names );
 	const alignment     scored_aln    = score_alignment_copy( residue_scorer(), the_alignment, proteins );
 

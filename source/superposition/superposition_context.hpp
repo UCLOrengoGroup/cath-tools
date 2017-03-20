@@ -25,9 +25,7 @@
 #include <boost/optional.hpp>
 
 #include "alignment/alignment.hpp"
-#include "chopping/chopping_type_aliases.hpp"
-#include "common/type_aliases.hpp"
-#include "file/pdb/pdb_list.hpp"
+#include "file/strucs_context.hpp"
 #include "superposition/superposition.hpp"
 
 namespace cath { namespace align { class alignment_context; } }
@@ -43,41 +41,45 @@ namespace cath {
 		/// of optionally storing an alignment
 		class superposition_context final : private boost::equality_comparable<superposition_context> {
 		private:
-			/// \brief The PDBs for the entries being superposed
-			file::pdb_list pdbs;
-
-			/// \brief The names of the entries to which the superposition refers
-			str_vec        names;
-
 			/// \brief The superposition itself
 			superposition  the_superposition;
+
+			/// \brief TODOCUMENT
+			file::strucs_context context;
 
 			/// \brief An optional alignment corresponding to the superposition
 			boost::optional<align::alignment> any_alignment;
 
-			/// \brief For each structure, the key regions of the structure or none if this refers to all of the structure
-			chop::region_vec_opt_vec regions;
-
 		public:
-			superposition_context(const file::pdb_list &,
+			superposition_context(const superposition &,
+			                      const file::strucs_context &);
+
+			superposition_context(const superposition &,
+			                      const file::strucs_context &,
+			                      const align::alignment &);
+
+			superposition_context(const superposition &,
+			                      const file::pdb_list &,
 			                      const str_vec &,
-			                      const superposition &,
-			                      const chop::region_vec_opt_vec &);
-			superposition_context(const file::pdb_list &,
-			                      const str_vec &,
-			                      const superposition &,
-			                      const align::alignment &,
 			                      const chop::region_vec_opt_vec &);
 
-			const file::pdb_list & get_pdbs() const;
-			const str_vec & get_names() const;
+			superposition_context(const superposition &,
+			                      const file::pdb_list &,
+			                      const str_vec &,
+			                      const chop::region_vec_opt_vec &,
+			                      const align::alignment &);
+
 			const superposition & get_superposition() const;
+			const file::strucs_context & get_strucs_context() const;
 			bool has_alignment() const;
 			const align::alignment & get_alignment() const;
-			const chop::region_vec_opt_vec & get_regions() const;
 
-			void set_pdbs(const file::pdb_list &);
+			superposition_context & set_pdbs(const file::pdb_list &);
 		};
+
+		const file::pdb_list & get_pdbs(const superposition_context &);
+		const str_vec & get_names(const superposition_context &);
+		const chop::region_vec_opt_vec & get_regions(const superposition_context &);
 
 		file::pdb_list get_restricted_pdbs(const superposition_context &);
 

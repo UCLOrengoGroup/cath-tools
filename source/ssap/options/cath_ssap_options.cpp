@@ -30,6 +30,7 @@
 #include "alignment/alignment.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+#include "chopping/region/region.hpp"
 #include "common/algorithm/copy_build.hpp"
 #include "common/argc_argv_faker.hpp"
 #include "common/type_aliases.hpp"

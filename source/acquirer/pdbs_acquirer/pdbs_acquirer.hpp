@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_H
 #define _CATH_TOOLS_SOURCE_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_H
 
+#include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "file/file_type_aliases.hpp"
 
@@ -28,6 +29,7 @@
 #include <utility>
 
 namespace cath { namespace file { class pdb_list; } }
+namespace cath { namespace file { class strucs_context; } }
 namespace cath { namespace opts { class cath_refine_align_options; } }
 namespace cath { namespace opts { class cath_score_align_options; } }
 namespace cath { namespace opts { class cath_superpose_options; } }
@@ -44,7 +46,7 @@ namespace cath {
 			virtual std::unique_ptr<pdbs_acquirer> do_clone() const = 0;
 			
 			/// \brief TODOCUMENT
-			virtual std::pair<cath::file::pdb_list, str_vec> do_get_pdbs_and_names(std::istream &) const = 0;
+			virtual std::pair<file::pdb_list, str_vec> do_get_pdbs_and_names(std::istream &) const = 0;
 
 		public:
 			pdbs_acquirer() = default;
@@ -64,6 +66,11 @@ namespace cath {
 		uptr_vec<pdbs_acquirer> get_pdbs_acquirers(const pdb_input_options_block &);
 
 		std::unique_ptr<pdbs_acquirer> get_pdbs_acquirer(const pdb_input_spec &);
+
+		file::strucs_context combine_acquired_pdbs_and_names_with_ids_and_regions(file::pdb_list &&,
+		                                                                          str_vec &&,
+		                                                                          str_vec &&,
+		                                                                          chop::region_vec_opt_vec &&);
 	} // namespace opts
 } // namespace cath
 

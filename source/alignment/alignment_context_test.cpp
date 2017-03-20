@@ -21,6 +21,8 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "alignment/alignment_context.hpp"
+#include "chopping/region/region.hpp"
+#include "file/pdb/pdb.hpp"
 #include "test/global_test_constants.hpp"
 
 using namespace cath;

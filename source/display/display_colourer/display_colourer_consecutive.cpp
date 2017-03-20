@@ -29,6 +29,7 @@
 #include "display/display_colour_spec/display_colour_spec.hpp"
 #include "display/viewer/viewer.hpp"
 #include "display_colour/display_colour.hpp"
+#include "file/pdb/pdb.hpp"
 #include "superposition/superposition_context.hpp"
 
 #include <algorithm>

@@ -33,6 +33,7 @@
 #include <iosfwd>
 #include <vector>
 
+namespace cath { namespace file { class strucs_context; } }
 namespace cath { namespace opts { class alignment_acquirer; } }
 namespace cath { namespace opts { class pdbs_acquirer; } }
 namespace cath { namespace opts { class selection_policy_acquirer; } }
@@ -92,6 +93,10 @@ namespace cath {
 		std::unique_ptr<const alignment_acquirer> get_alignment_acquirer(const cath_refine_align_options &);
 		std::unique_ptr<const pdbs_acquirer> get_pdbs_acquirer(const cath_refine_align_options &);
 		selection_policy_acquirer get_selection_policy_acquirer(const cath_refine_align_options &);
+
+		file::strucs_context get_pdbs_and_names(const cath_refine_align_options &,
+		                                        std::istream &,
+		                                        const bool &);
 	} // namespace opts
 } // namespace cath
 

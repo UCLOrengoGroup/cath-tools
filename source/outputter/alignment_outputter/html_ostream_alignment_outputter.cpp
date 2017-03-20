@@ -24,6 +24,7 @@
 #include "alignment/alignment_context.hpp"
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/io/outputter/html_align_outputter.hpp"
+#include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "display/options/display_spec.hpp"
 #include "display_colour/display_colour.hpp"

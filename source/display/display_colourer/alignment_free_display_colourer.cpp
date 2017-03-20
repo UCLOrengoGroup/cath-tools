@@ -21,7 +21,9 @@
 #include "alignment_free_display_colourer.hpp"
 
 #include "alignment/alignment_context.hpp"
+#include "chopping/region/region.hpp"
 #include "display/display_colour_spec/display_colour_spec.hpp"
+#include "file/pdb/pdb.hpp"
 
 using namespace cath;
 using namespace cath::align;
@@ -37,7 +39,7 @@ display_colour_spec alignment_free_display_colourer::do_get_colour_spec(const al
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return display_colour_spec{
 		do_get_colour_spec_from_regions(
-			arg_alignment_context.get_regions()
+			get_regions( arg_alignment_context )
 		)
 	};
 }

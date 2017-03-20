@@ -20,10 +20,12 @@
 
 #include "pymol_file_superposition_outputter.hpp"
 
+#include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/file/open_fstream.hpp"
 #include "display/viewer/pymol_viewer.hpp"
 #include "display_colour/display_colour_list.hpp"
+#include "file/pdb/pdb.hpp"
 #include "superposition/superposition_context.hpp"
 
 #include <fstream>

@@ -23,6 +23,7 @@
 #include "alignment/alignment_context.hpp"
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/pair_alignment.hpp"
+#include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
@@ -51,8 +52,8 @@ void ssap_ostream_alignment_outputter::do_output_alignment(const alignment_conte
 	check_alignment_is_a_pair( the_alignment );
 
 	const protein_list temp_protein_list = build_protein_list_of_pdb_list_and_names(
-		arg_alignment_context.get_pdbs(),
-		arg_alignment_context.get_names()
+		get_pdbs  ( arg_alignment_context ),
+		get_names ( arg_alignment_context )
 	);
 	output_alignment_to_cath_ssap_legacy_format(
 		arg_ostream,

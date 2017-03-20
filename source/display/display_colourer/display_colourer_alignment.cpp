@@ -26,6 +26,7 @@
 
 #include "alignment/alignment_context.hpp"
 #include "alignment/io/outputter/horiz_align_outputter.hpp"
+#include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "display/display_colour_spec/display_colour_spec.hpp"
 #include "display/viewer/viewer.hpp"

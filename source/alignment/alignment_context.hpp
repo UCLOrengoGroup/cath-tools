@@ -21,10 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_CONTEXT_H
 #define _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_CONTEXT_H
 
-#include "alignment/alignment.hpp"                  // for alignment
-#include "chopping/chopping_type_aliases.hpp"
-#include "common/type_aliases.hpp"                  // for str_vec
-#include "file/pdb/pdb_list.hpp"                    // for pdb_list
+#include "alignment/alignment.hpp" // for alignment
+#include "file/strucs_context.hpp"
 
 namespace cath { namespace sup { class superposition; } }
 namespace cath { namespace sup { class superposition_context; } }
@@ -32,35 +30,31 @@ namespace cath { namespace sup { class superposition_context; } }
 namespace cath {
 	namespace align {
 
-		/// \brief Store an alignment along with the context of the PDBs and ids of the structures
-		///
-		/// ATM, this is little more than a tuple<pdb_list, str_vec, alignment>
+		/// \brief Store an alignment along with the context of the PDBs and ids of the actual structures being superposed
 		class alignment_context final {
 		private:
 			/// \brief TODOCUMENT
-			file::pdb_list           pdbs;
+			alignment            the_alignment;
 
 			/// \brief TODOCUMENT
-			str_vec                  names;
-
-			/// \brief TODOCUMENT
-			alignment                the_alignment;
-
-			/// \brief For each PDB: the regions of the PDB to which the alignment refers,
-			///        or none if it refers to all of it
-			chop::region_vec_opt_vec regions;
+			file::strucs_context context;
 
 		public:
-			alignment_context(const file::pdb_list &,
+			alignment_context(const alignment &,
+			                  const file::strucs_context &);
+
+			alignment_context(const alignment &,
+			                  const file::pdb_list &,
 			                  const str_vec &,
-			                  const alignment &,
 			                  const chop::region_vec_opt_vec &);
 
-			const file::pdb_list & get_pdbs() const;
-			const str_vec & get_names() const;
 			const alignment & get_alignment() const;
-			const chop::region_vec_opt_vec & get_regions() const;
+			const file::strucs_context & get_strucs_context() const;
 		};
+
+		const file::pdb_list & get_pdbs(const alignment_context &);
+		const str_vec & get_names(const alignment_context &);
+		const chop::region_vec_opt_vec & get_regions(const alignment_context &);
 
 		sup::superposition_context make_superposition_context(const alignment_context &,
 		                                                      const sup::superposition &);

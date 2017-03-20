@@ -23,6 +23,8 @@
 #include "html_align_outputter.hpp"
 
 #include "alignment/test/alignment_fixture.hpp"
+#include "chopping/region/region.hpp"
+#include "file/pdb/pdb.hpp"
 
 using namespace cath;
 using namespace cath::align;

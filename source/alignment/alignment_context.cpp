@@ -33,24 +33,19 @@ using namespace cath::file;
 using namespace cath::sup;
 
 /// \brief Ctor for alignment_context
-alignment_context::alignment_context(const pdb_list           &arg_pdbs,      ///< TODOCUMENT
+alignment_context::alignment_context(const alignment          &arg_alignment, ///< TODOCUMENT
+                                     const strucs_context     &arg_context    ///< TODOCUMENT
+                                     ) : the_alignment { arg_alignment },
+                                         context       { arg_context   } {
+}
+
+/// \brief Ctor for alignment_context
+alignment_context::alignment_context(const alignment          &arg_alignment, ///< TODOCUMENT
+                                     const pdb_list           &arg_pdbs,      ///< TODOCUMENT
                                      const str_vec            &arg_names,     ///< TODOCUMENT
-                                     const alignment          &arg_alignment, ///< TODOCUMENT
                                      const region_vec_opt_vec &arg_regions    ///< The specification of the regions of the PDBs to which the alignment refers
-                                     ) : pdbs          { arg_pdbs      },
-                                         names         { arg_names     },
-                                         the_alignment { arg_alignment },
-                                         regions       { arg_regions   } {
-}
-
-/// \brief TODOCUMENT
-const pdb_list & alignment_context::get_pdbs() const {
-	return pdbs;
-}
-
-/// \brief TODOCUMENT
-const str_vec & alignment_context::get_names() const {
-	return names;
+                                     ) : the_alignment { arg_alignment                    },
+                                         context       { arg_pdbs, arg_names, arg_regions } {
 }
 
 /// \brief TODOCUMENT
@@ -58,9 +53,27 @@ const alignment & alignment_context::get_alignment() const {
 	return the_alignment;
 }
 
+/// \brief TODOCUMENT
+const strucs_context & alignment_context::get_strucs_context() const {
+	return context;
+}
+
+/// \brief TODOCUMENT
+const pdb_list & cath::align::get_pdbs(const alignment_context &arg_align_context ///< TODOCUMENT
+                                       ) {
+	return arg_align_context.get_strucs_context().get_pdbs();
+}
+
+/// \brief TODOCUMENT
+const str_vec & cath::align::get_names(const alignment_context &arg_align_context ///< TODOCUMENT
+                                       ) {
+	return arg_align_context.get_strucs_context().get_names();
+}
+
 /// \brief Getter for the specification of the regions of the PDBs to which the alignment refers
-const region_vec_opt_vec & alignment_context::get_regions() const {
-	return regions;
+const region_vec_opt_vec & cath::align::get_regions(const alignment_context &arg_align_context ///< TODOCUMENT
+                                                    ) {
+	return arg_align_context.get_strucs_context().get_regions();
 }
 
 /// \brief TODOCUMENT
@@ -72,10 +85,8 @@ superposition_context cath::align::make_superposition_context(const alignment_co
                                                               const superposition     &arg_superposition      ///< TODOCUMENT
                                                               ) {
 	return superposition_context(
-		arg_alignment_context.get_pdbs(),
-		arg_alignment_context.get_names(),
 		arg_superposition,
-		arg_alignment_context.get_alignment(),
-		arg_alignment_context.get_regions()
+		arg_alignment_context.get_strucs_context(),
+		arg_alignment_context.get_alignment()
 	);
 }

@@ -40,6 +40,7 @@
 
 namespace boost { namespace program_options { class options_description; } }
 namespace cath { namespace align { class alignment; } }
+namespace cath { namespace file { class strucs_context; } }
 namespace cath { namespace opts { class alignment_acquirer; } }
 namespace cath { namespace opts { class pdbs_acquirer; } }
 namespace cath { namespace opts { class selection_policy_acquirer; } }
@@ -116,9 +117,9 @@ namespace cath {
 		                                                                                const file::pdb_list &);
 
 		std::unique_ptr<const pdbs_acquirer> get_pdbs_acquirer(const cath_superpose_options &);
-		file::pdb_list_str_vec_pair get_pdbs_and_names(const cath_superpose_options &,
-		                                               std::istream &,
-		                                               const bool &);
+		file::strucs_context get_pdbs_and_names(const cath_superpose_options &,
+		                                        std::istream &,
+		                                        const bool &);
 	} // namespace opts
 } // namespace cath
 

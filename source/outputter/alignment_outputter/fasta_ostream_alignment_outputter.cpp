@@ -22,6 +22,7 @@
 
 #include "alignment/alignment_context.hpp"
 #include "alignment/io/alignment_io.hpp"
+#include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
@@ -50,8 +51,8 @@ void fasta_ostream_alignment_outputter::do_output_alignment(const alignment_cont
 		arg_ostream,
 		arg_alignment_context.get_alignment(),
 		build_protein_list_of_pdb_list_and_names(
-			arg_alignment_context.get_pdbs(),
-			arg_alignment_context.get_names()
+			get_pdbs ( arg_alignment_context ),
+			get_names( arg_alignment_context )
 		)
 	);
 }

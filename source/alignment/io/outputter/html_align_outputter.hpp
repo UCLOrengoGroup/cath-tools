@@ -23,6 +23,7 @@
 
 #include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"
+#include "file/strucs_context.hpp"
 
 #include <iosfwd>
 
@@ -45,34 +46,27 @@ namespace cath {
 		class html_align_outputter final {
 		private:
 			/// \brief A const-reference to the alignment to be output
-			std::reference_wrapper<const alignment               > the_alignment;
+			std::reference_wrapper<const alignment            > the_alignment;
 
 			/// \brief TODOCUMENT
-			std::reference_wrapper<const file::pdb_list          > pdbs;
+			std::reference_wrapper<const file::strucs_context > context;
 
 			/// \brief TODOCUMENT
-			std::reference_wrapper<const str_vec                 > names;
-
-			/// \brief For each PDB: the regions of the PDB to which the alignment refers,
-			///        or none if it refers to all of it
-			std::reference_wrapper<const chop::region_vec_opt_vec> regions;
-
-			/// \brief TODOCUMENT
-			std::reference_wrapper<const display_colourer        > colourer;
+			std::reference_wrapper<const display_colourer     > colourer;
 
 		public:
 			html_align_outputter(const alignment &,
-			                     const file::pdb_list &,
-			                     const str_vec &,
-			                     const chop::region_vec_opt_vec &,
+			                     const file::strucs_context &,
 			                     const display_colourer &);
 
 			const alignment & get_alignment() const;
-			const file::pdb_list & get_pdbs() const;
-			const str_vec & get_names() const;
-			const chop::region_vec_opt_vec & get_regions() const;
+			const file::strucs_context & get_strucs_context() const;
 			const display_colourer & get_display_colourer() const;
 		};
+
+		const file::pdb_list & get_pdbs(const html_align_outputter &);
+		const str_vec & get_names(const html_align_outputter &);
+		const chop::region_vec_opt_vec & get_regions(const html_align_outputter &);
 
 		html_align_outputter make_html_align_outputter(const alignment_context &,
 		                                               const display_colourer &);

@@ -22,6 +22,7 @@
 
 #include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
 #include "acquirer/pdbs_acquirer/istream_pdbs_acquirer.hpp"
+#include "chopping/region/region.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "common/cpp14/make_unique.hpp"
 #include "common/logger.hpp"
@@ -31,10 +32,12 @@
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "file/strucs_context.hpp"
 #include "options/options_block/pdb_input_options_block.hpp"
 #include "options/options_block/pdb_input_spec.hpp"
 
 using namespace cath;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
@@ -125,3 +128,25 @@ unique_ptr<pdbs_acquirer> cath::opts::get_pdbs_acquirer(const pdb_input_spec &ar
 	return pdbs_acquirers.front()->clone();
 }
 
+/// \brief Combine the PDBs and names obtained from a pdbs_acquirer with IDs and regions to make a strucs_context
+///
+/// This is provided as a common place for this bit of behaviour to be performed so that it will
+/// be easier to change in one place in the future
+///
+/// At present, this uses the arg_ids if they have the correct number of entries and arg_names_from_acq otherwise.
+///
+/// In the future, it may be worth building more interesting types (than str_vec) to record both the provenance (arg_names_from_acq)
+/// and user-specified names (arg_ids) of the structure
+strucs_context cath::opts::combine_acquired_pdbs_and_names_with_ids_and_regions(pdb_list           &&arg_pdbs,           ///< The PDBs obtained from a pdbs_acquirer
+                                                                                str_vec            &&arg_names_from_acq, ///< The names obtained from a pdbs_acquirer
+                                                                                str_vec            &&arg_ids,            ///< Alternative IDs
+                                                                                region_vec_opt_vec &&arg_regions         ///< Regions for the strucs_context
+                                                                                ) {
+	str_vec &&ids_to_use = ( arg_ids.size() == arg_pdbs.size() ) ? std::move( arg_ids            )
+	                                                             : std::move( arg_names_from_acq );
+	return {
+		std::move( arg_pdbs    ),
+		std::move( ids_to_use  ),
+		std::move( arg_regions )
+	};
+}

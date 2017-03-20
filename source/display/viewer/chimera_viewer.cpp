@@ -28,6 +28,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "alignment/alignment.hpp"
+#include "chopping/region/region.hpp"
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/batch/batch_functions.hpp"
