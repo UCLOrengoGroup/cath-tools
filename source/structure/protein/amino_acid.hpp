@@ -30,6 +30,9 @@
 
 #include "common/algorithm/contains.hpp"
 #include "common/char_arr_type_aliases.hpp"
+#include "common/cpp17/invoke.hpp"
+#include "common/function/ident.hpp"
+#include "common/string/char_arr_to_string.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/out_of_range_exception.hpp"
@@ -46,6 +49,9 @@
 namespace cath {
 	namespace detail { struct aa_code_getter; }
 	namespace detail { struct aa_type_getter; }
+
+	using char_char_3_arr_str_tpl     = std::tuple<char, char_3_arr, std::string>;
+	using char_char_3_arr_str_tpl_vec = std::vector<char_char_3_arr_str_tpl>;
 
 	/// \brief Represent the type of amino_acid record
 	enum class amino_acid_type {
@@ -66,7 +72,7 @@ namespace cath {
 		/// \brief The number of chars used to store a HETATM
 		static constexpr size_t NUM_HETATM_CHARS = 3;
 
-		static const char_str_str_tpl_vec & LETTER_CODE_AND_NAME_LIST();
+		static const char_char_3_arr_str_tpl_vec & LETTER_CODE_AND_NAME_LIST();
 
 		using char_size_unordered_map   = std::unordered_map<char,        uint>;
 		using string_size_unordered_map = std::unordered_map<std::string, uint>;
@@ -86,7 +92,8 @@ namespace cath {
 			dna_variant_t
 		> data;
 
-		template <typename T, size_t I> static std::unordered_map<T, uint> build_index_unordered_map();
+		template <typename T, size_t I, typename Proj = common::ident>
+		static std::unordered_map<T, uint> build_index_unordered_map(Proj && = Proj{});
 		template <typename T, size_t I> static T get_label(const size_t &);
 
 		static uint get_letter_index(const char &);
@@ -105,7 +112,7 @@ namespace cath {
 		const char_3_arr & get_hetatm_chars() const;
 
 		char        get_letter() const;
-		std::string get_code() const;
+		char_3_arr  get_code() const;
 		std::string get_name() const;
 
 //		static const std::string UNKNOWN_AMINO_ACID_NAME;
@@ -118,45 +125,51 @@ namespace cath {
 	/// \todo Since, some part of this arose as taking excessive & non-trivial time in some profile
 	///       it is worth seeing if it can be made faster, probably by using a std::array and constexpr_find()
 	///       and constexpr_for_n() to generate lookups with minimal runtime overhead.
-	inline const char_str_str_tpl_vec & amino_acid::LETTER_CODE_AND_NAME_LIST() {
-		static const char_str_str_tpl_vec letter_code_and_name_list = {
-			std::make_tuple( 'A', "ALA", "Alanine"                            ),
-			std::make_tuple( 'B', "ASX", "Ambiguous Asparagine/Aspartic Acid" ), // eg PDBs 156b, 1kp0, 1pgk, 2atc, 2fmd, 2rxn, 3atc, 3bcl and 3e2o
-			std::make_tuple( 'C', "CYS", "Cysteine"                           ),
-			std::make_tuple( 'D', "ASP", "Aspartic Acid"                      ),
-			std::make_tuple( 'E', "GLU", "Glutamic Acid"                      ),
-			std::make_tuple( 'F', "PHE", "Phenylalanine"                      ),
-			std::make_tuple( 'G', "GLY", "Glycine"                            ),
-			std::make_tuple( 'H', "HIS", "Histidine"                          ),
-			std::make_tuple( 'I', "ILE", "Isoleucine"                         ),
-			std::make_tuple( 'J', "XLE", "Leucine/Isoleucine"                 ), // eg PDBs?
-			std::make_tuple( 'K', "LYS", "Lysine"                             ),
-			std::make_tuple( 'L', "LEU", "Leucine"                            ),
-			std::make_tuple( 'M', "MET", "Methionine"                         ),
-			std::make_tuple( 'N', "ASN", "Asparagine"                         ),
-			std::make_tuple( 'O', "PYL", "Pyrrolysine"                        ),
-			std::make_tuple( 'P', "PRO", "Proline"                            ),
-			std::make_tuple( 'Q', "GLN", "Glutamine"                          ),
-			std::make_tuple( 'R', "ARG", "Arginine"                           ),
-			std::make_tuple( 'S', "SER", "Serine"                             ),
-			std::make_tuple( 'T', "THR", "Threonine"                          ),
-			std::make_tuple( 'U', "SEC", "Selenocysteine"                     ), // eg PDBs 1aa6, 1cc1, 1fdi, 1fdo, 1h0h, 1kqf, 1kqg, 1pae, 1pfp, 2bc7, 2bc8, 2iv2, 2wpn, 2xsk, 3ean, 3eao, 3fwf, 3fwi, 3fwj, 3u5s, 3ze7, 3ze8, 3ze9, 3zea, 4kl8, 4kn9, 4ko1, 4ko2, 4ko3, 4ko4
-			std::make_tuple( 'V', "VAL", "Valine"                             ),
-			std::make_tuple( 'W', "TRP", "Tryptophan"                         ),
-			std::make_tuple( 'X', "UNK", "Unknown"                            ),
-			std::make_tuple( 'Y', "TYR", "Tyrosine"                           ),
-			std::make_tuple( 'Z', "GLX", "Ambiguous Glutamine/Glutamic Acid"  )  // eg PDBs 156b, 1kp0, 1pgk, 2rxn, 2tnc, 3bcl and 4cpa
+	inline const char_char_3_arr_str_tpl_vec & amino_acid::LETTER_CODE_AND_NAME_LIST() {
+		static const char_char_3_arr_str_tpl_vec letter_code_and_name_list = {
+			std::make_tuple( 'A', char_3_arr{{ 'A','L','A' }}, "Alanine"                            ),
+			std::make_tuple( 'B', char_3_arr{{ 'A','S','X' }}, "Ambiguous Asparagine/Aspartic Acid" ), // eg PDBs 156b, 1kp0, 1pgk, 2atc, 2fmd, 2rxn, 3atc, 3bcl and 3e2o
+			std::make_tuple( 'C', char_3_arr{{ 'C','Y','S' }}, "Cysteine"                           ),
+			std::make_tuple( 'D', char_3_arr{{ 'A','S','P' }}, "Aspartic Acid"                      ),
+			std::make_tuple( 'E', char_3_arr{{ 'G','L','U' }}, "Glutamic Acid"                      ),
+			std::make_tuple( 'F', char_3_arr{{ 'P','H','E' }}, "Phenylalanine"                      ),
+			std::make_tuple( 'G', char_3_arr{{ 'G','L','Y' }}, "Glycine"                            ),
+			std::make_tuple( 'H', char_3_arr{{ 'H','I','S' }}, "Histidine"                          ),
+			std::make_tuple( 'I', char_3_arr{{ 'I','L','E' }}, "Isoleucine"                         ),
+			std::make_tuple( 'J', char_3_arr{{ 'X','L','E' }}, "Leucine/Isoleucine"                 ), // eg PDBs?
+			std::make_tuple( 'K', char_3_arr{{ 'L','Y','S' }}, "Lysine"                             ),
+			std::make_tuple( 'L', char_3_arr{{ 'L','E','U' }}, "Leucine"                            ),
+			std::make_tuple( 'M', char_3_arr{{ 'M','E','T' }}, "Methionine"                         ),
+			std::make_tuple( 'N', char_3_arr{{ 'A','S','N' }}, "Asparagine"                         ),
+			std::make_tuple( 'O', char_3_arr{{ 'P','Y','L' }}, "Pyrrolysine"                        ),
+			std::make_tuple( 'P', char_3_arr{{ 'P','R','O' }}, "Proline"                            ),
+			std::make_tuple( 'Q', char_3_arr{{ 'G','L','N' }}, "Glutamine"                          ),
+			std::make_tuple( 'R', char_3_arr{{ 'A','R','G' }}, "Arginine"                           ),
+			std::make_tuple( 'S', char_3_arr{{ 'S','E','R' }}, "Serine"                             ),
+			std::make_tuple( 'T', char_3_arr{{ 'T','H','R' }}, "Threonine"                          ),
+			std::make_tuple( 'U', char_3_arr{{ 'S','E','C' }}, "Selenocysteine"                     ), // eg PDBs 1aa6, 1cc1, 1fdi, 1fdo, 1h0h, 1kqf, 1kqg, 1pae, 1pfp, 2bc7, 2bc8, 2iv2, 2wpn, 2xsk, 3ean, 3eao, 3fwf, 3fwi, 3fwj, 3u5s, 3ze7, 3ze8, 3ze9, 3zea, 4kl8, 4kn9, 4ko1, 4ko2, 4ko3, 4ko4
+			std::make_tuple( 'V', char_3_arr{{ 'V','A','L' }}, "Valine"                             ),
+			std::make_tuple( 'W', char_3_arr{{ 'T','R','P' }}, "Tryptophan"                         ),
+			std::make_tuple( 'X', char_3_arr{{ 'U','N','K' }}, "Unknown"                            ),
+			std::make_tuple( 'Y', char_3_arr{{ 'T','Y','R' }}, "Tyrosine"                           ),
+			std::make_tuple( 'Z', char_3_arr{{ 'G','L','X' }}, "Ambiguous Glutamine/Glutamic Acid"  )  // eg PDBs 156b, 1kp0, 1pgk, 2rxn, 2tnc, 3bcl and 4cpa
 		};
 		return letter_code_and_name_list;
 	}
 
 	/// \brief TODOCUMENT
-	template <typename T, size_t I>
-	inline std::unordered_map<T, uint> amino_acid::build_index_unordered_map() {
+	template <typename T, size_t I, typename Proj>
+	inline std::unordered_map<T, uint> amino_acid::build_index_unordered_map(Proj &&arg_proj ///< An optional projection function to apply to each of the elements
+	                                                                         ) {
 		std::unordered_map<T, uint> index_map;
 		for (const uint &amino_acid_ctr : boost::irange( 0u, static_cast<uint>( LETTER_CODE_AND_NAME_LIST().size() ) ) ) {
-			const T &amino_acid_label = std::get<I>( LETTER_CODE_AND_NAME_LIST()[ amino_acid_ctr ] );
-			index_map.insert( std::make_pair( amino_acid_label, amino_acid_ctr ) );
+			index_map.emplace(
+				common::invoke(
+					std::forward<Proj>( arg_proj ),
+					std::get<I>( LETTER_CODE_AND_NAME_LIST()[ amino_acid_ctr ] )
+				),
+				amino_acid_ctr
+			);
 		}
 		return index_map;
 	}
@@ -249,15 +262,15 @@ namespace cath {
 		};
 
 		/// \brief A visitor to get the three-letter code from the variant in amino_acid
-		struct aa_code_getter : public boost::static_visitor<std::string> {
-			std::string operator()(const amino_acid::aa_variant_t     &x) const {
-				return amino_acid::get_label<std::string, 1>( x );
+		struct aa_code_getter : public boost::static_visitor<char_3_arr> {
+			char_3_arr operator()(const amino_acid::aa_variant_t     &x) const {
+				return amino_acid::get_label<char_3_arr, 1>( x );
 			}
-			std::string operator()(const amino_acid::hetatm_variant_t &x) const {
-				return { common::cbegin( x ), common::cend( x ) };
+			char_3_arr operator()(const amino_acid::hetatm_variant_t &x) const {
+				return x;
 			}
-			std::string operator()(const amino_acid::dna_variant_t    &x) const {
-				return to_three_char_str( x );
+			char_3_arr operator()(const amino_acid::dna_variant_t    &x) const {
+				return to_three_char_arr( x );
 			}
 		};
 	} // namespace detail
@@ -282,13 +295,21 @@ namespace cath {
 	}
 
 	/// \brief TODOCUMENT
-	inline std::string amino_acid::get_code() const {
+	inline char_3_arr amino_acid::get_code() const {
 		return boost::apply_visitor( detail::aa_code_getter{}, data );
 	}
 
 	/// \brief TODOCUMENT
 	inline std::string amino_acid::get_name() const {
 		return get_label<std::string, 2>( check_is_proper_amino_acid() );
+	}
+
+	/// \brief Get a string of the three-letter-code for the specified amino_acid
+	///
+	/// \relates amino_acid
+	inline std::string get_code_string(const amino_acid &arg_amino_acid ///< The amino_acid to query
+	                                   ) {
+		return common::char_arr_to_string( arg_amino_acid.get_code() );
 	}
 
 	namespace detail {
@@ -339,12 +360,15 @@ namespace cath {
 	}
 
 	/// \brief Return whether the specified amino_acid is a proper amino_acid (rather than a HETATM record or DNA/RNA pseudo-amino-acid)
+	///
+	/// \relates amino_acid
 	inline bool is_proper_amino_acid(const amino_acid &arg_amino_acid ///< The amino_acid to query
 	                                 ) {
 		return ( arg_amino_acid.get_type() == amino_acid_type::AA );
 	}
 
-	std::string get_code_of_amino_acid_letter(const char &);
+	char_3_arr get_code_of_amino_acid_letter(const char &);
+	std::string get_code_str_of_amino_acid_letter(const char &);
 
 	char get_letter_of_amino_acid_code(const std::string &);
 

@@ -331,7 +331,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 	set<chain_label> terminated_chains;
 	string           line_string;
 
-	str_opt          prev_amino_acid_3_char_code;
+	char_3_arr_opt   prev_amino_acid_3_char_code;
 	pdb_atom_vec     prev_atoms;
 	residue_id       prev_res_id;
 	bool             prev_warned_conflict = false;
@@ -384,7 +384,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			const auto        new_entry              = parse_pdb_atom_record( line_string, parse_aa );
 			const residue_id &res_id                 = new_entry.first;
 			const pdb_atom   &atom                   = new_entry.second;
-			const string      amino_acid_3_char_code = get_amino_acid_code( atom );
+			const char_3_arr  amino_acid_3_char_code = get_amino_acid_code( atom );
 
 			// If there are previously seen atoms that don't match this chain/res_id,
 			// then add those atoms' residue and reset prev_atoms
@@ -410,9 +410,9 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 					BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing PDB file, found conflicting consecutive entries for residue \""
 					                             << res_id
 					                             << "\" (with amino acids \""
-					                             << *prev_amino_acid_3_char_code
+					                             << char_arr_to_string( *prev_amino_acid_3_char_code )
 					                             << "\" and then \""
-					                             << amino_acid_3_char_code
+					                             << char_arr_to_string( amino_acid_3_char_code )
 					                             << "\") - ignoring latter entry (and any further entries)";
 					prev_warned_conflict = true;
 				}

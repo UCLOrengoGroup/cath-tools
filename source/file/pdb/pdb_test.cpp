@@ -119,7 +119,7 @@ ATOM   1875  CB  VAL B 140     -37.331  37.579 101.757  1.00 93.10           C)"
 	istringstream input_ss{ input_string };
 	const pdb the_pdb = read_pdb_file( input_ss );
 	BOOST_REQUIRE_EQUAL( the_pdb.get_num_residues(), 3 );
-	BOOST_CHECK_EQUAL( the_pdb.get_residue_cref_of_index__backbone_unchecked( 1 ).get_amino_acid().get_code(), "UNK");
+	BOOST_CHECK_EQUAL( get_code_string( the_pdb.get_residue_cref_of_index__backbone_unchecked( 1 ).get_amino_acid() ), "UNK");
 	// \todo: Create a better way to refer to check for UNK in code/tests without a string literal
 }
 

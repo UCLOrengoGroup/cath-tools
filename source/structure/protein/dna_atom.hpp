@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_DNA_ATOM_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_DNA_ATOM_H
 
+#include "common/char_arr_type_aliases.hpp"
+
 #include <string>
 
 namespace cath {
@@ -52,6 +54,8 @@ namespace cath {
 		G_SPACE, // eg in 4a1d
 		U_SPACE  // eg in 4a1d
 	};
+
+	char_3_arr to_three_char_arr(const dna_atom &);
 
 	std::string to_three_char_str(const dna_atom &);
 

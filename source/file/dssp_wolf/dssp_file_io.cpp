@@ -123,9 +123,9 @@ dssp_file cath::file::read_dssp(istream &arg_istream ///< The istream from which
 			BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing DSSP file, found conflicting consecutive entries for residue \""
 				<< parsed_residue.get_pdb_residue_id()
 				<< "\" (with amino acids \""
-				<< new_residues.back().get_amino_acid().get_code()
+				<< get_code_string( new_residues.back().get_amino_acid() )
 				<< "\" and then \""
-				<< parsed_residue.get_amino_acid().get_code()
+				<< get_code_string( parsed_residue.get_amino_acid() )
 				<< "\") - ignoring latter entry";
 		}
 		else {

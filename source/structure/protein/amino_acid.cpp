@@ -94,7 +94,9 @@ auto amino_acid::INDEX_OF_LETTER() -> const char_size_unordered_map & {
 
 /// \brief TODOCUMENT
 auto amino_acid::INDEX_OF_CODE() -> const string_size_unordered_map & {
-	static const string_size_unordered_map index_of_code(amino_acid::build_index_unordered_map<string, 1>());
+	static const string_size_unordered_map index_of_code(amino_acid::build_index_unordered_map<string, 1>(
+		[] (const char_3_arr &x) { return char_arr_to_string( x ); }
+	));
 	return index_of_code;
 }
 
@@ -173,12 +175,24 @@ amino_acid_vec cath::make_amino_acids_of_chars(const char_vec &arg_amino_acid_ch
 	);
 }
 
-/// \brief TODOCUMENT
+/// \brief Get the three-letter-code char_3_arr associated with the specified one letter
+///
+/// eg 'A' -> "ALA"
 ///
 /// \relates amino_acid
-string cath::get_code_of_amino_acid_letter(const char &arg_one_letter_aa ///< TODOCUMENT
-                                           ) {
-	return amino_acid(arg_one_letter_aa).get_code();
+char_3_arr cath::get_code_of_amino_acid_letter(const char &arg_one_letter_aa ///< The single-letter amino acid (eg 'A' for alanine)
+                                               ) {
+	return amino_acid( arg_one_letter_aa ).get_code();
+}
+
+/// \brief Get the three-letter-code string associated with the specified one letter
+///
+/// eg 'A' -> "ALA"
+///
+/// \relates amino_acid
+string cath::get_code_str_of_amino_acid_letter(const char &arg_one_letter_aa ///< The single-letter amino acid (eg 'A' for alanine)
+                                               ) {
+	return char_arr_to_string( get_code_of_amino_acid_letter( arg_one_letter_aa ) );
 }
 
 /// \brief TODOCUMENT
@@ -195,7 +209,7 @@ char cath::get_letter_of_amino_acid_code(const string &arg_three_letter_aa ///< 
 ostream & cath::operator<<(ostream          &arg_os,        ///< The ostream into which the description should be inserted
                            const amino_acid &arg_amino_acid ///< The amino_acid to describe
                            ) {
-	arg_os << arg_amino_acid.get_code();
+	arg_os << get_code_string( arg_amino_acid );
 	return arg_os;
 }
 

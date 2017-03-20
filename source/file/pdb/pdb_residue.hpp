@@ -121,7 +121,8 @@ namespace cath {
 		const geom::coord & get_oxygen_coord(const pdb_residue &);
 
 		char_opt get_amino_acid_letter(const pdb_residue &);
-		std::string get_amino_acid_code(const pdb_residue &);
+		char_3_arr get_amino_acid_code(const pdb_residue &);
+		std::string get_amino_acid_code_string(const pdb_residue &);
 		std::string get_amino_acid_name(const pdb_residue &);
 
 		residue_makeup contains_non_proper_amino_acids(const pdb_residue &);

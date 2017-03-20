@@ -391,8 +391,8 @@ char cath::get_amino_acid_letter(const residue &arg_residue ///< TODOCUMENT
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-string cath::get_amino_acid_code(const residue &arg_residue ///< TODOCUMENT
-                                 ) {
+char_3_arr cath::get_amino_acid_code(const residue &arg_residue ///< TODOCUMENT
+                                     ) {
 	return arg_residue.get_amino_acid().get_code();
 }
 
@@ -538,31 +538,31 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 
 		if ( dssp_is_unk && ! pdb_is_proper ) {
 			BOOST_LOG_TRIVIAL( debug ) << "The amino acid \""
-				<< pdb_amino_acid.get_code()
+				<< get_code_string( pdb_amino_acid )
 				<< "\" parsed from a PDB for residue \""
 				<< to_string( pdb_residue_id )
 				<< "\" does not match amino acid \""
-				<< dssp_amino_acid.get_code()
+				<< get_code_string( dssp_amino_acid )
 				<< "\" parsed from a DSSP but this is fine because it's a HETATM amino acid";
 		}
 		else if ( dssp_is_unk && ( pdb_is_pyl || pdb_is_sec || pdb_is_asx || pdb_is_glx ) ) {
 			BOOST_LOG_TRIVIAL( info ) << "The amino acid \""
-				<< pdb_amino_acid.get_code()
+				<< get_code_string( pdb_amino_acid )
 				<< "\" parsed from a PDB for residue \""
 				<< to_string( pdb_residue_id )
 				<< "\" does not match amino acid \""
-				<< dssp_amino_acid.get_code()
+				<< get_code_string( dssp_amino_acid )
 				<< "\" parsed from a DSSP - continuing because it looks "
 				<< "like nothing worse than DSSP not recognising a non-standard amino-acid code";
 		}
 		else if ( ! dssp_is_unk || arg_residue_makeup == residue_makeup::ALL_PROPER_AMINO_ACIDS ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(
 				"Amino acid \""
-				+ dssp_amino_acid.get_code()
+				+ get_code_string( dssp_amino_acid )
 				+ "\" parsed from DSSP for residue \""
 				+ to_string( pdb_residue_id )
 				+ "\" does not match amino acid \""
-				+ pdb_amino_acid.get_code()
+				+ get_code_string( pdb_amino_acid )
 				+ "\" parsed from PDB"
 			));
 		}

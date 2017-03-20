@@ -1,5 +1,5 @@
 /// \file
-/// \brief The std::array<char, N> type_aliases header
+/// \brief The char_arr_to_string header
 
 /// \copyright
 /// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
@@ -18,27 +18,28 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_COMMON_CHAR_ARR_TYPE_ALIASES_H
-#define _CATH_TOOLS_SOURCE_COMMON_CHAR_ARR_TYPE_ALIASES_H
+#ifndef _CATH_TOOLS_SOURCE_COMMON_STRING_CHAR_ARR_TO_STRING_H
+#define _CATH_TOOLS_SOURCE_COMMON_STRING_CHAR_ARR_TO_STRING_H
 
-#include <boost/optional/optional_fwd.hpp>
+#include "common/cpp14/cbegin_cend.hpp"
 
 #include <array>
+#include <string>
 
 namespace cath {
+	namespace common {
 
-	/// \brief A type alias for a std::array of 2 chars
-	using char_2_arr = std::array<char, 2>;
+		/// \brief Return a string of the characters in the specified char array
+		template <size_t N>
+		inline std::string char_arr_to_string(const std::array<char, N> &arg_char_arr ///< The char array from which to build the string
+		                                      ) {
+			return { 
+				common::cbegin( arg_char_arr ),
+				common::cend  ( arg_char_arr )
+			};
+		}
 
-	/// \brief A type alias for a std::array of 3 chars
-	using char_3_arr = std::array<char, 3>;
-
-	/// \brief A type alias for a std::array of 4 chars
-	using char_4_arr = std::array<char, 4>;
-
-	/// \brief A type alias for an optional std::array of 3 chars
-	using char_3_arr_opt = boost::optional<std::array<char, 3>>;
-
+	} // namespace common
 } // namespace cath
 
 #endif

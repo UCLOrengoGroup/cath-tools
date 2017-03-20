@@ -63,12 +63,20 @@ char_opt cath::file::get_amino_acid_letter(const pdb_residue &arg_residue ///< T
 	                                              : none;
 }
 
-/// \brief TODOCUMENT
+/// \brief Get the three-letter-code char_3_arr for the amino acid in the specified pdb_residue
 ///
 /// \relates pdb_residue
-string cath::file::get_amino_acid_code(const pdb_residue &arg_residue ///< The pdb_residue to query
-                                       ) {
+char_3_arr cath::file::get_amino_acid_code(const pdb_residue &arg_residue ///< The pdb_residue to query
+                                           ) {
 	return arg_residue.get_amino_acid().get_code();
+}
+
+/// \brief Get the three-letter-code string for the amino acid in the specified pdb_residue
+///
+/// \relates pdb_residue
+string cath::file::get_amino_acid_code_string(const pdb_residue &arg_residue ///< The pdb_residue to query
+                                              ) {
+	return get_code_string( arg_residue.get_amino_acid() );
 }
 
 /// \brief TODOCUMENT

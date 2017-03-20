@@ -42,8 +42,7 @@ namespace cath {
 
 	using bool_size_str_tpl             = std::tuple<bool, size_t, std::string>;
 	using bool_size_str_tpl_vec         = std::vector<bool_size_str_tpl>;
-	using char_str_str_tpl              = std::tuple<char, std::string, std::string>;
-	using char_str_str_tpl_vec          = std::vector<char_str_str_tpl>;
+
 	using diff_diff_pair                = std::pair<ptrdiff_t, ptrdiff_t>;
 	using size_size_doub_tpl            = std::tuple<size_t, size_t, double>;
 	using size_size_doub_tpl_vec        = std::vector<size_size_doub_tpl>;

@@ -162,7 +162,7 @@ namespace cath {
 
 	char get_amino_acid_letter(const residue &);
 
-	std::string get_amino_acid_code(const residue &);
+	char_3_arr get_amino_acid_code(const residue &);
 
 	std::string get_amino_acid_name(const residue &);
 

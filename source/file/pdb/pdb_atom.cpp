@@ -67,10 +67,16 @@ char cath::file::get_amino_acid_letter(const pdb_atom &arg_pdb_atom ///< The pdb
 	return arg_pdb_atom.get_amino_acid().get_letter();
 }
 
-/// \brief Get the three letter amino acid code (eg "SER") from a pdb_atom
-string cath::file::get_amino_acid_code(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
-                                       ) {
+/// \brief Get the three letter amino acid code (eg "SER") char_3_arr from a pdb_atom
+char_3_arr cath::file::get_amino_acid_code(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+                                           ) {
 	return arg_pdb_atom.get_amino_acid().get_code();
+}
+
+/// \brief Get the three letter amino acid code (eg "SER") string from a pdb_atom
+string cath::file::get_amino_acid_code_string(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+                                       ) {
+	return get_code_string( arg_pdb_atom.get_amino_acid() );
 }
 
 /// \brief Get the three letter amino acid code (eg "SER") from a pdb_atom
@@ -109,7 +115,7 @@ ostream & cath::file::write_pdb_file_entry(ostream          &arg_os,      ///< T
 	atom_ss << " ";
 	atom_ss << setw( 4 ) << get_element_type_untrimmed_str_ref( arg_pdb_atom ); // 13 - 16        Atom          name         Atom name.
 	atom_ss <<              arg_pdb_atom.get_alt_locn();                        // 17             Character     altLoc       Alternate location indicator.
-	atom_ss <<              get_amino_acid_code( arg_pdb_atom );                // 18 - 20        Residue name  resName      Residue name.
+	atom_ss <<              get_amino_acid_code_string( arg_pdb_atom );         // 18 - 20        Residue name  resName      Residue name.
 	atom_ss << " ";
 	atom_ss << arg_res_id.get_chain_label();                                    // 22             Character     chainID      Chain identifier.
 	                                                                            // 23 - 26        Integer       resSeq       Residue sequence number.
