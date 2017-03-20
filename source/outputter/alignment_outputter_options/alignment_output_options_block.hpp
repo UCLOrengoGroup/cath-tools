@@ -57,10 +57,10 @@ namespace cath {
 			boost::filesystem::path aln_to_html_file;
 			bool aln_to_html_stdout;
 
-			virtual std::unique_ptr<options_block> do_clone() const override final;
-			virtual std::string do_get_block_name() const override final;
-			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
-			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
+			std::unique_ptr<options_block> do_clone() const final;
+			std::string do_get_block_name() const final;
+			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
+			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 
 			boost::filesystem::path get_aln_to_cath_aln_file() const;
 			bool get_aln_to_cath_aln_stdout() const;

@@ -31,17 +31,17 @@ namespace cath {
 	/// use protein_from_pdb_and_calc instead.
 	class protein_from_pdb final : public protein_source_file_set {
 	private:
-		virtual std::unique_ptr<protein_source_file_set> do_clone() const override final;
+		std::unique_ptr<protein_source_file_set> do_clone() const final;
 
-		virtual file::data_file_vec do_get_file_set() const override final;
+		file::data_file_vec do_get_file_set() const final;
 
-		virtual protein_file_combn do_get_protein_file_combn() const override final;
+		protein_file_combn do_get_protein_file_combn() const final;
 
-		virtual bool do_makes_ssap_ready_protein() const override final;
+		bool do_makes_ssap_ready_protein() const final;
 
-		virtual protein do_read_files(const file::data_file_path_map &,
-		                              const std::string &,
-		                              std::ostream &) const override final;
+		protein do_read_files(const file::data_file_path_map &,
+		                      const std::string &,
+		                      std::ostream &) const final;
 	};
 
 } // namespace cath

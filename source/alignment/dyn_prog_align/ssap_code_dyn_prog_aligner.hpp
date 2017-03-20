@@ -37,7 +37,7 @@ namespace cath {
 		///          to make this thread-safe.
 		class ssap_code_dyn_prog_aligner final : public dyn_prog_aligner {
 		private:
-			virtual std::unique_ptr<dyn_prog_aligner> do_clone() const override final;
+			std::unique_ptr<dyn_prog_aligner> do_clone() const final;
 
 			using size_size_int_int_score_tuple = std::tuple<size_t,
 			                                                 size_t,
@@ -67,9 +67,9 @@ namespace cath {
 			                                const int &,
 			                                const int_vec_vec &);
 
-			virtual score_alignment_pair do_align(const dyn_prog_score_source &,
-			                                      const gap::gap_penalty &,
-			                                      const size_type &) const override final;
+			score_alignment_pair do_align(const dyn_prog_score_source &,
+			                              const gap::gap_penalty &,
+			                              const size_type &) const final;
 		};
 	} // namespace align
 } // namespace cath

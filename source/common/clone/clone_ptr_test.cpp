@@ -88,12 +88,12 @@ namespace cath {
 			                                          ) {
 				ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(clone_ptr_test_abstract_base);
 			}
-			virtual unique_ptr<clone_ptr_test_abstract_base> do_clone() const override final {
+			unique_ptr<clone_ptr_test_abstract_base> do_clone() const final {
 				return { make_uptr_clone( *this ) };
 			}
 
 		public:
-			virtual size_t method() const override final {
+			size_t method() const final {
 				return CONCRETE1_METHOD_RESULT;
 			}
 		};
@@ -107,12 +107,12 @@ namespace cath {
 			                                       ) {
 				ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(clone_ptr_test_abstract_base);
 			}
-			virtual unique_ptr<clone_ptr_test_abstract_base> do_clone() const override final {
+			unique_ptr<clone_ptr_test_abstract_base> do_clone() const final {
 				return { make_uptr_clone( *this ) };
 			}
 
 		public:
-			virtual size_t method() const override final {
+			size_t method() const final {
 				return CONCRETE2_METHOD_RESULT;
 			}
 		};

@@ -35,7 +35,7 @@ namespace cath {
 		/// \brief Pure virtual method with which each concrete alignment_free_display_colourer must define how to colour based on the regions
 		virtual broad_display_colour_spec do_get_colour_spec_from_regions(const chop::region_vec_opt_vec &) const = 0;
 
-		virtual display_colour_spec do_get_colour_spec(const align::alignment_context &) const override final;
+		display_colour_spec do_get_colour_spec(const align::alignment_context &) const final;
 
 	public:
 		alignment_free_display_colourer() noexcept = default;

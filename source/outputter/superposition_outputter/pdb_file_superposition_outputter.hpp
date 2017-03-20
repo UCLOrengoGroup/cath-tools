@@ -38,10 +38,10 @@ namespace cath {
 			/// \brief The specification of what should be included in the superposition
 			sup::superposition_content_spec content_spec;
 
-			virtual std::unique_ptr<superposition_outputter> do_clone() const override final;
-			virtual void do_output_superposition(const sup::superposition_context &,
-			                                     std::ostream &) const override final;
-			virtual bool do_involves_display_spec() const override final;
+			std::unique_ptr<superposition_outputter> do_clone() const final;
+			void do_output_superposition(const sup::superposition_context &,
+			                             std::ostream &) const final;
+			bool do_involves_display_spec() const final;
 
 		public:
 			pdb_file_superposition_outputter(const boost::filesystem::path &,

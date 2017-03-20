@@ -44,9 +44,9 @@ namespace cath {
 				dyn_prog_aligner & get_dyn_prog_aligner();
 				const dyn_prog_aligner & get_dyn_prog_aligner() const;
 
-				virtual str_str_pair do_align(const std::string &,
-				                              const std::string &,
-				                              const gap::gap_penalty &) const override final;
+				str_str_pair do_align(const std::string &,
+				                      const std::string &,
+				                      const gap::gap_penalty &) const final;
 
 			public:
 				explicit gen_dyn_prog_string_aligner(const dyn_prog_aligner &);

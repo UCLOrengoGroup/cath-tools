@@ -43,33 +43,33 @@ namespace cath {
 		void record_scene(std::ostream &,
 		                  const std::string &);
 
-		virtual std::string do_default_executable() const override final;
-		virtual std::string do_default_file_extension() const override final;
+		std::string do_default_executable() const final;
+		std::string do_default_file_extension() const final;
 
-		virtual void do_write_start(std::ostream &) const override final;
-		virtual void do_write_load_pdbs(std::ostream &,
-		                                const sup::superposition &,
-		                                const file::pdb_list &,
-		                                const str_vec &) const override final;
-		virtual void do_define_colour(std::ostream &,
-		                              const display_colour &,
-		                              const std::string &) const override final;
-		virtual bool do_accepts_multiple_colourings() const override final;
+		void do_write_start(std::ostream &) const final;
+		void do_write_load_pdbs(std::ostream &,
+		                        const sup::superposition &,
+		                        const file::pdb_list &,
+		                        const str_vec &) const final;
+		void do_define_colour(std::ostream &,
+		                      const display_colour &,
+		                      const std::string &) const final;
+		bool do_accepts_multiple_colourings() const final;
 
-		virtual void do_begin_colouring(std::ostream &,
-		                                const display_colourer &) override final;
-		virtual std::string do_get_colour_base_str(const std::string &) const override final;
-		virtual std::string do_get_colour_pdb_str(const std::string &,
-		                                          const std::string &) const override final;
-		virtual std::string do_get_colour_pdb_residues_str(const std::string &,
-		                                                   const std::string &,
-		                                                   const residue_id_vec &) const override final;
-		virtual void do_end_colouring(std::ostream &,
-		                              const display_colourer &) override final;
+		void do_begin_colouring(std::ostream &,
+		                        const display_colourer &) final;
+		std::string do_get_colour_base_str(const std::string &) const final;
+		std::string do_get_colour_pdb_str(const std::string &,
+		                                  const std::string &) const final;
+		std::string do_get_colour_pdb_residues_str(const std::string &,
+		                                           const std::string &,
+		                                           const residue_id_vec &) const final;
+		void do_end_colouring(std::ostream &,
+		                      const display_colourer &) final;
 
-		virtual void do_write_alignment_extras(std::ostream &,
-		                                       const sup::superposition_context &) const override final;
-		virtual void do_write_end(std::ostream &) const override final;
+		void do_write_alignment_extras(std::ostream &,
+		                               const sup::superposition_context &) const final;
+		void do_write_end(std::ostream &) const final;
 
 	public:
 		/// \brief TODOCUMENT

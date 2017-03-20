@@ -39,10 +39,10 @@ namespace cath {
 			/// \brief The optional JSON superposition input file
 			path_opt json_sup_infile;
 
-			virtual std::unique_ptr<options_block> do_clone() const override final;
-			virtual std::string do_get_block_name() const override final;
-			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
-			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
+			std::unique_ptr<options_block> do_clone() const final;
+			std::string do_get_block_name() const final;
+			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
+			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 
 		public:
 			const path_opt & get_json_sup_infile() const;

@@ -57,7 +57,7 @@ namespace cath {
 			/// \todo Should this be a reference too?
 			chop::region_vec_opt_vec regions;
 
-			virtual sup::superposition_context do_get_superposition(std::ostream &) const override final;
+			sup::superposition_context do_get_superposition(std::ostream &) const final;
 
 		public:
 			align_based_superposition_acquirer(const align::alignment &,

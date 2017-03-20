@@ -36,12 +36,12 @@ namespace cath {
 	///
 	/// Using program_exception_wrapper allows the program to be wrapped in standard last-chance exception handling.
 	class ssap_program_exception_wrapper final : public program_exception_wrapper {
-		virtual string do_get_program_name() const override final {
+		string do_get_program_name() const final {
 			return "cath-ssap";
 		}
 
 		/// \brief Parse the options and then pass them to run_ssap()
-		virtual void do_run_program(int argc, char * argv[]) override final {
+		void do_run_program(int argc, char * argv[]) final {
 			const auto the_cath_ssap_options = make_and_parse_options<cath_ssap_options>( argc, argv );
 
 			// If using Boost Log, and if debug requested, set the default filter to : permit all messages of severity info or more

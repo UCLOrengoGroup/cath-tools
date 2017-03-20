@@ -38,11 +38,11 @@ namespace cath {
 			/// \brief TODOCUMENT
 			mutable detail::score_accumulation_matrix the_accumulated_scores = detail::make_uninitialised_score_accumulation_matrix();
 
-			virtual std::unique_ptr<dyn_prog_aligner> do_clone() const override final;
+			std::unique_ptr<dyn_prog_aligner> do_clone() const final;
 
-			virtual score_alignment_pair do_align(const dyn_prog_score_source &,
-			                                      const gap::gap_penalty &,
-			                                      const size_type &) const override final;
+			score_alignment_pair do_align(const dyn_prog_score_source &,
+			                              const gap::gap_penalty &,
+			                              const size_type &) const final;
 
 			detail::path_step choose_path_step(const detail::path_step_score_map &,
 			                                   const size_t &,

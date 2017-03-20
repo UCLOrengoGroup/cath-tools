@@ -34,8 +34,8 @@ namespace cath {
 			/// \brief TODOCUMENT
 			boost::filesystem::path domain_defn_file;
 
-			virtual std::unique_ptr<pdbs_acquirer> do_clone() const override final;
-			virtual file::pdb_list_str_vec_pair do_get_pdbs_and_names(std::istream &) const override final;
+			std::unique_ptr<pdbs_acquirer> do_clone() const final;
+			file::pdb_list_str_vec_pair do_get_pdbs_and_names(std::istream &) const final;
 
 		public:
 			explicit domain_defn_pdbs_acquirer(const boost::filesystem::path &);

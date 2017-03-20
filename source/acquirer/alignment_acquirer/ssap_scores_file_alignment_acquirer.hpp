@@ -37,8 +37,8 @@ namespace cath {
 			using super = alignment_acquirer;
 			boost::filesystem::path ssap_scores_file;
 
-			virtual std::unique_ptr<alignment_acquirer> do_clone() const override final;
-			virtual std::pair<align::alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const override final;
+			std::unique_ptr<alignment_acquirer> do_clone() const final;
+			std::pair<align::alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const final;
 
 			align::size_size_alignment_tuple_vec get_spanning_alignments(const boost::filesystem::path &,
 			                                                             const str_vec &,

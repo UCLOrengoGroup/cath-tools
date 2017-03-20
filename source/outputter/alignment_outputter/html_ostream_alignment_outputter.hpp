@@ -36,10 +36,10 @@ namespace cath {
 			/// \brief TODOCUMENT
 			common::clone_ptr<display_colourer> colourer_ptr;
 
-			virtual std::unique_ptr<alignment_outputter> do_clone() const override final;
-			virtual void do_output_alignment(const align::alignment_context &,
-			                                 std::ostream &) const override final;
-			virtual bool do_involves_display_spec() const override final;
+			std::unique_ptr<alignment_outputter> do_clone() const final;
+			void do_output_alignment(const align::alignment_context &,
+			                         std::ostream &) const final;
+			bool do_involves_display_spec() const final;
 
 		public:
 			explicit html_ostream_alignment_outputter(const display_colourer &);

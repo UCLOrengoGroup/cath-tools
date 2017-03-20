@@ -50,13 +50,13 @@ namespace cath {
 			/// \brief TODOCUMENT
 			detail_help_options_block       the_detail_help_options_block;
 
-			virtual std::string do_get_program_name() const override final;
-			virtual boost::program_options::positional_options_description get_positional_options() override final;
-			virtual str_opt do_get_error_or_help_string() const override final;
+			std::string do_get_program_name() const final;
+			boost::program_options::positional_options_description get_positional_options() final;
+			str_opt do_get_error_or_help_string() const final;
 
-			virtual std::string do_get_help_prefix_string() const override final;
-			virtual std::string do_get_help_suffix_string() const override final;
-			virtual std::string do_get_overview_string() const override final;
+			std::string do_get_help_prefix_string() const final;
+			std::string do_get_help_suffix_string() const final;
+			std::string do_get_overview_string() const final;
 
 			static std::string get_version_description_string();
 

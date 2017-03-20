@@ -84,11 +84,11 @@ namespace cath {
 			sup::sup_pdbs_script_policy write_rasmol_script          = DEF_SCRIPT;    ///< Whether to write a Rasmol superposition script file
 			bool                        write_xml_sup                = DEF_BOOL;      ///< Whether to write an XML superposition file
 
-			virtual std::unique_ptr<options_block> do_clone() const override final;
-			virtual std::string do_get_block_name() const override final;
-			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
-			virtual void do_add_hidden_options_to_description(boost::program_options::options_description &) override final;
-			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
+			std::unique_ptr<options_block> do_clone() const final;
+			std::string do_get_block_name() const final;
+			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
+			void do_add_hidden_options_to_description(boost::program_options::options_description &) final;
+			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 
 		public:
 			bool protein_names_specified() const;

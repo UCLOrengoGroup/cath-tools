@@ -41,21 +41,21 @@ namespace cath {
 			/// \brief TODOCUMENT
 			detail::score_common_coord_handler the_coord_handler;
 
-			virtual std::unique_ptr<aligned_pair_score> do_clone() const override final;
+			std::unique_ptr<aligned_pair_score> do_clone() const final;
 
-			virtual boost::logic::tribool do_higher_is_better() const override final;
-			virtual score_value do_calculate(const align::alignment &,
-			                                 const protein &,
-			                                 const protein &) const override final;
-			virtual std::string do_description() const override final;
-			virtual std::string do_id_name() const override final;
-			virtual str_bool_pair_vec do_short_name_suffixes() const override final;
-			virtual std::string do_long_name() const override final;
-			virtual std::string do_reference() const override final;
+			boost::logic::tribool do_higher_is_better() const final;
+			score_value do_calculate(const align::alignment &,
+			                         const protein &,
+			                         const protein &) const final;
+			std::string do_description() const final;
+			std::string do_id_name() const final;
+			str_bool_pair_vec do_short_name_suffixes() const final;
+			std::string do_long_name() const final;
+			std::string do_reference() const final;
 
-//			virtual std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const override final;
+//			std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
 
-			virtual bool do_less_than_with_same_dynamic_type(const aligned_pair_score &) const override final;
+			bool do_less_than_with_same_dynamic_type(const aligned_pair_score &) const final;
 
 			static score_value score_for_target_length(const std::pair<geom::coord_list_vec, geom::coord_list_vec> &,
 			                                           const score_value &);

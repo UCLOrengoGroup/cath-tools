@@ -33,7 +33,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			std_region_io_spec region_io_spec;
 
-			virtual region do_read_region(const std::string &) const override final;
+			region do_read_region(const std::string &) const final;
 
 		public:
 			explicit std_region_reader(const std_region_io_spec &);

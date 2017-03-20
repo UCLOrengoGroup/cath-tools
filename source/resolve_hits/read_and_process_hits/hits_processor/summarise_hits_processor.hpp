@@ -43,15 +43,15 @@ namespace cath {
 				/// \brief Record an example query_id/full_hit pair
 				boost::optional<std::pair<std::string, full_hit>> example_query_id_and_hit;
 
-				virtual std::unique_ptr<hits_processor> do_clone() const override final;
+				std::unique_ptr<hits_processor> do_clone() const final;
 
-				virtual void do_process_hits_for_query(const std::string &,
-				                                       const crh_filter_spec &,
-				                                       full_hit_list &) override final;
+				void do_process_hits_for_query(const std::string &,
+				                               const crh_filter_spec &,
+				                               full_hit_list &) final;
 
-				virtual void do_finish_work() override final;
+				void do_finish_work() final;
 
-				virtual bool do_parse_hits_that_fail_score_filter() const override final;
+				bool do_parse_hits_that_fail_score_filter() const final;
 
 			public:
 				explicit summarise_hits_processor(std::ostream &,

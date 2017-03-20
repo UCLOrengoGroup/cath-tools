@@ -29,13 +29,13 @@ namespace cath {
 		/// \brief Concrete common_atom_selection_policy that selects the two alpha carbons in the two residues
 		class common_atom_select_ca_policy final : public common_atom_selection_policy {
 		private:
-			virtual void do_append_common_atoms_to_coord_lists(geom::coord_list_coord_list_pair &,
-			                                                   const residue &,
-			                                                   const residue &) const override final;
-			virtual std::string do_get_descriptive_name() const override final;
-			virtual std::unique_ptr<common_atom_selection_policy> do_clone() const override final;
+			void do_append_common_atoms_to_coord_lists(geom::coord_list_coord_list_pair &,
+			                                           const residue &,
+			                                           const residue &) const final;
+			std::string do_get_descriptive_name() const final;
+			std::unique_ptr<common_atom_selection_policy> do_clone() const final;
 
-			virtual bool do_less_than_with_same_dynamic_type(const common_atom_selection_policy &) const override final;
+			bool do_less_than_with_same_dynamic_type(const common_atom_selection_policy &) const final;
 		};
 
 	} // namespace align

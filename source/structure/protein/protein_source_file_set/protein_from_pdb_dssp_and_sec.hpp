@@ -32,17 +32,17 @@ namespace cath {
 		/// \brief Whether or not to limit the protein to residues that are found in the DSSP file
 		file::dssp_skip_policy the_dssp_skip_policy;
 
-		virtual std::unique_ptr<protein_source_file_set> do_clone() const override final;
+		std::unique_ptr<protein_source_file_set> do_clone() const final;
 
-		virtual file::data_file_vec do_get_file_set() const override final;
+		file::data_file_vec do_get_file_set() const final;
 
-		virtual protein_file_combn do_get_protein_file_combn() const override final;
+		protein_file_combn do_get_protein_file_combn() const final;
 
-		virtual bool do_makes_ssap_ready_protein() const override final;
+		bool do_makes_ssap_ready_protein() const final;
 
-		virtual protein do_read_files(const file::data_file_path_map &,
-		                              const std::string &,
-		                              std::ostream &) const override final;
+		protein do_read_files(const file::data_file_path_map &,
+		                      const std::string &,
+		                      std::ostream &) const final;
 
 	public:
 		explicit protein_from_pdb_dssp_and_sec(const file::dssp_skip_policy & = file::dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES);

@@ -35,7 +35,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			virtual std::unique_ptr<sym_protein_only_length_getter> do_sym_protein_only_clone() const = 0;
 
-			virtual std::unique_ptr<protein_only_length_getter> do_protein_only_clone() const override final;
+			std::unique_ptr<protein_only_length_getter> do_protein_only_clone() const final;
 
 		public:
 			std::unique_ptr<sym_protein_only_length_getter> sym_protein_only_clone() const;

@@ -37,11 +37,11 @@ namespace cath {
 			/// \brief Whether or not to permit no ATOM records
 			bool permit_no_atoms;
 
-			virtual std::unique_ptr<options_block> do_clone() const override final;
-			virtual std::string do_get_block_name() const override final;
-			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) override final;
-			virtual void do_add_hidden_options_to_description(boost::program_options::options_description &) override final;
-			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const override final;
+			std::unique_ptr<options_block> do_clone() const final;
+			std::string do_get_block_name() const final;
+			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
+			void do_add_hidden_options_to_description(boost::program_options::options_description &) final;
+			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 
 		public:
 			explicit check_pdb_options_block();

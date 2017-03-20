@@ -34,11 +34,11 @@ namespace cath {
 
 			double get_score_cutoff() const;
 
-			virtual size_vec do_select_common_residues_with_scores(const doub_doub_pair_vec &) const override final;
-			virtual std::string do_get_descriptive_name() const override final;
-			virtual std::unique_ptr<common_residue_selection_policy> do_clone() const override final;
+			size_vec do_select_common_residues_with_scores(const doub_doub_pair_vec &) const final;
+			std::string do_get_descriptive_name() const final;
+			std::unique_ptr<common_residue_selection_policy> do_clone() const final;
 
-			virtual bool do_less_than_with_same_dynamic_type(const common_residue_selection_policy &) const override final;
+			bool do_less_than_with_same_dynamic_type(const common_residue_selection_policy &) const final;
 
 		public:
 			explicit common_residue_select_min_score_policy(const double & = DEFAULT_CUTOFF);

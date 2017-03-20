@@ -29,10 +29,10 @@ namespace cath {
 		/// \brief TODOCUMENT
 		class ssap_ostream_alignment_outputter final : public alignment_outputter {
 		private:
-			virtual std::unique_ptr<alignment_outputter> do_clone() const override final;
-			virtual void do_output_alignment(const align::alignment_context &,
-			                                 std::ostream &) const override final;
-			virtual bool do_involves_display_spec() const override final;
+			std::unique_ptr<alignment_outputter> do_clone() const final;
+			void do_output_alignment(const align::alignment_context &,
+			                         std::ostream &) const final;
+			bool do_involves_display_spec() const final;
 		};
 
 	} // namespace opts

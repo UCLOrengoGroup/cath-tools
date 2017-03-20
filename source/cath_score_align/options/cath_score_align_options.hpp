@@ -48,12 +48,12 @@ namespace cath {
 			/// \brief TODOCUMENT
 			pdb_input_options_block            the_pdb_input_options_block;
 
-			virtual std::string do_get_program_name() const override final;
-			virtual str_opt do_get_error_or_help_string() const override final;
+			std::string do_get_program_name() const final;
+			str_opt do_get_error_or_help_string() const final;
 
-			virtual std::string do_get_help_prefix_string() const override final;
-			virtual std::string do_get_help_suffix_string() const override final;
-			virtual std::string do_get_overview_string() const override final;
+			std::string do_get_help_prefix_string() const final;
+			std::string do_get_help_suffix_string() const final;
+			std::string do_get_overview_string() const final;
 
 			void check_ok_to_use() const;
 

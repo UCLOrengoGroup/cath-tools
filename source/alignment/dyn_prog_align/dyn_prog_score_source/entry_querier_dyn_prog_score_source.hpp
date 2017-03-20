@@ -46,10 +46,10 @@ namespace cath {
 			/// \brief TODOCUMENT
 			const size_t         view_from_index_b;
 
-			virtual size_t do_get_length_a() const override final;
-			virtual size_t do_get_length_b() const override final;
-			virtual score_type do_get_score(const size_t &,
-			                                const size_t &) const override final;
+			size_t do_get_length_a() const final;
+			size_t do_get_length_b() const final;
+			score_type do_get_score(const size_t &,
+			                        const size_t &) const final;
 
 		public:
 			entry_querier_dyn_prog_score_source(const entry_querier &,

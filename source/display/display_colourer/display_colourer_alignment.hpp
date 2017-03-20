@@ -49,11 +49,11 @@ namespace cath {
 		/// \brief The gradient with which this display_colourer_alignment should colour alignments
 		display_colour_gradient gradient;
 
-		virtual std::unique_ptr<display_colourer> do_clone() const override final;
+		std::unique_ptr<display_colourer> do_clone() const final;
 
-		virtual display_colour_spec do_get_colour_spec(const align::alignment_context &) const override final;
+		display_colour_spec do_get_colour_spec(const align::alignment_context &) const final;
 
-		virtual std::string do_get_label() const override final;
+		std::string do_get_label() const final;
 
 		const display_colour_gradient & get_gradient() const;
 

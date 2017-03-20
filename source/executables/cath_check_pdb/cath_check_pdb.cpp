@@ -48,12 +48,12 @@ namespace cath {
 	///
 	/// Using program_exception_wrapper allows the program to be wrapped in standard last-chance exception handling.
 	class cath_check_pdb_program_exception_wrapper final : public program_exception_wrapper {
-		virtual string do_get_program_name() const override final {
+		string do_get_program_name() const final {
 			return "check-pdb";
 		}
 
 		/// \brief Parse the options and then pass them to cath_superposer::superpose()
-		virtual void do_run_program(int argc, char * argv[]) override final {
+		void do_run_program(int argc, char * argv[]) final {
 			const auto the_cath_check_pdb_options = make_and_parse_options<cath_check_pdb_options>( argc, argv );
 
 			// If the options are invalid or specify to do_nothing, then just output string return

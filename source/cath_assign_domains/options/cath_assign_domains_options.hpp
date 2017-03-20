@@ -42,12 +42,12 @@ namespace cath {
 			/// \brief The cath-assign-domains options block
 			cath_assign_domains_options_block the_cath_assign_domains_options_block;
 
-			virtual std::string do_get_program_name() const override final;
-			virtual str_opt do_get_error_or_help_string() const override final;
+			std::string do_get_program_name() const final;
+			str_opt do_get_error_or_help_string() const final;
 
-			virtual std::string do_get_help_prefix_string() const override final;
-			virtual std::string do_get_help_suffix_string() const override final;
-			virtual std::string do_get_overview_string() const override final;
+			std::string do_get_help_prefix_string() const final;
+			std::string do_get_help_suffix_string() const final;
+			std::string do_get_overview_string() const final;
 
 		public:
 			cath_assign_domains_options();

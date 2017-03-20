@@ -43,12 +43,12 @@ namespace cath {
 	///
 	/// Using program_exception_wrapper allows the program to be wrapped in standard last-chance exception handling.
 	class snap_judgement_program_exception_wrapper final : public program_exception_wrapper {
-		virtual string do_get_program_name() const override final {
+		string do_get_program_name() const final {
 			return "snap-judgement";
 		}
 
 		/// \brief Parse the options and then pass them to snap_judgementr::superpose()
-		virtual void do_run_program(int /*argc*/, char * /*argv*/[]) override final {
+		void do_run_program(int /*argc*/, char * /*argv*/[]) final {
 			cerr << "Running snap-judgement\n";
 
 			// The details of the pair to use

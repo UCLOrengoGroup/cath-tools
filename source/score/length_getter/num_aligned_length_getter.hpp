@@ -41,31 +41,31 @@ namespace cath {
 			/// \brief TODOCUMENT
 			detail::score_common_coord_handler common_coord_handler;
 
-			virtual std::unique_ptr<length_getter> do_clone() const override final;
+			std::unique_ptr<length_getter> do_clone() const final;
 
-			virtual boost::logic::tribool do_higher_is_better() const override final;
+			boost::logic::tribool do_higher_is_better() const final;
 
-			virtual size_t do_get_length(const align::alignment &,
-			                             const protein &,
-			                             const protein &) const override final;
+			size_t do_get_length(const align::alignment &,
+			                     const protein &,
+			                     const protein &) const final;
 
-			virtual length_getter_category do_get_length_getter_category() const override final;
+			length_getter_category do_get_length_getter_category() const final;
 
-			virtual std::string do_id_name() const override final;
+			std::string do_id_name() const final;
 
-			virtual str_bool_pair_vec do_short_name_suffixes() const override final;
+			str_bool_pair_vec do_short_name_suffixes() const final;
 
-			virtual std::string do_long_name() const override final;
+			std::string do_long_name() const final;
 
-			virtual std::string do_description() const override final;
+			std::string do_description() const final;
 
 //			virtual std::string do_short_suffix_string() const;
 
 //			virtual std::string do_long_suffix_string() const;
 
-			virtual const std::string do_description_brackets_string() const override final;
+			const std::string do_description_brackets_string() const final;
 
-			virtual bool do_less_than_with_same_dynamic_type(const length_getter &) const override final;
+			bool do_less_than_with_same_dynamic_type(const length_getter &) const final;
 
 			const detail::score_common_coord_handler & get_common_coord_handler() const;
 

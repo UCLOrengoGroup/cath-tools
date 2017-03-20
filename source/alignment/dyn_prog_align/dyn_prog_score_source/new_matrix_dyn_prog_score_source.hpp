@@ -36,10 +36,10 @@ namespace cath {
 			const size_t               length_a;
 			const size_t               length_b;
 
-			virtual size_t     do_get_length_a() const override final;
-			virtual size_t     do_get_length_b() const override final;
-			virtual score_type do_get_score(const size_t &,
-			                                const size_t &) const override final;
+			size_t     do_get_length_a() const final;
+			size_t     do_get_length_b() const final;
+			score_type do_get_score(const size_t &,
+			                        const size_t &) const final;
 
 		public:
 			new_matrix_dyn_prog_score_source(const float_score_vec_vec &,

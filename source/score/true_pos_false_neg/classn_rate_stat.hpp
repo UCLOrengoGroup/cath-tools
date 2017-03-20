@@ -117,9 +117,9 @@ namespace cath {
 		template <std_classn_rate_stat S>
 		class classn_rate_stat final : public classn_stat {
 		private:
-			virtual size_rational do_calculate(const true_false_pos_neg &) const override final;
+			size_rational do_calculate(const true_false_pos_neg &) const final;
 
-			virtual std::string do_get_name() const override final;
+			std::string do_get_name() const final;
 
 			/// \brief The numerator (looked up from numerator_and_denominator_of_stat at compile-time)
 			static constexpr classn_outcome numerator   = std::get<1>( common::constexpr_find(

@@ -43,14 +43,14 @@ namespace cath {
 
 		/// \brief A concrete program_exception_wrapper that throws requested exceptions to allow testing of program_exception_wrapper
 		class test_program_exception_wrapper final : public program_exception_wrapper {
-			virtual string do_get_program_name() const override final {
+			string do_get_program_name() const final {
 				return "test_program_exception_wrapper";
 			}
 
 			/// \brief Throw the sort of argument requested (or none at all)
-			virtual void do_run_program(int argc,
-			                            char * argv[]
-			                            ) override final {
+			void do_run_program(int argc,
+			                    char * argv[]
+			                    ) final {
 				BOOST_REQUIRE_GE(argc, 1);
 				const string first_argument_str( argv[ 0 ] );
 				if (first_argument_str == "boost") {

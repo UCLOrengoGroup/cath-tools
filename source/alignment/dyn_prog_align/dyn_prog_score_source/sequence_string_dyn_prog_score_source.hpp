@@ -37,10 +37,10 @@ namespace cath {
 
 			static void check_sequence_string(const std::string &);
 
-			virtual size_t do_get_length_a() const override final;
-			virtual size_t do_get_length_b() const override final;
-			virtual score_type do_get_score(const size_t &,
-			                                const size_t &) const override final;
+			size_t do_get_length_a() const final;
+			size_t do_get_length_b() const final;
+			score_type do_get_score(const size_t &,
+			                        const size_t &) const final;
 
 		public:
 			sequence_string_dyn_prog_score_source(const std::string &,

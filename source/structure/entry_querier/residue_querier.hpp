@@ -28,32 +28,32 @@ namespace cath {
 	/// \brief TODOCUMENT
 	class residue_querier final : public entry_querier {
 	private:
-		virtual size_t           do_get_length(const cath::protein &) const override final;
-		virtual double           do_get_gap_penalty_ratio() const override final;
-		virtual size_t           do_num_excluded_on_either_size() const override final;
-		virtual float_score_type do_optimum_single_score() const override final;
+		size_t           do_get_length(const cath::protein &) const final;
+		double           do_get_gap_penalty_ratio() const final;
+		size_t           do_num_excluded_on_either_size() const final;
+		float_score_type do_optimum_single_score() const final;
 
-		virtual std::string  do_get_entry_name() const override final;
-		virtual score_type   do_distance_score__offset_1(const cath::protein &,
-		                                                 const cath::protein &,
-		                                                 const size_t &,
-		                                                 const size_t &,
-		                                                 const size_t &,
-		                                                 const size_t &) const override final;
+		std::string  do_get_entry_name() const final;
+		score_type   do_distance_score__offset_1(const cath::protein &,
+		                                         const cath::protein &,
+		                                         const size_t &,
+		                                         const size_t &,
+		                                         const size_t &,
+		                                         const size_t &) const final;
 
-		virtual bool         do_are_comparable__offset_1(const cath::protein &,
-		                                                 const cath::protein &,
-		                                                 const size_t &,
-		                                                 const size_t &,
-		                                                 const size_t &,
-		                                                 const size_t &) const override final;
+		bool         do_are_comparable__offset_1(const cath::protein &,
+		                                         const cath::protein &,
+		                                         const size_t &,
+		                                         const size_t &,
+		                                         const size_t &,
+		                                         const size_t &) const final;
 
-		virtual bool         do_are_similar__offset_1(const cath::protein &,
-		                                              const cath::protein &,
-		                                              const size_t &,
-		                                              const size_t &) const override final;
+		bool         do_are_similar__offset_1(const cath::protein &,
+		                                      const cath::protein &,
+		                                      const size_t &,
+		                                      const size_t &) const final;
 
-		virtual bool         do_temp_hacky_is_residue() const override final;
+		bool         do_temp_hacky_is_residue() const final;
 
 	public:
 		/// As in the SSAP paper(s), the a and b values values are used to convert the distance into a score

@@ -29,14 +29,14 @@ namespace cath {
 		/// \brief TODOCUMENT
 		class common_residue_select_all_policy final : public common_residue_selection_policy {
 		private:
-			virtual size_vec do_select_common_residues(const alignment &,
-			                                           const std::vector<alignment::size_type> &,
-			                                           const alignment::size_type &,
-			                                           const alignment::size_type &) const override final;
-			virtual std::string do_get_descriptive_name() const override final;
-			virtual std::unique_ptr<common_residue_selection_policy> do_clone() const override final;
+			size_vec do_select_common_residues(const alignment &,
+			                                   const std::vector<alignment::size_type> &,
+			                                   const alignment::size_type &,
+			                                   const alignment::size_type &) const final;
+			std::string do_get_descriptive_name() const final;
+			std::unique_ptr<common_residue_selection_policy> do_clone() const final;
 
-			virtual bool do_less_than_with_same_dynamic_type(const common_residue_selection_policy &) const override final;
+			bool do_less_than_with_same_dynamic_type(const common_residue_selection_policy &) const final;
 		};
 	} // namespace align
 } // namespace cath

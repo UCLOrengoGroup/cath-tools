@@ -221,12 +221,12 @@ namespace cath {
 	///
 	/// Using program_exception_wrapper allows the program to be wrapped in standard last-chance exception handling.
 	class cath_assign_domains_program_exception_wrapper final : public program_exception_wrapper {
-		virtual string do_get_program_name() const override final {
+		string do_get_program_name() const final {
 			return "cath-assign-domains";
 		}
 
 		/// \brief Parse the options and then pass them to cath_assign_domainsr::superpose()
-		virtual void do_run_program(int argc, char * argv[]) override final {
+		void do_run_program(int argc, char * argv[]) final {
 //			./cath-assign-domains --svmlight-rbf-file /usr/local/svn/source/update/trunk/utilities/cath_svm.rbf_gamma_1_c_5.model --filelist-file ./data_files.txt --sf-of-domain-file ./superfamily_of_domain.txt
 //			const path   default_rbf_svm_file    = "/cath/homes2/ucbctnl/svm_gubbins_files/svm_experiments_data/ssap_and_prc/svm_data.full.rbf_gamma_1_c_5.model";
 //			const path   default_data_data_file  = "/data1/people/ucbctnl/ticket_914_data/data_data.txt";

@@ -28,25 +28,25 @@ namespace cath {
 	/// \brief TODOCUMENT
 	class jmol_viewer final : public rasmol_style_viewer {
 	private:
-		virtual std::string do_default_executable() const override final;
+		std::string do_default_executable() const final;
 
-		virtual void do_write_start(std::ostream &) const override final;
-		virtual void do_write_load_pdbs(std::ostream &,
-		                                const sup::superposition &,
-		                                const file::pdb_list &,
-		                                const str_vec &) const override final;
-		virtual void do_define_colour(std::ostream &,
-		                              const display_colour &,
-		                              const std::string &) const override final;
-		virtual std::string do_get_colour_base_str(const std::string &) const override final;
-		virtual std::string do_get_colour_pdb_str(const std::string &,
-		                                          const std::string &) const override final;
-		virtual std::string do_get_colour_pdb_residues_str(const std::string &,
-		                                                   const std::string &,
-		                                                   const residue_id_vec &) const override final;
-		virtual void do_write_alignment_extras(std::ostream &,
-		                                       const sup::superposition_context &) const override final;
-		virtual void do_write_end(std::ostream &) const override final;
+		void do_write_start(std::ostream &) const final;
+		void do_write_load_pdbs(std::ostream &,
+		                        const sup::superposition &,
+		                        const file::pdb_list &,
+		                        const str_vec &) const final;
+		void do_define_colour(std::ostream &,
+		                      const display_colour &,
+		                      const std::string &) const final;
+		std::string do_get_colour_base_str(const std::string &) const final;
+		std::string do_get_colour_pdb_str(const std::string &,
+		                                  const std::string &) const final;
+		std::string do_get_colour_pdb_residues_str(const std::string &,
+		                                           const std::string &,
+		                                           const residue_id_vec &) const final;
+		void do_write_alignment_extras(std::ostream &,
+		                               const sup::superposition_context &) const final;
+		void do_write_end(std::ostream &) const final;
 	};
 
 } // namespace cath

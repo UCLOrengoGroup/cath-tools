@@ -32,12 +32,12 @@ namespace cath {
 	///
 	/// Using program_exception_wrapper allows the program to be wrapped in standard last-chance exception handling.
 	class cath_refine_align_program_exception_wrapper final : public program_exception_wrapper {
-		virtual string do_get_program_name() const override final {
+		string do_get_program_name() const final {
 			return "cath-refine-align";
 		}
 
 		/// \brief Parse the options and then pass them to cath_refine_alignr::superpose()
-		virtual void do_run_program(int argc, char * argv[]) override final {
+		void do_run_program(int argc, char * argv[]) final {
 			const auto the_cath_refine_align_options = make_and_parse_options<cath_refine_align_options>( argc, argv );
 			cath_align_refiner::refine(the_cath_refine_align_options);
 		}

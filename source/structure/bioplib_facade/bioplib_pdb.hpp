@@ -67,16 +67,16 @@ namespace cath {
 			const PDB * get_ptr() const;
 			size_t get_natoms() const;
 
-			virtual void do_read_file(const boost::filesystem::path &) override final;
-			virtual void do_append_to_file(const boost::filesystem::path &) const override final;
-			virtual void do_set_chain_label(const chain_label &) override final;
-			virtual residue_id_vec do_get_residue_ids_of_first_chain__backbone_unchecked() const override final;
-			virtual geom::coord do_get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const override final;
-			virtual size_t do_get_num_atoms() const override final;
+			void do_read_file(const boost::filesystem::path &) final;
+			void do_append_to_file(const boost::filesystem::path &) const final;
+			void do_set_chain_label(const chain_label &) final;
+			residue_id_vec do_get_residue_ids_of_first_chain__backbone_unchecked() const final;
+			geom::coord do_get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const final;
+			size_t do_get_num_atoms() const final;
 
-			virtual void do_rotate(const geom::rotation &) override final;
-			virtual void do_add(const geom::coord &) override final;
-			virtual void do_subtract(const geom::coord &) override final;
+			void do_rotate(const geom::rotation &) final;
+			void do_add(const geom::coord &) final;
+			void do_subtract(const geom::coord &) final;
 
 		public:
 			bioplib_pdb() = default;
@@ -84,7 +84,7 @@ namespace cath {
 			bioplib_pdb(bioplib_pdb &&) = default;
 			bioplib_pdb & operator=(const bioplib_pdb &);
 			bioplib_pdb & operator=(bioplib_pdb &&) = default;
-			virtual ~bioplib_pdb() noexcept;
+			~bioplib_pdb() noexcept override;
 		};
 
 	} // namespace file

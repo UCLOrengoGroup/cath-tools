@@ -38,10 +38,10 @@ namespace cath {
 			/// \brief TODOCUMENT
 			common::clone_ptr<alignment_outputter> ostream_alignment_outputter_ptr;
 
-			virtual std::unique_ptr<alignment_outputter> do_clone() const override final;
-			virtual void do_output_alignment(const align::alignment_context &,
-			                                 std::ostream &) const override final;
-			virtual bool do_involves_display_spec() const override final;
+			std::unique_ptr<alignment_outputter> do_clone() const final;
+			void do_output_alignment(const align::alignment_context &,
+			                         std::ostream &) const final;
+			bool do_involves_display_spec() const final;
 
 		public:
 			file_alignment_outputter(const boost::filesystem::path &,

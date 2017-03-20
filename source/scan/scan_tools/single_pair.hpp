@@ -32,10 +32,10 @@ namespace cath {
 		/// \brief TODOCUMENT
 		class single_pair : public scan_type {
 		private:
-			virtual std::unique_ptr<scan_type> do_clone() const override final;
+			std::unique_ptr<scan_type> do_clone() const final;
 
-			virtual std::pair<record_scores_scan_action, scan_metrics> do_perform_scan(const protein_list &,
-			                                                                           const protein_list &) const override final;
+			std::pair<record_scores_scan_action, scan_metrics> do_perform_scan(const protein_list &,
+			                                                                   const protein_list &) const final;
 		};
 	} // namespace scan
 } // namespace cath

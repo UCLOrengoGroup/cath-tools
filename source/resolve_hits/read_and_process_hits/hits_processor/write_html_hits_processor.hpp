@@ -45,15 +45,15 @@ namespace cath {
 				/// \brief The specification for how to render the HTML
 				crh_html_spec html_spec;
 
-				virtual std::unique_ptr<hits_processor> do_clone() const override final;
+				std::unique_ptr<hits_processor> do_clone() const final;
 
-				virtual void do_process_hits_for_query(const std::string &,
-				                                       const crh_filter_spec &,
-				                                       full_hit_list &) override final;
+				void do_process_hits_for_query(const std::string &,
+				                               const crh_filter_spec &,
+				                               full_hit_list &) final;
 
-				virtual void do_finish_work() override final;
+				void do_finish_work() final;
 
-				virtual bool do_parse_hits_that_fail_score_filter() const override final;
+				bool do_parse_hits_that_fail_score_filter() const final;
 
 			public:
 				explicit write_html_hits_processor(std::ostream &,

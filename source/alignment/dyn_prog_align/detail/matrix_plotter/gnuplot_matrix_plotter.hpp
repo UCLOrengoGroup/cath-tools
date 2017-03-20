@@ -32,20 +32,20 @@ namespace cath {
 			/// \brief TODOCUMENT
 			class gnuplot_matrix_plotter final : public matrix_plotter  {
 			private:
-				virtual void do_plot_scores(doub_vec_vec &,
-				                            const double &,
-				                            const double &) override final;
-				virtual void do_plot_minor_corner_arrow(const size_t &,
-				                                        const size_t &,
-				                                        const size_t &,
-				                                        const size_t &) override final;
-				virtual void do_write_centre_score(const size_t &,
-				                                   const size_t &,
-				                                   const double &) override final;
-				virtual void do_write_corner_score(const size_t &,
-				                                   const size_t &,
-				                                   const double &) override final;
-				virtual void do_finish(const boost::filesystem::path &) const override final;
+				void do_plot_scores(doub_vec_vec &,
+				                    const double &,
+				                    const double &) final;
+				void do_plot_minor_corner_arrow(const size_t &,
+				                                const size_t &,
+				                                const size_t &,
+				                                const size_t &) final;
+				void do_write_centre_score(const size_t &,
+				                           const size_t &,
+				                           const double &) final;
+				void do_write_corner_score(const size_t &,
+				                           const size_t &,
+				                           const double &) final;
+				void do_finish(const boost::filesystem::path &) const final;
 
 				/// \brief TODOCUMENT
 				std::ostringstream preplot_commands;

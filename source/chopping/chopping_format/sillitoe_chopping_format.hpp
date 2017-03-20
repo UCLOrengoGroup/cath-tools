@@ -31,13 +31,13 @@ namespace cath {
 		/// \brief TODOCUMENT
 		class sillitoe_chopping_format final : public chopping_format {
 		private:
-			virtual std::unique_ptr<chopping_format> do_clone() const override final;
+			std::unique_ptr<chopping_format> do_clone() const final;
 
-			virtual bool do_represents_fragments() const override final;
+			bool do_represents_fragments() const final;
 
 			static std::pair<boost::string_ref, str_citr> parse_to_start_of_regions(const std::string &);
 
-			virtual domain do_parse_domain(const std::string &) const override final;
+			domain do_parse_domain(const std::string &) const final;
 
 		public:
 			region parse_segment(const boost::string_ref &) const;
