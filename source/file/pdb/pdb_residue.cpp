@@ -25,8 +25,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/range/adaptor/filtered.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/range/adaptor/reversed.hpp>
+#include <boost/range/irange.hpp>
 
 #include "common/boost_addenda/range/front.hpp"
 #include "common/boost_addenda/range/max_proj_element.hpp"

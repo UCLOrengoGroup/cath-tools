@@ -21,14 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_ORIENTATION_COVERING_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_ORIENTATION_COVERING_H
 
-#include <boost/range/adaptor/transformed.hpp>
-#include <boost/range/adaptor/filtered.hpp>
-#include <boost/range/adaptor/transformed.hpp>
-#include <boost/range/algorithm/min_element.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/transformed.hpp>
+#include <boost/range/adaptor/transformed.hpp>
+#include <boost/range/algorithm/min_element.hpp>
 #include <boost/range/irange.hpp>
 
 #include "common/algorithm/copy_build.hpp"
@@ -39,16 +39,14 @@
 #include "common/debug_numeric_cast.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
-#include "structure/geometry/quat_rot.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
+#include "structure/geometry/quat_rot.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 // #include <algorithm>
 // #include <cmath>
-#include <iostream> // ***** TEMPORARY *****
 #include <fstream>
-
 
 using namespace cath::common::literals;
 

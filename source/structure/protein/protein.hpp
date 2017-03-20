@@ -31,9 +31,9 @@
 #include "structure/protein/residue.hpp"
 #include "structure/structure_type_aliases.hpp"
 
+#include <cstddef>
 #include <iosfwd>
 #include <string>
-#include <cstddef>
 
 namespace cath { class residue; }
 namespace cath { class residue_id; }

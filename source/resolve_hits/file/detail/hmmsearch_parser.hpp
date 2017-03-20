@@ -30,8 +30,8 @@
 #include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 
-#include <string>
 #include <regex>
+#include <string>
 
 namespace cath {
 	namespace rslv {

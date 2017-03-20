@@ -21,7 +21,6 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "alignment/refiner/detail/alignment_split_list.hpp"
-
 #include "test/global_test_constants.hpp"
 
 using namespace cath;

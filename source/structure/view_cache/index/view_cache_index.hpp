@@ -24,10 +24,7 @@
 #include <boost/optional/optional_io.hpp>
 #include <boost/optional.hpp>
 
-#include "structure/view_cache/index/detail/pair_scan_action.hpp"
 #include "structure/view_cache/index/detail/dims/view_cache_index_dim_dirn.hpp"
-#include "structure/view_cache/index/detail/scaffold/view_cache_index_layer.hpp"
-#include "structure/view_cache/index/detail/scaffold/view_cache_index_tail.hpp"
 #include "structure/view_cache/index/detail/dims/view_cache_index_dim_linear_from_phi.hpp"
 #include "structure/view_cache/index/detail/dims/view_cache_index_dim_linear_from_psi.hpp"
 #include "structure/view_cache/index/detail/dims/view_cache_index_dim_linear_to_phi.hpp"
@@ -35,6 +32,9 @@
 #include "structure/view_cache/index/detail/dims/view_cache_index_dim_linear_x.hpp"
 #include "structure/view_cache/index/detail/dims/view_cache_index_dim_linear_y.hpp"
 #include "structure/view_cache/index/detail/dims/view_cache_index_dim_linear_z.hpp"
+#include "structure/view_cache/index/detail/pair_scan_action.hpp"
+#include "structure/view_cache/index/detail/scaffold/view_cache_index_layer.hpp"
+#include "structure/view_cache/index/detail/scaffold/view_cache_index_tail.hpp"
 #include "structure/view_cache/index/view_cache_index_entry.hpp"
 
 #include <chrono>

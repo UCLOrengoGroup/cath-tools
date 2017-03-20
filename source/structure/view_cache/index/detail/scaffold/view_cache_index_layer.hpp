@@ -77,7 +77,7 @@ namespace cath {
 
 				template <typename ACTN>
 				void perform_action_on_matches(const view_cache_index_entry &,
-				                               const detail::vcie_match_criteria &,
+				                               const vcie_match_criteria &,
 				                               ACTN &) const;
 
 				template <typename ACTN>
@@ -86,7 +86,7 @@ namespace cath {
 
 				template <typename ACTN>
 				void perform_action_on_all_match_at_nodes(const view_cache_index_layer<DIM, T> &,
-				                                          const detail::vcie_match_criteria &,
+				                                          const vcie_match_criteria &,
 				                                          ACTN &) const;
 
 				/// \brief TODOCUMENT
@@ -158,9 +158,9 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <typename DIM, typename T>
 			template <typename ACTN>
-			void view_cache_index_layer<DIM, T>::perform_action_on_matches(const view_cache_index_entry      &arg_entry,    ///< TODOCUMENT
-			                                                               const detail::vcie_match_criteria &arg_criteria, ///< TODOCUMENT
-			                                                               ACTN                              &arg_action    ///< TODOCUMENT
+			void view_cache_index_layer<DIM, T>::perform_action_on_matches(const view_cache_index_entry &arg_entry,    ///< TODOCUMENT
+			                                                               const vcie_match_criteria    &arg_criteria, ///< TODOCUMENT
+			                                                               ACTN                         &arg_action    ///< TODOCUMENT
 			                                                               ) const {
 				the_dimension.perform_action_on_matches( arg_entry, cells, arg_criteria, arg_action );
 			}
@@ -181,7 +181,7 @@ namespace cath {
 			template <typename DIM, typename T>
 			template <typename ACTN>
 			void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_nodes(const view_cache_index_layer<DIM, T> &arg_match_layer, ///< TODOCUMENT
-			                                                                          const detail::vcie_match_criteria    &arg_criteria,    ///< TODOCUMENT
+			                                                                          const vcie_match_criteria            &arg_criteria,    ///< TODOCUMENT
 			                                                                          ACTN                                 &arg_action       ///< TODOCUMENT
 			                                                                          ) const {
 				the_dimension.perform_action_on_all_match_at_nodes(

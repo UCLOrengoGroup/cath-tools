@@ -26,8 +26,8 @@
 #include "exception/invalid_argument_exception.hpp"
 #include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
 #include "score/aligned_pair_score_list/score_value_list_reader/score_value_reader.hpp"
-#include "score/score_type_aliases.hpp"
 #include "score/score_classification/score_classn_value_list.hpp"
+#include "score/score_type_aliases.hpp"
 #include "score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
 
 #include <iostream>

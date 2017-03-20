@@ -57,13 +57,13 @@ namespace cath {
 
 				template <typename ACTN>
 				void perform_action_on_matches(const view_cache_index_entry &,
-				                               const detail::vcie_match_criteria &,
+				                               const vcie_match_criteria &,
 				                               ACTN &) const;
 
 				/// \brief TODOCUMENT
 				template <typename ACTN>
 				void perform_action_on_all_match_at_nodes(const view_cache_index_tail &,
-				                                          const detail::vcie_match_criteria &,
+				                                          const vcie_match_criteria &,
 				                                          ACTN &) const;
 
 				/// \brief TODOCUMENT
@@ -103,9 +103,9 @@ namespace cath {
 			}
 
 			template <typename ACTN>
-			void view_cache_index_tail::perform_action_on_matches(const view_cache_index_entry      &arg_entry,    ///< TODOCUMENT
-			                                                      const detail::vcie_match_criteria &arg_criteria, ///< TODOCUMENT
-			                                                      ACTN                              &arg_action    ///< TODOCUMENT
+			void view_cache_index_tail::perform_action_on_matches(const view_cache_index_entry &arg_entry,    ///< TODOCUMENT
+			                                                      const vcie_match_criteria    &arg_criteria, ///< TODOCUMENT
+			                                                      ACTN                         &arg_action    ///< TODOCUMENT
 			                                                      ) const {
 				for (const view_cache_index_entry &entry : entries) {
 					if ( arg_criteria( arg_entry, entry ) ) {
@@ -129,9 +129,9 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename ACTN>
-			void view_cache_index_tail::perform_action_on_all_match_at_nodes(const view_cache_index_tail       &arg_match_tail, ///< TODOCUMENT
-			                                                                 const detail::vcie_match_criteria &arg_criteria,   ///< TODOCUMENT
-			                                                                 ACTN                              &arg_action      ///< TODOCUMENT
+			void view_cache_index_tail::perform_action_on_all_match_at_nodes(const view_cache_index_tail &arg_match_tail, ///< TODOCUMENT
+			                                                                 const vcie_match_criteria   &arg_criteria,   ///< TODOCUMENT
+			                                                                 ACTN                        &arg_action      ///< TODOCUMENT
 			                                                                 ) const {
 				// std::cerr << "Comparing "           << entries.size()
 				//           << " query entries with " << arg_match_tail.entries.size()

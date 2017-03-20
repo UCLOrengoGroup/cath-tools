@@ -28,8 +28,8 @@
 #include "common/type_aliases.hpp"
 
 #include <string>
-#include <vector>
 #include <type_traits>
+#include <vector>
 
 namespace cath {
 	namespace common {
