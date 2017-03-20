@@ -41,7 +41,7 @@ namespace cath {
 		chop::region_vec_opt get_regions_expanded_for_context(const chop::region_vec &,
 		                                                      const superposition_content_spec &);
 
-	} // namespace rslv
+	}  // namespace sup
 } // namespace cath
 
 #endif
