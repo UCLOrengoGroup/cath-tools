@@ -166,15 +166,21 @@ find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | s
 Assessing with all clang-tidy checks
 --
 
+Prefer using more recent version of clang-tidy; it's changing fast.
 
 Would like to use:
  * `misc-use-override` but (in version 3.6.2), it erroneously fires for method declarations that *do* use override
  * `google-readability-function` but (in version 3.6.2), it fires for declarations, for which I don't want to always name all params
 
+find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy -checks=llvm-include-order VAR -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
+
+
 ~~~~~no-highlight
-clang-tidy '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -list-checks - --
-clang-tidy '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -dump-config - --
-find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' VAR -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
+clang-tidy '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -list-checks --
+clang-tidy '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -dump-config --
+find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy VAR '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
+
+find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang-tidy VAR '-checks=*,-llvm-header-guard' - -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source
 ~~~~~
 
 
