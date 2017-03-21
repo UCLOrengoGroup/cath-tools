@@ -88,8 +88,8 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 	}
 
 	// read total length of protein data in file and allocate memory
-	while ( c = numeric_cast<char>( getc( wolf_infile ) ), c!= '#'  );
-	while ( c = numeric_cast<char>( getc( wolf_infile ) ), c!= '\n' );
+	while ( c = numeric_cast<char>( getc( wolf_infile ) ), c!= '#'  ) {}
+	while ( c = numeric_cast<char>( getc( wolf_infile ) ), c!= '\n' ) {}
 
 	residue_vec residues;
 	residues.reserve(length);
