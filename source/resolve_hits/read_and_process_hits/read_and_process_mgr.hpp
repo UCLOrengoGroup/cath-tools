@@ -149,7 +149,7 @@ namespace cath {
 			static constexpr bool DEFAULT_INPUT_HITS_ARE_GROUPED = false;
 
 			explicit read_and_process_mgr(const detail::hits_processor &,
-			                              const crh_filter_spec &,
+			                              crh_filter_spec,
 			                              const bool & = DEFAULT_INPUT_HITS_ARE_GROUPED);
 
 			void add_hit(const boost::string_ref &,
@@ -225,11 +225,11 @@ namespace cath {
 
 		/// \brief Ctor from the ostream to which the results should be written
 		inline read_and_process_mgr::read_and_process_mgr(const detail::hits_processor &arg_hits_processor,        ///< The hits_processor to use to process the hits
-		                                                  const crh_filter_spec        &arg_filter_spec,           ///< The filter spec to define how to filter the hits
+		                                                  crh_filter_spec               arg_filter_spec,           ///< The filter spec to define how to filter the hits
 		                                                  const bool                   &arg_input_hits_are_grouped ///< Whether or not the input hits are guaranteed to be presorted
-		                                                  ) : processor_ptr          { arg_hits_processor.clone() },
-		                                                      the_filter_spec        { arg_filter_spec            },
-		                                                      input_hits_are_grouped { arg_input_hits_are_grouped } {
+		                                                  ) : processor_ptr          { arg_hits_processor.clone()   },
+		                                                      the_filter_spec        { std::move( arg_filter_spec ) },
+		                                                      input_hits_are_grouped { arg_input_hits_are_grouped   } {
 		}
 
 		/// \brief Add a new hit for the current query_id

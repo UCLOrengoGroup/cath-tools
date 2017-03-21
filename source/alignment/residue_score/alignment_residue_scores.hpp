@@ -47,8 +47,8 @@ namespace cath {
 
 		public:
 			alignment_residue_scores(const size_t &,
-			                         const size_vec &,
-			                         const score_opt_vec_vec &);
+			                         size_vec,
+			                         score_opt_vec_vec);
 
 			size_t get_num_entries() const;
 			size_t get_length() const;

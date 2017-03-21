@@ -41,8 +41,8 @@ namespace cath {
 			residx_t length;
 
 		public:
-			alnd_rgn(const res_arrow &,
-			         const res_arrow &,
+			alnd_rgn(res_arrow,
+			         res_arrow,
 			         const residx_t &) noexcept;
 
 			const res_arrow & get_start_res_a() const;

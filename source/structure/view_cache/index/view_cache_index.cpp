@@ -63,9 +63,9 @@ using boost::lexical_cast;
 using boost::numeric_cast;
 
 /// \brief Ctor for view_cache_index
-view_cache_index::view_cache_index(const dim_tuple &arg_dim_defaults ///< TODOCUMENT
-                                   ) : dim_defaults( arg_dim_defaults        ),
-                                       the_index   ( dim_defaults.get_head() ) {
+view_cache_index::view_cache_index(dim_tuple arg_dim_defaults ///< TODOCUMENT
+                                   ) : dim_defaults( std::move( arg_dim_defaults ) ),
+                                       the_index   ( dim_defaults.get_head()       ) {
 }
 
 /// \brief TODOCUMENT

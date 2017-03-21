@@ -57,9 +57,9 @@ namespace cath {
 
 			public:
 				explicit write_html_hits_processor(std::ostream &,
-				                                   const crh_score_spec &,
-				                                   const crh_segment_spec &,
-				                                   const crh_html_spec &) noexcept;
+				                                   crh_score_spec,
+				                                   crh_segment_spec,
+				                                   crh_html_spec) noexcept;
 			};
 
 

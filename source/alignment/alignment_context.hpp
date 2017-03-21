@@ -40,10 +40,10 @@ namespace cath {
 			file::strucs_context context;
 
 		public:
-			alignment_context(const alignment &,
-			                  const file::strucs_context &);
+			alignment_context(alignment,
+			                  file::strucs_context);
 
-			alignment_context(const alignment &,
+			alignment_context(alignment,
 			                  const file::pdb_list &,
 			                  const str_vec &,
 			                  const chop::region_vec_opt_vec &);

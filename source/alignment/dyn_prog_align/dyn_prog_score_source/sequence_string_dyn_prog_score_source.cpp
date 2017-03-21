@@ -67,10 +67,10 @@ score_type sequence_string_dyn_prog_score_source::do_get_score(const size_t &arg
 }
 
 /// \brief Ctor for sequence_string_dyn_prog_score_source
-sequence_string_dyn_prog_score_source::sequence_string_dyn_prog_score_source(const string &arg_sequence_string_a, ///< The first  sequence to align
-                                                                             const string &arg_sequence_string_b  ///< The second sequence to align
-                                                                             ) : sequence_string_a ( arg_sequence_string_a ),
-                                                                                 sequence_string_b ( arg_sequence_string_b ) {
+sequence_string_dyn_prog_score_source::sequence_string_dyn_prog_score_source(string arg_sequence_string_a, ///< The first  sequence to align
+                                                                             string arg_sequence_string_b  ///< The second sequence to align
+                                                                             ) : sequence_string_a{ std::move( arg_sequence_string_a ) },
+                                                                                 sequence_string_b{ std::move( arg_sequence_string_b ) } {
 	// Check that both sequences strings are valid
 	check_sequence_string(sequence_string_a);
 	check_sequence_string(sequence_string_b);

@@ -73,8 +73,8 @@ namespace cath {
 
 			public:
 				explicit hits_processor(std::ostream &,
-				                        const crh_score_spec &,
-				                        const crh_segment_spec &) noexcept;
+				                        crh_score_spec,
+				                        crh_segment_spec) noexcept;
 				virtual ~hits_processor() noexcept = default;
 
 				hits_processor(const hits_processor &) = default;
@@ -109,12 +109,12 @@ namespace cath {
 
 
 			/// \brief Ctor
-			inline hits_processor::hits_processor(std::ostream           &arg_output_stream,   ///< The ostream to which results should be written
-			                                      const crh_score_spec   &arg_crh_score_spec,  ///< The score spec to apply to incoming hits
-			                                      const crh_segment_spec &arg_crh_segment_spec ///< The segment spec to apply to incoming hits
-			                                      ) noexcept : output_stream    { arg_output_stream    },
-			                                                   the_score_spec   { arg_crh_score_spec   },
-			                                                   the_segment_spec { arg_crh_segment_spec } {
+			inline hits_processor::hits_processor(std::ostream     &arg_output_stream,   ///< The ostream to which results should be written
+			                                      crh_score_spec    arg_crh_score_spec,  ///< The score spec to apply to incoming hits
+			                                      crh_segment_spec  arg_crh_segment_spec ///< The segment spec to apply to incoming hits
+			                                      ) noexcept : output_stream    { arg_output_stream                 },
+			                                                   the_score_spec   { std::move( arg_crh_score_spec   ) },
+			                                                   the_segment_spec { std::move( arg_crh_segment_spec ) } {
 			}
 
 			/// \brief Standard approach to achieving a virtual copy-ctor

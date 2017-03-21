@@ -54,12 +54,12 @@ namespace cath {
 
 		public:
 			crh_spec() = default;
-			explicit crh_spec(const crh_input_spec &,
-			                  const crh_segment_spec & = crh_segment_spec{},
-			                  const crh_score_spec & = crh_score_spec{},
-			                  const crh_filter_spec & = crh_filter_spec{},
-			                  const crh_output_spec & = crh_output_spec{},
-			                  const crh_html_spec & = crh_html_spec{});
+			explicit crh_spec(crh_input_spec,
+			                  crh_segment_spec = crh_segment_spec {},
+			                  crh_score_spec   = crh_score_spec   {},
+			                  crh_filter_spec  = crh_filter_spec  {},
+			                  crh_output_spec  = crh_output_spec  {},
+			                  crh_html_spec    = crh_html_spec    {} );
 
 			crh_input_spec & get_input_spec();
 			const crh_input_spec & get_input_spec() const;

@@ -56,7 +56,7 @@ namespace cath {
 			///       noexcept, but it should be so change that when a compiler that old no longer
 			///       needs to be supported.
 			full_hit_list() = default;
-			explicit full_hit_list(const full_hit_vec &);
+			explicit full_hit_list(full_hit_vec);
 
 			size_t size() const;
 			bool empty() const;
@@ -99,9 +99,9 @@ namespace cath {
 		                                             const full_hit_list &,
 		                                             const crh_segment_spec &);
 
-		/// \brief Ctor from lvalues
-		inline full_hit_list::full_hit_list(const full_hit_vec &arg_full_hit_list ///< The full_hits
-		                                    ) : the_full_hits   ( arg_full_hit_list   ) {
+		/// \brief Ctor
+		inline full_hit_list::full_hit_list(full_hit_vec arg_full_hit_list ///< The full_hits
+		                                    ) : the_full_hits( std::move( arg_full_hit_list ) ) {
 			// sort_full_hit_vec( the_full_hits, full_hit_labels );
 		}
 

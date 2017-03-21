@@ -89,11 +89,7 @@ namespace cath {
 				};
 			}
 
-			explicit calc_hit_list(const full_hit_list &,
-			                       const crh_score_spec &,
-			                       const crh_segment_spec &,
-			                       const crh_filter_spec & = make_accept_all_filter_spec());
-			explicit calc_hit_list(full_hit_list &&,
+			explicit calc_hit_list(full_hit_list,
 			                       const crh_score_spec &,
 			                       const crh_segment_spec &,
 			                       const crh_filter_spec & = make_accept_all_filter_spec());
@@ -145,22 +141,12 @@ namespace cath {
 			);
 		}
 
-		/// \brief Ctor from lvalues
-		inline calc_hit_list::calc_hit_list(const full_hit_list    &arg_full_hits,        ///< The full_hits from which these hits are to be drawn
+		/// \brief Ctor
+		inline calc_hit_list::calc_hit_list(full_hit_list           arg_full_hits,        ///< The full_hits from which these hits are to be drawn
 		                                    const crh_score_spec   &arg_score_spec,       ///< The crh_score_spec to specify how the crh-scores are to be calculated from the full-hits
 		                                    const crh_segment_spec &arg_crh_segment_spec, ///< The crh_segment_spec to specify how the segments are to be handled before being put into the hits for calculation
 		                                    const crh_filter_spec  &arg_filter_spec       ///< The crh_filter_spec specifying how hits should be filtered
-		                                    ) : full_hits { arg_full_hits },
-		                                        the_hits  { make_hit_list_from_full_hit_list( full_hits, arg_score_spec, arg_crh_segment_spec, arg_filter_spec ) } {
-			sort_hit_vec( the_hits, full_hits );
-		}
-
-		/// \brief Ctor from rvalues
-		inline calc_hit_list::calc_hit_list(full_hit_list         &&arg_full_hits,        ///< The full_hits from which these hits are to be drawn
-		                                    const crh_score_spec   &arg_score_spec,       ///< The crh_score_spec to specify how the crh-scores are to be calculated from the full-hits
-		                                    const crh_segment_spec &arg_crh_segment_spec, ///< The crh_segment_spec to specify how the segments are to be handled before being put into the hits for calculation
-		                                    const crh_filter_spec  &arg_filter_spec       ///< The crh_filter_spec specifying how hits should be filtered
-		                                    ) : full_hits { std::move( arg_full_hits  ) },
+		                                    ) : full_hits { std::move( arg_full_hits ) },
 		                                        the_hits  { make_hit_list_from_full_hit_list( full_hits, arg_score_spec, arg_crh_segment_spec, arg_filter_spec ) } {
 			sort_hit_vec( the_hits, full_hits );
 		}

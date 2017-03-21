@@ -53,7 +53,7 @@ namespace cath {
 	public:
 		protein_list_loader(const protein_source_file_set &,
 		                    const boost::filesystem::path &,
-		                    const str_vec &);
+		                    str_vec);
 
 		std::pair<protein_list, hrc_duration> load_proteins(std::ostream &) const;
 	};

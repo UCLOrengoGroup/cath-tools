@@ -56,28 +56,28 @@ using boost::range::find_if;
 using boost::range::for_each;
 
 /// \brief TODOCUMENT
-protein::protein(const string      &arg_title,   ///< TODOCUMENT
-                 const residue_vec &arg_residues ///< TODOCUMENT
-                 ) : title    ( arg_title    ),
-                     residues ( arg_residues ) {
+protein::protein(string      arg_title,   ///< TODOCUMENT
+                 residue_vec arg_residues ///< TODOCUMENT
+                 ) : title    ( std::move( arg_title    ) ),
+                     residues ( std::move( arg_residues ) ) {
 }
 
 /// \brief TODOCUMENT
-void protein::set_title(const string &arg_title ///< TODOCUMENT
+void protein::set_title(string arg_title ///< TODOCUMENT
                         ) {
-	title = arg_title;
+	title = std::move( arg_title );
 }
 
 /// \brief TODOCUMENT
-void protein::set_residues(const residue_vec &arg_residues ///< TODOCUMENT
+void protein::set_residues(residue_vec arg_residues ///< TODOCUMENT
                            ) {
-	residues = arg_residues;
+	residues = std::move( arg_residues );
 }
 
 /// \brief TODOCUMENT
-void protein::set_sec_strucs(const sec_struc_vec &arg_sec_strucs ///< TODOCUMENT
+void protein::set_sec_strucs(sec_struc_vec arg_sec_strucs ///< TODOCUMENT
                              ) {
-	sec_strucs = arg_sec_strucs;
+	sec_strucs = std::move( arg_sec_strucs );
 }
 
 /// \brief TODOCUMENT

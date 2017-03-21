@@ -73,7 +73,7 @@ namespace cath {
 		public:
 			view_cache_index_entry(const detail::index_type &,
 			                       const detail::index_type &,
-			                       const detail::view_type &,
+			                       detail::view_type,
 			                       const geom::rotation &,
 			                       const detail::angle_type &,
 			                       const detail::angle_type &,

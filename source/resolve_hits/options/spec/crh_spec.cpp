@@ -23,18 +23,18 @@
 using namespace cath::rslv;
 
 /// \brief Ctor from the individual specs	
-crh_spec::crh_spec(const crh_input_spec   &arg_input_spec,   ///< The input spec
-                   const crh_segment_spec &arg_segment_spec, ///< The segment spec
-                   const crh_score_spec   &arg_score_spec,   ///< The score spec
-                   const crh_filter_spec  &arg_filter_spec,  ///< The filter spec
-                   const crh_output_spec  &arg_output_spec,  ///< The output spec
-                   const crh_html_spec    &arg_html_spec     ///< The html spec
-                   ) : the_input_spec   { arg_input_spec   },
-                       the_segment_spec { arg_segment_spec },
-                       the_score_spec   { arg_score_spec   },
-                       the_filter_spec  { arg_filter_spec  },
-                       the_output_spec  { arg_output_spec  },
-                       the_html_spec    { arg_html_spec    } {
+crh_spec::crh_spec(crh_input_spec   arg_input_spec,   ///< The input spec
+                   crh_segment_spec arg_segment_spec, ///< The segment spec
+                   crh_score_spec   arg_score_spec,   ///< The score spec
+                   crh_filter_spec  arg_filter_spec,  ///< The filter spec
+                   crh_output_spec  arg_output_spec,  ///< The output spec
+                   crh_html_spec    arg_html_spec     ///< The html spec
+                   ) : the_input_spec   { std::move( arg_input_spec   ) },
+                       the_segment_spec { std::move( arg_segment_spec ) },
+                       the_score_spec   { std::move( arg_score_spec   ) },
+                       the_filter_spec  { std::move( arg_filter_spec  ) },
+                       the_output_spec  { std::move( arg_output_spec  ) },
+                       the_html_spec    { std::move( arg_html_spec    ) } {
 }
 
 /// \brief Non-const overload of getter for input_spec

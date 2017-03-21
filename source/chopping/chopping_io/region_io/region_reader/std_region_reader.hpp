@@ -36,7 +36,7 @@ namespace cath {
 			region do_read_region(const std::string &) const final;
 
 		public:
-			explicit std_region_reader(const std_region_io_spec &);
+			explicit std_region_reader(std_region_io_spec);
 		};
 
 	} // namespace chop

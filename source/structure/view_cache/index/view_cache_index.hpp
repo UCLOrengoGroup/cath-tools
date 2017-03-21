@@ -87,7 +87,7 @@ namespace cath {
 			detail::standard_vci_nested_layers the_index;
 
 		public:
-			explicit view_cache_index(const dim_tuple &);
+			explicit view_cache_index(dim_tuple);
 
 			void store(const view_cache_index_entry &);
 

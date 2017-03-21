@@ -88,14 +88,14 @@ namespace cath {
 
 	public:
 		residue(const residue_id &,
-		        const amino_acid &,
-		        const geom::coord &,
-		        const geom::coord &,
+		        amino_acid,
+		        geom::coord,
+		        geom::coord,
 		        const size_t &,
 		        const sec_struc_type &,
-		        const geom::rotation &,
-		        const geom::doub_angle &,
-		        const geom::doub_angle &,
+		        geom::rotation,
+		        geom::doub_angle,
+		        geom::doub_angle,
 		        const size_t &);
 
 		void initialise();

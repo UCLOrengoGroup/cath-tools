@@ -44,10 +44,10 @@ namespace cath {
 			line() = delete;
 
 			/// \brief Ctor
-			constexpr line(const coord &arg_point_on_line, ///< A point on the line
-			               const coord &arg_dirn           ///< A non-zero direction vector along the line (at present, this doesn't have to have length 1)
-			               ) : point_on_line{ arg_point_on_line },
-			                   dirn         { arg_dirn          } {
+			constexpr line(coord arg_point_on_line, ///< A point on the line
+			               coord arg_dirn           ///< A non-zero direction vector along the line (at present, this doesn't have to have length 1)
+			               ) : point_on_line{ std::move( arg_point_on_line ) },
+			                   dirn         { std::move( arg_dirn          ) } {
 			}
 
 			/// \brief Getter for point_on_line

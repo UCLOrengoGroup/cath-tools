@@ -41,7 +41,7 @@ region std_region_reader::do_read_region(const string &arg_region_string ///< TO
 }
 
 /// \brief Ctor for std_region_reader
-std_region_reader::std_region_reader(const std_region_io_spec &arg_std_region_io_spec ///< TODOCUMENT
-                                     ) : region_io_spec( arg_std_region_io_spec ) {
+std_region_reader::std_region_reader(std_region_io_spec arg_std_region_io_spec ///< TODOCUMENT
+                                     ) : region_io_spec{ std::move( arg_std_region_io_spec ) } {
 
 }

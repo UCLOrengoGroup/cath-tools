@@ -44,19 +44,19 @@ vcie_match_criteria::vcie_match_criteria(const bool            &arg_require_matc
                                          const index_type      &arg_minimum_index_distance,         ///< The minimum distance required between each vcie's from_index and its to_index
                                          const view_base_type  &arg_maximum_squared_distance,       ///< The maximum squared distance permissible between the two vcies' views
                                          const angle_type      &arg_maximum_frame_angle_difference, ///< The maximum angle permissible between the two vcies' frames
-                                         const angle_type      &arg_maximum_phi_angle_difference,   ///< The maximum angle permissible between the two vcies' phi angles
-                                         const angle_type      &arg_maximum_psi_angle_difference    ///< The maximum angle permissible between the two vcies' psi angles
-                                         ) : require_matching_directions    ( arg_require_matching_directions    ),
-                                             minimum_index_distance         ( arg_minimum_index_distance         ),
-                                             maximum_squared_distance       ( arg_maximum_squared_distance       ),
+                                         angle_type             arg_maximum_phi_angle_difference,   ///< The maximum angle permissible between the two vcies' phi angles
+                                         angle_type             arg_maximum_psi_angle_difference    ///< The maximum angle permissible between the two vcies' psi angles
+                                         ) : require_matching_directions    ( arg_require_matching_directions               ),
+                                             minimum_index_distance         ( arg_minimum_index_distance                    ),
+                                             maximum_squared_distance       ( arg_maximum_squared_distance                  ),
                                              maximum_frame_angle_distance_1 (
                                              	distance_1_of_angle<frame_quat_rot_type>(
                                              		arg_maximum_frame_angle_difference
                                              	)
                                              ),
-                                             maximum_frame_angle_difference ( arg_maximum_frame_angle_difference ),
-                                             maximum_phi_angle_difference   ( arg_maximum_phi_angle_difference   ),
-                                             maximum_psi_angle_difference   ( arg_maximum_psi_angle_difference   ) {
+                                             maximum_frame_angle_difference ( arg_maximum_frame_angle_difference            ),
+                                             maximum_phi_angle_difference   ( std::move( arg_maximum_phi_angle_difference ) ),
+                                             maximum_psi_angle_difference   ( std::move( arg_maximum_psi_angle_difference ) ) {
 }
 
 /// \brief Factory function to construct the default vcie_match_criteria

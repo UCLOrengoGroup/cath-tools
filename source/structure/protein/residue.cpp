@@ -149,25 +149,25 @@ void residue::check_phi_psi_angle(const doub_angle &arg_angle
 
 /// \brief Ctor for residue.
 residue::residue(const residue_id     &arg_residue_id,         ///< TODOCUMENT
-                 const amino_acid     &arg_amino_acid,         ///< TODOCUMENT
-                 const coord          &arg_carbon_alpha_coord, ///< Coordinates of the carbon alpha atom
-                 const coord          &arg_carbon_beta_coord,  ///< Coordinates of the carbon beta atom
+                 amino_acid            arg_amino_acid,         ///< TODOCUMENT
+                 coord                 arg_carbon_alpha_coord, ///< Coordinates of the carbon alpha atom
+                 coord                 arg_carbon_beta_coord,  ///< Coordinates of the carbon beta atom
                  const size_t         &arg_sec_struc_number,   ///< TODOCUMENT
                  const sec_struc_type &arg_sec_struc_type,     ///< TODOCUMENT
-                 const rotation       &arg_frame,              ///< TODOCUMENT
-                 const doub_angle     &arg_phi,                ///< TODOCUMENT
-                 const doub_angle     &arg_psi,                ///< TODOCUMENT
+                 rotation              arg_frame,              ///< TODOCUMENT
+                 doub_angle            arg_phi,                ///< TODOCUMENT
+                 doub_angle            arg_psi,                ///< TODOCUMENT
                  const size_t         &arg_access              ///< TODOCUMENT
-                 ) : the_residue_id    ( arg_residue_id         ),
-                     the_amino_acid    ( arg_amino_acid         ),
-                     carbon_alpha_coord( arg_carbon_alpha_coord ),
-                     carbon_beta_coord ( arg_carbon_beta_coord  ),
-                     sec_struc_number  ( arg_sec_struc_number   ),
-                     the_sec_struc_type( arg_sec_struc_type     ),
-                     frame             ( arg_frame              ),
-                     phi_angle         ( arg_phi                ),
-                     psi_angle         ( arg_psi                ),
-                     access            ( arg_access             ) {
+                 ) : the_residue_id    ( arg_residue_id                       ),
+                     the_amino_acid    ( std::move ( arg_amino_acid         ) ),
+                     carbon_alpha_coord( std::move ( arg_carbon_alpha_coord ) ),
+                     carbon_beta_coord ( std::move ( arg_carbon_beta_coord  ) ),
+                     sec_struc_number  ( arg_sec_struc_number                 ),
+                     the_sec_struc_type( arg_sec_struc_type                   ),
+                     frame             ( std::move ( arg_frame              ) ),
+                     phi_angle         ( std::move ( arg_phi                ) ),
+                     psi_angle         ( std::move ( arg_psi                ) ),
+                     access            ( arg_access                           ) {
 	check_phi_psi_angle( get_phi_angle() );
 	check_phi_psi_angle( get_psi_angle() );
 }

@@ -64,13 +64,13 @@ void sec_struc::check_sec_struc_type() const {
 sec_struc::sec_struc(const size_t         &arg_start_residue_num, ///< TODOCUMENT
                      const size_t         &arg_stop_residue_num,  ///< TODOCUMENT
                      const sec_struc_type &arg_sec_struc_type,    ///< TODOCUMENT
-                     const coord          &arg_midpoint,          ///< TODOCUMENT
-                     const coord          &arg_unit_dirn          ///< TODOCUMENT
-                     ) : start_residue_num ( arg_start_residue_num ),
-                         stop_residue_num  ( arg_stop_residue_num  ),
-                         type              ( arg_sec_struc_type    ),
-                         midpoint          ( arg_midpoint          ),
-                         unit_dirn         ( arg_unit_dirn         ) {
+                     coord                 arg_midpoint,          ///< TODOCUMENT
+                     coord                 arg_unit_dirn          ///< TODOCUMENT
+                     ) : start_residue_num ( arg_start_residue_num      ),
+                         stop_residue_num  ( arg_stop_residue_num       ),
+                         type              ( arg_sec_struc_type         ),
+                         midpoint          ( std::move( arg_midpoint  ) ),
+                         unit_dirn         ( std::move( arg_unit_dirn ) ) {
 	check_sec_struc_type();
 }
 

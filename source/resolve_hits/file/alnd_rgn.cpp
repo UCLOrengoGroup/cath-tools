@@ -32,12 +32,12 @@ using boost::adaptors::transformed;
 using std::string;
 
 /// \brief Ctor from start on each sequence and length
-alnd_rgn::alnd_rgn(const res_arrow &arg_start_res_a, ///< The start of the aligned region in the first  sequence
-                   const res_arrow &arg_start_res_b, ///< The start of the aligned region in the second sequence
-                   const residx_t  &arg_length       ///< The length of the aligned region
-                   ) noexcept : start_res_a( arg_start_res_a ),
-                                start_res_b( arg_start_res_b ),
-                                length     ( arg_length      ) {
+alnd_rgn::alnd_rgn(res_arrow       arg_start_res_a, ///< The start of the aligned region in the first  sequence
+                   res_arrow       arg_start_res_b, ///< The start of the aligned region in the second sequence
+                   const residx_t &arg_length       ///< The length of the aligned region
+                   ) noexcept : start_res_a( std::move( arg_start_res_a ) ),
+                                start_res_b( std::move( arg_start_res_b ) ),
+                                length     ( arg_length                   ) {
 }
 
 /// \brief Getter for the start of the aligned region in the first  sequence

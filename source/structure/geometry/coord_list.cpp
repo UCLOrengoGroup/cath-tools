@@ -38,8 +38,8 @@ using boost::accumulate;
 using boost::numeric_cast;
 
 /// \brief Constructor for coord_list from a vector of coords.
-coord_list::coord_list(const coord_vec &arg_coords ///< The vector of coords with which this coord_list should be initialised
-                       ) : coords( arg_coords ) {
+coord_list::coord_list(coord_vec arg_coords ///< The vector of coords with which this coord_list should be initialised
+                       ) : coords{ std::move( arg_coords ) } {
 }
 
 /// \brief Standard reserve() method for reserving memory for more coords

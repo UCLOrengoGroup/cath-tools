@@ -63,10 +63,11 @@ namespace cath {
 		using sec_struc_crange = boost::sub_range<const sec_struc_vec>;
 
 		protein() = default;
-		protein(const std::string &, const residue_vec &);
-		void set_title(const std::string &);
-		void set_residues(const residue_vec &);
-		void set_sec_strucs(const sec_struc_vec &);
+		protein(std::string,
+		        residue_vec);
+		void set_title(std::string);
+		void set_residues(residue_vec);
+		void set_sec_strucs(sec_struc_vec);
 
 		std::string get_title() const;
 

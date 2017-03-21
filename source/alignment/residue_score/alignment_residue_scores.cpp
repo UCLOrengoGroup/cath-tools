@@ -40,12 +40,12 @@ using boost::lexical_cast;
 using boost::numeric_cast;
 
 /// \brief Ctor for alignment_residue_scores
-alignment_residue_scores::alignment_residue_scores(const size_t            &arg_num_entries,                    ///< TODOCUMENT
-                                                   const size_vec          &arg_num_present_entries_by_index,   ///< TODOCUMENT
-                                                   const score_opt_vec_vec &arg_scores_to_other_present_entries ///< TODOCUMENT
-                                                   ) : num_entries                    ( arg_num_entries                     ),
-                                                       num_present_entries_by_index   ( arg_num_present_entries_by_index    ),
-                                                       scores_to_other_present_entries( arg_scores_to_other_present_entries ) {
+alignment_residue_scores::alignment_residue_scores(const size_t     &arg_num_entries,                    ///< TODOCUMENT
+                                                   size_vec          arg_num_present_entries_by_index,   ///< TODOCUMENT
+                                                   score_opt_vec_vec arg_scores_to_other_present_entries ///< TODOCUMENT
+                                                   ) : num_entries                    { arg_num_entries                                  },
+                                                       num_present_entries_by_index   { std::move( arg_num_present_entries_by_index    ) },
+                                                       scores_to_other_present_entries{ std::move( arg_scores_to_other_present_entries ) } {
 	sanity_check();
 }
 

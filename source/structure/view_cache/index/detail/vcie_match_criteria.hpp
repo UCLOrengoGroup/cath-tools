@@ -85,8 +85,8 @@ namespace cath {
 				                    const index_type &,
 				                    const view_base_type &,
 				                    const angle_type &,
-				                    const angle_type &,
-				                    const angle_type &);
+				                    angle_type,
+				                    angle_type);
 
 				const bool & get_require_matching_directions() const;
 				const index_type & get_minimum_index_distance() const;

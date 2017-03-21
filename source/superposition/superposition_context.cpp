@@ -66,39 +66,47 @@ using boost::property_tree::ptree;
 using boost::range::for_each;
 
 /// \brief Ctor for superposition_context
-superposition_context::superposition_context(const superposition  &arg_superposition, ///< TODOCUMENT
-                                             const strucs_context &arg_context        ///< TODOCUMENT
-                                             ) : the_superposition { arg_superposition },
-                                                 context           { arg_context       } {
+superposition_context::superposition_context(superposition  arg_superposition, ///< TODOCUMENT
+                                             strucs_context arg_context        ///< TODOCUMENT
+                                             ) : the_superposition { std::move( arg_superposition ) },
+                                                 context           { std::move( arg_context       ) } {
 }
 
 /// \brief Ctor for superposition_context
-superposition_context::superposition_context(const superposition  &arg_superposition, ///< TODOCUMENT
-                                             const strucs_context &arg_context,       ///< TODOCUMENT
-                                             const alignment      &arg_alignment      ///< TODOCUMENT
-                                             ) : the_superposition { arg_superposition },
-                                                 context           { arg_context       },
-                                                 any_alignment     { arg_alignment     } {
+superposition_context::superposition_context(superposition  arg_superposition, ///< TODOCUMENT
+                                             strucs_context arg_context,       ///< TODOCUMENT
+                                             alignment      arg_alignment      ///< TODOCUMENT
+                                             ) : the_superposition { std::move( arg_superposition ) },
+                                                 context           { std::move( arg_context       ) },
+                                                 any_alignment     { std::move( arg_alignment     ) } {
 }
 
 /// \brief Ctor for superposition_context
-superposition_context::superposition_context(const superposition      &arg_superposition, ///< TODOCUMENT
-                                             const pdb_list           &arg_pdbs,          ///< TODOCUMENT
-                                             const str_vec            &arg_names,         ///< TODOCUMENT
-                                             const region_vec_opt_vec &arg_regions        ///< The key regions of the structures
-                                             ) : the_superposition { arg_superposition },
-                                                 context           { arg_pdbs, arg_names, arg_regions } {
+superposition_context::superposition_context(superposition      arg_superposition, ///< TODOCUMENT
+                                             pdb_list           arg_pdbs,          ///< TODOCUMENT
+                                             str_vec            arg_names,         ///< TODOCUMENT
+                                             region_vec_opt_vec arg_regions        ///< The key regions of the structures
+                                             ) : the_superposition { std::move( arg_superposition )   },
+                                                 context           {
+                                                 	std::move( arg_pdbs    ),
+                                                 	std::move( arg_names   ),
+                                                 	std::move( arg_regions )
+                                                 } {
 }
 
 /// \brief Ctor for superposition_context
-superposition_context::superposition_context(const superposition      &arg_superposition, ///< TODOCUMENT
-                                             const pdb_list           &arg_pdbs,          ///< TODOCUMENT
-                                             const str_vec            &arg_names,         ///< TODOCUMENT
-                                             const region_vec_opt_vec &arg_regions,       ///< The key regions of the structures
-                                             const alignment          &arg_alignment      ///< TODOCUMENT
-                                             ) : the_superposition { arg_superposition                },
-                                                 context           { arg_pdbs, arg_names, arg_regions },
-                                                 any_alignment     { arg_alignment                    } {
+superposition_context::superposition_context(superposition      arg_superposition, ///< TODOCUMENT
+                                             pdb_list           arg_pdbs,          ///< TODOCUMENT
+                                             str_vec            arg_names,         ///< TODOCUMENT
+                                             region_vec_opt_vec arg_regions,       ///< The key regions of the structures
+                                             alignment          arg_alignment      ///< TODOCUMENT
+                                             ) : the_superposition { std::move( arg_superposition )   },
+                                                 context           {
+                                                 	std::move( arg_pdbs    ),
+                                                 	std::move( arg_names   ),
+                                                 	std::move( arg_regions )
+                                                 },
+                                                 any_alignment     { std::move( arg_alignment     )   } {
 }
 
 /// \brief TODOCUMENT

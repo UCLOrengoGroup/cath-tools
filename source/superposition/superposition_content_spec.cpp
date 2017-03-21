@@ -20,6 +20,8 @@
 
 #include "superposition_content_spec.hpp"
 
+#include <utility>
+
 using namespace cath;
 using namespace cath::sup;
 
@@ -29,11 +31,11 @@ constexpr double               superposition_content_spec::DEFAULT_ORGANIC_MAX_D
 
 /// \brief TODOCUMENT
 superposition_content_spec::superposition_content_spec(const supn_regions_context &arg_regions_context,                ///< The context to include when showing the specified region(s) of structure
-                                                       const doub_opt             &arg_include_dna_within_distance,    ///< The maximum distance from the specified region(s) to DNA/RNA for the that to be included (or none to always exclude)
-                                                       const doub_opt             &arg_include_organic_within_distance ///< The maximum distance from the specified region(s) to ligands for the that to be included (or none to always exclude)
-                                                       ) : regions_context                { arg_regions_context                 },
-                                                           include_dna_within_distance    { arg_include_dna_within_distance     },
-                                                           include_organic_within_distance{ arg_include_organic_within_distance } {
+                                                       doub_opt                    arg_include_dna_within_distance,    ///< The maximum distance from the specified region(s) to DNA/RNA for the that to be included (or none to always exclude)
+                                                       doub_opt                    arg_include_organic_within_distance ///< The maximum distance from the specified region(s) to ligands for the that to be included (or none to always exclude)
+                                                       ) : regions_context                { arg_regions_context                              },
+                                                           include_dna_within_distance    { std::move( arg_include_dna_within_distance     ) },
+                                                           include_organic_within_distance{ std::move( arg_include_organic_within_distance ) } {
 }
 
 /// \brief Getter for the context to include when showing the specified region(s) of structure

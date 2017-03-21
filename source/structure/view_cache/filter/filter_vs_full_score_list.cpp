@@ -71,8 +71,8 @@ void filter_vs_full_score_list::sort_filter_vs_full_scores() {
 ///
 /// The vector specified in the argument does not need to be pre-sorted;
 /// once this ctor has made the local copy, it will sort that copy
-filter_vs_full_score_list::filter_vs_full_score_list(const filter_vs_full_score_vec &arg_filter_vs_full_scores ///< The vector of filter_vs_full_score objects from which to construct this filter_vs_full_score_list
-                                                     ) : filter_vs_full_scores( arg_filter_vs_full_scores) {
+filter_vs_full_score_list::filter_vs_full_score_list(filter_vs_full_score_vec arg_filter_vs_full_scores ///< The vector of filter_vs_full_score objects from which to construct this filter_vs_full_score_list
+                                                     ) : filter_vs_full_scores( std::move( arg_filter_vs_full_scores ) ) {
 	sort_filter_vs_full_scores();
 }
 

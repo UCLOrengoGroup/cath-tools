@@ -57,7 +57,7 @@ namespace cath {
 			public:
 				masked_bests_cacher(masked_bests_cache &,
 				                    const calc_hit_vec &,
-				                    const res_arrow_vec &);
+				                    res_arrow_vec);
 
 				void advance_to_pos_with_best_so_far(const res_arrow &,
 				                                     const scored_arch_proxy &);
@@ -85,10 +85,10 @@ namespace cath {
 			/// \pre `is_sorted( arg_arrows )`
 			inline masked_bests_cacher::masked_bests_cacher(masked_bests_cache  &arg_masked_bests_cache, ///< The cache to which the cacher should store
 			                                                const calc_hit_vec  &arg_masks,              ///< The currently-active masks that will define the unmasked-region signatures
-			                                                const res_arrow_vec &arg_arrows              ///< The points at which to store results in the cache
+			                                                res_arrow_vec        arg_arrows              ///< The points at which to store results in the cache
 			                                                ) : cache_ref       ( arg_masked_bests_cache            ),
 			                                                    masks_ref       ( arg_masks                         ),
-			                                                    arrows_to_store ( arg_arrows                        ),
+			                                                    arrows_to_store ( std::move( arg_arrows           ) ),
 			                                                    current_itr     ( common::cbegin( arrows_to_store ) ) {
 			}
 

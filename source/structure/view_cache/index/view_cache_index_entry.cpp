@@ -52,13 +52,13 @@ using boost::numeric_cast;
 /// \brief Ctor that completely populates a view_cache_index_entry
 view_cache_index_entry::view_cache_index_entry(const index_type  &arg_from_index, ///< The index of the from_residue in its protein
                                                const index_type  &arg_to_index,   ///< The index of the to_residue in its protein
-                                               const view_type   &arg_view,       ///< The view of the to_residue from the from_residue
+                                               view_type          arg_view,       ///< The view of the to_residue from the from_residue
                                                const rotation    &arg_frame,      ///< The coordinate frame of the from_residue
                                                const angle_type  &arg_from_phi,   ///< The phi angle of the from_residue
                                                const angle_type  &arg_from_psi,   ///< The psi angle of the from_residue
                                                const angle_type  &arg_to_phi,     ///< The phi angle of the to_residue
                                                const angle_type  &arg_to_psi      ///< The psi angle of the to_residue
-                                               ) : view           ( arg_view       ),
+                                               ) : view           ( std::move( arg_view      ) ),
                                                    frame          (
                                                    	make_quat_rot_from_rotation<frame_quat_rot_type>(
                                                    		arg_frame

@@ -40,7 +40,7 @@ namespace cath {
 
 		public:
 			scored_hit_arch(const resscr_t &,
-			                const hit_arch &);
+			                hit_arch);
 			scored_hit_arch() = default;
 
 			const resscr_t & get_score() const noexcept;
@@ -55,9 +55,9 @@ namespace cath {
 
 		/// \brief Ctor
 		inline scored_hit_arch::scored_hit_arch(const resscr_t &arg_score, ///< The score associated with the architecture
-		                                        const hit_arch &arg_arch   ///< The architecture
-		                                        ) : the_score ( arg_score ),
-		                                            the_arch  ( arg_arch  ) {
+		                                        hit_arch        arg_arch   ///< The architecture
+		                                        ) : the_score ( arg_score             ),
+		                                            the_arch  ( std::move( arg_arch ) ) {
 		}
 
 		/// \brief Getter for the score

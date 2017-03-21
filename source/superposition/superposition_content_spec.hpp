@@ -54,8 +54,8 @@ namespace cath {
 			superposition_content_spec() = default;
 
 			explicit superposition_content_spec(const supn_regions_context &,
-			                                    const doub_opt & = DEFAULT_DNA_MAX_DIST,
-			                                    const doub_opt & = DEFAULT_ORGANIC_MAX_DIST);
+			                                    doub_opt = DEFAULT_DNA_MAX_DIST,
+			                                    doub_opt = DEFAULT_ORGANIC_MAX_DIST);
 
 			const supn_regions_context & get_regions_context() const;
 			const doub_opt & get_include_dna_within_distance() const;

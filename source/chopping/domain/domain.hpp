@@ -53,9 +53,9 @@ namespace cath {
 //			using iterator = region_vec::iterator;
 			using const_iterator = region_vec::const_iterator;
 
-			explicit domain(const region_vec &);
-			explicit domain(const region_vec &,
-			                const std::string &);
+			explicit domain(region_vec);
+			explicit domain(region_vec,
+			                std::string);
 
 			size_t num_segments() const;
 //			region operator[](const size_t &);

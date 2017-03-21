@@ -43,8 +43,8 @@ namespace cath {
 			                        const size_t &) const final;
 
 		public:
-			sequence_string_dyn_prog_score_source(const std::string &,
-			                                      const std::string &);
+			sequence_string_dyn_prog_score_source(std::string,
+			                                      std::string);
 		};
 
 	} // namespace align

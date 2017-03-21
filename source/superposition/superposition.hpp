@@ -67,8 +67,8 @@ namespace cath {
 			                       const size_t         & = 0,
 			                       const geom::coord    & = geom::coord::ORIGIN_COORD,
 			                       const geom::rotation & = geom::rotation::IDENTITY_ROTATION());
-			superposition(const geom::coord_vec &,
-			              const geom::rotation_vec &);
+			superposition(geom::coord_vec,
+			              geom::rotation_vec);
 
 			size_t get_num_entries() const;
 			const geom::coord & get_translation_of_index(const size_t &) const;

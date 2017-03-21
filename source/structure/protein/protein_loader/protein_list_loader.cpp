@@ -36,10 +36,10 @@ using namespace std;
 /// \brief TODOCUMENT
 protein_list_loader::protein_list_loader(const protein_source_file_set &arg_source_file_set, ///< TODOCUMENT
                                          const path                    &arg_data_dir,        ///< TODOCUMENT
-                                         const str_vec                 &arg_protein_names    ///< TODOCUMENT
-                                         ) : source_file_set_ptr ( arg_source_file_set.clone() ),
-                                             data_dir            ( arg_data_dir                ),
-                                             protein_names       ( arg_protein_names           ) {
+                                         str_vec                        arg_protein_names    ///< TODOCUMENT
+                                         ) : source_file_set_ptr ( arg_source_file_set.clone()    ),
+                                             data_dir            ( arg_data_dir                   ),
+                                             protein_names       ( std::move( arg_protein_names ) ) {
 }
 
 /// \brief TODOCUMENT

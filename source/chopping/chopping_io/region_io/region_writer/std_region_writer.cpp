@@ -30,8 +30,8 @@ using namespace cath::common;
 using std::string;
 
 /// \brief Ctor for std_region_writer
-std_region_writer::std_region_writer(const std_region_io_spec &arg_region_io_spec ///< TODOCUMENT
-                                     ) : region_io_spec( arg_region_io_spec ) {
+std_region_writer::std_region_writer(std_region_io_spec arg_region_io_spec ///< TODOCUMENT
+                                     ) : region_io_spec{ std::move( arg_region_io_spec ) } {
 }
 
 /// \brief TODOCUMENT

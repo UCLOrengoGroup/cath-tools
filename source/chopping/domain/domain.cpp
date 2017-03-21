@@ -55,16 +55,16 @@ void domain::sanity_check() const {
 }
 
 /// \brief Ctor for domain
-domain::domain(const region_vec &arg_segments, ///< TODOCUMENT
-               const string     &arg_domain_id///< TODOCUMENT
-               ) : segments ( arg_segments  ),
-                   domain_id( arg_domain_id ) {
+domain::domain(region_vec arg_segments, ///< TODOCUMENT
+               string     arg_domain_id ///< TODOCUMENT
+               ) : segments { std::move( arg_segments  ) },
+                   domain_id{ std::move( arg_domain_id ) } {
 	sanity_check();
 }
 
 /// \brief Ctor for domain
-domain::domain(const region_vec &arg_segments ///< TODOCUMENT
-               ) : segments( arg_segments ) {
+domain::domain(region_vec arg_segments ///< TODOCUMENT
+               ) : segments{ std::move( arg_segments ) } {
 	sanity_check();
 }
 

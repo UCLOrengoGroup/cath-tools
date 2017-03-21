@@ -59,7 +59,7 @@ namespace cath {
 			using const_iterator = calc_hit_vec::const_iterator;
 
 			hit_arch() = default; ///< \brief Default ctor
-			explicit hit_arch(const calc_hit_vec &);
+			explicit hit_arch(calc_hit_vec);
 
 			hit_arch            (const hit_arch &)          = default; ///< \brief Default copy-ctor
 			hit_arch            (hit_arch &&     ) noexcept = default; ///< \brief Default move-ctor
@@ -124,8 +124,8 @@ namespace cath {
 		}
 
 		/// \brief Ctor from a vector of calc_hits
-		inline hit_arch::hit_arch(const calc_hit_vec &arg_hit_arch ///< The vector of calc_hits from which to construct the hit_arch. Must have no mutually overlapping calc_hits. Need not be pre-sorted.
-		                          ) : the_hits( arg_hit_arch ) {
+		inline hit_arch::hit_arch(calc_hit_vec arg_hit_arch ///< The vector of calc_hits from which to construct the hit_arch. Must have no mutually overlapping calc_hits. Need not be pre-sorted.
+		                          ) : the_hits( std::move( arg_hit_arch ) ) {
 			sort_hit_vec( the_hits );
 			sanity_check();
 		}

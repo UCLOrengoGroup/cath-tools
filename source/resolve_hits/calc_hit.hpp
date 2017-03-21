@@ -75,8 +75,8 @@ namespace cath {
 			void sanity_check() const;
 
 		public:
-			calc_hit(const res_arrow &,
-			         const res_arrow &,
+			calc_hit(res_arrow,
+			         res_arrow,
 			         const resscr_t &,
 			         const hitidx_t &);
 
@@ -84,9 +84,9 @@ namespace cath {
 			         const resscr_t &,
 			         const hitidx_t &);
 
-			calc_hit(const res_arrow &,
-			         const res_arrow &,
-			         const hit_seg_vec &,
+			calc_hit(res_arrow,
+			         res_arrow,
+			         hit_seg_vec,
 			         const resscr_t &,
 			         const hitidx_t &);
 
@@ -161,14 +161,14 @@ namespace cath {
 		}
 
 		/// \brief Ctor for contiguous calc_hit
-		inline calc_hit::calc_hit(const res_arrow &arg_start_arrow, ///< The start boundary of the continuous calc_hit
-		                          const res_arrow &arg_stop_arrow,  ///< The end boundary of the continuous calc_hit
+		inline calc_hit::calc_hit(res_arrow        arg_start_arrow, ///< The start boundary of the continuous calc_hit
+		                          res_arrow        arg_stop_arrow,  ///< The end boundary of the continuous calc_hit
 		                          const resscr_t  &arg_score,       ///< The score associated with the calc_hit
 		                          const hitidx_t  &arg_label_idx    ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
-		                          ) : start_arrow ( arg_start_arrow ),
-		                              stop_arrow  ( arg_stop_arrow  ),
-		                              score       ( arg_score       ),
-		                              label_idx   ( arg_label_idx       ) {
+		                          ) : start_arrow ( std::move( arg_start_arrow ) ),
+		                              stop_arrow  ( std::move( arg_stop_arrow  ) ),
+		                              score       ( arg_score                    ),
+		                              label_idx   ( arg_label_idx                ) {
 			sanity_check();
 		}
 
@@ -185,16 +185,16 @@ namespace cath {
 		}
 
 		/// \brief Ctor for a possibly discontinuous calc_hit from start, stop and fragments
-		inline calc_hit::calc_hit(const res_arrow   &arg_start_arrow, ///< The boundary at the start of the first segment
-		                          const res_arrow   &arg_stop_arrow,  ///< The boundary at the end of the last segment
-		                          const hit_seg_vec &arg_fragments,   ///< The (possibly empty) list of the boundaries associated with any gaps between this calc_hit's segments
-		                          const resscr_t    &arg_score,       ///< The score associated with the calc_hit
-		                          const hitidx_t    &arg_label_idx    ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
-		                          ) : start_arrow ( arg_start_arrow        ),
-		                              stop_arrow  ( arg_stop_arrow         ),
+		inline calc_hit::calc_hit(res_arrow arg_start_arrow,       ///< The boundary at the start of the first segment
+		                          res_arrow arg_stop_arrow,        ///< The boundary at the end of the last segment
+		                          hit_seg_vec arg_fragments,       ///< The (possibly empty) list of the boundaries associated with any gaps between this calc_hit's segments
+		                          const resscr_t    &arg_score,    ///< The score associated with the calc_hit
+		                          const hitidx_t    &arg_label_idx ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
+		                          ) : start_arrow (std::move( arg_start_arrow        )),
+		                              stop_arrow  (std::move( arg_stop_arrow         )),
 		                              score       ( arg_score              ),
 		                              label_idx   ( arg_label_idx          ),
-		                              fragments   ( arg_fragments          ) {
+		                              fragments   (std::move( arg_fragments          )) {
 			sanity_check();
 		}
 

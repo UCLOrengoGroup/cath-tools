@@ -69,8 +69,8 @@ namespace cath {
 		sec_struc(const size_t &,
 		          const size_t &,
 		          const sec_struc_type &,
-		          const geom::coord &,
-		          const geom::coord &);
+		          geom::coord,
+		          geom::coord);
 
 		void set_planar_angles(const sec_struc_planar_angles_vec &);
 

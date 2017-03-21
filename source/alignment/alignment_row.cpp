@@ -64,8 +64,8 @@ void alignment_row::check_has_position_of_entry(const size_t &arg_entry ///< The
 }
 
 /// \brief Ctor for alignment_row from a vector of optional alignment positions
-alignment_row::alignment_row(const aln_posn_opt_vec &arg_positions ///< The vector of optional alignment positions from which to build the alignment row
-                             ) : positions ( arg_positions     ) {
+alignment_row::alignment_row(aln_posn_opt_vec arg_positions ///< The vector of optional alignment positions from which to build the alignment row
+                             ) : positions{ std::move( arg_positions ) } {
 }
 
 /// \brief Get the number of entries in this alignment row

@@ -87,10 +87,16 @@ bool write_html_hits_processor::do_parse_hits_that_fail_score_filter() const {
 }
 
 /// \brief Ctor for the write_html_hits_processor
-write_html_hits_processor::write_html_hits_processor(ostream                &arg_ostream,       ///< The ostream to which the results should be written
-                                                     const crh_score_spec   &arg_score_spec,    ///< The score_spec to apply to hits
-                                                     const crh_segment_spec &arg_segment_spec,  ///< The segment_spec to apply to hits
-                                                     const crh_html_spec    &arg_html_spec      ///< The specification for how to render the HTML
-                                                     ) noexcept : super         { arg_ostream, arg_score_spec, arg_segment_spec },
-                                                                  html_spec     { arg_html_spec                                 } {
+write_html_hits_processor::write_html_hits_processor(ostream          &arg_ostream,      ///< The ostream to which the results should be written
+                                                     crh_score_spec    arg_score_spec,   ///< The score_spec to apply to hits
+                                                     crh_segment_spec  arg_segment_spec, ///< The segment_spec to apply to hits
+                                                     crh_html_spec     arg_html_spec     ///< The specification for how to render the HTML
+                                                     ) noexcept : super {
+                                                                  	arg_ostream,
+                                                                  	std::move( arg_score_spec   ),
+                                                                  	std::move( arg_segment_spec )
+                                                                  },
+                                                                  html_spec{
+                                                                  	std::move( arg_html_spec )
+                                                                  } {
 }

@@ -33,18 +33,18 @@ using namespace cath::file;
 using namespace cath::sup;
 
 /// \brief Ctor for alignment_context
-alignment_context::alignment_context(const alignment          &arg_alignment, ///< TODOCUMENT
-                                     const strucs_context     &arg_context    ///< TODOCUMENT
-                                     ) : the_alignment { arg_alignment },
-                                         context       { arg_context   } {
+alignment_context::alignment_context(alignment      arg_alignment, ///< TODOCUMENT
+                                     strucs_context arg_context    ///< TODOCUMENT
+                                     ) : the_alignment { std::move( arg_alignment ) },
+                                         context       { std::move( arg_context   ) } {
 }
 
 /// \brief Ctor for alignment_context
-alignment_context::alignment_context(const alignment          &arg_alignment, ///< TODOCUMENT
+alignment_context::alignment_context(alignment                 arg_alignment, ///< TODOCUMENT
                                      const pdb_list           &arg_pdbs,      ///< TODOCUMENT
                                      const str_vec            &arg_names,     ///< TODOCUMENT
                                      const region_vec_opt_vec &arg_regions    ///< The specification of the regions of the PDBs to which the alignment refers
-                                     ) : the_alignment { arg_alignment                    },
+                                     ) : the_alignment { std::move( arg_alignment )       },
                                          context       { arg_pdbs, arg_names, arg_regions } {
 }
 

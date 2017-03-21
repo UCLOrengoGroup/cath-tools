@@ -39,8 +39,8 @@ namespace cath {
 			std::string pdb_name;
 
 		public:
-			domain_definition(const chop::domain &,
-			                  const std::string &);
+			domain_definition(chop::domain,
+			                  std::string);
 
 			const chop::domain & get_domain() const;
 			const std::string & get_pdb_name() const;

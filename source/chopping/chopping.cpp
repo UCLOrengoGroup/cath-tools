@@ -26,6 +26,8 @@
 #include "chopping/region/region.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 
+#include <utility>
+
 using namespace cath;
 using namespace cath::chop;
 
@@ -35,10 +37,10 @@ void chopping::sanity_check() const {
 }
 
 /// \brief Ctor for chopping
-chopping::chopping(const domain_vec &arg_domains,  ///< TODOCUMENT
-                   const region_vec &arg_fragments ///< TODOCUMENT
-                   ) : domains  ( arg_domains   ),
-                       fragments( arg_fragments ) {
+chopping::chopping(domain_vec arg_domains,  ///< TODOCUMENT
+                   region_vec arg_fragments ///< TODOCUMENT
+                   ) : domains  { std::move( arg_domains   ) },
+                       fragments{ std::move( arg_fragments ) } {
 }
 
 /// \brief TODOCUMENT

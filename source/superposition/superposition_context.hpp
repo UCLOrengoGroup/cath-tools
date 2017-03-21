@@ -51,23 +51,23 @@ namespace cath {
 			boost::optional<align::alignment> any_alignment;
 
 		public:
-			superposition_context(const superposition &,
-			                      const file::strucs_context &);
+			superposition_context(superposition,
+			                      file::strucs_context);
 
-			superposition_context(const superposition &,
-			                      const file::strucs_context &,
-			                      const align::alignment &);
+			superposition_context(superposition,
+			                      file::strucs_context,
+			                      align::alignment);
 
-			superposition_context(const superposition &,
-			                      const file::pdb_list &,
-			                      const str_vec &,
-			                      const chop::region_vec_opt_vec &);
+			superposition_context(superposition,
+			                      file::pdb_list,
+			                      str_vec,
+			                      chop::region_vec_opt_vec);
 
-			superposition_context(const superposition &,
-			                      const file::pdb_list &,
-			                      const str_vec &,
-			                      const chop::region_vec_opt_vec &,
-			                      const align::alignment &);
+			superposition_context(superposition,
+			                      file::pdb_list,
+			                      str_vec,
+			                      chop::region_vec_opt_vec,
+			                      align::alignment);
 
 			const superposition & get_superposition() const;
 			const file::strucs_context & get_strucs_context() const;

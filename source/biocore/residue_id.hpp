@@ -40,18 +40,18 @@ namespace cath {
 
 	public:
 		residue_id() = default;
-		residue_id(const chain_label &,
-		           const residue_name &);
+		residue_id(chain_label,
+		           residue_name);
 
 		const chain_label & get_chain_label() const;
 		const residue_name & get_residue_name() const;
 	};
 
 	/// \brief Ctor for residue_id
-	inline residue_id::residue_id(const chain_label  &arg_chain,   ///< The chain on which the residue belongs
-	                              const residue_name &arg_res_name ///< The residue_name in the PDB
-	                              ) : chain   ( arg_chain    ),
-	                                  res_name( arg_res_name ) {
+	inline residue_id::residue_id(chain_label  arg_chain,   ///< The chain on which the residue belongs
+	                              residue_name arg_res_name ///< The residue_name in the PDB
+	                              ) : chain   { std::move( arg_chain    ) },
+	                                  res_name{ std::move( arg_res_name ) } {
 	}
 
 	/// \brief Getter for the chain on which the residue belongs
