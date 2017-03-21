@@ -33,7 +33,7 @@ namespace cath {
 		namespace detail {
 
 			/// \brief Manage storing best architectures for unmasked-region signatures when the scanning passes
-			///        pre-calculated boundaries (at which the reuslts will be needed later on)
+			///        pre-calculated boundaries (at which the results will be needed later on)
 			class masked_bests_cacher final {
 			private:
 				/// \brief A const_iterator type alias for a const_iterator over a res_arrow_vec
@@ -66,7 +66,7 @@ namespace cath {
 			};
 
 			/// \brief Implementation method to advance to the specified iterator location with the specified best architecture seen so far
-			inline void masked_bests_cacher::advance_to_itr_with_best_so_far(const const_iterator    &arg_itr,        ///< The iterator location to which to advacne
+			inline void masked_bests_cacher::advance_to_itr_with_best_so_far(const const_iterator    &arg_itr,        ///< The iterator location to which to advance
 			                                                                 const scored_arch_proxy &arg_best_so_far ///< The best architecture (scored_arch_proxy) seen so far
 			                                                                 ) {
 				for (const res_arrow &the_arrow : boost::sub_range<const res_arrow_vec>( current_itr, arg_itr ) ) {

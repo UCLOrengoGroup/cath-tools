@@ -64,7 +64,7 @@ namespace cath {
 		return res_name;
 	}
 
-	/// \brief Wether or not this is a null residue_id
+	/// \brief Whether or not this is a null residue_id
 	inline bool is_null(const residue_id &arg_residue_id ///< The residue_id to query
 	                    ) {
 		return arg_residue_id.get_residue_name().is_null();

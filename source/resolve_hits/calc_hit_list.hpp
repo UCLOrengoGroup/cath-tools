@@ -66,7 +66,7 @@ namespace cath {
 			/// \brief A const_iterator type alias as part of making this a range over hits
 			using const_iterator = calc_hit_vec::const_iterator;
 
-			/// \brief Less-than fuction as used for keeping the hits sorted in the calc_hit_list
+			/// \brief Less-than function as used for keeping the hits sorted in the calc_hit_list
 			static auto get_less_than_fn(const full_hit_list &arg_full_hits ///< The full_hits from which these hits were drawn
 			                             ) {
 				return [&] (const calc_hit &x, const calc_hit &y) {

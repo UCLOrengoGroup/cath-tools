@@ -30,7 +30,7 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \todo Consider changing to a doub_vec_vec
-		///       (begause, eg, an all-vs-all within a set of 12,000 would require >1Gb)
+		///       (because, eg, an all-vs-all within a set of 12,000 would require >1Gb)
 		class record_scores_scan_action final {
 		private:
 			/// \brief TODOCUMENT
