@@ -51,19 +51,19 @@ namespace cath {
 			static constexpr array<int, 6> wide_split_match_multi = { { 1, 2, 3, 4, 5, 1 } };
 			static constexpr array<int, 6> split_match_multi      = { { 1, 2, 3, 4, 2, 6 } };
 
-			static_assert( constexpr_is_uniq( unique_empty           ) == true,  "Failure in static_assert() test of constexpr_is_uniq()" );
+			static_assert(   constexpr_is_uniq( unique_empty           ), "Failure in static_assert() test of constexpr_is_uniq()" );
 
-			static_assert( constexpr_is_uniq( unique_single          ) == true,  "Failure in static_assert() test of constexpr_is_uniq()" );
+			static_assert(   constexpr_is_uniq( unique_single          ), "Failure in static_assert() test of constexpr_is_uniq()" );
 
-			static_assert( constexpr_is_uniq( unique_pair            ) == true,  "Failure in static_assert() test of constexpr_is_uniq()" );
-			static_assert( constexpr_is_uniq( non_unique_pair        ) == false, "Failure in static_assert() test of constexpr_is_uniq()" );
+			static_assert(   constexpr_is_uniq( unique_pair            ), "Failure in static_assert() test of constexpr_is_uniq()" );
+			static_assert( ! constexpr_is_uniq( non_unique_pair        ), "Failure in static_assert() test of constexpr_is_uniq()" );
 
-			static_assert( constexpr_is_uniq( unique_multi           ) == true,  "Failure in static_assert() test of constexpr_is_uniq()" );
-			static_assert( constexpr_is_uniq( start_match_multi      ) == false, "Failure in static_assert() test of constexpr_is_uniq()" );
-			static_assert( constexpr_is_uniq( mid_match_multi        ) == false, "Failure in static_assert() test of constexpr_is_uniq()" );
-			static_assert( constexpr_is_uniq( end_match_multi        ) == false, "Failure in static_assert() test of constexpr_is_uniq()" );
-			static_assert( constexpr_is_uniq( wide_split_match_multi ) == false, "Failure in static_assert() test of constexpr_is_uniq()" );
-			static_assert( constexpr_is_uniq( split_match_multi      ) == false, "Failure in static_assert() test of constexpr_is_uniq()" );
+			static_assert(   constexpr_is_uniq( unique_multi           ), "Failure in static_assert() test of constexpr_is_uniq()" );
+			static_assert( ! constexpr_is_uniq( start_match_multi      ), "Failure in static_assert() test of constexpr_is_uniq()" );
+			static_assert( ! constexpr_is_uniq( mid_match_multi        ), "Failure in static_assert() test of constexpr_is_uniq()" );
+			static_assert( ! constexpr_is_uniq( end_match_multi        ), "Failure in static_assert() test of constexpr_is_uniq()" );
+			static_assert( ! constexpr_is_uniq( wide_split_match_multi ), "Failure in static_assert() test of constexpr_is_uniq()" );
+			static_assert( ! constexpr_is_uniq( split_match_multi      ), "Failure in static_assert() test of constexpr_is_uniq()" );
 		};
 
 	}  // namespace test

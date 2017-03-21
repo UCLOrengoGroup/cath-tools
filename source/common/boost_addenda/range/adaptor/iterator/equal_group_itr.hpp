@@ -144,10 +144,7 @@ namespace cath {
 		template <class RNG>
 		bool equal_group_itr<RNG>::equal(const equal_group_itr &arg_equal_group_itr ///< TODOCUMENT
 		                                 ) const {
-			if ( get_begin_itr() != arg_equal_group_itr.get_begin_itr() ) {
-				return false;
-			}
-			return true;
+			return ( get_begin_itr() == arg_equal_group_itr.get_begin_itr() );
 		}
 
 		/// \brief TODOCUMENT

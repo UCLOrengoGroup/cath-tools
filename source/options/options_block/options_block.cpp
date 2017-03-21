@@ -125,19 +125,13 @@ bool options_block::is_acceptable_input_file(const path &arg_output_file, ///< T
 /// \brief TODOCUMENT
 bool options_block::is_acceptable_output_dir(const path &arg_output_dir ///< TODOCUMENT
                                              ) {
-	if (!exists(arg_output_dir) && !is_directory(arg_output_dir)) {
-		return false;
-	}
-	return true;
+	return ( exists( arg_output_dir ) && is_directory( arg_output_dir ) );
 }
 
 /// \brief TODOCUMENT
 bool options_block::is_acceptable_input_dir(const path &arg_input_dir ///< TODOCUMENT
                                             ) {
-	if (!exists(arg_input_dir) && !is_directory(arg_input_dir)) {
-		return false;
-	}
-	return true;
+	return ( exists( arg_input_dir ) && is_directory( arg_input_dir ) );
 }
 
 /// \brief TODOCUMENT

@@ -50,11 +50,7 @@ namespace cath {
 					const T &exception_to_compare = dynamic_cast<const T &>(arg_exception_to_compare);
 					const std::string exception_to_compare_to_what_string(exception_to_compare_to.what());
 					const std::string exception_to_compare_what_string(exception_to_compare.what());
-					if (exception_to_compare_to_what_string != exception_to_compare_what_string) {
-						return false;
-					}
-
-					return true;
+					return ( exception_to_compare_to_what_string == exception_to_compare_what_string );
 				}
 				catch(const std::bad_cast &) {
 					return false;
