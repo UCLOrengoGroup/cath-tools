@@ -63,7 +63,7 @@ namespace std {
 		arg_os << " ]";
 		return arg_os;
 	}
-}
+} // namespace std
 
 /// \todo Consider adding a cbegin/cend-like interface for each adaptor, (eg "cequal_grouped") that returns
 ///       a const equal_grouped interface to a non-const range.
@@ -133,8 +133,8 @@ namespace cath {
 			};
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 /// \brief Test suite to perform basic checks of the adaptors
 BOOST_FIXTURE_TEST_SUITE(adaptor_test_suite, cath::test::adaptor_test_suite_fixture)
