@@ -113,7 +113,7 @@ const str_vec & ids_options_block::get_ids() const {
 /// \brief TODOCUMENT
 bool cath::opts::ids_specified(const ids_options_block &arg_block ///< TODOCUMENT
                                ) {
-	return ( arg_block.get_ids().size() > 0 );
+	return ( ! arg_block.get_ids().empty() );
 }
 
 /// \brief Getter for the name of the first protein structure to be compared

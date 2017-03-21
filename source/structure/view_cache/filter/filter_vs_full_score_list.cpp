@@ -237,7 +237,7 @@ filter_vs_full_score_vec cath::index::filter::filter_attempts_with_sensitivity(c
 	filter_vs_full_score_vec results;
 	for (const filter_vs_full_score &real_score : arg_filter_vs_full_score_list) {
 		const double &full_score = real_score.get_full_score();
-		if ( results.size() == 0 || results.back().get_full_score() != full_score ) {
+		if ( results.empty() || results.back().get_full_score() != full_score ) {
 			// Calculate the result for full_score
 			const filter_vs_full_score result = filter_attempt_full_score_with_sensitivity(
 				arg_filter_vs_full_score_list,

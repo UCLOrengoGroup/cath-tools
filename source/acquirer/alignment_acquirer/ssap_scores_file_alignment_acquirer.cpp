@@ -98,7 +98,7 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 	const alignment new_alignment = single_pdb ? make_single_alignment( front( arg_pdbs ).get_num_residues() )
 	                                           : build_alignment_from_parts( spanning_alignments, build_protein_list_of_pdb_list( arg_pdbs ) );
 
-	if ( names.size() == 0 ) {
+	if ( names.empty() ) {
 		// Return the results
 		return make_pair( new_alignment, my_orderer );
 	}
