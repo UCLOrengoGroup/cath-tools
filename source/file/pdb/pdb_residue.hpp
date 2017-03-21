@@ -174,7 +174,7 @@ namespace cath {
 		/// The returned value is the index within atoms of the relevant atom or none if no such is present
 		inline const boost::optional<size_t> & pdb_residue::get_core_atom_index_ref(const coarse_element_type &arg_element_type ///< The coarse_element_type to be accessed in core_atom_indices
 		                                                                            ) const {
-			return core_atom_indices[ get_core_atom_index_ref_index( arg_element_type ) ];
+			return core_atom_indices.at( get_core_atom_index_ref_index( arg_element_type ) );
 		}
 
 		/// \brief Make an array of the core element atoms' indices within the specified pdb_atoms
@@ -195,7 +195,7 @@ namespace cath {
 				const pdb_atom            &the_atom = arg_pdb_atoms[ atom_ctr ];
 				const coarse_element_type &element  = get_coarse_element_type( the_atom );
 				if ( element != coarse_element_type::NON_CORE ) {
-					boost::optional<size_t>   &result   = results[ get_core_atom_index_ref_index( element ) ];
+					boost::optional<size_t>   &result   = results.at( get_core_atom_index_ref_index( element ) );
 					if ( ! result || alt_locn_is_dssp_accepted( the_atom ) || ! alt_locn_is_dssp_accepted( arg_pdb_atoms[ *result ] ) ) {
 						result = atom_ctr;
 					}
