@@ -90,11 +90,8 @@ namespace cath {
 						||
 						arg_score >= *arg_filter_spec.get_worst_permissible_score() );
 				}
-				default : {
-					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst checking score_passes_filter()"));
-					return true; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-				}
 			}
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst checking score_passes_filter()"));
 		}
 
 		/// \brief Whether the data for the specified query ID should be specified given the specified filter query IDs

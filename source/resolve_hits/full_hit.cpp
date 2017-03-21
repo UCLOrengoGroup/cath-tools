@@ -105,11 +105,8 @@ string cath::rslv::to_string(const full_hit            &arg_full_hit,     ///< T
 				+ arg_full_hit.get_label()
 				+ "\"]";
 		}
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of full_hit_output_format not recognised in to_string() for full_hit"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of full_hit_output_format not recognised in to_string() for full_hit"));
 }
 
 

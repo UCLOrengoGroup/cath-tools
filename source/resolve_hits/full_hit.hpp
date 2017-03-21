@@ -307,11 +307,8 @@ namespace cath {
 				case( hit_score_type::CRH_SCORE   ) : {
 					return debug_numeric_cast<resscr_t>( arg_full_hit.get_score() );
 				}
-				default : {
-					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst getting crh_score from full_hit"));
-					return 0; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-				}
 			}
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst getting crh_score from full_hit"));
 		}
 
 	} // namespace rslv

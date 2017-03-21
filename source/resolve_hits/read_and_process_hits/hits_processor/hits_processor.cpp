@@ -65,9 +65,6 @@ unique_ptr<hits_processor> cath::rslv::detail::make_hits_processor(ostream      
 				arg_output_spec.get_boundary_output()
 			);
 		}
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of crh_out_format not recognised whilst converting to_string()"));
-			return {}; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of crh_out_format not recognised whilst converting to_string()"));
 }
