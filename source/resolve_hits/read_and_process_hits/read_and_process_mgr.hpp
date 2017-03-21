@@ -97,7 +97,7 @@ namespace cath {
 			/// \brief An unordered_map from the query_id string to the corresponding hits data
 			str_hit_list_umap hit_list_by_query_id;
 
-			/// \brief Whether or not (the user guaranteees that) the input hits data is presorted
+			/// \brief Whether or not (the user guarantees that) the input hits data is presorted
 			///        to ensure all hits for a query_id are consecutive
 			///
 			/// When this is true, it's possible to process and erase a block of hits for a query_id when the
@@ -264,7 +264,7 @@ namespace cath {
 			// (probably that the input data violates a given guarantee that it'd be grouped by query_id)
 			if ( to_be_erased_query_id && *to_be_erased_query_id == temp_hashable_query_id ) {
 
-				// ** Should probably catch this exception and exit with error code somwhere **
+				// ** Should probably catch this exception and exit with error code somewhere **
 				BOOST_THROW_EXCEPTION(common::runtime_error_exception(
 					"Attempt to add a hit for a query_id "
 					+ temp_hashable_query_id

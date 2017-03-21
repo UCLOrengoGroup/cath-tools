@@ -27,7 +27,7 @@
 namespace cath {
 	namespace opts {
 
-		/// \brief An options block for specifiying how PDBs should be read in
+		/// \brief An options block for specifying how PDBs should be read in
 		class pdb_input_options_block final : public cath::opts::options_block {
 		private:
 			static const std::string PO_PDB_INFILE;
