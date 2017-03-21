@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(ctor_does_not_throw, options_block_type, all_optio
 BOOST_AUTO_TEST_CASE_TEMPLATE(clone_works, options_block_type, all_options_block_types) {
 	const options_block_type the_options_block(construct_options_block_for_testing<options_block_type>());
 	const unique_ptr<options_block> options_block_new_clone_ptr = the_options_block.clone();
-	const auto &options_block_ref = *options_block_new_clone_ptr.get();
+	const auto &options_block_ref = *options_block_new_clone_ptr;
 	BOOST_CHECK_EQUAL( typeid( options_block_ref ),        typeid( the_options_block )        );
 	BOOST_CHECK_EQUAL( typeid( options_block_ref ).name(), typeid( the_options_block ).name() );
 }
