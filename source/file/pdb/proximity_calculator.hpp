@@ -119,7 +119,7 @@ namespace cath {
 		                                   const double &,
 		                                   const double &);
 
-		geom::coord_vec restrict_to_linkage_proximate_copy(geom::coord_vec  ,
+		geom::coord_vec restrict_to_linkage_proximate_copy(geom::coord_vec,
 		                                                   const proximity_calculator &,
 		                                                   const double &,
 		                                                   const double &);
