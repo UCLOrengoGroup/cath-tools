@@ -100,7 +100,7 @@ namespace cath {
 
 		public:
 			const scored_arch_proxy & get_best_for_unmasked(const hit_seg_vec &) const;
-			void store_best_for_unmasked(const hit_seg_vec &&,
+			void store_best_for_unmasked(hit_seg_vec &&,
 			                             const scored_arch_proxy &);
 		};
 
@@ -111,7 +111,7 @@ namespace cath {
 		}
 
 		/// \brief Store the optimum architecture for a signature of unmasked regions
-		inline void masked_bests_cache::store_best_for_unmasked(const hit_seg_vec       &&arg_unmasked,              ///< The set of unmasked regions for which the optimum architecture is to be stored
+		inline void masked_bests_cache::store_best_for_unmasked(hit_seg_vec             &&arg_unmasked,              ///< The set of unmasked regions for which the optimum architecture is to be stored
 		                                                        const scored_arch_proxy  &arg_best_scored_arch_proxy ///< The optimum architecture (scored_arch_proxy) to store
 		                                                        ) {
 			store.emplace(

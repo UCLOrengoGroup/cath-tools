@@ -157,7 +157,7 @@ namespace cath {
 			             std::string &&,
 			             const double &,
 			             const hit_score_type &,
-			             const alnd_rgn_vec_opt && = boost::none);
+			             alnd_rgn_vec_opt && = boost::none);
 
 			void process_all_outstanding();
 
@@ -240,7 +240,7 @@ namespace cath {
 		                                          std::string            &&arg_label,      ///< The label associated with the new hit
 		                                          const double            &arg_score,      ///< The score associated with the new hit
 		                                          const hit_score_type    &arg_score_type, ///< The type of the score
-		                                          const alnd_rgn_vec_opt &&arg_alnd_rgns   ///< Any hmmsearch aligned regions or else none
+		                                          alnd_rgn_vec_opt       &&arg_alnd_rgns   ///< Any hmmsearch aligned regions or else none
 		                                          ) {
 			// If this hit's score doesn't meet the filter and such hits don't need to be kept, then skip it
 			if ( ! processor_ptr->parse_hits_that_fail_score_filter() ) {

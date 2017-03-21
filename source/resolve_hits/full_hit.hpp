@@ -74,10 +74,10 @@ namespace cath {
 			         const alnd_rgn_vec_opt & = boost::none);
 
 			full_hit(const hit_seg_vec &,
-			         const std::string &&,
+			         std::string &&,
 			         const double &,
 			         const hit_score_type & = hit_score_type::CRH_SCORE,
-			         const alnd_rgn_vec_opt && = boost::none);
+			         alnd_rgn_vec_opt && = boost::none);
 
 			const hit_seg_vec & get_segments() const;
 			const std::string & get_label() const;
@@ -136,15 +136,15 @@ namespace cath {
 
 		/// \brief Ctor
 		inline full_hit::full_hit(const hit_seg_vec       &arg_segments,     ///< The segments of the full_hit
-		                          const std::string      &&arg_label,        ///< The label of the hits' match protein
+		                          std::string            &&arg_label,        ///< The label of the hits' match protein
 		                          const double            &arg_score,        ///< The score associated with the full_hit
 		                          const hit_score_type    &arg_score_type,   ///< The type of score stored in this hit (eg evalue / bitscore / crh-score)
-		                          const alnd_rgn_vec_opt &&arg_alnd_rgns_opt ///< Any aligned regions parsed from an hmmsearch output alignment or boost::none otherwise
-		                          ) : segments     { arg_segments           },
-		                              label        { std::move( arg_label ) },
-		                              the_score    { arg_score              },
-		                              score_type   { arg_score_type         },
-		                              alnd_rgns_opt{ arg_alnd_rgns_opt      } {
+		                          alnd_rgn_vec_opt       &&arg_alnd_rgns_opt ///< Any aligned regions parsed from an hmmsearch output alignment or boost::none otherwise
+		                          ) : segments     { arg_segments                   },
+		                              label        { std::move( arg_label )         },
+		                              the_score    { arg_score                      },
+		                              score_type   { arg_score_type                 },
+		                              alnd_rgns_opt{ std::move( arg_alnd_rgns_opt ) } {
 			sanity_check();
 		}
 
