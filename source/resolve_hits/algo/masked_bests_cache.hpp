@@ -116,7 +116,7 @@ namespace cath {
 		                                                        ) {
 			store.emplace(
 				std::move( arg_unmasked ),
-				std::move( arg_best_scored_arch_proxy )
+				arg_best_scored_arch_proxy
 			);
 		}
 
