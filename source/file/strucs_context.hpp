@@ -42,9 +42,9 @@ namespace cath {
 			chop::region_vec_opt_vec regions;
 
 		public:
-			strucs_context(const file::pdb_list,
-			               const str_vec,
-			               const chop::region_vec_opt_vec);
+			strucs_context(file::pdb_list,
+			               str_vec,
+			               chop::region_vec_opt_vec);
 
 			const file::pdb_list & get_pdbs() const;
 			const str_vec & get_names() const;
@@ -56,9 +56,9 @@ namespace cath {
 		size_t get_num_entries(const strucs_context &);
 
 		/// \brief Ctor for strucs_context
-		inline strucs_context::strucs_context(const pdb_list                 arg_pdbs,   ///< The PDBs of the structures
-		                                      const str_vec                  arg_names,  ///< The IDs of the structures
-		                                      const chop::region_vec_opt_vec arg_regions ///< The key regions of each structure to which this refers (or none where it refers to all of a structure)
+		inline strucs_context::strucs_context(pdb_list                 arg_pdbs,   ///< The PDBs of the structures
+		                                      str_vec                  arg_names,  ///< The IDs of the structures
+		                                      chop::region_vec_opt_vec arg_regions ///< The key regions of each structure to which this refers (or none where it refers to all of a structure)
 		                                      ) : pdbs    { std::move( arg_pdbs    ) },
 		                                          names   { std::move( arg_names   ) },
 		                                          regions { std::move( arg_regions ) } {
