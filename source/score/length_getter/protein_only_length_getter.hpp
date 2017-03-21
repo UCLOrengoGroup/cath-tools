@@ -81,18 +81,18 @@ namespace cath {
 		                             const protein &);
 
 		/// \brief Function to make protein_only_length_getter meet the Clonable concept (used in ptr_container)
-        ///
-        /// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
-        ///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
-        ///
-        /// This gets the smart pointer from the clone() method and then calls release on it.
-        ///
-        /// \returns A raw pointer to a new copy of the protein_only_length_getter argument, with the same dynamic type.
-        ///          The caller is responsible for deleting this new object.
-        inline protein_only_length_getter * new_clone(const protein_only_length_getter &arg_protein_only_length_getter ///< The protein_only_length_getter to clone
-                                                      ) {
-                return arg_protein_only_length_getter.protein_only_clone().release();
-        }
+		///
+		/// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
+		///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
+		///
+		/// This gets the smart pointer from the clone() method and then calls release on it.
+		///
+		/// \returns A raw pointer to a new copy of the protein_only_length_getter argument, with the same dynamic type.
+		///          The caller is responsible for deleting this new object.
+		inline protein_only_length_getter * new_clone(const protein_only_length_getter &arg_protein_only_length_getter ///< The protein_only_length_getter to clone
+		                                              ) {
+			return arg_protein_only_length_getter.protein_only_clone().release();
+		}
 	} // namespace score
 } // namespace cath
 

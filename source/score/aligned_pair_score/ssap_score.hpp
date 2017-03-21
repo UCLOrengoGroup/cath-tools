@@ -105,7 +105,7 @@ namespace cath {
 			                                                           const protein &,
 			                                                           const ssap_score_accuracy &,
 			                                                           const size_t &,
-																	   const distance_score_formula &);
+			                                                           const distance_score_formula &);
 			static score_value log_score_copy(const score_value &);
 			static score_value simple_normalise(const score_value &,
 			                                    const size_t &,
