@@ -44,6 +44,18 @@ namespace cath {
 			/// \brief TODOCUMENT
 			index_type structure_b;
 
+			/// \brief const-agnostic implementation of get_entry()
+			///
+			/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
+			/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
+			template <typename Action>
+			static auto get_entry_impl(Action           &arg_action,      ///< TODOCUMENT
+			                           const index_type &arg_structure_a, ///< TODOCUMENT
+			                           const index_type &arg_structure_b  ///< TODOCUMENT
+			                           ) -> decltype( arg_action.get_entry( arg_structure_a, arg_structure_b ) ) {
+				return arg_action.the_matrix[ arg_structure_a ][ arg_structure_b ];
+			}
+
 		public: // ***** TEMPORARILY PUBLIC *****
 			double & get_entry(const index_type &, const index_type &);
 			const double & get_entry(const index_type &, const index_type &) const;
@@ -71,14 +83,14 @@ namespace cath {
 		inline double & populate_matrix_scan_action::get_entry(const index_type &arg_structure_a, ///< TODOCUMENT
 		                                                       const index_type &arg_structure_b  ///< TODOCUMENT
 		                                                       ) {
-			return const_cast<double &>( static_cast<const populate_matrix_scan_action &>( *this ).get_entry( arg_structure_a, arg_structure_b ) );
+			return get_entry_impl( *this, arg_structure_a, arg_structure_b );
 		}
 
 		/// \brief TODOCUMENT
 		inline const double & populate_matrix_scan_action::get_entry(const index_type &arg_structure_a, ///< TODOCUMENT
 		                                                             const index_type &arg_structure_b  ///< TODOCUMENT
 		                                                             ) const {
-			return the_matrix[ arg_structure_a ][ arg_structure_b ];
+			return get_entry_impl( *this, arg_structure_a, arg_structure_b );
 		}
 
 		/// \brief TODOCUMENT

@@ -22,10 +22,14 @@
 #define _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_RESULTS_SET_H
 
 #include <boost/filesystem.hpp>
+#include <boost/range/algorithm/lower_bound.hpp>
 
+#include "common/cpp14/cbegin_cend.hpp"
+#include "exception/invalid_argument_exception.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
 #include "score/aligned_pair_score_list/score_value_list_reader/score_value_reader.hpp"
+#include "score/score_classification/detail/score_classn_value_list_name_less.hpp"
 #include "score/score_classification/score_classn_value_list.hpp"
 #include "score/score_type_aliases.hpp"
 #include "score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
@@ -79,7 +83,25 @@ namespace cath {
 			void check_is_sorted_uniqued() const;
 			void sort_score_classn_value_lists();
 
-			const score_classn_value_list & get_score_classn_value_list_of_name_impl(const std::string &) const;
+			/// \brief const-agnostic implementation of get_score_classn_value_list_of_name()
+			///
+			/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
+			/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
+			template <typename Set>
+			static auto get_score_classn_value_list_of_name_impl(Set               &arg_set, ///< TODOCUMENT
+			                                                     const std::string &arg_name ///< TODOCUMENT
+			                                                     ) -> decltype( arg_set.get_score_classn_value_list_of_name( arg_name ) ) {
+				const auto found_itr = boost::range::lower_bound(
+					arg_set.score_classn_value_lists,
+					arg_name,
+					detail::score_classn_value_list_name_less{}
+				);
+				if ( found_itr == common::cend( arg_set.score_classn_value_lists ) || found_itr->get_name() != arg_name ) {
+					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot find score_classn_value_list of name"));
+				}
+				return *found_itr;
+			}
+
 			score_classn_value_list & get_score_classn_value_list_of_name(const std::string &);
 
 		public:

@@ -42,12 +42,9 @@
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "common/boost_addenda/range/adaptor/limited.hpp"
 #include "common/boost_addenda/range/front.hpp"
-#include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
-#include "exception/invalid_argument_exception.hpp"
 #include "exception/out_of_range_exception.hpp"
 #include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
-#include "score/score_classification/detail/score_classn_value_list_name_less.hpp"
 #include "score/score_classification/value_list_scaling.hpp"
 #include "score/true_pos_false_neg/classn_rate_stat.hpp"
 #include "score/true_pos_false_neg/classn_stat_pair_series.hpp"
@@ -103,29 +100,15 @@ void score_classn_value_results_set::sort_score_classn_value_lists() {
 }
 
 /// \brief TODOCUMENT
-const score_classn_value_list & score_classn_value_results_set::get_score_classn_value_list_of_name_impl(const string &arg_name ///< TODOCUMENT
-                                                                                                         ) const {
-	const auto found_itr = lower_bound( score_classn_value_lists, arg_name, score_classn_value_list_name_less() );
-	if ( found_itr == common::cend( score_classn_value_lists ) || found_itr->get_name() != arg_name ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot find score_classn_value_list of name"));
-	}
-	return *found_itr;
-}
-
-/// \brief TODOCUMENT
 score_classn_value_list & score_classn_value_results_set::get_score_classn_value_list_of_name(const string &arg_name ///< TODOCUMENT
                                                                                               ) {
-	// Call the const get_score_classn_value_list_of_name_impl() and then cast away the constness
-	// (non-const methods casting away the constness of a result from a const-overloaded twin is
-	//  an idiomatic, non-naughty use of const_cast; it means neither method violates any of their guarantees
-	//  whereas the reverse direction would have a const method calling a non-const method, breaking its guarantee)
-	return const_cast<score_classn_value_list &>( get_score_classn_value_list_of_name_impl( arg_name ) );
+	return get_score_classn_value_list_of_name_impl( *this, arg_name );
 }
 
 /// \brief TODOCUMENT
 const score_classn_value_list & score_classn_value_results_set::get_score_classn_value_list_of_name(const string &arg_name ///< TODOCUMENT
                                                                                                     ) const {
-	return get_score_classn_value_list_of_name_impl( arg_name );
+	return get_score_classn_value_list_of_name_impl( *this, arg_name );
 }
 
 /// \brief TODOCUMENT

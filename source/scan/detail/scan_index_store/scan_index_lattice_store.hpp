@@ -76,6 +76,24 @@ namespace cath {
 				// /// \brief TODOCUMENT
 				// Cell empty_cell;
 
+				/// \brief const-agnostic implementation of find_cell()
+				///
+				/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
+				/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
+				template <typename Store>
+				static auto find_cell_impl(Store     &arg_store, ///< TODOCUMENT
+				                           const Key &arg_key    ///< TODOCUMENT
+				                           ) -> decltype( arg_store.find_cell( arg_key ) ) {
+					return arg_store.the_store[
+						debug_numeric_cast<size_t>(
+							common::tuple_lattice_index(
+								common::tuple_subtract( arg_key, arg_store.mins_key ),
+								arg_store.nums_of_cells_key
+							)
+						)
+					].second;
+				}
+
 				Cell & find_cell(const Key &);
 				const Cell & find_cell(const Key &) const;
 
@@ -107,21 +125,14 @@ namespace cath {
 			template <typename Key, typename Cell>
 			inline auto scan_index_lattice_store<Key, Cell>::find_cell(const Key &arg_key ///< TODOCUMENT
 			                                                           ) -> Cell & {
-				return const_cast<Cell &>( static_cast<const scan_index_lattice_store &>( *this ).find_cell( arg_key ) );
+				return find_cell_impl( *this, arg_key );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			inline auto scan_index_lattice_store<Key, Cell>::find_cell(const Key &arg_key ///< TODOCUMENT
 			                                                           ) const -> const Cell & {
-				return the_store[
-					debug_numeric_cast<size_t>(
-						common::tuple_lattice_index(
-							common::tuple_subtract( arg_key, mins_key ),
-							nums_of_cells_key
-						)
-					)
-				].second;
+				return find_cell_impl( *this, arg_key );
 			}
 
 			/// \brief TODOCUMENT

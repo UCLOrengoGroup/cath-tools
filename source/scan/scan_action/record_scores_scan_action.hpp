@@ -42,6 +42,18 @@ namespace cath {
 			/// \brief TODOCUMENT
 			doub_vec scores;
 
+			/// \brief const-agnostic implementation of get_entry()
+			///
+			/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
+			/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
+			template <typename Action>
+			static auto get_entry_impl(Action       &arg_action,      ///< TODOCUMENT
+			                           const size_t &arg_query_index, ///< TODOCUMENT
+			                           const size_t &arg_match_index  ///< TODOCUMENT
+			                           ) -> decltype( arg_action.get_entry( arg_query_index, arg_match_index ) ) {
+				return arg_action.scores[ arg_query_index * arg_action.num_matches + arg_match_index ];
+			}
+
 			double & get_entry(const size_t &,
 			                   const size_t &);
 			const double & get_entry(const size_t &,
@@ -64,19 +76,14 @@ namespace cath {
 		inline double & record_scores_scan_action::get_entry(const size_t &arg_query_index, ///< TODOCUMENT
 		                                                     const size_t &arg_match_index  ///< TODOCUMENT
 		                                                     ) {
-			return const_cast<double &>(
-				static_cast<const record_scores_scan_action &>( *this ).get_entry(
-					arg_query_index,
-					arg_match_index
-				)
-			);
+			return get_entry_impl( *this, arg_query_index, arg_match_index );
 		}
 
 		/// \brief TODOCUMENT
 		inline const double & record_scores_scan_action::get_entry(const size_t &arg_query_index, ///< TODOCUMENT
 		                                                           const size_t &arg_match_index  ///< TODOCUMENT
 		                                                           ) const {
-			return scores[ arg_query_index * num_matches + arg_match_index ];
+			return get_entry_impl( *this, arg_query_index, arg_match_index );
 		}
 
 		/// \brief TODOCUMENT

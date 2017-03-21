@@ -30,6 +30,7 @@
 #include "structure/view_cache/index/detail/vcie_match_criteria.hpp"
 
 #include <cstddef>
+#include <type_traits>
 #include <vector>
 
 namespace cath {
@@ -41,9 +42,27 @@ namespace cath {
 			private:
 				static bool get_increases(const view_cache_index_entry &);
 
-				template <typename CELLS>
-				const typename CELLS::value_type & cell_at_value_impl(const CELLS &,
-				                                                      const bool &) const;
+				/// \brief const-agnostic implementation of cell_at_value()
+				///
+				/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
+				/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
+				template <typename CELLS, typename DimDirn>
+				static auto cell_at_value_impl(DimDirn      &/*arg_dim_dirn*/, ///< TODOCUMENT
+				                               CELLS        &arg_cells,        ///< TODOCUMENT
+				                               const bool   &arg_increases     ///< TODOCUMENT
+				                               ) -> std::conditional_t<
+				                                    	std::is_const< DimDirn >::value,
+				                                    	const typename CELLS::value_type &,
+				                                    	typename CELLS::value_type &
+				                                    > {
+#ifndef NDEBUG
+					if ( arg_cells.empty() ) {
+						BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot get entry at_value() with no populated cells"));
+					}
+#endif
+					return arg_increases ? arg_cells.back()
+					                     : arg_cells.front();
+				}
 
 				template <typename CELLS>
 				typename CELLS::value_type & cell_at_value(CELLS &,
@@ -93,19 +112,7 @@ namespace cath {
 				return ( to_index > from_index );
 			}
 
-			/// \brief TODOCUMENT
-			template <typename CELLS>
-			inline const typename CELLS::value_type & view_cache_index_dim_dirn::cell_at_value_impl(const CELLS  &arg_cells,    ///< TODOCUMENT
-			                                                                                        const bool   &arg_increases ///< TODOCUMENT
-			                                                                                        ) const {
-#ifndef NDEBUG
-				if ( arg_cells.empty() ) {
-					BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot get entry at_value() with no populated cells"));
-				}
-#endif
-				return arg_increases ? arg_cells.back()
-				                     : arg_cells.front();
-			}
+			
 
 			/// \brief TODOCUMENT
 			template <typename CELLS>
@@ -119,12 +126,7 @@ namespace cath {
 					arg_cells.assign( 2, arg_default_cell );
 				}
 
-				// Call the const cell_at_value_impl() and then cast away the constness
-				// (non-const methods casting away the constness of a result from a const-overloaded twin is
-				//  an idiomatic, non-naughty use of const_cast; it means neither method violates any of their guarantees
-				//  whereas the reverse direction would have a const method calling a non-const method, breaking its guarantee)
-				using value_type = typename CELLS::value_type;
-				return const_cast<value_type &>( cell_at_value_impl( arg_cells, arg_increases ) );
+				return cell_at_value_impl( *this, arg_cells, arg_increases );
 			}
 
 			/// \brief TODOCUMENT
@@ -132,7 +134,7 @@ namespace cath {
 			inline const typename CELLS::value_type & view_cache_index_dim_dirn::cell_at_value(const CELLS  &arg_cells,    ///< TODOCUMENT
 			                                                                                   const bool   &arg_increases ///< TODOCUMENT
 			                                                                                   ) const {
-				return cell_at_value_impl( arg_cells, arg_increases );
+				return cell_at_value_impl( *this, arg_cells, arg_increases );
 			}
 
 			/// \brief TODOCUMENT
