@@ -39,6 +39,6 @@ namespace cath {
 	} // namespace detail
 } // namespace cath
 
-#define MAKE_STATIC_CONST( type, name ) inline namespace { constexpr auto const &name = cath::detail::make_static_const<type>::value; }
+#define MAKE_STATIC_CONST( type, name ) inline namespace { constexpr auto const &(name) = cath::detail::make_static_const<type>::value; }
 
 #endif
