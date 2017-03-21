@@ -107,32 +107,32 @@ const hrc_duration & cath::scan::get_scan_durn(const load_and_scan_metrics &arg_
 /// \relates load_and_scan_metrics
 string cath::scan::to_markdown_string(const load_and_scan_metrics &arg_load_and_scan_metrics ///< TODOCUMENT
                                       ) {
-	const auto query_strucs_metrics = get_query_strucs_metrics( arg_load_and_scan_metrics );
-	const auto query_index_metrics  = get_query_index_metrics ( arg_load_and_scan_metrics );
-	const auto index_strucs_metrics = get_index_strucs_metrics( arg_load_and_scan_metrics );
-	const auto index_index_metrics  = get_index_index_metrics ( arg_load_and_scan_metrics );
+	const auto &query_strucs_metrics = get_query_strucs_metrics( arg_load_and_scan_metrics );
+	const auto &query_index_metrics  = get_query_index_metrics ( arg_load_and_scan_metrics );
+	const auto &index_strucs_metrics = get_index_strucs_metrics( arg_load_and_scan_metrics );
+	const auto &index_index_metrics  = get_index_index_metrics ( arg_load_and_scan_metrics );
 
-	const auto &load_files_durn     = arg_load_and_scan_metrics.get_load_files_durn();
-	const auto &query_strucs_durn   = query_strucs_metrics.first;
-	const auto &query_index_durn    = query_index_metrics.first;
-	const auto &index_strucs_durn   = index_strucs_metrics.first;
-	const auto &index_index_durn    = index_index_metrics.first;
-	const auto &scan_durn           = get_scan_durn           ( arg_load_and_scan_metrics );
-	const auto total_durn           =   load_files_durn
-	                                  + query_strucs_durn
-	                                  + query_index_durn
-	                                  + index_strucs_durn
-	                                  + index_index_durn
-	                                  + scan_durn;
+	const auto &load_files_durn      = arg_load_and_scan_metrics.get_load_files_durn();
+	const auto &query_strucs_durn    = query_strucs_metrics.first;
+	const auto &query_index_durn     = query_index_metrics.first;
+	const auto &index_strucs_durn    = index_strucs_metrics.first;
+	const auto &index_index_durn     = index_index_metrics.first;
+	const auto &scan_durn            = get_scan_durn           ( arg_load_and_scan_metrics );
+	const auto total_durn            =   load_files_durn
+	                                   + query_strucs_durn
+	                                   + query_index_durn
+	                                   + index_strucs_durn
+	                                   + index_index_durn
+	                                   + scan_durn;
 
-	const auto &query_strucs_size   = query_strucs_metrics.second;
-	const auto &query_index_size    = query_index_metrics.second;
-	const auto &index_strucs_size   = index_strucs_metrics.second;
-	const auto &index_index_size    = index_index_metrics.second;
-	const auto  total_size          =   query_strucs_size
-	                                  + query_index_size
-	                                  + index_strucs_size
-	                                  + index_index_size;
+	const auto &query_strucs_size    = query_strucs_metrics.second;
+	const auto &query_index_size     = query_index_metrics.second;
+	const auto &index_strucs_size    = index_strucs_metrics.second;
+	const auto &index_index_size     = index_index_metrics.second;
+	const auto  total_size           =   query_strucs_size
+	                                   + query_index_size
+	                                   + index_strucs_size
+	                                   + index_index_size;
 
 	const auto property_fields = str_str_str_str_tpl_vec{ {
 		str_str_str_str_tpl{ "Task",                       "Duration",                                  "Rate",                                              "Memory Required"                            },

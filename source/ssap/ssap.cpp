@@ -320,13 +320,15 @@ ptrdiff_t cath::temp_get_global_run_counter() {
 prot_prot_pair cath::read_protein_pair(const cath_ssap_options &arg_cath_ssap_options, ///< The cath_ssap options
                                        ostream                 &arg_stderr             ///< TODOCUMENT
                                        ) {
-	const old_ssap_options_block the_ssap_options     = arg_cath_ssap_options.get_old_ssap_options();
-	const data_dirs_spec         the_data_dirs        = arg_cath_ssap_options.get_data_dirs_spec();
-	const string                 protein_name_a       = the_ssap_options.get_protein_name_a();
-	const string                 protein_name_b       = the_ssap_options.get_protein_name_b();
-	const auto                   protein_sources_ptr  = the_ssap_options.get_protein_source_files();
-	const path_opt               domin_file           = the_ssap_options.get_opt_domin_file();
-	return read_protein_pair( protein_name_a, protein_name_b, the_data_dirs, *protein_sources_ptr, domin_file, arg_stderr );
+	const auto &the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
+	return read_protein_pair(
+		the_ssap_options.get_protein_name_a(),
+		the_ssap_options.get_protein_name_b(),
+		arg_cath_ssap_options.get_data_dirs_spec(),
+		*the_ssap_options.get_protein_source_files(),
+		the_ssap_options.get_opt_domin_file(),
+		arg_stderr
+	);
 }
 
 /// \brief Read a pair of proteins following the specification in arg_ssap_options
@@ -351,7 +353,7 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 	reset_ssap_global_variables();
 
 	// If the options are invalid or specify to do_nothing, then just return
-	const auto error_or_help_string = arg_cath_ssap_options.get_error_or_help_string();
+	const auto &error_or_help_string = arg_cath_ssap_options.get_error_or_help_string();
 	if ( error_or_help_string ) {
 		arg_stdout << error_or_help_string << endl;
 		return;
@@ -431,8 +433,8 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 //		}
 //	}
 
-	const old_ssap_options_block the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
-	const data_dirs_spec         the_data_dirs    = arg_cath_ssap_options.get_data_dirs_spec();
+	const old_ssap_options_block &the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
+	const data_dirs_spec         &the_data_dirs    = arg_cath_ssap_options.get_data_dirs_spec();
 
 	// Run SSAP
 	align_proteins( proteins.first, proteins.second, the_ssap_options, the_data_dirs );
@@ -879,7 +881,7 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 		for (size_t ctr_b = length_b; ctr_b > 0; --ctr_b) {
 			const residue &residue_b = get_residue_ref_of_index__offset_1(arg_protein_b, ctr_b);
 			for (size_t ctr_a = length_a; ctr_a > 0; --ctr_a) {
-				const residue residue_a = get_residue_ref_of_index__offset_1(arg_protein_a, ctr_a);
+				const residue &residue_a = get_residue_ref_of_index__offset_1(arg_protein_a, ctr_a);
 
 				// Look to see if they match any secondary structures
 				for (size_t k = 0; k < clique_size; ++k) {

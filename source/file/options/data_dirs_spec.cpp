@@ -206,9 +206,9 @@ data_dirs_spec cath::opts::build_data_dirs_spec_of_dir(const path &arg_path ///<
 path_vec cath::opts::get_paths_of_data_file(const data_dirs_spec &arg_data_dirs_options, ///< The data_dirs_spec from which to grab the path
                                             const data_file      &arg_data_file          ///< The data type to query
                                             ) {
-	const path   cath_root_dir = arg_data_dirs_options.get_cath_root_dir();
-	const string path_string   = get_path_of_data_file( arg_data_dirs_options, arg_data_file );
-	path_vec     path_dirs     = split_path_into_directories( path_string );
+	const path   &cath_root_dir = arg_data_dirs_options.get_cath_root_dir();
+	const string  path_string   = get_path_of_data_file( arg_data_dirs_options, arg_data_file );
+	path_vec      path_dirs     = split_path_into_directories( path_string );
 	if ( ! cath_root_dir.empty() ) {
 		path_dirs.push_back( cath_root_dir / data_dirs_spec::DEFAULT_SUBDIR_NAME.at( arg_data_file ) );
 	}

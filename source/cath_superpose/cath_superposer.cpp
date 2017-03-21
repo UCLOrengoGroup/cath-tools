@@ -60,7 +60,7 @@ void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose
                                 ostream                      &arg_stderr                  ///< The ostream to which any stderr-like output should be written
                                 ) {
 	// If the options are invalid or specify to do_nothing, then just return
-	const auto error_or_help_string = arg_cath_superpose_options.get_error_or_help_string();
+	const auto &error_or_help_string = arg_cath_superpose_options.get_error_or_help_string();
 	if ( error_or_help_string ) {
 		arg_stdout << *error_or_help_string << endl;
 		return;
@@ -108,7 +108,7 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	}
 
 	// If a JSON superposition file has been specified, return that
-	const path_opt json_sup_infile = arg_cath_sup_opts.get_json_sup_infile();
+	const path_opt &json_sup_infile = arg_cath_sup_opts.get_json_sup_infile();
 	if ( json_sup_infile ) {
 		return set_pdbs_copy(
 			read_superposition_context_from_json_file( *json_sup_infile ),

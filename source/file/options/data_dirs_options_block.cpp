@@ -115,10 +115,10 @@ void data_dirs_options_block::do_add_visible_options_to_description(options_desc
 
 			// Grab the default, description start and description end and join them together to get a description for the option
 			const string     default_value = data_dirs_spec::DATA_FILE_TYPE_OPTION_DEFAULTS.at( the_data_file ).at( the_data_option );
-			const string     desc_start    = DATA_OPTION_DESCRIPTION_START.at(  the_data_option );
-			const string     desc_end      = DATA_OPTION_DESCRIPTION_END.at(    the_data_option );
+			const string    &desc_start    = DATA_OPTION_DESCRIPTION_START.at(  the_data_option );
+			const string    &desc_end      = DATA_OPTION_DESCRIPTION_END.at(    the_data_option );
 			const string     description   = desc_start + data_file_name + desc_end;
-			const string     varname       = DATA_OPTION_VARNAME.at( the_data_option );
+			const string    &varname       = DATA_OPTION_VARNAME.at( the_data_option );
 
 			// Add a new option, using the accumulated data
 			arg_desc.add_options()

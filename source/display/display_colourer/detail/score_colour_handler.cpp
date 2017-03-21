@@ -117,9 +117,9 @@ void cath::detail::adjust_display_colour_spec(display_colour_spec        &arg_co
 			for (size_t index = 0; index < aln_length; ++index) {
 				const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry, index );
 				if ( position ) {
-					const display_colour_opt base_col = get_base_clr( arg_colour_spec );
-					const display_colour_opt pdb_col  = get_clr_of_pdb_index          ( arg_colour_spec, entry            );
-					const display_colour_opt res_col  = get_clr_of_pdb_and_res_indices( arg_colour_spec, entry, *position );
+					const display_colour_opt &base_col = get_base_clr( arg_colour_spec );
+					const display_colour_opt  pdb_col  = get_clr_of_pdb_index          ( arg_colour_spec, entry            );
+					const display_colour_opt  res_col  = get_clr_of_pdb_and_res_indices( arg_colour_spec, entry, *position );
 					const display_colour best_colour = res_col  ? ( *res_col  ) :
 					                                   pdb_col  ? ( *pdb_col  ) :
 					                                   base_col ? ( *base_col ) : display_colour::BLACK;

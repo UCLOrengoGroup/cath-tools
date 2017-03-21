@@ -57,12 +57,12 @@ ostream & cath::align::operator<<(ostream                     &arg_os,          
                                   const horiz_align_outputter &arg_horiz_align_outputter ///< A horiz_align_outputter that wraps the alignment to be output
                                   ) {
 	// Grab alignment and then some basic information from it
-	const alignment            the_alignment   = arg_horiz_align_outputter.get_alignment();
-	const alignment::size_type length          = the_alignment.length();
-	const alignment::size_type num_entries     = the_alignment.num_entries();
-	const aln_posn_opt         max_index_opt   = get_max_last_present_position( the_alignment );
-	const aln_posn_type        max_index       = max_index_opt ? max_index_opt.get() : 0;
-	const size_t               max_index_width = lexical_cast<string>( max_index ).length();
+	const alignment     &the_alignment   = arg_horiz_align_outputter.get_alignment();
+	const auto           length          = the_alignment.length();
+	const auto           num_entries     = the_alignment.num_entries();
+	const aln_posn_opt   max_index_opt   = get_max_last_present_position( the_alignment );
+	const aln_posn_type  max_index       = max_index_opt ? max_index_opt.get() : 0;
+	const size_t         max_index_width = lexical_cast<string>( max_index ).length();
 
 	// Loop over the positions, and output them
 	arg_os << "alignment[";

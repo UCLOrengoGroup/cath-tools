@@ -48,7 +48,7 @@ unique_ptr<alignment_outputter> ssap_ostream_alignment_outputter::do_clone() con
 void ssap_ostream_alignment_outputter::do_output_alignment(const alignment_context &arg_alignment_context, ///< TODOCUMENT
                                                            ostream                 &arg_ostream            ///< TODOCUMENT
                                                            ) const {
-	const alignment the_alignment = arg_alignment_context.get_alignment();
+	const alignment &the_alignment = arg_alignment_context.get_alignment();
 	check_alignment_is_a_pair( the_alignment );
 
 	const protein_list temp_protein_list = build_protein_list_of_pdb_list_and_names(

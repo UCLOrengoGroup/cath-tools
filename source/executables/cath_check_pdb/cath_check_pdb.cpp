@@ -57,7 +57,7 @@ namespace cath {
 			const auto the_cath_check_pdb_options = make_and_parse_options<cath_check_pdb_options>( argc, argv );
 
 			// If the options are invalid or specify to do_nothing, then just output string return
-			const auto error_or_help_string = the_cath_check_pdb_options.get_error_or_help_string();
+			const auto &error_or_help_string = the_cath_check_pdb_options.get_error_or_help_string();
 			if ( error_or_help_string ) {
 				cout << *error_or_help_string << endl;
 				return;

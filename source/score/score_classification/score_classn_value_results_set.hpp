@@ -218,8 +218,8 @@ namespace cath {
 			size_t read_file_ctr = 0;
 			size_t file_ctr      = 0;
 			for (const auto &dir_entry : the_dir_range) {
-				const auto the_filename       = dir_entry.path();
-				const auto positive_and_label = arg_positive_and_label_of_filename( the_filename );
+				const auto &the_filename       = dir_entry.path();
+				const auto  positive_and_label = arg_positive_and_label_of_filename( the_filename );
 				if ( positive_and_label ) {
 					std::cerr << "About to attempt to read file " << std::right << std::setw(6) << read_file_ctr << " / " << file_ctr << " : " << the_filename << std::endl;
 					const auto the_scores = score_value_reader::read( the_filename );

@@ -70,7 +70,7 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
                                 ostream                         &arg_stderr                     ///< The ostream to which any stderr-like output should be written
                                 ) {
 	// If the options are invalid or specify to do_nothing, then just return
-	const auto error_or_help_string = arg_cath_refine_align_options.get_error_or_help_string();
+	const auto &error_or_help_string = arg_cath_refine_align_options.get_error_or_help_string();
 	if ( error_or_help_string ) {
 		arg_stdout << *error_or_help_string << endl;
 		return;

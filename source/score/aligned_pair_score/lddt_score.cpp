@@ -298,7 +298,7 @@ bool cath::score::operator<(const lddt_score &arg_lddt_score_a, ///< TODOCUMENT
 /// \relates lddt_score
 string cath::score::get_thresholds_summary_string(const lddt_score &arg_lddt_score ///< TODOCUMENT
                                                   ) {
-	const doub_vec the_thresholds = arg_lddt_score.get_threshold_values();
+	const doub_vec &the_thresholds = arg_lddt_score.get_threshold_values();
 	if ( the_thresholds.size() == 1 ) {
 		return lexical_cast<string>( the_thresholds.front() );
 	}

@@ -174,7 +174,7 @@ namespace cath {
 			best_n_ssap_hits( arg_ssaps, arg_sf_of_dom, NUM_BEST_HITS ),
 			[&] (const ssap_scores_entry &x) {
 				const string &match_id   = x.get_name_2();
-				const string  match_sf   = arg_sf_of_dom.get_superfamily_of_domain( match_id );
+				const string &match_sf   = arg_sf_of_dom.get_superfamily_of_domain( match_id );
 				const bool    created_sf = arg_sf_of_dom.is_in_created_sf         ( match_id );
 				return match_id
 					+ "; SSAP:**" + ( boost::format( "%g") % x.get_ssap_score() ).str()
@@ -190,7 +190,7 @@ namespace cath {
 			best_n_prc_hits( arg_prcs, arg_sf_of_dom, NUM_BEST_HITS ),
 			[&] (const prc_scores_entry &x) {
 				const string &match_id   = x.get_name_2();
-				const string  match_sf   = arg_sf_of_dom.get_superfamily_of_domain( match_id );
+				const string &match_sf   = arg_sf_of_dom.get_superfamily_of_domain( match_id );
 				const bool    created_sf = arg_sf_of_dom.is_in_created_sf( match_id );
 				return x.get_name_2()
 					+ "; PRC:**"  + ( boost::format( "%g") % x.get_evalue() ).str()
@@ -240,16 +240,16 @@ namespace cath {
 			const auto the_cath_assign_domains_options = make_and_parse_options<cath_assign_domains_options>( argc, argv );
 
 			// If the options are invalid or specify to do_nothing, then just return
-			const auto error_or_help_string = the_cath_assign_domains_options.get_error_or_help_string();
+			const auto &error_or_help_string = the_cath_assign_domains_options.get_error_or_help_string();
 			if ( error_or_help_string ) {
 				cout << *error_or_help_string << "\n";
 				return;
 			}
 
-			const path    rbf_svm_file    = the_cath_assign_domains_options.get_rbf_svm_file();
-			const path    data_data_file  = the_cath_assign_domains_options.get_data_data_file();
-			const path    sf_of_dom_file  = the_cath_assign_domains_options.get_sf_of_dom_file();
-			const str_vec forbidden_nodes = the_cath_assign_domains_options.get_forbidden_nodes();
+			const path    &rbf_svm_file    = the_cath_assign_domains_options.get_rbf_svm_file();
+			const path    &data_data_file  = the_cath_assign_domains_options.get_data_data_file();
+			const path    &sf_of_dom_file  = the_cath_assign_domains_options.get_sf_of_dom_file();
+			const str_vec &forbidden_nodes = the_cath_assign_domains_options.get_forbidden_nodes();
 
 			BOOST_LOG_TRIVIAL( info ) << "About to parse SVM-light RBF model " << rbf_svm_file;
 			const rbf_model the_svm       = parse_rbf_model( rbf_svm_file );
