@@ -64,6 +64,7 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 		c = numeric_cast<char>( getc( wolf_infile ) );
 		if ( c == EOF ) {
 			cerr << "ssap: WOLF file ended unexpectedly!" << endl;
+			fclose( wolf_infile );
 			exit(1);
 		}
 
@@ -71,6 +72,7 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 			while( c = numeric_cast<char>( getc( wolf_infile ) ), c != '\n' ) {
 				if (c==EOF) {
 					cerr << "ssap: WOLF file ended unexpectedly!" << endl;
+					fclose( wolf_infile );
 					exit(1);
 				}
 			}
@@ -78,6 +80,7 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 		else {
 			if (!fscanf( wolf_infile, "%zu", &length )) {
 				cerr << "ssap: WOLF file ended unexpectedly!" << endl;
+				fclose( wolf_infile );
 				exit(1);
 			}
 			foundlength = true;
@@ -103,6 +106,7 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 
 		if (!fgets(buffer, 999, wolf_infile)) {
 			cerr << "WOLF file ended unexpectedly!" << endl;
+			fclose( wolf_infile );
 			exit(1);
 		}
 
