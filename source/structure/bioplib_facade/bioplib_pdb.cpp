@@ -33,8 +33,6 @@
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/rotation.hpp"
 
-#include <iostream> // **** TEMPORARY ****
-
 using namespace boost::algorithm;
 using namespace boost::filesystem;
 using namespace cath;
