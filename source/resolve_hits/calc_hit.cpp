@@ -18,6 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -31,6 +32,7 @@ using namespace cath::rslv;
 using namespace std::literals::string_literals;
 
 using boost::adaptors::transformed;
+using boost::algorithm::all_of;
 using boost::algorithm::join;
 using boost::irange;
 using std::ostream;
@@ -79,25 +81,22 @@ ostream & cath::rslv::operator<<(ostream        &arg_os,      ///< The ostream i
 bool cath::rslv::operator==(const calc_hit &arg_lhs, ///< The first  calc_hit to compare
                             const calc_hit &arg_rhs  ///< The second calc_hit to compare
                             ) {
-	const bool similar = (
-		arg_lhs.get_num_segments() == arg_rhs.get_num_segments()
+	return (
+		( arg_lhs.get_num_segments() == arg_rhs.get_num_segments() )
 		&&
-		arg_lhs.get_score()        == arg_rhs.get_score()
+		( arg_lhs.get_score()        == arg_rhs.get_score()        )
 		&&
-		arg_lhs.get_label_idx()    == arg_rhs.get_label_idx()
+		( arg_lhs.get_label_idx()    == arg_rhs.get_label_idx()    )
+		&&
+		all_of(
+			irange( 0_z, arg_lhs.get_num_segments() ),
+			[&] (const size_t &seg_ctr) {
+				return (
+					arg_lhs.get_start_arrow_of_segment( seg_ctr ) == arg_rhs.get_start_arrow_of_segment( seg_ctr )
+					&&
+					arg_lhs.get_stop_arrow_of_segment ( seg_ctr ) == arg_rhs.get_stop_arrow_of_segment ( seg_ctr )
+				);
+			}
+		)
 	);
-	if ( ! similar ) {
-		return false;
-	}
-	for (const size_t seg_ctr : irange( 0_z, arg_lhs.get_num_segments() ) ) {
-		const bool segs_differ = (
-			arg_lhs.get_start_arrow_of_segment( seg_ctr ) != arg_rhs.get_start_arrow_of_segment( seg_ctr )
-			||
-			arg_lhs.get_stop_arrow_of_segment ( seg_ctr ) != arg_rhs.get_stop_arrow_of_segment ( seg_ctr )
-		);
-		if ( segs_differ ) {
-			return false;
-		}
-	}
-	return true;
 }

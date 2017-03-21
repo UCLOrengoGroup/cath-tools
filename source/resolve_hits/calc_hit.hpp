@@ -480,21 +480,19 @@ namespace cath {
 		inline bool second_right_intersperses_first(const calc_hit &arg_hit_a, ///< The first  calc_hit to query
 		                                            const calc_hit &arg_hit_b  ///< The second calc_hit to query
 		                                            ) {
-			if ( ! arg_hit_a.is_discontig() || ! arg_hit_b.is_discontig() ) {
-				return false;
-			}
-			const bool ends_are_ok = (
+			return (
+				arg_hit_a.is_discontig()
+				&&
+				arg_hit_b.is_discontig()
+				&&
 				arg_hit_a.get_start_arrow() < arg_hit_b.get_start_arrow()
 				&&
 				arg_hit_a.get_stop_arrow()  < arg_hit_b.get_stop_arrow()
 				&&
 				arg_hit_b.get_start_arrow() < arg_hit_a.get_stop_arrow()
+				&&
+				! hits_overlap( arg_hit_a, arg_hit_b )
 			);
-			if ( ! ends_are_ok ) {
-				return false;
-			}
-
-			return ( ! hits_overlap( arg_hit_a, arg_hit_b ) );
 		}
 
 		/// \brief Return whether the second calc_hit right-intersperses or inside-intersperses the first
@@ -511,19 +509,17 @@ namespace cath {
 		inline bool second_right_or_inside_intersperses_first(const calc_hit &arg_hit_a, ///< The first  calc_hit to query
 		                                                      const calc_hit &arg_hit_b  ///< The second calc_hit to query
 		                                                      ) {
-			if ( ! arg_hit_a.is_discontig() || ! arg_hit_b.is_discontig() ) {
-				return false;
-			}
-			const bool ends_are_ok = (
+			return (
+				arg_hit_a.is_discontig()
+				&&
+				arg_hit_b.is_discontig()
+				&&
 				arg_hit_a.get_start_arrow() < arg_hit_b.get_start_arrow()
 				&&
 				arg_hit_b.get_start_arrow() < arg_hit_a.get_stop_arrow()
+				&&
+				! hits_overlap( arg_hit_a, arg_hit_b )
 			);
-			if ( ! ends_are_ok ) {
-				return false;
-			}
-
-			return ( ! hits_overlap( arg_hit_a, arg_hit_b ) );
 		}
 
 	} // namespace rslv
