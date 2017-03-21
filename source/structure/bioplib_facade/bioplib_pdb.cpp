@@ -210,10 +210,7 @@ coord bioplib_pdb::do_get_residue_ca_coord_of_index__backbone_unchecked(const si
 	}
 
 	// Initialise the records of the first number and insert
-//	const size_t NUM_INSERT_CHARS(sizeof(PDB::insert) / sizeof(PDB::insert[0]));
-	// The previous line is quite sensible but doesn't compile on orengobuild64's g++ 4.1.2, so instead we do this:
-	const size_t NUM_INSERT_CHARS(sizeof(((PDB*)nullptr)->insert) / sizeof(sizeof(((PDB*)nullptr)->insert[0])));
-
+	constexpr size_t NUM_INSERT_CHARS = extent< decltype( PDB::insert ) >::value;
 	char_vec insert_code(NUM_INSERT_CHARS+2, 0);
 	strncpy(&insert_code.front(), current->insert, NUM_INSERT_CHARS+1);
 	int resnum(current->resnum);
