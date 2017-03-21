@@ -168,7 +168,7 @@ superposition::superposition(const vector<indices_and_coord_lists_type> &arg_ind
 				const size_t     &index_b      = get<2>( indices_and_coord_lists_entry );
 				const coord_list &coord_list_b = get<3>( indices_and_coord_lists_entry );
 
-				if (entries_loaded.count(index_a) && entries_loaded.count(index_b)) {
+				if ( contains( entries_loaded, index_a ) && contains( entries_loaded, index_b ) ) {
 					BOOST_THROW_EXCEPTION(invalid_argument_exception(
 						"Superposition cannot be created because there are loops (entry number "
 						+ lexical_cast<string>(input_ctr)
@@ -179,8 +179,8 @@ superposition::superposition(const vector<indices_and_coord_lists_type> &arg_ind
 						+ ")"
 					));
 				}
-				else if (entries_loaded.count(index_a) || entries_loaded.count(index_b)) {
-					const bool        b_is_to_be_matched_to_a = entries_loaded.count(index_a);
+				else if ( contains( entries_loaded, index_a ) || contains( entries_loaded, index_b ) ) {
+					const bool        b_is_to_be_matched_to_a = contains( entries_loaded, index_a );
 					const size_t     &source_index           = b_is_to_be_matched_to_a ? index_a      : index_b;
 					const size_t     &target_index           = b_is_to_be_matched_to_a ? index_b      : index_a;
 					const coord_list &source_coord_list      = b_is_to_be_matched_to_a ? coord_list_a : coord_list_b;

@@ -55,7 +55,7 @@ namespace cath {
 				size_t orig_num_entries;
 
 				/// \brief TODOCUMENT
-				size_t did_insert_entries;
+				bool did_insert_entries;
 
 
 				/// \brief TODOCUMENT

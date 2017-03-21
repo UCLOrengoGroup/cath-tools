@@ -132,6 +132,7 @@
 #include "common/difference.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
+#include "common/string/booled_to_string.hpp"
 #include "common/temp_check_offset_1.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -734,7 +735,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	set_pair_alignment_duplicate_scores( new_alignment, scores );
 
 	ssap_scores new_ssap_scores;
-	if (score) {
+	if ( score != 0 ) {
 		new_ssap_scores = plot_aln(
 			arg_protein_a,
 			arg_protein_b,
@@ -747,7 +748,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	}
 
 	if (res_not_ss__hacky) {
-		if (score) {
+		if ( score != 0 ) {
 			global_res_score = true;
 		}
 		else {
@@ -890,9 +891,9 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 					int astart = atoi( clique_data.equivs[k].prota_start ) - boundary;
 					int aend   = atoi( clique_data.equivs[k].prota_end   ) + boundary;
 
-					if ( pdb_number( residue_a )           && pdb_number( residue_b )         &&
-					     pdb_number( residue_b ) >= bstart && pdb_number( residue_b ) <= bend &&
-					     pdb_number( residue_a ) >= astart && pdb_number( residue_a ) <= aend ) {
+					if ( ( pdb_number( residue_a ) != 0 )    && ( pdb_number( residue_b ) != 0 )  &&
+					       pdb_number( residue_b ) >= bstart &&   pdb_number( residue_b ) <= bend &&
+					       pdb_number( residue_a ) >= astart &&   pdb_number( residue_a ) <= aend ) {
 						global_lower_mask_matrix.set( ctr_b, ctr_a, true );
 						break;
 					}
@@ -905,9 +906,9 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 					int astart = atoi( clique_data.equivs[ k + 1 ].prota_start ) + boundary;
 					int aend   = atoi( clique_data.equivs[ k     ].prota_end   ) - boundary;
 
-					if ( pdb_number( residue_a )          && pdb_number( residue_b )        &&
-					     pdb_number( residue_b ) < bstart && pdb_number( residue_b ) > bend &&
-					     pdb_number( residue_a ) < astart && pdb_number( residue_a ) > aend ) {
+					if ( ( pdb_number( residue_a ) != 0 )   && ( pdb_number( residue_b ) != 0 ) &&
+					       pdb_number( residue_b ) < bstart &&   pdb_number( residue_b ) > bend &&
+					       pdb_number( residue_a ) < astart &&   pdb_number( residue_a ) > aend ) {
 						global_lower_mask_matrix.set( ctr_b, ctr_a, true );
 						break;
 					}
@@ -992,8 +993,8 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 					}
 				}
 				// If no clique data is present, use built-in secondary structure method
-				else if (residue_a.get_sec_struc_number()
-				         && residue_b.get_sec_struc_number()
+				else if ( ( residue_a.get_sec_struc_number() != 0u )
+				         && ( residue_b.get_sec_struc_number() != 0u )
 				         && arg_opt_ss_alignment
 				         && sec_struc_match_matrix.get( residue_b.get_sec_struc_number(), residue_a.get_sec_struc_number() )
 				         && residues_have_similar_area_angle_props(residue_a, residue_b) ) {
@@ -1281,7 +1282,7 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 	const string msg_context_prfx = "When populating upper_score_matrix ("
 	                                + arg_entry_querier.get_entry_name()
 	                                + "; pass "
-	                                + ::std::to_string( arg_align_pass )
+	                                + booled_to_string( arg_align_pass )
 	                                + "), ";
 	BOOST_LOG_TRIVIAL( debug ) << msg_context_prfx
 	                           << "compared "
@@ -1633,7 +1634,7 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 	///  - as x tends to 0 from above, the score tends to \f$ - \infty \f$.
 
 	// CALCULATE AVERAGE SCORE (this doesn't appear to ever be used)
-	if ( maxscore && count ) {
+	if ( ( maxscore != 0 ) && (count != 0u) ) {
 		const double scaled_avg_single_score   = numeric_cast<double>(maxscore) * final_score_scaling / numeric_cast<double>(count);
 		const double final_score_over_compared = 100.0 * std::log(scaled_avg_single_score) / max_log;
 		local_ssap_scores.set_ssap_score_over_compared(final_score_over_compared);
@@ -1642,7 +1643,7 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 	// CALCULATE GLOBAL SCORE 1 (this is normalised over the smallest protein)
 	const size_t min_length              = min(length_a, length_b);
 	const size_t num_comparable_over_min = num_comparable(arg_entry_querier, min_length);
-	if ( maxscore && num_comparable_over_min > 0 ) {
+	if ( ( maxscore != 0 ) && num_comparable_over_min > 0 ) {
 		const double scaled_avg_single_score   = numeric_cast<double>(maxscore) * final_score_scaling / numeric_cast<double>(num_comparable_over_min);
 		const double final_score_over_compared = 100.0 * std::log(scaled_avg_single_score) / max_log;
 		local_ssap_scores.set_ssap_score_over_smaller(final_score_over_compared);
@@ -1651,14 +1652,14 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 	// CALCULATE GLOBAL SCORE 2 (this is normalised over the largest protein)
 	const size_t max_length              = max(length_a, length_b);
 	const size_t num_comparable_over_max = num_comparable(arg_entry_querier, max_length);
-	if ( maxscore && num_comparable_over_max > 0 ) {
+	if ( ( maxscore != 0 ) && num_comparable_over_max > 0 ) {
 		const double scaled_avg_single_score   = numeric_cast<double>(maxscore) * final_score_scaling / numeric_cast<double>(num_comparable_over_max);
 		const double final_score_over_compared = 100.0 * std::log(scaled_avg_single_score) / max_log;
 		local_ssap_scores.set_ssap_score_over_larger(final_score_over_compared);
 	}
 
 	if ( arg_entry_querier.temp_hacky_is_residue() ) {
-		if ( num_aligned_pairs > 0 && max_length ) {
+		if ( num_aligned_pairs > 0 && ( max_length != 0u ) ) {
 			local_ssap_scores.set_percentage_aligned_pairs_over_larger(
 				( 100.0 * numeric_cast<double>( num_aligned_pairs ) ) / numeric_cast<double>(max_length)
 			);

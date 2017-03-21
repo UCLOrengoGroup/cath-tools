@@ -43,7 +43,7 @@ using boost::lexical_cast;
 ///
 /// \pre There must be a dyn_prog_aligner stored in dyn_prog_aligner_ptr, else this will throw an out_of_range_exception
 void gen_dyn_prog_string_aligner::check_dyn_prog_aligner_ptr() const {
-	if ( ! dyn_prog_aligner_ptr.get() ) {
+	if ( dyn_prog_aligner_ptr.get() == nullptr ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Attempt to use gen_dyn_prog_string_aligner with unpopulated dyn_prog_aligner_ptr"));
 	}
 }

@@ -22,6 +22,7 @@
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 
+#include "common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/program_options/prog_opt_num_range.hpp"
 
@@ -123,6 +124,6 @@ bool cath::rslv::has_specified_crh_html_options(const variables_map &arg_vm ///<
                                                 ) {
 	return any_of(
 		crh_html_options_block::ALL_BLOCK_POS,
-		[&] (const string &x) { return ( arg_vm.count( x ) && ! arg_vm[ x ].defaulted() ); }
+		[&] (const string &x) { return ( contains( arg_vm, x ) && ! arg_vm[ x ].defaulted() ); }
 	);
 }

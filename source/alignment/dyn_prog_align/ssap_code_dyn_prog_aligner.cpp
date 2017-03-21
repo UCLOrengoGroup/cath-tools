@@ -371,7 +371,7 @@ void ssap_code_dyn_prog_aligner::traceback_recursive(alignment         &arg_alig
 	append_position_both_offset_1( arg_alignment, numeric_cast<size_t>( arg_mat_a ), numeric_cast<size_t>( arg_mat_b ) );
 
 	//
-	if ( !path_entry ) {
+	if ( path_entry == 0 ) {
 		return;
 	}
 

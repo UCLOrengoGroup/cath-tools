@@ -63,7 +63,7 @@ string env_var_option_name_handler::operator()(const string &arg_environment_var
 
 	// If we're allowing unknown options and this one isn't in the options description,
 	// then simply return "" so that Boost Program Options doesn't get a chance to complain
-	if (allow_unknown && !the_options.find_nothrow(option_string, false)) {
+	if ( allow_unknown && the_options.find_nothrow( option_string, false ) == nullptr ) {
 		return "";
 	}
 

@@ -354,7 +354,7 @@ namespace cath {
 		inline resid_atom_pair parse_pdb_atom_record(const std::string &arg_pdb_atom_record_string, ///< TODOCUMENT
 		                                             const amino_acid  &arg_amino_acid
 		                                             ) {
-			if ( isspace( arg_pdb_atom_record_string.at( 25 ) ) ) {
+			if ( isspace( arg_pdb_atom_record_string.at( 25 ) ) != 0 ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("PDB ATOM/HETATOM record malformed: space found in column 26 which should contain the end of a right justified residue number"));
 			}
 

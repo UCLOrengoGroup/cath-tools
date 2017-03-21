@@ -176,7 +176,7 @@ residue_name sillitoe_chopping_format::parse_residue(const string_ref &arg_strin
 	}
 	const auto begin_itr   = common::cbegin( arg_string_ref );
 	const auto end_itr     = common::cend  ( arg_string_ref );
-	if ( isdigit( arg_string_ref.back() ) ) {
+	if ( isdigit( arg_string_ref.back() ) != 0 ) {
 		/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 		return residue_name{ stoi( string{ begin_itr, end_itr } ) };
 	}

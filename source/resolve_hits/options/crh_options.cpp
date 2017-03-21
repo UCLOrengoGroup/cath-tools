@@ -20,6 +20,7 @@
 
 #include "crh_options.hpp"
 
+#include "common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "resolve_hits/options/spec/crh_spec.hpp"
 
 using namespace cath;
@@ -78,7 +79,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 
 	const variables_map &vm           = get_variables_map();
 	const auto          &input_format = get_crh_input_spec().get_input_format();
-	if ( vm.count( crh_score_options_block::PO_APPLY_CATH_RULES ) && ! vm[ crh_score_options_block::PO_APPLY_CATH_RULES ].defaulted() ) {
+	if ( contains( vm, crh_score_options_block::PO_APPLY_CATH_RULES ) && ! vm[ crh_score_options_block::PO_APPLY_CATH_RULES ].defaulted() ) {
 		if ( input_format != hits_input_format_tag::HMMER_DOMTBLOUT && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
 			return "The --"
 				+ crh_score_options_block::PO_APPLY_CATH_RULES
@@ -125,7 +126,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		const string         &option_name   = worst_perm_opt_name_of_score.at( score_type );
 		
 		
-		if ( vm.count( option_name ) && ! vm[ option_name ].defaulted() ) {
+		if ( contains( vm, option_name ) && ! vm[ option_name ].defaulted() ) {
 			if ( ! contains( valid_formats, input_format ) ) {
 				return "Cannot set worst permissible "
 					+ to_string( score_type   )

@@ -850,8 +850,8 @@ ostream & cath::align::output_alignment_to_cath_ssap_legacy_format(ostream      
 	const int NO_SCORE = 0;
 
 	for (size_t alignment_ctr = 0; alignment_ctr < arg_alignment.length(); ++alignment_ctr) {
-		const int has_posn_a = has_a_position_of_index( arg_alignment, alignment_ctr );
-		const int has_posn_b = has_b_position_of_index( arg_alignment, alignment_ctr );
+		const bool has_posn_a = has_a_position_of_index( arg_alignment, alignment_ctr );
+		const bool has_posn_b = has_b_position_of_index( arg_alignment, alignment_ctr );
 
 		// Grab the score if both sides of the alignment are present or set it to NO_SCORE (0) otherwise
 		const int score = (has_posn_a && has_posn_b)

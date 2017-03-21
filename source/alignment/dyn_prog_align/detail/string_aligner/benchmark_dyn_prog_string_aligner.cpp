@@ -214,7 +214,7 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 				}
 
 				// Update the best row index and value for the previous row
-				if (seq_2_ctr) {
+				if ( seq_2_ctr != 0 ) {
 					if (prev_value > best_row_value[seq_2_ctr - 1]) {
 						best_row_value[ seq_2_ctr - 1 ] = prev_value;
 						best_row_index[ seq_2_ctr - 1 ] = numeric_cast<ptrdiff_t>( seq_1_ctr );

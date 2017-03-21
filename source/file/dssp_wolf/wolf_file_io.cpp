@@ -78,7 +78,7 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 			}
 		}
 		else {
-			if (!fscanf( wolf_infile, "%zu", &length )) {
+			if ( fscanf( wolf_infile, "%zu", &length ) == 0 ) {
 				cerr << "ssap: WOLF file ended unexpectedly!" << endl;
 				fclose( wolf_infile );
 				exit(1);
@@ -104,7 +104,7 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 		buffer[0] = '\n';
 		buffer[1] = 0;
 
-		if (!fgets(buffer, 999, wolf_infile)) {
+		if ( fgets( buffer, 999, wolf_infile ) == nullptr ) {
 			cerr << "WOLF file ended unexpectedly!" << endl;
 			fclose( wolf_infile );
 			exit(1);
@@ -126,7 +126,7 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 		}
 
 		// Save disulphide bonds
-		if ( islower(amino_acid_char) ) {
+		if ( islower( amino_acid_char ) != 0 ) {
 			cerr << "IMPORTANT NOTICE : ******** THIS BIT OF CODE IS NOT COMPLETELY USELESS - HURRAH - PLEASE TELL SOMEONE *******" << endl;
 			amino_acid_char ='C';
 		}
