@@ -39,16 +39,13 @@ using boost::range::max_element;
 /// \relates data_file
 string cath::file::to_string(const data_file &arg_data_file ///< The data_file to output
                              ) {
-	switch (arg_data_file) {
+	switch ( arg_data_file ) {
 		case ( data_file::PDB  ) : { return "data_file::PDB"  ; }
 		case ( data_file::DSSP ) : { return "data_file::DSSP" ; }
 		case ( data_file::WOLF ) : { return "data_file::WOLF" ; }
 		case ( data_file::SEC  ) : { return "data_file::SEC"  ; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of data_file not recognised whilst inserting into an ostream"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of data_file not recognised whilst inserting into an ostream"));
 }
 
 /// \brief Simple insertion operator for data_file
@@ -57,16 +54,7 @@ string cath::file::to_string(const data_file &arg_data_file ///< The data_file t
 ostream & cath::file::operator<<(ostream         &arg_os,       ///< The ostream to which to output the data_file
                                  const data_file &arg_data_file ///< The data_file to output
                                  ) {
-	switch (arg_data_file) {
-		case ( data_file::PDB  ) : { arg_os << "data_file::PDB"  ; break; }
-		case ( data_file::DSSP ) : { arg_os << "data_file::DSSP" ; break; }
-		case ( data_file::WOLF ) : { arg_os << "data_file::WOLF" ; break; }
-		case ( data_file::SEC  ) : { arg_os << "data_file::SEC"  ; break; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of data_file not recognised whilst inserting into an ostream"));
-			break; // Superfluous, post-throw break statement to appease Eclipse's syntax highlighter
-		}
-	}
+	arg_os << to_string( arg_data_file );
 	return arg_os;
 }
 

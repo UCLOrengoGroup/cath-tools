@@ -81,11 +81,8 @@ string cath::sec::detail::to_string(const beta_bridge_type &arg_beta_bridge_type
 	switch ( arg_beta_bridge_type ) {
 		case ( beta_bridge_type::PARALLEL      ) : { return "PARALLEL"; };
 		case ( beta_bridge_type::ANTI_PARALLEL ) : { return "ANTIPARA"; };
-		default : {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of beta_bridge_type not recognised whilst converting to_string()"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of beta_bridge_type not recognised whilst converting to_string()"));
 }
 
 /// \brief Insert a description of the specified beta_bridge_type into the specified ostream
@@ -106,11 +103,8 @@ string cath::sec::detail::to_string(const beta_bridge_context &arg_beta_bridge_c
 	switch ( arg_beta_bridge_context ) {
 		case ( beta_bridge_context::LONE_BRIDGE ) : { return "BRDGE"; };
 		case ( beta_bridge_context::IN_SHEET    ) : { return "SHEET"; };
-		default : {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of beta_bridge_context not recognised whilst converting to_string()"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of beta_bridge_context not recognised whilst converting to_string()"));
 }
 
 /// \brief Insert a description of the specified beta_bridge_context into the specified ostream

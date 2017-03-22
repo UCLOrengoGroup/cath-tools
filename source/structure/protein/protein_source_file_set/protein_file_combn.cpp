@@ -43,11 +43,8 @@ unique_ptr<const protein_source_file_set> cath::get_protein_source_file_set(cons
 		case( protein_file_combn::PDB_DSSP_SEC      ) : { return { common::make_unique< protein_from_pdb_dssp_and_sec      >() }; break; }
 		case( protein_file_combn::PDB_DSSP_AND_CALC ) : { return { common::make_unique< protein_from_pdb_and_dssp_and_calc >() }; break; }
 		case( protein_file_combn::PDB_AND_CALC      ) : { return { common::make_unique< protein_from_pdb_and_calc          >() }; break; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("protein_file_combn is not recognised"));
-			return { common::make_unique<protein_from_pdb_dssp_and_sec>() };
-		}
 	}
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("protein_file_combn is not recognised"));
 }
 
 /// \brief Simple extraction operator for protein_file_combn

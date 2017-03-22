@@ -108,12 +108,8 @@ string cath::rslv::row_css_class_of_hit_row_context(const hit_row_context &arg_r
 		case ( hit_row_context::NORMAL      ) : { return "crh-row-normal"      ; }
 		case ( hit_row_context::RESULT      ) : { return "crh-row-result"      ; }
 		case ( hit_row_context::RESULT_FULL ) : { return "crh-row-result_full" ; }
-		default : {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_row_context not recognised whilst getting row_css_class_of_hit_row_context()"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
-
+	BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_row_context not recognised whilst getting row_css_class_of_hit_row_context()"));
 }
 
 /// \brief Get the first cell CSS class of the specified hit_row_context

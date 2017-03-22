@@ -47,11 +47,8 @@ ostream & cath::file::operator<<(ostream          &arg_os,        ///< TODOCUMEN
 	                             const pdb_record &arg_pdb_record ///< TODOCUMENT
 	                             ) {
 	switch ( arg_pdb_record ) {
-		case ( pdb_record::ATOM   ) : { arg_os << "ATOM";   break; }
-		case ( pdb_record::HETATM ) : { arg_os << "HETATM"; break; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of pdb_record not recognised whilst inserting into an ostream"));
-		}
+		case ( pdb_record::ATOM   ) : { arg_os << "ATOM"   ; return arg_os ; }
+		case ( pdb_record::HETATM ) : { arg_os << "HETATM" ; return arg_os ; }
 	}
-	return arg_os;
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of pdb_record not recognised whilst inserting into an ostream"));
 }

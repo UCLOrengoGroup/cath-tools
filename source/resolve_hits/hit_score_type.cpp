@@ -34,11 +34,8 @@ string cath::rslv::to_string(const hit_score_type &arg_hit_score_type ///< The h
 		case ( hit_score_type::FULL_EVALUE ) : { return "evalue"    ; }
 		case ( hit_score_type::BITSCORE    ) : { return "bitscore"  ; }
 		case ( hit_score_type::CRH_SCORE   ) : { return "crh-value" ; }
-		default : {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst converting to_string()"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst converting to_string()"));
 }
 
 /// \brief Insert a description of the specified hit_score_type into the specified ostream

@@ -64,12 +64,9 @@ using namespace std;
 //	                               const pdb_atom_parse_status &arg_pdb_atom_parse_status ///< TODOCUMENT
 //	                               ) {
 //	switch ( arg_pdb_atom_parse_status ) {
-//		case ( pdb_atom_parse_status::OK    ) : { arg_os << "OK"   ; break; }
-//		case ( pdb_atom_parse_status::SKIP  ) : { arg_os << "SKIP" ; break; }
-//		case ( pdb_atom_parse_status::ABORT ) : { arg_os << "ABORT"; break; }
-//		default : {
-//			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of pdb_atom_parse_status not recognised whilst inserting into an ostream"));
-//		}
+//		case ( pdb_atom_parse_status::OK    ) : { arg_os << "OK"   ; return arg_os ; }
+//		case ( pdb_atom_parse_status::SKIP  ) : { arg_os << "SKIP" ; return arg_os ; }
+//		case ( pdb_atom_parse_status::ABORT ) : { arg_os << "ABORT"; return arg_os ; }
 //	}
-//	return arg_os;
+//	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of pdb_atom_parse_status not recognised whilst inserting into an ostream"));
 //}

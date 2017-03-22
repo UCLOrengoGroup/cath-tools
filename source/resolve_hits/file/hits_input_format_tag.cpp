@@ -70,11 +70,8 @@ string cath::rslv::to_string(const hits_input_format_tag &arg_format_tag ///< Th
 		case ( hits_input_format_tag::HMMSEARCH_OUT    ) : { return "hmmsearch_out"    ; }
 		case ( hits_input_format_tag::RAW_WITH_SCORES  ) : { return "raw_with_scores"  ; }
 		case ( hits_input_format_tag::RAW_WITH_EVALUES ) : { return "raw_with_evalues" ; }
-		default : {
-			BOOST_THROW_EXCEPTION(out_of_range_exception("hits_input_format_tag value not recognised"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax parser
-		}
 	}
+	BOOST_THROW_EXCEPTION(out_of_range_exception("hits_input_format_tag value not recognised"));
 }
 
 /// \brief Insert a description of the specified hits_input_format_tag into the specified stream

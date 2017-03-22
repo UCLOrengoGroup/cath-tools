@@ -213,7 +213,7 @@ namespace cath {
 		switch ( arg_pdb_record ) {
 			case ( file::pdb_record::ATOM   ) : {
 				set_letter_code_or_name( arg_string );
-				break;
+				return;
 			}
 			case ( file::pdb_record::HETATM ) : {
 				if ( arg_string.length() != 3 ) {
@@ -231,14 +231,10 @@ namespace cath {
 						arg_string[ 2 ]
 					} };
 				}
-				break;
-			}
-			default : {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
-					"Value of arg_pdb_record not recognised whilst constructing an amino_acid"
-				));
+				return;
 			}
 		}
+		BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of arg_pdb_record not recognised whilst constructing an amino_acid"));
 	}
 
 	/// \brief Ctor for amino_acid
@@ -329,11 +325,8 @@ namespace cath {
 				case ( amino_acid_type::DNA ) : {
 					return uint8_char_char_3_arr_tpl{ 2, 0,                   char_3_arr{ { 0, 0, 0 } } };
 				}
-				default : {
-					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of arg_aa.get_type() not recognised whilst in make_amino_acid_lt_comparator()"));
-					return {}; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-				}
 			}
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of arg_aa.get_type() not recognised whilst in make_amino_acid_lt_comparator()"));
 		}
 	} // namespace detail
 

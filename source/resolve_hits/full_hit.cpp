@@ -42,11 +42,8 @@ std::string cath::rslv::get_score_string(const double         &arg_score,      /
 		case ( hit_score_type::FULL_EVALUE ) : { return ( format( "%." + ::std::to_string( arg_num_figures ) + "e" ) % arg_score ).str(); }
 		case ( hit_score_type::BITSCORE    ) : { return ( format( "%." + ::std::to_string( arg_num_figures ) + "g" ) % arg_score ).str(); }
 		case ( hit_score_type::CRH_SCORE   ) : { return ( format( "%." + ::std::to_string( arg_num_figures ) + "g" ) % arg_score ).str(); }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of hit_score_type not recognised whilst getting score string"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of hit_score_type not recognised whilst getting score string"));
 }
 
 /// \brief Generate a formatted string for the specified's full_hit's native score with the specified number of significant figures (roughly)

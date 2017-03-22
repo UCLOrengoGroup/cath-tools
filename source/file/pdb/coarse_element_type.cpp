@@ -39,11 +39,8 @@ string cath::file::to_string(const coarse_element_type &arg_element ///< The coa
 		case ( coarse_element_type::NITROGEN     ) : { return "nitrogen"     ; }
 		case ( coarse_element_type::OXYGEN       ) : { return "oxygen"       ; }
 		case ( coarse_element_type::NON_CORE     ) : { return "non_core"     ; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of coarse_element_type not recognised whilst converting to_string()"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of coarse_element_type not recognised whilst converting to_string()"));
 }
 
 /// \brief Insert a description of the specified coarse_element_type into the specified ostream

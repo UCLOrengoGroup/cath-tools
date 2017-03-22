@@ -48,11 +48,8 @@ namespace cath {
 			switch ( arg_sod ) {
 				case ( sod::SPARSE ) : { return "sparse"s; }
 				case ( sod::DENSE  ) : { return "dense"s;  }
-				default : {
-					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of sod not recognised whilst converting to_string()"));
-					return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-				}
 			}
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of sod not recognised whilst converting to_string()"));
 		}
 
 		namespace detail {

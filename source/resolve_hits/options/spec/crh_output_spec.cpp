@@ -58,11 +58,8 @@ string cath::rslv::to_string(const crh_out_format &arg_out_format ///< The crh_o
 		case ( crh_out_format::STANDARD ) : { return "standard"  ; }
 		case ( crh_out_format::SUMMARY  ) : { return "a summary" ; }
 		case ( crh_out_format::HTML     ) : { return "HTML"      ; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of crh_out_format not recognised whilst converting to_string()"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighterdefault : {
-		}
 	}
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of crh_out_format not recognised whilst converting to_string()"));
 }
 
 /// \brief Getter for the output file to which data should be written

@@ -95,11 +95,8 @@ double cath::sec::get_dssp_access_radius_without_water(const coarse_element_type
 		case( coarse_element_type::OXYGEN       ) : { return dssp_ball_constants::RADIUS_O;         }
 		case( coarse_element_type::CARBON_BETA  ) : { return dssp_ball_constants::RADIUS_SIDE_ATOM; }
 		case( coarse_element_type::NON_CORE     ) : { return dssp_ball_constants::RADIUS_SIDE_ATOM; }
-		default : {
-
-			return dssp_ball_constants::RADIUS_SIDE_ATOM;
-		}
 	}
+	return dssp_ball_constants::RADIUS_SIDE_ATOM;
 }
 
 /// \brief Get the radius of the DSSP accessibility sphere associated with the coarse_element_type of the specified pdb_atom

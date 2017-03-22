@@ -35,11 +35,9 @@ ostream & cath::scan::operator<<(ostream                             &arg_os,   
                                  const res_pair_index_dirn_criterion &arg_res_pair_index_dirn_criterion ///< TODOCUMENT
                                  ) {
 	switch ( arg_res_pair_index_dirn_criterion ) {
-		case ( res_pair_index_dirn_criterion::MUST_MATCH     ) : { arg_os << "MUST_MATCH";     break; }
-		case ( res_pair_index_dirn_criterion::NEED_NOT_MATCH ) : { arg_os << "NEED_NOT_MATCH"; break; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of res_pair_index_dirn_criterion not recognised whilst inserting into an ostream"));
-		}
+		case ( res_pair_index_dirn_criterion::MUST_MATCH     ) : { arg_os << "MUST_MATCH"     ; return arg_os ; }
+		case ( res_pair_index_dirn_criterion::NEED_NOT_MATCH ) : { arg_os << "NEED_NOT_MATCH" ; return arg_os ; }
 	}
-	return arg_os;
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of res_pair_index_dirn_criterion not recognised whilst inserting into an ostream"));
+	
 }

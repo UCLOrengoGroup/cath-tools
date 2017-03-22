@@ -133,11 +133,8 @@ prosec_sec_type cath::sec::make_prosec_sec_type(const sec_struc_type &arg_sec_st
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot make_prosec_sec_type() of sec_struc_type::COIL"));
 			return prosec_sec_type::ALPHA_HELIX; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
 		}
-		default : {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of sec_struc_type not recognised whilst making prosec_sec_type"));
-			return prosec_sec_type::ALPHA_HELIX; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of sec_struc_type not recognised whilst making prosec_sec_type"));
 }
 
 /// \brief Get the prosec axis point of the middle of the three specified consecutive residues in the same secondary structure

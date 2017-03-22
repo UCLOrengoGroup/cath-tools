@@ -73,11 +73,8 @@ string cath::rslv::to_string(const cath_id_score_category &arg_cath_id_score_cat
 		case ( cath_id_score_category::NORMAL      ) : { return "cath_id_score_category::NORMAL"      ; }
 		case ( cath_id_score_category::DC_TYPE     ) : { return "cath_id_score_category::DC_TYPE"     ; }
 		case ( cath_id_score_category::LATER_ROUND ) : { return "cath_id_score_category::LATER_ROUND" ; }
-		default : {
-			BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("Value of cath_id_score_category not recognised whilst converting to_string()"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("Value of cath_id_score_category not recognised whilst converting to_string()"));
 }
 
 /// \brief Insert a description of the specified cath_id_score_category into the specified ostream

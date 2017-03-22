@@ -33,13 +33,9 @@ ostream & cath::opts::detail::operator<<(ostream                &arg_os,    ///<
                                          const data_option &arg_data_option ///< The data_option to output
                                          ) {
 	switch (arg_data_option) {
-		case ( data_option::PATH   ) : { arg_os << "data_option::PATH"   ; break ; }
-		case ( data_option::PREFIX ) : { arg_os << "data_option::PREFIX" ; break ; }
-		case ( data_option::SUFFIX ) : { arg_os << "data_option::SUFFIX" ; break ; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of data_option not recognised whilst inserting into an ostream"));
-			break; // Superfluous, post-throw break statement to appease Eclipse's syntax highlighter
-		}
+		case ( data_option::PATH   ) : { arg_os << "data_option::PATH"   ; return arg_os ; }
+		case ( data_option::PREFIX ) : { arg_os << "data_option::PREFIX" ; return arg_os ; }
+		case ( data_option::SUFFIX ) : { arg_os << "data_option::SUFFIX" ; return arg_os ; }
 	}
-	return arg_os;
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of data_option not recognised whilst inserting into an ostream"));
 }

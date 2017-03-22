@@ -236,11 +236,8 @@ namespace cath {
 			switch ( arg_record_type ) {
 				case ( pdb_record::ATOM   ) : { return boost::algorithm::starts_with( arg_pdb_record_string, "ATOM  " ); }
 				case ( pdb_record::HETATM ) : { return boost::algorithm::starts_with( arg_pdb_record_string, "HETATM" ); }
-				default : {
-					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of pdb_record not recognised whilst checking is_pdb_record_of_type()"));
-					return false; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-				}
 			}
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of pdb_record not recognised whilst checking is_pdb_record_of_type()"));
 		}
 
 		/// \brief TODOCUMENT

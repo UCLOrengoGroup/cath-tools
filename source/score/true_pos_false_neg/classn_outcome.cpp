@@ -42,15 +42,12 @@ classn_outcome cath::score::outcome_of_correct_and_decision(const bool &arg_corr
 /// \relates classn_outcome
 ostream & cath::score::operator<<(ostream              &arg_os,            ///< TODOCUMENT
                                   const classn_outcome &arg_classn_outcome ///< TODOCUMENT
-								  ) {
+                                  ) {
 	switch ( arg_classn_outcome ) {
-		case ( classn_outcome::TRUE_POSITIVE  ) : { arg_os << "TRUE_POSITIVE"  ; break ; }
-		case ( classn_outcome::TRUE_NEGATIVE  ) : { arg_os << "TRUE_NEGATIVE"  ; break ; }
-		case ( classn_outcome::FALSE_NEGATIVE ) : { arg_os << "FALSE_NEGATIVE" ; break ; }
-		case ( classn_outcome::FALSE_POSITIVE ) : { arg_os << "FALSE_POSITIVE" ; break ; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("protein_file_combn is not recognised"));
-		}
+		case ( classn_outcome::TRUE_POSITIVE  ) : { arg_os << "TRUE_POSITIVE"  ; return arg_os ; }
+		case ( classn_outcome::TRUE_NEGATIVE  ) : { arg_os << "TRUE_NEGATIVE"  ; return arg_os ; }
+		case ( classn_outcome::FALSE_NEGATIVE ) : { arg_os << "FALSE_NEGATIVE" ; return arg_os ; }
+		case ( classn_outcome::FALSE_POSITIVE ) : { arg_os << "FALSE_POSITIVE" ; return arg_os ; }
 	}
-	return arg_os;
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("protein_file_combn is not recognised"));
 }

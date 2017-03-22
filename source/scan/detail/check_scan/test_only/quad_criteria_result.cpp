@@ -41,11 +41,8 @@ string cath::scan::detail::to_string(const quad_criteria_result &arg_crit_res //
 		case ( quad_criteria_result::FAILS_FRAME_CHECK         ) : { return { "FAILS_FRAME_CHECK"         }; }
 		case ( quad_criteria_result::FAILS_QUAD_CHECKS         ) : { return { "FAILS_QUAD_CHECKS"         }; }
 		case ( quad_criteria_result::HAS_NO_REP                ) : { return { "HAS_NO_REP"                }; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of quad_criteria_result not recognised whilst converting to_string()"));
-			return ""; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-		}
 	}
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of quad_criteria_result not recognised whilst converting to_string()"));
 }
 
 /// \brief TODOCUMENT

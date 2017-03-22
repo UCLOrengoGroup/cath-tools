@@ -60,11 +60,8 @@ string cath::to_string(const sec_struc_type &arg_sec_struc_type ///< The sec_str
 		case ( sec_struc_type::ALPHA_HELIX ) : { return "H"; }
 		case ( sec_struc_type::BETA_STRAND ) : { return "S"; }
 		case ( sec_struc_type::COIL        ) : { return " "; }
-		default : {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of sec_struc_type not recognised whilst converting to_string()"));
-			return "";
-		}
 	}
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of sec_struc_type not recognised whilst converting to_string()"));
 }
 
 /// \brief Simple insertion operator for sec_struc_type that outputs H or S
