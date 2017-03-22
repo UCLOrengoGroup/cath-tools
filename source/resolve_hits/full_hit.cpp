@@ -46,7 +46,7 @@ std::string cath::rslv::get_score_string(const double         &arg_score,      /
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of hit_score_type not recognised whilst getting score string"));
 }
 
-/// \brief Generate a formatted string for the specified's full_hit's native score with the specified number of significant figures (roughly)
+/// \brief Generate a formatted string for the specified full_hit's native score with the specified number of significant figures (roughly)
 ///
 /// \relates full_hit
 string cath::rslv::get_score_string(const full_hit &arg_full_hit,   ///< The full_hit containing the score to represent in a string
