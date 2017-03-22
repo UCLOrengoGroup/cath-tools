@@ -488,7 +488,9 @@ void cath::remove_domin_res(protein                  &arg_protein,              
 			///     43 46
 			///
 			/// Perhaps it'd be better if everything used sequential numbers rather than insert codes.
-			if ( pdb_number( my_residue ) && pdb_number( my_residue ) >= numeric_cast<int>( a_start ) && pdb_number( my_residue ) <= numeric_cast<int>( a_end ) ) {
+			///
+			/// \todo Is the initial `pdb_number( my_residue ) != 0` check just an error?
+			if ( ( pdb_number( my_residue ) != 0 ) && pdb_number( my_residue ) >= numeric_cast<int>( a_start ) && pdb_number( my_residue ) <= numeric_cast<int>( a_end ) ) {
 				found = true;
 				break;
 			}
