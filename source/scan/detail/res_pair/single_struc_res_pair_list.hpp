@@ -46,7 +46,7 @@ namespace cath {
 
 				/// \brief Default ctor
 				single_struc_res_pair_list() = default;
-				explicit single_struc_res_pair_list(const single_struc_res_pair_vec &);
+				explicit single_struc_res_pair_list(single_struc_res_pair_vec);
 
 				void reserve(const size_t &);
 				bool empty() const;
@@ -63,8 +63,8 @@ namespace cath {
 			};
 
 			/// \brief Ctor from a vector of single_struc_res_pair objects
-			inline single_struc_res_pair_list::single_struc_res_pair_list(const single_struc_res_pair_vec &arg_single_struc_res_pairs ///< TODOCUMENT
-			                                                              ) : single_struc_res_pairs ( arg_single_struc_res_pairs ) {
+			inline single_struc_res_pair_list::single_struc_res_pair_list(single_struc_res_pair_vec arg_single_struc_res_pairs ///< TODOCUMENT
+			                                                              ) : single_struc_res_pairs { std::move( arg_single_struc_res_pairs ) } {
 			}
 
 			/// \brief Return whether this single_struc_res_pair_list is empty

@@ -49,8 +49,8 @@ namespace cath {
 
 		public:
 			pymol_file_superposition_outputter(const boost::filesystem::path &,
-			                                   const display_spec &,
-			                                   const sup::superposition_content_spec &);
+			                                   display_spec,
+			                                   sup::superposition_content_spec);
 		};
 
 	} // namespace opts

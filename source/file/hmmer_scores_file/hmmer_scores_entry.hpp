@@ -83,10 +83,10 @@ namespace cath {
 			std::string description;
 
 		public:
-			hmmer_scores_entry(const std::string &,
-			                   const std::string &,
-			                   const std::string &,
-			                   const std::string &,
+			hmmer_scores_entry(std::string,
+			                   std::string,
+			                   std::string,
+			                   std::string,
 			                   const double &,
 			                   const double &,
 			                   const double &,
@@ -101,7 +101,7 @@ namespace cath {
 			                   const size_t &,
 			                   const size_t &,
 			                   const size_t &,
-			                   const std::string &);
+			                   std::string);
 
 			std::string get_name_1() const;
 			std::string get_accession_1() const;

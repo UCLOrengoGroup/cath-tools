@@ -56,8 +56,8 @@ pdb_list_str_vec_pair file_list_pdbs_acquirer::do_get_pdbs_and_names(istream &/*
 }
 
 /// \brief Ctor for file_list_pdbs_acquirer.
-file_list_pdbs_acquirer::file_list_pdbs_acquirer(const path_vec &arg_files ///< TODOCUMENT
-                                                 ) : files( arg_files ) {
+file_list_pdbs_acquirer::file_list_pdbs_acquirer(path_vec arg_files ///< TODOCUMENT
+                                                 ) : files { std::move( arg_files ) } {
 }
 
 

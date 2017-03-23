@@ -47,9 +47,9 @@ using std::string;
 
 /// \brief TODOCUMENT
 load_and_scan_metrics::load_and_scan_metrics(const hrc_duration &arg_load_files_durn, ///< TODOCUMENT
-                                             const scan_metrics &arg_scan_metrics     ///< TODOCUMENT
-                                             ) : load_files_durn  ( arg_load_files_durn ),
-                                                 the_scan_metrics ( arg_scan_metrics    ) {
+                                             scan_metrics        arg_scan_metrics     ///< TODOCUMENT
+                                             ) : load_files_durn  { arg_load_files_durn           },
+                                                 the_scan_metrics { std::move( arg_scan_metrics ) } {
 }
 
 /// \brief TODOCUMENT

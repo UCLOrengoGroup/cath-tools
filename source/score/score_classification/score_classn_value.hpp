@@ -41,7 +41,7 @@ namespace cath {
 		public:
 			score_classn_value(const double &,
 			                   const bool &,
-			                   const std::string & = {} );
+			                   std::string = {} );
 
 			const double & get_score_value() const;
 			const bool & get_instance_is_positive() const;

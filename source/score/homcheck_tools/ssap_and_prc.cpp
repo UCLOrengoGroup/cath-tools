@@ -26,11 +26,11 @@ using cath::score::rbf_model;
 ///
 /// \pre arg_ssap and arg_prc must have matching name_1 and name_2 values,
 ///      else an invalid_argument_exception will be thrown
-ssap_and_prc::ssap_and_prc(const ssap_scores_entry &arg_ssap, ///< The SSAP scores from which this should be constructed
-                           const prc_scores_entry  &arg_prc   ///< The PRC scores from which this should be constructed
-                           ) : the_ssap            ( arg_ssap ),
-                               the_prc             ( arg_prc  ),
-                               magic_function_score( magic_function( the_ssap, the_prc ) ) {
+ssap_and_prc::ssap_and_prc(ssap_scores_entry arg_ssap, ///< The SSAP scores from which this should be constructed
+                           prc_scores_entry  arg_prc   ///< The PRC scores from which this should be constructed
+                           ) : the_ssap             { std::move( arg_ssap               ) },
+                               the_prc              { std::move( arg_prc                ) },
+                               magic_function_score { magic_function( the_ssap, the_prc ) } {
 	if (
 		( the_ssap.get_name_1() != the_prc.get_name_1() )
 		||

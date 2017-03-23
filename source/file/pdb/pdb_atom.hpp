@@ -83,12 +83,12 @@ namespace cath {
 			         const uint &,
 			         const char_4_arr &,
 			         const char &,
-			         const amino_acid &,
-			         const geom::coord &,
+			         amino_acid,
+			         geom::coord,
 			         const float &,
 			         const float &,
-			         const char_2_arr &,
-			         const char_2_arr &);
+			         char_2_arr,
+			         char_2_arr);
 
 			const pdb_record & get_record_type() const;
 			const uint & get_atom_serial() const;
@@ -128,26 +128,26 @@ namespace cath {
 		boost::string_ref get_charge_str_ref(const pdb_atom &);
 
 		/// \brief Ctor for pdb_atom
-		inline pdb_atom::pdb_atom(const pdb_record   &arg_record_type,    ///< TODOCUMENT
-		                          const uint         &arg_atom_serial,    ///< TODOCUMENT
-		                          const char_4_arr   &arg_element_type,   ///< TODOCUMENT
-		                          const char         &arg_alt_locn,       ///< TODOCUMENT
-		                          const amino_acid   &arg_amino_acid,     ///< TODOCUMENT
-		                          const geom::coord  &arg_coord,          ///< TODOCUMENT
-		                          const float        &arg_occupancy,      ///< TODOCUMENT
-		                          const float        &arg_temp_factor,    ///< TODOCUMENT
-		                          const char_2_arr   &arg_element_symbol, ///< TODOCUMENT
-		                          const char_2_arr   &arg_charge          ///< TODOCUMENT
-		                          ) : atom_coord      ( arg_coord          ),
-		                              the_amino_acid  ( arg_amino_acid     ),
-		                              the_element_type( arg_element_type   ),
-		                              record_type     ( arg_record_type    ),
-		                              alt_locn        ( arg_alt_locn       ),
-		                              atom_serial     ( arg_atom_serial    ),
-		                              occupancy       ( arg_occupancy      ),
-		                              temp_factor     ( arg_temp_factor    ),
-		                              element_symbol  ( arg_element_symbol ),
-		                              charge          ( arg_charge         ) {
+		inline pdb_atom::pdb_atom(const pdb_record &arg_record_type,    ///< TODOCUMENT
+		                          const uint       &arg_atom_serial,    ///< TODOCUMENT
+		                          const char_4_arr &arg_element_type,   ///< TODOCUMENT
+		                          const char       &arg_alt_locn,       ///< TODOCUMENT
+		                          amino_acid        arg_amino_acid,     ///< TODOCUMENT
+		                          geom::coord       arg_coord,          ///< TODOCUMENT
+		                          const float      &arg_occupancy,      ///< TODOCUMENT
+		                          const float      &arg_temp_factor,    ///< TODOCUMENT
+		                          char_2_arr        arg_element_symbol, ///< TODOCUMENT
+		                          char_2_arr        arg_charge          ///< TODOCUMENT
+		                          ) : atom_coord       { std::move( arg_coord )          },
+		                              the_amino_acid   { std::move( arg_amino_acid )     },
+		                              the_element_type { arg_element_type                },
+		                              record_type      { arg_record_type                 },
+		                              alt_locn         { arg_alt_locn                    },
+		                              atom_serial      { arg_atom_serial                 },
+		                              occupancy        { arg_occupancy                   },
+		                              temp_factor      { arg_temp_factor                 },
+		                              element_symbol   { std::move( arg_element_symbol ) },
+		                              charge           { std::move( arg_charge )         } {
 			if ( ! boost::math::isfinite( occupancy ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Argument occupancy must be a normal, finite floating-point number"));
 			}

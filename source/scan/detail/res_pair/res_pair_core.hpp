@@ -64,12 +64,12 @@ namespace cath {
 
 			public:
 				res_pair_core();
-				res_pair_core(const view_type &,
-				              const frame_quat_rot &,
-				              const angle_type &,
-				              const angle_type &,
-				              const angle_type &,
-				              const angle_type &);
+				res_pair_core(view_type,
+				              frame_quat_rot,
+				              angle_type,
+				              angle_type,
+				              angle_type,
+				              angle_type);
 				const view_type & get_view() const;
 				const frame_quat_rot & get_frame() const;
 				const angle_type & get_from_phi_angle() const;
@@ -87,18 +87,18 @@ namespace cath {
 			}
 
 			/// \brief Ctor to populate all members
-			inline res_pair_core::res_pair_core(const view_type      &arg_view,           ///< The view of the to_residue from the from_residue
-			                                    const frame_quat_rot &arg_frame,          ///< The coordinate frame of the from_residue, as determined by its core atoms
-			                                    const angle_type     &arg_from_phi_angle, ///< The phi angle of the from_residue
-			                                    const angle_type     &arg_from_psi_angle, ///< The psi angle of the from_residue
-			                                    const angle_type     &arg_to_phi_angle,   ///< The phi angle of the to_residue
-			                                    const angle_type     &arg_to_psi_angle    ///< The psi angle of the to_residue
-			                                    ) : view          ( arg_view           ),
-			                                        frame         ( arg_frame          ),
-			                                        from_phi_angle( arg_from_phi_angle ),
-			                                        from_psi_angle( arg_from_psi_angle ),
-			                                        to_phi_angle  ( arg_to_phi_angle   ),
-			                                        to_psi_angle  ( arg_to_psi_angle   ) {
+			inline res_pair_core::res_pair_core(view_type      arg_view,           ///< The view of the to_residue from the from_residue
+			                                    frame_quat_rot arg_frame,          ///< The coordinate frame of the from_residue, as determined by its core atoms
+			                                    angle_type     arg_from_phi_angle, ///< The phi angle of the from_residue
+			                                    angle_type     arg_from_psi_angle, ///< The psi angle of the from_residue
+			                                    angle_type     arg_to_phi_angle,   ///< The phi angle of the to_residue
+			                                    angle_type     arg_to_psi_angle    ///< The psi angle of the to_residue
+			                                    ) : view           { std::move( arg_view           ) },
+			                                        frame          { std::move( arg_frame          ) },
+			                                        from_phi_angle { std::move( arg_from_phi_angle ) },
+			                                        from_psi_angle { std::move( arg_from_psi_angle ) },
+			                                        to_phi_angle   { std::move( arg_to_phi_angle   ) },
+			                                        to_psi_angle   { std::move( arg_to_psi_angle   ) } {
 			}
 
 			/// \brief Getter for view

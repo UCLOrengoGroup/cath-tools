@@ -77,9 +77,9 @@ namespace cath {
 			bool do_less_than_with_same_dynamic_type(const aligned_pair_score &) const final;
 
 		public:
-			explicit sequence_similarity_score(const substitution_matrix & = make_subs_matrix_identity());
+			explicit sequence_similarity_score(substitution_matrix = make_subs_matrix_identity());
 			explicit sequence_similarity_score(const length_getter &,
-			                                   const substitution_matrix & = make_subs_matrix_identity());
+			                                   substitution_matrix = make_subs_matrix_identity());
 			
 			const substitution_matrix & get_substitution_matrix() const;
 			const length_getter & get_length_getter() const;

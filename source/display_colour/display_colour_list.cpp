@@ -71,8 +71,8 @@ string display_colour_list::COLOURS_SEPARATOR(":");
 string display_colour_list::DEFAULT_COLOURS_STRING(join(DEFAULT_COLOURS_STRING_PARTS, COLOURS_SEPARATOR));
 
 /// \brief Ctor for display_colour_list
-display_colour_list::display_colour_list(const display_colour_vec &arg_colours ///< TODOCUMENT
-                                         ) : colours(arg_colours) {
+display_colour_list::display_colour_list(display_colour_vec arg_colours ///< TODOCUMENT
+                                         ) : colours { std::move( arg_colours ) } {
 }
 
 /// \brief TODOCUMENT

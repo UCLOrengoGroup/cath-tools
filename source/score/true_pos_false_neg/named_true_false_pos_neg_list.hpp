@@ -37,10 +37,10 @@ namespace cath {
 			std::string name;
 
 		public:
-			named_true_false_pos_neg_list(const true_false_pos_neg_list &,
-			                              const std::string &);
-			named_true_false_pos_neg_list(const true_false_pos_neg_vec &,
-			                              const std::string &);
+			named_true_false_pos_neg_list(true_false_pos_neg_list,
+			                              std::string);
+			named_true_false_pos_neg_list(true_false_pos_neg_vec,
+			                              std::string);
 
 			const true_false_pos_neg_list & get_list() const;
 			const std::string & get_name() const;

@@ -129,7 +129,7 @@ namespace cath {
 
 		public:
 			load_and_scan_metrics(const hrc_duration &,
-			                      const scan_metrics &);
+			                      scan_metrics);
 
 			const hrc_duration & get_load_files_durn() const;
 			const scan_metrics & get_scan_metrics() const;

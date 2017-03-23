@@ -18,7 +18,7 @@ namespace cath {
 			str_str_pair_bool_map all_pairs;
 
 		public:
-			explicit label_pair_is_positive(const str_str_pair_bool_map &);
+			explicit label_pair_is_positive(str_str_pair_bool_map);
 
 			bool is_positive(const std::string &,
 			                 const std::string &) const;

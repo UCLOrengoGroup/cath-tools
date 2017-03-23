@@ -50,8 +50,8 @@ namespace cath {
 		const display_colour_list & get_colours() const;
 
 	public:
-		explicit display_colourer_consecutive(const display_colour_list &);
-		display_colourer_consecutive(const display_colour_list &,
+		explicit display_colourer_consecutive(display_colour_list);
+		display_colourer_consecutive(display_colour_list,
 		                             const detail::score_colour_handler &);
 	};
 

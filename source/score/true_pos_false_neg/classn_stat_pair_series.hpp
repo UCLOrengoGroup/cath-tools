@@ -43,8 +43,8 @@ namespace cath {
 		public:
 			using const_iterator = doub_doub_pair_vec_citr;
 
-			explicit classn_stat_pair_series(const doub_doub_pair_vec &,
-			                                 const std::string &);
+			explicit classn_stat_pair_series(doub_doub_pair_vec,
+			                                 std::string);
 
 			bool empty() const;
 			size_t size() const;

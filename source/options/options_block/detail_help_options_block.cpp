@@ -79,8 +79,8 @@ str_opt detail_help_options_block::do_invalid_string(const variables_map &/*arg_
 }
 
 /// \brief Construct a detail_help_options_block from a map from option name to a pair of description and help message
-detail_help_options_block::detail_help_options_block(const str_str_str_pair_map &arg_desc_and_help_of_option_name ///< A map of option name (string) to a pair of description (string) and help message (string)
-                                                     ) : desc_and_help_of_option_name(arg_desc_and_help_of_option_name) {
+detail_help_options_block::detail_help_options_block(str_str_str_pair_map arg_desc_and_help_of_option_name ///< A map of option name (string) to a pair of description (string) and help message (string)
+                                                     ) : desc_and_help_of_option_name { std::move( arg_desc_and_help_of_option_name ) } {
 }
 
 /// \brief Whether the options specified in this detail_help_options_block are requesting any help strings

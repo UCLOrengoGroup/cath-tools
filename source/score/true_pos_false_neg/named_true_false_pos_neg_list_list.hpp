@@ -39,7 +39,7 @@ namespace cath {
 		public:
 			using const_iterator = named_true_false_pos_neg_list_vec_citr;
 
-			explicit named_true_false_pos_neg_list_list(const named_true_false_pos_neg_list_vec &);
+			explicit named_true_false_pos_neg_list_list(named_true_false_pos_neg_list_vec);
 
 			bool empty() const;
 			size_t size() const;

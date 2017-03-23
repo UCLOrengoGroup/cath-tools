@@ -48,7 +48,7 @@ namespace cath {
 
 			public:
 				single_struc_res_pair();
-				single_struc_res_pair(const res_pair_core &,
+				single_struc_res_pair(res_pair_core,
 				                      const index_type &,
 				                      const index_type &);
 
@@ -75,12 +75,12 @@ namespace cath {
 			}
 
 			/// \brief Ctor from a res_pair_core and the indices of the from/to residues
-			inline single_struc_res_pair::single_struc_res_pair(const res_pair_core &arg_res_pair_core, ///< The core properties of the res_pair
-			                                                    const index_type    &arg_from_res_idx,  ///< The from-residue index
-			                                                    const index_type    &arg_to_res_idx     ///< The to-residue   index
-			                                                    ) : the_core     ( arg_res_pair_core ),
-			                                                        from_res_idx ( arg_from_res_idx  ),
-			                                                        to_res_idx   ( arg_to_res_idx    ) {
+			inline single_struc_res_pair::single_struc_res_pair(res_pair_core     arg_res_pair_core, ///< The core properties of the res_pair
+			                                                    const index_type &arg_from_res_idx,  ///< The from-residue index
+			                                                    const index_type &arg_to_res_idx     ///< The to-residue   index
+			                                                    ) : the_core     { std::move( arg_res_pair_core ) },
+			                                                        from_res_idx { arg_from_res_idx               },
+			                                                        to_res_idx   { arg_to_res_idx                 } {
 			}
 
 			/// \brief Ctor from all the parts

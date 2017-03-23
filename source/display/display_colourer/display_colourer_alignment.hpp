@@ -58,8 +58,8 @@ namespace cath {
 		const display_colour_gradient & get_gradient() const;
 
 	public:
-		explicit display_colourer_alignment(const display_colour_gradient &);
-		display_colourer_alignment(const display_colour_gradient &,
+		explicit display_colourer_alignment(display_colour_gradient);
+		display_colourer_alignment(display_colour_gradient,
 		                           const detail::score_colour_handler &);
 	};
 

@@ -38,12 +38,12 @@ using boost::none;
 using boost::optional;
 
 /// \brief TODOCUMENT
-classn_stat_plotter_spec::classn_stat_plotter_spec(const str_vec                                      &arg_pre_plot_strs,              ///< TODOCUMENT
-                                                   const std::vector<std::pair<std::string, str_opt>> &arg_series_to_plot,             ///< TODOCUMENT
-                                                   const bool                                         &arg_tidy_up_score_based_legends ///< TODOCUMENT
-                                                   ) : pre_plot_strs              ( arg_pre_plot_strs               ),
-                                                       series_to_plot             ( arg_series_to_plot              ),
-                                                       tidy_up_score_based_legends( arg_tidy_up_score_based_legends ) {
+classn_stat_plotter_spec::classn_stat_plotter_spec(str_vec                                       arg_pre_plot_strs,              ///< TODOCUMENT
+                                                   std::vector<std::pair<std::string, str_opt>>  arg_series_to_plot,             ///< TODOCUMENT
+                                                   const bool                                   &arg_tidy_up_score_based_legends ///< TODOCUMENT
+                                                   ) : pre_plot_strs              { std::move( arg_pre_plot_strs               ) },
+                                                       series_to_plot             { std::move( arg_series_to_plot              ) },
+                                                       tidy_up_score_based_legends{ arg_tidy_up_score_based_legends              } {
 }
 
 /// \brief TODOCUMENT

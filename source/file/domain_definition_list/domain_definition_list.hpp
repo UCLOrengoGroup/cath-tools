@@ -40,7 +40,7 @@ namespace cath {
 		public:
 			using const_iterator = chop::domain_definition_vec::const_iterator;
 
-			explicit domain_definition_list(const chop::domain_definition_vec &);
+			explicit domain_definition_list(chop::domain_definition_vec);
 
 			size_t size() const;
 

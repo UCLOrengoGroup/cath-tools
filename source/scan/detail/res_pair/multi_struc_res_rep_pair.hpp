@@ -57,7 +57,7 @@ namespace cath {
 				res_rep_index_type to_res_rep_index;
 
 			public:
-				multi_struc_res_rep_pair(const res_pair_core &,
+				multi_struc_res_rep_pair(res_pair_core,
 				                         const index_type &,
 				                         const res_rep_index_type &,
 				                         const res_rep_index_type &);
@@ -73,14 +73,14 @@ namespace cath {
 			const view_base_type & get_view_z(const multi_struc_res_rep_pair &);
 
 			/// \brief Ctor from a res_pair_core, the index of the structure and the indices of the from/to residue reps
-			inline multi_struc_res_rep_pair::multi_struc_res_rep_pair(const res_pair_core      &arg_core,               ///< The core properties of the res_pair
+			inline multi_struc_res_rep_pair::multi_struc_res_rep_pair(res_pair_core             arg_core,               ///< The core properties of the res_pair
 			                                                          const index_type         &arg_structure_index,    ///< The index of the structure in the scan_multi_structure_data (name?)
 			                                                          const res_rep_index_type &arg_from_res_rep_index, ///< The rep index of the from rep-residue
 			                                                          const res_rep_index_type &arg_to_res_rep_index    ///< The rep index of the to   rep-residue
-			                                                          ) : the_core           ( arg_core               ),
-			                                                              structure_index    ( arg_structure_index    ),
-			                                                              from_res_rep_index ( arg_from_res_rep_index ),
-			                                                              to_res_rep_index   ( arg_to_res_rep_index   ) {
+			                                                          ) : the_core           { std::move( arg_core )  },
+			                                                              structure_index    { arg_structure_index    },
+			                                                              from_res_rep_index { arg_from_res_rep_index },
+			                                                              to_res_rep_index   { arg_to_res_rep_index   } {
 			}
 
 			/// \brief TODOCUMENT

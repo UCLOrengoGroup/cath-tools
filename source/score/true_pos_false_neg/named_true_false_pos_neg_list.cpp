@@ -24,15 +24,17 @@
 #include "score/true_pos_false_neg/classn_stat_pair_series.hpp"
 #include "score/true_pos_false_neg/true_false_pos_neg.hpp"
 
+#include <utility>
+
 using namespace cath;
 using namespace cath::score;
 using namespace std;
 
 /// \brief TODOCUMENT
-named_true_false_pos_neg_list::named_true_false_pos_neg_list(const true_false_pos_neg_list &arg_list, ///< TODOCUMENT
-                                                             const string                  &arg_name  ///< TODOCUMENT
-                                                             ) : the_list ( arg_list ),
-                                                                 name     ( arg_name ) {
+named_true_false_pos_neg_list::named_true_false_pos_neg_list(true_false_pos_neg_list arg_list, ///< TODOCUMENT
+                                                             string                  arg_name  ///< TODOCUMENT
+                                                             ) : the_list { std::move( arg_list ) },
+                                                                 name     { std::move( arg_name ) } {
 }
 
 /// \brief Ctor from true_false_pos_neg_vec and string containing the name
@@ -40,12 +42,12 @@ named_true_false_pos_neg_list::named_true_false_pos_neg_list(const true_false_po
 /// This delegates to the previous ctor. It could easily just initialise the member itself but
 /// delegation is preferred so that this ctor doesn't have to repeat any post-initialisation steps added
 /// to the previous one.
-named_true_false_pos_neg_list::named_true_false_pos_neg_list(const true_false_pos_neg_vec &arg_list, ///< TODOCUMENT
-                                                             const string                 &arg_name
-                                                             ) : named_true_false_pos_neg_list(
-                                                                 	true_false_pos_neg_list( arg_list),
-                                                                 	arg_name
-                                                                 ) {
+named_true_false_pos_neg_list::named_true_false_pos_neg_list(true_false_pos_neg_vec arg_list, ///< TODOCUMENT
+                                                             string                 arg_name  ///< TODOCUMENT
+                                                             ) : named_true_false_pos_neg_list{
+                                                                 	true_false_pos_neg_list{ std::move( arg_list ) },
+                                                                 	std::move( arg_name )
+                                                                 } {
 }
 
 /// \brief TODOCUMENT

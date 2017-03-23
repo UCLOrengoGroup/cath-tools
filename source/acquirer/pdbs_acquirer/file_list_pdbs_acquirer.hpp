@@ -39,7 +39,7 @@ namespace cath {
 			file::pdb_list_str_vec_pair do_get_pdbs_and_names(std::istream &) const final;
 
 		public:
-			explicit file_list_pdbs_acquirer(const path_vec &);
+			explicit file_list_pdbs_acquirer(path_vec);
 		};
 
 	} // namespace opts

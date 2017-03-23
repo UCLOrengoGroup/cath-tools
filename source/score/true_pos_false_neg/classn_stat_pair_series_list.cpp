@@ -33,9 +33,8 @@ using namespace std;
 using boost::range::find_if;
 
 /// \brief TODOCUMENT
-classn_stat_pair_series_list::classn_stat_pair_series_list(const classn_stat_pair_series_vec &arg_classn_stat_pair_serieses ///< TODOCUMENT
-                                                           ) : classn_stat_pair_serieses ( arg_classn_stat_pair_serieses ){
-
+classn_stat_pair_series_list::classn_stat_pair_series_list(classn_stat_pair_series_vec arg_classn_stat_pair_serieses ///< TODOCUMENT
+                                                           ) : classn_stat_pair_serieses{ std::move( arg_classn_stat_pair_serieses ) } {
 }
 
 /// \brief TODOCUMENT

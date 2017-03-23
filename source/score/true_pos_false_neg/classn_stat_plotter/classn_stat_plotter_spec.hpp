@@ -46,8 +46,8 @@ namespace cath {
 			bool tidy_up_score_based_legends = true;
 
 		public:
-			classn_stat_plotter_spec(const str_vec &,
-			                         const std::vector<std::pair<std::string, str_opt>> &,
+			classn_stat_plotter_spec(str_vec,
+			                         std::vector<std::pair<std::string, str_opt>>,
 			                         const bool &);
 
 			const str_vec & get_pre_plot_strs() const;

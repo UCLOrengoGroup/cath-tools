@@ -58,7 +58,7 @@ namespace cath {
 			std::pair<char, char> trim_offsets;
 
 		public:
-			explicit element_type_string(const char_4_arr &);
+			explicit element_type_string(char_4_arr);
 
 			element_type_string(const element_type_string &) = default;
 			element_type_string(element_type_string &&) noexcept = default;
@@ -70,8 +70,8 @@ namespace cath {
 		};
 
 		/// \brief Constructor from lvalue string
-		inline element_type_string::element_type_string(const char_4_arr &arg_string ///< The source string
-		                                                ) : element_type_untrimmed( arg_string ),
+		inline element_type_string::element_type_string(char_4_arr arg_string ///< The source string
+		                                                ) : element_type_untrimmed{ std::move( arg_string ) },
 		                                                    trim_offsets {
 		                                                    	common::dumb_trim_string_ref_to_offsets<char>(
 		                                                    		common::string_ref_of_char_arr( element_type_untrimmed )

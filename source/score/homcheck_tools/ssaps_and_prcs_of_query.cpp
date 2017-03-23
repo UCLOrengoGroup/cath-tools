@@ -64,8 +64,8 @@ void ssaps_and_prcs_of_query::sanity_check() const {
 ///
 /// \pre All ssap_and_prc_entries have the same query_id else this
 ///      throws a invalid_argument_exception
-ssaps_and_prcs_of_query::ssaps_and_prcs_of_query(const ssap_and_prc_vec &arg_ssap_and_prc_entries ///< The vector of ssap_and_prc objects from which this ssaps_and_prcs_of_query should be constructed
-                                                 ) : ssap_and_prc_entries ( arg_ssap_and_prc_entries ) {
+ssaps_and_prcs_of_query::ssaps_and_prcs_of_query(ssap_and_prc_vec arg_ssap_and_prc_entries ///< The vector of ssap_and_prc objects from which this ssaps_and_prcs_of_query should be constructed
+                                                 ) : ssap_and_prc_entries { std::move( arg_ssap_and_prc_entries ) } {
 	sanity_check();
 }
 

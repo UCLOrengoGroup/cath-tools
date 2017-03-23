@@ -9,30 +9,30 @@ using namespace cath::file;
 using namespace std;
 
 /// \brief Ctor from all of the required pieces of information
-prc_scores_entry::prc_scores_entry(const string &arg_name_1,   ///< Name of protein 1
+prc_scores_entry::prc_scores_entry(string        arg_name_1,   ///< Name of protein 1
                                    const size_t &arg_start_1,  ///< Start on protein 1
                                    const size_t &arg_end_1,    ///< End on protein 1
                                    const size_t &arg_length_1, ///< Length of protein 1
                                    const size_t &arg_hit_num,  ///< Number of this particular hit
-                                   const string &arg_name_2,   ///< Name of protein 2
+                                   string        arg_name_2,   ///< Name of protein 2
                                    const size_t &arg_start_2,  ///< Start on protein 2
                                    const size_t &arg_end_2,    ///< End on protein 2
                                    const size_t &arg_length_2, ///< Length of protein 2
                                    const double &arg_simple,   ///< Simple score
                                    const double &arg_reverse,  ///< Reverse score
                                    const double &arg_evalue    ///< E-value
-                                   ) : name_1   ( arg_name_1   ),
-                                       start_1  ( arg_start_1  ),
-                                       end_1    ( arg_end_1    ),
-                                       length_1 ( arg_length_1 ),
-                                       hit_num  ( arg_hit_num  ),
-                                       name_2   ( arg_name_2   ),
-                                       start_2  ( arg_start_2  ),
-                                       end_2    ( arg_end_2    ),
-                                       length_2 ( arg_length_2 ),
-                                       simple   ( arg_simple   ),
-                                       reverse  ( arg_reverse  ),
-                                       evalue   ( arg_evalue   ) {
+                                   ) : name_1   { std::move( arg_name_1 ) },
+                                       start_1  { arg_start_1             },
+                                       end_1    { arg_end_1               },
+                                       length_1 { arg_length_1            },
+                                       hit_num  { arg_hit_num             },
+                                       name_2   { std::move( arg_name_2 ) },
+                                       start_2  { arg_start_2             },
+                                       end_2    { arg_end_2               },
+                                       length_2 { arg_length_2            },
+                                       simple   { arg_simple              },
+                                       reverse  { arg_reverse             },
+                                       evalue   { arg_evalue              } {
 }
 
 /// \brief Getter for the name of protein 1

@@ -68,11 +68,11 @@ bool pymol_file_superposition_outputter::do_involves_display_spec() const {
 }
 
 /// \brief Ctor for pymol_file_superposition_outputter
-pymol_file_superposition_outputter::pymol_file_superposition_outputter(const path                       &arg_output_file,  ///< TODOCUMENT
-                                                                       const display_spec               &arg_display_spec, ///< TODOCUMENT
-                                                                       const superposition_content_spec &arg_content_spec  ///< The specification of what should be included in the superposition
-                                                                       ) : output_file      { arg_output_file  },
-                                                                           the_display_spec { arg_display_spec },
-                                                                           content_spec     { arg_content_spec } {
+pymol_file_superposition_outputter::pymol_file_superposition_outputter(const path                 &arg_output_file,  ///< TODOCUMENT
+                                                                       display_spec                arg_display_spec, ///< TODOCUMENT
+                                                                       superposition_content_spec  arg_content_spec  ///< The specification of what should be included in the superposition
+                                                                       ) : output_file      { arg_output_file               },
+                                                                           the_display_spec { std::move( arg_display_spec ) },
+                                                                           content_spec     { std::move( arg_content_spec ) } {
 }
 

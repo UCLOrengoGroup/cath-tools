@@ -56,12 +56,12 @@ namespace cath {
 				///
 				/// This is defined (rather than just using aggregate initialisation) to
 				/// allow the use of emplace_back in a vector of res_index_key_coord_and_dist
-				res_index_key_coord_and_dist(const size_t       &arg_res_index,         ///< The index of the residue in the source pdb
-				                             const geom::coord  &arg_key_coord,         ///< The key coord (the CA atom where present or the first atom otherwise)
-				                             const double       &arg_furthest_atom_dist ///< The furthest distance from the key_coord to any of the other atoms
-				                             ) : res_index          { arg_res_index          },
-				                                 key_coord          { arg_key_coord          },
-				                                 furthest_atom_dist { arg_furthest_atom_dist } {}
+				res_index_key_coord_and_dist(const size_t &arg_res_index,         ///< The index of the residue in the source pdb
+				                             geom::coord   arg_key_coord,         ///< The key coord (the CA atom where present or the first atom otherwise)
+				                             const double &arg_furthest_atom_dist ///< The furthest distance from the key_coord to any of the other atoms
+				                             ) : res_index          { arg_res_index              },
+				                                 key_coord          { std::move( arg_key_coord ) },
+				                                 furthest_atom_dist { arg_furthest_atom_dist     } {}
 			};
 
 			/// \brief Type alias for a vector of res_index_key_coord_and_dist values

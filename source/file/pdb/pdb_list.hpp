@@ -47,7 +47,7 @@ namespace cath {
 
 		public:
 			pdb_list() = default;
-			explicit pdb_list(const pdb_vec &);
+			explicit pdb_list(pdb_vec);
 
 			void push_back(const pdb &);
 			void reserve(const size_t &);

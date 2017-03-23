@@ -20,8 +20,8 @@ using boost::algorithm::is_space;
 using boost::token_compress_on;
 
 /// \brief Ctor from all of the required pieces of information
-ssap_scores_entry::ssap_scores_entry(const string &arg_prot1,      ///< Name of protein 1
-                                     const string &arg_prot2,      ///< Name of protein 2
+ssap_scores_entry::ssap_scores_entry(string        arg_prot1,      ///< Name of protein 1
+                                     string        arg_prot2,      ///< Name of protein 2
                                      const size_t &arg_length1,    ///< Length of protein 1
                                      const size_t &arg_length2,    ///< Length of protein 2
                                      const double &arg_ssap_score, ///< SSAP score for structural comparison
@@ -29,15 +29,15 @@ ssap_scores_entry::ssap_scores_entry(const string &arg_prot1,      ///< Name of 
                                      const double &arg_overlap_pc, ///< Percentage overlap  (100% x overlap /length of largest)
                                      const double &arg_seq_id_pc,  ///< Percentage identity (100% x identity/length of smallest)
                                      const double &arg_rmsd        ///< RMSD of superposed structures
-                                     ) : name_1     ( arg_prot1      ),
-                                         name_2     ( arg_prot2      ),
-                                         length_1   ( arg_length1    ),
-                                         length_2   ( arg_length2    ),
-                                         ssap_score ( arg_ssap_score ),
-                                         num_equivs ( arg_num_equivs ),
-                                         overlap_pc ( arg_overlap_pc ),
-                                         seq_id_pc  ( arg_seq_id_pc  ),
-                                         rmsd       ( arg_rmsd       ) {
+                                     ) : name_1     { std::move( arg_prot1 ) },
+                                         name_2     { std::move( arg_prot2 ) },
+                                         length_1   { arg_length1            },
+                                         length_2   { arg_length2            },
+                                         ssap_score { arg_ssap_score         },
+                                         num_equivs { arg_num_equivs         },
+                                         overlap_pc { arg_overlap_pc         },
+                                         seq_id_pc  { arg_seq_id_pc          },
+                                         rmsd       { arg_rmsd               } {
 }
 
 /// \brief Getter for the name of protein 1

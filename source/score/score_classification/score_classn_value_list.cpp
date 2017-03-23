@@ -76,12 +76,12 @@ void score_classn_value_list::sort_values() {
 /// \brief Ctor for score_classn_value_list
 ///
 /// For now, this is kept private to ensure clients use the factory function make_score_classn_value_list()
-score_classn_value_list::score_classn_value_list(const score_classn_value_vec &arg_score_classn_values, ///< TODOCUMENT
-                                                 const bool                   &arg_higher_is_better,    ///< TODOCUMENT
-                                                 const string                 &arg_name                 ///< TODOCUMENT
-                                                 ) : score_classn_values( arg_score_classn_values ),
-                                                     better_than        ( arg_higher_is_better    ),
-                                                     name               ( arg_name                ) {
+score_classn_value_list::score_classn_value_list(score_classn_value_vec  arg_score_classn_values, ///< TODOCUMENT
+                                                 const bool             &arg_higher_is_better,    ///< TODOCUMENT
+                                                 string                  arg_name                 ///< TODOCUMENT
+                                                 ) : score_classn_values{ std::move( arg_score_classn_values ) },
+                                                     better_than        { arg_higher_is_better                 },
+                                                     name               { std::move( arg_name                ) } {
 	sort_values();
 }
 

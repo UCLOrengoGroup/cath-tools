@@ -42,7 +42,7 @@ namespace cath {
 
 	public:
 		display_colour_spec() = default;
-		explicit display_colour_spec(const broad_display_colour_spec &);
+		explicit display_colour_spec(broad_display_colour_spec);
 
 		void colour_base(const display_colour &,
 		                 const bool & = false);

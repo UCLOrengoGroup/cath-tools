@@ -37,10 +37,10 @@ using boost::accumulate;
 using boost::range_value;
 
 /// \brief TODOCUMENT
-classn_stat_pair_series::classn_stat_pair_series(const doub_doub_pair_vec &arg_data, ///< TODOCUMENT
-                                                 const string             &arg_name  ///< TODOCUMENT
-                                                 ) : data ( arg_data ),
-                                                     name ( arg_name ) {
+classn_stat_pair_series::classn_stat_pair_series(doub_doub_pair_vec arg_data, ///< TODOCUMENT
+                                                 string             arg_name  ///< TODOCUMENT
+                                                 ) : data { std::move( arg_data ) },
+                                                     name { std::move( arg_name ) } {
 }
 
 /// \brief TODOCUMENT

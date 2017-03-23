@@ -34,8 +34,8 @@ namespace cath {
 			boost::optional<double> svm_score;
 
 		public:
-			ssap_and_prc(const file::ssap_scores_entry &,
-			             const file::prc_scores_entry &);
+			ssap_and_prc(file::ssap_scores_entry,
+			             file::prc_scores_entry);
 
 			void calculate_svm_score(const score::rbf_model &);
 

@@ -64,7 +64,7 @@ namespace cath {
 		static constexpr bool DEFAULT_NORMALISE_SCORES          = false;
 
 		display_spec() = default;
-		display_spec(const std::string &,
+		display_spec(std::string,
 		             const bool &,
 		             const bool &,
 		             const bool &,

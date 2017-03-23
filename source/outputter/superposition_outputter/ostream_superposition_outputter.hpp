@@ -39,7 +39,7 @@ namespace cath {
 			bool do_involves_display_spec() const final;
 
 		public:
-			ostream_superposition_outputter(const sup::superposition_content_spec &);
+			ostream_superposition_outputter(sup::superposition_content_spec);
 		};
 
 	} // namespace opts

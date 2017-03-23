@@ -38,7 +38,7 @@ namespace cath {
 		display_colour_vec colours;
 
 	public:
-		explicit display_colour_list(const display_colour_vec &);
+		explicit display_colour_list(display_colour_vec);
 
 		size_t size() const;
 		const display_colour & colour_of_index(const size_t &) const;

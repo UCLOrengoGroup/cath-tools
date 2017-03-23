@@ -127,16 +127,16 @@ bool sequence_similarity_score::do_less_than_with_same_dynamic_type(const aligne
 }
 
 /// \brief Default ctor for sequence_similarity_score (the substitution matrix defaults to the identity matrix)
-sequence_similarity_score::sequence_similarity_score(const substitution_matrix &arg_scores ///< The substitution matrix to use for scoring
-                                                     ) : scores ( arg_scores ) {
+sequence_similarity_score::sequence_similarity_score(substitution_matrix arg_scores ///< The substitution matrix to use for scoring
+                                                     ) : scores { std::move( arg_scores ) } {
 }
 
 /// \brief Ctor for sequence_similarity_score that allows the caller to specify the protein_only_length_getter
 ///        (the substitution matrix defaults to the identity matrix)
-sequence_similarity_score::sequence_similarity_score(const length_getter       &arg_length_getter, ///< The method for choosing the length used for normalisation
-                                                     const substitution_matrix &arg_scores         ///< The substitution matrix to use for scoring
-                                                     ) : scores           ( arg_scores                ),
-                                                         length_getter_ptr( arg_length_getter.clone() ) {
+sequence_similarity_score::sequence_similarity_score(const length_getter &arg_length_getter, ///< The method for choosing the length used for normalisation
+                                                     substitution_matrix  arg_scores         ///< The substitution matrix to use for scoring
+                                                     ) : scores            { std::move( arg_scores )   },
+                                                         length_getter_ptr { arg_length_getter.clone() } {
 }
 
 /// \brief TODOCUMENT

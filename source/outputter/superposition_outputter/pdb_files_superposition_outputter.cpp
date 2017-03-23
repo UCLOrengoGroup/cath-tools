@@ -68,9 +68,9 @@ bool pdb_files_superposition_outputter::do_involves_display_spec() const {
 }
 
 /// \brief Ctor for pdb_files_superposition_outputter
-pdb_files_superposition_outputter::pdb_files_superposition_outputter(const path                       &arg_output_dir,  ///< TODOCUMENT
-                                                                     const superposition_content_spec &arg_content_spec ///< The specification of what should be included in the superposition
-                                                                     ) : output_dir  { arg_output_dir   },
-                                                                         content_spec{ arg_content_spec } {
+pdb_files_superposition_outputter::pdb_files_superposition_outputter(const path                 &arg_output_dir,  ///< TODOCUMENT
+                                                                     superposition_content_spec  arg_content_spec ///< The specification of what should be included in the superposition
+                                                                     ) : output_dir  { arg_output_dir                },
+                                                                         content_spec{ std::move( arg_content_spec ) } {
 }
 

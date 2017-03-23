@@ -21,6 +21,7 @@
 #include "score_classn_value.hpp"
 
 #include <sstream>
+#include <utility>
 
 using namespace cath::score;
 using namespace std;
@@ -28,10 +29,10 @@ using namespace std;
 /// \brief Ctor for score_classn_value
 score_classn_value::score_classn_value(const double &arg_score_value,          ///< TODOCUMENT
                                        const bool   &arg_instance_is_positive, ///< TODOCUMENT
-                                       const string &arg_instance_label        ///< TODOCUMENT
-                                       ) : score_value         ( arg_score_value          ),
-                                           instance_is_positive( arg_instance_is_positive ),
-                                           instance_label      ( arg_instance_label       ) {
+                                       string        arg_instance_label        ///< TODOCUMENT
+                                       ) : score_value          { arg_score_value                 },
+                                           instance_is_positive { arg_instance_is_positive        },
+                                           instance_label       { std::move( arg_instance_label ) } {
 }
 
 /// \brief TODOCUMENT

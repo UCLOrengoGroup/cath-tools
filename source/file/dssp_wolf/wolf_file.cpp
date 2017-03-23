@@ -30,8 +30,8 @@ using namespace cath::file;
 using namespace std;
 
 /// \brief Ctor for wolf_file
-wolf_file::wolf_file(const residue_vec &arg_wolf_residues
-                     ) : wolf_residues(arg_wolf_residues) {
+wolf_file::wolf_file(residue_vec arg_wolf_residues
+                     ) : wolf_residues{ std::move( arg_wolf_residues ) } {
 }
 
 /// \brief Return the number of residues

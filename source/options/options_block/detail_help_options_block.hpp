@@ -64,7 +64,7 @@ namespace cath {
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 
 		public:
-			explicit detail_help_options_block(const str_str_str_pair_map &);
+			explicit detail_help_options_block(str_str_str_pair_map);
 
 			bool has_help_string() const;
 			std::string help_string() const;

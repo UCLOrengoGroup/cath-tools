@@ -49,16 +49,16 @@ constexpr bool display_spec::DEFAULT_SCORES_TO_EQUIVS;
 constexpr bool display_spec::DEFAULT_NORMALISE_SCORES;
 
 /// \brief Ctor for display_spec
-display_spec::display_spec(const string &arg_display_colours_string,    ///< TODOCUMENT
-                           const bool   &arg_gradient_colour_alignment, ///< Whether to display a gradient of colours
-                           const bool   &arg_show_scores_if_present,    ///< Whether to use colour to indicate scores (if they're present)
-                           const bool   &arg_scores_to_equivs,          ///< Whether to colour based on scores to the *present* equivalent positions
-                           const bool   &arg_normalise_scores           ///< Whether to colour based on scores normalised across the alignment, rather than absolute scores
-                           ) : display_colours_string    ( arg_display_colours_string    ),
-                               gradient_colour_alignment ( arg_gradient_colour_alignment ),
-                               show_scores_if_present    ( arg_show_scores_if_present    ),
-                               scores_to_equivs          ( arg_scores_to_equivs          ),
-                               normalise_scores          ( arg_normalise_scores          ) {
+display_spec::display_spec(string      arg_display_colours_string,    ///< TODOCUMENT
+                           const bool &arg_gradient_colour_alignment, ///< Whether to display a gradient of colours
+                           const bool &arg_show_scores_if_present,    ///< Whether to use colour to indicate scores (if they're present)
+                           const bool &arg_scores_to_equivs,          ///< Whether to colour based on scores to the *present* equivalent positions
+                           const bool &arg_normalise_scores           ///< Whether to colour based on scores normalised across the alignment, rather than absolute scores
+                           ) : display_colours_string    { std::move( arg_display_colours_string ) },
+                               gradient_colour_alignment { arg_gradient_colour_alignment           },
+                               show_scores_if_present    { arg_show_scores_if_present              },
+                               scores_to_equivs          { arg_scores_to_equivs                    },
+                               normalise_scores          { arg_normalise_scores                    } {
 }
 
 /// \brief TODOCUMENT

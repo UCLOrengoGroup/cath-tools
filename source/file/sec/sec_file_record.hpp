@@ -51,8 +51,8 @@ namespace cath {
 			sec_file_record(const size_t &,
 			                const size_t &,
 			                const sec_struc_type &,
-			                const geom::coord &,
-			                const geom::coord &);
+			                geom::coord,
+			                geom::coord);
 
 			size_t         get_start_residue_num() const;
 			size_t         get_stop_residue_num() const;

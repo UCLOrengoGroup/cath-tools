@@ -46,8 +46,8 @@ namespace cath {
 			sec_struc_planar_angles_vec_vec inter_planar_angles;
 
 		public:
-			sec_file(const sec_file_record_vec &,
-			         const sec_struc_planar_angles_vec_vec &);
+			sec_file(sec_file_record_vec,
+			         sec_struc_planar_angles_vec_vec);
 
 			using iterator       = sec_file_record_vec::const_iterator;
 			using const_iterator = sec_file_record_vec::const_iterator;

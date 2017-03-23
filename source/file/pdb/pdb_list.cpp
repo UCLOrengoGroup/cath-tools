@@ -43,8 +43,8 @@ using boost::filesystem::path;
 using boost::irange;
 
 /// \brief Ctor from a vector<pdb>
-pdb_list::pdb_list(const pdb_vec &arg_pdbs ///< The pdbs from which this pdb_list should be constructed
-                   ) : pdbs( arg_pdbs ) {
+pdb_list::pdb_list(pdb_vec arg_pdbs ///< The pdbs from which this pdb_list should be constructed
+                   ) : pdbs{ std::move( arg_pdbs ) } {
 }
 
 /// \brief TODOCUMENT

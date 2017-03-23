@@ -51,12 +51,12 @@ namespace cath {
 			double evalue;
 
 		public:
-			prc_scores_entry(const std::string &,
+			prc_scores_entry(std::string,
 			                 const size_t &,
 			                 const size_t &,
 			                 const size_t &,
 			                 const size_t &,
-			                 const std::string &,
+			                 std::string,
 			                 const size_t &,
 			                 const size_t &,
 			                 const size_t &,

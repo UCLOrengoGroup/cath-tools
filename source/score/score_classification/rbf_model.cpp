@@ -75,12 +75,12 @@ constexpr value_list_scaling rbf_model::SSAP_SCORE_SCALING;
 #endif
 
 /// \brief TODOCUMENT
-rbf_model::rbf_model(const double                                &arg_gamma,       ///< The SVM RBF gamma parameter
-                     const double                                &arg_b,           ///< The SVM RBF b parameter
-                     const vector<pair<double, double_octuple> > &arg_model_values ///< The SVM RBF support vectors
-                     ) : gamma           ( arg_gamma        ),
-                         b               ( arg_b            ),
-                         support_vectors ( arg_model_values ) {
+rbf_model::rbf_model(const double                          &arg_gamma,       ///< The SVM RBF gamma parameter
+                     const double                          &arg_b,           ///< The SVM RBF b parameter
+                     vector<pair<double, double_octuple> >  arg_model_values ///< The SVM RBF support vectors
+                     ) : gamma           { arg_gamma                     },
+                         b               { arg_b                         },
+                         support_vectors { std::move( arg_model_values ) } {
 }
 
 // Stop suppressing the GCC warning again

@@ -76,11 +76,8 @@ namespace cath {
 			/// \brief Type alias for the const_iterator type for the range of atoms
 			using const_iterator = pdb_atom_vec::const_iterator;
 
-			pdb_residue(const residue_id &,
-			            const pdb_atom_vec &);
-
-			pdb_residue(const residue_id &,
-			            pdb_atom_vec &&);
+			pdb_residue(residue_id,
+			            pdb_atom_vec);
 
 			const residue_id & get_residue_id() const;
 			bool empty() const;
@@ -205,19 +202,11 @@ namespace cath {
 		}
 
 		/// \brief Ctor for pdb_residue
-		inline pdb_residue::pdb_residue(const residue_id   &arg_residue_id, ///< The name of the residue
-		                                const pdb_atom_vec &arg_atoms       ///< The pdb_atoms making up this residue
-		                                ) : the_residue_id   ( arg_residue_id                  ),
-		                                    atoms            ( arg_atoms                       ),
-		                                    core_atom_indices( make_core_atom_indices( atoms ) ) {
-		}
-
-		/// \brief Ctor for pdb_residue
-		inline pdb_residue::pdb_residue(const residue_id  &arg_residue_id, ///< The name of the residue
-		                                pdb_atom_vec     &&arg_atoms       ///< The pdb_atoms making up this residue
-		                                ) : the_residue_id   ( arg_residue_id                  ),
-		                                    atoms            ( std::move( arg_atoms )          ),
-		                                    core_atom_indices( make_core_atom_indices( atoms ) ) {
+		inline pdb_residue::pdb_residue(residue_id   arg_residue_id, ///< The name of the residue
+		                                pdb_atom_vec arg_atoms       ///< The pdb_atoms making up this residue
+		                                ) : the_residue_id   { std::move( arg_residue_id     ) },
+		                                    atoms            { std::move( arg_atoms          ) },
+		                                    core_atom_indices{ make_core_atom_indices( atoms ) } {
 		}
 
 		/// \brief Getter for the residue name

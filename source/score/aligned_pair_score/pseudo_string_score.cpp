@@ -113,10 +113,10 @@ bool pseudo_string_score::do_less_than_with_same_dynamic_type(const aligned_pair
 }
 
 /// \brief Ctor for pseudo_string_score that uses the defaults for score_common_coord_handler (selecting CA atoms for all aligned residues)
-pseudo_string_score::pseudo_string_score(const string  &arg_score_name,      ///< TODOCUMENT
-                                         const tribool &arg_higher_is_better ///< TODOCUMENT
-                                         ) : score_name            ( arg_score_name       ),
-                                             higher_is_better_value( arg_higher_is_better ) {
+pseudo_string_score::pseudo_string_score(string  arg_score_name,      ///< TODOCUMENT
+                                         tribool arg_higher_is_better ///< TODOCUMENT
+                                         ) : score_name             { std::move( arg_score_name       ) },
+                                             higher_is_better_value { std::move( arg_higher_is_better ) } {
 }
 
 /// \brief TODOCUMENT

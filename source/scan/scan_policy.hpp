@@ -51,8 +51,8 @@ namespace cath {
 
 		public:
 			scan_policy(const res_pair_keyer<KPs...> &,
-			            const quad_criteria &,
-			            const scan_stride &);
+			            quad_criteria,
+			            scan_stride);
 
 			const res_pair_keyer<KPs...> & get_keyer() const;
 			const quad_criteria & get_criteria() const;
@@ -62,11 +62,11 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename... KPs>
 		scan_policy<KPs...>::scan_policy(const res_pair_keyer<KPs...> &arg_keyer,      ///< TODOCUMENT
-		                                 const quad_criteria          &arg_criteria,   ///< TODOCUMENT
-		                                 const scan_stride            &arg_scan_stride ///< TODOCUMENT
-		                                 ) : keyer        ( arg_keyer       ),
-		                                     the_criteria ( arg_criteria    ),
-		                                     the_stride   ( arg_scan_stride ) {
+		                                 quad_criteria                 arg_criteria,   ///< TODOCUMENT
+		                                 scan_stride                   arg_scan_stride ///< TODOCUMENT
+		                                 ) : keyer        { arg_keyer                    },
+		                                     the_criteria { std::move( arg_criteria    ) },
+		                                     the_stride   { std::move( arg_scan_stride ) } {
 		}
 
 		/// \brief TODOCUMENT

@@ -81,8 +81,8 @@ namespace cath {
 				              const index_type &,
 				              const detail::view_base_type &,
 				              const detail::angle_type &,
-				              const detail::angle_type &,
-				              const detail::angle_type &);
+				              detail::angle_type,
+				              detail::angle_type);
 
 				const res_pair_index_dirn_criterion & get_index_direction_criterion() const;
 				const index_type & get_minimum_index_distance() const;

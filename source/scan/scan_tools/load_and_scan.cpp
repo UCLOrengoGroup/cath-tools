@@ -48,12 +48,12 @@ void load_and_scan::perform_scan() {
 }
 
 /// \brief TODOCUMENT
-load_and_scan::load_and_scan(const protein_list_loader &arg_query_protein_list_loader, ///< TODOCUMENT
-                             const protein_list_loader &arg_match_protein_list_loader, ///< TODOCUMENT
-                             const scan_type           &arg_scan_type                  ///< TODOCUMENT
-                             ) : query_protein_loader( arg_query_protein_list_loader ),
-                                 match_protein_loader( arg_match_protein_list_loader ),
-                                 scan_ptr            ( arg_scan_type.clone()         ) {
+load_and_scan::load_and_scan(protein_list_loader  arg_query_protein_list_loader, ///< TODOCUMENT
+                             protein_list_loader  arg_match_protein_list_loader, ///< TODOCUMENT
+                             const scan_type     &arg_scan_type                  ///< TODOCUMENT
+                             ) : query_protein_loader { std::move( arg_query_protein_list_loader ) },
+                                 match_protein_loader { std::move( arg_match_protein_list_loader ) },
+                                 scan_ptr             { arg_scan_type.clone()                      } {
 	perform_load();
 	perform_scan();
 }

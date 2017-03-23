@@ -59,8 +59,8 @@ using std::setfill;
 using std::string;
 
 /// \brief Ctor from a broad_display_colour_spec
-display_colour_spec::display_colour_spec(const broad_display_colour_spec &arg_broad_spec ///< The broad_display_colour_spec from which to construct this display_colour_spec
-                                         ) : the_broad_spec { arg_broad_spec } {
+display_colour_spec::display_colour_spec(broad_display_colour_spec arg_broad_spec ///< The broad_display_colour_spec from which to construct this display_colour_spec
+                                         ) : the_broad_spec { std::move( arg_broad_spec ) } {
 }
 
 /// \brief Specify the base colour to use

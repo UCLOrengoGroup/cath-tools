@@ -84,9 +84,9 @@ namespace cath {
 				size_t get_rep_sets_index_of_res_rep_indices(const res_rep_index_type &,
 				                                             const res_rep_index_type &) const;
 
-				scan_structure_data(const single_struc_res_pair_list_vec &,
+				scan_structure_data(single_struc_res_pair_list_vec,
 				                    const index_type &,
-				                    const roled_scan_stride &);
+				                    roled_scan_stride);
 
 			public:
 				scan_structure_data(const protein &,
@@ -129,12 +129,12 @@ namespace cath {
 			/// \brief Ctor for building from required data and sanity checking
 			///
 			/// This is private; a public ctor that ensures consistency is provided and that ctor delegates to this one
-			inline scan_structure_data::scan_structure_data(const single_struc_res_pair_list_vec &arg_rep_sets,         ///< The lists of neighbours for each of the rep res_pairs
-			                                                const index_type                     &arg_num_residues,     ///< The total number of residues in the source protein
-			                                                const roled_scan_stride              &arg_roled_scan_stride ///< TODOCUMENT
-			                                                ) : rep_sets              ( arg_rep_sets          ),
-			                                                    num_residues          ( arg_num_residues      ),
-			                                                    the_roled_scan_stride ( arg_roled_scan_stride ) {
+			inline scan_structure_data::scan_structure_data(single_struc_res_pair_list_vec  arg_rep_sets,         ///< The lists of neighbours for each of the rep res_pairs
+			                                                const index_type               &arg_num_residues,     ///< The total number of residues in the source protein
+			                                                roled_scan_stride               arg_roled_scan_stride ///< TODOCUMENT
+			                                                ) : rep_sets              { std::move( arg_rep_sets          ) },
+			                                                    num_residues          { arg_num_residues                   },
+			                                                    the_roled_scan_stride { std::move( arg_roled_scan_stride ) } {
 				sanity_check();
 			}
 

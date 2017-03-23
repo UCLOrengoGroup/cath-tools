@@ -36,7 +36,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			using const_iterator = classn_stat_pair_series_vec_citr;
 
-			explicit classn_stat_pair_series_list(const classn_stat_pair_series_vec &);
+			explicit classn_stat_pair_series_list(classn_stat_pair_series_vec);
 
 			bool empty() const;
 			size_t size() const;

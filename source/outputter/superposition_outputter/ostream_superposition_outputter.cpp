@@ -57,6 +57,6 @@ bool ostream_superposition_outputter::do_involves_display_spec() const {
 }
 
 /// \brief Ctor for ostream_superposition_outputter
-ostream_superposition_outputter::ostream_superposition_outputter(const superposition_content_spec &arg_content_spec ///< The specification of what should be included in the superposition
-                                                                 ) : content_spec { arg_content_spec } {
+ostream_superposition_outputter::ostream_superposition_outputter(superposition_content_spec arg_content_spec ///< The specification of what should be included in the superposition
+                                                                 ) : content_spec { std::move( arg_content_spec ) } {
 }

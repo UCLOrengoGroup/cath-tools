@@ -45,7 +45,7 @@ namespace cath {
 
 		public:
 			pdb_file_superposition_outputter(const boost::filesystem::path &,
-			                                 const sup::superposition_content_spec &);
+			                                 sup::superposition_content_spec);
 		};
 
 	} // namespace opts

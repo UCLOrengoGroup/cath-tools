@@ -80,14 +80,14 @@ const display_colour_list & display_colourer_consecutive::get_colours() const {
 }
 
 /// \brief Ctor
-display_colourer_consecutive::display_colourer_consecutive(const display_colour_list &arg_colours ///< The list of colours with which the structures should be coloured
-                                                           ) : colours { arg_colours } {
+display_colourer_consecutive::display_colourer_consecutive(display_colour_list arg_colours ///< The list of colours with which the structures should be coloured
+                                                           ) : colours { std::move( arg_colours ) } {
 }
 
 /// \brief Ctor
-display_colourer_consecutive::display_colourer_consecutive(const display_colour_list  &arg_colours,      ///< The list of colours with which the structures should be coloured
+display_colourer_consecutive::display_colourer_consecutive(display_colour_list         arg_colours,      ///< The list of colours with which the structures should be coloured
                                                            const score_colour_handler &arg_score_handler ///< Specification for post-modifying the colouring based on scores
-                                                           ) : super   { arg_score_handler },
-                                                               colours { arg_colours       } {
+                                                           ) : super   { arg_score_handler        },
+                                                               colours { std::move( arg_colours ) } {
 }
 

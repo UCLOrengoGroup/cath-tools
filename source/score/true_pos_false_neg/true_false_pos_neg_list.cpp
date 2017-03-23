@@ -31,8 +31,8 @@ using namespace cath::score;
 using namespace std;
 
 /// \brief Ctor from a vector of true_false_pos_neg objects
-true_false_pos_neg_list::true_false_pos_neg_list(const true_false_pos_neg_vec &arg_tfpns ///< The vector of true_false_pos_neg objects with which this true_false_pos_neg_list should be constructed
-                                                 ) : tfpns ( arg_tfpns ) {
+true_false_pos_neg_list::true_false_pos_neg_list(true_false_pos_neg_vec arg_tfpns ///< The vector of true_false_pos_neg objects with which this true_false_pos_neg_list should be constructed
+                                                 ) : tfpns { std::move( arg_tfpns ) } {
 }
 
 /// \brief Return whether the vector is empty

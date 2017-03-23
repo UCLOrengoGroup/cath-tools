@@ -62,8 +62,8 @@ namespace cath {
 			void perform_scan();
 
 		public:
-			load_and_scan(const protein_list_loader &,
-			              const protein_list_loader &,
+			load_and_scan(protein_list_loader,
+			              protein_list_loader,
 			              const scan_type &);
 
 			const protein_list & get_query_proteins() const;

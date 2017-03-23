@@ -45,7 +45,7 @@ namespace cath {
 		public:
 			using const_iterator = residue_vec_citr;
 
-			explicit dssp_file(const residue_vec &);
+			explicit dssp_file(residue_vec);
 
 			size_t get_num_residues() const;
 			const residue & get_residue_of_index(const size_t &) const;

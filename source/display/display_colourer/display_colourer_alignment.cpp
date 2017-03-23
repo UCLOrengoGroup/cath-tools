@@ -111,13 +111,13 @@ const display_colour_gradient & display_colourer_alignment::get_gradient() const
 }
 
 /// \brief Ctor
-display_colourer_alignment::display_colourer_alignment(const display_colour_gradient &arg_gradient ///< The gradient with which this display_colourer_alignment should colour alignments
-                                                       ) : gradient { arg_gradient } {
+display_colourer_alignment::display_colourer_alignment(display_colour_gradient arg_gradient ///< The gradient with which this display_colourer_alignment should colour alignments
+                                                       ) : gradient { std::move( arg_gradient ) } {
 }
 
 /// \brief Ctor
-display_colourer_alignment::display_colourer_alignment(const display_colour_gradient &arg_gradient,     ///< The gradient with which this display_colourer_alignment should colour alignments
-                                                       const score_colour_handler    &arg_score_handler ///< Specification for post-modifying the colouring based on scores
-                                                       ) : super    { arg_score_handler },
-                                                           gradient { arg_gradient      } {
+display_colourer_alignment::display_colourer_alignment(display_colour_gradient     arg_gradient,     ///< The gradient with which this display_colourer_alignment should colour alignments
+                                                       const score_colour_handler &arg_score_handler ///< Specification for post-modifying the colouring based on scores
+                                                       ) : super    { arg_score_handler         },
+                                                           gradient { std::move( arg_gradient ) } {
 }

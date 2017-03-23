@@ -40,17 +40,17 @@ namespace cath {
 
 			public:
 				constexpr roled_scan_stride(const scan_role &,
-				                            const scan_stride &);
+				                            scan_stride);
 
 				constexpr const scan_role & get_scan_role() const;
 				constexpr const scan_stride & get_scan_stride() const;
 			};
 
 			/// \brief Ctor from scan_role and scan_stride
-			inline constexpr roled_scan_stride::roled_scan_stride(const scan_role   &arg_scan_role,  ///< TODOCUMENT
-			                                                      const scan_stride &arg_scan_stride ///< TODOCUMENT
-			                                                      ) : the_role   ( arg_scan_role   ),
-			                                                          the_stride ( arg_scan_stride ) {
+			inline constexpr roled_scan_stride::roled_scan_stride(const scan_role &arg_scan_role,  ///< TODOCUMENT
+			                                                      scan_stride      arg_scan_stride ///< TODOCUMENT
+			                                                      ) : the_role   { arg_scan_role                },
+			                                                          the_stride { std::move( arg_scan_stride ) } {
 			}
 
 			/// \brief TODOCUMENT

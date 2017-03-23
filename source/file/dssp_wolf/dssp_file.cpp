@@ -56,8 +56,8 @@ using boost::numeric_cast;
 using boost::range::count_if;
 
 /// \brief Ctor for dssp_file
-dssp_file::dssp_file(const residue_vec &arg_dssp_residues ///< TODOCUMENT
-                     ) : dssp_residues(arg_dssp_residues) {
+dssp_file::dssp_file(residue_vec arg_dssp_residues ///< TODOCUMENT
+                     ) : dssp_residues { std::move( arg_dssp_residues ) } {
 }
 
 /// \brief TODOCUMENT

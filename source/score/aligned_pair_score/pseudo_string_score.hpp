@@ -66,8 +66,8 @@ namespace cath {
 
 
 		public:
-			explicit pseudo_string_score(const std::string &,
-			                             const boost::logic::tribool &);
+			explicit pseudo_string_score(std::string,
+			                             boost::logic::tribool);
 		};
 
 		bool operator<(const pseudo_string_score &,

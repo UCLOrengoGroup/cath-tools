@@ -34,12 +34,12 @@ using boost::algorithm::replace_all_copy;
 using boost::algorithm::starts_with;
 
 /// \brief Ctor for env_var_option_name_handler
-env_var_option_name_handler::env_var_option_name_handler(const string              &arg_prefix,        ///< The prefix string to strip off all environment variable names(eg "CATH_TOOLS_"
+env_var_option_name_handler::env_var_option_name_handler(string                     arg_prefix,        ///< The prefix string to strip off all environment variable names(eg "CATH_TOOLS_"
                                                          const bool                &arg_allow_unknown, ///< Whether to allow unrecognised options (by not passing them back to parse_environment(), which would complain)
                                                          const options_description &arg_options        ///< The options_description containing the options that should be accepted (can be left to default empty value if arg_allow_unknown is false)
-                                                         ) : prefix(arg_prefix),
-                                                             allow_unknown(arg_allow_unknown),
-                                                             the_options(arg_options) {
+                                                         ) : prefix        { std::move( arg_prefix ) },
+                                                             allow_unknown { arg_allow_unknown       },
+                                                             the_options   { arg_options             } {
 }
 
 /// \brief Operator() that takes an environment variable name and converts it to an option name that should be processed or an empty string

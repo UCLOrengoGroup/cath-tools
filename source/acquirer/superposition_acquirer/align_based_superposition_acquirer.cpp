@@ -167,14 +167,14 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 }
 
 /// \brief Ctor for align_based_superposition_acquirer
-align_based_superposition_acquirer::align_based_superposition_acquirer(const alignment                 &arg_alignment,                ///< TODOCUMENT
-                                                                       const size_size_pair_vec        &arg_spanning_tree,            ///< TODOCUMENT
-                                                                       const strucs_context            &arg_strucs_context,           ///< TODOCUMENT
-                                                                       const selection_policy_acquirer &arg_selection_policy_acquirer ///< TODOCUMENT
-                                                                       ) : the_alignment_ref             { arg_alignment                 },
-                                                                           spanning_tree_ref             { arg_spanning_tree             },
-                                                                           context_ref                   { arg_strucs_context            },
-                                                                           the_selection_policy_acquirer { arg_selection_policy_acquirer } {
+align_based_superposition_acquirer::align_based_superposition_acquirer(const alignment           &arg_alignment,                ///< TODOCUMENT
+                                                                       const size_size_pair_vec  &arg_spanning_tree,            ///< TODOCUMENT
+                                                                       const strucs_context      &arg_strucs_context,           ///< TODOCUMENT
+                                                                       selection_policy_acquirer  arg_selection_policy_acquirer ///< TODOCUMENT
+                                                                       ) : the_alignment_ref             { arg_alignment                              },
+                                                                           spanning_tree_ref             { arg_spanning_tree                          },
+                                                                           context_ref                   { arg_strucs_context                         },
+                                                                           the_selection_policy_acquirer { std::move( arg_selection_policy_acquirer ) } {
 }
 
 /// \brief TODOCUMENT

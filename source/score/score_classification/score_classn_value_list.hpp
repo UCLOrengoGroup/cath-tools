@@ -69,9 +69,9 @@ namespace cath {
 
 			void sort_values();
 
-			score_classn_value_list(const score_classn_value_vec &,
+			score_classn_value_list(score_classn_value_vec,
 			                        const bool &,
-			                        const std::string &);
+			                        std::string);
 
 		public:
 			using const_iterator = score_classn_value_vec_citr;

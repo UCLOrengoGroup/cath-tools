@@ -162,12 +162,12 @@ substitution_matrix::substitution_matrix(const amino_acid_vec &arg_amino_acids, 
                                          const score_vec_vec  &arg_scores,                    ///< The all-against-all scores corresponding to the list of amino acids
                                          const score_type     &arg_score_for_one_unknown_aa,  ///< The score that's returned if one of the query amino acids is unrecognised
                                          const score_type     &arg_score_for_two_unknown_aas, ///< The score that's returned if both query amino acids are unrecognised
-                                         const string         &arg_name                       ///< A name for the substitution matrix
-                                         ) : amino_acids              ( sort_copy( arg_amino_acids )  ),
-                                             scores                   ( reorder_scores( arg_amino_acids, amino_acids, arg_scores ) ),
-                                             score_for_one_unknown_aa ( arg_score_for_one_unknown_aa  ),
-                                             score_for_two_unknown_aas( arg_score_for_two_unknown_aas ),
-                                             name                     ( arg_name                      ) {
+                                         string                arg_name                       ///< A name for the substitution matrix
+                                         ) : amino_acids               { sort_copy( arg_amino_acids )  },
+                                             scores                    { reorder_scores( arg_amino_acids, amino_acids, arg_scores ) },
+                                             score_for_one_unknown_aa  { arg_score_for_one_unknown_aa  },
+                                             score_for_two_unknown_aas { arg_score_for_two_unknown_aas },
+                                             name                      { std::move( arg_name )         } {
 	// Check that the generated matrix is symmetric
 	check_is_symmetric();
 

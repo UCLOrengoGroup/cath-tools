@@ -27,8 +27,8 @@ using boost::lexical_cast;
 using boost::token_compress_on;
 
 /// \brief Ctor from a map of pairs of labels to is_positive bools
-label_pair_is_positive::label_pair_is_positive(const str_str_pair_bool_map &arg_positive_of_label_pairs ///< A map of pairs of labels to is_positive bools from which to construct this label_pair_is_positive
-                                               ) : all_pairs( arg_positive_of_label_pairs ) {
+label_pair_is_positive::label_pair_is_positive(str_str_pair_bool_map arg_positive_of_label_pairs ///< A map of pairs of labels to is_positive bools from which to construct this label_pair_is_positive
+                                               ) : all_pairs { std::move( arg_positive_of_label_pairs ) } {
 
 }
 

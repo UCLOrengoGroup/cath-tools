@@ -57,13 +57,13 @@ void sec_file_record::check_sec_struc_type() const {
 sec_file_record::sec_file_record(const size_t         &arg_start_residue_num, ///< The start residue of the secondary structure
                                  const size_t         &arg_stop_residue_num,  ///< The stop residue of the secondary structure
                                  const sec_struc_type &arg_sec_struc_type,    ///< The type of secondary structure: sec_struc_type::ALPHA_HELIX or sec_struc_type::BETA_STRAND
-                                 const coord          &arg_midpoint,          ///< The coordinates of the secondary structure's midpoint
-                                 const coord          &arg_unit_dirn          ///< A unit vector along the secondary structure
-                                 ) : start_residue_num( arg_start_residue_num ),
-                                     stop_residue_num ( arg_stop_residue_num  ),
-                                     type             ( arg_sec_struc_type    ),
-                                     midpoint         ( arg_midpoint          ),
-                                     unit_dirn        ( arg_unit_dirn         ) {
+                                 coord                 arg_midpoint,          ///< The coordinates of the secondary structure's midpoint
+                                 coord                 arg_unit_dirn          ///< A unit vector along the secondary structure
+                                 ) : start_residue_num { arg_start_residue_num      },
+                                     stop_residue_num  { arg_stop_residue_num       },
+                                     type              { arg_sec_struc_type         },
+                                     midpoint          { std::move( arg_midpoint  ) },
+                                     unit_dirn         { std::move( arg_unit_dirn ) } {
 	check_sec_struc_type();
 	unit_dirn = normalise_copy( unit_dirn );
 }

@@ -39,10 +39,10 @@ using std::max;
 using std::min;
 
 /// \brief Ctor to populate the sec_file_records and planar_angles_lists
-sec_file::sec_file(const sec_file_record_vec             &arg_sec_file_records,   ///< The list of sec_file_records
-                   const sec_struc_planar_angles_vec_vec &arg_inter_planar_angles ///< The list of planar_angle_lists
-                   ) : records             ( arg_sec_file_records    ),
-                       inter_planar_angles ( arg_inter_planar_angles ) {
+sec_file::sec_file(sec_file_record_vec             arg_sec_file_records,   ///< The list of sec_file_records
+                   sec_struc_planar_angles_vec_vec arg_inter_planar_angles ///< The list of planar_angle_lists
+                   ) : records             { std::move( arg_sec_file_records    ) },
+                       inter_planar_angles { std::move( arg_inter_planar_angles ) } {
 	if ( records.empty() ) {
 		if ( ! inter_planar_angles.empty() ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("There are inter_planar_angles despite there being no sec file records"));

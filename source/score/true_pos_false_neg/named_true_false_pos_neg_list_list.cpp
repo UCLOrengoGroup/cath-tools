@@ -33,8 +33,8 @@ using namespace cath::score;
 // using namespace std;
 
 /// \brief TODOCUMENT
-named_true_false_pos_neg_list_list::named_true_false_pos_neg_list_list(const named_true_false_pos_neg_list_vec &arg_named_true_false_pos_neg_list_vec ///< TODOCUMENT
-                                                                       ) : named_true_false_pos_neg_lists( arg_named_true_false_pos_neg_list_vec ) {
+named_true_false_pos_neg_list_list::named_true_false_pos_neg_list_list(named_true_false_pos_neg_list_vec arg_named_true_false_pos_neg_list_vec ///< TODOCUMENT
+                                                                       ) : named_true_false_pos_neg_lists{ std::move( arg_named_true_false_pos_neg_list_vec ) } {
 
 }
 

@@ -48,8 +48,8 @@ using boost::algorithm::is_any_of;
 using boost::algorithm::token_compress_on;
 
 /// \brief Ctor for domain_definition_list
-domain_definition_list::domain_definition_list(const domain_definition_vec &arg_domain_definitions
-                                               ) : domain_definitions( arg_domain_definitions ) {
+domain_definition_list::domain_definition_list(domain_definition_vec arg_domain_definitions
+                                               ) : domain_definitions { std::move( arg_domain_definitions ) } {
 }
 
 /// \brief TODOCUMENT

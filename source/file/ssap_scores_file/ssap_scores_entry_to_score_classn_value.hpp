@@ -33,12 +33,12 @@ namespace cath {
 
 			public:
 				/// \brief Ctor from the ssap_scores_entry getter and label_pair_is_positive
-				score_classn_value_maker(const score::label_pair_is_positive &arg_is_positive,  ///< A label_pair_is_positive to determine which pairs are positive
-				                         const GETR_FN                       &arg_score_getter, ///< The ssap_scores_entry getter member function with which to extract the score value
-				                         const NAME_FN                       &arg_name_getter   ///< TODOCUMENT
-				                         ) : the_is_positive( arg_is_positive  ),
-				                             f_score_getter ( arg_score_getter ),
-				                             f_name_getter  ( arg_name_getter  ) {
+				score_classn_value_maker(score::label_pair_is_positive  arg_is_positive,  ///< A label_pair_is_positive to determine which pairs are positive
+				                         const GETR_FN                 &arg_score_getter, ///< The ssap_scores_entry getter member function with which to extract the score value
+				                         const NAME_FN                 &arg_name_getter   ///< TODOCUMENT
+				                         ) : the_is_positive { std::move( arg_is_positive ) },
+				                             f_score_getter  { arg_score_getter             },
+				                             f_name_getter   { arg_name_getter              } {
 				}
 
 				/// \brief Build a score_classn_value from the specified ssap_scores_entry using the stored field getter and label_pair_is_positive

@@ -41,7 +41,7 @@ namespace cath {
 		void check_values() const;
 
 	public:
-		display_colour_gradient(const display_colour_vec &,
+		display_colour_gradient(display_colour_vec,
 		                        const size_t &);
 
 		size_t get_steps_in_between_points() const;

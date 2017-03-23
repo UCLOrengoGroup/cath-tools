@@ -38,10 +38,10 @@ string cath::file::detail::strip_header_name(const string &arg_string ///< TODOC
 }
 
 /// \brief Ctor from all of the required pieces of information
-hmmer_scores_entry::hmmer_scores_entry(const string &arg_name_1,               ///< TODOCUMENT
-                                       const string &arg_accession_1,          ///< TODOCUMENT
-                                       const string &arg_name_2,               ///< TODOCUMENT
-                                       const string &arg_accession_2,          ///< TODOCUMENT
+hmmer_scores_entry::hmmer_scores_entry(string        arg_name_1,               ///< TODOCUMENT
+                                       string        arg_accession_1,          ///< TODOCUMENT
+                                       string        arg_name_2,               ///< TODOCUMENT
+                                       string        arg_accession_2,          ///< TODOCUMENT
                                        const double &arg_full_sequence_evalue, ///< TODOCUMENT
                                        const double &arg_full_sequence_score,  ///< TODOCUMENT
                                        const double &arg_full_sequence_bias,   ///< TODOCUMENT
@@ -56,26 +56,26 @@ hmmer_scores_entry::hmmer_scores_entry(const string &arg_name_1,               /
                                        const size_t &arg_dom,                  ///< TODOCUMENT
                                        const size_t &arg_rep,                  ///< TODOCUMENT
                                        const size_t &arg_inc,                  ///< TODOCUMENT
-                                       const string &arg_description           ///< TODOCUMENT
-                                       ) : name_1               ( arg_name_1                ),
-                                           accession_1          ( arg_accession_1           ),
-                                           name_2               ( arg_name_2                ),
-                                           accession_2          ( arg_accession_2           ),
-                                           full_sequence_evalue ( arg_full_sequence_evalue  ),
-                                           full_sequence_score  ( arg_full_sequence_score   ),
-                                           full_sequence_bias   ( arg_full_sequence_bias    ),
-                                           best_1_domain_evalue ( arg_best_1_domain_evalue  ),
-                                           best_1_domain_score  ( arg_best_1_domain_score   ),
-                                           best_1_domain_bias   ( arg_best_1_domain_bias    ),
-                                           expected_num_doms    ( arg_expected_num_doms     ),
-                                           reg                  ( arg_reg                   ),
-                                           clu                  ( arg_clu                   ),
-                                           ov                   ( arg_ov                    ),
-                                           env                  ( arg_env                   ),
-                                           dom                  ( arg_dom                   ),
-                                           rep                  ( arg_rep                   ),
-                                           inc                  ( arg_inc                   ),
-                                           description          ( arg_description           ) {
+                                       string        arg_description           ///< TODOCUMENT
+                                       ) : name_1               { std::move( arg_name_1      ) },
+                                           accession_1          { std::move( arg_accession_1 ) },
+                                           name_2               { std::move( arg_name_2      ) },
+                                           accession_2          { std::move( arg_accession_2 ) },
+                                           full_sequence_evalue { arg_full_sequence_evalue     },
+                                           full_sequence_score  { arg_full_sequence_score      },
+                                           full_sequence_bias   { arg_full_sequence_bias       },
+                                           best_1_domain_evalue { arg_best_1_domain_evalue     },
+                                           best_1_domain_score  { arg_best_1_domain_score      },
+                                           best_1_domain_bias   { arg_best_1_domain_bias       },
+                                           expected_num_doms    { arg_expected_num_doms        },
+                                           reg                  { arg_reg                      },
+                                           clu                  { arg_clu                      },
+                                           ov                   { arg_ov                       },
+                                           env                  { arg_env                      },
+                                           dom                  { arg_dom                      },
+                                           rep                  { arg_rep                      },
+                                           inc                  { arg_inc                      },
+                                           description          { std::move( arg_description ) } {
 }
 
 /// \brief TODOCUMENT

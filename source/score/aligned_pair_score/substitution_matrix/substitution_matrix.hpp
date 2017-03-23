@@ -94,7 +94,7 @@ namespace cath {
 			                    const score_vec_vec &,
 			                    const score_type &,
 			                    const score_type &,
-			                    const std::string &);
+			                    std::string);
 
 			const std::string & get_name() const;
 

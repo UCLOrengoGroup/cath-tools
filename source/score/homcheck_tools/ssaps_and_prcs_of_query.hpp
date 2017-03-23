@@ -47,7 +47,7 @@ namespace cath {
 			using const_iterator = ssap_and_prc_vec::const_iterator;
 
 			ssaps_and_prcs_of_query() = default;
-			explicit ssaps_and_prcs_of_query(const ssap_and_prc_vec &);
+			explicit ssaps_and_prcs_of_query(ssap_and_prc_vec);
 
 			void calculate_all_svm_scores(const score::rbf_model &);
 

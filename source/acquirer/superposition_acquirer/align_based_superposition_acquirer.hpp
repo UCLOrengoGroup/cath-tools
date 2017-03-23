@@ -63,7 +63,7 @@ namespace cath {
 			align_based_superposition_acquirer(const align::alignment &,
 			                                   const size_size_pair_vec &,
 			                                   const file::strucs_context &,
-			                                   const selection_policy_acquirer &);
+			                                   selection_policy_acquirer);
 
 			align_based_superposition_acquirer(const align::alignment &&,
 			                                   const size_size_pair_vec &,

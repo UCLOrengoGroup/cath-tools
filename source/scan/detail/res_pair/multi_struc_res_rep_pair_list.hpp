@@ -51,7 +51,7 @@ namespace cath {
 
 				/// \brief Default ctor
 				multi_struc_res_rep_pair_list() = default;
-				explicit multi_struc_res_rep_pair_list(const multi_struc_res_rep_pair_vec &);
+				explicit multi_struc_res_rep_pair_list(multi_struc_res_rep_pair_vec);
 
 				bool empty() const;
 				size_t size() const;
@@ -66,8 +66,8 @@ namespace cath {
 			};
 
 			/// \brief Ctor from a vector of multi_struc_res_rep_pair objects
-			inline multi_struc_res_rep_pair_list::multi_struc_res_rep_pair_list(const multi_struc_res_rep_pair_vec &arg_multi_struc_res_rep_pairs ///< The vector of multi_struc_res_rep_pairs from which to construct the multi_struc_res_rep_pair_list
-			                                                                    ) : multi_struc_res_rep_pairs ( arg_multi_struc_res_rep_pairs ) {
+			inline multi_struc_res_rep_pair_list::multi_struc_res_rep_pair_list(multi_struc_res_rep_pair_vec arg_multi_struc_res_rep_pairs ///< The vector of multi_struc_res_rep_pairs from which to construct the multi_struc_res_rep_pair_list
+			                                                                    ) : multi_struc_res_rep_pairs { std::move( arg_multi_struc_res_rep_pairs ) } {
 			}
 
 			/// \brief Return whether this multi_struc_res_rep_pair_list is empty

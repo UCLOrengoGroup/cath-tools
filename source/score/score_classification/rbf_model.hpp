@@ -61,7 +61,7 @@ namespace cath {
 		public:
 			rbf_model(const double &,
 			          const double &,
-			          const std::vector<std::pair<double, double_octuple> > &);
+			          std::vector<std::pair<double, double_octuple> >);
 			static double_octuple make_standard_scores(const homcheck::ssap_and_prc &);
 
 			static double_octuple make_standard_scores(const file::prc_scores_entry &,

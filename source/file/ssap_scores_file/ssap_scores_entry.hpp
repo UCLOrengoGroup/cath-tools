@@ -44,8 +44,8 @@ namespace cath {
 			double      rmsd;
 
 		public:
-			ssap_scores_entry(const std::string &,
-			                  const std::string &,
+			ssap_scores_entry(std::string,
+			                  std::string,
 			                  const size_t &,
 			                  const size_t &,
 			                  const double &,
