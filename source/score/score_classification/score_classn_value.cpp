@@ -55,7 +55,7 @@ const string & score_classn_value::get_instance_label() const {
 /// \relates score_classn_value
 ostream & cath::score::operator<<(ostream                  &arg_ostream,           ///< TODOCUMENT
                                   const score_classn_value &arg_score_classn_value ///< TODOCUMENT
-								  ) {
+                                  ) {
 	ostringstream out_ss;
 	out_ss << "score_classn_value[score:";
 	out_ss << arg_score_classn_value.get_score_value();
