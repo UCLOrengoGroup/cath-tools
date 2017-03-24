@@ -146,8 +146,9 @@ namespace cath {
 		                              atom_serial      { arg_atom_serial                 },
 		                              occupancy        { arg_occupancy                   },
 		                              temp_factor      { arg_temp_factor                 },
-		                              element_symbol   ( std::move( arg_element_symbol ) ),
-		                              charge           ( std::move( arg_charge )         ) {
+		                              element_symbol   ( std::move( arg_element_symbol ) ), //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
+		                              charge           ( std::move( arg_charge )         )  //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
+		                              {
 			if ( ! boost::math::isfinite( occupancy ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Argument occupancy must be a normal, finite floating-point number"));
 			}

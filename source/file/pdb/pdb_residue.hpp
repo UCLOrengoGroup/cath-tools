@@ -202,11 +202,13 @@ namespace cath {
 		}
 
 		/// \brief Ctor for pdb_residue
+		///
 		inline pdb_residue::pdb_residue(residue_id   arg_residue_id, ///< The name of the residue
 		                                pdb_atom_vec arg_atoms       ///< The pdb_atoms making up this residue
 		                                ) : the_residue_id   { std::move( arg_residue_id     ) },
 		                                    atoms            { std::move( arg_atoms          ) },
-		                                    core_atom_indices( make_core_atom_indices( atoms ) ) {
+		                                    core_atom_indices( make_core_atom_indices( atoms ) ) //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
+		                                    {
 		}
 
 		/// \brief Getter for the residue name

@@ -71,7 +71,7 @@ namespace cath {
 
 		/// \brief Constructor from lvalue string
 		inline element_type_string::element_type_string(char_4_arr arg_string ///< The source string
-		                                                ) : element_type_untrimmed( std::move( arg_string ) ),
+		                                                ) : element_type_untrimmed( std::move( arg_string ) ), //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
 		                                                    trim_offsets {
 		                                                    	common::dumb_trim_string_ref_to_offsets<char>(
 		                                                    		common::string_ref_of_char_arr( element_type_untrimmed )
