@@ -20,10 +20,14 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/property_tree/from_json_string.hpp"
+#include "common/property_tree/to_json_string.hpp"
+
 #include "chopping/region/region.hpp"
 #include "superposition/io/superposition_io.hpp"
 #include "test/superposition_fixture.hpp"
 
+using namespace cath::common;
 using namespace cath::geom;
 using namespace cath::sup;
 using namespace std;
@@ -41,7 +45,7 @@ BOOST_AUTO_TEST_SUITE(json)
 BOOST_AUTO_TEST_SUITE(write)
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup) {
-	BOOST_CHECK_EQUAL( to_json_string( the_sup, false ), sup_json_str );
+	BOOST_CHECK_EQUAL( to_json_string( the_sup, json_style::COMPACT ), sup_json_str );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -49,7 +53,7 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(write)
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_identity) {
-	BOOST_CHECK_EQUAL( superposition_from_json_string( sup_json_str ), the_sup );
+	BOOST_CHECK_EQUAL( from_json_string<superposition>( sup_json_str ), the_sup );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

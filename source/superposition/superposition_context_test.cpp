@@ -25,6 +25,8 @@
 #include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/property_tree/from_json_string.hpp"
+#include "common/property_tree/to_json_string.hpp"
 #include "file/options/data_dirs_options_block.hpp"
 #include "superposition/superposition_content_spec.hpp"
 #include "test/superposition_fixture.hpp"
@@ -75,16 +77,16 @@ BOOST_AUTO_TEST_CASE(to_json_string_works_for_example_sup_con) {
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works) {
-	const auto from_json_string = superposition_context_from_json_string( sup_context_json_str );
-	BOOST_REQUIRE_EQUAL     ( get_pdbs ( from_json_string ).size(),                  2       );
-	BOOST_CHECK_EQUAL       ( get_pdbs ( from_json_string )[ 0 ].get_num_residues(), 0       );
-	BOOST_CHECK_EQUAL       ( get_pdbs ( from_json_string )[ 1 ].get_num_residues(), 0       );
+	const auto from_json_str = from_json_string<superposition_context>( sup_context_json_str );
+	BOOST_REQUIRE_EQUAL     ( get_pdbs ( from_json_str ).size(),                  2       );
+	BOOST_CHECK_EQUAL       ( get_pdbs ( from_json_str )[ 0 ].get_num_residues(), 0       );
+	BOOST_CHECK_EQUAL       ( get_pdbs ( from_json_str )[ 1 ].get_num_residues(), 0       );
 
-	BOOST_CHECK_EQUAL_RANGES( get_names( from_json_string ),                         names   );
+	BOOST_CHECK_EQUAL_RANGES( get_names( from_json_str ),                         names   );
 
-	BOOST_CHECK_EQUAL       ( from_json_string.get_superposition(),                  the_sup );
+	BOOST_CHECK_EQUAL       ( from_json_str.get_superposition(),                  the_sup );
 
-	BOOST_CHECK_EQUAL       ( from_json_string.has_alignment(),                      false   );
+	BOOST_CHECK_EQUAL       ( from_json_str.has_alignment(),                      false   );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

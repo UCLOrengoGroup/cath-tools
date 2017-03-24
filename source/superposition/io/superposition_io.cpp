@@ -30,6 +30,7 @@
 #include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/file/open_fstream.hpp"
+#include "common/property_tree/make_ptree_of.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/not_implemented_exception.hpp"
@@ -453,38 +454,4 @@ void cath::sup::save_to_ptree(ptree               &arg_ptree,        ///< The pt
 		transformation_ptree.put_child( superposition_io_consts::ROTATION_KEY,    make_ptree_of( arg_superposition.get_rotation_of_index   ( index ) ) );
 		transformations_ptree.push_back( make_pair( "", transformation_ptree ) );
 	}
-}
-
-/// \brief Make a new Boost Property Tree ptree representing the specified superposition
-///
-/// \relates superposition
-ptree cath::sup::make_ptree_of(const superposition &arg_superposition ///< The superposition that the new ptree should represent
-                               ) {
-	ptree new_ptree;
-	save_to_ptree( new_ptree, arg_superposition );
-	return new_ptree;
-}
-
-/// \brief Build a superposition from a JSON string (via a ptree)
-///
-/// \relates superposition
-superposition cath::sup::superposition_from_json_string(const string &arg_json_string ///< The JSON string from which the superposition should be read
-                                                        ) {
-	ptree tree;
-	istringstream in_ss( arg_json_string );
-	read_json( in_ss, tree);
-	return superposition_from_ptree( tree );
-}
-
-/// \brief Create a JSON string to represent the specified superposition
-///
-/// \relates superposition
-string cath::sup::to_json_string(const superposition &arg_superposition, ///< The superposition to represent in the JSON string
-                                 const bool          &arg_pretty_print   ///< Whether to use whitespace (including line breaks) in the JSON to make it more human-readable
-                                 ) {
-	ostringstream json_ss;
-	ptree temp_ptree;
-	save_to_ptree( temp_ptree, arg_superposition );
-	write_json( json_ss, temp_ptree, arg_pretty_print );
-	return json_ss.str();
 }

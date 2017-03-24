@@ -287,37 +287,3 @@ void cath::geom::save_to_ptree(ptree          &arg_ptree,   ///< The ptree to wh
 	arg_ptree.push_back( make_pair( "", detail::make_ptree_of_row( arg_rotation, 1 ) ) );
 	arg_ptree.push_back( make_pair( "", detail::make_ptree_of_row( arg_rotation, 2 ) ) );
 }
-
-/// \brief Make a new Boost Property Tree ptree representing the specified rotation
-///
-/// \relates rotation
-ptree cath::geom::make_ptree_of(const rotation &arg_rotation ///< The rotation that the new ptree should represent
-                                ) {
-	ptree new_ptree;
-	save_to_ptree( new_ptree, arg_rotation );
-	return new_ptree;
-}
-
-/// \brief Build a rotation from a JSON string (via a ptree)
-///
-/// \relates rotation
-rotation cath::geom::rotation_from_json_string(const string &arg_json_string ///< The JSON string from which the rotation should be read
-                                               ) {
-	ptree tree;
-	istringstream in_ss( arg_json_string );
-	read_json( in_ss, tree);
-	return rotation_from_ptree( tree );
-}
-
-/// \brief Create a JSON string to represent the specified rotation
-///
-/// \relates rotation
-string cath::geom::to_json_string(const rotation   &arg_rotation,  ///< The rotation to represent in the JSON string
-                                  const json_style &arg_json_style ///< The style in which the JSON should be written
-                                  ) {
-	ostringstream json_ss;
-	ptree temp_ptree;
-	save_to_ptree( temp_ptree, arg_rotation );
-	write_json( json_ss, temp_ptree, ( arg_json_style == json_style::PRETTY ) );
-	return json_ss.str();
-}

@@ -23,6 +23,7 @@
 #include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/file/open_fstream.hpp"
+#include "common/property_tree/write_to_json_file.hpp"
 #include "file/pdb/pdb.hpp"
 #include "superposition/superposition_context.hpp"
 

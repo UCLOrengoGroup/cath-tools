@@ -29,6 +29,7 @@
 #include <boost/property_tree/ptree_fwd.hpp>
 
 #include "common/json_style.hpp"
+#include "common/property_tree/read_from_ptree.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 namespace cath { namespace geom { template <typename T> class angle; } }
@@ -342,12 +343,6 @@ namespace cath {
 		void save_to_ptree(boost::property_tree::ptree &,
 		                   const coord &);
 
-		boost::property_tree::ptree make_ptree_of(const coord &);
-
-		coord coord_from_json_string(const std::string &);
-		std::string to_json_string(const coord &,
-		                           const common::json_style & = common::json_style::PRETTY);
-
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
@@ -498,6 +493,17 @@ namespace cath {
 
 
 	} // namespace geom
+	
+	namespace common {
+	
+		/// \brief Specialisation of cath::common::read_from_ptree for coord
+		template <>
+		inline geom::coord read_from_ptree<geom::coord>(const boost::property_tree::ptree &arg_ptree ///< The ptree from which to read the coord
+		                                                ) {
+			return geom::coord_from_ptree( arg_ptree );
+		}
+	
+	} // namespace common
 } // namespace cath
 
 #endif

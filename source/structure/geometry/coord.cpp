@@ -190,38 +190,3 @@ void cath::geom::save_to_ptree(ptree       &arg_ptree, ///< The ptree to which t
 	arg_ptree.put( "y", arg_coord.get_y() );
 	arg_ptree.put( "z", arg_coord.get_z() );
 }
-
-
-/// \brief Make a new ptree representing the specified coord
-///
-/// \relates coord
-ptree cath::geom::make_ptree_of(const coord &arg_coord ///< The coord that the new ptree should represent
-                                ) {
-	ptree new_ptree;
-	save_to_ptree( new_ptree, arg_coord );
-	return new_ptree;
-}
-
-/// \brief Build a coord from a JSON string (via a ptree)
-///
-/// \relates coord
-coord cath::geom::coord_from_json_string(const string &arg_json_string ///< The JSON string from which the coord should be read
-                                         ) {
-	ptree tree;
-	istringstream in_ss( arg_json_string );
-	read_json( in_ss, tree);
-	return coord_from_ptree( tree );
-}
-
-/// \brief Create a JSON string to represent the specified coord
-///
-/// \relates coord
-string cath::geom::to_json_string(const coord      &arg_coord,     ///< The coord to represent in the JSON string
-                                  const json_style &arg_json_style ///< The style in which the JSON should be written
-                                  ) {
-	ostringstream json_ss;
-	ptree temp_ptree;
-	save_to_ptree( temp_ptree, arg_coord );
-	write_json( json_ss, temp_ptree, ( arg_json_style == json_style::PRETTY ) );
-	return json_ss.str();
-}

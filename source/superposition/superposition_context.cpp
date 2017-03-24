@@ -34,6 +34,7 @@
 #include "common/algorithm/append.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/file/open_fstream.hpp"
+#include "common/property_tree/make_ptree_of.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/options/data_dirs_options_block.hpp"
 #include "file/pdb/pdb.hpp"
@@ -454,74 +455,4 @@ void cath::sup::save_to_ptree(ptree                       &arg_ptree,      ///< 
 			entries_ptree.push_back( make_pair( "", entry_ptree ) );
 		}
 	);
-}
-
-/// \brief TODOCUMENT
-///
-/// At present, this stores the names and the superposition but does nothing
-/// with the alignment or the PDBs
-///
-/// \relates superposition_context
-ptree cath::sup::make_ptree_of(const superposition_context &arg_sup_context ///< TODOCUMENT
-                               ) {
-	ptree new_ptree;
-	save_to_ptree( new_ptree, arg_sup_context );
-	return new_ptree;
-}
-
-/// \brief Build a superposition_context from a JSON string (via a ptree)
-///
-/// \relates superposition_context
-superposition_context cath::sup::superposition_context_from_json_string(const string &arg_json_string ///< The JSON string from which the superposition_context should be read
-                                                                        ) {
-	ptree tree;
-	istringstream in_ss( arg_json_string );
-	read_json( in_ss, tree);
-	return superposition_context_from_ptree( tree );
-}
-
-/// \brief Create a JSON string to represent the specified superposition
-///
-/// At present, this stores the names and the superposition but does nothing
-/// with the alignment or the PDBs
-///
-/// \relates superposition_context
-string cath::sup::to_json_string(const superposition_context &arg_sup_context, ///< The superposition_context to represent in the JSON string
-                                 const json_style            &arg_json_style   ///< Whether to use whitespace (including line breaks) in the JSON to make it more human-readable
-                                 ) {
-	ostringstream json_ss;
-	ptree temp_ptree;
-	save_to_ptree( temp_ptree, arg_sup_context );
-	write_json( json_ss, temp_ptree, ( arg_json_style == json_style::PRETTY ) );
-	return json_ss.str();
-}
-
-/// \brief Read a superposition_context from the specified JSON file
-///
-/// \relates superposition_context
-superposition_context cath::sup::read_superposition_context_from_json_file(const path &arg_json_file ///< The JSON file to read
-                                                                           ) {
-	ifstream json_file_ifstream;
-	open_ifstream( json_file_ifstream, arg_json_file );
-	const string json_str {
-		istreambuf_iterator<char>( json_file_ifstream ),
-		istreambuf_iterator<char>()
-	};
-	json_file_ifstream.close();
-	return superposition_context_from_json_string( json_str );
-}
-
-/// \brief Write the specified superposition_context to the specified JSON file
-///        in the specified style
-///
-/// \relates superposition_context
-void cath::sup::write_to_json_file(const path                  &arg_json_out_file, ///< The file to which the JSON should be written
-                                   const superposition_context &arg_sup_context,   ///< The superposition_context to write
-                                   const json_style            &arg_json_style     ///< The style in which the JSON should be written
-                                   ) {
-	ofstream json_file_ostream;
-	open_ofstream( json_file_ostream, arg_json_out_file );
-	json_file_ostream << to_json_string( arg_sup_context, arg_json_style );
-	json_file_ostream << flush;
-	json_file_ostream.close();
 }

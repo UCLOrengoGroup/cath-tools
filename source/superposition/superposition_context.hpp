@@ -114,19 +114,19 @@ namespace cath {
 		void save_to_ptree(boost::property_tree::ptree &,
 		                   const superposition_context &);
 
-		boost::property_tree::ptree make_ptree_of(const superposition_context &);
-
-		superposition_context superposition_context_from_json_string(const std::string &);
-
-		std::string to_json_string(const superposition_context &,
-		                           const common::json_style & = common::json_style::PRETTY);
-
-		superposition_context read_superposition_context_from_json_file(const boost::filesystem::path &);
-
-		void write_to_json_file(const boost::filesystem::path &,
-		                        const superposition_context &,
-		                        const common::json_style & = common::json_style::PRETTY);
 	} // namespace sup
+
+	namespace common {
+
+		/// \brief Specialisation of cath::common::read_from_ptree for superposition_context
+		template <>
+		inline sup::superposition_context read_from_ptree<sup::superposition_context>(const boost::property_tree::ptree &arg_ptree ///< The ptree from which to read the superposition_context
+		                                                                              ) {
+			return sup::superposition_context_from_ptree( arg_ptree );
+		}
+
+	} // namespace common
+
 } // namespace cath
 
 #endif

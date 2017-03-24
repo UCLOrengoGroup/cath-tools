@@ -23,6 +23,8 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
+#include "common/property_tree/from_json_string.hpp"
+#include "common/property_tree/to_json_string.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "structure/geometry/angle.hpp"
@@ -163,27 +165,27 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(read)
 
 BOOST_AUTO_TEST_CASE(throws_on_from_json_string_with_missing_row) {
-	BOOST_CHECK_THROW( rotation_from_json_string( R"({"":["1","0","0"],"":["0","1","0"],"":["0","0"]})"          "\n" ), runtime_error_exception );
+	BOOST_CHECK_THROW( from_json_string<rotation>( R"({"":["1","0","0"],"":["0","1","0"],"":["0","0"]})"          "\n" ), runtime_error_exception );
 }
 
 BOOST_AUTO_TEST_CASE(throws_on_from_json_string_with_short_row) {
-	BOOST_CHECK_THROW( rotation_from_json_string( R"({"":["1","0","0"],"":["0","1","0"],"":["0","0"]})"          "\n" ), runtime_error_exception );
+	BOOST_CHECK_THROW( from_json_string<rotation>( R"({"":["1","0","0"],"":["0","1","0"],"":["0","0"]})"          "\n" ), runtime_error_exception );
 }
 
 BOOST_AUTO_TEST_CASE(throws_on_from_json_string_with_spurious_label) {
-	BOOST_CHECK_THROW( rotation_from_json_string( R"({"":["1","0","0"],"":["0","1","0"],"wrong":["0","0","1"]})" "\n" ), runtime_error_exception );
+	BOOST_CHECK_THROW( from_json_string<rotation>( R"({"":["1","0","0"],"":["0","1","0"],"wrong":["0","0","1"]})" "\n" ), runtime_error_exception );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_identity) {
-	BOOST_CHECK_EQUAL( rotation_from_json_string( R"({"":["1","0","0"],"":["0","1","0"],"":["0","0","1"]})" "\n" ), rotation::IDENTITY_ROTATION()       );
+	BOOST_CHECK_EQUAL( from_json_string<rotation>( R"({"":["1","0","0"],"":["0","1","0"],"":["0","0","1"]})" "\n" ), rotation::IDENTITY_ROTATION()       );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_x_to_y_to_z_to_x) {
-	BOOST_CHECK_EQUAL( rotation_from_json_string( R"({"":["0","0","1"],"":["1","0","0"],"":["0","1","0"]})" "\n" ), rotation::ROTATE_X_TO_Y_TO_Z_TO_X() );
+	BOOST_CHECK_EQUAL( from_json_string<rotation>( R"({"":["0","0","1"],"":["1","0","0"],"":["0","1","0"]})" "\n" ), rotation::ROTATE_X_TO_Y_TO_Z_TO_X() );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_x_to_z_to_y_to_x) {
-	BOOST_CHECK_EQUAL( rotation_from_json_string( R"({"":["0","1","0"],"":["0","0","1"],"":["1","0","0"]})" "\n" ), rotation::ROTATE_X_TO_Z_TO_Y_TO_X() );
+	BOOST_CHECK_EQUAL( from_json_string<rotation>( R"({"":["0","1","0"],"":["0","0","1"],"":["1","0","0"]})" "\n" ), rotation::ROTATE_X_TO_Z_TO_Y_TO_X() );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -21,6 +21,8 @@
 #include <boost/math/constants/constants.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/property_tree/from_json_string.hpp"
+#include "common/property_tree/to_json_string.hpp"
 #include "structure/geometry/angle.hpp"
 #include "structure/geometry/coord.hpp"
 #include "test/global_test_constants.hpp"
@@ -217,19 +219,19 @@ BOOST_AUTO_TEST_CASE(to_json_string_works_for_unit_z) {
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_origin) {
-	BOOST_CHECK_EQUAL( coord_from_json_string( R"({"x":"0","y":"0","z":"0"})" ), coord::ORIGIN_COORD );
+	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"0","y":"0","z":"0"})" ), coord::ORIGIN_COORD );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_unit_x) {
-	BOOST_CHECK_EQUAL( coord_from_json_string( R"({"x":"1","y":"0","z":"0"})" ), coord::UNIT_X       );
+	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"1","y":"0","z":"0"})" ), coord::UNIT_X       );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_unit_y) {
-	BOOST_CHECK_EQUAL( coord_from_json_string( R"({"x":"0","y":"1","z":"0"})" ), coord::UNIT_Y       );
+	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"0","y":"1","z":"0"})" ), coord::UNIT_Y       );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_unit_z) {
-	BOOST_CHECK_EQUAL( coord_from_json_string( R"({"x":"0","y":"0","z":"1"})" ), coord::UNIT_Z       );
+	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"0","y":"0","z":"1"})" ), coord::UNIT_Z       );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

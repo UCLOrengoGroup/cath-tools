@@ -25,6 +25,7 @@
 
 #include "chopping/region/regions_limiter.hpp"
 #include "common/path_type_aliases.hpp"
+#include "common/property_tree/read_from_ptree.hpp"
 #include "file/pdb/pdb_write_mode.hpp"
 #include "superposition/io/sup_pdbs_script_policy.hpp"
 #include "superposition/superposition.hpp"
@@ -105,13 +106,18 @@ namespace cath {
 		void save_to_ptree(boost::property_tree::ptree &,
 		                   const superposition &);
 
-		boost::property_tree::ptree make_ptree_of(const superposition &);
-
-		superposition superposition_from_json_string(const std::string &);
-
-		std::string to_json_string(const superposition &,
-		                           const bool & = true);
 	} // namespace sup
+
+	namespace common {
+	
+		/// \brief Specialisation of cath::common::read_from_ptree for superposition
+		template <>
+		inline sup::superposition read_from_ptree<sup::superposition>(const boost::property_tree::ptree &arg_ptree ///< The ptree from which to read the superposition
+		                                                              ) {
+			return sup::superposition_from_ptree( arg_ptree );
+		}
+	
+	} // namespace common
 } // namespace cath
 
 #endif

@@ -28,6 +28,7 @@
 #include <boost/operators.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 
+#include "common/property_tree/read_from_ptree.hpp"
 #include "common/difference.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/out_of_range_exception.hpp"
@@ -184,13 +185,6 @@ namespace cath {
 
 		void save_to_ptree(boost::property_tree::ptree &,
 		                   const rotation &);
-
-		boost::property_tree::ptree make_ptree_of(const rotation &);
-
-		rotation rotation_from_json_string(const std::string &);
-
-		std::string to_json_string(const rotation &,
-		                           const common::json_style & = common::json_style::PRETTY);
 
 		/// \brief Generate some rotation that has the specified angle of rotation
 		///
@@ -711,6 +705,17 @@ namespace cath {
 		}
 
 	} // namespace geom
+
+	namespace common {
+
+		/// \brief Specialisation of cath::common::read_from_ptree for rotation
+		template <>
+		inline geom::rotation read_from_ptree<geom::rotation>(const boost::property_tree::ptree &arg_ptree ///< The ptree from which to read the rotation
+		                                                      ) {
+			return geom::rotation_from_ptree( arg_ptree );
+		}
+
+	} // namespace common
 } // namespace cath
 
 #endif

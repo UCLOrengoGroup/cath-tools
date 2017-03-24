@@ -31,6 +31,7 @@
 #include "cath_superpose/options/cath_superpose_options.hpp"
 #include "chopping/region/region.hpp"
 #include "common/logger.hpp"
+#include "common/property_tree/read_from_json_file.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
@@ -42,6 +43,7 @@
 
 using namespace cath;
 using namespace cath::align;
+using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 using namespace cath::sup;
@@ -111,7 +113,7 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	const path_opt &json_sup_infile = arg_cath_sup_opts.get_json_sup_infile();
 	if ( json_sup_infile ) {
 		return set_pdbs_copy(
-			read_superposition_context_from_json_file( *json_sup_infile ),
+			read_from_json_file<superposition_context>( *json_sup_infile ),
 			raw_pdbs
 		);
 	}
