@@ -206,7 +206,7 @@ namespace cath {
 		                                pdb_atom_vec arg_atoms       ///< The pdb_atoms making up this residue
 		                                ) : the_residue_id   { std::move( arg_residue_id     ) },
 		                                    atoms            { std::move( arg_atoms          ) },
-		                                    core_atom_indices{ make_core_atom_indices( atoms ) } {
+		                                    core_atom_indices( make_core_atom_indices( atoms ) ) {
 		}
 
 		/// \brief Getter for the residue name
