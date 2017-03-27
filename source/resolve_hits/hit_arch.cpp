@@ -20,10 +20,6 @@
 
 #include "hit_arch.hpp"
 
-#include <boost/algorithm/string/join.hpp>
-#include <boost/range/adaptor/transformed.hpp>
-
-#include "common/boost_addenda/range/adaptor/lexical_casted.hpp"
 #include "resolve_hits/full_hit_list.hpp"
 #include "resolve_hits/options/spec/crh_segment_spec.hpp"
 
@@ -32,18 +28,26 @@
 
 using namespace cath::common;
 using namespace cath::rslv;
-using namespace std::literals::string_literals;
 
-using boost::make_optional;
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::optional;
-using std::ostream;
 using std::string;
 
 // Come GCC >= 5.0, reinstate this static_assert that should be passing
 //static_assert( std::is_nothrow_move_assignable   <hit_arch>::value, "" );
 static_assert( std::is_nothrow_move_constructible<hit_arch>::value, "" );
+
+/// \brief Get a list of the full hits from the specified full_hit_list that correspond to
+///        the hits in the specified hit_arch
+///
+/// \relates hit_arch
+full_hit_list cath::rslv::get_full_hits_of_hit_arch(const hit_arch      &arg_hit_arch, ///< The hit_arch whose full hits should be extracted
+                                                    const full_hit_list &arg_full_hits ///< The full_hit_list associated with the hit_arch, from which the full_hits should be extracted
+                                                    ) {
+	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+	return full_hit_list{ transform_build<full_hit_vec>(
+		arg_hit_arch,
+		[&] (const calc_hit &x) { return arg_full_hits[ x.get_label_idx() ]; }
+	) };
+}
 
 /// \brief Generate a string describing the specified hit_arch in the specified format
 ///
@@ -59,39 +63,12 @@ string cath::rslv::to_output_string(const hit_arch            &arg_hit_arch,    
                                     const string              &arg_prefix,           ///< Any prefix that should come before the hit in hit_output_format::JON
                                     const hit_boundary_output &arg_boundary_output   ///< Whether to output the trimmed or original boundaries
                                     ) {
-	const bool is_jon = ( arg_format == hit_output_format::JON );
-	const string prefix    = is_jon ? ""   : "hit_arch[\n\t";
-	const string separator = is_jon ? "\n" : "\n\t";
-	const string suffix    = is_jon ? "\n" : "\n]";
-
-	const auto arch_full_hits = full_hit_list{ transform_build<full_hit_vec>(
-		arg_hit_arch,
-		[&] (const calc_hit &x) { return arg_full_hits[ x.get_label_idx() ]; }
-	) };
-
-	return prefix
-		+ join(
-			arch_full_hits
-				| transformed( [&] (const full_hit &x) {
-					return to_string(
-						x,
-						arg_format,
-						arg_prefix,
-						make_optional( arg_boundary_output == hit_boundary_output::TRIMMED, arg_crh_segment_spec.get_overlap_trim_spec() )
-					)
-					+ (
-						is_jon
-						? " " + get_all_resolved_segments_string( x, arch_full_hits, arg_crh_segment_spec )
-						: ""s
-					)
-					+ (
-						is_jon && x.get_alnd_rgns_opt()
-						? " " + to_string( *x.get_alnd_rgns_opt() )
-						: ""s
-					);
-				} ),
-			separator
-		)
-		+ suffix;
+	return to_output_string(
+		get_full_hits_of_hit_arch( arg_hit_arch, arg_full_hits ),
+		arg_crh_segment_spec,
+		arg_format,
+		arg_prefix,
+		arg_boundary_output
+	);
 }
 

@@ -79,6 +79,9 @@ namespace cath {
 			hit_arch & operator+=(const hit_arch &);
 		};
 
+		full_hit_list get_full_hits_of_hit_arch(const hit_arch &,
+		                                        const full_hit_list &);
+
 		std::string to_output_string(const hit_arch &,
 		                             const full_hit_list &,
 		                             const crh_segment_spec &,

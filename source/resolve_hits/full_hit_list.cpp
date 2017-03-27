@@ -20,7 +20,9 @@
 
 #include "full_hit_list.hpp"
 
+#include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/combine.hpp>
 
 #include "common/algorithm/append.hpp"
@@ -31,8 +33,11 @@
 
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace std::literals::string_literals;
 
 using boost::adaptors::filtered;
+using boost::adaptors::transformed;
+using boost::algorithm::join;
 using boost::make_optional;
 using boost::none;
 using boost::range::combine;
@@ -125,6 +130,50 @@ string cath::rslv::get_all_resolved_segments_string(const full_hit         &arg_
 		resolve_all_boundaries( arg_full_hit, arg_full_hits, arg_crh_segment_spec ),
 		none
 	);
+}
+
+/// \brief Generate a string describing the specified full_hit_list in the specified format
+///
+/// This is separated from a normal to_string() function because
+/// the interface requirements of this may change (eg to demand that the client
+/// passes the crh_score_spec, crh_segment_spec, hits_boundary_output)
+///
+/// \relates full_hit_list
+string cath::rslv::to_output_string(const full_hit_list       &arg_full_hits,        ///< The list of full_hits to describe
+                                    const crh_segment_spec    &arg_crh_segment_spec, ///< The crh_segment_spec specifying any trimming that should be performed on the output segments
+                                    const hit_output_format   &arg_format,           ///< The format in which the hit_arch should be described
+                                    const string              &arg_prefix,           ///< Any prefix that should come before the hit in hit_output_format::JON
+                                    const hit_boundary_output &arg_boundary_output   ///< Whether to output the trimmed or original boundaries
+                                    ) {
+	const bool is_jon = ( arg_format == hit_output_format::JON );
+	const string prefix    = is_jon ? ""   : "hit_arch[\n\t";
+	const string separator = is_jon ? "\n" : "\n\t";
+	const string suffix    = is_jon ? "\n" : "\n]";
+
+	return prefix
+		+ join(
+			arg_full_hits
+				| transformed( [&] (const full_hit &x) {
+					return to_string(
+						x,
+						arg_format,
+						arg_prefix,
+						make_optional( arg_boundary_output == hit_boundary_output::TRIMMED, arg_crh_segment_spec.get_overlap_trim_spec() )
+					)
+					+ (
+						is_jon
+						? " " + get_all_resolved_segments_string( x, arg_full_hits, arg_crh_segment_spec )
+						: ""s
+					)
+					+ (
+						is_jon && x.get_alnd_rgns_opt()
+						? " " + to_string( *x.get_alnd_rgns_opt() )
+						: ""s
+					);
+				} ),
+			separator
+		)
+		+ suffix;
 }
 
 /// \brief Generate a string describing the specified full_hit_list

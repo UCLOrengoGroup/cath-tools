@@ -45,3 +45,12 @@ scored_hit_arch cath::rslv::make_scored_hit_arch(const scored_arch_proxy &arg_sc
 	};
 }
 
+/// \brief Get a list of the full hits from the specified full_hit_list that correspond to
+///        the hits in the specified scored_hit_arch
+///
+/// \relates scored_hit_arch
+full_hit_list cath::rslv::get_full_hits_of_hit_arch(const scored_hit_arch &arg_scored_hit_arch, ///< The scored_hit_arch whose full hits should be extracted
+                                                    const full_hit_list   &arg_full_hits        ///< The full_hit_list associated with the scored_hit_arch, from which the full_hits should be extracted
+                                                    ) {
+	return get_full_hits_of_hit_arch( arg_scored_hit_arch.get_arch(), arg_full_hits );
+}

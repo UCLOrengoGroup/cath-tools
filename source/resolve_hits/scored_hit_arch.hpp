@@ -159,6 +159,9 @@ namespace cath {
 		scored_hit_arch make_scored_hit_arch(const scored_arch_proxy &,
 		                                     const calc_hit_list &);
 
+		full_hit_list get_full_hits_of_hit_arch(const scored_hit_arch &,
+		                                        const full_hit_list &);
+
 	} // namespace rslv
 } // namespace cath
 

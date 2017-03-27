@@ -50,12 +50,15 @@ void write_results_hits_processor::do_process_hits_for_query(const string       
 	arg_full_hits = full_hit_list{};
 
 	// Resolve the hits
-	const auto best_result = resolve_hits( the_calc_hit_list );
+	const auto result_hit_arch  = resolve_hits( the_calc_hit_list );
+	const auto result_full_hits = get_full_hits_of_hit_arch(
+		result_hit_arch,
+		the_calc_hit_list.get_full_hits()
+	);
 
 	// Output the results to arg_ostream
 	get_ostream() << to_output_string(
-		best_result.get_arch(),
-		the_calc_hit_list.get_full_hits(),
+		result_full_hits,
 		get_segment_spec(),
 		hit_output_format::JON,
 		arg_query_id,

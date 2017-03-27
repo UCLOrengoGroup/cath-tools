@@ -26,6 +26,7 @@
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/type_aliases.hpp"
 #include "resolve_hits/full_hit.hpp"
+#include "resolve_hits/options/spec/hit_boundary_output.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 
 namespace cath { namespace rslv { class read_and_process_mgr; } }
@@ -76,6 +77,11 @@ namespace cath {
 		                                  const boost::filesystem::path &);
 		void read_full_hit_list_from_istream(read_and_process_mgr &,
 		                                     std::istream &);
+		std::string to_output_string(const full_hit_list &,
+		                             const crh_segment_spec &,
+		                             const hit_output_format & = hit_output_format::CLASS,
+		                             const std::string & = std::string{},
+		                             const hit_boundary_output & = hit_boundary_output::ORIG);
 		std::string to_string(const full_hit_list &);
 		std::ostream & operator<<(std::ostream &,
 		                          const full_hit_list &);
