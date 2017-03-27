@@ -50,7 +50,7 @@ namespace cath {
 			/// \brief The list of segments
 			hit_seg_vec segments;
 
-			/// \brief The index of the label for this full_hit (in some corresponding list labels)
+			/// \brief The the label for this full_hit
 			std::string label;
 
 			/// \brief The score associated with this full_hit
