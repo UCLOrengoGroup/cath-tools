@@ -79,8 +79,11 @@ MESSAGE( STATUS "Using CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS} )
 # 'SYSTEM' tells the compiler it's a system include directory so warnings should be suppressed
 include_directories( SYSTEM ${Boost_INCLUDE_DIR} )
 include_directories( SYSTEM ${GSL_INCLUDE_DIR}   )
+include_directories( SYSTEM rapidjson/include    )
 link_directories   (        ${Boost_LIBRARYDIR}  )
 link_directories   (        ${Boost_LIBRARYDIR}  )
+
+add_definitions(-DRAPIDJSON_HAS_STDSTRING=1)
 
 # Add handling of includes and library links for bioplib
 add_custom_target(
