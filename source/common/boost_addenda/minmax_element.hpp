@@ -36,7 +36,7 @@ namespace cath {
 				common::cbegin( arg_range ),
 				common::cend  ( arg_range )
 			);
-    	}
+		}
 
 		/// \brief TODOCUMENT
 		template <typename RNG, typename FN>
@@ -48,7 +48,7 @@ namespace cath {
 				common::cend  ( arg_range ),
 				arg_function
 			);
-    	}
+		}
 
 	} // namespace common
 } // namespace cath
