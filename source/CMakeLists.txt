@@ -1385,6 +1385,11 @@ set(
 )
 
 set(
+	TESTSOURCES_COMMON_RAPIDJSON_ADDENDA
+		common/rapidjson_addenda/rapidjson_writer_test.cpp
+)
+
+set(
 	TESTSOURCES_COMMON_STRING
 		common/string/booled_to_string_test.cpp
 		common/string/string_parse_tools_test.cpp
@@ -1430,6 +1435,7 @@ set(
 		common/logger_test.cpp
 		${TESTSOURCES_COMMON_METAPROGRAMMING}
 		common/program_exception_wrapper_test.cpp
+		${TESTSOURCES_COMMON_RAPIDJSON_ADDENDA}
 		${TESTSOURCES_COMMON_STRING}
 		common/temp_check_offset_1_test.cpp
 		${TESTSOURCES_COMMON_TEST_PREDICATE}
