@@ -229,3 +229,12 @@ resscr_opt cath::rslv::get_best_crh_score(const full_hit_list  &arg_full_hit_lis
 			[&] (const full_hit &x) { return get_crh_score( x, arg_score_spec ); }
 		) );
 }
+
+/// \brief Write the specified full_hit_list to the specified rapidjson_writer
+string cath::rslv::to_json_string_with_compact_fullhits(const full_hit_list &arg_full_hit_list ///< The full_hit_list to write
+                                                        ) {
+	rapidjson_writer<json_style::PRETTY> the_writer;
+	write_to_rapidjson_with_compact_fullhits( the_writer, arg_full_hit_list );
+	return the_writer.get_cpp_string();
+}
+

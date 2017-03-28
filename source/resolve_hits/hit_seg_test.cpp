@@ -21,8 +21,10 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/rapidjson_addenda/to_rapidjson_string.hpp"
 #include "resolve_hits/hit_seg.hpp"
 
+using namespace cath::common;
 using namespace cath::rslv;
 
 using boost::lexical_cast;
@@ -71,5 +73,28 @@ BOOST_AUTO_TEST_CASE(length) {
 	static_assert( get_length( hit_seg_of_res_idcs( 10, 20 ) ) == 11, "" );
 	BOOST_CHECK( true );
 }
+
+BOOST_AUTO_TEST_SUITE(json)
+
+BOOST_AUTO_TEST_SUITE(write)
+
+BOOST_AUTO_TEST_CASE(to_json_string_works_for_hit_seg) {
+	const hit_seg eg_hit_seg = hit_seg_of_res_idcs( 10, 20 );
+	BOOST_CHECK_EQUAL( to_rapidjson_string< json_style::COMPACT >( eg_hit_seg ), "[10,20]"               );
+	BOOST_CHECK_EQUAL( to_rapidjson_string< json_style::PRETTY  >( eg_hit_seg ), "[\n    10,\n    20\n]" );
+}
+
+BOOST_AUTO_TEST_CASE(to_json_string_works_for_hit_seg_vec) {
+	const hit_seg_vec eg_hit_segs = {
+		hit_seg_of_res_idcs( 10, 20 ),
+		hit_seg_of_res_idcs( 30, 40 ),
+	};
+	BOOST_CHECK_EQUAL( to_rapidjson_string< json_style::COMPACT >( eg_hit_segs ), "[[10,20],[30,40]]" );
+	BOOST_CHECK_EQUAL( to_rapidjson_string< json_style::PRETTY  >( eg_hit_segs ), "[\n    [\n        10,\n        20\n    ],\n    [\n        30,\n        40\n    ]\n]" );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()

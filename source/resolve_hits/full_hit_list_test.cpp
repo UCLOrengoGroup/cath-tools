@@ -87,4 +87,19 @@ BOOST_AUTO_TEST_CASE(get_max_stop_works) {
 	BOOST_CHECK_EQUAL( *get_max_stop( eg_full_hit_list ), 1439 );
 }
 
+BOOST_AUTO_TEST_SUITE(json)
+
+BOOST_AUTO_TEST_CASE(get_max_stop_works) {
+	BOOST_CHECK_EQUAL( to_json_string_with_compact_fullhits( eg_full_hit_list ), R"([
+    {"match-id":"label_a","score":20.0,"score-type":"crh-value","boundaries":[[1266,1344]]},
+    {"match-id":"label_b","score":21.0,"score-type":"crh-value","boundaries":[[1273,1321],[1399,1438]]},
+    {"match-id":"label_c","score":22.0,"score-type":"crh-value","boundaries":[[1101,1319]]},
+    {"match-id":"label_d","score":23.0,"score-type":"crh-value","boundaries":[[1301,1321]]},
+    {"match-id":"label_e","score":24.0,"score-type":"crh-value","boundaries":[[1438,1439]]},
+    {"match-id":"label_f","score":25.0,"score-type":"crh-value","boundaries":[[1272,1320],[1398,1437]]}
+])" );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 BOOST_AUTO_TEST_SUITE_END()

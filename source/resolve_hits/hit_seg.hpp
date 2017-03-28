@@ -27,6 +27,8 @@
 #include <boost/range/algorithm/sort.hpp>
 #include <boost/range/numeric.hpp>
 
+#include "common/json_style.hpp"
+#include "common/rapidjson_addenda/rapidjson_writer.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "resolve_hits/res_arrow.hpp"
@@ -245,6 +247,29 @@ namespace cath {
 		std::string to_string(const hit_seg &);
 		std::ostream & operator<<(std::ostream &,
 		                          const hit_seg &);
+
+		/// \brief Write the specified hit_seg to the specified rapidjson_writer
+		template <common::json_style Style>
+		void write_to_rapidjson(common::rapidjson_writer<Style> &arg_writer, ///< The rapidjson_writer to which the hit_seg should be written
+		                        const hit_seg                   &arg_hit_seg ///< The hit_seg to write
+		                        ) {
+			arg_writer.start_array();
+			arg_writer.write_uint( get_start_res_index( arg_hit_seg ) );
+			arg_writer.write_uint( get_stop_res_index ( arg_hit_seg ) );
+			arg_writer.end_array();
+		}
+
+		/// \brief Write the specified hit_seg_vec to the specified rapidjson_writer
+		template <common::json_style Style>
+		void write_to_rapidjson(common::rapidjson_writer<Style> &arg_writer,  ///< The rapidjson_writer to which the hit_seg_vec should be written
+		                        const hit_seg_vec               &arg_hit_segs ///< The hit_seg_vec to write
+		                        ) {
+			arg_writer.start_array();
+			for (const hit_seg &the_hit_seg : arg_hit_segs) {
+				write_to_rapidjson( arg_writer, the_hit_seg );
+			}
+			arg_writer.end_array();
+		}
 
 	} // namespace rslv
 } // namespace cath

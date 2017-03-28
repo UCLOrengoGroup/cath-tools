@@ -20,27 +20,63 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/rapidjson_addenda/to_rapidjson_string.hpp"
 #include "resolve_hits/full_hit.hpp"
 
-using namespace cath;
-using namespace cath::rslv;
+namespace cath { namespace test { } }
 
-BOOST_AUTO_TEST_SUITE(full_hit_test_suite)
+using namespace cath;
+using namespace cath::common;
+using namespace cath::rslv;
+using namespace cath::test;
+
+namespace cath {
+	namespace test {
+
+		/// \brief The full_hit_test_suite_fixture to assist in testing full_hit
+		struct full_hit_test_suite_fixture {
+		protected:
+			~full_hit_test_suite_fixture() noexcept = default;
+
+			const full_hit eg_full_hit_a{ { hit_seg_of_res_idcs( 1272, 1363 ) }, "lemur", 1.0 };
+
+			const full_hit eg_full_hit_b{ { hit_seg_of_res_idcs( 1272, 1320 ), hit_seg_of_res_idcs( 1398, 1437 ) }, "pangolin", 1.0 };
+		};
+
+	}  // namespace test
+}  // namespace cath
+
+
+BOOST_FIXTURE_TEST_SUITE(full_hit_test_suite, full_hit_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	const auto the_full_hit = full_hit( { hit_seg_of_res_idcs( 1272, 1363 ) }, "lemur", 1.0 );
-	BOOST_CHECK_EQUAL( get_start_res_index_of_segment( the_full_hit, 0 ), 1272 );
-	BOOST_CHECK_EQUAL( get_stop_res_index_of_segment ( the_full_hit, 0 ), 1363 );
-	BOOST_CHECK_EQUAL( to_string( the_full_hit ), R"(full_hit[1272-1363; score: 1; label: "lemur"])" );
+	BOOST_CHECK_EQUAL( get_start_res_index_of_segment( eg_full_hit_a, 0 ), 1272 );
+	BOOST_CHECK_EQUAL( get_stop_res_index_of_segment ( eg_full_hit_a, 0 ), 1363 );
+	BOOST_CHECK_EQUAL( to_string( eg_full_hit_a ), R"(full_hit[1272-1363; score: 1; label: "lemur"])" );
 }
 
 BOOST_AUTO_TEST_CASE(basic_2) {
-	const auto the_full_hit = full_hit( { hit_seg_of_res_idcs( 1272, 1320 ), hit_seg_of_res_idcs( 1398, 1437 ) }, "pangolin", 1.0 );
-	BOOST_CHECK_EQUAL( get_start_res_index_of_segment( the_full_hit, 0 ), 1272 );
-	BOOST_CHECK_EQUAL( get_stop_res_index_of_segment ( the_full_hit, 0 ), 1320 );
-	BOOST_CHECK_EQUAL( get_start_res_index_of_segment( the_full_hit, 1 ), 1398 );
-	BOOST_CHECK_EQUAL( get_stop_res_index_of_segment ( the_full_hit, 1 ), 1437 );
-	BOOST_CHECK_EQUAL( to_string( the_full_hit ), R"(full_hit[1272-1320,1398-1437; score: 1; label: "pangolin"])" );
+	BOOST_CHECK_EQUAL( get_start_res_index_of_segment( eg_full_hit_b, 0 ), 1272 );
+	BOOST_CHECK_EQUAL( get_stop_res_index_of_segment ( eg_full_hit_b, 0 ), 1320 );
+	BOOST_CHECK_EQUAL( get_start_res_index_of_segment( eg_full_hit_b, 1 ), 1398 );
+	BOOST_CHECK_EQUAL( get_stop_res_index_of_segment ( eg_full_hit_b, 1 ), 1437 );
+	BOOST_CHECK_EQUAL( to_string( eg_full_hit_b ), R"(full_hit[1272-1320,1398-1437; score: 1; label: "pangolin"])" );
 }
+
+BOOST_AUTO_TEST_SUITE(json)
+
+BOOST_AUTO_TEST_CASE(get_max_stop_works) {
+	BOOST_CHECK_EQUAL(
+		to_rapidjson_string<json_style::COMPACT>( eg_full_hit_a ),
+		R"({"match-id":"lemur","score":1.0,"score-type":"crh-value","boundaries":[[1272,1363]]})"
+	);
+	BOOST_CHECK_EQUAL(
+		to_rapidjson_string<json_style::COMPACT>( eg_full_hit_b ),
+		R"({"match-id":"pangolin","score":1.0,"score-type":"crh-value","boundaries":[[1272,1320],[1398,1437]]})"
+	);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 
 BOOST_AUTO_TEST_SUITE_END()
