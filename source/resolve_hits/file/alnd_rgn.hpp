@@ -27,9 +27,7 @@
 namespace cath {
 	namespace rslv {
 
-		/// \brief Represent a continuous region of (sequence) residues that are aligned each other
-		///
-		/// At present this is only 
+		/// \brief Represent a continuous region of (sequence) residues that are aligned to each other
 		struct alnd_rgn {
 			/// \brief The start of the aligned region in the first  sequence
 			res_arrow start_res_a;
