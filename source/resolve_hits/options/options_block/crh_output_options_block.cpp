@@ -48,6 +48,9 @@ const string crh_output_options_block::PO_SUMMARISE                { "summarise"
 /// \brief The option name for whether to output HTML describing the hits and the results
 const string crh_output_options_block::PO_GENERATE_HTML_OUTPUT     { "html-output"               };
 
+/// \brief The option name for whether to output the results in JSON format
+const string crh_output_options_block::PO_JSON_OUTPUT              { "json-output"               };
+
 /// \brief The option name for whether to restrict HTML output to the contents of the body tag
 const string crh_output_options_block::PO_RESTRICT_HTML_WITHIN_BODY{ "restrict-html-within-body" };
 
@@ -72,11 +75,12 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
                                                                      ) {
 	const string file_varname   { "<file>"   };
 
-	const auto output_file_notifier                   = [&] (const path &x) { the_spec.set_output_file              (           x ); };
-	const auto output_trimmed_hits_notifier           = [&] (const bool &x) {          set_output_trimmed_hits      ( the_spec, x ); };
-	const auto summarise_notifier                     = [&] (const bool &x) { the_spec.set_summarise                (           x ); };
-	const auto generate_html_output_notifier          = [&] (const bool &x) { the_spec.set_generate_html_output     (           x ); };
-	const auto export_css_file_notifier               = [&] (const path &x) { the_spec.set_export_css_file          (           x ); };
+	const auto output_file_notifier          = [&] (const path &x) { the_spec.set_output_file          (           x ); };
+	const auto output_trimmed_hits_notifier  = [&] (const bool &x) {          set_output_trimmed_hits  ( the_spec, x ); };
+	const auto summarise_notifier            = [&] (const bool &x) { the_spec.set_summarise            (           x ); };
+	const auto generate_html_output_notifier = [&] (const bool &x) { the_spec.set_generate_html_output (           x ); };
+	const auto json_output_notifier          = [&] (const bool &x) { the_spec.set_json_output          (           x ); };
+	const auto export_css_file_notifier      = [&] (const path &x) { the_spec.set_export_css_file      (           x ); };
 
 	arg_desc.add_options()
 		(
@@ -110,6 +114,13 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 			"Output the results as HTML"
 		)
 		(
+			( PO_JSON_OUTPUT ).c_str(),
+			bool_switch()
+				->notifier     ( json_output_notifier                               )
+				->default_value( crh_output_spec::DEFAULT_JSON_OUTPUT               ),
+			"Output the results as JSON"
+		)
+		(
 			( PO_EXPORT_CSS_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                                       )
@@ -121,6 +132,8 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 		"If crh_segment_spec::DEFAULT_OUTPUT_TRIMMED_HITS      isn't false, it might mess up the bool switch in here" );
 	static_assert( !                            crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT,
 		"If crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT      isn't false, it might mess up the bool switch in here" );
+	static_assert( !                            crh_output_spec::DEFAULT_JSON_OUTPUT,
+		"If crh_output_spec::DEFAULT_JSON_OUTPUT               isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Add any hidden options to the provided options_description

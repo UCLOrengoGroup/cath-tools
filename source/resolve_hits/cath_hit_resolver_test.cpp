@@ -393,5 +393,20 @@ BOOST_AUTO_TEST_CASE(html) {
 BOOST_AUTO_TEST_SUITE_END()
 
 
+BOOST_AUTO_TEST_SUITE(json_output)
+
+BOOST_AUTO_TEST_CASE(json) {
+	execute_perform_resolve_hits( {
+		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		"--" + crh_output_options_block::PO_JSON_OUTPUT,
+	} );
+	istringstream istream_of_output{ output_ss.str() };
+	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
+	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 
 BOOST_AUTO_TEST_SUITE_END()

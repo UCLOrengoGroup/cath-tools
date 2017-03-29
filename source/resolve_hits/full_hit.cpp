@@ -65,6 +65,18 @@ string cath::rslv::get_score_string(const full_hit &arg_full_hit,   ///< The ful
 /// and by a ',' between segments.
 ///
 /// \relates full_hit
+hit_seg_vec cath::rslv::get_segments(const full_hit            &arg_full_hit,     ///< The full_hit whose segments should be described
+                                     const optional<trim_spec> &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+                                     ) {
+	return ::cath::rslv::get_segments( arg_full_hit.get_segments(), arg_trim_spec_opt );
+}
+
+/// \brief Generate a string describing the segments of the specified string
+///
+/// This is the numbers of the start/stop residues, separated by a '-' between the start and stop
+/// and by a ',' between segments.
+///
+/// \relates full_hit
 string cath::rslv::get_segments_string(const full_hit            &arg_full_hit,     ///< The full_hit whose segments should be described
                                        const optional<trim_spec> &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                        ) {

@@ -235,6 +235,8 @@ namespace cath {
 			return arg_hit_segs;
 		}
 
+		hit_seg_vec get_present_segments(const hit_seg_opt_vec &);
+		std::string get_segments_string(const hit_seg_vec &);
 		hit_seg_vec make_fragments_of_segments(hit_seg_vec);
 		bool segments_are_start_sorted_and_non_overlapping(const hit_seg_vec &);
 		hit_seg_vec make_fragments_of_start_sorted_segments(const hit_seg_vec &);

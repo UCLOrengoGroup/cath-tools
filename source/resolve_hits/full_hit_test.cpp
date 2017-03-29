@@ -22,6 +22,7 @@
 
 #include "common/rapidjson_addenda/to_rapidjson_string.hpp"
 #include "resolve_hits/full_hit.hpp"
+#include "resolve_hits/full_hit_rapidjson.hpp"
 
 namespace cath { namespace test { } }
 

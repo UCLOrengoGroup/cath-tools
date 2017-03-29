@@ -26,6 +26,7 @@
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
+#include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/program_options/validator.hpp"
@@ -121,12 +122,10 @@ istream & cath::rslv::operator>>(istream   &arg_is,       ///< The stream from w
 /// \relates hit_seg
 ///
 /// \alsorelates trim_spec
-string cath::rslv::to_possibly_trimmed_simple_string(const hit_seg             &arg_hit_seg,      ///< The hit_seg to describe
-                                                     const optional<trim_spec> &arg_trim_spec_opt ///< The optional specification describing the possible trimming
+string cath::rslv::to_possibly_trimmed_simple_string(const hit_seg       &arg_hit_seg,      ///< The hit_seg to describe
+                                                     const trim_spec_opt &arg_trim_spec_opt ///< The optional specification describing the possible trimming
                                                      ) {
-	return arg_trim_spec_opt
-		? to_simple_string( trim_hit_seg_copy( arg_hit_seg, *arg_trim_spec_opt ) )
-		: to_simple_string(                    arg_hit_seg                       );
+	return to_simple_string( trim_hit_seg_copy( arg_hit_seg, arg_trim_spec_opt ) );
 }
 
 /// \brief Generate a string describing the segments of the specified segments
@@ -135,16 +134,27 @@ string cath::rslv::to_possibly_trimmed_simple_string(const hit_seg             &
 /// and by a ',' between segments.
 ///
 /// \relates full_hit
-string cath::rslv::get_segments_string(const hit_seg_vec         &arg_segs,         ///< The segments to be described
-                                       const optional<trim_spec> &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
-                                       ) {
-	return join(
-		arg_segs
-			| transformed( [&] (const hit_seg &x) {
-				return to_possibly_trimmed_simple_string( x, arg_trim_spec_opt );
-			} ),
-		","
+hit_seg_vec cath::rslv::get_segments(const hit_seg_vec   &arg_segs,         ///< The segments to be described
+                                     const trim_spec_opt &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+                                     ) {
+	return transform_build<hit_seg_vec>(
+		arg_segs,
+		[&] (const hit_seg &x) {
+			return trim_hit_seg_copy( x, arg_trim_spec_opt );
+		}
 	);
+}
+
+/// \brief Generate a string describing the segments of the specified segments
+///
+/// This is the numbers of the start/stop residues, separated by a '-' between the start and stop
+/// and by a ',' between segments.
+///
+/// \relates full_hit
+string cath::rslv::get_segments_string(const hit_seg_vec   &arg_segs,         ///< The segments to be described
+                                       const trim_spec_opt &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+                                       ) {
+	return get_segments_string( get_segments( arg_segs, arg_trim_spec_opt ) );
 }
 
 /// \brief Generate a string describing the segments of the specified optional segments
@@ -153,18 +163,12 @@ string cath::rslv::get_segments_string(const hit_seg_vec         &arg_segs,     
 /// and by a ',' between segments. Values of none are excluded from the output.
 ///
 /// \relates full_hit
-string cath::rslv::get_segments_string(const hit_seg_opt_vec     &arg_segs,         ///< The segments to be described
-                                       const optional<trim_spec> &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+string cath::rslv::get_segments_string(const hit_seg_opt_vec &arg_segs,         ///< The segments to be described
+                                       const trim_spec_opt   &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                        ) {
-	return join(
-		arg_segs
-			| filtered( [&] (const hit_seg_opt &x) {
-				return static_cast<bool>( x );
-			} )
-			| transformed( [&] (const hit_seg_opt &x) {
-				return to_possibly_trimmed_simple_string( *x, arg_trim_spec_opt );
-			} ),
-		","
+	return get_segments_string(
+		get_present_segments( arg_segs),
+		arg_trim_spec_opt
 	);
 }
 

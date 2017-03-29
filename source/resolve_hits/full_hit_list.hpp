@@ -24,9 +24,9 @@
 #include <boost/filesystem/path.hpp>
 
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/rapidjson_addenda/to_rapidjson_string.hpp"
 #include "common/type_aliases.hpp"
 #include "resolve_hits/full_hit.hpp"
+#include "resolve_hits/options/spec/crh_segment_spec.hpp"
 #include "resolve_hits/options/spec/hit_boundary_output.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 
@@ -158,19 +158,9 @@ namespace cath {
 		using full_hit_tpl     = std::tuple<std::string, residx_residx_pair_vec, double>;
 		using full_hit_tpl_vec = std::vector<full_hit_tpl>;
 
-		/// \brief Write the specified full_hit_list to the specified rapidjson_writer
-		template <common::json_style Style>
-		void write_to_rapidjson_with_compact_fullhits(common::rapidjson_writer<Style> &arg_writer,       ///< The rapidjson_writer to which the full_hit_list should be written
-		                                              const full_hit_list             &arg_full_hit_list ///< The full_hit_list to write
-		                                              ) {
-			arg_writer.start_array();
-			for (const auto &the_full_hit : arg_full_hit_list) {
-				arg_writer.write_raw_string( common::to_rapidjson_string<common::json_style::COMPACT>( the_full_hit ) );
-			}
-			arg_writer.end_array();
-		}
-
-		std::string to_json_string_with_compact_fullhits(const full_hit_list &);
+		std::string to_json_string_with_compact_fullhits(const full_hit_list &,
+		                                                 const crh_segment_spec_opt & = boost::none,
+		                                                 const size_t & = 0);
 
 	} // namespace rslv
 } // namespace cath

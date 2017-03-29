@@ -96,6 +96,7 @@ namespace cath {
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_HTML_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_JSON_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_IN_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME();

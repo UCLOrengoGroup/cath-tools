@@ -87,8 +87,12 @@ namespace cath {
 		std::string get_score_string(const full_hit &,
 		                             const size_t & = 4);
 
+		hit_seg_vec get_segments(const full_hit &,
+		                         const boost::optional<trim_spec> & = boost::none);
+
 		std::string get_segments_string(const full_hit &,
 		                                const boost::optional<trim_spec> & = boost::none);
+
 		std::string to_string(const full_hit &,
 		                      const hit_output_format & = hit_output_format::CLASS,
 		                      const std::string & = std::string{},
@@ -309,20 +313,6 @@ namespace cath {
 				}
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst getting crh_score from full_hit"));
-		}
-
-		/// \brief Write the specified full_hit to the specified rapidjson_writer
-		template <common::json_style Style>
-		void write_to_rapidjson(common::rapidjson_writer<Style> &arg_writer,  ///< The rapidjson_writer to which the full_hit should be written
-		                        const full_hit                  &arg_full_hit ///< The full_hit to write
-		                        ) {
-			arg_writer.start_object();
-			arg_writer.write_key( "match-id"     ).write_string( arg_full_hit.get_label()                   );
-			arg_writer.write_key( "score"        ).write_double( arg_full_hit.get_score()                   );
-			arg_writer.write_key( "score-type"   ).write_string( to_string( arg_full_hit.get_score_type() ) );
-			arg_writer.write_key( "boundaries"   );
-			write_to_rapidjson( arg_writer, arg_full_hit.get_segments() );
-			arg_writer.end_object();
 		}
 
 	} // namespace rslv

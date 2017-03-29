@@ -20,6 +20,9 @@
 
 #include "hit_seg.hpp"
 
+#include <boost/algorithm/string/join.hpp>
+#include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/adjacent_find.hpp>
 #include <boost/range/algorithm/sort.hpp>
 
@@ -32,11 +35,42 @@
 using namespace cath::common;
 using namespace cath::rslv;
 
+using boost::adaptors::filtered;
+using boost::adaptors::transformed;
+using boost::algorithm::join;
 using boost::range::adjacent_find;
 using boost::range::sort;
 using std::ostream;
 using std::pair;
 using std::string;
+
+/// \brief Get a vector of the entries that are present in the specified vector of optional hit_segs
+///
+/// \relates hit_seg
+hit_seg_vec cath::rslv::get_present_segments(const hit_seg_opt_vec &arg_segments ///< The vector of optional hit_segs to query
+                                             ) {
+	return transform_build<hit_seg_vec>(
+		arg_segments
+			| filtered( [&] (const hit_seg_opt &x) {
+				return static_cast<bool>( x );
+			} ),
+		[&] (const hit_seg_opt &x) { return *x; }
+	);
+}
+
+/// \brief Get a simple string describing the specified segments (eg "1-3,5-9")
+///
+/// \relates hit_seg
+string cath::rslv::get_segments_string(const hit_seg_vec &arg_segments ///< The segments to describe
+                                       ) {
+	return join(
+		arg_segments
+			| transformed( [&] (const hit_seg &x) {
+				return to_simple_string( x );
+			} ),
+		","
+	);
+}
 
 /// \brief Make the (sorted) fragments between the specified segments
 ///

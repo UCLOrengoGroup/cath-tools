@@ -23,6 +23,7 @@
 
 #include "common/boost_addenda/range/front.hpp"
 #include "resolve_hits/full_hit_list.hpp"
+#include "resolve_hits/options/spec/crh_segment_spec.hpp"
 
 namespace cath { namespace test { } }
 

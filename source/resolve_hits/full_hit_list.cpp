@@ -28,6 +28,7 @@
 #include "common/algorithm/append.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/max_proj_element.hpp"
+#include "resolve_hits/full_hit_rapidjson.hpp"
 #include "resolve_hits/options/spec/crh_segment_spec.hpp"
 #include "resolve_hits/trim/hit_seg_boundary_fns.hpp"
 
@@ -231,10 +232,15 @@ resscr_opt cath::rslv::get_best_crh_score(const full_hit_list  &arg_full_hit_lis
 }
 
 /// \brief Write the specified full_hit_list to the specified rapidjson_writer
-string cath::rslv::to_json_string_with_compact_fullhits(const full_hit_list &arg_full_hit_list ///< The full_hit_list to write
+string cath::rslv::to_json_string_with_compact_fullhits(const full_hit_list        &arg_full_hit_list, ///< The full_hit_list to write
+                                                        const crh_segment_spec_opt &arg_segment_spec,  ///< An optional crh_segment_spec which can be used for including each full_hit's trimmed boundaries and resolved boundaries
+                                                        const size_t               &arg_extra_depth    ///< The number of levels of depth
                                                         ) {
-	rapidjson_writer<json_style::PRETTY> the_writer;
-	write_to_rapidjson_with_compact_fullhits( the_writer, arg_full_hit_list );
-	return the_writer.get_cpp_string();
+	return string_of_rapidjson_write<json_style::PRETTY> (
+		[&] (rapidjson_writer<json_style::PRETTY> &x) {
+			write_to_rapidjson_with_compact_fullhits( x, arg_full_hit_list, arg_segment_spec );
+		},
+		arg_extra_depth
+	);
 }
 

@@ -1,0 +1,22 @@
+{
+    "443cb81e8e280e529de69ef113974208": [
+        {"match-id":"3ifqB00_round_3","score":39.5,"score-type":"bitscore","boundaries":[[93,288],[350,460]],"trimmed":[[108,273],[365,445]],"resolved":[[93,288],[350,460]]},
+        {"match-id":"4ev8A00_round_3","score":17.7,"score-type":"bitscore","boundaries":[[479,677]],"trimmed":[[494,662]],"resolved":[[479,677]]}
+    ],
+    "5e1ccef4ef9782ffd2979ae49ca232c8": [
+        {"match-id":"2pygA00_round_3","score":22.3,"score-type":"bitscore","boundaries":[[534,745],[780,812],[875,931]],"trimmed":[[549,730],[789,802],[890,916]],"resolved":[[534,745],[780,812],[875,931]]}
+    ],
+    "65d5daf26dc58455a709f4db2f429657": [
+        {"match-id":"2cokA00_round_3","score":16.9,"score-type":"bitscore","boundaries":[[57,98],[158,177]],"trimmed":[[69,85],[163,171]],"resolved":[[57,98],[158,177]]}
+    ],
+    "98300abb63cbbe1df0ce443557c9e767": [
+        {"match-id":"2f31A00_round_1","score":233.9,"score-type":"bitscore","boundaries":[[183,387]],"trimmed":[[198,372]],"resolved":[[183,387]]},
+        {"match-id":"3uunB00_round_3","score":12.1,"score-type":"bitscore","boundaries":[[487,537],[700,928]],"trimmed":[[502,522],[715,913]],"resolved":[[487,537],[700,928]]}
+    ],
+    "c6a53e4fda2270987ca6e8e89783a311": [
+        {"match-id":"4mf0B00_round_3","score":23.0,"score-type":"bitscore","boundaries":[[58,92],[129,280]],"trimmed":[[68,82],[144,265]],"resolved":[[58,92],[129,280]]}
+    ],
+    "e309f37197edd3a5b6c85424e3d88fc1": [
+        {"match-id":"1gcjA00_round_3","score":16.5,"score-type":"bitscore","boundaries":[[128,176],[219,429]],"trimmed":[[142,161],[234,414]],"resolved":[[128,176],[219,429]]}
+    ]
+}

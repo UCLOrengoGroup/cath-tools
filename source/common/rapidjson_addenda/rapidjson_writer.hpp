@@ -33,25 +33,48 @@ namespace cath {
 	namespace common {
 
 		/// \brief Wrap rapidjson's Writer/PrettyWriter simple writing functionality
-		template <json_style Style = json_style::PRETTY>
+		///
+		/// \todo The interface could be made a bit cleaner by many of the write_... methods
+		///       being renamed to the overloads of the same name.
+		template <json_style Style = json_style::PRETTY,
+		          typename   OStrm = rapidjson::StringBuffer>
 		class rapidjson_writer final {
 		private:
-			/// \brief Type alias for the type of buffer to which the JSON should be written
-			using buffer_t = rapidjson::StringBuffer;
+			// /// \brief Type alias for the type of buffer to which the JSON should be written
+			// using outstream_t = rapidjson::StringBuffer;
 
 			/// \brief Type alias for the type of rapidjson writer
-			using writer_t = std::conditional_t< Style == json_style::PRETTY,
-			                                     rapidjson::PrettyWriter< buffer_t >,
-			                                     rapidjson::Writer      < buffer_t > >;
+			using writer_t    = std::conditional_t< Style == json_style::PRETTY,
+			                                        rapidjson::PrettyWriter< OStrm >,
+			                                        rapidjson::Writer      < OStrm > >;
 
 			/// \brief The buffer to which the JSON should be written
-			buffer_t buffer;
+			OStrm outstream;
 
 			/// \brief The rapidjson writer
-			writer_t writer{ buffer };
+			writer_t writer{ outstream };
 
 		public:
 			rapidjson_writer() = default;
+
+			/// \brief Make this explicitly non-copyable/non-movable since the member rapidjson writer/outstream types are
+			rapidjson_writer            (const rapidjson_writer &) = delete;
+			/// \brief Make this explicitly non-copyable/non-movable since the member rapidjson writer/outstream types are
+			rapidjson_writer            (rapidjson_writer &&     ) = delete;
+			/// \brief Make this explicitly non-copyable/non-movable since the member rapidjson writer/outstream types are
+			rapidjson_writer & operator=(const rapidjson_writer &) = delete;
+			/// \brief Make this explicitly non-copyable/non-movable since the member rapidjson writer/outstream types are
+			rapidjson_writer & operator=(rapidjson_writer &&     ) = delete;
+
+			/// \brief Explicit ctor for when 1 or more arguments are specified, perfect-forwards all parameters to the outstream ctor
+			template <typename T, typename... Ts >
+			explicit rapidjson_writer(T  &&   arg_value, ///< The first parameter
+			                          Ts &&...arg_values ///< Any further parameters
+			                          ) : outstream{
+			                              	std::forward< T  >( arg_value  ),
+			                              	std::forward< Ts >( arg_values )...
+			                              }  {
+			}
 
 			/// \brief Write a raw string in the JSON
 			template <typename... Ts>
@@ -151,7 +174,7 @@ namespace cath {
 
 			/// \brief Get a C-style string of the JSON
 			const char * get_c_string() const {
-				return buffer.GetString();
+				return outstream.GetString();
 			}
 
 			/// \brief Get a std::string of the JSON

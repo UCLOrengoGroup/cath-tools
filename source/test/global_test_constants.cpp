@@ -343,6 +343,12 @@ const path & global_test_constants::CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() {
 }
 
 /// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() {
+	static const path crh_eg_hmmsearch_json_filename             ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.json"                   );
+	return crh_eg_hmmsearch_json_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
 const path & global_test_constants::CRH_EG_RAW_EVALUE_IN_FILENAME() {
 	static const path crh_eg_raw_eva_in_filename     ( CRH_TEST_DATA_DIR() / "eg_raw_evalue.in"                    );
 	return crh_eg_raw_eva_in_filename;

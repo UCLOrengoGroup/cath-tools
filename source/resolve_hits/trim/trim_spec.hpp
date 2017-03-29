@@ -82,6 +82,9 @@ namespace cath {
 		std::string to_possibly_trimmed_simple_string(const hit_seg &,
 		                                              const boost::optional<trim_spec> &);
 
+		hit_seg_vec get_segments(const hit_seg_vec &,
+		                         const trim_spec_opt &);
+
 		std::string get_segments_string(const hit_seg_vec &,
 		                                const boost::optional<trim_spec> &);
 
@@ -188,6 +191,16 @@ namespace cath {
 		                                 ) {
 			trim_hit_seg( arg_hit_seg, arg_trim_spec );
 			return arg_hit_seg;
+		}
+
+		/// \brief Return a copy of the specified hit_seg, trimmed according to the specified trim_spec if specified
+		///
+		/// \relates trim_spec
+		inline hit_seg trim_hit_seg_copy(hit_seg              arg_hit_seg,  ///< The hit_seg to trim
+		                                 const trim_spec_opt &arg_trim_spec ///< The trim_spec to apply
+		                                 ) {
+			return arg_trim_spec ? trim_hit_seg_copy( std::move( arg_hit_seg ), *arg_trim_spec )
+			                     : arg_hit_seg;
 		}
 
 		/// \brief Get the trimmed start/stop resulting from applying the specified trim_spec on a segment with the specified start/stop

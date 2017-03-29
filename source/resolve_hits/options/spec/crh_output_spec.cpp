@@ -46,6 +46,7 @@ using std::vector;
 
 constexpr hit_boundary_output crh_output_spec::DEFAULT_BOUNDARY_OUTPUT;
 constexpr bool                crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;
+constexpr bool                crh_output_spec::DEFAULT_JSON_OUTPUT;
 constexpr bool                crh_output_spec::DEFAULT_SUMMARISE;
 constexpr bool                crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN;
 
@@ -58,6 +59,7 @@ string cath::rslv::to_string(const crh_out_format &arg_out_format ///< The crh_o
 		case ( crh_out_format::STANDARD ) : { return "standard"  ; }
 		case ( crh_out_format::SUMMARY  ) : { return "a summary" ; }
 		case ( crh_out_format::HTML     ) : { return "HTML"      ; }
+		case ( crh_out_format::JSON     ) : { return "JSON"      ; }
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of crh_out_format not recognised whilst converting to_string()"));
 }
@@ -76,6 +78,11 @@ const hit_boundary_output & crh_output_spec::get_boundary_output() const {
 /// \brief Getter for whether to output HTML describing the hits and the results
 const bool & crh_output_spec::get_generate_html_output() const {
 	return generate_html_output;
+}
+
+/// \brief Getter for whether to output the results in JSON format
+const bool & crh_output_spec::get_json_output() const {
+	return json_output;
 }
 
 /// \brief Getter for whether to output a summary of the input data
@@ -111,6 +118,13 @@ crh_output_spec & crh_output_spec::set_boundary_output(const hit_boundary_output
 crh_output_spec & crh_output_spec::set_generate_html_output(const bool &arg_generate_html_output ///< Whether to output HTML describing the hits and the results
                                                             ) {
 	generate_html_output = arg_generate_html_output;
+	return *this;
+}
+
+/// \brief Setter for whether to output the results in JSON format
+crh_output_spec & crh_output_spec::set_json_output(const bool &arg_json_output ///< Whether to output the results in JSON format
+                                                   ) {
+	json_output = arg_json_output;
 	return *this;
 }
 
@@ -157,6 +171,9 @@ crh_out_format cath::rslv::get_out_format(const crh_output_spec &arg_output_spec
 	else if ( arg_output_spec.get_generate_html_output() ) {
 		return crh_out_format::HTML;
 	}
+	else if ( arg_output_spec.get_json_output() ) {
+		return crh_out_format::JSON;
+	}
 	else {
 		return crh_out_format::STANDARD;
 	}
@@ -172,7 +189,8 @@ str_opt cath::rslv::get_invalid_description(const crh_output_spec &arg_output_sp
 	// Note: Don't include CSS export here because that takes a file argument and is independent of the output format
 	const auto  mut_excl_output_opts = crh_out_format_opt_vec{
 		make_optional( arg_output_spec.get_summarise(),            crh_out_format::SUMMARY ),
-		make_optional( arg_output_spec.get_generate_html_output(), crh_out_format::HTML    )
+		make_optional( arg_output_spec.get_generate_html_output(), crh_out_format::HTML    ),
+		make_optional( arg_output_spec.get_json_output(),          crh_out_format::JSON    )
 	};
 	const auto  mut_excl_outputs = transform_build<crh_out_format_vec>(
 		mut_excl_output_opts | filtered( [] (const crh_out_format_opt &x) { return static_cast<bool>( x ); } ),
@@ -191,7 +209,10 @@ str_opt cath::rslv::get_invalid_description(const crh_output_spec &arg_output_sp
 	const auto out_format_str = to_string     ( out_format      );
 
 	if ( means_output_trimmed_hits( arg_output_spec.get_boundary_output() ) && out_format != crh_out_format::STANDARD ) {
-		return "Cannot output trimmed boundaries if output format is " + out_format_str;
+		return
+			"Cannot specify trimmed boundaries if output format is "
+			+ out_format_str
+			+ " (but the output format may already contain the information you require)";
 	}
 
 	return none;

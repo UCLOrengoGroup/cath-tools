@@ -34,7 +34,8 @@ namespace cath {
 		enum class crh_out_format {
 			STANDARD,
 			SUMMARY,
-			HTML
+			HTML,
+			JSON
 		};
 
 		/// \brief Type alias for an optional crh_out_format
@@ -63,6 +64,9 @@ namespace cath {
 			/// \brief Whether to output HTML describing the hits and the results
 			bool                generate_html_output      = DEFAULT_GENERATE_HTML_OUTPUT;
 
+			/// \brief Whether to output the results in JSON format
+			bool                json_output               = DEFAULT_JSON_OUTPUT;
+
 			/// \brief An optional file to which the cath-resolve-hits CSS should be dumped
 			path_opt            export_css_file;
 
@@ -79,6 +83,9 @@ namespace cath {
 			/// \brief The default value for whether to output HTML describing the hits and the results
 			static constexpr bool                DEFAULT_GENERATE_HTML_OUTPUT      = false;
 
+			/// \brief The default value for whether to output the results in JSON format
+			static constexpr bool                DEFAULT_JSON_OUTPUT      = false;
+
 			/// \brief The default value for whether to output a summary of the hmmsearch output alignment
 			static constexpr bool                DEFAULT_OUTPUT_HMMSEARCH_ALN      = false;
 
@@ -86,6 +93,7 @@ namespace cath {
 			const hit_boundary_output & get_boundary_output() const;
 			const bool & get_summarise() const;
 			const bool & get_generate_html_output() const;
+			const bool & get_json_output() const;
 			const path_opt & get_export_css_file() const;
 			const bool & get_output_hmmsearch_aln() const;
 
@@ -93,6 +101,7 @@ namespace cath {
 			crh_output_spec & set_boundary_output(const hit_boundary_output &);
 			crh_output_spec & set_summarise(const bool &);
 			crh_output_spec & set_generate_html_output(const bool &);
+			crh_output_spec & set_json_output(const bool &);
 			crh_output_spec & set_export_css_file(const path_opt &);
 			crh_output_spec & set_output_hmmsearch_aln(const bool &);
 		};

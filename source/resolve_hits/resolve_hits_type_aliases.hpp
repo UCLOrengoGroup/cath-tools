@@ -31,6 +31,7 @@ namespace cath { namespace rslv { class full_hit; } }
 namespace cath { namespace rslv { class hit_seg; } }
 namespace cath { namespace rslv { class res_arrow; } }
 namespace cath { namespace rslv { class scored_arch_proxy; } }
+namespace cath { namespace rslv { class trim_spec; } }
 namespace cath { namespace rslv { struct alnd_rgn; } }
 namespace cath { namespace rslv { struct html_hit; } }
 
@@ -121,6 +122,9 @@ namespace cath {
 
 		/// \brief Type alias for a vector of scored_arch_proxy objects
 		using scored_arch_proxy_vec = std::vector<scored_arch_proxy>;
+
+		/// \brief Type alias for an optional trim_spec
+		using trim_spec_opt = boost::optional<trim_spec>;
 
 		/// \brief The initial score before any hits have been added
 		constexpr resscr_t INIT_SCORE = 0.0;

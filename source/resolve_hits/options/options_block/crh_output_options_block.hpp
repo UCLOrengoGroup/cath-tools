@@ -46,6 +46,7 @@ namespace cath {
 			static const std::string PO_OUTPUT_TRIMMED_HITS;
 			static const std::string PO_SUMMARISE;
 			static const std::string PO_GENERATE_HTML_OUTPUT;
+			static const std::string PO_JSON_OUTPUT;
 			static const std::string PO_RESTRICT_HTML_WITHIN_BODY;
 			static const std::string PO_EXPORT_CSS_FILE;
 			static const std::string PO_OUTPUT_HMMSEARCH_ALN;
