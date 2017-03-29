@@ -1324,6 +1324,7 @@ set(
 		common/algorithm/constexpr_integer_rounding_test.cpp
 		common/algorithm/constexpr_is_uniq_test.cpp
 		common/algorithm/constexpr_modulo_fns_test.cpp
+		common/algorithm/for_n_test.cpp
 		common/algorithm/transform_build_test.cpp
 		common/algorithm/variadic_and_test.cpp
 )
