@@ -1388,6 +1388,7 @@ set(
 set(
 	TESTSOURCES_COMMON_RAPIDJSON_ADDENDA
 		common/rapidjson_addenda/rapidjson_writer_test.cpp
+		common/rapidjson_addenda/string_of_rapidjson_write_test.cpp
 )
 
 set(

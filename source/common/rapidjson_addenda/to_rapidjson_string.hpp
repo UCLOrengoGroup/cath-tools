@@ -21,11 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_COMMON_RAPIDJSON_ADDENDA_TO_RAPIDJSON_STRING_H
 #define _CATH_TOOLS_SOURCE_COMMON_RAPIDJSON_ADDENDA_TO_RAPIDJSON_STRING_H
 
-#include "common/cpp17/void_t.hpp"
-#include "common/rapidjson_addenda/rapidjson_writer.hpp"
-
-#include <type_traits>
-#include <utility>
+#include "common/rapidjson_addenda/string_of_rapidjson_write.hpp"
 
 namespace cath {
 	namespace common {
@@ -57,11 +53,13 @@ namespace cath {
 		///
 		/// \tparam T must be a type for which a write_to_rapidjson has been partially specialised
 		template <json_style Style, typename T>
-		std::string to_rapidjson_string(const T &arg_value ///< The value to write
+		std::string to_rapidjson_string(const T      &arg_value,          ///< The value to write
+		                                const size_t &arg_extra_depth = 0 ///< The number of levels of depth
 		                                ) {
-			rapidjson_writer<Style> the_writer;
-			write_to_rapidjson( the_writer, arg_value );
-			return the_writer.get_cpp_string();
+			return string_of_rapidjson_write<Style>(
+				[&] (rapidjson_writer<Style> &the_writer) { write_to_rapidjson( the_writer, arg_value ); },
+				arg_extra_depth
+			);
 		}
 
 
