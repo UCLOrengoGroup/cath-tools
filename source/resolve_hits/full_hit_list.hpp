@@ -21,21 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FULL_HIT_LIST_H
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FULL_HIT_LIST_H
 
-#include <boost/filesystem/path.hpp>
-
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/type_aliases.hpp"
-#include "resolve_hits/full_hit.hpp"
-#include "resolve_hits/options/spec/crh_segment_spec.hpp"
-#include "resolve_hits/options/spec/hit_boundary_output.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
-
-namespace cath { namespace rslv { class read_and_process_mgr; } }
 
 namespace cath {
 	namespace rslv {
-
-		using doub_opt = boost::optional<double>;
 
 		/// \brief Represent a list of full_hits (which can then be resolved)
 		///
@@ -74,37 +64,11 @@ namespace cath {
 			const_iterator end() const;
 		};
 
-		void read_full_hit_list_from_file(read_and_process_mgr &,
-		                                  const boost::filesystem::path &);
-		void read_full_hit_list_from_istream(read_and_process_mgr &,
-		                                     std::istream &);
-		std::string to_output_string(const full_hit_list &,
-		                             const crh_segment_spec &,
-		                             const hit_output_format & = hit_output_format::CLASS,
-		                             const std::string & = std::string{},
-		                             const hit_boundary_output & = hit_boundary_output::ORIG);
 		std::string to_string(const full_hit_list &);
 		std::ostream & operator<<(std::ostream &,
 		                          const full_hit_list &);
 		residx_opt get_max_stop(const full_hit_list &);
-		resscr_opt get_best_crh_score(const full_hit_list &,
-		                              const crh_score_spec &);
 
-		seg_boundary_pair_vec resolved_boundaries(const full_hit &,
-		                                          const full_hit_list &,
-		                                          const crh_segment_spec &);
-
-		hit_seg_opt_vec merge_boundaries(const hit_seg_vec &,
-		                                 const seg_boundary_pair_vec &,
-		                                 const crh_segment_spec &);
-
-		hit_seg_opt_vec resolve_all_boundaries(const full_hit &,
-		                                       const full_hit_list &,
-		                                       const crh_segment_spec &);
-
-		std::string get_all_resolved_segments_string(const full_hit &,
-		                                             const full_hit_list &,
-		                                             const crh_segment_spec &);
 
 		/// \brief Ctor
 		inline full_hit_list::full_hit_list(full_hit_vec arg_full_hit_list ///< The full_hits
@@ -154,13 +118,6 @@ namespace cath {
 		inline auto full_hit_list::end() const -> const_iterator {
 			return common::cend( the_full_hits );
 		}
-
-		using full_hit_tpl     = std::tuple<std::string, residx_residx_pair_vec, double>;
-		using full_hit_tpl_vec = std::vector<full_hit_tpl>;
-
-		std::string to_json_string_with_compact_fullhits(const full_hit_list &,
-		                                                 const crh_segment_spec_opt & = boost::none,
-		                                                 const size_t & = 0);
 
 	} // namespace rslv
 } // namespace cath

@@ -44,6 +44,7 @@
 #include "common/debug_numeric_cast.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/type_aliases.hpp"
+#include "resolve_hits/full_hit_fns.hpp"
 #include "resolve_hits/full_hit_list.hpp"
 #include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
 

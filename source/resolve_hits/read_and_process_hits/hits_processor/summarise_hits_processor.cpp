@@ -27,6 +27,7 @@
 
 #include "common/boost_addenda/range/front.hpp"
 #include "common/clone/make_uptr_clone.hpp"
+#include "resolve_hits/full_hit_fns.hpp"
 #include "resolve_hits/full_hit_list.hpp"
 
 using namespace cath;

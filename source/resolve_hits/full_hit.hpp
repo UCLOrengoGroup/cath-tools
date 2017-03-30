@@ -24,14 +24,10 @@
 #include <boost/operators.hpp>
 #include <boost/optional.hpp>
 
-#include "common/type_aliases.hpp"
 #include "resolve_hits/file/alnd_rgn.hpp"
-#include "resolve_hits/hit_output_format.hpp"
 #include "resolve_hits/hit_score_type.hpp"
 #include "resolve_hits/hit_seg.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
-#include "resolve_hits/score_functions.hpp"
-#include "resolve_hits/trim/trim_spec.hpp"
 
 #include <string>
 
@@ -86,17 +82,6 @@ namespace cath {
 
 		std::string get_score_string(const full_hit &,
 		                             const size_t & = 4);
-
-		hit_seg_vec get_segments(const full_hit &,
-		                         const trim_spec_opt & = boost::none);
-
-		std::string get_segments_string(const full_hit &,
-		                                const trim_spec_opt & = boost::none);
-
-		std::string to_string(const full_hit &,
-		                      const hit_output_format & = hit_output_format::CLASS,
-		                      const std::string & = std::string{},
-		                      const trim_spec_opt & = boost::none);
 
 		/// \brief Sanity check that the full_hit is sensible and throw an exception if not
 		inline void full_hit::sanity_check() const {
@@ -287,32 +272,6 @@ namespace cath {
 					} ),
 				0_z
 			);
-		}
-
-		/// \brief Get the crh-score associated with the specified hit, calculated according to the specified crh_score_spec
-		inline resscr_t get_crh_score(const full_hit       &arg_full_hit,  ///< The full_hit to query
-		                              const crh_score_spec &arg_score_spec ///< The crh_score_spec to use in any score calculations that are required
-		                              ) {
-			switch ( arg_full_hit.get_score_type() ) {
-				case( hit_score_type::FULL_EVALUE ) : {
-					return crh_score_of_evalue(
-						arg_full_hit.get_score(),
-						get_total_length( arg_full_hit ),
-						arg_score_spec
-					);
-				}
-				case( hit_score_type::BITSCORE    ) : {
-					return crh_score_of_pseudo_bitscore(
-						arg_full_hit.get_score(),
-						get_total_length( arg_full_hit ),
-						arg_score_spec
-					);
-				}
-				case( hit_score_type::CRH_SCORE   ) : {
-					return debug_numeric_cast<resscr_t>( arg_full_hit.get_score() );
-				}
-			}
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst getting crh_score from full_hit"));
 		}
 
 	} // namespace rslv

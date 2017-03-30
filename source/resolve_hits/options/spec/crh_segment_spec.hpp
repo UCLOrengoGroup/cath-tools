@@ -55,6 +55,9 @@ namespace cath {
 
 		hit_seg_opt apply_spec_to_seg_copy(const hit_seg &,
 		                                   const crh_segment_spec_opt &);
+
+		trim_spec_opt get_trim_spec_opt(const crh_segment_spec_opt &);
+
 	} // namespace rslv
 } // namespace cath
 

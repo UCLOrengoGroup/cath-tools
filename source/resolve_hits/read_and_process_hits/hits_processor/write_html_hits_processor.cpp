@@ -21,6 +21,7 @@
 #include "write_html_hits_processor.hpp"
 
 #include "common/clone/make_uptr_clone.hpp"
+#include "resolve_hits/full_hit.hpp"
 #include "resolve_hits/full_hit_list.hpp"
 #include "resolve_hits/html_output/resolve_hits_html_outputter.hpp"
 

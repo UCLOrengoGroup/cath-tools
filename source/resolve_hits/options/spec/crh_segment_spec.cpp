@@ -22,6 +22,7 @@
 
 using namespace cath::rslv;
 
+using boost::make_optional;
 using boost::none;
 
 constexpr trim_spec crh_segment_spec::DEFAULT_OVERLAP_TRIM_SPEC;
@@ -71,4 +72,15 @@ hit_seg_opt cath::rslv::apply_spec_to_seg_copy(const hit_seg              &arg_s
 		( arg_segment_spec && get_length( arg_seg ) >= arg_segment_spec->get_min_seg_length() )
 			? make_optional( trim_hit_seg_copy( arg_seg, arg_segment_spec->get_overlap_trim_spec() ) )
 			: none;
+}
+
+/// \brief Get an optional trim_spec of the specified optional crh_segment_spec
+///        (where the result is none iff the input is none)
+///
+/// \relates crh_segment_spec
+trim_spec_opt cath::rslv::get_trim_spec_opt(const crh_segment_spec_opt &arg_crh_segment_spec ///< The optional crh_segment_spec from which to make an optional trim_spec
+                                            ) {
+	return arg_crh_segment_spec
+		? make_optional( arg_crh_segment_spec->get_overlap_trim_spec() )
+		: none;
 }

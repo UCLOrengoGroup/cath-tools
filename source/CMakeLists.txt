@@ -695,7 +695,9 @@ set(
 		resolve_hits/cath_hit_resolver.cpp
 		${NORMSOURCES_RESOLVE_HITS_FILE}
 		resolve_hits/full_hit.cpp
+		resolve_hits/full_hit_fns.cpp
 		resolve_hits/full_hit_list.cpp
+		resolve_hits/full_hit_list_fns.cpp
 		resolve_hits/hit_arch.cpp
 		resolve_hits/hit_resolver.cpp
 		resolve_hits/hit_score_type.cpp

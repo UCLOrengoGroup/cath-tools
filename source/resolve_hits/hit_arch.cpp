@@ -20,7 +20,9 @@
 
 #include "hit_arch.hpp"
 
+#include "resolve_hits/full_hit.hpp"
 #include "resolve_hits/full_hit_list.hpp"
+#include "resolve_hits/full_hit_list_fns.hpp"
 #include "resolve_hits/options/spec/crh_segment_spec.hpp"
 
 #include <string>

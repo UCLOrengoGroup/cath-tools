@@ -27,8 +27,9 @@
 
 #include "common/chrono/duration_to_seconds_string.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "resolve_hits/full_hit_list.hpp"
 #include "resolve_hits/calc_hit.hpp"
+#include "resolve_hits/full_hit.hpp"
+#include "resolve_hits/full_hit_list.hpp"
 #include "resolve_hits/options/spec/crh_filter_spec.hpp"
 #include "resolve_hits/score_functions.hpp"
 

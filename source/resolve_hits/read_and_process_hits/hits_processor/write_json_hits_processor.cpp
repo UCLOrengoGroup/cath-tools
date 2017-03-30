@@ -23,6 +23,7 @@
 #include "common/clone/make_uptr_clone.hpp"
 #include "exception/out_of_range_exception.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
+#include "resolve_hits/full_hit_list_fns.hpp"
 #include "resolve_hits/hit_resolver.hpp"
 #include "resolve_hits/scored_hit_arch.hpp"
 
