@@ -88,15 +88,15 @@ namespace cath {
 		                             const size_t & = 4);
 
 		hit_seg_vec get_segments(const full_hit &,
-		                         const boost::optional<trim_spec> & = boost::none);
+		                         const trim_spec_opt & = boost::none);
 
 		std::string get_segments_string(const full_hit &,
-		                                const boost::optional<trim_spec> & = boost::none);
+		                                const trim_spec_opt & = boost::none);
 
 		std::string to_string(const full_hit &,
 		                      const hit_output_format & = hit_output_format::CLASS,
 		                      const std::string & = std::string{},
-		                      const boost::optional<trim_spec> & = boost::none);
+		                      const trim_spec_opt & = boost::none);
 
 		/// \brief Sanity check that the full_hit is sensible and throw an exception if not
 		inline void full_hit::sanity_check() const {

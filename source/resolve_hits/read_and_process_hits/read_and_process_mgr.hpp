@@ -108,16 +108,13 @@ namespace cath {
 			///        for hashing to avoid having to reallocate on every call to add_hit()
 			std::string temp_hashable_query_id;
 
-			/// \brief A type alias for a pair of string and hit data (non-const) reference
-			using str_hits_ref_pair = std::pair<std::string, full_hit_list &>;
-
 			/// \brief The query_id of the previous result and a reference to the corresponding data (if any)
 			///
 			/// This is used when `input_hits_are_grouped` to indicate that a calc_hit_list under this query_id
 			/// can be processed as soon as a result is found with a different query id
 			///
 			/// The hit data reference avoids many of the repeated calls to the hashing function when input_hits_are_grouped
-			boost::optional<str_hits_ref_pair> prev_query_id_and_hits_ref;
+			str_hits_ref_pair_opt prev_query_id_and_hits_ref;
 
 			/// \brief A record of the query_id associated with the latest asynchronous processing job
 			///        so that the thread can detect if it finds itself trying to add another hit to

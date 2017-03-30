@@ -41,7 +41,7 @@ namespace cath {
 				size_t num_hits = 0;
 
 				/// \brief Record an example query_id/full_hit pair
-				boost::optional<std::pair<std::string, full_hit>> example_query_id_and_hit;
+				str_full_hit_pair_opt example_query_id_and_hit;
 
 				std::unique_ptr<hits_processor> do_clone() const final;
 

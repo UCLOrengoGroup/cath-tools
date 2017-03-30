@@ -65,8 +65,8 @@ string cath::rslv::get_score_string(const full_hit &arg_full_hit,   ///< The ful
 /// and by a ',' between segments.
 ///
 /// \relates full_hit
-hit_seg_vec cath::rslv::get_segments(const full_hit            &arg_full_hit,     ///< The full_hit whose segments should be described
-                                     const optional<trim_spec> &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+hit_seg_vec cath::rslv::get_segments(const full_hit      &arg_full_hit,     ///< The full_hit whose segments should be described
+                                     const trim_spec_opt &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                      ) {
 	return ::cath::rslv::get_segments( arg_full_hit.get_segments(), arg_trim_spec_opt );
 }
@@ -77,8 +77,8 @@ hit_seg_vec cath::rslv::get_segments(const full_hit            &arg_full_hit,   
 /// and by a ',' between segments.
 ///
 /// \relates full_hit
-string cath::rslv::get_segments_string(const full_hit            &arg_full_hit,     ///< The full_hit whose segments should be described
-                                       const optional<trim_spec> &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+string cath::rslv::get_segments_string(const full_hit      &arg_full_hit,     ///< The full_hit whose segments should be described
+                                       const trim_spec_opt &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                        ) {
 	return get_segments_string( arg_full_hit.get_segments(), arg_trim_spec_opt );
 }
@@ -86,10 +86,10 @@ string cath::rslv::get_segments_string(const full_hit            &arg_full_hit, 
 /// \brief Generate a string describing the specified full_hit
 ///
 /// \relates full_hit
-string cath::rslv::to_string(const full_hit            &arg_full_hit,     ///< The full_hit to describe
-                             const hit_output_format   &arg_format,       ///< The format in which to generate the output
-                             const string              &arg_prefix,       ///< A prefix string, typically used to put the query_id at the front. (Any non-empty string will have a space appended.)
-                             const optional<trim_spec> &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+string cath::rslv::to_string(const full_hit          &arg_full_hit,     ///< The full_hit to describe
+                             const hit_output_format &arg_format,       ///< The format in which to generate the output
+                             const string            &arg_prefix,       ///< A prefix string, typically used to put the query_id at the front. (Any non-empty string will have a space appended.)
+                             const trim_spec_opt     &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                              ) {
 	if ( arg_format != hit_output_format::JON && ! arg_prefix.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot specify prefix for any full_hit format other than JON"));

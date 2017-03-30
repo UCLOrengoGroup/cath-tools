@@ -30,10 +30,10 @@ namespace cath {
 
 		/// \brief Write the specified full_hit to the specified rapidjson_writer
 		template <common::json_style Style>
-		void write_to_rapidjson(common::rapidjson_writer<Style>      &arg_writer,                     ///< The rapidjson_writer to which the full_hit should be written
-		                        const full_hit                       &arg_full_hit,                   ///< The full_hit to write
-		                        const crh_segment_spec_opt           &arg_segment_spec = boost::none, ///< An optional crh_segment_spec which can be used for including each full_hit's trimmed boundaries and resolved boundaries
-		                        const boost::optional<full_hit_list> &arg_hits         = boost::none  ///< An optional full_hit_list (from which the specified full_hit is drawn), which can be used for including the full_hit's resolved boundaries
+		void write_to_rapidjson(common::rapidjson_writer<Style> &arg_writer,                     ///< The rapidjson_writer to which the full_hit should be written
+		                        const full_hit                  &arg_full_hit,                   ///< The full_hit to write
+		                        const crh_segment_spec_opt      &arg_segment_spec = boost::none, ///< An optional crh_segment_spec which can be used for including each full_hit's trimmed boundaries and resolved boundaries
+		                        const full_hit_list_opt         &arg_hits         = boost::none  ///< An optional full_hit_list (from which the specified full_hit is drawn), which can be used for including the full_hit's resolved boundaries
 		                        ) {
 			arg_writer.start_object();
 			arg_writer.write_key( "match-id"     ).write_string( arg_full_hit.get_label()                   );

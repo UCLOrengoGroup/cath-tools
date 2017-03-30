@@ -80,16 +80,16 @@ namespace cath {
 		                          trim_spec &);
 
 		std::string to_possibly_trimmed_simple_string(const hit_seg &,
-		                                              const boost::optional<trim_spec> &);
+		                                              const trim_spec_opt &);
 
 		hit_seg_vec get_segments(const hit_seg_vec &,
 		                         const trim_spec_opt &);
 
 		std::string get_segments_string(const hit_seg_vec &,
-		                                const boost::optional<trim_spec> &);
+		                                const trim_spec_opt &);
 
 		std::string get_segments_string(const hit_seg_opt_vec &,
-		                                const boost::optional<trim_spec> &);
+		                                const trim_spec_opt &);
 
 		void validate(boost::any &,
 		              const str_vec &,

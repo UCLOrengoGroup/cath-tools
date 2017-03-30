@@ -91,7 +91,7 @@ namespace cath {
 				scored_hit_arch resolve();
 			};
 
-			/// \brief Update the optional<scored_arch_proxy> if the specified hit improves
+			/// \brief Update the scored_arch_proxy_opt if the specified hit improves
 			///        on the best result seen so far
 			///
 			/// To update, the new score must beat:
