@@ -147,7 +147,7 @@ string cath::rslv::to_output_string(const full_hit_list       &arg_full_hits,   
                                     const hit_boundary_output &arg_boundary_output   ///< Whether to output the trimmed or original boundaries
                                     ) {
 	const bool is_jon = ( arg_format == hit_output_format::JON );
-	const string prefix    = is_jon ? ""   : "hit_arch[\n\t";
+	const string prefix    = is_jon ? ""   : "full_hit_list[\n\t";
 	const string separator = is_jon ? "\n" : "\n\t";
 	const string suffix    = is_jon ? "\n" : "\n]";
 
