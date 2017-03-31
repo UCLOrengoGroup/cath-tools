@@ -98,7 +98,7 @@ Input:
                                                  (so the run is faster and uses less memory)
 
 Segment overlap/removal:
-  --overlap-trim-spec <trim> (=50/30)            Allow different hits' segments to overlap a bit by trimming all segments using spec <trim>
+  --overlap-trim-spec <trim> (=30/10)            Allow different hits' segments to overlap a bit by trimming all segments using spec <trim>
                                                  of the form n/m (n is a segment length; m is the *total* length to be trimmed off both ends)
                                                  For longer segments, total trim stays at m; for shorter, it decreases linearly (to 0 for length 1).
                                                  To choose: set m to the biggest total trim you'd want for a really long segment;

@@ -84,7 +84,7 @@ ostream & cath::rslv::operator<<(ostream         &arg_os,       ///< The ostream
 	return arg_os;
 }
 
-/// \brief Attempt to parse a trim_spec from the specified string (eg "50/30")
+/// \brief Attempt to parse a trim_spec from the specified string (eg "30/10")
 ///
 /// \relates trim_spec
 trim_spec cath::rslv::parse_trim_spec(const string &arg_trim_spec_str ///< The string from which the trim_spec should be parsed

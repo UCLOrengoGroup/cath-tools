@@ -37,7 +37,7 @@ namespace cath {
 
 		public:
 			/// \brief The default value for the specification for trimming hits' segments to allow some overlap
-			static constexpr trim_spec DEFAULT_OVERLAP_TRIM_SPEC = { 50, 30 };
+			static constexpr trim_spec DEFAULT_OVERLAP_TRIM_SPEC = { 30, 10 };
 
 			/// \brief The default value for the minimum segment length
 			static constexpr residx_t  DEFAULT_MIN_SEG_LENGTH    =  7;
