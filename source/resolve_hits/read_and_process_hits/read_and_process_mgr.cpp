@@ -22,7 +22,6 @@
 
 #include "common/boost_addenda/range/min_proj_element.hpp"
 #include "common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "common/function/more.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
 #include "resolve_hits/hit_resolver.hpp"
@@ -89,7 +88,7 @@ constexpr bool read_and_process_mgr::DEFAULT_INPUT_HITS_ARE_GROUPED;
 // size_t lowest_rank_of_soln_hits(const calc_hit_list &arg_hits, ///<
 //                                 const hit_arch &arg_soln  ///<
 //                                 ) {
-// 	const size_vec hit_ranks = get_ranks( arg_hits, common::more{}, [] (const calc_hit &x) { return x.get_score(); } );
+// 	const size_vec hit_ranks = get_ranks( arg_hits, std::greater{}, [] (const calc_hit &x) { return x.get_score(); } );
 
 // 	return min_proj(
 // 		arg_soln,
