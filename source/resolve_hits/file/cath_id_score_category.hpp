@@ -44,11 +44,11 @@ namespace cath {
 		inline constexpr bool hmmer_evalues_are_suspicious(const double &arg_cond_evalue, ///< The HMMER conditional evalue
 		                                                   const double &arg_indp_evalue  ///< The HMMER independent evalue
 		                                                   ) {
-			constexpr double EVALUE_CUTOFF = 0.001;
+			// constexpr double EVALUE_CUTOFF = 0.001; //< Not permitted by GCC 4.9.2
 			return (
-				arg_cond_evalue <= EVALUE_CUTOFF
+				arg_cond_evalue <= 0.001
 				&&
-				arg_indp_evalue >  EVALUE_CUTOFF
+				arg_indp_evalue >  0.001
 			);
 		}
 
