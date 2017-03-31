@@ -76,6 +76,7 @@ namespace cath {
 			const hit_score_type & get_score_type() const;
 			const hit_extras_store & get_extras_store() const;
 
+			static std::string get_prefix_name();
 			static std::string get_label_name();
 			static std::string get_resolved_name();
 			static std::string get_score_name();

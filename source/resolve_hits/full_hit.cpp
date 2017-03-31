@@ -56,6 +56,11 @@ string cath::rslv::get_score_string(const full_hit &arg_full_hit,   ///< The ful
 	);
 }
 
+/// \brief Getter for the name to use when outputting the prefix (ie query-id)
+string full_hit::get_prefix_name() {
+	return "query-id";
+}
+
 /// \brief Getter for the name to use when outputting the label (ie match-id)
 string full_hit::get_label_name() {
 	return "match-id";

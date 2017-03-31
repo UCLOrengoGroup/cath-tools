@@ -169,6 +169,16 @@ namespace cath {
 			const_iterator end() const {
 				return common::cend( extras );
 			}
+
+			/// \brief Return whether this is empty
+			bool empty() const {
+				return extras.empty();
+			}
+
+			/// \brief Return the number of pieces of information currently being stored
+			size_t size() const {
+				return extras.size();
+			}
 		};
 
 		/// \brief Get the first value in the specified hit_extras_store that matches the specified hit_extra_cat

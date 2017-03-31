@@ -37,6 +37,9 @@ namespace cath {
 				/// \brief Whether to trim the boundaries before outputting them
 				hit_boundary_output boundary_output;
 
+				/// \brief Whether the header has yet been written
+				bool written_header = false;
+
 				std::unique_ptr<hits_processor> do_clone() const final;
 
 				void do_process_hits_for_query(const std::string &,

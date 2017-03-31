@@ -39,6 +39,10 @@ namespace cath {
 		std::string get_segments_string(const full_hit &,
 		                                const trim_spec_opt & = boost::none);
 
+		cath::str_vec get_field_headers(const full_hit &,
+		                                const bool &,
+		                                const bool &);
+
 		std::string to_string(const full_hit &,
 		                      const hit_output_format & = hit_output_format::CLASS,
 		                      const std::string & = std::string{},

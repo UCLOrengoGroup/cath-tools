@@ -137,8 +137,10 @@ Detailed help:
   --cath-rules-help                              Show help on the rules activated by the --apply-cath-rules option
   --raw-format-help                              Show help about the raw input formats (raw_with_scores and raw_with_evalues)
 
-The standard output is one line per selected hit. Each line contains the following space-separated fields: `query_protein_id`, `match_id`, `score`, `starts_stops` `resolved_starts_stops` (where `resolved_starts_stops` is like `starts_stops` but may include adjustments made to resolve overlaps between hits.
-)
+The standard output is one line per selected hit, preceded by header lines (beginning "#"), the last of which (beginning "#FIELDS") lists the fields in the file, typically:
+  #FIELDS query-id match-id score boundaries resolved
+(`boundaries` and `resolved` describe a domain's starts / stops; `resolved` may include adjustments made to resolve overlaps between hits)
+
 Please tell us your cath-tools bugs/suggestions : https://github.com/UCLOrengoGroup/cath-tools/issues/new
 ~~~~~
 
@@ -146,9 +148,15 @@ Please tell us your cath-tools bugs/suggestions : https://github.com/UCLOrengoGr
 Output format
 -------------
 
-The standard output is one line per selected hit. Each line contains the following space-separated fields: `query_protein_id`, `match_id`, `score`, `starts_stops` `resolved_starts_stops` (where `resolved_starts_stops` is like `starts_stops` but may include adjustments made to resolve overlaps between hits.)
+The standard output is one line per selected hit, preceded by header lines (beginning `#`), the last of which (beginning `#FIELDS`) lists the fields in the file, typically:
 
-Alternatively, the `--html-output` triggers HTML output.
+~~~~~no-highlight
+#FIELDS query-id match-id score boundaries resolved
+~~~~~
+
+(`boundaries` and `resolved` describe a domain's starts / stops; `resolved` may include adjustments made to resolve overlaps between hits)
+
+Alternatively, consider `--json-output` or `--html-output`.
 
 
 Warning

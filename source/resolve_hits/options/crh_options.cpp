@@ -166,11 +166,10 @@ specify the --)" + crh_input_options_block::PO_INPUT_HITS_ARE_GROUPED + R"( flag
 
 /// \brief Get a string to append to the standard help
 string crh_options::do_get_help_suffix_string() const {
-	return "\nThe standard output is one line per selected hit."
-		" Each line contains the following space-separated fields:"
-		" `query_protein_id`, `match_id`, `score`, `starts_stops` `resolved_starts_stops`"
-		" (where `resolved_starts_stops` is like `starts_stops` but"
-		" may include adjustments made to resolve overlaps between hits.\n)";
+	return "\nThe standard output is one line per selected hit,"
+		" preceded by header lines (beginning \"#\"), the last of which (beginning \"#FIELDS\") lists the fields in the file, typically:\n"
+		"  #FIELDS query-id match-id score boundaries resolved\n"
+		"(`boundaries` and `resolved` describe a domain's starts / stops; `resolved` may include adjustments made to resolve overlaps between hits)\n";
 }
 
 /// \brief Get an overview of the job that these options are for

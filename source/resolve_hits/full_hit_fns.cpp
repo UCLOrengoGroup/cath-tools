@@ -20,14 +20,20 @@
 
 #include "full_hit_fns.hpp"
 
+#include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
+
 #include "resolve_hits/file/alnd_rgn.hpp"
 #include "resolve_hits/full_hit_fns.hpp"
 #include "resolve_hits/full_hit_list_fns.hpp"
 
+using namespace cath;
 using namespace cath::common;
 using namespace cath::rslv;
 using namespace std::literals::string_literals;
 
+using boost::format;
+using boost::lexical_cast;
 using boost::make_optional;
 using boost::none;
 using std::string;
@@ -56,6 +62,41 @@ string cath::rslv::get_segments_string(const full_hit      &arg_full_hit,     //
 	return get_segments_string( arg_full_hit.get_segments(), arg_trim_spec_opt );
 }
 
+/// \brief Generate a list of headers corresponding to the fields that will be generated for data as specified
+///
+/// \relates full_hit
+str_vec cath::rslv::get_field_headers(const full_hit &arg_full_hit,                      ///< An example hit
+                                      const bool     &has_prefix,                        ///< The data has a non-empty prefix (ie query-id)
+                                      const bool     &arg_has_full_hits_and_segment_spec ///< The data has full_hits and segment_spec available
+                                      ) {
+	str_vec headers;
+	headers.reserve(
+		  ( has_prefix                         ? 1_z : 0_z )
+		+ 3_z
+		+ ( arg_has_full_hits_and_segment_spec ? 1_z : 0_z )
+		+ arg_full_hit.get_extras_store().size()
+	);
+	if ( has_prefix ) {
+		headers.push_back( full_hit::get_prefix_name()           );
+	}
+	headers.push_back( full_hit::get_label_name()            );
+	headers.push_back( full_hit::get_score_name()            );
+	headers.push_back( full_hit::get_segments_name()         );
+	if ( arg_has_full_hits_and_segment_spec ) {
+		headers.push_back( full_hit::get_resolved_name()         );
+	}
+	if ( get_first< hit_extra_cat::ALND_RGNS >( arg_full_hit.get_extras_store() ) ) {
+		headers.push_back( to_string( hit_extra_cat::ALND_RGNS ) );
+	}
+	if ( get_first< hit_extra_cat::COND_EVAL >( arg_full_hit.get_extras_store() ) ) {
+		headers.push_back( to_string( hit_extra_cat::COND_EVAL ) );
+	}
+	if ( get_first< hit_extra_cat::INDP_EVAL >( arg_full_hit.get_extras_store() ) ) {
+		headers.push_back( to_string( hit_extra_cat::INDP_EVAL ) );
+	}
+	return headers;
+}
+
 /// \brief Generate a string describing the specified full_hit
 ///
 /// \relates full_hit
@@ -78,7 +119,9 @@ string cath::rslv::to_string(const full_hit             &arg_full_hit,         /
 
 	switch ( arg_format ) {
 		case( hit_output_format::JON ) : {
-			const str_opt alnd_rgns_str_opt = get_first< hit_extra_cat::ALND_RGNS >( arg_full_hit.get_extras_store() );
+			const str_opt  alnd_rgns_str_opt = get_first< hit_extra_cat::ALND_RGNS >( arg_full_hit.get_extras_store() );
+			const doub_opt cond_eval_val_opt = get_first< hit_extra_cat::COND_EVAL >( arg_full_hit.get_extras_store() );
+			const doub_opt indp_eval_val_opt = get_first< hit_extra_cat::INDP_EVAL >( arg_full_hit.get_extras_store() );
 			return arg_prefix
 				+ ( arg_prefix.empty() ? ""s : " "s )
 				+ arg_full_hit.get_label()
@@ -91,11 +134,9 @@ string cath::rslv::to_string(const full_hit             &arg_full_hit,         /
 					? " " + get_all_resolved_segments_string( arg_full_hit, *arg_full_hits, *arg_segment_spec_opt )
 					: ""s
 				)
-				+ (
-					alnd_rgns_str_opt
-					? ( " " + *alnd_rgns_str_opt )
-					: ""s
-				);
+				+ ( alnd_rgns_str_opt ? ( " " +                      *alnd_rgns_str_opt         ) : ""s )
+				+ ( cond_eval_val_opt ? ( " " + ( format( "%.5g" ) % *cond_eval_val_opt ).str() ) : ""s )
+				+ ( indp_eval_val_opt ? ( " " + ( format( "%.5g" ) % *indp_eval_val_opt ).str() ) : ""s );
 		}
 		case( hit_output_format::CLASS ) : {
 			return "full_hit["
