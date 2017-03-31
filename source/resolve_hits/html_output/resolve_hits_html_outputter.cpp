@@ -242,11 +242,13 @@ string resolve_hits_html_outputter::hit_html(const html_hit         &arg_html_hi
 							//         d.crh-hit-match-id; # 1cukA01
 							//     })
 							{
-								make_pair( "crh-hit-id"s,         "batch" + batch_idx_str + "-hit" + hit_idx_str ),
-								make_pair( "crh-hit-match-id"s,   the_full_hit.get_label() ),
-								make_pair( "crh-hit-boundaries"s, join( boundaries_strs, ", " ) ),
-								make_pair( "crh-seg-num"s,        ::std::to_string( x_idx + 1 ) ),
-								make_pair( "crh-seg-boundaries"s, to_simple_string( resolved_boundaries[ x_idx ] ) ),
+								make_pair( "crh-hit-id"s,                                 "batch" + batch_idx_str + "-hit" + hit_idx_str ),
+								make_pair( "crh-hit-"  + full_hit::get_label_name(),      the_full_hit.get_label() ),
+								make_pair( "crh-hit-"s + full_hit::get_segments_name(),   join( boundaries_strs, ", " ) ),
+								make_pair( "crh-hit-"  + full_hit::get_score_name(),      ::std::to_string( the_full_hit.get_score() ) ),
+								make_pair( "crh-hit-"  + full_hit::get_score_type_name(), to_string( the_full_hit.get_score_type() ) ),
+								make_pair( "crh-seg-num"s,                                ::std::to_string( x_idx + 1 ) ),
+								make_pair( "crh-seg-boundaries"s,                         to_simple_string( resolved_boundaries[ x_idx ] ) ),
 							},
 							arg_sequence_length
 						}.get_all_span_html_strs( arg_row_context != hit_row_context::RESULT_FULL ),
