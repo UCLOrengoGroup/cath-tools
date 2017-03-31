@@ -699,6 +699,7 @@ set(
 		resolve_hits/full_hit_list.cpp
 		resolve_hits/full_hit_list_fns.cpp
 		resolve_hits/hit_arch.cpp
+		resolve_hits/hit_extras.cpp
 		resolve_hits/hit_resolver.cpp
 		resolve_hits/hit_score_type.cpp
 		resolve_hits/hit_seg.cpp
@@ -1678,6 +1679,7 @@ set(
 		${TESTSOURCES_RESOLVE_HITS_FILE}
 		resolve_hits/full_hit_list_test.cpp
 		resolve_hits/full_hit_test.cpp
+		resolve_hits/hit_extras_test.cpp
 		resolve_hits/hit_resolver_test.cpp
 		resolve_hits/hit_seg_test.cpp
 		resolve_hits/hit_test.cpp

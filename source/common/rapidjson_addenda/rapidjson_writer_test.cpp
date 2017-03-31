@@ -34,13 +34,13 @@ using std::sqrt;
 BOOST_AUTO_TEST_SUITE(rapidjson_writer_test_suite)
 
 BOOST_AUTO_TEST_CASE(simple_compact_works) {
-	BOOST_CHECK_EQUAL( rapidjson_writer< json_style::COMPACT >{}.start_object().write_key( "lue" ).write_uint( 42 ).end_object().get_cpp_string(), R"({"lue":42})" );
+	BOOST_CHECK_EQUAL( rapidjson_writer< json_style::COMPACT >{}.start_object().write_key_value( "lue", 42u ).end_object().get_cpp_string(), R"({"lue":42})" );
 }
 
 BOOST_AUTO_TEST_CASE(simple_pretty_works) {
 	const auto expected = "{\n" R"(    "lue": 42)" "\n}";
-	BOOST_CHECK_EQUAL( rapidjson_writer< json_style::PRETTY >{}.start_object().write_key( "lue" ).write_uint( 42 ).end_object().get_cpp_string(), expected );
-	BOOST_CHECK_EQUAL( rapidjson_writer<                    >{}.start_object().write_key( "lue" ).write_uint( 42 ).end_object().get_cpp_string(), expected );
+	BOOST_CHECK_EQUAL( rapidjson_writer< json_style::PRETTY >{}.start_object().write_key_value( "lue", 42u ).end_object().get_cpp_string(), expected );
+	BOOST_CHECK_EQUAL( rapidjson_writer<                    >{}.start_object().write_key_value( "lue", 42u ).end_object().get_cpp_string(), expected );
 }
 
 BOOST_AUTO_TEST_CASE(everything_works) {
@@ -48,16 +48,16 @@ BOOST_AUTO_TEST_CASE(everything_works) {
 		rapidjson_writer< json_style::PRETTY >{}
 			.start_object()
 				.write_key( "stuff" ).start_array()
-					.write_double     ( sqrt( 2.0 )     )
-					.write_int        ( -123            )
-					.write_int64      ( -123            )
-					.write_uint       (  123            )
-					.write_uint64     (  123            )
-					.write_string     ( "cstring"       )
-					.write_string     ( "cppstring"s    )
+					.write_value( sqrt( 2.0 )     )
+					.write_value( -123            )
+					.write_value( -123l           )
+					.write_value(  123u           )
+					.write_value(  123ul          )
+					.write_value( "cstring"       )
+					.write_value( "cppstring"s    )
 				.end_array()
-				.write_key( "aye"  ).write_bool( true  )
-				.write_key( "nay"s ).write_bool( false )
+				.write_key_value( "aye",  true  )
+				.write_key_value( "nay"s, false )
 				.write_key( "null" ).write_null()
 				.write_key( "raws" ).start_array()
 					.write_raw_string ( R"({"lue-a", 42a})" )

@@ -86,6 +86,7 @@ namespace cath {
 		static const boost::filesystem::path              & CRH_EG_DOMTBL_IN_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_DOMTBL_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME();
+		static const boost::filesystem::path              & CRH_EG_DOMTBL_JSON_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_IN_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_OUT_FILENAME();
 		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME();

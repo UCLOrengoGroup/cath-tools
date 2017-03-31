@@ -256,8 +256,8 @@ namespace cath {
 		                        const hit_seg                   &arg_hit_seg ///< The hit_seg to write
 		                        ) {
 			arg_writer.start_array();
-			arg_writer.write_uint( get_start_res_index( arg_hit_seg ) );
-			arg_writer.write_uint( get_stop_res_index ( arg_hit_seg ) );
+			arg_writer.write_value( get_start_res_index( arg_hit_seg ) );
+			arg_writer.write_value( get_stop_res_index ( arg_hit_seg ) );
 			arg_writer.end_array();
 		}
 

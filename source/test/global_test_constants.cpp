@@ -283,6 +283,12 @@ const path & global_test_constants::CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME() {
 }
 
 /// \brief Test constant for a cath-resolve-hits test file
+const path & global_test_constants::CRH_EG_DOMTBL_JSON_OUT_FILENAME() {
+	static const path crh_eg_domtbl_json_out_filename( CRH_TEST_DATA_DIR() / "eg_domtblout.json"                   );
+	return crh_eg_domtbl_json_out_filename;
+}
+
+/// \brief Test constant for a cath-resolve-hits test file
 const path & global_test_constants::CRH_EG_HMMSEARCH_IN_FILENAME() {
 	static const path crh_eg_hmmsearch_in_filename   ( CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.in"                 );
 	return crh_eg_hmmsearch_in_filename;

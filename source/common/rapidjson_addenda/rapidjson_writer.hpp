@@ -25,6 +25,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
+#include "common/debug_numeric_cast.hpp"
 #include "common/json_style.hpp"
 
 #include <string>
@@ -85,62 +86,76 @@ namespace cath {
 			}
 
 			/// \brief Write a key to the JSON
-			template <typename... Ts>
-			rapidjson_writer & write_key(Ts &&...arg_values ///< The key string (can be std::string or char *)
+			rapidjson_writer & write_key(const std::string &arg_key ///< The key string
 			                             ) {
-				writer.Key( std::forward<Ts>( arg_values )... );
+				writer.Key( arg_key.c_str(), debug_numeric_cast<unsigned int>( arg_key.length() ) );
+				return *this;
+			}
+
+			/// \brief Write a key to the JSON
+			rapidjson_writer & write_key(const char * const arg_key ///< The key string (can be std::string or char *)
+			                             ) {
+				writer.Key( arg_key );
 				return *this;
 			}
 
 			/// \brief Write a string value to the JSON
-			template <typename... Ts>
-			rapidjson_writer & write_string(Ts &&...arg_values ///< The string value (can be std::string or char *)
-			                                ) {
-				writer.String( std::forward<Ts>( arg_values )... );
+			rapidjson_writer & write_value(const std::string &arg_value ///< The string value (can be std::string or char *)
+			                               ) {
+				writer.String( arg_value );
+				return *this;
+			}
+
+			/// \brief Write a string value to the JSON
+			rapidjson_writer & write_value(const char * const arg_value ///< The string value (can be std::string or char *)
+			                               ) {
+				writer.String( arg_value );
 				return *this;
 			}
 
 			/// \brief Write a bool value to the JSON
-			rapidjson_writer & write_bool(const bool &arg_value ///< The bool value to write to the JSON
-			                              ) {
+			rapidjson_writer & write_value(const bool &arg_value ///< The bool value to write to the JSON
+			                               ) {
 				writer.Bool( arg_value );
 				return *this;
 			}
 
 			/// \brief Write a double value to the JSON
-			rapidjson_writer & write_double(const double &arg_value ///< The double value to write to the JSON
-			                                ) {
+			rapidjson_writer & write_value(const double &arg_value ///< The double value to write to the JSON
+			                               ) {
 				writer.Double( arg_value );
 				return *this;
 			}
 
 			/// \brief Write a int value to the JSON
-			rapidjson_writer & write_int(const int &arg_value ///< The int value to write to the JSON
-			                             ) {
+			rapidjson_writer & write_value(const int &arg_value ///< The int value to write to the JSON
+			                               ) {
 				writer.Int( arg_value );
 				return *this;
 			}
 
 			/// \brief Write a int64_t value to the JSON
-			rapidjson_writer & write_int64(const int64_t &arg_value ///< The int64_t value to write to the JSON
+			rapidjson_writer & write_value(const int64_t &arg_value ///< The int64_t value to write to the JSON
 			                               ) {
 				writer.Int64( arg_value );
 				return *this;
 			}
 
 			/// \brief Write a uint value to the JSON
-			rapidjson_writer & write_uint(const uint &arg_value ///< The uint value to write to the JSON
-			                              ) {
+			rapidjson_writer & write_value(const uint &arg_value ///< The uint value to write to the JSON
+			                               ) {
 				writer.Uint( arg_value );
 				return *this;
 			}
 
 			/// \brief Write a uint64_t value to the JSON
-			rapidjson_writer & write_uint64(const uint64_t &arg_value ///< The uint64_t value to write to the JSON
-			                                ) {
+			rapidjson_writer & write_value(const uint64_t &arg_value ///< The uint64_t value to write to the JSON
+			                               ) {
 				writer.Uint64( arg_value );
 				return *this;
 			}
+
+
 
 			/// \brief Write a null value to the JSON
 			rapidjson_writer & write_null() {
@@ -187,7 +202,16 @@ namespace cath {
 			bool is_complete() const {
 				return writer.IsComplete();
 			}
+
+			/// \brief Write a key and a value
+			template <typename   T>
+			rapidjson_writer & write_key_value(const std::string              &arg_key,    ///< The key to write
+			                                   const T                        &arg_value   ///< The value to write
+			                                   ) {
+				return write_key( arg_key ).write_value( arg_value );
+			}
 		};
+
 
 	} // namespace common
 } // namespace cath

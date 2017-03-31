@@ -78,6 +78,7 @@ string cath::rslv::to_string(const full_hit             &arg_full_hit,         /
 
 	switch ( arg_format ) {
 		case( hit_output_format::JON ) : {
+			const str_opt alnd_rgns_str_opt = get_first< hit_extra_cat::ALND_RGNS >( arg_full_hit.get_extras_store() );
 			return arg_prefix
 				+ ( arg_prefix.empty() ? ""s : " "s )
 				+ arg_full_hit.get_label()
@@ -91,8 +92,8 @@ string cath::rslv::to_string(const full_hit             &arg_full_hit,         /
 					: ""s
 				)
 				+ (
-					arg_full_hit.get_alnd_rgns_opt()
-					? " " + to_string( *arg_full_hit.get_alnd_rgns_opt() )
+					alnd_rgns_str_opt
+					? ( " " + *alnd_rgns_str_opt )
 					: ""s
 				);
 		}

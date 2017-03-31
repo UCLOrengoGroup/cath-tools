@@ -25,6 +25,7 @@
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath::common;
+using namespace cath::rslv;
 
 using boost::format;
 using std::string;
@@ -53,4 +54,34 @@ string cath::rslv::get_score_string(const full_hit &arg_full_hit,   ///< The ful
 		arg_full_hit.get_score_type(),
 		arg_num_figures
 	);
+}
+
+/// \brief Getter for the name to use when outputting the label (ie match-id)
+string full_hit::get_label_name() {
+	return "match-id";
+}
+
+/// \brief Getter for the name to use when outputting the resolved boundaries
+string full_hit::get_resolved_name() {
+	return "resolved";
+}
+
+/// \brief Getter for the name to use when outputting the score
+string full_hit::get_score_name() {
+	return "score";
+}
+
+/// \brief Getter for the name to use when outputting the score type
+string full_hit::get_score_type_name() {
+	return "score-type";
+}
+
+/// \brief Getter for the name to use when outputting the boundaries
+string full_hit::get_segments_name() {
+	return "boundaries";
+}
+
+/// \brief Getter for the name to use when outputting the trimmed boundaries
+string full_hit::get_trimmed_name() {
+	return "trimmed";
 }

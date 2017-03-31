@@ -121,9 +121,11 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 		const resscr_t bitscore               = parse_float_from_field ( bitscore_field_itrs.first,    bitscore_field_itrs.second    );
 		const residx_t start                  = parse_uint_from_field  ( start_res_field_itrs.first,   start_res_field_itrs.second   );
 		const residx_t stop                   = parse_uint_from_field  ( stop_res_field_itrs.first,    stop_res_field_itrs.second    );
+		const double   cond_evalue            = parse_double_from_field( cond_evalue_field_itrs.first, cond_evalue_field_itrs.second );
+		const double   indp_evalue            = parse_double_from_field( indp_evalue_field_itrs.first, indp_evalue_field_itrs.second );
 		const bool     evalues_are_susp       = hmmer_evalues_are_suspicious(
-			parse_double_from_field( cond_evalue_field_itrs.first, cond_evalue_field_itrs.second ),
-			parse_double_from_field( indp_evalue_field_itrs.first, indp_evalue_field_itrs.second )
+			cond_evalue,
+			indp_evalue
 		);
 
 		if ( bitscore <= 0 ) {
@@ -141,12 +143,17 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 			continue;
 		}
 
+		hit_extras_store extras_store;
+		extras_store.push_back< hit_extra_cat::COND_EVAL >( cond_evalue );
+		extras_store.push_back< hit_extra_cat::INDP_EVAL >( indp_evalue );
+
 		arg_read_and_process_mgr.add_hit(
 			target_id_str_ref,
 			{ { hit_seg{ arrow_before_res( start ), arrow_after_res ( stop  ) } } },
 			string{ query_field_itrs.first, query_field_itrs.second },
 			bitscore / bitscore_divisor( arg_apply_cath_policies, id_score_cat, evalues_are_susp ),
-			hit_score_type::BITSCORE
+			hit_score_type::BITSCORE,
+			std::move( extras_store )
 		);
 	}
 

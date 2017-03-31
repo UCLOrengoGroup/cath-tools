@@ -57,6 +57,12 @@ namespace cath {
 				/// \brief Whether the conditional and independent evalues are "suspicious" under the CATH-Gene3D rules
 				///        (see `cath-resolve-hits --cath-rules-help`)
 				bool     evalues_are_susp;
+
+				/// \brief The hit's conditional evalue
+				double   conditional_evalue;
+
+				/// \brief The hit's independent evalue
+				double   independent_evalue;
 			};
 
 			/// Type alias for a vector of hmmsearch_summary entries
@@ -231,6 +237,9 @@ namespace cath {
 					const auto env_from_itrs    = common::find_field_itrs( line, LINE_ENV_FROM_OFFSET,    1 + LINE_ALI_TO_OFFSET,      ali_to_itrs.second      );
 					const auto env_to_itrs      = common::find_field_itrs( line, LINE_ENV_TO_OFFSET,      1 + LINE_ENV_FROM_OFFSET,    env_from_itrs.second    );
 
+					const double conditional_evalue = common::parse_double_from_field( cond_evalue_itrs.first, cond_evalue_itrs.second );
+					const double independent_evalue = common::parse_double_from_field( indp_evalue_itrs.first, indp_evalue_itrs.second );
+
 					summaries.push_back( hmmsearch_summary{
 						common::parse_double_from_field( bitscore_itrs.first, bitscore_itrs.second ),
 						common::parse_uint_from_field  ( env_from_itrs.first, env_from_itrs.second ),
@@ -242,9 +251,11 @@ namespace cath {
 							? common::parse_uint_from_field ( ali_to_itrs.first,   ali_to_itrs.second   )
 							: 0,
 						hmmer_evalues_are_suspicious(
-							common::parse_double_from_field( cond_evalue_itrs.first, cond_evalue_itrs.second ),
-							common::parse_double_from_field( indp_evalue_itrs.first, indp_evalue_itrs.second )
-						)
+							conditional_evalue,
+							independent_evalue
+						),
+						conditional_evalue,
+						independent_evalue
 					} );
 
 					advance_line();
@@ -311,13 +322,20 @@ namespace cath {
 					segs.front().set_start_arrow( arrow_before_res( start ) );
 					segs.back ().set_stop_arrow ( arrow_after_res ( stop  ) );
 
+					hit_extras_store extras;
+					if ( arg_parse_hmmsearch_aln ) {
+						extras.push_back< hit_extra_cat::ALND_RGNS >( to_string( std::get<2>( aln_results ) ) );
+					}
+					extras.push_back< hit_extra_cat::COND_EVAL >( summ.conditional_evalue );
+					extras.push_back< hit_extra_cat::INDP_EVAL >( summ.independent_evalue );
+
 					arg_read_and_process_mgr.add_hit(
 						query_id,
-						segs,
+						std::move( segs ),
 						std::move( id_a ),
 						summ.bitscore / bitscore_divisor( arg_apply_cath_policies, id_score_cat, summ.evalues_are_susp ),
 						hit_score_type::BITSCORE,
-						std::move( alnd_rngs_opt )
+						std::move( extras )
 					);
 				}
 

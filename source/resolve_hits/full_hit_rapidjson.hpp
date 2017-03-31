@@ -39,22 +39,23 @@ namespace cath {
 		                        const full_hit_list_opt         &arg_hits         = boost::none  ///< An optional full_hit_list (from which the specified full_hit is drawn), which can be used for including the full_hit's resolved boundaries
 		                        ) {
 			arg_writer.start_object();
-			arg_writer.write_key( "match-id"     ).write_string( arg_full_hit.get_label()                   );
-			arg_writer.write_key( "score"        ).write_double( arg_full_hit.get_score()                   );
-			arg_writer.write_key( "score-type"   ).write_string( to_string( arg_full_hit.get_score_type() ) );
-			arg_writer.write_key( "boundaries"   );
+			arg_writer.write_key_value( full_hit::get_label_name(),       arg_full_hit.get_label()                   );
+			arg_writer.write_key_value( full_hit::get_score_name(),       arg_full_hit.get_score()                   );
+			arg_writer.write_key_value( full_hit::get_score_type_name(),  to_string( arg_full_hit.get_score_type() ) );
+			arg_writer.write_key( full_hit::get_segments_name()   );
 			write_to_rapidjson( arg_writer, arg_full_hit.get_segments() );
 			if ( arg_segment_spec ) {
-				arg_writer.write_key( "trimmed" );
+				arg_writer.write_key( full_hit::get_trimmed_name() );
 				write_to_rapidjson( arg_writer, get_segments( arg_full_hit, arg_segment_spec->get_overlap_trim_spec() ) );
 				if ( arg_hits ) {
-					arg_writer.write_key( "resolved" );
+					arg_writer.write_key( full_hit::get_resolved_name() );
 					write_to_rapidjson( arg_writer, get_present_segments( resolve_all_boundaries( arg_full_hit, *arg_hits, *arg_segment_spec ) ) );
 				}
 			}
-			const auto &alnd_rgns_opt = arg_full_hit.get_alnd_rgns_opt();
-			if ( alnd_rgns_opt ) {
-				arg_writer.write_key( "aligned_regions" ).write_string( to_string( *alnd_rgns_opt ) );
+			const auto extras_store = arg_full_hit.get_extras_store();
+			for (const auto &extra_info_pair : extras_store) {
+				arg_writer.write_key( to_string( extra_info_pair.first ) );
+				invoke_for_hit_extra_info( [&] (const auto &x) { arg_writer.write_value( x ); }, extra_info_pair );
 			}
 			arg_writer.end_object();
 		}

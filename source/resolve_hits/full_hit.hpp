@@ -25,6 +25,7 @@
 #include <boost/optional.hpp>
 
 #include "resolve_hits/file/alnd_rgn.hpp"
+#include "resolve_hits/hit_extras.hpp"
 #include "resolve_hits/hit_score_type.hpp"
 #include "resolve_hits/hit_seg.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
@@ -57,8 +58,8 @@ namespace cath {
 			/// \brief The type of score that's being used here
 			hit_score_type score_type;
 
-			/// \brief Any aligned regions parsed from an hmmsearch output alignment or boost::none otherwise
-			alnd_rgn_vec_opt alnd_rgns_opt;
+			/// \brief Store any extra information associated with the hit
+			hit_extras_store extras_store;
 
 			void sanity_check() const;
 
@@ -67,13 +68,20 @@ namespace cath {
 			         std::string,
 			         const double &,
 			         const hit_score_type & = hit_score_type::CRH_SCORE,
-			         alnd_rgn_vec_opt = boost::none);
+			         hit_extras_store = {});
 
 			const hit_seg_vec & get_segments() const;
 			const std::string & get_label() const;
 			const double & get_score() const;
 			const hit_score_type & get_score_type() const;
-			const alnd_rgn_vec_opt & get_alnd_rgns_opt() const;
+			const hit_extras_store & get_extras_store() const;
+
+			static std::string get_label_name();
+			static std::string get_resolved_name();
+			static std::string get_score_name();
+			static std::string get_score_type_name();
+			static std::string get_segments_name();
+			static std::string get_trimmed_name();
 		};
 
 		std::string get_score_string(const double &,
@@ -108,12 +116,12 @@ namespace cath {
 		                          std::string           arg_label,        ///< The label of the hits' match protein
 		                          const double         &arg_score,        ///< The score associated with the full_hit
 		                          const hit_score_type &arg_score_type,   ///< The type of score stored in this hit (eg evalue / bitscore / crh-score)
-		                          alnd_rgn_vec_opt      arg_alnd_rgns_opt ///< Any aligned regions parsed from an hmmsearch output alignment or boost::none otherwise
-		                          ) : segments     { std::move( arg_segments      ) },
-		                              label        { std::move( arg_label         ) },
-		                              the_score    { arg_score                      },
-		                              score_type   { arg_score_type                 },
-		                              alnd_rgns_opt{ std::move( arg_alnd_rgns_opt ) } {
+		                          hit_extras_store      arg_extras_store  ///< The store of any extra pieces of information associated with the hit
+		                          ) : segments     { std::move( arg_segments     ) },
+		                              label        { std::move( arg_label        ) },
+		                              the_score    { arg_score                     },
+		                              score_type   { arg_score_type                },
+		                              extras_store { std::move( arg_extras_store ) } {
 			sanity_check();
 		}
 
@@ -137,12 +145,14 @@ namespace cath {
 			return score_type;
 		}
 
-		/// \brief Getter for aligned regions if they were parsed from a hmmsearch files
-		inline const alnd_rgn_vec_opt & full_hit::get_alnd_rgns_opt() const {
-			return alnd_rgns_opt;
+		/// \brief Getter for the store of any extra pieces of information associated with the hit
+		inline const hit_extras_store & full_hit::get_extras_store() const {
+			return extras_store;
 		}
 
 		/// \brief Return whether the two specified full_hits are identical
+		///
+		/// Note: at present, doesn't require that the extras_stores match
 		///
 		/// \relates full_hit
 		inline bool operator==(const full_hit &arg_lhs, ///< The first  full_hit to compare
