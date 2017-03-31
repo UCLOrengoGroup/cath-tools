@@ -151,7 +151,7 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 			target_id_str_ref,
 			{ { hit_seg{ arrow_before_res( start ), arrow_after_res ( stop  ) } } },
 			string{ query_field_itrs.first, query_field_itrs.second },
-			bitscore / bitscore_divisor( arg_apply_cath_policies, id_score_cat, evalues_are_susp ),
+			bitscore / bitscore_divisor( arg_apply_cath_policies, evalues_are_susp ),
 			hit_score_type::BITSCORE,
 			std::move( extras_store )
 		);

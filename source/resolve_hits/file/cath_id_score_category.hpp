@@ -28,9 +28,8 @@ namespace cath {
 
 		/// \brief Represent the type of match ID, wrt the CATH-specific scoring that Jon uses
 		enum class cath_id_score_category : char {
-			NORMAL,     ///< A normal match (use this as the default if unsure)
-			DC_TYPE,    ///< An ID like dc_c869189e57e572c71376c2f3dfe7dc9c that is handled differently
-			LATER_ROUND ///< An ID like 2fcwB01_round_2 or 2ezwA00_round_3 (but not 2ffkB00_round_1 because that's first-round)
+			NORMAL, ///< A normal match (use this as the default if unsure)
+			DC_TYPE ///< An ID like dc_c869189e57e572c71376c2f3dfe7dc9c that is handled differently
 		};
 
 		cath_id_score_category cath_score_category_of_id(const boost::string_ref &,
@@ -42,9 +41,9 @@ namespace cath {
 		                          const cath_id_score_category &);
 
 		/// \brief Return whether the specified HMMER evalues are suspicious under the CATH-Gene3D rules
-		inline bool hmmer_evalues_are_suspicious(const double &arg_cond_evalue, ///< The HMMER conditional evalue
-		                                         const double &arg_indp_evalue  ///< The HMMER independent evalue
-		                                         ) {
+		inline constexpr bool hmmer_evalues_are_suspicious(const double &arg_cond_evalue, ///< The HMMER conditional evalue
+		                                                   const double &arg_indp_evalue  ///< The HMMER independent evalue
+		                                                   ) {
 			constexpr double EVALUE_CUTOFF = 0.001;
 			return (
 				arg_cond_evalue <= EVALUE_CUTOFF
@@ -53,14 +52,11 @@ namespace cath {
 			);
 		}
 
-		/// \brief Return the value by which the bitscore should be divided under the CATH-Gene3d rules
-		inline double bitscore_divisor(const bool                   &arg_apply_cath_policies, ///< Whether the CATH-Gene3D rules are to be applied (if not, then this will return 1.0 )
-		                               const cath_id_score_category &arg_id_score_cat,        ///< The category of ID under CATH-Gene3d
-		                               const bool                   &arg_evalues_are_susp     ///< Whether the HMMER evalues were demed suspicious
-		                               ) {
-			return ( arg_apply_cath_policies && arg_evalues_are_susp                                    ) ? 4.0 :
-			       ( arg_apply_cath_policies && arg_id_score_cat == cath_id_score_category::LATER_ROUND ) ? 2.0 :
-			                                                                                                1.0;
+		/// \brief Return the value by which the bitscore should be divided under the CATH-Gene3D rules
+		inline constexpr double bitscore_divisor(const bool                   &arg_apply_cath_policies, ///< Whether the CATH-Gene3D rules are to be applied (if not, then this will return 1.0 )
+		                                         const bool                   &arg_evalues_are_susp     ///< Whether the HMMER evalues were deemed suspicious
+		                                         ) {
+			return ( arg_apply_cath_policies && arg_evalues_are_susp ) ? 4.0 : 1.0;
 		}
 
 	} // namespace rslv

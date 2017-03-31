@@ -333,7 +333,7 @@ namespace cath {
 						query_id,
 						std::move( segs ),
 						std::move( id_a ),
-						summ.bitscore / bitscore_divisor( arg_apply_cath_policies, id_score_cat, summ.evalues_are_susp ),
+						summ.bitscore / bitscore_divisor( arg_apply_cath_policies, summ.evalues_are_susp ),
 						hit_score_type::BITSCORE,
 						std::move( extras )
 					);

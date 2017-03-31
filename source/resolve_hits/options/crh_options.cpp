@@ -305,7 +305,5 @@ If hit's match ID is like "dc_72a964d791dea7a3dd35a8bbf49385b8" (matches /^dc_\w
 	+ R"(file (ie keep the hit as one continuous segment)
 
 If the conditional-evalue is <= 0.001 but the independent-value is > 0.001, then quarter the bitscore when parsing the hit.
-
-Otherwise, if the hit's match ID is like "1pbyB00_round_3" (matches /_round_\d+$/ but not /_round_1$/), then halve the bitscore when parsing the hit.
 )";
 }

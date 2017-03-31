@@ -41,25 +41,15 @@ using std::string;
 cath_id_score_category cath::rslv::cath_score_category_of_id(const string_ref &arg_id,                 ///< The ID to examine
                                                              const bool       &arg_apply_cath_policies ///< Whether to actually examine arg_id, rather than just returning cath_id_score_category::NORMAL
                                                              ) {
-	if ( ! arg_apply_cath_policies ) {
-		return cath_id_score_category::NORMAL;
-	}
+	if ( arg_apply_cath_policies ) {
+		static const regex  dc_regex        { R"(^dc_\w{32}$)" };
+		static const string dc_prefix_suffix{ "dc_" };
 
-	static const regex  dc_regex        { R"(^dc_\w{32}$)" };
-	static const regex  round_regex     { R"(_round_\d+$)" };
-	static const string round_one_suffix{ "_round_1" };
-	static const string dc_prefix_suffix{ "dc_" };
-
-	if ( arg_id.ends_with( round_one_suffix ) ) {
-		return cath_id_score_category::NORMAL;
-	}
-	if ( arg_id.length() == 35 && arg_id.starts_with( dc_prefix_suffix ) ) {
-		if (   regex_search( common::cbegin( arg_id ), common::cend( arg_id ), dc_regex        ) ) {
-			return cath_id_score_category::DC_TYPE;
+		if ( arg_id.length() == 35 && arg_id.starts_with( dc_prefix_suffix ) ) {
+			if ( regex_search( common::cbegin( arg_id ), common::cend( arg_id ), dc_regex ) ) {
+				return cath_id_score_category::DC_TYPE;
+			}
 		}
-	}
-	if ( regex_search( common::cbegin( arg_id ), common::cend( arg_id ), round_regex     ) ) {
-		return cath_id_score_category::LATER_ROUND;
 	}
 	return cath_id_score_category::NORMAL;
 }
@@ -72,7 +62,6 @@ string cath::rslv::to_string(const cath_id_score_category &arg_cath_id_score_cat
 	switch ( arg_cath_id_score_category ) {
 		case ( cath_id_score_category::NORMAL      ) : { return "cath_id_score_category::NORMAL"      ; }
 		case ( cath_id_score_category::DC_TYPE     ) : { return "cath_id_score_category::DC_TYPE"     ; }
-		case ( cath_id_score_category::LATER_ROUND ) : { return "cath_id_score_category::LATER_ROUND" ; }
 	}
 	BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("Value of cath_id_score_category not recognised whilst converting to_string()"));
 }
