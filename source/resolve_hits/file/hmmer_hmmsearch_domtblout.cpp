@@ -118,7 +118,7 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 		const auto     start_res_field_itrs   = find_field_itrs( line_string, start_field_idx,       1 + BITSCORE_FIELD_IDX,    bitscore_field_itrs.second    );
 		const auto     stop_res_field_itrs    = find_field_itrs( line_string, stop_field_idx,        1 + start_field_idx,       start_res_field_itrs.second   );
 
-		const resscr_t bitscore               = parse_float_from_field ( bitscore_field_itrs.first,    bitscore_field_itrs.second    );
+		const double   bitscore               = parse_double_from_field( bitscore_field_itrs.first,    bitscore_field_itrs.second    );
 		const residx_t start                  = parse_uint_from_field  ( start_res_field_itrs.first,   start_res_field_itrs.second   );
 		const residx_t stop                   = parse_uint_from_field  ( stop_res_field_itrs.first,    stop_res_field_itrs.second    );
 		const double   cond_evalue            = parse_double_from_field( cond_evalue_field_itrs.first, cond_evalue_field_itrs.second );
