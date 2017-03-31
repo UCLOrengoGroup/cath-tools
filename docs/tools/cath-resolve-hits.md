@@ -125,6 +125,7 @@ Output:
   --output-trimmed-hits                          When writing out the final hits, output the hits' starts/stop as they are *after trimming*
   --summarise                                    Output a brief text summary of the input data (rather than processing it)
   --html-output                                  Output the results as HTML
+  --json-output                                  Output the results as JSON
   --export-css-file <file>                       Export the CSS used in the HTML output to <file>
 
 HTML:
