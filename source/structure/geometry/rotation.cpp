@@ -58,16 +58,16 @@ const rotation & rotation::IDENTITY_ROTATION() {
 /// \brief TODOCUMENT
 const rotation & rotation::ROTATE_X_TO_Y_TO_Z_TO_X() {
 	static const rotation rotate_x_to_y_to_z_to_x(0.0, 0.0, 1.0,
-                                                  1.0, 0.0, 0.0,
-                                                  0.0, 1.0, 0.0);
+	                                              1.0, 0.0, 0.0,
+	                                              0.0, 1.0, 0.0);
 	return rotate_x_to_y_to_z_to_x;
 }
 
 /// \brief TODOCUMENT
 const rotation & rotation::ROTATE_X_TO_Z_TO_Y_TO_X() {
 	static const rotation rotate_x_to_z_to_y_to_x(0.0, 1.0, 0.0,
-                                                  0.0, 0.0, 1.0,
-                                                  1.0, 0.0, 0.0);
+	                                              0.0, 0.0, 1.0,
+	                                              1.0, 0.0, 0.0);
 	return rotate_x_to_z_to_y_to_x;
 }
 
