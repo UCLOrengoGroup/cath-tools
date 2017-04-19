@@ -27,8 +27,8 @@
 #include "exception/invalid_argument_exception.hpp"
 #include "resolve_hits/algo/scored_arch_proxy.hpp"
 #include "resolve_hits/hit_arch.hpp"
-#include "resolve_hits/res_arrow.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
+#include "seq/seq_arrow.hpp"
 
 #include <vector>
 
@@ -51,30 +51,30 @@ namespace cath {
 			scored_arch_proxy_vec best_arches;
 
 			/// \brief The index (in best_arches) of the best architecture seen for all residue positions
-			std::vector<resarw_t> bests;
+			std::vector<seq::resarw_t> bests;
 
 		public:
-			explicit best_scan_arches(const residx_t &);
+			explicit best_scan_arches(const seq::residx_t &);
 
-			const scored_arch_proxy & get_best_scored_arch_up_to_arrow(const res_arrow &) const;
+			const scored_arch_proxy & get_best_scored_arch_up_to_arrow(const seq::seq_arrow &) const;
 
 			const scored_arch_proxy & get_best_scored_arch_so_far() const;
 
-			resscr_t extend_up_to_arrow(const res_arrow &);
+			resscr_t extend_up_to_arrow(const seq::seq_arrow &);
 
-			void add_best_up_to_arrow(const res_arrow &,
+			void add_best_up_to_arrow(const seq::seq_arrow &,
 			                          const scored_arch_proxy &);
 		};
 
 		inline const resscr_t & get_best_score_up_to_arrow(const best_scan_arches &,
-		                                                   const res_arrow &);
+		                                                   const seq::seq_arrow &);
 		inline const hit_arch & get_best_arch_up_to_arrow(const best_scan_arches &,
-		                                                  const res_arrow &);
+		                                                  const seq::seq_arrow &);
 		inline const resscr_t & get_best_score_so_far(const best_scan_arches &);
 		inline const hit_arch & get_best_arch_so_far(const best_scan_arches &);
 
 		/// \brief Ctor from the number of residues expected
-		inline best_scan_arches::best_scan_arches(const residx_t &arg_num_residues ///< The number of residues expected
+		inline best_scan_arches::best_scan_arches(const seq::residx_t &arg_num_residues ///< The number of residues expected
 		                                          ) {
 			bests.reserve( arg_num_residues + 1 ); // 1 more arrow than there are residues they surround
 
@@ -85,7 +85,7 @@ namespace cath {
 		}
 
 		/// \brief Get the best architecture (scored_arch_proxy) seen so far up to and including the specified arrow
-		inline const scored_arch_proxy & best_scan_arches::get_best_scored_arch_up_to_arrow(const res_arrow &arg_arrow ///< The point at which we want to know the optimum solution
+		inline const scored_arch_proxy & best_scan_arches::get_best_scored_arch_up_to_arrow(const seq::seq_arrow &arg_arrow ///< The point at which we want to know the optimum solution
 		                                                                                    ) const {
 			const auto &index = arg_arrow.get_index();
 #ifndef NDEBUG
@@ -103,7 +103,7 @@ namespace cath {
 		}
 
 		/// \brief Extend the previous best seen architecture as the best up to the specified arrow
-		inline resscr_t best_scan_arches::extend_up_to_arrow(const res_arrow &arg_arrow ///< The point up to which the previous best seen architecture is now known to still be the best
+		inline resscr_t best_scan_arches::extend_up_to_arrow(const seq::seq_arrow &arg_arrow ///< The point up to which the previous best seen architecture is now known to still be the best
 		                                                     ) {
 			const auto &index = arg_arrow.get_index();
 #ifndef NDEBUG
@@ -130,7 +130,7 @@ namespace cath {
 		///      (else, in a debug build, an exception will be thrown)
 		///
 		/// \relates best_scan_arches
-		inline void best_scan_arches::add_best_up_to_arrow(const res_arrow         &arg_arrow,      ///< The boundary associated with the new best
+		inline void best_scan_arches::add_best_up_to_arrow(const seq::seq_arrow    &arg_arrow,      ///< The boundary associated with the new best
 		                                                   const scored_arch_proxy &arg_scored_arch ///< The new best architecture
 		                                                   ) {
 #ifndef NDEBUG

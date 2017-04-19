@@ -34,13 +34,13 @@ namespace cath {
 		void parse_hmmsearch_out_file(read_and_process_mgr &,
 		                              const boost::filesystem::path &,
 		                              const bool &,
-		                              const residx_t &,
+		                              const seq::residx_t &,
 		                              const bool &);
 
 		void parse_hmmsearch_out(read_and_process_mgr &,
 		                         std::istream &,
 		                         const bool &,
-		                         const residx_t &,
+		                         const seq::residx_t &,
 		                         const bool &);
 
 	} // namespace rslv

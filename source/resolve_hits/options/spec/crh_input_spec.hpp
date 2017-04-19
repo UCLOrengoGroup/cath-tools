@@ -43,7 +43,7 @@ namespace cath {
 			hits_input_format_tag input_format           = DEFAULT_INPUT_FORMAT;
 
 			/// \brief The minimum gap length to consider when parsing an alignment
-			residx_t              min_gap_length         = DEFAULT_MIN_GAP_LENGTH;
+			seq::residx_t         min_gap_length         = DEFAULT_MIN_GAP_LENGTH;
 
 			/// \brief Whether the code can assume that the input data is pre-grouped by query_id
 			bool                  input_hits_are_grouped = DEFAULT_INPUT_HITS_ARE_GROUPED;
@@ -56,7 +56,7 @@ namespace cath {
 			static constexpr hits_input_format_tag DEFAULT_INPUT_FORMAT           = hits_input_format_tag::RAW_WITH_SCORES;
 
 			/// \brief The default value for the minimum gap length to consider when parsing an alignment
-			static constexpr residx_t              DEFAULT_MIN_GAP_LENGTH         = 30;
+			static constexpr seq::residx_t         DEFAULT_MIN_GAP_LENGTH         = 30;
 
 			/// \brief The default value for whether the code can assume that the input data is pre-grouped by query_id
 			static constexpr bool                  DEFAULT_INPUT_HITS_ARE_GROUPED = false;
@@ -64,13 +64,13 @@ namespace cath {
 			const path_opt & get_input_file() const;
 			const bool & get_read_from_stdin() const;
 			const hits_input_format_tag & get_input_format() const;
-			const residx_t & get_min_gap_length() const;
+			const seq::residx_t & get_min_gap_length() const;
 			const bool & get_input_hits_are_grouped() const;
 
 			crh_input_spec & set_input_file(const boost::filesystem::path &);
 			crh_input_spec & set_read_from_stdin(const bool &);
 			crh_input_spec & set_input_format(const hits_input_format_tag &);
-			crh_input_spec & set_min_gap_length(const residx_t &);
+			crh_input_spec & set_min_gap_length(const seq::residx_t &);
 			crh_input_spec & set_input_hits_are_grouped(const bool &);
 		};
 

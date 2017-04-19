@@ -37,7 +37,7 @@ namespace cath {
 			class masked_bests_cacher final {
 			private:
 				/// \brief A const_iterator type alias for a const_iterator over a res_arrow_vec
-				using const_iterator = res_arrow_vec::const_iterator;
+				using const_iterator = seq::res_arrow_vec::const_iterator;
 
 				/// \brief (A reference_wrapper to) the masked_bests_cached in which best results should be stored as appropriate
 				std::reference_wrapper<masked_bests_cache> cache_ref;
@@ -46,7 +46,7 @@ namespace cath {
 				std::reference_wrapper<const calc_hit_vec> masks_ref;
 
 				/// \brief The points at which best results should be stored
-				const res_arrow_vec arrows_to_store;
+				const seq::res_arrow_vec arrows_to_store;
 
 				/// \brief The current position
 				const_iterator current_itr;
@@ -57,9 +57,9 @@ namespace cath {
 			public:
 				masked_bests_cacher(masked_bests_cache &,
 				                    const calc_hit_vec &,
-				                    res_arrow_vec);
+				                    seq::res_arrow_vec);
 
-				void advance_to_pos_with_best_so_far(const res_arrow &,
+				void advance_to_pos_with_best_so_far(const seq::seq_arrow &,
 				                                     const scored_arch_proxy &);
 
 				void advance_to_end_with_best_so_far(const scored_arch_proxy &);
@@ -69,7 +69,7 @@ namespace cath {
 			inline void masked_bests_cacher::advance_to_itr_with_best_so_far(const const_iterator    &arg_itr,        ///< The iterator location to which to advance
 			                                                                 const scored_arch_proxy &arg_best_so_far ///< The best architecture (scored_arch_proxy) seen so far
 			                                                                 ) {
-				for (const res_arrow &the_arrow : boost::sub_range<const res_arrow_vec>( current_itr, arg_itr ) ) {
+				for (const seq::seq_arrow &the_arrow : boost::sub_range<const seq::res_arrow_vec>( current_itr, arg_itr ) ) {
 					store_best_for_masks_up_to_arrow(
 						cache_ref.get(),
 						arg_best_so_far,
@@ -85,7 +85,7 @@ namespace cath {
 			/// \pre `is_sorted( arg_arrows )`
 			inline masked_bests_cacher::masked_bests_cacher(masked_bests_cache  &arg_masked_bests_cache, ///< The cache to which the cacher should store
 			                                                const calc_hit_vec  &arg_masks,              ///< The currently-active masks that will define the unmasked-region signatures
-			                                                res_arrow_vec        arg_arrows              ///< The points at which to store results in the cache
+			                                                seq::res_arrow_vec   arg_arrows              ///< The points at which to store results in the cache
 			                                                ) : cache_ref       ( arg_masked_bests_cache            ),
 			                                                    masks_ref       ( arg_masks                         ),
 			                                                    arrows_to_store ( std::move( arg_arrows           ) ),
@@ -94,14 +94,14 @@ namespace cath {
 
 			/// \brief Advance to the specified position with the specified best architecture (scored_arch_proxy)
 			///        performing any cache-stores as appropriate
-			inline void masked_bests_cacher::advance_to_pos_with_best_so_far(const res_arrow         &arg_new_position, ///< The position to which to advance
+			inline void masked_bests_cacher::advance_to_pos_with_best_so_far(const seq::seq_arrow    &arg_new_position, ///< The position to which to advance
 			                                                                 const scored_arch_proxy &arg_best_so_far   ///< The best architecture (scored_arch_proxy) seen thus far
 			                                                                 ) {
 				advance_to_itr_with_best_so_far(
 					std::find_if(
 						current_itr,
 						common::cend( arrows_to_store ),
-						[&] (const res_arrow &x) { return x >= arg_new_position; }
+						[&] (const seq::seq_arrow &x) { return x >= arg_new_position; }
 					),
 					arg_best_so_far
 				);
@@ -120,11 +120,11 @@ namespace cath {
 			masked_bests_cacher make_masked_bests_cacher(masked_bests_cache &,
 			                                             const calc_hit_vec &,
 			                                             const discont_hits_index_by_start &,
-			                                             const res_arrow &);
+			                                             const seq::seq_arrow &);
 
-			res_arrow_vec get_arrows_before_starts_of_doms_right_interspersed_with_all_of(const calc_hit_vec &,
-			                                                                              const discont_hits_index_by_start &,
-			                                                                              const res_arrow &);
+			seq::res_arrow_vec get_arrows_before_starts_of_doms_right_interspersed_with_all_of(const calc_hit_vec &,
+			                                                                                   const discont_hits_index_by_start &,
+			                                                                                   const seq::seq_arrow &);
 
 		} // namespace detail
 	} // namespace rslv

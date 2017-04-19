@@ -31,9 +31,9 @@
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
-#include "resolve_hits/hit_seg.hpp"
-#include "resolve_hits/res_arrow.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
+#include "seq/seq_arrow.hpp"
+#include "seq/seq_seg.hpp"
 
 using namespace cath::common::literals;
 
@@ -41,8 +41,8 @@ namespace cath {
 	namespace rslv {
 
 		class calc_hit;
-		inline res_arrow get_stop_of_first_segment(const calc_hit &);
-		inline res_arrow get_start_of_last_segment(const calc_hit &);
+		inline seq::seq_arrow get_stop_of_first_segment(const calc_hit &);
+		inline seq::seq_arrow get_start_of_last_segment(const calc_hit &);
 
 		/// \brief Represent a single calc_hit (ie one domain) with a score, label and one or more segments
 		///
@@ -56,10 +56,10 @@ namespace cath {
 		class calc_hit final {
 		private:
 			/// \brief The boundary at the start of the first segment
-			res_arrow start_arrow;
+			seq::seq_arrow start_arrow;
 
 			/// \brief The boundary at the end of the last segment
-			res_arrow stop_arrow;
+			seq::seq_arrow stop_arrow;
 
 			/// \brief The score associated with this calc_hit
 			///
@@ -70,35 +70,35 @@ namespace cath {
 			hitidx_t label_idx;
 
 			/// \brief The (possibly empty) list of the boundaries associated with any gaps between this calc_hit's segments
-			hit_seg_vec fragments;
+			seq::seq_seg_vec fragments;
 
 			void sanity_check() const;
 
 		public:
-			calc_hit(res_arrow,
-			         res_arrow,
+			calc_hit(seq::seq_arrow,
+			         seq::seq_arrow,
 			         const resscr_t &,
 			         const hitidx_t &);
 
-			calc_hit(const hit_seg_vec &,
+			calc_hit(const seq::seq_seg_vec &,
 			         const resscr_t &,
 			         const hitidx_t &);
 
-			calc_hit(res_arrow,
-			         res_arrow,
-			         hit_seg_vec,
+			calc_hit(seq::seq_arrow,
+			         seq::seq_arrow,
+			         seq::seq_seg_vec,
 			         const resscr_t &,
 			         const hitidx_t &);
 
 			bool is_discontig() const;
 			size_t get_num_segments() const;
-			const res_arrow & get_start_arrow_of_segment(const size_t &) const;
-			const res_arrow & get_stop_arrow_of_segment(const size_t &) const;
+			const seq::seq_arrow & get_start_arrow_of_segment(const size_t &) const;
+			const seq::seq_arrow & get_stop_arrow_of_segment(const size_t &) const;
 
-			const res_arrow   & get_start_arrow() const;
-			const res_arrow   & get_stop_arrow()  const;
-			const resscr_t    & get_score()       const;
-			const hitidx_t    & get_label_idx() const;
+			const seq::seq_arrow & get_start_arrow() const;
+			const seq::seq_arrow & get_stop_arrow () const;
+			const resscr_t       & get_score      () const;
+			const hitidx_t       & get_label_idx  () const;
 
 			static auto get_hit_start_less() {
 				return [] (const calc_hit &x, const calc_hit &y) {
@@ -161,8 +161,8 @@ namespace cath {
 		}
 
 		/// \brief Ctor for contiguous calc_hit
-		inline calc_hit::calc_hit(res_arrow        arg_start_arrow, ///< The start boundary of the continuous calc_hit
-		                          res_arrow        arg_stop_arrow,  ///< The end boundary of the continuous calc_hit
+		inline calc_hit::calc_hit(seq::seq_arrow   arg_start_arrow, ///< The start boundary of the continuous calc_hit
+		                          seq::seq_arrow   arg_stop_arrow,  ///< The end boundary of the continuous calc_hit
 		                          const resscr_t  &arg_score,       ///< The score associated with the calc_hit
 		                          const hitidx_t  &arg_label_idx    ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
 		                          ) : start_arrow ( std::move( arg_start_arrow ) ),
@@ -173,9 +173,9 @@ namespace cath {
 		}
 
 		/// \brief Ctor for a possibly discontinuous calc_hit from segments
-		inline calc_hit::calc_hit(const hit_seg_vec &arg_segments, ///< The segments of the calc_hit
-		                          const resscr_t    &arg_score,    ///< The score associated with the calc_hit
-		                          const hitidx_t    &arg_label_idx ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
+		inline calc_hit::calc_hit(const seq::seq_seg_vec &arg_segments, ///< The segments of the calc_hit
+		                          const resscr_t         &arg_score,    ///< The score associated with the calc_hit
+		                          const hitidx_t         &arg_label_idx ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
 		                          ) : start_arrow ( arg_segments.front().get_start_arrow()      ),
 		                              stop_arrow  ( arg_segments.back ().get_stop_arrow ()      ),
 		                              score       ( arg_score                                   ),
@@ -185,11 +185,11 @@ namespace cath {
 		}
 
 		/// \brief Ctor for a possibly discontinuous calc_hit from start, stop and fragments
-		inline calc_hit::calc_hit(res_arrow arg_start_arrow,       ///< The boundary at the start of the first segment
-		                          res_arrow arg_stop_arrow,        ///< The boundary at the end of the last segment
-		                          hit_seg_vec arg_fragments,       ///< The (possibly empty) list of the boundaries associated with any gaps between this calc_hit's segments
-		                          const resscr_t    &arg_score,    ///< The score associated with the calc_hit
-		                          const hitidx_t    &arg_label_idx ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
+		inline calc_hit::calc_hit(seq::seq_arrow     arg_start_arrow, ///< The boundary at the start of the first segment
+		                          seq::seq_arrow     arg_stop_arrow,  ///< The boundary at the end of the last segment
+		                          seq::seq_seg_vec   arg_fragments,   ///< The (possibly empty) list of the boundaries associated with any gaps between this calc_hit's segments
+		                          const resscr_t    &arg_score,       ///< The score associated with the calc_hit
+		                          const hitidx_t    &arg_label_idx    ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
 		                          ) : start_arrow (std::move( arg_start_arrow        )),
 		                              stop_arrow  (std::move( arg_stop_arrow         )),
 		                              score       ( arg_score              ),
@@ -209,15 +209,15 @@ namespace cath {
 		}
 
 		/// \brief Get the start boundary of the segment with the specified index
-		inline const res_arrow & calc_hit::get_start_arrow_of_segment(const size_t &arg_segment_index ///< The index of the segment whose start arrow should be returned
-		                                                              ) const {
+		inline const seq::seq_arrow & calc_hit::get_start_arrow_of_segment(const size_t &arg_segment_index ///< The index of the segment whose start arrow should be returned
+		                                                                   ) const {
 			return ( arg_segment_index > 0                ) ? fragments[ arg_segment_index - 1 ].get_stop_arrow()
 			                                                : start_arrow;
 		}
 
 		/// \brief Get the stop boundary of the segment with the specified index
-		inline const res_arrow & calc_hit::get_stop_arrow_of_segment(const size_t &arg_segment_index ///< The index of the segment whose stop arrow should be returned
-		                                                             ) const {
+		inline const seq::seq_arrow & calc_hit::get_stop_arrow_of_segment(const size_t &arg_segment_index ///< The index of the segment whose stop arrow should be returned
+		                                                                  ) const {
 			return ( arg_segment_index < fragments.size() ) ? fragments[ arg_segment_index     ].get_start_arrow()
 			                                                : stop_arrow;
 		}
@@ -225,7 +225,7 @@ namespace cath {
 		/// \brief Get the length of the specified calc_hit's segment corresponding to the specified index
 		///
 		/// \relates calc_hit
-		inline size_t get_length_of_hit_seg(const calc_hit &arg_hit,    ///< The calc_hit to query
+		inline size_t get_length_of_seq_seg(const calc_hit &arg_hit,    ///< The calc_hit to query
 		                                    const size_t   &arg_seg_idx ///< The index of the segment who length should be returned
 		                                    ) {
 			return static_cast<size_t>(
@@ -238,9 +238,9 @@ namespace cath {
 		/// \brief Get the specified calc_hit's segment corresponding to the specified index
 		///
 		/// \relates calc_hit
-		inline hit_seg get_hit_seg_of_seg_idx(const calc_hit &arg_hit,    ///< The calc_hit to query
-		                                      const size_t   &arg_seg_idx ///< The index of the segment to return
-		                                      ) {
+		inline seq::seq_seg get_seq_seg_of_seg_idx(const calc_hit &arg_hit,    ///< The calc_hit to query
+		                                           const size_t   &arg_seg_idx ///< The index of the segment to return
+		                                           ) {
 			return {
 				arg_hit.get_start_arrow_of_segment( arg_seg_idx ),
 				arg_hit.get_stop_arrow_of_segment ( arg_seg_idx )
@@ -250,12 +250,12 @@ namespace cath {
 		/// \brief Get a vector of the segments in this calc_hit
 		///
 		/// \relates calc_hit
-		inline const hit_seg_vec get_hit_segs(const calc_hit &arg_hit ///< The calc_hit to query
-		                                      ) {
-			return common::transform_build<hit_seg_vec>(
+		inline const seq::seq_seg_vec get_seq_segs(const calc_hit &arg_hit ///< The calc_hit to query
+		                                           ) {
+			return common::transform_build<seq::seq_seg_vec>(
 				boost::irange( 0_z, arg_hit.get_num_segments() ),
 				[&] (const size_t &x) {
-					return get_hit_seg_of_seg_idx( arg_hit, x );
+					return get_seq_seg_of_seg_idx( arg_hit, x );
 				}
 			);
 		}
@@ -263,28 +263,28 @@ namespace cath {
 		/// \brief Get the (possibly-repeated, non-sorted) segments from the specified hits
 		///
 		/// \relates calc_hit
-		inline const hit_seg_vec get_hit_segs(const calc_hit_vec &arg_hit_vec ///< The hits whose segments should be returned
-		                                      ) {
-			hit_seg_vec results;
+		inline const seq::seq_seg_vec get_seq_segs(const calc_hit_vec &arg_hit_vec ///< The hits whose segments should be returned
+		                                           ) {
+			seq::seq_seg_vec results;
 			for (const calc_hit &the_hit : arg_hit_vec) {
-				common::append( results, get_hit_segs( the_hit ) );
+				common::append( results, get_seq_segs( the_hit ) );
 			}
 			return results;
 		}
 
 		/// \brief Get a vector of the specified hits' segments, sorted by their starts
-		inline hit_seg_vec get_start_sorted_hit_segs(const calc_hit_vec &arg_hit_vec ///< The vector of hits to query
-		                                             ) {
-			return start_sort_hit_segs_copy( get_hit_segs( arg_hit_vec ) );
+		inline seq::seq_seg_vec get_start_sorted_seq_segs(const calc_hit_vec &arg_hit_vec ///< The vector of hits to query
+		                                                  ) {
+			return start_sort_seq_segs_copy( get_seq_segs( arg_hit_vec ) );
 		}
 
 		/// \brief Get the (first) start of this calc_hit
-		inline const res_arrow & calc_hit::get_start_arrow() const {
+		inline const seq::seq_arrow & calc_hit::get_start_arrow() const {
 			return start_arrow;
 		}
 
 		/// \brief Get the (last) stop of this calc_hit
-		inline const res_arrow & calc_hit::get_stop_arrow()  const {
+		inline const seq::seq_arrow & calc_hit::get_stop_arrow()  const {
 			return stop_arrow;
 		}
 
@@ -301,34 +301,34 @@ namespace cath {
 		/// \brief Get the start residue index of the segment of specified index in the specified calc_hit
 		///
 		/// \relates calc_hit
-		inline const residx_t & get_start_res_index_of_segment(const calc_hit &arg_hit,          ///< The calc_hit to query
-		                                                       const size_t   &arg_segment_index ///< The index of the segment to query
-		                                                       ) {
+		inline const seq::residx_t & get_start_res_index_of_segment(const calc_hit &arg_hit,          ///< The calc_hit to query
+		                                                            const size_t   &arg_segment_index ///< The index of the segment to query
+		                                                            ) {
 			return arg_hit.get_start_arrow_of_segment( arg_segment_index ).res_after();
 		}
 
 		/// \brief Get the stop residue index of the segment of specified index in the specified calc_hit
 		///
 		/// \relates calc_hit
-		inline residx_t get_stop_res_index_of_segment(const calc_hit &arg_hit,          ///< The calc_hit to query
-		                                              const size_t   &arg_segment_index ///< The index of the segment to query
-		                                              ) {
+		inline seq::residx_t get_stop_res_index_of_segment(const calc_hit &arg_hit,          ///< The calc_hit to query
+		                                                   const size_t   &arg_segment_index ///< The index of the segment to query
+		                                                   ) {
 			return arg_hit.get_stop_arrow_of_segment( arg_segment_index ).res_before();
 		}
 
 		/// \brief Get the start residue index of the specified calc_hit
 		///
 		/// \relates calc_hit
-		inline const residx_t & get_start_res_index(const calc_hit &arg_hit ///< The calc_hit to query
-		                                            ) {
+		inline const seq::residx_t & get_start_res_index(const calc_hit &arg_hit ///< The calc_hit to query
+		                                                 ) {
 			return arg_hit.get_start_arrow().res_after();
 		}
 
 		/// \brief Get the stop residue index of the specified calc_hit
 		///
 		/// \relates calc_hit
-		inline residx_t get_stop_res_index(const calc_hit &arg_hit ///< The calc_hit to query
-		                                   ) {
+		inline seq::residx_t get_stop_res_index(const calc_hit &arg_hit ///< The calc_hit to query
+		                                        ) {
 			return arg_hit.get_stop_arrow().res_before();
 		}
 
@@ -337,8 +337,8 @@ namespace cath {
 		/// \pre `arg_hit.is_discontig()` else an invalid_argument_exception will be thrown
 		///
 		/// \relates calc_hit
-		inline res_arrow get_stop_of_first_segment(const calc_hit &arg_hit ///< The calc_hit to query
-		                                           ) {
+		inline seq::seq_arrow get_stop_of_first_segment(const calc_hit &arg_hit ///< The calc_hit to query
+		                                                ) {
 			if ( ! arg_hit.is_discontig() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_stop_of_first_segment of contiguous calc_hit"));
 			}
@@ -350,8 +350,8 @@ namespace cath {
 		/// \pre `arg_hit.is_discontig()` else an invalid_argument_exception will be thrown
 		///
 		/// \relates calc_hit
-		inline res_arrow get_start_of_last_segment(const calc_hit &arg_hit ///< The calc_hit to query
-		                                           ) {
+		inline seq::seq_arrow get_start_of_last_segment(const calc_hit &arg_hit ///< The calc_hit to query
+		                                                ) {
 			if ( ! arg_hit.is_discontig() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_start_of_last_segment of contiguous calc_hit"));
 			}
@@ -366,7 +366,7 @@ namespace cath {
 			return boost::accumulate(
 				boost::irange( 0_z, arg_hit.get_num_segments() )
 					| boost::adaptors::transformed( [&] (const size_t &x) {
-						return get_length_of_hit_seg( arg_hit, x );
+						return get_length_of_seq_seg( arg_hit, x );
 					} ),
 				0_z
 			);
@@ -375,14 +375,14 @@ namespace cath {
 		/// \brief Make a continuous calc_hit from the residue indices
 		///
 		/// \relates calc_hit
-		inline calc_hit make_hit_from_res_indices(const residx_t &arg_start_res_idx, ///< The start residue index
-		                                          const residx_t &arg_stop_res_idx,  ///< The stop residue index
-		                                          const resscr_t &arg_score,         ///< The score associated with the calc_hit
-		                                          const hitidx_t &arg_label_idx      ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
+		inline calc_hit make_hit_from_res_indices(const seq::residx_t &arg_start_res_idx, ///< The start residue index
+		                                          const seq::residx_t &arg_stop_res_idx,  ///< The stop residue index
+		                                          const resscr_t      &arg_score,         ///< The score associated with the calc_hit
+		                                          const hitidx_t      &arg_label_idx      ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
 		                                          ) {
 			return {
-				arrow_before_res( arg_start_res_idx ),
-				arrow_after_res ( arg_stop_res_idx  ),
+				seq::arrow_before_res( arg_start_res_idx ),
+				seq::arrow_after_res ( arg_stop_res_idx  ),
 				arg_score,
 				arg_label_idx
 			};
@@ -396,9 +396,9 @@ namespace cath {
 		                                          const hitidx_t               &arg_label_idx               ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
 		                                          ) {
 			return {
-				common::transform_build<hit_seg_vec>(
+				common::transform_build<seq::seq_seg_vec>(
 					arg_residue_index_segments,
-					hit_seg_of_res_idx_pair
+					seq::seq_seg_of_res_idx_pair
 				),
 				arg_score,
 				arg_label_idx
@@ -437,9 +437,9 @@ namespace cath {
 			}
 			for (const auto &seg_ctr_a : boost::irange( 0_z, arg_hit_a.get_num_segments() ) ) {
 				for (const auto &seg_ctr_b : boost::irange( 0_z, arg_hit_b.get_num_segments() ) ) {
-					const bool seg_overlap = hit_segs_overlap(
-						get_hit_seg_of_seg_idx( arg_hit_a, seg_ctr_a ),
-						get_hit_seg_of_seg_idx( arg_hit_b, seg_ctr_b )
+					const bool seg_overlap = seq_segs_overlap(
+						get_seq_seg_of_seg_idx( arg_hit_a, seg_ctr_a ),
+						get_seq_seg_of_seg_idx( arg_hit_b, seg_ctr_b )
 					);
 					if ( seg_overlap ) {
 						return true;

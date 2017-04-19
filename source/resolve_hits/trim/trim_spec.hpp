@@ -26,8 +26,8 @@
 
 #include "common/debug_numeric_cast.hpp"
 #include "common/type_aliases.hpp"
-#include "resolve_hits/hit_seg.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
+#include "seq/seq_seg.hpp"
 
 #include <stdexcept>
 
@@ -45,25 +45,25 @@ namespace cath {
 		class trim_spec final {
 		private:
 			/// \brief The length of a segment on which the trimming is to be defined
-			residx_t full_length = DEFAULT_FULL_LENGTH;
+			seq::residx_t full_length = DEFAULT_FULL_LENGTH;
 
 			/// \brief The total amount of trimming (split between start and end) to be performed on a segment of the specified length
-			residx_t total_trimming = DEFAULT_TOTAL_TRIMMING;
+			seq::residx_t total_trimming = DEFAULT_TOTAL_TRIMMING;
 
 		public:
 			/// \brief The default value for the length of a segment on which the trimming is to be defined
-			static constexpr residx_t DEFAULT_FULL_LENGTH = 1;
+			static constexpr seq::residx_t DEFAULT_FULL_LENGTH = 1;
 
 			/// \brief The default value for the total amount of trimming (split between start and end) to be performed on a segment of the specified length
-			static constexpr residx_t DEFAULT_TOTAL_TRIMMING = 0;
+			static constexpr seq::residx_t DEFAULT_TOTAL_TRIMMING = 0;
 
 			constexpr trim_spec() noexcept = default;
 
-			constexpr trim_spec(const residx_t &,
-			                    const residx_t &);
+			constexpr trim_spec(const seq::residx_t &,
+			                    const seq::residx_t &);
 
-			constexpr const residx_t & get_full_length() const noexcept;
-			constexpr const residx_t & get_total_trimming() const noexcept;
+			constexpr const seq::residx_t & get_full_length() const noexcept;
+			constexpr const seq::residx_t & get_total_trimming() const noexcept;
 		};
 		
 
@@ -79,16 +79,16 @@ namespace cath {
 		std::istream & operator>>(std::istream &,
 		                          trim_spec &);
 
-		std::string to_possibly_trimmed_simple_string(const hit_seg &,
+		std::string to_possibly_trimmed_simple_string(const seq::seq_seg &,
 		                                              const trim_spec_opt &);
 
-		hit_seg_vec get_segments(const hit_seg_vec &,
-		                         const trim_spec_opt &);
+		seq::seq_seg_vec get_segments(const seq::seq_seg_vec &,
+		                              const trim_spec_opt &);
 
-		std::string get_segments_string(const hit_seg_vec &,
+		std::string get_segments_string(const seq::seq_seg_vec &,
 		                                const trim_spec_opt &);
 
-		std::string get_segments_string(const hit_seg_opt_vec &,
+		std::string get_segments_string(const seq::seq_seg_opt_vec &,
 		                                const trim_spec_opt &);
 
 		void validate(boost::any &,
@@ -97,8 +97,8 @@ namespace cath {
 		              int);
 
 		/// \brief Ctor for a trim_spec from the full_length and total_trimming
-		constexpr trim_spec::trim_spec(const residx_t &arg_full_length,   ///< The length of a segment on which the trimming is to be defined
-		                               const residx_t &arg_total_trimming ///< The total amount of trimming (split between start and end) to be performed on a segment of the specified length
+		constexpr trim_spec::trim_spec(const seq::residx_t &arg_full_length,   ///< The length of a segment on which the trimming is to be defined
+		                               const seq::residx_t &arg_total_trimming ///< The total amount of trimming (split between start and end) to be performed on a segment of the specified length
 		                               ) : full_length   { arg_full_length },
 		                                   total_trimming{
 		                                   	( arg_total_trimming < arg_full_length )
@@ -110,12 +110,12 @@ namespace cath {
 		}
 
 		/// \brief Getter for the length of a segment on which the trimming is to be defined
-		constexpr const residx_t & trim_spec::get_full_length() const noexcept {
+		constexpr const seq::residx_t & trim_spec::get_full_length() const noexcept {
 			return full_length;
 		}
 
 		/// \brief Getter for the total amount of trimming (split between start and end) to be performed on a segment of the specified length
-		constexpr const residx_t & trim_spec::get_total_trimming() const noexcept {
+		constexpr const seq::residx_t & trim_spec::get_total_trimming() const noexcept {
 			return total_trimming;
 		}
 
@@ -127,9 +127,9 @@ namespace cath {
 		/// \brief Get the total trimming resulting from applying the specified trim_spec on a segment of the specified length
 		///
 		/// \relates trim_spec
-		constexpr residx_t total_trimming_of_length(const trim_spec &arg_trim_spec, ///< The trim_spec to apply
-		                                            const residx_t  &arg_length     ///< The length of the segment in question
-		                                            ) {
+		constexpr seq::residx_t total_trimming_of_length(const trim_spec     &arg_trim_spec, ///< The trim_spec to apply
+		                                                 const seq::residx_t &arg_length     ///< The length of the segment in question
+		                                                 ) {
 			return
 				( arg_length == 0 )
 					? 0
@@ -141,78 +141,78 @@ namespace cath {
 		/// \brief Get the length-after-trimming resulting from applying the specified trim_spec on a segment of the specified length
 		///
 		/// \relates trim_spec
-		constexpr residx_t length_after_trimming(const trim_spec &arg_trim_spec, ///< The trim_spec to apply
-		                                         const residx_t  &arg_length     ///< The length of the segment in question
-		                                         ) {
+		constexpr seq::residx_t length_after_trimming(const trim_spec     &arg_trim_spec, ///< The trim_spec to apply
+		                                              const seq::residx_t &arg_length     ///< The length of the segment in question
+		                                              ) {
 			return arg_length - total_trimming_of_length( arg_trim_spec, arg_length );
 		}
 
 		/// \brief Get the trimming to be applied at the start resulting from applying the specified trim_spec on a segment of the specified length
 		///
 		/// \relates trim_spec
-		constexpr residx_t start_trimming_of_length(const trim_spec &arg_trim_spec, ///< The trim_spec to apply
-		                                            const residx_t  &arg_length     ///< The length of the segment in question
-		                                            ) {
+		constexpr seq::residx_t start_trimming_of_length(const trim_spec     &arg_trim_spec, ///< The trim_spec to apply
+		                                                 const seq::residx_t &arg_length     ///< The length of the segment in question
+		                                                 ) {
 			return total_trimming_of_length( arg_trim_spec, arg_length ) / 2;
 		}
 
 		/// \brief Get the trimming to be applied at the stop resulting from applying the specified trim_spec on a segment of the specified length
 		///
 		/// \relates trim_spec
-		constexpr residx_t stop_trimming_of_length(const trim_spec &arg_trim_spec, ///< The trim_spec to apply
-		                                           const residx_t  &arg_length     ///< The length of the segment in question
-		                                           ) {
+		constexpr seq::residx_t stop_trimming_of_length(const trim_spec     &arg_trim_spec, ///< The trim_spec to apply
+		                                                const seq::residx_t &arg_length     ///< The length of the segment in question
+		                                                ) {
 			return
 				( total_trimming_of_length( arg_trim_spec, arg_length ) / 2 )
 				+
 				( total_trimming_of_length( arg_trim_spec, arg_length ) % 2 );
 		}
 
-		/// \brief Trim the specified hit_seg according to the specified trim_spec
+		/// \brief Trim the specified seq_seg according to the specified trim_spec
 		///
 		/// \todo Come relaxed constexpr, make this constexpr
 		///
 		/// \relates trim_spec
-		inline void trim_hit_seg(hit_seg         &arg_hit_seg,    ///< The hit_seg to trim
+		inline void trim_seq_seg(seq::seq_seg    &arg_seq_seg,    ///< The seq_seg to trim
 		                         const trim_spec &arg_trim_spec ///< The trim_spec to apply
 		                         ) {
-			const auto length = get_length( arg_hit_seg );
-			arg_hit_seg.set_start_arrow( arg_hit_seg.get_start_arrow() + start_trimming_of_length( arg_trim_spec, length ) );
-			arg_hit_seg.set_stop_arrow ( arg_hit_seg.get_stop_arrow () - stop_trimming_of_length ( arg_trim_spec, length ) );
+			const auto length = get_length( arg_seq_seg );
+			arg_seq_seg.set_start_arrow( arg_seq_seg.get_start_arrow() + start_trimming_of_length( arg_trim_spec, length ) );
+			arg_seq_seg.set_stop_arrow ( arg_seq_seg.get_stop_arrow () - stop_trimming_of_length ( arg_trim_spec, length ) );
 		}
 
-		/// \brief Return a copy of the specified hit_seg, trimmed according to the specified trim_spec
+		/// \brief Return a copy of the specified seq_seg, trimmed according to the specified trim_spec
 		///
 		/// \todo Come relaxed constexpr, make this constexpr
 		///
 		/// \relates trim_spec
-		inline hit_seg trim_hit_seg_copy(hit_seg          arg_hit_seg,  ///< The hit_seg to trim
-		                                 const trim_spec &arg_trim_spec ///< The trim_spec to apply
-		                                 ) {
-			trim_hit_seg( arg_hit_seg, arg_trim_spec );
-			return arg_hit_seg;
+		inline seq::seq_seg trim_seq_seg_copy(seq::seq_seg     arg_seq_seg,  ///< The seq_seg to trim
+		                                      const trim_spec &arg_trim_spec ///< The trim_spec to apply
+		                                      ) {
+			trim_seq_seg( arg_seq_seg, arg_trim_spec );
+			return arg_seq_seg;
 		}
 
-		/// \brief Return a copy of the specified hit_seg, trimmed according to the specified trim_spec if specified
+		/// \brief Return a copy of the specified seq_seg, trimmed according to the specified trim_spec if specified
 		///
 		/// \relates trim_spec
-		inline hit_seg trim_hit_seg_copy(hit_seg              arg_hit_seg,  ///< The hit_seg to trim
-		                                 const trim_spec_opt &arg_trim_spec ///< The trim_spec to apply
-		                                 ) {
-			return arg_trim_spec ? trim_hit_seg_copy( std::move( arg_hit_seg ), *arg_trim_spec )
-			                     : arg_hit_seg;
+		inline seq::seq_seg trim_seq_seg_copy(seq::seq_seg         arg_seq_seg,  ///< The seq_seg to trim
+		                                      const trim_spec_opt &arg_trim_spec ///< The trim_spec to apply
+		                                      ) {
+			return arg_trim_spec ? trim_seq_seg_copy( std::move( arg_seq_seg ), *arg_trim_spec )
+			                     : arg_seq_seg;
 		}
 
 		/// \brief Get the trimmed start/stop resulting from applying the specified trim_spec on a segment with the specified start/stop
 		///
 		/// \relates trim_spec
-		constexpr residx_residx_pair trim_copy_start_stop(const trim_spec &arg_trim_spec, ///< The trim_spec to apply
-		                                                  const residx_t  &arg_start,     ///< The start residue index of the segment in question
-		                                                  const residx_t  &arg_stop       ///< The stop  residue index of the segment in question
-		                                                  ) {
+		constexpr seq::residx_residx_pair trim_copy_start_stop(const trim_spec     &arg_trim_spec, ///< The trim_spec to apply
+		                                                       const seq::residx_t &arg_start,     ///< The start residue index of the segment in question
+		                                                       const seq::residx_t &arg_stop       ///< The stop  residue index of the segment in question
+		                                                       ) {
 			return ( arg_stop < arg_start )
 				? throw std::invalid_argument("stop must not come before start")
-				: residx_residx_pair{
+				: seq::residx_residx_pair{
 					arg_start + start_trimming_of_length( arg_trim_spec, arg_stop + 1 - arg_start ),
 					arg_stop  - stop_trimming_of_length ( arg_trim_spec, arg_stop + 1 - arg_start )
 				};

@@ -1,5 +1,5 @@
 /// \file
-/// \brief The hit_seg_boundary_fns class header
+/// \brief The seq_seg_boundary_fns class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -36,27 +36,27 @@ namespace cath {
 				STOP   ///< The stop boundary is wanted
 			};
 
-			res_arrow_opt get_boundary_impl(const boundary_wanted &,
-			                                const hit_seg &,
-			                                const hit_seg_vec &,
-			                                const crh_segment_spec &);
+			seq::res_arrow_opt get_boundary_impl(const boundary_wanted &,
+			                                     const seq::seq_seg &,
+			                                     const seq::seq_seg_vec &,
+			                                     const crh_segment_spec &);
 		} // namespace detail
 
-		res_arrow_opt get_start_boundary(const hit_seg &,
-		                                 const hit_seg_vec &,
-		                                 const crh_segment_spec &);
+		seq::res_arrow_opt get_start_boundary(const seq::seq_seg &,
+		                                      const seq::seq_seg_vec &,
+		                                      const crh_segment_spec &);
 
-		res_arrow_opt get_stop_boundary(const hit_seg &,
-		                                const hit_seg_vec &,
-		                                const crh_segment_spec &);
+		seq::res_arrow_opt get_stop_boundary(const seq::seq_seg &,
+		                                     const seq::seq_seg_vec &,
+		                                     const crh_segment_spec &);
 
-		seg_boundary_pair get_boundary_pair(const hit_seg &,
-		                                    const hit_seg_vec &,
+		seg_boundary_pair get_boundary_pair(const seq::seq_seg &,
+		                                    const seq::seq_seg_vec &,
 		                                    const crh_segment_spec &);
 
-		res_arrow_opt calc_resolved_boundary(const hit_seg &,
-		                                     const hit_seg &,
-		                                     const trim_spec &);
+		seq::res_arrow_opt calc_resolved_boundary(const seq::seq_seg &,
+		                                          const seq::seq_seg &,
+		                                          const trim_spec &);
 
 	} // namespace rslv
 } // namespace cath

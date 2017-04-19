@@ -23,6 +23,8 @@
 
 #include <boost/optional/optional_fwd.hpp>
 
+#include "seq/seq_type_aliases.hpp"
+
 #include <iosfwd>
 #include <vector>
 
@@ -30,8 +32,6 @@ namespace cath { namespace rslv { class calc_hit; } }
 namespace cath { namespace rslv { class crh_segment_spec; } }
 namespace cath { namespace rslv { class full_hit; } }
 namespace cath { namespace rslv { class full_hit_list; } }
-namespace cath { namespace rslv { class hit_seg; } }
-namespace cath { namespace rslv { class res_arrow; } }
 namespace cath { namespace rslv { class scored_arch_proxy; } }
 namespace cath { namespace rslv { class trim_spec; } }
 namespace cath { namespace rslv { struct alnd_rgn; } }
@@ -64,51 +64,23 @@ namespace cath {
 		/// \brief Type alias for a vector of hitidx_t values
 		using hitidx_vec                = std::vector<hitidx_t>;
 
-		/// \brief Type alias for an optional hit_seg
-		using hit_seg_opt               = boost::optional<hit_seg>;
-
-		/// \brief Type alias for a vector of hit_seg_opt
-		using hit_seg_opt_vec           = std::vector<hit_seg_opt>;
-
-		/// \brief Type alias for a vector of hit_seg objects
-		using hit_seg_vec               = std::vector<hit_seg>;
-
 		/// \brief Type alias for a vector of html_hits
 		using html_hit_vec              = std::vector<html_hit>;
 
-		/// \brief Type alias for a pair of res_arrow and hit index
-		using res_arr_idx_pair          = std::pair<res_arrow, hitidx_t>;
+		/// \brief Type alias for a pair of seq_arrow and hit index
+		using res_arr_idx_pair          = std::pair<seq::seq_arrow, hitidx_t>;
 
-		/// \brief Type alias for a vector of pairs of res_arrow and hitidx_t
+		/// \brief Type alias for a vector of pairs of seq_arrow and hitidx_t
 		using res_arr_idx_pair_vec      = std::vector<res_arr_idx_pair>;
 
-		/// \brief Type alias for an optional res_arrow
-		using res_arrow_opt             = boost::optional<res_arrow>;
-
-		/// \brief Type alias for a vector of res_arrow objects
-		using res_arrow_vec             = std::vector<res_arrow>;
-
 		/// \brief Type alias for a pair of res_arrows
-		using res_arr_res_arr_pair      = std::pair<res_arrow, res_arrow>;
+		using res_arr_res_arr_pair      = std::pair<seq::seq_arrow, seq::seq_arrow>;
 
 		/// \brief Type alias for a pair of res_arrows
 		using res_arr_res_arr_pair_vec  = std::vector<res_arr_res_arr_pair>;
 
-		/// \brief Type alias for the type to be used for indexing residue boundaries
-		///        (within a res_arrow object)
-		using resarw_t                  = unsigned int;
-
-		/// \brief Type alias for the type to be used to index residues
-		using residx_t                  = resarw_t;
-
-		/// \brief Type alias for an optional residx_t
-		using residx_opt                = boost::optional<residx_t>;
-
-		/// \brief Type alias for a pair of residue indices
-		using residx_residx_pair        = std::pair<residx_t, residx_t>;
-
 		/// \brief Type alias for a vector of pairs of residue indices
-		using residx_residx_pair_vec    = std::vector<residx_residx_pair>;
+		using residx_residx_pair_vec    = std::vector<seq::residx_residx_pair>;
 
 		/// \brief Type alias for the type to be used for hits' scores
 		using resscr_t                  = float;
@@ -123,7 +95,7 @@ namespace cath {
 		using scored_arch_proxy_vec     = std::vector<scored_arch_proxy>;
 
 		/// \brief Type alias for a pair of res_arrow_opt values
-		using seg_boundary_pair         = std::pair<res_arrow_opt, res_arrow_opt>;
+		using seg_boundary_pair         = std::pair<seq::res_arrow_opt, seq::res_arrow_opt>;
 
 		/// \brief Type alias for a vector of seg_boundary_pair values
 		using seg_boundary_pair_vec     = std::vector<seg_boundary_pair>;

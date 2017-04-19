@@ -36,6 +36,7 @@
 
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace cath::seq;
 
 using boost::adaptors::transformed;
 using boost::algorithm::is_any_of;
@@ -119,13 +120,13 @@ istream & cath::rslv::operator>>(istream   &arg_is,       ///< The stream from w
 
 /// \brief Extract into the specified trim_spec from the specified stream
 ///
-/// \relates hit_seg
+/// \relates seq_seg
 ///
 /// \alsorelates trim_spec
-string cath::rslv::to_possibly_trimmed_simple_string(const hit_seg       &arg_hit_seg,      ///< The hit_seg to describe
+string cath::rslv::to_possibly_trimmed_simple_string(const seq_seg       &arg_seq_seg,      ///< The seq_seg to describe
                                                      const trim_spec_opt &arg_trim_spec_opt ///< The optional specification describing the possible trimming
                                                      ) {
-	return to_simple_string( trim_hit_seg_copy( arg_hit_seg, arg_trim_spec_opt ) );
+	return to_simple_string( trim_seq_seg_copy( arg_seq_seg, arg_trim_spec_opt ) );
 }
 
 /// \brief Generate a string describing the segments of the specified segments
@@ -134,13 +135,13 @@ string cath::rslv::to_possibly_trimmed_simple_string(const hit_seg       &arg_hi
 /// and by a ',' between segments.
 ///
 /// \relates full_hit
-hit_seg_vec cath::rslv::get_segments(const hit_seg_vec   &arg_segs,         ///< The segments to be described
+seq_seg_vec cath::rslv::get_segments(const seq_seg_vec   &arg_segs,         ///< The segments to be described
                                      const trim_spec_opt &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                      ) {
-	return transform_build<hit_seg_vec>(
+	return transform_build<seq_seg_vec>(
 		arg_segs,
-		[&] (const hit_seg &x) {
-			return trim_hit_seg_copy( x, arg_trim_spec_opt );
+		[&] (const seq_seg &x) {
+			return trim_seq_seg_copy( x, arg_trim_spec_opt );
 		}
 	);
 }
@@ -151,7 +152,7 @@ hit_seg_vec cath::rslv::get_segments(const hit_seg_vec   &arg_segs,         ///<
 /// and by a ',' between segments.
 ///
 /// \relates full_hit
-string cath::rslv::get_segments_string(const hit_seg_vec   &arg_segs,         ///< The segments to be described
+string cath::rslv::get_segments_string(const seq_seg_vec   &arg_segs,         ///< The segments to be described
                                        const trim_spec_opt &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                        ) {
 	return get_segments_string( get_segments( arg_segs, arg_trim_spec_opt ) );
@@ -163,7 +164,7 @@ string cath::rslv::get_segments_string(const hit_seg_vec   &arg_segs,         //
 /// and by a ',' between segments. Values of none are excluded from the output.
 ///
 /// \relates full_hit
-string cath::rslv::get_segments_string(const hit_seg_opt_vec &arg_segs,         ///< The segments to be described
+string cath::rslv::get_segments_string(const seq_seg_opt_vec &arg_segs,         ///< The segments to be described
                                        const trim_spec_opt   &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                        ) {
 	return get_segments_string(

@@ -54,6 +54,7 @@
 
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace cath::seq;
 
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
@@ -98,7 +99,7 @@ calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const full_hit_list   
                                                           ) {
 	const trim_spec &overlap_trim_spec  = arg_segment_spec.get_overlap_trim_spec();
 	const residx_t  &min_seg_length     = arg_segment_spec.get_min_seg_length();
-	const auto       seg_long_enough_fn = [&] (const hit_seg &x) { return ( get_length( x ) >= min_seg_length ); };
+	const auto       seg_long_enough_fn = [&] (const seq_seg &x) { return ( get_length( x ) >= min_seg_length ); };
 	bool hit_failed_seg_length = false;
 
 	return transform_build<calc_hit_vec>(
@@ -122,14 +123,14 @@ calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const full_hit_list   
 			const full_hit &the_hit       = arg_full_hit_list[ x ];
 			const auto      filtered_segs = the_hit.get_segments() | filtered( seg_long_enough_fn );
 			return calc_hit{
-				trim_hit_seg_copy( front( filtered_segs ), overlap_trim_spec ).get_start_arrow(),
-				trim_hit_seg_copy( back ( filtered_segs ), overlap_trim_spec ).get_stop_arrow(),
-				transform_build<hit_seg_vec>(
+				trim_seq_seg_copy( front( filtered_segs ), overlap_trim_spec ).get_start_arrow(),
+				trim_seq_seg_copy( back ( filtered_segs ), overlap_trim_spec ).get_stop_arrow(),
+				transform_build<seq_seg_vec>(
 					filtered_segs | adjacented,
-					[&] (const pair<hit_seg, hit_seg> &x) {
-						return hit_seg{
-							trim_hit_seg_copy( x.first,  overlap_trim_spec ).get_stop_arrow(),
-							trim_hit_seg_copy( x.second, overlap_trim_spec ).get_start_arrow()
+					[&] (const pair<seq_seg, seq_seg> &x) {
+						return seq_seg{
+							trim_seq_seg_copy( x.first,  overlap_trim_spec ).get_stop_arrow(),
+							trim_seq_seg_copy( x.second, overlap_trim_spec ).get_start_arrow()
 						};
 					}
 				),
@@ -178,7 +179,7 @@ void cath::rslv::read_hit_list_from_istream(read_and_process_mgr &arg_read_and_p
 	};
 
 	double           score;
-	hit_seg_vec      segments;
+	seq_seg_vec      segments;
 	vector<residx_t> bounds;
 	string           line;
 	string           query_id;
@@ -320,12 +321,12 @@ resscr_opt cath::rslv::get_best_score(const calc_hit_list &arg_calc_hit_list ///
 ///
 /// \relates calc_hit_list
 calc_hit_list::const_iterator cath::rslv::find_first_hit_stopping_at_or_after(const calc_hit_list &arg_calc_hit_list, ///< The calc_hit_list to query
-                                                                              const res_arrow     &arg_res_arrow      ///< The boundary that the calc_hit must stop at or after
+                                                                              const seq_arrow     &arg_res_arrow      ///< The boundary that the calc_hit must stop at or after
                                                                               ) {
 	return lower_bound(
 		arg_calc_hit_list,
 		arg_res_arrow,
-		[] (const calc_hit &h, const res_arrow &a) {
+		[] (const calc_hit &h, const seq_arrow &a) {
 			return ( h.get_stop_arrow() < a );
 		}
 	);
@@ -337,12 +338,12 @@ calc_hit_list::const_iterator cath::rslv::find_first_hit_stopping_at_or_after(co
 ///
 /// \relates calc_hit_list
 calc_hit_list::const_iterator cath::rslv::find_first_hit_stopping_after(const calc_hit_list &arg_calc_hit_list, ///< The calc_hit_list to query
-                                                                        const res_arrow     &arg_res_arrow      ///< The boundary that the calc_hit must stop after
+                                                                        const seq_arrow     &arg_res_arrow      ///< The boundary that the calc_hit must stop after
                                                                         ) {
 	return upper_bound(
 		arg_calc_hit_list,
 		arg_res_arrow,
-		[] (const res_arrow &a, const calc_hit &h) {
+		[] (const seq_arrow &a, const calc_hit &h) {
 			return ( a < h.get_stop_arrow() );
 		}
 	);
@@ -355,8 +356,8 @@ calc_hit_list::const_iterator cath::rslv::find_first_hit_stopping_after(const ca
 ///
 /// \relates calc_hit_list
 integer_range<hitidx_t> cath::rslv::indices_of_hits_that_stop_in_range(const calc_hit_list &arg_calc_hit_list, ///< The calc_hit_list to query
-                                                                       const res_arrow     &arg_start_arrow,   ///< The start arrow that the hits corresponding to the returned indices must stop after
-                                                                       const res_arrow     &arg_stop_arrow     ///< The stop  arrow that the hits corresponding to the returned indices must stop before or at
+                                                                       const seq_arrow     &arg_start_arrow,   ///< The start arrow that the hits corresponding to the returned indices must stop after
+                                                                       const seq_arrow     &arg_stop_arrow     ///< The stop  arrow that the hits corresponding to the returned indices must stop before or at
                                                                        ) {
 	return {
 		numeric_cast<hitidx_t>( distance( cbegin( arg_calc_hit_list ), find_first_hit_stopping_after( arg_calc_hit_list, arg_start_arrow ) ) ),

@@ -29,9 +29,9 @@
 #include "common/string/string_parse_tools.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "resolve_hits/file/alnd_rgn.hpp"
-#include "resolve_hits/hit_seg.hpp"
-#include "resolve_hits/res_arrow.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
+#include "seq/seq_arrow.hpp"
+#include "seq/seq_seg.hpp"
 
 #include <string>
 
@@ -51,7 +51,7 @@ namespace cath {
 			///
 			/// This is used to represent a stretch of the alignment that has the same
 			/// aln_presence; the second field indicates the length of the stretch
-			using aln_stretch     = std::pair<aln_presence, residx_t>;
+			using aln_stretch     = std::pair<aln_presence, seq::residx_t>;
 
 			/// \brief Type alias for a vector of aln_stretch types
 			using aln_stretch_vec = std::vector<aln_stretch>;
@@ -92,12 +92,12 @@ namespace cath {
 				/// \brief The (optional) index of the start of the alignment in the first sequence
 				///
 				/// This is optional to allow it be initialised as the data is read in
-				residx_opt start_a;
+				seq::residx_opt start_a;
 
 				/// \brief The (optional) index of the start of the alignment in the second sequence
 				///
 				/// This is optional to allow it be initialised as the data is read in
-				residx_opt start_b;
+				seq::residx_opt start_b;
 
 				/// \brief The string of the aligned first sequence
 				///
@@ -111,7 +111,7 @@ namespace cath {
 				///
 				/// This is only used in process_aln but is stored here to allow the
 				/// vector's allocated memory to be reused between results
-				hit_seg_vec segments;
+				seq::seq_seg_vec segments;
 
 				/// \brief A list of the aligned regions
 				///
@@ -128,7 +128,7 @@ namespace cath {
 				/// \brief The field offset to the alignment in an alignment line
 				static constexpr size_t LINE_ALN_OFFSET   = 2;
 
-				void update_segments(const residx_t &);
+				void update_segments(const seq::residx_t &);
 				void update_aligned_regions(const bool &);
 
 			public:
@@ -138,25 +138,25 @@ namespace cath {
 
 				void add_b(const std::string &);
 
-				std::tuple<std::string &, hit_seg_vec &, alnd_rgn_vec &> process_aln(const residx_t &,
-				                                                                     const bool &);
+				std::tuple<std::string &, seq::seq_seg_vec &, alnd_rgn_vec &> process_aln(const seq::residx_t &,
+				                                                                          const bool &);
 
 				bool empty() const;
 			};
 
 			/// \brief Update the segments based on the parsed information
-			inline void hmmsearch_aln::update_segments(const residx_t &arg_min_gap_length ///< The minimum length for a missing stretch to be considered a gap
+			inline void hmmsearch_aln::update_segments(const seq::residx_t &arg_min_gap_length ///< The minimum length for a missing stretch to be considered a gap
 			                                           ) {
 				segments.clear();
-				res_arrow arrow_b = arrow_before_res( *start_b );
+				seq::seq_arrow arrow_b = seq::arrow_before_res( *start_b );
 				for (const aln_stretch &stretch : stretches) {
 					const auto &presence = stretch.first;
 					const auto &length   = stretch.second;
 
 					if ( presence == aln_presence::BOTH || presence == aln_presence::B ) {
-						const res_arrow  start = arrow_b;
+						const seq::seq_arrow  start = arrow_b;
 						arrow_b += length;
-						const res_arrow &stop  = arrow_b;
+						const seq::seq_arrow &stop  = arrow_b;
 
 						if ( presence == aln_presence::BOTH || length < arg_min_gap_length ) {
 							if ( segments.empty() || segments.back().get_stop_arrow() != start ) {
@@ -175,8 +175,8 @@ namespace cath {
 			                                                  ) {
 				aligned_regions.clear();
 				if ( arg_parse_hmmsearch_aln ) {
-					res_arrow arrow_a = arrow_before_res( *start_a );
-					res_arrow arrow_b = arrow_before_res( *start_b );
+					seq::seq_arrow arrow_a = seq::arrow_before_res( *start_a );
+					seq::seq_arrow arrow_b = seq::arrow_before_res( *start_b );
 					for (const aln_stretch &stretch : stretches) {
 						const auto &presence = stretch.first;
 						const auto &length   = stretch.second;
@@ -270,9 +270,9 @@ namespace cath {
 			/// \brief Process the alignment that has been loaded into this hmmsearch_aln
 			///
 			/// This should always be called after add_b()
-			inline std::tuple<std::string &, hit_seg_vec &, alnd_rgn_vec &> hmmsearch_aln::process_aln(const residx_t &arg_min_gap_length,     ///< The minimum length for a gap to be considered a gap
-			                                                                                           const bool     &arg_parse_hmmsearch_aln ///< Whether to parse the hmmsearch alignment information for outputting later
-			                                                                                           ) {
+			inline std::tuple<std::string &, seq::seq_seg_vec &, alnd_rgn_vec &> hmmsearch_aln::process_aln(const seq::residx_t &arg_min_gap_length,     ///< The minimum length for a gap to be considered a gap
+			                                                                                                const bool          &arg_parse_hmmsearch_aln ///< Whether to parse the hmmsearch alignment information for outputting later
+			                                                                                                ) {
 				update_segments       ( arg_min_gap_length      );
 				update_aligned_regions( arg_parse_hmmsearch_aln );
 				return std::tie( id_a, segments, aligned_regions );

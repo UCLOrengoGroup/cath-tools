@@ -50,6 +50,7 @@
 using namespace cath;
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace cath::seq;
 using namespace std::literals::string_literals;
 
 using boost::adaptors::filtered;
@@ -183,15 +184,15 @@ string resolve_hits_html_outputter::markers_row(const size_t  &arg_sequence_leng
 
 /// \brief Merge the original segment boundaries with an optional set of resolved
 ///        boundaries, replacing originals with resolveds if they exist
-hit_seg_opt_vec merge_opt_resolved_boundaries(const hit_seg_vec               &arg_segs,              ///< The original boundaries
+seq_seg_opt_vec merge_opt_resolved_boundaries(const seq_seg_vec               &arg_segs,              ///< The original boundaries
                                               const seg_boundary_pair_vec_opt &arg_result_boundaries, ///< The optional resolved boundaries, where that has been required
                                               const crh_segment_spec          &arg_segment_spec       ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
                                               ) {
 	return arg_result_boundaries
 		? merge_boundaries( arg_segs, *arg_result_boundaries, arg_segment_spec )
-		: transform_build<hit_seg_opt_vec>(
+		: transform_build<seq_seg_opt_vec>(
 			arg_segs,
-			[] (const hit_seg &x) { return make_optional( x ); }
+			[] (const seq_seg &x) { return make_optional( x ); }
 		);
 }
 
@@ -207,18 +208,18 @@ string resolve_hits_html_outputter::hit_html(const html_hit         &arg_html_hi
 	const auto resolved_boundaries = merge_opt_resolved_boundaries( the_full_hit.get_segments(), the_result_boundaries, arg_segment_spec );
 	const auto boundaries_strs     = transform_build<str_vec>(
 		resolved_boundaries
-			| filtered( [] (const hit_seg_opt &x) { return static_cast<bool>( x ); } ),
-		[] (const hit_seg_opt &x) { return to_simple_string( x ); }
+			| filtered( [] (const seq_seg_opt &x) { return static_cast<bool>( x ); } ),
+		[] (const seq_seg_opt &x) { return to_simple_string( x ); }
 	);
 
 	return join(
 		irange( 0_z, the_full_hit.get_segments().size() )
 			| transformed( [&] (const size_t &x_idx) {
-				const hit_seg &x = the_full_hit.get_segments()[ x_idx ];
+				const seq_seg &x = the_full_hit.get_segments()[ x_idx ];
 
 				// Grab the result of applying the crh_segment_spec to the segment
 				// (which may be boost::none if the segment is shorter than min-seg-length)
-				const hit_seg_opt trimmed_seg_opt = apply_spec_to_seg_copy( x, arg_segment_spec );
+				const seq_seg_opt trimmed_seg_opt = apply_spec_to_seg_copy( x, arg_segment_spec );
 
 				// Prepare batch index and hit index strings
 				const string      batch_idx_str   = ::std::to_string( arg_html_hit.batch_idx + 1 );
@@ -282,8 +283,8 @@ string resolve_hits_html_outputter::hits_row_html(const html_hit_vec     &arg_fu
 					first_hit.get_segments(),
 					first_result_boundaries,
 					arg_segment_spec
-				) | filtered( [] (const hit_seg_opt &x) { return static_cast<bool>( x ); } ),
-				[] (const hit_seg_opt &x) { return to_simple_string( x ); }
+				) | filtered( [] (const seq_seg_opt &x) { return static_cast<bool>( x ); } ),
+				[] (const seq_seg_opt &x) { return to_simple_string( x ); }
 			)
 			: str_vec{}
 	);

@@ -21,6 +21,7 @@
 #include "crh_segment_spec.hpp"
 
 using namespace cath::rslv;
+using namespace cath::seq;
 
 using boost::make_optional;
 using boost::none;
@@ -61,16 +62,16 @@ crh_segment_spec cath::rslv::make_no_action_crh_segment_spec() {
 		.set_min_seg_length   ( 1                        );
 }
 
-/// \brief Apply the specified crh_segment_spec to a copy of the specified hit_seg, returning
+/// \brief Apply the specified crh_segment_spec to a copy of the specified seq_seg, returning
 ///        a trimmed version if the segment's length meets the min-seg-length, or none otherwise
 ///
 /// \relates crh_segment_spec
-hit_seg_opt cath::rslv::apply_spec_to_seg_copy(const hit_seg              &arg_seg,         ///< The hit_seg to copy
+seq_seg_opt cath::rslv::apply_spec_to_seg_copy(const seq_seg              &arg_seg,         ///< The seq_seg to copy
                                                const crh_segment_spec_opt &arg_segment_spec ///< The crh_segment_spec to apply
                                                ) {
 	return 
 		( arg_segment_spec && get_length( arg_seg ) >= arg_segment_spec->get_min_seg_length() )
-			? make_optional( trim_hit_seg_copy( arg_seg, arg_segment_spec->get_overlap_trim_spec() ) )
+			? make_optional( trim_seq_seg_copy( arg_seg, arg_segment_spec->get_overlap_trim_spec() ) )
 			: none;
 }
 

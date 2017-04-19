@@ -30,6 +30,7 @@
 using namespace cath;
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace cath::seq;
 using namespace std::literals::string_literals;
 
 using boost::format;
@@ -44,7 +45,7 @@ using std::string;
 /// and by a ',' between segments.
 ///
 /// \relates full_hit
-hit_seg_vec cath::rslv::get_segments(const full_hit      &arg_full_hit,     ///< The full_hit whose segments should be described
+seq_seg_vec cath::rslv::get_segments(const full_hit      &arg_full_hit,     ///< The full_hit whose segments should be described
                                      const trim_spec_opt &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                      ) {
 	return ::cath::rslv::get_segments( arg_full_hit.get_segments(), arg_trim_spec_opt );

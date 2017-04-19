@@ -1,5 +1,5 @@
 /// \file
-/// \brief The hit_seg_boundary_fns test suite
+/// \brief The seq_seg_boundary_fns test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -21,17 +21,18 @@
 #include <boost/optional/optional_io.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "resolve_hits/hit_seg.hpp"
-#include "resolve_hits/trim/hit_seg_boundary_fns.hpp"
+#include "resolve_hits/trim/seq_seg_boundary_fns.hpp"
 #include "resolve_hits/trim/trim_spec.hpp"
+#include "seq/seq_seg.hpp"
 
 using namespace cath::rslv;
+using namespace cath::seq;
 
-BOOST_AUTO_TEST_SUITE(hit_seg_boundary_fns_test_suite)
+BOOST_AUTO_TEST_SUITE(seq_seg_boundary_fns_test_suite)
 
 BOOST_AUTO_TEST_CASE(handles_example) {
-	constexpr auto seg_a = hit_seg_of_res_idcs( 138, 168 );
-	constexpr auto seg_b = hit_seg_of_res_idcs(  67, 295 );
+	constexpr auto seg_a = seq_seg_of_res_idcs( 138, 168 );
+	constexpr auto seg_b = seq_seg_of_res_idcs(  67, 295 );
 	constexpr auto trim  = trim_spec{ 200, 190 };
 	BOOST_CHECK_EQUAL( calc_resolved_boundary( seg_a, seg_b, trim ), make_optional( arrow_before_res( 156 ) ) );
 }

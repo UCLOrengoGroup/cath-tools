@@ -67,7 +67,7 @@ namespace cath {
 		std::string to_string(const full_hit_list &);
 		std::ostream & operator<<(std::ostream &,
 		                          const full_hit_list &);
-		residx_opt get_max_stop(const full_hit_list &);
+		seq::residx_opt get_max_stop(const full_hit_list &);
 
 
 		/// \brief Ctor

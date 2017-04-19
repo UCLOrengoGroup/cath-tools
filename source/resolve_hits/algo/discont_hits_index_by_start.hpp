@@ -46,8 +46,8 @@ namespace cath {
 			public:
 				explicit discont_hits_index_by_start(const calc_hit_list &);
 
-				boost::integer_range<size_t> get_index_indices_of_disconts_in_range(const res_arrow &,
-				                                                                    const res_arrow &) const;
+				boost::integer_range<size_t> get_index_indices_of_disconts_in_range(const seq::seq_arrow &,
+				                                                                    const seq::seq_arrow &) const;
 
 				size_t size() const;
 				const calc_hit & get_discont_hit_of_index_index(const size_t &) const;

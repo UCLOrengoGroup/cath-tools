@@ -21,8 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_ALND_RGN_H
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_ALND_RGN_H
 
-#include "resolve_hits/res_arrow.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
+#include "seq/seq_arrow.hpp"
 
 namespace cath {
 	namespace rslv {
@@ -30,22 +30,22 @@ namespace cath {
 		/// \brief Represent a continuous region of (sequence) residues that are aligned to each other
 		struct alnd_rgn {
 			/// \brief The start of the aligned region in the first  sequence
-			res_arrow start_res_a;
+			seq::seq_arrow start_res_a;
 
 			/// \brief The start of the aligned region in the second sequence
-			res_arrow start_res_b;
+			seq::seq_arrow start_res_b;
 
 			/// \brief The length of the aligned region
-			residx_t length;
+			seq::residx_t length;
 
 		public:
-			alnd_rgn(res_arrow,
-			         res_arrow,
-			         const residx_t &) noexcept;
+			alnd_rgn(seq::seq_arrow,
+			         seq::seq_arrow,
+			         const seq::residx_t &) noexcept;
 
-			const res_arrow & get_start_res_a() const;
-			const res_arrow & get_start_res_b() const;
-			const residx_t & get_length() const;
+			const seq::seq_arrow & get_start_res_a() const;
+			const seq::seq_arrow & get_start_res_b() const;
+			const seq::residx_t & get_length() const;
 		};
 
 		std::string to_string(const alnd_rgn &);

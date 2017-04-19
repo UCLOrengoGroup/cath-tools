@@ -23,6 +23,7 @@
 #include "resolve_hits/trim/trim_spec.hpp"
 
 using namespace cath::rslv;
+using namespace cath::seq;
 
 using std::make_pair;
 

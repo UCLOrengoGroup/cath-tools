@@ -38,6 +38,7 @@ namespace cath { namespace test { } }
 
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace cath::seq;
 using namespace cath::test;
 using namespace std::literals::string_literals;
 
@@ -57,22 +58,22 @@ namespace cath {
 				
 				return full_hit_list{
 					{
-						full_hit{ { hit_seg_of_res_idcs(   2,  68 ), hit_seg_of_res_idcs( 168, 332 ), }, "1pkyA02",  4.1e-85, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs( 333,                                  464 ), }, "1e0tA01",  2.7e-60, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(   2,  69 ), hit_seg_of_res_idcs( 167, 336 ), }, "2e28A01",  4.4e-55, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(   2, 135 ), hit_seg_of_res_idcs( 162, 328 ), }, "3gr4A02",  2.2e-54, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(  69,                                  167 ), }, "1e0tA03",  6.6e-51, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(   2,  68 ), hit_seg_of_res_idcs( 168, 329 ), }, "3qv9A02",  2.5e-50, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(   1,  69 ), hit_seg_of_res_idcs( 167, 328 ), }, "3t05A01",  2.1e-49, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(   3,  71 ), hit_seg_of_res_idcs( 167, 329 ), }, "3gg8A02",  4.8e-49, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(   2, 151 ), hit_seg_of_res_idcs( 168, 326 ), }, "1a3wA02",  1.8e-48, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(   2,  68 ), hit_seg_of_res_idcs( 161, 329 ), }, "3hqnA02",  3.1e-48, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(   2,  68 ), hit_seg_of_res_idcs( 169, 329 ), }, "3khdA02",  3.8e-46, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(   2,  71 ), hit_seg_of_res_idcs( 167, 333 ), }, "4drsA02",  5.6e-42, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs( 104,                                  167 ), }, "1pkyC03",  2.2e-30, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs( 170,                                  328 ), }, "3qtgA01",  2.5e-21, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs(  70,                                  166 ), }, "4drsA03",  3.0e-19, hit_score_type::FULL_EVALUE },
-						full_hit{ { hit_seg_of_res_idcs( 351,                                  467 ), }, "2e28A03",  3.4e-15, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(   2,  68 ), seq_seg_of_res_idcs( 168, 332 ), }, "1pkyA02",  4.1e-85, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs( 333,                                  464 ), }, "1e0tA01",  2.7e-60, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(   2,  69 ), seq_seg_of_res_idcs( 167, 336 ), }, "2e28A01",  4.4e-55, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(   2, 135 ), seq_seg_of_res_idcs( 162, 328 ), }, "3gr4A02",  2.2e-54, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(  69,                                  167 ), }, "1e0tA03",  6.6e-51, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(   2,  68 ), seq_seg_of_res_idcs( 168, 329 ), }, "3qv9A02",  2.5e-50, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(   1,  69 ), seq_seg_of_res_idcs( 167, 328 ), }, "3t05A01",  2.1e-49, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(   3,  71 ), seq_seg_of_res_idcs( 167, 329 ), }, "3gg8A02",  4.8e-49, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(   2, 151 ), seq_seg_of_res_idcs( 168, 326 ), }, "1a3wA02",  1.8e-48, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(   2,  68 ), seq_seg_of_res_idcs( 161, 329 ), }, "3hqnA02",  3.1e-48, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(   2,  68 ), seq_seg_of_res_idcs( 169, 329 ), }, "3khdA02",  3.8e-46, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(   2,  71 ), seq_seg_of_res_idcs( 167, 333 ), }, "4drsA02",  5.6e-42, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs( 104,                                  167 ), }, "1pkyC03",  2.2e-30, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs( 170,                                  328 ), }, "3qtgA01",  2.5e-21, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs(  70,                                  166 ), }, "4drsA03",  3.0e-19, hit_score_type::FULL_EVALUE },
+						full_hit{ { seq_seg_of_res_idcs( 351,                                  467 ), }, "2e28A03",  3.4e-15, hit_score_type::FULL_EVALUE },
 					}
 				};
 			}

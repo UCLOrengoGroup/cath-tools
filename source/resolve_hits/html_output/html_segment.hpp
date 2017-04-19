@@ -25,7 +25,7 @@
 
 #include "display_colour/display_colour.hpp"
 #include "display_colour/display_colour_type_aliases.hpp"
-#include "resolve_hits/res_arrow.hpp"
+#include "seq/seq_arrow.hpp"
 
 namespace cath {
 	namespace rslv {
@@ -42,8 +42,8 @@ namespace cath {
 				BOTH        ///< Round the pill on both sides
 			};
 
-			static std::string get_html_string(const res_arrow &,
-			                                   const res_arrow_opt &,
+			static std::string get_html_string(const seq::seq_arrow &,
+			                                   const seq::res_arrow_opt &,
 			                                   const std::string &,
 			                                   const str_str_pair_vec &,
 			                                   const display_colour_opt &,
@@ -51,33 +51,33 @@ namespace cath {
 			                                   const size_t &,
 			                                   const pill_rounding & = pill_rounding::BOTH);
 
-			static std::string get_resolve_boundary_html_string(const res_arrow &,
+			static std::string get_resolve_boundary_html_string(const seq::seq_arrow &,
 			                                                    const display_colour &,
 			                                                    const size_t &);
 
 		public:
 			/// \brief The position of the segment's start
-			res_arrow start;
+			seq::seq_arrow start;
 
 			/// \brief The position of the segment's trimmed start
 			///        (or none if this is so short it isn't counted as a segment)
-			res_arrow_opt trimmed_start;
+			seq::res_arrow_opt trimmed_start;
 
 			/// \brief The position of the segment's trimmed stop
 			///        (or none if this is so short it isn't counted as a segment)
-			res_arrow_opt trimmed_stop;
+			seq::res_arrow_opt trimmed_stop;
 
 			/// \brief The position of the segment's stop
-			res_arrow stop;
+			seq::seq_arrow stop;
 
 
 			/// \brief The position of any resolved boundary start
 			///        (ie the meeting point between this segment's start and some other overlapping segment's end)
-			res_arrow_opt resolved_start;
+			seq::res_arrow_opt resolved_start;
 
 			/// \brief The position of any resolved boundary end
 			///        (ie the meeting point between this segment's end and some other overlapping segment's start)
-			res_arrow_opt resolved_stop;
+			seq::res_arrow_opt resolved_stop;
 
 
 			/// \brief The colour in which the hit should be rendered

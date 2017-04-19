@@ -30,6 +30,7 @@ namespace cath { namespace test { } }
 using namespace cath;
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace cath::seq;
 using namespace cath::test;
 
 using boost::lexical_cast;
@@ -50,12 +51,12 @@ namespace cath {
 				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 				return calc_hit_list {
 					full_hit_list{ {
-						full_hit( { hit_seg_of_res_idcs( 1266,                                    1344 ), }, "label_a", 20.0 ),
-						full_hit( { hit_seg_of_res_idcs( 1273, 1321 ), hit_seg_of_res_idcs( 1399, 1438 ), }, "label_b", 21.0 ),
-						full_hit( { hit_seg_of_res_idcs( 1101,                                    1319 ), }, "label_c", 22.0 ),
-						full_hit( { hit_seg_of_res_idcs( 1301,                                    1321 ), }, "label_d", 23.0 ),
-						full_hit( { hit_seg_of_res_idcs( 1438,                                    1439 ), }, "label_e", 24.0 ),
-						full_hit( { hit_seg_of_res_idcs( 1272, 1320 ), hit_seg_of_res_idcs( 1398, 1437 ), }, "label_f", 25.0 ),
+						full_hit( { seq_seg_of_res_idcs( 1266,                                    1344 ), }, "label_a", 20.0 ),
+						full_hit( { seq_seg_of_res_idcs( 1273, 1321 ), seq_seg_of_res_idcs( 1399, 1438 ), }, "label_b", 21.0 ),
+						full_hit( { seq_seg_of_res_idcs( 1101,                                    1319 ), }, "label_c", 22.0 ),
+						full_hit( { seq_seg_of_res_idcs( 1301,                                    1321 ), }, "label_d", 23.0 ),
+						full_hit( { seq_seg_of_res_idcs( 1438,                                    1439 ), }, "label_e", 24.0 ),
+						full_hit( { seq_seg_of_res_idcs( 1272, 1320 ), seq_seg_of_res_idcs( 1398, 1437 ), }, "label_f", 25.0 ),
 					} },
 					make_neutral_score_spec(),
 					make_no_action_crh_segment_spec()

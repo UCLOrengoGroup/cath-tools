@@ -30,10 +30,11 @@
 #include "resolve_hits/file/alnd_rgn.hpp"
 #include "resolve_hits/full_hit_fns.hpp"
 #include "resolve_hits/full_hit_rapidjson.hpp"
-#include "resolve_hits/trim/hit_seg_boundary_fns.hpp"
+#include "resolve_hits/trim/seq_seg_boundary_fns.hpp"
 
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace cath::seq;
 
 using boost::adaptors::transformed;
 using boost::algorithm::join;
@@ -100,10 +101,10 @@ resscr_opt cath::rslv::get_best_crh_score(const full_hit_list  &arg_full_hit_lis
 ///        differ from the specified hit
 ///
 /// \relates full_hit_list
-hit_seg_vec get_other_hits_segments(const full_hit      &arg_full_hit, ///< The hit whose segments should be excluded from the list
+seq_seg_vec get_other_hits_segments(const full_hit      &arg_full_hit, ///< The hit whose segments should be excluded from the list
                                     const full_hit_list &arg_full_hits ///< The list of hits from which the segments should be drawn
                                     ) {
-	hit_seg_vec results;
+	seq_seg_vec results;
 	for (const full_hit &the_full_hit : arg_full_hits) {
 		if ( the_full_hit != arg_full_hit ) {
 			append( results, the_full_hit.get_segments() );
@@ -120,12 +121,12 @@ seg_boundary_pair_vec cath::rslv::resolved_boundaries(const full_hit         &ar
                                                       const full_hit_list    &arg_full_hits,       ///< The list of hits providing the context (may include the original hit)
                                                       const crh_segment_spec &arg_crh_segment_spec ///< The crh_segment_spec to use
                                                       ) {
-	const hit_seg_vec other_segments = get_other_hits_segments( arg_full_hit, arg_full_hits );
+	const seq_seg_vec other_segments = get_other_hits_segments( arg_full_hit, arg_full_hits );
 
 	// Build up a vector of res_arr_res_arr_pairs, one calculated for each segment of arg_full_hit
 	return transform_build<seg_boundary_pair_vec>(
 		arg_full_hit.get_segments(),
-		[&] (const hit_seg &x) {
+		[&] (const seq_seg &x) {
 			return get_boundary_pair( x, other_segments, arg_crh_segment_spec );
 		}
 	);
@@ -133,21 +134,21 @@ seg_boundary_pair_vec cath::rslv::resolved_boundaries(const full_hit         &ar
 
 /// \brief Merge original boundaries with resolved boundaries, replacing originals with
 ///        resolveds where they exist
-hit_seg_opt_vec cath::rslv::merge_boundaries(const hit_seg_vec           &arg_segs,                ///< The original boundaries
+seq_seg_opt_vec cath::rslv::merge_boundaries(const seq_seg_vec           &arg_segs,                ///< The original boundaries
                                              const seg_boundary_pair_vec &arg_resolved_boundaries, ///< The resolved boundaries (where resolving has been required)
                                              const crh_segment_spec      &arg_crh_segment_spec     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
                                              ) {
-	return transform_build<hit_seg_opt_vec>(
+	return transform_build<seq_seg_opt_vec>(
 		combine( arg_segs, arg_resolved_boundaries ),
-		[&] (const boost::tuple<hit_seg, seg_boundary_pair> &x) {
-			const auto &the_hit_seg = x.get<0>();
+		[&] (const boost::tuple<seq_seg, seg_boundary_pair> &x) {
+			const auto &the_seq_seg = x.get<0>();
 			const auto &seg_bnd_1   = x.get<1>().first;
 			const auto &seg_bnd_2   = x.get<1>().second;
 			return make_optional(
-				get_length( the_hit_seg ) >= arg_crh_segment_spec.get_min_seg_length(),
-				hit_seg{
-					seg_bnd_1.value_or( the_hit_seg.get_start_arrow() ),
-					seg_bnd_2.value_or( the_hit_seg.get_stop_arrow () )
+				get_length( the_seq_seg ) >= arg_crh_segment_spec.get_min_seg_length(),
+				seq_seg{
+					seg_bnd_1.value_or( the_seq_seg.get_start_arrow() ),
+					seg_bnd_2.value_or( the_seq_seg.get_stop_arrow () )
 				}
 			);
 		}
@@ -159,7 +160,7 @@ hit_seg_opt_vec cath::rslv::merge_boundaries(const hit_seg_vec           &arg_se
 ///        resolved boundary or the original where no resolving is required)
 ///
 /// \relates full_hit_list
-hit_seg_opt_vec cath::rslv::resolve_all_boundaries(const full_hit         &arg_full_hit,        ///< The hit whose boundaries should be resolved
+seq_seg_opt_vec cath::rslv::resolve_all_boundaries(const full_hit         &arg_full_hit,        ///< The hit whose boundaries should be resolved
                                                    const full_hit_list    &arg_full_hits,       ///< The list of hits providing the context (may include the original hit)
                                                    const crh_segment_spec &arg_crh_segment_spec ///< The crh_segment_spec to use
                                                    ) {

@@ -40,29 +40,29 @@ namespace cath {
 			/// \brief Contain data to represent an hmmsearch output summary line for a hit
 			struct hmmsearch_summary final {
 				/// \brief The hit's bitscore
-				double   bitscore;
+				double        bitscore;
 
 				/// \brief The hit's "env" from residue index
-				residx_t env_from;
+				seq::residx_t env_from;
 
 				/// \brief The hit's "env" to residue index
-				residx_t env_to;
+				seq::residx_t env_to;
 
 				/// \brief The hit's "ali" from residue index
-				residx_t ali_from;
+				seq::residx_t ali_from;
 
 				/// \brief The hit's "ali" to residue index
-				residx_t ali_to;
+				seq::residx_t ali_to;
 
 				/// \brief Whether the conditional and independent evalues are "suspicious" under the CATH-Gene3D rules
 				///        (see `cath-resolve-hits --cath-rules-help`)
-				bool     evalues_are_susp;
+				bool          evalues_are_susp;
 
 				/// \brief The hit's conditional evalue
-				double   conditional_evalue;
+				double        conditional_evalue;
 
 				/// \brief The hit's independent evalue
-				double   independent_evalue;
+				double        independent_evalue;
 			};
 
 			/// Type alias for a vector of hmmsearch_summary entries
@@ -119,7 +119,7 @@ namespace cath {
 				void parse_alignment_section();
 				void finish_alignment(read_and_process_mgr &,
 				                      const bool &,
-				                      const residx_t &,
+				                      const seq::residx_t &,
 				                      const bool &);
 
 				std::string & get_line();
@@ -277,13 +277,13 @@ namespace cath {
 			/// \brief Finish the current alignment
 			inline void hmmsearch_parser::finish_alignment(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which complete hits should be added
 			                                               const bool           &arg_apply_cath_policies,  ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
-			                                               const residx_t       &arg_min_gap_length,       ///< The minimum length for a gap to be considered a gap
+			                                               const seq::residx_t  &arg_min_gap_length,       ///< The minimum length for a gap to be considered a gap
 			                                               const bool           &arg_parse_hmmsearch_aln   ///< Whether to parse the hmmsearch alignment information for outputting later
 			                                               ) {
-				auto            aln_results   = the_aln.process_aln( arg_min_gap_length, arg_parse_hmmsearch_aln );
-				std::string    &id_a          = std::get<0>( aln_results );
-				hit_seg_vec    &segs          = std::get<1>( aln_results );
-				auto            alnd_rngs_opt = boost::make_optional(
+				auto              aln_results   = the_aln.process_aln( arg_min_gap_length, arg_parse_hmmsearch_aln );
+				std::string      &id_a          = std::get<0>( aln_results );
+				seq::seq_seg_vec &segs          = std::get<1>( aln_results );
+				auto              alnd_rngs_opt = boost::make_optional(
 					arg_parse_hmmsearch_aln,
 					std::get<2>( aln_results )
 				);
@@ -304,10 +304,10 @@ namespace cath {
 					}
 				}
 				else {
-					const auto      id_score_cat  = cath_score_category_of_id( id_a, arg_apply_cath_policies );
-					const bool      apply_dc_cat  = ( id_score_cat == cath_id_score_category::DC_TYPE );
-					const residx_t &start         = apply_dc_cat ? summ.ali_from : summ.env_from;
-					const residx_t &stop          = apply_dc_cat ? summ.ali_to   : summ.env_to;
+					const auto           id_score_cat  = cath_score_category_of_id( id_a, arg_apply_cath_policies );
+					const bool           apply_dc_cat  = ( id_score_cat == cath_id_score_category::DC_TYPE );
+					const seq::residx_t &start         = apply_dc_cat ? summ.ali_from : summ.env_from;
+					const seq::residx_t &stop          = apply_dc_cat ? summ.ali_to   : summ.env_to;
 
 					// If applying the CATH discontinuous policy, erase any segments after the first
 					if ( apply_dc_cat ) {
@@ -319,8 +319,8 @@ namespace cath {
 
 					// Overwrite the final start/stop with those parsed from the summary
 					// (env_from/env_to normally; ali_from/ali_to when applying the CATH discontinuous policy)
-					segs.front().set_start_arrow( arrow_before_res( start ) );
-					segs.back ().set_stop_arrow ( arrow_after_res ( stop  ) );
+					segs.front().set_start_arrow( seq::arrow_before_res( start ) );
+					segs.back ().set_stop_arrow ( seq::arrow_after_res ( stop  ) );
 
 					hit_extras_store extras;
 					if ( arg_parse_hmmsearch_aln ) {

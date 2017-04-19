@@ -29,6 +29,7 @@
 
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace cath::seq;
 
 using boost::make_optional;
 using boost::none;

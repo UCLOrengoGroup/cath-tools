@@ -39,6 +39,7 @@
 using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::rslv::detail;
+using namespace cath::seq;
 
 using boost::ignore_unused;
 using boost::none;
@@ -95,8 +96,8 @@ inline void sanity_check(const scored_arch_proxy &arg_scored_arch_proxy, ///< Th
 ///
 /// \todo Could be more efficient at rejecting hits that stop in forbidden regions
 scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(const calc_hit_vec      &arg_mask,           ///< The active mask defining any no-go areas.
-                                                                             const res_arrow         &arg_start_arrow,    ///< The point at which to start the dynamic-programming scan. Guaranteed to be at the boundary of a segment in arg_masks, or at the very start if arg_masks is empty
-                                                                             const res_arrow         &arg_stop_arrow,     ///< The point at which to stop the dynamic-programming scan. Guaranteed to be at the boundary of a segment in arg_masks, or at the very end   if arg_masks is empty
+                                                                             const seq_arrow         &arg_start_arrow,    ///< The point at which to start the dynamic-programming scan. Guaranteed to be at the boundary of a segment in arg_masks, or at the very start if arg_masks is empty
+                                                                             const seq_arrow         &arg_stop_arrow,     ///< The point at which to stop the dynamic-programming scan. Guaranteed to be at the boundary of a segment in arg_masks, or at the very end   if arg_masks is empty
                                                                              const scored_arch_proxy &arg_best_upto_start ///< The known-best architecture up to the start point
                                                                              ) {
 	// Create and initialise a new best_scan_arches for this particular scan

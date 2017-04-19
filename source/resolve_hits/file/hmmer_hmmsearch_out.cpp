@@ -30,6 +30,7 @@ using namespace cath;
 using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::rslv::detail;
+using namespace cath::seq;
 
 using boost::filesystem::path;
 using std::ifstream;

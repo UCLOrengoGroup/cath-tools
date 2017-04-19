@@ -27,8 +27,8 @@
 #include "resolve_hits/file/alnd_rgn.hpp"
 #include "resolve_hits/hit_extras.hpp"
 #include "resolve_hits/hit_score_type.hpp"
-#include "resolve_hits/hit_seg.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
+#include "seq/seq_seg.hpp"
 
 #include <string>
 
@@ -45,7 +45,7 @@ namespace cath {
 		class full_hit final : private boost::equality_comparable<full_hit> {
 		private:
 			/// \brief The list of segments
-			hit_seg_vec segments;
+			seq::seq_seg_vec segments;
 
 			/// \brief The the label for this full_hit
 			std::string label;
@@ -64,13 +64,13 @@ namespace cath {
 			void sanity_check() const;
 
 		public:
-			full_hit(hit_seg_vec,
+			full_hit(seq::seq_seg_vec,
 			         std::string,
 			         const double &,
 			         const hit_score_type & = hit_score_type::CRH_SCORE,
 			         hit_extras_store = {});
 
-			const hit_seg_vec & get_segments() const;
+			const seq::seq_seg_vec & get_segments() const;
 			const std::string & get_label() const;
 			const double & get_score() const;
 			const hit_score_type & get_score_type() const;
@@ -113,7 +113,7 @@ namespace cath {
 		}
 
 		/// \brief Ctor
-		inline full_hit::full_hit(hit_seg_vec           arg_segments,     ///< The segments of the full_hit
+		inline full_hit::full_hit(seq::seq_seg_vec      arg_segments,     ///< The segments of the full_hit
 		                          std::string           arg_label,        ///< The label of the hits' match protein
 		                          const double         &arg_score,        ///< The score associated with the full_hit
 		                          const hit_score_type &arg_score_type,   ///< The type of score stored in this hit (eg evalue / bitscore / crh-score)
@@ -127,7 +127,7 @@ namespace cath {
 		}
 
 		/// \brief Getter for the segments of the full_hit
-		inline const hit_seg_vec & full_hit::get_segments() const {
+		inline const seq::seq_seg_vec & full_hit::get_segments() const {
 			return segments;
 		}
 		
@@ -179,68 +179,68 @@ namespace cath {
 		/// \brief Get the specified full_hit's segment corresponding to the specified index
 		///
 		/// \relates full_hit
-		inline const hit_seg & get_hit_seg_of_seg_idx(const full_hit &arg_full_hit, ///< The full_hit to query
-		                                              const size_t   &arg_seg_idx   ///< The index of the segment to return
-		                                              ) {
+		inline const seq::seq_seg & get_seq_seg_of_seg_idx(const full_hit &arg_full_hit, ///< The full_hit to query
+		                                                   const size_t   &arg_seg_idx   ///< The index of the segment to return
+		                                                   ) {
 			return arg_full_hit.get_segments()[ arg_seg_idx ];
 		}
 
 		/// \brief Get the length of the specified full_hit's segment corresponding to the specified index
 		///
 		/// \relates full_hit
-		inline size_t get_length_of_hit_seg(const full_hit &arg_full_hit, ///< The full_hit to query
+		inline size_t get_length_of_seq_seg(const full_hit &arg_full_hit, ///< The full_hit to query
 		                                    const size_t   &arg_seg_idx   ///< The index of the segment who length should be returned
 		                                    ) {
-			return get_length( get_hit_seg_of_seg_idx( arg_full_hit, arg_seg_idx ) );
+			return get_length( get_seq_seg_of_seg_idx( arg_full_hit, arg_seg_idx ) );
 		}
 
 		/// \brief Get the start residue index of the segment of specified index in the specified full_hit
 		///
 		/// \relates full_hit
-		inline const residx_t & get_start_res_index_of_segment(const full_hit &arg_full_hit,     ///< The full_hit to query
-		                                                       const size_t   &arg_segment_index ///< The index of the segment to query
-		                                                       ) {
-			return get_start_res_index( get_hit_seg_of_seg_idx( arg_full_hit, arg_segment_index ) );
+		inline const seq::residx_t & get_start_res_index_of_segment(const full_hit &arg_full_hit,     ///< The full_hit to query
+		                                                            const size_t   &arg_segment_index ///< The index of the segment to query
+		                                                            ) {
+			return get_start_res_index( get_seq_seg_of_seg_idx( arg_full_hit, arg_segment_index ) );
 		}
 
 		/// \brief Get the stop residue index of the segment of specified index in the specified full_hit
 		///
 		/// \relates full_hit
-		inline residx_t get_stop_res_index_of_segment(const full_hit &arg_full_hit,     ///< The full_hit to query
-		                                              const size_t   &arg_segment_index ///< The index of the segment to query
-		                                              ) {
-			return get_stop_res_index( get_hit_seg_of_seg_idx( arg_full_hit, arg_segment_index ) );
+		inline seq::residx_t get_stop_res_index_of_segment(const full_hit &arg_full_hit,     ///< The full_hit to query
+		                                                   const size_t   &arg_segment_index ///< The index of the segment to query
+		                                                   ) {
+			return get_stop_res_index( get_seq_seg_of_seg_idx( arg_full_hit, arg_segment_index ) );
 		}
 
-		/// \brief Get the start res_arrow of the specified full_hit
+		/// \brief Get the start seq_arrow of the specified full_hit
 		///
 		/// \relates full_hit
-		inline const res_arrow & get_start_res_arrow(const full_hit &arg_full_hit ///< The full_hit to query
-		                                             ) {
+		inline const seq::seq_arrow & get_start_res_arrow(const full_hit &arg_full_hit ///< The full_hit to query
+		                                                  ) {
 			return arg_full_hit.get_segments().front().get_start_arrow();
 		}
 
-		/// \brief Get the stop res_arrow of the specified full_hit
+		/// \brief Get the stop seq_arrow of the specified full_hit
 		///
 		/// \relates full_hit
-		inline const res_arrow & get_stop_res_arrow(const full_hit &arg_full_hit ///< The full_hit to query
-		                                            ) {
+		inline const seq::seq_arrow & get_stop_res_arrow(const full_hit &arg_full_hit ///< The full_hit to query
+		                                                 ) {
 			return arg_full_hit.get_segments().back().get_stop_arrow();
 		}
 
 		/// \brief Get the start residue index of the specified full_hit
 		///
 		/// \relates full_hit
-		inline const residx_t & get_start_res_index(const full_hit &arg_full_hit ///< The full_hit to query
-		                                            ) {
+		inline const seq::residx_t & get_start_res_index(const full_hit &arg_full_hit ///< The full_hit to query
+		                                                 ) {
 			return get_start_res_index( arg_full_hit.get_segments().front() );
 		}
 
 		/// \brief Get the stop residue index of the specified full_hit
 		///
 		/// \relates full_hit
-		inline residx_t get_stop_res_index(const full_hit &arg_full_hit ///< The full_hit to query
-		                                   ) {
+		inline seq::residx_t get_stop_res_index(const full_hit &arg_full_hit ///< The full_hit to query
+		                                        ) {
 			return get_stop_res_index( arg_full_hit.get_segments().back() );
 		}
 
@@ -249,8 +249,8 @@ namespace cath {
 		/// \pre `is_discontig( arg_full_hit )` else an invalid_argument_exception will be thrown
 		///
 		/// \relates full_hit
-		inline const res_arrow & get_stop_of_first_segment(const full_hit &arg_full_hit ///< The full_hit to query
-		                                                   ) {
+		inline const seq::seq_arrow & get_stop_of_first_segment(const full_hit &arg_full_hit ///< The full_hit to query
+		                                                        ) {
 			if ( ! is_discontig( arg_full_hit ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_stop_of_first_segment of contiguous full_hit"));
 			}
@@ -263,8 +263,8 @@ namespace cath {
 		/// \pre `is_discontig( arg_full_hit )` else an invalid_argument_exception will be thrown
 		///
 		/// \relates full_hit
-		inline res_arrow get_start_of_last_segment(const full_hit &arg_full_hit ///< The full_hit to query
-		                                           ) {
+		inline seq::seq_arrow get_start_of_last_segment(const full_hit &arg_full_hit ///< The full_hit to query
+		                                                ) {
 			if ( ! is_discontig( arg_full_hit ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_start_of_last_segment of contiguous full_hit"));
 			}
@@ -278,7 +278,7 @@ namespace cath {
 		                               ) {
 			return boost::accumulate(
 				arg_full_hit.get_segments()
-					| boost::adaptors::transformed( [&] (const hit_seg &x) {
+					| boost::adaptors::transformed( [&] (const seq::seq_seg &x) {
 						return get_length( x );
 					} ),
 				0_z

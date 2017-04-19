@@ -36,6 +36,7 @@
 using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::rslv::detail;
+using namespace cath::seq;
 
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
@@ -52,7 +53,7 @@ using boost::sub_range;
 masked_bests_cacher cath::rslv::detail::make_masked_bests_cacher(masked_bests_cache                &arg_masked_bests_cache, ///< The cache to which the masked_bests_cacher should store best architectures
                                                                  const calc_hit_vec                &arg_masks,              ///< The currently-active masks that will define the unmasked-region signatures
                                                                  const discont_hits_index_by_start &arg_dhibs,              ///< A discont_hits_index_by_start that allows us to quickly find the discontiguous domains that start within a specified region
-                                                                 const res_arrow                   &arg_start_arrow         ///< The start arrow of the region that will be scanned
+                                                                 const seq_arrow                   &arg_start_arrow         ///< The start arrow of the region that will be scanned
                                                                  ) {
 	return {
 		arg_masked_bests_cache,
@@ -71,7 +72,7 @@ masked_bests_cacher cath::rslv::detail::make_masked_bests_cacher(masked_bests_ca
 /// \relates masked_bests_cacher
 res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_interspersed_with_all_of(const calc_hit_vec                &arg_masks,      ///< The mask domains, all of which should be right-interspersed by the domains we're looking for
                                                                                                   const discont_hits_index_by_start &arg_dhibs,      ///< A discont_hits_index_by_start that allows us to quickly find the discontiguous domains that start within a specified region
-                                                                                                  const res_arrow                   &arg_start_arrow ///< The start arrow that must precede all of the returned arrows
+                                                                                                  const seq_arrow                   &arg_start_arrow ///< The start arrow that must precede all of the returned arrows
                                                                                                   ) {
 	// If no masks, just return an empty vector
 	if ( arg_masks.empty() ) {
@@ -86,13 +87,13 @@ res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_intersp
 #endif
 
 	// Grab the latest start point of the mask's hits' interiors
-	const res_arrow &max_first_seg_stop = get_stop_of_first_segment( *max_element(
+	const seq_arrow &max_first_seg_stop = get_stop_of_first_segment( *max_element(
 		arg_masks,
 		calc_hit::get_hit_first_seg_stop_less()
 	));
 
 	// Grab the earliest stop point of the mask's hits' interiors
-	const res_arrow &min_last_seg_start = get_start_of_last_segment( *max_element(
+	const seq_arrow &min_last_seg_start = get_start_of_last_segment( *max_element(
 		arg_masks,
 		calc_hit::get_hit_last_seg_start_less()
 	));
@@ -141,6 +142,6 @@ res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_intersp
 			| transformed( [&] (const size_t    &x) { return arg_dhibs.get_discont_hit_of_index_index( x ); } )
 			| filtered   ( hit_suitable_intersperses_arg_masks                      )
 			| transformed( [ ] (const calc_hit  &x) { return x.get_start_arrow(); } )
-			| filtered   ( [&] (const res_arrow &x) { return x>= arg_start_arrow; } )
+			| filtered   ( [&] (const seq_arrow &x) { return x>= arg_start_arrow; } )
 	) );
 }

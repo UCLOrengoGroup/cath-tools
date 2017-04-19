@@ -34,6 +34,7 @@
 using namespace cath;
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace cath::seq;
 
 using boost::filesystem::path;
 using std::ifstream;
@@ -149,7 +150,7 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 
 		arg_read_and_process_mgr.add_hit(
 			target_id_str_ref,
-			{ { hit_seg{ arrow_before_res( start ), arrow_after_res ( stop  ) } } },
+			{ { seq_seg{ arrow_before_res( start ), arrow_after_res ( stop  ) } } },
 			string{ query_field_itrs.first, query_field_itrs.second },
 			bitscore / bitscore_divisor( arg_apply_cath_policies, evalues_are_susp ),
 			hit_score_type::BITSCORE,

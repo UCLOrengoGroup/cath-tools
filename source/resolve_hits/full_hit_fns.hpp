@@ -33,8 +33,8 @@
 namespace cath {
 	namespace rslv {
 
-		hit_seg_vec get_segments(const full_hit &,
-		                         const trim_spec_opt & = boost::none);
+		seq::seq_seg_vec get_segments(const full_hit &,
+		                              const trim_spec_opt & = boost::none);
 
 		std::string get_segments_string(const full_hit &,
 		                                const trim_spec_opt & = boost::none);

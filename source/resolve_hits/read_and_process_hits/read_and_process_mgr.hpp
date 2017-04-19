@@ -150,7 +150,7 @@ namespace cath {
 			                              const bool & = DEFAULT_INPUT_HITS_ARE_GROUPED);
 
 			void add_hit(const boost::string_ref &,
-			             hit_seg_vec,
+			             seq::seq_seg_vec,
 			             std::string,
 			             const double &,
 			             const hit_score_type &,
@@ -233,7 +233,7 @@ namespace cath {
 		///
 		/// \pre `is_active()` else an invalid_argument_exception will be thrown
 		inline void read_and_process_mgr::add_hit(const boost::string_ref &arg_query_id,   ///< A string_ref of the query_id
-		                                          hit_seg_vec              arg_segments,   ///< Any fragments of the new hit
+		                                          seq::seq_seg_vec         arg_segments,   ///< Any fragments of the new hit
 		                                          std::string              arg_label,      ///< The label associated with the new hit
 		                                          const double            &arg_score,      ///< The score associated with the new hit
 		                                          const hit_score_type    &arg_score_type, ///< The type of the score

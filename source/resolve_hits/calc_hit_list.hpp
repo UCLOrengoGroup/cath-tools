@@ -122,15 +122,15 @@ namespace cath {
 		std::string to_string(const calc_hit_list &);
 		std::ostream & operator<<(std::ostream &,
 		                          const calc_hit_list &);
-		residx_opt get_max_stop(const calc_hit_list &);
+		seq::residx_opt get_max_stop(const calc_hit_list &);
 		resscr_opt get_best_score(const calc_hit_list &);
 		calc_hit_list::const_iterator find_first_hit_stopping_at_or_after(const calc_hit_list  &,
-		                                                                  const res_arrow &);
+		                                                                  const seq::seq_arrow &);
 		calc_hit_list::const_iterator find_first_hit_stopping_after(const calc_hit_list  &,
-		                                                            const res_arrow &);
+		                                                            const seq::seq_arrow &);
 		boost::integer_range<hitidx_t> indices_of_hits_that_stop_in_range(const calc_hit_list &,
-		                                                                  const res_arrow &,
-		                                                                  const res_arrow &);
+		                                                                  const seq::seq_arrow &,
+		                                                                  const seq::seq_arrow &);
 
 		/// \brief Private-static method for in-place sorting hits using get_less_than_fn()
 		inline void calc_hit_list::sort_hit_vec(calc_hit_vec        &arg_hit_vec,  ///< The hits to in-place sort

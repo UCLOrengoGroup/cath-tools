@@ -47,13 +47,13 @@ namespace cath {
 		                                          const full_hit_list &,
 		                                          const crh_segment_spec &);
 
-		hit_seg_opt_vec merge_boundaries(const hit_seg_vec &,
-		                                 const seg_boundary_pair_vec &,
-		                                 const crh_segment_spec &);
+		seq::seq_seg_opt_vec merge_boundaries(const seq::seq_seg_vec &,
+		                                      const seg_boundary_pair_vec &,
+		                                      const crh_segment_spec &);
 
-		hit_seg_opt_vec resolve_all_boundaries(const full_hit &,
-		                                       const full_hit_list &,
-		                                       const crh_segment_spec &);
+		seq::seq_seg_opt_vec resolve_all_boundaries(const full_hit &,
+		                                            const full_hit_list &,
+		                                            const crh_segment_spec &);
 
 		std::string get_all_resolved_segments_string(const full_hit &,
 		                                             const full_hit_list &,

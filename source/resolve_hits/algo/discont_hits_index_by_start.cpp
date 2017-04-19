@@ -34,6 +34,7 @@
 using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::rslv::detail;
+using namespace cath::seq;
 
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
@@ -73,11 +74,11 @@ discont_hits_index_by_start::discont_hits_index_by_start(const calc_hit_list &ar
 ///        within the specified region (inclusive)
 ///
 /// The only way these indices should be used is as arguments to get_discont_hit_of_index_index()
-integer_range<size_t> discont_hits_index_by_start::get_index_indices_of_disconts_in_range(const res_arrow &arg_start, ///< The start of the region of interest
-                                                                                          const res_arrow &arg_stop   ///< The end of the region of interest
+integer_range<size_t> discont_hits_index_by_start::get_index_indices_of_disconts_in_range(const seq_arrow &arg_start, ///< The start of the region of interest
+                                                                                          const seq_arrow &arg_stop   ///< The end of the region of interest
                                                                                           ) const {
-	const auto begin_itr = lower_bound( disconts, arg_start, [] (const res_arr_idx_pair &p, const res_arrow &a) { return p.first < a; } );
-	const auto end_itr   = upper_bound( disconts, arg_stop,  [] (const res_arrow &a, const res_arr_idx_pair &p) { return a < p.first; } );
+	const auto begin_itr = lower_bound( disconts, arg_start, [] (const res_arr_idx_pair &p, const seq_arrow &a) { return p.first < a; } );
+	const auto end_itr   = upper_bound( disconts, arg_stop,  [] (const seq_arrow &a, const res_arr_idx_pair &p) { return a < p.first; } );
 	return irange(
 		numeric_cast<size_t>( distance( common::cbegin( disconts ), begin_itr ) ),
 		numeric_cast<size_t>( distance( common::cbegin( disconts ), end_itr   ) )

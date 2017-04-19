@@ -23,17 +23,18 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/algorithm/string/join.hpp>
 
-#include "resolve_hits/hit_seg.hpp"
+#include "seq/seq_seg.hpp"
 
 using namespace cath::rslv;
+using namespace cath::seq;
 
 using boost::algorithm::join;
 using boost::adaptors::transformed;
 using std::string;
 
 /// \brief Ctor from start on each sequence and length
-alnd_rgn::alnd_rgn(res_arrow       arg_start_res_a, ///< The start of the aligned region in the first  sequence
-                   res_arrow       arg_start_res_b, ///< The start of the aligned region in the second sequence
+alnd_rgn::alnd_rgn(seq_arrow       arg_start_res_a, ///< The start of the aligned region in the first  sequence
+                   seq_arrow       arg_start_res_b, ///< The start of the aligned region in the second sequence
                    const residx_t &arg_length       ///< The length of the aligned region
                    ) noexcept : start_res_a( std::move( arg_start_res_a ) ),
                                 start_res_b( std::move( arg_start_res_b ) ),
@@ -41,12 +42,12 @@ alnd_rgn::alnd_rgn(res_arrow       arg_start_res_a, ///< The start of the aligne
 }
 
 /// \brief Getter for the start of the aligned region in the first  sequence
-const res_arrow & alnd_rgn::get_start_res_a() const {
+const seq_arrow & alnd_rgn::get_start_res_a() const {
 	return start_res_a;
 }
 
 /// \brief Getter for the start of the aligned region in the second sequence
-const res_arrow & alnd_rgn::get_start_res_b() const {
+const seq_arrow & alnd_rgn::get_start_res_b() const {
 	return start_res_b;
 }
 

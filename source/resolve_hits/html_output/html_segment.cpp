@@ -32,6 +32,7 @@
 using namespace cath;
 using namespace cath::common;
 using namespace cath::rslv;
+using namespace cath::seq;
 using namespace std::literals::string_literals;
 
 using boost::adaptors::transformed;
@@ -41,7 +42,7 @@ using boost::none;
 using std::string;
 
 /// \brief Get an HTML span string to represent some aspect of a segment
-string html_segment::get_html_string(const res_arrow          &arg_start,           ///< The start of the segment to render
+string html_segment::get_html_string(const seq_arrow          &arg_start,           ///< The start of the segment to render
                                      const res_arrow_opt      &arg_stop,            ///< The stop of the segment to render (or none for a boundary)
                                      const string             &arg_css_class,       ///< The CSS classes with which the HTML span should be marked
                                      const str_str_pair_vec   &arg_data_key_values, ///< A set of key/value pairs to be inserted as data attributes in the span (keys are prefixed with "data-" if not already)
@@ -96,7 +97,7 @@ string html_segment::get_html_string(const res_arrow          &arg_start,       
 }
 
 /// \brief Get a resolved boundary HTML string
-string html_segment::get_resolve_boundary_html_string(const res_arrow      &arg_point,          ///< The location of the arrow
+string html_segment::get_resolve_boundary_html_string(const seq_arrow      &arg_point,          ///< The location of the arrow
                                                       const display_colour &arg_colour,         ///< The colour in which this boundary should be rendered
                                                       const size_t         &arg_full_seq_length ///< The length of the full sequence on which this hit appears
                                                       ) {

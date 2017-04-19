@@ -61,7 +61,7 @@ namespace cath {
 
 				scored_arch_proxy_opt get_best_scored_arch_with_one_of_hits(const boost::sub_range<boost::integer_range<hitidx_t>> &,
 				                                                            const calc_hit_vec &,
-				                                                            const res_arrow &,
+				                                                            const seq::seq_arrow &,
 				                                                            const best_scan_arches &,
 				                                                            const resscr_t &);
 
@@ -69,7 +69,7 @@ namespace cath {
 				std::reference_wrapper<const calc_hit_list> hits;
 
 				/// \brief The maximum stop of any of the hits
-				residx_t max_stop;
+				seq::residx_t max_stop;
 
 				/// \brief A cache of the best architectures seen for specific unmasked-region signatures
 				masked_bests_cache the_masked_bests_cache;
@@ -81,8 +81,8 @@ namespace cath {
 				discont_hits_index_by_start the_dhibs;
 
 				scored_arch_proxy get_best_score_and_arch_of_specified_regions(const calc_hit_vec &,
-				                                                               const res_arrow &,
-				                                                               const res_arrow &,
+				                                                               const seq::seq_arrow &,
+				                                                               const seq::seq_arrow &,
 				                                                               const scored_arch_proxy &);
 
 			public:
@@ -119,7 +119,7 @@ namespace cath {
 			/// Note: Not using max_element because that'd probably call get_complex_hit_score() twice for many elements
 			inline scored_arch_proxy_opt hit_resolver::get_best_scored_arch_with_one_of_hits(const boost::sub_range<boost::integer_range<hitidx_t>> &arg_hit_indices,  ///< The indices of the hits to consider
 			                                                                                 const calc_hit_vec                                     &arg_mask,         ///< The active mask defining no-go regions
-			                                                                                 const res_arrow                                        &arg_start_arrow,  ///< The start point of the current scan (from which arg_bests should have results (up to the one place before the stop of these hits))
+			                                                                                 const seq::seq_arrow                                   &arg_start_arrow,  ///< The start point of the current scan (from which arg_bests should have results (up to the one place before the stop of these hits))
 			                                                                                                                                                           ///< Guaranteed to be at the boundary of a segment in arg_masks, or at the very start if arg_masks is empty
 			                                                                                 const best_scan_arches                                 &arg_bests,        ///< The history of best-seen architectures so far in this layer of dynamic programming. This is setup to handle the current forbidden arg_masks.
 			                                                                                 const resscr_t                                         &arg_score_to_beat ///< The existing score to beat. This is setup to handle the current forbidden arg_masks.

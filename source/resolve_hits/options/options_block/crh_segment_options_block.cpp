@@ -30,6 +30,7 @@
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::rslv;
+using namespace cath::seq;
 using namespace cath;
 
 using boost::none;
