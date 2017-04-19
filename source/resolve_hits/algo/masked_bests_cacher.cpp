@@ -47,7 +47,7 @@ using boost::range::upper_bound;
 using boost::sub_range;
 
 /// \brief Build a masked_bests_cacher to handle the caching of best results in the specified masked_bests_cache
-///        whilst scaning from the specified start position with the specified hits and mask
+///        whilst scanning from the specified start position with the specified hits and mask
 ///
 /// \relates masked_bests_cacher
 masked_bests_cacher cath::rslv::detail::make_masked_bests_cacher(masked_bests_cache                &arg_masked_bests_cache, ///< The cache to which the masked_bests_cacher should store best architectures
