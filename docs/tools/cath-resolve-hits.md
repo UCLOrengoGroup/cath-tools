@@ -30,7 +30,7 @@ Features
  * Outputs in plain text or JSON
  * Uses a simple default input file format
  * Also accepts HMMER domtblout files and hmmsearch output files
- * Accepts input that hasn't been pre-sorted or even pre-grouped (but can exploit that where specified)
+ * Accepts input that hasn't been pre-sorted or even pre-grouped (but can exploit pre-grouping where specified)
 
 **Configurable**
 
