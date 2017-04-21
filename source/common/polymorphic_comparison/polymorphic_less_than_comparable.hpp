@@ -116,8 +116,9 @@ namespace cath {
 
 				// If the result is true (first object's dynamic type compares strictly less-than) or false (strictly greater-than),
 				// then just (the bool equivalent of) that value; otherwise, return the result of calling less_than_with_same_dynamic_type().
-				return ( dyn_type_cmp || ! dyn_type_cmp ) ? static_cast<bool>(dyn_type_cmp)
-				                                          : arg_object1.less_than_with_same_dynamic_type( arg_object2 );
+				return ! boost::logic::indeterminate( dyn_type_cmp )
+					? static_cast<bool>( dyn_type_cmp )
+					: arg_object1.less_than_with_same_dynamic_type( arg_object2 );
 			}
 
 			template<class archive> void serialize(archive &/*ar*/,

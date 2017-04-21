@@ -58,8 +58,9 @@ namespace cath {
 				//    * return false;
 				// * otherwise:
 				//    * return the result of calling equal_with_same_dynamic_type().
-				return ( dyn_type_cmp || ! dyn_type_cmp ) ? false
-				                                          : arg_object1.equal_with_same_dynamic_type( arg_object2 );
+				return ! boost::logic::indeterminate( dyn_type_cmp  )
+					? false
+					: arg_object1.equal_with_same_dynamic_type( arg_object2 );
 			}
 
 			template<class archive> void serialize(archive &/*ar*/,

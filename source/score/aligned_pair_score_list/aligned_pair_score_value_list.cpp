@@ -23,6 +23,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/logic/tribool.hpp>
+#include <boost/logic/tribool_io.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/range/algorithm/adjacent_find.hpp>
 #include <boost/range/irange.hpp>
@@ -30,6 +31,7 @@
 #include "alignment/alignment.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/tribool/tribool.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "score/aligned_pair_score/aligned_pair_score.hpp"
@@ -192,7 +194,7 @@ ostream & cath::score::operator<<(ostream                             &arg_os,  
 		arg_os << ":";
 		arg_os << value;
 		arg_os << ";";
-		arg_os << ( (score.higher_is_better() != false) ? value : -value );
+		arg_os << ( is_not_false( score.higher_is_better() ) ? value : -value );
 		arg_os << "\n";
 	}
 	return arg_os;

@@ -42,6 +42,7 @@
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "common/boost_addenda/range/adaptor/limited.hpp"
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/tribool/tribool.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/out_of_range_exception.hpp"
 #include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
@@ -191,7 +192,7 @@ void score_classn_value_results_set::add_aligned_pair_score_value_list(const ali
 		for (const size_t &score_value_ctr : irange( 0_z, num_score_values ) ) {
 			const auto   &score            = arg_aligned_pair_score_value_list.get_aligned_pair_score_of_index( score_value_ctr );
 			const string &name             = score.human_friendly_short_name();
-			const bool   &higher_is_better = score.higher_is_better();
+			const bool   &higher_is_better = is_true( score.higher_is_better() );
 			score_classn_value_lists.push_back( make_score_classn_value_list( {}, higher_is_better, name ) );
 		}
 		sort_score_classn_value_lists();
@@ -216,7 +217,7 @@ void score_classn_value_results_set::add_aligned_pair_score_value_list(const ali
 		const auto   &value            = arg_aligned_pair_score_value_list.get_value_of_index             ( score_value_ctr );
 		const auto   &score            = arg_aligned_pair_score_value_list.get_aligned_pair_score_of_index( score_value_ctr );
 		const string &name             = score.human_friendly_short_name();
-		const bool   &higher_is_better = score.higher_is_better();
+		const bool   &higher_is_better = is_true( score.higher_is_better() );
 
 		score_classn_value_list &the_list = get_score_classn_value_list_of_name( name );
 		if ( get_higher_is_better( the_list ) != higher_is_better ) {
