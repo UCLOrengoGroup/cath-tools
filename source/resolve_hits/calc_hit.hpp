@@ -437,7 +437,7 @@ namespace cath {
 			}
 			for (const auto &seg_ctr_a : boost::irange( 0_z, arg_hit_a.get_num_segments() ) ) {
 				for (const auto &seg_ctr_b : boost::irange( 0_z, arg_hit_b.get_num_segments() ) ) {
-					const bool seg_overlap = seq_segs_overlap(
+					const bool seg_overlap = are_overlapping(
 						get_seq_seg_of_seg_idx( arg_hit_a, seg_ctr_a ),
 						get_seq_seg_of_seg_idx( arg_hit_b, seg_ctr_b )
 					);

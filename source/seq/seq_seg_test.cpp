@@ -54,23 +54,75 @@ BOOST_AUTO_TEST_CASE(insetion_operator_works) {
 	BOOST_CHECK_EQUAL( lexical_cast<string>( seq_seg_of_res_idcs( 1272, 1320 ) ), "seq_seg[1272-1320]" );
 }
 
-BOOST_AUTO_TEST_CASE(overlap) {
+BOOST_AUTO_TEST_CASE(are_overlapping_works) {
 	constexpr auto seq_seg_a = seq_seg_of_res_idcs( 1266, 1344 );
 	constexpr auto seq_seg_b = seq_seg_of_res_idcs( 1272, 1320 );
 	constexpr auto seq_seg_c = seq_seg_of_res_idcs( 1398, 1437 );
-	static_assert(   seq_segs_overlap( seq_seg_a, seq_seg_b ), "" );
-	static_assert( ! seq_segs_overlap( seq_seg_a, seq_seg_c ), "" );
-	static_assert( ! seq_segs_overlap( seq_seg_b, seq_seg_c ), "" );
-	static_assert(   seq_segs_overlap( seq_seg_b, seq_seg_a ), "" );
-	static_assert( ! seq_segs_overlap( seq_seg_c, seq_seg_a ), "" );
-	static_assert( ! seq_segs_overlap( seq_seg_c, seq_seg_b ), "" );
+	static_assert(   are_overlapping( seq_seg_a, seq_seg_b ), "" );
+	static_assert( ! are_overlapping( seq_seg_a, seq_seg_c ), "" );
+	static_assert( ! are_overlapping( seq_seg_b, seq_seg_c ), "" );
+	static_assert(   are_overlapping( seq_seg_b, seq_seg_a ), "" );
+	static_assert( ! are_overlapping( seq_seg_c, seq_seg_a ), "" );
+	static_assert( ! are_overlapping( seq_seg_c, seq_seg_b ), "" );
 	BOOST_CHECK( true );
 }
-
 
 BOOST_AUTO_TEST_CASE(length) {
 	static_assert( get_length( seq_seg_of_res_idcs( 10, 10 ) ) ==  1, "" );
 	static_assert( get_length( seq_seg_of_res_idcs( 10, 20 ) ) == 11, "" );
+	BOOST_CHECK( true );
+}
+
+
+BOOST_AUTO_TEST_CASE(shorter_and_longer_length) {
+	static_assert( shorter_length( seq_seg_of_res_idcs( 10, 19 ), seq_seg_of_res_idcs( 10, 29 ) ) == 10, "" );
+	static_assert( longer_length ( seq_seg_of_res_idcs( 10, 19 ), seq_seg_of_res_idcs( 10, 29 ) ) == 20, "" );
+	BOOST_CHECK( true );
+}
+
+
+BOOST_AUTO_TEST_CASE(overlap_by_works) {
+	static_assert( overlap_by( seq_seg_of_res_idcs(  2,  3 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0, "" );
+	static_assert( overlap_by( seq_seg_of_res_idcs(  3,  4 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  1, "" );
+	static_assert( overlap_by( seq_seg_of_res_idcs(  4,  5 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  2, "" );
+	static_assert( overlap_by( seq_seg_of_res_idcs(  5,  6 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  2, "" );
+	static_assert( overlap_by( seq_seg_of_res_idcs(  6,  7 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  2, "" );
+	static_assert( overlap_by( seq_seg_of_res_idcs(  7,  8 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  1, "" );
+	static_assert( overlap_by( seq_seg_of_res_idcs(  8,  9 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0, "" );
+
+	static_assert( overlap_by( seq_seg_of_res_idcs(  4,  7 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  4, "" );
+	static_assert( overlap_by( seq_seg_of_res_idcs(  2,  9 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  4, "" );
+
+	BOOST_CHECK( true );
+}
+
+BOOST_AUTO_TEST_CASE(fraction_overlap_over_shorter_works) {
+	static_assert( fraction_overlap_over_shorter( seq_seg_of_res_idcs(  2,  3 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.00, "" );
+	static_assert( fraction_overlap_over_shorter( seq_seg_of_res_idcs(  3,  4 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.50, "" );
+	static_assert( fraction_overlap_over_shorter( seq_seg_of_res_idcs(  4,  5 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  1.00, "" );
+	static_assert( fraction_overlap_over_shorter( seq_seg_of_res_idcs(  5,  6 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  1.00, "" );
+	static_assert( fraction_overlap_over_shorter( seq_seg_of_res_idcs(  6,  7 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  1.00, "" );
+	static_assert( fraction_overlap_over_shorter( seq_seg_of_res_idcs(  7,  8 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.50, "" );
+	static_assert( fraction_overlap_over_shorter( seq_seg_of_res_idcs(  8,  9 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.00, "" );
+
+	static_assert( fraction_overlap_over_shorter( seq_seg_of_res_idcs(  4,  7 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  1.00, "" );
+	static_assert( fraction_overlap_over_shorter( seq_seg_of_res_idcs(  2,  9 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  1.00, "" );
+
+	BOOST_CHECK( true );
+}
+
+BOOST_AUTO_TEST_CASE(fraction_overlap_over_longer_works) {
+	static_assert( fraction_overlap_over_longer( seq_seg_of_res_idcs(  2,  3 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.00, "" );
+	static_assert( fraction_overlap_over_longer( seq_seg_of_res_idcs(  3,  4 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.25, "" );
+	static_assert( fraction_overlap_over_longer( seq_seg_of_res_idcs(  4,  5 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.50, "" );
+	static_assert( fraction_overlap_over_longer( seq_seg_of_res_idcs(  5,  6 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.50, "" );
+	static_assert( fraction_overlap_over_longer( seq_seg_of_res_idcs(  6,  7 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.50, "" );
+	static_assert( fraction_overlap_over_longer( seq_seg_of_res_idcs(  7,  8 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.25, "" );
+	static_assert( fraction_overlap_over_longer( seq_seg_of_res_idcs(  8,  9 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.00, "" );
+
+	static_assert( fraction_overlap_over_longer( seq_seg_of_res_idcs(  4,  7 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  1.00, "" );
+	static_assert( fraction_overlap_over_longer( seq_seg_of_res_idcs(  2,  9 ), seq_seg_of_res_idcs( 4, 7 ) ) ==  0.50, "" );
+
 	BOOST_CHECK( true );
 }
 
