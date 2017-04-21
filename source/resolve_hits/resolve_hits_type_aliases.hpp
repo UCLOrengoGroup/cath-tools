@@ -79,9 +79,6 @@ namespace cath {
 		/// \brief Type alias for a pair of res_arrows
 		using res_arr_res_arr_pair_vec  = std::vector<res_arr_res_arr_pair>;
 
-		/// \brief Type alias for a vector of pairs of residue indices
-		using residx_residx_pair_vec    = std::vector<seq::residx_residx_pair>;
-
 		/// \brief Type alias for the type to be used for hits' scores
 		using resscr_t                  = float;
 

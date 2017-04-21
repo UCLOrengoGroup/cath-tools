@@ -34,6 +34,7 @@
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 #include "seq/seq_arrow.hpp"
 #include "seq/seq_seg.hpp"
+#include "seq/seq_seg_run.hpp"
 
 using namespace cath::common::literals;
 
@@ -55,12 +56,6 @@ namespace cath {
 		/// ...so that it can be processed efficiently in a vector
 		class calc_hit final {
 		private:
-			/// \brief The boundary at the start of the first segment
-			seq::seq_arrow start_arrow;
-
-			/// \brief The boundary at the end of the last segment
-			seq::seq_arrow stop_arrow;
-
 			/// \brief The score associated with this calc_hit
 			///
 			/// This must be greater than 0.0
@@ -69,8 +64,8 @@ namespace cath {
 			/// \brief The index of the label for this calc_hit (in some corresponding list labels)
 			hitidx_t label_idx;
 
-			/// \brief The (possibly empty) list of the boundaries associated with any gaps between this calc_hit's segments
-			seq::seq_seg_vec fragments;
+			/// \brief The list of the segments
+			seq::seq_seg_run segments;
 
 			void sanity_check() const;
 
@@ -80,7 +75,7 @@ namespace cath {
 			         const resscr_t &,
 			         const hitidx_t &);
 
-			calc_hit(const seq::seq_seg_vec &,
+			calc_hit(seq::seq_seg_vec,
 			         const resscr_t &,
 			         const hitidx_t &);
 
@@ -148,9 +143,6 @@ namespace cath {
 
 		/// \brief Sanity check that the calc_hit is sensible and throw an exception if not
 		inline void calc_hit::sanity_check() const {
-			if ( stop_arrow < start_arrow ) {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Start index must not be greater than the stop index"));
-			}
 			if ( score <= 0 ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 					"Hit cannot be processed because its score of "
@@ -165,22 +157,22 @@ namespace cath {
 		                          seq::seq_arrow   arg_stop_arrow,  ///< The end boundary of the continuous calc_hit
 		                          const resscr_t  &arg_score,       ///< The score associated with the calc_hit
 		                          const hitidx_t  &arg_label_idx    ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
-		                          ) : start_arrow ( std::move( arg_start_arrow ) ),
-		                              stop_arrow  ( std::move( arg_stop_arrow  ) ),
-		                              score       ( arg_score                    ),
-		                              label_idx   ( arg_label_idx                ) {
+		                          ) : score     { arg_score     },
+		                              label_idx { arg_label_idx },
+		                              segments  {
+		                              	std::move( arg_start_arrow ),
+		                              	std::move( arg_stop_arrow )
+		                              } {
 			sanity_check();
 		}
 
 		/// \brief Ctor for a possibly discontinuous calc_hit from segments
-		inline calc_hit::calc_hit(const seq::seq_seg_vec &arg_segments, ///< The segments of the calc_hit
-		                          const resscr_t         &arg_score,    ///< The score associated with the calc_hit
-		                          const hitidx_t         &arg_label_idx ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
-		                          ) : start_arrow ( arg_segments.front().get_start_arrow()      ),
-		                              stop_arrow  ( arg_segments.back ().get_stop_arrow ()      ),
-		                              score       ( arg_score                                   ),
-		                              label_idx   ( arg_label_idx                               ),
-		                              fragments   ( make_fragments_of_segments( arg_segments )  ) {
+		inline calc_hit::calc_hit(seq::seq_seg_vec  arg_segments, ///< The segments of the calc_hit
+		                          const resscr_t   &arg_score,    ///< The score associated with the calc_hit
+		                          const hitidx_t   &arg_label_idx ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
+		                          ) : score     { arg_score                 },
+		                              label_idx { arg_label_idx             },
+		                              segments  { std::move( arg_segments ) } {
 			sanity_check();
 		}
 
@@ -190,36 +182,36 @@ namespace cath {
 		                          seq::seq_seg_vec   arg_fragments,   ///< The (possibly empty) list of the boundaries associated with any gaps between this calc_hit's segments
 		                          const resscr_t    &arg_score,       ///< The score associated with the calc_hit
 		                          const hitidx_t    &arg_label_idx    ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
-		                          ) : start_arrow (std::move( arg_start_arrow        )),
-		                              stop_arrow  (std::move( arg_stop_arrow         )),
-		                              score       ( arg_score              ),
-		                              label_idx   ( arg_label_idx          ),
-		                              fragments   (std::move( arg_fragments          )) {
+		                          ) : score       { arg_score     },
+		                              label_idx   { arg_label_idx },
+		                              segments    {
+		                              	std::move( arg_start_arrow ),
+		                              	std::move( arg_stop_arrow ),
+		                              	std::move( arg_fragments )
+		                              } {
 			sanity_check();
 		}
 
 		/// \brief Return whether this calc_hit is discontiguous
 		inline bool calc_hit::is_discontig() const {
-			return ! fragments.empty();
+			return segments.is_discontig();
 		}
 
 		/// \brief Return the number of segments in this calc_hit
 		inline size_t calc_hit::get_num_segments() const {
-			return fragments.size() + 1;
+			return segments.get_num_segments();
 		}
 
 		/// \brief Get the start boundary of the segment with the specified index
 		inline const seq::seq_arrow & calc_hit::get_start_arrow_of_segment(const size_t &arg_segment_index ///< The index of the segment whose start arrow should be returned
 		                                                                   ) const {
-			return ( arg_segment_index > 0                ) ? fragments[ arg_segment_index - 1 ].get_stop_arrow()
-			                                                : start_arrow;
+			return segments.get_start_arrow_of_segment( arg_segment_index );
 		}
 
 		/// \brief Get the stop boundary of the segment with the specified index
 		inline const seq::seq_arrow & calc_hit::get_stop_arrow_of_segment(const size_t &arg_segment_index ///< The index of the segment whose stop arrow should be returned
 		                                                                  ) const {
-			return ( arg_segment_index < fragments.size() ) ? fragments[ arg_segment_index     ].get_start_arrow()
-			                                                : stop_arrow;
+			return segments.get_stop_arrow_of_segment( arg_segment_index );
 		}
 
 		/// \brief Get the length of the specified calc_hit's segment corresponding to the specified index
@@ -280,12 +272,12 @@ namespace cath {
 
 		/// \brief Get the (first) start of this calc_hit
 		inline const seq::seq_arrow & calc_hit::get_start_arrow() const {
-			return start_arrow;
+			return segments.get_start_arrow();
 		}
 
 		/// \brief Get the (last) stop of this calc_hit
 		inline const seq::seq_arrow & calc_hit::get_stop_arrow()  const {
-			return stop_arrow;
+			return segments.get_stop_arrow();
 		}
 
 		/// \brief Get the score associated with this calc_hit
@@ -391,9 +383,9 @@ namespace cath {
 		/// \brief Make a calc_hit
 		///
 		/// \relates calc_hit
-		inline calc_hit make_hit_from_res_indices(const residx_residx_pair_vec &arg_residue_index_segments, ///< The residue index start/stop pairs of the calc_hit's segments
-		                                          const resscr_t               &arg_score,                  ///< The score associated with the calc_hit
-		                                          const hitidx_t               &arg_label_idx               ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
+		inline calc_hit make_hit_from_res_indices(const seq::residx_residx_pair_vec &arg_residue_index_segments, ///< The residue index start/stop pairs of the calc_hit's segments
+		                                          const resscr_t                    &arg_score,                  ///< The score associated with the calc_hit
+		                                          const hitidx_t                    &arg_label_idx               ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
 		                                          ) {
 			return {
 				common::transform_build<seq::seq_seg_vec>(
@@ -417,7 +409,7 @@ namespace cath {
 				arg_hit_b.get_start_arrow() < arg_hit_a.get_stop_arrow()
 			);
 		}
-		
+
 		/// \brief Return whether the two specified hits overlap with each other
 		///
 		/// This requires there to be a genuine overlap of segments, not just that one

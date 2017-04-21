@@ -934,6 +934,7 @@ set(
 	NORMSOURCES_SEQ
 		seq/seq_arrow.cpp
 		seq/seq_seg.cpp
+		seq/seq_seg_run.cpp
 )
 
 set(

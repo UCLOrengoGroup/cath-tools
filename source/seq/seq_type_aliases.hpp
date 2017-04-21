@@ -27,6 +27,7 @@
 
 namespace cath { namespace seq { class seq_arrow; } }
 namespace cath { namespace seq { class seq_seg; } }
+namespace cath { namespace seq { class seq_seg_run; } }
 
 namespace cath {
 	namespace seq {
@@ -50,11 +51,17 @@ namespace cath {
 		/// \brief Type alias for a pair of residue indices
 		using residx_residx_pair        = std::pair<residx_t, residx_t>;
 
+		/// \brief Type alias for a vector of pairs of residue indices
+		using residx_residx_pair_vec    = std::vector<seq::residx_residx_pair>;
+
 		/// \brief Type alias for an optional seq_seg
 		using seq_seg_opt               = boost::optional<seq_seg>;
 
 		/// \brief Type alias for a vector of seq_seg_opt
 		using seq_seg_opt_vec           = std::vector<seq_seg_opt>;
+
+		/// \brief Type alias for a vector of seq_seg_run
+		using seq_seg_run_vec           = std::vector<seq_seg_run>;
 
 		/// \brief Type alias for a vector of seq_seg objects
 		using seq_seg_vec               = std::vector<seq_seg>;

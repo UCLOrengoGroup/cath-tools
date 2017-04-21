@@ -193,7 +193,7 @@ namespace cath {
 			return common::cend( the_hits );
 		}
 
-		using hit_tpl     = std::tuple<std::string, residx_residx_pair_vec, double>;
+		using hit_tpl     = std::tuple<std::string, seq::residx_residx_pair_vec, double>;
 		using hit_tpl_vec = std::vector<hit_tpl>;
 
 	} // namespace rslv
