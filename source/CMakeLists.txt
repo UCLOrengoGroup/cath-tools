@@ -1375,6 +1375,11 @@ set(
 )
 
 set(
+	TESTSOURCES_COMMON_CONTAINER
+		common/container/id_of_string_test.cpp
+)
+
+set(
 	TESTSOURCES_COMMON_CPP17
 		common/cpp17/apply_test.cpp
 )
@@ -1442,6 +1447,7 @@ set(
 		${TESTSOURCES_COMMON_BOOST_ADDENDA}
 		${TESTSOURCES_COMMON_CLONE}
 		common/command_executer_test.cpp
+		${TESTSOURCES_COMMON_CONTAINER}
 		${TESTSOURCES_COMMON_CPP17}
 		common/difference_test.cpp
 		${TESTSOURCES_COMMON_FILE}
