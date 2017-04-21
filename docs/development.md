@@ -117,7 +117,7 @@ Checking headers compile independently
 Clang:
 
 ~~~~~no-highlight
-find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -I source VAR
+find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang++ -x c++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source VAR
 ~~~~~
 
 GCC:
@@ -131,7 +131,7 @@ Fixing trailing namespace comments
 ----------------------------------
 
 ~~~~~no-highlight
-find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy -fix -checks=llvm-namespace-comment VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source || true"
+find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy -fix -checks=llvm-namespace-comment VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source || true"
 ~~~~~
 
 
@@ -143,7 +143,7 @@ Whilst the header guards start with one underscore (contrary to clang-tidy's pre
 
 ~~~~~no-highlight
 find $PWD/source -type f -iname '*.hpp' | sort | grep -vw 'third_party_code' | sed 's/\.hpp$//g' | xargs -I VAR -P 8 ln -s VAR.hpp VAR.h
-find $PWD/source -type l -iname '*.h'   | sort | xargs -I VAR -P 4 /bin/tcsh -c "clang-tidy -fix -checks=llvm-header-guard VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source || true"
+find $PWD/source -type l -iname '*.h'   | sort | xargs -I VAR -P 4 /bin/tcsh -c "clang-tidy -fix -checks=llvm-header-guard VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source || true"
 find $PWD/source -type l -iname '*.h'   | sort | xargs rm -f
 find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | xargs sed -i 's/#ifndef __CATH_TOOLS_SOURCE_/#ifndef _CATH_TOOLS_SOURCE_/g'
 find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | xargs sed -i 's/#define __CATH_TOOLS_SOURCE_/#define _CATH_TOOLS_SOURCE_/g'
@@ -156,7 +156,7 @@ find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | x
 
 ~~~~~no-highlight
 find $PWD/source -type f -iname '*.hpp' | sort | grep -vw 'third_party_code' | sed 's/\.hpp$//g' | xargs -I VAR -P 8 ln -s VAR.hpp VAR.h
-find $PWD/source -type l -iname '*.h'   | sort | xargs -I VAR -P 4 /bin/tcsh -c "clang-tidy -fix -checks=llvm-header-guard VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source || true"
+find $PWD/source -type l -iname '*.h'   | sort | xargs -I VAR -P 4 /bin/tcsh -c "clang-tidy -fix -checks=llvm-header-guard VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source || true"
 find $PWD/source -type l -iname '*.h'   | sort | xargs rm -f
 find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | sed 's/\.h$//g' | xargs -I VAR diff -C1 VAR.hpp VAR.h
 find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | sed 's/\.h$//g' | xargs -I VAR mv       VAR.h   VAR.hpp
@@ -176,9 +176,9 @@ Would like to use:
 ~~~~~no-highlight
 clang-tidy '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -list-checks --
 clang-tidy '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -dump-config --
-find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy VAR '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source || true"
+find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy VAR '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source || true"
 
-find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy VAR '-checks=*,-llvm-header-guard' - -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -I source || true"
+find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy VAR '-checks=*,-llvm-header-guard' - -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source || true"
 ~~~~~
 
 
