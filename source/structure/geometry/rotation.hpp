@@ -452,31 +452,31 @@ namespace cath {
 		                                          ) const {
 			check_index( arg_row_index );
 			check_index( arg_col_index );
-			if      ( arg_row_index == 0 && arg_col_index == 0 ) {
+			if ( arg_row_index == 0 && arg_col_index == 0 ) {
 				return value_0_0;
 			}
-			else if ( arg_row_index == 0 && arg_col_index == 1 ) {
+			if ( arg_row_index == 0 && arg_col_index == 1 ) {
 				return value_0_1;
 			}
-			else if ( arg_row_index == 0 && arg_col_index == 2 ) {
+			if ( arg_row_index == 0 && arg_col_index == 2 ) {
 				return value_0_2;
 			}
-			else if ( arg_row_index == 1 && arg_col_index == 0 ) {
+			if ( arg_row_index == 1 && arg_col_index == 0 ) {
 				return value_1_0;
 			}
-			else if ( arg_row_index == 1 && arg_col_index == 1 ) {
+			if ( arg_row_index == 1 && arg_col_index == 1 ) {
 				return value_1_1;
 			}
-			else if ( arg_row_index == 1 && arg_col_index == 2 ) {
+			if ( arg_row_index == 1 && arg_col_index == 2 ) {
 				return value_1_2;
 			}
-			else if ( arg_row_index == 2 && arg_col_index == 0 ) {
+			if ( arg_row_index == 2 && arg_col_index == 0 ) {
 				return value_2_0;
 			}
-			else if ( arg_row_index == 2 && arg_col_index == 1 ) {
+			if ( arg_row_index == 2 && arg_col_index == 1 ) {
 				return value_2_1;
 			}
-			else if ( arg_row_index == 2 && arg_col_index == 2 ) {
+			if ( arg_row_index == 2 && arg_col_index == 2 ) {
 				return value_2_2;
 			}
 			BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("Rotation row and/or column indices unrecognised"));
@@ -488,31 +488,31 @@ namespace cath {
 		inline const double & rotation::get_value() const {
 			check_index<row_index>();
 			check_index<col_index>();
-			if      ( row_index == 0 && col_index == 0 ) {
+			if ( row_index == 0 && col_index == 0 ) {
 				return value_0_0;
 			}
-			else if ( row_index == 0 && col_index == 1 ) {
+			if ( row_index == 0 && col_index == 1 ) {
 				return value_0_1;
 			}
-			else if ( row_index == 0 && col_index == 2 ) {
+			if ( row_index == 0 && col_index == 2 ) {
 				return value_0_2;
 			}
-			else if ( row_index == 1 && col_index == 0 ) {
+			if ( row_index == 1 && col_index == 0 ) {
 				return value_1_0;
 			}
-			else if ( row_index == 1 && col_index == 1 ) {
+			if ( row_index == 1 && col_index == 1 ) {
 				return value_1_1;
 			}
-			else if ( row_index == 1 && col_index == 2 ) {
+			if ( row_index == 1 && col_index == 2 ) {
 				return value_1_2;
 			}
-			else if ( row_index == 2 && col_index == 0 ) {
+			if ( row_index == 2 && col_index == 0 ) {
 				return value_2_0;
 			}
-			else if ( row_index == 2 && col_index == 1 ) {
+			if ( row_index == 2 && col_index == 1 ) {
 				return value_2_1;
 			}
-			else if ( row_index == 2 && col_index == 2 ) {
+			if ( row_index == 2 && col_index == 2 ) {
 				return value_2_2;
 			}
 		}

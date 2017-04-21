@@ -92,7 +92,7 @@ break_pair_validity_and_future cath::align::detail::check_pair(const alignment &
 		const auto the_future = ( left_and_right_are_all ? break_pair_future::NEVER_AGAIN : break_pair_future::MAYBE_LATER );
 		return { break_pair_validity::GOOD, the_future };
 	}
-	else if ( left_and_right_are_all ) {
+	if ( left_and_right_are_all ) {
 		return { break_pair_validity::BAD, break_pair_future::NEVER_AGAIN };
 	}
 

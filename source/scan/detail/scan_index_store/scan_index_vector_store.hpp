@@ -92,9 +92,7 @@ namespace cath {
 				if ( cell_itr != common::cend( the_store ) && cell_itr->first == arg_key ) {
 					return cell_itr->second;
 				}
-				else {
-					return the_store.insert( cell_itr, make_pair( arg_key, Cell{} ) )->second;
-				}
+				return the_store.insert( cell_itr, make_pair( arg_key, Cell{} ) )->second;
 			}
 
 			/// \brief TODOCUMENT

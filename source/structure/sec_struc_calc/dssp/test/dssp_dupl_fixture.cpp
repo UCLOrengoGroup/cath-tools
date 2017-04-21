@@ -118,9 +118,7 @@ str_opt cath::sec::difference_string(const string         &arg_context_str,     
 		if ( arg_dsspfile_hbond_opt ) {
 			return "DSSP has a " + arg_context_str + " bond (" + to_string( *arg_dsspfile_hbond_opt )  + ") where one hasn't been calculated"s;
 		}
-		else {
-			return "Calculated a " + arg_context_str + " bond (" + to_string( *arg_hbond_half_opt )  + ") where DSSP doesn't have one"s;
-		}
+		return "Calculated a " + arg_context_str + " bond (" + to_string( *arg_hbond_half_opt )  + ") where DSSP doesn't have one"s;
 	}
 	if ( arg_dsspfile_hbond_opt && arg_hbond_half_opt ) {
 		if ( arg_dsspfile_hbond_opt->index != arg_hbond_half_opt->index ) {
@@ -357,9 +355,7 @@ dsspfile_hbond_opt dssp_dupl_fixture::parse_dsspfile_bond(const string &arg_hbon
 		}
 		return none;
 	}
-	else {
-		return dsspfile_hbond{ offset, energy };
-	}
+	return dsspfile_hbond{ offset, energy };
 }
 
 /// \brief Test constant for the DSSP root test data subdirectory

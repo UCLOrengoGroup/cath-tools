@@ -94,17 +94,16 @@ bool regions_limiter::update_residue_is_included(const residue_id &arg_residue_i
 			// ...and either way, return true
 			return true;
 		}
+		
 		// Else the active region is a whole-chain region
-		else {
-			// If still inside the active whole-chain region's chain, just return true
-			if ( arg_residue_id.get_chain_label() == get_chain_label( active_region ) ) {
-				return true;
-			}
-
-			// Otherwise, deactivate that active region and then fall through to determine
-			// whether arg_residue_id is in the start of another region
-			active_region_idx = none;
+		// If still inside the active whole-chain region's chain, just return true
+		if ( arg_residue_id.get_chain_label() == get_chain_label( active_region ) ) {
+			return true;
 		}
+
+		// Otherwise, deactivate that active region and then fall through to determine
+		// whether arg_residue_id is in the start of another region
+		active_region_idx = none;
 	}
 
 	// If not currently within a region, loop over the regions

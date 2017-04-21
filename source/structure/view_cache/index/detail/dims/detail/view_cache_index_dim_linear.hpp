@@ -222,7 +222,7 @@ namespace cath {
 						start_offset = cell_index_in_current;
 						return arg_cells.front();
 					}
-					else if ( cell_index_in_current < 0 ) {
+					if ( cell_index_in_current < 0 ) {
 						const size_t num_to_prepend = cath::debug_numeric_cast<size_t>( -cell_index_in_current );
 						const int new_start_offest = get_start_offset() + cell_index_in_current;
 						// Come GCC v4.9 above, replace this begin() with cbegin()
@@ -230,14 +230,12 @@ namespace cath {
 						start_offset = new_start_offest;
 						return arg_cells.front();
 					}
-					else if ( static_cast<size_t>( cell_index_in_current ) >= arg_cells.size() ) {
+					if ( static_cast<size_t>( cell_index_in_current ) >= arg_cells.size() ) {
 						const size_t new_size    = 1 + cath::debug_numeric_cast<size_t>( cell_index_in_current );
 						arg_cells.resize( new_size, arg_default_cell );
 						return arg_cells.back();
 					}
-					else {
-						return arg_cells[ cath::debug_numeric_cast<size_t>( cell_index_in_current ) ];
-					}
+					return arg_cells[ cath::debug_numeric_cast<size_t>( cell_index_in_current ) ];
 				}
 
 				/// \brief TODOCUMENT

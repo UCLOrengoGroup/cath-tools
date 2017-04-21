@@ -33,15 +33,14 @@ residue_locating cath::chop::make_residue_locating_of_has_name_and_has_index(con
                                                                              ) {
 	/// \todo: Come C++14, check out if this can be done with a switch on a using constexpr pair case labels
 	///        (eg `switch ( make_pair( has_name, has_index ) ) { case( pair<bool>( true, true) ) [...]`)
-	if      (   arg_has_name &&   arg_has_index ) {
+	if (   arg_has_name &&   arg_has_index ) {
 		return residue_locating::NAME_AND_INDEX;
 	}
-	else if (   arg_has_name && ! arg_has_index ) {
+	if (   arg_has_name && ! arg_has_index ) {
 		return residue_locating::NAME;
 	}
-	else if ( ! arg_has_name &&   arg_has_index ) {
+	if ( ! arg_has_name &&   arg_has_index ) {
 		return residue_locating::INDEX;
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot locate residues without using name or index"));
-	return residue_locating::NAME_AND_INDEX; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
 }

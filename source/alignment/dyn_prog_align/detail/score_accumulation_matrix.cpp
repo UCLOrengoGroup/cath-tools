@@ -140,9 +140,7 @@ score_type score_accumulation_matrix::get_score_towards_end_at_point(const size_
 	if ( arg_index_a < length_a && arg_index_b < length_b ) {
 		return scores.get( arg_index_a, arg_index_b );
 	}
-	else {
-		return 0;
-	}
+	return 0;
 }
 
 /// \brief TODOCUMENT

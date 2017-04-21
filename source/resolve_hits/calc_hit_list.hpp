@@ -76,7 +76,7 @@ namespace cath {
 					if ( lhs_tie < rhs_tie) {
 						return true;
 					}
-					else if ( rhs_tie < lhs_tie ) {
+					if ( rhs_tie < lhs_tie ) {
 						return false;
 					}
 

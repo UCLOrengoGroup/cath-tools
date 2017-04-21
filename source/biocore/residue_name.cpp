@@ -254,9 +254,7 @@ residue_name cath::make_residue_name(const string &arg_residue_name ///< TODOCUM
 		return residue_name( residue_number, res_name_last_char );
 	}
 	// Otherwise, no insert code so just return a residue_name of the string converted to an int
-	else {
-		return residue_name( lexical_cast<int>( arg_residue_name ) );
-	}
+	return residue_name( lexical_cast<int>( arg_residue_name ) );
 }
 
 /// \brief TODOCUMENT

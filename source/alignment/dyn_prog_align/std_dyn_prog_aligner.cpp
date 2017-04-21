@@ -235,12 +235,12 @@ path_step std_dyn_prog_aligner::choose_path_step(const path_step_score_map &arg_
 		return path_step::ALIGN_PAIR;
 	}
 	// Else, if path_step::INSERT_INTO_SECOND doesn't achieve the maximum score but path_step::INSERT_INTO_FIRST does, then choose that
-	else if ( insert_into_first_score == max_score && insert_into_second_score != max_score ) {
+	if ( insert_into_first_score == max_score && insert_into_second_score != max_score ) {
 //		cerr << "Returning path_step::INSERT_INTO_FIRST" << endl;
 		return path_step::INSERT_INTO_FIRST;
 	}
 	// Else, if path_step::INSERT_INTO_FIRST doesn't achieve the maximum score but path_step::INSERT_INTO_SECOND does, then choose that
-	else if ( insert_into_first_score != max_score && insert_into_second_score == max_score ) {
+	if ( insert_into_first_score != max_score && insert_into_second_score == max_score ) {
 //		cerr << "Returning path_step::INSERT_INTO_SECOND" << endl;
 		return path_step::INSERT_INTO_SECOND;
 	}
@@ -268,19 +268,19 @@ path_step std_dyn_prog_aligner::choose_path_step(const path_step_score_map &arg_
 	const double radio_diff_after_insert_into_first  = difference( ratio_after_insert_into_first,  first_to_second_ratio );
 	const double radio_diff_after_insert_into_second = difference( ratio_after_insert_into_second, first_to_second_ratio );
 
-	if (radio_diff_after_insert_into_first       < radio_diff_after_insert_into_second) {
+	if ( radio_diff_after_insert_into_first  < radio_diff_after_insert_into_second ) {
 		return path_step::INSERT_INTO_FIRST;
 	}
-	else if (radio_diff_after_insert_into_second < radio_diff_after_insert_into_first) {
+	if ( radio_diff_after_insert_into_second < radio_diff_after_insert_into_first  ) {
 		return path_step::INSERT_INTO_SECOND;
 	}
 
 	const double radio_offset_after_insert_into_first  = difference( ratio_after_insert_into_first,  1.0 );
 	const double radio_offset_after_insert_into_second = difference( ratio_after_insert_into_second, 1.0 );
-	if (radio_offset_after_insert_into_first     < radio_offset_after_insert_into_second) {
+	if ( radio_offset_after_insert_into_first < radio_offset_after_insert_into_second ) {
 		return path_step::INSERT_INTO_FIRST;
 	}
-	else if (radio_diff_after_insert_into_second < radio_offset_after_insert_into_first) {
+	if ( radio_diff_after_insert_into_second  < radio_offset_after_insert_into_first  ) {
 		return path_step::INSERT_INTO_SECOND;
 	}
 

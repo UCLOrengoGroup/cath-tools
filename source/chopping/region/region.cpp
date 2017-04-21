@@ -283,17 +283,17 @@ region_comparison cath::chop::compare_locations(const region &arg_region_a, ///<
 	const size_t stop_b  = get_stop_index ( arg_region_b );
 
 	//      If the starts and stops are equal,                      then THE_SAME_AS
-	if      ( start_a == start_b && stop_a == stop_b ) { return region_comparison::THE_SAME_AS   ; }
+	if ( start_a == start_b && stop_a == stop_b ) { return region_comparison::THE_SAME_AS   ; }
 	// Else if the first's start is no earlier and stop no later,   then A_SUBSET_OF
-	else if ( start_a >= start_b && stop_a <= stop_b ) { return region_comparison::A_SUBSET_OF   ; }
+	if ( start_a >= start_b && stop_a <= stop_b ) { return region_comparison::A_SUBSET_OF   ; }
 	// Else if the first's start is no later   and stop no earlier, then A_SUPERSET_OF
-	else if ( start_a <= start_b && stop_a >= stop_b ) { return region_comparison::A_SUPERSET_OF ; }
+	if ( start_a <= start_b && stop_a >= stop_b ) { return region_comparison::A_SUPERSET_OF ; }
 	// Otherwise, one of the regions is earlier than the other, even if overlappingly
 	//
 	// If   the first  is earlier then... If the first stops  before the second starts : STRICTLY_BEFORE else OVERLAPPINGLY_BEFORE
-	else if ( start_a < start_b ) { return ( stop_a  < start_b ) ? region_comparison::STRICTLY_BEFORE : region_comparison::OVERLAPPINGLY_BEFORE ; }
+	if ( start_a < start_b ) { return ( stop_a  < start_b ) ? region_comparison::STRICTLY_BEFORE : region_comparison::OVERLAPPINGLY_BEFORE ; }
 	// Else the second is earlier, so...  If the first starts after  the second stops  : STRICTLY_AFTER  else region_comparison::OVERLAPPINGLY_AFTER
-	else                          { return ( start_a > stop_b  ) ? region_comparison::STRICTLY_AFTER  : region_comparison::OVERLAPPINGLY_AFTER  ; }
+	                           return ( start_a > stop_b  ) ? region_comparison::STRICTLY_AFTER  : region_comparison::OVERLAPPINGLY_AFTER  ;
 }
 
 /// \brief Expand the specified region to the whole chain of the region

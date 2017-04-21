@@ -137,9 +137,7 @@ namespace cath {
 					                         get_carbon_coord( *arg_residue_i_prev );
 					return get_nitrogen_coord( arg_residue_i ) - ( prev_c_to_o / length( prev_c_to_o ) );
 				}
-				else {
-					return get_nitrogen_coord( arg_residue_i );
-				}
+				return get_nitrogen_coord( arg_residue_i );
 			} ();
 			return get_hbond_energy(
 				get_nitrogen_coord( arg_residue_i ),

@@ -168,15 +168,13 @@ crh_out_format cath::rslv::get_out_format(const crh_output_spec &arg_output_spec
 	if ( arg_output_spec.get_summarise() ) {
 		return crh_out_format::SUMMARY;
 	}
-	else if ( arg_output_spec.get_generate_html_output() ) {
+	if ( arg_output_spec.get_generate_html_output() ) {
 		return crh_out_format::HTML;
 	}
-	else if ( arg_output_spec.get_json_output() ) {
+	if ( arg_output_spec.get_json_output() ) {
 		return crh_out_format::JSON;
 	}
-	else {
-		return crh_out_format::STANDARD;
-	}
+	return crh_out_format::STANDARD;
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_output_spec invalid

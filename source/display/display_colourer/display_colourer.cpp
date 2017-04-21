@@ -133,9 +133,7 @@ unique_ptr<const display_colourer> cath::get_display_colourer(const display_spec
 	if ( arg_display_spec.get_gradient_colour_alignment() ) {
 		return { common::make_unique< display_colourer_alignment   >( arg_colour_gradient,                 colour_handler ) };
 	}
-	else {
-		return { common::make_unique< display_colourer_consecutive >( get_colour_list( arg_display_spec ), colour_handler ) };
-	}
+	return { common::make_unique< display_colourer_consecutive >( get_colour_list( arg_display_spec ), colour_handler ) };
 }
 
 /// \brier Helper guard to notify a viewer at the start and end of a colouring with a display_colourer

@@ -255,9 +255,7 @@ optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond_list &
 	if ( bonded_to_later ) {
 		return { bonded_to_earlier ? helix_category::BONDED_TO_BOTH : helix_category::BONDED_TO_LATER_ONLY };
 	}
-	else {
-		return make_optional( bonded_to_earlier, helix_category::BONDED_TO_EARLIER_ONLY );
-	}
+	return make_optional( bonded_to_earlier, helix_category::BONDED_TO_EARLIER_ONLY );
 }
 
 /// \brief Return whether the residue at the specified is n-helix bonded to the relevant later residue

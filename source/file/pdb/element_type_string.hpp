@@ -107,29 +107,25 @@ namespace cath {
 			if ( arg_trimmed_element_str.empty() || arg_trimmed_element_str.length() > 2 ) {
 				return coarse_element_type::NON_CORE;
 			}
-			else if ( arg_trimmed_element_str.front() == 'C' ) {
-				if      ( arg_trimmed_element_str == "CA" ) {
+			if ( arg_trimmed_element_str.front() == 'C' ) {
+				if ( arg_trimmed_element_str == "CA" ) {
 					return coarse_element_type::CARBON_ALPHA;
 				}
-				else if ( arg_trimmed_element_str == "C"  ) {
+				if ( arg_trimmed_element_str == "C"  ) {
 					return coarse_element_type::CARBON;
 				}
-				else if ( arg_trimmed_element_str == "CB" ) {
+				if ( arg_trimmed_element_str == "CB" ) {
 					return coarse_element_type::CARBON_BETA;
 				}
-				else {
-					return coarse_element_type::NON_CORE;
-				}
-			}
-			else if ( arg_trimmed_element_str == "N" ) {
-				return coarse_element_type::NITROGEN;
-			}
-			else if ( arg_trimmed_element_str == "O" ) {
-				return coarse_element_type::OXYGEN;
-			}
-			else {
 				return coarse_element_type::NON_CORE;
 			}
+			if ( arg_trimmed_element_str == "N" ) {
+				return coarse_element_type::NITROGEN;
+			}
+			if ( arg_trimmed_element_str == "O" ) {
+				return coarse_element_type::OXYGEN;
+			}
+			return coarse_element_type::NON_CORE;
 		}
 
 		/// \brief Get the coarse_element_type corresponding to the specified element_type_string

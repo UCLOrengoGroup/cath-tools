@@ -90,9 +90,7 @@ selection_policy_acquirer cath::opts::get_selection_policy_acquirer(const alignm
 	if ( arg_alignment_input_spec.get_residue_name_align() ) {
 		return { common_residue_select_all_policy(),                common_atom_select_ca_policy() };
 	}
-	else {
-		return { common_residue_select_best_score_percent_policy(), common_atom_select_ca_policy() };
-	}
+	return { common_residue_select_best_score_percent_policy(), common_atom_select_ca_policy() };
 }
 
 /// \brief TODOCUMENT

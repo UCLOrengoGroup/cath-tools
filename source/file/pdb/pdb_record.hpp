@@ -53,19 +53,16 @@ namespace cath {
 			if ( boost::range::equal( arg_substring, atom_6_str ) || boost::range::equal( arg_substring, atom_4_str ) ) {
 				return pdb_record::ATOM;
 			}
-			else if ( boost::range::equal( arg_substring, hetatm_6_str ) ) {
+			if ( boost::range::equal( arg_substring, hetatm_6_str ) ) {
 				return pdb_record::HETATM;
 			}
-			else {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
-					"Unable to recognise pdb_record type "
-					+ std::string{
-						common::cbegin( arg_substring ),
-						common::cend  ( arg_substring )
-					}
-				));
-				return pdb_record::ATOM; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
-			}
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
+				"Unable to recognise pdb_record type "
+				+ std::string{
+					common::cbegin( arg_substring ),
+					common::cend  ( arg_substring )
+				}
+			));
 		}
 
 		/// \brief Return the pdb_record corresponding to the six chars after the specified start in the

@@ -180,13 +180,11 @@ residue_name sillitoe_chopping_format::parse_residue(const string_ref &arg_strin
 		/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 		return residue_name{ stoi( string{ begin_itr, end_itr } ) };
 	}
-	else {
-		if ( arg_string_ref.length() <= 1 ) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format residue from a string containing a single, non-numeric character"));
-		}
-		return {
-			stoi( string{ begin_itr, prev( end_itr ) } ),
-			arg_string_ref.back()
-		};
+	if ( arg_string_ref.length() <= 1 ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format residue from a string containing a single, non-numeric character"));
 	}
+	return {
+		stoi( string{ begin_itr, prev( end_itr ) } ),
+		arg_string_ref.back()
+	};
 }
