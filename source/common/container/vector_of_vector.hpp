@@ -91,7 +91,7 @@ namespace cath {
 
 		/// \brief Ctor from a nested initializer_list
 		///
-		/// This may be quite inefficient and is currently just here for conveience
+		/// This may be quite inefficient and is currently just here for convenience
 		/// re test data
 		///
 		/// \pre arg_init_list must be rectangular (ie all inner intializer_list<T>s should have the same size)
@@ -142,7 +142,7 @@ namespace cath {
 
 		/// \brief Assign from the two specified lengths and the value with which to populate
 		///
-		/// This is analagous to std::vector::assign
+		/// This is analogous to std::vector::assign
 		template <typename T>
 		vector_of_vector<T> & vector_of_vector<T>::assign(const size_t &arg_length_a, ///< The new length of the first  dimension
 		                                                  const size_t &arg_length_b, ///< The new length of the second dimension

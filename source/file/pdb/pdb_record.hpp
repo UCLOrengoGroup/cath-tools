@@ -68,7 +68,7 @@ namespace cath {
 			}
 		}
 
-		/// \brief Return the pdb_record correspoding to the six chars after the specified start in the
+		/// \brief Return the pdb_record corresponding to the six chars after the specified start in the
 		///        specified string
 		///
 		/// \pre The six chars must be "ATOM  " or "HETATM" else
