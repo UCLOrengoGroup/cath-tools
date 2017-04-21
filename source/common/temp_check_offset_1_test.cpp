@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE(zero_throws) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(one_does_not_throw) {
-	BOOST_CHECK_NO_THROW( check_offset_1(1) );
+	BOOST_CHECK_NO_THROW_DIAG( check_offset_1(1) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

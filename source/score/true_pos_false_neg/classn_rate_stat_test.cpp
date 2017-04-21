@@ -21,6 +21,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/algorithm/constexpr_for_n.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "score/true_pos_false_neg/classn_rate_stat.hpp"
 #include "test/global_test_constants.hpp"
 
@@ -45,9 +46,9 @@ namespace cath {
 			/// \brief TODOCUMENT
 			void operator()() {
 				constexpr std_classn_rate_stat to_test = get<0>( get<I>( properties_of_classn_rate_stat::numerator_and_denominator_of_stat ) );
-				BOOST_CHECK_NO_THROW( classn_rate_stat<to_test>() );
+				BOOST_CHECK_NO_THROW_DIAG( classn_rate_stat<to_test>() );
 				classn_rate_stat<to_test> stat;
-				BOOST_CHECK_NO_THROW( stat.get_name() );
+				BOOST_CHECK_NO_THROW_DIAG( stat.get_name() );
 				BOOST_CHECK_GT( stat.get_name().length(), 0 );
 			}
 		};
