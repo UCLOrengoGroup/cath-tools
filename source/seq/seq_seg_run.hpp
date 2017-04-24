@@ -146,14 +146,14 @@ namespace cath {
 
 		/// \brief Get the start boundary of the segment with the specified index
 		inline const seq_arrow & seq_seg_run::get_start_arrow_of_segment(const size_t &arg_segment_index ///< The index of the segment whose start arrow should be returned
-		                                                                      ) const {
+		                                                                 ) const {
 			return ( arg_segment_index > 0                ) ? fragments[ arg_segment_index - 1 ].get_stop_arrow()
 			                                                : start_arrow;
 		}
 
 		/// \brief Get the stop boundary of the segment with the specified index
 		inline const seq_arrow & seq_seg_run::get_stop_arrow_of_segment(const size_t &arg_segment_index ///< The index of the segment whose stop arrow should be returned
-		                                                                     ) const {
+		                                                                ) const {
 			return ( arg_segment_index < fragments.size() ) ? fragments[ arg_segment_index     ].get_start_arrow()
 			                                                : stop_arrow;
 		}
@@ -175,8 +175,8 @@ namespace cath {
 		///
 		/// \relates seq_seg_run
 		inline seq_seg get_seq_seg_of_seg_idx(const seq_seg_run &arg_seq_seg_run, ///< The seq_seg_run to query
-		                                           const size_t      &arg_seg_idx      ///< The index of the segment to return
-		                                           ) {
+		                                      const size_t      &arg_seg_idx      ///< The index of the segment to return
+		                                      ) {
 			return {
 				arg_seq_seg_run.get_start_arrow_of_segment( arg_seg_idx ),
 				arg_seq_seg_run.get_stop_arrow_of_segment ( arg_seg_idx )
@@ -187,7 +187,7 @@ namespace cath {
 		///
 		/// \relates seq_seg_run
 		inline const seq_seg_vec get_seq_segs(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
-		                                           ) {
+		                                      ) {
 			return common::transform_build<seq_seg_vec>(
 				boost::irange( 0_z, arg_seq_seg_run.get_num_segments() ),
 				[&] (const size_t &x) {
@@ -200,7 +200,7 @@ namespace cath {
 		///
 		/// \relates seq_seg_run
 		inline const seq_seg_vec get_seq_segs(const seq_seg_run_vec &arg_seq_seg_run_vec ///< The seq_seg_runs whose segments should be returned
-		                                           ) {
+		                                      ) {
 			seq_seg_vec results;
 			for (const seq_seg_run &the_seq_seg_run : arg_seq_seg_run_vec) {
 				common::append( results, get_seq_segs( the_seq_seg_run ) );
@@ -210,7 +210,7 @@ namespace cath {
 
 		/// \brief Get a vector of the specified seq_seg_runs' segments, sorted by their starts
 		inline seq_seg_vec get_start_sorted_seq_segs(const seq_seg_run_vec &arg_seq_seg_run_vec ///< The vector of seq_seg_runs to query
-		                                                  ) {
+		                                             ) {
 			return start_sort_seq_segs_copy( get_seq_segs( arg_seq_seg_run_vec ) );
 		}
 
@@ -228,8 +228,8 @@ namespace cath {
 		///
 		/// \relates seq_seg_run
 		inline const residx_t & get_start_res_index_of_segment(const seq_seg_run &arg_seq_seg_run,  ///< The seq_seg_run to query
-		                                                            const size_t      &arg_segment_index ///< The index of the segment to query
-		                                                            ) {
+		                                                       const size_t      &arg_segment_index ///< The index of the segment to query
+		                                                       ) {
 			return arg_seq_seg_run.get_start_arrow_of_segment( arg_segment_index ).res_after();
 		}
 
@@ -237,8 +237,8 @@ namespace cath {
 		///
 		/// \relates seq_seg_run
 		inline residx_t get_stop_res_index_of_segment(const seq_seg_run &arg_seq_seg_run,  ///< The seq_seg_run to query
-		                                                   const size_t      &arg_segment_index ///< The index of the segment to query
-		                                                   ) {
+		                                              const size_t      &arg_segment_index ///< The index of the segment to query
+		                                              ) {
 			return arg_seq_seg_run.get_stop_arrow_of_segment( arg_segment_index ).res_before();
 		}
 
@@ -246,7 +246,7 @@ namespace cath {
 		///
 		/// \relates seq_seg_run
 		inline const residx_t & get_start_res_index(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
-		                                                 ) {
+		                                            ) {
 			return arg_seq_seg_run.get_start_arrow().res_after();
 		}
 
@@ -254,7 +254,7 @@ namespace cath {
 		///
 		/// \relates seq_seg_run
 		inline residx_t get_stop_res_index(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
-		                                        ) {
+		                                   ) {
 			return arg_seq_seg_run.get_stop_arrow().res_before();
 		}
 
@@ -264,7 +264,7 @@ namespace cath {
 		///
 		/// \relates seq_seg_run
 		inline seq_arrow get_stop_of_first_segment(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
-		                                                ) {
+		                                           ) {
 			if ( ! arg_seq_seg_run.is_discontig() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_stop_of_first_segment of contiguous seq_seg_run"));
 			}
@@ -277,7 +277,7 @@ namespace cath {
 		///
 		/// \relates seq_seg_run
 		inline seq_arrow get_start_of_last_segment(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
-		                                                ) {
+		                                           ) {
 			if ( ! arg_seq_seg_run.is_discontig() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_start_of_last_segment of contiguous seq_seg_run"));
 			}
