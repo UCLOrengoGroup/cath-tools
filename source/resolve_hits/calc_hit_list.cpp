@@ -178,11 +178,10 @@ void cath::rslv::read_hit_list_from_istream(read_and_process_mgr &arg_read_and_p
 		return find_if( b, e, is_non_space_char );
 	};
 
-	double           score;
-	seq_seg_vec      segments;
-	vector<residx_t> bounds;
-	string           line;
-	string           query_id;
+	double     score;
+	residx_vec bounds;
+	string     line;
+	string     query_id;
 
 	const auto bounds_pusher = [&] (const residx_t &x) { bounds.push_back( x ); };
 
@@ -240,18 +239,9 @@ void cath::rslv::read_hit_list_from_istream(read_and_process_mgr &arg_read_and_p
 			BOOST_THROW_EXCEPTION(runtime_error_exception( "Odd number of bounds" ));
 		}
 
-		// *** SHOULD CHECK THAT BOUNDS IS STRICTLY ASCENDING ****
-		segments.clear();
-		for (const size_t &bound_ctr : irange( 0_z, bounds.size(), 2_z ) ) {
-			segments.emplace_back(
-				arrow_before_res( bounds[ bound_ctr     ] ),
-				arrow_after_res ( bounds[ bound_ctr + 1 ] )
-			);
-		}
-
 		arg_read_and_process_mgr.add_hit(
 			query_id_str_ref,
-			segments,
+			segments_from_bounds( bounds ),
 			string{ begin_of_match_id_itr, end_of_match_id_itr },
 			score,
 			arg_score_type

@@ -40,9 +40,9 @@ namespace cath {
 		protected:
 			~full_hit_test_suite_fixture() noexcept = default;
 
-			const full_hit eg_full_hit_a{ { seq_seg_of_res_idcs( 1272, 1363 ) }, "lemur", 1.0 };
+			const full_hit eg_full_hit_a{ { seq_seg{ 1272, 1363 } }, "lemur", 1.0 };
 
-			const full_hit eg_full_hit_b{ { seq_seg_of_res_idcs( 1272, 1320 ), seq_seg_of_res_idcs( 1398, 1437 ) }, "pangolin", 1.0 };
+			const full_hit eg_full_hit_b{ { seq_seg{ 1272, 1320 }, seq_seg{ 1398, 1437 } }, "pangolin", 1.0 };
 		};
 
 	}  // namespace test

@@ -58,9 +58,9 @@ BOOST_AUTO_TEST_CASE(get_unmasked_regions_before_arrow_handles_simple_eg) {
 BOOST_AUTO_TEST_CASE(get_arrows_before_starts_of_doms_right_interspersed_with_all_of_handles_tricky_case) {
 	const calc_hit_list discont_hits{
 		full_hit_list{ full_hit_vec{
-			full_hit( { seq_seg_of_res_idcs( 10, 19 ), seq_seg_of_res_idcs( 40, 49 ), }, "match_a", 1.0 ),
-			full_hit( { seq_seg_of_res_idcs( 30, 39 ), seq_seg_of_res_idcs( 50, 59 ), }, "match_b", 1.0 ),
-			full_hit( { seq_seg_of_res_idcs(  0,  9 ), seq_seg_of_res_idcs( 60, 69 ), }, "match_c", 1.0 ),
+			full_hit( { seq_seg{ 10, 19 }, seq_seg{ 40, 49 }, }, "match_a", 1.0 ),
+			full_hit( { seq_seg{ 30, 39 }, seq_seg{ 50, 59 }, }, "match_b", 1.0 ),
+			full_hit( { seq_seg{  0,  9 }, seq_seg{ 60, 69 }, }, "match_c", 1.0 ),
 		} },
 		make_neutral_score_spec(),
 		make_no_action_crh_segment_spec()
@@ -68,8 +68,8 @@ BOOST_AUTO_TEST_CASE(get_arrows_before_starts_of_doms_right_interspersed_with_al
 	BOOST_CHECK_EQUAL_RANGES(
 		get_arrows_before_starts_of_doms_right_interspersed_with_all_of(
 			calc_hit_vec{
-				calc_hit( { seq_seg_of_res_idcs( 10, 19 ), seq_seg_of_res_idcs( 40, 49 ), }, 1.0, 1 ),
-				calc_hit( { seq_seg_of_res_idcs(  0,  9 ), seq_seg_of_res_idcs( 60, 69 ), }, 1.0, 3 ),
+				calc_hit( { seq_seg{ 10, 19 }, seq_seg{ 40, 49 }, }, 1.0, 1 ),
+				calc_hit( { seq_seg{  0,  9 }, seq_seg{ 60, 69 }, }, 1.0, 3 ),
 			},
 			discont_hits_index_by_start{ discont_hits },
 			arrow_before_res( 20 )

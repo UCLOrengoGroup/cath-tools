@@ -52,7 +52,10 @@ namespace cath {
 		using residx_residx_pair        = std::pair<residx_t, residx_t>;
 
 		/// \brief Type alias for a vector of pairs of residue indices
-		using residx_residx_pair_vec    = std::vector<seq::residx_residx_pair>;
+		using residx_residx_pair_vec    = std::vector<residx_residx_pair>;
+
+		/// \brief Type alias for a vector residx_t
+		using residx_vec                = std::vector<residx_t>;
 
 		/// \brief Type alias for an optional seq_seg
 		using seq_seg_opt               = boost::optional<seq_seg>;

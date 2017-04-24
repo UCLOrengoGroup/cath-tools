@@ -25,6 +25,7 @@
 #include <boost/operators.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/sort.hpp>
+#include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
 #include "common/json_style.hpp"
@@ -59,6 +60,9 @@ namespace cath {
 			constexpr seq_seg(const seq_arrow &,
 			                  const seq_arrow &);
 
+			constexpr seq_seg(const residx_t &,
+			                  const residx_t &);
+
 			constexpr const seq_arrow & get_start_arrow() const;
 			constexpr const seq_arrow & get_stop_arrow() const;
 
@@ -92,6 +96,15 @@ namespace cath {
 		                                      	sanity_check( arg_start, arg_stop )
 		                                      	? arg_stop
 		                                      	: arg_stop
+		                                      } {
+		}
+
+		/// \brief TODOCUMENT
+		inline constexpr seq_seg::seq_seg(const residx_t &arg_start_idx, ///< The residue index of the segment's start
+		                                  const residx_t &arg_stop_idx   ///< The residue index of the segment's stop
+		                                  ) : seq_seg{
+		                                      	arrow_before_res( arg_start_idx ),
+		                                      	arrow_after_res ( arg_stop_idx  )
 		                                      } {
 		}
 
@@ -164,26 +177,14 @@ namespace cath {
 			);
 		}
 
-		/// \brief Build a seq_seg of the specified start/stop residue indices
-		///
-		/// \relates seq_seg
-		inline constexpr seq_seg seq_seg_of_res_idcs(const residx_t &arg_start_res_idx, ///< The segment's start residue index
-		                                             const residx_t &arg_stop_res_idx   ///< The segment's stop  residue index
-		                                             ) {
-			return {
-				arrow_before_res( arg_start_res_idx ),
-				arrow_after_res ( arg_stop_res_idx  )
-			};
-		}
-
 		/// \brief Build a seq_seg from a pair of start/stop residue indices
 		///
 		/// \relates seq_seg
 		inline constexpr seq_seg seq_seg_of_res_idx_pair(const residx_residx_pair &arg_res_idx_pair ///< The segments start/stop residue indices
 		                                                 ) {
 			return {
-				arrow_before_res( arg_res_idx_pair.first  ),
-				arrow_after_res ( arg_res_idx_pair.second )
+				arg_res_idx_pair.first,
+				arg_res_idx_pair.second
 			};
 		}
 
@@ -292,6 +293,45 @@ namespace cath {
 		                                            ) {
 			start_sort_seq_segs( arg_seq_segs );
 			return arg_seq_segs;
+		}
+
+		/// \brief Build a vector of seq_seg from the specified list of bounds representing start/stop residue index pairs
+		///
+		/// \pre `arg_bounds.size() % 2 != 0` else an invalid_argument_exception will be thrown
+		///
+		/// \pre Each start after the first must be on a residue later than the preceding stop residue
+		///       else an invalid_argument_exception will be thrown
+		///
+		/// \pre Each seq_seq must be valid (ie stop must be on a residue not earlier than the corresponding start residue)
+		///       else an invalid_argument will be thrown
+		///
+		/// \relates seq_seg
+		inline seq_seg_vec segments_from_bounds(const residx_vec &arg_bounds ///< The start/stop residue index pairs from which to build the seq_segs
+		                                        ) {
+			// Check there's an even number of bounds
+			if ( arg_bounds.size() % 2 != 0 ) {
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("There should be an even number of bounds from which to make segments"));
+			}
+
+			// Prepare a vector of segments of the correct size
+			seq_seg_vec segments;
+			segments.reserve( arg_bounds.size() / 2 );
+
+			// Loop over the pairs of bounds
+			for (const size_t &bound_ctr : boost::irange( 0_z, arg_bounds.size(), 2_z ) ) {
+				const auto start_arrow = arrow_before_res( arg_bounds[ bound_ctr     ] );
+				const auto stop_arrow  = arrow_after_res ( arg_bounds[ bound_ctr + 1 ] );
+
+				// Check the segment comes after any preceding segments, else throw
+				if ( ! segments.empty() && segments.back().get_stop_arrow() > start_arrow ) {
+					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Whilst building segments from bounds, found preceding stop after start"));
+				}
+
+				// Add the seg_seg (whose ctor will check start < stop)
+				segments.emplace_back( start_arrow, stop_arrow );
+			}
+
+			return segments;
 		}
 
 		seq_seg_vec get_present_segments(const seq_seg_opt_vec &);

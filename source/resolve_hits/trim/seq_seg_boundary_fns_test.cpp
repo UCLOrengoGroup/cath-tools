@@ -31,8 +31,8 @@ using namespace cath::seq;
 BOOST_AUTO_TEST_SUITE(seq_seg_boundary_fns_test_suite)
 
 BOOST_AUTO_TEST_CASE(handles_example) {
-	constexpr auto seg_a = seq_seg_of_res_idcs( 138, 168 );
-	constexpr auto seg_b = seq_seg_of_res_idcs(  67, 295 );
+	constexpr auto seg_a = seq_seg{ 138, 168 };
+	constexpr auto seg_b = seq_seg{  67, 295 };
 	constexpr auto trim  = trim_spec{ 200, 190 };
 	BOOST_CHECK_EQUAL( calc_resolved_boundary( seg_a, seg_b, trim ), make_optional( arrow_before_res( 156 ) ) );
 }
