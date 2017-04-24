@@ -99,7 +99,7 @@ namespace cath {
 		                                      } {
 		}
 
-		/// \brief TODOCUMENT
+		/// \brief seq_seg ctor from standard start/stop indices
 		inline constexpr seq_seg::seq_seg(const residx_t &arg_start_idx, ///< The residue index of the segment's start
 		                                  const residx_t &arg_stop_idx   ///< The residue index of the segment's stop
 		                                  ) : seq_seg{

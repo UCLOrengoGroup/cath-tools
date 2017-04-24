@@ -1877,6 +1877,7 @@ set(
 
 set(
 	TESTSOURCES_SEQ
+		seq/seq_seg_run_test.cpp
 		seq/seq_seg_test.cpp
 )
 

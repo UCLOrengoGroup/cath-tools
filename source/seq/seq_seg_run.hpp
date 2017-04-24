@@ -24,7 +24,9 @@
 #include <boost/range/irange.hpp>
 
 #include "common/algorithm/append.hpp"
+#include "common/algorithm/contains.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/cpp17/invoke.hpp"
 #include "seq/seq_arrow.hpp"
 #include "seq/seq_seg.hpp"
 
@@ -35,7 +37,13 @@ namespace cath {
 		inline seq_arrow get_stop_of_first_segment(const seq_seg_run &);
 		inline seq_arrow get_start_of_last_segment(const seq_seg_run &);
 
-		/// \brief TODOCUMENT
+		/// \brief Represent a series of non-overlapping, increasing segments
+		///
+		/// This stores the first start and last stop on the stack and any segments as
+		/// gaps so that the first-start/last stop can be processed (without accessing
+		/// external memory and hence) very quickly.
+		///
+		/// Many seq_seg_runs are single-segment, which can be handled completely locally
 		class seq_seg_run final {
 		private:
 			/// \brief The boundary at the start of the first segment
@@ -103,8 +111,22 @@ namespace cath {
 
 		/// \brief Sanity check that the seq_seg_run is sensible and throw an exception if not
 		inline void seq_seg_run::sanity_check() const {
-			if ( stop_arrow < start_arrow ) {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Start index must not be greater than the stop index"));
+			if ( stop_arrow <= start_arrow ) {
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Start index must not be greater than or equal to the stop index"));
+			}
+			if ( ! fragments.empty() ) {
+				if ( start_arrow >= fragments.front().get_start_arrow() ) {
+					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot create a seq_seg_run with fragments that don't start after the start"));
+				}
+				if ( stop_arrow  <= fragments.back ().get_stop_arrow () ) {
+					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot create a seq_seg_run with fragments that don't end before the end"));
+				}
+				const auto first_seq_seg_is_not_earlier = [] (const seq_seg &x, const seq_seg &y) {
+					return x.get_stop_arrow() >= y.get_start_arrow();
+				};
+				if ( common::contains_adjacent_match( fragments, first_seq_seg_is_not_earlier ) ) {
+					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot create a seq_seg_run with fragments that aren't increasing"));
+				}
 			}
 		}
 
@@ -161,10 +183,10 @@ namespace cath {
 		/// \brief Get the length of the specified seq_seg_run's segment corresponding to the specified index
 		///
 		/// \relates seq_seg_run
-		inline size_t get_length_of_seq_seg(const seq_seg_run &arg_seq_seg_run, ///< The seq_seg_run to query
-		                                    const size_t      &arg_seg_idx      ///< The index of the segment who length should be returned
-		                                    ) {
-			return static_cast<size_t>(
+		inline residx_t get_length_of_seq_seg(const seq_seg_run &arg_seq_seg_run, ///< The seq_seg_run to query
+		                                      const size_t      &arg_seg_idx      ///< The index of the segment who length should be returned
+		                                      ) {
+			return static_cast<residx_t>(
 				arg_seq_seg_run.get_stop_arrow_of_segment ( arg_seg_idx )
 				-
 				arg_seq_seg_run.get_start_arrow_of_segment( arg_seg_idx )
@@ -287,14 +309,14 @@ namespace cath {
 		/// \brief Get the total length of the specified seq_seg_run (ie the sum of its segments' lengths)
 		///
 		/// \relates seq_seg_run
-		inline size_t get_total_length(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
-		                               ) {
+		inline residx_t get_total_length(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
+		                                 ) {
 			return boost::accumulate(
 				boost::irange( 0_z, arg_seq_seg_run.get_num_segments() )
 					| boost::adaptors::transformed( [&] (const size_t &x) {
 						return get_length_of_seq_seg( arg_seq_seg_run, x );
 					} ),
-				0_z
+				static_cast<residx_t>( 0 )
 			);
 		}
 
@@ -335,6 +357,57 @@ namespace cath {
 				arg_seq_seg_run_b.get_start_arrow() < arg_seq_seg_run_a.get_stop_arrow()
 			);
 		}
+
+		namespace detail {
+
+			/// \brief Get the index of the first segment in the specified seq_seg_run that isn't entirely before
+			///        the specified arrow
+			inline size_t index_of_first_seg_not_earlier_than_arrow(const seq_seg_run &arg_seq_seg_run, ///< The seq_seg_run to query
+			                                                        const seq_arrow   &arg_arrow        ///< The arrow to compare to
+			                                                        ) {
+				const size_t num_segs       = arg_seq_seg_run.get_num_segments();
+				const auto   seg_nums_range = boost::irange( 0_z, num_segs );
+				const auto   result_itr     = lower_bound(
+					seg_nums_range,
+					arg_arrow,
+					[&] (const size_t &seg_index, const seq_arrow &other_start_arrow) {
+						return arg_seq_seg_run.get_stop_arrow_of_segment( seg_index ) <= other_start_arrow;
+					}
+				);
+				return ( result_itr != common::cend( seg_nums_range ) )
+					? *result_itr
+					: num_segs;
+			}
+
+			/// \brief Apply the specified function to all overlapping pairs of seq_segs between the two specified seq_seg_runs
+			///
+			/// \todo In an ideal world, this would be a range over which functions could iterator, rather than a function
+			template <typename Fn>
+			inline void apply_to_overlaps_in_seq_seg_runs(const seq_seg_run  &arg_seq_seg_run_a, ///< The first  seq_seg_run to query
+			                                              const seq_seg_run  &arg_seq_seg_run_b, ///< The second seq_seg_run to query
+			                                              Fn                &&arg_fn             ///< The function to apply
+			                                              ) {
+				const size_t num_segs_a = arg_seq_seg_run_a.get_num_segments();
+				const size_t num_segs_b = arg_seq_seg_run_b.get_num_segments();
+
+				size_t ctr_a = index_of_first_seg_not_earlier_than_arrow( arg_seq_seg_run_a, arg_seq_seg_run_b.get_start_arrow() );
+				size_t ctr_b = index_of_first_seg_not_earlier_than_arrow( arg_seq_seg_run_b, arg_seq_seg_run_a.get_start_arrow() );
+
+				while ( ctr_a != num_segs_a && ctr_b != num_segs_b) {
+					const auto &seg_a = get_seq_seg_of_seg_idx( arg_seq_seg_run_a, ctr_a );
+					const auto &seg_b = get_seq_seg_of_seg_idx( arg_seq_seg_run_b, ctr_b );
+					if ( are_overlapping( seg_a, seg_b ) ) {
+						common::invoke( arg_fn, seg_a, seg_b );
+					}
+					if ( seg_a.get_stop_arrow() <= seg_b.get_stop_arrow() ) {
+						++ctr_a;
+					}
+					if ( seg_b.get_stop_arrow() <= seg_a.get_stop_arrow() ) {
+						++ctr_b;
+					}
+				}
+			}
+		}
 		
 		/// \brief Return whether the two specified seq_seg_runs overlap with each other
 		///
@@ -350,21 +423,84 @@ namespace cath {
 		inline bool are_overlapping(const seq_seg_run &arg_seq_seg_run_a, ///< The first  seq_seg_run to query
 		                            const seq_seg_run &arg_seq_seg_run_b  ///< The second seq_seg_run to query
 		                            ) {
+			bool found_overlaps = false;
+			detail::apply_to_overlaps_in_seq_seg_runs(
+				arg_seq_seg_run_a,
+				arg_seq_seg_run_b,
+				[&] (const seq_seg &, const seq_seg &) { found_overlaps = true; }
+			);
+			return found_overlaps;
+		}
+
+		/// \brief Return the number of residues by which the two specified seq_seg_runs overlap (or 0 if they don't overlap)
+		///
+		/// \todo This can be made more efficient by iterating over the two segment
+		///       lists simultaneously
+		///
+		/// \relates seq_seg
+		inline residx_t overlap_by(const seq_seg_run &arg_seq_seg_run_a, ///< The first  seq_seg_run to query
+		                           const seq_seg_run &arg_seq_seg_run_b  ///< The second seq_seg_run to query
+		                           ) {
 			if ( ! any_interaction( arg_seq_seg_run_a, arg_seq_seg_run_b ) ) {
-				return false;
+				return 0;
 			}
-			for (const auto &seg_ctr_a : boost::irange( 0_z, arg_seq_seg_run_a.get_num_segments() ) ) {
-				for (const auto &seg_ctr_b : boost::irange( 0_z, arg_seq_seg_run_b.get_num_segments() ) ) {
-					const bool seg_overlap = are_overlapping(
-						get_seq_seg_of_seg_idx( arg_seq_seg_run_a, seg_ctr_a ),
-						get_seq_seg_of_seg_idx( arg_seq_seg_run_b, seg_ctr_b )
-					);
-					if ( seg_overlap ) {
-						return true;
-					}
+			residx_t overlap_size = 0;
+			detail::apply_to_overlaps_in_seq_seg_runs(
+				arg_seq_seg_run_a,
+				arg_seq_seg_run_b,
+				[&] (const seq_seg &x, const seq_seg &y) {
+					overlap_size += overlap_by( x, y );
 				}
-			}
-			return false;
+			);
+			return overlap_size;
+		}
+
+		/// \brief Return the length of the shorter of the two specified seq_seg_runs
+		///
+		/// \relates seq_seg
+		inline residx_t shorter_length(const seq_seg_run &arg_seq_seg_run_a, ///< The first  seq_seg_run to query
+		                               const seq_seg_run &arg_seq_seg_run_b  ///< The second seq_seg_run to query
+		                               ) {
+			return std::min(
+				get_total_length( arg_seq_seg_run_a ),
+				get_total_length( arg_seq_seg_run_b )
+			);
+		}
+
+		/// \brief Return the length of the longer of the two specified seq_seg_runs
+		///
+		/// \relates seq_seg
+		inline residx_t longer_length(const seq_seg_run &arg_seq_seg_run_a, ///< The first  seq_seg_run to query
+		                              const seq_seg_run &arg_seq_seg_run_b  ///< The second seq_seg_run to query
+		                              ) {
+			return std::max(
+				get_total_length( arg_seq_seg_run_a ),
+				get_total_length( arg_seq_seg_run_b )
+			);
+		}
+
+		/// \brief Return the fraction overlap between the two specified seq_seg_runs over the length of the shorter
+		///
+		/// \relates seq_seg
+		inline double fraction_overlap_over_shorter(const seq_seg_run &arg_seq_seg_run_a, ///< The first  seq_seg_run to query
+		                                            const seq_seg_run &arg_seq_seg_run_b  ///< The second seq_seg_run to query
+		                                            ) {
+			return
+				static_cast<double>( overlap_by    ( arg_seq_seg_run_a, arg_seq_seg_run_b ) )
+				/
+				static_cast<double>( shorter_length( arg_seq_seg_run_a, arg_seq_seg_run_b ) );
+		}
+
+		/// \brief Return the fraction overlap between the two specified seq_seg_runs over the length of the longer
+		///
+		/// \relates seq_seg
+		inline double fraction_overlap_over_longer(const seq_seg_run &arg_seq_seg_run_a, ///< The first  seq_seg_run to query
+		                                           const seq_seg_run &arg_seq_seg_run_b  ///< The second seq_seg_run to query
+		                                           ) {
+			return
+				static_cast<double>( overlap_by   ( arg_seq_seg_run_a, arg_seq_seg_run_b ) )
+				/
+				static_cast<double>( longer_length( arg_seq_seg_run_a, arg_seq_seg_run_b ) );
 		}
 
 	} // namespace seq
