@@ -394,8 +394,8 @@ namespace cath {
 				size_t ctr_b = index_of_first_seg_not_earlier_than_arrow( arg_seq_seg_run_b, arg_seq_seg_run_a.get_start_arrow() );
 
 				while ( ctr_a != num_segs_a && ctr_b != num_segs_b) {
-					const auto &seg_a = get_seq_seg_of_seg_idx( arg_seq_seg_run_a, ctr_a );
-					const auto &seg_b = get_seq_seg_of_seg_idx( arg_seq_seg_run_b, ctr_b );
+					const seq_seg seg_a = get_seq_seg_of_seg_idx( arg_seq_seg_run_a, ctr_a );
+					const seq_seg seg_b = get_seq_seg_of_seg_idx( arg_seq_seg_run_b, ctr_b );
 					if ( are_overlapping( seg_a, seg_b ) ) {
 						common::invoke( arg_fn, seg_a, seg_b );
 					}
