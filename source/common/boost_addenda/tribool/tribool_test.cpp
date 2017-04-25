@@ -39,21 +39,17 @@ namespace cath {
 			~tribool_test_suite_fixture() noexcept = default;
 
 			/// \brief An example true tribool
-			static constexpr tribool eg_tb_true  = true;
+			const tribool eg_tb_true  = true;
 
 			/// \brief An example false tribool
-			static constexpr tribool eg_tb_false = false;
+			const tribool eg_tb_false = false;
 
 			/// \brief An example indeterminate tribool
-			static constexpr tribool eg_tb_indet = indeterminate;
+			const tribool eg_tb_indet = indeterminate;
 		};
 
 	} // namespace test
 } // namespace cath
-
-constexpr tribool tribool_test_suite_fixture::eg_tb_true;
-constexpr tribool tribool_test_suite_fixture::eg_tb_false;
-constexpr tribool tribool_test_suite_fixture::eg_tb_indet;
 
 BOOST_FIXTURE_TEST_SUITE(tribool_test_suite, tribool_test_suite_fixture)
 
