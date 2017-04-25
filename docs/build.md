@@ -27,7 +27,7 @@ git submodule update --init --recursive
 
 There are three further dependencies/prerequisites...
 
-### Boost ( &ge; v1.58.0 )
+### Boost ( v1.57.0 / v1.58.0 )
 
 This is used heavily throughout the code. Both headers and compiled library files are needed.
 
