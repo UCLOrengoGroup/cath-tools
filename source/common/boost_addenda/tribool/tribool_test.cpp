@@ -57,27 +57,28 @@ constexpr tribool tribool_test_suite_fixture::eg_tb_indet;
 
 BOOST_FIXTURE_TEST_SUITE(tribool_test_suite, tribool_test_suite_fixture)
 
+/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make the tribool functions constexpr and change these back to static_asserts
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK  (   is_true              ( eg_tb_true  )     ); ///< TODO: Come GCC with a fix for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80485, turn these back into static_assert()s
-	static_assert( ! is_false             ( eg_tb_true  ), "" );
-	BOOST_CHECK  ( ! is_not_true          ( eg_tb_true  )     ); ///< TODO: Come GCC with a fix for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80485, turn these back into static_assert()s
-	static_assert(   is_not_false         ( eg_tb_true  ), "" );
-	static_assert( ! indeterminate        ( eg_tb_true  ), "" );
-	static_assert(   is_not_indeterminate ( eg_tb_true  ), "" );
+	BOOST_CHECK  (   is_true              ( eg_tb_true  ) ); ///< \TODO: Come GCC with a fix for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80485, turn these back into static_assert()s
+	BOOST_CHECK  ( ! is_false             ( eg_tb_true  ) );
+	BOOST_CHECK  ( ! is_not_true          ( eg_tb_true  ) ); ///< \TODO: Come GCC with a fix for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80485, turn these back into static_assert()s
+	BOOST_CHECK  (   is_not_false         ( eg_tb_true  ) );
+	BOOST_CHECK  ( ! indeterminate        ( eg_tb_true  ) );
+	BOOST_CHECK  (   is_not_indeterminate ( eg_tb_true  ) );
 
-	static_assert( ! is_true              ( eg_tb_false ), "" );
-	BOOST_CHECK  (   is_false             ( eg_tb_false )     ); ///< TODO: Come GCC with a fix for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80485, turn these back into static_assert()s
-	static_assert(   is_not_true          ( eg_tb_false ), "" );
-	BOOST_CHECK  ( ! is_not_false         ( eg_tb_false )     ); ///< TODO: Come GCC with a fix for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80485, turn these back into static_assert()s
-	static_assert( ! indeterminate        ( eg_tb_false ), "" );
-	static_assert(   is_not_indeterminate ( eg_tb_false ), "" );
+	BOOST_CHECK  ( ! is_true              ( eg_tb_false ) );
+	BOOST_CHECK  (   is_false             ( eg_tb_false ) ); ///< \TODO: Come GCC with a fix for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80485, turn these back into static_assert()s
+	BOOST_CHECK  (   is_not_true          ( eg_tb_false ) );
+	BOOST_CHECK  ( ! is_not_false         ( eg_tb_false ) ); ///< \TODO: Come GCC with a fix for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80485, turn these back into static_assert()s
+	BOOST_CHECK  ( ! indeterminate        ( eg_tb_false ) );
+	BOOST_CHECK  (   is_not_indeterminate ( eg_tb_false ) );
 
-	static_assert( ! is_true              ( eg_tb_indet ), "" );
-	static_assert( ! is_false             ( eg_tb_indet ), "" );
-	static_assert(   is_not_true          ( eg_tb_indet ), "" );
-	static_assert(   is_not_false         ( eg_tb_indet ), "" );
-	static_assert(   indeterminate        ( eg_tb_indet ), "" );
-	static_assert( ! is_not_indeterminate ( eg_tb_indet ), "" );
+	BOOST_CHECK  ( ! is_true              ( eg_tb_indet ) );
+	BOOST_CHECK  ( ! is_false             ( eg_tb_indet ) );
+	BOOST_CHECK  (   is_not_true          ( eg_tb_indet ) );
+	BOOST_CHECK  (   is_not_false         ( eg_tb_indet ) );
+	BOOST_CHECK  (   indeterminate        ( eg_tb_indet ) );
+	BOOST_CHECK  ( ! is_not_indeterminate ( eg_tb_indet ) );
 
 	BOOST_CHECK( true );
 }

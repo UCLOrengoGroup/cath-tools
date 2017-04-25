@@ -27,32 +27,42 @@ namespace cath {
 	namespace common {
 
 		/// \brief Return whether the specified tribool is true
-		inline constexpr bool is_true(const boost::logic::tribool &arg_tribool ///< The tribool to query
-		                              ) {
+		///
+		/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make this constexpr
+		inline bool is_true(const boost::logic::tribool &arg_tribool ///< The tribool to query
+		                    ) {
 			return static_cast<bool>(   arg_tribool );
 		}
 
 		/// \brief Return whether the specified tribool is false
-		inline constexpr bool is_false(const boost::logic::tribool &arg_tribool ///< The tribool to query
-		                               ) {
+		///
+		/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make this constexpr
+		inline bool is_false(const boost::logic::tribool &arg_tribool ///< The tribool to query
+		                     ) {
 			return static_cast<bool>( ! arg_tribool );
 		}
 
 		/// \brief Return whether the specified tribool is not true
-		inline constexpr bool is_not_true(const boost::logic::tribool &arg_tribool ///< The tribool to query
-		                                  ) {
+		///
+		/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make this constexpr
+		inline bool is_not_true(const boost::logic::tribool &arg_tribool ///< The tribool to query
+		                        ) {
 			return ! is_true( arg_tribool );
 		}
 
 		/// \brief Return whether the specified tribool is not false
-		inline constexpr bool is_not_false(const boost::logic::tribool &arg_tribool ///< The tribool to query
-		                                   ) {
+		///
+		/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make this constexpr
+		inline bool is_not_false(const boost::logic::tribool &arg_tribool ///< The tribool to query
+		                         ) {
 			return ! is_false( arg_tribool );
 		}
 
 		/// \brief Return whether the specified tribool is not indeterminate
-		inline constexpr bool is_not_indeterminate(const boost::logic::tribool &arg_tribool ///< The tribool to query
-		                                           ) {
+		///
+		/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make this constexpr
+		inline bool is_not_indeterminate(const boost::logic::tribool &arg_tribool ///< The tribool to query
+		                                 ) {
 			return ! boost::logic::indeterminate( arg_tribool );
 		}
 
