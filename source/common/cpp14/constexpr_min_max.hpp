@@ -30,12 +30,12 @@ namespace cath {
 	///
 	/// Defaults to lhs if equivalent. Only uses operator<().
 	///
-	/// \todo Come GCC 5.0 (or whenever libstdc++'s std::min() is constexpr), remove this and replace all calls
-	///       with calls to std::min()
+	/// \todo Come GCC 5.0 (or whenever libstdc++'s std::min() is constexpr) and come all Clang >= 3.5,
+	///       remove this and replace all calls with calls to std::min()
 	template <typename T>
-	inline constexpr const size_t & constexpr_min(const T &arg_lhs, ///< The left-hand-side  argument
-	                                              const T &arg_rhs  ///< The right-hand-side argument
-	                                              ) {
+	inline constexpr const T & constexpr_min(const T &arg_lhs, ///< The left-hand-side  argument
+	                                         const T &arg_rhs  ///< The right-hand-side argument
+	                                         ) {
 		return ( arg_rhs < arg_lhs ) ? arg_rhs : arg_lhs;
 	}
 
@@ -43,12 +43,12 @@ namespace cath {
 	///
 	/// Defaults to lhs if equivalent. Only uses operator<().
 	///
-	/// \todo Come GCC 5.0 (or whenever libstdc++'s std::max() is constexpr), remove this and replace all calls
-	///       with calls to std::max()
+	/// \todo Come GCC 5.0 (or whenever libstdc++'s std::min() is constexpr) and come all Clang >= 3.5,
+	///       remove this and replace all calls with calls to std::min()
 	template <typename T>
-	inline constexpr const size_t & constexpr_max(const T &arg_lhs, ///< The left-hand-side  argument
-	                                              const T &arg_rhs  ///< The right-hand-side argument
-	                                              ) {
+	inline constexpr const T & constexpr_max(const T &arg_lhs, ///< The left-hand-side  argument
+	                                         const T &arg_rhs  ///< The right-hand-side argument
+	                                         ) {
 		return ( arg_lhs < arg_rhs ) ? arg_rhs : arg_lhs;
 	}
 

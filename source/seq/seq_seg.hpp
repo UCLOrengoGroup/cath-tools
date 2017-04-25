@@ -28,6 +28,7 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
+#include "common/cpp14/constexpr_min_max.hpp"
 #include "common/json_style.hpp"
 #include "common/rapidjson_addenda/rapidjson_writer.hpp"
 #include "common/size_t_literal.hpp"
@@ -218,13 +219,23 @@ namespace cath {
 
 		/// \brief Return the number of residues by which the two specified seq_segs overlap (or 0 if they don't overlap)
 		///
+		/// \todo Come relaxed, constexpr use this (but keep constexpr_max() / constexpr_min() if they haven't been retired yet):
+		///     const auto max_start = std::max( arg_seq_seg_a.get_start_arrow(), arg_seq_seg_b.get_start_arrow() );
+		///     const auto min_stop  = std::min( arg_seq_seg_a.get_stop_arrow(),  arg_seq_seg_b.get_stop_arrow()  );
+		///     return ( std::max( min_stop, max_start ) - max_start );
+		///
 		/// \relates seq_seg
 		inline constexpr residx_t overlap_by(const seq_seg &arg_seq_seg_a, ///< The first  seq_seg to query
 		                                     const seq_seg &arg_seq_seg_b  ///< The second seq_seg to query
 		                                     ) {
-			const auto max_start = std::max( arg_seq_seg_a.get_start_arrow(), arg_seq_seg_b.get_start_arrow() );
-			const auto min_stop  = std::min( arg_seq_seg_a.get_stop_arrow(),  arg_seq_seg_b.get_stop_arrow()  );
-			return ( std::max( min_stop, max_start ) - max_start );
+			return (
+				common::constexpr_max(
+					common::constexpr_min( arg_seq_seg_a.get_stop_arrow(),  arg_seq_seg_b.get_stop_arrow()  ),
+					common::constexpr_max( arg_seq_seg_a.get_start_arrow(), arg_seq_seg_b.get_start_arrow() )
+				)
+				-
+				common::constexpr_max( arg_seq_seg_a.get_start_arrow(), arg_seq_seg_b.get_start_arrow() )
+			);
 		}
 
 		/// \brief Return the length of the shorter of the two specified seq_segs
@@ -233,10 +244,10 @@ namespace cath {
 		inline constexpr residx_t shorter_length(const seq_seg &arg_seq_seg_a, ///< The first  seq_seg to query
 		                                         const seq_seg &arg_seq_seg_b  ///< The second seq_seg to query
 		                                         ) {
-			return std::min(
+			return static_cast<residx_t>( common::constexpr_min(
 				get_length( arg_seq_seg_a ),
 				get_length( arg_seq_seg_b )
-			);
+			) );
 		}
 
 		/// \brief Return the length of the longer of the two specified seq_segs
@@ -245,10 +256,10 @@ namespace cath {
 		inline constexpr residx_t longer_length(const seq_seg &arg_seq_seg_a, ///< The first  seq_seg to query
 		                                        const seq_seg &arg_seq_seg_b  ///< The second seq_seg to query
 		                                        ) {
-			return std::max(
+			return static_cast<residx_t>( common::constexpr_max(
 				get_length( arg_seq_seg_a ),
 				get_length( arg_seq_seg_b )
-			);
+			) );
 		}
 
 		/// \brief Return the fraction overlap between the two specified seq_segs over the length of the shorter
