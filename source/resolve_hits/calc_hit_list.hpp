@@ -71,8 +71,10 @@ namespace cath {
 			static auto get_less_than_fn(const full_hit_list &arg_full_hits ///< The full_hits from which these hits were drawn
 			                             ) {
 				return [&] (const calc_hit &x, const calc_hit &y) {
-					const auto lhs_tie = std::tie( get_stop_arrow( x ), get_start_arrow( x ), x.get_score() );
-					const auto rhs_tie = std::tie( get_stop_arrow( y ), get_start_arrow( y ), y.get_score() );
+					const auto num_segs_lhs = get_num_segments( x );
+					const auto num_segs_rhs = get_num_segments( y );
+					const auto lhs_tie = std::tie( get_stop_arrow( x ), get_start_arrow( x ), x.get_score(), num_segs_lhs );
+					const auto rhs_tie = std::tie( get_stop_arrow( y ), get_start_arrow( y ), y.get_score(), num_segs_rhs );
 					if ( lhs_tie < rhs_tie) {
 						return true;
 					}
@@ -80,12 +82,21 @@ namespace cath {
 						return false;
 					}
 
-					const auto lhs_segs_str = get_segments_string( x );
-					const auto rhs_segs_str = get_segments_string( y );
+					for (const size_t &seg_ctr : boost::irange( 0_z, get_num_segments( x ) ) ) {
+						const auto lhs_seg_tie = std::tie( get_start_arrow_of_segment( x, seg_ctr ), get_stop_arrow_of_segment( x, seg_ctr ) );
+						const auto rhs_seg_tie = std::tie( get_start_arrow_of_segment( y, seg_ctr ), get_stop_arrow_of_segment( y, seg_ctr ) );
+						if ( lhs_seg_tie < rhs_seg_tie) {
+							return true;
+						}
+						if ( rhs_seg_tie < lhs_seg_tie ) {
+							return false;
+						}
+					}
+
 					return (
-						std::tie( lhs_segs_str, arg_full_hits[ x.get_label_idx() ].get_label() )
+						arg_full_hits[ x.get_label_idx() ].get_label()
 						<
-						std::tie( rhs_segs_str, arg_full_hits[ y.get_label_idx() ].get_label() )
+						arg_full_hits[ y.get_label_idx() ].get_label()
 					);
 				};
 			}
