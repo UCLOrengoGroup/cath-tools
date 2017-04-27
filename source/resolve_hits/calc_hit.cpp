@@ -62,7 +62,13 @@ string cath::rslv::get_segments_string(const calc_hit &arg_hit ///< The calc_hit
 /// \relates calc_hit
 string cath::rslv::to_string(const calc_hit &arg_hit ///< The calc_hit to describe
                              ) {
-	return "calc_hit[" + get_segments_string( arg_hit ) + "]";
+	using std::to_string;
+	return
+		  "calc_hit["
+		+ get_segments_string( arg_hit )
+		+ ", score: "
+		+ to_string( arg_hit.get_score() )
+		+ "]";
 }
 
 /// \brief Insert a description of the specified calc_hit into the specified ostream
