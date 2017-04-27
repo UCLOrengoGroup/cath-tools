@@ -63,7 +63,7 @@ using std::numeric_limits;
 auto hit_resolver::get_hit_stops_differ_fn(const calc_hit_list &arg_calc_hit_list ///< The list of hits to which the indices will refer
                                            ) {
 	return [&] (const hitidx_t &x, const hitidx_t &y) {
-		return ( arg_calc_hit_list[ x ].get_stop_arrow() != arg_calc_hit_list[ y ].get_stop_arrow() );
+		return ( get_stop_arrow( arg_calc_hit_list[ x ] ) != get_stop_arrow( arg_calc_hit_list[ y ] ) );
 	};
 }
 
@@ -124,7 +124,7 @@ scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(con
 	// Loop over the groups of hits' indices that correspond to hits with the same stop point
 	for (const auto &indices_of_hits_with_same_stop : indices_of_hits | equal_grouped( get_hit_stops_differ_fn( hits.get() ) ) ) {
 		// Grab the stop point of the hits in this group
-		const auto current_arrow = hits.get()[ front( indices_of_hits_with_same_stop ) ].get_stop_arrow();
+		const auto current_arrow = get_stop_arrow( hits.get()[ front( indices_of_hits_with_same_stop ) ] );
 
 		sanity_check( bests.get_best_scored_arch_so_far(), hits.get(), arg_mask );
 

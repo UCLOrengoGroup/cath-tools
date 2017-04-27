@@ -71,8 +71,8 @@ namespace cath {
 			static auto get_less_than_fn(const full_hit_list &arg_full_hits ///< The full_hits from which these hits were drawn
 			                             ) {
 				return [&] (const calc_hit &x, const calc_hit &y) {
-					const auto lhs_tie = std::tie( x.get_stop_arrow(), x.get_start_arrow(), x.get_score() );
-					const auto rhs_tie = std::tie( y.get_stop_arrow(), y.get_start_arrow(), y.get_score() );
+					const auto lhs_tie = std::tie( get_stop_arrow( x ), get_start_arrow( x ), x.get_score() );
+					const auto rhs_tie = std::tie( get_stop_arrow( y ), get_start_arrow( y ), y.get_score() );
 					if ( lhs_tie < rhs_tie) {
 						return true;
 					}

@@ -133,7 +133,12 @@ BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK_EQUAL(   fraction_overlap_over_longer  ( d, b ), 0.0 );
 	BOOST_CHECK_EQUAL(   fraction_overlap_over_longer  ( d, c ), 0.0 );
 	BOOST_CHECK_EQUAL(   fraction_overlap_over_longer  ( d, d ), 1.0 );
+}
 
+BOOST_AUTO_TEST_CASE(problem_case) {
+	const seq_seg_run a{ seq_seg_vec{ {  0, 1 }, { 4, 6 } } };
+	const seq_seg_run b{ seq_seg_vec{ {  3, 5 }           } };
+	BOOST_CHECK( are_overlapping( a, b ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

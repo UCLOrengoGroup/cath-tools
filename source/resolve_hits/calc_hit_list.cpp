@@ -283,7 +283,7 @@ residx_opt cath::rslv::get_max_stop(const calc_hit_list &arg_calc_hit_list ///< 
 		: make_optional( get_stop_res_index( *max_element(
 			arg_calc_hit_list,
 			[] (const calc_hit &x, const calc_hit &y) {
-				return x.get_stop_arrow() < y.get_stop_arrow();
+				return get_stop_arrow( x ) < get_stop_arrow( y );
 		} ) ) );
 }
 
@@ -317,7 +317,7 @@ calc_hit_list::const_iterator cath::rslv::find_first_hit_stopping_at_or_after(co
 		arg_calc_hit_list,
 		arg_res_arrow,
 		[] (const calc_hit &h, const seq_arrow &a) {
-			return ( h.get_stop_arrow() < a );
+			return ( get_stop_arrow( h ) < a );
 		}
 	);
 }
@@ -334,7 +334,7 @@ calc_hit_list::const_iterator cath::rslv::find_first_hit_stopping_after(const ca
 		arg_calc_hit_list,
 		arg_res_arrow,
 		[] (const seq_arrow &a, const calc_hit &h) {
-			return ( a < h.get_stop_arrow() );
+			return ( a < get_stop_arrow( h ) );
 		}
 	);
 }

@@ -423,19 +423,51 @@ namespace cath {
 		inline bool are_overlapping(const seq_seg_run &arg_seq_seg_run_a, ///< The first  seq_seg_run to query
 		                            const seq_seg_run &arg_seq_seg_run_b  ///< The second seq_seg_run to query
 		                            ) {
-			bool found_overlaps = false;
-			detail::apply_to_overlaps_in_seq_seg_runs(
-				arg_seq_seg_run_a,
-				arg_seq_seg_run_b,
-				[&] (const seq_seg &, const seq_seg &) { found_overlaps = true; }
-			);
-			return found_overlaps;
+			if ( ! any_interaction( arg_seq_seg_run_a, arg_seq_seg_run_b ) ) {
+				return false;
+			}
+			const size_t num_segs_a = arg_seq_seg_run_a.get_num_segments();
+			const size_t num_segs_b = arg_seq_seg_run_b.get_num_segments();
+
+			// If there are non-trivial numbers of segments, use a linear strategy
+			if ( num_segs_a + num_segs_b > 4 ) {
+				for (size_t ctr_a = 0, ctr_b = 0 ; ctr_a != num_segs_a && ctr_b != num_segs_b ; ) {
+					if ( are_overlapping( get_seq_seg_of_seg_idx( arg_seq_seg_run_a, ctr_a ),
+					                      get_seq_seg_of_seg_idx( arg_seq_seg_run_b, ctr_b ) ) ) {
+						return true;
+					}
+
+					const size_t orig_ctr_a = ctr_a;
+					if ( arg_seq_seg_run_a.get_stop_arrow_of_segment( ctr_a ) <= arg_seq_seg_run_b.get_stop_arrow_of_segment(      ctr_b ) ) {
+						++ctr_a;
+					}
+					if ( arg_seq_seg_run_b.get_stop_arrow_of_segment( ctr_b ) <= arg_seq_seg_run_a.get_stop_arrow_of_segment( orig_ctr_a ) ) {
+						++ctr_b;
+					}
+				}
+				return false;
+			}
+			// Otherwise, it turns out to be measurably faster to just do all-vs-all
+			else {
+				for (const auto &seg_ctr_a : boost::irange( 0_z, num_segs_a ) ) {
+					for (const auto &seg_ctr_b : boost::irange( 0_z, num_segs_b ) ) {
+						const bool seg_overlap = are_overlapping(
+							get_seq_seg_of_seg_idx( arg_seq_seg_run_a, seg_ctr_a ),
+							get_seq_seg_of_seg_idx( arg_seq_seg_run_b, seg_ctr_b )
+						);
+						if ( seg_overlap ) {
+							return true;
+						}
+					}
+				}
+				return false;
+			}
 		}
 
 		/// \brief Return the number of residues by which the two specified seq_seg_runs overlap (or 0 if they don't overlap)
 		///
-		/// \todo This can be made more efficient by iterating over the two segment
-		///       lists simultaneously
+		/// \todo Consider seeing whether the lesson of are_overlapping() also applies here
+		///       (ie use a dumb strategy for trivial numbers of segments)
 		///
 		/// \relates seq_seg
 		inline residx_t overlap_by(const seq_seg_run &arg_seq_seg_run_a, ///< The first  seq_seg_run to query
@@ -501,6 +533,63 @@ namespace cath {
 				static_cast<double>( overlap_by   ( arg_seq_seg_run_a, arg_seq_seg_run_b ) )
 				/
 				static_cast<double>( longer_length( arg_seq_seg_run_a, arg_seq_seg_run_b ) );
+		}
+
+		/// \brief Return whether the second calc_hit right-intersperses the first
+		///
+		/// This means that both are discontiguous hits that don't actually
+		/// overlap each other but the second's start is within the first
+		/// and the first's stop in within the second. Like this:
+		///
+		/// ~~~~~
+		///   ***     ***
+		///       ***     ***
+		/// ~~~~~
+		///
+		/// \relates calc_hit
+		inline bool second_right_intersperses_first(const seq_seg_run &arg_seq_seg_run_a, ///< The first  calc_hit to query
+		                                            const seq_seg_run &arg_seq_seg_run_b  ///< The second calc_hit to query
+		                                            ) {
+			return (
+				arg_seq_seg_run_a.is_discontig()
+				&&
+				arg_seq_seg_run_b.is_discontig()
+				&&
+				arg_seq_seg_run_a.get_start_arrow() < arg_seq_seg_run_b.get_start_arrow()
+				&&
+				arg_seq_seg_run_a.get_stop_arrow () < arg_seq_seg_run_b.get_stop_arrow ()
+				&&
+				arg_seq_seg_run_b.get_start_arrow() < arg_seq_seg_run_a.get_stop_arrow ()
+				&&
+				! are_overlapping( arg_seq_seg_run_a, arg_seq_seg_run_b )
+			);
+		}
+
+		/// \brief Return whether the second calc_hit right-intersperses or inside-intersperses the first
+		///
+		/// This means that both are discontiguous hits that don't actually
+		/// overlap each other but the second's start is within the first
+		///
+		/// ~~~~~
+		///   ***     ***     ***
+		///       ***     ***
+		/// ~~~~~
+		///
+		/// \relates calc_hit
+		inline bool second_right_or_inside_intersperses_first(const seq_seg_run &arg_seq_seg_run_a, ///< The first  calc_hit to query
+		                                                      const seq_seg_run &arg_seq_seg_run_b  ///< The second calc_hit to query
+		                                                      ) {
+			return (
+				arg_seq_seg_run_a.is_discontig()
+				&&
+				arg_seq_seg_run_b.is_discontig()
+				&&
+				arg_seq_seg_run_a.get_start_arrow() < arg_seq_seg_run_b.get_start_arrow()
+				&&
+				arg_seq_seg_run_b.get_start_arrow() < arg_seq_seg_run_a.get_stop_arrow ()
+				&&
+				! are_overlapping( arg_seq_seg_run_a, arg_seq_seg_run_b )
+			);
 		}
 
 	} // namespace seq

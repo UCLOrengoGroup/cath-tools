@@ -47,7 +47,7 @@ using std::string;
 string cath::rslv::get_segments_string(const calc_hit &arg_hit ///< The calc_hit whose segments should be described
                                        ) {
 	return join(
-		boost::irange( 0_z, arg_hit.get_num_segments() )
+		boost::irange( 0_z, get_num_segments( arg_hit ) )
 			| boost::adaptors::transformed( [&] (const size_t &x) {
 				return ::std::to_string( get_start_res_index_of_segment( arg_hit, x ) )
 				     + "-"
@@ -82,19 +82,19 @@ bool cath::rslv::operator==(const calc_hit &arg_lhs, ///< The first  calc_hit to
                             const calc_hit &arg_rhs  ///< The second calc_hit to compare
                             ) {
 	return (
-		( arg_lhs.get_num_segments() == arg_rhs.get_num_segments() )
+		( get_num_segments( arg_lhs ) == get_num_segments( arg_rhs ) )
 		&&
-		( arg_lhs.get_score()        == arg_rhs.get_score()        )
+		( arg_lhs.get_score()         == arg_rhs.get_score()         )
 		&&
-		( arg_lhs.get_label_idx()    == arg_rhs.get_label_idx()    )
+		( arg_lhs.get_label_idx()     == arg_rhs.get_label_idx()     )
 		&&
 		all_of(
-			irange( 0_z, arg_lhs.get_num_segments() ),
+			irange( 0_z, get_num_segments( arg_lhs ) ),
 			[&] (const size_t &seg_ctr) {
 				return (
-					arg_lhs.get_start_arrow_of_segment( seg_ctr ) == arg_rhs.get_start_arrow_of_segment( seg_ctr )
+					get_start_arrow_of_segment( arg_lhs, seg_ctr ) == get_start_arrow_of_segment( arg_rhs, seg_ctr )
 					&&
-					arg_lhs.get_stop_arrow_of_segment ( seg_ctr ) == arg_rhs.get_stop_arrow_of_segment ( seg_ctr )
+					get_stop_arrow_of_segment ( arg_lhs, seg_ctr ) == get_stop_arrow_of_segment ( arg_rhs, seg_ctr )
 				);
 			}
 		)

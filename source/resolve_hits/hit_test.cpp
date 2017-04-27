@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(basic_2) {
 BOOST_AUTO_TEST_CASE(overlap) {
 	const auto the_hit_a = make_hit_from_res_indices( { { 1266, 1344 },                }, 1.0, 0 );
 	const auto the_hit_b = make_hit_from_res_indices( { { 1272, 1320 }, { 1398, 1437 } }, 1.0, 1 );
-	BOOST_CHECK( hits_overlap( the_hit_a, the_hit_b ) );
+	BOOST_CHECK( are_overlapping( the_hit_a, the_hit_b ) );
 }
 
 

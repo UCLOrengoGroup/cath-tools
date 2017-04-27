@@ -42,8 +42,10 @@ namespace cath {
 	namespace rslv {
 
 		class calc_hit;
-		inline seq::seq_arrow get_stop_of_first_segment(const calc_hit &);
+		inline const seq::seq_arrow & get_start_arrow(const calc_hit &);
+		inline const seq::seq_arrow & get_stop_arrow(const calc_hit &);
 		inline seq::seq_arrow get_start_of_last_segment(const calc_hit &);
+		inline seq::seq_arrow get_stop_of_first_segment(const calc_hit &);
 
 		/// \brief Represent a single calc_hit (ie one domain) with a score, label and one or more segments
 		///
@@ -85,25 +87,19 @@ namespace cath {
 			         const resscr_t &,
 			         const hitidx_t &);
 
-			bool is_discontig() const;
-			size_t get_num_segments() const;
-			const seq::seq_arrow & get_start_arrow_of_segment(const size_t &) const;
-			const seq::seq_arrow & get_stop_arrow_of_segment(const size_t &) const;
-
-			const seq::seq_arrow & get_start_arrow() const;
-			const seq::seq_arrow & get_stop_arrow () const;
-			const resscr_t       & get_score      () const;
-			const hitidx_t       & get_label_idx  () const;
+			const seq::seq_seg_run & get_segments () const;
+			const resscr_t         & get_score    () const;
+			const hitidx_t         & get_label_idx() const;
 
 			static auto get_hit_start_less() {
 				return [] (const calc_hit &x, const calc_hit &y) {
-					return ( x.get_start_arrow() < y.get_start_arrow() );
+					return ( get_start_arrow( x ) < get_start_arrow( y ) );
 				};
 			}
 
 			static auto get_hit_stop_less() {
 				return [] (const calc_hit &x, const calc_hit &y) {
-					return ( x.get_stop_arrow() < y.get_stop_arrow() );
+					return ( get_stop_arrow( x ) < get_stop_arrow( y ) );
 				};
 			}
 
@@ -192,27 +188,60 @@ namespace cath {
 			sanity_check();
 		}
 
+
+		/// \brief Get the segments associated with this calc_hit
+		inline const seq::seq_seg_run & calc_hit::get_segments() const {
+			return segments;
+		}
+
+		/// \brief Get the score associated with this calc_hit
+		inline const resscr_t & calc_hit::get_score() const {
+			return score;
+		}
+
+		/// \brief Get the index of the label associated with this calc_hit (where the index refers to some other list of hits' labels)
+		inline const hitidx_t & calc_hit::get_label_idx() const {
+			return label_idx;
+		}
+
 		/// \brief Return whether this calc_hit is discontiguous
-		inline bool calc_hit::is_discontig() const {
-			return segments.is_discontig();
+		inline bool is_discontig(const calc_hit &arg_calc_hit ///< The calc_hit to query
+		                         ) {
+			return arg_calc_hit.get_segments().is_discontig();
 		}
 
 		/// \brief Return the number of segments in this calc_hit
-		inline size_t calc_hit::get_num_segments() const {
-			return segments.get_num_segments();
+		inline size_t get_num_segments(const calc_hit &arg_calc_hit ///< The calc_hit to query
+		                               ) {
+			return arg_calc_hit.get_segments().get_num_segments();
 		}
 
 		/// \brief Get the start boundary of the segment with the specified index
-		inline const seq::seq_arrow & calc_hit::get_start_arrow_of_segment(const size_t &arg_segment_index ///< The index of the segment whose start arrow should be returned
-		                                                                   ) const {
-			return segments.get_start_arrow_of_segment( arg_segment_index );
+		inline const seq::seq_arrow & get_start_arrow_of_segment(const calc_hit &arg_calc_hit,     ///< The calc_hit to query
+		                                                         const size_t   &arg_segment_index ///< The index of the segment whose start arrow should be returned
+		                                                         ) {
+			return arg_calc_hit.get_segments().get_start_arrow_of_segment( arg_segment_index );
 		}
 
 		/// \brief Get the stop boundary of the segment with the specified index
-		inline const seq::seq_arrow & calc_hit::get_stop_arrow_of_segment(const size_t &arg_segment_index ///< The index of the segment whose stop arrow should be returned
-		                                                                  ) const {
-			return segments.get_stop_arrow_of_segment( arg_segment_index );
+		inline const seq::seq_arrow & get_stop_arrow_of_segment(const calc_hit &arg_calc_hit,     ///< The calc_hit to query
+		                                                        const size_t   &arg_segment_index ///< The index of the segment whose stop arrow should be returned
+		                                                        ) {
+			return arg_calc_hit.get_segments().get_stop_arrow_of_segment( arg_segment_index );
 		}
+
+		/// \brief Get the (first) start of this calc_hit
+		inline const seq::seq_arrow & get_start_arrow(const calc_hit &arg_calc_hit ///< The calc_hit to query
+		                                              ) {
+			return arg_calc_hit.get_segments().get_start_arrow();
+		}
+
+		/// \brief Get the (last) stop of this calc_hit
+		inline const seq::seq_arrow & get_stop_arrow(const calc_hit &arg_calc_hit ///< The calc_hit to query
+		                                             ) {
+			return arg_calc_hit.get_segments().get_stop_arrow();
+		}
+
 
 		/// \brief Get the length of the specified calc_hit's segment corresponding to the specified index
 		///
@@ -220,11 +249,7 @@ namespace cath {
 		inline size_t get_length_of_seq_seg(const calc_hit &arg_hit,    ///< The calc_hit to query
 		                                    const size_t   &arg_seg_idx ///< The index of the segment who length should be returned
 		                                    ) {
-			return static_cast<size_t>(
-				arg_hit.get_stop_arrow_of_segment ( arg_seg_idx )
-				-
-				arg_hit.get_start_arrow_of_segment( arg_seg_idx )
-			);
+			return get_length_of_seq_seg( arg_hit.get_segments(), arg_seg_idx );
 		}
 		
 		/// \brief Get the specified calc_hit's segment corresponding to the specified index
@@ -233,10 +258,7 @@ namespace cath {
 		inline seq::seq_seg get_seq_seg_of_seg_idx(const calc_hit &arg_hit,    ///< The calc_hit to query
 		                                           const size_t   &arg_seg_idx ///< The index of the segment to return
 		                                           ) {
-			return {
-				arg_hit.get_start_arrow_of_segment( arg_seg_idx ),
-				arg_hit.get_stop_arrow_of_segment ( arg_seg_idx )
-			};
+			return get_seq_seg_of_seg_idx( arg_hit.get_segments(), arg_seg_idx );
 		}
 
 		/// \brief Get a vector of the segments in this calc_hit
@@ -244,12 +266,7 @@ namespace cath {
 		/// \relates calc_hit
 		inline const seq::seq_seg_vec get_seq_segs(const calc_hit &arg_hit ///< The calc_hit to query
 		                                           ) {
-			return common::transform_build<seq::seq_seg_vec>(
-				boost::irange( 0_z, arg_hit.get_num_segments() ),
-				[&] (const size_t &x) {
-					return get_seq_seg_of_seg_idx( arg_hit, x );
-				}
-			);
+			return get_seq_segs( arg_hit.get_segments() );
 		}
 
 		/// \brief Get the (possibly-repeated, non-sorted) segments from the specified hits
@@ -270,25 +287,6 @@ namespace cath {
 			return start_sort_seq_segs_copy( get_seq_segs( arg_hit_vec ) );
 		}
 
-		/// \brief Get the (first) start of this calc_hit
-		inline const seq::seq_arrow & calc_hit::get_start_arrow() const {
-			return segments.get_start_arrow();
-		}
-
-		/// \brief Get the (last) stop of this calc_hit
-		inline const seq::seq_arrow & calc_hit::get_stop_arrow()  const {
-			return segments.get_stop_arrow();
-		}
-
-		/// \brief Get the score associated with this calc_hit
-		inline const resscr_t & calc_hit::get_score() const {
-			return score;
-		}
-
-		/// \brief Get the index of the label associated with this calc_hit (where the index refers to some other list of hits' labels)
-		inline const hitidx_t & calc_hit::get_label_idx() const {
-			return label_idx;
-		}
 
 		/// \brief Get the start residue index of the segment of specified index in the specified calc_hit
 		///
@@ -296,7 +294,7 @@ namespace cath {
 		inline const seq::residx_t & get_start_res_index_of_segment(const calc_hit &arg_hit,          ///< The calc_hit to query
 		                                                            const size_t   &arg_segment_index ///< The index of the segment to query
 		                                                            ) {
-			return arg_hit.get_start_arrow_of_segment( arg_segment_index ).res_after();
+			return get_start_res_index_of_segment( arg_hit.get_segments(), arg_segment_index );
 		}
 
 		/// \brief Get the stop residue index of the segment of specified index in the specified calc_hit
@@ -305,7 +303,7 @@ namespace cath {
 		inline seq::residx_t get_stop_res_index_of_segment(const calc_hit &arg_hit,          ///< The calc_hit to query
 		                                                   const size_t   &arg_segment_index ///< The index of the segment to query
 		                                                   ) {
-			return arg_hit.get_stop_arrow_of_segment( arg_segment_index ).res_before();
+			return get_stop_res_index_of_segment( arg_hit.get_segments(), arg_segment_index );
 		}
 
 		/// \brief Get the start residue index of the specified calc_hit
@@ -313,7 +311,7 @@ namespace cath {
 		/// \relates calc_hit
 		inline const seq::residx_t & get_start_res_index(const calc_hit &arg_hit ///< The calc_hit to query
 		                                                 ) {
-			return arg_hit.get_start_arrow().res_after();
+			return get_start_res_index( arg_hit.get_segments() );
 		}
 
 		/// \brief Get the stop residue index of the specified calc_hit
@@ -321,7 +319,7 @@ namespace cath {
 		/// \relates calc_hit
 		inline seq::residx_t get_stop_res_index(const calc_hit &arg_hit ///< The calc_hit to query
 		                                        ) {
-			return arg_hit.get_stop_arrow().res_before();
+			return get_stop_res_index( arg_hit.get_segments() );
 		}
 
 		/// \brief Get the stop of the first segment in the specified calc_hit
@@ -331,10 +329,7 @@ namespace cath {
 		/// \relates calc_hit
 		inline seq::seq_arrow get_stop_of_first_segment(const calc_hit &arg_hit ///< The calc_hit to query
 		                                                ) {
-			if ( ! arg_hit.is_discontig() ) {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_stop_of_first_segment of contiguous calc_hit"));
-			}
-			return arg_hit.get_stop_arrow_of_segment( 0 );
+			return get_stop_of_first_segment( arg_hit.get_segments() );
 		}
 
 		/// \brief Get the start of the last segment in the specified calc_hit
@@ -344,10 +339,7 @@ namespace cath {
 		/// \relates calc_hit
 		inline seq::seq_arrow get_start_of_last_segment(const calc_hit &arg_hit ///< The calc_hit to query
 		                                                ) {
-			if ( ! arg_hit.is_discontig() ) {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_start_of_last_segment of contiguous calc_hit"));
-			}
-			return arg_hit.get_start_arrow_of_segment( arg_hit.get_num_segments() - 1 );
+			return get_start_of_last_segment( arg_hit.get_segments() );
 		}
 
 		/// \brief Get the total length of the specified calc_hit (ie the sum of its segments' lengths)
@@ -355,13 +347,7 @@ namespace cath {
 		/// \relates calc_hit
 		inline size_t get_total_length(const calc_hit &arg_hit ///< The calc_hit to query
 		                               ) {
-			return boost::accumulate(
-				boost::irange( 0_z, arg_hit.get_num_segments() )
-					| boost::adaptors::transformed( [&] (const size_t &x) {
-						return get_length_of_seq_seg( arg_hit, x );
-					} ),
-				0_z
-			);
+			return get_total_length( arg_hit.get_segments() );
 		}
 
 		/// \brief Make a continuous calc_hit from the residue indices
@@ -403,11 +389,7 @@ namespace cath {
 		inline bool any_interaction(const calc_hit &arg_hit_a, ///< The first  calc_hit to query
 		                            const calc_hit &arg_hit_b  ///< The second calc_hit to query
 		                            ) {
-			return (
-				arg_hit_a.get_start_arrow() < arg_hit_b.get_stop_arrow()
-				&&
-				arg_hit_b.get_start_arrow() < arg_hit_a.get_stop_arrow()
-			);
+			return any_interaction( arg_hit_a.get_segments(), arg_hit_b.get_segments() );
 		}
 
 		/// \brief Return whether the two specified hits overlap with each other
@@ -421,24 +403,10 @@ namespace cath {
 		///       lists simultaneously
 		///
 		/// \relates calc_hit
-		inline bool hits_overlap(const calc_hit &arg_hit_a, ///< The first  calc_hit to query
-		                         const calc_hit &arg_hit_b  ///< The second calc_hit to query
-		                         ) {
-			if ( ! any_interaction( arg_hit_a, arg_hit_b ) ) {
-				return false;
-			}
-			for (const auto &seg_ctr_a : boost::irange( 0_z, arg_hit_a.get_num_segments() ) ) {
-				for (const auto &seg_ctr_b : boost::irange( 0_z, arg_hit_b.get_num_segments() ) ) {
-					const bool seg_overlap = are_overlapping(
-						get_seq_seg_of_seg_idx( arg_hit_a, seg_ctr_a ),
-						get_seq_seg_of_seg_idx( arg_hit_b, seg_ctr_b )
-					);
-					if ( seg_overlap ) {
-						return true;
-					}
-				}
-			}
-			return false;
+		inline bool are_overlapping(const calc_hit &arg_hit_a, ///< The first  calc_hit to query
+		                            const calc_hit &arg_hit_b  ///< The second calc_hit to query
+		                            ) {
+			return are_overlapping( arg_hit_a.get_segments(), arg_hit_b.get_segments() );
 		}
 
 		/// \brief Return whether the specified calc_hit overlaps with any of the hits in the specified list of hits
@@ -446,11 +414,11 @@ namespace cath {
 		/// Note: don't call this `overlap` - that can cause problems with other `overlap` functions
 		///
 		/// \relates calc_hit
-		inline bool hit_overlaps_with_any_of_hits(const calc_hit &arg_hit_lhs, ///< The calc_hit to query
-		                                          const calc_hit_vec  &arg_hit_vec  ///< The list of hits to query
+		inline bool hit_overlaps_with_any_of_hits(const calc_hit     &arg_hit_lhs, ///< The calc_hit to query
+		                                          const calc_hit_vec &arg_hit_vec  ///< The list of hits to query
 		                                          ) {
 			for (const calc_hit &hit_rhs : arg_hit_vec) {
-				if ( hits_overlap( arg_hit_lhs, hit_rhs ) ) {
+				if ( are_overlapping( arg_hit_lhs, hit_rhs ) ) {
 					return true;
 				}
 			}
@@ -469,22 +437,10 @@ namespace cath {
 		/// ~~~~~
 		///
 		/// \relates calc_hit
-		inline bool second_right_intersperses_first(const calc_hit &arg_hit_a, ///< The first  calc_hit to query
-		                                            const calc_hit &arg_hit_b  ///< The second calc_hit to query
+		inline bool second_right_intersperses_first(const calc_hit &arg_hit_lhs, ///< The first  calc_hit to query
+		                                            const calc_hit &arg_hit_rhs  ///< The second calc_hit to query
 		                                            ) {
-			return (
-				arg_hit_a.is_discontig()
-				&&
-				arg_hit_b.is_discontig()
-				&&
-				arg_hit_a.get_start_arrow() < arg_hit_b.get_start_arrow()
-				&&
-				arg_hit_a.get_stop_arrow()  < arg_hit_b.get_stop_arrow()
-				&&
-				arg_hit_b.get_start_arrow() < arg_hit_a.get_stop_arrow()
-				&&
-				! hits_overlap( arg_hit_a, arg_hit_b )
-			);
+			return second_right_intersperses_first( arg_hit_lhs.get_segments(), arg_hit_rhs.get_segments() );
 		}
 
 		/// \brief Return whether the second calc_hit right-intersperses or inside-intersperses the first
@@ -498,20 +454,10 @@ namespace cath {
 		/// ~~~~~
 		///
 		/// \relates calc_hit
-		inline bool second_right_or_inside_intersperses_first(const calc_hit &arg_hit_a, ///< The first  calc_hit to query
-		                                                      const calc_hit &arg_hit_b  ///< The second calc_hit to query
+		inline bool second_right_or_inside_intersperses_first(const calc_hit &arg_hit_lhs, ///< The first  calc_hit to query
+		                                                      const calc_hit &arg_hit_rhs  ///< The second calc_hit to query
 		                                                      ) {
-			return (
-				arg_hit_a.is_discontig()
-				&&
-				arg_hit_b.is_discontig()
-				&&
-				arg_hit_a.get_start_arrow() < arg_hit_b.get_start_arrow()
-				&&
-				arg_hit_b.get_start_arrow() < arg_hit_a.get_stop_arrow()
-				&&
-				! hits_overlap( arg_hit_a, arg_hit_b )
-			);
+			return second_right_or_inside_intersperses_first( arg_hit_lhs.get_segments(), arg_hit_rhs.get_segments() );
 		}
 
 	} // namespace rslv

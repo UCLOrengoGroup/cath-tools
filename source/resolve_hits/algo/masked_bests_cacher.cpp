@@ -81,7 +81,7 @@ res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_intersp
 
 #ifndef NDEBUG
 	// If in debug mode, check all hits in the mask are discontiguous, or throw otherwise
-	if ( ! all_of( arg_masks, [] (const calc_hit &x) { return x.is_discontig(); } ) ) {
+	if ( ! all_of( arg_masks, [] (const calc_hit &x) { return is_discontig( x ); } ) ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Mask should only contain discontiguous domains"));
 	}
 #endif
@@ -128,7 +128,7 @@ res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_intersp
 	// as a relevant start in the mask c+a
 	const auto hit_suitable_intersperses_arg_masks = [&] (const calc_hit &x) {
 		return (
-			x.is_discontig()
+			is_discontig( x )
 			&&
 			all_of( arg_masks, [&] (const calc_hit &y) { return second_right_or_inside_intersperses_first( y, x ); } )
 			&&
@@ -141,7 +141,7 @@ res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_intersp
 		index_indices_of_disconts_in_range
 			| transformed( [&] (const size_t    &x) { return arg_dhibs.get_discont_hit_of_index_index( x ); } )
 			| filtered   ( hit_suitable_intersperses_arg_masks                      )
-			| transformed( [ ] (const calc_hit  &x) { return x.get_start_arrow(); } )
+			| transformed( [ ] (const calc_hit  &x) { return get_start_arrow( x ); } )
 			| filtered   ( [&] (const seq_arrow &x) { return x>= arg_start_arrow; } )
 	) );
 }

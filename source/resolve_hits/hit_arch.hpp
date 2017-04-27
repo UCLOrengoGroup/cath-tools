@@ -119,7 +119,7 @@ namespace cath {
 		inline void hit_arch::sanity_check() const {
 			const auto overlap_itr = boost::range::adjacent_find(
 				the_hits,
-				&hits_overlap
+				&are_overlapping
 			);
 			if ( overlap_itr != common::cend( the_hits ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot create hit_arch with overlapping domains"));

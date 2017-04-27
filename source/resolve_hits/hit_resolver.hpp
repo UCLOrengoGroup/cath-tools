@@ -144,18 +144,18 @@ namespace cath {
 					//  the middle of a free stretch)
 					//
 					// If that's an improvement on best_so_far/arg_score_to_beat then update best_so_far
-					if ( ! the_hit.is_discontig() ) {
+					if ( ! is_discontig( the_hit ) ) {
 						update_best_if_hit_improves(
 							best_so_far,
 							the_hit.get_score(),
 							hit_index,
-							arg_bests.get_best_scored_arch_up_to_arrow( the_hit.get_start_arrow() ),
+							arg_bests.get_best_scored_arch_up_to_arrow( get_start_arrow( the_hit ) ),
 							arg_score_to_beat
 						);
 					}
 					// Else if the hit is discontiguous...
 					else {
-						const auto &hit_start = the_hit.get_start_arrow();
+						const auto &hit_start = get_start_arrow( the_hit );
 
 						const scored_arch_proxy &best_hit_complement =
 							// If the discontiguous hit is within this region

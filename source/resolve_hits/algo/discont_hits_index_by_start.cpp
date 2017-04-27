@@ -55,10 +55,10 @@ res_arr_idx_pair_vec discont_hits_index_by_start::calc_disconts(const calc_hit_l
 		copy_build<res_arr_idx_pair_vec>(
 			irange( 0_z, arg_calc_hit_list.size() )
 				| filtered   ( [&] (const size_t &x) {
-					return arg_calc_hit_list[ x ].is_discontig();
+					return is_discontig( arg_calc_hit_list[ x ] );
 				} )
 				| transformed( [&] (const size_t &x) {
-					return make_pair( arg_calc_hit_list[ x ].get_start_arrow(), numeric_cast<hitidx_t>( x ) );
+					return make_pair( get_start_arrow( arg_calc_hit_list[ x ] ), numeric_cast<hitidx_t>( x ) );
 				} )
 		)
 	);
