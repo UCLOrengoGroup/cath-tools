@@ -425,6 +425,35 @@ namespace cath {
 			return false;
 		}
 
+		/// \brief Whether the segments in the first specified calc_hit never extend outside
+		///        those in the second specified calc_hit
+		///
+		/// \relates calc_hit
+		inline bool first_is_not_outside_second(const calc_hit &arg_hit_lhs, ///< The first  calc_hit to query
+		                                        const calc_hit &arg_hit_rhs  ///< The second calc_hit to query
+		                                        ) {
+			return first_is_not_outside_second( arg_hit_lhs.get_segments(), arg_hit_rhs.get_segments() );
+		}
+
+		/// \brief Whether either of the specified calc_hit covers the other
+		///
+		/// \relates calc_hit
+		inline bool one_covers_other(const calc_hit &arg_hit_lhs, ///< The first  calc_hit to query
+		                             const calc_hit &arg_hit_rhs  ///< The second calc_hit to query
+		                             ) {
+			return one_covers_other( arg_hit_lhs.get_segments(), arg_hit_rhs.get_segments() );
+		}
+
+		/// \brief Whether the segments in the first specified calc_hit are shorter strictly
+		///        within those  in the second specified calc_hit
+		///
+		/// \relates calc_hit
+		inline bool first_is_shorter_and_within_second(const calc_hit &arg_hit_lhs, ///< The first  calc_hit to query
+		                                               const calc_hit &arg_hit_rhs  ///< The second calc_hit to query
+		                                               ) {
+			return first_is_shorter_and_within_second( arg_hit_lhs.get_segments(), arg_hit_rhs.get_segments() );
+		}
+
 		/// \brief Return whether the second calc_hit right-intersperses the first
 		///
 		/// This means that both are discontiguous hits that don't actually

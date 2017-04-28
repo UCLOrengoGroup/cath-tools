@@ -20,11 +20,140 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/algorithm/is_uniq_for_unordered.hpp"
 #include "seq/seq_seg_run.hpp"
 
-using namespace cath::seq;
+namespace cath { namespace test { } }
 
-BOOST_AUTO_TEST_SUITE(seq_seg_run_test_suite)
+using namespace cath::common;
+using namespace cath::seq;
+using namespace cath::test;
+
+using std::pair;
+
+namespace cath {
+	namespace seq {
+		using seq_seg_seq_seg_pair = pair< seq_seg, seq_seg >;
+	}
+}
+
+namespace cath {
+	namespace test {
+
+		/// \brief The seq_seg_run_test_suite_fixture to assist in testing seq_seg_run
+		struct seq_seg_run_test_suite_fixture {
+		protected:
+			~seq_seg_run_test_suite_fixture() noexcept = default;
+
+			static constexpr seq_seg seg_zero_one   { 0, 1 };
+			static constexpr seq_seg seg_zero_two   { 0, 2 };
+			static constexpr seq_seg seg_zero_three { 0, 3 };
+			static constexpr seq_seg seg_one_two    { 1, 2 };
+			static constexpr seq_seg seg_two_three  { 2, 3 };
+			static constexpr seq_seg seg_three_four { 3, 4 };
+
+			/// \brief Example of two single segments: sngls_separated_1_before
+			// |--   |
+			// |   --|
+			static constexpr seq_seg_seq_seg_pair sngls_separated_1_before     { seg_zero_one,   seg_three_four };
+
+			/// \brief Example of two single segments: sngls_separated_2_before
+			// |   --|
+			// |--   |
+			static constexpr seq_seg_seq_seg_pair sngls_separated_2_before     { seg_three_four, seg_zero_one   };
+
+			/// \brief Example of two single segments: sngls_touching_1_before
+			// |--   |
+			// |  -- |
+			static constexpr seq_seg_seq_seg_pair sngls_touching_1_before      { seg_zero_one,   seg_two_three  };
+
+			/// \brief Example of two single segments: sngls_touching_2_before
+			// |  -- |
+			// |--   |
+			static constexpr seq_seg_seq_seg_pair sngls_touching_2_before      { seg_two_three,  seg_zero_one   };
+
+			/// \brief Example of two single segments: sngls_ovrlp_1_before
+			// |--   |
+			// | --  |
+			static constexpr seq_seg_seq_seg_pair sngls_ovrlp_1_before         { seg_zero_one,   seg_one_two    };
+
+			/// \brief Example of two single segments: sngls_ovrlp_2_before
+			// | --  |
+			// |--   |
+			static constexpr seq_seg_seq_seg_pair sngls_ovrlp_2_before         { seg_one_two,    seg_zero_one   };
+
+			/// \brief Example of two single segments: sngls_ovrhng_1_starts_before
+			// |---  |
+			// | --  |
+			static constexpr seq_seg_seq_seg_pair sngls_ovrhng_1_starts_before { seg_zero_two,   seg_one_two    };
+
+			/// \brief Example of two single segments: sngls_ovrhng_2_starts_before
+			// | --  |
+			// |---  |
+			static constexpr seq_seg_seq_seg_pair sngls_ovrhng_2_starts_before { seg_one_two,    seg_zero_two   };
+
+			/// \brief Example of two single segments: sngls_ovrhng_2_stops_after
+			// |--   |
+			// |---  |
+			static constexpr seq_seg_seq_seg_pair sngls_ovrhng_2_stops_after   { seg_zero_one,   seg_zero_two   };
+
+			/// \brief Example of two single segments: sngls_ovrhng_1_stops_after
+			// |---  |
+			// |--   |
+			static constexpr seq_seg_seq_seg_pair sngls_ovrhng_1_stops_after   { seg_zero_two,   seg_zero_one   };
+
+			/// \brief Example of two single segments: sngls_nested_1_within
+			// |---- |
+			// | --  |
+			static constexpr seq_seg_seq_seg_pair sngls_nested_1_within        { seg_zero_three, seg_one_two    };
+
+			/// \brief Example of two single segments: sngls_nested_2_within
+			// | --  |
+			// |---- |
+			static constexpr seq_seg_seq_seg_pair sngls_nested_2_within        { seg_one_two,    seg_zero_three };
+
+			/// \brief Example of two single segments: sngls_same
+			// |--   |
+			// |--   |
+			static constexpr seq_seg_seq_seg_pair sngls_same                   { seg_zero_one,   seg_zero_one   };
+
+			/// \brief Make a seq_seg_run of the first seq_seg in the specified pair
+			seq_seg_run sngl_run_1(const seq_seg_seq_seg_pair &arg_seq_segs ///< The pair of single seq_segs to query
+			                       ) {
+				return { { arg_seq_segs.first } };
+			}
+
+			/// \brief Make a seq_seg_run of the second seq_seg in the specified pair
+			seq_seg_run sngl_run_2(const seq_seg_seq_seg_pair &arg_seq_segs ///< The pair of single seq_segs to query
+			                      ) {
+				return { { arg_seq_segs.second } };
+			}
+		};
+
+	} // namespace test
+} // namespace cath
+
+constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_zero_one;
+constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_zero_two;
+constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_zero_three;
+constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_one_two;
+constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_two_three;
+constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_three_four;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_separated_1_before;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_separated_2_before;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_touching_1_before;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_touching_2_before;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrlp_1_before;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrlp_2_before;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrhng_1_starts_before;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrhng_2_starts_before;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrhng_2_stops_after;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrhng_1_stops_after;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_nested_1_within;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_nested_2_within;
+constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_same;
+
+BOOST_FIXTURE_TEST_SUITE(seq_seg_run_test_suite, seq_seg_run_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	const seq_seg_run a{ seq_seg_vec{ {  100,  199 }, {  300,  399 } } };
@@ -140,5 +269,210 @@ BOOST_AUTO_TEST_CASE(problem_case) {
 	const seq_seg_run b{ seq_seg_vec{ {  3, 5 }           } };
 	BOOST_CHECK( are_overlapping( a, b ) );
 }
+
+BOOST_AUTO_TEST_SUITE(covering_functions)
+
+
+BOOST_AUTO_TEST_SUITE(singles)
+
+// |--   |
+// |   --|
+BOOST_AUTO_TEST_CASE(work_on_singles_separated_1_before) {
+	BOOST_CHECK( ! first_is_not_outside_second       ( sngl_run_1( sngls_separated_1_before     ), sngl_run_2( sngls_separated_1_before     ) ) );
+	BOOST_CHECK( ! one_covers_other                  ( sngl_run_1( sngls_separated_1_before     ), sngl_run_2( sngls_separated_1_before     ) ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( sngl_run_1( sngls_separated_1_before     ), sngl_run_2( sngls_separated_1_before     ) ) );
+}
+
+// |   --|
+// |--   |
+BOOST_AUTO_TEST_CASE(work_on_singles_separated_2_before) {
+	BOOST_CHECK( ! first_is_not_outside_second       ( sngl_run_1( sngls_separated_2_before     ), sngl_run_2( sngls_separated_2_before     ) ) );
+	BOOST_CHECK( ! one_covers_other                  ( sngl_run_1( sngls_separated_2_before     ), sngl_run_2( sngls_separated_2_before     ) ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( sngl_run_1( sngls_separated_2_before     ), sngl_run_2( sngls_separated_2_before     ) ) );
+}
+
+// |--   |
+// |  -- |
+BOOST_AUTO_TEST_CASE(work_on_singles_touching_1_before) {
+	BOOST_CHECK( ! first_is_not_outside_second       ( sngl_run_1( sngls_touching_1_before      ), sngl_run_2( sngls_touching_1_before      ) ) );
+	BOOST_CHECK( ! one_covers_other                  ( sngl_run_1( sngls_touching_1_before      ), sngl_run_2( sngls_touching_1_before      ) ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( sngl_run_1( sngls_touching_1_before      ), sngl_run_2( sngls_touching_1_before      ) ) );
+}
+
+// |  -- |
+// |--   |
+BOOST_AUTO_TEST_CASE(work_on_singles_touching_2_before) {
+	BOOST_CHECK( ! first_is_not_outside_second       ( sngl_run_1( sngls_touching_2_before      ), sngl_run_2( sngls_touching_2_before      ) ) );
+	BOOST_CHECK( ! one_covers_other                  ( sngl_run_1( sngls_touching_2_before      ), sngl_run_2( sngls_touching_2_before      ) ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( sngl_run_1( sngls_touching_2_before      ), sngl_run_2( sngls_touching_2_before      ) ) );
+}
+
+// |--   |
+// | --  |
+BOOST_AUTO_TEST_CASE(work_on_singles_overlapping_1_before) {
+	BOOST_CHECK( ! first_is_not_outside_second       ( sngl_run_1( sngls_ovrlp_1_before         ), sngl_run_2( sngls_ovrlp_1_before         ) ) );
+	BOOST_CHECK( ! one_covers_other                  ( sngl_run_1( sngls_ovrlp_1_before         ), sngl_run_2( sngls_ovrlp_1_before         ) ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( sngl_run_1( sngls_ovrlp_1_before         ), sngl_run_2( sngls_ovrlp_1_before         ) ) );
+}
+
+// | --  |
+// |--   |
+BOOST_AUTO_TEST_CASE(work_on_singles_overlapping_2_before) {
+	BOOST_CHECK( ! first_is_not_outside_second       ( sngl_run_1( sngls_ovrlp_2_before         ), sngl_run_2( sngls_ovrlp_2_before         ) ) );
+	BOOST_CHECK( ! one_covers_other                  ( sngl_run_1( sngls_ovrlp_2_before         ), sngl_run_2( sngls_ovrlp_2_before         ) ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( sngl_run_1( sngls_ovrlp_2_before         ), sngl_run_2( sngls_ovrlp_2_before         ) ) );
+}
+
+// |---  |
+// | --  |
+BOOST_AUTO_TEST_CASE(work_on_singles_overhang_1_starts_before) {
+	BOOST_CHECK( ! first_is_not_outside_second       ( sngl_run_1( sngls_ovrhng_1_starts_before ), sngl_run_2( sngls_ovrhng_1_starts_before ) ) );
+	BOOST_CHECK(   one_covers_other                  ( sngl_run_1( sngls_ovrhng_1_starts_before ), sngl_run_2( sngls_ovrhng_1_starts_before ) ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( sngl_run_1( sngls_ovrhng_1_starts_before ), sngl_run_2( sngls_ovrhng_1_starts_before ) ) );
+}
+
+// | --  |
+// |---  |
+BOOST_AUTO_TEST_CASE(work_on_singles_overhang_2_starts_before) {
+	BOOST_CHECK(   first_is_not_outside_second       ( sngl_run_1( sngls_ovrhng_2_starts_before ), sngl_run_2( sngls_ovrhng_2_starts_before ) ) );
+	BOOST_CHECK(   one_covers_other                  ( sngl_run_1( sngls_ovrhng_2_starts_before ), sngl_run_2( sngls_ovrhng_2_starts_before ) ) );
+	BOOST_CHECK(   first_is_shorter_and_within_second( sngl_run_1( sngls_ovrhng_2_starts_before ), sngl_run_2( sngls_ovrhng_2_starts_before ) ) );
+}
+
+// |--   |
+// |---  |
+BOOST_AUTO_TEST_CASE(work_on_singles_overhang_2_stops_after) {
+	BOOST_CHECK(   first_is_not_outside_second       ( sngl_run_1( sngls_ovrhng_2_stops_after   ), sngl_run_2( sngls_ovrhng_2_stops_after   ) ) );
+	BOOST_CHECK(   one_covers_other                  ( sngl_run_1( sngls_ovrhng_2_stops_after   ), sngl_run_2( sngls_ovrhng_2_stops_after   ) ) );
+	BOOST_CHECK(   first_is_shorter_and_within_second( sngl_run_1( sngls_ovrhng_2_stops_after   ), sngl_run_2( sngls_ovrhng_2_stops_after   ) ) );
+}
+
+// |---  |
+// |--   |
+BOOST_AUTO_TEST_CASE(work_on_singles_overhang_1_stops_after) {
+	BOOST_CHECK( ! first_is_not_outside_second       ( sngl_run_1( sngls_ovrhng_1_stops_after   ), sngl_run_2( sngls_ovrhng_1_stops_after   ) ) );
+	BOOST_CHECK(   one_covers_other                  ( sngl_run_1( sngls_ovrhng_1_stops_after   ), sngl_run_2( sngls_ovrhng_1_stops_after   ) ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( sngl_run_1( sngls_ovrhng_1_stops_after   ), sngl_run_2( sngls_ovrhng_1_stops_after   ) ) );
+}
+
+// |---- |
+// | --  |
+BOOST_AUTO_TEST_CASE(work_on_singles_nested_1_within) {
+	BOOST_CHECK( ! first_is_not_outside_second       ( sngl_run_1( sngls_nested_1_within        ), sngl_run_2( sngls_nested_1_within        ) ) );
+	BOOST_CHECK(   one_covers_other                  ( sngl_run_1( sngls_nested_1_within        ), sngl_run_2( sngls_nested_1_within        ) ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( sngl_run_1( sngls_nested_1_within        ), sngl_run_2( sngls_nested_1_within        ) ) );
+}
+
+// | --  |
+// |---- |
+BOOST_AUTO_TEST_CASE(work_on_singles_nested_2_within) {
+	BOOST_CHECK(   first_is_not_outside_second       ( sngl_run_1( sngls_nested_2_within        ), sngl_run_2( sngls_nested_2_within        ) ) );
+	BOOST_CHECK(   one_covers_other                  ( sngl_run_1( sngls_nested_2_within        ), sngl_run_2( sngls_nested_2_within        ) ) );
+	BOOST_CHECK(   first_is_shorter_and_within_second( sngl_run_1( sngls_nested_2_within        ), sngl_run_2( sngls_nested_2_within        ) ) );
+}
+
+// |--   |
+// |--   |
+BOOST_AUTO_TEST_CASE(work_on_singles_identical) {
+	BOOST_CHECK(   first_is_not_outside_second       ( sngl_run_1( sngls_same              ), sngl_run_2( sngls_same              ) ) );
+	BOOST_CHECK(   one_covers_other                  ( sngl_run_1( sngls_same              ), sngl_run_2( sngls_same              ) ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( sngl_run_1( sngls_same              ), sngl_run_2( sngls_same              ) ) );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+
+BOOST_AUTO_TEST_SUITE(multis)
+
+
+BOOST_AUTO_TEST_CASE(same) {
+	const seq_seg_run a{ seq_seg_vec{ {  100,  199 }, {  300,  399 } } };
+	BOOST_CHECK(   first_is_not_outside_second       ( a, a ) );
+	BOOST_CHECK(   one_covers_other                  ( a, a ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( a, a ) );
+}
+
+BOOST_AUTO_TEST_CASE(extra_seg_at_start) {
+	const seq_seg_run a{ seq_seg_vec{ { 30, 59 }, {  100,  199 }, {  300,  399 }               } };
+	const seq_seg_run b{ seq_seg_vec{             {  100,  199 }, {  300,  399 }               } };
+	BOOST_CHECK( ! first_is_not_outside_second       ( a, b ) );
+	BOOST_CHECK(   one_covers_other                  ( a, b ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( a, b ) );
+
+	BOOST_CHECK(   first_is_not_outside_second       ( b, a ) );
+	BOOST_CHECK(   one_covers_other                  ( b, a ) );
+	BOOST_CHECK(   first_is_shorter_and_within_second( b, a ) );
+}
+
+BOOST_AUTO_TEST_CASE(extra_seg_at_end) {
+	const seq_seg_run a{ seq_seg_vec{             {  100,  199 }, {  300,  399 }, { 500, 599 } } };
+	const seq_seg_run b{ seq_seg_vec{             {  100,  199 }, {  300,  399 }               } };
+	BOOST_CHECK( ! first_is_not_outside_second       ( a, b ) );
+	BOOST_CHECK(   one_covers_other                  ( a, b ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( a, b ) );
+
+	BOOST_CHECK(   first_is_not_outside_second       ( b, a ) );
+	BOOST_CHECK(   one_covers_other                  ( b, a ) );
+	BOOST_CHECK(   first_is_shorter_and_within_second( b, a ) );
+}
+
+
+
+BOOST_AUTO_TEST_CASE(gap_start_offset) {
+	const seq_seg_run a{ seq_seg_vec{ {  100,  198 }, {  300,  399 } } };
+	const seq_seg_run b{ seq_seg_vec{ {  100,  199 }, {  300,  399 } } };
+
+	BOOST_CHECK(   first_is_not_outside_second       ( a, b ) );
+	BOOST_CHECK(   one_covers_other                  ( a, b ) );
+	BOOST_CHECK(   first_is_shorter_and_within_second( a, b ) );
+
+	BOOST_CHECK( ! first_is_not_outside_second       ( b, a ) );
+	BOOST_CHECK(   one_covers_other                  ( b, a ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( b, a ) );
+}
+
+BOOST_AUTO_TEST_CASE(gap_stop_offset) {
+	const seq_seg_run a{ seq_seg_vec{ {  100,  199 }, {  301,  399 } } };
+	const seq_seg_run b{ seq_seg_vec{ {  100,  199 }, {  300,  399 } } };
+
+	BOOST_CHECK(   first_is_not_outside_second       ( a, b ) );
+	BOOST_CHECK(   one_covers_other                  ( a, b ) );
+	BOOST_CHECK(   first_is_shorter_and_within_second( a, b ) );
+
+	BOOST_CHECK( ! first_is_not_outside_second       ( b, a ) );
+	BOOST_CHECK(   one_covers_other                  ( b, a ) );
+	BOOST_CHECK( ! first_is_shorter_and_within_second( b, a ) );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+
+BOOST_AUTO_TEST_SUITE(multis)
+
+BOOST_AUTO_TEST_CASE(basic) {
+	const seq_seg_run a{ seq_seg_vec{ {  100,                  399 } } };
+	const seq_seg_run b{ seq_seg_vec{ {  101,                  399 } } };
+	const seq_seg_run c{ seq_seg_vec{ {  100,                  398 } } };
+	const seq_seg_run d{ seq_seg_vec{ {  100,  199 }, {  300,  399 } } };
+	const seq_seg_run e{ seq_seg_vec{ {  100,  198 }, {  300,  399 } } };
+	const seq_seg_run f{ seq_seg_vec{ {  100,  199 }, {  301,  399 } } };
+
+	const auto hashes = { calc_hash( a ),
+	                      calc_hash( b ),
+	                      calc_hash( c ),
+	                      calc_hash( d ),
+	                      calc_hash( e ),
+	                      calc_hash( f ) };
+
+	BOOST_CHECK( is_uniq_for_unordered( hashes ) );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 
 BOOST_AUTO_TEST_SUITE_END()

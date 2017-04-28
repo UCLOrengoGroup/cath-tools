@@ -31,10 +31,13 @@
 #include <boost/range/algorithm/equal.hpp>
 #include <boost/range/algorithm/lower_bound.hpp>
 #include <boost/range/algorithm/max_element.hpp>
+#include <boost/range/algorithm/reverse.hpp>
+#include <boost/range/algorithm/sort.hpp>
 #include <boost/range/algorithm/upper_bound.hpp>
 #include <boost/range/sub_range.hpp>
 #include <boost/spirit/include/qi.hpp>
 
+#include "common/algorithm/remove_itrs_from_range.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/make_string_ref.hpp"
 #include "common/boost_addenda/range/adaptor/adjacented.hpp"
@@ -44,6 +47,8 @@
 #include "common/debug_numeric_cast.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/type_aliases.hpp"
+#include "resolve_hits/detail/calc_hit_prune_builder.hpp"
+#include "resolve_hits/first_hit_is_better.hpp"
 #include "resolve_hits/full_hit_fns.hpp"
 #include "resolve_hits/full_hit_list.hpp"
 #include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
@@ -52,6 +57,7 @@
 #include <fstream>
 #include <string>
 
+using namespace cath;
 using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::seq;
@@ -71,6 +77,8 @@ using boost::numeric_cast;
 using boost::range::equal;
 using boost::range::lower_bound;
 using boost::range::max_element;
+using boost::range::reverse;
+using boost::range::sort;
 using boost::range::upper_bound;
 using boost::spirit::qi::double_;
 using boost::spirit::qi::omit;
@@ -139,6 +147,84 @@ calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const full_hit_list   
 			};
 		}
 	);
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates calc_hit_list
+calc_hit_vec cath::rslv::make_sorted_pruned_calc_hit_vec(const full_hit_list    &arg_full_hit_list, ///< The full_hit_list to convert
+                                                         const crh_score_spec   &arg_score_spec,    ///< The crh_score_spec to specify how the crh-scores are to be calculated from the full-hits
+                                                         const crh_segment_spec &arg_segment_spec,  ///< The crh_segment_spec to specify how the segments are to be handled before being put into the hits for calculation
+                                                         const crh_filter_spec  &arg_filter_spec    ///< The crh_filter_spec specifying how hits should be filtered
+                                                         ) {
+	const trim_spec &overlap_trim_spec = arg_segment_spec.get_overlap_trim_spec();
+	const residx_t  &min_seg_length    = arg_segment_spec.get_min_seg_length();
+
+	bool failed_seg_length = false;
+	detail::calc_hit_prune_builder the_builder;
+	the_builder.reserve( arg_full_hit_list.size() );
+
+	// TODOCUMENT
+	seq_seg_vec trimmed_segs;
+
+	for (const size_t &full_hit_ctr : irange( 0_z, arg_full_hit_list.size() ) ) {
+		const full_hit &the_full_hit = arg_full_hit_list[ full_hit_ctr ];
+
+		if ( ! score_passes_filter( arg_filter_spec, the_full_hit.get_score(), the_full_hit.get_score_type() ) ) {
+			continue;
+		}
+
+		const auto full_segs          = the_full_hit.get_segments();
+		const auto seg_long_enough_fn = [&] (const seq_seg &x) { return ( get_length( x ) >= min_seg_length ); };
+		const auto filtered_segs      = full_segs | filtered( seg_long_enough_fn );
+
+		trimmed_segs.clear();
+		for (const auto &the_seg : filtered_segs) {
+			trimmed_segs.push_back( trim_seq_seg_copy( the_seg, overlap_trim_spec ) );
+		}
+
+		if ( empty( trimmed_segs ) ) {
+			if ( ! failed_seg_length ) {
+				BOOST_LOG_TRIVIAL( warning )
+					<< "At least one hit (with match ID "
+					<< the_full_hit.get_label()
+					<< ") in list has no segments that meet the min-seg-length "
+					<< ::std::to_string( min_seg_length );
+				failed_seg_length = true;
+			}
+			continue;
+		}
+
+		seq_seg_vec fragments;
+		if ( trimmed_segs.size() > 1 ) {
+			fragments.reserve( trimmed_segs.size() - 1 );
+		}
+		for (const size_t seg_frag_ctr : boost::irange( 1_z, trimmed_segs.size() ) ) {
+			fragments.emplace_back(
+				trimmed_segs[ seg_frag_ctr - 1 ].get_stop_arrow(),
+				trimmed_segs[ seg_frag_ctr     ].get_start_arrow()
+			);
+		}
+
+		the_builder.add_hit(
+			calc_hit{
+				front( trimmed_segs ).get_start_arrow(),
+				back ( trimmed_segs ).get_stop_arrow(),
+				std::move( fragments ),
+				get_crh_score( the_full_hit, arg_score_spec ),
+				debug_numeric_cast<hitidx_t>( full_hit_ctr )
+			},
+			arg_full_hit_list
+		);
+	}
+
+	calc_hit_vec result_hits{ std::move( the_builder.get_built_hits() ) };
+	boost::range::sort(
+		result_hits,
+		calc_hit_list::get_less_than_fn( arg_full_hit_list )
+	);
+
+	return result_hits;
 }
 
 /// \brief Read a calc_hit_list from the specified file
@@ -353,4 +439,82 @@ integer_range<hitidx_t> cath::rslv::indices_of_hits_that_stop_in_range(const cal
 		numeric_cast<hitidx_t>( distance( cbegin( arg_calc_hit_list ), find_first_hit_stopping_after( arg_calc_hit_list, arg_start_arrow ) ) ),
 		numeric_cast<hitidx_t>( distance( cbegin( arg_calc_hit_list ), find_first_hit_stopping_after( arg_calc_hit_list, arg_stop_arrow  ) ) )
 	};
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates calc_hit_list
+calc_hit_vec_citr_vec cath::rslv::identify_redundant_hits(const calc_hit_vec  &arg_calc_hits, ///< The calc_hit_list to query
+                                                          const full_hit_list &arg_full_hits  ///< TODOCUMENT
+                                                          ) {
+	const auto rend_itr = common::rend( arg_calc_hits );
+	using chl_citr      = calc_hit_list::const_iterator;
+	using chl_citr_vec  = vector<chl_citr>;
+
+	chl_citr_vec active_hit_itrs;
+	chl_citr_vec to_be_removed_itrs;
+	to_be_removed_itrs.reserve( arg_calc_hits.size() );
+
+	for (auto the_ritr = common::rbegin( arg_calc_hits ); the_ritr != rend_itr; ++the_ritr) {
+		const auto &this_hit = *the_ritr;
+
+		const auto active_hitrs_end = common::cend( active_hit_itrs );
+		auto active_hit_write_itr   = std::begin  ( active_hit_itrs );
+
+		for (auto active_hitrs_read_itr = common::cbegin( active_hit_itrs ); active_hitrs_read_itr != active_hitrs_end; ++active_hitrs_read_itr) {
+			const auto &active_hit_itr = *active_hitrs_read_itr;
+			const auto &active_hit     = *active_hit_itr;
+
+			if ( get_start_arrow( active_hit ) < get_stop_arrow( this_hit ) ) {
+				const auto result = first_hit_is_better( this_hit, active_hit, arg_full_hits );
+				if ( is_true ( result ) ) {
+					to_be_removed_itrs.push_back( active_hit_itr );
+				}
+				else {
+					if ( active_hit_write_itr != active_hitrs_read_itr ) {
+						*active_hit_write_itr = *active_hitrs_read_itr;
+					}
+					++active_hit_write_itr;
+
+					if ( is_false ( result ) ) {
+						to_be_removed_itrs.push_back( next( the_ritr ).base() );
+						break;
+					}
+				}
+			}
+		}
+
+		// If any actives have been removed then erase the spares at the end
+		if ( active_hit_write_itr != active_hitrs_end ) {
+			active_hit_itrs.erase( active_hit_write_itr, active_hitrs_end );
+		}
+
+		// If this element hasn't been marked for removal, then put it into the actives for future comparisons
+		if ( to_be_removed_itrs.empty() || to_be_removed_itrs.back() != next( the_ritr ).base() ) {
+			active_hit_itrs.push_back( next( the_ritr ).base() );
+		}
+	}
+
+	reverse( to_be_removed_itrs );
+	sort( to_be_removed_itrs );
+
+	return to_be_removed_itrs;
+}
+
+/// \brief Remove all redundant hits of the specified presorted calc_hit_vec
+///
+/// \relates calc_hit_list
+void cath::rslv::remove_redundant_hits(calc_hit_vec        &arg_calc_hits, ///< The calc_hit_list to query, which must be presorted under calc_hit_list::get_less_than_fn
+                                       const full_hit_list &arg_full_hits  ///< The full_hits to use for calc_hit comparisons
+                                       ) {
+	arg_calc_hits.erase(
+		remove_itrs_from_range(
+			arg_calc_hits,
+			identify_redundant_hits(
+				arg_calc_hits,
+				arg_full_hits
+			)
+		),
+		common::cend( arg_calc_hits )
+	);
 }

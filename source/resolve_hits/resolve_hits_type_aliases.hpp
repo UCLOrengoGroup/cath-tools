@@ -49,6 +49,15 @@ namespace cath {
 		/// \brief Type alias for a vector of calc_hit objects
 		using calc_hit_vec              = std::vector<calc_hit>;
 
+		/// \brief Type alias for calc_hit_vec's const_iterator type
+		using calc_hit_vec_citr         = calc_hit_vec::const_iterator;
+
+		/// \brief Type alias for a vector of calc_hit_vec_citr values
+		using calc_hit_vec_citr_vec     = std::vector<calc_hit_vec_citr>;
+
+		/// \brief Type alias for calc_hit_vec's iterator type
+		using calc_hit_vec_itr          = calc_hit_vec::iterator;
+
 		/// \brief Type alias for an optional crh_segment_spec
 		using crh_segment_spec_opt      = boost::optional<crh_segment_spec>;
 

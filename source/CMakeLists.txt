@@ -1694,6 +1694,7 @@ set(
 		resolve_hits/calc_hit_list_test.cpp
 		resolve_hits/cath_hit_resolver_test.cpp
 		${TESTSOURCES_RESOLVE_HITS_FILE}
+		resolve_hits/first_hit_is_better_test.cpp
 		resolve_hits/full_hit_list_test.cpp
 		resolve_hits/full_hit_test.cpp
 		resolve_hits/hit_extras_test.cpp

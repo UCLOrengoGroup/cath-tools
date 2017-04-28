@@ -100,6 +100,22 @@ namespace cath {
 			}
 		};
 
+		/// \brief Calculate a hash number for the segments in the seq_seg_run
+		inline size_t calc_hash(const seq_seg_run &arg_seq_seg_run ///< The segments to hash
+		                        ) {
+			const std::hash<resarw_t> hasher{};
+			size_t result = hasher( arg_seq_seg_run.get_start_arrow().get_index() );
+			const auto combine_fn = [&] (const resarw_t &x) {
+				result ^= hasher( x ) + 0x9e3779b9 + ( result << 6 ) + ( result >> 2 );
+			};
+			for (const size_t &seg_ctr : boost::irange( 0_z, arg_seq_seg_run.get_num_segments() ) ) {
+				combine_fn( arg_seq_seg_run.get_start_arrow_of_segment( seg_ctr ).get_index() );
+				combine_fn( arg_seq_seg_run.get_stop_arrow_of_segment ( seg_ctr ).get_index() );
+			}
+			combine_fn( arg_seq_seg_run.get_stop_arrow().get_index() );
+			return result;
+		}
+
 		std::string get_segments_string(const seq_seg_run &);
 		std::string to_string(const seq_seg_run &);
 		std::ostream & operator<<(std::ostream &,
@@ -534,6 +550,74 @@ namespace cath {
 				/
 				static_cast<double>( longer_length( arg_seq_seg_run_a, arg_seq_seg_run_b ) );
 		}
+
+		/// \brief Whether the segments in the first specified seq_seg_run never extend outside
+		///        those in the second specified seq_seg_run
+		///
+		/// In other words: the first is within or equal to the second
+		///
+		/// \relates calc_hit
+		inline bool first_is_not_outside_second(const seq_seg_run &arg_seq_seg_run_a, ///< The first  calc_hit to query
+		                                        const seq_seg_run &arg_seq_seg_run_b  ///< The second calc_hit to query
+		                                        ) {
+			if ( arg_seq_seg_run_a.get_start_arrow() < arg_seq_seg_run_b.get_start_arrow() ) {
+				return false;
+			}
+			if ( arg_seq_seg_run_a.get_stop_arrow () > arg_seq_seg_run_b.get_stop_arrow () ) {
+				return false;
+			}
+
+			const size_t num_segments_lhs = arg_seq_seg_run_a.get_num_segments();
+			const size_t num_segments_rhs = arg_seq_seg_run_b.get_num_segments();
+
+			size_t rhs_ctr = 0;
+			for (const auto &lhs_ctr : boost::irange( 0_z, num_segments_lhs ) ) {
+				while ( rhs_ctr < num_segments_rhs && arg_seq_seg_run_a.get_stop_arrow_of_segment( lhs_ctr ) > arg_seq_seg_run_b.get_stop_arrow_of_segment( rhs_ctr ) ) {
+					++rhs_ctr;
+				}
+				if ( rhs_ctr == num_segments_rhs ) {
+					return false;
+				}
+				if ( arg_seq_seg_run_a.get_start_arrow_of_segment( lhs_ctr ) < arg_seq_seg_run_b.get_start_arrow_of_segment( rhs_ctr ) ) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		/// \brief Whether either of the specified seq_seg_run covers the other
+		///
+		/// \relates calc_hit
+		inline bool one_covers_other(const seq_seg_run &arg_seq_seg_run_a, ///< The first  calc_hit to query
+		                             const seq_seg_run &arg_seq_seg_run_b  ///< The second calc_hit to query
+		                             ) {
+			const residx_t length_a = get_total_length( arg_seq_seg_run_a );
+			const residx_t length_b = get_total_length( arg_seq_seg_run_b );
+			if ( length_a < length_b ) {
+				return first_is_not_outside_second( arg_seq_seg_run_a, arg_seq_seg_run_b );
+			}
+			if ( length_a > length_b ) {
+				return first_is_not_outside_second( arg_seq_seg_run_b, arg_seq_seg_run_a );
+			}
+			return ( arg_seq_seg_run_a == arg_seq_seg_run_b );
+		}
+
+		/// \brief Whether the segments in the first specified seq_seg_run are shorter strictly
+		///        within those  in the second specified seq_seg_run
+		///
+		/// In other words: the first is within and not equal to the second
+		///
+		/// \relates calc_hit
+		inline bool first_is_shorter_and_within_second(const seq_seg_run &arg_seq_seg_run_a, ///< The first  calc_hit to query
+		                                               const seq_seg_run &arg_seq_seg_run_b  ///< The second calc_hit to query
+		                                               ) {
+			return (
+				get_total_length( arg_seq_seg_run_a ) < get_total_length( arg_seq_seg_run_b )
+				&&
+				first_is_not_outside_second( arg_seq_seg_run_a, arg_seq_seg_run_b )
+			);
+		}
+
 
 		/// \brief Return whether the second calc_hit right-intersperses the first
 		///

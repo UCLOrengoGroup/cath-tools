@@ -51,12 +51,12 @@ namespace cath {
 				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 				return calc_hit_list {
 					full_hit_list{ {
-						full_hit( { seq_seg{ 1266,                        1344 }, }, "label_a", 20.0 ),
-						full_hit( { seq_seg{ 1273, 1321 }, seq_seg{ 1399, 1438 }, }, "label_b", 21.0 ),
-						full_hit( { seq_seg{ 1101,                        1319 }, }, "label_c", 22.0 ),
-						full_hit( { seq_seg{ 1301,                        1321 }, }, "label_d", 23.0 ),
-						full_hit( { seq_seg{ 1438,                        1439 }, }, "label_e", 24.0 ),
-						full_hit( { seq_seg{ 1272, 1320 }, seq_seg{ 1398, 1437 }, }, "label_f", 25.0 ),
+						full_hit( { seq_seg{ 1266,                        1344 }, }, "label_a", 25.0 ), // This one needs a better score than "label_d", else it'd be worse
+						full_hit( { seq_seg{ 1273, 1321 }, seq_seg{ 1399, 1438 }, }, "label_b", 24.0 ), // This one needs a better score than "label_d", else it'd be worse
+						full_hit( { seq_seg{ 1101,                        1319 }, }, "label_c", 23.0 ),
+						full_hit( { seq_seg{ 1301,                        1321 }, }, "label_d", 22.0 ),
+						full_hit( { seq_seg{ 1438,                        1439 }, }, "label_e", 21.0 ),
+						full_hit( { seq_seg{ 1272, 1320 }, seq_seg{ 1398, 1437 }, }, "label_f", 20.0 ),
 					} },
 					make_neutral_score_spec(),
 					make_no_action_crh_segment_spec()
@@ -79,8 +79,12 @@ BOOST_AUTO_TEST_CASE(insertion_operator_works) {
 	BOOST_CHECK_EQUAL( lexical_cast<string>( eg_hit_list ), "calc_hit_list[6hits]" );
 }
 
-BOOST_AUTO_TEST_CASE(get_first_label_works) {
+BOOST_AUTO_TEST_CASE(get_first_label_of_full_hits_works) {
 	BOOST_CHECK_EQUAL( front( eg_hit_list.get_full_hits() ).get_label(), "label_a" );
+}
+
+BOOST_AUTO_TEST_CASE(get_first_label_of_calc_hits_works) {
+	BOOST_CHECK_EQUAL( eg_hit_list.get_full_hits()[ front( eg_hit_list ).get_label_idx() ].get_label(), "label_c" );
 }
 
 BOOST_AUTO_TEST_CASE(get_best_score_works) {

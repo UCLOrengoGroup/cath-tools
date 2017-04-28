@@ -123,6 +123,10 @@ namespace cath {
 		                                              const crh_score_spec &,
 		                                              const crh_segment_spec &,
 		                                              const crh_filter_spec & = make_accept_all_filter_spec());
+		calc_hit_vec make_sorted_pruned_calc_hit_vec(const full_hit_list &,
+		                                             const crh_score_spec &,
+		                                             const crh_segment_spec &,
+		                                             const crh_filter_spec &);
 
 		void read_hit_list_from_file(read_and_process_mgr &,
 		                             const boost::filesystem::path &,
@@ -143,6 +147,13 @@ namespace cath {
 		                                                                  const seq::seq_arrow &,
 		                                                                  const seq::seq_arrow &);
 
+		calc_hit_vec_citr_vec identify_redundant_hits(const calc_hit_vec &,
+		                                              const full_hit_list &);
+
+		void remove_redundant_hits(calc_hit_vec &,
+		                           const full_hit_list &);
+
+
 		/// \brief Private-static method for in-place sorting hits using get_less_than_fn()
 		inline void calc_hit_list::sort_hit_vec(calc_hit_vec        &arg_hit_vec,  ///< The hits to in-place sort
 		                                        const full_hit_list &arg_full_hits ///< The full_hits from which these hits were drawn
@@ -159,8 +170,8 @@ namespace cath {
 		                                    const crh_segment_spec &arg_crh_segment_spec, ///< The crh_segment_spec to specify how the segments are to be handled before being put into the hits for calculation
 		                                    const crh_filter_spec  &arg_filter_spec       ///< The crh_filter_spec specifying how hits should be filtered
 		                                    ) : full_hits { std::move( arg_full_hits ) },
-		                                        the_hits  { make_hit_list_from_full_hit_list( full_hits, arg_score_spec, arg_crh_segment_spec, arg_filter_spec ) } {
-			sort_hit_vec( the_hits, full_hits );
+		                                        the_hits  { make_sorted_pruned_calc_hit_vec( full_hits, arg_score_spec, arg_crh_segment_spec, arg_filter_spec ) } {
+			remove_redundant_hits( the_hits, full_hits );
 		}
 
 		/// \brief Return the number of hits
