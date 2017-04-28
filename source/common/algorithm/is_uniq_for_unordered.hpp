@@ -25,6 +25,8 @@
 
 #include "common/cpp14/cbegin_cend.hpp"
 
+#include <algorithm>
+
 namespace cath {
 	namespace common {
 		/// \brief TODOCUMENT
@@ -33,7 +35,7 @@ namespace cath {
 		                                  const ForwardItr &arg_end    ///< TODOCUMENT
 		                                  ) {
 			for (ForwardItr itr( arg_begin ); itr != arg_end; ++itr ) {
-				if ( count( itr, arg_end, *itr ) > 1 ) {
+				if ( std::count( itr, arg_end, *itr ) > 1 ) {
 					return false;
 				}
 			}
