@@ -44,6 +44,9 @@ namespace cath {
 		/// external memory and hence) very quickly.
 		///
 		/// Many seq_seg_runs are single-segment, which can be handled completely locally
+		///
+		/// \todo Carefully review handling of consecutive segments that touch each other,
+		///       particularly in the associated non-member, non-friend functions
 		class seq_seg_run final {
 		private:
 			/// \brief The boundary at the start of the first segment
