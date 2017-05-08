@@ -57,7 +57,7 @@ namespace cath {
 		virtual std::string do_get_label() const = 0;
 
 	public:
-		display_colourer() noexcept = default;
+		display_colourer() noexcept;
 		explicit display_colourer(const detail::score_colour_handler &);
 		virtual ~display_colourer() noexcept = default;
 
@@ -73,6 +73,14 @@ namespace cath {
 
 		std::string get_label() const;
 	};
+
+	/// \brief Default ctor
+	///
+	/// This is defined outside of the class because Clang 4.0 complains otherwise.
+	/// Not quite sure about what that means.
+	/// See Vittorio Romeo's StackOverflow question about it here:
+	/// http://stackoverflow.com/questions/43819314/default-member-initializer-needed-within-definition-of-enclosing-class-outside
+	inline display_colourer::display_colourer() noexcept = default;
 
 	/// \brief NVI pass-through to the virtual do_get_label() method
 	inline std::string display_colourer::get_label() const {
