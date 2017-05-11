@@ -1,6 +1,8 @@
 cath-superpose
 ==============
 
+[**Downloads**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest)
+
 ![Screenshot-half](img/1fi2A00_1j58A01.bad.jpg) ![Screenshot-half](img/1fi2A00_1j58A01.good.jpg)
 <br>
 <span class="figure-caption">*__Left__: A standard superposition of [1fi2A00](http://www.cathdb.info/version/latest/domain/1fi2A00)/[1j58A01](http://www.cathdb.info/version/latest/domain/1j58A01) is disrupted by divergent regions;<br>__Right__: `cath-superpose` does better by targeting the similar regions (but at the cost of increased RMSD). <sub style="color: grey;">[rendered by PyMOL]</sub>*</span>

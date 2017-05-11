@@ -1,6 +1,8 @@
 cath-ssap
 =========
 
+[**Downloads**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest)
+
 The binary for SSAP is called `cath-ssap`. For usage, run `cath-ssap --help` or see [below](#usage).
 
 Preparing to run SSAP

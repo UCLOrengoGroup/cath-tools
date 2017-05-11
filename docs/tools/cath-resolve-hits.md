@@ -1,6 +1,8 @@
 cath-resolve-hits
 =================
 
+[**Downloads**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest)
+
 A fast, effective way to collapse a list of domain matches to your query sequence(s) down to the best, non-overlapping subset (ie domain architecture).
 
 ![Screenshot](img/cath-resolve-hits.example.jpg)
