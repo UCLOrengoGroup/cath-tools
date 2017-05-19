@@ -60,7 +60,7 @@ namespace cath {
 				/// over elements of type `const hits_processor &` rather than `clone_ptr<const hits_processor>`
 				using const_iterator = common::range_const_iterator_t< boost::indirected_range<const hits_processor_clptr_vec> >;
 
-				hits_processor_list() noexcept = default;
+				hits_processor_list() = default;
 
 				explicit hits_processor_list(const crh_score_spec &,
 				                             const crh_segment_spec & = crh_segment_spec{},
