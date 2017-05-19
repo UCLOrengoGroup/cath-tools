@@ -149,7 +149,10 @@ calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const full_hit_list   
 	);
 }
 
-/// \brief TODOCUMENT
+/// \brief Make a vector of calc_hits from the specified full_hit_list that's both sorted
+///        and pruned of any hits that are redundant (because there's at least one other
+///        hit in the list that's strictly better than it)
+///
 ///
 /// \relates calc_hit_list
 calc_hit_vec cath::rslv::make_sorted_pruned_calc_hit_vec(const full_hit_list    &arg_full_hit_list, ///< The full_hit_list to convert
@@ -164,7 +167,6 @@ calc_hit_vec cath::rslv::make_sorted_pruned_calc_hit_vec(const full_hit_list    
 	detail::calc_hit_prune_builder the_builder;
 	the_builder.reserve( arg_full_hit_list.size() );
 
-	// TODOCUMENT
 	seq_seg_vec trimmed_segs;
 
 	for (const size_t &full_hit_ctr : irange( 0_z, arg_full_hit_list.size() ) ) {
@@ -441,11 +443,12 @@ integer_range<hitidx_t> cath::rslv::indices_of_hits_that_stop_in_range(const cal
 	};
 }
 
-/// \brief TODOCUMENT
+/// \brief Generate a list of iterators to the calc_hits in the specified list that are redundant
+///        (because there's at least one other hit in the list that's strictly better than it)
 ///
 /// \relates calc_hit_list
 calc_hit_vec_citr_vec cath::rslv::identify_redundant_hits(const calc_hit_vec  &arg_calc_hits, ///< The calc_hit_list to query
-                                                          const full_hit_list &arg_full_hits  ///< TODOCUMENT
+                                                          const full_hit_list &arg_full_hits  ///< The corresponding full_hit_list that is used for names that can be used to pick a "better" of two otherwise identical hits
                                                           ) {
 	const auto rend_itr = common::rend( arg_calc_hits );
 	using chl_citr      = calc_hit_list::const_iterator;
