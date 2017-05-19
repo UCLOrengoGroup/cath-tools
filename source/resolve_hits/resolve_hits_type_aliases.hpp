@@ -23,6 +23,7 @@
 
 #include <boost/optional/optional_fwd.hpp>
 
+#include "common/type_aliases.hpp"
 #include "seq/seq_type_aliases.hpp"
 
 #include <iosfwd>
@@ -34,6 +35,7 @@ namespace cath { namespace rslv { class full_hit; } }
 namespace cath { namespace rslv { class full_hit_list; } }
 namespace cath { namespace rslv { class scored_arch_proxy; } }
 namespace cath { namespace rslv { class trim_spec; } }
+namespace cath { namespace rslv { namespace detail { class hits_processor; } } }
 namespace cath { namespace rslv { struct alnd_rgn; } }
 namespace cath { namespace rslv { struct html_hit; } }
 
@@ -127,6 +129,18 @@ namespace cath {
 
 		/// \brief The initial score before any hits have been added
 		constexpr resscr_t INIT_SCORE = 0.0;
+
+		namespace detail {
+
+			/// \brief Type alias for a clone_ptr to a hits_processor
+			using hits_processor_clptr = common::clone_ptr<hits_processor>;
+
+			/// \brief Type alias for a vector of clone_ptrs to hits_processors
+			using hits_processor_clptr_vec = common::clptr_vec<hits_processor>;
+
+			/// \brief Type alias for a unique_ptr to a hits_processor
+			using hits_processor_uptr = std::unique_ptr<hits_processor>;
+		}
 
 	} // namespace rslv
 } // namespace cath

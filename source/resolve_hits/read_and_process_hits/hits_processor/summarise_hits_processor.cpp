@@ -54,23 +54,26 @@ unique_ptr<hits_processor> summarise_hits_processor::do_clone() const {
 /// \brief Process the specified data
 ///
 /// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
-void summarise_hits_processor::do_process_hits_for_query(const string          &arg_query_id,    ///< The query_protein_id string
-                                                         const crh_filter_spec &/*arg_filter_spec*/, ///< The filter_spec to apply to the hits
-                                                         full_hit_list         &arg_full_hits    ///< The hits to process
+void summarise_hits_processor::do_process_hits_for_query(const string           &arg_query_id,         ///< The query_protein_id string
+                                                         const crh_filter_spec  &/*arg_filter_spec*/,  ///< The filter_spec to apply to the hits
+                                                         const crh_score_spec   &/*arg_score_spec*/,   ///< The score spec to apply to the hits
+                                                         const crh_segment_spec &/*arg_segment_spec*/, ///< The segment spec to apply to the hits
+                                                         const calc_hit_list    &arg_calc_hits         ///< The hits to process
                                                          ) {
-	if ( ! example_query_id_and_hit && ! arg_full_hits.empty() ) {
+	const full_hit_list &full_hits = arg_calc_hits.get_full_hits();
+	if ( ! example_query_id_and_hit && ! full_hits.empty() ) {
 		example_query_id_and_hit = make_pair(
 			arg_query_id,
-			front( arg_full_hits )
+			front( full_hits )
 		);
 	}
 
-	const auto max_stop_opt = get_max_stop( arg_full_hits );
+	const auto max_stop_opt = get_max_stop( full_hits );
 	if ( max_stop_opt ) {
 		max_stops.push_back( *max_stop_opt );
 	}
 
-	num_hits += arg_full_hits.size();
+	num_hits += full_hits.size();
 }
 
 /// \brief Calculate the median of an unsorted bunch of size_t values
@@ -131,13 +134,11 @@ void summarise_hits_processor::do_finish_work() {
 }
 
 /// \brief Return true: read_and_resolve_mgr should still parse hits that fail the score filter and pass them to this processor
-bool summarise_hits_processor::do_parse_hits_that_fail_score_filter() const {
+bool summarise_hits_processor::do_wants_hits_that_fail_score_filter() const {
 	return true;
 }
 
 /// \brief Ctor for the summarise_hits_processor
-summarise_hits_processor::summarise_hits_processor(ostream                &arg_ostream,     ///< The ostream to which the results should be written
-                                                   const crh_score_spec   &arg_score_spec,  ///< The score_spec to apply to hits
-                                                   const crh_segment_spec &arg_segment_spec ///< The segment_spec to apply to hits
-                                                   ) noexcept : super{ arg_ostream, arg_score_spec, arg_segment_spec } {
+summarise_hits_processor::summarise_hits_processor(ostream &arg_ostream ///< The ostream to which the results should be written
+                                                   ) noexcept : super{ arg_ostream } {
 }

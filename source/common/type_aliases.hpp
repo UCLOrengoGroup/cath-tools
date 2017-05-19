@@ -33,6 +33,7 @@
 #include <utility>
 #include <vector>
 
+namespace cath { namespace common { template <typename> class clone_ptr; } }
 namespace cath { namespace common {  template <typename T> class vector_of_vector; } }
 
 namespace cath {
@@ -164,6 +165,16 @@ namespace cath {
 
 	using size_size_size_size_tpl       = std::tuple<size_t, size_t, size_t, size_t>;
 } // namespace cath
+
+namespace cath {
+	namespace common {
+
+		/// \brief Alias template for a vector of clone_ptr of T
+		template <typename T>
+		using clptr_vec = std::vector< common::clone_ptr< T > >;
+
+	}
+}
 
 namespace cath {
 	class protein;

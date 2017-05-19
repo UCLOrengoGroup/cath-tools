@@ -49,16 +49,16 @@ namespace cath {
 
 				void do_process_hits_for_query(const std::string &,
 				                               const crh_filter_spec &,
-				                               full_hit_list &) final;
+				                               const crh_score_spec &,
+				                               const crh_segment_spec &,
+				                               const calc_hit_list &) final;
 
 				void do_finish_work() final;
 
-				bool do_parse_hits_that_fail_score_filter() const final;
+				bool do_wants_hits_that_fail_score_filter() const final;
 
 			public:
 				explicit write_html_hits_processor(std::ostream &,
-				                                   crh_score_spec,
-				                                   crh_segment_spec,
 				                                   crh_html_spec) noexcept;
 			};
 

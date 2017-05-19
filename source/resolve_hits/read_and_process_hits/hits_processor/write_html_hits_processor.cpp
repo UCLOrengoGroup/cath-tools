@@ -43,9 +43,11 @@ unique_ptr<hits_processor> write_html_hits_processor::do_clone() const {
 /// \brief Process the specified data
 ///
 /// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
-void write_html_hits_processor::do_process_hits_for_query(const string          &arg_query_id,    ///< The query_protein_id string
-                                                          const crh_filter_spec &arg_filter_spec, ///< The filter_spec to apply to the hits
-                                                          full_hit_list         &arg_full_hits    ///< The hits to process
+void write_html_hits_processor::do_process_hits_for_query(const string           &arg_query_id,     ///< The query_protein_id string
+                                                          const crh_filter_spec  &arg_filter_spec,  ///< The filter_spec to apply to the hits
+                                                          const crh_score_spec   &arg_score_spec,   ///< The score spec to apply to the hits
+                                                          const crh_segment_spec &arg_segment_spec, ///< The segment spec to apply to the hits
+                                                          const calc_hit_list    &arg_calc_hits     ///< The hits to process
                                                           ) {
 	// If the prefix hasn't already been printed, then do so and record
 	if ( ! printed_prefix ) {
@@ -58,18 +60,15 @@ void write_html_hits_processor::do_process_hits_for_query(const string          
 	// Output the HTML for this query and its hits
 	get_ostream() << resolve_hits_html_outputter::output_html(
 		arg_query_id,
-		move( arg_full_hits ),
-		get_score_spec(),
-		get_segment_spec(),
+		arg_calc_hits,
+		arg_score_spec,
+		arg_segment_spec,
 		html_spec,
 		false,
 		arg_filter_spec,
 		batch_counter
 	);
 	++batch_counter;
-
-	// Clear the hits
-	arg_full_hits = full_hit_list{};
 }
 
 /// \brief Write the HTML suffix to finish the work (if it has been started)
@@ -83,21 +82,13 @@ void write_html_hits_processor::do_finish_work() {
 }
 
 /// \brief Return true: read_and_resolve_mgr should still parse hits that fail the score filter and pass them to this processor
-bool write_html_hits_processor::do_parse_hits_that_fail_score_filter() const {
+bool write_html_hits_processor::do_wants_hits_that_fail_score_filter() const {
 	return true;
 }
 
 /// \brief Ctor for the write_html_hits_processor
-write_html_hits_processor::write_html_hits_processor(ostream          &arg_ostream,      ///< The ostream to which the results should be written
-                                                     crh_score_spec    arg_score_spec,   ///< The score_spec to apply to hits
-                                                     crh_segment_spec  arg_segment_spec, ///< The segment_spec to apply to hits
-                                                     crh_html_spec     arg_html_spec     ///< The specification for how to render the HTML
-                                                     ) noexcept : super {
-                                                                  	arg_ostream,
-                                                                  	std::move( arg_score_spec   ),
-                                                                  	std::move( arg_segment_spec )
-                                                                  },
-                                                                  html_spec{
-                                                                  	std::move( arg_html_spec )
-                                                                  } {
+write_html_hits_processor::write_html_hits_processor(ostream       &arg_ostream,  ///< The ostream to which the results should be written
+                                                     crh_html_spec  arg_html_spec ///< The specification for how to render the HTML
+                                                     ) noexcept : super    { arg_ostream,               },
+                                                                  html_spec{ std::move( arg_html_spec ) } {
 }

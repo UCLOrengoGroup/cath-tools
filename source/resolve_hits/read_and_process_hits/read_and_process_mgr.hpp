@@ -32,7 +32,7 @@
 #include "resolve_hits/calc_hit_list.hpp"
 #include "resolve_hits/options/spec/crh_filter_spec.hpp"
 #include "resolve_hits/options/spec/should_skip_query.hpp"
-#include "resolve_hits/read_and_process_hits/hits_processor/hits_processor.hpp"
+#include "resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.hpp"
 
 #include <future>
 #include <unordered_map>
@@ -83,10 +83,8 @@ namespace cath {
 		/// no other data members.
 		class read_and_process_mgr final {
 		private:
-			/// \brief (A unique_ptr to) the hits_processor that will process the hits
-			///
-			/// Could easily be a clone_ptr if there's any reason to want read_and_process_mgr to be copyable
-			std::unique_ptr<detail::hits_processor> processor_ptr;
+			/// \brief A list of the processors that will process the hits
+			detail::hits_processor_list processors;
 
 			/// \brief The filter spec to define how to filter the hits
 			crh_filter_spec the_filter_spec;
@@ -130,7 +128,7 @@ namespace cath {
 			/// until an async processing job is complete.
 			std::future<void> resolve_future;
 
-			static void process_query_id(detail::hits_processor &,
+			static void process_query_id(detail::hits_processor_list &,
 			                             const std::string &,
 			                             const crh_filter_spec &,
 			                             full_hit_list &);
@@ -145,7 +143,7 @@ namespace cath {
 			/// This is false - better not to assume this guarantee
 			static constexpr bool DEFAULT_INPUT_HITS_ARE_GROUPED = false;
 
-			explicit read_and_process_mgr(const detail::hits_processor &,
+			explicit read_and_process_mgr(const detail::hits_processor_list &,
 			                              crh_filter_spec,
 			                              const bool & = DEFAULT_INPUT_HITS_ARE_GROUPED);
 
@@ -172,11 +170,16 @@ namespace cath {
 		                       const query_id_recorder &);
 
 		read_and_process_mgr make_read_and_process_mgr(const detail::hits_processor &,
-		                                               const crh_spec &);
+		                                               const crh_filter_spec &,
+		                                               const crh_score_spec &,
+		                                               const crh_segment_spec &,
+		                                               const crh_input_spec &);
 
 		read_and_process_mgr make_read_and_process_mgr(const detail::hits_processor &,
-		                                               const crh_filter_spec &,
-		                                               const crh_input_spec &);
+		                                               const crh_spec &);
+
+		read_and_process_mgr make_read_and_process_mgr(const detail::hits_processor_list &,
+		                                               const crh_spec &);
 
 		read_and_process_mgr make_read_and_process_mgr(std::ostream &,
 		                                               const crh_spec &);
@@ -184,12 +187,12 @@ namespace cath {
 		/// \brief Process the specified data
 		///
 		/// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
-		inline void read_and_process_mgr::process_query_id(detail::hits_processor &arg_processor,   ///< The hits_processor to use to process the hits
-		                                                   const std::string      &arg_query_id,    ///< The query ID
-		                                                   const crh_filter_spec  &arg_filter_spec, ///< The filter spec to define how to filter the hits
-		                                                   full_hit_list          &arg_full_hits    ///< The hits to process
+		inline void read_and_process_mgr::process_query_id(detail::hits_processor_list &arg_processors,  ///< The hits_processors to use to process the hits
+		                                                   const std::string           &arg_query_id,    ///< The query ID
+		                                                   const crh_filter_spec       &arg_filter_spec, ///< The filter spec to define how to filter the hits
+		                                                   full_hit_list               &arg_full_hits    ///< The hits to process
 		                                                   ) {
-			arg_processor.process_hits_for_query( arg_query_id, arg_filter_spec, arg_full_hits );
+			arg_processors.process_hits_for_query( arg_query_id, arg_filter_spec, arg_full_hits );
 		}
 
 		/// \brief Trigger asynchronous processing of the data corresponding to the specified protein_query_id
@@ -206,7 +209,7 @@ namespace cath {
 			resolve_future = async(
 				std::launch::async,
 				process_query_id,
-				std::ref( *processor_ptr ),
+				std::ref( processors ),
 				arg_query_id,
 				the_filter_spec,
 				std::ref( hit_list_by_query_id[ arg_query_id ] )
@@ -221,10 +224,10 @@ namespace cath {
 		}
 
 		/// \brief Ctor from the ostream to which the results should be written
-		inline read_and_process_mgr::read_and_process_mgr(const detail::hits_processor &arg_hits_processor,        ///< The hits_processor to use to process the hits
-		                                                  crh_filter_spec               arg_filter_spec,           ///< The filter spec to define how to filter the hits
-		                                                  const bool                   &arg_input_hits_are_grouped ///< Whether or not the input hits are guaranteed to be presorted
-		                                                  ) : processor_ptr          { arg_hits_processor.clone()   },
+		inline read_and_process_mgr::read_and_process_mgr(const detail::hits_processor_list &arg_hits_processors,        ///< The hits_processor to use to process the hits
+		                                                  crh_filter_spec                    arg_filter_spec,           ///< The filter spec to define how to filter the hits
+		                                                  const bool                        &arg_input_hits_are_grouped ///< Whether or not the input hits are guaranteed to be presorted
+		                                                  ) : processors             { arg_hits_processors          },
 		                                                      the_filter_spec        { std::move( arg_filter_spec ) },
 		                                                      input_hits_are_grouped { arg_input_hits_are_grouped   } {
 		}
@@ -240,7 +243,7 @@ namespace cath {
 		                                          hit_extras_store         arg_hit_extras  ///< Any hmmsearch aligned regions or else none
 		                                          ) {
 			// If this hit's score doesn't meet the filter and such hits don't need to be kept, then skip it
-			if ( ! processor_ptr->parse_hits_that_fail_score_filter() ) {
+			if ( ! processors.wants_hits_that_fail_score_filter() ) {
 				if ( ! score_passes_filter( the_filter_spec, arg_score, arg_score_type ) ) {
 					return;
 				}
@@ -310,7 +313,7 @@ namespace cath {
 				auto &query_id_full_hits = hit_list_by_query_id[ query_id ];
 				if ( ! query_id_full_hits.empty() ) {
 					process_query_id(
-						*processor_ptr,
+						processors,
 						query_id,
 						the_filter_spec,
 						query_id_full_hits
@@ -325,7 +328,7 @@ namespace cath {
 			to_be_erased_query_id      = boost::none;
 
 			// Signal the hits_processor to finish all work
-			processor_ptr->finish_work();
+			processors.finish_work();
 		}
 
 		/// \brief Getter for the filter spec to define how to filter the hits 

@@ -27,6 +27,7 @@
 #include "resolve_hits/hit_resolver.hpp"
 #include "resolve_hits/options/spec/crh_input_spec.hpp"
 #include "resolve_hits/options/spec/crh_spec.hpp"
+#include "resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.hpp"
 #include "resolve_hits/scored_hit_arch.hpp"
 
 #include <iostream>
@@ -105,6 +106,23 @@ constexpr bool read_and_process_mgr::DEFAULT_INPUT_HITS_ARE_GROUPED;
 // 	);
 // }
 
+/// \brief Make a read_and_process_mgr from the specified hits_processor, crh_filter_spec and crh_input_spec
+///
+/// \relates read_and_process_mgr
+read_and_process_mgr cath::rslv::make_read_and_process_mgr(const hits_processor   &arg_hits_processor,   ///< The hits_processor that should process the hits
+                                                           const crh_filter_spec  &arg_filter_spec,      ///< The crh_filter_spec to specify how hits should be filtered
+                                                           const crh_score_spec   &arg_crh_score_spec,   ///< The score spec to apply to incoming hits
+                                                           const crh_segment_spec &arg_crh_segment_spec, ///< The segment spec to apply to incoming hits
+                                                           const crh_input_spec   &arg_input_spec        ///< The crh_input_spec to specify how hits should be read in
+                                                           ) {
+	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+	return read_and_process_mgr{
+		hits_processor_list{ arg_crh_score_spec, arg_crh_segment_spec, { arg_hits_processor.clone() } },
+		arg_filter_spec,
+		arg_input_spec.get_input_hits_are_grouped()
+	};
+}
+
 /// \brief Make a read_and_process_mgr from the specified hits_processor and crh_spec
 ///
 /// \relates read_and_process_mgr
@@ -114,22 +132,22 @@ read_and_process_mgr cath::rslv::make_read_and_process_mgr(const hits_processor 
 	return make_read_and_process_mgr(
 		arg_hits_processor,
 		arg_spec.get_filter_spec(),
+		arg_spec.get_score_spec(),
+		arg_spec.get_segment_spec(),
 		arg_spec.get_input_spec()
 	);
 }
 
-/// \brief Make a read_and_process_mgr from the specified hits_processor, crh_filter_spec and crh_input_spec
+/// \brief Make a read_and_process_mgr from the specified hits_processor_list and crh_spec
 ///
 /// \relates read_and_process_mgr
-read_and_process_mgr cath::rslv::make_read_and_process_mgr(const hits_processor  &arg_hits_processor, ///< The hits_processor that should process the hits
-                                                           const crh_filter_spec &arg_filter_spec,    ///< The crh_filter_spec to specify how hits should be filtered
-                                                           const crh_input_spec  &arg_input_spec      ///< The crh_input_spec to specify how hits should be read in
+read_and_process_mgr cath::rslv::make_read_and_process_mgr(const hits_processor_list &arg_hits_processors, ///< The hits_processor that should process the hits
+                                                           const crh_spec            &arg_spec             ///< The crh_spec to specify behaviour
                                                            ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return read_and_process_mgr{
-		arg_hits_processor,
-		arg_filter_spec,
-		arg_input_spec.get_input_hits_are_grouped()
+		arg_hits_processors,
+		arg_spec.get_filter_spec(),
+		arg_spec.get_input_spec().get_input_hits_are_grouped()
 	};
 }
 
@@ -137,16 +155,16 @@ read_and_process_mgr cath::rslv::make_read_and_process_mgr(const hits_processor 
 ///
 /// \relates read_and_process_mgr
 read_and_process_mgr cath::rslv::make_read_and_process_mgr(ostream        &arg_ostream, ///< The ostream to which the results should be written
-                                                           const crh_spec &arg_crh_spec ///< The crh_spec to specify what to do
+                                                           const crh_spec &arg_spec     ///< The crh_spec to specify what to do
                                                            ) {
 	return make_read_and_process_mgr(
-		*make_hits_processor(
+		make_hits_processors(
 			arg_ostream,
-			arg_crh_spec.get_output_spec(),
-			arg_crh_spec.get_score_spec(),
-			arg_crh_spec.get_segment_spec(),
-			arg_crh_spec.get_html_spec()
+			arg_spec.get_output_spec(),
+			arg_spec.get_score_spec(),
+			arg_spec.get_segment_spec(),
+			arg_spec.get_html_spec()
 		),
-		arg_crh_spec
+		arg_spec
 	);
 }

@@ -668,7 +668,7 @@ set(
 
 set(
 	NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR
-		resolve_hits/read_and_process_hits/hits_processor/hits_processor.cpp
+		resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.cpp
 		resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.cpp
 		resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.cpp
 		resolve_hits/read_and_process_hits/hits_processor/write_json_hits_processor.cpp
@@ -1677,6 +1677,16 @@ set(
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR
+		resolve_hits/read_and_process_hits/hits_processor/hits_processor_list_test.cpp
+)
+
+set(
+	TESTSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS
+		${TESTSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR}
+)
+
+set(
 	TESTSOURCES_RESOLVE_HITS_TEST
 		resolve_hits/test/resolve_hits_fixture.cpp
 )
@@ -1702,6 +1712,7 @@ set(
 		resolve_hits/hit_test.cpp
 		${TESTSOURCES_RESOLVE_HITS_HTML_OUTPUT}
 		${TESTSOURCES_RESOLVE_HITS_OPTIONS}
+		${TESTSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS}
 		${TESTSOURCES_RESOLVE_HITS_TEST}
 		${TESTSOURCES_RESOLVE_HITS_TRIM}
 )
