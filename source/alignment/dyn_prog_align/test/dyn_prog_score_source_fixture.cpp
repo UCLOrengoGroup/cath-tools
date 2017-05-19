@@ -24,6 +24,7 @@
 
 using namespace cath;
 using namespace cath::align;
+using namespace cath::common;
 using namespace std;
 
 /// \brief A first  sequence string for making an example sequence_string_dyn_prog_score_source

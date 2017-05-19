@@ -22,6 +22,7 @@
 
 using namespace cath;
 using namespace cath::align;
+using namespace cath::common;
 //using namespace std;
 
 /// \brief Return the number of elements in the first entry to by aligned with dynamic-programming

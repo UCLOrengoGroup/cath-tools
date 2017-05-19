@@ -31,7 +31,7 @@ namespace cath {
 		class mask_dyn_prog_score_source final : public dyn_prog_score_source {
 		private:
 			/// \brief TODOCUMENT
-			const bool_vec_of_vec &mask_matrix;
+			const common::bool_vec_of_vec &mask_matrix;
 
 			/// \brief TODOCUMENT
 			const dyn_prog_score_source &masked_score_source;
@@ -42,7 +42,7 @@ namespace cath {
 			                        const size_t &) const final;
 
 		public:
-			mask_dyn_prog_score_source(const bool_vec_of_vec &,
+			mask_dyn_prog_score_source(const common::bool_vec_of_vec &,
 			                           const dyn_prog_score_source &);
 		};
 	} // namespace align

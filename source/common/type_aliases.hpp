@@ -34,7 +34,7 @@
 #include <vector>
 
 namespace cath { namespace common { template <typename> class clone_ptr; } }
-namespace cath { namespace common {  template <typename T> class vector_of_vector; } }
+namespace cath { namespace common { template <typename T> class vector_of_vector; } }
 
 namespace cath {
 
@@ -66,8 +66,6 @@ namespace cath {
 	using bool_deq_itr                  = bool_deq::iterator;
 	using bool_deq_citr                 = bool_deq::const_iterator;
 	using bool_deq_vec                  = std::vector<bool_deq>;
-
-	using bool_vec_of_vec               = common::vector_of_vector<bool>; // WARNING: Remember std has a stupid template specialisation for vector<bool>
 
 	using char_vec                      = std::vector<char>;
 
@@ -168,6 +166,8 @@ namespace cath {
 
 namespace cath {
 	namespace common {
+
+		using bool_vec_of_vec = vector_of_vector<bool>; // WARNING: Remember std has a stupid template specialisation for vector<bool>
 
 		/// \brief Alias template for a vector of clone_ptr of T
 		template <typename T>

@@ -40,11 +40,11 @@ namespace cath {
 			const align::new_matrix_dyn_prog_score_source &      make_example_new_matrix_dyn_prog_score_source();
 			const align::sequence_string_dyn_prog_score_source & make_example_sequence_string_dyn_prog_score_source();
 
-			static const std::string         sequence_string_a;
-			static const std::string         sequence_string_b;
-			static const score_vec_of_vec    example_old_score_matrix;
-			static const float_score_vec_vec example_new_score_matrix;
-			static const bool_vec_of_vec     example_mask_matrix;
+			static const std::string             sequence_string_a;
+			static const std::string             sequence_string_b;
+			static const score_vec_of_vec        example_old_score_matrix;
+			static const float_score_vec_vec     example_new_score_matrix;
+			static const common::bool_vec_of_vec example_mask_matrix;
 
 		public:
 			template <typename DPSS>
