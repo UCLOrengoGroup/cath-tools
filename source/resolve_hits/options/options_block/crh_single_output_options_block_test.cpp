@@ -1,5 +1,5 @@
 /// \file
-/// \brief The crh_output_options_block test suite
+/// \brief The crh_single_output_options_block test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -23,7 +23,7 @@
 namespace cath {
 	namespace test {
 
-		/// \brief The crh_output_options_block_test_suite_fixture to assist in testing crh_output_options_block
+		/// \brief The crh_output_options_block_test_suite_fixture to assist in testing crh_single_output_options_block
 		struct crh_output_options_block_test_suite_fixture {
 		protected:
 			~crh_output_options_block_test_suite_fixture() noexcept = default;

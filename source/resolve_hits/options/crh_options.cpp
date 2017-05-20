@@ -69,7 +69,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 	}
 
 	const auto &the_in_spec  = the_input_ob.get_crh_input_spec();
-	const auto &the_out_spec = the_output_ob.get_crh_output_spec();
+	const auto &the_out_spec = the_single_output_ob.get_crh_output_spec();
 
 	// If the user has specified neither an input file nor to read from stdin, then return an blank error string
 	// (so the error will just be the basic "See 'cath-resolve-hits --help' for usage." message)
@@ -96,7 +96,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 	// Check that if the output_hmmsearch_aln option's enabled, the input format is HMMSEARCH_OUT
 	if ( the_out_spec.get_output_hmmsearch_aln() && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
 		return "Cannot use the --"
-			+ crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN
+			+ crh_single_output_options_block::PO_OUTPUT_HMMSEARCH_ALN
 			+ " option if using "
 			+ to_string( input_format )
 			+ " input format, must be using "
@@ -139,10 +139,10 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		}
 	}
 
-	if ( has_specified_crh_html_options( vm ) && ( get_out_format( the_output_ob ) != crh_out_format::HTML ) ) {
+	if ( has_specified_crh_html_options( vm ) && ( get_out_format( the_single_output_ob ) != crh_out_format::HTML ) ) {
 		return
 			"Cannot specify HTML options without setting the output format to HTML (with --"
-			+ crh_output_options_block::PO_GENERATE_HTML_OUTPUT
+			+ crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT
 			+ ")";
 	}
 
@@ -209,13 +209,13 @@ str_str_str_pair_map crh_options::detail_help_spec() {
 
 /// \brief Ctor, which initialises the detail_help_ob and adds the options_blocks to the parent executable_options
 crh_options::crh_options() : detail_help_ob{ detail_help_spec() } {
-	super::add_options_block( the_input_ob   );
-	super::add_options_block( the_segment_ob );
-	super::add_options_block( the_score_ob   );
-	super::add_options_block( the_filter_ob  );
-	super::add_options_block( the_output_ob  );
-	super::add_options_block( the_html_ob    );
-	super::add_options_block( detail_help_ob );
+	super::add_options_block( the_input_ob         );
+	super::add_options_block( the_segment_ob       );
+	super::add_options_block( the_score_ob         );
+	super::add_options_block( the_filter_ob        );
+	super::add_options_block( the_single_output_ob );
+	super::add_options_block( the_html_ob          );
+	super::add_options_block( detail_help_ob       );
 }
 
 /// \brief Build a crh_spec of the individual specs
@@ -226,7 +226,7 @@ crh_spec crh_options::get_crh_spec() const {
 		the_segment_ob.get_crh_segment_spec(),
 		the_score_ob.get_crh_score_spec(),
 		the_filter_ob.get_crh_filter_spec(),
-		the_output_ob.get_crh_output_spec(),
+		the_single_output_ob.get_crh_output_spec(),
 		the_html_ob.get_crh_html_spec()
 	};
 }
@@ -253,7 +253,7 @@ const crh_filter_spec & crh_options::get_crh_filter_spec() const {
 
 /// \brief Getter for the cath-resolve-hits output options_block
 const crh_output_spec & crh_options::get_crh_output_spec() const {
-	return the_output_ob.get_crh_output_spec();
+	return the_single_output_ob.get_crh_output_spec();
 }
 
 /// \brief Getter for the cath-resolve-hits html options_block

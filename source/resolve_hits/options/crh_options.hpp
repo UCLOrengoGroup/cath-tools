@@ -26,9 +26,9 @@
 #include "resolve_hits/options/options_block/crh_filter_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_html_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_input_options_block.hpp"
-#include "resolve_hits/options/options_block/crh_output_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_score_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_segment_options_block.hpp"
+#include "resolve_hits/options/options_block/crh_single_output_options_block.hpp"
 
 #include <iosfwd>
 
@@ -57,7 +57,7 @@ namespace cath {
 			crh_filter_options_block        the_filter_ob;
 
 			/// \brief The cath-resolve-hits output options_block
-			crh_output_options_block        the_output_ob;
+			crh_single_output_options_block the_single_output_ob;
 
 			/// \brief The cath-resolve-hits html options_block
 			crh_html_options_block          the_html_ob;

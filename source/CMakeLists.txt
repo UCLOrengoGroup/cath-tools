@@ -642,9 +642,9 @@ set(
 		resolve_hits/options/options_block/crh_filter_options_block.cpp
 		resolve_hits/options/options_block/crh_html_options_block.cpp
 		resolve_hits/options/options_block/crh_input_options_block.cpp
-		resolve_hits/options/options_block/crh_output_options_block.cpp
 		resolve_hits/options/options_block/crh_score_options_block.cpp
 		resolve_hits/options/options_block/crh_segment_options_block.cpp
+		resolve_hits/options/options_block/crh_single_output_options_block.cpp
 )
 
 set(
@@ -1665,9 +1665,9 @@ set(
 		resolve_hits/options/options_block/crh_filter_options_block_test.cpp
 		resolve_hits/options/options_block/crh_html_options_block_test.cpp
 		resolve_hits/options/options_block/crh_input_options_block_test.cpp
-		resolve_hits/options/options_block/crh_output_options_block_test.cpp
 		resolve_hits/options/options_block/crh_score_options_block_test.cpp
 		resolve_hits/options/options_block/crh_segment_options_block_test.cpp
+		resolve_hits/options/options_block/crh_single_output_options_block_test.cpp
 )
 
 set(

@@ -1,5 +1,5 @@
 /// \file
-/// \brief The crh_output_options_block class header
+/// \brief The crh_single_output_options_block class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -28,7 +28,7 @@ namespace cath {
 	namespace rslv {
 
 		/// \brief Define an options_block for options specifying how cath-resolve-hits should write the output
-		class crh_output_options_block final : public opts::options_block {
+		class crh_single_output_options_block final : public opts::options_block {
 		private:
 			using super = opts::options_block;
 
@@ -54,7 +54,7 @@ namespace cath {
 			const crh_output_spec & get_crh_output_spec() const;
 		};
 
-		crh_out_format get_out_format(const crh_output_options_block &);
+		crh_out_format get_out_format(const crh_single_output_options_block &);
 
 	} // namespace rslv
 } // namespace cath

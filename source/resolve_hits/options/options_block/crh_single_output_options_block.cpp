@@ -1,5 +1,5 @@
 /// \file
-/// \brief The crh_output_options_block class definitions
+/// \brief The crh_single_output_options_block class definitions
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "crh_output_options_block.hpp"
+#include "crh_single_output_options_block.hpp"
 
 #include "common/clone/make_uptr_clone.hpp"
 
@@ -37,42 +37,42 @@ using std::string;
 using std::unique_ptr;
 
 /// \brief The option name for the output file to which data should be written (or unspecified for stdout)
-const string crh_output_options_block::PO_OUTPUT_FILE              { "output-file"               };
+const string crh_single_output_options_block::PO_OUTPUT_FILE              { "output-file"               };
 
 /// \brief The option name for whether to output the hits starts/stops *after* trimming
-const string crh_output_options_block::PO_OUTPUT_TRIMMED_HITS      { "output-trimmed-hits"       };
+const string crh_single_output_options_block::PO_OUTPUT_TRIMMED_HITS      { "output-trimmed-hits"       };
 
 /// \brief The option name for whether to output a summary of the input data
-const string crh_output_options_block::PO_SUMMARISE                { "summarise"                 };
+const string crh_single_output_options_block::PO_SUMMARISE                { "summarise"                 };
 
 /// \brief The option name for whether to output HTML describing the hits and the results
-const string crh_output_options_block::PO_GENERATE_HTML_OUTPUT     { "html-output"               };
+const string crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT     { "html-output"               };
 
 /// \brief The option name for whether to output the results in JSON format
-const string crh_output_options_block::PO_JSON_OUTPUT              { "json-output"               };
+const string crh_single_output_options_block::PO_JSON_OUTPUT              { "json-output"               };
 
 /// \brief The option name for whether to restrict HTML output to the contents of the body tag
-const string crh_output_options_block::PO_RESTRICT_HTML_WITHIN_BODY{ "restrict-html-within-body" };
+const string crh_single_output_options_block::PO_RESTRICT_HTML_WITHIN_BODY{ "restrict-html-within-body" };
 
 /// \brief The option name for an optional file to which the cath-resolve-hits CSS should be dumped
-const string crh_output_options_block::PO_EXPORT_CSS_FILE          { "export-css-file"           };
+const string crh_single_output_options_block::PO_EXPORT_CSS_FILE          { "export-css-file"           };
 
 /// \brief The option name for whether to output a summary of the hmmsearch output alignment
-const string crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN     { "output-hmmsearch-aln"      };
+const string crh_single_output_options_block::PO_OUTPUT_HMMSEARCH_ALN     { "output-hmmsearch-aln"      };
 
 /// \brief A standard do_clone method
-unique_ptr<options_block> crh_output_options_block::do_clone() const {
+unique_ptr<options_block> crh_single_output_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
 }
 
 /// \brief Define this block's name (used as a header for the block in the usage)
-string crh_output_options_block::do_get_block_name() const {
+string crh_single_output_options_block::do_get_block_name() const {
 	return "Output";
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_output_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
-                                                                     ) {
+void crh_single_output_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+                                                                            ) {
 	const string file_varname   { "<file>"   };
 
 	const auto output_file_notifier          = [&] (const path &x) { the_spec.set_output_file          (           x ); };
@@ -137,8 +137,8 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 }
 
 /// \brief Add any hidden options to the provided options_description
-void crh_output_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
-                                                                    ) {
+void crh_single_output_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+                                                                           ) {
 	const auto output_hmmsearch_aln_notifier = [&] (const bool &x) { the_spec.set_output_hmmsearch_aln( x ); };
 
 	arg_desc.add_options()
@@ -154,22 +154,22 @@ void crh_output_options_block::do_add_hidden_options_to_description(options_desc
 		"If crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN isn't false, it might mess up the bool switch in here" );
 }
 
-/// \brief Generate a description of any problem that makes the specified crh_output_options_block invalid
+/// \brief Generate a description of any problem that makes the specified crh_single_output_options_block invalid
 ///        or none otherwise
-str_opt crh_output_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
-                                                    ) const {
+str_opt crh_single_output_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+                                                           ) const {
 	return get_invalid_description( the_spec );
 }
 
-/// \brief Getter for the crh_output_spec that the crh_output_options_block configures
-const crh_output_spec & crh_output_options_block::get_crh_output_spec() const {
+/// \brief Getter for the crh_output_spec that the crh_single_output_options_block configures
+const crh_output_spec & crh_single_output_options_block::get_crh_output_spec() const {
 	return the_spec;
 }
 
-/// \brief Get the crh_out_format for the crh_output_spec of the specified crh_output_options_block
+/// \brief Get the crh_out_format for the crh_output_spec of the specified crh_single_output_options_block
 ///
-/// \relates crh_output_options_block
-crh_out_format cath::rslv::get_out_format(const crh_output_options_block &arg_crh_output_options_block ///< The crh_output_options_block to query
+/// \relates crh_single_output_options_block
+crh_out_format cath::rslv::get_out_format(const crh_single_output_options_block &arg_crh_output_options_block ///< The crh_single_output_options_block to query
                                           ) {
 	return get_out_format( arg_crh_output_options_block.get_crh_output_spec() );
 }
