@@ -652,9 +652,9 @@ set(
 		resolve_hits/options/spec/crh_filter_spec.cpp
 		resolve_hits/options/spec/crh_html_spec.cpp
 		resolve_hits/options/spec/crh_input_spec.cpp
-		resolve_hits/options/spec/crh_output_spec.cpp
 		resolve_hits/options/spec/crh_score_spec.cpp
 		resolve_hits/options/spec/crh_segment_spec.cpp
+		resolve_hits/options/spec/crh_single_output_spec.cpp
 		resolve_hits/options/spec/crh_spec.cpp
 		resolve_hits/options/spec/hit_boundary_output.cpp
 )

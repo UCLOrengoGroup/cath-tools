@@ -33,7 +33,7 @@
 namespace cath { namespace rslv { class calc_hit_list; } }
 namespace cath { namespace rslv { class crh_filter_spec; } }
 namespace cath { namespace rslv { class crh_html_spec; } }
-namespace cath { namespace rslv { class crh_output_spec; } }
+namespace cath { namespace rslv { class crh_single_output_spec; } }
 namespace cath { namespace rslv { class full_hit_list; } }
 namespace cath { namespace rslv { namespace detail { class hits_processor_list; } } }
 

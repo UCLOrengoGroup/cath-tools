@@ -84,7 +84,7 @@ namespace cath {
 			const crh_segment_spec & get_crh_segment_spec() const;
 			const crh_score_spec & get_crh_score_spec() const;
 			const crh_filter_spec & get_crh_filter_spec() const;
-			const crh_output_spec & get_crh_output_spec() const;
+			const crh_single_output_spec & get_crh_single_output_spec() const;
 			const crh_html_spec & get_crh_html_spec() const;
 
 			static const std::string PROGRAM_NAME;

@@ -22,7 +22,7 @@
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_OUTPUT_OPTIONS_BLOCK_H
 
 #include "options/options_block/options_block.hpp"
-#include "resolve_hits/options/spec/crh_output_spec.hpp"
+#include "resolve_hits/options/spec/crh_single_output_spec.hpp"
 
 namespace cath {
 	namespace rslv {
@@ -33,7 +33,7 @@ namespace cath {
 			using super = opts::options_block;
 
 			/// \brief The spec this options_block configures
-			crh_output_spec the_spec;
+			crh_single_output_spec the_spec;
 
 			std::unique_ptr<opts::options_block> do_clone() const final;
 			std::string do_get_block_name() const final;
@@ -51,7 +51,7 @@ namespace cath {
 			static const std::string PO_EXPORT_CSS_FILE;
 			static const std::string PO_OUTPUT_HMMSEARCH_ALN;
 
-			const crh_output_spec & get_crh_output_spec() const;
+			const crh_single_output_spec & get_crh_single_output_spec() const;
 		};
 
 		crh_out_format get_out_format(const crh_single_output_options_block &);

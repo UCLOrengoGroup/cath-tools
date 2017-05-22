@@ -1,5 +1,5 @@
 /// \file
-/// \brief The crh_output_spec class header
+/// \brief The crh_single_output_spec class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -50,44 +50,44 @@ namespace cath {
 		std::string to_string(const crh_out_format &);
 
 		/// \brief Specify the output for cath-resolve-hits
-		class crh_output_spec final {
+		class crh_single_output_spec final {
 		private:
 			/// \brief The output file to which data should be written
 			path_opt            output_file;
 
 			/// \brief Whether to output the hits starts/stops *after* trimming
-			hit_boundary_output boundary_output           = DEFAULT_BOUNDARY_OUTPUT;
+			hit_boundary_output boundary_output      = DEFAULT_BOUNDARY_OUTPUT;
 
 			/// \brief Whether to output a summary of the input data
-			bool                summarise                 = DEFAULT_SUMMARISE;
+			bool                summarise            = DEFAULT_SUMMARISE;
 
 			/// \brief Whether to output HTML describing the hits and the results
-			bool                generate_html_output      = DEFAULT_GENERATE_HTML_OUTPUT;
+			bool                generate_html_output = DEFAULT_GENERATE_HTML_OUTPUT;
 
 			/// \brief Whether to output the results in JSON format
-			bool                json_output               = DEFAULT_JSON_OUTPUT;
+			bool                json_output          = DEFAULT_JSON_OUTPUT;
 
 			/// \brief An optional file to which the cath-resolve-hits CSS should be dumped
 			path_opt            export_css_file;
 
 			/// \brief Whether to output a summary of the hmmsearch output alignment
-			bool                output_hmmsearch_aln      = DEFAULT_OUTPUT_HMMSEARCH_ALN;
+			bool                output_hmmsearch_aln = DEFAULT_OUTPUT_HMMSEARCH_ALN;
 
 		public:
 			/// \brief The default value for whether to output the hits starts/stops *after* trimming
-			static constexpr hit_boundary_output DEFAULT_BOUNDARY_OUTPUT           = hit_boundary_output::ORIG;
+			static constexpr hit_boundary_output DEFAULT_BOUNDARY_OUTPUT      = hit_boundary_output::ORIG;
 
 			/// \brief The default value for whether to output a summary of the input data
-			static constexpr bool                DEFAULT_SUMMARISE                 = false;
+			static constexpr bool                DEFAULT_SUMMARISE            = false;
 
 			/// \brief The default value for whether to output HTML describing the hits and the results
-			static constexpr bool                DEFAULT_GENERATE_HTML_OUTPUT      = false;
+			static constexpr bool                DEFAULT_GENERATE_HTML_OUTPUT = false;
 
 			/// \brief The default value for whether to output the results in JSON format
-			static constexpr bool                DEFAULT_JSON_OUTPUT      = false;
+			static constexpr bool                DEFAULT_JSON_OUTPUT          = false;
 
 			/// \brief The default value for whether to output a summary of the hmmsearch output alignment
-			static constexpr bool                DEFAULT_OUTPUT_HMMSEARCH_ALN      = false;
+			static constexpr bool                DEFAULT_OUTPUT_HMMSEARCH_ALN = false;
 
 			const path_opt & get_output_file() const;
 			const hit_boundary_output & get_boundary_output() const;
@@ -97,21 +97,21 @@ namespace cath {
 			const path_opt & get_export_css_file() const;
 			const bool & get_output_hmmsearch_aln() const;
 
-			crh_output_spec & set_output_file(const boost::filesystem::path &);
-			crh_output_spec & set_boundary_output(const hit_boundary_output &);
-			crh_output_spec & set_summarise(const bool &);
-			crh_output_spec & set_generate_html_output(const bool &);
-			crh_output_spec & set_json_output(const bool &);
-			crh_output_spec & set_export_css_file(const path_opt &);
-			crh_output_spec & set_output_hmmsearch_aln(const bool &);
+			crh_single_output_spec & set_output_file(const boost::filesystem::path &);
+			crh_single_output_spec & set_boundary_output(const hit_boundary_output &);
+			crh_single_output_spec & set_summarise(const bool &);
+			crh_single_output_spec & set_generate_html_output(const bool &);
+			crh_single_output_spec & set_json_output(const bool &);
+			crh_single_output_spec & set_export_css_file(const path_opt &);
+			crh_single_output_spec & set_output_hmmsearch_aln(const bool &);
 		};
 
-		crh_out_format get_out_format(const crh_output_spec &);
+		crh_out_format get_out_format(const crh_single_output_spec &);
 
-		str_opt get_invalid_description(const crh_output_spec &);
+		str_opt get_invalid_description(const crh_single_output_spec &);
 
-		crh_output_spec & set_output_trimmed_hits(crh_output_spec &,
-		                                          const bool &);
+		crh_single_output_spec & set_output_trimmed_hits(crh_single_output_spec &,
+		                                                 const bool &);
 
 	} // namespace rslv
 } // namespace cath

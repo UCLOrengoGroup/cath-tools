@@ -69,7 +69,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 	}
 
 	const auto &the_in_spec  = the_input_ob.get_crh_input_spec();
-	const auto &the_out_spec = the_single_output_ob.get_crh_output_spec();
+	const auto &the_out_spec = the_single_output_ob.get_crh_single_output_spec();
 
 	// If the user has specified neither an input file nor to read from stdin, then return an blank error string
 	// (so the error will just be the basic "See 'cath-resolve-hits --help' for usage." message)
@@ -226,7 +226,7 @@ crh_spec crh_options::get_crh_spec() const {
 		the_segment_ob.get_crh_segment_spec(),
 		the_score_ob.get_crh_score_spec(),
 		the_filter_ob.get_crh_filter_spec(),
-		the_single_output_ob.get_crh_output_spec(),
+		the_single_output_ob.get_crh_single_output_spec(),
 		the_html_ob.get_crh_html_spec()
 	};
 }
@@ -252,8 +252,8 @@ const crh_filter_spec & crh_options::get_crh_filter_spec() const {
 }
 
 /// \brief Getter for the cath-resolve-hits output options_block
-const crh_output_spec & crh_options::get_crh_output_spec() const {
-	return the_single_output_ob.get_crh_output_spec();
+const crh_single_output_spec & crh_options::get_crh_single_output_spec() const {
+	return the_single_output_ob.get_crh_single_output_spec();
 }
 
 /// \brief Getter for the cath-resolve-hits html options_block

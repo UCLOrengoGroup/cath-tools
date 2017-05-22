@@ -82,7 +82,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
                                       ostream        &arg_stdout    ///< The output stream
                                       ) {
 	const auto &in_spec         = arg_crh_spec.get_input_spec();
-	const auto &out_spec        = arg_crh_spec.get_output_spec();
+	const auto &out_spec        = arg_crh_spec.get_single_output_spec();
 	const auto &score_spec      = arg_crh_spec.get_score_spec();
 	const auto &css_file_opt    = out_spec.get_export_css_file();
 	const auto &input_file_opt  = in_spec.get_input_file();

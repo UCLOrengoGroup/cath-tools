@@ -22,7 +22,7 @@
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 
-#include "resolve_hits/options/spec/crh_output_spec.hpp"
+#include "resolve_hits/options/spec/crh_single_output_spec.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/write_json_hits_processor.hpp"
@@ -121,16 +121,16 @@ auto hits_processor_list::end() const -> const_iterator {
 /// \brief Make the hits_processor implied by the specified spec object and the specified ostream
 ///
 /// \relates hits_processor_list
-hits_processor_list cath::rslv::detail::make_hits_processors(ostream                &arg_ostream,      ///< The ostream to which the new hits_processor should write
-                                                             const crh_output_spec  &arg_output_spec,  ///< The crh_output_spec defining the type of hits_processor to make
-                                                             const crh_score_spec   &arg_score_spec,   ///< The crh_score_spec how to handle scores
-                                                             const crh_segment_spec &arg_segment_spec, ///< The crh_segment_spec how to handle segments
-                                                             const crh_html_spec    &arg_html_spec     ///< The crh_html_spec defining how to render any HTML
+hits_processor_list cath::rslv::detail::make_hits_processors(ostream                      &arg_ostream,            ///< The ostream to which the new hits_processor should write
+                                                             const crh_single_output_spec &arg_single_output_spec, ///< The crh_single_output_spec defining the type of hits_processor to make
+                                                             const crh_score_spec         &arg_score_spec,         ///< The crh_score_spec how to handle scores
+                                                             const crh_segment_spec       &arg_segment_spec,       ///< The crh_segment_spec how to handle segments
+                                                             const crh_html_spec          &arg_html_spec           ///< The crh_html_spec defining how to render any HTML
                                                              ) {
-	const auto &bound_out = arg_output_spec.get_boundary_output();
+	const auto &bound_out = arg_single_output_spec.get_boundary_output();
 	hits_processor_list the_list{ arg_score_spec, arg_segment_spec };
 	the_list.add_processor( [&] () -> unique_ptr<hits_processor> {
-		switch ( get_out_format( arg_output_spec ) ) {
+		switch ( get_out_format( arg_single_output_spec ) ) {
 			case ( crh_out_format::HTML     ) : { return make_unique< write_html_hits_processor    >( arg_ostream, arg_html_spec ); }
 			case ( crh_out_format::SUMMARY  ) : { return make_unique< summarise_hits_processor     >( arg_ostream                ); }
 			case ( crh_out_format::STANDARD ) : { return make_unique< write_results_hits_processor >( arg_ostream, bound_out     ); }

@@ -86,54 +86,54 @@ void crh_single_output_options_block::do_add_visible_options_to_description(opti
 		(
 			PO_OUTPUT_FILE.c_str(),
 			value<path>()
-				->value_name   ( file_varname                                       )
-				->notifier     ( output_file_notifier                               ),
+				->value_name   ( file_varname                                         )
+				->notifier     ( output_file_notifier                                 ),
 			( "Write output to file " + file_varname + " (or, if unspecified, to stdout)" ).c_str()
 		)
 		(
 			( PO_OUTPUT_TRIMMED_HITS ).c_str(),
 			bool_switch()
-				->notifier     ( output_trimmed_hits_notifier                       )
+				->notifier     ( output_trimmed_hits_notifier                         )
 				->default_value(
-					means_output_trimmed_hits( crh_output_spec::DEFAULT_BOUNDARY_OUTPUT )
+					means_output_trimmed_hits( crh_single_output_spec::DEFAULT_BOUNDARY_OUTPUT )
 				),
 			"When writing out the final hits, output the hits' starts/stop as they are *after trimming*"
 		)
 		(
 			( PO_SUMMARISE ).c_str(),
 			bool_switch()
-				->notifier     ( summarise_notifier                                 )
-				->default_value( crh_output_spec::DEFAULT_SUMMARISE                 ),
+				->notifier     ( summarise_notifier                                   )
+				->default_value( crh_single_output_spec::DEFAULT_SUMMARISE            ),
 			"Output a brief text summary of the input data (rather than processing it)"
 		)
 		(
 			( PO_GENERATE_HTML_OUTPUT ).c_str(),
 			bool_switch()
-				->notifier     ( generate_html_output_notifier                      )
-				->default_value( crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT      ),
+				->notifier     ( generate_html_output_notifier                        )
+				->default_value( crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT ),
 			"Output the results as HTML"
 		)
 		(
 			( PO_JSON_OUTPUT ).c_str(),
 			bool_switch()
-				->notifier     ( json_output_notifier                               )
-				->default_value( crh_output_spec::DEFAULT_JSON_OUTPUT               ),
+				->notifier     ( json_output_notifier                                 )
+				->default_value( crh_single_output_spec::DEFAULT_JSON_OUTPUT          ),
 			"Output the results as JSON"
 		)
 		(
 			( PO_EXPORT_CSS_FILE ).c_str(),
 			value<path>()
-				->value_name   ( file_varname                                       )
-				->notifier     ( export_css_file_notifier                           ),
+				->value_name   ( file_varname                                         )
+				->notifier     ( export_css_file_notifier                             ),
 			( "Export the CSS used in the HTML output to " + file_varname ).c_str()
 		);
 
-	static_assert( ! means_output_trimmed_hits( crh_output_spec::DEFAULT_BOUNDARY_OUTPUT ),
-		"If crh_segment_spec::DEFAULT_OUTPUT_TRIMMED_HITS      isn't false, it might mess up the bool switch in here" );
-	static_assert( !                            crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT,
-		"If crh_output_spec::DEFAULT_GENERATE_HTML_OUTPUT      isn't false, it might mess up the bool switch in here" );
-	static_assert( !                            crh_output_spec::DEFAULT_JSON_OUTPUT,
-		"If crh_output_spec::DEFAULT_JSON_OUTPUT               isn't false, it might mess up the bool switch in here" );
+	static_assert( ! means_output_trimmed_hits( crh_single_output_spec::DEFAULT_BOUNDARY_OUTPUT ),
+		"If crh_segment_spec::DEFAULT_OUTPUT_TRIMMED_HITS        isn't false, it might mess up the bool switch in here" );
+	static_assert( !                            crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT,
+		"If crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT isn't false, it might mess up the bool switch in here" );
+	static_assert( !                            crh_single_output_spec::DEFAULT_JSON_OUTPUT,
+		"If crh_single_output_spec::DEFAULT_JSON_OUTPUT          isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Add any hidden options to the provided options_description
@@ -145,13 +145,13 @@ void crh_single_output_options_block::do_add_hidden_options_to_description(optio
 		(
 			PO_OUTPUT_HMMSEARCH_ALN.c_str(),
 			bool_switch()
-				->notifier     ( output_hmmsearch_aln_notifier                 )
-				->default_value( crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN ),
+				->notifier     ( output_hmmsearch_aln_notifier                        )
+				->default_value( crh_single_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN ),
 			"Print a summary of the hmmsearch alignment in the output"
 		);
 
-	static_assert( ! crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN,
-		"If crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN isn't false, it might mess up the bool switch in here" );
+	static_assert( ! crh_single_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN,
+		"If crh_single_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_single_output_options_block invalid
@@ -161,15 +161,15 @@ str_opt crh_single_output_options_block::do_invalid_string(const variables_map &
 	return get_invalid_description( the_spec );
 }
 
-/// \brief Getter for the crh_output_spec that the crh_single_output_options_block configures
-const crh_output_spec & crh_single_output_options_block::get_crh_output_spec() const {
+/// \brief Getter for the crh_single_output_spec that the crh_single_output_options_block configures
+const crh_single_output_spec & crh_single_output_options_block::get_crh_single_output_spec() const {
 	return the_spec;
 }
 
-/// \brief Get the crh_out_format for the crh_output_spec of the specified crh_single_output_options_block
+/// \brief Get the crh_out_format for the crh_single_output_spec of the specified crh_single_output_options_block
 ///
 /// \relates crh_single_output_options_block
 crh_out_format cath::rslv::get_out_format(const crh_single_output_options_block &arg_crh_output_options_block ///< The crh_single_output_options_block to query
                                           ) {
-	return get_out_format( arg_crh_output_options_block.get_crh_output_spec() );
+	return get_out_format( arg_crh_output_options_block.get_crh_single_output_spec() );
 }

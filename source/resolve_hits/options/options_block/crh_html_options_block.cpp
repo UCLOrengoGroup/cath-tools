@@ -102,9 +102,9 @@ void crh_html_options_block::do_add_visible_options_to_description(options_descr
 		);
 
 	static_assert( ! crh_html_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY,
-		"If crh_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY isn't false, it might mess up the bool switch in here" );
+		"If crh_single_output_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY isn't false, it might mess up the bool switch in here" );
 	static_assert( ! crh_html_spec::DEFAULT_EXCLUDE_REJECTED_HITS,
-		"If crh_output_spec::DEFAULT_EXCLUDE_REJECTED_HITS isn't false, it might mess up the bool switch in here" );
+		"If crh_single_output_spec::DEFAULT_EXCLUDE_REJECTED_HITS isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_html_options_block invalid

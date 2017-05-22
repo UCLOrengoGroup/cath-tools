@@ -92,7 +92,7 @@ namespace cath {
 			};
 
 			hits_processor_list make_hits_processors(std::ostream &,
-			                                         const crh_output_spec &,
+			                                         const crh_single_output_spec &,
 			                                         const crh_score_spec &,
 			                                         const crh_segment_spec &,
 			                                         const crh_html_spec &);

@@ -24,7 +24,7 @@
 #include "resolve_hits/options/spec/crh_filter_spec.hpp"
 #include "resolve_hits/options/spec/crh_html_spec.hpp"
 #include "resolve_hits/options/spec/crh_input_spec.hpp"
-#include "resolve_hits/options/spec/crh_output_spec.hpp"
+#include "resolve_hits/options/spec/crh_single_output_spec.hpp"
 #include "resolve_hits/options/spec/crh_score_spec.hpp"
 #include "resolve_hits/options/spec/crh_segment_spec.hpp"
 
@@ -35,31 +35,31 @@ namespace cath {
 		class crh_spec final {
 		private:
 			/// \brief The input spec
-			crh_input_spec   the_input_spec;
+			crh_input_spec         the_input_spec;
 
 			/// \brief The segment spec
-			crh_segment_spec the_segment_spec;
+			crh_segment_spec       the_segment_spec;
 
 			/// \brief The score spec
-			crh_score_spec   the_score_spec;
+			crh_score_spec         the_score_spec;
 
 			/// \brief The filter spec
-			crh_filter_spec  the_filter_spec;
+			crh_filter_spec        the_filter_spec;
 
 			/// \brief The output spec
-			crh_output_spec  the_output_spec;
+			crh_single_output_spec the_single_output_spec;
 
 			/// \brief The html spec
-			crh_html_spec    the_html_spec;
+			crh_html_spec          the_html_spec;
 
 		public:
 			crh_spec() = default;
 			explicit crh_spec(crh_input_spec,
-			                  crh_segment_spec = crh_segment_spec {},
-			                  crh_score_spec   = crh_score_spec   {},
-			                  crh_filter_spec  = crh_filter_spec  {},
-			                  crh_output_spec  = crh_output_spec  {},
-			                  crh_html_spec    = crh_html_spec    {} );
+			                  crh_segment_spec       = crh_segment_spec {},
+			                  crh_score_spec         = crh_score_spec   {},
+			                  crh_filter_spec        = crh_filter_spec  {},
+			                  crh_single_output_spec = crh_single_output_spec  {},
+			                  crh_html_spec          = crh_html_spec    {} );
 
 			crh_input_spec & get_input_spec();
 			const crh_input_spec & get_input_spec() const;
@@ -69,8 +69,8 @@ namespace cath {
 			const crh_score_spec & get_score_spec() const;
 			crh_filter_spec & get_filter_spec();
 			const crh_filter_spec & get_filter_spec() const;
-			crh_output_spec & get_output_spec();
-			const crh_output_spec & get_output_spec() const;
+			crh_single_output_spec & get_single_output_spec();
+			const crh_single_output_spec & get_single_output_spec() const;
 			crh_html_spec & get_html_spec();
 			const crh_html_spec & get_html_spec() const;
 
@@ -78,7 +78,7 @@ namespace cath {
 			crh_spec & set_segment_spec(const crh_segment_spec &);
 			crh_spec & set_score_spec(const crh_score_spec &);
 			crh_spec & set_filter_spec(const crh_filter_spec &);
-			crh_spec & set_output_spec(const crh_output_spec &);
+			crh_spec & set_single_output_spec(const crh_single_output_spec &);
 			crh_spec & set_html_spec(const crh_html_spec &);
 		};
 
