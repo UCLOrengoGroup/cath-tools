@@ -23,16 +23,16 @@
 namespace cath {
 	namespace test {
 
-		/// \brief The crh_output_options_block_test_suite_fixture to assist in testing crh_single_output_options_block
-		struct crh_output_options_block_test_suite_fixture {
+		/// \brief The crh_single_output_options_block_test_suite_fixture to assist in testing crh_single_output_options_block
+		struct crh_single_output_options_block_test_suite_fixture {
 		protected:
-			~crh_output_options_block_test_suite_fixture() noexcept = default;
+			~crh_single_output_options_block_test_suite_fixture() noexcept = default;
 		};
 
 	}
 }  // namespace cath
 
-BOOST_FIXTURE_TEST_SUITE(crh_output_options_block_test_suite, cath::test::crh_output_options_block_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(crh_single_output_options_block_test_suite, cath::test::crh_single_output_options_block_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK( true );

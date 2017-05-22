@@ -169,7 +169,7 @@ const crh_single_output_spec & crh_single_output_options_block::get_crh_single_o
 /// \brief Get the crh_out_format for the crh_single_output_spec of the specified crh_single_output_options_block
 ///
 /// \relates crh_single_output_options_block
-crh_out_format cath::rslv::get_out_format(const crh_single_output_options_block &arg_crh_output_options_block ///< The crh_single_output_options_block to query
+crh_out_format cath::rslv::get_out_format(const crh_single_output_options_block &arg_crh_single_output_options_block ///< The crh_single_output_options_block to query
                                           ) {
-	return get_out_format( arg_crh_output_options_block.get_crh_single_output_spec() );
+	return get_out_format( arg_crh_single_output_options_block.get_crh_single_output_spec() );
 }
