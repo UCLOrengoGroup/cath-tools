@@ -149,15 +149,6 @@ crh_single_output_spec & crh_single_output_spec::set_output_hmmsearch_aln(const 
 	return *this;
 }
 
-/// \brief Convenience setter for whether to output the hits starts/stops *after* trimming
-///
-/// \relates crh_single_output_spec
-crh_single_output_spec & cath::rslv::set_output_trimmed_hits(crh_single_output_spec &arg_single_output_spec, ///< The crh_single_output_spec to modify
-                                                             const bool             &arg_output_trimmed_hits ///< Whether to output the hits starts/stops *after* trimming
-                                                             ) {
-	return arg_single_output_spec.set_boundary_output( hit_boundary_output_of_output_trimmed_hits( arg_output_trimmed_hits ) );
-}
-
 /// \brief Get the crh_out_format implied by the specified crh_single_output_spec
 ///
 /// \pre There is a single, unambiguous output format
@@ -214,4 +205,13 @@ str_opt cath::rslv::get_invalid_description(const crh_single_output_spec &arg_si
 	}
 
 	return none;
+}
+
+/// \brief Convenience setter for whether to output the hits starts/stops *after* trimming
+///
+/// \relates crh_single_output_spec
+crh_single_output_spec & cath::rslv::set_output_trimmed_hits(crh_single_output_spec &arg_single_output_spec, ///< The crh_single_output_spec to modify
+                                                             const bool             &arg_output_trimmed_hits ///< Whether to output the hits starts/stops *after* trimming
+                                                             ) {
+	return arg_single_output_spec.set_boundary_output( hit_boundary_output_of_output_trimmed_hits( arg_output_trimmed_hits ) );
 }
