@@ -642,6 +642,7 @@ set(
 		resolve_hits/options/options_block/crh_filter_options_block.cpp
 		resolve_hits/options/options_block/crh_html_options_block.cpp
 		resolve_hits/options/options_block/crh_input_options_block.cpp
+		resolve_hits/options/options_block/crh_output_options_block.cpp
 		resolve_hits/options/options_block/crh_score_options_block.cpp
 		resolve_hits/options/options_block/crh_segment_options_block.cpp
 		resolve_hits/options/options_block/crh_single_output_options_block.cpp
@@ -652,6 +653,7 @@ set(
 		resolve_hits/options/spec/crh_filter_spec.cpp
 		resolve_hits/options/spec/crh_html_spec.cpp
 		resolve_hits/options/spec/crh_input_spec.cpp
+		resolve_hits/options/spec/crh_output_spec.cpp
 		resolve_hits/options/spec/crh_score_spec.cpp
 		resolve_hits/options/spec/crh_segment_spec.cpp
 		resolve_hits/options/spec/crh_single_output_spec.cpp
@@ -1665,6 +1667,7 @@ set(
 		resolve_hits/options/options_block/crh_filter_options_block_test.cpp
 		resolve_hits/options/options_block/crh_html_options_block_test.cpp
 		resolve_hits/options/options_block/crh_input_options_block_test.cpp
+		resolve_hits/options/options_block/crh_output_options_block_test.cpp
 		resolve_hits/options/options_block/crh_score_options_block_test.cpp
 		resolve_hits/options/options_block/crh_segment_options_block_test.cpp
 		resolve_hits/options/options_block/crh_single_output_options_block_test.cpp
