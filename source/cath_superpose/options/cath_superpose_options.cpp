@@ -107,7 +107,7 @@ str_opt cath_superpose_options::do_get_error_or_help_string() const {
 
 	const bool using_display_spec =    any_alignment_outputters_involve_display_spec    ( aln_outputters )
 	                                || any_superposition_outputters_involve_display_spec( sup_outputters );
-	if ( the_display_ob.has_specified_options( vm ) && ! using_display_spec ) {
+	if ( specifies_options_from_block( vm, the_display_ob ) && ! using_display_spec ) {
 		return "Cannot specify display options because no display is being used in superposition/alignment outputters"s;
 	}
 

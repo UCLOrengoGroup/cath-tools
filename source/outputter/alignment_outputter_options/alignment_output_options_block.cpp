@@ -97,6 +97,20 @@ str_opt alignment_output_options_block::do_invalid_string(const variables_map &/
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec alignment_output_options_block::do_get_all_options_names() const {
+	return {
+		alignment_output_options_block::PO_ALN_TO_CATH_ALN_FILE,
+		alignment_output_options_block::PO_ALN_TO_CATH_ALN_STDOUT,
+		alignment_output_options_block::PO_ALN_TO_FASTA_FILE,
+		alignment_output_options_block::PO_ALN_TO_FASTA_STDOUT,
+		alignment_output_options_block::PO_ALN_TO_SSAP_FILE,
+		alignment_output_options_block::PO_ALN_TO_SSAP_STDOUT,
+		alignment_output_options_block::PO_ALN_TO_HTML_FILE,
+		alignment_output_options_block::PO_ALN_TO_HTML_STDOUT,
+	};
+}
+
 /// \brief TODOCUMENT
 path alignment_output_options_block::get_aln_to_cath_aln_file() const {
 	return aln_to_cath_aln_file;

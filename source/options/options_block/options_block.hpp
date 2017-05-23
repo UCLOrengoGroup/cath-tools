@@ -78,6 +78,11 @@ namespace cath {
 			/// \returns A string describing the conflict in the options or an empty string if there's none
 			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const = 0;
 
+			/// \brief Pure virtual method with which each concrete options_block must define its full list of options names
+			///
+			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
+			virtual str_vec do_get_all_options_names() const = 0;
+
 		public:
 			options_block() = default;
 			std::unique_ptr<options_block> clone() const;
@@ -94,6 +99,8 @@ namespace cath {
 
 			str_opt invalid_string(const boost::program_options::variables_map &) const;
 
+			str_vec get_all_options_names() const;
+
 			static bool is_acceptable_output_file(const boost::filesystem::path &);
 			static bool is_acceptable_input_file(const boost::filesystem::path &,
 			                                     const bool & = false);
@@ -104,6 +111,9 @@ namespace cath {
 			static const std::string SUB_DESC_SEPARATOR;
 			static const std::string SUB_DESC_PAIR_SEPARATOR;
 		};
+
+		bool specifies_options_from_block(const boost::program_options::variables_map &,
+		                                  const options_block &);
 
 		/// \brief Function to make options_block meet the Clonable concept (used in ptr_container)
 		///

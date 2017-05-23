@@ -70,6 +70,13 @@ str_opt superposition_input_options_block::do_invalid_string(const variables_map
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec superposition_input_options_block::do_get_all_options_names() const {
+	return {
+		superposition_input_options_block::PO_JSON_SUP_INFILE,
+	};
+}
+
 /// \brief Getter for the optional file from which to read a JSON superposition
 const path_opt & superposition_input_options_block::get_json_sup_infile() const {
 	return json_sup_infile;

@@ -91,6 +91,14 @@ str_opt pdb_input_options_block::do_invalid_string(const variables_map &/*arg_va
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec pdb_input_options_block::do_get_all_options_names() const {
+	return {
+		pdb_input_options_block::PO_PDB_INFILE,
+		pdb_input_options_block::PO_PDBS_FROM_STDIN,
+	};
+}
+
 /// \brief TODOCUMENT
 const pdb_input_spec & pdb_input_options_block::get_pdb_input_spec() const {
 	return the_pdb_input_spec;

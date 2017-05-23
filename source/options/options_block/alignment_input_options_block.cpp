@@ -136,6 +136,17 @@ str_opt alignment_input_options_block::do_invalid_string(const variables_map &/*
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec alignment_input_options_block::do_get_all_options_names() const {
+	return {
+		alignment_input_options_block::PO_RES_NAME_ALIGN,
+		alignment_input_options_block::PO_FASTA_ALIGN_INFILE,
+		alignment_input_options_block::PO_SSAP_ALIGN_INFILE,
+		alignment_input_options_block::PO_CORA_ALIGN_INFILE,
+		alignment_input_options_block::PO_SSAP_SCORE_INFILE,
+	};
+}
+
 /// \brief TODOCUMENT
 const alignment_input_spec & alignment_input_options_block::get_alignment_input_spec() const {
 	return the_alignment_input_spec;

@@ -40,6 +40,7 @@ namespace cath {
 			std::string do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
+			str_vec do_get_all_options_names() const final;
 
 		public:
 			const pdb_input_spec & get_pdb_input_spec() const;

@@ -82,6 +82,14 @@ str_opt misc_help_version_options_block::do_invalid_string(const variables_map &
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec misc_help_version_options_block::do_get_all_options_names() const {
+	return {
+		misc_help_version_options_block::PO_HELP,
+		misc_help_version_options_block::PO_VERSION,
+	};
+}
+
 /// \brief Get the help flag
 const bool & misc_help_version_options_block::get_help() const {
 	return help;

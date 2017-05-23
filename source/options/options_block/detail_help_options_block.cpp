@@ -21,7 +21,9 @@
 #include "detail_help_options_block.hpp"
 
 #include <boost/optional.hpp>
+#include <boost/range/adaptor/map.hpp>
 
+#include "common/algorithm/copy_build.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
@@ -29,6 +31,7 @@ using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
 
+using boost::adaptors::map_keys;
 using boost::none;
 using boost::program_options::bool_switch;
 using boost::program_options::options_description;
@@ -76,6 +79,11 @@ void detail_help_options_block::do_add_visible_options_to_description(options_de
 str_opt detail_help_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                      ) const {
 	return none;
+}
+
+/// \brief Return all options names for this block
+str_vec detail_help_options_block::do_get_all_options_names() const {
+	return copy_build<str_vec>( desc_and_help_of_option_name | map_keys );
 }
 
 /// \brief Construct a detail_help_options_block from a map from option name to a pair of description and help message

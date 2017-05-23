@@ -107,6 +107,16 @@ str_opt cath_assign_domains_options_block::do_invalid_string(const variables_map
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec cath_assign_domains_options_block::do_get_all_options_names() const {
+	return {
+		cath_assign_domains_options_block::PO_SVMLIGHT_RBF_FILE,
+		cath_assign_domains_options_block::PO_FILELIST_FILE,
+		cath_assign_domains_options_block::PO_SF_OF_DOMAIN_FILE,
+		cath_assign_domains_options_block::PO_FORBIDDEN_NODES,
+	};
+}
+
 /// \brief Getter for the SVM-light RBF model file
 const path & cath_assign_domains_options_block::get_rbf_svm_file() const {
 	return rbf_svm_file;

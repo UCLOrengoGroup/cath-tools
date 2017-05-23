@@ -20,10 +20,8 @@
 
 #include "display_options_block.hpp"
 
-#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/optional.hpp>
 
-#include "common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "display_colour/display_colour_list.hpp"
 
@@ -33,7 +31,6 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 
-using boost::algorithm::any_of;
 using boost::program_options::bool_switch;
 using boost::program_options::options_description;
 using boost::program_options::value;
@@ -53,13 +50,6 @@ const string display_options_block::PO_SCORES_TO_EQUIVS          { "scores-to-eq
 
 /// \brief The option name for whether to colour based on scores normalised across the alignment, rather than absolute scores
 const string display_options_block::PO_NORMALISE_SCORES          { "normalise-scores"          };
-
-/// \brief A list of all the option names used in this options_block
-const str_vec display_options_block::ALL_BLOCK_POS = { display_options_block::PO_VIEWER_COLOURS,
-                                                       display_options_block::PO_GRADIENT_COLOUR_ALIGNMENT,
-                                                       display_options_block::PO_SHOW_SCORES_IF_PRESENT,
-                                                       display_options_block::PO_SCORES_TO_EQUIVS,
-                                                       display_options_block::PO_NORMALISE_SCORES };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> display_options_block::do_clone() const {
@@ -129,16 +119,18 @@ str_opt display_options_block::do_invalid_string(const variables_map &/*arg_vari
 	return ::cath::invalid_string( get_display_spec() );
 }
 
+/// \brief Return all options names for this block
+str_vec display_options_block::do_get_all_options_names() const {
+	return {
+		display_options_block::PO_VIEWER_COLOURS,
+		display_options_block::PO_GRADIENT_COLOUR_ALIGNMENT,
+		display_options_block::PO_SHOW_SCORES_IF_PRESENT,
+		display_options_block::PO_SCORES_TO_EQUIVS,
+		display_options_block::PO_NORMALISE_SCORES,
+	};
+}
+
 /// \brief Public, by-value getter for the_display_spec
 display_spec display_options_block::get_display_spec() const {
 	return the_display_spec;
-}
-
-/// \brief Return whether or not the specified variables_map has specified any of the options in this block
-bool display_options_block::has_specified_options(const variables_map &arg_vm ///< The variables_map to examine
-                                                  ) const {
-	return any_of(
-		ALL_BLOCK_POS,
-		[&] (const string &x) { return ( contains( arg_vm, x ) && ! arg_vm[ x ].defaulted() ); }
-	);
 }

@@ -99,6 +99,14 @@ str_opt check_pdb_options_block::do_invalid_string(const variables_map &/*arg_va
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec check_pdb_options_block::do_get_all_options_names() const {
+	return {
+		check_pdb_options_block::PO_PDB_FILE,
+		check_pdb_options_block::PO_PERMIT,
+	};
+}
+
 /// \brief Construct a check_pdb_options_block from a map from option name to a pair of description and help message
 check_pdb_options_block::check_pdb_options_block() : permit_no_atoms(false) {
 }

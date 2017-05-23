@@ -105,6 +105,19 @@ str_opt superposition_output_options_block::do_invalid_string(const variables_ma
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec superposition_output_options_block::do_get_all_options_names() const {
+	return {
+		superposition_output_options_block::PO_SUP_FILE,
+		superposition_output_options_block::PO_SUP_FILES_DIR,
+		superposition_output_options_block::PO_SUP_TO_STDOUT,
+		superposition_output_options_block::PO_SUP_TO_PYMOL,
+		superposition_output_options_block::PO_PYMOL_PROGRAM,
+		superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
+		superposition_output_options_block::PO_SUP_TO_JSON_FILE,
+	};
+}
+
 /// TODOCUMENT
 path superposition_output_options_block::get_sup_to_pdb_file() const {
 	return sup_to_pdb_file;

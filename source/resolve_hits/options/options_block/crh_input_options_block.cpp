@@ -156,6 +156,16 @@ str_opt crh_input_options_block::do_invalid_string(const variables_map &arg_vari
 	return get_invalid_description( the_spec );
 }
 
+/// \brief Return all options names for this block
+str_vec crh_input_options_block::do_get_all_options_names() const {
+	return {
+		crh_input_options_block::PO_INPUT_FILE_OR_STDIN,
+		crh_input_options_block::PO_INPUT_FORMAT,
+		crh_input_options_block::PO_MIN_GAP_LENGTH,
+		crh_input_options_block::PO_INPUT_HITS_ARE_GROUPED,
+	};
+}
+
 /// \brief Getter for the crh_input_spec that the crh_input_options_block configures
 const crh_input_spec & crh_input_options_block::get_crh_input_spec() const {
 	return the_spec;

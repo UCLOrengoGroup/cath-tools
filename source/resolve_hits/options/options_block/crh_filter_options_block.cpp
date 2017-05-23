@@ -136,6 +136,17 @@ str_opt crh_filter_options_block::do_invalid_string(const variables_map &/*arg_v
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec crh_filter_options_block::do_get_all_options_names() const {
+	return {
+		crh_filter_options_block::PO_WORST_PERMISSIBLE_EVALUE,
+		crh_filter_options_block::PO_WORST_PERMISSIBLE_BITSCORE,
+		crh_filter_options_block::PO_WORST_PERMISSIBLE_SCORE,
+		crh_filter_options_block::PO_FILTER_QUERY_ID,
+		crh_filter_options_block::PO_LIMIT_QUERIES,
+	};
+}
+
 /// \brief Getter for the crh_filter_spec that the crh_filter_options_block configures
 const crh_filter_spec & crh_filter_options_block::get_crh_filter_spec() const {
 	return the_spec;

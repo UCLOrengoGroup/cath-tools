@@ -40,6 +40,7 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
 			void do_add_hidden_options_to_description(boost::program_options::options_description &) final;
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
+			str_vec do_get_all_options_names() const final;
 
 		public:
 			static const std::string PO_OUTPUT_FILE;

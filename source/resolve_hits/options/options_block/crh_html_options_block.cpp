@@ -52,11 +52,6 @@ const string crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS     { "html-max-nu
 /// \brief  The option name for whether to exclude hits rejected by the score filters from the HTML
 const string crh_html_options_block::PO_EXCLUDE_REJECTED_HITS     { "html-exclude-rejected-hits" };
 
-/// \brief A list of all the option names used in this options_block
-const str_vec crh_html_options_block::ALL_BLOCK_POS = { crh_html_options_block::PO_RESTRICT_HTML_WITHIN_BODY,
-                                                        crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS,
-                                                        crh_html_options_block::PO_EXCLUDE_REJECTED_HITS };
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_html_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -114,16 +109,16 @@ str_opt crh_html_options_block::do_invalid_string(const variables_map &/*arg_var
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec crh_html_options_block::do_get_all_options_names() const {
+	return {
+		crh_html_options_block::PO_RESTRICT_HTML_WITHIN_BODY,
+		crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS,
+		crh_html_options_block::PO_EXCLUDE_REJECTED_HITS,
+	};
+}
+
 /// \brief Getter for the crh_html_spec that the crh_html_options_block configures
 const crh_html_spec & crh_html_options_block::get_crh_html_spec() const {
 	return the_spec;
-}
-
-/// \brief Return whether the specified variables_map indicates any of the crh_html_options_block options have been specified
-bool cath::rslv::has_specified_crh_html_options(const variables_map &arg_vm ///< The variables_map to query
-                                                ) {
-	return any_of(
-		crh_html_options_block::ALL_BLOCK_POS,
-		[&] (const string &x) { return ( contains( arg_vm, x ) && ! arg_vm[ x ].defaulted() ); }
-	);
 }

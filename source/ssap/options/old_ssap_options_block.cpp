@@ -193,6 +193,29 @@ str_opt old_ssap_options_block::do_invalid_string(const variables_map &/*arg_var
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec old_ssap_options_block::do_get_all_options_names() const {
+	return {
+		old_ssap_options_block::PO_NAME,
+		old_ssap_options_block::PO_DEBUG,
+		old_ssap_options_block::PO_OUT_FILE,
+		old_ssap_options_block::PO_CLIQUE_FILE,
+		old_ssap_options_block::PO_DOMIN_FILE,
+		old_ssap_options_block::PO_MAX_SCORE_TO_REFAST,
+		old_ssap_options_block::PO_MAX_SCORE_TO_RESLOW,
+		old_ssap_options_block::PO_SLOW_SSAP_ONLY,
+		old_ssap_options_block::PO_LOC_SSAP_SCORE,
+		old_ssap_options_block::PO_ALL_SCORES,
+		old_ssap_options_block::PO_PROTEIN_SOURCE_FILES,
+		old_ssap_options_block::PO_SUPN_DIR,
+		old_ssap_options_block::PO_ALIGN_DIR,
+		old_ssap_options_block::PO_MIN_OUT_SCORE,
+		old_ssap_options_block::PO_MIN_SUP_SCORE,
+		old_ssap_options_block::PO_RASMOL_SCRIPT,
+		old_ssap_options_block::PO_XML_SUP,
+	};
+}
+
 /// \brief Whether any protein names have been specified
 bool old_ssap_options_block::protein_names_specified() const {
 	return ! names.empty();

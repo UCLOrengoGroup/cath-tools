@@ -39,18 +39,15 @@ namespace cath {
 			std::string do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
+			str_vec do_get_all_options_names() const final;
 
 		public:
 			static const std::string PO_RESTRICT_HTML_WITHIN_BODY;
 			static const std::string PO_MAX_NUM_NON_SOLN_HITS;
 			static const std::string PO_EXCLUDE_REJECTED_HITS;
 
-			static const str_vec ALL_BLOCK_POS;
-
 			const crh_html_spec & get_crh_html_spec() const;
 		};
-
-		bool has_specified_crh_html_options(const boost::program_options::variables_map &arg_vm);
 
 	} // namespace rslv
 } // namespace cath

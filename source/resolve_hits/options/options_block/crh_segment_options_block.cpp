@@ -102,6 +102,14 @@ str_opt crh_segment_options_block::do_invalid_string(const variables_map &/*arg_
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec crh_segment_options_block::do_get_all_options_names() const {
+	return {
+		crh_segment_options_block::PO_OVERLAP_TRIM_SPEC,
+		crh_segment_options_block::PO_MIN_SEG_LENGTH,
+	};
+}
+
 /// \brief Getter for the crh_segment_spec that the crh_segment_options_block configures
 const crh_segment_spec & crh_segment_options_block::get_crh_segment_spec() const {
 	return the_spec;

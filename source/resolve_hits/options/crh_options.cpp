@@ -139,7 +139,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		}
 	}
 
-	if ( has_specified_crh_html_options( vm ) && ( get_out_format( the_single_output_ob ) != crh_out_format::HTML ) ) {
+	if ( specifies_options_from_block( vm, crh_html_options_block{} ) && ( get_out_format( the_single_output_ob ) != crh_out_format::HTML ) ) {
 		return
 			"Cannot specify HTML options without setting the output format to HTML (with --"
 			+ crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT

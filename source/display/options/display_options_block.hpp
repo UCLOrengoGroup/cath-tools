@@ -42,19 +42,16 @@ namespace cath {
 			static const std::string PO_SCORES_TO_EQUIVS;
 			static const std::string PO_NORMALISE_SCORES;
 
-			static const str_vec ALL_BLOCK_POS;
-
 			display_spec the_display_spec;
 
 			std::unique_ptr<options_block> do_clone() const final;
 			std::string do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
+			str_vec do_get_all_options_names() const final;
 
 		public:
 			display_spec get_display_spec() const;
-
-			bool has_specified_options(const boost::program_options::variables_map &arg_vm) const;
 		};
 
 	} // namespace opts

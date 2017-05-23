@@ -164,6 +164,13 @@ str_opt data_dirs_options_block::do_invalid_string(const variables_map &/*arg_va
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec data_dirs_options_block::do_get_all_options_names() const {
+	return {
+		data_dirs_options_block::PO_CATH_ROOT_DIR,
+	};
+}
+
 /// \brief Getter for the data_dirs_spec
 const data_dirs_spec & data_dirs_options_block::get_data_dirs_spec() const {
 	return the_data_dirs_spec;

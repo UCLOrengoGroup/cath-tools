@@ -161,6 +161,20 @@ str_opt crh_single_output_options_block::do_invalid_string(const variables_map &
 	return get_invalid_description( the_spec );
 }
 
+/// \brief Return all options names for this block
+str_vec crh_single_output_options_block::do_get_all_options_names() const {
+	return {
+		crh_single_output_options_block::PO_OUTPUT_FILE,
+		crh_single_output_options_block::PO_OUTPUT_TRIMMED_HITS,
+		crh_single_output_options_block::PO_SUMMARISE,
+		crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT,
+		crh_single_output_options_block::PO_JSON_OUTPUT,
+		crh_single_output_options_block::PO_RESTRICT_HTML_WITHIN_BODY,
+		crh_single_output_options_block::PO_EXPORT_CSS_FILE,
+		crh_single_output_options_block::PO_OUTPUT_HMMSEARCH_ALN,
+	};
+}
+
 /// \brief Getter for the crh_single_output_spec that the crh_single_output_options_block configures
 const crh_single_output_spec & crh_single_output_options_block::get_crh_single_output_spec() const {
 	return the_spec;

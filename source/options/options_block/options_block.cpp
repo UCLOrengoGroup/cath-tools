@@ -20,9 +20,11 @@
 
 #include "options_block.hpp"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional.hpp>
 
+#include "common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 
 using namespace boost::filesystem;
@@ -32,10 +34,10 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 
+using boost::algorithm::any_of;
 using boost::filesystem::is_empty;
 using boost::none;
 using boost::numeric_cast;
-
 
 /// \brief A string to use to separate (valid values and their descriptions) from each other
 const string options_block::SUB_DESC_SEPARATOR = "\n   ";
@@ -94,6 +96,10 @@ str_opt options_block::invalid_string(const variables_map &arg_variables_map ///
 	return do_invalid_string( arg_variables_map );
 }
 
+/// \brief An NVI pass-through to a method that returns the options_block's full list of options names
+str_vec options_block::get_all_options_names() const {
+	return do_get_all_options_names();
+}
 
 /// \brief TODOCUMENT
 bool options_block::is_acceptable_output_file(const path &arg_output_file ///< TODOCUMENT
@@ -149,4 +155,16 @@ bool options_block::is_acceptable_executable(const path &arg_output_file ///< TO
 		}
 	}
 	return true;
+}
+
+/// \brief Return whether or not the specified variables_map has specified any of the options in this block
+///
+/// \relates options_block
+bool cath::opts::specifies_options_from_block(const variables_map &arg_vm,           ///< The variables_map to examine
+                                              const options_block &arg_options_block ///< The options block
+                                              ) {
+	return any_of(
+		arg_options_block.get_all_options_names(),
+		[&] (const string &x) { return ( contains( arg_vm, x ) && ! arg_vm[ x ].defaulted() ); }
+	);
 }

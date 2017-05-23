@@ -80,6 +80,13 @@ str_opt ids_options_block::do_invalid_string(const variables_map &/*arg_variable
 	return none;
 }
 
+/// \brief Return all options names for this block
+str_vec ids_options_block::do_get_all_options_names() const {
+	return {
+		ids_options_block::PO_ID,
+	};
+}
+
 // /// \brief TODOCUMENT
 // size_t ids_options_block::num_ids_specified() const {
 // 	return ids.size();
