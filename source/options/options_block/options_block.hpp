@@ -125,7 +125,7 @@ namespace cath {
 		/// \returns A raw pointer to a new copy of the options_block argument, with the same dynamic type.
 		///          The caller is responsible for deleting this new object.
 		inline options_block * new_clone(const options_block &arg_options_block ///< The options_block to clone
-										 ) {
+		                                 ) {
 			return arg_options_block.clone().release();
 		}
 	} // namespace opts

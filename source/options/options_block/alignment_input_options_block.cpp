@@ -65,7 +65,7 @@ string alignment_input_options_block::do_get_block_name() const {
 
 /// \brief Add this block's options to the provided options_description
 void alignment_input_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
-                                                                  ) {
+                                                                          ) {
 	const string file_varname { "<file>" };
 
 	const auto residue_name_align_notifier   = [&] (const bool &x) { the_alignment_input_spec.set_residue_name_align  ( x ); };
