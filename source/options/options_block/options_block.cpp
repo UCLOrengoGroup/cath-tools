@@ -55,13 +55,19 @@ unique_ptr<options_block> options_block::clone() const {
 	return check_uptr_clone_against_this( do_clone(), *this );
 }
 
+/// \brief Add all this block's hidden options to the specified options_description
+void options_block::add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the block's hidden options should be added
+                                                      ) {
+	do_add_hidden_options_to_description( arg_desc );
+}
+
 /// \brief A method that uses the concrete class's methods to construct an options description
 ///        (using the specified line_length) of the hidden options
 options_description options_block::get_all_options_description(const size_t &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                ) {
 	options_description desc{ do_get_block_name(), numeric_cast<unsigned int>( arg_line_length ) };
 	do_add_visible_options_to_description( desc );
-	do_add_hidden_options_to_description ( desc );
+	add_hidden_options_to_description ( desc );
 	return desc;
 }
 
@@ -86,7 +92,7 @@ options_description options_block::get_visible_options_description(const size_t 
 options_description options_block::get_hidden_options_description() {
 	const string block_name = do_get_block_name();
 	options_description desc( block_name + " [hidden options]" );
-	do_add_hidden_options_to_description( desc );
+	add_hidden_options_to_description( desc );
 	return desc;
 }
 

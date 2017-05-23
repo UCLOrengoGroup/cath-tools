@@ -93,9 +93,12 @@ namespace cath {
 			options_block & operator=(const options_block &) = default;
 			options_block & operator=(options_block &&) noexcept = default;
 
+			void add_hidden_options_to_description(boost::program_options::options_description &);
+
 			boost::program_options::options_description get_all_options_description(const size_t &);
 			boost::program_options::options_description get_visible_options_description(const size_t &);
 			boost::program_options::options_description get_hidden_options_description();
+
 
 			str_opt invalid_string(const boost::program_options::variables_map &) const;
 
