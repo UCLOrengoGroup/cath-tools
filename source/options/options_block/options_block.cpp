@@ -23,7 +23,9 @@
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional.hpp>
+#include <boost/range/adaptor/filtered.hpp>
 
+#include "common/algorithm/copy_build.hpp"
 #include "common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 
@@ -34,6 +36,7 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 
+using boost::adaptors::filtered;
 using boost::algorithm::any_of;
 using boost::filesystem::is_empty;
 using boost::none;
@@ -163,7 +166,28 @@ bool options_block::is_acceptable_executable(const path &arg_output_file ///< TO
 	return true;
 }
 
-/// \brief Return whether or not the specified variables_map has specified any options with any of the specified names
+/// \brief Return the names of any of the "specified" options that have been specified in the "specified" variables_map
+///
+/// \relates options_block
+str_vec cath::opts::specified_options(const variables_map &arg_vm,        ///< The variables_map to examine,
+                                      const str_vec       &arg_opts_names ///< The names of the options of interest
+                                      ) {
+	return copy_build<str_vec>(
+		arg_opts_names
+			| filtered( [&] (const string &x) { return ( contains( arg_vm, x ) && ! arg_vm[ x ].defaulted() ); } )
+	);
+}
+
+/// \brief Return the names of any of the options in the "specified" options_block that have been specified in the "specified" variables_map
+///
+/// \relates options_block
+str_vec cath::opts::specified_options_from_block(const variables_map &arg_vm,           ///< The variables_map to examine,
+                                                 const options_block &arg_options_block ///< The options block
+                                                 ) {
+	return specified_options( arg_vm, arg_options_block.get_all_options_names() );
+}
+
+/// \brief Return whether the specified variables_map has specified any options with any of the specified names
 ///
 /// \relates options_block
 bool cath::opts::specifies_any_of_options(const variables_map &arg_vm,        ///< The variables_map to examine
@@ -175,7 +199,7 @@ bool cath::opts::specifies_any_of_options(const variables_map &arg_vm,        //
 	);
 }
 
-/// \brief Return whether or not the specified variables_map has specified any of the options in this block
+/// \brief Return whether the specified variables_map has specified any of the options in this block
 ///
 /// \relates options_block
 bool cath::opts::specifies_options_from_block(const variables_map &arg_vm,           ///< The variables_map to examine

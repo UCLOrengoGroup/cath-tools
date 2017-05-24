@@ -115,6 +115,12 @@ namespace cath {
 			static const std::string SUB_DESC_PAIR_SEPARATOR;
 		};
 
+		str_vec specified_options(const boost::program_options::variables_map &,
+		                          const str_vec &);
+
+		str_vec specified_options_from_block(const boost::program_options::variables_map &,
+		                                     const options_block &);
+
 		bool specifies_any_of_options(const boost::program_options::variables_map &,
 		                              const str_vec &);
 
