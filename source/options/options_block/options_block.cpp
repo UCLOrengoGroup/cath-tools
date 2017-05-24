@@ -163,14 +163,23 @@ bool options_block::is_acceptable_executable(const path &arg_output_file ///< TO
 	return true;
 }
 
+/// \brief Return whether or not the specified variables_map has specified any options with any of the specified names
+///
+/// \relates options_block
+bool cath::opts::specifies_any_of_options(const variables_map &arg_vm,        ///< The variables_map to examine
+                                          const str_vec       &arg_opts_names ///< The names of the options of interest
+                                          ) {
+	return any_of(
+		arg_opts_names,
+		[&] (const string &x) { return ( contains( arg_vm, x ) && ! arg_vm[ x ].defaulted() ); }
+	);
+}
+
 /// \brief Return whether or not the specified variables_map has specified any of the options in this block
 ///
 /// \relates options_block
 bool cath::opts::specifies_options_from_block(const variables_map &arg_vm,           ///< The variables_map to examine
                                               const options_block &arg_options_block ///< The options block
                                               ) {
-	return any_of(
-		arg_options_block.get_all_options_names(),
-		[&] (const string &x) { return ( contains( arg_vm, x ) && ! arg_vm[ x ].defaulted() ); }
-	);
+	return specifies_any_of_options( arg_vm, arg_options_block.get_all_options_names() );
 }
