@@ -28,6 +28,7 @@
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/front.hpp"
 #include "exception/invalid_argument_exception.hpp"
+#include "resolve_hits/options/options_block/crh_output_options_block.hpp"
 
 using namespace cath;
 using namespace cath::common;
@@ -147,6 +148,43 @@ crh_single_output_spec & crh_single_output_spec::set_output_hmmsearch_aln(const 
                                                                           ) {
 	output_hmmsearch_aln = arg_output_hmmsearch_aln;
 	return *this;
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates crh_single_output_spec
+str_vec cath::rslv::get_deprecated_suggestion(const crh_single_output_spec &arg_single_output_spec ///< The crh_single_output_spec to query
+                                              ) {
+	if ( get_invalid_description( arg_single_output_spec ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to get deprecated suggestion for invalid crh_single_output_spec"));
+	}
+	const crh_out_format  output_format = get_out_format( arg_single_output_spec );
+	const path_opt       &output_file   = arg_single_output_spec.get_output_file();
+	if ( ! output_file ) {
+		switch ( output_format ) {
+			case ( crh_out_format::STANDARD ) : { return {                                                              }; }
+			case ( crh_out_format::SUMMARY  ) : { return { "--" + crh_output_options_block::PO_SUMMARISE_TO_FILE,   "-" }; }
+			case ( crh_out_format::HTML     ) : { return { "--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, "-" }; }
+			case ( crh_out_format::JSON     ) : { return { "--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, "-" }; }
+		}
+	}
+	else {
+		switch ( output_format ) {
+			case ( crh_out_format::STANDARD ) : { return { "--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE,   output_file->string(), "--" + crh_output_options_block::PO_QUIET }; }
+			case ( crh_out_format::SUMMARY  ) : { return { "--" + crh_output_options_block::PO_SUMMARISE_TO_FILE,   output_file->string(), "--" + crh_output_options_block::PO_QUIET }; }
+			case ( crh_out_format::HTML     ) : { return { "--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, output_file->string(), "--" + crh_output_options_block::PO_QUIET }; }
+			case ( crh_out_format::JSON     ) : { return { "--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, output_file->string(), "--" + crh_output_options_block::PO_QUIET }; }
+		}
+	}
+	BOOST_THROW_EXCEPTION(invalid_argument_exception("Unrecognised crh_out_format " + to_string( output_format ) ));
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates crh_single_output_spec
+string cath::rslv::get_deprecated_suggestion_str(const crh_single_output_spec &arg_crh_single_output_spec ///< The crh_single_output_spec to query
+                                                 ) {
+	return join( get_deprecated_suggestion( arg_crh_single_output_spec ), " " );
 }
 
 /// \brief Get the crh_out_format implied by the specified crh_single_output_spec

@@ -106,6 +106,9 @@ namespace cath {
 			crh_single_output_spec & set_output_hmmsearch_aln(const bool &);
 		};
 
+		str_vec get_deprecated_suggestion(const crh_single_output_spec &);
+		std::string get_deprecated_suggestion_str(const crh_single_output_spec &);
+
 		crh_out_format get_out_format(const crh_single_output_spec &);
 
 		str_opt get_invalid_description(const crh_single_output_spec &);

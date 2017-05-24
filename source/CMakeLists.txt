@@ -1674,9 +1674,15 @@ set(
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS_OPTIONS_SPEC
+		resolve_hits/options/spec/crh_single_output_spec_test.cpp
+)
+
+set(
 	TESTSOURCES_RESOLVE_HITS_OPTIONS
 		resolve_hits/options/crh_options_test.cpp
 		${TESTSOURCES_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK}
+		${TESTSOURCES_RESOLVE_HITS_OPTIONS_SPEC}
 )
 
 set(
