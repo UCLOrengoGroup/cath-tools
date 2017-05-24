@@ -20,6 +20,9 @@
 
 #include "crh_output_options_block.hpp"
 
+#include <boost/range/join.hpp>
+
+#include "common/algorithm/sort_uniq_build.hpp" // ***** TEMPORARY *****
 #include "common/clone/make_uptr_clone.hpp"
 
 using namespace cath;
@@ -33,6 +36,7 @@ using boost::program_options::bool_switch;
 using boost::program_options::options_description;
 using boost::program_options::value;
 using boost::program_options::variables_map;
+using boost::range::join;
 using std::string;
 using std::unique_ptr;
 
@@ -195,6 +199,18 @@ str_opt crh_output_options_block::do_invalid_string(const variables_map &/*arg_v
 
 /// \brief Return all options names for this block
 str_vec crh_output_options_block::do_get_all_options_names() const {
+	// \TODO Remove the sort_uniq_build() (and replace with copy_build())
+	// once the duplicated options have been removed from crh_single_output_options_block
+	return sort_uniq_build<str_vec>(
+		join(
+			get_all_non_deprecated_option_names(),
+			deprecated_single_output_ob.get_all_options_names()
+		)
+	);
+}
+
+/// \brief Return all non-deprecated options names for this block
+str_vec crh_output_options_block::get_all_non_deprecated_option_names() const {
 	return {
 		crh_output_options_block::PO_HITS_TEXT_TO_FILE,
 		crh_output_options_block::PO_QUIET,

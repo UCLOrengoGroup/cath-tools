@@ -44,6 +44,10 @@ namespace cath {
 
 		public:
 			static const std::string PO_OUTPUT_FILE;
+			/// \TODO Remove any options duplicated in crh_output_options_block once this
+			///       is only used for deprecated options within that. Then:
+			///        * propagate those changes to crh_single_output_spec
+			///        * remove sort_copy_build in crh_output_options_block::do_get_all_options_names()
 			static const std::string PO_OUTPUT_TRIMMED_HITS;
 			static const std::string PO_SUMMARISE;
 			static const std::string PO_GENERATE_HTML_OUTPUT;

@@ -48,6 +48,8 @@ namespace cath {
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 			str_vec do_get_all_options_names() const final;
 
+			str_vec get_all_non_deprecated_option_names() const;
+
 		public:
 			static const std::string PO_HITS_TEXT_TO_FILE;
 			static const std::string PO_QUIET;
