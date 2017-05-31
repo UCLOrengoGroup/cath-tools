@@ -78,6 +78,10 @@ namespace cath {
 	using diff_vec                      = std::vector<ptrdiff_t>;
 	using diff_vec_vec                  = std::vector<diff_vec>;
 
+	/// \brief Alias template for a vector of reference_wrappers of T
+	template <typename T>
+	using ref_vec                       = std::vector<std::reference_wrapper<T>>;
+
 	template <typename T>
 	using uptr_vec                      = std::vector<std::unique_ptr<T>>;
 

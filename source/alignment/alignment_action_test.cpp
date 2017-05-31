@@ -53,10 +53,10 @@ namespace cath {
 
 			const path         root_dir           = { TEST_MULTI_SSAP_SUPERPOSE_DIR() };
 			const path         expected_aln_file  = { root_dir / "expected_glue_output.fa" };
-			const protein      protein_1g5aA03    = { read_protein_from_dssp_and_pdb( root_dir / "1g5aA03.dssp", root_dir / "1g5aA03", dssp_skip_policy::SKIP__BREAK_ANGLES, "1g5aA03", reference_wrapper<ostream>( test_stderr ) ) };
-			const protein      protein_1r7aA02    = { read_protein_from_dssp_and_pdb( root_dir / "1r7aA02.dssp", root_dir / "1r7aA02", dssp_skip_policy::SKIP__BREAK_ANGLES, "1r7aA02", reference_wrapper<ostream>( test_stderr ) ) };
-			const protein      protein_1wzaA02    = { read_protein_from_dssp_and_pdb( root_dir / "1wzaA02.dssp", root_dir / "1wzaA02", dssp_skip_policy::SKIP__BREAK_ANGLES, "1wzaA02", reference_wrapper<ostream>( test_stderr ) ) };
-			const protein      protein_1zjaA02    = { read_protein_from_dssp_and_pdb( root_dir / "1zjaA02.dssp", root_dir / "1zjaA02", dssp_skip_policy::SKIP__BREAK_ANGLES, "1zjaA02", reference_wrapper<ostream>( test_stderr ) ) };
+			const protein      protein_1g5aA03    = { read_protein_from_dssp_and_pdb( root_dir / "1g5aA03.dssp", root_dir / "1g5aA03", dssp_skip_policy::SKIP__BREAK_ANGLES, "1g5aA03", ostream_ref( test_stderr ) ) };
+			const protein      protein_1r7aA02    = { read_protein_from_dssp_and_pdb( root_dir / "1r7aA02.dssp", root_dir / "1r7aA02", dssp_skip_policy::SKIP__BREAK_ANGLES, "1r7aA02", ostream_ref( test_stderr ) ) };
+			const protein      protein_1wzaA02    = { read_protein_from_dssp_and_pdb( root_dir / "1wzaA02.dssp", root_dir / "1wzaA02", dssp_skip_policy::SKIP__BREAK_ANGLES, "1wzaA02", ostream_ref( test_stderr ) ) };
+			const protein      protein_1zjaA02    = { read_protein_from_dssp_and_pdb( root_dir / "1zjaA02.dssp", root_dir / "1zjaA02", dssp_skip_policy::SKIP__BREAK_ANGLES, "1zjaA02", ostream_ref( test_stderr ) ) };
 			const protein_list all_proteins       = { make_protein_list( { protein_1g5aA03, protein_1r7aA02, protein_1wzaA02, protein_1zjaA02 } ) };
 			const alignment    aln_1wzaA02_1zjaA02= { read_alignment_from_cath_ssap_legacy_format( root_dir / "1wzaA021zjaA02.list", protein_1wzaA02, protein_1zjaA02, test_stderr ) };
 			const alignment    aln_1g5aA03_1zjaA02= { read_alignment_from_cath_ssap_legacy_format( root_dir / "1g5aA031zjaA02.list", protein_1g5aA03, protein_1zjaA02, test_stderr ) };

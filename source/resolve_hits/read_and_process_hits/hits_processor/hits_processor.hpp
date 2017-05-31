@@ -41,12 +41,6 @@ namespace cath {
 	namespace rslv {
 		namespace detail {
 
-			/// \brief Alias template for a vector of reference_wrappers of T
-			///
-			/// \TODO: Move to common/type_aliases.hpp
-			template <typename T>
-			using ref_vec = std::vector< std::reference_wrapper< T > >;
-
 			/// \brief Provide and ABC interface for classes that will process hits in read_and_process_mgr
 			class hits_processor {
 			private:

@@ -143,7 +143,7 @@ private:
 	reference_wrapper<const display_colourer> the_colourer;
 
 	/// \brier Reference to the stream to which the viewer data is to be written
-	reference_wrapper<ostream> the_os;
+	ostream_ref the_os;
 
 	/// \brier Reference to the viewer to notify
 	reference_wrapper<viewer> the_viewer;
