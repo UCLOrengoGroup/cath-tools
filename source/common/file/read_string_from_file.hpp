@@ -1,5 +1,5 @@
 /// \file
-/// \brief The read_from_json_file header
+/// \brief The read_string_from_file header
 
 /// \copyright
 /// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
@@ -18,28 +18,30 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_COMMON_PROPERTY_TREE_READ_FROM_JSON_FILE_H
-#define _CATH_TOOLS_SOURCE_COMMON_PROPERTY_TREE_READ_FROM_JSON_FILE_H
+#ifndef _CATH_TOOLS_SOURCE_COMMON_FILE_READ_STRING_FROM_FILE_H
+#define _CATH_TOOLS_SOURCE_COMMON_FILE_READ_STRING_FROM_FILE_H
 
 #include <boost/filesystem/path.hpp>
-// #include <boost/property_tree/json_parser.hpp>
 
-#include "common/file/read_string_from_file.hpp"
-#include "common/property_tree/from_json_string.hpp"
+#include "common/file/open_fstream.hpp"
 
 #include <fstream>
-#include <string>
 
 namespace cath {
 	namespace common {
 
-		/// \brief Build a T from a JSON string (via a ptree)
-		///
-		/// Requires that there is specialisation of read_from_ptree<> for T
-		template <typename T>
-		T read_from_json_file(const boost::filesystem::path &arg_json_file ///< The JSON file to read
-		                      ) {
-			return from_json_string<T>( read_string_from_file( arg_json_file ) );
+		/// \brief Read the contents of the specified file into a string
+		inline std::string read_string_from_file(const boost::filesystem::path &arg_file ///< The file from which the string should be read
+		                                         ) {
+			std::ifstream input_stream;
+			open_ifstream( input_stream, arg_file );
+
+			const std::string result{
+				std::istreambuf_iterator<char>( input_stream ),
+				std::istreambuf_iterator<char>(              )
+			};
+			input_stream.close();
+			return result;
 		}
 
 	} // namespace common
