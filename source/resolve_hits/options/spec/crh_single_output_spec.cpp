@@ -45,11 +45,9 @@ using boost::range::count_if;
 using std::string;
 using std::vector;
 
-constexpr hit_boundary_output crh_single_output_spec::DEFAULT_BOUNDARY_OUTPUT;
 constexpr bool                crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;
 constexpr bool                crh_single_output_spec::DEFAULT_JSON_OUTPUT;
 constexpr bool                crh_single_output_spec::DEFAULT_SUMMARISE;
-constexpr bool                crh_single_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN;
 
 /// \brief Generate a string describing the specified crh_out_format
 ///
@@ -70,12 +68,6 @@ const path_opt & crh_single_output_spec::get_output_file() const {
 	return output_file;
 }
 
-
-/// \brief Getter for whether to output the hits starts/stops *after* trimming
-const hit_boundary_output & crh_single_output_spec::get_boundary_output() const {
-	return boundary_output;
-}
-
 /// \brief Getter for whether to output HTML describing the hits and the results
 const bool & crh_single_output_spec::get_generate_html_output() const {
 	return generate_html_output;
@@ -91,27 +83,10 @@ const bool & crh_single_output_spec::get_summarise() const {
 	return summarise;
 }
 
-/// \brief Getter for an optional file to which the cath-resolve-hits CSS should be dumped
-const path_opt & crh_single_output_spec::get_export_css_file() const {
-	return export_css_file;
-}
-
-/// \brief Getter for whether to output a summary of the hmmsearch output alignment
-const bool & crh_single_output_spec::get_output_hmmsearch_aln() const {
-	return output_hmmsearch_aln;
-}
-
 /// \brief Setter for the output file to which data should be written
 crh_single_output_spec & crh_single_output_spec::set_output_file(const path &arg_output_file ///< The output file to which data should be written
                                                                  ) {
 	output_file = arg_output_file;
-	return *this;
-}
-
-/// \brief Setter for whether to output the hits starts/stops *after* trimming
-crh_single_output_spec & crh_single_output_spec::set_boundary_output(const hit_boundary_output &arg_boundary_output ///< Whether to output the hits starts/stops *after* trimming
-                                                                     ) {
-	boundary_output = arg_boundary_output;
 	return *this;
 }
 
@@ -136,21 +111,23 @@ crh_single_output_spec & crh_single_output_spec::set_summarise(const bool &arg_s
 	return *this;
 }
 
-/// \brief Setter for an optional file to which the cath-resolve-hits CSS should be dumped
-crh_single_output_spec & crh_single_output_spec::set_export_css_file(const path_opt &arg_export_css_file ///< An optional file to which the cath-resolve-hits CSS should be dumped
-                                                                     ) {
-	export_css_file = arg_export_css_file;
-	return  *this;
+/// \brief Return whether the specified crh_single_output_spec is in a default state
+///
+/// \relates crh_single_output_spec
+bool cath::rslv::is_default(const crh_single_output_spec &arg_single_output_spec ///< The crh_single_output_spec to query
+                            ) {
+	return (
+		! arg_single_output_spec.get_output_file()
+		&&
+		! arg_single_output_spec.get_summarise()
+		&&
+		! arg_single_output_spec.get_generate_html_output()
+		&&
+		! arg_single_output_spec.get_json_output()
+	);
 }
 
-/// \brief Setter for whether to output a summary of the hmmsearch output alignment
-crh_single_output_spec & crh_single_output_spec::set_output_hmmsearch_aln(const bool &arg_output_hmmsearch_aln ///< Whether to output a summary of the hmmsearch output alignment
-                                                                          ) {
-	output_hmmsearch_aln = arg_output_hmmsearch_aln;
-	return *this;
-}
-
-/// \brief TODOCUMENT
+/// \brief Get a list of non-deprecated option strings suggested to replicate the behaviour implied by the specified crh_single_output_spec
 ///
 /// \relates crh_single_output_spec
 str_vec cath::rslv::get_deprecated_suggestion(const crh_single_output_spec &arg_single_output_spec ///< The crh_single_output_spec to query
@@ -162,24 +139,24 @@ str_vec cath::rslv::get_deprecated_suggestion(const crh_single_output_spec &arg_
 	const path_opt       &output_file   = arg_single_output_spec.get_output_file();
 	if ( ! output_file ) {
 		switch ( output_format ) {
-			case ( crh_out_format::STANDARD ) : { return {                                                              }; }
-			case ( crh_out_format::SUMMARY  ) : { return { "--" + crh_output_options_block::PO_SUMMARISE_TO_FILE,   "-" }; }
-			case ( crh_out_format::HTML     ) : { return { "--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, "-" }; }
-			case ( crh_out_format::JSON     ) : { return { "--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, "-" }; }
+			case ( crh_out_format::STANDARD ) : { return {                                                                                                                           }; }
+			case ( crh_out_format::SUMMARY  ) : { return {                                            "--" + crh_output_options_block::PO_SUMMARISE_TO_FILE,   "-"                   }; }
+			case ( crh_out_format::HTML     ) : { return {                                            "--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, "-"                   }; }
+			case ( crh_out_format::JSON     ) : { return {                                            "--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, "-"                   }; }
 		}
 	}
 	else {
 		switch ( output_format ) {
-			case ( crh_out_format::STANDARD ) : { return { "--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE,   output_file->string(), "--" + crh_output_options_block::PO_QUIET }; }
-			case ( crh_out_format::SUMMARY  ) : { return { "--" + crh_output_options_block::PO_SUMMARISE_TO_FILE,   output_file->string(), "--" + crh_output_options_block::PO_QUIET }; }
-			case ( crh_out_format::HTML     ) : { return { "--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, output_file->string(), "--" + crh_output_options_block::PO_QUIET }; }
-			case ( crh_out_format::JSON     ) : { return { "--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, output_file->string(), "--" + crh_output_options_block::PO_QUIET }; }
+			case ( crh_out_format::STANDARD ) : { return { "--" + crh_output_options_block::PO_QUIET, "--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE,   output_file->string() }; }
+			case ( crh_out_format::SUMMARY  ) : { return { "--" + crh_output_options_block::PO_QUIET, "--" + crh_output_options_block::PO_SUMMARISE_TO_FILE,   output_file->string() }; }
+			case ( crh_out_format::HTML     ) : { return { "--" + crh_output_options_block::PO_QUIET, "--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, output_file->string() }; }
+			case ( crh_out_format::JSON     ) : { return { "--" + crh_output_options_block::PO_QUIET, "--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, output_file->string() }; }
 		}
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Unrecognised crh_out_format " + to_string( output_format ) ));
 }
 
-/// \brief TODOCUMENT
+/// \brief Get a string containing non-deprecated option strings suggested to replicate the behaviour implied by the specified crh_single_output_spec
 ///
 /// \relates crh_single_output_spec
 string cath::rslv::get_deprecated_suggestion_str(const crh_single_output_spec &arg_crh_single_output_spec ///< The crh_single_output_spec to query
@@ -232,24 +209,5 @@ str_opt cath::rslv::get_invalid_description(const crh_single_output_spec &arg_si
 		);
 	}
 
-	const auto out_format     = get_out_format( arg_single_output_spec );
-	const auto out_format_str = to_string     ( out_format      );
-
-	if ( means_output_trimmed_hits( arg_single_output_spec.get_boundary_output() ) && out_format != crh_out_format::STANDARD ) {
-		return
-			"Cannot specify trimmed boundaries if output format is "
-			+ out_format_str
-			+ " (but the output format may already contain the information you require)";
-	}
-
 	return none;
-}
-
-/// \brief Convenience setter for whether to output the hits starts/stops *after* trimming
-///
-/// \relates crh_single_output_spec
-crh_single_output_spec & cath::rslv::set_output_trimmed_hits(crh_single_output_spec &arg_single_output_spec, ///< The crh_single_output_spec to modify
-                                                             const bool             &arg_output_trimmed_hits ///< Whether to output the hits starts/stops *after* trimming
-                                                             ) {
-	return arg_single_output_spec.set_boundary_output( hit_boundary_output_of_output_trimmed_hits( arg_output_trimmed_hits ) );
 }

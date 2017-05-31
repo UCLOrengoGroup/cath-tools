@@ -20,6 +20,7 @@
 
 #include "cath_hit_resolver.hpp"
 
+#include "common/file/ofstream_list.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/logger.hpp"
 #include "exception/not_implemented_exception.hpp"
@@ -82,7 +83,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
                                       ostream        &arg_stdout    ///< The output stream
                                       ) {
 	const auto &in_spec         = arg_crh_spec.get_input_spec();
-	const auto &out_spec        = arg_crh_spec.get_single_output_spec();
+	const auto &out_spec        = arg_crh_spec.get_output_spec();
 	const auto &score_spec      = arg_crh_spec.get_score_spec();
 	const auto &css_file_opt    = out_spec.get_export_css_file();
 	const auto &input_file_opt  = in_spec.get_input_file();
@@ -90,10 +91,13 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 
 	// If CSS requested, export it
 	if ( css_file_opt ) {
-		ofstream css_export_file_stream;
-		open_ofstream( css_export_file_stream, *css_file_opt );
-		css_export_file_stream << resolve_hits_html_outputter::css_string();
-		css_export_file_stream.close();
+		ofstream_list oftreams{ arg_stdout };
+		const auto ostream_refs = oftreams.open_ofstreams( { *css_file_opt } );
+		if ( ostream_refs.size() != 1 ) {
+			BOOST_THROW_EXCEPTION(out_of_range_exception("argh"));
+		}
+		ostream_refs.front().get() << resolve_hits_html_outputter::css_string();
+		oftreams.close_all();
 	}
 
 	// If no input specified, stop here
@@ -114,17 +118,10 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 	}
 	istream &the_istream_ref = ( read_from_stdin ? arg_istream : input_file_stream );
 
-	// Organise the output stream
-	ofstream output_file_stream;
-	const auto &output_file_opt = out_spec.get_output_file();
-	if ( output_file_opt ) {
-		open_ofstream( output_file_stream, *output_file_opt );
-	}
-	ostream &the_ostream_ref = ( output_file_opt ? output_file_stream : arg_stdout );
-
 	// Prepare a read_and_process_mgr object
+	ofstream_list oftreams{ arg_stdout };
 	read_and_process_mgr the_read_and_process_mgr = make_read_and_process_mgr(
-		the_ostream_ref,
+		oftreams,
 		arg_crh_spec
 	);
 
@@ -182,9 +179,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 	}
 
 	// Close any open file streams
-	if ( output_file_opt ) {
-		output_file_stream.close();
-	}
+	oftreams.close_all();
 	if ( input_file_opt ) {
 		input_file_stream.close();
 	}

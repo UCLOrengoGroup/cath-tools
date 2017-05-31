@@ -58,6 +58,12 @@ unique_ptr<options_block> options_block::clone() const {
 	return check_uptr_clone_against_this( do_clone(), *this );
 }
 
+/// \brief Add all this block's visible options to the specified options_description
+void options_block::add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the block's hidden options should be added
+                                                       ) {
+	do_add_visible_options_to_description( arg_desc );
+}
+
 /// \brief Add all this block's hidden options to the specified options_description
 void options_block::add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the block's hidden options should be added
                                                       ) {

@@ -40,6 +40,7 @@ using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::max_element;
 using boost::range::min_element;
+using std::move;
 using std::ostream;
 using std::right;
 using std::setw;
@@ -104,32 +105,34 @@ double median(size_vec &args ///< The bunch of unsorted size_t values for which 
 /// \brief Write the HTML suffix to finish the work (if it has been started)
 void summarise_hits_processor::do_finish_work() {
 	if ( num_hits > 0 ) {
-		get_ostream()
-			<< "Summary of input data\n"
-			<< "---------------------\n"
-			<< " * Number of queries : " << right << setw( 6 ) << max_stops.size() << " (excludes any queries with no hits)\n"
-			<< " * Number of hits    : " << right << setw( 6 ) << num_hits
-			<< " (ie an average of " << ( numeric_cast<double>( num_hits ) / numeric_cast<double>( max_stops.size() ) ) << " per query)\n"
-			<< " * Minimum max-stop  : " << right << setw( 6 ) << ( max_stops.empty() ? "<N/A>" : std::to_string( *min_element( max_stops ) ) ) << "\n"
-			<< " * Median  max-stop  : "
-			<< (
-				max_stops.empty()
-					? " <N/A>"
-					: ( format( "%8.1f" ) % median( max_stops ) ).str()
-			)
-			<< "\n"
-			<< " * Maximum max-stop  : " << right << setw( 6 ) << ( max_stops.empty() ? "<N/A>" : std::to_string( *max_element( max_stops ) ) ) << "\n"
-			<< " * Example hit       :\n"
-			<< (
-				example_query_id_and_hit
-				?
-					  "    * Query ID : " + example_query_id_and_hit->first                         + "\n"
-					+ "    * Match ID : " + example_query_id_and_hit->second.get_label()            + "\n"
-					+ "    * Score    : " + get_score_string   ( example_query_id_and_hit->second ) + "\n"
-					+ "    * Segments : " + get_segments_string( example_query_id_and_hit->second ) + "\n"
-				:
-					""
-			);
+		for (const ostream_ref &ostream_ref : get_ostreams() ) {
+			ostream_ref.get()
+				<< "Summary of input data\n"
+				<< "---------------------\n"
+				<< " * Number of queries : " << right << setw( 6 ) << max_stops.size() << " (excludes any queries with no hits)\n"
+				<< " * Number of hits    : " << right << setw( 6 ) << num_hits
+				<< " (ie an average of " << ( numeric_cast<double>( num_hits ) / numeric_cast<double>( max_stops.size() ) ) << " per query)\n"
+				<< " * Minimum max-stop  : " << right << setw( 6 ) << ( max_stops.empty() ? "<N/A>" : std::to_string( *min_element( max_stops ) ) ) << "\n"
+				<< " * Median  max-stop  : "
+				<< (
+					max_stops.empty()
+						? " <N/A>"
+						: ( format( "%8.1f" ) % median( max_stops ) ).str()
+				)
+				<< "\n"
+				<< " * Maximum max-stop  : " << right << setw( 6 ) << ( max_stops.empty() ? "<N/A>" : std::to_string( *max_element( max_stops ) ) ) << "\n"
+				<< " * Example hit       :\n"
+				<< (
+					example_query_id_and_hit
+					?
+						  "    * Query ID : " + example_query_id_and_hit->first                         + "\n"
+						+ "    * Match ID : " + example_query_id_and_hit->second.get_label()            + "\n"
+						+ "    * Score    : " + get_score_string   ( example_query_id_and_hit->second ) + "\n"
+						+ "    * Segments : " + get_segments_string( example_query_id_and_hit->second ) + "\n"
+					:
+						""
+				);
+		}
 	}
 }
 
@@ -139,6 +142,6 @@ bool summarise_hits_processor::do_wants_hits_that_fail_score_filter() const {
 }
 
 /// \brief Ctor for the summarise_hits_processor
-summarise_hits_processor::summarise_hits_processor(ostream &arg_ostream ///< The ostream to which the results should be written
-                                                   ) noexcept : super{ arg_ostream } {
+summarise_hits_processor::summarise_hits_processor(ref_vec<ostream> arg_ostreams ///< The ostream to which the results should be written
+                                                   ) noexcept : super{ move( arg_ostreams ) } {
 }

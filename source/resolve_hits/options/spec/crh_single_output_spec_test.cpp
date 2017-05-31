@@ -31,10 +31,10 @@ BOOST_AUTO_TEST_CASE(get_deprecated_suggestion_works) {
 	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec()                        .set_summarise           ( true ) ), "--summarise-to-file -"             );
 	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec()                        .set_generate_html_output( true ) ), "--html-output-to-file -"           );
 	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec()                        .set_json_output         ( true ) ), "--json-output-to-file -"           );
-	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec().set_output_file( "abc")                                  ), "--hits-text-to-file abc --quiet"   );
-	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec().set_output_file( "abc").set_summarise           ( true ) ), "--summarise-to-file abc --quiet"   );
-	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec().set_output_file( "abc").set_generate_html_output( true ) ), "--html-output-to-file abc --quiet" );
-	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec().set_output_file( "abc").set_json_output         ( true ) ), "--json-output-to-file abc --quiet" );
+	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec().set_output_file( "abc")                                  ), "--quiet --hits-text-to-file abc"   );
+	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec().set_output_file( "abc").set_summarise           ( true ) ), "--quiet --summarise-to-file abc"   );
+	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec().set_output_file( "abc").set_generate_html_output( true ) ), "--quiet --html-output-to-file abc" );
+	BOOST_CHECK_EQUAL( get_deprecated_suggestion_str( crh_single_output_spec().set_output_file( "abc").set_json_output         ( true ) ), "--quiet --json-output-to-file abc" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

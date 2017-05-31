@@ -154,13 +154,14 @@ read_and_process_mgr cath::rslv::make_read_and_process_mgr(const hits_processor_
 /// \brief Make a read_and_process_mgr from the specified ostream and crh_spec
 ///
 /// \relates read_and_process_mgr
-read_and_process_mgr cath::rslv::make_read_and_process_mgr(ostream        &arg_ostream, ///< The ostream to which the results should be written
-                                                           const crh_spec &arg_spec     ///< The crh_spec to specify what to do
+read_and_process_mgr cath::rslv::make_read_and_process_mgr(ofstream_list  &arg_ofstreams, ///< The ofstream_list to which the read_and_process_mgr's hits_processors should write
+                                                           const crh_spec &arg_spec       ///< The crh_spec to specify what to do
                                                            ) {
 	return make_read_and_process_mgr(
 		make_hits_processors(
-			arg_ostream,
+			arg_ofstreams,
 			arg_spec.get_single_output_spec(),
+			arg_spec.get_output_spec(),
 			arg_spec.get_score_spec(),
 			arg_spec.get_segment_spec(),
 			arg_spec.get_html_spec()

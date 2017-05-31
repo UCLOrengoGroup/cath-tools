@@ -35,6 +35,7 @@ using namespace cath::test;
 
 using boost::algorithm::all_of;
 using std::make_unique;
+using std::ostream;
 using std::ostringstream;
 
 namespace cath {
@@ -47,6 +48,12 @@ namespace cath {
 
 			/// \brief A dummy ostringstream to which tests can write
 			ostringstream test_ss;
+
+			/// \brief A dummy ostream_ref to which the tests can write
+			ostream_ref test_ss_ref{ test_ss };
+
+			/// \brief A dummy ostream_ref_vec to which the tests can write
+			ref_vec<ostream> test_ss_ref_vec{ test_ss_ref };
 
 			/// \brief A dummy crh_score_spec to be used in tests
 			const crh_score_spec score_spec{};
@@ -66,20 +73,20 @@ BOOST_AUTO_TEST_CASE(ctor_does_not_throw) {
 
 BOOST_AUTO_TEST_CASE(size_and_empty_work) {
 	BOOST_CHECK      (   hits_processor_list{}.empty() );
-	BOOST_CHECK      ( ! hits_processor_list{}.add_processor( summarise_hits_processor             { test_ss } ).empty() );
-	BOOST_CHECK      ( ! hits_processor_list{}.add_processor( make_unique<summarise_hits_processor>( test_ss ) ).empty() );
+	BOOST_CHECK      ( ! hits_processor_list{}.add_processor( summarise_hits_processor             { test_ss_ref_vec } ).empty() );
+	BOOST_CHECK      ( ! hits_processor_list{}.add_processor( make_unique<summarise_hits_processor>( test_ss_ref_vec ) ).empty() );
 	BOOST_CHECK_EQUAL(   hits_processor_list{}.size(), 0 );
-	BOOST_CHECK_EQUAL(   hits_processor_list{}.add_processor( summarise_hits_processor             { test_ss } ).size(), 1 );
-	BOOST_CHECK_EQUAL(   hits_processor_list{}.add_processor( make_unique<summarise_hits_processor>( test_ss ) ).size(), 1 );
+	BOOST_CHECK_EQUAL(   hits_processor_list{}.add_processor( summarise_hits_processor             { test_ss_ref_vec } ).size(), 1 );
+	BOOST_CHECK_EQUAL(   hits_processor_list{}.add_processor( make_unique<summarise_hits_processor>( test_ss_ref_vec ) ).size(), 1 );
 }
 
 BOOST_AUTO_TEST_CASE(accesses_work) {
-	const bool correct_parse_hits = summarise_hits_processor{ test_ss }.wants_hits_that_fail_score_filter();
+	const bool correct_parse_hits = summarise_hits_processor{ test_ss_ref_vec }.wants_hits_that_fail_score_filter();
 	const auto the_list = [&] () {
 		hits_processor_list temp_list;
 		temp_list
-			.add_processor( summarise_hits_processor{ test_ss } )
-			.add_processor( summarise_hits_processor{ test_ss } );
+			.add_processor( summarise_hits_processor{ test_ss_ref_vec } )
+			.add_processor( summarise_hits_processor{ test_ss_ref_vec } );
 		return temp_list;
 	} ();
 

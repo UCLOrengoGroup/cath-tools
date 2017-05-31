@@ -38,23 +38,19 @@ namespace cath {
 			std::unique_ptr<opts::options_block> do_clone() const final;
 			std::string do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
-			void do_add_hidden_options_to_description(boost::program_options::options_description &) final;
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 			str_vec do_get_all_options_names() const final;
 
 		public:
-			static const std::string PO_OUTPUT_FILE;
 			/// \TODO Remove any options duplicated in crh_output_options_block once this
 			///       is only used for deprecated options within that. Then:
 			///        * propagate those changes to crh_single_output_spec
 			///        * remove sort_copy_build in crh_output_options_block::do_get_all_options_names()
-			static const std::string PO_OUTPUT_TRIMMED_HITS;
+
+			static const std::string PO_OUTPUT_FILE;
 			static const std::string PO_SUMMARISE;
 			static const std::string PO_GENERATE_HTML_OUTPUT;
 			static const std::string PO_JSON_OUTPUT;
-			static const std::string PO_RESTRICT_HTML_WITHIN_BODY;
-			static const std::string PO_EXPORT_CSS_FILE;
-			static const std::string PO_OUTPUT_HMMSEARCH_ALN;
 
 			const crh_single_output_spec & get_crh_single_output_spec() const;
 		};

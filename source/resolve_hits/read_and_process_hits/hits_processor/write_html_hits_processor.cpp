@@ -32,6 +32,7 @@ using namespace cath::rslv::detail;
 
 using std::move;
 using std::ostream;
+using std::reference_wrapper;
 using std::string;
 using std::unique_ptr;
 
@@ -39,6 +40,8 @@ using std::unique_ptr;
 unique_ptr<hits_processor> write_html_hits_processor::do_clone() const {
 	return { make_uptr_clone( *this ) };
 }
+
+template <typename...> class type_printer;
 
 /// \brief Process the specified data
 ///
@@ -52,31 +55,37 @@ void write_html_hits_processor::do_process_hits_for_query(const string          
 	// If the prefix hasn't already been printed, then do so and record
 	if ( ! printed_prefix ) {
 		if ( ! html_spec.get_restrict_html_within_body() ) {
-			get_ostream() << resolve_hits_html_outputter::html_prefix();
+			for (const ostream_ref &ostream_ref : get_ostreams() ) {
+				ostream_ref.get() << resolve_hits_html_outputter::html_prefix();
+			}
 		}
 		printed_prefix = true;
 	}
 
 	// Output the HTML for this query and its hits
-	get_ostream() << resolve_hits_html_outputter::output_html(
-		arg_query_id,
-		arg_calc_hits,
-		arg_score_spec,
-		arg_segment_spec,
-		html_spec,
-		false,
-		arg_filter_spec,
-		batch_counter
-	);
+	for (const ostream_ref &ostream_ref : get_ostreams() ) {
+		ostream_ref.get() << resolve_hits_html_outputter::output_html(
+			arg_query_id,
+			arg_calc_hits,
+			arg_score_spec,
+			arg_segment_spec,
+			html_spec,
+			false,
+			arg_filter_spec,
+			batch_counter
+		);
+	}
 	++batch_counter;
 }
 
 /// \brief Write the HTML suffix to finish the work (if it has been started)
 void write_html_hits_processor::do_finish_work() {
 	if ( printed_prefix ) {
-		get_ostream() << resolve_hits_html_outputter::html_key();
-		if ( ! html_spec.get_restrict_html_within_body() ) {
-			get_ostream() << resolve_hits_html_outputter::html_suffix();
+		for (const ostream_ref &ostream_ref : get_ostreams() ) {
+			ostream_ref.get() << resolve_hits_html_outputter::html_key();
+			if ( ! html_spec.get_restrict_html_within_body() ) {
+				ostream_ref.get() << resolve_hits_html_outputter::html_suffix();
+			}
 		}
 	}
 }
@@ -87,8 +96,8 @@ bool write_html_hits_processor::do_wants_hits_that_fail_score_filter() const {
 }
 
 /// \brief Ctor for the write_html_hits_processor
-write_html_hits_processor::write_html_hits_processor(ostream       &arg_ostream,  ///< The ostream to which the results should be written
-                                                     crh_html_spec  arg_html_spec ///< The specification for how to render the HTML
-                                                     ) noexcept : super    { arg_ostream,               },
-                                                                  html_spec{ std::move( arg_html_spec ) } {
+write_html_hits_processor::write_html_hits_processor(ref_vec<ostream> arg_ostreams,  ///< The ostream to which the results should be written
+                                                     crh_html_spec    arg_html_spec ///< The specification for how to render the HTML
+                                                     ) noexcept : super    { move( arg_ostreams  ) },
+                                                                  html_spec{ move( arg_html_spec ) } {
 }

@@ -32,8 +32,10 @@ using namespace cath::rslv::detail;
 
 using std::move;
 using std::ostream;
+using std::reference_wrapper;
 using std::string;
 using std::unique_ptr;
+using std::vector;
 
 /// \brief A standard do_clone method
 unique_ptr<hits_processor> write_json_hits_processor::do_clone() const {
@@ -50,7 +52,7 @@ void write_json_hits_processor::do_process_hits_for_query(const string          
                                                           const calc_hit_list    &arg_calc_hits        ///< The hits to process
                                                           ) {
 	if ( ! has_started ) {
-		json_writer.start_object();
+		json_writers.start_object();
 		has_started = true;
 	}
 
@@ -62,14 +64,14 @@ void write_json_hits_processor::do_process_hits_for_query(const string          
 	);
 
 	// Output the results to arg_ostream
-	json_writer.write_key( arg_query_id );
-	json_writer.write_raw_string( to_json_string_with_compact_fullhits( result_full_hits, arg_segment_spec, 1 ) );
+	json_writers.write_key( arg_query_id );
+	json_writers.write_raw_string( to_json_string_with_compact_fullhits( result_full_hits, arg_segment_spec, 1 ) );
 }
 
 /// \brief Do nothing to finish the batch of work
 void write_json_hits_processor::do_finish_work() {
-	if ( has_started && ! json_writer.is_complete() ) {
-		json_writer.end_object();
+	if ( has_started && ! json_writers.is_complete() ) {
+		json_writers.end_object();
 	}
 }
 
@@ -79,27 +81,30 @@ bool write_json_hits_processor::do_wants_hits_that_fail_score_filter() const {
 }
 
 /// \brief Ctor for write_json_hits_processor
-write_json_hits_processor::write_json_hits_processor(ostream &arg_ostream ///< The ostream to which the results should be written
-                                                     ) noexcept : super { arg_ostream } {
+write_json_hits_processor::write_json_hits_processor(ref_vec<ostream> arg_ostreams ///< The ostream to which the results should be written
+                                                     ) noexcept : super { move( arg_ostreams ) } {
+	for (const ostream_ref &ostream_ref : get_ostreams() ) {
+		json_writers.emplace_back( ostream_ref.get() );
+	}
 }
 
 
 /// \brief Copy ctor for write_json_hits_processor
 write_json_hits_processor::write_json_hits_processor(const write_json_hits_processor &arg_rhs ///< The other write_json_hits_processor from which to copy construct
-                                                     ) : super      { arg_rhs             },
-                                                         json_writer{ get_ostream()       },
-                                                         has_started{ arg_rhs.has_started } {
-	if ( has_started && ! json_writer.is_complete() ) {
+                                                     ) : super       { arg_rhs             },
+                                                         json_writers{ get_ostreams()      },
+                                                         has_started { arg_rhs.has_started } {
+	if ( has_started && ! json_writers.is_complete() ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Unable to copy construct from write_json_hits_processor that's in-process of writing"));
 	}
 }
 
 /// \brief Move ctor for write_json_hits_processor
 write_json_hits_processor::write_json_hits_processor(write_json_hits_processor &&arg_rhs ///< The other write_json_hits_processor from which to move construct
-                                                     ) : super      { move( arg_rhs )     },
-                                                         json_writer{ get_ostream()       },
-                                                         has_started{ arg_rhs.has_started } {
-	if ( has_started && ! json_writer.is_complete() ) {
+                                                     ) : super       { move( arg_rhs )     },
+                                                         json_writers{ get_ostreams()      },
+                                                         has_started { arg_rhs.has_started } {
+	if ( has_started && ! json_writers.is_complete() ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Unable to copy construct from write_json_hits_processor that's in-process of writing"));
 	}
 }

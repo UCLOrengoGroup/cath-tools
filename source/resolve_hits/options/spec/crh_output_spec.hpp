@@ -86,6 +86,13 @@ namespace cath {
 			crh_output_spec & set_output_hmmsearch_aln(const bool &);
 		};
 
+		bool has_html_output(const crh_output_spec &);
+
+		bool has_hits_text_output(const crh_output_spec &);
+
+		bool has_any_out_files_matching(const crh_output_spec &,
+		                                const boost::filesystem::path &);
+
 		path_vec get_all_output_paths(const crh_output_spec &);
 
 		str_opt get_invalid_description(const crh_output_spec &);

@@ -56,7 +56,7 @@ namespace cath {
 				bool do_wants_hits_that_fail_score_filter() const final;
 
 			public:
-				explicit summarise_hits_processor(std::ostream &) noexcept;
+				explicit summarise_hits_processor(ref_vec<std::ostream>) noexcept;
 			};
 
 

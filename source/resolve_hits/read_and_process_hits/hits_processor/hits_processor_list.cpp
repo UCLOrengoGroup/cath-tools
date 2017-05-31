@@ -21,12 +21,17 @@
 #include "hits_processor_list.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
+// #include <boost/optional/optional_io.hpp> // ***** TEMPORARY *****
 
+#include "common/file/ofstream_list.hpp"
+#include "resolve_hits/options/spec/crh_output_spec.hpp"
 #include "resolve_hits/options/spec/crh_single_output_spec.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/write_json_hits_processor.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.hpp"
+
+#include <iostream> // ***** TEMPORARY *****
 
 using namespace cath::common;
 using namespace cath::rslv;
@@ -121,22 +126,52 @@ auto hits_processor_list::end() const -> const_iterator {
 /// \brief Make the hits_processor implied by the specified spec object and the specified ostream
 ///
 /// \relates hits_processor_list
-hits_processor_list cath::rslv::detail::make_hits_processors(ostream                      &arg_ostream,            ///< The ostream to which the new hits_processor should write
+hits_processor_list cath::rslv::detail::make_hits_processors(ofstream_list                &arg_ofstreams,          ///< The ofstream_list to which the hits_processors should write
                                                              const crh_single_output_spec &arg_single_output_spec, ///< The crh_single_output_spec defining the type of hits_processor to make
+                                                             const crh_output_spec        &arg_output_spec,        ///< The crh_output_spec defining the type of hits_processor to make
                                                              const crh_score_spec         &arg_score_spec,         ///< The crh_score_spec how to handle scores
                                                              const crh_segment_spec       &arg_segment_spec,       ///< The crh_segment_spec how to handle segments
                                                              const crh_html_spec          &arg_html_spec           ///< The crh_html_spec defining how to render any HTML
                                                              ) {
-	const auto &bound_out = arg_single_output_spec.get_boundary_output();
+	const auto &bound_out = arg_output_spec.get_boundary_output();
 	hits_processor_list the_list{ arg_score_spec, arg_segment_spec };
-	the_list.add_processor( [&] () -> unique_ptr<hits_processor> {
-		switch ( get_out_format( arg_single_output_spec ) ) {
-			case ( crh_out_format::HTML     ) : { return make_unique< write_html_hits_processor    >( arg_ostream, arg_html_spec ); }
-			case ( crh_out_format::SUMMARY  ) : { return make_unique< summarise_hits_processor     >( arg_ostream                ); }
-			case ( crh_out_format::STANDARD ) : { return make_unique< write_results_hits_processor >( arg_ostream, bound_out     ); }
-			case ( crh_out_format::JSON     ) : { return make_unique< write_json_hits_processor    >( arg_ostream                ); }
+	if ( ! is_default( arg_single_output_spec ) ) {
+		the_list.add_processor( [&] () -> unique_ptr<hits_processor> {
+			const path_opt output_file_opt = arg_single_output_spec.get_output_file();
+			const auto     ostream_refs    = arg_ofstreams.open_ofstreams( { output_file_opt.value_or( arg_ofstreams.get_flag() ) } );
+			switch ( get_out_format( arg_single_output_spec ) ) {
+				case ( crh_out_format::HTML     ) : { return make_unique< write_html_hits_processor    >( ostream_refs, arg_html_spec ); }
+				case ( crh_out_format::SUMMARY  ) : { return make_unique< summarise_hits_processor     >( ostream_refs                ); }
+				case ( crh_out_format::STANDARD ) : { return make_unique< write_results_hits_processor >( ostream_refs, bound_out     ); }
+				case ( crh_out_format::JSON     ) : { return make_unique< write_json_hits_processor    >( ostream_refs                ); }
+			}
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of crh_out_format not recognised whilst converting to_string()"));
+		} () );
+	}
+	else {
+		const path_vec &summarise_files   = arg_output_spec.get_summarise_files();
+		const path_vec &html_output_files = arg_output_spec.get_html_output_files();
+		const path_vec &json_output_files = arg_output_spec.get_json_output_files();
+		const path_vec  hits_text_files   = [&] () {
+			path_vec temp_hits_text_files = arg_output_spec.get_hits_text_files();
+			if ( ! arg_output_spec.get_quiet() && ! has_any_out_files_matching( arg_output_spec, arg_ofstreams.get_flag() ) ) {
+				temp_hits_text_files.push_back( arg_ofstreams.get_flag() );
+			}
+			return temp_hits_text_files;
+		} ();
+
+		if ( ! html_output_files.empty() ) {
+			the_list.add_processor( make_unique< write_html_hits_processor    >( arg_ofstreams.open_ofstreams( html_output_files ), arg_html_spec ) );
 		}
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of crh_out_format not recognised whilst converting to_string()"));
-	} () );
+		if ( ! summarise_files.empty()   ) {
+			the_list.add_processor( make_unique< summarise_hits_processor     >( arg_ofstreams.open_ofstreams( summarise_files   )                ) );
+		}
+		if ( ! hits_text_files.empty() ) {
+			the_list.add_processor( make_unique< write_results_hits_processor >( arg_ofstreams.open_ofstreams( hits_text_files   ), bound_out     ) );
+		}
+		if ( ! json_output_files.empty() ) {
+			the_list.add_processor( make_unique< write_json_hits_processor    >( arg_ofstreams.open_ofstreams( json_output_files )                ) );
+		}
+	}
 	return the_list;
 }

@@ -53,7 +53,7 @@ namespace cath {
 				bool do_wants_hits_that_fail_score_filter() const final;
 
 			public:
-				explicit write_results_hits_processor(std::ostream &,
+				explicit write_results_hits_processor(ref_vec<std::ostream>,
 				                                      const hit_boundary_output &) noexcept;
 			};
 

@@ -48,6 +48,8 @@ namespace cath {
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 			str_vec do_get_all_options_names() const final;
 
+			str_vec get_all_non_deprecated_option_names_that_clash_with_deprecated() const;
+			str_vec get_all_non_deprecated_option_names_that_do_not_clash_with_deprecated() const;
 			str_vec get_all_non_deprecated_option_names() const;
 
 		public:
@@ -61,9 +63,12 @@ namespace cath {
 			static const std::string PO_OUTPUT_HMMSEARCH_ALN;
 
 			const crh_output_spec & get_crh_output_spec() const;
+			const crh_single_output_options_block & get_deprecated_single_output_options_block() const;
 		};
 
-		crh_out_format get_out_format(const crh_output_options_block &);
+		const crh_single_output_spec & get_deprecated_single_output_spec(const crh_output_options_block &);
+
+		bool has_any_html_output(const crh_output_options_block &);
 
 	} // namespace rslv
 } // namespace cath

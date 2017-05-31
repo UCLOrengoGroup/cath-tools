@@ -55,9 +55,6 @@ namespace cath {
 			/// \brief The output file to which data should be written
 			path_opt            output_file;
 
-			/// \brief Whether to output the hits starts/stops *after* trimming
-			hit_boundary_output boundary_output      = DEFAULT_BOUNDARY_OUTPUT;
-
 			/// \brief Whether to output a summary of the input data
 			bool                summarise            = DEFAULT_SUMMARISE;
 
@@ -67,16 +64,7 @@ namespace cath {
 			/// \brief Whether to output the results in JSON format
 			bool                json_output          = DEFAULT_JSON_OUTPUT;
 
-			/// \brief An optional file to which the cath-resolve-hits CSS should be dumped
-			path_opt            export_css_file;
-
-			/// \brief Whether to output a summary of the hmmsearch output alignment
-			bool                output_hmmsearch_aln = DEFAULT_OUTPUT_HMMSEARCH_ALN;
-
 		public:
-			/// \brief The default value for whether to output the hits starts/stops *after* trimming
-			static constexpr hit_boundary_output DEFAULT_BOUNDARY_OUTPUT      = hit_boundary_output::ORIG;
-
 			/// \brief The default value for whether to output a summary of the input data
 			static constexpr bool                DEFAULT_SUMMARISE            = false;
 
@@ -86,25 +74,19 @@ namespace cath {
 			/// \brief The default value for whether to output the results in JSON format
 			static constexpr bool                DEFAULT_JSON_OUTPUT          = false;
 
-			/// \brief The default value for whether to output a summary of the hmmsearch output alignment
-			static constexpr bool                DEFAULT_OUTPUT_HMMSEARCH_ALN = false;
 
 			const path_opt & get_output_file() const;
-			const hit_boundary_output & get_boundary_output() const;
 			const bool & get_summarise() const;
 			const bool & get_generate_html_output() const;
 			const bool & get_json_output() const;
-			const path_opt & get_export_css_file() const;
-			const bool & get_output_hmmsearch_aln() const;
 
 			crh_single_output_spec & set_output_file(const boost::filesystem::path &);
-			crh_single_output_spec & set_boundary_output(const hit_boundary_output &);
 			crh_single_output_spec & set_summarise(const bool &);
 			crh_single_output_spec & set_generate_html_output(const bool &);
 			crh_single_output_spec & set_json_output(const bool &);
-			crh_single_output_spec & set_export_css_file(const path_opt &);
-			crh_single_output_spec & set_output_hmmsearch_aln(const bool &);
 		};
+
+		bool is_default(const crh_single_output_spec &);
 
 		str_vec get_deprecated_suggestion(const crh_single_output_spec &);
 		std::string get_deprecated_suggestion_str(const crh_single_output_spec &);

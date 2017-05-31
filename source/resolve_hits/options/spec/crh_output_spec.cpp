@@ -24,6 +24,7 @@
 #include <boost/range/algorithm/count.hpp>
 
 #include "common/algorithm/append.hpp"
+#include "common/algorithm/contains.hpp"
 #include "common/algorithm/is_uniq.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
 #include "resolve_hits/options/options_block/crh_output_options_block.hpp"
@@ -139,6 +140,41 @@ crh_output_spec & crh_output_spec::set_output_hmmsearch_aln(const bool &arg_outp
 	return *this;
 }
 
+/// \brief Return whether the specified crh_output_spec implies any HTML output
+///
+/// \relates crh_output_spec
+bool cath::rslv::has_html_output(const crh_output_spec &arg_output_spec ///< The crh_output_spec to query
+                                 ) {
+	return ! arg_output_spec.get_html_output_files().empty();
+}
+
+/// \brief Return whether the specified crh_output_spec implies any hits-text output
+///
+/// \relates crh_output_spec
+bool cath::rslv::has_hits_text_output(const crh_output_spec &arg_output_spec ///< The crh_output_spec to query
+                                      ) {
+	return ! arg_output_spec.get_hits_text_files().empty();
+}
+
+/// \brief Return whether the specified crh_output_spec has any output files that match the specified file
+///
+/// \relates crh_output_spec
+bool cath::rslv::has_any_out_files_matching(const crh_output_spec &arg_output_spec, ///< The crh_output_spec to query
+                                            const path            &arg_query_path   ///< The file being searched for
+                                            ) {
+	return (
+		contains( arg_output_spec.get_hits_text_files(),   arg_query_path )
+		||
+		contains( arg_output_spec.get_summarise_files(),   arg_query_path )
+		||
+		contains( arg_output_spec.get_html_output_files(), arg_query_path )
+		||
+		contains( arg_output_spec.get_json_output_files(), arg_query_path )
+		||
+		( arg_output_spec.get_export_css_file() == arg_query_path )
+	);
+}
+
 /// \brief Get all output paths implied by the specified crh_output_spec
 ///
 /// \relates crh_output_spec
@@ -174,6 +210,14 @@ str_opt cath::rslv::get_invalid_description(const crh_output_spec &arg_output_sp
 
 	if ( ! is_uniq( all_sorted_paths ) ) {
 		return "Cannot send more than one type of output to the same output file"s;
+	}
+
+	const bool hits_text_to_stdout = num_stdouts == 0 && ! arg_output_spec.get_quiet();
+	if ( means_output_trimmed_hits( arg_output_spec.get_boundary_output() ) && ! ( hits_text_to_stdout || has_hits_text_output( arg_output_spec ) ) ) {
+		return
+			"Cannot specify trimmed boundaries if not outputting any hits text (with --"
+			+ crh_output_options_block::PO_HITS_TEXT_TO_FILE
+			+ ") but your output format may already contain the information you require";
 	}
 
 	return none;

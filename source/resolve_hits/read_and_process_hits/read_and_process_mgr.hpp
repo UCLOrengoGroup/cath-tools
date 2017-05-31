@@ -181,7 +181,7 @@ namespace cath {
 		read_and_process_mgr make_read_and_process_mgr(const detail::hits_processor_list &,
 		                                               const crh_spec &);
 
-		read_and_process_mgr make_read_and_process_mgr(std::ostream &,
+		read_and_process_mgr make_read_and_process_mgr(common::ofstream_list &,
 		                                               const crh_spec &);
 
 		/// \brief Process the specified data

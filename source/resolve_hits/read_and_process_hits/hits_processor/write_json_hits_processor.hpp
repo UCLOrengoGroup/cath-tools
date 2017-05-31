@@ -23,7 +23,7 @@
 
 #include <rapidjson/ostreamwrapper.h>
 
-#include "common/rapidjson_addenda/rapidjson_writer.hpp"
+#include "common/rapidjson_addenda/rapidjson_writer_list.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/hits_processor.hpp"
 
 namespace cath {
@@ -37,7 +37,7 @@ namespace cath {
 				using super = hits_processor;
 
 				/// \brief The JSON writer, which writes to an OStreamWrapper of the hits_processor's ostream
-				common::rapidjson_writer<common::json_style::PRETTY, rapidjson::OStreamWrapper> json_writer{ get_ostream() };
+				common::rapidjson_writer_list<common::json_style::PRETTY, rapidjson::OStreamWrapper> json_writers;
 
 				/// \brief Whether anything has been written to this yet
 				bool has_started = false;
@@ -55,7 +55,7 @@ namespace cath {
 				bool do_wants_hits_that_fail_score_filter() const final;
 
 			public:
-				explicit write_json_hits_processor(std::ostream &) noexcept;
+				explicit write_json_hits_processor(ref_vec<std::ostream>) noexcept;
 
 				write_json_hits_processor(const write_json_hits_processor &);
 				write_json_hits_processor(write_json_hits_processor &&);

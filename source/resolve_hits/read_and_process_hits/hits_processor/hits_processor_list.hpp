@@ -32,6 +32,9 @@
 #include <initializer_list>
 #include <utility>
 
+namespace cath { namespace common { class ofstream_list; } }
+namespace cath { namespace rslv { class crh_output_spec; } }
+
 namespace cath {
 	namespace rslv {
 		namespace detail {
@@ -91,8 +94,9 @@ namespace cath {
 				const_iterator end() const;
 			};
 
-			hits_processor_list make_hits_processors(std::ostream &,
+			hits_processor_list make_hits_processors(common::ofstream_list &,
 			                                         const crh_single_output_spec &,
+			                                         const crh_output_spec &,
 			                                         const crh_score_spec &,
 			                                         const crh_segment_spec &,
 			                                         const crh_html_spec &);

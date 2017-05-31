@@ -41,11 +41,17 @@ namespace cath {
 	namespace rslv {
 		namespace detail {
 
+			/// \brief Alias template for a vector of reference_wrappers of T
+			///
+			/// \TODO: Move to common/type_aliases.hpp
+			template <typename T>
+			using ref_vec = std::vector< std::reference_wrapper< T > >;
+
 			/// \brief Provide and ABC interface for classes that will process hits in read_and_process_mgr
 			class hits_processor {
 			private:
 				/// \brief (A reference_wrapper to) the output stream to which the results should be written
-				std::reference_wrapper<std::ostream> output_stream;
+				ref_vec<std::ostream> output_streams;
 
 				/// \brief Pure virtual method with which each concrete hits_processor must define how to create a clone of itself
 				virtual std::unique_ptr<hits_processor> do_clone() const = 0;
@@ -67,10 +73,11 @@ namespace cath {
 				// virtual bool do_requires_strictly_worse_hits() const = 0;
 
 			protected:
-				std::ostream & get_ostream();
+				const ref_vec<std::ostream> & get_ostreams();
 
 			public:
 				explicit hits_processor(std::ostream &) noexcept;
+				explicit hits_processor(ref_vec<std::ostream>) noexcept;
 				virtual ~hits_processor() noexcept = default;
 
 				hits_processor(const hits_processor &) = default;
@@ -95,14 +102,20 @@ namespace cath {
 				// bool requires_strictly_worse_hits() const;
 			};
 
-			/// \brief Getter for the ostream to which results should be written
-			inline std::ostream & hits_processor::get_ostream() {
-				return output_stream;
+			/// \brief Getter for the ostreams to which results should be written
+			inline const ref_vec<std::ostream> & hits_processor::get_ostreams() {
+				return output_streams;
 			}
 
 			/// \brief Ctor
 			inline hits_processor::hits_processor(std::ostream &arg_output_stream ///< The ostream to which results should be written
-			                                      ) noexcept : output_stream { arg_output_stream } {
+			                                      ) noexcept : output_streams { { arg_output_stream } } {
+			}
+
+			/// \brief Ctor
+			inline hits_processor::hits_processor(ref_vec<std::ostream> arg_stream_refs ///< A vector of reference_wrappers to the ostreams to which results should be written
+			                                      ) noexcept : output_streams{ std::move( arg_stream_refs ) } {
+
 			}
 
 			/// \brief Standard approach to achieving a virtual copy-ctor

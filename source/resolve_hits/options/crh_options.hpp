@@ -28,7 +28,7 @@
 #include "resolve_hits/options/options_block/crh_input_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_score_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_segment_options_block.hpp"
-#include "resolve_hits/options/options_block/crh_single_output_options_block.hpp"
+#include "resolve_hits/options/options_block/crh_output_options_block.hpp"
 
 #include <iosfwd>
 
@@ -57,7 +57,7 @@ namespace cath {
 			crh_filter_options_block        the_filter_ob;
 
 			/// \brief The cath-resolve-hits output options_block
-			crh_single_output_options_block the_single_output_ob;
+			crh_output_options_block        the_output_ob;
 
 			/// \brief The cath-resolve-hits html options_block
 			crh_html_options_block          the_html_ob;
@@ -84,7 +84,7 @@ namespace cath {
 			const crh_segment_spec & get_crh_segment_spec() const;
 			const crh_score_spec & get_crh_score_spec() const;
 			const crh_filter_spec & get_crh_filter_spec() const;
-			const crh_single_output_spec & get_crh_single_output_spec() const;
+			const crh_output_spec & get_crh_output_spec() const;
 			const crh_html_spec & get_crh_html_spec() const;
 
 			static const std::string PROGRAM_NAME;

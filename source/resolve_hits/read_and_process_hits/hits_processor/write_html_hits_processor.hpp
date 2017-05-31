@@ -58,7 +58,7 @@ namespace cath {
 				bool do_wants_hits_that_fail_score_filter() const final;
 
 			public:
-				explicit write_html_hits_processor(std::ostream &,
+				explicit write_html_hits_processor(ref_vec<std::ostream>,
 				                                   crh_html_spec) noexcept;
 			};
 

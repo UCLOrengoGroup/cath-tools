@@ -39,9 +39,6 @@ using std::unique_ptr;
 /// \brief The option name for the output file to which data should be written (or unspecified for stdout)
 const string crh_single_output_options_block::PO_OUTPUT_FILE              { "output-file"               };
 
-/// \brief The option name for whether to output the hits starts/stops *after* trimming
-const string crh_single_output_options_block::PO_OUTPUT_TRIMMED_HITS      { "output-trimmed-hits"       };
-
 /// \brief The option name for whether to output a summary of the input data
 const string crh_single_output_options_block::PO_SUMMARISE                { "summarise"                 };
 
@@ -50,15 +47,6 @@ const string crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT     { "htm
 
 /// \brief The option name for whether to output the results in JSON format
 const string crh_single_output_options_block::PO_JSON_OUTPUT              { "json-output"               };
-
-/// \brief The option name for whether to restrict HTML output to the contents of the body tag
-const string crh_single_output_options_block::PO_RESTRICT_HTML_WITHIN_BODY{ "restrict-html-within-body" };
-
-/// \brief The option name for an optional file to which the cath-resolve-hits CSS should be dumped
-const string crh_single_output_options_block::PO_EXPORT_CSS_FILE          { "export-css-file"           };
-
-/// \brief The option name for whether to output a summary of the hmmsearch output alignment
-const string crh_single_output_options_block::PO_OUTPUT_HMMSEARCH_ALN     { "output-hmmsearch-aln"      };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_single_output_options_block::do_clone() const {
@@ -76,11 +64,9 @@ void crh_single_output_options_block::do_add_visible_options_to_description(opti
 	const string file_varname   { "<file>"   };
 
 	const auto output_file_notifier          = [&] (const path &x) { the_spec.set_output_file          (           x ); };
-	const auto output_trimmed_hits_notifier  = [&] (const bool &x) {          set_output_trimmed_hits  ( the_spec, x ); };
 	const auto summarise_notifier            = [&] (const bool &x) { the_spec.set_summarise            (           x ); };
 	const auto generate_html_output_notifier = [&] (const bool &x) { the_spec.set_generate_html_output (           x ); };
 	const auto json_output_notifier          = [&] (const bool &x) { the_spec.set_json_output          (           x ); };
-	const auto export_css_file_notifier      = [&] (const path &x) { the_spec.set_export_css_file      (           x ); };
 
 	arg_desc.add_options()
 		(
@@ -89,15 +75,6 @@ void crh_single_output_options_block::do_add_visible_options_to_description(opti
 				->value_name   ( file_varname                                         )
 				->notifier     ( output_file_notifier                                 ),
 			( "Write output to file " + file_varname + " (or, if unspecified, to stdout)" ).c_str()
-		)
-		(
-			( PO_OUTPUT_TRIMMED_HITS ).c_str(),
-			bool_switch()
-				->notifier     ( output_trimmed_hits_notifier                         )
-				->default_value(
-					means_output_trimmed_hits( crh_single_output_spec::DEFAULT_BOUNDARY_OUTPUT )
-				),
-			"When writing out the final hits, output the hits' starts/stop as they are *after trimming*"
 		)
 		(
 			( PO_SUMMARISE ).c_str(),
@@ -119,39 +96,12 @@ void crh_single_output_options_block::do_add_visible_options_to_description(opti
 				->notifier     ( json_output_notifier                                 )
 				->default_value( crh_single_output_spec::DEFAULT_JSON_OUTPUT          ),
 			"Output the results as JSON"
-		)
-		(
-			( PO_EXPORT_CSS_FILE ).c_str(),
-			value<path>()
-				->value_name   ( file_varname                                         )
-				->notifier     ( export_css_file_notifier                             ),
-			( "Export the CSS used in the HTML output to " + file_varname ).c_str()
 		);
 
-	static_assert( ! means_output_trimmed_hits( crh_single_output_spec::DEFAULT_BOUNDARY_OUTPUT ),
-		"If crh_segment_spec::DEFAULT_OUTPUT_TRIMMED_HITS        isn't false, it might mess up the bool switch in here" );
-	static_assert( !                            crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT,
+	static_assert( ! crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT,
 		"If crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT isn't false, it might mess up the bool switch in here" );
-	static_assert( !                            crh_single_output_spec::DEFAULT_JSON_OUTPUT,
+	static_assert( ! crh_single_output_spec::DEFAULT_JSON_OUTPUT,
 		"If crh_single_output_spec::DEFAULT_JSON_OUTPUT          isn't false, it might mess up the bool switch in here" );
-}
-
-/// \brief Add any hidden options to the provided options_description
-void crh_single_output_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
-                                                                           ) {
-	const auto output_hmmsearch_aln_notifier = [&] (const bool &x) { the_spec.set_output_hmmsearch_aln( x ); };
-
-	arg_desc.add_options()
-		(
-			PO_OUTPUT_HMMSEARCH_ALN.c_str(),
-			bool_switch()
-				->notifier     ( output_hmmsearch_aln_notifier                        )
-				->default_value( crh_single_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN ),
-			"Print a summary of the hmmsearch alignment in the output"
-		);
-
-	static_assert( ! crh_single_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN,
-		"If crh_single_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_single_output_options_block invalid
@@ -165,13 +115,9 @@ str_opt crh_single_output_options_block::do_invalid_string(const variables_map &
 str_vec crh_single_output_options_block::do_get_all_options_names() const {
 	return {
 		crh_single_output_options_block::PO_OUTPUT_FILE,
-		crh_single_output_options_block::PO_OUTPUT_TRIMMED_HITS,
 		crh_single_output_options_block::PO_SUMMARISE,
 		crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT,
 		crh_single_output_options_block::PO_JSON_OUTPUT,
-		crh_single_output_options_block::PO_RESTRICT_HTML_WITHIN_BODY,
-		crh_single_output_options_block::PO_EXPORT_CSS_FILE,
-		crh_single_output_options_block::PO_OUTPUT_HMMSEARCH_ALN,
 	};
 }
 
