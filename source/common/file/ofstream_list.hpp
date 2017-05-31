@@ -49,7 +49,7 @@ namespace cath {
 			std::deque<std::ofstream> ofstreams;
 
 		public:
-			ofstream_list() noexcept = default;
+			ofstream_list() = default;
 
 			explicit ofstream_list(std::ostream &,
 			                       const boost::filesystem::path & = "-");
