@@ -30,7 +30,7 @@ namespace cath {
 	///        (and then calculating the sec_file information)
 	class protein_from_pdb_and_dssp_and_calc final : public protein_source_file_set {
 	private:
-		/// \brief Whether or not to limit the protein to residues that are found in the DSSP file
+		/// \brief Whether to limit the protein to residues that are found in the DSSP file
 		file::dssp_skip_policy the_dssp_skip_policy;
 
 		std::unique_ptr<protein_source_file_set> do_clone() const final;

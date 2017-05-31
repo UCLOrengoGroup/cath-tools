@@ -29,7 +29,7 @@ namespace cath {
 /// \brief Concrete protein_source_file_set for reading each protein from a PDB file, a DDSP file and a sec file
 	class protein_from_pdb_dssp_and_sec final : public protein_source_file_set {
 	private:
-		/// \brief Whether or not to limit the protein to residues that are found in the DSSP file
+		/// \brief Whether to limit the protein to residues that are found in the DSSP file
 		file::dssp_skip_policy the_dssp_skip_policy;
 
 		std::unique_ptr<protein_source_file_set> do_clone() const final;

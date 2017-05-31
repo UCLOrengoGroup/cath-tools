@@ -52,7 +52,7 @@ residue_name_align_map::residue_name_align_map(const str_vec &arg_residue_name_s
 	}
 }
 
-/// \brief Grab whether or not the residue_name_align_map contains a residue specified by its name
+/// \brief Grab whether the residue_name_align_map contains a residue specified by its name
 bool residue_name_align_map::contains_residue_name_string(const string &arg_residue_name ///< The name of the residue to queried
                                                           ) const {
 	return ( contains( index_of_residue_name, arg_residue_name ) );

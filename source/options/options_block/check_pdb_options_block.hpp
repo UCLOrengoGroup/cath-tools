@@ -34,7 +34,7 @@ namespace cath {
 			/// \brief The PDB file to check
 			boost::filesystem::path pdb_file;
 
-			/// \brief Whether or not to permit no ATOM records
+			/// \brief Whether to permit no ATOM records
 			bool permit_no_atoms;
 
 			std::unique_ptr<options_block> do_clone() const final;

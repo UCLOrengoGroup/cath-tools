@@ -28,11 +28,11 @@ using namespace cath::score;
 using namespace std;
 
 /// \brief Ctor for that allows the user to specify higher_is_better
-score_classn_value_better_value::score_classn_value_better_value(const bool &arg_higher_is_better ///< Whether or not a higher score_value is "better" and should be treated as less-than
+score_classn_value_better_value::score_classn_value_better_value(const bool &arg_higher_is_better ///< Whether a higher score_value is "better" and should be treated as less-than
                                                                  ) : higher_is_better( arg_higher_is_better ) {
 }
 
-/// \brief Getter for higher_is_better (whether or not a higher score_value is "better" and should be treated as less-than)
+/// \brief Getter for higher_is_better (whether a higher score_value is "better" and should be treated as less-than)
 const bool & score_classn_value_better_value::get_higher_is_better() const {
 	return higher_is_better;
 }

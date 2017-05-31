@@ -30,7 +30,7 @@ namespace cath {
 
 		namespace detail {
 
-			/// \brief Return whether or not the specified value ends in .5
+			/// \brief Return whether the specified value ends in .5
 			inline constexpr bool ends_with_half(const double &arg_value ///< The value to test
 			                                     ) {
 				return ( arg_value - static_cast<double>( static_cast<seq::residx_t>( arg_value ) ) ) == 0.5;

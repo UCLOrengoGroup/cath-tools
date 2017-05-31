@@ -95,7 +95,7 @@ namespace cath {
 			/// \brief An unordered_map from the query_id string to the corresponding hits data
 			str_hit_list_umap hit_list_by_query_id;
 
-			/// \brief Whether or not (the user guarantees that) the input hits data is presorted
+			/// \brief Whether (the user guarantees that) the input hits data is presorted
 			///        to ensure all hits for a query_id are consecutive
 			///
 			/// When this is true, it's possible to process and erase a block of hits for a query_id when the
@@ -226,7 +226,7 @@ namespace cath {
 		/// \brief Ctor from the ostream to which the results should be written
 		inline read_and_process_mgr::read_and_process_mgr(const detail::hits_processor_list &arg_hits_processors,        ///< The hits_processor to use to process the hits
 		                                                  crh_filter_spec                    arg_filter_spec,           ///< The filter spec to define how to filter the hits
-		                                                  const bool                        &arg_input_hits_are_grouped ///< Whether or not the input hits are guaranteed to be presorted
+		                                                  const bool                        &arg_input_hits_are_grouped ///< Whether the input hits are guaranteed to be presorted
 		                                                  ) : processors             { arg_hits_processors          },
 		                                                      the_filter_spec        { std::move( arg_filter_spec ) },
 		                                                      input_hits_are_grouped { arg_input_hits_are_grouped   } {

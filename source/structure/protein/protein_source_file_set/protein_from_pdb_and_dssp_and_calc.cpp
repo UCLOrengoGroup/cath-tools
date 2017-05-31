@@ -75,7 +75,7 @@ protein protein_from_pdb_and_dssp_and_calc::do_read_files(const data_file_path_m
 }
 
 /// \brief Ctor for protein_from_pdb_and_dssp_and_calc
-protein_from_pdb_and_dssp_and_calc::protein_from_pdb_and_dssp_and_calc(const dssp_skip_policy &arg_dssp_skip_policy ///< Whether or not to limit to the residues in the DSSP file
+protein_from_pdb_and_dssp_and_calc::protein_from_pdb_and_dssp_and_calc(const dssp_skip_policy &arg_dssp_skip_policy ///< Whether to limit to the residues in the DSSP file
                                                                        ) : the_dssp_skip_policy( arg_dssp_skip_policy ) {
 }
 

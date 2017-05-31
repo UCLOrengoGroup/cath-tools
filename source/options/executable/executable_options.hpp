@@ -72,7 +72,7 @@ namespace cath {
 			/// \brief A list of (references to) the options blocks to be processed during parsing
 			std::vector<std::reference_wrapper<options_block>> all_options_blocks;
 
-			/// \brief Whether or not options have been parsed
+			/// \brief Whether options have been parsed
 			///
 			/// This is used to prevent post-parsing methods being called before parse_options() is called
 			/// and to prevent pre-parsing methods being called before

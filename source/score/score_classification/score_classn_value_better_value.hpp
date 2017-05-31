@@ -35,7 +35,7 @@ namespace cath {
 		/// Used in a standard sort function, this sorts the best entries to the front.
 		class score_classn_value_better_value final {
 		private:
-			/// \brief Whether or not a higher score_value is "better" and should be treated as less-than
+			/// \brief Whether a higher score_value is "better" and should be treated as less-than
 			bool higher_is_better;
 
 		public:

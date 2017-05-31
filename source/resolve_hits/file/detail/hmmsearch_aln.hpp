@@ -171,7 +171,7 @@ namespace cath {
 			}
 
 			/// \brief Update the aligned regions based on the parsed information
-			inline void hmmsearch_aln::update_aligned_regions(const bool &arg_parse_hmmsearch_aln ///< Whether or not to actually bother parsing this hmmsearch alignment information
+			inline void hmmsearch_aln::update_aligned_regions(const bool &arg_parse_hmmsearch_aln ///< Whether to actually bother parsing this hmmsearch alignment information
 			                                                  ) {
 				aligned_regions.clear();
 				if ( arg_parse_hmmsearch_aln ) {

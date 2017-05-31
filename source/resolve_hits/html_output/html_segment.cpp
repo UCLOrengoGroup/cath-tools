@@ -181,7 +181,7 @@ string html_segment::get_strong_front_html_string() const {
 }
 
 /// \brief Get the list of HTML span strings to represent this segment
-str_vec html_segment::get_all_span_html_strs(const bool &arg_do_layers ///< Whether or not render multiple layers or a single layer as in a full result
+str_vec html_segment::get_all_span_html_strs(const bool &arg_do_layers ///< Whether render multiple layers or a single layer as in a full result
                                              ) const {
 	if ( ! arg_do_layers ) {
 		return { get_full_result_html_string() };

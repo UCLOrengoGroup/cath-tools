@@ -35,7 +35,7 @@ namespace cath {
 				/// \brief Convenience type alias for the parent class
 				using super = hits_processor;
 
-				/// \brief Record whether or not the prefix has yet been printed
+				/// \brief Record whether the prefix has yet been printed
 				bool printed_prefix = false;
 
 				/// \brief A counter of the batch being processed

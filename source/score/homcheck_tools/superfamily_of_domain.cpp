@@ -67,13 +67,13 @@ size_t superfamily_of_domain::size() const {
 	return sf_of_dom.size();
 }
 
-/// \brief Return whether or not this superfamily_of_domain has superfamily information for the specified domain ID
+/// \brief Return whether this superfamily_of_domain has superfamily information for the specified domain ID
 bool superfamily_of_domain::has_superfamily_of_domain(const string &arg_domain_id ///< The domain ID to query
                                                       ) const {
 	return sf_of_dom.count( arg_domain_id ) > 0;
 }
 
-/// \brief Return whether or not this superfamily_of_domain has superfamily information for the specified domain ID
+/// \brief Return whether this superfamily_of_domain has superfamily information for the specified domain ID
 ///
 /// \pre `this->has_superfamily_of_domain( arg_domain_id )`, else and invalid_argument_exception will be thrown
 const string & superfamily_of_domain::get_superfamily_of_domain(const string &arg_domain_id ///< The domain ID to query
