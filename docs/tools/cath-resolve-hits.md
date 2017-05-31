@@ -123,13 +123,14 @@ Hit filtering:
                                                  (may be specified multiple times for multiple query proteins)
   --limit-queries [=<num>(=1)]                   Only process the first <num> query protein(s) encountered in the input data
 
-Output:
-  --output-file <file>                           Write output to file <file> (or, if unspecified, to stdout)
+Output ([...]-to-file options may be specified multiple times):
+  --hits-text-to-file <file>                     Write the resolved hits in plain text to file <file>
+  --quiet                                        Suppress the default output of resolved hits in plain text to stdout
   --output-trimmed-hits                          When writing out the final hits, output the hits' starts/stop as they are *after trimming*
-  --summarise                                    Output a brief text summary of the input data (rather than processing it)
-  --html-output                                  Output the results as HTML
-  --json-output                                  Output the results as JSON
-  --export-css-file <file>                       Export the CSS used in the HTML output to <file>
+  --summarise-to-file <file>                     Write a brief text summary of the input data to file <file> (or '-' for stdout)
+  --html-output-to-file <file>                   Write the results as HTML to file <file> (or '-' for stdout)
+  --json-output-to-file <file>                   Write the results as JSON to file <file> (or '-' for stdout)
+  --export-css-file <file>                       Export the CSS used in the HTML output to <file> (or '-' for stdout)
 
 HTML:
   --restrict-html-within-body                    Restrict HTML output to the contents of the body tag.
