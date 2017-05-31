@@ -1,0 +1,69 @@
+/// \file
+/// \brief The ofstream_list class definitions
+
+/// \copyright
+/// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
+/// Copyright (C) 2007, Tony Lewis
+///
+/// This program is free software: you can redistribute it and/or modify
+/// it under the terms of the GNU General Public License as published by
+/// the Free Software Foundation, either version 3 of the License, or
+/// (at your option) any later version.
+///
+/// This program is distributed in the hope that it will be useful,
+/// but WITHOUT ANY WARRANTY; without even the implied warranty of
+/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+/// GNU General Public License for more details.
+///
+/// You should have received a copy of the GNU General Public License
+/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#include "ofstream_list.hpp"
+
+#include "common/algorithm/transform_build.hpp"
+#include "common/file/open_fstream.hpp"
+
+#include <fstream>
+
+using namespace cath::common;
+
+using boost::filesystem::path;
+using std::ofstream;
+using std::ostream;
+
+/// \brief Ctor from a special ostream and a flag to be used to indicate when output should be sent to that ostream
+ofstream_list::ofstream_list(ostream    &arg_standard_outstream,     ///< A special ostream (often stdout) to which output can be sent
+                             const path &arg_standard_outstream_flag ///< A flag to be used to indicate when output should be sent to the special ostream
+                             ) : standard_outstream     { arg_standard_outstream      },
+                                 standard_outstream_flag{ arg_standard_outstream_flag } {
+}
+
+/// \brief Open the specified list of paths and add them to the outputs
+ostream_ref_vec ofstream_list::open_ofstreams(const path_vec &arg_paths ///< The paths to open
+                                              ) {
+	return transform_build<ostream_ref_vec>(
+		arg_paths,
+		[&] (const path &the_path) -> ostream_ref {
+			if ( the_path == standard_outstream_flag && standard_outstream ) {
+				return *standard_outstream;
+			}
+			else {
+				ofstreams.emplace_back();
+				open_ofstream( ofstreams.back(), the_path );
+				return { ofstreams.back() };
+			}
+		}
+	);
+}
+
+/// \brief Get the flag, which is used to indicate when output should be sent to the special ostream
+const path & ofstream_list::get_flag() const {
+	return standard_outstream_flag;
+}
+
+/// \brief Close all ofstreams
+void ofstream_list::close_all() {
+	for (ofstream &the_ofstream: ofstreams) {
+		the_ofstream.close();
+	}
+}

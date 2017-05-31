@@ -312,6 +312,7 @@ set(
 set(
 	NORMSOURCES_COMMON_FILE
 		common/file/find_file.cpp
+		common/file/ofstream_list.cpp
 		common/file/open_fstream.cpp
 		common/file/temp_file.cpp
 )
@@ -1389,6 +1390,7 @@ set(
 
 set(
 	TESTSOURCES_COMMON_FILE
+		common/file/ofstream_list_test.cpp
 		common/file/open_fstream_test.cpp
 		common/file/simple_file_read_write_test.cpp
 		common/file/temp_file_test.cpp
