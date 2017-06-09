@@ -45,7 +45,7 @@ using std::string;
 ///
 /// \relates seq_seg_run
 string cath::seq::get_segments_string(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run whose segments should be described
-                                       ) {
+                                      ) {
 	return join(
 		boost::irange( 0_z, arg_seq_seg_run.get_num_segments() )
 			| boost::adaptors::transformed( [&] (const size_t &x) {
@@ -61,16 +61,16 @@ string cath::seq::get_segments_string(const seq_seg_run &arg_seq_seg_run ///< Th
 ///
 /// \relates seq_seg_run
 string cath::seq::to_string(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to describe
-                             ) {
+                            ) {
 	return "seq_seg_run[" + get_segments_string( arg_seq_seg_run ) + "]";
 }
 
 /// \brief Insert a description of the specified seq_seg_run into the specified ostream
 ///
 /// \relates seq_seg_run
-ostream & cath::seq::operator<<(ostream        &arg_os,      ///< The ostream into which the description should be inserted
-                                 const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to describe
-                                 ) {
+ostream & cath::seq::operator<<(ostream           &arg_os,         ///< The ostream into which the description should be inserted
+                                const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to describe
+                                ) {
 	arg_os << to_string( arg_seq_seg_run );
 	return arg_os;
 }
@@ -79,8 +79,8 @@ ostream & cath::seq::operator<<(ostream        &arg_os,      ///< The ostream in
 ///
 /// \relates seq_seg_run
 bool cath::seq::operator==(const seq_seg_run &arg_lhs, ///< The first  seq_seg_run to compare
-                            const seq_seg_run &arg_rhs  ///< The second seq_seg_run to compare
-                            ) {
+                           const seq_seg_run &arg_rhs  ///< The second seq_seg_run to compare
+                           ) {
 	return (
 		( arg_lhs.get_num_segments() == arg_rhs.get_num_segments() )
 		&&
