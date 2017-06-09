@@ -18,6 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/algorithm/is_uniq_for_unordered.hpp"
@@ -29,7 +30,9 @@ using namespace cath::common;
 using namespace cath::seq;
 using namespace cath::test;
 
+using boost::lexical_cast;
 using std::pair;
+using std::string;
 
 namespace cath {
 	namespace seq {
@@ -154,6 +157,12 @@ constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_nested_2_wi
 constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_same;
 
 BOOST_FIXTURE_TEST_SUITE(seq_seg_run_test_suite, seq_seg_run_test_suite_fixture)
+
+BOOST_AUTO_TEST_CASE(converts_to_string_correctly) {
+	const seq_seg_run a{ seq_seg_vec{ {  100,  199 }, {  300,  399 } } };
+	BOOST_CHECK_EQUAL( to_string           ( a ), "seq_seg_run[100-199,300-399]" );
+	BOOST_CHECK_EQUAL( lexical_cast<string>( a ), "seq_seg_run[100-199,300-399]" );
+}
 
 BOOST_AUTO_TEST_CASE(basic) {
 	const seq_seg_run a{ seq_seg_vec{ {  100,  199 }, {  300,  399 } } };
