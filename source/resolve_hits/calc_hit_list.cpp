@@ -246,6 +246,8 @@ void cath::rslv::read_hit_list_from_file(read_and_process_mgr &arg_read_and_proc
 
 /// \brief Read a calc_hit_list from the specified istream
 ///
+/// \todo Alter this to use seq_seg_run_parser
+///
 /// \relates calc_hit_list
 void cath::rslv::read_hit_list_from_istream(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which each calc_hit should be sent when it's read
                                             istream              &arg_istream,              ///< The istream from which to read the hits data
