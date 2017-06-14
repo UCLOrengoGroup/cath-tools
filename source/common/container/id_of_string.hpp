@@ -37,43 +37,43 @@ namespace cath {
 		/// This class isn't thread-safe
 		///
 		/// Not currently able to avoid constructing a new string if passed a char *
+		///
+		/// \TODO Consider adding (or changing this into) id_of_string_ref / id_of_string_view.
+		///       The Boost string_ref currently has a std::hash specialisation
+		///       but it's #if-ed out (#if 0).
+		///
+		/// \TODO Alternatively consider using Boost.MultiIndex as discussed in
+		///       "Why You Should Use Boost MultiIndex (Part II)"
 		class id_of_string final {
-		private:
+		public:
 			/// \brief Type alias for the type of the IDs
 			using id_type = size_t;
 
+		private:
 			/// \brief The unordered_map that stores the string-to-id lookup map
 			std::unordered_map<std::string, id_type> the_map;
 
 		public:
+			/// \brief A const_iterator type alias as part of making this a range over pair<const string, id_type>
+			using const_iterator = std::unordered_map<std::string, id_type>::const_iterator;
+
+			/// \brief An iterator type alias that just duplicates const_iterator to appease some Boost code (Range?)
+			using iterator = const_iterator;
+
 			id_of_string() = default;
 
 			/// \brief Insert a new string and return its new ID
-			inline id_type emplace(std::string arg_string ///< The string to insert
-			                       ) {
-#ifndef NDEBUG
-				if ( the_map.count( arg_string ) > 0 ) {
-					BOOST_THROW_EXCEPTION(invalid_argument_exception("Attempt to use id_of_string::emplace() to insert a string that's already present"));
-				}
-#endif
-				const auto prev_size = the_map.size();
-				the_map.emplace( std::move( arg_string ), prev_size );
-				return prev_size;
-			}
-
-			/// \brief Insert a new string if it isn't already present, and return its ID either way
-			inline id_type emplace_if_not_present(std::string arg_string ///< The string to insert
-			                                      ) {
-				const auto find_itr = the_map.find( arg_string );
-				return ( find_itr == common::cend( the_map ) )
-					? emplace( std::move( arg_string ) )
-					: find_itr->second;
+			///
+			/// Can be used if the name already exists
+			inline const std::pair<const std::string, id_type> & emplace(std::string arg_string ///< The string to insert
+			                                                             ) {
+				return *( the_map.emplace( std::move( arg_string ), the_map.size() ).first );
 			}
 
 			/// \brief Get the ID corresponding to the specified string
-			inline id_type get(const std::string &arg_string ///< The string to lookup
-			                   ) const {
-				return the_map.at( arg_string );
+			inline id_type operator[](const std::string &arg_string ///< The string to lookup
+			                          ) const {
+				return the_map.find( arg_string )->second;
 			}
 
 			/// \brief Return whether this id_of_string is empty
@@ -95,6 +95,16 @@ namespace cath {
 			/// \brief Clear the id_of_string of all strings
 			inline void clear() {
 				the_map.clear();
+			}
+
+			/// \brief Standard const begin() method, as part of making this into a range over pair<const string, id_type>
+			inline const_iterator begin() const {
+				return common::cbegin( the_map );
+			}
+
+			/// \brief Standard const end() method, as part of making this into a range over pair<const string, id_type>
+			inline const_iterator end() const {
+				return common::cend( the_map );
 			}
 		};
 
