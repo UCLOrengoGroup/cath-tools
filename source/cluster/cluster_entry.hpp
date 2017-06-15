@@ -1,0 +1,55 @@
+/// \file
+/// \brief The cluster_entry class header
+
+/// \copyright
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
+/// Copyright (C) 2011, Orengo Group, University College London
+///
+/// This program is free software: you can redistribute it and/or modify
+/// it under the terms of the GNU General Public License as published by
+/// the Free Software Foundation, either version 3 of the License, or
+/// (at your option) any later version.
+///
+/// This program is distributed in the hope that it will be useful,
+/// but WITHOUT ANY WARRANTY; without even the implied warranty of
+/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+/// GNU General Public License for more details.
+///
+/// You should have received a copy of the GNU General Public License
+/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#ifndef _CATH_TOOLS_SOURCE_CLUSTER_CLUSTER_ENTRY_H
+#define _CATH_TOOLS_SOURCE_CLUSTER_CLUSTER_ENTRY_H
+
+#include "seq/seq_seg_run.hpp"
+
+#include <string>
+
+namespace cath {
+	namespace clust {
+
+		/// \brief Store the data of a cluster entry
+		class cluster_entry final {
+		private:
+			/// \brief The name of the cluster_entry
+			std::string name;
+
+			/// \brief The segments of the cluster_entry
+			seq::seq_seg_run segments;
+
+		public:
+			/// \brief Default ctor
+			cluster_entry() noexcept = default;
+
+			/// \brief Ctor from name and segments
+			explicit cluster_entry(std::string      arg_name, ///< The name of the cluster_entry
+			                       seq::seq_seg_run arg_segs  ///< The segments of the cluster_entry
+			                       ) : name    { std::move( arg_name ) },
+			                           segments{ std::move( arg_segs ) } {
+			}
+		};
+
+	} // namespace clust
+} // namespace cath
+
+#endif
