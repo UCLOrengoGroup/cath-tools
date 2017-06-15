@@ -2240,18 +2240,18 @@ add_executable(
 )
 
 add_executable(
+	mod-test-common
+		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+		${TESTSOURCES_COMMON}
+)
+
+add_executable(
 	mod-test-seq
 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
 		${TESTSOURCES_SEQ}
 		#${NORMSOURCES_BIOCORE}
 )
 
-# add_executable(
-# 	mod-test-common
-# 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
-# 		${TESTSOURCES_COMMON}
-# )
-#
 # add_executable(
 # 	mod-test-exception
 # 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
@@ -2271,7 +2271,7 @@ target_link_libraries( cath-superpose      normsources_cath_superpose           
 
 target_link_libraries( mod-test-chopping    normsources_test normsources_chopping normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 target_link_libraries( mod-test-seq         normsources_test normsources_seq      normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-# target_link_libraries( mod-test-common    normsources_test                      normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+target_link_libraries( mod-test-common      normsources_test                      normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 # target_link_libraries( mod-test-exception normsources_test                                         normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 
 add_dependencies( build-test          built_bioplib_libraries )
