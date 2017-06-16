@@ -38,8 +38,8 @@ namespace cath {
 			seq::seq_seg_run segments;
 
 		public:
-			/// \brief Default ctor
-			cluster_entry() = default;
+			/// \brief No default ctor for now (because seq_seg_run doesn't default construct)
+			cluster_entry() = delete;
 
 			/// \brief Ctor from name and segments
 			explicit cluster_entry(std::string      arg_name, ///< The name of the cluster_entry

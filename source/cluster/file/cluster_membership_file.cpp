@@ -29,10 +29,10 @@
 #include "common/string/string_parse_tools.hpp"
 #include "seq/seq_seg_run_parser.hpp"
 
-#include <iostream>
 #include <fstream>
-#include <string>
+#include <iostream>
 #include <sstream>
+#include <string>
 
 using namespace cath::clust;
 using namespace cath::common;
@@ -55,7 +55,7 @@ int cath::clust::parse_old_membership(istream &arg_istream ///< The istream to p
 		static constexpr size_t DOMAIN_ID_OFFSET  = 1;
 		const auto cluster_id_itrs = find_field_itrs( line, CLUSTER_ID_OFFSET                                               );
 		const auto domain_id_itrs  = find_field_itrs( line, DOMAIN_ID_OFFSET, 1 + CLUSTER_ID_OFFSET, cluster_id_itrs.second );
-		// TODO Check there are no more fields (but allow whitespace)
+		/// \TODO Check there are no more fields (but allow whitespace)
 
 		const cluster_id_t cluster_id           = parse_uint_from_field( cluster_id_itrs.first, cluster_id_itrs.second );
 		const auto         domain_id_str_ref    = make_string_ref( domain_id_itrs );
@@ -103,7 +103,7 @@ new_cluster_data cath::clust::parse_new_membership(istream      &arg_istream,   
 		static constexpr size_t DOMAIN_ID_OFFSET  = 1;
 		const auto cluster_id_itrs = find_field_itrs( line, CLUSTER_ID_OFFSET                                               );
 		const auto domain_id_itrs  = find_field_itrs( line, DOMAIN_ID_OFFSET, 1 + CLUSTER_ID_OFFSET, cluster_id_itrs.second );
-		// TODO Check there are no more fields (but allow whitespace)
+		/// \TODO Check there are no more fields (but allow whitespace)
 
 		const auto         slash_index          = make_string_ref( domain_id_itrs ).find_last_of( '/' );
 		const bool         has_segs             = ( slash_index != string_ref::npos );

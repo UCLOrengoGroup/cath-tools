@@ -20,8 +20,8 @@
 
 #include "new_cluster_data.hpp"
 
-#include <boost/range/adaptor/transformed.hpp>
 #include <boost/algorithm/string/join.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "common/algorithm/sort_uniq_build.hpp"
 
@@ -59,9 +59,9 @@ std::string cath::clust::to_string(const new_cluster_data &arg_new_cluster_data 
 			irange( 0_z, get_num_clusters( arg_new_cluster_data ) )
 				| transformed( [&] (const size_t &x) {
 					return to_string( x )
-						+ "(\""
+						+ R"((")"
 						+ get_name_of_cluster_of_id( arg_new_cluster_data, x )
-						+ "\"):"
+						+ R"("):)"
 						+ to_string( get_size_of_cluster_of_id( arg_new_cluster_data, x ) );
 				} ),
 			", "

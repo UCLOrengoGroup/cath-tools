@@ -46,7 +46,7 @@ namespace cath {
 			std::reference_wrapper<common::id_of_string> id_of_seq_name;
 
 		public:
-			domain_cluster_ids_by_seq(common::id_of_string &);
+			explicit domain_cluster_ids_by_seq(common::id_of_string &);
 
 			/// \brief Disallow construction from a temporary id_of_string
 			///        because this stores a reference

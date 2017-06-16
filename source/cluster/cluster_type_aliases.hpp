@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CLUSTER_CLUSTER_TYPE_ALIASES_H
 #define _CATH_TOOLS_SOURCE_CLUSTER_CLUSTER_TYPE_ALIASES_H
 
+#include <cstddef>
 #include <vector>
 
 namespace cath { namespace clust { struct domain_cluster_id; } }
