@@ -39,7 +39,7 @@ namespace cath {
 
 		public:
 			/// \brief Default ctor
-			cluster_entry() noexcept = default;
+			cluster_entry() = default;
 
 			/// \brief Ctor from name and segments
 			explicit cluster_entry(std::string      arg_name, ///< The name of the cluster_entry

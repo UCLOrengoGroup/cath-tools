@@ -75,7 +75,7 @@ namespace cath {
 		inline domain_cluster_ids_by_seq & domain_cluster_ids_by_seq::add(const boost::string_ref &arg_seq_id,           ///< The name of the sequence under which to store the domain_cluster_id
 		                                                                  domain_cluster_id        arg_domain_cluster_id ///< The domain_cluster_id to store
 		                                                                  ) {
-			const auto &id = id_of_seq_name.get().emplace( std::string{ arg_seq_id } ).second;
+			const auto &id = id_of_seq_name.get().emplace( arg_seq_id.to_string() ).second;
 			if ( id >= domain_cluster_ids_of_seq_id.size() ) {
 				domain_cluster_ids_of_seq_id.resize( id + 1 );
 			}
