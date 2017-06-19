@@ -51,10 +51,32 @@ namespace cath {
 				/// \brief Dtor to wrap gsl_matrix_free()
 				~gsl_matrix_wrp() noexcept {
 					try {
-						gsl_matrix_free( ptr );
+						if ( ptr != nullptr ) {
+							gsl_matrix_free( ptr );
+						}
 					}
 					catch (...) {
 					}
+				}
+
+				gsl_matrix_wrp(const gsl_matrix_wrp &) = delete; ///< Make move-only
+
+				/// \brief Move ctor that sets RHS's ptr to null after the move
+				gsl_matrix_wrp(gsl_matrix_wrp &&arg_rhs ///< The gsl_matrix_wrp to move into this
+				               ) : ptr { std::move( arg_rhs.ptr ) } {
+					arg_rhs.ptr = nullptr;
+				}
+
+				gsl_matrix_wrp & operator=(const gsl_matrix_wrp &) = delete; ///< Make move-only
+
+				/// \brief Move assignment operator that sets RHS's ptr to null after the move
+				gsl_matrix_wrp & operator=(gsl_matrix_wrp &&arg_rhs ///< The gsl_matrix_wrp to move into this
+				                           ) {
+					if ( this != &arg_rhs ) {
+						ptr = std::move( arg_rhs.ptr );
+						arg_rhs.ptr = nullptr;
+					}
+					return *this;
 				}
 
 				/// \brief Const-overload of getter for a reference to the gsl_matrix
@@ -77,6 +99,47 @@ namespace cath {
 					return ptr;
 				}
 			};
+
+			/// \brief Generate a string describing the specified gsl_matrix_wrp
+			///
+			/// \relates to_string
+			inline std::string to_string(const gsl_matrix_wrp &arg_matrix_wrap ///< The gsl_matrix_wrp to describe
+			                             ) {
+				using std::to_string;
+				return "gsl_matrix_wrp["
+					       + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 0, 0 ) )
+					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 0, 1 ) )
+					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 0, 2 ) )
+
+					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 1, 0 ) )
+					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 1, 1 ) )
+					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 1, 2 ) )
+
+					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 2, 0 ) )
+					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 2, 1 ) )
+					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 2, 2 ) )
+					+ "]";
+			}
+
+			/// \brief Increment the specified cell of the specified gsl_matrix_wrp by the specified amount
+			///
+			/// \relates gsl_matrix_wrp
+			inline void gsl_matrix_wrp_increment(gsl_matrix_wrp &arg_matrix_wrap, ///< The gsl_matrix_wrp to modify
+			                                     const size_t   &arg_row_index,   ///< The row_index of the cell to modify
+			                                     const size_t   &arg_col_index,   ///< The column index of the cell to modify
+			                                     const double   &arg_addend       ///< The amount to add to the cell
+			                                     ) {
+				gsl_matrix_set(
+					arg_matrix_wrap.get_ptr(),
+					arg_row_index,
+					arg_col_index,
+					gsl_matrix_get(
+						arg_matrix_wrap.get_ptr(),
+						arg_row_index,
+						arg_col_index
+					) + arg_addend
+				);
+			}
 
 		} // namespace detail
 	} // namespace geom

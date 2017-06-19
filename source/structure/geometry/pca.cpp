@@ -74,13 +74,14 @@ line cath::geom::line_of_best_fit(const coord_list &arg_coords ///< The list of 
 			back( arg_coords ) - front( arg_coords )
 		};
 	}
-	
+
 	doub_vec        matrix = build_matrix_of_coords( arg_coords, cog );
 	gsl_matrix_view A      = gsl_matrix_view_array ( &matrix.front(), arg_coords.size(), 3 );
 
 	gsl_matrix_wrp  V    { 3, 3 };
 	gsl_vector_wrp  S    { 3    };
 	gsl_vector_wrp  work { 3    };
+	gsl_vector_set_zero( work.get_ptr() );
 
 	gsl_linalg_SV_decomp(
 		&A.matrix,

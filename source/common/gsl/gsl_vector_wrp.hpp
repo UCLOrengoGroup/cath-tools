@@ -51,10 +51,32 @@ namespace cath {
 				/// \brief Dtor to wrap gsl_vector_free()
 				~gsl_vector_wrp() noexcept {
 					try {
-						gsl_vector_free( ptr );
+						if ( ptr != nullptr ) {
+							gsl_vector_free( ptr );
+						}
 					}
 					catch (...) {
 					}
+				}
+
+				gsl_vector_wrp(const gsl_vector_wrp &) = delete; ///< Make move-only
+
+				/// \brief Move ctor that sets RHS's ptr to null after the move
+				gsl_vector_wrp(gsl_vector_wrp &&arg_rhs ///< The gsl_vector_wrp to move into this
+				               ) : ptr { std::move( arg_rhs.ptr ) } {
+					arg_rhs.ptr = nullptr;
+				}
+
+				gsl_vector_wrp & operator=(const gsl_vector_wrp &) = delete; ///< Make move-only
+
+				/// \brief Move assignment operator that sets RHS's ptr to null after the move
+				gsl_vector_wrp & operator=(gsl_vector_wrp &&arg_rhs ///< The gsl_vector_wrp to move into this
+				                           ) {
+					if ( this != &arg_rhs ) {
+						ptr = std::move( arg_rhs.ptr );
+						arg_rhs.ptr = nullptr;
+					}
+					return *this;
 				}
 
 				/// \brief Const-overload of getter for a reference to the gsl_vector
@@ -77,6 +99,23 @@ namespace cath {
 					return ptr;
 				}
 			};
+
+			/// \brief Generate a string describing the specified gsl_vector_wrp
+			///
+			/// \relates to_string
+			inline std::string to_string(const gsl_vector_wrp &arg_vector_wrap ///< The gsl_vector_wrp to describe
+			                             ) {
+				using std::to_string;
+				return
+					  "gsl_vector_wrp["
+					+ to_string( gsl_vector_get( arg_vector_wrap.get_ptr(), 0 ) )
+					+ ", "
+					+ to_string( gsl_vector_get( arg_vector_wrap.get_ptr(), 1 ) )
+					+ ", "
+					+ to_string( gsl_vector_get( arg_vector_wrap.get_ptr(), 2 ) )
+					+ "]";
+			}
+
 
 		} // namespace detail
 	} // namespace geom

@@ -1436,6 +1436,11 @@ set(
 )
 
 set(
+	TESTSOURCES_COMMON_GSL
+		common/gsl/get_determinant_test.cpp
+)
+
+set(
 	TESTSOURCES_COMMON_METAPROGRAMMING
 		common/metaprogramming/append_template_params_into_first_wrapper_test.cpp
 		common/metaprogramming/change_template_subwrappers_test.cpp
@@ -1496,6 +1501,7 @@ set(
 		common/difference_test.cpp
 		${TESTSOURCES_COMMON_FILE}
 		${TESTSOURCES_COMMON_FUNCTION}
+		${TESTSOURCES_COMMON_GSL}
 		common/invert_permutation_test.cpp
 		common/less_than_helper_test.cpp
 		common/logger_test.cpp
