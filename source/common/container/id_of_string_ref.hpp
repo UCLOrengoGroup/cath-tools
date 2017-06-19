@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_COMMON_CONTAINER_ID_OF_STRING_REF_H
 #define _CATH_TOOLS_SOURCE_COMMON_CONTAINER_ID_OF_STRING_REF_H
 
+#include "common/container/detail/ref_wrap_hasher.hpp"
+#include "common/container/detail/ref_wrap_uom_wrap.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 
 #include <string>
@@ -28,93 +30,6 @@
 
 namespace cath {
 	namespace common {
-
-		namespace detail {
-
-			/// \brief Wrap a reference_wrapper<T> for use in an unordered_map with hashing on the T value
-			///
-			/// Equality is also performed on the T value.
-			///
-			/// \todo If this continues to be used, move it to its own header
-			template <typename T>
-			class ref_wrap_uom_wrap final {
-			private:
-				/// \brief The reference_wrapper of the value
-				std::reference_wrapper<T> value;
-
-			public:
-				/// \brief Ctor from a reference
-				ref_wrap_uom_wrap(T &arg_value ///< The value from which to construct
-				                  ) : value{ arg_value } {
-				}
-
-				/// \brief Prevent construction from an rvalue
-				ref_wrap_uom_wrap(T&& x ) = delete;
-
-				/// \brief Ctor from a reference_wrapper<T>
-				ref_wrap_uom_wrap(const std::reference_wrapper<T> &arg_value ///< The reference_wrapper<T> from which this should be constructed
-				                  ) : value{ arg_value } {
-				}
-				/// \brief Copy ctor
-				ref_wrap_uom_wrap(const ref_wrap_uom_wrap<T> &arg_value ///< The ref_wrap_uom_wrap from which this should be constructed
-				                  ) : value{ arg_value.get_ref_wrap() } {
-				}
-
-				/// \brief Assignment from a reference_wrapper<T>
-				ref_wrap_uom_wrap & operator=(const std::reference_wrapper<T> &arg_rhs ///< The reference_wrapper<T> to assign
-				                              ) {
-					value = arg_rhs;
-					return *this;
-				}
-				/// \brief Copy assignment operator
-				ref_wrap_uom_wrap & operator=(const ref_wrap_uom_wrap<T> &arg_rhs ///< The ref_wrap_uom_wrap to assign
-				                              ) {
-					value = arg_rhs.get_ref_wrap();
-					return *this;
-				}
-
-				/// \brief Get the reference_wrapper
-				const std::reference_wrapper<T> & get_ref_wrap() {
-					return value;
-				}
-
-				/// \brief Conversion to a reference to T
-				operator T & () const {
-					return value.get();
-				}
-
-				/// \brief Get a reference to T
-				T & get() const {
-					return value.get();
-				}
-
-				/// \brief Invoke the wrapped value on the specified arguments
-				template  <typename... Ts>
-				std::result_of_t< T & (Ts &&...) > operator()(Ts &&... args ///< The values to pass to the value
-				                                              ) const {
-					return value( std::forward<Ts>( args )... );
-				}
-			};
-
-			/// \brief Equality operator for ref_wrap_uom_wrap
-			template <typename T>
-			inline bool operator==(const ref_wrap_uom_wrap<T> &arg_lhs, ///< The first  ref_wrap_uom_wrap to compare
-			                       const ref_wrap_uom_wrap<T> &arg_rhs  ///< The second ref_wrap_uom_wrap to compare
-			                       ) {
-				return ( arg_lhs.get() == arg_rhs.get() );
-			}
-
-			/// \brief Hasher for a ref_wrap_uom_wrap<T>
-			template <typename T>
-			struct ref_wrap_hasher final {
-				/// \brief The function operator that performs the hash on the T value
-				///        using std::hash<decay_t<T>>
-				size_t operator()(const ref_wrap_uom_wrap<T> &arg_value
-				                  ) const {
-					return std::hash<std::decay_t<T>>{}( arg_value.get() );
-				}
-			};
-		}
 
 		/// \brief A type alias for a reference_wrapper of const string
 		///
