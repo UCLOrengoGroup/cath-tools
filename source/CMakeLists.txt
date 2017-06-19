@@ -1408,6 +1408,7 @@ set(
 	TESTSOURCES_COMMON_CONTAINER
 		common/container/id_of_string_ref_test.cpp
 		common/container/id_of_string_test.cpp
+		common/container/id_of_string_view_test.cpp
 )
 
 set(

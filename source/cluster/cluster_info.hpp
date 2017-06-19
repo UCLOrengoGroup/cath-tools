@@ -62,7 +62,7 @@ namespace cath {
 		/// one call, use increment_and_get_id_for_cluster_of_name()
 		inline cluster_id_t cluster_info::add_name(const boost::string_ref &arg_name ///< The name of the cluster to add
 		                                           ) {
-			const auto cluster_id = ider.add_name( arg_name.to_string() );
+			const auto cluster_id = ider.add_name( arg_name );
 			if ( cluster_id >= sizes.size() ) {
 				sizes.resize( cluster_id + 1, 0_z );
 			}

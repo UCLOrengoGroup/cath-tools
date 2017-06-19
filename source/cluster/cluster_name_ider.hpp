@@ -31,7 +31,7 @@
 #include "common/boost_addenda/range/front.hpp"
 #include "common/boost_addenda/range/max_proj_element.hpp"
 #include "common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "common/container/id_of_string_ref.hpp"
+#include "common/container/id_of_string_view.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/out_of_range_exception.hpp"
 
@@ -46,22 +46,13 @@ namespace cath {
 		///
 		/// The IDs are guaranteed to be stable (in-between calls to clear()) and
 		/// sensible for indexing into vectors without wasting much space.
-		///
-		/// \TODO This should use an id_of_string_ref that is based on string_ref not
-		/// reference_wrapper<string> because the code wants to be able to check
-		/// sub-parts of the recently-read-in line without having to build a new string.
-		/// Once that's done BE SURE TO change cluster_info::add_name() to not always
-		/// generate a full string.
-		///
-		/// \TODO Consider using an id_of_string_ref / id_of_string_view class and
-		///       only store the string in the str_deq - see id_of_string_ref notes.
 		class cluster_name_ider final {
 		private:
 			/// \brief A map from the names to the corresponding ID
-			common::id_of_string_ref ids_by_name;
+			common::id_of_string_view ids_by_name;
 
 			/// \brief A deque of the names where each ID is the index of the corresponding string
-			str_deq                  names_by_id;
+			str_deq                   names_by_id;
 
 		public:
 			/// \brief A const_iterator type alias as part of making this a range over the names
@@ -69,10 +60,12 @@ namespace cath {
 
 			/// \brief Default ctor
 			cluster_name_ider() = default;
+			inline cluster_id_t add_name(const boost::string_ref &);
 			inline cluster_id_t add_name(const std::string &);
 			inline cluster_id_t add_name(std::string &&);
 			inline const std::string & get_name_of_id(const size_t &) const;
 			inline cluster_id_t get_id_of_name(const std::string &) const;
+			inline cluster_id_t get_id_of_name(const boost::string_ref &) const;
 			inline bool empty() const;
 			inline size_t size() const;
 			inline cluster_name_ider & clear();
@@ -94,13 +87,13 @@ namespace cath {
 		/// \brief Add the specified name and return its ID
 		///
 		/// Can be used if the name already exists
-		inline cluster_id_t cluster_name_ider::add_name(const std::string &arg_name ///< The name to add
+		inline cluster_id_t cluster_name_ider::add_name(const boost::string_ref &arg_name ///< The name to add
 		                                                ) {
 			if ( ids_by_name.contains( arg_name ) ) {
 				return ids_by_name[ arg_name ];
 			}
-			names_by_id.push_back( arg_name );
-			const cluster_id_t &id = ids_by_name.emplace( names_by_id.back() ).second;
+			names_by_id.push_back( arg_name.to_string() );
+			const cluster_id_t &id = ids_by_name.emplace( boost::string_ref{ names_by_id.back() } ).second;
 			if ( id + 1 != names_by_id.size() ) {
 				BOOST_THROW_EXCEPTION(common::out_of_range_exception(
 					"cluster_name_ider tried to add a name with ID "
@@ -116,13 +109,21 @@ namespace cath {
 		/// \brief Add the specified name and return its ID
 		///
 		/// Can be used if the name already exists
+		inline cluster_id_t cluster_name_ider::add_name(const std::string &arg_name ///< The name to add
+		                                                ) {
+			return add_name( boost::string_ref{ arg_name } );
+		}
+
+		/// \brief Add the specified name and return its ID
+		///
+		/// Can be used if the name already exists
 		inline cluster_id_t cluster_name_ider::add_name(std::string &&arg_name ///< The name to add
 		                                                ) {
 			if ( ids_by_name.contains( arg_name ) ) {
 				return ids_by_name[ arg_name ];
 			}
 			names_by_id.push_back( std::move( arg_name ) );
-			const cluster_id_t &id = ids_by_name.emplace( names_by_id.back() ).second;
+			const cluster_id_t &id = ids_by_name.emplace( boost::string_ref{ names_by_id.back() } ).second;
 			if ( id + 1 != names_by_id.size() ) {
 				BOOST_THROW_EXCEPTION(common::out_of_range_exception(
 					"cluster_name_ider tried to add a name with ID "
@@ -142,6 +143,12 @@ namespace cath {
 		inline const std::string & cluster_name_ider::get_name_of_id(const size_t &arg_id ///< The ID to query
 		                                                             ) const {
 			return names_by_id[ arg_id ];
+		}
+
+		/// \brief Get the ID associated with the specified name
+		inline auto cluster_name_ider::get_id_of_name(const boost::string_ref &arg_name ///< The name to query
+		                                              ) const -> cluster_id_t {
+			return ids_by_name[ arg_name ];
 		}
 
 		/// \brief Get the ID associated with the specified name
