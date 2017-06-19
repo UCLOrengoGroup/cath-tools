@@ -511,7 +511,6 @@ set(
 		file/pdb/pdb.cpp
 		file/pdb/pdb_atom.cpp
 		file/pdb/pdb_atom_parse_status.cpp
-		file/pdb/pdb_base.cpp
 		file/pdb/pdb_list.cpp
 		file/pdb/pdb_record.cpp
 		file/pdb/pdb_residue.cpp
@@ -978,12 +977,6 @@ set(
 )
 
 set(
-	NORMSOURCES_STRUCTURE_BIOPLIB_FACADE
-		structure/bioplib_facade/bioplib_interface.cpp
-		structure/bioplib_facade/bioplib_pdb.cpp
-)
-
-set(
 	NORMSOURCES_STRUCTURE_ENTRY_QUERIER
 		structure/entry_querier/entry_querier.cpp
 		structure/entry_querier/residue_querier.cpp
@@ -1086,7 +1079,6 @@ set(
 set(
 	NORMSOURCES_STRUCTURE
 		${NORMSOURCES_STRUCTURE_ACCESSIBILITY_CALC}
-		${NORMSOURCES_STRUCTURE_BIOPLIB_FACADE}
 		${NORMSOURCES_STRUCTURE_ENTRY_QUERIER}
 		${NORMSOURCES_STRUCTURE_GEOMETRY}
 		${NORMSOURCES_STRUCTURE_PROTEIN}
@@ -1603,7 +1595,6 @@ set(
 		file/pdb/coarse_element_type_test.cpp
 		file/pdb/element_type_string_test.cpp
 		file/pdb/pdb_atom_test.cpp
-		file/pdb/pdb_base_test.cpp
 		file/pdb/pdb_list_test.cpp
 		file/pdb/pdb_residue_test.cpp
 		file/pdb/pdb_test.cpp
@@ -1973,11 +1964,6 @@ set(
 )
 
 set(
-	TESTSOURCES_STRUCTURE_BIOPLIB_FACADE
-		structure/bioplib_facade/bioplib_pdb_test.cpp
-)
-
-set(
 	TESTSOURCES_STRUCTURE_ENTRY_QUERIER
 		structure/entry_querier/entry_querier_test.cpp
 )
@@ -2091,7 +2077,6 @@ set(
 set(
 	TESTSOURCES_STRUCTURE
 		${TESTSOURCES_STRUCTURE_ACCESSIBILITY_CALC}
-		${TESTSOURCES_STRUCTURE_BIOPLIB_FACADE}
 		${TESTSOURCES_STRUCTURE_ENTRY_QUERIER}
 		${TESTSOURCES_STRUCTURE_GEOMETRY}
 		structure/get_residue_names_test.cpp
@@ -2314,26 +2299,19 @@ add_executable(
 #####################################################################
 #####################################################################
 
-target_link_libraries( build-test          normsources_cath_refine_align normsources_cath_superpose normsources_cluster normsources_resolve_hits normsources_test normsources_seq std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-assign-domains normsources_cath_assign_domains                                                                                                        std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-refine-align   normsources_cath_refine_align                                                                                                          std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                                                               normsources_seq                        normsources_common normsources_exception          pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-score-align    normsources_cath_score_align                                                                                                           std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-ssap                                                                                                                                                  std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-superpose      normsources_cath_superpose                                                                                                             std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+target_link_libraries( build-test          normsources_cath_refine_align normsources_cath_superpose normsources_cluster normsources_resolve_hits normsources_test normsources_seq std_normsources_remain normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-assign-domains normsources_cath_assign_domains                                                                                                        std_normsources_remain normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-refine-align   normsources_cath_refine_align                                                                                                          std_normsources_remain normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                                                               normsources_seq                        normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-score-align    normsources_cath_score_align                                                                                                           std_normsources_remain normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-ssap                                                                                                                                                  std_normsources_remain normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-superpose      normsources_cath_superpose                                                                                                             std_normsources_remain normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 
 target_link_libraries( mod-test-chopping    normsources_test normsources_chopping                 normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 target_link_libraries( mod-test-cluster     normsources_test normsources_cluster  normsources_seq normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 target_link_libraries( mod-test-common      normsources_test                                      normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 target_link_libraries( mod-test-seq         normsources_test normsources_seq                      normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 # target_link_libraries( mod-test-exception normsources_test                                                         normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-
-add_dependencies( build-test          built_bioplib_libraries )
-add_dependencies( cath-assign-domains built_bioplib_libraries )
-add_dependencies( cath-refine-align   built_bioplib_libraries )
-add_dependencies( cath-score-align    built_bioplib_libraries )
-add_dependencies( cath-ssap           built_bioplib_libraries )
-add_dependencies( cath-superpose      built_bioplib_libraries )
 
 #####################################################################
 #####################################################################
@@ -2391,12 +2369,9 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 #			# structure/geometry/quat_rot.cpp
 #	)
 
-	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-	target_link_libraries( check-pdb                                 std_normsources_remain normsources_common normsources_exception biop gen pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-#	target_link_libraries( develtest                                                                                                                  pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-
-	add_dependencies( snap-judgement built_bioplib_libraries )
-	add_dependencies( check-pdb      built_bioplib_libraries )
+	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources_remain normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+	target_link_libraries( check-pdb                                 std_normsources_remain normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+#	target_link_libraries( develtest                                                                                                 pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 
 endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 

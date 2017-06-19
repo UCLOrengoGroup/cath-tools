@@ -45,9 +45,6 @@ namespace cath {
 		/// to move it into the desired location.
 		///
 		/// Note that the translation must be performed before the rotation.
-		///
-		/// \todo Sort out pdb_base and bioplib_pdb and then make the relevant methods here take
-		///       a pdb_base& rather than a pdb&.
 		class superposition final : private boost::equality_comparable<superposition>  {
 		private:
 			/// \brief TODOCUMENT

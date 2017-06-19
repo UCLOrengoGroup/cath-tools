@@ -11,19 +11,9 @@ Requirements
 
 You'll need a fairly good (ie recent) C++ compiler (eg on Ubuntu: `sudo apt-get install g++`). The code is currently being developed against GCC v4.9.2 and Clang v3.6.0.
 
-To get the source code, you can clone from GitHub (making sure you use the `--recursive` option so you include [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage"), which we include as a Git submodule to use its superposition routine).
-
-
 ~~~~~no-highlight
-git clone --recursive https://github.com/UCLOrengoGroup/cath-tools.git
+git clone https://github.com/UCLOrengoGroup/cath-tools.git
 ~~~~~
-
-If you've already cloned cath-tools without including bioplib, then use:
-
-~~~~~no-highlight
-git submodule update --init --recursive
-~~~~~
-
 
 There are three further dependencies/prerequisites...
 
@@ -139,21 +129,5 @@ cd       ${BUILD_ROOT_DIR}/cath-tools/
 make -C gcc_relwithdebinfo -k -j2
 ls -l ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
 ~~~~~
-
-
-
-Other Bioplib versions
-----------------------
-
-At present, cath-tools uses [bioplib](https://github.com/ACRMGroup/bioplib "Bioplib's GitHub Homepage") v2.1.2. If you want to try using &ge;v3.0, be sure to comment out the line in the Makefile that switches on the use of libxml2:
-
-~~~~~no-highlight
-# Include libxml2
-# Note: xml2-config is installed with libxml2
-#       Link to libxml2 with -lxml2
-COPT := $(COPT) -D XML_SUPPORT $(shell xml2-config --cflags)
-~~~~~
-
-(otherwise the build against the bioplib libraries will be broken by unresolved dependencies to libxml2)
 
 For advance building options, see [Developers](developers).

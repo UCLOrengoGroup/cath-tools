@@ -34,7 +34,6 @@
 #include "file/file_type_aliases.hpp"
 #include "file/pdb/element_type_string.hpp"
 #include "file/pdb/pdb_atom_parse_status.hpp"
-#include "file/pdb/pdb_base.hpp"
 #include "file/pdb/pdb_record.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/protein/amino_acid.hpp"
@@ -105,6 +104,14 @@ namespace cath {
 			void rotate(const geom::rotation &);
 			void operator+=(const geom::coord &);
 			void operator-=(const geom::coord &);
+
+			/// \brief Specify how short a line can be before it will be rejected.
+			static constexpr size_t MIN_NUM_PDB_COLS =  66;
+
+			/// \brief Specify how long a line can be before it will be rejected.
+			///
+			/// This is set to 160, twice the standard 80, to avoid rejecting lines that have just got some extra stuff at the end
+			static constexpr size_t MAX_NUM_PDB_COLS =  2 * 80;
 		};
 
 		boost::string_ref get_element_type_untrimmed_str_ref(const pdb_atom &);
@@ -308,10 +315,10 @@ namespace cath {
 			if ( ! is_pdb_record_of_type( arg_pdb_atom_record_string, pdb_record::ATOM ) && ! is_pdb_record_of_type( arg_pdb_atom_record_string, pdb_record::HETATM ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot check for atom record parse problems because string is not an ATOM record"));
 			}
-			if ( arg_pdb_atom_record_string.length() < pdb_base::MIN_NUM_PDB_COLS ) {
+			if ( arg_pdb_atom_record_string.length() < pdb_atom::MIN_NUM_PDB_COLS ) {
 				return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Is too long", the_aa };
 			}
-			if ( arg_pdb_atom_record_string.length() > pdb_base::MAX_NUM_PDB_COLS ) {
+			if ( arg_pdb_atom_record_string.length() > pdb_atom::MAX_NUM_PDB_COLS ) {
 				return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Is too long", the_aa };
 			}
 			if ( arg_pdb_atom_record_string.at( 11 ) != ' '   ) {

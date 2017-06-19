@@ -81,9 +81,11 @@ using boost::numeric_cast;
 using boost::range::binary_search;
 using boost::range::count_if;
 
+const string pdb::PDB_RECORD_STRING_TER ( "TER   " );
+
 /// \brief TODOCUMENT
-void pdb::do_read_file(const path &arg_filename ///< TODOCUMENT
-                       ) {
+void pdb::read_file(const path &arg_filename ///< TODOCUMENT
+                    ) {
 	ifstream pdb_istream;
 	open_ifstream(pdb_istream, arg_filename);
 
@@ -108,8 +110,8 @@ void pdb::do_read_file(const path &arg_filename ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-void pdb::do_append_to_file(const path &arg_filename ///< TODOCUMENT
-                            ) const {
+void pdb::append_to_file(const path &arg_filename ///< TODOCUMENT
+                         ) const {
 	ofstream pdb_appstream;
 	open_ofstream(pdb_appstream, arg_filename);
 
@@ -134,26 +136,26 @@ void pdb::do_append_to_file(const path &arg_filename ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-void pdb::do_set_chain_label(const chain_label &arg_chain_label ///< TODOCUMENT
-                             ) {
+void pdb::set_chain_label(const chain_label &arg_chain_label ///< TODOCUMENT
+                          ) {
 	for (pdb_residue &my_pdb_residue : pdb_residues) {
 		my_pdb_residue.set_chain_label( arg_chain_label );
 	}
 }
 
 /// \brief TODOCUMENT
-residue_id_vec pdb::do_get_residue_ids_of_first_chain__backbone_unchecked() const {
+residue_id_vec pdb::get_residue_ids_of_first_chain__backbone_unchecked() const {
 	return get_backbone_complete_residue_ids_of_first_chain( *this, false );
 }
 
 /// \brief TODOCUMENT
-coord pdb::do_get_residue_ca_coord_of_index__backbone_unchecked(const size_t &arg_index ///< TODOCUMENT
-                                                                ) const {
+coord pdb::get_residue_ca_coord_of_index__backbone_unchecked(const size_t &arg_index ///< TODOCUMENT
+                                                             ) const {
 	return get_carbon_alpha_coord( get_residue_cref_of_index__backbone_unchecked( arg_index ) );
 }
 
 /// \brief TODOCUMENT
-size_t pdb::do_get_num_atoms() const {
+size_t pdb::get_num_atoms() const {
 	auto num_atoms = 0_z;
 	for (const pdb_residue &residue : pdb_residues) {
 		num_atoms += residue.get_num_atoms();
@@ -162,20 +164,20 @@ size_t pdb::do_get_num_atoms() const {
 }
 
 /// \brief TODOCUMENT
-void pdb::do_rotate(const rotation &arg_rotation ///< TODOCUMENT
-                    ) {
-	for (pdb_residue &my_pdb_residue : pdb_residues) {
-		my_pdb_residue.rotate( arg_rotation );
-	}
-	for (pdb_residue &my_pdb_residue : post_ter_residues) {
-		my_pdb_residue.rotate( arg_rotation );
-	}
-}
-
-/// \brief TODOCUMENT
-void pdb::do_add(const coord &arg_coord ///< TODOCUMENT
+void pdb::rotate(const rotation &arg_rotation ///< TODOCUMENT
                  ) {
 	for (pdb_residue &my_pdb_residue : pdb_residues) {
+		my_pdb_residue.rotate( arg_rotation );
+	}
+	for (pdb_residue &my_pdb_residue : post_ter_residues) {
+		my_pdb_residue.rotate( arg_rotation );
+	}
+}
+
+/// \brief TODOCUMENT
+void pdb::operator+=(const coord &arg_coord ///< TODOCUMENT
+                     ) {
+	for (pdb_residue &my_pdb_residue : pdb_residues) {
 		my_pdb_residue += arg_coord;
 	}
 	for (pdb_residue &my_pdb_residue : post_ter_residues) {
@@ -184,8 +186,8 @@ void pdb::do_add(const coord &arg_coord ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-void pdb::do_subtract(const coord &arg_coord ///< TODOCUMENT
-                      ) {
+void pdb::operator-=(const coord &arg_coord ///< TODOCUMENT
+                     ) {
 	for (pdb_residue &my_pdb_residue : pdb_residues) {
 		my_pdb_residue -= arg_coord;
 	}
@@ -368,7 +370,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			if ( parse_status == pdb_atom_parse_status::ABORT ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(
 					"ATOM record is malformed : " + parse_string
-					+ "\nRecord was \"" + line_string.substr(0, pdb_base::MAX_NUM_PDB_COLS)
+					+ "\nRecord was \"" + line_string.substr(0, pdb_atom::MAX_NUM_PDB_COLS)
 					+ "\""
 				));
 			}
@@ -536,7 +538,7 @@ ostream & cath::file::write_pdb_file(ostream               &arg_os,             
 			const string residue_name_with_insert_or_space = make_residue_name_string_with_insert_or_space(
 				get_residue_name( the_residue )
 			);
-			arg_os << pdb_base::PDB_RECORD_STRING_TER
+			arg_os << pdb::PDB_RECORD_STRING_TER
 				<< right
 				<< setw( 5 ) << ( last_atom ? ( last_atom->get_atom_serial() + 1u ) : 0u )
 				<< "      "

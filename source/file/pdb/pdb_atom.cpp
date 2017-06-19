@@ -24,7 +24,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 
-#include "file/pdb/pdb_base.hpp"
 #include "structure/geometry/rotation.hpp"
 
 #include <iomanip>
@@ -42,6 +41,9 @@ using boost::algorithm::trim_left_copy;
 using boost::algorithm::trim_right;
 using boost::lexical_cast;
 using boost::string_ref;
+
+constexpr size_t pdb_atom::MIN_NUM_PDB_COLS;
+constexpr size_t pdb_atom::MAX_NUM_PDB_COLS;
 
 /// \brief TODOCUMENT
 void pdb_atom::rotate(const rotation &arg_rotation ///< TODOCUMENT

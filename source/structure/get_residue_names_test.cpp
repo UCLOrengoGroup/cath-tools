@@ -22,16 +22,18 @@
 
 #include <boost/filesystem.hpp>
 
+#include "file/pdb/pdb.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/file/open_fstream.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
-#include "structure/bioplib_facade/bioplib_pdb.hpp"
 #include "structure/protein/residue.hpp"
 #include "test/global_test_constants.hpp"
 
 #include <fstream>
 #include <string>
+
+namespace cath { namespace test { } }
 
 using namespace boost::filesystem;
 using namespace cath;
@@ -82,7 +84,7 @@ namespace cath {
 				switch ( arg_filetype ) {
 					case ( get_residue_ids_test_filetype::PDB ) : {
 						const path pdb_file ( TEST_RESIDUE_IDS_DATA_DIR() / ( arg_chain_id + pdb_extension ) );
-						bioplib_pdb my_pdb;
+						pdb my_pdb;
 						my_pdb.read_file( pdb_file.string() );
 						got_residue_ids = my_pdb.get_residue_ids_of_first_chain__backbone_unchecked();
 						break;

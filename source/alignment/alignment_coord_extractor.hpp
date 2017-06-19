@@ -39,12 +39,7 @@ namespace cath { class residue;    }
 namespace cath {
 	namespace align {
 
-		/// \brief A pair of methods to extract common coordinates from a pair of structures where common coordinates are defined by an alignment
-		///
-		/// In both cases, the carbon alpha atom is used for each residue's coordinates.
-		///
-		/// The first extracts coordinates from protein data structures (ie WOLF + sec files) whereas
-		/// the second extracts coordinates from bioplib_pdb structures (ie ACRM interface to PDB files).
+		/// \brief Extract common coordinates from a pair of structures where common coordinates are defined by an alignment
 		///
 		/// \todo Refactor as much common code as possible out of these two methods
 		///

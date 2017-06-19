@@ -93,7 +93,7 @@ Ensure you have clang installed. Find the analyzer programs `ccc-analyzer` and `
 dpkg -l | grep clang | awk '{print $2}' | xargs dpkg -L | grep analyzer
 ~~~~~
 
-Then substitute their locations into the following commands and then run the commands, starting in the root of the cath-tools project (with bioplib already built if you don't want errors from static analysis of bioplib):
+Then substitute their locations into the following commands and then run the commands, starting in the root of the cath-tools project:
 
 
 ~~~~~no-highlight

@@ -20,9 +20,10 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
-#include "test/global_test_constants.hpp"
-#include "structure/bioplib_facade/bioplib_pdb.hpp"
+#include "file/pdb/pdb.hpp"
 #include "structure/geometry/coord.hpp"
+#include "structure/structure_type_aliases.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace boost::filesystem;
 using namespace cath;
@@ -75,8 +76,8 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(alignment_coord_extractor_test_suite, cath::test::alignment_coord_extractor_test_suite_fixture)
 
 /// \brief Check that grabbing the first few carbon alpha coordinates from a test file produces the expected results
-BOOST_AUTO_TEST_CASE(bioplib_pdb_ca_coord_querying) {
-	bioplib_pdb my_pdb;
+BOOST_AUTO_TEST_CASE(pdb_ca_coord_querying) {
+	pdb my_pdb;
 	my_pdb.read_file(EXAMPLE_A_PDB_FILENAME().string());
 	coord_vec first_ca_coords;
 	first_ca_coords.reserve(EXPECTED_FIRST_CA_COORDS.size());

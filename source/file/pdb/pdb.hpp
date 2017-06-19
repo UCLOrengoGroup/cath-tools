@@ -30,7 +30,6 @@
 #include "exception/invalid_argument_exception.hpp"
 #include "file/file_type_aliases.hpp"
 #include "file/pdb/dssp_skip_policy.hpp"
-#include "file/pdb/pdb_base.hpp"
 #include "file/pdb/pdb_residue.hpp"
 #include "file/pdb/pdb_write_mode.hpp"
 #include "structure/structure_type_aliases.hpp"
@@ -49,7 +48,7 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \todo Change to do reading and writing via streams
-		class pdb final : public pdb_base, private boost::additive<pdb, geom::coord> {
+		class pdb final : private boost::additive<pdb, geom::coord> {
 		private:
 			/// \brief TODOCUMENT
 			pdb_residue_vec pdb_residues;
@@ -57,20 +56,20 @@ namespace cath {
 			/// \brief The residues that appeared after a TER record in their respective chains
 			pdb_residue_vec post_ter_residues;
 
-			void do_read_file(const boost::filesystem::path &) final;
-			void do_append_to_file(const boost::filesystem::path &) const final;
-			void do_set_chain_label(const chain_label &) final;
-			residue_id_vec do_get_residue_ids_of_first_chain__backbone_unchecked() const final;
-			geom::coord do_get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const final;
-			size_t do_get_num_atoms() const final;
-
-			void do_rotate(const geom::rotation &) final;
-			void do_add(const geom::coord &) final;
-			void do_subtract(const geom::coord &) final;
-
 		public:
 			size_t get_num_backbone_complete_residues() const;
 			size_t get_index_of_backbone_complete_index(const size_t &) const;
+
+			void read_file(const boost::filesystem::path &);
+			void append_to_file(const boost::filesystem::path &) const;
+			void set_chain_label(const chain_label &);
+			residue_id_vec get_residue_ids_of_first_chain__backbone_unchecked() const;
+			geom::coord get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const;
+			size_t get_num_atoms() const;
+
+			void rotate(const geom::rotation &);
+			void operator+=(const geom::coord &);
+			void operator-=(const geom::coord &);
 
 			bool empty() const;
 			size_t get_num_residues() const;
@@ -90,6 +89,8 @@ namespace cath {
 
 			const_iterator begin() const;
 			const_iterator end() const;
+
+			static const std::string PDB_RECORD_STRING_TER;
 		};
 
 		residue_id_vec get_backbone_complete_residue_ids_of_first_chain(const pdb &,

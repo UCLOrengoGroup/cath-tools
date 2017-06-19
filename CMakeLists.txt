@@ -4,7 +4,7 @@ cmake_minimum_required (VERSION 2.8.8)
 find_program   ( LSB_RELEASE lsb_release )
 execute_process( COMMAND ${LSB_RELEASE} -cs OUTPUT_VARIABLE LSB_RELEASE_CODE OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-
+# TODO: Consider using GSL_RANGE_CHECK_OFF, at least in release builds
 
 execute_process(
 	COMMAND git describe --tags --long
@@ -84,18 +84,6 @@ link_directories   (        ${Boost_LIBRARYDIR}  )
 link_directories   (        ${Boost_LIBRARYDIR}  )
 
 add_definitions(-DRAPIDJSON_HAS_STDSTRING=1)
-
-# Add handling of includes and library links for bioplib
-add_custom_target(
-	built_bioplib_libraries
-	COMMAND make
-	# In CMake v3.2, the BYPRODUCTS field allows specifiecation of the expected resulting files - these can be used by Ninja to avoid calling this step every time
-	#BYPRODUCTS ${CMAKE_CURRENT_LIST_DIR}/bioplib/src/libgen.a ${CMAKE_CURRENT_LIST_DIR}/bioplib/src/libbiop.a
-	COMMENT Attempting to build bioplib
-	WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bioplib/src
-)
-
-link_directories( ${CMAKE_CURRENT_LIST_DIR}/bioplib/src )
 
 set( CMAKE_INCLUDE_CURRENT_DIR      ON )
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY .. )

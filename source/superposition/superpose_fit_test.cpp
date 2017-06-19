@@ -22,7 +22,6 @@
 
 namespace cath { namespace test { } }
 
-#include "structure/bioplib_facade/bioplib_interface.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
 #include "structure/geometry/rotation.hpp"
@@ -103,17 +102,14 @@ BOOST_AUTO_TEST_CASE(issue_34_test) {
 	// 	coord{  -7.174810, -11.553500,   5.146210    },
 	// 	coord{  -9.626950, -10.977500,   8.003710    },
 	// } };
-	// const auto bioplib_rot = bioplib_fit( a, b );
 
 	// const auto svd_rot     = superpose_fit( a, b );
 
-	// std::cerr << "bioplib_rot : " << bioplib_rot << "\n";
 	// // ignore_unused( svd_rot );
 	// std::cerr << "svd_rot     : " << svd_rot     << "\n";
 
 	// std::cerr << "a                         : " << a                         << "\n\n";
 	// std::cerr << "rotate_copy( svd_rot, b ) : " << rotate_copy( svd_rot, b ) << "\n\n";
-	// std::cerr << "RMSD ( bioplib_rot, b, a ) : " << calc_rmsd( rotate_copy( bioplib_rot, b ), a ) << "\n\n";
 	// std::cerr << "RMSD ( svd_rot,     b, a ) : " << calc_rmsd( rotate_copy( svd_rot,     b ), a ) << "\n\n";
 
 	BOOST_CHECK( true );
