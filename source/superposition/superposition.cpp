@@ -34,10 +34,9 @@
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
-#include "structure/bioplib_facade/bioplib_interface.hpp"
-#include "structure/bioplib_facade/bioplib_pdb.hpp"
 #include "structure/geometry/coord_list.hpp"
 #include "structure/geometry/rotation.hpp"
+#include "superposition/superpose_fit.hpp"
 
 #include <deque>
 #include <fstream>
@@ -86,26 +85,20 @@ coord_rot_pair superposition::fit_second_to_first(const coord_list &arg_coords_a
 
 	// Calculate rotation matrix
 	//
-	// Occasionally, if the original pair of coordinates are exactly 180 degrees from optimum, one
-	// call to bioblip_fit can be insufficient to get a good answer.
+	// This used to be complicated by the old fitting routine's difficulty with two sets of coordinates
+	// that are exactly 180-degree rotations of each other. I think that because that routine was iterative,
+	// it had some difficulties with situations in which it could find a direction to start the improvements.
+	// Cf a ball-bearing that's perfectly balanced at the top of a smooth mound and doesn't roll in any direction.
 	//
-	// For example, this problem can occur with some subsets of the residues in chains B and C of 1iph
+	// For example, this problem occurred with chains B and C of 1iph.
 	//
-	// Presumably this is because the algorithm struggles to find a first step of improvement when the
-	// correct rotation is exactly 180 degrees, and it takes many iterations to build up a tiny perturbation.
+	// To tackle this, the code previously calculated a first rotation against the centred_coords_b
+	// twisted x->y->z and then a second rotation against the centred_coords_b twisted
+	// by the first rotation.
 	//
-	// So here, a second call is made and the results combined with the first call to get a more robust answer.
-	//
-	// To provide extra protection against it failing to perturb the original at all,
-	// the first rotation is calculated against the centred_coords_b twisted x->y->z
-	// and then the second rotation is calculated against the centred_coords_b twisted
-	// by the first rotation
-	const coord_list twisted_centred_coords_b = rotate_copy( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), centred_coords_b         );
-//	const coord_list twisted_centred_coords_b = centred_coords_b;
-	const rotation   rotation_1               = bioplib_fit(centred_coords_a,                     twisted_centred_coords_b );
-	const coord_list centred_coords_b_rot     = rotate_copy( rotation_1,                          centred_coords_b         );
-	const rotation   rotation_2               = bioplib_fit( centred_coords_a,                    centred_coords_b_rot     );
-	const rotation   match_rotation           = rotation_2 * rotation_1;
+	// Now that the non-iterative Kabsch algorithm is being used, 1iphB/1iphC appear to superpose
+	// correctly and that extra code has been removed.
+	const rotation   match_rotation      = superpose_fit_2nd_to_1st( centred_coords_a, centred_coords_b );
 
 	// Calculate translation vector
 	const coord      match_translation   = rotate_copy(transpose_copy(match_rotation), centre_of_gravity_a) - centre_of_gravity_b;

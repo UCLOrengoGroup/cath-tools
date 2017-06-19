@@ -346,7 +346,7 @@ BOOST_AUTO_TEST_CASE(tm_score_1c55A_1c55A) {
 
 /// \brief Check the TM-score for 1c55A/1c56A is correct
 BOOST_AUTO_TEST_CASE(tm_score_1c55A_1c56A) {
-	BOOST_CHECK_CLOSE( tm_score().calculate  ( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.9131980677949697, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( tm_score().calculate  ( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.9131980677380123, ACCURACY_PERCENTAGE() );
 }
 
 /// \brief Check the TM-score for 1c55A/1wt7A is correct
