@@ -94,15 +94,15 @@ namespace cath {
 
 			static void check_index(const size_t &);
 			static void check_value(const double &);
-			void init_from_vector_with_rotation_checks(const doub_vec &);
-			void init_from_vector(const doub_vec &);
-			void init_from_values_with_rotation_checks(const double &, const double &, const double &,
-			                                           const double &, const double &, const double &,
-			                                           const double &, const double &, const double &);
-			void init_from_values(const double &, const double &, const double &,
-			                      const double &, const double &, const double &,
-			                      const double &, const double &, const double &);
-			void set_value(const size_t &, const size_t &, const double &);
+			rotation & init_from_vector_with_rotation_checks(const doub_vec &);
+			rotation & init_from_vector(const doub_vec &);
+			rotation & init_from_values_with_rotation_checks(const double &, const double &, const double &,
+			                                                 const double &, const double &, const double &,
+			                                                 const double &, const double &, const double &);
+			rotation & init_from_values(const double &, const double &, const double &,
+			                            const double &, const double &, const double &,
+			                            const double &, const double &, const double &);
+			rotation & set_value(const size_t &, const size_t &, const double &);
 			void check_is_valid_rotation() const;
 			double determinant() const;
 
@@ -227,15 +227,16 @@ namespace cath {
 
 		/// \brief Private initialisation from row-major order vector to be used by multiple ctors
 		///        and then basic checks that this is a valid rotation
-		inline void rotation::init_from_vector_with_rotation_checks(const doub_vec &arg_vector ///< TODOCUMENT
-		                                                            ) {
+		inline rotation & rotation::init_from_vector_with_rotation_checks(const doub_vec &arg_vector ///< TODOCUMENT
+		                                                                  ) {
 			init_from_vector( arg_vector );
 			check_is_valid_rotation();
+			return *this;
 		}
 
 		/// \brief Private initialisation from row-major order vector to be used by multiple ctors
-		inline void rotation::init_from_vector(const doub_vec &arg_vector ///< TODOCUMENT
-		                                       ) {
+		inline rotation & rotation::init_from_vector(const doub_vec &arg_vector ///< TODOCUMENT
+		                                             ) {
 			// Sanity check the inputs
 			if ( arg_vector.size() != coord::NUM_DIMS * coord::NUM_DIMS ) {
 				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Rotation matrix cannot be constructed from vector that does not have 9 elements"));
@@ -243,25 +244,27 @@ namespace cath {
 			init_from_values( arg_vector[ 0 ], arg_vector[ 1 ], arg_vector[ 2 ],
 			                  arg_vector[ 3 ], arg_vector[ 4 ], arg_vector[ 5 ],
 			                  arg_vector[ 6 ], arg_vector[ 7 ], arg_vector[ 8 ] );
+			return *this;
 		}
 
 		/// \brief Private initialisation from row-major order vector to be used by multiple ctors
 		///        and then basic checks that this is a valid rotation
-		inline void rotation::init_from_values_with_rotation_checks(const double &arg_val_00, const double &arg_val_01, const double &arg_val_02,
-		                                                            const double &arg_val_10, const double &arg_val_11, const double &arg_val_12,
-		                                                            const double &arg_val_20, const double &arg_val_21, const double &arg_val_22
-		                                                            ) {
+		inline rotation & rotation::init_from_values_with_rotation_checks(const double &arg_val_00, const double &arg_val_01, const double &arg_val_02,
+		                                                                  const double &arg_val_10, const double &arg_val_11, const double &arg_val_12,
+		                                                                  const double &arg_val_20, const double &arg_val_21, const double &arg_val_22
+		                                                                  ) {
 			init_from_values( arg_val_00, arg_val_01, arg_val_02,
 			                  arg_val_10, arg_val_11, arg_val_12,
 			                  arg_val_20, arg_val_21, arg_val_22 );
 			check_is_valid_rotation();
+			return *this;
 		}
 
 		/// \brief Private initialisation from row-major order vector to be used by multiple ctors
-		inline void rotation::init_from_values(const double &arg_val_00, const double &arg_val_01, const double &arg_val_02,
-		                                       const double &arg_val_10, const double &arg_val_11, const double &arg_val_12,
-		                                       const double &arg_val_20, const double &arg_val_21, const double &arg_val_22
-		                                       ) {
+		inline rotation & rotation::init_from_values(const double &arg_val_00, const double &arg_val_01, const double &arg_val_02,
+		                                             const double &arg_val_10, const double &arg_val_11, const double &arg_val_12,
+		                                             const double &arg_val_20, const double &arg_val_21, const double &arg_val_22
+		                                             ) {
 			value_0_0 = arg_val_00;
 			value_0_1 = arg_val_01;
 			value_0_2 = arg_val_02;
@@ -271,13 +274,14 @@ namespace cath {
 			value_2_0 = arg_val_20;
 			value_2_1 = arg_val_21;
 			value_2_2 = arg_val_22;
+			return *this;
 		}
 
 		/// \brief Set a specific value from a rotation object's rotation matrix
-		inline void rotation::set_value(const size_t &arg_row_index, ///< TODOCUMENT
-		                                const size_t &arg_col_index, ///< TODOCUMENT
-		                                const double &arg_value      ///< TODOCUMENT
-		                                ) {
+		inline rotation & rotation::set_value(const size_t &arg_row_index, ///< TODOCUMENT
+		                                      const size_t &arg_col_index, ///< TODOCUMENT
+		                                      const double &arg_value      ///< TODOCUMENT
+		                                      ) {
 			check_index( arg_row_index );
 			check_index( arg_col_index );
 			check_value( arg_value     );
@@ -309,6 +313,7 @@ namespace cath {
 				value_2_2 = arg_value;
 			}
 			BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("Rotation row and/or column indices unrecognised"));
+			return *this;
 		}
 
 		/// \brief TODOCUMENT
