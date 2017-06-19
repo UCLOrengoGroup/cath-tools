@@ -81,11 +81,11 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 		}
 
 //		arg_stderr << "Extracting common coords between " << name_1 << " and " << name_2 << endl;
-//		arg_stderr << "the_alignment.num_entries() is " << the_alignment.num_entries()   << endl;
-//		arg_stderr << "the_alignment.length()      is " << the_alignment.length()        << endl;
-//		arg_stderr << "pdbs.size()                 is " << pdbs.size()                   << endl;
-//		arg_stderr << "index_1                     is " << index_1                       << endl;
-//		arg_stderr << "index_2                     is " << index_2                       << endl;
+//		arg_stderr << "the_alignment.get().num_entries() is " << the_alignment_ref.get().num_entries() << endl;
+//		arg_stderr << "the_alignment.get().length()      is " << the_alignment_ref.get().length()      << endl;
+//		arg_stderr << "get_pdbs( *this ).size()          is " << get_pdbs( *this ).size()              << endl;
+//		arg_stderr << "index_1                           is " << index_1                               << endl;
+//		arg_stderr << "index_2                           is " << index_2                               << endl;
 		const pair<coord_list, coord_list> all_common_coords = alignment_coord_extractor::get_common_coords(
 			get_alignment(),
 			get_pdbs( *this )[ index_1 ],
@@ -134,6 +134,10 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 			index_1,
 			index_2
 		);
+
+		// std::cerr << "common_coords.first  is " << common_coords.first  << "\n";
+		// std::cerr << "cog.first            is " << centre_of_gravity( common_coords.first ) << "\n";
+		// std::cerr << "common_coords.second is " << common_coords.second << "\n";
 
 		// Add the data to the back of the data to be used to make a superposition
 		indices_and_coord_lists.emplace_back(

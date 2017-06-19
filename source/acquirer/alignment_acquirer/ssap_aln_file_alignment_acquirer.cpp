@@ -89,8 +89,8 @@ pair<alignment, superpose_orderer> ssap_aln_file_alignment_acquirer::do_get_alig
 		);
 	}
 
-	 const protein_list proteins_of_pdbs = build_protein_list_of_pdb_list( arg_pdbs );
-	 score_alignment( residue_scorer(), new_alignment, proteins_of_pdbs );
+	const protein_list proteins_of_pdbs = build_protein_list_of_pdb_list( arg_pdbs );
+	score_alignment( residue_scorer(), new_alignment, proteins_of_pdbs );
 
 	// Return the results
 	return make_pair( new_alignment, my_orderer );
