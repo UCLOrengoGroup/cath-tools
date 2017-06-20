@@ -303,6 +303,7 @@ set(
 		cluster/domain_cluster_ids_by_seq.cpp
 		${NORMSOURCES_CLUSTER_FILE}
 		cluster/new_cluster_data.cpp
+		cluster/old_cluster_data.cpp
 )
 
 set(
@@ -1353,6 +1354,7 @@ set(
 		${TESTSOURCES_CLUSTER_FILE}
 		cluster/mapping_tool_test.cpp
 		cluster/new_cluster_data_test.cpp
+		cluster/old_cluster_data_test.cpp
 )
 
 set(

@@ -120,6 +120,15 @@ namespace cath {
 			return arg_new_cluster_data.get_dom_clust_ids().get_id_of_seq_name();
 		}
 
+		/// \brief Get whether there is a non-empty domain_cluster_ids associated with the specified sequence name in the specified new_cluster_data
+		///
+		/// \relates new_cluster_data
+		inline bool has_domain_cluster_ids_of_seq_name(const new_cluster_data &arg_new_cluster_data, ///< The new_cluster_data to query
+		                                               const std::string      &arg_seq_name          ///< The name of the sequence of interest
+		                                               ) {
+			return has_domain_cluster_ids_of_seq_name( arg_new_cluster_data.get_dom_clust_ids(), arg_seq_name );
+		}
+
 		/// \brief Get the domain_cluster_ids associated with the specified sequence name in the specified new_cluster_data
 		///
 		/// \relates new_cluster_data

@@ -21,12 +21,14 @@
 #include "new_cluster_data.hpp"
 
 #include <boost/algorithm/string/join.hpp>
+#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
 #include "common/algorithm/sort_uniq_build.hpp"
 
 using namespace cath::common;
 
+using boost::adaptors::filtered;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::irange;
@@ -69,6 +71,9 @@ std::string cath::clust::to_string(const new_cluster_data &arg_new_cluster_data 
 		+ " }, cluster_index_by_seq_regions{ "
 		+ join(
 			sorted_seq_names
+				| filtered( [&] (const string &x) {
+					return has_domain_cluster_ids_of_seq_name( arg_new_cluster_data, x );
+				} )
 				| transformed( [&] (const string &x) {
 					return x + ":(" + to_string( get_domain_cluster_ids_of_seq_name( arg_new_cluster_data, x ) ) + ")";
 				} ),

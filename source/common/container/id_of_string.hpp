@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_COMMON_CONTAINER_ID_OF_STRING_H
 #define _CATH_TOOLS_SOURCE_COMMON_CONTAINER_ID_OF_STRING_H
 
+#include <boost/range/algorithm/find_if.hpp>
+
 #include "common/cpp14/cbegin_cend.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
@@ -106,7 +108,22 @@ namespace cath {
 			inline const_iterator end() const {
 				return common::cend( the_map );
 			}
+
 		};
+
+		/// \brief Find the string associated with the specified ID in the specified id_of_string
+		///
+		/// Note: This is inefficient! Don't use in performance-critical code
+		inline const std::string & string_of_id(const id_of_string          &arg_id_of_string, ///< The id_of_string to query
+		                                        const id_of_string::id_type &arg_id            ///< The ID of interest
+		                                        ) {
+			return boost::find_if(
+				arg_id_of_string,
+				[&] (const std::pair<const std::string, id_of_string::id_type> &x) {
+					return ( x.second == arg_id );
+				}
+			)->first;
+		}
 
 	} // namespace common
 } // namespace cath

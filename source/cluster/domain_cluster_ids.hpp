@@ -99,8 +99,10 @@ namespace cath {
 			}
 		};
 
-		std::string to_string(const domain_cluster_id &);
-		std::string to_string(const domain_cluster_ids &);
+		std::string to_string(const domain_cluster_id &,
+		                      const bool & = true);
+		std::string to_string(const domain_cluster_ids &,
+		                      const bool & = true);
 
 	} // namespace clust
 } // namespace cath

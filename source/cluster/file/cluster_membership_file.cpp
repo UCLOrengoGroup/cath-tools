@@ -23,6 +23,7 @@
 #include <boost/utility/string_ref.hpp>
 
 #include "cluster/cluster_type_aliases.hpp"
+#include "cluster/old_cluster_data.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/optional/make_optional_if.hpp"
@@ -45,50 +46,69 @@ using std::istream;
 using std::istringstream;
 using std::string;
 
+static constexpr size_t CLUSTER_ID_OFFSET = 0;
+static constexpr size_t DOMAIN_ID_OFFSET  = 1;
+
 /// \brief Parse the data for old "from" clusters from a cluster membership istream
-int cath::clust::parse_old_membership(istream &arg_istream ///< The istream to parse from
-                                      ) {
+old_cluster_data cath::clust::parse_old_membership(istream      &arg_istream,     ///< The istream to parse from
+                                                   id_of_string &arg_id_of_string ///< The id_of_string to use to map from sequences names to IDs 
+                                                   ) {
+	old_cluster_data result{ arg_id_of_string };
 	seq_seg_run_parser segs_parser;
 	string line;
 	while ( getline( arg_istream, line ) ) {
-		static constexpr size_t CLUSTER_ID_OFFSET = 0;
-		static constexpr size_t DOMAIN_ID_OFFSET  = 1;
 		const auto cluster_id_itrs = find_field_itrs( line, CLUSTER_ID_OFFSET                                               );
 		const auto domain_id_itrs  = find_field_itrs( line, DOMAIN_ID_OFFSET, 1 + CLUSTER_ID_OFFSET, cluster_id_itrs.second );
 		/// \TODO Check there are no more fields (but allow whitespace)
 
-		const cluster_id_t cluster_id           = parse_uint_from_field( cluster_id_itrs.first, cluster_id_itrs.second );
-		const auto         domain_id_str_ref    = make_string_ref( domain_id_itrs );
-		const auto         slash_index          = domain_id_str_ref.find_last_of( '/' );
+		const auto         slash_index          = make_string_ref( domain_id_itrs ).find_last_of( '/' );
 		const bool         has_segs             = ( slash_index != string_ref::npos );
 		const auto         pre_split_point_itr  = has_segs ? next( domain_id_itrs.first, debug_numeric_cast<ptrdiff_t>( slash_index     ) )
 		                                                   : domain_id_itrs.second;
-		const auto         seq_id_str_ref       = make_string_ref( domain_id_itrs.first, pre_split_point_itr );
-		const auto         opt_segs             = make_optional_if_fn(
-			has_segs,
-			[&] () {
-				return segs_parser.parse( next( pre_split_point_itr ), domain_id_itrs.second );
-			}
+		result.add_entry(
+			make_string_ref( cluster_id_itrs.first, cluster_id_itrs.second ),
+			make_string_ref( domain_id_itrs.first,  pre_split_point_itr    ),
+			make_optional_if_fn(
+				has_segs,
+				[&] () {
+					return segs_parser.parse( next( pre_split_point_itr ), domain_id_itrs.second );
+				}
+			)
 		);
 
-		ignore_unused( seq_id_str_ref, cluster_id );
+		// const cluster_id_t cluster_id           = parse_uint_from_field( cluster_id_itrs.first, cluster_id_itrs.second );
+		// const auto         domain_id_str_ref    = make_string_ref( domain_id_itrs );
+		// const auto         slash_index          = domain_id_str_ref.find_last_of( '/' );
+		// const bool         has_segs             = ( slash_index != string_ref::npos );
+		// const auto         pre_split_point_itr  = has_segs ? next( domain_id_itrs.first, debug_numeric_cast<ptrdiff_t>( slash_index     ) )
+		//                                                    : domain_id_itrs.second;
+		// const auto         seq_id_str_ref       = make_string_ref( domain_id_itrs.first, pre_split_point_itr );
+		// const auto         opt_segs             = make_optional_if_fn(
+		// 	has_segs,
+		// 	[&] () {
+		// 		return segs_parser.parse( next( pre_split_point_itr ), domain_id_itrs.second );
+		// 	}
+		// );
+		// ignore_unused( seq_id_str_ref, cluster_id );
 	}
-	return 0;
+	return result;
 }
 
 /// \brief Parse the data for old "from" clusters from a cluster membership istream
-int cath::clust::parse_old_membership(const string &arg_input ///< The string to parse from
-                                      ) {
+old_cluster_data cath::clust::parse_old_membership(const string &arg_input,       ///< The string to parse from
+                                                   id_of_string &arg_id_of_string ///< The id_of_string to use to map from sequences names to IDs 
+                                                   ) {
 	istringstream in_ss{ arg_input };
-	return parse_old_membership( in_ss );
+	return parse_old_membership( in_ss, arg_id_of_string );
 }
 
 /// \brief Parse the data for old "from" clusters from a cluster membership istream
-int cath::clust::parse_old_membership(const path &arg_input ///< The file to parse from
-                                      ) {
+old_cluster_data cath::clust::parse_old_membership(const path &arg_input,         ///< The file to parse from
+                                                   id_of_string &arg_id_of_string ///< The id_of_string to use to map from sequences names to IDs 
+                                                   ) {
 	ifstream in_stream;
 	open_ifstream( in_stream, arg_input );
-	return parse_old_membership( in_stream );
+	return parse_old_membership( in_stream, arg_id_of_string );
 }
 
 /// \brief Parse the data for new "to" clusters from a cluster membership istream
@@ -99,8 +119,6 @@ new_cluster_data cath::clust::parse_new_membership(istream      &arg_istream,   
 	seq_seg_run_parser segs_parser;
 	string line;
 	while ( getline( arg_istream, line ) ) {
-		static constexpr size_t CLUSTER_ID_OFFSET = 0;
-		static constexpr size_t DOMAIN_ID_OFFSET  = 1;
 		const auto cluster_id_itrs = find_field_itrs( line, CLUSTER_ID_OFFSET                                               );
 		const auto domain_id_itrs  = find_field_itrs( line, DOMAIN_ID_OFFSET, 1 + CLUSTER_ID_OFFSET, cluster_id_itrs.second );
 		/// \TODO Check there are no more fields (but allow whitespace)

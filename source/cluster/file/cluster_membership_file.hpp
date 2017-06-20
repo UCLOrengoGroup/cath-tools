@@ -23,7 +23,8 @@
 
 #include <boost/filesystem/path.hpp>
 
-#include "cluster/new_cluster_data.hpp"
+#include "cluster/new_cluster_data.hpp" // Required for the deleted function definitions
+#include "cluster/old_cluster_data.hpp" // Required for the deleted function definitions
 
 #include <iostream>
 #include <string>
@@ -33,30 +34,54 @@ namespace cath { namespace common { class id_of_string; } }
 namespace cath {
 	namespace clust {
 
-		int parse_old_membership(std::istream &);
-		int parse_old_membership(const std::string &);
-		int parse_old_membership(const boost::filesystem::path &);
+		old_cluster_data parse_old_membership(std::istream &,
+		                                      common::id_of_string &);
+
+		/// \brief Prevent calling with an rvalue id_of_string
+		old_cluster_data parse_old_membership(std::istream &,
+		                                      const common::id_of_string &&) = delete;
+
+
+		old_cluster_data parse_old_membership(const std::string &,
+		                                      common::id_of_string &);
+
+		/// \brief Prevent calling with an rvalue id_of_string
+		old_cluster_data parse_old_membership(const std::string &,
+		                                      const common::id_of_string &&) = delete;
+
+
+		old_cluster_data parse_old_membership(const boost::filesystem::path &,
+		                                      common::id_of_string &);
+
+		/// \brief Prevent calling with an rvalue id_of_string
+		old_cluster_data parse_old_membership(const boost::filesystem::path &,
+		                                      const common::id_of_string &&) = delete;
+
+
+
 
 		new_cluster_data parse_new_membership(std::istream &,
 		                                      common::id_of_string &);
 
+		/// \brief Prevent calling with an rvalue id_of_string
 		new_cluster_data parse_new_membership(std::istream &,
 		                                      const common::id_of_string &&) = delete;
 
+
 		new_cluster_data parse_new_membership(const std::string &,
 		                                      common::id_of_string &);
 
+		/// \brief Prevent calling with an rvalue id_of_string
 		new_cluster_data parse_new_membership(const std::string &,
 		                                      const common::id_of_string &&) = delete;
+
 
 		new_cluster_data parse_new_membership(const boost::filesystem::path &,
 		                                      common::id_of_string &);
 
+		/// \brief Prevent calling with an rvalue id_of_string
 		new_cluster_data parse_new_membership(const boost::filesystem::path &,
 		                                      const common::id_of_string &&) = delete;
-
-
-		// std::pair<boost::string_ref, boost::optional<>> parse_cluster_domain_id(const boost::string_ref &);
 
 	} // namespace clust
 } // namespace cath

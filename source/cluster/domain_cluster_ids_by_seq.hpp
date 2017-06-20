@@ -55,6 +55,9 @@ namespace cath {
 			domain_cluster_ids_by_seq & add(const boost::string_ref &,
 			                                domain_cluster_id);
 
+			bool empty() const;
+			size_t size() const;
+
 			const common::id_of_string & get_id_of_seq_name() const;
 
 			const domain_cluster_ids & operator[](const size_t &) const;
@@ -83,6 +86,16 @@ namespace cath {
 			return *this;
 		}
 
+		/// \brief Return whether this is empty
+		inline bool domain_cluster_ids_by_seq::empty() const {
+			return domain_cluster_ids_of_seq_id.empty();
+		}
+
+		/// \brief Return the number of domain_cluster_ids entries (including possibly empty ones)
+		inline size_t domain_cluster_ids_by_seq::size() const {
+			return domain_cluster_ids_of_seq_id.size();
+		}
+
 		/// \brief Get the id_of_seq_name lookup from sequence name to sequence ID
 		inline const common::id_of_string & domain_cluster_ids_by_seq::get_id_of_seq_name() const {
 			return id_of_seq_name.get();
@@ -101,6 +114,16 @@ namespace cath {
 		                                                                const std::string               &arg_seq_name                ///< The name of the sequence of interest
 		                                                                ) {
 			return arg_dom_cluster_ids_by_seq.get_id_of_seq_name()[ arg_seq_name ];
+		}
+
+		/// \brief Get whether there is a non-empty domain_cluster_ids for the sequence with the specified name in the specified domain_cluster_ids_by_seq
+		///
+		/// \relates domain_cluster_ids_by_seq
+		inline bool has_domain_cluster_ids_of_seq_name(const domain_cluster_ids_by_seq &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
+		                                               const std::string               &arg_seq_name                ///< The name of the sequence of interest
+		                                               ) {
+			const auto id = get_cluster_id_of_seq_name( arg_dom_cluster_ids_by_seq, arg_seq_name );
+			return ( id < arg_dom_cluster_ids_by_seq.size() && ! arg_dom_cluster_ids_by_seq[ id ].empty() );
 		}
 
 		/// \brief Get the domain_cluster_ids of the sequence with the specified name from the specified domain_cluster_ids_by_seq
