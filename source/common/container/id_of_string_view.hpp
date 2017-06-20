@@ -36,7 +36,7 @@ namespace cath {
 			struct string_view_hasher final {
 				/// \brief The function operator that performs the hash on the T value
 				///        using std::hash<decay_t<T>>
-				size_t operator()(const boost::string_ref &arg_value ///< TODOCUMENT
+				size_t operator()(const boost::string_ref &arg_value ///< The string_ref value to hash
 				                  ) const {
 					return boost::hash_range( arg_value.begin(), arg_value.end() );
 				}
