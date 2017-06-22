@@ -144,7 +144,7 @@ namespace cath {
 	/// \brief Return whether the specified CATH node is (in) one of the specified list of forbidden CATH nodes
 	bool node_is_forbidden(const string  &arg_query_node,     ///< The CATH node to query
 	                       const str_vec &arg_forbidden_nodes ///< The list of CATH nodes to which assignment is forbidden
-						   ) {
+	                       ) {
 		return any_of(
 			arg_forbidden_nodes,
 			[&] (const string &x) {
