@@ -122,6 +122,8 @@ seq_seg_vec cath::seq::make_fragments_of_start_sorted_segments(const seq_seg_vec
 
 /// \brief Return whether the midpoint of the first specified seq_seg is less than that of the second
 ///
+/// This cuts out the halving operation, which isn't actually needed here
+///
 /// \relates seq_seg
 bool cath::seq::midpoint_less(const seq_seg &arg_seq_seg_lhs, ///< The first  seq_seg to compare
                               const seq_seg &arg_seq_seg_rhs  ///< The second seq_seg to compare
