@@ -26,9 +26,12 @@
 #include "common/algorithm/append.hpp"
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/algorithm/variadic_and.hpp"
 #include "common/cpp17/invoke.hpp"
 #include "seq/seq_arrow.hpp"
 #include "seq/seq_seg.hpp"
+
+#include <array>
 
 namespace cath {
 	namespace seq {
@@ -211,7 +214,25 @@ namespace cath {
 				arg_seq_seg_run.get_start_arrow_of_segment( arg_seg_idx )
 			);
 		}
-		
+
+		/// \brief Get the middle of the specified seq_seg_run's segment corresponding to the specified index
+		///
+		/// Eg,
+		///   * the middle of a seg from 2 to 4 is 3
+		///   * the middle of a seg from 2 to 5 is 3.5
+		///
+		/// \relates seq_seg_run
+		inline double get_middle_of_seq_seg(const seq_seg_run &arg_seq_seg_run, ///< The seq_seg_run to query
+		                                    const size_t      &arg_seg_idx      ///< The index of the segment who middle index should be returned
+		                                    ) {
+			return static_cast<double>(
+				arg_seq_seg_run.get_stop_arrow_of_segment ( arg_seg_idx ).res_after ()
+				+
+				arg_seq_seg_run.get_start_arrow_of_segment( arg_seg_idx ).res_before()
+			)
+			/ 2.0;
+		}
+
 		/// \brief Get the specified seq_seg_run's segment corresponding to the specified index
 		///
 		/// \relates seq_seg_run
@@ -338,6 +359,68 @@ namespace cath {
 				static_cast<residx_t>( 0 )
 			);
 		}
+
+		/// \brief Get the middle index of the specified seq_seg_run
+		///        (ie the length-weighted average of its segments' middles, as calculated by get_middle_of_seq_seg())
+		///
+		/// \relates seq_seg_run
+		inline double middle_index(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
+		                           ) {
+			return boost::accumulate(
+				boost::irange( 0_z, arg_seq_seg_run.get_num_segments() )
+					| boost::adaptors::transformed( [&] (const size_t &x) {
+						return (
+							get_length_of_seq_seg( arg_seq_seg_run, x )
+							*
+							get_middle_of_seq_seg( arg_seq_seg_run, x )
+						);
+					} ),
+				0.0
+			) / static_cast<double>( get_total_length( arg_seq_seg_run ) );
+		}
+
+
+		namespace detail {
+
+			/// \brief Implementation function for returning a seq_seg_vec from an even list of starts/stops
+			///
+			/// \relates seq_seg_run
+			template <size_t N, std::size_t... Index>
+			seq_seg_vec make_seq_seg_run_from_res_indices_impl(const std::array<residx_t, N> &arg_array,
+			                                                   std::index_sequence<Index...>
+			                                                   ) {
+				return seq_seg_vec{ {
+					seq_seg{
+						arg_array.at( 2_z * Index     ),
+						arg_array.at( 2_z * Index + 1 )
+					}...
+				} };
+			}
+		}
+
+		/// \brief Make a seq_seg_run from the even list of residue start/stop indices
+		///
+		/// \relates seq_seg_run
+		template <typename... Ts>
+		seq_seg_run make_seq_seg_run_from_res_indices(const Ts &...arg_res_idcs ///< The start/stop residue indices
+		                                              ) {
+			static_assert( sizeof...( Ts ) >= 2,
+				"make_seq_seg_run_from_res_indices() requires at least two index parameters" );
+
+			static_assert( ( sizeof...( Ts ) % 2 ) == 0,
+				"make_seq_seg_run_from_res_indices() requires an even number of index parameters" );
+
+			static_assert( common::variadic_and( std::is_integral<std::decay_t<Ts>>::value... ),
+				"make_seq_seg_run_from_res_indices() requires all parameters to by of integral type" );
+
+			return {
+				detail::make_seq_seg_run_from_res_indices_impl(
+					std::array<residx_t, sizeof...( Ts )>{ { debug_numeric_cast<residx_t>( arg_res_idcs )... } },
+					std::make_index_sequence< sizeof...( Ts ) / 2 >{}
+				)
+			};
+		}
+
 
 		/// \brief Make a continuous seq_seg_run from the residue indices
 		///

@@ -28,7 +28,6 @@
 namespace cath { namespace seq { class seq_arrow; } }
 namespace cath { namespace seq { class seq_seg; } }
 namespace cath { namespace seq { class seq_seg_run; } }
-
 namespace cath {
 	namespace seq {
 
@@ -62,6 +61,9 @@ namespace cath {
 
 		/// \brief Type alias for a vector of seq_seg_opt
 		using seq_seg_opt_vec           = std::vector<seq_seg_opt>;
+
+		/// \brief Type alias for an optional seq_seg_run
+		using seq_seg_run_opt           = boost::optional<seq_seg_run>;
 
 		/// \brief Type alias for a vector of seq_seg_run
 		using seq_seg_run_vec           = std::vector<seq_seg_run>;

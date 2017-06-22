@@ -158,6 +158,15 @@ constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_same;
 
 BOOST_FIXTURE_TEST_SUITE(seq_seg_run_test_suite, seq_seg_run_test_suite_fixture)
 
+
+BOOST_AUTO_TEST_CASE(make_seq_seg_run_from_res_indices_works) {
+	const seq_seg_run a{ seq_seg_vec{ {  0, 1 }, { 4, 6 } } };
+	const seq_seg_run b{ seq_seg_vec{ {  3, 5 }           } };
+	BOOST_CHECK_EQUAL( make_seq_seg_run_from_res_indices( 0, 1, 4, 6 ), a );
+	BOOST_CHECK_EQUAL( make_seq_seg_run_from_res_indices( 3,       5 ), b );
+}
+
+
 BOOST_AUTO_TEST_CASE(converts_to_string_correctly) {
 	const seq_seg_run a{ seq_seg_vec{ {  100,  199 }, {  300,  399 } } };
 	BOOST_CHECK_EQUAL( to_string           ( a ), "seq_seg_run[100-199,300-399]" );
@@ -274,9 +283,12 @@ BOOST_AUTO_TEST_CASE(basic) {
 }
 
 BOOST_AUTO_TEST_CASE(problem_case) {
-	const seq_seg_run a{ seq_seg_vec{ {  0, 1 }, { 4, 6 } } };
-	const seq_seg_run b{ seq_seg_vec{ {  3, 5 }           } };
-	BOOST_CHECK( are_overlapping( a, b ) );
+	BOOST_CHECK(
+		are_overlapping(
+			make_seq_seg_run_from_res_indices( 0, 1, 4, 6 ),
+			make_seq_seg_run_from_res_indices( 3,       5 )
+		)
+	);
 }
 
 BOOST_AUTO_TEST_SUITE(covering_functions)
@@ -464,24 +476,36 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(multis)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	const seq_seg_run a{ seq_seg_vec{ {  100,                  399 } } };
-	const seq_seg_run b{ seq_seg_vec{ {  101,                  399 } } };
-	const seq_seg_run c{ seq_seg_vec{ {  100,                  398 } } };
-	const seq_seg_run d{ seq_seg_vec{ {  100,  199 }, {  300,  399 } } };
-	const seq_seg_run e{ seq_seg_vec{ {  100,  198 }, {  300,  399 } } };
-	const seq_seg_run f{ seq_seg_vec{ {  100,  199 }, {  301,  399 } } };
-
-	const auto hashes = { calc_hash( a ),
-	                      calc_hash( b ),
-	                      calc_hash( c ),
-	                      calc_hash( d ),
-	                      calc_hash( e ),
-	                      calc_hash( f ) };
+	const auto hashes = { calc_hash( make_seq_seg_run_from_res_indices( 100,             399 ) ),
+	                      calc_hash( make_seq_seg_run_from_res_indices( 101,             399 ) ),
+	                      calc_hash( make_seq_seg_run_from_res_indices( 100,             398 ) ),
+	                      calc_hash( make_seq_seg_run_from_res_indices( 100,  199, 300,  399 ) ),
+	                      calc_hash( make_seq_seg_run_from_res_indices( 100,  198, 300,  399 ) ),
+	                      calc_hash( make_seq_seg_run_from_res_indices( 100,  199, 301,  399 ) ) };
 
 	BOOST_CHECK( is_uniq_for_unordered( hashes ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+
+
+
+// BOOST_AUTO_TEST_SUITE(middle)
+
+BOOST_AUTO_TEST_CASE(middle) {
+	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 2, 2       )         ),  2.0 );
+	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 2, 3       )         ),  2.5 );
+	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 1, 3       )         ),  2.0 );
+
+	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 1,       9 )         ),  5.0 );
+	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 1, 3, 7, 9 )         ),  5.0 );
+
+	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 1,       9, 21, 29 ) ), 15.0 );
+	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 1, 3, 7, 9, 21, 29 ) ), 17.0 );
+}
+
+// BOOST_AUTO_TEST_SUITE_END()
+
 
 
 BOOST_AUTO_TEST_SUITE_END()
