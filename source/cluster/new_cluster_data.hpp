@@ -22,7 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CLUSTER_NEW_CLUSTER_DATA_H
 
 #include "cluster/domain_cluster_ids_by_seq.hpp"
-#include "cluster/cluster_info.hpp"
+#include "cluster/clusters_info.hpp"
 
 namespace cath {
 	namespace clust {
@@ -38,7 +38,7 @@ namespace cath {
 			domain_cluster_ids_by_seq dom_clust_ids;
 
 			/// \brief Basic information on the cluster
-			cluster_info clust_info;
+			clusters_info clust_info;
 
 		public:
 			explicit new_cluster_data(common::id_of_string &) noexcept;
@@ -48,10 +48,11 @@ namespace cath {
 
 			new_cluster_data & add_entry(const boost::string_ref &,
 			                             const boost::string_ref &,
-			                             boost::optional<seq::seq_seg_run>);
+			                             const boost::string_ref &,
+			                             seq::seq_seg_run_opt);
 
 			const domain_cluster_ids_by_seq & get_dom_clust_ids() const;
-			const cluster_info & get_clust_info() const;
+			const clusters_info & get_clust_info() const;
 		};
 
 		/// \brief Ctor from an id_of_string reference
@@ -61,13 +62,16 @@ namespace cath {
 
 		/// \brief Add an entry with the specified sequence name and (optional) segments to the cluster with
 		///        the specified name
-		inline new_cluster_data & new_cluster_data::add_entry(const boost::string_ref           &arg_clust_name, ///< The name of the cluster of the entry
-		                                                      const boost::string_ref           &arg_seq_id,     ///< The name of the sequence within which this entry appears
-		                                                      boost::optional<seq::seq_seg_run>  arg_segments    ///< The (optional) segments of the entry within the sequence
+		inline new_cluster_data & new_cluster_data::add_entry(const boost::string_ref &arg_clust_name, ///< The name of the cluster of the entry
+		                                                      const boost::string_ref &arg_seq_id,     ///< The name of the sequence within which this entry appears
+		                                                      const boost::string_ref &arg_domain_id,  ///< The name of the entry
+		                                                      seq::seq_seg_run_opt     arg_segments    ///< The (optional) segments of the entry within the sequence
 		                                                      ) {
-			const auto cluster_id = increment_and_get_id_for_cluster_of_name(
+			const auto cluster_id = update_info_and_get_id_for_cluster_of_name(
 				clust_info,
-				arg_clust_name
+				arg_clust_name,
+				arg_domain_id,
+				arg_segments
 			);
 			dom_clust_ids.add(
 				arg_seq_id,
@@ -82,7 +86,7 @@ namespace cath {
 		}
 
 		/// \brief Get the cluster info
-		inline const cluster_info & new_cluster_data::get_clust_info() const {
+		inline const clusters_info & new_cluster_data::get_clust_info() const {
 			return clust_info;
 		}
 
@@ -94,13 +98,22 @@ namespace cath {
 			return arg_new_cluster_data.get_clust_info().get_num_clusters();
 		}
 
+		/// \brief Get the info of the cluster with the specified ID from the specified new_cluster_data
+		///
+		/// \relates new_cluster_data
+		inline const cluster_info & get_info_of_cluster_of_id(const new_cluster_data &arg_new_cluster_data, ///< The new_cluster_data to query
+		                                                      const cluster_id_t     &arg_cluster_id        ///< The ID of the cluster of interest
+		                                                      ) {
+			return arg_new_cluster_data.get_clust_info().get_info_of_cluster_of_id( arg_cluster_id );
+		}
+
 		/// \brief Get the size of the cluster with the specified ID from the specified new_cluster_data
 		///
 		/// \relates new_cluster_data
 		inline size_t get_size_of_cluster_of_id(const new_cluster_data &arg_new_cluster_data, ///< The new_cluster_data to query
 		                                        const cluster_id_t     &arg_cluster_id        ///< The ID of the cluster of interest
 		                                        ) {
-			return arg_new_cluster_data.get_clust_info().get_size_of_cluster_of_id( arg_cluster_id );
+			return get_info_of_cluster_of_id( arg_new_cluster_data, arg_cluster_id ).get_size();
 		}
 
 		/// \brief Get the name of the cluster with the specified ID in the specified new_cluster_data
@@ -118,6 +131,24 @@ namespace cath {
 		inline const common::id_of_string & get_id_of_seq_name(const new_cluster_data &arg_new_cluster_data ///< The new_cluster_data to query
 		                                                       ) {
 			return arg_new_cluster_data.get_dom_clust_ids().get_id_of_seq_name();
+		}
+
+		/// \brief Get whether there is a non-empty domain_cluster_ids associated with the specified sequence id in the specified new_cluster_data
+		///
+		/// \relates new_cluster_data
+		inline bool has_domain_cluster_ids_of_seq_id(const new_cluster_data              &arg_new_cluster_data, ///< The new_cluster_data to query
+		                                             const common::id_of_string::id_type &arg_seq_id            ///< The id of the sequence of interest
+		                                             ) {
+			return has_domain_cluster_ids_of_seq_id( arg_new_cluster_data.get_dom_clust_ids(), arg_seq_id );
+		}
+
+		/// \brief Get the domain_cluster_ids associated with the specified sequence id in the specified new_cluster_data
+		///
+		/// \relates new_cluster_data
+		inline const domain_cluster_ids & get_domain_cluster_ids_of_seq_id(const new_cluster_data              &arg_new_cluster_data, ///< The new_cluster_data to query
+		                                                                   const common::id_of_string::id_type &arg_seq_id            ///< The id of the sequence of interest
+		                                                                   ) {
+			return arg_new_cluster_data.get_dom_clust_ids()[ arg_seq_id ];
 		}
 
 		/// \brief Get whether there is a non-empty domain_cluster_ids associated with the specified sequence name in the specified new_cluster_data

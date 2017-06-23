@@ -295,15 +295,29 @@ set(
 )
 
 set(
+	NORMSOURCES_CLUSTER_MAP
+		cluster/map/map_clusters.cpp
+)
+
+set(
+	NORMSOURCES_CLUSTER_OPTIONS_SPEC
+		cluster/options/spec/clust_mapping_spec.cpp
+)
+
+set(
+	NORMSOURCES_CLUSTER_OPTIONS
+		${NORMSOURCES_CLUSTER_OPTIONS_SPEC}
+)
+
+set(
 	NORMSOURCES_CLUSTER
-		cluster/cluster_entry.cpp
-		cluster/cluster_info.cpp
-		cluster/cluster_name_ider.cpp
+		cluster/cluster_domains.cpp
 		cluster/domain_cluster_ids.cpp
-		cluster/domain_cluster_ids_by_seq.cpp
 		${NORMSOURCES_CLUSTER_FILE}
+		${NORMSOURCES_CLUSTER_MAP}
 		cluster/new_cluster_data.cpp
 		cluster/old_cluster_data.cpp
+		${NORMSOURCES_CLUSTER_OPTIONS}
 )
 
 set(
@@ -1349,6 +1363,7 @@ set(
 		cluster/cluster_entry_test.cpp
 		cluster/cluster_info_test.cpp
 		cluster/cluster_name_ider_test.cpp
+		cluster/clusters_info_test.cpp
 		cluster/domain_cluster_ids_by_seq_test.cpp
 		cluster/domain_cluster_ids_test.cpp
 		${TESTSOURCES_CLUSTER_FILE}

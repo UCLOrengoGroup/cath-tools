@@ -1,5 +1,5 @@
 /// \file
-/// \brief The cluster_entry class definitions
+/// \brief The clust_mapping_spec class definitions
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,9 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cluster_entry.hpp"
-
-#include <iostream>
-#include <string>
+#include "clust_mapping_spec.hpp"
 
 using namespace cath::clust;
+
+constexpr double clust_mapping_spec::DEFAULT_MIN_EQUIV_DOM_OL;
+constexpr double clust_mapping_spec::DEFAULT_MIN_EQUIV_CLUST_OL;
+constexpr double clust_mapping_spec::MIN_MIN_EQUIV_DOM_OL;
+constexpr double clust_mapping_spec::MIN_MIN_EQUIV_CLUST_OL;

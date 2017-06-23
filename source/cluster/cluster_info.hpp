@@ -21,9 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CLUSTER_CLUSTER_INFO_H
 #define _CATH_TOOLS_SOURCE_CLUSTER_CLUSTER_INFO_H
 
+#include <boost/operators.hpp>
 #include <boost/utility/string_ref.hpp>
 
-#include "cluster/cluster_name_ider.hpp"
+#include "common/optional/make_optional_if.hpp"
+#include "common/type_aliases.hpp"
+#include "exception/invalid_argument_exception.hpp"
 #include "seq/seq_seg_run.hpp"
 
 #include <string>
@@ -31,84 +34,144 @@
 namespace cath {
 	namespace clust {
 
-		/// \brief Store a name/id lookup and size for clusters
-		class cluster_info final {
+		/// \brief Store the summary information on cluster, which can be used for determining
+		///        the mapping threshold and for ordering unmapped, new clusters
+		class cluster_info final : private boost::less_than_comparable<cluster_info> {
 		private:
-			/// \brief The lookup between name and ID
-			///
-			/// The IDs for this can be used as to index into the sizes
-			cluster_name_ider ider;
+			/// \brief The size of the cluster
+			size_t size;
 
-			/// \brief The sizes of the clusters
-			size_vec sizes;
+			/// \brief The total of the square-roots of the domains' lengths
+			doub_opt total_sqrt_length;
+
+			/// \brief The total of the domains' middle indices (via middle_index(const seq_seg_run &))
+			doub_opt total_mid_point_index;
+
+			/// \brief The lowest domain ID in the cluster
+			std::string lowest_domain_id;
 
 		public:
 			/// \brief Default ctor
 			cluster_info() = default;
 
-			cluster_id_t add_name(const boost::string_ref &);
-			const std::string & get_name_of_id(const size_t &);
-			cluster_info & increment_size_of_cluster_of_id(const cluster_id_t &);
-			size_t get_num_clusters() const;
-			size_t get_size_of_cluster_of_id(const cluster_id_t &) const;
-			const std::string & get_name_of_cluster_of_id(const cluster_id_t &) const;
+			cluster_info & add_entry(const boost::string_ref &,
+			                         const seq::seq_seg_run_opt &);
+
+			const size_t & get_size() const;
+			const doub_opt & get_total_sqrt_length() const;
+			const doub_opt & get_total_mid_point_index() const;
+			const std::string & get_lowest_domain_id() const;
 		};
 
-		/// \brief Add a cluster with the specified name
-		///
-		/// This can be called even if the name already exists
-		///
-		/// This sets the size for the cluster to 0. To add and increment in
-		/// one call, use increment_and_get_id_for_cluster_of_name()
-		inline cluster_id_t cluster_info::add_name(const boost::string_ref &arg_name ///< The name of the cluster to add
-		                                           ) {
-			const auto cluster_id = ider.add_name( arg_name );
-			if ( cluster_id >= sizes.size() ) {
-				sizes.resize( cluster_id + 1, 0_z );
+		bool operator<(const cluster_info &,
+		               const cluster_info &);
+
+		/// \brief Update the cluster to account for a new entry with the specified name and (optional) segments
+		inline cluster_info & cluster_info::add_entry(const boost::string_ref    &arg_name,    ///< The name of the new entry
+		                                              const seq::seq_seg_run_opt &arg_segments ///< The (optional) segments of the new entry
+		                                              ) {
+			if ( size == 0 ) {
+				lowest_domain_id = arg_name.to_string();
+				if ( arg_segments ) {
+					total_sqrt_length     = 0.0;
+					total_mid_point_index = 0_z;
+				}
 			}
-			return cluster_id;
-		}
-
-		/// \brief Get the name of the cluster with the specified ID
-		inline const std::string & cluster_info::get_name_of_id(const size_t &arg_cluster_id ///< The ID of the cluster to get the name
-		                                                        ) {
-			return ider.get_name_of_id( arg_cluster_id );
-		}
-
-		/// \brief Increment the cluster with the specified ID
-		inline cluster_info & cluster_info::increment_size_of_cluster_of_id(const cluster_id_t &arg_cluster_id ///< The ID of the cluster to increment the size of
-		                                                                    ) {
-			++( sizes[ arg_cluster_id ] );
+			else {
+				if ( static_cast<bool>( arg_segments) != static_cast<bool>( total_sqrt_length ) ) {
+					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot mix specifying domain regions within a cluster"));
+				}
+			}
+			++size;
+			if ( arg_name < lowest_domain_id ) {
+				lowest_domain_id = arg_name.to_string();
+			}
+			if ( arg_segments ) {
+				*total_sqrt_length     += sqrt( static_cast<double>( get_total_length( *arg_segments ) ) );
+				*total_mid_point_index += middle_index( *arg_segments );
+			}
 			return *this;
 		}
 
-		/// \brief Get the number of clusters
-		inline size_t cluster_info::get_num_clusters() const {
-			return sizes.size();
+		/// \brief Get the number of entries
+		inline const size_t & cluster_info::get_size() const {
+			return size;
 		}
 
-		/// \brief Get the size of the cluster with the specified ID
-		inline size_t cluster_info::get_size_of_cluster_of_id(const cluster_id_t &arg_cluster_id ///< The ID of the cluster whose size should be retrieved
-		                                                      ) const {
-			return sizes[ arg_cluster_id ];
-		}
-
-		/// \brief Get the name of the cluster with the specified ID
-		inline const std::string & cluster_info::get_name_of_cluster_of_id(const cluster_id_t &arg_cluster_id ///< The ID of the cluster whose name should be retrieved
-		                                                                   ) const {
-			return ider.get_name_of_id( arg_cluster_id );
-		}
-
-		/// \brief Increment the size for the cluster with the specified name in the specified cluster_infor
-		///        and return its ID
+		/// \brief Getter for the total sqrt length
 		///
-		/// \relates cluster_info
-		inline cluster_id_t increment_and_get_id_for_cluster_of_name(cluster_info            &arg_cluster_info, ///< The cluster_info to query
-		                                                             const boost::string_ref &arg_name          ///< The name of the cluster of interest
-		                                                             ) {
-			const auto cluster_id = arg_cluster_info.add_name( arg_name );
-			arg_cluster_info.increment_size_of_cluster_of_id( cluster_id );
-			return cluster_id;
+		/// \pre `get_size() > 0` else an invalid_argument_exception will be thrown
+		inline const doub_opt & cluster_info::get_total_sqrt_length() const {
+			if ( get_size() <= 0 ) {
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_total_sqrt_length() from cluster_info that's empty"));
+			}
+			return total_sqrt_length;
+		}
+
+		/// \brief Getter for the total mid-point index
+		///
+		/// \pre `get_size() > 0` else an invalid_argument_exception will be thrown
+		inline const doub_opt & cluster_info::get_total_mid_point_index() const {
+			if ( get_size() <= 0 ) {
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_total_mid_point_index() from cluster_info that's empty"));
+			}
+			return total_mid_point_index;
+		}
+
+		/// \brief Getter for the lowest domain ID
+		///
+		/// \pre `get_size() > 0` else an invalid_argument_exception will be thrown
+		inline const std::string & cluster_info::get_lowest_domain_id() const {
+			if ( get_size() <= 0 ) {
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot get_lowest_domain_id() from cluster_info that's empty"));
+			}
+			return lowest_domain_id;
+		}
+
+		/// \brief Get the average mid point index of the specified cluster
+		inline doub_opt get_average_mid_point_index(const cluster_info &arg_cluster_info ///< The cluster_info to query
+		                                            ) {
+			return common::make_optional_if_fn(
+				arg_cluster_info.get_total_sqrt_length()
+				&&
+				arg_cluster_info.get_total_mid_point_index(),
+				[&] () {
+					return (
+						static_cast<double>( *arg_cluster_info.get_total_mid_point_index() )
+						/
+						static_cast<double>(  arg_cluster_info.get_size                 () )
+					);
+				}
+			);
+		}
+
+		/// \brief Return whether the first specified cluster_info should be placed before the second when ordering
+		///        unmapped new clusters
+		///
+		///  * descending on sum over domains of sqrt(total_dom_length) (ie earlier FunFams have more/longer sequences, with more emphasis on having more sequence)
+		///  * descending on number of sequences
+		///  * ascending on average mid-point index
+		///  * ascending on first domain ID
+		inline bool operator<(const cluster_info &arg_lhs, ///< The first  cluster to compare
+		                      const cluster_info &arg_rhs  ///< The second cluster to compare
+		                      ) {
+			const auto average_mid_point_index_lhs = get_average_mid_point_index( arg_lhs );
+			const auto average_mid_point_index_rhs = get_average_mid_point_index( arg_rhs );
+			return (
+				std::tie(
+					arg_rhs.get_total_sqrt_length(),
+					arg_rhs.get_size(),
+					average_mid_point_index_lhs,
+					arg_lhs.get_lowest_domain_id()
+				)
+				<
+				std::tie(
+					arg_lhs.get_total_sqrt_length(),
+					arg_lhs.get_size(),
+					average_mid_point_index_rhs,
+					arg_rhs.get_lowest_domain_id()
+				)
+			);
 		}
 
 	} // namespace clust

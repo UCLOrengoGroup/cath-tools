@@ -33,14 +33,14 @@ namespace cath {
 		struct domain_cluster_id {
 
 			/// \brief The segments of a domain (or none if the domain covers the full entry (sequence))
-			boost::optional<seq::seq_seg_run> segments;
+			seq::seq_seg_run_opt segments;
 
 			/// \brief The cluster ID of the domain
 			cluster_id_t cluster_id;
 
 			/// \brief Ctor from the segments and cluster ID of a domain
-			domain_cluster_id(boost::optional<seq::seq_seg_run>  arg_segments,  ///< The segments of a domain (or none if the domain covers the full entry (sequence))
-			                  const cluster_id_t                &arg_cluster_id ///< The cluster ID of the domain
+			domain_cluster_id(seq::seq_seg_run_opt  arg_segments,  ///< The segments of a domain (or none if the domain covers the full entry (sequence))
+			                  const cluster_id_t   &arg_cluster_id ///< The cluster ID of the domain
 			                  ) : segments   { std::move( arg_segments ) },
 			                      cluster_id { arg_cluster_id            } {
 			}

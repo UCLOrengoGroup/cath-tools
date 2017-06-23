@@ -1,5 +1,5 @@
-/// \file
-/// \brief The cluster_info class definitions
+/// \map
+/// \brief The map_clusters class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,9 +18,25 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cluster_info.hpp"
+#ifndef _CATH_TOOLS_SOURCE_CLUSTER_MAP_MAP_CLUSTERS_H
+#define _CATH_TOOLS_SOURCE_CLUSTER_MAP_MAP_CLUSTERS_H
+
+#include "cluster/cluster_type_aliases.hpp"
 
 #include <iostream>
 #include <string>
 
-using namespace cath::clust;
+namespace cath { namespace clust { class clust_mapping_spec; } }
+namespace cath { namespace clust { class new_cluster_data; } }
+
+namespace cath {
+	namespace clust {
+
+		int map_clusters(const old_cluster_data_opt &,
+		                 const new_cluster_data &,
+		                 const clust_mapping_spec &);
+
+	} // namespace clust
+} // namespace cath
+
+#endif

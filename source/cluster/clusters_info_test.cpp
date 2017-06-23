@@ -1,5 +1,5 @@
 /// \file
-/// \brief The cluster_name_ider class definitions
+/// \brief The clusters_info test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,9 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cluster_name_ider.hpp"
+#include <boost/test/auto_unit_test.hpp>
 
-#include <iostream>
-#include <string>
+#include "cluster/clusters_info.hpp"
 
-using namespace cath::clust;
+using namespace cath::seq;
+
+BOOST_AUTO_TEST_SUITE(clusters_info_test_suite)
+
+BOOST_AUTO_TEST_CASE(basic) {
+	BOOST_CHECK( true );
+}
+
+BOOST_AUTO_TEST_SUITE_END()

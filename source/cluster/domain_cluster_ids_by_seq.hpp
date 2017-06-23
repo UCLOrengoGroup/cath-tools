@@ -116,14 +116,32 @@ namespace cath {
 			return arg_dom_cluster_ids_by_seq.get_id_of_seq_name()[ arg_seq_name ];
 		}
 
+		/// \brief Get whether there is a non-empty domain_cluster_ids for the sequence with the specified id in the specified domain_cluster_ids_by_seq
+		///
+		/// \relates domain_cluster_ids_by_seq
+		inline bool has_domain_cluster_ids_of_seq_id(const domain_cluster_ids_by_seq     &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
+		                                             const common::id_of_string::id_type &arg_seq_id                  ///< The id of the sequence of interest
+		                                             ) {
+			return (
+				arg_seq_id < arg_dom_cluster_ids_by_seq.size()
+				&&
+				! arg_dom_cluster_ids_by_seq[ arg_seq_id ].empty()
+			);
+		}
+
 		/// \brief Get whether there is a non-empty domain_cluster_ids for the sequence with the specified name in the specified domain_cluster_ids_by_seq
 		///
 		/// \relates domain_cluster_ids_by_seq
 		inline bool has_domain_cluster_ids_of_seq_name(const domain_cluster_ids_by_seq &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
 		                                               const std::string               &arg_seq_name                ///< The name of the sequence of interest
 		                                               ) {
-			const auto id = get_cluster_id_of_seq_name( arg_dom_cluster_ids_by_seq, arg_seq_name );
-			return ( id < arg_dom_cluster_ids_by_seq.size() && ! arg_dom_cluster_ids_by_seq[ id ].empty() );
+			return has_domain_cluster_ids_of_seq_id(
+				arg_dom_cluster_ids_by_seq,
+				get_cluster_id_of_seq_name(
+					arg_dom_cluster_ids_by_seq,
+					arg_seq_name
+				)
+			);
 		}
 
 		/// \brief Get the domain_cluster_ids of the sequence with the specified name from the specified domain_cluster_ids_by_seq

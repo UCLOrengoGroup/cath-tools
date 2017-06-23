@@ -18,9 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/optional/optional_io.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
 #include "cluster/file/cluster_membership_file.hpp"
+#include "cluster/map/map_clusters.hpp"
+#include "cluster/options/spec/clust_mapping_spec.hpp"
 
 namespace cath { namespace test { } }
 
@@ -28,6 +31,7 @@ using namespace cath::clust;
 using namespace cath::common;
 using namespace cath::test;
 
+using boost::none;
 using std::string;
 
 namespace cath {
@@ -51,9 +55,9 @@ namespace cath {
 			/// \brief An example "new" membership string
 			const string new_membership_str = R"(335 14e361063ccad7801d24cff355749dfb/206-244
 335 72c898c9ba2ec6809a457be7ce0d72fb/162-200
-414 4f5c5f455b1589578cd42403f846f48b/200-235
+414 4f5c5f455b1589578cd42403f846f48b/110-173
 414 3724f6c949f50a3e71dd4166debe1c8e/163-205
-416 16f85e1adbb904c4b56067a7f35b92c4/87-135_203-228
+416 3457216f85e1adbb904c4b56067a2457
 416 126c3de59272d9c6d2de490d47f9f19d
 )";
 
@@ -85,18 +89,63 @@ BOOST_AUTO_TEST_CASE(old_cluster_data__to_string) {
 	BOOST_CHECK_EQUAL( to_string( old_data ), expected_str );
 }
 
+BOOST_AUTO_TEST_CASE(old_cluster_info_first) {
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 0 ).get_size                    (),                                          1 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 0 ).get_total_sqrt_length       (),                                       none );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 0 ).get_total_mid_point_index   (),                                       none );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 0 ).get_lowest_domain_id        (),         "126c3de59272d9c6d2de490d47f9f19d" );
+	BOOST_CHECK_EQUAL( get_average_mid_point_index( get_info_of_cluster_of_id( old_data, 0 ) ),                                       none );
+}
+
+BOOST_AUTO_TEST_CASE(old_cluster_info_second) {
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 1 ).get_size                    (),                                          6 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 1 ).get_total_sqrt_length       (),                         46.154651393277824 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 1 ).get_total_mid_point_index   (),                                      706.0 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 1 ).get_lowest_domain_id        (), "14e361063ccad7801d24cff355749dfb/115-178" );
+	BOOST_CHECK_EQUAL( get_average_mid_point_index( get_info_of_cluster_of_id( old_data, 1 ) ),                         117.66666666666667 );
+}
+
 BOOST_AUTO_TEST_CASE(new_cluster_data__to_string) {
 	const string expected_str = "new_cluster_data[3 clusters, "
 		R"(cluster_sizes{ 0("335"):2, 1("414"):2, 2("416"):2 }, )"
 		  "cluster_index_by_seq_regions{ "
 		  "126c3de59272d9c6d2de490d47f9f19d:(*->2), "
 		  "14e361063ccad7801d24cff355749dfb:([206-244]->0), "
-		  "16f85e1adbb904c4b56067a7f35b92c4:([87-135,203-228]->2), "
+		  "3457216f85e1adbb904c4b56067a2457:(*->2), "
 		  "3724f6c949f50a3e71dd4166debe1c8e:([163-205]->1), "
-		  "4f5c5f455b1589578cd42403f846f48b:([200-235]->1), "
+		  "4f5c5f455b1589578cd42403f846f48b:([110-173]->1), "
 		  "72c898c9ba2ec6809a457be7ce0d72fb:([162-200]->0) } ]";
 
 	BOOST_CHECK_EQUAL( to_string( new_data ), expected_str );
 }
+
+BOOST_AUTO_TEST_CASE(new_cluster_info_first) {
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 0 ).get_size                    (),                                          2 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 0 ).get_total_sqrt_length       (),                         12.489995996796796 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 0 ).get_total_mid_point_index   (),                                      406.0 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 0 ).get_lowest_domain_id        (), "14e361063ccad7801d24cff355749dfb/206-244" );
+	BOOST_CHECK_EQUAL( get_average_mid_point_index( get_info_of_cluster_of_id( new_data, 0 ) ),                                      203.0 );
+}
+
+BOOST_AUTO_TEST_CASE(new_cluster_info_second) {
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 1 ).get_size                    (),                                          2 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 1 ).get_total_sqrt_length       (),                         14.557438524302000 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 1 ).get_total_mid_point_index   (),                                      325.5 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 1 ).get_lowest_domain_id        (), "3724f6c949f50a3e71dd4166debe1c8e/163-205" );
+	BOOST_CHECK_EQUAL( get_average_mid_point_index( get_info_of_cluster_of_id( new_data, 1 ) ),                                     162.75 );
+}
+
+BOOST_AUTO_TEST_CASE(new_cluster_info_third) {
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 2 ).get_size                    (),                                          2 );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 2 ).get_total_sqrt_length       (),                                       none );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 2 ).get_total_mid_point_index   (),                                       none );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 2 ).get_lowest_domain_id        (),         "126c3de59272d9c6d2de490d47f9f19d" );
+	BOOST_CHECK_EQUAL( get_average_mid_point_index( get_info_of_cluster_of_id( new_data, 2 ) ),                                       none );
+}
+
+// BOOST_AUTO_TEST_CASE(map_clusters_does_stuff) {
+// 	map_clusters( old_data, new_data, clust_mapping_spec{} );
+// 	BOOST_CHECK( true );
+// }
 
 BOOST_AUTO_TEST_SUITE_END()

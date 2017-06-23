@@ -68,6 +68,7 @@ old_cluster_data cath::clust::parse_old_membership(istream      &arg_istream,   
 		result.add_entry(
 			make_string_ref( cluster_id_itrs.first, cluster_id_itrs.second ),
 			make_string_ref( domain_id_itrs.first,  pre_split_point_itr    ),
+			make_string_ref( domain_id_itrs.first,  domain_id_itrs.second  ),
 			make_optional_if_fn(
 				has_segs,
 				[&] () {
@@ -75,21 +76,6 @@ old_cluster_data cath::clust::parse_old_membership(istream      &arg_istream,   
 				}
 			)
 		);
-
-		// const cluster_id_t cluster_id           = parse_uint_from_field( cluster_id_itrs.first, cluster_id_itrs.second );
-		// const auto         domain_id_str_ref    = make_string_ref( domain_id_itrs );
-		// const auto         slash_index          = domain_id_str_ref.find_last_of( '/' );
-		// const bool         has_segs             = ( slash_index != string_ref::npos );
-		// const auto         pre_split_point_itr  = has_segs ? next( domain_id_itrs.first, debug_numeric_cast<ptrdiff_t>( slash_index     ) )
-		//                                                    : domain_id_itrs.second;
-		// const auto         seq_id_str_ref       = make_string_ref( domain_id_itrs.first, pre_split_point_itr );
-		// const auto         opt_segs             = make_optional_if_fn(
-		// 	has_segs,
-		// 	[&] () {
-		// 		return segs_parser.parse( next( pre_split_point_itr ), domain_id_itrs.second );
-		// 	}
-		// );
-		// ignore_unused( seq_id_str_ref, cluster_id );
 	}
 	return result;
 }
@@ -130,6 +116,7 @@ new_cluster_data cath::clust::parse_new_membership(istream      &arg_istream,   
 		result.add_entry(
 			make_string_ref( cluster_id_itrs.first, cluster_id_itrs.second ),
 			make_string_ref( domain_id_itrs.first,  pre_split_point_itr    ),
+			make_string_ref( domain_id_itrs.first,  domain_id_itrs.second  ),
 			make_optional_if_fn(
 				has_segs,
 				[&] () {

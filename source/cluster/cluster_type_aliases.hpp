@@ -1,4 +1,4 @@
-	/// \file
+/// \file
 /// \brief The cluster type_aliases header
 
 /// \copyright
@@ -21,19 +21,48 @@
 #ifndef _CATH_TOOLS_SOURCE_CLUSTER_CLUSTER_TYPE_ALIASES_H
 #define _CATH_TOOLS_SOURCE_CLUSTER_CLUSTER_TYPE_ALIASES_H
 
+#include <boost/optional/optional_fwd.hpp>
+
 #include <cstddef>
 #include <vector>
 
+namespace cath { namespace clust { class cluster_domains; } }
+namespace cath { namespace clust { class cluster_info; } }
+namespace cath { namespace clust { class cluster_list; } }
+namespace cath { namespace clust { class old_cluster_data; } }
+namespace cath { namespace clust { namespace detail { struct seq_id_and_domain_cluster_ids_pair; } } }
 namespace cath { namespace clust { struct domain_cluster_id; } }
 
 namespace cath {
 	namespace clust {
+		
+		/// \brief Type alias for a vector of cluster_domains entries
+		using cluster_domains_vec      = std::vector<cluster_domains>;
+
+		/// \brief Type alias for cluster_domains_vec's const_iterator type
+		using cluster_domains_vec_citr = cluster_domains_vec::const_iterator;
 
 		/// \brief Type alias for the type used to index clusters
-		using cluster_id_t = size_t;
+		using cluster_id_t             = size_t;
+
+		/// \brief Type alias for a vector of cluster_info objects
+		using cluster_info_vec         = std::vector<cluster_info>;
 
 		/// \brief Type alias for a vector of domain_cluster_id
-		using domain_cluster_id_vec = std::vector<domain_cluster_id>;
+		using domain_cluster_id_vec    = std::vector<domain_cluster_id>;
+
+		/// \brief Type alias for an optional old_cluster_data
+		using old_cluster_data_opt     = boost::optional<old_cluster_data>;
+
+		namespace detail {
+
+			/// \brief Type alias for a vector of seq_id_and_domain_cluster_ids_pair objects
+			using seq_id_and_domain_cluster_ids_pair_vec      = std::vector<seq_id_and_domain_cluster_ids_pair>;
+
+			/// \brief Type alias for seq_id_and_domain_cluster_ids_pair_vec's const_iterator type
+			using seq_id_and_domain_cluster_ids_pair_vec_citr = seq_id_and_domain_cluster_ids_pair_vec::const_iterator;
+
+		} // namespace detail
 
 	} // namespace clust
 } // namespace cath
