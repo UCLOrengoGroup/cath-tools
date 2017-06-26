@@ -370,9 +370,9 @@ bool cath::residue_matches_residue_id(const residue    &arg_residue,   ///< TODO
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-char cath::get_amino_acid_letter(const residue &arg_residue ///< TODOCUMENT
-                                 ) {
-	return arg_residue.get_amino_acid().get_letter();
+char cath::get_amino_acid_letter_tolerantly(const residue &arg_residue ///< TODOCUMENT
+                                            ) {
+	return arg_residue.get_amino_acid().get_letter_tolerantly();
 }
 
 /// \brief TODOCUMENT
@@ -400,7 +400,7 @@ string cath::ssap_legacy_alignment_left_side_string(const residue &arg_residue /
 	aln_ss        <<    setw(4) << pdb_number_or_value_if_null( arg_residue, 0 );
 	aln_ss << " " << ( arg_residue.get_sec_struc_type() != sec_struc_type::COIL ? lexical_cast<string>( arg_residue.get_sec_struc_type() ) : "0" );
 	aln_ss << " " <<   pdb_insert_or_value_if_null_or_absent( arg_residue, '0' );
-	aln_ss << " " <<   get_amino_acid_letter( arg_residue );
+	aln_ss << " " <<   get_amino_acid_letter_tolerantly( arg_residue );
 	return aln_ss.str();
 }
 
@@ -417,7 +417,7 @@ string cath::ssap_legacy_alignment_left_side_gap_string() {
 string cath::ssap_legacy_alignment_right_side_string(const residue &arg_residue ///< TODOCUMENT
                                                      ) {
 	ostringstream aln_ss;
-	aln_ss        <<   get_amino_acid_letter( arg_residue );
+	aln_ss        <<   get_amino_acid_letter_tolerantly( arg_residue );
 	aln_ss << " " <<   pdb_insert_or_value_if_null_or_absent( arg_residue, '0' );
 	aln_ss << " " << ( arg_residue.get_sec_struc_type() != sec_struc_type::COIL ? lexical_cast<string>( arg_residue.get_sec_struc_type() ) : "0" );
 	aln_ss << " " <<   setw(4) << pdb_number_or_value_if_null( arg_residue, 0 );
@@ -444,7 +444,7 @@ string cath::get_pdb_residue_id_string(const residue &arg_residue ///< TODOCUMEN
 /// \relates residue
 int cath::get_accessi_of_residue(const residue &arg_residue ///< TODOCUMENT
                                  ) {
-	const char one_letter_amino_acid = get_amino_acid_letter( arg_residue );
+	const char one_letter_amino_acid = get_amino_acid_letter_tolerantly( arg_residue );
 	return ACCESSI.find( one_letter_amino_acid )->second - numeric_cast<int>( arg_residue.get_access() );
 }
 
@@ -458,7 +458,7 @@ ostream & cath::operator<<(ostream       &arg_os,     ///< TODOCUMENT
 	arg_os                                     << pdb_insert_or_value_if_null_or_absent( arg_residue, ' ' );
 	arg_os << ", SS:"                          << arg_residue.get_sec_struc_type();
 	arg_os << " ("       << right << setw( 2 ) << arg_residue.get_sec_struc_number();
-	arg_os << "), AA:"                         << get_amino_acid_letter( arg_residue );
+	arg_os << "), AA:"                         << get_amino_acid_letter_tolerantly( arg_residue );
 	arg_os << ", ACC:"   << right << setw( 2 ) << arg_residue.get_access();
 	arg_os << ", PHI:"   << right << setw( 4 ) << arg_residue.get_phi_angle();
 	arg_os << ", PSI:"   << right << setw( 4 ) << arg_residue.get_psi_angle();

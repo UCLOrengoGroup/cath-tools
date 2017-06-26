@@ -56,11 +56,17 @@ using boost::none;
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_residue
-char_opt cath::file::get_amino_acid_letter(const pdb_residue &arg_residue ///< The pdb_residue to query
-                                           ) {
-	const amino_acid &the_amino_acid = arg_residue.get_amino_acid();
-	return is_proper_amino_acid( the_amino_acid ) ? char_opt( the_amino_acid.get_letter() )
-	                                              : none;
+char_opt cath::file::get_letter_if_amino_acid(const pdb_residue &arg_residue ///< The pdb_residue to query
+                                              ) {
+	return arg_residue.get_amino_acid().get_letter_if_amino_acid();
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates pdb_residue
+char cath::file::get_amino_acid_letter_tolerantly(const pdb_residue &arg_residue ///< The pdb_residue to query
+                                                  ) {
+	return arg_residue.get_amino_acid().get_letter_tolerantly();
 }
 
 /// \brief Get the three-letter-code char_3_arr for the amino acid in the specified pdb_residue

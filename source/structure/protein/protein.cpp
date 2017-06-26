@@ -216,10 +216,10 @@ amino_acid cath::get_amino_acid_of_index(const protein &arg_protein,      ///< T
 /// \brief TODOCUMENT
 ///
 /// \relates protein
-char cath::get_amino_acid_letter_of_index(const protein &arg_protein,      ///< TODOCUMENT
-                                          const size_t  &arg_residue_index ///< TODOCUMENT
-                                          ) {
-	return get_amino_acid_of_index( arg_protein, arg_residue_index ).get_letter();
+char cath::get_amino_acid_letter_of_index_tolerantly(const protein &arg_protein,      ///< TODOCUMENT
+                                                     const size_t  &arg_residue_index ///< TODOCUMENT
+                                                     ) {
+	return get_amino_acid_of_index( arg_protein, arg_residue_index ).get_letter_tolerantly();
 }
 
 /// \brief Retrieve a list of all the PDB residue names of the residues in the specified protein

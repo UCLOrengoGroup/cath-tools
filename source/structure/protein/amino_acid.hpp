@@ -32,6 +32,7 @@
 #include "common/char_arr_type_aliases.hpp"
 #include "common/cpp17/invoke.hpp"
 #include "common/function/ident.hpp"
+#include "common/optional/make_optional_if.hpp"
 #include "common/string/char_arr_to_string.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -47,8 +48,9 @@
 #include <vector>
 
 namespace cath {
-	namespace detail { struct aa_code_getter; }
-	namespace detail { struct aa_type_getter; }
+	namespace detail { struct aa_code_getter;            }
+	namespace detail { struct tolerant_aa_letter_getter; }
+	namespace detail { struct aa_type_getter;            }
 
 	using char_char_3_arr_str_tpl     = std::tuple<char, char_3_arr, std::string>;
 	using char_char_3_arr_str_tpl_vec = std::vector<char_char_3_arr_str_tpl>;
@@ -68,6 +70,7 @@ namespace cath {
 	private:
 		friend detail::aa_code_getter;
 		friend detail::aa_type_getter;
+		friend detail::tolerant_aa_letter_getter;
 
 		/// \brief The number of chars used to store a HETATM
 		static constexpr size_t NUM_HETATM_CHARS = 3;
@@ -111,7 +114,8 @@ namespace cath {
 
 		const char_3_arr & get_hetatm_chars() const;
 
-		char        get_letter() const;
+		char_opt    get_letter_if_amino_acid() const;
+		char        get_letter_tolerantly() const;
 		char_3_arr  get_code() const;
 		std::string get_name() const;
 
@@ -244,6 +248,19 @@ namespace cath {
 
 	namespace detail {
 
+		/// \brief A visitor to get the three-letter code from the variant in amino_acid
+		struct aa_code_getter : public boost::static_visitor<char_3_arr> {
+			char_3_arr operator()(const amino_acid::aa_variant_t     &x) const {
+				return amino_acid::get_label<char_3_arr, 1>( x );
+			}
+			char_3_arr operator()(const amino_acid::hetatm_variant_t &x) const {
+				return x;
+			}
+			char_3_arr operator()(const amino_acid::dna_variant_t    &x) const {
+				return to_three_char_arr( x );
+			}
+		};
+
 		/// \brief A visitor to get the amino_acid_type from the variant in amino_acid
 		struct aa_type_getter : public boost::static_visitor<amino_acid_type> {
 			amino_acid_type operator()(const amino_acid::aa_variant_t     &) const {
@@ -257,18 +274,40 @@ namespace cath {
 			}
 		};
 
-		/// \brief A visitor to get the three-letter code from the variant in amino_acid
-		struct aa_code_getter : public boost::static_visitor<char_3_arr> {
-			char_3_arr operator()(const amino_acid::aa_variant_t     &x) const {
-				return amino_acid::get_label<char_3_arr, 1>( x );
+		/// \brief A visitor to get the one-letter code from the variant in amino_acid.
+		///        This just returns 'X' for DNA/HETATM amino_acids.
+		struct tolerant_aa_letter_getter : public boost::static_visitor<char> {
+			char operator()(const amino_acid::aa_variant_t     &x) const {
+				return amino_acid::get_label<char, 0>( x );
 			}
-			char_3_arr operator()(const amino_acid::hetatm_variant_t &x) const {
-				return x;
+			char operator()(const amino_acid::hetatm_variant_t &x) const {
+				// Some of the most common codes, as extracted from PDB dir with command like:
+				//
+				//     ls -1 | xargs grep -hPB99999 '^TER   ' | grep -P '^HETATM' | awk '{print substr( $0, 18, 3 )}' | sort | uniq -c | sort -g
+				//
+				// Codes from pages like : http://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/MSE
+				//
+				// Default to 'X'
+				return
+					( x == char_3_arr{ { ' ', 'I', 'C' } } ) ? 'C' :
+					( x == char_3_arr{ { ' ', 'I', 'G' } } ) ? 'G' :
+					( x == char_3_arr{ { 'H', 'Y', 'P' } } ) ? 'P' :
+					( x == char_3_arr{ { 'L', 'C', 'G' } } ) ? 'G' :
+					( x == char_3_arr{ { 'M', 'L', 'Y' } } ) ? 'K' :
+					( x == char_3_arr{ { 'M', 'S', 'E' } } ) ? 'M' :
+					( x == char_3_arr{ { 'N', 'C', 'X' } } ) ? 'N' :
+					( x == char_3_arr{ { 'O', 'M', 'G' } } ) ? 'G' :
+					( x == char_3_arr{ { 'P', 'C', 'A' } } ) ? 'E' :
+					( x == char_3_arr{ { 'P', 'S', 'U' } } ) ? 'U' :
+					( x == char_3_arr{ { 'P', 'T', 'R' } } ) ? 'Y' :
+					( x == char_3_arr{ { 'S', 'E', 'P' } } ) ? 'S' :
+					                                           'X' ;
 			}
-			char_3_arr operator()(const amino_acid::dna_variant_t    &x) const {
-				return to_three_char_arr( x );
+			char operator()(const amino_acid::dna_variant_t    & ) const {
+				return 'X';
 			}
 		};
+
 	} // namespace detail
 
 	/// \brief Get the amino_acid_type of this amino_acid
@@ -285,9 +324,19 @@ namespace cath {
 		return *raw_string_ptr;
 	}
 
-	/// \brief TODOCUMENT
-	inline char amino_acid::get_letter() const {
-		return get_label<char, 0>( check_is_proper_amino_acid() );
+	/// \brief Get the single letter for the amino_acid if it is an amino acid, or none otherwise
+	inline char_opt amino_acid::get_letter_if_amino_acid() const {
+		const aa_variant_t * const aa_ptr = boost::get<aa_variant_t>( &data );
+		return common::make_optional_if_fn(
+			aa_ptr != nullptr,
+			[&] () { return get_label<char, 0>( *aa_ptr ); }
+		);
+	}
+
+	/// \brief Get a single letter for the amino_acid, which is the expected letter for
+	///        the standard amino acids and a few HETATMs (eg MSE -> M) and is 'X' otherwise
+	inline char amino_acid::get_letter_tolerantly() const {
+		return boost::apply_visitor( detail::tolerant_aa_letter_getter{}, data );
 	}
 
 	/// \brief TODOCUMENT
@@ -317,13 +366,13 @@ namespace cath {
 			using uint8_char_char_3_arr_tpl = std::tuple<uint8_t, char, char_3_arr>;
 			switch ( arg_aa.get_type() ) {
 				case ( amino_acid_type::AA ) : {
-					return uint8_char_char_3_arr_tpl{ 0, arg_aa.get_letter(), char_3_arr{ { 0, 0, 0 } } };
+					return uint8_char_char_3_arr_tpl{ 0, *arg_aa.get_letter_if_amino_acid(), char_3_arr{ { 0, 0, 0 } } };
 				}
 				case ( amino_acid_type::HETATOM ) : {
-					return uint8_char_char_3_arr_tpl{ 1, 0,                   arg_aa.get_hetatm_chars() };
+					return uint8_char_char_3_arr_tpl{ 1, 0,                                  arg_aa.get_hetatm_chars() };
 				}
 				case ( amino_acid_type::DNA ) : {
-					return uint8_char_char_3_arr_tpl{ 2, 0,                   char_3_arr{ { 0, 0, 0 } } };
+					return uint8_char_char_3_arr_tpl{ 2, 0,                                  char_3_arr{ { 0, 0, 0 } } };
 				}
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of arg_aa.get_type() not recognised whilst in make_amino_acid_lt_comparator()"));

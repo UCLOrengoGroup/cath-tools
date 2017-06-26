@@ -208,7 +208,7 @@ namespace cath {
 				(
 					! is_proper_amino_acid( arg_residue_i.get_amino_acid() )
 					||
-					arg_residue_i.get_amino_acid().get_letter() != 'P' // Proline has side-chain on N
+					arg_residue_i.get_amino_acid() != amino_acid{ 'P' } // Proline has side-chain on N
 				)
 			);
 		}

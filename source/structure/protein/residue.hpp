@@ -160,7 +160,7 @@ namespace cath {
 	bool residue_matches_residue_id(const residue &,
 	                                const residue_id &);
 
-	char get_amino_acid_letter(const residue &);
+	char get_amino_acid_letter_tolerantly(const residue &);
 
 	char_3_arr get_amino_acid_code(const residue &);
 

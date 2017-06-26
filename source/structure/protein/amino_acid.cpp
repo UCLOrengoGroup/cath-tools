@@ -200,7 +200,7 @@ string cath::get_code_str_of_amino_acid_letter(const char &arg_one_letter_aa ///
 /// \relates amino_acid
 char cath::get_letter_of_amino_acid_code(const string &arg_three_letter_aa ///< TODOCUMENT
                                          ) {
-	return amino_acid(arg_three_letter_aa).get_letter();
+	return *( amino_acid( arg_three_letter_aa ).get_letter_if_amino_acid() );
 }
 
 /// \brief Insert a description of the specified amino_acid into the specified ostream

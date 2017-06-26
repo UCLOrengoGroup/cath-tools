@@ -179,7 +179,7 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 		for (alignment::size_type index_ctr = 0; index_ctr < length; ++index_ctr) {
 			const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
 			if ( position ) {
-				const char           amino_acid_letter  = *get_amino_acid_letter( the_pdb.get_residue_cref_of_backbone_complete_index( *position ) );
+				const char           amino_acid_letter  = get_amino_acid_letter_tolerantly( the_pdb.get_residue_cref_of_backbone_complete_index( *position ) );
 				const size_size_pair entry_and_res_pair = make_pair( entry_ctr, *position );
 				const bool           has_residue_colour = contains( colour_of_pdb_and_res_map, entry_and_res_pair );
 				const display_colour the_colour         = has_residue_colour ? colour_of_pdb_and_res_map.at( entry_and_res_pair )

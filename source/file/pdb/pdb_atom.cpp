@@ -64,9 +64,9 @@ void pdb_atom::operator-=(const coord &arg_coord ///< TODOCUMENT
 }
 
 /// \brief Get the one letter amino acid code (eg 'S') from a pdb_atom
-char cath::file::get_amino_acid_letter(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
-                                       ) {
-	return arg_pdb_atom.get_amino_acid().get_letter();
+char cath::file::get_amino_acid_letter_tolerantly(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+                                                  ) {
+	return arg_pdb_atom.get_amino_acid().get_letter_tolerantly();
 }
 
 /// \brief Get the three letter amino acid code (eg "SER") char_3_arr from a pdb_atom

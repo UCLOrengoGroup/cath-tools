@@ -116,7 +116,7 @@ namespace cath {
 
 		boost::string_ref get_element_type_untrimmed_str_ref(const pdb_atom &);
 		coarse_element_type get_coarse_element_type(const pdb_atom &);
-		char get_amino_acid_letter(const pdb_atom &);
+		char get_amino_acid_letter_tolerantly(const pdb_atom &);
 		char_3_arr get_amino_acid_code(const pdb_atom &);
 		std::string get_amino_acid_code_string(const pdb_atom &);
 		std::string get_amino_acid_name(const pdb_atom &);

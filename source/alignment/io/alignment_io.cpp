@@ -505,7 +505,7 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 		// Otherwise, it's an amino-acid letter
 		else {
 			// Continue searching pdb_ctr through the PDB until it matches this letter
-			while ( sequence_char != arg_amino_acids[ pdb_ctr ].get_letter() ) {
+			while ( sequence_char != arg_amino_acids[ pdb_ctr ].get_letter_tolerantly() ) {
 				skipped_residues.push_back( lexical_cast<string>( pdb_ctr ) );
 
 				// Increment pdb_ctr
@@ -931,7 +931,7 @@ ostream & cath::align::write_alignment_as_fasta_alignment(ostream            &ar
 			// If this entry has no position at this index, output a '-' character
 			// otherwise, use the position at this index to output the amino acid letter
 			const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry_ctr, aln_index );
-			arg_os << ( position ? get_amino_acid_letter_of_index( the_protein, *position )
+			arg_os << ( position ? get_amino_acid_letter_of_index_tolerantly( the_protein, *position )
 			                     : '-' );
 		}
 		arg_os << "\n";

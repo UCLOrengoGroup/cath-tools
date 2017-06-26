@@ -168,8 +168,8 @@ namespace cath {
 	amino_acid get_amino_acid_of_index(const protein &,
 	                                   const size_t &);
 
-	char get_amino_acid_letter_of_index(const protein &,
-	                                    const size_t &);
+	char get_amino_acid_letter_of_index_tolerantly(const protein &,
+	                                               const size_t &);
 
 	residue_id_vec get_residue_ids(const protein &);
 

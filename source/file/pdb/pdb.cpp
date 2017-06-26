@@ -796,7 +796,7 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 			new_pdb_residues.push_back( the_residue );
 		}
 		// Else if this is a proper amino acid (not just a bunch of HETATMs), record it
-		else if ( get_amino_acid_letter( the_residue ) ) {
+		else if ( get_letter_if_amino_acid( the_residue ) ) {
 			if ( arg_ostream_ref_opt ) {
 				backbone_skipped_residues.push_back( the_residue.get_residue_id() );
 			}
