@@ -62,6 +62,8 @@ namespace cath {
 		DNA      ///< A DNA/RNA amino acid record
 	};
 
+	std::string to_string(const amino_acid_type &);
+
 	/// \brief TODOCUMENT
 	///
 	/// \todo Make get_code() return char_3_arr and make LETTER_CODE_AND_NAME_LIST store char_3_arr
@@ -205,7 +207,14 @@ namespace cath {
 	inline auto amino_acid::check_is_proper_amino_acid() const -> const aa_variant_t & {
 		const aa_variant_t * const aa_ptr = boost::get<aa_variant_t>( &data );
 		if ( aa_ptr == nullptr ) {
-			BOOST_THROW_EXCEPTION(common::out_of_range_exception("Cannot use a generic HETATM amino_acid or DNA value as a proper, ATOM-record amino acid"));
+			const auto code = get_code();
+			BOOST_THROW_EXCEPTION(common::out_of_range_exception(
+				R"(Cannot use a generic HETATM amino_acid or DNA value as a proper, ATOM-record amino acid. Problem was a )"
+				+ to_string( get_type() )
+				+ R"( with code ")"
+				+ std::string( code.begin(), code.end() )
+				+ R"(".)"
+			));
 		}
 		return *aa_ptr;
 	}

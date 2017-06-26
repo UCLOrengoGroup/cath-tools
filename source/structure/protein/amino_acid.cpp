@@ -86,6 +86,19 @@ const map<string, dna_atom> DNA_RNA_RESIDUE_NAMES = {
 //	return example_b_pdb_stemname;
 //}
 
+/// \brief Generate a string describing the specified amino_acid_type
+///
+/// \relates amino_acid_type
+string cath::to_string(const amino_acid_type &arg_amino_acid_type ///< The amino_acid_type to describe
+                       ) {
+	switch ( arg_amino_acid_type ) {
+		case ( amino_acid_type::AA      ) : { return "AA"      ; };
+		case ( amino_acid_type::HETATOM ) : { return "HETATOM" ; };
+		case ( amino_acid_type::DNA     ) : { return "DNA"     ; };
+	}
+	BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of amino_acid_type not recognised whilst converting to_string()"));
+}
+
 /// \brief TODOCUMENT
 auto amino_acid::INDEX_OF_LETTER() -> const char_size_unordered_map & {
 	static const char_size_unordered_map index_of_letter(amino_acid::build_index_unordered_map<char,   0>());
