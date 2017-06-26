@@ -254,40 +254,27 @@ doub_angle residue::DEFAULT_PHI_PSI() {
 bool cath::operator==(const residue &arg_residue_1, ///< The first  residue to compare
                       const residue &arg_residue_2  ///< The second residue to compare
                       ) {
-	// Search for possible differences
-	if ( arg_residue_1.get_pdb_residue_id()     != arg_residue_2.get_pdb_residue_id()     ) {
-		return false;
-	}
-	if ( arg_residue_1.get_amino_acid()         != arg_residue_2.get_amino_acid()         ) {
-		return false;
-	}
-	if ( arg_residue_1.get_carbon_alpha_coord() != arg_residue_2.get_carbon_alpha_coord() ) {
-		return false;
-	}
-	if ( arg_residue_1.get_carbon_beta_coord()  != arg_residue_2.get_carbon_beta_coord()  ) {
-		return false;
-	}
-	if ( arg_residue_1.get_sec_struc_number()   != arg_residue_2.get_sec_struc_number()   ) {
-		return false;
-	}
-	if ( arg_residue_1.get_sec_struc_type()     != arg_residue_2.get_sec_struc_type()     ) {
-		return false;
-	}
-	if ( arg_residue_1.get_frame()              != arg_residue_2.get_frame()              ) {
-		return false;
-	}
-	if ( arg_residue_1.get_phi_angle()          != arg_residue_2.get_phi_angle()          ) {
-		return false;
-	}
-	if ( arg_residue_1.get_psi_angle()          != arg_residue_2.get_psi_angle()          ) {
-		return false;
-	}
-	if ( arg_residue_1.get_access()             != arg_residue_2.get_access()             ) {
-		return false;
-	}
-
-	// If no differences have been found, then return false
-	return true;
+	return (
+		( arg_residue_1.get_pdb_residue_id()     == arg_residue_2.get_pdb_residue_id()     )
+		&&
+		( arg_residue_1.get_amino_acid()         == arg_residue_2.get_amino_acid()         )
+		&&
+		( arg_residue_1.get_carbon_alpha_coord() == arg_residue_2.get_carbon_alpha_coord() )
+		&&
+		( arg_residue_1.get_carbon_beta_coord()  == arg_residue_2.get_carbon_beta_coord()  )
+		&&
+		( arg_residue_1.get_sec_struc_number()   == arg_residue_2.get_sec_struc_number()   )
+		&&
+		( arg_residue_1.get_sec_struc_type()     == arg_residue_2.get_sec_struc_type()     )
+		&&
+		( arg_residue_1.get_frame()              == arg_residue_2.get_frame()              )
+		&&
+		( arg_residue_1.get_phi_angle()          == arg_residue_2.get_phi_angle()          )
+		&&
+		( arg_residue_1.get_psi_angle()          == arg_residue_2.get_psi_angle()          )
+		&&
+		( arg_residue_1.get_access()             == arg_residue_2.get_access()             )
+	);
 }
 
 /// \brief TODOCUMENT
