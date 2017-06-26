@@ -130,12 +130,27 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 	const size_display_colour_map      &colour_of_pdb_map         = get_clr_of_pdb( colour_spec );
 	const size_size_display_colour_map &colour_of_pdb_and_res_map = colour_spec.get_clr_of_pdb_and_res();
 
-	arg_os << "<html>\n";
-	arg_os << "<style>\n";
-	arg_os << "#aln_container { width: 100%; overflow-x: auto; font-family: courier; font-size: 9pt; }\n";
-	arg_os << "#aln_container .seq      { width: 100%; position: relative; white-space: pre; }\n";
-	arg_os << "#aln_container .seq-name { float: left; width: 100px; }\n";
-	arg_os << "#aln_container .seq-res  { margin-left: 110px; }\n";
+	arg_os << R"(<html>
+<style>
+#aln_container {
+	font-family : "Liberation Mono", courier, monospace;
+	font-size   : 9pt;
+	overflow-x  : auto;
+	width       : 100%;
+	}
+#aln_container .seq      {
+	position    : relative;
+	white-space : pre;
+	width       : 100%;
+	}
+#aln_container .seq-name {
+	float       : left;
+	width       : 100px;
+	}
+#aln_container .seq-res  {
+	margin-left : 110px;
+	}
+)";
 
 	str_str_map colour_name_of_hex_string;
 	for (size_t colour_ctr = 0; colour_ctr < num_colours; ++colour_ctr) {
@@ -145,10 +160,14 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 		arg_os << "span." << colour_name << " {background: #" << colour_hex << "}\n";
 		colour_name_of_hex_string[ colour_hex ] = colour_name;
 	}
-	arg_os << "span.gap { background: white; color: white }\n";
-	arg_os << "</style>\n";
-	arg_os << "<body>\n";
-	arg_os << "<div id=\"aln_container\">\n";
+	arg_os << R"(span.gap {
+	background  : white;
+	color       : white;
+}
+</style>
+<body>
+<div id="aln_container">
+)";
 
 	// Loop over the positions, and output them
 	for (alignment::size_type entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
