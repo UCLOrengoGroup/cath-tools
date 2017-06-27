@@ -2356,50 +2356,8 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 			${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
 	)
 
-#	set(
-#		DEVELTEST_ALIGNMENT_SOURCES
-#			alignment/alignment.cpp
-#			alignment/alignment_row.cpp
-#			alignment/residue_score/alignment_residue_scores.cpp
-#			exception/invalid_argument_exception.cpp
-#	)
-
-#	add_executable(
-#		develtest
-#			executables/develtest/develtest.cpp
-#
-#			# superposition/superposition_test.cpp // requires complex spider of stuff
-#
-#			# alignment/alignment_test.cpp
-#			# alignment/io/align_scaffold.cpp
-#			# alignment/pair_alignment.cpp
-#			# test/alignment_fixture.cpp
-#			# ${DEVELTEST_ALIGNMENT_SOURCES}
-#
-#			alignment/tools/alignment_breaks_test.cpp
-#			alignment/tools/alignment_breaks.cpp
-#			alignment/io/align_scaffold.cpp
-#			${DEVELTEST_ALIGNMENT_SOURCES}
-#
-#			# alignment/io/align_scaffold_test.cpp
-#			# alignment/io/align_scaffold.cpp
-#			# test/alignment_fixture.cpp
-#			# ${DEVELTEST_ALIGNMENT_SOURCES}
-#
-#			# common/boost_addenda/range/adaptor/adaptor_test.cpp
-#			# exception/invalid_argument_exception.cpp
-#
-#			# common/file/open_fstream.cpp
-#			# exception/invalid_argument_exception.cpp
-#			# exception/runtime_error_exception.cpp
-#			# structure/geometry/orientation_covering.cpp
-#			# structure/geometry/orientation_covering_test.cpp
-#			# structure/geometry/quat_rot.cpp
-#	)
-
 	target_link_libraries( snap-judgement normsources_cath_superpose std_normsources_remain normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 	target_link_libraries( check-pdb                                 std_normsources_remain normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-#	target_link_libraries( develtest                                                                                                 pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 
 endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 
