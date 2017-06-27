@@ -29,7 +29,10 @@ using namespace boost::filesystem;
 using namespace boost::test_tools;
 using namespace cath;
 using namespace cath::common;
-using namespace std;
+
+using std::getenv;
+using std::ifstream;
+using std::string;
 
 const string files_equal::FILENAME_NAME_PREFIX("file ");
 
@@ -63,7 +66,10 @@ predicate_result files_equal::operator()(const path &arg_filename1, ///< TODOCUM
 	open_ifstream( file_ifstream1, arg_filename1 );
 
 	// ...and then just use a istream_and_file_equal
-	istream_and_file_equal the_istream_and_file_equal( overwrite_diff_expected_with_got, diff_half_width );
+	istream_and_file_equal the_istream_and_file_equal(
+		( overwrite_diff_expected_with_got || ( getenv( "BOOTSTRAP_TESTS" ) != nullptr ) ),
+		diff_half_width
+	);
 	const predicate_result the_result = the_istream_and_file_equal(
 		file_ifstream1,
 		FILENAME_NAME_PREFIX + arg_filename1.string(),
