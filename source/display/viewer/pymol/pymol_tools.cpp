@@ -24,6 +24,7 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
 #include "biocore/residue_id.hpp"
@@ -34,6 +35,7 @@ using namespace cath;
 using namespace cath::common;
 using namespace std::literals::string_literals;
 
+using boost::adaptors::filtered;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::algorithm::replace_all_copy;
@@ -113,8 +115,16 @@ string pymol_tools::pymol_res_seln_str(const string         &arg_name,    ///< T
 		+ R"("//)"
 		+ ( ( *the_chain_label_opt == chain_label( ' ' ) ) ? ""s : to_string( *the_chain_label_opt ) )
 		+ "/"
+		+ (
+			has_any_strictly_negative_residue_numbers( arg_res_ids )
+			? "`"
+			: ""
+		)
 		+ join(
 			arg_res_ids
+				| filtered( [&] (const residue_id &x) {
+					return ! is_null( x );
+				} )
 				| transformed( [] (const residue_id &x) {
 					return parse_residue_name_for_pymol( x.get_residue_name() );
 				} ),

@@ -36,4 +36,41 @@ BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK_EQUAL( make_residue_id( 'A', -5, 'A' ), make_residue_id( 'A', -5, 'A' ) );
 }
 
+BOOST_AUTO_TEST_CASE(negative_number_check_works) {
+	BOOST_CHECK(   has_strictly_negative_residue_number( make_residue_id( 'A', -1      ) ) );
+	BOOST_CHECK(   has_strictly_negative_residue_number( make_residue_id( 'A', -1, 'A' ) ) );
+
+	BOOST_CHECK( ! has_strictly_negative_residue_number( make_residue_id( 'A',  0      ) ) );
+	BOOST_CHECK( ! has_strictly_negative_residue_number( make_residue_id( 'A',  0, 'A' ) ) );
+
+	BOOST_CHECK( ! has_strictly_negative_residue_number( make_residue_id( 'A',  1      ) ) );
+	BOOST_CHECK( ! has_strictly_negative_residue_number( make_residue_id( 'A',  1, 'A' ) ) );
+
+	BOOST_CHECK( ! has_strictly_negative_residue_number( make_residue_id( 'A'          ) ) );
+}
+
+BOOST_AUTO_TEST_CASE(any_negative_number_check_works) {
+	const residue_id_vec none_strictly_negative = { {
+		make_residue_id( 'A',  0      ),
+		make_residue_id( 'A',  0, 'A' ),
+		make_residue_id( 'A',  1      ),
+		make_residue_id( 'A',  1, 'A' ),
+		make_residue_id( 'A'          ),
+	} };
+
+	BOOST_CHECK( ! has_any_strictly_negative_residue_numbers ( none_strictly_negative ) );
+
+	const residue_id_vec one_strictly_negative = { {
+		make_residue_id( 'A',  0      ),
+		make_residue_id( 'A',  0, 'A' ),
+		make_residue_id( 'A',  1      ),
+		make_residue_id( 'A', -1, 'A' ),
+		make_residue_id( 'A',  1, 'A' ),
+		make_residue_id( 'A'          ),
+	} };
+
+	BOOST_CHECK(   has_any_strictly_negative_residue_numbers (  one_strictly_negative ) );
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()

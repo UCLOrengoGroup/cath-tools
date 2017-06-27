@@ -80,6 +80,7 @@ namespace cath {
 	                             const char &);
 	char insert_or_value_if_null_or_absent(const residue_name &,
 	                                       const char &);
+	bool has_strictly_negative_residue_number(const residue_name &);
 
 	std::string insert_string(const residue_name &);
 	std::string make_residue_name_string_with_insert_or_space(const residue_name &);

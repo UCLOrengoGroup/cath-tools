@@ -213,6 +213,14 @@ char cath::insert_or_value_if_null_or_absent(const residue_name &arg_residue_nam
 		: insert( arg_residue_name );
 }
 
+/// \brief Return whether the specified residue_name has a strictly negative residue number
+///
+/// \relates residue_name
+bool cath::has_strictly_negative_residue_number(const residue_name &arg_residue_name ///< The residue_name to query
+                                                ) {
+	return ( ! arg_residue_name.is_null() && arg_residue_name.residue_number() < 0 );
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates residue_name

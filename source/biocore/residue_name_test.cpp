@@ -32,4 +32,17 @@ BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK_EQUAL( to_string( residue_name( -5, 'A' ) ), "-5A"      );
 }
 
+BOOST_AUTO_TEST_CASE(negative_number_check_works) {
+	BOOST_CHECK(   has_strictly_negative_residue_number( residue_name( -1      ) ) );
+	BOOST_CHECK(   has_strictly_negative_residue_number( residue_name( -1, 'A' ) ) );
+
+	BOOST_CHECK( ! has_strictly_negative_residue_number( residue_name(  0      ) ) );
+	BOOST_CHECK( ! has_strictly_negative_residue_number( residue_name(  0, 'A' ) ) );
+
+	BOOST_CHECK( ! has_strictly_negative_residue_number( residue_name(  1      ) ) );
+	BOOST_CHECK( ! has_strictly_negative_residue_number( residue_name(  1, 'A' ) ) );
+
+	BOOST_CHECK( ! has_strictly_negative_residue_number( residue_name(         ) ) );
+}
+
 BOOST_AUTO_TEST_SUITE_END()

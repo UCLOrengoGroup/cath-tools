@@ -26,6 +26,7 @@
 #include <boost/graph/kruskal_min_spanning_tree.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "alignment/alignment.hpp"
 #include "chopping/region/region.hpp"
@@ -34,6 +35,7 @@
 #include "common/batch/batch_functions.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
+
 #include "display/viewer/pymol/pymol_tools.hpp"
 #include "display_colour/display_colour.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -53,20 +55,27 @@ using namespace cath::detail;
 using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::sup;
-using namespace std;
 
+using boost::adaptors::transformed;
 using boost::adjacency_list;
 using boost::algorithm::join;
 using boost::algorithm::replace_all_copy;
 using boost::edge_weight_t;
 using boost::graph_traits;
 using boost::irange;
-using boost::kruskal_minimum_spanning_tree;
 using boost::lexical_cast;
 using boost::no_property;
 using boost::property;
 using boost::undirectedS;
 using boost::vecS;
+using std::make_pair;
+using std::map;
+using std::min;
+using std::ostream;
+using std::ostringstream;
+using std::pair;
+using std::string;
+using std::vector;
 
 constexpr size_t chimera_viewer::RESIDUE_BATCH_SIZE;
 
@@ -257,49 +266,70 @@ void cath::detail::write_chimera_global_alignment(ostream                     &a
 		arg_os << "disable alignment\n";
 	}
 
+	enum class coreness : bool {
+		NONCORE,
+		CORE,
+	};
+	using str_res_id_vec_map              = map<string, residue_id_vec>;
+	using coreness_str_res_id_vec_map_map = map<coreness, str_res_id_vec_map>;
+
 	// ????
 	if ( the_alignment.is_scored() ) {
-		using bool_str_str_vec_map_pair = pair<bool, str_str_vec_map>;
-		using bool_str_str_vec_map_map = map <bool, str_str_vec_map>;
-		bool_str_str_vec_map_map core_res_names_of_entry_name;
+		coreness_str_res_id_vec_map_map core_res_ids_of_entry_name;
 		const alignment_residue_scores &the_scores = the_alignment.get_alignment_residue_scores();
 		for (size_t entry = 0; entry < num_entries; ++entry) {
 			const string &entry_name = names[ entry ];
 			for (alignment::size_type index = 0; index < aln_length; ++index) {
 				if ( has_score( the_scores, entry, index ) ) {
-					const float_score_type  the_score  = get_score( the_scores, entry, index, true, true );
-					const bool              is_core    = ( the_score > 0.25 );
-					const aln_posn_type     the_posn   = get_position_of_entry_of_index( the_alignment, entry, index );
-					const residue_id       &res_name   = residue_ids[ entry ][ the_posn ];
-					core_res_names_of_entry_name[ is_core ][ entry_name ].push_back( chimera_viewer::parse_residue_id_for_chimera( res_name ) );
+					const coreness is_core = ( get_score( the_scores, entry, index, true, true ) > 0.25 )
+					                         ? coreness::CORE
+					                         : coreness::NONCORE;
+					core_res_ids_of_entry_name[ is_core ][ entry_name ].push_back(
+						residue_ids[ entry ][ get_position_of_entry_of_index( the_alignment, entry, index ) ]
+					);
 				}
 			}
 		}
-		for (const bool_str_str_vec_map_pair &core_data : core_res_names_of_entry_name) {
-			const bool            &is_core                 = core_data.first;
-			const string           core_name               = ( is_core ? "core" : "noncore" );
-			const str_str_vec_map &res_names_of_entry_name = core_data.second;
-			str_vec selection_strings;
-			for (const str_str_vec_pair &entry_name_and_res_names : res_names_of_entry_name) {
-				const string  &entry_name = entry_name_and_res_names.first;
-				const str_vec &res_names  = entry_name_and_res_names.second;
+		arg_os << join(
+			core_res_ids_of_entry_name
+				// \TODO Come C++17 and structured bindings, use here
+				| transformed( [] (const pair<const coreness, str_res_id_vec_map> &core_data) {
+					const coreness           &is_core               = core_data.first;
+					const str_res_id_vec_map &res_ids_of_entry_name = core_data.second;
 
-				const size_t num_res_names   = res_names.size();
-				const size_t num_res_batches = num_batches( num_res_names, chimera_viewer::RESIDUE_BATCH_SIZE, broken_batch_tol::PERMIT );
-				for (size_t batch_ctr = 0; batch_ctr < num_res_batches; ++batch_ctr) {
-					string batch_string( "/" + entry_name + "///" );
-					const size_size_pair begin_and_end = batch_begin_and_end( num_res_names, chimera_viewer::RESIDUE_BATCH_SIZE, batch_ctr, broken_batch_tol::PERMIT );
-					for (size_t res_index = begin_and_end.first; res_index < begin_and_end.second; ++res_index) {
-						batch_string += ( res_index > 0 ? "+" : "" );
-						batch_string += res_names[ res_index ];
+					// \TODO Come C++17 and structured bindings, use here
+					str_vec selection_strings;
+					for (const pair<const string, residue_id_vec> &entry_name_and_res_ids : res_ids_of_entry_name) {
+						const string         &entry_name = entry_name_and_res_ids.first;
+						const residue_id_vec &res_ids    = entry_name_and_res_ids.second;
+
+						const size_t num_res_ids     = res_ids.size();
+						const size_t num_res_batches = num_batches( num_res_ids, chimera_viewer::RESIDUE_BATCH_SIZE, broken_batch_tol::PERMIT );
+						for (const size_t &batch_ctr : irange( 0_z, num_res_batches ) ) {
+							const size_size_pair begin_and_end = batch_begin_and_end(
+								num_res_ids,
+								chimera_viewer::RESIDUE_BATCH_SIZE,
+								batch_ctr,
+								broken_batch_tol::PERMIT
+							);
+							selection_strings.push_back( pymol_tools::pymol_res_seln_str(
+								entry_name,
+								residue_id_vec{
+									next( common::cbegin( res_ids ), begin_and_end.first  ),
+									next( common::cbegin( res_ids ), begin_and_end.second )
+								}
+							) );
+						}
 					}
-					selection_strings.push_back( batch_string );
-				}
-//				selection_strings.push_back( "/" + entry_name + "///" + join( res_names,  "+"  ) );
-
-			}
-			arg_os << "select " << core_name << ", ( " << join( selection_strings, " or " ) << " )\n";
-		}
+					return
+						  "select "
+						+ ( ( is_core == coreness::CORE ) ? "core"s : "noncore"s )
+						+ ", ( "
+						+ join( selection_strings, " or " )
+						+ " )";
+				} ),
+			"\n"
+		) << "\n";
 		arg_os << "deselect\n";
 	}
 

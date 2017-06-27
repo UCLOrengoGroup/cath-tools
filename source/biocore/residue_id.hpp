@@ -120,8 +120,11 @@ namespace cath {
 
 	residue_id make_residue_id(const std::string &);
 
+	bool has_strictly_negative_residue_number(const residue_id &);
+
 	chain_label_opt consistent_chain_label(const residue_id_vec &);
 	bool have_consistent_chain_labels(const residue_id_vec &);
+	bool has_any_strictly_negative_residue_numbers(const residue_id_vec &);
 
 } // namespace cath
 

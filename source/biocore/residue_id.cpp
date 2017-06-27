@@ -20,6 +20,8 @@
 
 #include "residue_id.hpp"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
+
 #include "common/cpp14/cbegin_cend.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
@@ -29,6 +31,7 @@
 using namespace cath;
 using namespace cath::common;
 
+using boost::algorithm::any_of;
 using boost::make_optional;
 using boost::none;
 using std::istream;
@@ -90,6 +93,14 @@ residue_id cath::make_residue_id(const string &arg_input_string ///< The string 
 	};
 }
 
+/// \brief Return whether the specified residue ID has a strictly negative residue number
+///
+/// \relates residue_id
+bool cath::has_strictly_negative_residue_number(const residue_id &arg_residue_id ///< The residue_id to query
+                                                ) {
+	return has_strictly_negative_residue_number( arg_residue_id.get_residue_name() );
+}
+
 /// \brief Return a chain label that is used consistently in all of the specified residue_ids
 ///        or none otherwise
 ///
@@ -120,4 +131,15 @@ chain_label_opt cath::consistent_chain_label(const residue_id_vec &arg_residue_i
 bool cath::have_consistent_chain_labels(const residue_id_vec &arg_residue_ids ///< The vector of residue_ids to query
                                         ) {
 	return arg_residue_ids.empty() || consistent_chain_label( arg_residue_ids );
+}
+
+/// \brief Return whether any of the specified residue_ids has a strictly negative residue number
+///
+/// \relates residue_id
+bool cath::has_any_strictly_negative_residue_numbers(const residue_id_vec &arg_residue_ids ///< The residue_ids to query
+                                                     ) {
+	return any_of(
+		arg_residue_ids,
+		[] (const residue_id &x) { return has_strictly_negative_residue_number( x ); }
+	);
 }
