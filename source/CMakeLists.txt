@@ -513,6 +513,12 @@ set(
 )
 
 set(
+	NORMSOURCES_FILE_NAME_SET
+		file/name_set/name_set.cpp
+		file/name_set/name_set_list.cpp
+)
+
+set(
 	NORMSOURCES_FILE_OPTIONS
 		file/options/data_dirs_options_block.cpp
 		file/options/data_dirs_spec.cpp
@@ -558,6 +564,7 @@ set(
 		${NORMSOURCES_FILE_DOMAIN_DEFINITION_LIST}
 		${NORMSOURCES_FILE_DSSP_WOLF}
 		${NORMSOURCES_FILE_HMMER_SCORES_FILE}
+		${NORMSOURCES_FILE_NAME_SET}
 		${NORMSOURCES_FILE_OPTIONS}
 		${NORMSOURCES_FILE_PDB}
 		${NORMSOURCES_FILE_PRC_SCORES_FILE}
@@ -1603,6 +1610,12 @@ set(
 )
 
 set(
+	TESTSOURCES_FILE_NAME_SET
+		file/name_set/name_set_list_test.cpp
+		file/name_set/name_set_test.cpp
+)
+
+set(
 	TESTSOURCES_FILE_OPTIONS
 		file/options/data_dirs_options_block_test.cpp
 		file/options/data_dirs_spec_test.cpp
@@ -1640,6 +1653,7 @@ set(
 	TESTSOURCES_FILE
 		${TESTSOURCES_FILE_DSSP_WOLF}
 		${TESTSOURCES_FILE_HMMER_SCORES_FILE}
+		${TESTSOURCES_FILE_NAME_SET}
 		${TESTSOURCES_FILE_OPTIONS}
 		${TESTSOURCES_FILE_PDB}
 		${TESTSOURCES_FILE_PRC_SCORES_FILE}
