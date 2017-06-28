@@ -1114,8 +1114,15 @@ set(
 )
 
 set(
+	NORMSOURCES_SUPERPOSITION_OPTIONS
+		superposition/options/align_regions_options_block.cpp
+		superposition/options/superposition_content_options_block.cpp
+)
+
+set(
 	NORMSOURCES_SUPERPOSITION
 		${NORMSOURCES_SUPERPOSITION_IO}
+		${NORMSOURCES_SUPERPOSITION_OPTIONS}
 		superposition/superpose_fit.cpp
 		superposition/superpose_orderer.cpp
 		superposition/superposition.cpp
@@ -2123,8 +2130,15 @@ set(
 )
 
 set(
+	TESTSOURCES_SUPERPOSITION_OPTIONS
+		superposition/options/align_regions_options_block_test.cpp
+		superposition/options/superposition_content_options_block_test.cpp
+)
+
+set(
 	TESTSOURCES_SUPERPOSITION
 		${TESTSOURCES_SUPERPOSITION_IO}
+		${TESTSOURCES_SUPERPOSITION_OPTIONS}
 		superposition/superpose_fit_test.cpp
 		superposition/superpose_orderer_test.cpp
 		superposition/superposition_context_test.cpp

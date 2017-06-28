@@ -66,6 +66,8 @@ namespace cath {
 			superposition_content_spec & set_include_organic_within_distance(const doub_opt &);
 		};
 
+		str_opt get_invalid_description(const superposition_content_spec &);
+
 	} // namespace sup
 } // namespace cath
 
