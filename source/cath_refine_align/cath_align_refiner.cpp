@@ -80,11 +80,20 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 	const strucs_context  context  = get_pdbs_and_names( arg_cath_refine_align_options, arg_istream, true );
 	const pdb_list       &raw_pdbs = context.get_pdbs();
 
-	const protein_list    proteins = build_protein_list_of_pdb_list_and_names( raw_pdbs, context.get_names() );
+	const pdb_list backbone_complete_subset_pdbs = pdb_list_of_backbone_complete_region_limited_subset_pdbs(
+		raw_pdbs,
+		context.get_regions(),
+		ref( arg_stderr )
+	);
+
+	const protein_list    proteins = build_protein_list_of_pdb_list_and_names(
+		backbone_complete_subset_pdbs,
+		context.get_name_sets()
+	);
 
 	// An alignment is required but this should have been checked elsewhere
 	const auto                aln_acq_ptr        = get_alignment_acquirer( arg_cath_refine_align_options );
-	const auto                alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree( raw_pdbs );
+	const auto                alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree( backbone_complete_subset_pdbs );
 	const alignment          &the_alignment      = alignment_and_tree.first;
 	const size_size_pair_vec &spanning_tree      = alignment_and_tree.second;
 

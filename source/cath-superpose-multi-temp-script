@@ -24,6 +24,11 @@ if ( scalar(@ARGV) < 4 ) {
 my ( $temp_dir_name, @struc_ids ) = @ARGV;
 @struc_ids = uniq( sort( @struc_ids ) ) ;
 
+# my @choppings = grep { $ARG =~ /^D\[/ } @struc_ids;
+# @struc_ids    = grep { $ARG !~ /^D\[/ } @struc_ids;
+
+# warn Dumper( [ \@struc_ids, \@choppings ] );
+
 # Check the directory exists
 my $temp_dir = dir($temp_dir_name)->absolute();
 if ( ! -d $temp_dir ) {

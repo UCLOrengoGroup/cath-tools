@@ -132,7 +132,7 @@ namespace cath {
 			const simple_locn_crit the_crit{ max_squared_dist };
 
 			for (const size_t &the_res_idx : boost::irange( 0_z, arg_pdb.get_num_residues() ) ) {
-				const auto &the_res = arg_pdb.get_residue_cref_of_index__backbone_unchecked( the_res_idx );
+				const auto &the_res = arg_pdb.get_residue_of_index__backbone_unchecked( the_res_idx );
 				const auto  data    = make_simple_locn_index_of_ca( the_res, debug_numeric_cast<unsigned int>( the_res_idx ) );
 				for (const auto &key : common::cross( the_keyer.make_close_keys( data, the_crit ) ) ) {
 					if ( arg_store.has_matches( key ) ) {

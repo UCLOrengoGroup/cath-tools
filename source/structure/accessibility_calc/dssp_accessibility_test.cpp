@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(makes_ball_points_with_unit_y_in_the_middle) {
 BOOST_AUTO_TEST_CASE(gets_eg_accessibility_count_correct) {
 	const auto parsed_pdb = read_pdb_file( global_test_constants::EXAMPLE_A_PDB_FILENAME() );
 	BOOST_REQUIRE_GE   ( parsed_pdb.get_num_residues(), 4_z  );
-	const auto &the_res = parsed_pdb.get_residue_cref_of_index__backbone_unchecked( 3 );
+	const auto &the_res = parsed_pdb.get_residue_of_index__backbone_unchecked( 3 );
 	BOOST_REQUIRE_EQUAL( the_res.get_residue_id(), make_residue_id( 'A', 1002 ) );
 	BOOST_REQUIRE      ( the_res.has_nitrogen() );
 	const pdb_atom &the_atom = the_res.get_nitrogen();
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(gets_eg_accessibility_count_correct) {
 BOOST_AUTO_TEST_CASE(gets_eg_accessibility_fraction_correct) {
 	const auto parsed_pdb = read_pdb_file( global_test_constants::EXAMPLE_A_PDB_FILENAME() );
 	BOOST_REQUIRE_GE   ( parsed_pdb.get_num_residues(), 4_z  );
-	const auto &the_res = parsed_pdb.get_residue_cref_of_index__backbone_unchecked( 3 );
+	const auto &the_res = parsed_pdb.get_residue_of_index__backbone_unchecked( 3 );
 	BOOST_REQUIRE_EQUAL( the_res.get_residue_id(), make_residue_id( 'A', 1002 ) );
 	BOOST_REQUIRE      ( the_res.has_nitrogen() );
 	const pdb_atom &the_atom = the_res.get_nitrogen();
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE(gets_eg_accessibility_fraction_correct) {
 BOOST_AUTO_TEST_CASE(gets_eg_accessibility_surface_area_correct) {
 	const auto parsed_pdb = read_pdb_file( global_test_constants::EXAMPLE_A_PDB_FILENAME() );
 	BOOST_REQUIRE_GE   ( parsed_pdb.get_num_residues(), 4_z  );
-	const auto &the_res = parsed_pdb.get_residue_cref_of_index__backbone_unchecked( 3 );
+	const auto &the_res = parsed_pdb.get_residue_of_index__backbone_unchecked( 3 );
 	BOOST_REQUIRE_EQUAL( the_res.get_residue_id(), make_residue_id( 'A', 1002 ) );
 	BOOST_REQUIRE      ( the_res.has_nitrogen() );
 	const pdb_atom &the_atom = the_res.get_nitrogen();
@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_CASE(gets_eg_accessibility_surface_area_correct) {
 BOOST_AUTO_TEST_CASE(gets_eg_res_accessibility_surface_area_correct) {
 	const auto parsed_pdb = read_pdb_file( global_test_constants::EXAMPLE_A_PDB_FILENAME() );
 	BOOST_REQUIRE_GE   ( parsed_pdb.get_num_residues(), 4_z  );
-	const auto &the_res = parsed_pdb.get_residue_cref_of_index__backbone_unchecked( 3 );
+	const auto &the_res = parsed_pdb.get_residue_of_index__backbone_unchecked( 3 );
 	BOOST_REQUIRE_EQUAL( the_res.get_residue_id(), make_residue_id( 'A', 1002 ) );
 	BOOST_CHECK_EQUAL  ( round( get_accessibility_surface_area( the_res, parsed_pdb ) ), 138 );
 }

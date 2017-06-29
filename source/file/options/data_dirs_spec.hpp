@@ -29,6 +29,8 @@
 
 #include <map>
 
+namespace cath { namespace file { class name_set; } }
+
 namespace cath {
 	namespace opts {
 		using data_file_str_map    = std::map<file::data_file, std::string>;
@@ -106,6 +108,10 @@ namespace cath {
 		boost::filesystem::path find_file(const data_dirs_spec &,
 		                                  const file::data_file &,
 		                                  const std::string &);
+
+		boost::filesystem::path find_file(const data_dirs_spec &,
+		                                  const file::data_file &,
+		                                  const file::name_set &);
 
 		path_vec split_path_into_directories(const std::string &);
 

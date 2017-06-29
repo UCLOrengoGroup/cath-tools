@@ -20,9 +20,10 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "cath_refine_align/cath_align_refiner.hpp"
 #include "cath_refine_align/options/cath_refine_align_options.hpp"
 #include "cath_superpose/cath_superposer.hpp"
-#include "cath_refine_align/cath_align_refiner.hpp"
+#include "chopping/domain/domain.hpp"
 #include "common/argc_argv_faker.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/file/temp_file.hpp"

@@ -33,6 +33,8 @@
 #include "outputter/alignment_outputter_options/alignment_output_options_block.hpp"
 #include "outputter/superposition_output_options/superposition_output_options_block.hpp"
 #include "outputter/superposition_outputter/superposition_outputter_list.hpp"
+#include "superposition/options/align_regions_options_block.hpp"
+#include "superposition/options/superposition_content_options_block.hpp"
 
 #include <iosfwd>
 #include <memory>
@@ -54,6 +56,8 @@ namespace cath {
 		/// \todo Add options to allow identifiable PDBs to be loaded from a directory
 		/// \todo Sort out the interaction between loading PDBs and loading an alignment
 		/// \todo Add options to write/read a superposition
+		///
+		/// \todo Abstract out duplication between cath_refine_align_options / cath_superpose_options
 		class cath_superpose_options final : public executable_options {
 		private:
 			using super = executable_options;
@@ -61,28 +65,31 @@ namespace cath {
 			static const std::string STANDARD_USAGE_ERROR_STRING;
 
 			/// \brief The options_block for the alignment input options
-			alignment_input_options_block      the_alignment_input_ob;
+			alignment_input_options_block            the_alignment_input_ob;
 
 			/// \brief The options_block for the superposition input options
-			superposition_input_options_block  the_superposition_input_ob;
+			superposition_input_options_block        the_superposition_input_ob;
 
 			/// \brief The options_block for the IDs options
-			ids_options_block                  the_ids_ob;
+			ids_options_block                        the_ids_ob;
 
 			/// \brief The options_block for the pdb input options
-			pdb_input_options_block            the_pdb_input_ob;
+			pdb_input_options_block                  the_pdb_input_ob;
+
+			/// \brief The align_regions_options_block for align regions options
+			align_regions_options_block              the_align_regions_ob;
 
 			/// \brief The options_block for the alignment output options
-			alignment_output_options_block     the_alignment_output_ob;
+			alignment_output_options_block           the_alignment_output_ob;
 
 			/// \brief The options_block for the superposition output options
-			superposition_output_options_block the_superposition_output_ob;
+			superposition_output_options_block       the_superposition_output_ob;
 
 			/// \brief The options_block for the display options
-			display_options_block              the_display_ob;
+			display_options_block                    the_display_ob;
 
 			/// \brief The specification of what should be included in the superposition
-			sup::superposition_content_spec    the_content_spec;
+			sup::superposition_content_options_block the_content_ob;
 
 			std::string do_get_program_name() const final;
 			str_opt do_get_error_or_help_string() const final;
@@ -107,7 +114,7 @@ namespace cath {
 			alignment_outputter_list get_alignment_outputters() const;
 			superposition_outputter_list get_superposition_outputters() const;
 
-			chop::region_vec_opt_vec get_regions(const size_t &) const;
+			const chop::domain_vec & get_domains() const;
 
 			static const std::string PROGRAM_NAME;
 		};

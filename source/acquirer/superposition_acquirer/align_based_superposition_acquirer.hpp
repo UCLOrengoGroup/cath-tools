@@ -51,12 +51,6 @@ namespace cath {
 			/// \brief TODOCUMENT
 			selection_policy_acquirer the_selection_policy_acquirer;
 
-			/// \brief For each PDB: the regions of the PDB to which the alignment refers,
-			///        or none if it refers to all of it
-			///
-			/// \todo Should this be a reference too?
-			chop::region_vec_opt_vec regions;
-
 			sup::superposition_context do_get_superposition(std::ostream &) const final;
 
 		public:
@@ -87,8 +81,10 @@ namespace cath {
 		};
 
 		const file::pdb_list & get_pdbs(const align_based_superposition_acquirer &);
-		const str_vec & get_names(const align_based_superposition_acquirer &);
+		const file::name_set_list & get_name_sets(const align_based_superposition_acquirer &);
 		const chop::region_vec_opt_vec & get_regions(const align_based_superposition_acquirer &);
+
+		file::pdb_list get_restricted_pdbs(const align_based_superposition_acquirer &);
 
 		sup::superposition hacky_multi_ssap_fuction(const file::pdb_list &,
 		                                            const str_vec &,

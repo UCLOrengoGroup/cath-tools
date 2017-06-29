@@ -20,6 +20,7 @@
 
 #include "cath_superpose/cath_superposer.hpp"
 #include "cath_superpose/options/cath_superpose_options.hpp"
+#include "chopping/domain/domain.hpp"
 #include "common/program_exception_wrapper.hpp"
 
 using namespace cath::common;

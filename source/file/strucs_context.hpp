@@ -24,6 +24,7 @@
 #include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"                  // for str_vec
 #include "exception/invalid_argument_exception.hpp"
+#include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb_list.hpp"                    // for pdb_list
 
 namespace cath {
@@ -36,18 +37,18 @@ namespace cath {
 			file::pdb_list           pdbs;
 
 			/// \brief The IDs of the structures
-			str_vec                  names;
+			name_set_list            name_sets;
 
 			/// \brief The key regions of each structure to which this refers (or none where it refers to all of a structure)
 			chop::region_vec_opt_vec regions;
 
 		public:
 			strucs_context(file::pdb_list,
-			               str_vec,
+			               name_set_list,
 			               chop::region_vec_opt_vec);
 
 			const file::pdb_list & get_pdbs() const;
-			const str_vec & get_names() const;
+			const name_set_list & get_name_sets() const;
 			const chop::region_vec_opt_vec & get_regions() const;
 
 			strucs_context & set_pdbs(const file::pdb_list &);
@@ -56,13 +57,13 @@ namespace cath {
 		size_t get_num_entries(const strucs_context &);
 
 		/// \brief Ctor for strucs_context
-		inline strucs_context::strucs_context(pdb_list                 arg_pdbs,   ///< The PDBs of the structures
-		                                      str_vec                  arg_names,  ///< The IDs of the structures
-		                                      chop::region_vec_opt_vec arg_regions ///< The key regions of each structure to which this refers (or none where it refers to all of a structure)
-		                                      ) : pdbs    { std::move( arg_pdbs    ) },
-		                                          names   { std::move( arg_names   ) },
-		                                          regions { std::move( arg_regions ) } {
-			if ( pdbs.size() != names.size() || pdbs.size() != regions.size() ) {
+		inline strucs_context::strucs_context(pdb_list                 arg_pdbs,      ///< The PDBs of the structures
+		                                      name_set_list            arg_name_sets, ///< The IDs of the structures
+		                                      chop::region_vec_opt_vec arg_regions    ///< The key regions of each structure to which this refers (or none where it refers to all of a structure)
+		                                      ) : pdbs      { std::move( arg_pdbs      ) },
+		                                          name_sets { std::move( arg_name_sets ) },
+		                                          regions   { std::move( arg_regions   ) } {
+			if ( pdbs.size() != name_sets.size() || pdbs.size() != regions.size() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot construct a strucs_context with inconsistent numbers of PDBs / names / regions"));
 			}
 		}
@@ -73,8 +74,8 @@ namespace cath {
 		}
 
 		/// \brief Getter for the IDs of the structures
-		inline const str_vec & strucs_context::get_names() const {
-			return names;
+		inline const name_set_list & strucs_context::get_name_sets() const {
+			return name_sets;
 		}
 
 		/// \brief Getter for the key regions of each structure to which this refers (or none where it refers to all of a structure)
@@ -95,8 +96,10 @@ namespace cath {
 		/// \brief Get the number of entries in the specified strucs_context
 		inline size_t get_num_entries(const strucs_context &arg_strucs_context ///< The strucs_context to query
 		                              ) {
-			return arg_strucs_context.get_names().size();
+			return arg_strucs_context.get_name_sets().size();
 		}
+
+		file::pdb_list get_restricted_pdbs(const strucs_context &);
 
 	} // namespace file
 } // namespace cath

@@ -212,8 +212,8 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 
 //					cerr << "(1) At alignment index\t" << aln_index << ",\tabout to get CA coord from\t" << entry_a << "\t(\t" << names[ entry_a ] << "\t), index:\t" << *posn_a << endl;
 //					cerr << "(2) At alignment index\t" << aln_index << ",\tabout to get CA coord from\t" << entry_b << "\t(\t" << names[ entry_b ] << "\t), index:\t" << *posn_b << endl;
-					const coord         ca_a        = pdbs[ entry_a ].get_residue_ca_coord_of_backbone_complete_index( *posn_a );
-					const coord         ca_b        = pdbs[ entry_b ].get_residue_ca_coord_of_backbone_complete_index( *posn_b );
+					const coord         ca_a        = get_residue_ca_coord_of_backbone_complete_index( pdbs[ entry_a ], *posn_a );
+					const coord         ca_b        = get_residue_ca_coord_of_backbone_complete_index( pdbs[ entry_b ], *posn_b );
 					const double        distance    = superposed_distance( the_superposition, entry_a, ca_a, entry_b, ca_b );
 
 					edges.push_back    ( make_pair( entry_a, entry_b ) );

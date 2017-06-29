@@ -24,6 +24,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/range/sub_range.hpp>
 
+#include "chopping/chopping_type_aliases.hpp"
 #include "common/temp_check_offset_1.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "structure/geometry/coord.hpp"
@@ -195,6 +196,11 @@ namespace cath {
 	                        const size_t &,
 	                        const size_t &);
 
+	void restrict_to_regions(protein &,
+	                         const chop::region_vec_opt &);
+
+	protein restrict_to_regions_copy(protein,
+	                                 const chop::region_vec_opt &);
 
 	/// \brief TODOCUMENT
 	///

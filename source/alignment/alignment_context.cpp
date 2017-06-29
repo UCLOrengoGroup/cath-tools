@@ -42,10 +42,10 @@ alignment_context::alignment_context(alignment      arg_alignment, ///< TODOCUME
 /// \brief Ctor for alignment_context
 alignment_context::alignment_context(alignment                 arg_alignment, ///< TODOCUMENT
                                      const pdb_list           &arg_pdbs,      ///< TODOCUMENT
-                                     const str_vec            &arg_names,     ///< TODOCUMENT
+                                     const name_set_list      &arg_name_sets, ///< TODOCUMENT
                                      const region_vec_opt_vec &arg_regions    ///< The specification of the regions of the PDBs to which the alignment refers
                                      ) : the_alignment { std::move( arg_alignment )       },
-                                         context       { arg_pdbs, arg_names, arg_regions } {
+                                         context       { arg_pdbs, arg_name_sets, arg_regions } {
 }
 
 /// \brief TODOCUMENT
@@ -65,15 +65,23 @@ const pdb_list & cath::align::get_pdbs(const alignment_context &arg_align_contex
 }
 
 /// \brief TODOCUMENT
-const str_vec & cath::align::get_names(const alignment_context &arg_align_context ///< TODOCUMENT
-                                       ) {
-	return arg_align_context.get_strucs_context().get_names();
+const name_set_list & cath::align::get_name_sets(const alignment_context &arg_align_context ///< TODOCUMENT
+                                                 ) {
+	return arg_align_context.get_strucs_context().get_name_sets();
 }
 
 /// \brief Getter for the specification of the regions of the PDBs to which the alignment refers
 const region_vec_opt_vec & cath::align::get_regions(const alignment_context &arg_align_context ///< TODOCUMENT
                                                     ) {
 	return arg_align_context.get_strucs_context().get_regions();
+}
+
+/// \brief Get a copy of the PDBs in the specified alignment_context, restricted to its regions
+///
+/// \relates alignment_context
+pdb_list cath::align::get_restricted_pdbs(const alignment_context &arg_alignment_context ///< The alignment_context to query
+                                          ) {
+  return get_restricted_pdbs( arg_alignment_context.get_strucs_context() );
 }
 
 /// \brief TODOCUMENT

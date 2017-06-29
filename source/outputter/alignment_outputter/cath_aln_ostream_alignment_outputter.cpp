@@ -56,11 +56,11 @@ void cath_aln_ostream_alignment_outputter::do_output_alignment(const alignment_c
                                                                ) const {
 	check_alignment_is_a_pair( arg_alignment_context.get_alignment() );
 
-	const alignment    &the_alignment = arg_alignment_context.get_alignment();
-	const str_vec      &names         = get_names( arg_alignment_context );
-	const pdb_list     &pdbs          = get_pdbs ( arg_alignment_context );
-	const protein_list  proteins      = build_protein_list_of_pdb_list_and_names( pdbs, names );
-	const alignment     scored_aln    = score_alignment_copy( residue_scorer(), the_alignment, proteins );
+	const alignment     &the_alignment = arg_alignment_context.get_alignment();
+	const name_set_list &name_sets     = get_name_sets( arg_alignment_context );
+	const pdb_list      &pdbs          = get_pdbs     ( arg_alignment_context );
+	const protein_list   proteins      = build_protein_list_of_pdb_list_and_names( pdbs, name_sets );
+	const alignment      scored_aln    = score_alignment_copy( residue_scorer(), the_alignment, proteins );
 
 //	const aligned_pair_score_list the_score_list = make_full_aligned_pair_score_list();
 //	cerr << "make_full_aligned_pair_score_list() returns : " << endl;

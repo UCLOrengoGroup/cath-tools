@@ -33,6 +33,7 @@
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
+#include "file/name_set/name_set.hpp"
 
 using namespace cath;
 using namespace cath::common;
@@ -253,6 +254,22 @@ path cath::opts::find_file(const data_dirs_spec &arg_data_dirs_options, ///< The
 
 	// Otherwise, return the file that was found
 	return found_file;
+}
+
+/// \brief Attempt to find a file of a given type for a given name using the preferences specified in a given data_dirs_spec
+///
+/// \returns The found file or an empty path object if one could not be found
+///
+/// \relates data_dirs_spec
+path cath::opts::find_file(const data_dirs_spec  &arg_data_dirs_options, ///< The data_dirs_spec specifying how to find the file
+                           const file::data_file &arg_data_file,         ///< The data type of file that's required
+                           const file::name_set  &arg_name_set           ///< The name for which to find the file (eg 1c0pA01)
+                           ) {
+	return find_file(
+		arg_data_dirs_options,
+		arg_data_file,
+		arg_name_set.get_name_from_acq()
+	);
 }
 
 /// \brief Convenience function to split a string containing a path of colon-separated directories

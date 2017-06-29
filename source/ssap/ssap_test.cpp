@@ -22,6 +22,7 @@
 
 #include <boost/optional.hpp> // ***** TEMPORARY *****
 
+#include "chopping/region/region.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/file/simple_file_read_write.hpp"
@@ -93,7 +94,7 @@ namespace cath {
 			const string id1 = { *ID1 };
 			const string id2 = { *ID2 };
 			const data_dirs_spec data_dirs       = build_data_dirs_spec_of_dir( TEST_SSAP_REGRESSION_DATA_DIR() );
-			const prot_prot_pair parsed_proteins = read_protein_pair( id1, id2, data_dirs, protein_from_wolf_and_sec(), none );
+			const prot_prot_pair parsed_proteins = read_protein_pair( id1, none, id2, none, data_dirs, protein_from_wolf_and_sec(), none );
 			const protein &prot1 = parsed_proteins.first;
 			const protein &prot2 = parsed_proteins.second;
 			

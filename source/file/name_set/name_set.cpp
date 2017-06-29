@@ -25,6 +25,18 @@
 using std::string;
 using std::ostream;
 
+/// \brief If the specified name_set has a domain_name_from_regions, return that,
+///        else if it has a specified_id, return that, else return the name_from_acq
+///
+/// \relates name_set
+string cath::file::get_domain_or_specified_or_name_from_acq(const name_set &arg_name_set ///< The name_set to query
+                                                            ) {
+	return
+		arg_name_set.get_domain_name_from_regions() ? *arg_name_set.get_domain_name_from_regions() :
+		arg_name_set.get_specified_id()             ? *arg_name_set.get_specified_id()             :
+		                                               arg_name_set.get_name_from_acq();
+}
+
 /// \brief Generate a string describing the specified name_set
 ///
 /// \relates name_set

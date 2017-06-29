@@ -25,6 +25,7 @@
 #include <boost/optional.hpp>
 #include <boost/range.hpp>
 
+#include "chopping/chopping_type_aliases.hpp"
 #include "common/path_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "file/file_type_aliases.hpp"
@@ -33,8 +34,9 @@
 #include <iostream>
 #include <vector>
 
-namespace cath { namespace file {class pdb; } }
 namespace cath { class protein_list; }
+namespace cath { namespace file { class name_set_list; } }
+namespace cath { namespace file { class pdb; } }
 
 namespace cath {
 	namespace file {
@@ -74,10 +76,17 @@ namespace cath {
 		pdb_list pdb_list_of_backbone_complete_subset_pdbs(const pdb_list &,
 		                                                   const ostream_ref_opt & = boost::none);
 
+		pdb_list pdb_list_of_backbone_complete_region_limited_subset_pdbs(const pdb_list &,
+		                                                                  const chop::region_vec_opt_vec &,
+		                                                                  const ostream_ref_opt &);
+
 		protein_list build_protein_list_of_pdb_list(const pdb_list &);
 
 		protein_list build_protein_list_of_pdb_list_and_names(const pdb_list &,
 		                                                      const str_vec &);
+
+		protein_list build_protein_list_of_pdb_list_and_names(const pdb_list &,
+		                                                      const name_set_list &);
 
 		amino_acid_vec_vec get_amino_acid_lists(const pdb_list &);
 

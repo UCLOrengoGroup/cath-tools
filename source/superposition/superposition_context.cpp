@@ -54,17 +54,19 @@ using namespace cath::geom;
 using namespace cath::opts;
 using namespace cath::sup;
 using namespace cath::sup::detail;
-using namespace std;
 
 using boost::adaptors::map_values;
 using boost::adaptors::transformed;
 using boost::algorithm::any_of;
 using boost::filesystem::path;
 using boost::log::trivial::severity_level;
+using boost::make_optional;
 using boost::none;
 using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;
 using boost::range::for_each;
+using std::pair;
+using std::string;
 
 /// \brief Ctor for superposition_context
 superposition_context::superposition_context(superposition  arg_superposition, ///< TODOCUMENT
@@ -85,27 +87,27 @@ superposition_context::superposition_context(superposition  arg_superposition, /
 /// \brief Ctor for superposition_context
 superposition_context::superposition_context(superposition      arg_superposition, ///< TODOCUMENT
                                              pdb_list           arg_pdbs,          ///< TODOCUMENT
-                                             str_vec            arg_names,         ///< TODOCUMENT
+                                             name_set_list      arg_name_sets,     ///< TODOCUMENT
                                              region_vec_opt_vec arg_regions        ///< The key regions of the structures
                                              ) : the_superposition { std::move( arg_superposition )   },
                                                  context           {
-                                                 	std::move( arg_pdbs    ),
-                                                 	std::move( arg_names   ),
-                                                 	std::move( arg_regions )
+                                                 	std::move( arg_pdbs      ),
+                                                 	std::move( arg_name_sets ),
+                                                 	std::move( arg_regions   )
                                                  } {
 }
 
 /// \brief Ctor for superposition_context
 superposition_context::superposition_context(superposition      arg_superposition, ///< TODOCUMENT
                                              pdb_list           arg_pdbs,          ///< TODOCUMENT
-                                             str_vec            arg_names,         ///< TODOCUMENT
+                                             name_set_list      arg_name_sets,     ///< TODOCUMENT
                                              region_vec_opt_vec arg_regions,       ///< The key regions of the structures
                                              alignment          arg_alignment      ///< TODOCUMENT
                                              ) : the_superposition { std::move( arg_superposition )   },
                                                  context           {
-                                                 	std::move( arg_pdbs    ),
-                                                 	std::move( arg_names   ),
-                                                 	std::move( arg_regions )
+                                                 	std::move( arg_pdbs      ),
+                                                 	std::move( arg_name_sets ),
+                                                 	std::move( arg_regions   )
                                                  },
                                                  any_alignment     { std::move( arg_alignment     )   } {
 }
@@ -160,9 +162,9 @@ const pdb_list & cath::sup::get_pdbs(const superposition_context &arg_supn_conte
 /// \brief TODOCUMENT
 ///
 /// \relates superposition_context
-const str_vec & cath::sup::get_names(const superposition_context &arg_supn_context ///< TODOCUMENT
-                                     ) {
-	return arg_supn_context.get_strucs_context().get_names();
+const name_set_list & cath::sup::get_name_sets(const superposition_context &arg_supn_context ///< TODOCUMENT
+                                               ) {
+	return arg_supn_context.get_strucs_context().get_name_sets();
 }
 
 /// \brief Getter for the specification of the key regions of the structures
@@ -194,16 +196,7 @@ const region_vec_opt_vec & cath::sup::get_regions(const superposition_context &a
 /// \relates superposition_context
 pdb_list cath::sup::get_restricted_pdbs(const superposition_context &arg_superposition_context ///< The superposition_context to query
                                         ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
-	return pdb_list{
-		transform_build<pdb_vec>(
-			get_pdbs   ( arg_superposition_context ),
-			get_regions( arg_superposition_context ),
-			[] (const pdb &the_pdb, const region_vec_opt &the_regions) {
-				return get_regions_limited_pdb( the_regions, the_pdb );
-			}
-		)
-	};
+	return get_restricted_pdbs( arg_superposition_context.get_strucs_context() );
 }
 
 /// \brief Get a PDB with the appropriate parts of the specified PDB according to the specified
@@ -324,9 +317,9 @@ void cath::sup::load_pdbs_from_names(superposition_context &arg_supn_context, //
                                      ) {
 	arg_supn_context.set_pdbs(
 		pdb_list{ transform_build<pdb_vec>(
-			get_names( arg_supn_context ),
-			[&] (const string &name) {
-				return read_pdb_file( find_file( arg_data_dirs, data_file::PDB, name ) );
+			get_name_sets( arg_supn_context ),
+			[&] (const name_set &the_name_set) {
+				return read_pdb_file( find_file( arg_data_dirs, data_file::PDB, the_name_set ) );
 			}
 		) }
 	);
@@ -355,8 +348,8 @@ alignment_context cath::sup::make_alignment_context(const superposition_context 
 	return {
 		arg_superposition_context.get_alignment(),
 		get_restricted_pdbs( arg_superposition_context ),
-		get_names  ( arg_superposition_context ),
-		get_regions( arg_superposition_context )
+		get_name_sets      ( arg_superposition_context ),
+		get_regions        ( arg_superposition_context )
 	};
 }
 
@@ -394,12 +387,12 @@ superposition_context cath::sup::superposition_context_from_ptree(const ptree &a
 	}
 
 	// Read the names
-	const auto names = transform_build<str_vec>(
+	const name_set_list names { transform_build<name_set_vec>(
 		entries | map_values,
 		[] (const ptree &x) {
-			return x.get<string>( superposition_io_consts::NAME_KEY );
+			return name_set{ x.get<string>( superposition_io_consts::NAME_KEY ) };
 		}
-	);
+	) };
 
 	// Read the translations
 	const auto translations = transform_build<coord_vec>(
@@ -446,7 +439,7 @@ void cath::sup::save_to_ptree(ptree                       &arg_ptree,      ///< 
 	auto &entries_ptree = arg_ptree.get_child( superposition_io_consts::ENTRIES_KEY );
 
 	for_each(
-		get_names( arg_sup_context ),
+		get_supn_json_names( get_name_sets( arg_sup_context ) ),
 		trans_ptrees,
 		[&] (const string &name, const pair<string, ptree> &trans_ptree) {
 			ptree entry_ptree;

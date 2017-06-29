@@ -91,6 +91,8 @@ namespace cath {
 			);
 		}
 
+		std::string get_domain_or_specified_or_name_from_acq(const name_set &);
+
 		std::string to_string(const name_set &);
 
 		std::ostream & operator<<(std::ostream &,

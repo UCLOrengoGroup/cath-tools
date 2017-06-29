@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(from_json_string_works) {
 	BOOST_CHECK_EQUAL       ( get_pdbs ( from_json_str )[ 0 ].get_num_residues(), 0       );
 	BOOST_CHECK_EQUAL       ( get_pdbs ( from_json_str )[ 1 ].get_num_residues(), 0       );
 
-	BOOST_CHECK_EQUAL_RANGES( get_names( from_json_str ),                         names   );
+	BOOST_CHECK_EQUAL_RANGES( get_name_sets( from_json_str ),                     names   );
 
 	BOOST_CHECK_EQUAL       ( from_json_str.get_superposition(),                  the_sup );
 

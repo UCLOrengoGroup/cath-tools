@@ -25,7 +25,9 @@
 #include "acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
 #include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+#include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
+#include "common/algorithm/transform_build.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
@@ -44,6 +46,7 @@ using namespace cath::opts;
 using namespace cath::sup;
 using namespace std::literals::string_literals;
 
+using boost::irange;
 using boost::none;
 using boost::program_options::variables_map;
 using std::istream;
@@ -148,9 +151,11 @@ cath_superpose_options::cath_superpose_options() {
 	super::add_options_block( the_superposition_input_ob  );
 	super::add_options_block( the_ids_ob                  );
 	super::add_options_block( the_pdb_input_ob            );
+	super::add_options_block( the_align_regions_ob        );
 	super::add_options_block( the_alignment_output_ob     );
 	super::add_options_block( the_superposition_output_ob );
 	super::add_options_block( the_display_ob              );
+	super::add_options_block( the_content_ob              );
 }
 
 /// TODOCUMENT
@@ -200,7 +205,7 @@ alignment_outputter_list cath_superpose_options::get_alignment_outputters() cons
 superposition_outputter_list cath_superpose_options::get_superposition_outputters() const {
 	return the_superposition_output_ob.get_superposition_outputters(
 		the_display_ob.get_display_spec(),
-		the_content_spec
+		the_content_ob.get_superposition_content_spec()
 	);
 }
 
@@ -211,9 +216,8 @@ superposition_outputter_list cath_superpose_options::get_superposition_outputter
 ///
 /// \todo Add superposition regions options that are stored in cath_superpose_options
 ///       and have this method return the results
-region_vec_opt_vec cath_superpose_options::get_regions(const size_t &arg_num_entries ///< The number of entries for which the regions are required
-                                                       ) const {
-	return region_vec_opt_vec( arg_num_entries );
+const domain_vec & cath_superpose_options::get_domains() const {
+	return the_align_regions_ob.get_align_domains();
 }
 
 /// \brief Get the single alignment_acquirer implied by the specified cath_superpose_options
@@ -256,13 +260,10 @@ strucs_context cath::opts::get_pdbs_and_names(const cath_superpose_options &arg_
 	const auto   pdbs_acquireer_ptr = get_pdbs_acquirer( arg_cath_sup_opts );
 	auto         pdbs_and_names     = pdbs_acquireer_ptr->get_pdbs_and_names( arg_istream, arg_remove_partial_residues );
 
-	// It's a good idea to get this num_pdbs now, before pdbs_and_names.first gets moved from
-	const size_t num_pdbs           = pdbs_and_names.first.size();
-
-	return combine_acquired_pdbs_and_names_with_ids_and_regions(
+	return combine_acquired_pdbs_and_names_with_ids_and_domains(
 		std::move( pdbs_and_names.first  ),
 		std::move( pdbs_and_names.second ),
-		str_vec{ arg_cath_sup_opts.get_ids() },
-		arg_cath_sup_opts.get_regions( num_pdbs )
+		arg_cath_sup_opts.get_ids(),
+		arg_cath_sup_opts.get_domains()
 	);
 }

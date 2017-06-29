@@ -51,8 +51,8 @@ void fasta_ostream_alignment_outputter::do_output_alignment(const alignment_cont
 		arg_ostream,
 		arg_alignment_context.get_alignment(),
 		build_protein_list_of_pdb_list_and_names(
-			get_pdbs ( arg_alignment_context ),
-			get_names( arg_alignment_context )
+			get_restricted_pdbs( arg_alignment_context ),
+			get_name_sets      ( arg_alignment_context )
 		)
 	);
 }

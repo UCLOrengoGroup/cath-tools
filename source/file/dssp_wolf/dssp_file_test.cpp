@@ -230,7 +230,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 	}
 
 	for (size_t pdb_residue_ctr = 0; pdb_residue_ctr < num_pdb_residues; ++pdb_residue_ctr) {
-		const pdb_residue &the_pdb_residue = the_pdb_file.get_residue_cref_of_index__backbone_unchecked(pdb_residue_ctr);
+		const pdb_residue &the_pdb_residue = the_pdb_file.get_residue_of_index__backbone_unchecked(pdb_residue_ctr);
 		const residue     &built_residue   = combi_prot_with_all_pdb_residues.get_residue_ref_of_index( pdb_residue_ctr );
 		BOOST_CHECK_EQUAL( the_pdb_residue.get_residue_id(),                               built_residue.get_pdb_residue_id()     );
 		BOOST_CHECK_EQUAL( get_carbon_alpha_coord( the_pdb_residue ),                      built_residue.get_carbon_alpha_coord() );

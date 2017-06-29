@@ -21,9 +21,11 @@
 #include "pdb_list.hpp"
 
 #include <boost/filesystem/path.hpp>
+#include <boost/range/combine.hpp>
 
 #include "common/algorithm/transform_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
+#include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
@@ -35,12 +37,14 @@
 #include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace std;
 
 using boost::filesystem::path;
 using boost::irange;
+using boost::range::combine;
 
 /// \brief Ctor from a vector<pdb>
 pdb_list::pdb_list(pdb_vec arg_pdbs ///< The pdbs from which this pdb_list should be constructed
@@ -141,6 +145,34 @@ pdb_list cath::file::pdb_list_of_backbone_complete_subset_pdbs(const pdb_list   
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_list
+pdb_list cath::file::pdb_list_of_backbone_complete_region_limited_subset_pdbs(const pdb_list           &arg_pdb_list, ///< TODOCUMENT
+                                                                              const region_vec_opt_vec &arg_regions,  ///< TODOCUMENT
+                                                                              const ostream_ref_opt    &arg_ostream   ///< An optional reference to an ostream to which any logging should be sent
+                                                                              ) {
+	if ( arg_pdb_list.size() != arg_regions.size() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Number of regions lists must match number of PDBs in pdb_list to restrict."));
+	}
+	pdb_list new_pdb_list;
+	new_pdb_list.reserve( arg_pdb_list.size() );
+
+	// \TODO Come C++17 and structured bindings, use here
+	for (const boost::tuple<const region_vec_opt &, const pdb &> &the_pair : combine( arg_regions, arg_pdb_list ) ) {
+		new_pdb_list.push_back(
+			backbone_complete_subset_of_pdb(
+				get_regions_limited_pdb(
+					the_pair.get<0>(),
+					the_pair.get<1>()
+				),
+				arg_ostream
+			).first
+		);
+	}
+	return new_pdb_list;
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates pdb_list
 ///
 /// \relates protein_list
 ///
@@ -173,6 +205,20 @@ protein_list cath::file::build_protein_list_of_pdb_list_and_names(const pdb_list
 		new_proteins[ protein_ctr ].set_title( arg_names[ protein_ctr ] );
 	}
 	return new_proteins;
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates pdb_list
+///
+/// \relates protein_list
+protein_list cath::file::build_protein_list_of_pdb_list_and_names(const pdb_list      &arg_pdb_list, ///< TODOCUMENT
+                                                                  const name_set_list &arg_name_sets ///< TODOCUMENT
+                                                                  ) {
+	return build_protein_list_of_pdb_list_and_names(
+		arg_pdb_list,
+		get_protein_list_names( arg_name_sets )
+	);
 }
 
 /// \brief TODOCUMENT

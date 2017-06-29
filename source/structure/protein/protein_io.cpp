@@ -67,7 +67,7 @@ using boost::numeric_cast;
 protein cath::read_protein_from_wolf_and_sec_files(const path            &arg_wolf_filename, ///< The WOLF file to read
                                                    const path            &arg_sec_filename,  ///< A sec file
                                                    const string          &arg_name,          ///< The name to set as the title of the protein
-                                                   const ostream_ref_opt &arg_stderr         ///< An optional referece to an ostream to which any logging should be performed
+                                                   const ostream_ref_opt &arg_stderr         ///< An optional reference to an ostream to which any logging should be performed
                                                    ) {
 	return protein_from_wolf_and_sec(
 		read_wolf( arg_wolf_filename ),
@@ -85,7 +85,7 @@ protein cath::read_protein_from_dssp_pdb_and_sec_files(const path             &a
                                                        const path             &arg_sec_filename,     ///< A sec file
                                                        const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to limit the protein to those residues that were present in the DSSP
                                                        const string           &arg_name,             ///< The name to set as the title of the protein
-                                                       const ostream_ref_opt  &arg_stderr            ///< An optional referece to an ostream to which any logging should be performed
+                                                       const ostream_ref_opt  &arg_stderr            ///< An optional reference to an ostream to which any logging should be performed
                                                        ) {
 	return add_name_and_paint_sec_file_onto_protein_copy(
 		read_protein_from_dssp_and_pdb(
@@ -111,7 +111,7 @@ protein cath::read_protein_from_dssp_and_pdb_and_calc_sec(const path            
                                                           const path             &arg_pdb_filename,     ///< A PDB file
                                                           const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to limit the protein to those residues that were present in the DSSP
                                                           const string           &arg_name,             ///< The name to set as the title of the protein
-                                                          const ostream_ref_opt  &arg_stderr            ///< An optional referece to an ostream to which any logging should be performed
+                                                          const ostream_ref_opt  &arg_stderr            ///< An optional reference to an ostream to which any logging should be performed
                                                           ) {
 	protein the_protein = read_protein_from_dssp_and_pdb(
 		arg_dssp_filename,
@@ -214,7 +214,7 @@ protein cath::read_protein_from_pdb_and_calc_dssp_and_sec(const path            
 protein cath::protein_from_wolf_and_sec(const wolf_file       &arg_wolf,  ///< The parsed wolf_file object
                                         const sec_file        &arg_sec,   ///< The parsed sec
                                         const string          &arg_name,  ///< The name to set as the title of the protein
-                                        const ostream_ref_opt &arg_stderr ///< An optional referece to an ostream to which any logging should be performed
+                                        const ostream_ref_opt &arg_stderr ///< An optional reference to an ostream to which any logging should be performed
                                         ) {
 	// Create a protein from the wolf file, set its title, paint the sec_file onto it and then return it
 	return add_name_and_paint_sec_file_onto_protein_copy(
@@ -236,7 +236,7 @@ protein cath::protein_from_dssp_pdb_and_sec(const dssp_file        &arg_dssp,   
                                             const sec_file         &arg_sec,              ///< The parsed sec file
                                             const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to limit the protein to those residues that were present in the DSSP
                                             const string           &arg_name,             ///< The name to set as the title of the protein
-                                            const ostream_ref_opt  &arg_stderr            ///< An optional referece to an ostream to which any logging should be performed
+                                            const ostream_ref_opt  &arg_stderr            ///< An optional reference to an ostream to which any logging should be performed
                                             ) {
 	// Create a protein from the DSSP and PDB, set its title, paint the sec_file onto it and then return it
 	return add_name_and_paint_sec_file_onto_protein_copy(
@@ -260,7 +260,7 @@ protein cath::protein_from_dssp_pdb_and_sec(const dssp_file        &arg_dssp,   
 void cath::add_name_and_paint_sec_file_onto_protein(protein               &arg_protein, ///< The protein to be modified (taken by non-const reference to allow it to be modified)
                                                     const sec_file        &arg_sec,     ///< The parsed sec file whose secondary structures should be painted on to the protein
                                                     const string          &arg_name,    ///< The name to set as the title of the protein
-                                                    const ostream_ref_opt &arg_stderr   ///< An optional referece to an ostream to which any logging should be performed
+                                                    const ostream_ref_opt &arg_stderr   ///< An optional reference to an ostream to which any logging should be performed
                                                     ) {
 	// Set the protein's title and then paint the sec_file onto it
 	arg_protein.set_title(arg_name);
@@ -274,7 +274,7 @@ void cath::add_name_and_paint_sec_file_onto_protein(protein               &arg_p
 protein cath::add_name_and_paint_sec_file_onto_protein_copy(protein                arg_protein, ///< The protein whose copy should be modified (taken by value to allow the compiler to elide copies of rvalues)
                                                             const sec_file        &arg_sec,     ///< The parsed sec file whose secondary structures should be painted on to the protein
                                                             const string          &arg_name,    ///< The name to set as the title of the protein
-                                                            const ostream_ref_opt &arg_stderr   ///< An optional referece to an ostream to which any logging should be performed
+                                                            const ostream_ref_opt &arg_stderr   ///< An optional reference to an ostream to which any logging should be performed
                                                             ) {
 	// Using the local copy of the protein, set it's title and paint the sec_file onto it and then return it
 	add_name_and_paint_sec_file_onto_protein( arg_protein, arg_sec, arg_name, arg_stderr );
@@ -287,7 +287,7 @@ protein cath::add_name_and_paint_sec_file_onto_protein_copy(protein             
 /// \relatesalso sec_file
 void cath::paint_sec_file_onto_protein(protein               &arg_protein,  ///< The protein to be modified (taken by non-const reference to allow it to be modified)
                                        const sec_file        &arg_sec_file, ///< The parsed sec file whose secondary structures should be painted on to the protein
-                                       const ostream_ref_opt &arg_stderr    ///< An optional referece to an ostream to which any logging should be performed
+                                       const ostream_ref_opt &arg_stderr    ///< An optional reference to an ostream to which any logging should be performed
                                        ) {
 	const sec_struc_vec new_sec_strucs = make_sec_struc_list(arg_sec_file);
 	arg_protein.set_sec_strucs ( new_sec_strucs );
@@ -302,7 +302,7 @@ void cath::paint_sec_file_onto_protein(protein               &arg_protein,  ///<
 /// \relatesalso sec_file
 protein cath::paint_sec_file_onto_protein_copy(protein                arg_protein,  ///< The protein whose copy should be modified (taken by value to allow the compiler to elide copies of rvalues)
                                                const sec_file        &arg_sec_file, ///< The parsed sec file whose secondary structures should be painted on to the protein
-                                               const ostream_ref_opt &arg_stderr    ///< An optional referece to an ostream to which any logging should be performed
+                                               const ostream_ref_opt &arg_stderr    ///< An optional reference to an ostream to which any logging should be performed
                                                ) {
 	paint_sec_file_onto_protein(arg_protein, arg_sec_file, arg_stderr);
 	return arg_protein;
@@ -313,7 +313,7 @@ protein cath::paint_sec_file_onto_protein_copy(protein                arg_protei
 /// \relatesalso protein
 /// \relatesalso sec_file
 void cath::calc_and_paint_sec_file_onto_protein(protein               &arg_protein, ///< The protein to be modified (taken by non-const reference to allow it to be modified)
-                                                const ostream_ref_opt &arg_stderr   ///< An optional referece to an ostream to which any logging should be performed
+                                                const ostream_ref_opt &arg_stderr   ///< An optional reference to an ostream to which any logging should be performed
                                                 ) {
 	arg_protein.set_sec_strucs( make_sec_struc_list( get_sec_file( arg_protein ) ) );
 
@@ -326,7 +326,7 @@ void cath::calc_and_paint_sec_file_onto_protein(protein               &arg_prote
 /// \relatesalso protein
 /// \relatesalso sec_file
 protein cath::calc_and_paint_sec_file_onto_protein_copy(protein                arg_protein, ///< The protein whose copy should be modified (taken by value to allow the compiler to elide copies of rvalues)
-                                                        const ostream_ref_opt &arg_stderr   ///< An optional referece to an ostream to which any logging should be performed
+                                                        const ostream_ref_opt &arg_stderr   ///< An optional reference to an ostream to which any logging should be performed
                                                         ) {
 	calc_and_paint_sec_file_onto_protein( arg_protein, arg_stderr);
 	return arg_protein;
@@ -337,7 +337,7 @@ protein cath::calc_and_paint_sec_file_onto_protein_copy(protein                a
 /// \relatesalso protein
 void cath::remove_domin_res(protein               &arg_protein,        ///< The protein object to modify
                             const path            &arg_domin_filename, ///< A domin file
-                            const ostream_ref_opt &arg_stderr          ///< An optional referece to an ostream to which any logging should be performed
+                            const ostream_ref_opt &arg_stderr          ///< An optional reference to an ostream to which any logging should be performed
                             ) {
 	// Prepare a vector to contain the starts and ends from the clique data
 	size_size_pair_vec clique_starts_and_ends;
@@ -365,7 +365,7 @@ void cath::remove_domin_res(protein               &arg_protein,        ///< The 
 /// \relatesalso protein
 void cath::remove_domin_res(protein                  &arg_protein,                ///< The protein object to modify
                             const size_size_pair_vec &arg_clique_starts_and_ends, ///< The starts and stops that have been parsed out of a domin file
-                            const ostream_ref_opt    &arg_stderr                  ///< An optional referece to an ostream to which any logging should be performed
+                            const ostream_ref_opt    &arg_stderr                  ///< An optional reference to an ostream to which any logging should be performed
                             ) {
 	/////
 	// 1. Process the secondary structures that are to be removed

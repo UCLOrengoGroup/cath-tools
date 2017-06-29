@@ -119,7 +119,11 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	}
 
 	// Get the alignment and corresponding spanning tree
-	const pdb_list backbone_complete_subset_pdbs = pdb_list_of_backbone_complete_subset_pdbs( raw_pdbs, ref( arg_stderr ) );
+	const pdb_list backbone_complete_subset_pdbs = pdb_list_of_backbone_complete_region_limited_subset_pdbs(
+		raw_pdbs,
+		context.get_regions(),
+		ref( arg_stderr )
+	);
 	const auto       aln_and_spn_tree = [&] () {
 		try {
 			return get_alignment_and_spanning_tree( arg_cath_sup_opts, backbone_complete_subset_pdbs );
@@ -141,7 +145,7 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 		return {
 			hacky_multi_ssap_fuction(
 				backbone_complete_subset_pdbs,
-				context.get_names(),
+				get_multi_ssap_alignment_file_names( context.get_name_sets() ),
 				spanning_tree,
 				ssap_scores_file.parent_path(),
 				arg_cath_sup_opts.get_selection_policy_acquirer(),

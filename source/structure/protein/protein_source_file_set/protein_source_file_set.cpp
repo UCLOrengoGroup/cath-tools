@@ -30,6 +30,7 @@
 #include "file/options/data_dirs_options_block.hpp"
 #include "structure/protein/protein.hpp"
 
+#include "chopping/region/region.hpp"
 #include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
 #include "structure/protein/protein_source_file_set/protein_from_pdb_and_calc.hpp"
 #include "structure/protein/protein_source_file_set/protein_from_pdb_and_dssp_and_calc.hpp"
@@ -43,6 +44,7 @@
 
 using namespace boost::filesystem;
 using namespace cath;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
@@ -51,6 +53,7 @@ using namespace std;
 using boost::adaptors::filtered;
 using boost::assign::ptr_push_back;
 using boost::lexical_cast;
+using boost::none;
 using boost::ptr_vector;
 using boost::range::transform;
 
@@ -78,6 +81,7 @@ bool protein_source_file_set::makes_ssap_ready_protein() const {
 /// \brief An NVI pass-through method to read the files that have been specified
 protein protein_source_file_set::read_files(const data_dirs_spec &arg_data_dirs,    ///< The data_dirs_options_block to specify how things should be done
                                             const string         &arg_protein_name, ///< The name of the protein that is to be read from files
+                                            const region_vec_opt &arg_regions,      ///< The regions to which the resulting protein should be restricted
                                             ostream              &arg_stderr        ///< The ostream to which any warnings/errors should be written
                                             ) const {
 	const data_file_path_map filename_of_data_file = get_filename_of_data_file(
@@ -85,7 +89,10 @@ protein protein_source_file_set::read_files(const data_dirs_spec &arg_data_dirs,
 		arg_data_dirs,
 		arg_protein_name
 	);
-	return do_read_files( filename_of_data_file, arg_protein_name, arg_stderr );
+	return restrict_to_regions_copy(
+		do_read_files( filename_of_data_file, arg_protein_name, arg_stderr ),
+		arg_regions
+	);
 }
 
 /// \brief TODOCUMENT
@@ -100,6 +107,7 @@ protein cath::read_protein_from_files(const protein_source_file_set &arg_source_
 	return arg_source_file_set.read_files(
 		build_data_dirs_spec_of_dir( arg_data_dir ),
 		arg_protein_name,
+		none,
 		( arg_ostream ? arg_ostream->get() : parse_ss )
 	);
 }

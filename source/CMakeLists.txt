@@ -570,6 +570,7 @@ set(
 		${NORMSOURCES_FILE_PRC_SCORES_FILE}
 		${NORMSOURCES_FILE_SEC}
 		${NORMSOURCES_FILE_SSAP_SCORES_FILE}
+		file/strucs_context.cpp
 )
 
 set(

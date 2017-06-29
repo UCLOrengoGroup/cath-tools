@@ -21,7 +21,9 @@
 #include "region.hpp"
 
 #include <boost/algorithm/string/join.hpp>
+#include <boost/program_options.hpp>
 
+#include "chopping/chopping_format/sillitoe_chopping_format.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
@@ -29,9 +31,12 @@ using namespace cath::chop;
 using namespace cath::common;
 
 using boost::algorithm::join;
+using boost::any;
+using boost::program_options::invalid_option_value;
+using boost::program_options::validators::get_single_string;
+using std::make_pair;
 using std::ostream;
 using std::string;
-using std::make_pair;
 
 /// \brief TODOCUMENT
 void region::sanity_check() const {
@@ -388,4 +393,28 @@ ostream & cath::chop::operator<<(ostream      &arg_os,    ///< The ostream into 
                                  ) {
 	arg_os << to_string( arg_region );
 	return arg_os;
+}
+
+/// \brief TODOCUMENT
+void cath::chop::validate(any           &arg_prev_value,    ///< TODOCUMENT
+                          const str_vec &arg_value_strings, ///< TODOCUMENT
+                          domain *,
+                          int
+                          ) {
+	arg_prev_value = [&] () {
+		// Standard validate boilerplate:
+		//  * Make sure no previous assignment to 'a' was made.
+		//  * Extract the first string from 'arg_value_strings'.
+		//    (If there is more than one string, it's an error, and exception will be thrown.)
+		boost::program_options::validators::check_first_occurrence( arg_prev_value );
+		const std::string &value_string = boost::program_options::validators::get_single_string( arg_value_strings );
+
+		// Attempt to lexical_cast value_string and if it fails, throw an invalid_option_value exception
+		try {
+			return sillitoe_chopping_format{}.parse_domain( value_string );
+		}
+		catch (...) {
+			BOOST_THROW_EXCEPTION( boost::program_options::invalid_option_value( value_string ) );
+		}
+	} ();
 }

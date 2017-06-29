@@ -20,6 +20,7 @@
 
 #include "cath_refine_align/cath_align_refiner.hpp"
 #include "cath_refine_align/options/cath_refine_align_options.hpp"
+#include "chopping/domain/domain.hpp"
 #include "common/program_exception_wrapper.hpp"
 
 using namespace cath::common;

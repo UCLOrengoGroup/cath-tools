@@ -41,6 +41,7 @@
 using namespace cath;
 using namespace cath::align;
 using namespace cath::align::detail;
+using namespace cath::align::gap;
 using namespace cath::common;
 using namespace std;
 
@@ -93,7 +94,7 @@ const multi_align_group & multi_align_builder::get_group_of_index(const size_t &
 void multi_align_builder::add_alignment_branch(const size_t       &arg_entry_a,     ///< The index of the first  entry to be joined
                                                const size_t       &arg_entry_b,     ///< The index of the second entry to be joined
                                                const alignment    &arg_alignment,   ///< The alignment between the two entries (with entries in the same order)
-                                               const protein_list &/*arg_proteins*/ ///< The PDBs associated with the entries whose alignment is being built
+                                               const protein_list &/*arg_proteins*/     ///< The PDBs associated with the entries whose alignment is being built
                                                ) {
 	// Find the groups currently containing the two specified entries
 	const size_t group_index_a = find_group_of_entry( arg_entry_a );
@@ -122,19 +123,19 @@ void multi_align_builder::add_alignment_branch(const size_t       &arg_entry_a, 
 	//  (ie glue group_b into group_a by identifying entry_b from the two groups)
 	group_a.glue_in_copy_of_group( group_b, arg_entry_b );
 
-	// Refine the join between the two groups
-//	group_a.refine_join(
-//		the_refiner,
-//		make_subset_protein_list( arg_proteins, group_a.get_entries() ),
-//		gap_penalty( 50, 0 )
-//	);
+	// // Refine the join between the two groups
+	// group_a.refine_join(
+	// 	the_refiner,
+	// 	make_subset_protein_list( arg_proteins, group_a.get_entries() ),
+	// 	gap_penalty( 50, 0 )
+	// );
 
-//	// Refine the alignment
-//	group_a.refine_alignment(
-//		the_refiner,
-//		make_subset_protein_list( arg_proteins, group_a.get_entries() ),
-//		gap_penalty( 50, 0 )
-//	);
+	// // Refine the alignment
+	// group_a.refine_alignment(
+	// 	the_refiner,
+	// 	make_subset_protein_list( arg_proteins, group_a.get_entries() ),
+	// 	gap_penalty( 50, 0 )
+	// );
 
 	// Update all the group indices of the entries in group_a
 	update_group_index_of_entry( group_index_a );

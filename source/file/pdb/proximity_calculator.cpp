@@ -54,8 +54,7 @@ res_index_key_coord_and_dist_vec proximity_calculator::get_res_indices_key_coord
 
 	// Loop over the residues (tracking the index)
 	for (const size_t &res_ctr : irange( 0_z, arg_pdb.get_num_residues() ) ) {
-		const auto &res        = arg_pdb.get_residue_cref_of_index__backbone_unchecked( res_ctr );
-		
+		const auto &res        = arg_pdb.get_residue_of_index__backbone_unchecked( res_ctr );
 
 		// If this residue is included in the regions and isn't empty...
 		const bool is_included = the_limiter.update_residue_is_included( res.get_residue_id() );
@@ -121,7 +120,7 @@ bool proximity_calculator::is_within_distance(const coord  &arg_coord,   ///< Th
 
 			// Otherwise, return whether any of the atoms are close enough
 			return any_of(
-				source_pdb.get().get_residue_cref_of_index__backbone_unchecked( res_indx ),
+				source_pdb.get().get_residue_of_index__backbone_unchecked( res_indx ),
 				[&] (const pdb_atom &atom) {
 					return ( squared_distance_between_points( atom.get_coord(), arg_coord ) <= distance_sq );
 				}

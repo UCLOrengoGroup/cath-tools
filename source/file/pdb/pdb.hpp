@@ -57,30 +57,22 @@ namespace cath {
 			pdb_residue_vec post_ter_residues;
 
 		public:
-			size_t get_num_backbone_complete_residues() const;
-			size_t get_index_of_backbone_complete_index(const size_t &) const;
-
 			void read_file(const boost::filesystem::path &);
 			void append_to_file(const boost::filesystem::path &) const;
-			void set_chain_label(const chain_label &);
+			pdb & set_chain_label(const chain_label &);
 			residue_id_vec get_residue_ids_of_first_chain__backbone_unchecked() const;
 			geom::coord get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const;
 			size_t get_num_atoms() const;
 
-			void rotate(const geom::rotation &);
-			void operator+=(const geom::coord &);
-			void operator-=(const geom::coord &);
+			pdb & rotate(const geom::rotation &);
+			pdb & operator+=(const geom::coord &);
+			pdb & operator-=(const geom::coord &);
 
 			bool empty() const;
 			size_t get_num_residues() const;
-			const pdb_residue & get_residue_cref_of_index__backbone_unchecked(const size_t &) const;
-			void set_residues(const pdb_residue_vec &);
-			void set_residues(pdb_residue_vec &&);
-			void set_post_ter_residues(const pdb_residue_vec &);
-			void set_post_ter_residues(pdb_residue_vec &&);
-
-			const pdb_residue & get_residue_cref_of_backbone_complete_index(const size_t &) const;
-			geom::coord get_residue_ca_coord_of_backbone_complete_index(const size_t &) const;
+			const pdb_residue & get_residue_of_index__backbone_unchecked(const size_t &) const;
+			pdb & set_residues(pdb_residue_vec);
+			pdb & set_post_ter_residues(pdb_residue_vec);
 
 			const pdb_residue_vec & get_post_ter_residues() const;
 
@@ -92,6 +84,32 @@ namespace cath {
 
 			static const std::string PDB_RECORD_STRING_TER;
 		};
+
+		size_t get_num_backbone_complete_residues(const pdb &);
+
+		size_t get_index_of_backbone_complete_index(const pdb &,
+		                                            const size_t &);
+
+		const pdb_residue & get_residue_of_backbone_complete_index(const pdb &,
+		                                                           const size_t &);
+
+		geom::coord get_residue_ca_coord_of_backbone_complete_index(const pdb &,
+		                                                            const size_t &);
+
+		size_t get_num_region_limited_backbone_complete_residues(const pdb &,
+		                                                         const chop::region_vec_opt & = boost::none);
+
+		size_t get_index_of_region_limited_backbone_complete_index(const pdb &,
+		                                                           const size_t &,
+		                                                           const chop::region_vec_opt & = boost::none);
+
+		const pdb_residue & get_residue_of_region_limited_backbone_complete_index(const pdb &,
+		                                                                          const size_t &,
+		                                                                          const chop::region_vec_opt & = boost::none);
+		geom::coord get_residue_ca_coord_of_region_limited_backbone_complete_index(const pdb &,
+		                                                                           const size_t &,
+		                                                                           const chop::region_vec_opt & = boost::none);
+
 
 		residue_id_vec get_backbone_complete_residue_ids_of_first_chain(const pdb &,
 		                                                                const bool & = true);
@@ -145,6 +163,10 @@ namespace cath {
 		pdb get_regions_limited_pdb(const chop::region_vec_opt &,
 		                            const pdb &);
 
+		pdb backbone_complete_region_limited_subset_of_pdb(const pdb &,
+		                                                   const chop::region_vec_opt &,
+		                                                   const ostream_ref_opt & = boost::none);
+
 		/// \brief Get whether this PDB is empty of residues
 		inline bool pdb::empty() const {
 			return pdb_residues.empty();
@@ -158,8 +180,8 @@ namespace cath {
 
 		/// \brief Get the residue of the specified index
 		///        (with no checking for which residues are backbone-complete)
-		inline const pdb_residue & pdb::get_residue_cref_of_index__backbone_unchecked(const size_t &arg_index ///< The index of the residue to retun
-		                                                                              ) const {
+		inline const pdb_residue & pdb::get_residue_of_index__backbone_unchecked(const size_t &arg_index ///< The index of the residue to retun
+		                                                                         ) const {
 #ifndef NDEBUG
 			if ( arg_index >= get_num_residues() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
@@ -187,9 +209,9 @@ namespace cath {
 		inline size_opt index_of_preceding_residue_in_same_chain(const pdb    &arg_pdb,  ///< The PDB containing the residues in question
 		                                                         const size_t &arg_index ///< The index of the query residue
 		                                                         ) {
-			const auto &chain = get_chain_label( arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_index ) );
+			const auto &chain = get_chain_label( arg_pdb.get_residue_of_index__backbone_unchecked( arg_index ) );
 			for (const size_t &index : boost::irange( 0_z, arg_index ) | boost::adaptors::reversed ) {
-				if ( chain == get_chain_label( arg_pdb.get_residue_cref_of_index__backbone_unchecked( index ) ) ) {
+				if ( chain == get_chain_label( arg_pdb.get_residue_of_index__backbone_unchecked( index ) ) ) {
 					return index;
 				}
 			}

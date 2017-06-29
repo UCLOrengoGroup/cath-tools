@@ -128,6 +128,7 @@
 #include "alignment/gap/gap_penalty.hpp"
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/pair_alignment.hpp"
+#include "chopping/domain/domain.hpp"
 #include "common/container/vector_of_vector.hpp"
 #include "common/difference.hpp"
 #include "common/file/open_fstream.hpp"
@@ -170,6 +171,7 @@ using namespace boost::log::trivial;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::align::gap;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
@@ -322,9 +324,14 @@ prot_prot_pair cath::read_protein_pair(const cath_ssap_options &arg_cath_ssap_op
                                        ostream                 &arg_stderr             ///< TODOCUMENT
                                        ) {
 	const auto &the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
+	// const auto &the_domains      = arg_cath_ssap_options.get_domains();
+	// region_vec_opt regions_a = make_optional_if_fn( the_domains.size() > 0, [&] () { const domain &dom = the_domains[ 0 ]; return region_vec{ common::cbegin( dom ), common::cend( dom ) }; } );
+	// region_vec_opt regions_b = make_optional_if_fn( the_domains.size() > 1, [&] () { const domain &dom = the_domains[ 1 ]; return region_vec{ common::cbegin( dom ), common::cend( dom ) }; } );
 	return read_protein_pair(
 		the_ssap_options.get_protein_name_a(),
+		none,
 		the_ssap_options.get_protein_name_b(),
+		none,
 		arg_cath_ssap_options.get_data_dirs_spec(),
 		*the_ssap_options.get_protein_source_files(),
 		the_ssap_options.get_opt_domin_file(),
@@ -334,14 +341,30 @@ prot_prot_pair cath::read_protein_pair(const cath_ssap_options &arg_cath_ssap_op
 
 /// \brief Read a pair of proteins following the specification in arg_ssap_options
 prot_prot_pair cath::read_protein_pair(const string                  &arg_protein_name_a,          ///< TODOCUMENT
+                                       const region_vec_opt          &arg_regions_a,               ///< TODOCUMENT
                                        const string                  &arg_protein_name_b,          ///< TODOCUMENT
+                                       const region_vec_opt          &arg_regions_b,               ///< TODOCUMENT
                                        const data_dirs_spec          &arg_data_dirs_spec,          ///< TODOCUMENT
                                        const protein_source_file_set &arg_protein_source_file_set, ///< TODOCUMENT
                                        const path_opt                &arg_domin_file,              ///< TODOCUMENT
                                        ostream                       &arg_stderr                   ///< TODOCUMENT
                                        ) {
-	const protein protein_a      = read_protein_data_from_ssap_options_files(arg_data_dirs_spec, arg_protein_name_a, arg_protein_source_file_set, arg_domin_file, arg_stderr );
-	const protein protein_b      = read_protein_data_from_ssap_options_files(arg_data_dirs_spec, arg_protein_name_b, arg_protein_source_file_set, none,           arg_stderr );
+	const protein protein_a = read_protein_data_from_ssap_options_files(
+		arg_data_dirs_spec,
+		arg_protein_name_a,
+		arg_protein_source_file_set,
+		arg_domin_file,
+		arg_regions_a,
+		arg_stderr
+	);
+	const protein protein_b = read_protein_data_from_ssap_options_files(
+		arg_data_dirs_spec,
+		arg_protein_name_b,
+		arg_protein_source_file_set,
+		none,
+		arg_regions_b,
+		arg_stderr
+	);
 	return make_pair(protein_a, protein_b);
 }
 
@@ -585,7 +608,7 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 	// RUN SLOW SSAP - END
 
 	fflush(stdout);
-}				
+}
 
 
 /// \brief Function to run fast SSAP
@@ -772,6 +795,7 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
                                                         const string                  &arg_protein_name,            ///< The name of the protein that is to be read from files
                                                         const protein_source_file_set &arg_protein_source_file_set, ///< TODOCUMENT
                                                         const path_opt                &arg_domin_file,              ///< Optional domin file
+                                                        const region_vec_opt          &arg_regions,                 ///< The regions to which the resulting protein should be restricted
                                                         ostream                       &arg_stderr                   ///< TODOCUMENT
                                                         ) {
 	// Report which files are being used
@@ -790,6 +814,7 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 	protein new_protein_to_populate = arg_protein_source_file_set.read_files(
 		arg_data_dirs,
 		arg_protein_name,
+		arg_regions,
 		arg_stderr
 	);
 
@@ -798,7 +823,7 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 		remove_domin_res( new_protein_to_populate, *arg_domin_file, ref( arg_stderr ) );
 	}
 
-	//	// Return the newly created protein object
+	// Return the newly created protein object
 	return new_protein_to_populate;
 }
 
@@ -1972,8 +1997,8 @@ ssap_scores cath::plot_aln(const protein                 &arg_protein_a,     ///
 
 	// Select global1 if a local score is required
 	const double select_score = arg_ssap_options.get_use_local_ssap_score()
-								? local_ssap_scores.get_ssap_score_over_smaller()
-								: local_ssap_scores.get_ssap_score_over_larger();
+	                            ? local_ssap_scores.get_ssap_score_over_smaller()
+	                            : local_ssap_scores.get_ssap_score_over_larger();
 
 	// Changed print_ssap_scores to save_ssap_scores (v1.14 JEB)
 	const bool score_is_high_enough = save_ssap_scores(arg_alignment, arg_protein_a, arg_protein_b, local_ssap_scores, arg_ssap_options, arg_data_dirs);

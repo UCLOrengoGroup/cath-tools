@@ -65,7 +65,7 @@ namespace cath {
 		};
 
 		const file::pdb_list & get_pdbs(const html_align_outputter &);
-		const str_vec & get_names(const html_align_outputter &);
+		const file::name_set_list & get_name_sets(const html_align_outputter &);
 		const chop::region_vec_opt_vec & get_regions(const html_align_outputter &);
 
 		html_align_outputter make_html_align_outputter(const alignment_context &,

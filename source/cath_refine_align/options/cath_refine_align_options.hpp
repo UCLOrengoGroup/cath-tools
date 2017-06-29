@@ -26,9 +26,11 @@
 #include "display/options/display_options_block.hpp"
 #include "options/executable/executable_options.hpp"
 #include "options/options_block/alignment_input_options_block.hpp"
+#include "options/options_block/ids_options_block.hpp"
 #include "options/options_block/pdb_input_options_block.hpp"
 #include "outputter/alignment_outputter_options/alignment_output_options_block.hpp"
 #include "outputter/superposition_output_options/superposition_output_options_block.hpp"
+#include "superposition/options/align_regions_options_block.hpp"
 
 #include <iosfwd>
 #include <vector>
@@ -44,6 +46,8 @@ namespace cath {
 	namespace opts {
 
 		/// \brief TODOCUMENT
+		///
+		/// \todo Abstract out duplication between cath_refine_align_options / cath_superpose_options
 		class cath_refine_align_options final : public executable_options {
 		private:
 			using super = executable_options;
@@ -53,8 +57,14 @@ namespace cath {
 			/// \brief TODOCUMENT
 			alignment_input_options_block      the_alignment_input_options_block;
 
+			/// \brief The options_block for the IDs options
+			ids_options_block                  the_ids_ob;
+
 			/// \brief TODOCUMENT
 			pdb_input_options_block            the_pdb_input_options_block;
+
+			/// \brief The align_regions_options_block for align regions options
+			align_regions_options_block        the_align_regions_ob;
 
 			/// \brief TODOCUMENT
 			alignment_output_options_block     the_alignment_output_options_block;
@@ -80,12 +90,13 @@ namespace cath {
 		public:
 			cath_refine_align_options();
 
+			const str_vec & get_ids() const;
 			const pdb_input_spec & get_pdb_input_spec() const;
 			const alignment_input_spec & get_alignment_input_spec() const;
 			alignment_outputter_list get_alignment_outputters() const;
 			superposition_outputter_list get_superposition_outputters() const;
 
-			chop::region_vec_opt_vec get_regions(const size_t &) const;
+			const chop::domain_vec & get_domains() const;
 
 			static const std::string PROGRAM_NAME;
 		};

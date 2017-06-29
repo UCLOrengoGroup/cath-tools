@@ -42,7 +42,7 @@ namespace cath {
 			const geom::coord_list      coord_list_2{ { geom::coord{ -1.0,  0.0, -2.0 }, geom::coord{  1.0,  0.0, -2.0 }, geom::coord{  0.0,  0.0,  4.0 } } };
 
 			const file::pdb_list        pdbs{ file::pdb_vec{ NUM_ENTRIES, file::pdb{} } };
-			const str_vec               names{ "1c0pA01", "1hdoA00" };
+			const file::name_set_list   names{ file::name_set_vec{ { file::name_set{ "1c0pA01" }, file::name_set{ "1hdoA00" } } } };
 			const superposition         the_sup{ create_pairwise_superposition( coord_list_1, coord_list_2 ) };
 			const superposition_context the_sup_con{ the_sup, pdbs, names, cath::chop::region_vec_opt_vec( NUM_ENTRIES ) };
 

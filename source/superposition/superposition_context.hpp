@@ -28,7 +28,9 @@
 #include "file/strucs_context.hpp"
 #include "superposition/superposition.hpp"
 
+
 namespace cath { namespace align { class alignment_context; } }
+namespace cath { namespace file { class name_set_list; } }
 namespace cath { namespace opts { class data_dirs_spec; } }
 namespace cath { namespace sup { class superposition_content_spec; } }
 
@@ -60,12 +62,12 @@ namespace cath {
 
 			superposition_context(superposition,
 			                      file::pdb_list,
-			                      str_vec,
+			                      file::name_set_list,
 			                      chop::region_vec_opt_vec);
 
 			superposition_context(superposition,
 			                      file::pdb_list,
-			                      str_vec,
+			                      file::name_set_list,
 			                      chop::region_vec_opt_vec,
 			                      align::alignment);
 
@@ -78,7 +80,7 @@ namespace cath {
 		};
 
 		const file::pdb_list & get_pdbs(const superposition_context &);
-		const str_vec & get_names(const superposition_context &);
+		const file::name_set_list & get_name_sets(const superposition_context &);
 		const chop::region_vec_opt_vec & get_regions(const superposition_context &);
 
 		file::pdb_list get_restricted_pdbs(const superposition_context &);

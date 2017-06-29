@@ -24,6 +24,7 @@
 #include <boost/optional.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
+#include "chopping/chopping_type_aliases.hpp"
 #include "file/file_type_aliases.hpp"
 #include "structure/protein/protein_list.hpp"
 #include "structure/protein/protein_source_file_set/protein_file_combn.hpp"
@@ -76,6 +77,7 @@ namespace cath {
 		bool makes_ssap_ready_protein() const;
 		protein read_files(const opts::data_dirs_spec &,
 		                   const std::string &,
+		                   const chop::region_vec_opt &,
 		                   std::ostream &) const;
 	};
 

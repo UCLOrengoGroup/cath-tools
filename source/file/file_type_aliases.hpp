@@ -33,6 +33,7 @@ namespace cath { class amino_acid; }
 namespace cath { class chain_label; }
 namespace cath { class residue_id; }
 namespace cath { namespace file { class hmmer_scores_entry; } }
+namespace cath { namespace file { class name_set; } }
 namespace cath { namespace file { class pdb; } }
 namespace cath { namespace file { class pdb_atom; } }
 namespace cath { namespace file { class pdb_list; } }
@@ -45,6 +46,9 @@ namespace cath { namespace file { enum class residue_makeup : bool; } }
 
 namespace cath {
 	namespace file {
+
+		/// \brief Type alias for a vector of name_set
+		using name_set_vec = std::vector<name_set>;
 
 		/// \brief Type alias for a vector of residue_makeup values
 		using residue_makeup_vec = std::vector<residue_makeup>;

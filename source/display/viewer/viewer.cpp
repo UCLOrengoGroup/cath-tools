@@ -202,7 +202,7 @@ str_vec cath::clean_names_for_viewer(const str_vec &arg_names
 /// \relates viewer
 str_vec cath::clean_names_for_viewer(const superposition_context &arg_superposition_context ///< TODOCUMENT
                                      ) {
-	return clean_names_for_viewer( get_names( arg_superposition_context ) );
+	return clean_names_for_viewer( get_viewer_names( get_name_sets( arg_superposition_context ) ) );
 }
 
 /// \brief TODOCUMENT
@@ -210,7 +210,7 @@ str_vec cath::clean_names_for_viewer(const superposition_context &arg_superposit
 /// \relates viewer
 str_vec cath::clean_names_for_viewer(const alignment_context &arg_alignment_context ///< TODOCUMENT
                                      ) {
-	return clean_names_for_viewer( get_names( arg_alignment_context ) );
+	return clean_names_for_viewer( get_viewer_names( get_name_sets( arg_alignment_context ) ) );
 }
 
 /// \brief Output instructions from the specified viewer for the specified superposition_context to

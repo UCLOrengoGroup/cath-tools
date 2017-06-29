@@ -21,13 +21,17 @@
 #ifndef _CATH_TOOLS_SOURCE_CHOPPING_REGION_REGION_H
 #define _CATH_TOOLS_SOURCE_CHOPPING_REGION_REGION_H
 
+#include <boost/any.hpp>
 #include <boost/operators.hpp>
 
 #include "biocore/chain_label.hpp"
+// #include "chopping/chopping_type_aliases.hpp"
 #include "chopping/region/region_comparison.hpp"
 #include "chopping/residue_location/residue_location.hpp"
 
 #include <cstddef>
+
+namespace cath { namespace chop { class domain; } }
 
 namespace cath {
 	namespace chop {
@@ -132,6 +136,11 @@ namespace cath {
 
 		std::ostream & operator<<(std::ostream &,
 		                          const region &);
+
+		void validate(boost::any &,
+		              const str_vec &,
+		              domain *,
+		              int);
 
 	} // namespace chop
 } // namespace cath

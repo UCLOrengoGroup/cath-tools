@@ -22,8 +22,10 @@
 #define _CATH_TOOLS_SOURCE_SSAP_SSAP_H
 
 #include <boost/filesystem.hpp>
+#include <boost/optional.hpp>
 
 #include "alignment/align_type_aliases.hpp"
+#include "chopping/chopping_type_aliases.hpp"
 #include "common/path_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "ssap/compare_upper_cell_result.hpp"
@@ -55,7 +57,9 @@ namespace cath {
 	                                 std::ostream & = std::cerr);
 
 	prot_prot_pair read_protein_pair(const std::string &,
+	                                 const chop::region_vec_opt &,
 	                                 const std::string &,
+	                                 const chop::region_vec_opt &,
 	                                 const opts::data_dirs_spec &,
 	                                 const protein_source_file_set &,
 	                                 const path_opt &,
@@ -86,7 +90,8 @@ namespace cath {
 	protein read_protein_data_from_ssap_options_files(const opts::data_dirs_spec &,
 	                                                  const std::string &,
 	                                                  const protein_source_file_set &,
-	                                                  const path_opt &,
+	                                                  const path_opt & = boost::none,
+	                                                  const chop::region_vec_opt & = boost::none,
 	                                                  std::ostream & = std::cerr);
 
 	clique read_clique_file(const boost::filesystem::path &);

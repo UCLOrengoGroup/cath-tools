@@ -24,6 +24,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "cath_superpose/options/cath_superpose_options.hpp"
+#include "chopping/domain/domain.hpp"
 #include "common/argc_argv_faker.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/file/temp_file.hpp"

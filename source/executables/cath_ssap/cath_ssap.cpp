@@ -21,6 +21,7 @@
 #include <boost/log/expressions.hpp>
 #include <boost/log/trivial.hpp>
 
+#include "chopping/domain/domain.hpp"
 #include "common/program_exception_wrapper.hpp"
 #include "ssap/options/cath_ssap_options.hpp"
 #include "ssap/ssap.hpp"

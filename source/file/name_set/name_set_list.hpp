@@ -97,10 +97,15 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const name_set_list &);
 
+		bool all_have_specified_id(const name_set_list &);
+		bool all_have_domain_name_from_regions(const name_set_list &);
+
 		str_vec get_names_from_acq(const name_set_list &);
+		str_vec get_domain_or_specified_or_from_acq_names(const name_set_list &);
 
 		str_vec get_alignment_html_names(const name_set_list &);
 		str_vec get_multi_ssap_alignment_file_names(const name_set_list &);
+		str_vec get_protein_list_names(const name_set_list &);
 		str_vec get_supn_json_names(const name_set_list &);
 		str_vec get_supn_pdb_file_names(const name_set_list &);
 		str_vec get_viewer_names(const name_set_list &);

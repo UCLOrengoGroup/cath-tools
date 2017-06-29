@@ -31,7 +31,9 @@
 #include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+#include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
+#include "common/algorithm/transform_build.hpp"
 #include "common/argc_argv_faker.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -55,6 +57,7 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 
+using boost::irange;
 using boost::lexical_cast;
 using boost::none;
 using boost::ptr_vector;
@@ -156,10 +159,18 @@ void cath_refine_align_options::check_ok_to_use() const {
 /// \brief TODOCUMENT
 cath_refine_align_options::cath_refine_align_options() {
 	super::add_options_block( the_alignment_input_options_block      );
+	super::add_options_block( the_ids_ob                             );
 	super::add_options_block( the_pdb_input_options_block            );
+	super::add_options_block( the_align_regions_ob                   );
 	super::add_options_block( the_alignment_output_options_block     );
 	super::add_options_block( the_superposition_output_options_block );
 	super::add_options_block( the_display_options_block              );
+}
+
+
+/// \brief TODOCUMENT
+const str_vec & cath_refine_align_options::get_ids() const {
+	return the_ids_ob.get_ids();
 }
 
 /// TODOCUMENT
@@ -195,9 +206,8 @@ superposition_outputter_list cath_refine_align_options::get_superposition_output
 ///
 /// \todo Add superposition regions options that are stored in cath_refine_align_options
 ///       and have this method return the results
-region_vec_opt_vec cath_refine_align_options::get_regions(const size_t &arg_num_entries ///< The number of entries for which the regions are required
-                                                          ) const {
-	return region_vec_opt_vec( arg_num_entries );
+const domain_vec & cath_refine_align_options::get_domains() const {
+	return the_align_regions_ob.get_align_domains();
 }
 
 /// \brief Get the single alignment_acquirer implied by the specified cath_refine_align_options
@@ -239,12 +249,10 @@ strucs_context cath::opts::get_pdbs_and_names(const cath_refine_align_options &a
 	const auto   pdbs_acquireer_ptr = get_pdbs_acquirer( arg_cath_ref_opts );
 	auto         pdbs_and_names     = pdbs_acquireer_ptr->get_pdbs_and_names( arg_istream, arg_remove_partial_residues );
 
-	// It's a good idea to get this num_pdbs now, before pdbs_and_names.first gets moved from
-	const size_t num_pdbs           = pdbs_and_names.first.size();
-
-	return strucs_context{
+	return combine_acquired_pdbs_and_names_with_ids_and_domains(
 		std::move( pdbs_and_names.first  ),
 		std::move( pdbs_and_names.second ),
-		arg_cath_ref_opts.get_regions( num_pdbs )
-	};
+		arg_cath_ref_opts.get_ids(),
+		arg_cath_ref_opts.get_domains()
+	);
 }

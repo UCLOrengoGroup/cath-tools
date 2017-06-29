@@ -29,6 +29,7 @@
 #include <boost/range/irange.hpp>
 
 #include "biocore/residue_id.hpp"
+#include "chopping/region/regions_limiter.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
@@ -44,6 +45,7 @@
 
 using namespace boost::log;
 using namespace cath;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::geom;
 using namespace std;
@@ -314,7 +316,7 @@ void cath::wipe_sec_strucs_of_residues(protein &arg_protein ///< The protein obj
 ///
 /// \relatesalso protein
 void cath::label_residues_with_sec_strucs(protein               &arg_protein,   ///< The protein object to modify
-                                          const ostream_ref_opt &/*arg_stderr*/ ///< An optional referece to an ostream to which any logging should be performed
+                                          const ostream_ref_opt &/*arg_stderr*/ ///< An optional reference to an ostream to which any logging should be performed
                                           ) {
 	/// \brief TODOCUMENT
 	const size_t num_residues = arg_protein.get_length();
@@ -406,7 +408,7 @@ coord cath::calculate_inter_sec_struc_vector(const protein            &arg_prote
 			"Unable to calculate inter-sec_struc vector because source index "
 			+ lexical_cast<string>(arg_src_sec_struc_index)
 			+ " is out of range in a protein with "
-			+ lexical_cast<string>(num_sec_strucs)
+			+ lexical_cast<string>( num_sec_strucs )
 			+ " secondary structures"
 		));
 	}
@@ -415,7 +417,7 @@ coord cath::calculate_inter_sec_struc_vector(const protein            &arg_prote
 			"Unable to calculate inter-sec_struc vector because source index "
 			+ lexical_cast<string>(arg_src_sec_struc_index)
 			+ " is out of range in a protein with "
-			+ lexical_cast<string>(num_sec_strucs)
+			+ lexical_cast<string>( num_sec_strucs )
 			+ " secondary structures"
 		));
 	}
@@ -447,5 +449,178 @@ coord cath::view_vector(const protein &arg_protein,    ///< TODOCUMENT
 		arg_protein.get_residue_ref_of_index( arg_from_index ),
 		arg_protein.get_residue_ref_of_index( arg_to_index   )
 	);
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates protein
+void cath::restrict_to_regions(protein              &/*arg_protein*/, ///< TODOCUMENT
+                               const region_vec_opt &/*arg_regions*/  ///< TODOCUMENT
+                               ) {
+// 	residue_vec residues_to_keep;
+// 	residues_to_keep.reserve( arg_protein.get_length() );
+
+// 	regions_limiter the_limiter{ arg_regions };
+
+// 	for (const residue &res : arg_protein) {
+// 		if ( the_limiter.update_residue_is_included( res.get_pdb_residue_id() ) ) {
+// 			residues_to_keep.push_back( res );
+// 		}
+// 	}
+
+// 	// A vector to populate with the sec_strucs that are to be kept
+// 	const size_t num_sec_strucs = arg_protein.get_num_sec_strucs();
+// 	sec_struc_vec sec_strucs_to_keep;
+// 	sec_strucs_to_keep.reserve( num_sec_strucs );
+
+// 	// A vector of the old numbers of each of the kept sec_strucs indexed by their new numbers.
+// 	size_vec sec_struc_index_conv;
+// 	sec_struc_index_conv.reserve( num_sec_strucs );
+
+// 	for (const size_t &sec_struc_ctr : irange( 0_z, num_sec_strucs ) ) {
+// 		const sec_struc &my_sec_struc = arg_protein.get_sec_struc_ref_of_index(sec_struc_ctr);
+
+// 		// Look to see if we want to exclude this sec_struc
+// 		const bool found = any_of(
+// 			arg_clique_starts_and_ends,
+// 			[&] (const size_size_pair &x) {
+// 				const size_t &a_start = x.first;
+// 				const size_t &a_end   = x.second;
+
+// 				// If the secondary structure's start or end is within the range, then mark it at as one to exclude
+// 				// (Should this code also exclude secondary structures that straddle the range?
+// 				//  ie (my_sec_struc.from <= a_end) || (my_sec_struc.to >= a_start) ? )
+// 				return (
+// 					( my_sec_struc.get_start_residue_num() >= a_start && my_sec_struc.get_start_residue_num() <= a_end )
+// 					||
+// 					( my_sec_struc.get_stop_residue_num()  >= a_start && my_sec_struc.get_stop_residue_num()  <= a_end ) );
+// 			}
+// 		);
+
+// 		// If it's not designated to be removed, then keep
+// 		if ( ! found ) {
+// 			// Record the old sec_struc number according to the new sec_struc number
+// 			// (the new sec_struc number is implied because sec_struc_index_conv is populated synchronously with sec_strucs_to_keep)
+// 			sec_struc_index_conv.push_back(sec_struc_ctr);
+
+// 			// Add the new sec_struc to sec_strucs_to_keep, first updating its sec_struc number to the new value
+// 			sec_struc new_sec_struc(my_sec_struc);
+// 			sec_strucs_to_keep.push_back(my_sec_struc);
+// 		}
+// 	}
+
+// 	// Update pair data
+// 	const size_t num_sec_strucs_to_keep = sec_strucs_to_keep.size();
+// 	for (size_t new_sec_struc_ctr_i = 0; new_sec_struc_ctr_i < num_sec_strucs_to_keep; ++new_sec_struc_ctr_i) {
+// 		const size_t    &old_sec_struc_index_i = sec_struc_index_conv[new_sec_struc_ctr_i];
+// 		const sec_struc &old_sec_struc         = arg_protein.get_sec_struc_ref_of_index( old_sec_struc_index_i );
+
+// 		sec_struc_planar_angles_vec new_planar_angles;
+// 		new_planar_angles.reserve(num_sec_strucs_to_keep);
+
+// 		for (const size_t &old_sec_struc_index_j : sec_struc_index_conv) {
+// 			const sec_struc_planar_angles old_planar_angles = old_sec_struc.get_planar_angles_of_index( old_sec_struc_index_j );
+
+// 			// The previous code appeared to be wiping all planar_angles here!
+// 			// Not sure what was going on there.
+// 			//                                        Tony Lewis, 30th September 2012
+// 			new_planar_angles.push_back(old_planar_angles);
+// 		}
+
+// 		sec_struc &new_sec_struc = sec_strucs_to_keep[new_sec_struc_ctr_i];
+// 		new_sec_struc.set_planar_angles(new_planar_angles);
+// 	}
+// 	arg_protein.set_sec_strucs(sec_strucs_to_keep);
+
+
+
+// 	/////
+// 	// 2. Process the residues that are to be removed
+// 	/////
+
+// 	const size_t protein_length = arg_protein.get_length();
+// 	residue_vec residues_to_keep;
+// 	residues_to_keep.reserve(protein_length);
+
+// 	// Look for residues to exclude
+// 	for (size_t residue_ctr = 0; residue_ctr < protein_length; ++residue_ctr) {
+// 		const residue &my_residue = arg_protein.get_residue_ref_of_index(residue_ctr);
+// 		bool           found      = false;
+
+// 		// Look to see if we want to exclude this residue
+// 		for (const size_size_pair &clique_start_and_end : arg_clique_starts_and_ends) {
+// 			const size_t &a_start = clique_start_and_end.first;
+// 			const size_t &a_end   = clique_start_and_end.second;
+
+// 			/// Problem in which residues names are compared numerically
+// 			/// --------------------------------------------------------
+// 			///
+// 			/// \todo Fix this! this is comparing residue names without handling insert-codes and without any consideration
+// 			/// that the numbers in residue names can be completely out of order.
+// 			///
+// 			/// Scanning a chain with lots of insert-codes, eg:
+// 			///
+// 			///     > cathedral_scan -d 2qriB -c /cath/data/v3_5_0/release_data/Class1-4.s35.cathedral.library --clique --dir /cath/data/v3_5_0/grath
+// 			///
+// 			/// ...produces files like this:
+// 			///
+// 			///     > cat 2qriB1nepA00.clique
+// 			///     5
+// 			///      2   21   30  1    5    8
+// 			///      3   36   41  7   62   65
+// 			///      8   78   83  6   52   59
+// 			///     29  233  236  5   35   44
+// 			///     30  241  250  3   16   21
+// 			///
+// 			/// ...but then CATHEDRAL can hardly be expected to get this right because the grath file is wrong:
+// 			///
+// 			///     > head -n 6 /cath/data/v3_5_0/grath/2qriB.gth
+// 			///     2qriB
+// 			///     32
+// 			///     6 11
+// 			///     21 30
+// 			///     36 41
+// 			///     43 46
+// 			///
+// 			/// Perhaps it'd be better if everything used sequential numbers rather than insert codes.
+// 			///
+// 			/// \todo Is the initial `pdb_number( my_residue ) != 0` check just an error?
+// 			if ( ( pdb_number( my_residue ) != 0 ) && pdb_number( my_residue ) >= numeric_cast<int>( a_start ) && pdb_number( my_residue ) <= numeric_cast<int>( a_end ) ) {
+// 				found = true;
+// 				break;
+// 			}
+// 		}
+
+// 		// If it's not designated to be removed, then keep
+// 		if (!found) {
+// 			residues_to_keep.push_back(my_residue);
+// 		}
+// 	}
+
+// //	const size_t num_residues_to_keep = residues_to_keep.size();
+// //
+// //	for (size_t i = 1; i <= num_residues_to_keep; ++i) {
+// //		residue &newp = residues_to_keep[i-1];
+// //
+// //		// Disulfide information (not sure it's important)
+// //		if ( islower(newp.get_amino_acid()) ) {
+// //			cerr << "IMPORTANT NOTICE : ******** THIS BIT OF CODE IS NOT COMPLETELY USELESS - HURRAH - PLEASE TELL SOMEONE *******" << endl;
+// //			newp.set_amino_acid('C');
+// //		}
+// //	}
+
+// 	arg_protein.set_residues( residues_to_keep );
+
+// 	label_residues_with_sec_strucs( arg_protein, arg_stderr );
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates protein
+protein cath::restrict_to_regions_copy(protein               arg_protein, ///< TODOCUMENT
+                                       const region_vec_opt &arg_regions  ///< TODOCUMENT
+                                       ) {
+	restrict_to_regions( arg_protein, arg_regions );
+	return arg_protein;
 }
 

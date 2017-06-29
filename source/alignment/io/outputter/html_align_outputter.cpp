@@ -79,9 +79,9 @@ const pdb_list & cath::align::get_pdbs(const html_align_outputter &arg_html_alig
 }
 
 /// \brief TODOCUMENT
-const str_vec & cath::align::get_names(const html_align_outputter &arg_html_align_outputter ///< TODOCUMENT
-                                       ) {
-	return arg_html_align_outputter.get_strucs_context().get_names();
+const name_set_list & cath::align::get_name_sets(const html_align_outputter &arg_html_align_outputter ///< TODOCUMENT
+                                                 ) {
+	return arg_html_align_outputter.get_strucs_context().get_name_sets();
 }
 
 /// \brief The specification of the regions of the PDBs to which the alignment refers
@@ -117,8 +117,10 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
                                   ) {
 	// Grab alignment and then some basic information from it
 	const alignment           &the_alignment   = arg_html_align_outputter.get_alignment();
-	const pdb_list            &pdbs            = get_pdbs   ( arg_html_align_outputter );
-	const str_vec             &names           = get_names  ( arg_html_align_outputter );
+	const pdb_list            &pdbs            = get_pdbs     ( arg_html_align_outputter );
+	const region_vec_opt_vec  &regions         = get_regions  ( arg_html_align_outputter );
+	const name_set_list       &name_sets       = get_name_sets( arg_html_align_outputter );
+	const str_vec             &names           = get_alignment_html_names( name_sets );
 	const display_colourer    &colourer        = arg_html_align_outputter.get_display_colourer();
 	const alignment::size_type length          = the_alignment.length();
 	const alignment::size_type num_entries     = the_alignment.num_entries();
@@ -171,15 +173,16 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 
 	// Loop over the positions, and output them
 	for (alignment::size_type entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
-		const pdb    &the_pdb = pdbs [ entry_ctr ];
-		const string &name    = names[ entry_ctr ];
+		const pdb    &the_pdb     = pdbs [ entry_ctr ];
+		const string &name        = names[ entry_ctr ];
+		const auto   &pdb_regions = regions[ entry_ctr ];
 		arg_os << "<div class=\"seq\">";
 		arg_os << "<div class=\"seq-name\">&gt;" << name << "</div>";
 		arg_os << "<div class=\"seq-res\">";
 		for (alignment::size_type index_ctr = 0; index_ctr < length; ++index_ctr) {
 			const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
 			if ( position ) {
-				const char           amino_acid_letter  = get_amino_acid_letter_tolerantly( the_pdb.get_residue_cref_of_backbone_complete_index( *position ) );
+				const char           amino_acid_letter  = get_amino_acid_letter_tolerantly( get_residue_of_region_limited_backbone_complete_index( the_pdb, *position, pdb_regions ) );
 				const size_size_pair entry_and_res_pair = make_pair( entry_ctr, *position );
 				const bool           has_residue_colour = contains( colour_of_pdb_and_res_map, entry_and_res_pair );
 				const display_colour the_colour         = has_residue_colour ? colour_of_pdb_and_res_map.at( entry_and_res_pair )

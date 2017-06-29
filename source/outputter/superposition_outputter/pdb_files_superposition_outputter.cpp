@@ -49,8 +49,9 @@ unique_ptr<superposition_outputter> pdb_files_superposition_outputter::do_clone(
 void pdb_files_superposition_outputter::do_output_superposition(const superposition_context &arg_supn_context, ///< TODOCUMENT
                                                                 ostream                     &/*arg_ostream*/   ///< TODOCUMENT
                                                                 ) const {
-	const pdb_list  pdbs  = get_supn_content_pdbs( arg_supn_context, content_spec );
-	const str_vec  &names = get_names( arg_supn_context );
+	const pdb_list       pdbs      = get_supn_content_pdbs( arg_supn_context, content_spec );
+	const name_set_list &name_sets = get_name_sets( arg_supn_context );
+	const str_vec       &names     = get_supn_pdb_file_names( name_sets );
 
 	for (const size_t &pdb_ctr : irange( 0_z, pdbs.size() ) ) {
 		write_superposed_pdb_to_file(

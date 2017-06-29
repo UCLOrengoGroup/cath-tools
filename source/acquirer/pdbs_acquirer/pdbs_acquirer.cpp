@@ -22,6 +22,7 @@
 
 #include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
 #include "acquirer/pdbs_acquirer/istream_pdbs_acquirer.hpp"
+#include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "common/cpp14/make_unique.hpp"
@@ -42,6 +43,7 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 
+using boost::none;
 using std::cerr;
 using std::istream;
 using std::pair;
@@ -128,6 +130,22 @@ unique_ptr<pdbs_acquirer> cath::opts::get_pdbs_acquirer(const pdb_input_spec &ar
 	return pdbs_acquirers.front()->clone();
 }
 
+/// \brief Strip the specified domain_vec into a str_opt_vec and a region_vec_opt_vec,
+///        making some attempt to avoid unnecessary allocations
+///
+/// There currently allocates the region_vec. More could be done to improve efficiency given motivation.
+pair<str_opt_vec, region_vec_opt_vec> strip_domain_vec(domain_vec arg_domains ///< The domain_vec to strip
+                                                       ) {
+	pair<str_opt_vec, region_vec_opt_vec> result;
+	result.first .reserve( arg_domains.size() );
+	result.second.reserve( arg_domains.size() );
+	for (const domain &the_domain : arg_domains) {
+		result.first .push_back( std::move( the_domain.get_opt_domain_id() ) );
+		result.second.push_back( region_vec{ common::cbegin( the_domain ), common::cend( the_domain ) } );
+	}
+	return result;
+}
+
 /// \brief Combine the PDBs and names obtained from a pdbs_acquirer with IDs and regions to make a strucs_context
 ///
 /// This is provided as a common place for this bit of behaviour to be performed so that it will
@@ -137,16 +155,22 @@ unique_ptr<pdbs_acquirer> cath::opts::get_pdbs_acquirer(const pdb_input_spec &ar
 ///
 /// In the future, it may be worth building more interesting types (than str_vec) to record both the provenance (arg_names_from_acq)
 /// and user-specified names (arg_ids) of the structure
-strucs_context cath::opts::combine_acquired_pdbs_and_names_with_ids_and_regions(pdb_list           &&arg_pdbs,           ///< The PDBs obtained from a pdbs_acquirer
-                                                                                str_vec            &&arg_names_from_acq, ///< The names obtained from a pdbs_acquirer
-                                                                                str_vec            &&arg_ids,            ///< Alternative IDs
-                                                                                region_vec_opt_vec &&arg_regions         ///< Regions for the strucs_context
+strucs_context cath::opts::combine_acquired_pdbs_and_names_with_ids_and_domains(pdb_list   arg_pdbs,           ///< The PDBs obtained from a pdbs_acquirer
+                                                                                str_vec    arg_names_from_acq, ///< The names obtained from a pdbs_acquirer
+                                                                                str_vec    specified_ids,      ///< Alternative IDs
+                                                                                domain_vec arg_domains         ///< Regions for the strucs_context
                                                                                 ) {
-	str_vec &&ids_to_use = ( arg_ids.size() == arg_pdbs.size() ) ? std::move( arg_ids            )
-	                                                             : std::move( arg_names_from_acq );
+	auto stripped_domain_vec = strip_domain_vec( std::move( arg_domains ) );
+
+	stripped_domain_vec.second.resize( arg_names_from_acq.size(), none );
+
 	return {
-		std::move( arg_pdbs    ),
-		std::move( ids_to_use  ),
-		std::move( arg_regions )
+		std::move( arg_pdbs                   ),
+		build_name_set_list(
+			std::move( arg_names_from_acq        ),
+			std::move( specified_ids             ),
+			std::move( stripped_domain_vec.first )
+		),
+		std::move( stripped_domain_vec.second )
 	};
 }

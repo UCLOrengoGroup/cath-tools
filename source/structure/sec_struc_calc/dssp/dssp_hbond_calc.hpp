@@ -158,10 +158,10 @@ namespace cath {
 			const auto prev_index = index_of_preceding_residue_in_same_chain( arg_pdb, arg_i );
 			return get_hbond_energy(
 				prev_index
-					? boost::make_optional( arg_pdb.get_residue_cref_of_index__backbone_unchecked( *prev_index ) )
+					? boost::make_optional( arg_pdb.get_residue_of_index__backbone_unchecked( *prev_index ) )
 					: boost::none,
-				arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i     ),
-				arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_j     )
+				arg_pdb.get_residue_of_index__backbone_unchecked( arg_i     ),
+				arg_pdb.get_residue_of_index__backbone_unchecked( arg_j     )
 			);
 		}
 
@@ -229,10 +229,10 @@ namespace cath {
 				&&
 				has_hbond_energy(
 					prev_index
-						? boost::make_optional( arg_pdb.get_residue_cref_of_index__backbone_unchecked( *prev_index ) )
+						? boost::make_optional( arg_pdb.get_residue_of_index__backbone_unchecked( *prev_index ) )
 						: boost::none,
-					arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_i     ),
-					arg_pdb.get_residue_cref_of_index__backbone_unchecked( arg_j     )
+					arg_pdb.get_residue_of_index__backbone_unchecked( arg_i     ),
+					arg_pdb.get_residue_of_index__backbone_unchecked( arg_j     )
 				)
 			);
 		}

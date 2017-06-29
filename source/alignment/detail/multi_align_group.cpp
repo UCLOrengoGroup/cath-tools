@@ -50,15 +50,19 @@ using boost::range::remove_copy;
 void multi_align_group::refine_join(alignment_refiner  &arg_alignment_refiner, ///< TODOCUMENT
                                     const protein_list &arg_proteins,          ///< TODOCUMENT
                                     const gap_penalty  &arg_gap_penalty,       ///< TODOCUMENT
-                                    const size_t       &arg_join_point         ///< TODOCUMENT
+                                    const size_opt     &arg_join_point         ///< TODOCUMENT
                                     ) {
-	cerr << "Alignment to be refined at join point " << arg_join_point << " : \n";
+	cerr << "Alignment to be refined"
+		<< ( arg_join_point ? ( " (at join point " + to_string( *arg_join_point ) + ")" ) : "" )
+		<< " : \n";
 	write_alignment_as_fasta_alignment( cerr, the_alignment, arg_proteins );
 	cerr << endl;
 
 	the_alignment = arg_alignment_refiner.iterate( the_alignment, arg_proteins, arg_gap_penalty );
 
-	cerr << "Refined alignment (at join point " << arg_join_point << ") : \n";
+	cerr << "Refined alignment"
+		<< ( arg_join_point ? ( " (at join point " + to_string( *arg_join_point ) + ")" ) : "" )
+		<< " : \n";
 	write_alignment_as_fasta_alignment( cerr, the_alignment, arg_proteins );
 	cerr << endl;
 }

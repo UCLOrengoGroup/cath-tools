@@ -113,7 +113,7 @@ locn_index_store cath::scan::make_sparse_lattice(const pdb   &arg_pdb,       ///
 	return simple_spatial_lattice_store_maker< sod::SPARSE, vector< simple_locn_index > >{}(
 		irange( 0_z, arg_pdb.get_num_residues() )
 			| transformed( [&] (const size_t &x) {
-				return make_simple_locn_index_of_ca( arg_pdb.get_residue_cref_of_index__backbone_unchecked( x ), debug_numeric_cast<unsigned int>( x ) );
+				return make_simple_locn_index_of_ca( arg_pdb.get_residue_of_index__backbone_unchecked( x ), debug_numeric_cast<unsigned int>( x ) );
 			} ),
 		arg_cell_size,
 		arg_max_dist
@@ -128,7 +128,7 @@ locn_index_store cath::scan::make_dense_lattice(const pdb   &arg_pdb,       ///<
 	return simple_spatial_lattice_store_maker< sod::DENSE, vector< simple_locn_index > >{}(
 		irange( 0_z, arg_pdb.get_num_residues() )
 			| transformed( [&] (const size_t &x) {
-				return make_simple_locn_index_of_ca( arg_pdb.get_residue_cref_of_index__backbone_unchecked( x ), debug_numeric_cast<unsigned int>( x ) );
+				return make_simple_locn_index_of_ca( arg_pdb.get_residue_of_index__backbone_unchecked( x ), debug_numeric_cast<unsigned int>( x ) );
 			} ),
 		arg_cell_size,
 		arg_max_dist

@@ -20,6 +20,7 @@
 
 #include "name_set_list.hpp"
 
+#include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/combine.hpp>
@@ -31,6 +32,7 @@ using namespace cath::common;
 using namespace cath::file;
 
 using boost::adaptors::transformed;
+using boost::algorithm::all_of;
 using boost::algorithm::join;
 using boost::none;
 using boost::range::combine;
@@ -98,6 +100,29 @@ ostream & cath::file::operator<<(ostream             &arg_os,           ///< The
 	return arg_os;
 }
 
+
+/// \brief Return whether all the specified name_sets have specified_ids
+///
+/// \relates name_set_list
+bool cath::file::all_have_specified_id(const name_set_list &arg_name_set_list ///< TODOCUMENT
+                                       ) {
+	return all_of(
+		arg_name_set_list,
+		[] (const name_set &x) { return static_cast<bool>( x.get_specified_id() ); }
+	);
+}
+
+/// \brief Return whether all the specified name_sets have domain_name_from_regions
+///
+/// \relates name_set_list
+bool cath::file::all_have_domain_name_from_regions(const name_set_list &arg_name_set_list ///< TODOCUMENT
+                                                   ) {
+	return all_of(
+		arg_name_set_list,
+		[] (const name_set &x) { return static_cast<bool>( x.get_domain_name_from_regions() ); }
+	);
+}
+
 /// \brief Get a vector of the name_from_acq strings of the specified name_sets
 ///
 /// \relates name_set_list
@@ -109,12 +134,23 @@ str_vec cath::file::get_names_from_acq(const name_set_list &arg_name_sets ///< T
 	);
 }
 
+/// \brief Get a vector of the name_from_acq strings of the specified name_sets
+///
+/// \relates name_set_list
+str_vec cath::file::get_domain_or_specified_or_from_acq_names(const name_set_list &arg_name_sets ///< The name_set_list to query
+                                                              ) {
+	return transform_build<str_vec>(
+		arg_name_sets,
+		[] (const name_set &x) { return get_domain_or_specified_or_name_from_acq( x ); }
+	);
+}
+
 /// \brief Get a vector of the names from the specified name_sets suitable for use in alignment HTML
 ///
 /// \relates name_set_list
 str_vec cath::file::get_alignment_html_names(const name_set_list &arg_name_sets ///< The name_set_list to query
                                              ) {
-	return get_names_from_acq( arg_name_sets );
+	return get_domain_or_specified_or_from_acq_names( arg_name_sets );
 }
 
 /// \brief Get a vector of the names from the specified name_sets suitable for use in generating multi_ssap_alignment file names
@@ -123,6 +159,14 @@ str_vec cath::file::get_alignment_html_names(const name_set_list &arg_name_sets 
 str_vec cath::file::get_multi_ssap_alignment_file_names(const name_set_list &arg_name_sets ///< The name_set_list to query
                                                         ) {
 	return get_names_from_acq( arg_name_sets );
+}
+
+/// \brief Get a vector of the names from the specified name_sets suitable for use in building protein_lists
+///
+/// \relates name_set_list
+str_vec cath::file::get_protein_list_names(const name_set_list &arg_name_sets ///< The name_set_list to query
+                                           ) {
+	return get_domain_or_specified_or_from_acq_names( arg_name_sets );
 }
 
 /// \brief Get a vector of the names from the specified name_sets suitable for use in superposition JSON
@@ -138,7 +182,7 @@ str_vec cath::file::get_supn_json_names(const name_set_list &arg_name_sets ///< 
 /// \relates name_set_list
 str_vec cath::file::get_supn_pdb_file_names(const name_set_list &arg_name_sets ///< The name_set_list to query
                                             ) {
-	return get_names_from_acq( arg_name_sets );
+	return get_domain_or_specified_or_from_acq_names( arg_name_sets );
 }
 
 /// \brief Get a vector of the names from the specified name_sets suitable for use in viewer (eg PyMOL) names
@@ -146,5 +190,5 @@ str_vec cath::file::get_supn_pdb_file_names(const name_set_list &arg_name_sets /
 /// \relates name_set_list
 str_vec cath::file::get_viewer_names(const name_set_list &arg_name_sets ///< The name_set_list to query
                                      ) {
-	return get_names_from_acq( arg_name_sets );
+	return get_domain_or_specified_or_from_acq_names( arg_name_sets );
 }

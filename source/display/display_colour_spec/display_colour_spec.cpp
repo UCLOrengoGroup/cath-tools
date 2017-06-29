@@ -232,7 +232,7 @@ void cath::colour_viewer_with_spec(const display_colour_spec &arg_colour_spec,  
 				transform_build<residue_id_vec>(
 					pdb_and_res_index.second,
 					[&] (const size_t &x) {
-						return pdbs[ pdb_index ].get_residue_cref_of_backbone_complete_index( x ).get_residue_id();
+						return get_residue_of_backbone_complete_index( pdbs[ pdb_index ], x ).get_residue_id();
 					}
 				)
 			);
