@@ -25,14 +25,17 @@ using namespace cath::rslv;
 constexpr resscr_t crh_score_spec::DEFAULT_LONG_DOMAINS_PREFERENCE;
 constexpr resscr_t crh_score_spec::DEFAULT_HIGH_SCORES_PREFERENCE;
 constexpr bool     crh_score_spec::DEFAULT_APPLY_CATH_RULES;
+constexpr bool     crh_score_spec::DEFAULT_NAIVE_GREEDY;
 
 /// \brief Ctor
 crh_score_spec::crh_score_spec(const bool     &arg_apply_cath_rules,        ///< Whether to apply rules specific to CATH-Gene3D
                                const resscr_t &arg_long_domains_preference, ///< The degree to which long domains are preferred
-                               const resscr_t &arg_high_scores_preference   ///< The degree to which high scores are preferred
+                               const resscr_t &arg_high_scores_preference,  ///< The degree to which high scores are preferred
+                               const bool     &arg_naive_greedy             ///< Whether to use a naive, greedy approach to resolving
                                ) : long_domains_preference { arg_long_domains_preference },
                                    high_scores_preference  { arg_high_scores_preference  },
-                                   apply_cath_rules        { arg_apply_cath_rules        } {
+                                   apply_cath_rules        { arg_apply_cath_rules        },
+                                   naive_greedy            { arg_naive_greedy            } {
 }
 
 /// \brief Getter for the degree to which long domains are preferred
@@ -45,10 +48,14 @@ const resscr_t & crh_score_spec::get_high_scores_preference() const {
 	return high_scores_preference;
 }
 
-
 /// \brief Getter for whether to apply rules specific to CATH-Gene3D
 const bool & crh_score_spec::get_apply_cath_rules() const {
 	return apply_cath_rules;
+}
+
+/// \brief Getter for whether to use a naive, greedy approach to resolving
+const bool & crh_score_spec::get_naive_greedy() const {
+	return naive_greedy;
 }
 
 /// \brief Setter for the degree to which long domains are preferred
@@ -69,6 +76,13 @@ crh_score_spec & crh_score_spec::set_high_scores_preference(const resscr_t &arg_
 crh_score_spec & crh_score_spec::set_apply_cath_rules(const bool &arg_apply_cath_rules ///< Whether to apply rules specific to CATH-Gene3D
                                                       ) {
 	apply_cath_rules = arg_apply_cath_rules;
+	return *this;
+}
+
+/// \brief Setter for whether to use a naive, greedy approach to resolving
+crh_score_spec & crh_score_spec::set_naive_greedy(const bool &arg_naive_greedy ///< Whether to use a naive, greedy approach to resolving
+                                                  ) {
+	naive_greedy = arg_naive_greedy;
 	return *this;
 }
 

@@ -32,6 +32,7 @@
 #include "common/cpp14/cbegin_cend.hpp"
 #include "resolve_hits/algo/masked_bests_cacher.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
+#include "resolve_hits/resolve/naive_greedy_hit_resolver.hpp"
 #include "resolve_hits/scored_hit_arch.hpp"
 
 #include <map>
@@ -206,9 +207,11 @@ scored_hit_arch hit_resolver::resolve() {
 }
 
 /// \brief The front-end for resolving hits
-scored_hit_arch cath::rslv::resolve_hits(const calc_hit_list &arg_hits ///< The hits to resolve
+scored_hit_arch cath::rslv::resolve_hits(const calc_hit_list &arg_hits,        ///< The hits to resolve
+                                         const bool          &arg_naive_greedy ///< Whether to use a naive, greedy approach to resolving
                                          ) {
-	return detail::hit_resolver{ arg_hits }.resolve();
+	return arg_naive_greedy ? naive_greedy_resolve_hits( arg_hits )
+	                        : detail::hit_resolver{ arg_hits }.resolve();
 }
 
 

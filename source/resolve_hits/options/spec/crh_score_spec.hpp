@@ -38,6 +38,9 @@ namespace cath {
 			/// \brief Whether to apply rules specific to CATH-Gene3D
 			bool     apply_cath_rules        = DEFAULT_APPLY_CATH_RULES;
 
+			/// \brief Whether to use a naive, greedy approach to resolving
+			bool     naive_greedy            = DEFAULT_NAIVE_GREEDY;
+
 
 		public:
 			/// \brief The default value for the degree to which long domains are preferred
@@ -54,19 +57,25 @@ namespace cath {
 			/// \brief The default value for whether to apply rules specific to CATH-Gene3D
 			static constexpr bool     DEFAULT_APPLY_CATH_RULES           = false;
 
+			/// \brief The default value for whether to use a naive, greedy approach to resolving
+			static constexpr bool     DEFAULT_NAIVE_GREEDY               = false;
+
 			crh_score_spec() noexcept = default;
 
 			explicit crh_score_spec(const bool &,
 			                        const resscr_t & = DEFAULT_LONG_DOMAINS_PREFERENCE,
-			                        const resscr_t & = DEFAULT_HIGH_SCORES_PREFERENCE);
+			                        const resscr_t & = DEFAULT_HIGH_SCORES_PREFERENCE,
+			                        const bool & = DEFAULT_NAIVE_GREEDY);
 
 			const resscr_t & get_long_domains_preference() const;
 			const resscr_t & get_high_scores_preference() const;
 			const bool & get_apply_cath_rules() const;
+			const bool & get_naive_greedy() const;
 
 			crh_score_spec & set_long_domains_preference(const resscr_t &);
 			crh_score_spec & set_high_scores_preference(const resscr_t &);
 			crh_score_spec & set_apply_cath_rules(const bool &);
+			crh_score_spec & set_naive_greedy(const bool &);
 		};
 
 		crh_score_spec make_neutral_score_spec();

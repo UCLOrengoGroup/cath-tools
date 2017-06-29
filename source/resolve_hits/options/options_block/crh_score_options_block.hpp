@@ -45,6 +45,7 @@ namespace cath {
 			static const std::string PO_LONG_DOMAINS_PREFERENCE;
 			static const std::string PO_HIGH_SCORES_PREFERENCE;
 			static const std::string PO_APPLY_CATH_RULES;
+			static const std::string PO_NAIVE_GREEDY;
 
 			const crh_score_spec & get_crh_score_spec() const;
 		};

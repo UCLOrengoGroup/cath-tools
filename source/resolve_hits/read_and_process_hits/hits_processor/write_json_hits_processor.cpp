@@ -24,7 +24,7 @@
 #include "exception/out_of_range_exception.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
 #include "resolve_hits/full_hit_list_fns.hpp"
-#include "resolve_hits/hit_resolver.hpp"
+#include "resolve_hits/resolve/hit_resolver.hpp"
 #include "resolve_hits/scored_hit_arch.hpp"
 
 using namespace cath::common;
@@ -47,7 +47,7 @@ unique_ptr<hits_processor> write_json_hits_processor::do_clone() const {
 /// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
 void write_json_hits_processor::do_process_hits_for_query(const string           &arg_query_id,        ///< The query_protein_id string
                                                           const crh_filter_spec  &/*arg_filter_spec*/, ///< The filter_spec to apply to the hits
-                                                          const crh_score_spec   &/*arg_score_spec*/,  ///< The score spec to apply to the hits
+                                                          const crh_score_spec   &arg_score_spec,      ///< The score spec to apply to the hits
                                                           const crh_segment_spec &arg_segment_spec,    ///< The segment spec to apply to the hits
                                                           const calc_hit_list    &arg_calc_hits        ///< The hits to process
                                                           ) {
@@ -57,7 +57,7 @@ void write_json_hits_processor::do_process_hits_for_query(const string          
 	}
 
 	// Resolve the hits
-	const auto result_hit_arch  = resolve_hits( arg_calc_hits );
+	const auto result_hit_arch  = resolve_hits( arg_calc_hits, arg_score_spec.get_naive_greedy() );
 	const auto result_full_hits = get_full_hits_of_hit_arch(
 		result_hit_arch,
 		arg_calc_hits.get_full_hits()

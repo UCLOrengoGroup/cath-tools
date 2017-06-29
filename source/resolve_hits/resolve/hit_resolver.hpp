@@ -207,7 +207,8 @@ namespace cath {
 
 		} // namespace detail
 
-		scored_hit_arch resolve_hits(const calc_hit_list &);
+		scored_hit_arch resolve_hits(const calc_hit_list &,
+		                             const bool &);
 
 	} // namespace rslv
 } // namespace cath

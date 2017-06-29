@@ -37,11 +37,11 @@
 #include "resolve_hits/full_hit_fns.hpp"
 #include "resolve_hits/full_hit_list.hpp"
 #include "resolve_hits/full_hit_list_fns.hpp"
-#include "resolve_hits/hit_resolver.hpp"
 #include "resolve_hits/html_output/html_hit.hpp"
 #include "resolve_hits/html_output/html_segment.hpp"
 #include "resolve_hits/options/options_block/crh_html_options_block.hpp"
 #include "resolve_hits/options/spec/crh_segment_spec.hpp"
+#include "resolve_hits/resolve/hit_resolver.hpp"
 #include "resolve_hits/scored_hit_arch.hpp"
 #include "resolve_hits/trim/trim_spec.hpp"
 
@@ -754,7 +754,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
                                                 ) {
 	const auto  filtered_grey     = display_colour{ 0.666, 0.666, 0.666 };
 	const auto &the_full_hit_list = arg_calc_hit_list.get_full_hits();
-	const auto  best_result       = resolve_hits( arg_calc_hit_list );
+	const auto  best_result       = resolve_hits( arg_calc_hit_list, arg_score_spec.get_naive_greedy() );
 	const auto  chosen_full_hits  = full_hit_list{ transform_build<full_hit_vec>(
 		best_result.get_arch(),
 		[&] (const calc_hit &x) {

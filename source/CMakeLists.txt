@@ -723,6 +723,12 @@ set(
 )
 
 set(
+	NORMSOURCES_RESOLVE_HITS_RESOLVE
+		resolve_hits/resolve/hit_resolver.cpp
+		resolve_hits/resolve/naive_greedy_hit_resolver.cpp
+)
+
+set(
 	NORMSOURCES_RESOLVE_HITS_TRIM
 		resolve_hits/trim/seq_seg_boundary_fns.cpp
 		resolve_hits/trim/trim_spec.cpp
@@ -741,11 +747,11 @@ set(
 		resolve_hits/full_hit_list_fns.cpp
 		resolve_hits/hit_arch.cpp
 		resolve_hits/hit_extras.cpp
-		resolve_hits/hit_resolver.cpp
 		resolve_hits/hit_score_type.cpp
 		${NORMSOURCES_RESOLVE_HITS_HTML_OUTPUT}
 		${NORMSOURCES_RESOLVE_HITS_OPTIONS}
 		${NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS}
+		${NORMSOURCES_RESOLVE_HITS_RESOLVE}
 		resolve_hits/scored_hit_arch.cpp
 		${NORMSOURCES_RESOLVE_HITS_TRIM}
 )
@@ -1777,6 +1783,11 @@ set(
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS_RESOLVE
+		resolve_hits/resolve/hit_resolver_test.cpp
+)
+
+set(
 	TESTSOURCES_RESOLVE_HITS_TEST
 		resolve_hits/test/resolve_hits_fixture.cpp
 )
@@ -1798,11 +1809,11 @@ set(
 		resolve_hits/full_hit_list_test.cpp
 		resolve_hits/full_hit_test.cpp
 		resolve_hits/hit_extras_test.cpp
-		resolve_hits/hit_resolver_test.cpp
 		resolve_hits/hit_test.cpp
 		${TESTSOURCES_RESOLVE_HITS_HTML_OUTPUT}
 		${TESTSOURCES_RESOLVE_HITS_OPTIONS}
 		${TESTSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS}
+		${TESTSOURCES_RESOLVE_HITS_RESOLVE}
 		${TESTSOURCES_RESOLVE_HITS_TEST}
 		${TESTSOURCES_RESOLVE_HITS_TRIM}
 )

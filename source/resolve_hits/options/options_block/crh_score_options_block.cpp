@@ -48,6 +48,9 @@ const string crh_score_options_block::PO_HIGH_SCORES_PREFERENCE  { "high-scores-
 /// \brief The option name for whether to apply rules specific to CATH-Gene3D
 const string crh_score_options_block::PO_APPLY_CATH_RULES        { "apply-cath-rules"        };
 
+/// \brief The option name for whether to use a naive, greedy approach to resolving
+const string crh_score_options_block::PO_NAIVE_GREEDY            { "naive-greedy"            };
+
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_score_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -66,6 +69,7 @@ void crh_score_options_block::do_add_visible_options_to_description(options_desc
 	const auto long_domains_preference_notifier = [&] (const resscr_t &x) { the_spec.set_long_domains_preference ( x ); };
 	const auto high_scores_preference_notifier  = [&] (const resscr_t &x) { the_spec.set_high_scores_preference  ( x ); };
 	const auto apply_cath_rules_notifier        = [&] (const bool     &x) { the_spec.set_apply_cath_rules        ( x ); };
+	const auto naive_greedy_notifier            = [&] (const bool     &x) { the_spec.set_naive_greedy            ( x ); };
 
 	arg_desc.add_options()
 		(
@@ -95,9 +99,19 @@ void crh_score_options_block::do_add_visible_options_to_description(options_desc
 				->notifier     ( apply_cath_rules_notifier                       )
 				->default_value( crh_score_spec::DEFAULT_APPLY_CATH_RULES        ),
 			"Apply rules specific to CATH-Gene3D during the parsing and processing"
+		)
+		(
+			( PO_NAIVE_GREEDY ).c_str(),
+			bool_switch()
+				->notifier     ( naive_greedy_notifier                           )
+				->default_value( crh_score_spec::DEFAULT_NAIVE_GREEDY            ),
+			"Use a naive, greedy approach to resolving (not recommended except for comparison)"
 		);
 
-	static_assert( ! crh_score_spec::DEFAULT_APPLY_CATH_RULES, "If crh_score_spec::DEFAULT_APPLY_CATH_RULES isn't false, it might mess up the bool switch in here" );
+	static_assert( ! crh_score_spec::DEFAULT_APPLY_CATH_RULES,
+		"If crh_score_spec::DEFAULT_APPLY_CATH_RULES isn't false, it might mess up the bool switch in here" );
+	static_assert( ! crh_score_spec::DEFAULT_NAIVE_GREEDY,
+		"If crh_score_spec::DEFAULT_NAIVE_GREEDY     isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_score_options_block invalid

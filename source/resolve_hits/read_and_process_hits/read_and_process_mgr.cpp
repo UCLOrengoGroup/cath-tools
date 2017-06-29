@@ -24,10 +24,10 @@
 #include "common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
-#include "resolve_hits/hit_resolver.hpp"
 #include "resolve_hits/options/spec/crh_input_spec.hpp"
 #include "resolve_hits/options/spec/crh_spec.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.hpp"
+#include "resolve_hits/resolve/hit_resolver.hpp"
 #include "resolve_hits/scored_hit_arch.hpp"
 
 #include <iostream>
