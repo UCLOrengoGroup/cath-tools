@@ -1768,6 +1768,7 @@ set(
 set(
 	TESTSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR
 		resolve_hits/read_and_process_hits/hits_processor/hits_processor_list_test.cpp
+		resolve_hits/read_and_process_hits/hits_processor/hits_processor_test.cpp
 )
 
 set(

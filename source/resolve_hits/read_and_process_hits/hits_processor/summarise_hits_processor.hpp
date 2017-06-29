@@ -55,6 +55,8 @@ namespace cath {
 
 				bool do_wants_hits_that_fail_score_filter() const final;
 
+				bool do_requires_strictly_worse_hits() const final;
+
 			public:
 				explicit summarise_hits_processor(ref_vec<std::ostream>) noexcept;
 			};

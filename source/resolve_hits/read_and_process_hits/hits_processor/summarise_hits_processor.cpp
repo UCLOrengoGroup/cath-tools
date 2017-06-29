@@ -141,6 +141,11 @@ bool summarise_hits_processor::do_wants_hits_that_fail_score_filter() const {
 	return true;
 }
 
+/// \brief Return true: read_and_resolve_mgr may not strip out strictly worse hits from the data; they are required
+bool summarise_hits_processor::do_requires_strictly_worse_hits() const {
+	return true;
+}
+
 /// \brief Ctor for the summarise_hits_processor
 summarise_hits_processor::summarise_hits_processor(ref_vec<ostream> arg_ostreams ///< The ostream to which the results should be written
                                                    ) noexcept : super{ move( arg_ostreams ) } {

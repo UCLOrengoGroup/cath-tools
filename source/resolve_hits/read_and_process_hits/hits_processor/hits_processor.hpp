@@ -64,7 +64,9 @@ namespace cath {
 				///        read_and_resolve_mgr to still parse hits that fail the score filter and pass them to this processor
 				virtual bool do_wants_hits_that_fail_score_filter() const = 0;
 
-				// virtual bool do_requires_strictly_worse_hits() const = 0;
+				/// \brief Pure virtual method with which each concrete hits_processor must define whether it expects
+				///        to see results even if they're strictly worse than other hits in the results
+				virtual bool do_requires_strictly_worse_hits() const = 0;
 
 			protected:
 				const ref_vec<std::ostream> & get_ostreams();
@@ -93,7 +95,7 @@ namespace cath {
 				                            const calc_hit_list &);
 				void finish_work();
 				bool wants_hits_that_fail_score_filter() const;
-				// bool requires_strictly_worse_hits() const;
+				bool requires_strictly_worse_hits() const;
 			};
 
 			/// \brief Getter for the ostreams to which results should be written
@@ -164,6 +166,11 @@ namespace cath {
 			/// \brief NVI pass-through to the virtual do_wants_hits_that_fail_score_filter() method
 			inline bool hits_processor::wants_hits_that_fail_score_filter() const {
 				return do_wants_hits_that_fail_score_filter();
+			}
+
+			/// \brief NVI pass-through to the virtual do_requires_strictly_worse_hits() method
+			inline bool hits_processor::requires_strictly_worse_hits() const {
+				return do_requires_strictly_worse_hits();
 			}
 
 		} // namespace detail

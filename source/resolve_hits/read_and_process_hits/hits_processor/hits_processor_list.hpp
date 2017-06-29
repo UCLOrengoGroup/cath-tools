@@ -85,6 +85,8 @@ namespace cath {
 
 				bool wants_hits_that_fail_score_filter() const;
 
+				bool requires_strictly_worse_hits() const;
+
 				void process_hits_for_query(const std::string &,
 				                            const crh_filter_spec &,
 				                            full_hit_list &);

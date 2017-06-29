@@ -107,6 +107,12 @@ bool hits_processor_list::wants_hits_that_fail_score_filter() const {
 	return any_of( *this, [] (const hits_processor &x) { return x.wants_hits_that_fail_score_filter(); } );
 }
 
+/// \brief Return whether any of the hits_processors in the list want to hear about hits that are strictly worse than
+///        than others in the same data
+bool hits_processor_list::requires_strictly_worse_hits() const {
+	return any_of( *this, [] (const hits_processor &x) { return x.requires_strictly_worse_hits(); } );
+}
+
 /// \brief Standard const begin() method, as part of making this a range over hits_processors
 ///
 /// Note that this pipes through boost::indirected_range so the range is

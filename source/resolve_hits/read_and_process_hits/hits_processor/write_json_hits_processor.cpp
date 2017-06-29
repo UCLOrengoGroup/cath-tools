@@ -75,8 +75,13 @@ void write_json_hits_processor::do_finish_work() {
 	}
 }
 
-/// \brief Return true: read_and_resolve_mgr needn't parse hits that fail the score filter or pass them to this processor
+/// \brief Return false: read_and_resolve_mgr needn't parse hits that fail the score filter or pass them to this processor
 bool write_json_hits_processor::do_wants_hits_that_fail_score_filter() const {
+	return false;
+}
+
+/// \brief Return false: read_and_resolve_mgr may strip out strictly worse hits from the data; they aren't required
+bool write_json_hits_processor::do_requires_strictly_worse_hits() const {
 	return false;
 }
 
