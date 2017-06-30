@@ -30,6 +30,7 @@
 #include "exception/runtime_error_exception.hpp"
 #include "resolve_hits/calc_hit.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
+#include "resolve_hits/detail/full_hit_prune_builder.hpp"
 #include "resolve_hits/options/spec/crh_filter_spec.hpp"
 #include "resolve_hits/options/spec/should_skip_query.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.hpp"
@@ -89,11 +90,11 @@ namespace cath {
 			/// \brief The filter spec to define how to filter the hits
 			crh_filter_spec the_filter_spec;
 
-			/// \brief A type alias for an unordered_map from the query_id string to the corresponding hits data
-			using str_hit_list_umap = std::unordered_map<std::string, full_hit_list>;
+			/// \brief A type alias for an unordered_map from the query_id string to a full_hit_prune_builder
+			using str_hit_builder_umap = std::unordered_map<std::string, detail::full_hit_prune_builder>;
 
 			/// \brief An unordered_map from the query_id string to the corresponding hits data
-			str_hit_list_umap hit_list_by_query_id;
+			str_hit_builder_umap hit_builder_by_query_id;
 
 			/// \brief Whether (the user guarantees that) the input hits data is presorted
 			///        to ensure all hits for a query_id are consecutive
@@ -112,7 +113,7 @@ namespace cath {
 			/// can be processed as soon as a result is found with a different query id
 			///
 			/// The hit data reference avoids many of the repeated calls to the hashing function when input_hits_are_grouped
-			str_hits_ref_pair_opt prev_query_id_and_hits_ref;
+			str_hits_builder_ref_pair_opt prev_query_id_and_hits_builder_ref;
 
 			/// \brief A record of the query_id associated with the latest asynchronous processing job
 			///        so that the thread can detect if it finds itself trying to add another hit to
@@ -131,7 +132,7 @@ namespace cath {
 			static void process_query_id(detail::hits_processor_list &,
 			                             const std::string &,
 			                             const crh_filter_spec &,
-			                             full_hit_list &);
+			                             detail::full_hit_prune_builder &);
 
 			void trigger_async_process_query_id(const std::string &);
 
@@ -187,12 +188,16 @@ namespace cath {
 		/// \brief Process the specified data
 		///
 		/// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
-		inline void read_and_process_mgr::process_query_id(detail::hits_processor_list &arg_processors,  ///< The hits_processors to use to process the hits
-		                                                   const std::string           &arg_query_id,    ///< The query ID
-		                                                   const crh_filter_spec       &arg_filter_spec, ///< The filter spec to define how to filter the hits
-		                                                   full_hit_list               &arg_full_hits    ///< The hits to process
+		inline void read_and_process_mgr::process_query_id(detail::hits_processor_list    &arg_processors,  ///< The hits_processors to use to process the hits
+		                                                   const std::string              &arg_query_id,    ///< The query ID
+		                                                   const crh_filter_spec          &arg_filter_spec, ///< The filter spec to define how to filter the hits
+		                                                   detail::full_hit_prune_builder &arg_hit_builder  ///< The hits to process
 		                                                   ) {
-			arg_processors.process_hits_for_query( arg_query_id, arg_filter_spec, arg_full_hits );
+			arg_processors.process_hits_for_query(
+				arg_query_id,
+				arg_filter_spec,
+				arg_hit_builder.get_built_hits()
+			);
 		}
 
 		/// \brief Trigger asynchronous processing of the data corresponding to the specified protein_query_id
@@ -212,7 +217,7 @@ namespace cath {
 				std::ref( processors ),
 				arg_query_id,
 				the_filter_spec,
-				std::ref( hit_list_by_query_id[ arg_query_id ] )
+				std::ref( hit_builder_by_query_id.find( arg_query_id )->second )
 			);
 		}
 
@@ -255,9 +260,9 @@ namespace cath {
 
 			// If input_hits_are_grouped and previous hits had a different query_id, trigger an async worker thread to
 			// process the hits associated with that previous query_id
-			if ( input_hits_are_grouped && prev_query_id_and_hits_ref && prev_query_id_and_hits_ref->first != temp_hashable_query_id ) {
-				trigger_async_process_query_id( prev_query_id_and_hits_ref->first );
-				prev_query_id_and_hits_ref = boost::none;
+			if ( input_hits_are_grouped && prev_query_id_and_hits_builder_ref && prev_query_id_and_hits_builder_ref->first != temp_hashable_query_id ) {
+				trigger_async_process_query_id( prev_query_id_and_hits_builder_ref->first );
+				prev_query_id_and_hits_builder_ref = boost::none;
 			}
 
 			// If this query_id matches to_be_erased_query_id then something's wrong
@@ -272,24 +277,41 @@ namespace cath {
 				));
 			}
 
+			const auto get_or_add_builder_fn = [&] (const std::string &x) -> detail::full_hit_prune_builder & {
+				const auto find_itr = hit_builder_by_query_id.find( x );
+				if ( find_itr != common::cend( hit_builder_by_query_id ) ) {
+					return find_itr->second;
+				}
+				return hit_builder_by_query_id.emplace(
+					x,
+					detail::full_hit_prune_builder{
+						processors.requires_strictly_worse_hits()
+							? seg_dupl_hit_policy::PRESERVE
+							: seg_dupl_hit_policy::PRUNE
+					}
+				).first->second;
+			};
+
 			// If this is the same query_id as the previous query, then just re-use the cached reference to that query's hits data
-			// otherwise, look it up in hit_list_by_query_id
-			auto &the_hits = prev_query_id_and_hits_ref ? prev_query_id_and_hits_ref->second
-			                                            : hit_list_by_query_id[ temp_hashable_query_id ];
+			// otherwise, look it up in hit_builder_by_query_id
+			auto &the_builder = prev_query_id_and_hits_builder_ref ? prev_query_id_and_hits_builder_ref->second
+			                                                       : get_or_add_builder_fn( temp_hashable_query_id );
+
+			// std::cerr << "arg_segments size is : " << arg_segments.size() << "\n";
 
 			// Add the new hit to the query's hits data
-			the_hits.emplace_back(
+			the_builder.add_hit( full_hit{
 				std::move( arg_segments ),
 				std::move( arg_label ),
 				arg_score,
 				arg_score_type,
 				std::move( arg_hit_extras )
-			);
+			} );
 
-			// If the input hits are presorted then ensure prev_query_id_and_hits_ref is up-to-date
+			// If the input hits are presorted then ensure prev_query_id_and_hits_builder_ref is up-to-date
 			// with this hit
-			if ( input_hits_are_grouped && ! prev_query_id_and_hits_ref ) {
-				prev_query_id_and_hits_ref = str_hits_ref_pair{ temp_hashable_query_id, the_hits };
+			if ( input_hits_are_grouped && ! prev_query_id_and_hits_builder_ref ) {
+				prev_query_id_and_hits_builder_ref = str_hits_builder_ref_pair{ temp_hashable_query_id, the_builder };
 			}
 		}
 
@@ -301,30 +323,29 @@ namespace cath {
 				wait_for_any_active_work();
 			}
 
-
 			// Get a sorted list of all the query IDs
 			const auto sorted_query_ids = common::sort_build<str_vec>(
-				hit_list_by_query_id | boost::adaptors::map_keys
+				hit_builder_by_query_id | boost::adaptors::map_keys
 			);
 
 			// Loop over the sorted query IDs
 			for (const auto &query_id : sorted_query_ids) {
 				// Grab the data for this query_id and process it
-				auto &query_id_full_hits = hit_list_by_query_id[ query_id ];
-				if ( ! query_id_full_hits.empty() ) {
+				auto &query_id_full_hits_builder = hit_builder_by_query_id.find( query_id )->second;
+				if ( ! query_id_full_hits_builder.empty() ) {
 					process_query_id(
 						processors,
 						query_id,
 						the_filter_spec,
-						query_id_full_hits
+						query_id_full_hits_builder
 					);
 				}
 			}
 
-			// Clear all data in hit_list_by_query_id
-			// and wipe prev_query_id_and_hits_ref and to_be_erased_query_id
-			hit_list_by_query_id.clear();
-			prev_query_id_and_hits_ref = boost::none;
+			// Clear all data in hit_builder_by_query_id
+			// and wipe prev_query_id_and_hits_builder_ref and to_be_erased_query_id
+			hit_builder_by_query_id.clear();
+			prev_query_id_and_hits_builder_ref = boost::none;
 			to_be_erased_query_id      = boost::none;
 
 			// Signal the hits_processor to finish all work

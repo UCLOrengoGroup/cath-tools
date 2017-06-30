@@ -89,7 +89,7 @@ namespace cath {
 
 				void process_hits_for_query(const std::string &,
 				                            const crh_filter_spec &,
-				                            full_hit_list &);
+				                            full_hit_list);
 				void finish_work();
 
 				const_iterator begin() const;
@@ -109,14 +109,32 @@ namespace cath {
 			/// This builds a calc_hit_list from the specified full_hit_list once and then passes it to each of the hits_processors
 			inline void hits_processor_list::process_hits_for_query(const std::string     &arg_query_id,    ///< The query_protein_id string
 			                                                        const crh_filter_spec &arg_filter_spec, ///< The filter spec to apply to hits
-			                                                        full_hit_list         &arg_full_hits    ///< The full hits to be processed
+			                                                        full_hit_list          arg_full_hits    ///< The full hits to be processed
 			                                                        ) {
-				const calc_hit_list the_calc_hit_list{ std::move( arg_full_hits ), get_score_spec(), get_segment_spec(), arg_filter_spec };
+				const calc_hit_list the_calc_hit_list{
+					std::move( arg_full_hits ),
+					get_score_spec(),
+					get_segment_spec(),
+					arg_filter_spec,
+					(
+						// If strictly worse hits were required in the full_hits, then it's worth pruning them out now,
+						// otherwise don't (because that'd just be wasted effort)
+						requires_strictly_worse_hits()
+							? seg_dupl_hit_policy::PRUNE
+							: seg_dupl_hit_policy::PRESERVE
+					)
+				};
 				arg_full_hits = full_hit_list{};
 				boost::for_each(
 					processors,
 					[&] (common::clone_ptr<hits_processor> &x) {
-						x->process_hits_for_query( arg_query_id, arg_filter_spec, get_score_spec(), get_segment_spec(), the_calc_hit_list );
+						x->process_hits_for_query(
+							arg_query_id,
+							arg_filter_spec,
+							get_score_spec(),
+							get_segment_spec(),
+							the_calc_hit_list
+						);
 					}
 				);
 			}

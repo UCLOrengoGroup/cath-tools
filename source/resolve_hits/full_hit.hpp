@@ -285,6 +285,35 @@ namespace cath {
 			);
 		}
 
+		/// \brief Whether the segments in the first specified full_hit never extend outside
+		///        those in the second specified full_hit
+		///
+		/// \relates full_hit
+		inline bool first_is_not_outside_second(const full_hit &arg_hit_lhs, ///< The first  full_hit to query
+		                                        const full_hit &arg_hit_rhs  ///< The second full_hit to query
+		                                        ) {
+			return first_is_not_outside_second( arg_hit_lhs.get_segments(), arg_hit_rhs.get_segments() );
+		}
+
+		/// \brief Whether either of the specified full_hit covers the other
+		///
+		/// \relates full_hit
+		inline bool one_covers_other(const full_hit &arg_hit_lhs, ///< The first  full_hit to query
+		                             const full_hit &arg_hit_rhs  ///< The second full_hit to query
+		                             ) {
+			return one_covers_other( arg_hit_lhs.get_segments(), arg_hit_rhs.get_segments() );
+		}
+
+		/// \brief Whether the segments in the first specified full_hit are shorter strictly
+		///        within those  in the second specified full_hit
+		///
+		/// \relates full_hit
+		inline bool first_is_shorter_and_within_second(const full_hit &arg_hit_lhs, ///< The first  full_hit to query
+		                                               const full_hit &arg_hit_rhs  ///< The second full_hit to query
+		                                               ) {
+			return first_is_shorter_and_within_second( arg_hit_lhs.get_segments(), arg_hit_rhs.get_segments() );
+		}
+
 	} // namespace rslv
 } // namespace cath
 

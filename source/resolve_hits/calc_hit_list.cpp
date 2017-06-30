@@ -155,16 +155,17 @@ calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const full_hit_list   
 ///
 ///
 /// \relates calc_hit_list
-calc_hit_vec cath::rslv::make_sorted_pruned_calc_hit_vec(const full_hit_list    &arg_full_hit_list, ///< The full_hit_list to convert
-                                                         const crh_score_spec   &arg_score_spec,    ///< The crh_score_spec to specify how the crh-scores are to be calculated from the full-hits
-                                                         const crh_segment_spec &arg_segment_spec,  ///< The crh_segment_spec to specify how the segments are to be handled before being put into the hits for calculation
-                                                         const crh_filter_spec  &arg_filter_spec    ///< The crh_filter_spec specifying how hits should be filtered
+calc_hit_vec cath::rslv::make_sorted_pruned_calc_hit_vec(const full_hit_list       &arg_full_hit_list, ///< The full_hit_list to convert
+                                                         const crh_score_spec      &arg_score_spec,    ///< The crh_score_spec to specify how the crh-scores are to be calculated from the full-hits
+                                                         const crh_segment_spec    &arg_segment_spec,  ///< The crh_segment_spec to specify how the segments are to be handled before being put into the hits for calculation
+                                                         const crh_filter_spec     &arg_filter_spec,   ///< The crh_filter_spec specifying how hits should be filtered
+                                                         const seg_dupl_hit_policy &arg_policy         ///< Whether the strictly-worse hits should be pruned
                                                          ) {
 	const trim_spec &overlap_trim_spec = arg_segment_spec.get_overlap_trim_spec();
 	const residx_t  &min_seg_length    = arg_segment_spec.get_min_seg_length();
 
 	bool failed_seg_length = false;
-	detail::calc_hit_prune_builder the_builder;
+	detail::calc_hit_prune_builder the_builder{ arg_policy };
 	the_builder.reserve( arg_full_hit_list.size() );
 
 	seq_seg_vec trimmed_segs;

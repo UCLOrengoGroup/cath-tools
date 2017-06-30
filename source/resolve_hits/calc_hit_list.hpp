@@ -32,6 +32,7 @@
 #include "resolve_hits/full_hit_list.hpp"
 #include "resolve_hits/options/spec/crh_filter_spec.hpp"
 #include "resolve_hits/score_functions.hpp"
+#include "resolve_hits/seg_dupl_hit_policy.hpp"
 
 #include <tuple>
 
@@ -104,7 +105,8 @@ namespace cath {
 			explicit calc_hit_list(full_hit_list,
 			                       const crh_score_spec &,
 			                       const crh_segment_spec &,
-			                       const crh_filter_spec & = make_accept_all_filter_spec());
+			                       const crh_filter_spec & = make_accept_all_filter_spec(),
+			                       const seg_dupl_hit_policy & = seg_dupl_hit_policy::PRESERVE);
 
 			size_t size() const;
 			bool empty() const;
@@ -126,7 +128,8 @@ namespace cath {
 		calc_hit_vec make_sorted_pruned_calc_hit_vec(const full_hit_list &,
 		                                             const crh_score_spec &,
 		                                             const crh_segment_spec &,
-		                                             const crh_filter_spec &);
+		                                             const crh_filter_spec &,
+		                                             const seg_dupl_hit_policy &);
 
 		void read_hit_list_from_file(read_and_process_mgr &,
 		                             const boost::filesystem::path &,
@@ -165,12 +168,19 @@ namespace cath {
 		}
 
 		/// \brief Ctor
-		inline calc_hit_list::calc_hit_list(full_hit_list           arg_full_hits,        ///< The full_hits from which these hits are to be drawn
-		                                    const crh_score_spec   &arg_score_spec,       ///< The crh_score_spec to specify how the crh-scores are to be calculated from the full-hits
-		                                    const crh_segment_spec &arg_crh_segment_spec, ///< The crh_segment_spec to specify how the segments are to be handled before being put into the hits for calculation
-		                                    const crh_filter_spec  &arg_filter_spec       ///< The crh_filter_spec specifying how hits should be filtered
+		inline calc_hit_list::calc_hit_list(full_hit_list              arg_full_hits,        ///< The full_hits from which these hits are to be drawn
+		                                    const crh_score_spec      &arg_score_spec,       ///< The crh_score_spec to specify how the crh-scores are to be calculated from the full-hits
+		                                    const crh_segment_spec    &arg_crh_segment_spec, ///< The crh_segment_spec to specify how the segments are to be handled before being put into the hits for calculation
+		                                    const crh_filter_spec     &arg_filter_spec,      ///< The crh_filter_spec specifying how hits should be filtered
+		                                    const seg_dupl_hit_policy &arg_policy            ///< Whether the strictly-worse hits should be pruned
 		                                    ) : full_hits { std::move( arg_full_hits ) },
-		                                        the_hits  { make_sorted_pruned_calc_hit_vec( full_hits, arg_score_spec, arg_crh_segment_spec, arg_filter_spec ) } {
+		                                        the_hits  { make_sorted_pruned_calc_hit_vec(
+		                                        	full_hits,
+		                                        	arg_score_spec,
+		                                        	arg_crh_segment_spec,
+		                                        	arg_filter_spec,
+		                                        	arg_policy
+		                                        ) } {
 			remove_redundant_hits( the_hits, full_hits );
 		}
 
