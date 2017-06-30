@@ -158,7 +158,7 @@ str_vec cath::file::get_alignment_html_names(const name_set_list &arg_name_sets 
 /// \relates name_set_list
 str_vec cath::file::get_multi_ssap_alignment_file_names(const name_set_list &arg_name_sets ///< The name_set_list to query
                                                         ) {
-	return get_names_from_acq( arg_name_sets );
+	return get_domain_or_specified_or_from_acq_names( arg_name_sets );
 }
 
 /// \brief Get a vector of the names from the specified name_sets suitable for use in building protein_lists
