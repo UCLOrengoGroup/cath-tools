@@ -9,6 +9,7 @@
 # use that instead of the sudo commands and then uncomment sudo: false
 #sudo: false
 language: cpp
+dist: precise
 
 notifications:
   slack: cathupdate:9wDvWdLmrVhxI4JcsOFlkxir
