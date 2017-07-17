@@ -114,6 +114,7 @@ Hit preference:
   --high-scores-preference <val> (=0)            Prefer higher scores to degree <val>
                                                  (<val> may be negative to reduce preference for higher scores; 0 leaves scores unaffected)
   --apply-cath-rules                             Apply rules specific to CATH-Gene3D during the parsing and processing
+  --naive-greedy                                 Use a naive, greedy approach to resolving (not recommended except for comparison)
 
 Hit filtering:
   --worst-permissible-evalue <evalue> (=0.001)   Ignore any hits with an evalue worse than <evalue>
