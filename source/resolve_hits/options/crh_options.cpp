@@ -25,6 +25,7 @@
 
 using namespace cath;
 using namespace cath::common;
+using namespace cath::opts;
 using namespace cath::rslv;
 
 using boost::none;
@@ -79,7 +80,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 
 	const variables_map &vm           = get_variables_map();
 	const auto          &input_format = get_crh_input_spec().get_input_format();
-	if ( contains( vm, crh_score_options_block::PO_APPLY_CATH_RULES ) && ! vm[ crh_score_options_block::PO_APPLY_CATH_RULES ].defaulted() ) {
+	if ( specifies_option( vm, crh_score_options_block::PO_APPLY_CATH_RULES ) ) {
 		if ( input_format != hits_input_format_tag::HMMER_DOMTBLOUT && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
 			return "The --"
 				+ crh_score_options_block::PO_APPLY_CATH_RULES
@@ -125,7 +126,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		const auto           &valid_formats = format_worse_conf.second;
 		const string         &option_name   = worst_perm_opt_name_of_score.at( score_type );
 
-		if ( contains( vm, option_name ) && ! vm[ option_name ].defaulted() ) {
+		if ( specifies_option( vm, option_name ) ) {
 			if ( ! contains( valid_formats, input_format ) ) {
 				return "Cannot set worst permissible "
 					+ to_string( score_type   )

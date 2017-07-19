@@ -148,7 +148,7 @@ void crh_input_options_block::do_add_hidden_options_to_description(options_descr
 str_opt crh_input_options_block::do_invalid_string(const variables_map &arg_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                    ) const {
 
-	if ( arg_variables_map.count( PO_MIN_GAP_LENGTH ) != 0 && ! arg_variables_map[ PO_MIN_GAP_LENGTH ].defaulted() ) {
+	if ( specifies_option( arg_variables_map, PO_MIN_GAP_LENGTH ) ) {
 		if ( the_spec.get_input_format() != hits_input_format_tag::HMMSEARCH_OUT ) {
 			return "Cannot specify the minimum gap length for input formats that don't involve parsing gaps out of an alignment"s;
 		}
