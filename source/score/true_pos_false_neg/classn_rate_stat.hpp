@@ -167,7 +167,7 @@ namespace cath {
 		/// \brief The rates for the x and y axes respectively of a ROC curve
 		using roc_rates              = std::pair<false_positive_rate, true_positive_rate>;
 
-		/// brief The rates for the x and y axes respectively of a precision-recall graph
+		/// \brief The rates for the x and y axes respectively of a precision-recall graph
 		using precision_recall_rates = std::pair<recall,              precision         >;
 	} // namespace score
 } // namespace cath

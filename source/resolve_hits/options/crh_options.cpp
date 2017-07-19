@@ -119,7 +119,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 	};
 	//
 
-	// For each such score type, check whether the relevant option has been specified and 
+	// For each such score type, check whether the relevant option has been specified and
 	// if so, validate that the input format is suitable or return an error string
 	for (const auto &format_worse_conf : formats_for_worst_perm_opt_of_score) {
 		const hit_score_type &score_type    = format_worse_conf.first;
