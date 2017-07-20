@@ -49,6 +49,7 @@ using namespace cath;
 using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::test;
+using namespace std::literals::string_literals;
 
 using boost::algorithm::contains;
 using boost::filesystem::path;
@@ -73,7 +74,7 @@ namespace cath {
 			///        and the fixture's i/o streams.
 			void execute_perform_resolve_hits(const str_vec &arg_arguments ///< The arguments to pass to perform_resolve_hits(), preceded by a pseudo-program-name
 			                                  ) {
-				const str_vec progname_vec = { "pseudo_program_name" };
+				const auto progname_vec = { "pseudo_program_name"s };
 				perform_resolve_hits(
 					copy_build<str_vec>( join(
 						progname_vec,
