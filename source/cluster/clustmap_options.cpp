@@ -20,17 +20,9 @@
 
 #include "clustmap_options.hpp"
 
-// #include "common/boost_addenda/program_options/variables_map_contains.hpp"
-// #include "resolve_hits/options/spec/crh_spec.hpp"
-
 using namespace cath;
 using namespace cath::clust;
-// using namespace cath::common;
 
-// using boost::program_options::variables_map;
-// using std::map;
-// using std::pair;
-// using std::vector;
 using boost::none;
 using boost::program_options::positional_options_description;
 using std::string;
@@ -173,12 +165,21 @@ When <input_file> is -, the input is read from standard input.)";
 /// \brief Get a string to append to the standard help
 string clustmap_options::do_get_help_suffix_string() const {
 	return R"(
-The cluster membership file should contain lines like:
+The input cluster-membership data should contain lines like:
 
 cluster_name domain_id
 
-...where domain_id is a sequence/protein name, which may optionally be suffixed with notation like  '/100-199,350-399' to indicate the domain's segments. The suffixes should be present for all of the domain IDs or for none of them. Domains should be unique and non-overlapping.
-)";
+...where domain_id is a sequence/protein name,)"
+	" optionally suffixed with the domain's segments in notation like '/100-199,350-399'."
+	" The suffixes should be present for all of the domain IDs or for none of them."
+	R"(One  Domains shouldn't overlap with others in the same cluster-membership data should be unique and non-overlapping.
+
+Input data needn't necessarily be grouped by cluster.
+
+NOTE: When mapping (ie using --)" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE + R"(, "
+	"the algorithm doesn't treat the two cluster membership files identically: "
+	"it doesn't care about unmapped domains in the new cluster but "
+	"does care about unmapped domains in the old cluster.)";
 }
 
 /// \brief Get an overview of the job that these options are for

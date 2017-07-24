@@ -18,18 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
 #include "cluster/domain_cluster_ids_by_seq.hpp"
-// #include "common/rapidjson_addenda/to_rapidjson_string.hpp"
 
-// using namespace cath::common;
 using namespace cath::seq;
-
-// using boost::lexical_cast;
-// using std::invalid_argument;
-// using std::string;
 
 BOOST_AUTO_TEST_SUITE(domain_cluster_ids_by_seq_test_suite)
 

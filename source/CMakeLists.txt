@@ -329,7 +329,6 @@ set(
 	NORMSOURCES_CLUSTER
 		cluster/cath_cluster_mapper.cpp
 		cluster/cluster_domains.cpp
-		cluster/cluster_list.cpp
 		cluster/clustmap_options.cpp
 		${NORMSOURCES_CLUSTER_DETAIL}
 		cluster/domain_cluster_ids.cpp

@@ -69,8 +69,8 @@ namespace cath {
 			constexpr const double & get_min_equiv_dom_ol() const;
 			constexpr const double & get_min_equiv_clust_ol() const;
 
-			constexpr clust_mapping_spec & set_min_equiv_dom_ol(const double &);
-			constexpr clust_mapping_spec & set_min_equiv_clust_ol(const double &);
+			clust_mapping_spec & set_min_equiv_dom_ol(const double &);
+			clust_mapping_spec & set_min_equiv_clust_ol(const double &);
 		};
 
 		/// \brief Check a fraction is within [0, 1] and is strictly greater than the specified minimum.
@@ -91,25 +91,25 @@ namespace cath {
 		}
 
 		/// \brief Getter for the minimum fraction overlap for domains TODOCUMENT FURTHER
-		constexpr const double & clust_mapping_spec::get_min_equiv_dom_ol() const {
+		inline constexpr const double & clust_mapping_spec::get_min_equiv_dom_ol() const {
 			return min_equiv_dom_ol;
 		}
 
 		/// \brief Getter for the minimum fraction overlap for clusters TODOCUMENT FURTHER
-		constexpr const double & clust_mapping_spec::get_min_equiv_clust_ol() const {
+		inline constexpr const double & clust_mapping_spec::get_min_equiv_clust_ol() const {
 			return min_equiv_clust_ol;
 		}
 
 		/// \brief Setter for the minimum fraction overlap for domains TODOCUMENT FURTHER
-		constexpr clust_mapping_spec & clust_mapping_spec::set_min_equiv_dom_ol(const double &arg_min_equiv_dom_ol ///< The minimum fraction overlap for domains TODOCUMENT FURTHER
-		                                                                        ) {
+		inline clust_mapping_spec & clust_mapping_spec::set_min_equiv_dom_ol(const double &arg_min_equiv_dom_ol ///< The minimum fraction overlap for domains TODOCUMENT FURTHER
+		                                                                     ) {
 			min_equiv_dom_ol = check_frac_against_strict_min_and_return( arg_min_equiv_dom_ol, MIN_MIN_EQUIV_DOM_OL );
 			return *this;
 		}
 
 		/// \brief Setter for the minimum fraction overlap for clusters TODOCUMENT FURTHER
-		constexpr clust_mapping_spec & clust_mapping_spec::set_min_equiv_clust_ol(const double &arg_min_equiv_clust_ol ///< The minimum fraction overlap for clusters TODOCUMENT FURTHER
-		                                                                          ) {
+		inline clust_mapping_spec & clust_mapping_spec::set_min_equiv_clust_ol(const double &arg_min_equiv_clust_ol ///< The minimum fraction overlap for clusters TODOCUMENT FURTHER
+		                                                                       ) {
 			min_equiv_clust_ol = check_frac_against_strict_min_and_return( arg_min_equiv_clust_ol, MIN_MIN_EQUIV_CLUST_OL );
 			return *this;
 		}

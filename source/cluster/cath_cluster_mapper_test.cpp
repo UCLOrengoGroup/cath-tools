@@ -113,6 +113,19 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
+/// \TODO: Tests to add:
+///  * Gives helpful error on both --map-from-clustmemb-file and --read-batches-from-input specified
+///  * Allows any string for input data cluster names
+///  * Rejects --map-from-clustmemb-file cluster names that aren't positive-integers
+///  * Overlapping domains are rejected
+///  * Exact duplicates are warned *once*.
+///  * Duplicates spotted if specifying in different ways (ie /1-2,3-4 vs 1-2_3-4)
+///  * Accepts either overlap value being 50 or 100
+///  * Rejects overlap value < 50 or > 100
+///  * Enforce that both overlap values must be ≥ 50 and ≤ 100 but can be either 50 or 100.
+///  * Errors if no input option specified
+///  * Errors on attempt to specify --summary when not performing mappings
+
 BOOST_FIXTURE_TEST_SUITE(cath_cluster_mapper_test_suite, cluster_mapper_test_suite_fixture)
 
 // BOOST_AUTO_TEST_CASE(fails_on_attempt_to_mix_deprecated_options_with_new) {

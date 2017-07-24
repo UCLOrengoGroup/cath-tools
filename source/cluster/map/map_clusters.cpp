@@ -20,12 +20,8 @@
 
 #include "map_clusters.hpp"
 
-#include <boost/format.hpp> // ***** TEMPORARY *****
-
-#include <boost/algorithm/string/join.hpp> // ***** TEMPORARY *****
 #include <boost/optional.hpp>
-#include <boost/range/adaptor/filtered.hpp> // ***** TEMPORARY *****
-#include <boost/range/adaptor/transformed.hpp> // ***** TEMPORARY *****
+#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/stable_partition.hpp>
 #include <boost/range/irange.hpp>
 
@@ -42,11 +38,8 @@ using namespace cath::clust;
 using namespace cath::common;
 using namespace cath::seq;
 
-using boost::adaptors::filtered; // ***** TEMPORARY *****
-using boost::adaptors::transformed; // ***** TEMPORARY *****
-using boost::algorithm::join; // ***** TEMPORARY *****
+using boost::adaptors::filtered;
 using boost::find_if;
-using boost::format; // ***** TEMPORARY *****
 using boost::irange;
 using boost::none;
 using boost::range::stable_partition;
@@ -144,32 +137,6 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 				}
 			}
 
-			// if ( get_num_clusters( arg_new_clusters  ) > 4 && get_num_clusters( arg_new_clusters  ) < 27
-			//   && get_num_clusters( *arg_old_clusters ) > 4 && get_num_clusters( *arg_old_clusters ) < 27 ) {
-			// 	std::cerr << "For old cluster ";
-			// 	std::cerr << ( format( "%2d" ) % old_cluster_idx ).str();
-			// 	std::cerr << " [";
-			// 	std::cerr << ( format( "%3d" ) % old_cluster.size() ).str();
-			// 	std::cerr << "] : ";
-			// 	std::cerr << join(
-			// 		irange( 0_z, num_new_clusters )
-			// 			| transformed( [&] (const size_t &x) {
-			// 				using std::to_string;
-			// 				return
-			// 					(
-			// 						( new_clust_equivs[ x ] > 0 )
-			// 						? ( format( "%2d" ) % new_clust_equivs[ x ] ).str()
-			// 						: "  "
-			// 					)
-			// 					+ " ["
-			// 					+ ( format( "%3d" ) % get_size_of_cluster_of_id( arg_new_clusters, x ) ).str()
-			// 					+ "]";
-			// 			} ),
-			// 		", "
-			// 	);
-			// 	std::cerr << "\n";
-			// }
-
 			for (const size_t &new_cluster_idx : irange( 0_z, num_new_clusters ) ) {
 				if ( new_clust_equivs[ new_cluster_idx ] > 0 ) {
 					chosen_maps.emplace_back(
@@ -180,49 +147,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 				}
 			}
 
-			// const double num_in_old_cluster = debug_numeric_cast<double>( old_cluster.size() );
-			// for (const size_t &new_cluster_idx : irange( 0_z, num_new_clusters ) ) {
-			// 	const double num_mapped         = debug_numeric_cast<double>( new_clust_equivs[ new_cluster_idx ] );
-			// 	const double num_in_new_cluster = debug_numeric_cast<double>( get_size_of_cluster_of_id( arg_new_clusters, new_cluster_idx ) );
-			// 	if ( num_mapped > min_equiv_clust_ol * num_in_old_cluster &&  num_mapped > min_equiv_clust_ol * num_in_new_cluster ) {
-			// 		old_clust_id_of_new_clust_id[ new_cluster_idx ] = old_cluster_idx;
-			// 		break;
-			// 	}
-			// }
-
-			// /// \brief The domain_cluster_ids of the domains on the sequence
-			// domain_cluster_ids dom_cluster_ids;
-
-			// For each old cluster member:
-			//   Search in the unordered_map to find a domain equiv
-			//   If a domain equivalent is found:
-			//     Find equivalent domain's cluster
-			//     Increment that cluster's counter of domain equivalents
-			//     If the counter has reached the target, add the cluster mapping to the list and move to the next cluster
-
-			// arg_mapping_spec;
-			// const size_t &target_equivalences = old_cluster;
-			// *arg_old_clusters;
 		}
-
-		// std::cerr
-		// 	<< "Num mapped in news : "
-		// 	<< join(
-		// 		num_mapped_by_new_cluster
-		// 			| transformed( [] (const size_t &x) { using std::to_string; return to_string( x ); } ),
-		// 		", "
-		// 	)
-		// 	<< "\n";
-		// std::cerr
-		// 	<< "Num mapped in olds : "
-		// 	<< join(
-		// 		num_mapped_by_old_cluster
-		// 			| transformed( [] (const size_t &x) { using std::to_string; return to_string( x ); } ),
-		// 		", "
-		// 	)
-		// 	<< "\n";
-
-		// std::cerr << "\n\n";
 
 		const auto partition_point_itr = stable_partition(
 			chosen_maps,
@@ -250,100 +175,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 		}
 		chosen_maps.erase( partition_point_itr, common::cend( chosen_maps ) );
 
-		// for (const potential_map &pot_map : chosen_maps) {
-		// 	const size_t &old_cluster_idx   = pot_map.old_cluster_idx;
-		// 	const size_t &new_cluster_idx   = pot_map.new_cluster_idx;
-
-		// 	// const size_t &num_in_new        = get_size_of_cluster_of_id( arg_new_clusters, new_cluster_idx );
-		// 	const size_t &num_in_old        = ( *arg_old_clusters ) [ old_cluster_idx ].size();
-		// 	const size_t &num_mapped        = pot_map.num_mapped;
-		// 	const size_t &num_mapped_in_new = num_mapped_by_new_cluster[ new_cluster_idx ];
-		// 	// const size_t &num_mapped_in_old = num_mapped_by_old_cluster[ old_cluster_idx ];
-
-		// 	const double frac_of_old        = debug_numeric_cast<double>( num_mapped ) / debug_numeric_cast<double>( num_in_old        );
-		// 	const double frac_of_mapped_new = debug_numeric_cast<double>( num_mapped ) / debug_numeric_cast<double>( num_mapped_in_new );
-
-		// 	if ( frac_of_old > min_equiv_clust_ol && frac_of_mapped_new > 0.5 ) {
-		// 		old_clust_id_of_new_clust_id[ new_cluster_idx ] = old_cluster_idx;
-		// 	}
-
-		// 	// std::cerr
-		// 	// 	<< "Mapped "
-		// 	// 	<< ( format( "%3d" ) % num_mapped        ).str()
-		// 	// 	<< " between old_"
-		// 	// 	<< ( format( "%1d" ) % old_cluster_idx   ).str()
-		// 	// 	<< ": "
-		// 	// 	<< ( format( "%3d" ) % num_in_old        ).str()
-		// 	// 	<< " ["
-		// 	// 	<< ( format( "%3d" ) % num_mapped_in_old ).str()
-		// 	// 	<< " mapped] and new_"
-		// 	// 	<< ( format( "%1d" ) % new_cluster_idx   ).str()
-		// 	// 	<< ": "
-		// 	// 	<< ( format( "%3d" ) % num_in_new        ).str()
-		// 	// 	<< " ["
-		// 	// 	<< ( format( "%3d" ) % num_mapped_in_new ).str()
-		// 	// 	<< " mapped]" << "\t"
-		// 	// 	<< ( format( "%3.1f" ) % ( static_cast<double>( num_mapped ) * 100.0 / static_cast<double>( num_in_old        ) ) ).str()
-		// 	// 	<< R"(%)" << "\t"
-		// 	// 	<< ( format( "%3.1f" ) % ( static_cast<double>( num_mapped ) * 100.0 / static_cast<double>( num_mapped_in_old ) ) ).str()
-		// 	// 	<< R"(%)" << "\t"
-		// 	// 	<< ( format( "%3.1f" ) % ( static_cast<double>( num_mapped ) * 100.0 / static_cast<double>( num_in_new        ) ) ).str()
-		// 	// 	<< R"(%)" << "\t"
-		// 	// 	<< ( format( "%3.1f" ) % ( static_cast<double>( num_mapped ) * 100.0 / static_cast<double>( num_mapped_in_new ) ) ).str()
-		// 	// 	<< R"(%)"
-		// 	// 	<< "\n";
-		// }
-		// // std::cerr << "\n\n";
 	}
-
-	// std::cerr << join(
-	// 	potential_maps
-	// 		| transformed( [] (const potential_map &x) {
-	// 			return "Alsoran : "
-	// 				+ std::to_string( x.old_cluster_idx )
-	// 				+ " -> "
-	// 				+ std::to_string( x.new_cluster_idx );
-	// 		} ),
-	// 	"\n"
-	// ) << "\n\n";
-
-	// std::cerr << join(
-	// 	chosen_maps
-	// 		| transformed( [] (const potential_map &x) {
-	// 			return "Chosen  : "
-	// 				+ std::to_string( x.old_cluster_idx )
-	// 				+ " -> "
-	// 				+ std::to_string( x.new_cluster_idx );
-	// 		} ),
-	// 	"\n"
-	// ) << "\n\n";
-
-	// for (const potential_map &x : potential_maps) {
-	// 	std::cerr "Alsoran : "
-	// 			<< x.old_cluster_idx
-	// 			<< " -> "
-	// 			<< x.new_cluster_idx
-	// 			<< "\n";
-	// }
-	// std::cerr << "\n":
-	// for (const potential_map &x : chosen_maps) {
-	// 	std::cerr "Chosen  : "
-	// 			<< x.old_cluster_idx
-	// 			<< " -> "
-	// 			<< x.new_cluster_idx
-	// 			<< "\n";
-	// }
-
-
-	// for (const size_t &mapping_idx : irange( 0_z, old_clust_id_of_new_clust_id.size() ) ) {
-	// 	if ( old_clust_id_of_new_clust_id[ mapping_idx ] ) {
-	// 		std::cerr
-	// 			<< ( * ( old_clust_id_of_new_clust_id[ mapping_idx ] ) )
-	// 			<< " -> "
-	// 			<< mapping_idx
-	// 			<< "\n";
-	// 	}
-	// }
 
 	deque<bool> mapped_new_clusters( num_new_clusters, false );
 	for (const potential_map &x : chosen_maps) {
@@ -362,30 +194,6 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 			);
 		}
 	);
-
-	// const size_t num_unmapped = unmapped_new_cluster_indices.size();
-	// const size_t num_mapped   = num_new_clusters - num_unmapped;
-	// std::cerr
-	// 	<< "Mapped "
-	// 	<< num_mapped
-	// 	<< " "
-	// 	<< ( ( 100.0 * static_cast<double>( num_mapped ) ) / static_cast<double>( num_new_clusters ) )
-	// 	<< " "
-	// 	<< num_new_clusters
-	// 	<< "\n";
-
-
-	// std::cerr << "Sorted unmapped new clusters : " << join(
-	// 	unmapped_new_cluster_indices
-	// 		| transformed( [] (const size_t &x) {
-	// 			using std::to_string;
-	// 			return to_string( x );
-	// 		} ),
-	// 	", "
-	// ) << "\n";
-
-	// sort_any_any_unmapped_new_clusters();
-	// give_unmapped_new_clusters_a_name()
 
 	return {
 		chosen_maps,

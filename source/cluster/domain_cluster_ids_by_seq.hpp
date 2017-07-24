@@ -27,8 +27,6 @@
 #include "cluster/domain_cluster_ids.hpp"
 #include "common/container/id_of_string.hpp"
 
-// #include <string>
-
 namespace cath {
 	namespace clust {
 

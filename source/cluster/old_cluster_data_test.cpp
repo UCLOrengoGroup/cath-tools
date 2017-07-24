@@ -22,14 +22,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "cluster/old_cluster_data.hpp"
-// #include "common/rapidjson_addenda/to_rapidjson_string.hpp"
-
-// using namespace cath::common;
 using namespace cath::seq;
-
-// using boost::lexical_cast;
-// using std::invalid_argument;
-// using std::string;
 
 BOOST_AUTO_TEST_SUITE(old_cluster_data_test_suite)
 
