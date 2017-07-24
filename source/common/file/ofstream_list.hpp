@@ -28,6 +28,7 @@
 #include "common/type_aliases.hpp"
 
 #include <fstream>
+#include <functional>
 
 namespace cath {
 	namespace common {
@@ -37,6 +38,8 @@ namespace cath {
 
 		/// \brief A list of ostreams, with support for populating from paths, which get automatically opened,
 		///        and a special flag which indicates output to the ostream optionally specified on construction
+		///
+		/// Note: this has substantial overlap with path_or_istream and could perhaps share a common implementation
 		class ofstream_list {
 		private:
 			/// \brief An optional special ostream to which output can be sent (usually stdout)

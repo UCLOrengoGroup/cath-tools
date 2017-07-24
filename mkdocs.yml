@@ -4,6 +4,7 @@ theme: readthedocs
 pages:
 - Home                  : index.md
 - Tools :
+  - cath-map-clusters   : tools/cath-map-clusters.md
   - cath-resolve-hits   : tools/cath-resolve-hits.md
   - cath-ssap           : tools/cath-ssap.md
   - cath-superpose      : tools/cath-superpose.md

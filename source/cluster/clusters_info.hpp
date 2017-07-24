@@ -55,6 +55,8 @@ namespace cath {
 			size_t get_num_clusters() const;
 			const cluster_info & get_info_of_cluster_of_id(const cluster_id_t &) const;
 			const std::string & get_name_of_cluster_of_id(const cluster_id_t &) const;
+
+			const cluster_name_ider & get_ider() const;
 		};
 
 		/// \brief Add a cluster with the specified name
@@ -102,6 +104,11 @@ namespace cath {
 		inline const std::string & clusters_info::get_name_of_cluster_of_id(const cluster_id_t &arg_cluster_id ///< The ID of the cluster whose name should be retrieved
 		                                                                    ) const {
 			return ider.get_name_of_id( arg_cluster_id );
+		}
+
+		/// \brief Get the cluster_name_ider used to ID the clusters
+		inline const cluster_name_ider & clusters_info::get_ider() const {
+			return ider;
 		}
 
 		/// \brief Update the info for the specified cluster to account for a new domain with the specified name and

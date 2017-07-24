@@ -30,7 +30,7 @@ namespace cath {
 	namespace clust {
 
 		/// \brief Store a list of cluster_domains entries, one for each cluster
-		class cluster_list {
+		class cluster_list final {
 		private:
 			/// \brief The vector of cluster_domains entries, one for each cluster
 			cluster_domains_vec cluster_seq_domains;

@@ -24,7 +24,10 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/irange.hpp>
 
+using namespace cath::clust;
+
 using boost::adaptors::transformed;
+using boost::optional;
 using boost::algorithm::join;
 using boost::irange;
 
@@ -54,4 +57,26 @@ std::string cath::clust::to_string(const old_cluster_data &arg_old_cluster_data 
 			", "
 		)
 		+ " } ]";
+}
+
+/// \brief Get the largest number if the names are all numeric or none otherwise
+///
+/// \relates old_cluster_data
+optional<ptrdiff_t> cath::clust::largest_number_if_names_all_numeric_integers(const old_cluster_data &arg_old_cluster_data ///< The old_cluster_data to describe
+                                                                              ) {
+	return largest_number_if_names_all_numeric_integers(
+		arg_old_cluster_data.get_clust_info().get_ider()
+	);
+}
+
+/// \brief Get the largest number if the names are all numeric
+///        or arg_value if no old_cluster_data is present
+///        or none if the cluster names aren't all numeric
+///
+/// \relates old_cluster_data
+optional<ptrdiff_t> cath::clust::largest_number_if_names_all_numeric_integers_of_val_if_none(const old_cluster_data_opt &arg_old_cluster_data, ///< The old_cluster_data to describe
+                                                                                             const ptrdiff_t            &arg_value             ///< The value to return if no old_cluster_data is present
+                                                                                             ) {
+	return arg_old_cluster_data ? largest_number_if_names_all_numeric_integers( *arg_old_cluster_data )
+	                            : arg_value;
 }

@@ -30,7 +30,7 @@ namespace cath {
 	namespace clust {
 
 		/// \brief The segments of a domain (or none if the domain covers the full entry (sequence)) and the domain's cluster ID
-		struct domain_cluster_id {
+		struct domain_cluster_id final {
 
 			/// \brief The segments of a domain (or none if the domain covers the full entry (sequence))
 			seq::seq_seg_run_opt segments;
@@ -51,7 +51,7 @@ namespace cath {
 		/// \TODO Consider making this enforce:
 		///   * No overlapping segments
 		///   * Keep in some sort of order?
-		class domain_cluster_ids {
+		class domain_cluster_ids final {
 		private:
 			/// \brief The vector of domain_cluster_id objects
 			std::vector<domain_cluster_id> dom_clust_ids;

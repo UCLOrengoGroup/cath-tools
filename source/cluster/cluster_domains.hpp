@@ -32,7 +32,7 @@ namespace cath {
 		namespace detail {
 
 			/// \brief Store a seq_id and the corresponding domain_cluster_ids
-			struct seq_id_and_domain_cluster_ids_pair {
+			struct seq_id_and_domain_cluster_ids_pair final {
 				/// \brief The seq_id of a sequence
 				common::id_of_string::id_type seq_id;
 
@@ -46,7 +46,7 @@ namespace cath {
 
 
 		/// \brief Store a (sparse, sorted) list of seq_id_and_domain_cluster_ids_pair entries, sorted
-		class cluster_domains {
+		class cluster_domains final {
 		private:
 			/// \brief The sparse, sorted list of seq_id_and_domain_cluster_ids_pair entries
 			///
@@ -64,8 +64,10 @@ namespace cath {
 			                             seq::seq_seg_run_opt,
 			                             const cluster_id_t &);
 
-			const_iterator begin() const;
+			bool empty() const;
+			size_t size() const;
 
+			const_iterator begin() const;
 			const_iterator end() const;
 		};
 
@@ -93,6 +95,16 @@ namespace cath {
 			// Add the domain and return *this
 			emplace_itr->dom_cluster_ids.emplace_back( arg_segments, arg_cluster_id );
 			return *this;
+		}
+
+		/// \brief Return whether this is empty
+		inline bool cluster_domains::empty() const {
+			return seq_domains.empty();
+		}
+
+		/// \brief Return the number of seq_id_and_domain_cluster_ids_pairs
+		inline size_t cluster_domains::size() const {
+			return seq_domains.size();
 		}
 
 		/// \brief Standard const begin() method, as part of making this into a range over the seq_id_and_domain_cluster_ids_pairs

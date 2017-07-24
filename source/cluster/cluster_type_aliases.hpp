@@ -30,6 +30,7 @@ namespace cath { namespace clust { class cluster_domains; } }
 namespace cath { namespace clust { class cluster_info; } }
 namespace cath { namespace clust { class cluster_list; } }
 namespace cath { namespace clust { class old_cluster_data; } }
+namespace cath { namespace clust { namespace detail { class mapping_job; } } }
 namespace cath { namespace clust { namespace detail { struct seq_id_and_domain_cluster_ids_pair; } } }
 namespace cath { namespace clust { struct domain_cluster_id; } }
 
@@ -55,6 +56,9 @@ namespace cath {
 		using old_cluster_data_opt     = boost::optional<old_cluster_data>;
 
 		namespace detail {
+
+			/// \brief Type alias for a vector of mapping_job objects
+			using mapping_job_vec = std::vector<mapping_job>;
 
 			/// \brief Type alias for a vector of seq_id_and_domain_cluster_ids_pair objects
 			using seq_id_and_domain_cluster_ids_pair_vec      = std::vector<seq_id_and_domain_cluster_ids_pair>;

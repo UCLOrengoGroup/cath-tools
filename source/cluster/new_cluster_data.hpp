@@ -21,8 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CLUSTER_NEW_CLUSTER_DATA_H
 #define _CATH_TOOLS_SOURCE_CLUSTER_NEW_CLUSTER_DATA_H
 
-#include "cluster/domain_cluster_ids_by_seq.hpp"
+#include <boost/range/adaptor/transformed.hpp>
+
 #include "cluster/clusters_info.hpp"
+#include "cluster/domain_cluster_ids_by_seq.hpp"
+#include "common/boost_addenda/range/accumulate_proj.hpp"
 
 namespace cath {
 	namespace clust {
@@ -114,6 +117,19 @@ namespace cath {
 		                                        const cluster_id_t     &arg_cluster_id        ///< The ID of the cluster of interest
 		                                        ) {
 			return get_info_of_cluster_of_id( arg_new_cluster_data, arg_cluster_id ).get_size();
+		}
+
+		/// \brief Get the total number of entries in the clusters of the specified new_cluster_data
+		///
+		/// \relates new_cluster_data
+		inline size_t get_num_entries(const new_cluster_data &arg_new_cluster_data ///< The new_cluster_data to query
+		                              ) {
+			return common::accumulate_proj(
+				boost::irange( 0_z, get_num_clusters( arg_new_cluster_data ) ),
+				0_z,
+				std::plus<>{},
+				[&] (const size_t &x) { return get_size_of_cluster_of_id( arg_new_cluster_data, x ); }
+			);
 		}
 
 		/// \brief Get the name of the cluster with the specified ID in the specified new_cluster_data

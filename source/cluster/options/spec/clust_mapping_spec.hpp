@@ -21,12 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CLUSTER_OPTIONS_SPEC_CLUST_MAPPING_SPEC_H
 #define _CATH_TOOLS_SOURCE_CLUSTER_OPTIONS_SPEC_CLUST_MAPPING_SPEC_H
 
+#include <boost/operators.hpp>
+
 #include <stdexcept>
 
 namespace cath {
 	namespace clust {
 
-		/// \brief Specify the specification for mapping clusters
+		/// \brief Specify the details of how to clusters should be mapped
 		///
 		/// Note that this stores as absolute fractions, not as percentages
 		///
@@ -34,7 +36,7 @@ namespace cath {
 		///
 		///      --renumber-new-start-num             For --map-from-member-file, renumber unmapped clusters starting from <num>
 		///                                           (rather than from one above the highest number in the <file>))
-		class clust_mapping_spec final {
+		class clust_mapping_spec final : boost::equality_comparable<clust_mapping_spec> {
 		private:
 			/// \brief The minimum fraction overlap for domains TODOCUMENT FURTHER
 			double min_equiv_dom_ol   = DEFAULT_MIN_EQUIV_DOM_OL;
@@ -110,6 +112,19 @@ namespace cath {
 		                                                                          ) {
 			min_equiv_clust_ol = check_frac_against_strict_min_and_return( arg_min_equiv_clust_ol, MIN_MIN_EQUIV_CLUST_OL );
 			return *this;
+		}
+
+		/// \brief Return whether the two specified clust_mapping_specs are identical
+		///
+		/// \relates clust_mapping_spec
+		inline constexpr bool operator==(const clust_mapping_spec &arg_lhs, ///< The first  clust_mapping_spec to compare
+		                                 const clust_mapping_spec &arg_rhs  ///< The second clust_mapping_spec to compare
+		                                 ) {
+			return (
+				arg_lhs.get_min_equiv_dom_ol()   == arg_rhs.get_min_equiv_dom_ol()
+				&&
+				arg_lhs.get_min_equiv_clust_ol() == arg_rhs.get_min_equiv_clust_ol()
+			);
 		}
 
 	} // namespace clust

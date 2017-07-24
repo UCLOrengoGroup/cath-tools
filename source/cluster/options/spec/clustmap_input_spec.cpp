@@ -1,5 +1,5 @@
-/// \map
-/// \brief The map_clusters class header
+/// \file
+/// \brief The clustmap_input_spec class definitions
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,26 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CLUSTER_MAP_MAP_CLUSTERS_H
-#define _CATH_TOOLS_SOURCE_CLUSTER_MAP_MAP_CLUSTERS_H
+#include "clustmap_input_spec.hpp"
 
-#include "cluster/cluster_type_aliases.hpp"
+using namespace cath::clust;
 
-#include <iostream>
-#include <string>
-
-namespace cath { namespace clust { class clust_mapping_spec; } }
-namespace cath { namespace clust { class new_cluster_data; } }
-namespace cath { namespace clust { struct map_results; } }
-
-namespace cath {
-	namespace clust {
-
-		map_results map_clusters(const old_cluster_data_opt &,
-		                         const new_cluster_data &,
-		                         const clust_mapping_spec &);
-
-	} // namespace clust
-} // namespace cath
-
-#endif
+constexpr bool clustmap_input_spec::DEFAULT_READ_BATCHES_FROM_INPUT;

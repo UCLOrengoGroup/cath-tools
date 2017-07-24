@@ -1,5 +1,5 @@
-/// \map
-/// \brief The map_clusters class header
+/// \file
+/// \brief The mapping_job test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,26 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CLUSTER_MAP_MAP_CLUSTERS_H
-#define _CATH_TOOLS_SOURCE_CLUSTER_MAP_MAP_CLUSTERS_H
+#include <boost/test/auto_unit_test.hpp>
 
-#include "cluster/cluster_type_aliases.hpp"
+#include "cluster/detail/mapping_job.hpp"
 
-#include <iostream>
-#include <string>
+BOOST_AUTO_TEST_SUITE(mapping_job_test_suite)
 
-namespace cath { namespace clust { class clust_mapping_spec; } }
-namespace cath { namespace clust { class new_cluster_data; } }
-namespace cath { namespace clust { struct map_results; } }
+BOOST_AUTO_TEST_CASE(basic) {
+	BOOST_CHECK( true );
+}
 
-namespace cath {
-	namespace clust {
-
-		map_results map_clusters(const old_cluster_data_opt &,
-		                         const new_cluster_data &,
-		                         const clust_mapping_spec &);
-
-	} // namespace clust
-} // namespace cath
-
-#endif
+BOOST_AUTO_TEST_SUITE_END()

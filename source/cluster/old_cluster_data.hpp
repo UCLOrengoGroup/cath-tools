@@ -21,8 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CLUSTER_OLD_CLUSTER_DATA_H
 #define _CATH_TOOLS_SOURCE_CLUSTER_OLD_CLUSTER_DATA_H
 
-#include "cluster/clusters_info.hpp"
 #include "cluster/cluster_list.hpp"
+#include "cluster/clusters_info.hpp"
+#include "common/boost_addenda/range/accumulate_proj.hpp"
 #include "common/container/id_of_string.hpp"
 
 #include <functional>
@@ -160,6 +161,28 @@ namespace cath {
 			return arg_old_cluster_data.get_clust_info().get_info_of_cluster_of_id( arg_cluster_id );
 		}
 
+		/// \brief Get the size of the cluster with the specified ID from the specified old_cluster_data
+		///
+		/// \relates old_cluster_data
+		inline size_t get_size_of_cluster_of_id(const old_cluster_data &arg_old_cluster_data, ///< The old_cluster_data to query
+		                                        const cluster_id_t     &arg_cluster_id        ///< The ID of the cluster of interest
+		                                        ) {
+			return get_info_of_cluster_of_id( arg_old_cluster_data, arg_cluster_id ).get_size();
+		}
+
+		/// \brief Get the total number of entries in the clusters of the specified old_cluster_data
+		///
+		/// \relates old_cluster_data
+		inline size_t get_num_entries(const old_cluster_data &arg_old_cluster_data ///< The old_cluster_data to query
+		                              ) {
+			return common::accumulate_proj(
+				boost::irange( 0_z, get_num_clusters( arg_old_cluster_data ) ),
+				0_z,
+				std::plus<>{},
+				[&] (const size_t &x) { return get_size_of_cluster_of_id( arg_old_cluster_data, x ); }
+			);
+		}
+
 		/// \brief Get the name of the cluster with the specified ID in the specified old_cluster_data
 		///
 		/// \relates old_cluster_data
@@ -170,6 +193,9 @@ namespace cath {
 		}
 
 		std::string to_string(const old_cluster_data &);
+		boost::optional<ptrdiff_t> largest_number_if_names_all_numeric_integers(const old_cluster_data &);
+		boost::optional<ptrdiff_t> largest_number_if_names_all_numeric_integers_of_val_if_none(const old_cluster_data_opt &,
+		                                                                                       const ptrdiff_t &);
 
 	} // namespace clust
 } // namespace cath

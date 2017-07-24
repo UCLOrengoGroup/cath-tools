@@ -1,5 +1,5 @@
-/// \map
-/// \brief The map_clusters class header
+/// \file
+/// \brief The map_clusters_fixture header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,26 +18,34 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CLUSTER_MAP_MAP_CLUSTERS_H
-#define _CATH_TOOLS_SOURCE_CLUSTER_MAP_MAP_CLUSTERS_H
+#ifndef _CATH_TOOLS_SOURCE_CLUSTER_TEST_MAP_CLUSTERS_FIXTURE_H
+#define _CATH_TOOLS_SOURCE_CLUSTER_TEST_MAP_CLUSTERS_FIXTURE_H
 
-#include "cluster/cluster_type_aliases.hpp"
+#include <boost/filesystem/path.hpp>
 
-#include <iostream>
 #include <string>
 
-namespace cath { namespace clust { class clust_mapping_spec; } }
-namespace cath { namespace clust { class new_cluster_data; } }
-namespace cath { namespace clust { struct map_results; } }
-
 namespace cath {
-	namespace clust {
+	namespace test {
 
-		map_results map_clusters(const old_cluster_data_opt &,
-		                         const new_cluster_data &,
-		                         const clust_mapping_spec &);
+		/// \brief Store data that can be reused for multiple map_clusters tests
+		class map_clusters_fixture {
+		protected:
+			static boost::filesystem::path map_clusters_test_data_dir();
 
-	} // namespace clust
+			static boost::filesystem::path eg_input_file();
+			static boost::filesystem::path eg_input_mapfrom_file();
+			static boost::filesystem::path eg_mapfrom_result_file();
+			static boost::filesystem::path eg_renumber_only_result_file();
+
+			static std::string eg_input_str();
+			static std::string eg_input_mapfrom_str();
+			static std::string eg_mapfrom_result_str();
+			static std::string eg_renumber_only_result_str();
+
+		};
+
+	} // namespace test
 } // namespace cath
 
 #endif

@@ -7,7 +7,7 @@ A fast, effective way to collapse a list of domain matches to your query sequenc
 
 ![Screenshot](img/cath-resolve-hits.example.jpg)
 <br>
-<span class="figure-caption">*__Above__: cath-resolve-hits chooses the hits at the top from the list of possible hits at the bottom*</span>
+<span class="figure-caption">*__Above__: cath-resolve-hits' HTML output shows it choosing the hits at the top from the list of candidates at the bottom*</span>
 
 
 Features
@@ -15,7 +15,7 @@ Features
 
 **Fast**
 
- * Can process around 1-2 million input hits per second
+ * Can process around 1&ndash;2 million input hits per second
 
 **Powerful**
 
@@ -61,7 +61,7 @@ Where the fields are space-separated and are:
  1. **query_protein_id** : An identifier for the query protein sequence
  1. **match_id**         : An identifier for the match
  1. **score**            : A (strictly positive) score indicating how good it would be to have that hit in the final result
- 1. **starts_stops**     : The starts/stops on the query sequence, given in the format: 37-124,239-331
+ 1. **starts_stops**     : The starts/stops on the query sequence, given in the format: 37&ndash;124,239&ndash;331
 
 The output is the non-overlapping subset that maximises the sum of the hits' scores.
 
@@ -178,7 +178,7 @@ For now, don't set `--high-scores-preference` too high (say, above 3.5) because 
 How Fast?
 ---------
 
-To give a very rough idea: on an SSD-enable laptop, we've seen `cath-resolve-hits` process some large data files at around 1-2 million hits per second. That test setup was probably a bit unrealistic so your mileage may vary significantly. For reference: the GCC build appeared to run quite a bit faster than the Clang build.
+To give a very rough idea: on an SSD-enable laptop, we've seen `cath-resolve-hits` process some large data files at around 1&ndash;2 million hits per second. That test setup was probably a bit unrealistic so your mileage may vary significantly. For reference: the GCC build appeared to run quite a bit faster than the Clang build.
 
 
 
@@ -186,7 +186,7 @@ To give a very rough idea: on an SSD-enable laptop, we've seen `cath-resolve-hit
 CATH Rules invoked by option `--apply-cath-rules`
 -------------------------------------------------
 
-The `--apply-cath-rules` option applies the following CATH-Gene3D specific rules when parsing from `hmmer_domtmblout` or `hmmsearch_out` format files.
+The `--apply-cath-rules` option applies the following CATH&ndash;Gene3D specific rules when parsing from `hmmer_domtmblout` or `hmmsearch_out` format files.
 
 ### Discontinuous domains
 
