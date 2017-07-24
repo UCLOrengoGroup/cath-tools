@@ -42,6 +42,20 @@ namespace cath {
 			output_stream.close();
 		}
 
+		/// \brief Write the specified istream to the specified file
+		///
+		/// This is named after Perl's Path::Class::File spew() method
+		inline void spew(const boost::filesystem::path &arg_file,   ///< The file to which the string should be written
+		                 std::istream                  &arg_istream ///< The istream to write to the file
+		                 ) {
+			std::ofstream output_stream;
+			open_ofstream( output_stream, arg_file );
+			arg_istream.clear();
+			arg_istream.seekg( 0 );
+			output_stream << arg_istream.rdbuf();
+			output_stream.close();
+		}
+
 	} // namespace common
 } // namespace cath
 

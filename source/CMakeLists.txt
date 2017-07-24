@@ -369,10 +369,17 @@ set(
 )
 
 set(
+	NORMSOURCES_COMMON_TEST_PREDICATE_DETAIL
+		common/test_predicate/detail/strings_equal.cpp
+)
+
+set(
 	NORMSOURCES_COMMON_TEST_PREDICATE
+		${NORMSOURCES_COMMON_TEST_PREDICATE_DETAIL}
 		common/test_predicate/files_equal.cpp
 		common/test_predicate/istream_and_file_equal.cpp
 		common/test_predicate/istreams_equal.cpp
+		common/test_predicate/string_matches_file.cpp
 )
 
 set(

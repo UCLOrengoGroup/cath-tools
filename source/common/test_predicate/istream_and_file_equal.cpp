@@ -21,14 +21,19 @@
 #include "istream_and_file_equal.hpp"
 
 #include "common/file/open_fstream.hpp"
+#include "common/file/spew.hpp"
 #include "common/test_predicate/files_equal.hpp"
 
 #include <fstream>
 
-using namespace boost::test_tools;
 using namespace cath;
 using namespace cath::common;
-using namespace std;
+
+using boost::filesystem::path;
+using boost::test_tools::predicate_result;
+using std::ifstream;
+using std::istream;
+using std::string;
 
 using boost::filesystem::path;
 
@@ -63,13 +68,8 @@ predicate_result istream_and_file_equal::operator()(istream      &arg_istream, /
 
 	// If overwrite_diff_expected_with_got and the result's negative,
 	// overwrite the expected (arg_filename) with the got (arg_istream)
-	if ( overwrite_diff_expected_with_got && ! the_result ) {
-		ofstream overwrite_ofstream;
-		open_ofstream( overwrite_ofstream, arg_filename );
-		arg_istream.clear();
-		arg_istream.seekg( 0 );
-		overwrite_ofstream << arg_istream.rdbuf();
-		overwrite_ofstream.close();
+	if ( ! the_result && ( overwrite_diff_expected_with_got || ( getenv( "BOOTSTRAP_TESTS" ) != nullptr ) ) ) {
+		spew( arg_filename, arg_istream );
 	}
 
 	return the_result;
