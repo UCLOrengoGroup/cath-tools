@@ -21,7 +21,6 @@
 #include "hits_processor_list.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
-// #include <boost/optional/optional_io.hpp> // ***** TEMPORARY *****
 
 #include "common/file/ofstream_list.hpp"
 #include "resolve_hits/options/spec/crh_output_spec.hpp"
@@ -30,8 +29,6 @@
 #include "resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/write_json_hits_processor.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.hpp"
-
-#include <iostream> // ***** TEMPORARY *****
 
 using namespace cath::common;
 using namespace cath::rslv;

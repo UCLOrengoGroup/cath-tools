@@ -24,7 +24,7 @@
 #include <boost/log/trivial.hpp>
 #include <boost/range/join.hpp>
 
-#include "common/algorithm/sort_uniq_build.hpp" // ***** TEMPORARY *****
+#include "common/algorithm/sort_uniq_build.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 
 using namespace cath;
