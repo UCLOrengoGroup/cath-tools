@@ -39,7 +39,9 @@ env:
 before_install:
   - export SUSAN="sarandon";
   - if [ "$TRAVIS_OS_NAME" == "linux"                        ]; then export MARY="quite contrary"                                                                      ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^clang ]; then export TRACY="flick"                                                                              ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux"                        ]; then echo $CC                                                                                          ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ "^clang" ]; then export TRACY="flick"                                                                            ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC =~ ^clang" ]; then export BLACY="flick"                                                                              ; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^gcc   ]; then export ANNE="Cleaves"                                                                             ; fi
   - if [ "$TRAVIS_OS_NAME" == "linux"                        ]; then export BUILD_FILE_SUFFIX=".ubuntu14.04"; else export BUILD_FILE_SUFFIX=".macos"                   ; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^clang ]; then export CXX="clang++-4.0" CC="clang-4.0"                                                           ; fi
@@ -91,6 +93,7 @@ script:
   - echo "SUSAN $SUSAN"
   - echo "MARY  $MARY"
   - echo "TRACY $TRACY"
+  - echo "BLACY $BLACY"
   - echo "ANNE  $ANNE"
   - echo "CC    $CC"
   - echo "CXX   $CXX"
