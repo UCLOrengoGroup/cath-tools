@@ -304,6 +304,7 @@ set(
 		cluster/map/aggregate_map_results.cpp
 		cluster/map/map_clusters.cpp
 		cluster/map/map_results.cpp
+		cluster/map/overlap_frac_distn.cpp
 )
 
 set(
@@ -1422,6 +1423,7 @@ set(
 	TESTSOURCES_CLUSTER_MAP
 		cluster/map/aggregate_map_results_test.cpp
 		cluster/map/map_results_test.cpp
+		cluster/map/overlap_frac_distn_test.cpp
 )
 
 set(

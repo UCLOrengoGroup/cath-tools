@@ -50,8 +50,8 @@ namespace cath {
 			///        because this stores a reference
 			domain_cluster_ids_by_seq(const common::id_of_string &&) = delete;
 
-			domain_cluster_ids_by_seq & add(const boost::string_ref &,
-			                                domain_cluster_id);
+			clust_entry_problem add(const boost::string_ref &,
+			                        domain_cluster_id);
 
 			bool empty() const;
 			size_t size() const;
@@ -73,15 +73,24 @@ namespace cath {
 		///       and can avoid making a new string when it doesn't need to store.
 		///       That said, there's probably less reuse of IDs than for clusters
 		///       so it may make little difference.
-		inline domain_cluster_ids_by_seq & domain_cluster_ids_by_seq::add(const boost::string_ref &arg_seq_id,           ///< The name of the sequence under which to store the domain_cluster_id
-		                                                                  domain_cluster_id        arg_domain_cluster_id ///< The domain_cluster_id to store
-		                                                                  ) {
+		inline clust_entry_problem domain_cluster_ids_by_seq::add(const boost::string_ref &arg_seq_id,           ///< The name of the sequence under which to store the domain_cluster_id
+		                                                          domain_cluster_id        arg_domain_cluster_id ///< The domain_cluster_id to store
+		                                                          ) {
 			const auto &id = id_of_seq_name.get().emplace( arg_seq_id.to_string() ).second;
 			if ( id >= domain_cluster_ids_of_seq_id.size() ) {
 				domain_cluster_ids_of_seq_id.resize( id + 1 );
 			}
-			domain_cluster_ids_of_seq_id[ id ].emplace_back( std::move( arg_domain_cluster_id ) );
-			return *this;
+			domain_cluster_ids &the_domain_cluster_ids = domain_cluster_ids_of_seq_id[ id ];
+
+			for (const auto &the_domain_cluster_id : the_domain_cluster_ids) {
+				const auto intrcn = interaction( arg_domain_cluster_id, the_domain_cluster_id );
+				if ( intrcn != clust_entry_problem::NONE ) {
+					return intrcn;
+				}
+			}
+
+			the_domain_cluster_ids.emplace_back( std::move( arg_domain_cluster_id ) );
+			return clust_entry_problem::NONE;
 		}
 
 		/// \brief Return whether this is empty

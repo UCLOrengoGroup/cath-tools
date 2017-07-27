@@ -50,16 +50,15 @@ namespace cath {
 
 			/// \brief Add a domain with the specified (optional) segments in the specified cluster
 			///        under the specified sequence ID
-			cluster_list & add_domain_to_cluster(const cluster_id_t                  &arg_cluster_id, ///< The cluster ID of the domain to add
-			                                     const common::id_of_string::id_type &arg_seq_id,     ///< The ID of the sequence on which the domain to add appears
-			                                     seq::seq_seg_run_opt                 arg_segments    ///< The (optional) segments of the domain to add
-			                                     ) {
-				ensure_and_get_cluster_domains_of_cluster_id( arg_cluster_id ).add_domain(
+			clust_entry_problem add_domain_to_cluster(const cluster_id_t                  &arg_cluster_id, ///< The cluster ID of the domain to add
+			                                          const common::id_of_string::id_type &arg_seq_id,     ///< The ID of the sequence on which the domain to add appears
+			                                          seq::seq_seg_run_opt                 arg_segments    ///< The (optional) segments of the domain to add
+			                                          ) {
+				return ensure_and_get_cluster_domains_of_cluster_id( arg_cluster_id ).add_domain(
 					arg_seq_id,
 					arg_segments,
 					arg_cluster_id
 				);
-				return *this;
 			}
 
 			/// \brief Return whether this is empty (ie stores info for no clusters)

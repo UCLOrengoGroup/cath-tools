@@ -20,6 +20,7 @@
 
 #include "clust_mapping_options_block.hpp"
 
+#include <boost/lexical_cast.hpp>
 #include <boost/optional.hpp>
 
 #include "common/clone/make_uptr_clone.hpp"
@@ -29,6 +30,7 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace cath;
 
+using boost::lexical_cast;
 using boost::none;
 using boost::program_options::options_description;
 using boost::program_options::value;
@@ -36,10 +38,10 @@ using boost::program_options::variables_map;
 using std::string;
 using std::unique_ptr;
 
-/// \brief The option name for the minimum fraction overlap for domains TODOCUMENT FURTHER
+/// \brief The option name for the fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
 const string clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL   { "min_equiv_dom_ol"   };
 
-/// \brief The option name for the minimum fraction overlap for clusters TODOCUMENT FURTHER
+/// \brief The option name for the fraction of the old cluster's entries that must map to a map-from cluster for them to be considered equivalent
 const string clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL { "min_equiv_clust_ol" };
 
 /// \brief A standard do_clone method
@@ -55,6 +57,7 @@ string clust_mapping_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 void clust_mapping_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
                                                                         ) {
+	using std::to_string;
 	const string percent_varname   { "<percent>" };
 
 	const auto min_equiv_dom_ol_notifier   = [&] (const double &x) { the_spec.set_min_equiv_dom_ol  ( x / 100.0 ); };
@@ -67,8 +70,13 @@ void clust_mapping_options_block::do_add_visible_options_to_description(options_
 				->value_name   ( percent_varname                                        )
 				->notifier     ( min_equiv_dom_ol_notifier                              )
 				->default_value( 100.0 * clust_mapping_spec::DEFAULT_MIN_EQUIV_DOM_OL   ),
-			( "Define domain equivalence as: sharing more than " + percent_varname + R"(% of residues (over the longest domain))" + "\n"
-				+ "(where " + percent_varname + " must be ≥ 50)" ).c_str()
+			( "Define domain equivalence as: sharing more than " + percent_varname + R"(% of residues (over the longest domain))"
+				+ "\n"
+				+ "(where "
+				+ percent_varname
+				+ R"( must be ≥ )"
+				+ lexical_cast<string>( 100.0 * clust_mapping_spec::MIN_MIN_EQUIV_DOM_OL               )
+				+ ")" ).c_str()
 		)
 		(
 			PO_MIN_EQUIV_CLUST_OL.c_str(),
@@ -76,10 +84,20 @@ void clust_mapping_options_block::do_add_visible_options_to_description(options_
 				->value_name   ( percent_varname                                        )
 				->notifier     ( min_equiv_clust_ol_notifier                            )
 				->default_value( 100.0 * clust_mapping_spec::DEFAULT_MIN_EQUIV_CLUST_OL ),
-			( "Define cluster equivalence as: more than " + percent_varname + R"(% of the map-from cluster's members having equivalents in the working cluster)" + "\n"
-				"(where " + percent_varname + " must be ≥ 50)" ).c_str()
+			( "Define cluster equivalence as: more than " + percent_varname
+				+ R"(% of the map-from cluster's members having equivalents in the working cluster)"
+				+ "\n"
+				R"([and them being equivalent to > )"
+				+ lexical_cast<string>( 100.0 * clust_mapping_spec::MIN_EQUIV_FRAC_OF_NEW_CLUST        )
+				+ R"(% of the working cluster's entries and > )"
+				+ lexical_cast<string>( 100.0 * clust_mapping_spec::MIN_EQUIV_FRAC_OF_NEW_CLUST_EQUIVS )
+				+ R"(% of those that have an equivalence])" "\n"
+				"(where "
+				+ percent_varname
+				+ R"( must be ≥ )"
+				+ lexical_cast<string>( 100.0 * clust_mapping_spec::MIN_MIN_EQUIV_CLUST_OL             )
+				+ R"(%))" ).c_str()
 		);
-
 }
 
 /// \brief Generate a description of any problem that makes the specified clust_mapping_options_block invalid
@@ -100,4 +118,22 @@ str_vec clust_mapping_options_block::do_get_all_options_names() const {
 /// \brief Getter for the clust_mapping_spec that the clust_mapping_options_block configures
 const clust_mapping_spec & clust_mapping_options_block::get_clust_mapping_spec() const {
 	return the_spec;
+}
+
+/// \brief Return the names of the threshold options
+///
+/// \relates clust_mapping_options_block
+str_vec cath::clust::clust_thresh_option_names() {
+	return {
+		clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL,
+		clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL,
+	};
+}
+
+/// \brief Return whether the any of the threshold options have been specified in the specified variables_map
+///
+/// \relates clust_mapping_options_block
+bool cath::clust::specified_clust_thresh_options(const variables_map &arg_vm ///< The variables_map to examine
+                                                 ) {
+	return specifies_any_of_options( arg_vm, clust_thresh_option_names() );
 }

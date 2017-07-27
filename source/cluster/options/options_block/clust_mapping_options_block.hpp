@@ -32,7 +32,7 @@ namespace cath {
 		private:
 			using super = opts::options_block;
 
-			// /// \brief The spec this options_block configures
+			/// \brief The spec this options_block configures
 			clust_mapping_spec the_spec;
 
 			std::unique_ptr<opts::options_block> do_clone() const final;
@@ -47,6 +47,9 @@ namespace cath {
 
 			const clust_mapping_spec & get_clust_mapping_spec() const;
 		};
+
+		str_vec clust_thresh_option_names();
+		bool specified_clust_thresh_options(const boost::program_options::variables_map &);
 
 	} // namespace clust
 } // namespace cath

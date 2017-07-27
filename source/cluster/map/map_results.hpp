@@ -24,6 +24,7 @@
 #include <boost/filesystem/path.hpp>
 
 #include "cluster/cluster_type_aliases.hpp"
+#include "cluster/map/overlap_frac_distn.hpp"
 #include "cluster/options/spec/clust_mapping_spec.hpp"
 #include "common/type_aliases.hpp"
 
@@ -63,9 +64,6 @@ namespace cath {
 
 		}
 
-		/// \brief Type alias for a vector of potential_maps
-		using potential_map_vec = std::vector<potential_map>;
-
 		/// \brief Store the data arising from a mapping
 		struct map_results final {
 			/// \brief The maps that have finally been selected
@@ -86,11 +84,11 @@ namespace cath {
 			/// \brief The total number of mapped entries for each of the old clusters, indexed by their clusters' indices
 			size_vec num_mapped_by_old_cluster;
 
-			/// \brief The fractions (over largest) of the domain mappings
-			doub_vec domain_mapping_fractions;
+			/// \brief The highest overlap fraction (over largest) for each of the old domains
+			overlap_frac_distn highest_old_dom_overlap_fractions;
 
-			/// \brief The fractions (over TODOCUMENT) of the cluster mappings
-			doub_vec cluster_mapping_fractions;
+			/// \brief The highest overlap fraction for each of the old clusters
+			overlap_frac_distn highest_old_clust_overlap_fractions;
 
 			/// \brief The spec under which the mapping was performed
 			clust_mapping_spec the_spec;
@@ -101,7 +99,8 @@ namespace cath {
 		std::string results_string(const old_cluster_data_opt &,
 		                           const new_cluster_data &,
 		                           const map_results &,
-		                           const str_opt &);
+		                           const str_opt &,
+		                           const bool & = true);
 
 		std::string longer_results_string(const old_cluster_data_opt &,
 		                                  const new_cluster_data &,

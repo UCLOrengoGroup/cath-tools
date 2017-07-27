@@ -80,7 +80,7 @@ addons:
   artifacts:
     paths:
     - release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
-    #- release_build/cath-map-clusters.$BUILD_FILE_SUFFIX
+    - release_build/cath-map-clusters.$BUILD_FILE_SUFFIX
     - release_build/cath-refine-align.$BUILD_FILE_SUFFIX
     - release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX
     - release_build/cath-ssap.$BUILD_FILE_SUFFIX
@@ -99,7 +99,7 @@ script:
   - release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
   - release_build/cath-superpose --version
   - mv release_build/cath-assign-domains release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
-# - mv release_build/cath-map-clusters release_build/cath-map-clusters.$BUILD_FILE_SUFFIX
+  - mv release_build/cath-map-clusters   release_build/cath-map-clusters.$BUILD_FILE_SUFFIX
   - mv release_build/cath-refine-align   release_build/cath-refine-align.$BUILD_FILE_SUFFIX
   - mv release_build/cath-resolve-hits   release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX
   - mv release_build/cath-ssap           release_build/cath-ssap.$BUILD_FILE_SUFFIX
@@ -111,7 +111,7 @@ deploy:
     secure: ywyguRbIJMXgFRffEahFyqNoTL86bb1LO0W9IfufNTCDYPTquhMLFda7D7J0E4OEzAyB9PAcQPzBZL3C7HjZwJH7nmNQLc/+ie4WxEQrOAZsx2gQGXpscJN09dpFlhRZMWpZa0G5HdYAu1IxnU470uuKx1BNSeGl6zZbHIzHW8V/euzlAfbzkzt6H8NLE+g4oCEjK3H7ETEQbETWB63crkNa+RP0xwVXbtotTeFqqR6f7hTdwnEYRY8w51T32dq+dyg0QpmHJhyqKa3ALcNAc8PJgcCXcVUlL0/pj9O4r7EH4BGiOpfXMzcwLyVtpnC7MZXkCbAlQqCEL0it7BWZAuesNy4AFpJjPsnvLC5XNrcf3qRrcGPyYWLK9lGJCV3ZTwhAdWnMJyidt+91Lwus7qHJ9BGx5hCOc/VxSMyRZyrcoZnAlDulpOkVOiqoeReAGNQD4IQhYsWIKevaXb+oaW/0XLKi4MA7ckHXSuqpUlbyJsuW/J5zvpP8J5QO+rzqwDWa4D8644ZLtAG8gYzYVm/OpA4B/7uzE8i8TNgVhK3dY6DsOgHwBgFc5OSfj499De4rSWNR+Zit5TFLVJWTrpmQPNV/M8lrLMjtUbFLHpHagUk7Rk4GxSdu6ZO2Kpci7IyvO9PZ6gJnHS8UMYHBzruatDOm3o0Z1ck35dEUH1E=
   file:
     - release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
-#   - release_build/cath-map-clusters.$BUILD_FILE_SUFFIX
+    - release_build/cath-map-clusters.$BUILD_FILE_SUFFIX
     - release_build/cath-refine-align.$BUILD_FILE_SUFFIX
     - release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX
     - release_build/cath-ssap.$BUILD_FILE_SUFFIX

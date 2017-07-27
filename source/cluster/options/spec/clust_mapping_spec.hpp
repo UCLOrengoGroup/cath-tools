@@ -38,27 +38,33 @@ namespace cath {
 		///                                           (rather than from one above the highest number in the <file>))
 		class clust_mapping_spec final : boost::equality_comparable<clust_mapping_spec> {
 		private:
-			/// \brief The minimum fraction overlap for domains TODOCUMENT FURTHER
+			/// \brief The fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
 			double min_equiv_dom_ol   = DEFAULT_MIN_EQUIV_DOM_OL;
 
-			/// \brief The minimum fraction overlap for clusters TODOCUMENT FURTHER
+			/// \brief The fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
 			double min_equiv_clust_ol = DEFAULT_MIN_EQUIV_CLUST_OL;
 
 			static constexpr double check_frac_against_strict_min_and_return(const double &,
 			                                                                 const double &);
 
 		public:
-			/// \brief Default value for the minimum fraction overlap for domains TODOCUMENT FURTHER
-			static constexpr double DEFAULT_MIN_EQUIV_DOM_OL   = 0.6;
+			/// \brief Default value for the fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
+			static constexpr double DEFAULT_MIN_EQUIV_DOM_OL           = 0.6;
 
-			/// \brief Default value for the minimum fraction overlap for clusters TODOCUMENT FURTHER
-			static constexpr double DEFAULT_MIN_EQUIV_CLUST_OL = 0.6;
+			/// \brief Default value for the fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
+			static constexpr double DEFAULT_MIN_EQUIV_CLUST_OL         = 0.6;
 
-			/// \brief Strict minimum value for the minimum fraction overlap for domains TODOCUMENT FURTHER
-			static constexpr double MIN_MIN_EQUIV_DOM_OL       = 0.5;
+			/// \brief Strict minimum value for the fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
+			static constexpr double MIN_MIN_EQUIV_DOM_OL               = 0.5;
 
-			/// \brief Strict minimum value for the minimum fraction overlap for clusters TODOCUMENT FURTHER
-			static constexpr double MIN_MIN_EQUIV_CLUST_OL     = 0.5;
+			/// \brief Strict minimum value for the fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
+			static constexpr double MIN_MIN_EQUIV_CLUST_OL             = 0.5;
+
+			/// \brief Strict minimum value for the fraction of the new cluster's entries that must map to a map-from cluster for them to be considered equivalent
+			static constexpr double MIN_EQUIV_FRAC_OF_NEW_CLUST        = 0.2;
+
+			/// \brief Strict minimum value for the fraction of the new cluster's entries that have mapped anywhere that must map to a map-from cluster for them to be considered equivalent
+			static constexpr double MIN_EQUIV_FRAC_OF_NEW_CLUST_EQUIVS = 0.5;
 
 			/// \brief Default ctor
 			constexpr clust_mapping_spec() = default;
@@ -78,37 +84,37 @@ namespace cath {
 		inline constexpr double clust_mapping_spec::check_frac_against_strict_min_and_return(const double &arg_frac, ///< The fraction to check
 		                                                                                     const double &arg_min   ///< The strict minimum to compare the fraction against
 		                                                                                     ) {
-			return ( arg_frac >= 0.0 && arg_frac <= 1.0 && arg_frac > arg_min )
+			return ( arg_frac >= 0.0 && arg_frac <= 1.0 && arg_frac >= arg_min )
 				? arg_frac
 				: throw std::invalid_argument("The specified cluster mapping fraction is out of range");
 		}
 
 		/// \brief Ctor from the domain and cluster overlap fractions
-		inline constexpr clust_mapping_spec::clust_mapping_spec(const double &arg_min_equiv_dom_ol,  ///< The minimum fraction overlap for domains TODOCUMENT FURTHER
-		                                                        const double &arg_min_equiv_clust_ol ///< The minimum fraction overlap for clusters TODOCUMENT FURTHER
+		inline constexpr clust_mapping_spec::clust_mapping_spec(const double &arg_min_equiv_dom_ol,  ///< The fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
+		                                                        const double &arg_min_equiv_clust_ol ///< The fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
 		                                                        ) : min_equiv_dom_ol   { check_frac_against_strict_min_and_return( arg_min_equiv_dom_ol,   MIN_MIN_EQUIV_DOM_OL   ) },
 		                                                            min_equiv_clust_ol { check_frac_against_strict_min_and_return( arg_min_equiv_clust_ol, MIN_MIN_EQUIV_CLUST_OL ) } {
 		}
 
-		/// \brief Getter for the minimum fraction overlap for domains TODOCUMENT FURTHER
+		/// \brief Getter for the fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
 		inline constexpr const double & clust_mapping_spec::get_min_equiv_dom_ol() const {
 			return min_equiv_dom_ol;
 		}
 
-		/// \brief Getter for the minimum fraction overlap for clusters TODOCUMENT FURTHER
+		/// \brief Getter for the fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
 		inline constexpr const double & clust_mapping_spec::get_min_equiv_clust_ol() const {
 			return min_equiv_clust_ol;
 		}
 
-		/// \brief Setter for the minimum fraction overlap for domains TODOCUMENT FURTHER
-		inline clust_mapping_spec & clust_mapping_spec::set_min_equiv_dom_ol(const double &arg_min_equiv_dom_ol ///< The minimum fraction overlap for domains TODOCUMENT FURTHER
+		/// \brief Setter for the fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
+		inline clust_mapping_spec & clust_mapping_spec::set_min_equiv_dom_ol(const double &arg_min_equiv_dom_ol ///< The fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
 		                                                                     ) {
 			min_equiv_dom_ol = check_frac_against_strict_min_and_return( arg_min_equiv_dom_ol, MIN_MIN_EQUIV_DOM_OL );
 			return *this;
 		}
 
-		/// \brief Setter for the minimum fraction overlap for clusters TODOCUMENT FURTHER
-		inline clust_mapping_spec & clust_mapping_spec::set_min_equiv_clust_ol(const double &arg_min_equiv_clust_ol ///< The minimum fraction overlap for clusters TODOCUMENT FURTHER
+		/// \brief Setter for the fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
+		inline clust_mapping_spec & clust_mapping_spec::set_min_equiv_clust_ol(const double &arg_min_equiv_clust_ol ///< The fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
 		                                                                       ) {
 			min_equiv_clust_ol = check_frac_against_strict_min_and_return( arg_min_equiv_clust_ol, MIN_MIN_EQUIV_CLUST_OL );
 			return *this;

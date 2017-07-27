@@ -46,6 +46,39 @@ namespace cath {
 			}
 		};
 
+		/// \brief Represent whether a new cluster entry has any problems
+		enum class clust_entry_problem : char {
+			PARSE_ERROR, ///< The entry causes an error during parse
+			CLASH,       ///< The entry clashes with at least one previous entry (ie overlaps but not has different starts/stops)
+			NONE,        ///< The entry has no interaction with previous entries
+			REPEAT,      ///< The entry has identical starts/stops as a previous entry
+		};
+
+		/// \brief Determine the type of interaction (if any) between the two specified seq_seg_run_opts
+		inline clust_entry_problem interaction(const seq::seq_seg_run_opt &arg_lhs, ///< The first  seq_seg_run_opt to query
+		                                       const seq::seq_seg_run_opt &arg_rhs  ///< The second seq_seg_run_opt to query
+		                                       ) {
+			if ( ! arg_lhs && ! arg_rhs ) {
+				return clust_entry_problem::REPEAT;
+			}
+			if ( static_cast<bool>( arg_lhs ) != static_cast<bool>( arg_rhs ) ) {
+				return clust_entry_problem::CLASH;
+			}
+			if ( ! are_overlapping( *arg_lhs, *arg_rhs ) ) {
+				return clust_entry_problem::NONE;
+			}
+			return ( *arg_lhs == *arg_rhs )
+				? clust_entry_problem::REPEAT
+				: clust_entry_problem::CLASH;
+		}
+
+		/// \brief Determine the type of interaction (if any) between the two specified domain_cluster_ids
+		inline clust_entry_problem interaction(const domain_cluster_id &arg_lhs, ///< The first  domain_cluster_id to query
+		                                       const domain_cluster_id &arg_rhs  ///< The second domain_cluster_id to query
+		                                       ) {
+			return interaction( arg_lhs.segments, arg_rhs.segments );
+		}
+
 		/// \brief A list of domain_cluster_ids
 		///
 		/// \TODO Consider making this enforce:

@@ -97,15 +97,14 @@ size_t cath::clust::get_num_mapped_entries(const map_results &arg_map_results //
 /// \brief Generate a string describing the specified map_results
 ///
 /// \relates map_results
-string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters, ///< The old clusters
-                                   const new_cluster_data     &arg_new_clusters, ///< The new clusters
-                                   const map_results          &arg_map_results,  ///< The map_results 
-                                   const str_opt              &arg_batch_id      ///< An optional identifier for the mapped batch
+string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,   ///< The old clusters
+                                   const new_cluster_data     &arg_new_clusters,   ///< The new clusters
+                                   const map_results          &arg_map_results,    ///< The map_results 
+                                   const str_opt              &arg_batch_id,       ///< An optional identifier for the mapped batch
+                                   const bool                 &arg_include_headers ///< Whether to include the headers for the columns
                                    ) {
 	const auto &chosen_maps                  = arg_map_results.chosen_maps;
 	const auto &other_maps                   = arg_map_results.other_maps;
-	const auto &num_mapped_by_new_cluster    = arg_map_results.num_mapped_by_new_cluster;
-	const auto &num_mapped_by_old_cluster    = arg_map_results.num_mapped_by_old_cluster;
 	const auto &unmapped_new_cluster_indices = arg_map_results.unmapped_new_cluster_indices;
 
 	// If not mapping, start from 1
@@ -117,56 +116,21 @@ string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Argh"));
 	}
 
-	const auto map_summary_fn = [&] (const potential_map &the_map) {
-		const size_t &old_cluster_idx   = the_map.old_cluster_idx;
-		const size_t &new_cluster_idx   = the_map.new_cluster_idx;
-		const size_t &num_mapped        = the_map.num_mapped;
-		const size_t &num_in_new        = get_size_of_cluster_of_id( arg_new_clusters, new_cluster_idx );
-		const size_t &num_in_old        = ( *arg_old_clusters ) [ old_cluster_idx ].size();
-		const size_t &num_mapped_in_new = num_mapped_by_new_cluster[ new_cluster_idx ];
-		const size_t &num_mapped_in_old = num_mapped_by_old_cluster[ old_cluster_idx ];
-
-		const string new_name = ( format( "%3d" ) % get_name_of_cluster_of_id(  arg_new_clusters, new_cluster_idx ) ).str();
-		const string old_name = ( format( "%3d" ) % get_name_of_cluster_of_id( *arg_old_clusters, old_cluster_idx ) ).str();
-
-		return
-			  new_name
-			+ " to "
-			+ old_name
-			+ " [share "
-			+ ( format( "%3d" ) % num_mapped        ).str()
-			+ " equivs ie: "
-			+ ( format( "%5.1f" ) % ( static_cast<double>( num_mapped ) * 100.0 / static_cast<double>( num_in_new        ) ) ).str()
-			+ R"(% of )"
-			+ new_name
-			+ "'s "
-			+ ( format( "%3d" ) % num_in_new        ).str()
-			+ " members and  "
-			+ ( format( "%5.1f" ) % ( static_cast<double>( num_mapped ) * 100.0 / static_cast<double>( num_mapped_in_new ) ) ).str()
-			+ R"(% of its )"
-			+ ( format( "%3d" ) % num_mapped_in_new ).str()
-			+ " equivs; "
-			+ ( format( "%5.1f" ) % ( static_cast<double>( num_mapped ) * 100.0 / static_cast<double>( num_in_old        ) ) ).str()
-			+ R"(% of )"
-			+ old_name
-			+ "'s "
-			+ ( format( "%3d" ) % num_in_old        ).str()
-			+ "  members and "
-			+ ( format( "%5.1f" ) % ( static_cast<double>( num_mapped ) * 100.0 / static_cast<double>( num_mapped_in_old ) ) ).str()
-			+ R"(% of its )"
-			+ ( format( "%3d" ) % num_mapped_in_old ).str()
-			+ " equivs]";
-	};
-
-	return "# cluster-id suggested-name"
-		+ ( arg_batch_id ? " batch-id"s : ""s )
-		+ "\n"
+	return (
+			arg_include_headers
+				? "# cluster-id suggested-name"
+					+ ( arg_batch_id ? " batch-id"s : ""s )
+					+ "\n"
+				: ""
+		)
 		+ join(
 			chosen_maps
 				| transformed( [&] (const potential_map &the_map) {
 					return
-						( arg_batch_id ? *arg_batch_id : "" )
-						+ map_summary_fn( the_map )
+						  get_name_of_cluster_of_id(  arg_new_clusters, the_map.new_cluster_idx )
+						+ " "
+						+ get_name_of_cluster_of_id( *arg_old_clusters, the_map.old_cluster_idx )
+						+ ( arg_batch_id ? ( " " + *arg_batch_id ) : "" )
 						+ "\n";
 				} ),
 			""
@@ -179,7 +143,7 @@ string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,
 						  get_name_of_cluster_of_id( arg_new_clusters,  new_cluster_index )
 						+ " "
 						+ detail::get_name_of_new_unmapped_cluster_of_index( precede_index, new_cluster_index_index )
-						+ ( arg_batch_id ? " " + *arg_batch_id : "" )
+						+ ( arg_batch_id ? ( " " + *arg_batch_id ) : "" )
 						+ "\n";
 				} ),
 			""
@@ -214,7 +178,7 @@ string cath::clust::longer_results_string(const old_cluster_data_opt &arg_old_cl
 		const size_t &new_cluster_idx   = the_map.new_cluster_idx;
 		const size_t &num_mapped        = the_map.num_mapped;
 		const size_t &num_in_new        = get_size_of_cluster_of_id( arg_new_clusters, new_cluster_idx );
-		const size_t &num_in_old        = ( *arg_old_clusters ) [ old_cluster_idx ].size();
+		const size_t &num_in_old        = num_entries( ( *arg_old_clusters ) [ old_cluster_idx ] );
 		const size_t &num_mapped_in_new = num_mapped_by_new_cluster[ new_cluster_idx ];
 		const size_t &num_mapped_in_old = num_mapped_by_old_cluster[ old_cluster_idx ];
 

@@ -21,6 +21,7 @@
 #include "aggregate_map_results.hpp"
 
 #include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "cluster/map/map_results.hpp"
@@ -36,6 +37,7 @@ using namespace cath::common;
 
 using boost::filesystem::path;
 using boost::format;
+using boost::lexical_cast;
 using boost::numeric_cast;
 using std::ofstream;
 using std::string;
@@ -80,6 +82,17 @@ const size_t & aggregate_map_results::get_num_mapped_entries() const {
 	return num_mapped_entries;
 }
 
+/// \brief Getter for the highest overlap fraction (over largest) for each of the old domains
+const overlap_frac_distn & aggregate_map_results::get_highest_old_dom_overlap_fractions() const {
+	return highest_old_dom_overlap_fractions;
+}
+
+/// \brief Getter for the highest overlap fraction for each of the old clusters
+const overlap_frac_distn & aggregate_map_results::get_highest_old_clust_overlap_fractions() const {
+	return highest_old_clust_overlap_fractions;
+}
+
+
 /// \brief Getter for the specification that was used to perform the mappings
 const clust_mapping_spec & aggregate_map_results::get_clust_mapping_spec() const {
 	return the_spec;
@@ -105,13 +118,17 @@ aggregate_map_results & aggregate_map_results::add_map_results(const map_results
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Cannot have mapped more clusters than there are old/new clusters"));
 	}
 
-	num_old_clusters         += curr_num_old_clusters;
-	num_new_clusters         += curr_num_new_clusters;
-	num_mapped_clusters      += curr_num_mapped_clusters;
-	num_old_entries          += curr_num_old_entries;
-	num_new_entries          += curr_num_new_entries;
-	num_mapped_entries       += curr_num_mapped_entries;
-	added_to                  = true;
+	num_old_clusters                    += curr_num_old_clusters;
+	num_new_clusters                    += curr_num_new_clusters;
+	num_mapped_clusters                 += curr_num_mapped_clusters;
+	num_old_entries                     += curr_num_old_entries;
+	num_new_entries                     += curr_num_new_entries;
+	num_mapped_entries                  += curr_num_mapped_entries;
+
+	highest_old_dom_overlap_fractions   += arg_map_results.highest_old_dom_overlap_fractions;
+	highest_old_clust_overlap_fractions += arg_map_results.highest_old_clust_overlap_fractions;
+
+	added_to                             = true;
 
 	return *this;
 }
@@ -136,6 +153,12 @@ string cath::clust::markdown_summary_string(const aggregate_map_results &arg_agg
 	if ( ! arg_aggregate_map_results.get_added_to() ) {
 		return "No mapping was performed";
 	}
+
+	const doub_vec percentile_list = { 25.0, 50.0, 75.0, 90.0, 95.0, 98.0, 99.0, 100.0 };
+
+	const auto   &highest_old_dom_ol_fracs  = arg_aggregate_map_results.get_highest_old_dom_overlap_fractions();
+	const auto   &highest_old_clst_ol_fracs = arg_aggregate_map_results.get_highest_old_clust_overlap_fractions();
+
 	const size_t &num_old_clusters          = arg_aggregate_map_results.get_num_old_clusters();
 	const size_t &num_new_clusters          = arg_aggregate_map_results.get_num_new_clusters();
 	const size_t &num_mapped_clusters       = arg_aggregate_map_results.get_num_mapped_clusters();
@@ -176,22 +199,47 @@ In this run, the cut-off for defining domain-equivalence was )" + dom_pc_str + R
 Domains from Map-From Clusters
 --
 
-| Category                                                         | Number | Percentage |
-|------------------------------------------------------------------|--------|------------|
-| All                                                                                                |)" + ( format( "%6d" ) % num_old_entries          ).str() + R"( |     100.0% |
-| &nbsp; ...of which:                                                                                |        |            |
-| &nbsp; &bull; Equivalence-mapped     (ie )" + dom_pc_str + R"( < overlap                         ) |)" + ( format( "%6d" ) % num_mapped_entries       ).str() + R"( | )" + ( ( format( "%5.1f" ) % pc_old_entries_mapped   ).str() ) + R"(% |
-| &nbsp; &bull; Not equivalence-mapped (ie                         overlap ≤ )" + dom_pc_str + R"( ) |)" + ( format( "%6d" ) % num_unmapped_old_entries ).str() + R"( | )" + ( ( format( "%5.1f" ) % pc_old_entries_unmapped ).str() ) + R"(% |
+| Category                                                                          | Number | Percentage |
+|-----------------------------------------------------------------------------------|--------|------------|
+| All                                                                               |)" + ( format( "%7d" ) % num_old_entries          ).str() + R"( |     100.0% |
+| &nbsp; ...of which:                                                               |        |            |
+| &nbsp; &bull; Equivalence-mapped     (ie )" + dom_pc_str + R"( < overlap                         ) |)" + ( format( "%7d" ) % num_mapped_entries       ).str() + R"( | )" + ( ( format( "%9.1f" ) % pc_old_entries_mapped   ).str() ) + R"(% |
+| &nbsp; &bull; Not equivalence-mapped (ie                         overlap ≤ )" + dom_pc_str + R"( ) |)" + ( format( "%7d" ) % num_unmapped_old_entries ).str() + R"( | )" + ( ( format( "%9.1f" ) % pc_old_entries_unmapped ).str() ) + R"(% |
 
 Domains from New Clusters
 --
 
-| Category                                                        | Number | Percentage |
-|-----------------------------------------------------------------|--------|------------|
-| All                                                                             |)" + ( format( "%6d" ) % num_new_entries          ).str() + R"( |     100.0% |
-| &nbsp; ...of which:                                                             |        |            |
-| &nbsp; &bull; Equivalence-mapped     (ie overlap > )" + dom_pc_str + R"(      ) |)" + ( format( "%6d" ) % num_mapped_entries       ).str() + R"( | )" + ( ( format( "%5.1f" ) % pc_new_entries_mapped   ).str() ) + R"(% |
-| &nbsp; &bull; Not equivalence-mapped (ie overlap ≤ )" + dom_pc_str + R"(      ) |)" + ( format( "%6d" ) % num_unmapped_new_entries ).str() + R"( | )" + ( ( format( "%5.1f" ) % pc_new_entries_unmapped ).str() ) + R"(% |
+| Category                                                       | Number | Percentage |
+|----------------------------------------------------------------|--------|------------|
+| All                                                            |)" + ( format( "%7d" ) % num_new_entries          ).str() + R"( |     100.0% |
+| &nbsp; ...of which:                                            |        |            |
+| &nbsp; &bull; Equivalence-mapped     (ie overlap > )" + dom_pc_str + R"(      ) |)" + ( format( "%7d" ) % num_mapped_entries       ).str() + R"( | )" + ( ( format( "%9.1f" ) % pc_new_entries_mapped   ).str() ) + R"(% |
+| &nbsp; &bull; Not equivalence-mapped (ie overlap ≤ )" + dom_pc_str + R"(      ) |)" + ( format( "%7d" ) % num_unmapped_new_entries ).str() + R"( | )" + ( ( format( "%9.1f" ) % pc_new_entries_unmapped ).str() ) + R"(% |
+
+Distribution of Domain Mapping Percentages for Domains from Map-From Clusters
+--
+
+Including completely-unmapped domains:
+
+)"
+	+ percentile_markdown_table(
+		highest_old_dom_ol_fracs,
+		percentile_list,
+		"Percentile through distribution of mapping percentages",
+		"Mapping Percentage",
+		overlap_frac_distn::zeroes_policy::INCLUDE
+	) + R"(
+
+Excluding completely-unmapped domains:
+
+)"
+	+ percentile_markdown_table(
+		highest_old_dom_ol_fracs,
+		percentile_list,
+		"Percentile through distribution of mapping percentages",
+		"Mapping Percentage",
+		overlap_frac_distn::zeroes_policy::EXCLUDE
+	) + R"(
 
 Cluster Mapping
 ==
@@ -201,26 +249,59 @@ The quality of a mapping between a pair of clusters is defined as the percentage
 the map-from cluster that have an equivalent domain in the new cluster.
 In this run, the cutoff for defining cluster-equivalence was )" + ( format( "%.1f" ) % min_equiv_clust_ol_pc ).str() + R"(%.
 
+Also, for clusters to be considered equivalents, the map-from cluster's members must
+be equivalent to > )"
+	+ lexical_cast<string>( 100.0 * clust_mapping_spec::MIN_EQUIV_FRAC_OF_NEW_CLUST        )
+	+ R"(% of the working cluster's entries and > )"
+	+ lexical_cast<string>( 100.0 * clust_mapping_spec::MIN_EQUIV_FRAC_OF_NEW_CLUST_EQUIVS )
+	+ R"(% of those that have an equivalence.
+
 Map-From Clusters
 --
 
 | Category                             | Number | Percentage |
 |--------------------------------------|--------|------------|
-| All                                  |)" + ( format( "%6d" ) % num_old_clusters          ).str() + R"( |     100.0% |
+| All                                  |)" + ( format( "%7d" ) % num_old_clusters          ).str() + R"( |     100.0% |
 | &nbsp; ...of which:                  |        |            |
-| &nbsp; &bull; Equivalence-mapped     |)" + ( format( "%6d" ) % num_mapped_clusters       ).str() + R"( | )" + ( ( format( "%5.1f" ) % pc_old_clusters_mapped   ).str() ) + R"(% |
-| &nbsp; &bull; Not equivalence-mapped |)" + ( format( "%6d" ) % num_unmapped_old_clusters ).str() + R"( | )" + ( ( format( "%5.1f" ) % pc_old_clusters_unmapped ).str() ) + R"(% |
+| &nbsp; &bull; Equivalence-mapped     |)" + ( format( "%7d" ) % num_mapped_clusters       ).str() + R"( | )" + ( ( format( "%9.1f" ) % pc_old_clusters_mapped   ).str() ) + R"(% |
+| &nbsp; &bull; Not equivalence-mapped |)" + ( format( "%7d" ) % num_unmapped_old_clusters ).str() + R"( | )" + ( ( format( "%9.1f" ) % pc_old_clusters_unmapped ).str() ) + R"(% |
 
 New Clusters
 --
 
 | Category                             | Number | Percentage |
 |--------------------------------------|--------|------------|
-| All                                  |)" + ( format( "%6d" ) % num_new_clusters          ).str() + R"( |     100.0% |
+| All                                  |)" + ( format( "%7d" ) % num_new_clusters          ).str() + R"( |     100.0% |
 | &nbsp; ...of which:                  |        |            |
-| &nbsp; &bull; Equivalence-mapped     |)" + ( format( "%6d" ) % num_mapped_clusters       ).str() + R"( | )" + ( ( format( "%5.1f" ) % pc_new_clusters_mapped   ).str() ) + R"(% |
-| &nbsp; &bull; Not equivalence-mapped |)" + ( format( "%6d" ) % num_unmapped_new_clusters ).str() + R"( | )" + ( ( format( "%5.1f" ) % pc_new_clusters_unmapped ).str() ) + R"(% |
-)";
+| &nbsp; &bull; Equivalence-mapped     |)" + ( format( "%7d" ) % num_mapped_clusters       ).str() + R"( | )" + ( ( format( "%9.1f" ) % pc_new_clusters_mapped   ).str() ) + R"(% |
+| &nbsp; &bull; Not equivalence-mapped |)" + ( format( "%7d" ) % num_unmapped_new_clusters ).str() + R"( | )" + ( ( format( "%9.1f" ) % pc_new_clusters_unmapped ).str() ) + R"(% |
+
+Distribution of Cluster Mapping Percentages for Map-From Clusters
+--
+
+Including completely-unmapped clusters:
+
+)"
+	+ percentile_markdown_table(
+		highest_old_clst_ol_fracs,
+		percentile_list,
+		"Percentile through distribution of mapping percentages",
+		"Mapping Percentage",
+		overlap_frac_distn::zeroes_policy::INCLUDE
+	)
+	+ R"(
+
+Excluding completely-unmapped clusters:
+
+)"
+	+ percentile_markdown_table(
+		highest_old_clst_ol_fracs,
+		percentile_list,
+		"Percentile through distribution of mapping percentages",
+		"Mapping Percentage",
+		overlap_frac_distn::zeroes_policy::EXCLUDE
+	)
+	+ "\n\n";
 }
 
 /// TODO: Consider splitting "Domains from Map-From Clusters" numbers entry:
@@ -228,79 +309,6 @@ New Clusters
 /// into:
 ///  * Insufficiently-mapped  (ie 0 < overlap ≤ X )
 ///  * Completely-unmapped    (ie     overlap = 0 )
-
-/// TODO: Consider adding the below text
-///
-/// This should be done by storing the best mapping percentage achieved by mapped-from domain
-/// and then aggregating (if necessary) across multiple mappings. To aggregate,
-/// it might be best to do something like store counts for scores *rounded to (say) three decimal places*
-/// in an unordered_map<double, size_t>
-/*
-Distribution of Domain Mapping Percentages for Domains from Map-From Clusters
---
-
-Excluding completely-unmapped domains:
-
-| Percentile through distribution of mapping percentages | Mapping Percentage |
-|--------------------------------------------------------|--------------------|
-|                                                     25 |                30% |
-|                                                     50 |                40% |
-|                                                     75 |                50% |
-|                                                     90 |                60% |
-|                                                     95 |                70% |
-|                                                     98 |                80% |
-|                                                     99 |                90% |
-|                                                    100 |                90% |
-
-Including completely unmapped domains:
-
-| Percentile through distribution of mapping percentages | Mapping Percentage |
-|--------------------------------------------------------|--------------------|
-|                                                     25 |                30% |
-|                                                     50 |                40% |
-|                                                     75 |                50% |
-|                                                     90 |                60% |
-|                                                     95 |                70% |
-|                                                     98 |                80% |
-|                                                     99 |                90% |
-|                                                    100 |                90% |
-*/
-
-/// TODO: Consider adding:
-/*
-Distribution of Cluster-mapping Percentages for Map-From Clusters
---
-
-Excluding completely-unmapped clusters:
-
-**this needs tweaking**
-
-**in particular, it should be clear how multiple candidate old-froms to the same new-to are resolved**
-
-| Percentile through distribution of mapping percentages | Mapping Percentage |
-|--------------------------------------------------------|--------------------|
-|                                                     25 |                30% |
-|                                                     50 |                40% |
-|                                                     75 |                50% |
-|                                                     90 |                60% |
-|                                                     95 |                70% |
-|                                                     98 |                80% |
-|                                                     99 |                90% |
-|                                                    100 |                90% |
-
-Including completely unmapped clusters:
-
-| Percentile through distribution of mapping percentages | Mapping Percentage |
-|--------------------------------------------------------|--------------------|
-|                                                     25 |                30% |
-|                                                     50 |                40% |
-|                                                     75 |                50% |
-|                                                     90 |                60% |
-|                                                     95 |                70% |
-|                                                     98 |                80% |
-|                                                     99 |                90% |
-|                                                    100 |                90% |
-*/
 
 /// \brief Write a Markdown summary of the specified aggregate_map_results to the specified file
 ///

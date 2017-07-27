@@ -26,3 +26,5 @@ constexpr double clust_mapping_spec::DEFAULT_MIN_EQUIV_DOM_OL;
 constexpr double clust_mapping_spec::DEFAULT_MIN_EQUIV_CLUST_OL;
 constexpr double clust_mapping_spec::MIN_MIN_EQUIV_DOM_OL;
 constexpr double clust_mapping_spec::MIN_MIN_EQUIV_CLUST_OL;
+constexpr double clust_mapping_spec::MIN_EQUIV_FRAC_OF_NEW_CLUST;
+constexpr double clust_mapping_spec::MIN_EQUIV_FRAC_OF_NEW_CLUST_EQUIVS;

@@ -35,17 +35,20 @@ namespace cath {
 
 		void perform_map_clusters(const str_vec &,
 		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout);
+		                          std::ostream & = std::cout,
+		                          std::ostream & = std::cerr);
 
 		void perform_map_clusters(const clustmap_options &,
 		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout);
+		                          std::ostream & = std::cout,
+		                          std::ostream & = std::cerr);
 
 		void perform_map_clusters(const clustmap_input_spec &,
 		                          const clust_mapping_spec &,
 		                          const clustmap_output_spec &,
 		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout);
+		                          std::ostream & = std::cout,
+		                          std::ostream & = std::cerr);
 
 	} // namespace clust
 } // namespace cath

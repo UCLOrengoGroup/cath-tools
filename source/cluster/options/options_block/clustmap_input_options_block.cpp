@@ -70,9 +70,10 @@ void clustmap_input_options_block::do_add_visible_options_to_description(options
 			value<path>()
 				->value_name   ( file_varname                                         )
 				->notifier     ( map_from_clustmemb_file_notifier                     ),
-			( "Map numbers from previous clusters specified in " + file_varname + " to their equivalents in the working clusters where possible\n"
-				"(of, if unspecified, renumber all working clusters from 1 upwards)\n"
-				"Cluster names in this file must be positive integers" ).c_str()
+			( "Map numbers from previous clusters specified in " + file_varname + " to their equivalents in the working clusters where possible and\n"
+				"if all the cluster names in " + file_varname + "are positive integers, renumber leftover new clusters from one plus the largest\n"
+				"or if not, rename with new_cmc_cluster_1, new_cmc_cluster_2, ...\n"
+				"(of, if unspecified, renumber all working clusters from 1 upwards)" ).c_str()
 		)
 		(
 			( PO_READ_BATCHES_FROM_INPUT ).c_str(),
@@ -112,7 +113,7 @@ str_opt clustmap_input_options_block::do_invalid_string(const variables_map &arg
 	if ( ! specifies_option( arg_variables_map, PO_WORKING_CLUSTMEMB_FILE ) ) {
 		return "Must specify an input file"s;
 	}
-	return none;
+	return get_invalid_description( get_clustmap_input_spec() );
 }
 
 /// \brief Return all options names for this block

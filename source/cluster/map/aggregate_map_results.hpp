@@ -23,6 +23,7 @@
 
 #include <boost/filesystem/path.hpp>
 
+#include "cluster/map/overlap_frac_distn.hpp"
 #include "cluster/options/spec/clust_mapping_spec.hpp"
 
 namespace cath { namespace clust { class new_cluster_data; } }
@@ -59,11 +60,17 @@ namespace cath {
 			///        (which is the same as the number of entry mappings because each entry can be mapped at most once)
 			size_t             num_mapped_entries       = 0;
 
+			/// \brief The highest overlap fraction (over largest) for each of the old domains
+			overlap_frac_distn highest_old_dom_overlap_fractions;
+
+			/// \brief The highest overlap fraction for each of the old clusters
+			overlap_frac_distn highest_old_clust_overlap_fractions;
+
 			/// \brief The specification that was used to perform the mappings
 			clust_mapping_spec the_spec;
 
 		public:
-			aggregate_map_results() noexcept = default;
+			aggregate_map_results() = default;
 			explicit aggregate_map_results(const clust_mapping_spec &) noexcept;
 
 			const bool & get_added_to() const;
@@ -73,6 +80,8 @@ namespace cath {
 			const size_t & get_num_old_entries() const;
 			const size_t & get_num_new_entries() const;
 			const size_t & get_num_mapped_entries() const;
+			const overlap_frac_distn & get_highest_old_dom_overlap_fractions() const;
+			const overlap_frac_distn & get_highest_old_clust_overlap_fractions() const;
 			const clust_mapping_spec & get_clust_mapping_spec() const;
 
 			aggregate_map_results & add_map_results(const map_results &,

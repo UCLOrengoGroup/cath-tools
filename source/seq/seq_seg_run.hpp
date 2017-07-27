@@ -226,12 +226,16 @@ namespace cath {
 		inline double get_middle_of_seq_seg(const seq_seg_run &arg_seq_seg_run, ///< The seq_seg_run to query
 		                                    const size_t      &arg_seg_idx      ///< The index of the segment who middle index should be returned
 		                                    ) {
-			return static_cast<double>(
-				arg_seq_seg_run.get_stop_arrow_of_segment ( arg_seg_idx ).res_after ()
-				+
-				arg_seq_seg_run.get_start_arrow_of_segment( arg_seg_idx ).res_before()
-			)
-			/ 2.0;
+			// Use res_after() for the start_arrow so that this can handle a seq_seg that starts at 0
+			// and then subtract 0.5 at the end to make up the difference
+			return (
+				static_cast<double>(
+					arg_seq_seg_run.get_stop_arrow_of_segment ( arg_seg_idx ).res_after ()
+					+
+					arg_seq_seg_run.get_start_arrow_of_segment( arg_seg_idx ).res_after()
+				)
+				/ 2.0
+			) - 0.5;
 		}
 
 		/// \brief Get the specified seq_seg_run's segment corresponding to the specified index

@@ -24,6 +24,7 @@
 #include <boost/optional.hpp>
 
 #include "common/path_type_aliases.hpp"
+#include "common/type_aliases.hpp"
 
 namespace cath {
 	namespace clust {
@@ -55,6 +56,8 @@ namespace cath {
 			clustmap_input_spec & set_map_from_clustmemb_file(const path_opt &);
 			clustmap_input_spec & set_read_batches_from_input(const bool &);
 		};
+
+		str_opt get_invalid_description(const clustmap_input_spec &);
 
 		/// \brief Getter for the cluster-membership file for the working clusters
 		inline const boost::filesystem::path & clustmap_input_spec::get_working_clustmemb_file() const {

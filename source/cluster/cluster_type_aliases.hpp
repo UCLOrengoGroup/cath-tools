@@ -33,6 +33,7 @@ namespace cath { namespace clust { class old_cluster_data; } }
 namespace cath { namespace clust { namespace detail { class mapping_job; } } }
 namespace cath { namespace clust { namespace detail { struct seq_id_and_domain_cluster_ids_pair; } } }
 namespace cath { namespace clust { struct domain_cluster_id; } }
+namespace cath { namespace clust { struct potential_map; } }
 
 namespace cath {
 	namespace clust {
@@ -54,6 +55,9 @@ namespace cath {
 
 		/// \brief Type alias for an optional old_cluster_data
 		using old_cluster_data_opt     = boost::optional<old_cluster_data>;
+
+		/// \brief Type alias for a vector of potential_maps
+		using potential_map_vec        = std::vector<potential_map>;
 
 		namespace detail {
 

@@ -24,6 +24,7 @@
 
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/file/open_fstream.hpp"
+#include "common/optional/make_optional_if.hpp"
 #include "common/size_t_literal.hpp"
 
 #include <fstream>
@@ -65,9 +66,6 @@ const path_opt & mapping_job::get_old_cluster_membership_file() const {
 
 /// \brief Read a batch of mapping jobs from the specified istream
 ///
-/// TODO: consider, checking that no file is '-'
-/// TODO: consider enforcing consistency re whether there are old, map-from clusters
-///
 /// \brief relates mapping_job
 mapping_job_vec cath::clust::detail::read_batch_mapping_file(istream &arg_istream ///< The istream from which to read the mapping jobs
                                                              ) {
@@ -75,19 +73,25 @@ mapping_job_vec cath::clust::detail::read_batch_mapping_file(istream &arg_istrea
 	string line;
 	while ( getline( arg_istream, line ) ) {
 		const auto parts = split_build<str_vec>( line, is_any_of( " \t" ), token_compress_on );
-		switch ( parts.size() ) {
-			case ( 0_z ) : {
-				BOOST_THROW_EXCEPTION(runtime_error_exception("TODOCUMENT"));
-			}
-			case ( 1_z ) : {
-				BOOST_THROW_EXCEPTION(runtime_error_exception("TODOCUMENT"));
-			}
-			case ( 2_z ) : { results.emplace_back( string{ parts[ 0 ] }, path{ parts[ 1 ] }                     ); break; }
-			case ( 3_z ) : { results.emplace_back( string{ parts[ 0 ] }, path{ parts[ 1 ] }, path{ parts[ 2 ] } ); break; }
-			default : {
-				BOOST_THROW_EXCEPTION(runtime_error_exception("TODOCUMENT"));
-			}
+		if ( parts.size() < 2 ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception("There should be at least two columns (batch_id working_clust_memb_file) in batch specification input lines"));
 		}
+		if ( parts.size() > 3 ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception("There cannot be more than three columns (batch_id working_clust_memb_file prev_clust_memb_file) in batch specification input lines"));
+		}
+		string batch_id_str( parts.front() );
+		if ( batch_id_str == "-" ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot use files with name \"-\" in batch specification input lines"));
+		}
+
+		results.emplace_back(
+			move( batch_id_str ),
+			path{ parts[ 1 ] },
+			make_optional_if_fn(
+				parts.size() >= 3,
+				[&] () { return path{ parts[ 2 ] }; }
+			)
+		);
 	}
 	return results;
 }

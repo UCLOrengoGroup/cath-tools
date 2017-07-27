@@ -35,53 +35,65 @@ namespace cath {
 	namespace clust {
 
 		old_cluster_data parse_old_membership(std::istream &,
-		                                      common::id_of_string &);
+		                                      common::id_of_string &,
+		                                      const ostream_ref_opt & = boost::none);
 
 		/// \brief Prevent calling with an rvalue id_of_string
 		old_cluster_data parse_old_membership(std::istream &,
-		                                      const common::id_of_string &&) = delete;
+		                                      const common::id_of_string &&,
+		                                      const ostream_ref_opt & = boost::none) = delete;
 
 
 		old_cluster_data parse_old_membership(const std::string &,
-		                                      common::id_of_string &);
+		                                      common::id_of_string &,
+		                                      const ostream_ref_opt & = boost::none);
 
 		/// \brief Prevent calling with an rvalue id_of_string
 		old_cluster_data parse_old_membership(const std::string &,
-		                                      const common::id_of_string &&) = delete;
+		                                      const common::id_of_string &&,
+		                                      const ostream_ref_opt & = boost::none) = delete;
 
 
 		old_cluster_data parse_old_membership(const boost::filesystem::path &,
-		                                      common::id_of_string &);
+		                                      common::id_of_string &,
+		                                      const ostream_ref_opt & = boost::none);
 
 		/// \brief Prevent calling with an rvalue id_of_string
 		old_cluster_data parse_old_membership(const boost::filesystem::path &,
-		                                      const common::id_of_string &&) = delete;
+		                                      const common::id_of_string &&,
+		                                      const ostream_ref_opt & = boost::none) = delete;
 
 
 
 
 		new_cluster_data parse_new_membership(std::istream &,
-		                                      common::id_of_string &);
+		                                      common::id_of_string &,
+		                                      const ostream_ref_opt & = boost::none);
 
 		/// \brief Prevent calling with an rvalue id_of_string
 		new_cluster_data parse_new_membership(std::istream &,
-		                                      const common::id_of_string &&) = delete;
+		                                      const common::id_of_string &&,
+		                                      const ostream_ref_opt & = boost::none) = delete;
 
 
 		new_cluster_data parse_new_membership(const std::string &,
-		                                      common::id_of_string &);
+		                                      common::id_of_string &,
+		                                      const ostream_ref_opt & = boost::none);
 
 		/// \brief Prevent calling with an rvalue id_of_string
 		new_cluster_data parse_new_membership(const std::string &,
-		                                      const common::id_of_string &&) = delete;
+		                                      const common::id_of_string &&,
+		                                      const ostream_ref_opt & = boost::none) = delete;
 
 
 		new_cluster_data parse_new_membership(const boost::filesystem::path &,
-		                                      common::id_of_string &);
+		                                      common::id_of_string &,
+		                                      const ostream_ref_opt & = boost::none);
 
 		/// \brief Prevent calling with an rvalue id_of_string
 		new_cluster_data parse_new_membership(const boost::filesystem::path &,
-		                                      const common::id_of_string &&) = delete;
+		                                      const common::id_of_string &&,
+		                                      const ostream_ref_opt & = boost::none) = delete;
 
 	} // namespace clust
 } // namespace cath

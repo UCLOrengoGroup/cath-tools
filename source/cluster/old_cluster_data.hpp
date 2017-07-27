@@ -25,6 +25,7 @@
 #include "cluster/clusters_info.hpp"
 #include "common/boost_addenda/range/accumulate_proj.hpp"
 #include "common/container/id_of_string.hpp"
+#include "common/cpp17/invoke.hpp"
 
 #include <functional>
 
@@ -65,10 +66,10 @@ namespace cath {
 			/// Prevent construction from an id_of_string rvalue
 			old_cluster_data(const common::id_of_string &&) = delete;
 
-			old_cluster_data & add_entry(const boost::string_ref &,
-			                             const boost::string_ref &,
-			                             const boost::string_ref &,
-			                             seq::seq_seg_run_opt);
+			clust_entry_problem add_entry(const boost::string_ref &,
+			                              const boost::string_ref &,
+			                              const boost::string_ref &,
+			                              seq::seq_seg_run_opt);
 
 			const clusters_info & get_clust_info() const;
 			const common::id_of_string & get_id_of_seq_name() const;
@@ -88,24 +89,28 @@ namespace cath {
 
 		/// \brief Add an entry with the specified sequence name and (optional) segments to the cluster with
 		///        the specified name
-		inline old_cluster_data & old_cluster_data::add_entry(const boost::string_ref &arg_clust_name, ///< The name of the cluster of the entry
-		                                                      const boost::string_ref &arg_seq_id,     ///< The name of the sequence within which this entry appears
-		                                                      const boost::string_ref &arg_domain_id,  ///< The name of the entry
-		                                                      seq::seq_seg_run_opt     arg_segments    ///< The (optional) segments of the entry within the sequence
-		                                                      ) {
-			const auto cluster_id = update_info_and_get_id_for_cluster_of_name(
-				clust_info,
-				arg_clust_name,
-				arg_domain_id,
-				arg_segments
-			);
-			const common::id_of_string::id_type &seq_id = id_of_seq_name.get().emplace( arg_seq_id.to_string() ).second;
-			clusters.add_domain_to_cluster(
-				cluster_id,
-				seq_id,
-				std::move( arg_segments )
-			);
-			return *this;
+		inline clust_entry_problem old_cluster_data::add_entry(const boost::string_ref &arg_clust_name, ///< The name of the cluster of the entry
+		                                                       const boost::string_ref &arg_seq_id,     ///< The name of the sequence within which this entry appears
+		                                                       const boost::string_ref &arg_domain_id,  ///< The name of the entry
+		                                                       seq::seq_seg_run_opt     arg_segments    ///< The (optional) segments of the entry within the sequence
+		                                                       ) {
+			try {
+				const auto cluster_id = update_info_and_get_id_for_cluster_of_name(
+					clust_info,
+					arg_clust_name,
+					arg_domain_id,
+					arg_segments
+				);
+				const common::id_of_string::id_type &seq_id = id_of_seq_name.get().emplace( arg_seq_id.to_string() ).second;
+				return clusters.add_domain_to_cluster(
+					cluster_id,
+					seq_id,
+					std::move( arg_segments )
+				);
+			}
+			catch (...) {
+				return clust_entry_problem::CLASH;
+			}
 		}
 
 		/// \brief Get the cluster info

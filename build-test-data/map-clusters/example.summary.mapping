@@ -1,0 +1,118 @@
+Domain Mapping
+==
+
+This section describes how well the map-from domains could be mapped to new domains (and vice versa).
+The quality of a mapping between a pair of domains is defined as the percentage overlap over the longer
+domain (ie the percentage of the longer domain's residues shared with the other domain).
+In this run, the cut-off for defining domain-equivalence was 60.0%.
+
+
+Domains from Map-From Clusters
+--
+
+| Category                                                                          | Number | Percentage |
+|-----------------------------------------------------------------------------------|--------|------------|
+| All                                                                               |    137 |     100.0% |
+| &nbsp; ...of which:                                                               |        |            |
+| &nbsp; &bull; Equivalence-mapped     (ie 60.0 < overlap                         ) |    131 |      95.6% |
+| &nbsp; &bull; Not equivalence-mapped (ie                         overlap ≤ 60.0 ) |      6 |       4.4% |
+
+Domains from New Clusters
+--
+
+| Category                                                       | Number | Percentage |
+|----------------------------------------------------------------|--------|------------|
+| All                                                            |    134 |     100.0% |
+| &nbsp; ...of which:                                            |        |            |
+| &nbsp; &bull; Equivalence-mapped     (ie overlap > 60.0      ) |    131 |      97.8% |
+| &nbsp; &bull; Not equivalence-mapped (ie overlap ≤ 60.0      ) |      3 |       2.2% |
+
+Distribution of Domain Mapping Percentages for Domains from Map-From Clusters
+--
+
+Including completely-unmapped domains:
+
+| Percentile through distribution of mapping percentages | Mapping Percentage |
+|--------------------------------------------------------|--------------------|
+|                                                     25 |               100% |
+|                                                     50 |               100% |
+|                                                     75 |               100% |
+|                                                     90 |               100% |
+|                                                     95 |               100% |
+|                                                     98 |               100% |
+|                                                     99 |               100% |
+|                                                    100 |               100% |
+
+Excluding completely-unmapped domains:
+
+| Percentile through distribution of mapping percentages | Mapping Percentage |
+|--------------------------------------------------------|--------------------|
+|                                                     25 |               100% |
+|                                                     50 |               100% |
+|                                                     75 |               100% |
+|                                                     90 |               100% |
+|                                                     95 |               100% |
+|                                                     98 |               100% |
+|                                                     99 |               100% |
+|                                                    100 |               100% |
+
+Cluster Mapping
+==
+
+This section describes how well the old clusters could be mapped to the new clusters (and vice versa).
+The quality of a mapping between a pair of clusters is defined as the percentage of the domains in
+the map-from cluster that have an equivalent domain in the new cluster.
+In this run, the cutoff for defining cluster-equivalence was 60.0%.
+
+Also, for clusters to be considered equivalents, the map-from cluster's members must
+be equivalent to > 20% of the working cluster's entries and > 50% of those that have an equivalence.
+
+Map-From Clusters
+--
+
+| Category                             | Number | Percentage |
+|--------------------------------------|--------|------------|
+| All                                  |      7 |     100.0% |
+| &nbsp; ...of which:                  |        |            |
+| &nbsp; &bull; Equivalence-mapped     |      5 |      71.4% |
+| &nbsp; &bull; Not equivalence-mapped |      2 |      28.6% |
+
+New Clusters
+--
+
+| Category                             | Number | Percentage |
+|--------------------------------------|--------|------------|
+| All                                  |      7 |     100.0% |
+| &nbsp; ...of which:                  |        |            |
+| &nbsp; &bull; Equivalence-mapped     |      5 |      71.4% |
+| &nbsp; &bull; Not equivalence-mapped |      2 |      28.6% |
+
+Distribution of Cluster Mapping Percentages for Map-From Clusters
+--
+
+Including completely-unmapped clusters:
+
+| Percentile through distribution of mapping percentages | Mapping Percentage |
+|--------------------------------------------------------|--------------------|
+|                                                     25 |                50% |
+|                                                     50 |                95% |
+|                                                     75 |               100% |
+|                                                     90 |               100% |
+|                                                     95 |               100% |
+|                                                     98 |               100% |
+|                                                     99 |               100% |
+|                                                    100 |               100% |
+
+Excluding completely-unmapped clusters:
+
+| Percentile through distribution of mapping percentages | Mapping Percentage |
+|--------------------------------------------------------|--------------------|
+|                                                     25 |              91.3% |
+|                                                     50 |                95% |
+|                                                     75 |               100% |
+|                                                     90 |               100% |
+|                                                     95 |               100% |
+|                                                     98 |               100% |
+|                                                     99 |               100% |
+|                                                    100 |               100% |
+

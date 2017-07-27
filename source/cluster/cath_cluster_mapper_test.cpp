@@ -20,7 +20,6 @@
 
 #include <boost/range/join.hpp>
 #include <boost/test/auto_unit_test.hpp>
-// #include <boost/algorithm/string/predicate.hpp>
 
 #include "cluster/cath_cluster_mapper.hpp"
 #include "cluster/options/options_block/clust_mapping_options_block.hpp"
@@ -29,48 +28,30 @@
 #include "cluster/test/map_clusters_fixture.hpp"
 #include "common/algorithm/copy_build.hpp"
 #include "common/file/temp_file.hpp"
+#include "common/regex/regex_count.hpp"
 #include "common/test_predicate/files_equal.hpp"
+#include "common/test_predicate/string_matches_file.hpp"
 #include "common/type_aliases.hpp"
-// #include "cluster/options/options_block/clust_mapping_options_block.hpp"
-// #include "cluster/options/options_block/clust_mapping_options_block.hpp"
-// #include "cluster/options/options_block/clust_mapping_options_block.hpp"
-// #include "cluster/options/options_block/clust_mapping_options_block.hpp"
-// #include "cluster/options/options_block/clust_mapping_options_block.hpp"
-// #include "cluster/options/options_block/clustmap_input_options_block.hpp"
-// #include "cluster/options/options_block/clustmap_output_options_block.hpp"
-// #include "cluster/options/options_block/crh_score_options_block.hpp"
-// #include "cluster/test/map_clusters_fixture.hpp"
-// #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
-// #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
-// #include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
-// #include "common/file/read_string_from_file.hpp"
-// #include "common/file/simple_file_read_write.hpp"
-// #include "common/file/temp_file.hpp"
-// #include "common/test_predicate/istream_and_file_equal.hpp"
-// #include "test/global_test_constants.hpp"
+#include "options/options_block/misc_help_version_options_block.hpp"
 
 #include <regex>
 #include <sstream>
 
 namespace cath { namespace test { } }
 
-// using namespace cath::rslv;
-// using namespace cath;
 using namespace cath::clust;
 using namespace cath::common;
+using namespace cath::opts;
 using namespace cath::test;
 using namespace std::literals::string_literals;
 
-// using boost::algorithm::contains;
-// using cath::common::copy_build;
-// using cath::common::temp_file;
-// using cath::common::write_file;
-// using std::string;
 using boost::filesystem::path;
 using boost::range::join;
 using std::istringstream;
-using std::regex;
 using std::ostringstream;
+using std::regex;
+using std::smatch;
+using std::string;
 
 namespace cath {
 	namespace test {
@@ -78,19 +59,27 @@ namespace cath {
 		/// \brief The cluster_mapper_test_suite_fixture to assist in testing calc_hit_list
 		struct cluster_mapper_test_suite_fixture : protected map_clusters_fixture {
 		protected:
-			~cluster_mapper_test_suite_fixture() noexcept  = default;
+			~cluster_mapper_test_suite_fixture() noexcept {
+				try {
+					BOOST_CHECK_EQUAL( err_ss.str(), "" );
+				}
+				catch (...) {
+				}
+			}
 
 			/// \brief Call perform_map_clusters() with the specified arguments preceded by a pseudo-program-name
 			///        and the fixture's i/o streams.
 			void execute_perform_map_clusters(const str_vec &arg_arguments ///< The arguments to pass to perform_map_clusters(), preceded by a pseudo-program-name
 			                                  ) {
+				// std::cerr << "Options are :\n\t\"" << boost::algorithm::join( arg_arguments, "\"\n\t\"" ) << "\n";
+
 				const auto progname_rng = { "pseudo_program_name"s };
 				perform_map_clusters(
 					copy_build<str_vec>( join(
 						progname_rng,
 						arg_arguments
 					) ),
-					input_ss, output_ss
+					input_ss, output_ss, err_ss
 				);
 			}
 
@@ -99,6 +88,9 @@ namespace cath {
 
 			/// \brief The output stream to use in the tests
 			ostringstream   output_ss;
+
+			/// \brief The error stream to use in the tests
+			ostringstream   err_ss;
 
 			// /// \brief An output stream to which logging can be sent
 			// ostringstream   log_ss;
@@ -113,46 +105,26 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-/// \TODO: Tests to add:
-///  * Gives helpful error on both --map-from-clustmemb-file and --read-batches-from-input specified
-///  * Allows any string for input data cluster names
-///  * Rejects --map-from-clustmemb-file cluster names that aren't positive-integers
-///  * Overlapping domains are rejected
-///  * Exact duplicates are warned *once*.
-///  * Duplicates spotted if specifying in different ways (ie /1-2,3-4 vs 1-2_3-4)
-///  * Accepts either overlap value being 50 or 100
-///  * Rejects overlap value < 50 or > 100
-///  * Enforce that both overlap values must be ≥ 50 and ≤ 100 but can be either 50 or 100.
-///  * Errors if no input option specified
-///  * Errors on attempt to specify --summary when not performing mappings
-
 BOOST_FIXTURE_TEST_SUITE(cath_cluster_mapper_test_suite, cluster_mapper_test_suite_fixture)
-
-// BOOST_AUTO_TEST_CASE(fails_on_attempt_to_mix_deprecated_options_with_new) {
-// 	// When calling perform_map_clusters with options: - (a dash to read from the input stream)
-// 	execute_perform_map_clusters( {
-// 		"--" + clustmap_output_options_block::PO_JSON_OUTPUT_TO_FILE, "-"
-// 		"--" + clust_mapping_options_block::PO_SUMMARISE,
-// 		"--" + clust_mapping_options_block::PO_OUTPUT_FILE, TEMP_TEST_FILE_FILENAME.string(),
-// 		"--" + clustmap_output_options_block::PO_QUIET,
-// 	} );
-
-// 	// Then expect the correct error message in the output stream
-// 	BOOST_CHECK_EQUAL( output_ss.str(), "cath-resolve-hits: Cannot mix old, deprecated options (--output-file) with new, replacement options (--quiet, --json-output-to-file). Please use the new options only.\nSee 'cath-resolve-hits --help' for usage.\n" );
-// }
-
 
 BOOST_AUTO_TEST_CASE(fails_if_given_no_options) {
 	// Given an input stream containing the input
 	input_ss.str( eg_input_str() );
 
-	// When calling perform_map_clusters with options: - (a dash to read from the input stream)
+	// When calling perform_map_clusters without options
 	execute_perform_map_clusters( { } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(Must specify an input file)" } ) );
 }
 
+BOOST_AUTO_TEST_CASE(gives_correct_help_usage) {
+	// When calling perform_map_clusters with options: help
+	execute_perform_map_clusters( { "--" + misc_help_version_options_block::PO_HELP } );
+
+	// Then expect the correct help message in the output stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), help_usage_file() );
+}
 
 BOOST_AUTO_TEST_CASE(processes_from_stdin_to_stdout) {
 	// Given an input stream containing the input
@@ -162,7 +134,7 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_stdout) {
 	execute_perform_map_clusters( { "-" } );
 
 	// Then expect the correct results in the output stream
-	BOOST_CHECK_EQUAL( output_ss.str(), eg_renumber_only_result_str() );
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_renumber_only_result_file() );
 }
 
 BOOST_AUTO_TEST_CASE(processes_from_file_to_stdout) {
@@ -170,23 +142,8 @@ BOOST_AUTO_TEST_CASE(processes_from_file_to_stdout) {
 	execute_perform_map_clusters( { eg_input_file().string() } );
 
 	// Then expect the correct results in the output stream
-	BOOST_CHECK_EQUAL( output_ss.str(), eg_renumber_only_result_str() );
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_renumber_only_result_file() );
 }
-
-// clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE
-// clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT
-//
-// clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL
-// clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL
-//
-// clustmap_input_options_block::PO_APPEND_BATCH_ID
-// clustmap_input_options_block::PO_OUTPUT_TO_FILE
-// clustmap_input_options_block::PO_SUMMARISE_TO_FILE
-
-// eg_input_str();
-// eg_input_mapfrom_str();
-// eg_input_result_str();
-
 
 BOOST_AUTO_TEST_CASE(processes_from_file_to_file) {
 	// When calling perform_map_clusters with options: an input file, the output file option and an output file
@@ -200,437 +157,470 @@ BOOST_AUTO_TEST_CASE(processes_from_file_to_file) {
 	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, eg_renumber_only_result_file() );
 }
 
-// BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file) {
-// 	// Given an input stream containing the input
-// 	input_ss.str( example_input_raw );
-
-// 	// When calling perform_map_clusters with options: - (a dash to read from the input stream), the output file option and an output file
-// 	execute_perform_map_clusters( {
-// 		"-",
-// 		"--" + clustmap_output_options_block::PO_QUIET,
-// 		"--" + clustmap_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string() } );
-
-// 	// Then expect:
-// 	//  * an empty output stream and
-// 	//  * the output file containing the correct output
-// 	//
-// 	// \todo Add a better test tool for comparing a got file to an expected string
-// 	BOOST_CHECK_EQUAL( output_ss.str(), "" );
-// 	istringstream expected_out_ss{ example_output };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( expected_out_ss, "expected_crh_output", TEMP_TEST_FILE_FILENAME );
-// }
-
-// BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file__deprecated_opts) {
-// 	// Redirect any logging to log_ss
-// 	log_to_ostream_guard log_output_guard{ log_ss };
-
-// 	// Given an input stream containing the input
-// 	input_ss.str( example_input_raw );
-
-// 	// When calling perform_map_clusters with options: - (a dash to read from the input stream), the output file option and an output file
-// 	execute_perform_map_clusters( { "-", "--" + clust_mapping_options_block::PO_OUTPUT_FILE, TEMP_TEST_FILE_FILENAME.string() } );
-
-// 	// Then expect:
-// 	//  * an empty output stream and
-// 	//  * the output file containing the correct output
-// 	//
-// 	// \todo Add a better test tool for comparing a got file to an expected string
-// 	BOOST_CHECK_EQUAL( output_ss.str(), "" );
-// 	istringstream expected_out_ss{ example_output };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( expected_out_ss, "expected_crh_output", TEMP_TEST_FILE_FILENAME );
-
-// 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-quiet \-\-hits\-text\-to\-file )" } ) );
-// }
-
-// BOOST_AUTO_TEST_CASE(does_not_require_right_intersperses_all_to_cache) {
-// 	// Given an input that requires caching at the start of match_b whilst processing in match_a and match_c
-// 	// even though match_b doesn't right intersperse match_c
-// 	const string input_hits_str =
-// 		"query match_c 1 0-9,60-69\n"
-// 		"query match_a 1 10-19,40-49\n"
-// 		"query match_b 1 30-39,50-59\n";
-// 	input_ss.str( input_hits_str );
-
-// 	// When calling perform_map_clusters on that data with no trimming
-// 	execute_perform_map_clusters( {
-// 		"-",
-// 		"--" + clust_mapping_options_block::PO_OVERLAP_TRIM_SPEC,
-// 		"1/0"
-// 	} );
-
-// 	// Then expect the output to be the same as the input
-// 	// (but with repeat of the boundaries for the resolved version)
-// 	const string output_hits_str =
-// 		"# Generated by cath-resolve-hits, one of the cath-tools (https://github.com/UCLOrengoGroup/cath-tools)\n"
-// 		"#FIELDS query-id match-id score boundaries resolved\n"
-// 		"query match_c 1 0-9,60-69 0-9,60-69\n"
-// 		"query match_a 1 10-19,40-49 10-19,40-49\n"
-// 		"query match_b 1 30-39,50-59 30-39,50-59\n";
-// 	BOOST_CHECK_EQUAL( output_ss.str(), output_hits_str );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_domtbl) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_DOMTBL_IN_FILENAME().string(), "--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_DOMTBL_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_DOMTBL_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_hmmsearch) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_hmmsearch_big_gap) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clustmap_input_options_block::PO_MIN_GAP_LENGTH, "10000"
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_hmmsearch_small_gap) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clustmap_input_options_block::PO_MIN_GAP_LENGTH, "1"
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_hmmsearch_trimmed) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clustmap_output_options_block::PO_OUTPUT_TRIMMED_HITS
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_hmmsearch_big_trim) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clust_mapping_options_block::PO_OVERLAP_TRIM_SPEC, "100/60"
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME() );
-// }
-
-
-// BOOST_AUTO_TEST_CASE(handles_output_hmmsearch_aln) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clustmap_output_options_block::PO_OUTPUT_HMMSEARCH_ALN
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_raw_evalue) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_RAW_EVALUE_IN_FILENAME().string(), "--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_EVALUES ),
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_RAW_EVALUE_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_EVALUE_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_raw_score) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_RAW_SCORE_IN_FILENAME().string(), "--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_SCORES ),
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_OUT_FILENAME() );
-// }
-
-
-// BOOST_AUTO_TEST_CASE(handles_dc_correctly) {
-// 	execute_perform_map_clusters( {
-// 		(CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.in" ).string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
-// 		"--" + crh_score_options_block::PO_APPLY_CATH_RULES,
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
-// }
-
-// BOOST_AUTO_TEST_CASE(rejects_output_hmmsearch_aln_for_non_hmmsearch_format) {
-// 	execute_perform_map_clusters( {
-// 		(CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.in" ).string(),
-// 		"--" + clustmap_output_options_block::PO_OUTPUT_HMMSEARCH_ALN,
-// 	} );
-// 	BOOST_CHECK( boost::algorithm::contains( output_ss.str(), "Cannot use" ) );
-// }
-
-// BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scores) {
-// 	const log_to_ostream_guard the_guard{ log_ss };
-
-// 	BOOST_CHECK_NO_THROW_DIAG( execute_perform_map_clusters( {
-// 		(CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.negatives_scores.in" ).string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clustmap_output_options_block::PO_HTML_OUTPUT_TO_FILE, "-"
-// 	} ) );
-
-// 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(^Skipping .* weak hits\.)" } ) );
-// }
-
-// BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scores__deprecated_opts) {
-// 	// Redirect any logging to log_ss
-// 	log_to_ostream_guard log_output_guard{ log_ss };
-
-// 	BOOST_CHECK_NO_THROW_DIAG( execute_perform_map_clusters( {
-// 		(CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.negatives_scores.in" ).string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clust_mapping_options_block::PO_GENERATE_HTML_OUTPUT
-// 	} ) );
-
-// 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-html\-output\-to\-file \-)" } ) );
-// }
-
-// BOOST_AUTO_TEST_CASE(handles_overlap_being_valid_only_once_short_seg_gone) {
-// 	// Given: an input stream containing two hits that can both be included in the results
-// 	// but only because the second hit's second segment is removed due to being shorter than
-// 	// the min_seg_length (and not because of trimming)
-// 	const string input_hits_str =
-// 		"the_query match_1 1 21-122\n"
-// 		"the_query match_2 1 0-20,94-95\n";
-// 	input_ss.str( input_hits_str );
-
-// 	// When: calling perform_map_clusters with options to read from the input stream,
-// 	// remove segments shorter than 7 and perform no trimming
-// 	execute_perform_map_clusters( {
-// 		"-",
-// 		"--" + clust_mapping_options_block::PO_MIN_SEG_LENGTH,    "7",
-// 		"--" + clust_mapping_options_block::PO_OVERLAP_TRIM_SPEC, "1/0",
-// 	} );
-
-// 	// Then: expect the results to have included both hits but to have removed
-// 	// the short segment from the final results
-// 	const string output_hits_str =
-// 		"# Generated by cath-resolve-hits, one of the cath-tools (https://github.com/UCLOrengoGroup/cath-tools)\n"
-// 		"#FIELDS query-id match-id score boundaries resolved\n"
-// 		"the_query match_2 1 0-20,94-95 0-20\n"
-// 		"the_query match_1 1 21-122 21-122\n";
-// 	BOOST_CHECK_EQUAL( output_ss.str(), output_hits_str );
-// }
-
-// BOOST_AUTO_TEST_SUITE(limit)
-
-// BOOST_AUTO_TEST_CASE(file_domtbl) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_DOMTBL_IN_FILENAME().string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
-// 		"--" + clust_mapping_options_block::PO_LIMIT_QUERIES + "=2"
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_hmmsearch) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clust_mapping_options_block::PO_LIMIT_QUERIES + "=2"
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_raw_evalue) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_RAW_EVALUE_IN_FILENAME().string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_EVALUES ),
-// 		"--" + clust_mapping_options_block::PO_LIMIT_QUERIES + "=2"
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(file_raw_score) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_RAW_SCORE_IN_FILENAME().string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_SCORES ),
-// 		"--" + clust_mapping_options_block::PO_LIMIT_QUERIES + "=2"
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_SUITE_END()
-
-
-
-// BOOST_AUTO_TEST_SUITE(summary_output)
-
-// BOOST_AUTO_TEST_CASE(summarise) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clustmap_output_options_block::PO_SUMMARISE_TO_FILE, "-"
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(summarise__deprecated_opts) {
-// 	// Redirect any logging to log_ss
-// 	log_to_ostream_guard log_output_guard{ log_ss };
-
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clust_mapping_options_block::PO_SUMMARISE
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
-
-// 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-summarise\-to\-file \-)" } ) );
-// }
-
-// BOOST_AUTO_TEST_SUITE_END()
-
-
-// BOOST_AUTO_TEST_SUITE(css)
-
-// BOOST_AUTO_TEST_CASE(export_css_to_stdout) {
-// 	execute_perform_map_clusters( {
-// 		"--" + clustmap_output_options_block::PO_EXPORT_CSS_FILE, "-",
-// 	} );
-
-// 	BOOST_CHECK(   regex_search( output_ss.str(), regex{ R"(^/\* \-\-\- Start[^]*crh-exclusion-note[^]{0,100}$)" } ) ); // In EMCAScript, . doesn't match newline characters, hence the use of [^] here
-// 	BOOST_CHECK( ! regex_search( output_ss.str(), regex{ R"(443cb81e8e280e529de69ef113974208)" } ) );
-// }
-
-// BOOST_AUTO_TEST_CASE(export_css_to_file) {
-// 	execute_perform_map_clusters( {
-// 		"--" + clustmap_output_options_block::PO_EXPORT_CSS_FILE, TEMP_TEST_FILE_FILENAME.string(),
-// 	} );
-
-// 	BOOST_CHECK(   output_ss.str().empty() );
-// 	BOOST_CHECK(   regex_search( read_string_from_file( TEMP_TEST_FILE_FILENAME ), regex{ R"(^/\* \-\-\- Start[^]*crh-exclusion-note[^]{0,100}$)" } ) ); // In EMCAScript, . doesn't match newline characters, hence the use of [^] here
-// 	BOOST_CHECK( ! regex_search( read_string_from_file( TEMP_TEST_FILE_FILENAME ), regex{ R"(443cb81e8e280e529de69ef113974208)" } ) );
-// }
-
-// BOOST_AUTO_TEST_SUITE_END()
-
-
-// BOOST_AUTO_TEST_SUITE(html_output)
-
-// BOOST_AUTO_TEST_CASE(html) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clust_mapping_options_block::PO_OVERLAP_TRIM_SPEC, "150/90",
-// 		"--" + clustmap_output_options_block::PO_HTML_OUTPUT_TO_FILE, "-",
-// 		"--" + clust_mapping_options_block::PO_WORST_PERMISSIBLE_BITSCORE, "14",
-// 		"--" + clust_mapping_options_block::PO_EXCLUDE_REJECTED_HITS,
-// 		"--" + clust_mapping_options_block::PO_MAX_NUM_NON_SOLN_HITS, "10"
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(html__deprecated_opts) {
-// 	// Redirect any logging to log_ss
-// 	log_to_ostream_guard log_output_guard{ log_ss };
-
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clust_mapping_options_block::PO_OVERLAP_TRIM_SPEC, "150/90",
-// 		"--" + clust_mapping_options_block::PO_GENERATE_HTML_OUTPUT,
-// 		"--" + clust_mapping_options_block::PO_WORST_PERMISSIBLE_BITSCORE, "14",
-// 		"--" + clust_mapping_options_block::PO_EXCLUDE_REJECTED_HITS,
-// 		"--" + clust_mapping_options_block::PO_MAX_NUM_NON_SOLN_HITS, "10"
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
-
-// 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-html\-output\-to\-file \-)" } ) );
-// }
-
-// BOOST_AUTO_TEST_SUITE_END()
-
-
-// BOOST_AUTO_TEST_SUITE(json_output)
-
-// BOOST_AUTO_TEST_CASE(json_from_hmmsearch_out) {
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clustmap_output_options_block::PO_JSON_OUTPUT_TO_FILE, "-",
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(json_from_domtblout) {
-// 	execute_perform_map_clusters( {
-// 		(CRH_TEST_DATA_DIR() / "eg_domtblout.in" ).string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
-// 		"--" + clustmap_output_options_block::PO_JSON_OUTPUT_TO_FILE, "-",
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
-// }
-
-// BOOST_AUTO_TEST_CASE(json_from_hmmsearch_out__deprecated_opts) {
-// 	// Redirect any logging to log_ss
-// 	log_to_ostream_guard log_output_guard{ log_ss };
-
-// 	execute_perform_map_clusters( {
-// 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-// 		"--" + clust_mapping_options_block::PO_JSON_OUTPUT,
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
-
-// 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-json\-output\-to\-file \-)" } ) );
-// }
-
-// BOOST_AUTO_TEST_CASE(json_from_domtblout__deprecated_opts) {
-// 	// Redirect any logging to log_ss
-// 	log_to_ostream_guard log_output_guard{ log_ss };
-
-// 	execute_perform_map_clusters( {
-// 		(CRH_TEST_DATA_DIR() / "eg_domtblout.in" ).string(),
-// 		"--" + clustmap_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
-// 		"--" + clust_mapping_options_block::PO_JSON_OUTPUT,
-// 	} );
-// 	istringstream istream_of_output{ output_ss.str() };
-// 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
-// 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
-
-// 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-json\-output\-to\-file \-)" } ) );
-// }
-
-// BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_CASE(append_batch_id_works) {
+	// When calling perform_map_clusters with options: an input file, the output file option and an output file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_output_options_block::PO_APPEND_BATCH_ID, "agifttome" } );
 
+	// Then expect:
+	//  * an empty output stream and
+	//  * the output file containing the correct output
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_append_batch_id_result_file() );
+}
+
+
+BOOST_AUTO_TEST_SUITE(overlap_thresholds)
+
+BOOST_AUTO_TEST_CASE(rejects_dom_overlap_option_if_not_mapping_from) {
+	// When calling perform_map_clusters with options: an input file and a domain overlap
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL, "60" } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(Cannot specify mapping threshold options)" } ) );
+}
+
+BOOST_AUTO_TEST_CASE(rejects_clust_overlap_option_if_not_mapping_from) {
+	// When calling perform_map_clusters with options: an input file and a cluster overlap
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL, "60" } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(Cannot specify mapping threshold options)" } ) );
+}
+
+
+
+BOOST_AUTO_TEST_SUITE(out_of_range)
+
+BOOST_AUTO_TEST_CASE(rejects_dom_overlap_less_than_50) {
+	// When calling perform_map_clusters with options: an input file and a too-small domain overlap
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL, "49.99" } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(mapping fraction is out of range)" } ) );
+}
+
+BOOST_AUTO_TEST_CASE(rejects_clust_overlap_less_than_50) {
+	// When calling perform_map_clusters with options: an input file and a too-small cluster overlap
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL, "49.99" } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(mapping fraction is out of range)" } ) );
+}
+
+BOOST_AUTO_TEST_CASE(rejects_dom_overlap_more_than_100) {
+	// When calling perform_map_clusters with options: an input file and a too-large domain overlap
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL, "100.1" } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(mapping fraction is out of range)" } ) );
+}
+
+BOOST_AUTO_TEST_CASE(rejects_clust_overlap_more_than_100) {
+	// When calling perform_map_clusters with options: an input file and a too-large cluster overlap
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL, "100.1" } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(mapping fraction is out of range)" } ) );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+
+BOOST_AUTO_TEST_SUITE(in_range)
+
+BOOST_AUTO_TEST_CASE(accepts_dom_overlap_of_50) {
+	// When calling perform_map_clusters with options: an input file, a map-from file and a domain overlap of 50%
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
+		"--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL, "50" } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_mapfrom_dom_ol_50_result_file() );
+}
+
+BOOST_AUTO_TEST_CASE(accepts_clust_overlap_of_50) {
+	// When calling perform_map_clusters with options: an input file, a map-from file and a cluster overlap of 50%
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
+		"--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL, "50" } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_mapfrom_clust_ol_50_result_file() );
+}
+
+BOOST_AUTO_TEST_CASE(accepts_dom_overlap_of_100) {
+	// When calling perform_map_clusters with options: an input file, a map-from file and a domain overlap of 100%
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
+		"--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL, "100" } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_mapfrom_dom_ol_100_result_file() );
+}
+
+BOOST_AUTO_TEST_CASE(accepts_clust_overlap_of_100) {
+	// When calling perform_map_clusters with options: an input file, a map-from file and a cluster overlap of 100%
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
+		"--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL, "100" } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_mapfrom_clust_ol_100_result_file() );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+
+
+BOOST_AUTO_TEST_CASE(fails_if_batch_id_when_using_batches) {
+	// When calling perform_map_clusters with options: an input file, the append-batch-id flag and the batches flag
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_output_options_block::PO_APPEND_BATCH_ID, "agifttome",
+		"--" + clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(Cannot specify a batch ID for appending.*when reading batches from input)" } ) );
+}
+
+
+BOOST_AUTO_TEST_CASE(fails_if_map_from_file_when_using_batches) {
+	// When calling perform_map_clusters with options: an input file, a map-from file and the batches flag
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
+		"--" + clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT } );
+
+	// Then expect the correct error message in the output stream
+	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(Cannot specify a map-from cluster-membership file.*when reading batches from input)" } ) );
+}
+
+
+BOOST_AUTO_TEST_CASE(accepts_non_numeric_cluster_names_in_map_from) {
+	// When calling perform_map_clusters with options: an input file, a map-from file that includes non-numeric cluster names
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_non_numeric_file().string()} );
+
+	// Then expect the correct results output stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_input_non_numeric_fromresult() );
+}
+
+
+BOOST_AUTO_TEST_CASE(accepts_non_numeric_cluster_names_in_map_to) {
+	// When calling perform_map_clusters with options: an input file that includes non-numeric cluster names
+	execute_perform_map_clusters( { eg_input_non_numeric_file().string() } );
+
+	// Then expect the correct results in the output stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_input_non_numeric_toresult() );
+}
+
+
+/// \TODO Prefer a case that has some mapping results below 100% to better check the percentile stats
+BOOST_AUTO_TEST_CASE(generates_correct_summary_file_when_mapping) {
+	// When calling perform_map_clusters with options: an input file, a map-from file and a file to write a summary to
+	execute_perform_map_clusters( { eg_input_non_numeric_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
+		"--" + clustmap_output_options_block::PO_SUMMARISE_TO_FILE,      TEMP_TEST_FILE_FILENAME.string(),
+		// "--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL,         "99",
+		// "--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL,       "99",
+	} );
+
+	// Then expect the correct output in the summary file (TEMP_TEST_FILE_FILENAME)
+	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, eg_summary_mapping_file() );
+}
+
+BOOST_AUTO_TEST_CASE(generates_correct_summary_file_when_renumbering) {
+	// When calling perform_map_clusters with options: an input file and a file to write a summary to
+	execute_perform_map_clusters( { eg_input_non_numeric_file().string(),
+		"--" + clustmap_output_options_block::PO_SUMMARISE_TO_FILE, TEMP_TEST_FILE_FILENAME.string() } );
+
+	// Then expect the correct output in the summary file (TEMP_TEST_FILE_FILENAME)
+	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, eg_renumbering_summary_file() );
+}
+
+// Check that the mapping correctly require that:
+//  * > 0.2 of the candidate new cluster's entries map to the candidate old cluster and
+//  * > 0.5 of the candidate new cluster's entries that map to some old cluster map to the candidate old cluster
+//
+// The correct answer is:
+//  * to_cluster_w *should not* map to from_cluster_a (and to nothing else)
+//  * to_cluster_x *should not* map to from_cluster_b (and to nothing else)
+//  * to_cluster_y *should not* map to from_cluster_c (and to nothing else)
+//  * to_cluster_z *should*     map to from_cluster_d (and to nothing else)
+//
+// The breakdown:
+//
+//   from_cluster_name | from_size | from_mapped | to_cluster_name | to_size | to_mapped || pair_mapped | frac_to | frac_to_mapped | decision
+//  -------------------+-----------+-------------+-----------------+---------+-----------++-------------+---------+----------------+----------
+//   from_cluster_a    |         2 |           2 | to_cluster_w    |      10 |         4 ||           2 |   0.2 ✗ |         0.5  ✗ |    ✗
+//   from_cluster_b    |         5 |           5 | to_cluster_x    |      10 |        10 ||           5 |   0.5 ✓ |         0.5  ✗ |    ✗
+//   from_cluster_c    |         2 |           2 | to_cluster_y    |      10 |         2 ||           2 |   0.2 ✗ |         1.0  ✓ |    ✗
+//   from_cluster_d    |         3 |           3 | to_cluster_z    |      10 |         4 ||           3 |   0.3 ✓ |         0.75 ✓ |    ✓
+//
+BOOST_AUTO_TEST_CASE(handles_to_clust_ol_thresholds_correctly) {
+	// When calling perform_map_clusters with options: an input file and a map-from file with data to test to-cluster thresholds
+	execute_perform_map_clusters( { to_clust_ol_thresholds_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, to_clust_ol_thresholds_mapfrom_file().string(),
+	} );
+
+	// Then expect the correct results in the output stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), to_clust_ol_thresholds_result_file() );
+}
+
+
+BOOST_AUTO_TEST_SUITE(clashes_duplicates_etc)
+
+BOOST_AUTO_TEST_CASE(handles_clashing_segments_in_input) {
+	// When calling perform_map_clusters with options: a clashing_segments input file
+	execute_perform_map_clusters( { eg_input_clashing_segments_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(clashes with a previous entry)" } ), 2 );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_clashing_segments_in_map_from) {
+	// When calling perform_map_clusters with options: an input file and a clashing_segments map-from file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_clashing_segments_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(clashes with a previous entry)" } ), 2 );
+	err_ss.str( "" );
+}
+
+
+
+
+BOOST_AUTO_TEST_CASE(handles_clashing_segments_w_diff_names_in_input) {
+	// When calling perform_map_clusters with options: a clashing_segments_w_diff_names input file
+	execute_perform_map_clusters( { eg_input_clashing_segments_w_diff_names_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK( regex_search( err_ss.str(), regex{ R"(clashes with a previous entry)" } ) );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_clashing_segments_w_diff_names_in_map_from) {
+	// When calling perform_map_clusters with options: an input file and a clashing_segments_w_diff_names map-from file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_clashing_segments_w_diff_names_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK( regex_search( err_ss.str(), regex{ R"(clashes with a previous entry)" } ) );
+	err_ss.str( "" );
+}
+
+
+
+BOOST_AUTO_TEST_CASE(handles_mixed_wcds_and_segments_in_input) {
+	// When calling perform_map_clusters with options: a mixed_wcds_and_segments input file
+	execute_perform_map_clusters( { eg_input_mixed_wcds_and_segments_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(clashes with a previous entry)" } ), 1 );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_mixed_wcds_and_segments_in_map_from) {
+	// When calling perform_map_clusters with options: an input file and a mixed_wcds_and_segments map-from file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mixed_wcds_and_segments_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( err_ss.str(), "" ); // Ideally, it'd be good if this detected the clash across clusters but
+	                                       // at present the map-from data is stored separately by cluster so
+	                                       // it doesn't seem worth the additional effort
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_eg_input_mixed_wcds_and_segments_within_cluster_file_in_input) {
+	// When calling perform_map_clusters with options: a mixed_wcds_and_segments_within_cluster input file
+	execute_perform_map_clusters( { eg_input_mixed_wcds_and_segments_within_cluster_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(clashes with a previous entry)" } ), 1 );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_eg_input_mixed_wcds_and_segments_within_cluster_file_in_map_from) {
+	// When calling perform_map_clusters with options: an input file and a mixed_wcds_and_segments_within_cluster map-from file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mixed_wcds_and_segments_within_cluster_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(clashes with a previous entry)" } ), 1 );
+	err_ss.str( "" );
+}
+
+
+
+
+BOOST_AUTO_TEST_CASE(handles_repeated_segments_in_input) {
+	// When calling perform_map_clusters with options: a repeated_segments input file
+	execute_perform_map_clusters( { eg_input_repeated_segments_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(duplicates a previous entry)" } ), 1 );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_repeated_segments_in_map_from) {
+	// When calling perform_map_clusters with options: an input file and a repeated_segments map-from file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_repeated_segments_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(duplicates a previous entry)" } ), 1 );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_repeated_segments_w_diff_names_in_input) {
+	// When calling perform_map_clusters with options: a repeated_segments_w_diff_names input file
+	execute_perform_map_clusters( { eg_input_repeated_segments_w_diff_names_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(duplicates a previous entry)" } ), 1 );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_repeated_segments_w_diff_names_in_map_from) {
+	// When calling perform_map_clusters with options: an input file and a repeated_segments_w_diff_names map-from file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_repeated_segments_w_diff_names_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(duplicates a previous entry)" } ), 1 );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_repeated_wcds_in_input) {
+	// When calling perform_map_clusters with options: a repeated_wcds input file
+	execute_perform_map_clusters( { eg_input_repeated_wcds_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(duplicates a previous entry)" } ), 1 );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_repeated_wcds_in_map_from) {
+	// When calling perform_map_clusters with options: an input file and a repeated_wcds map-from file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_repeated_wcds_file().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_NE( output_ss.str(), "" );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(duplicates a previous entry)" } ), 1 );
+	err_ss.str( "" );
+}
+
+
+
+
+
+BOOST_AUTO_TEST_CASE(handles_start_at_zero_in_input) {
+	// When calling perform_map_clusters with options: a zero_start input file
+	execute_perform_map_clusters( { eg_input_zero_start().string() } );
+
+	// Then expect the correct output
+	BOOST_CHECK_EQUAL( output_ss.str(), "# cluster-id suggested-name\nclust_a 1\n" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_start_at_zero_in_input_in_map_from) {
+	// When calling perform_map_clusters with options: an input file and a zero_start map-from file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_zero_start().string() } );
+
+	// Then expect the correct output
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_simple_mapfrom_result_file() );
+}
+
+
+
+
+BOOST_AUTO_TEST_CASE(handles_backward_segment_in_input) {
+	// When calling perform_map_clusters with options: a backward segment input file
+	execute_perform_map_clusters( { eg_input_backward_segment().string()  } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), empty_result_file() );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(parsing segments from entry.*start residue before the stop residue)" } ), 1 );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_backward_segment_in_input_in_map_from) {
+	// When calling perform_map_clusters with options: an input file and a backward segment map-from file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_backward_segment().string()  } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_simple_mapfrom_result_file() );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(parsing segments from entry.*start residue before the stop residue)" } ), 1 );
+	err_ss.str( "" );
+}
+
+
+
+BOOST_AUTO_TEST_CASE(handles_misordered_segments_in_input) {
+	// When calling perform_map_clusters with options: a misordered segments input file
+	execute_perform_map_clusters( { eg_input_misordered_segments().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), empty_result_file() );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(parsing segments from entry.*building segments from bounds, found preceding stop after start)" } ), 1 );
+	err_ss.str( "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_misordered_segments_in_input_in_map_from) {
+	// When calling perform_map_clusters with options: an input file and a misordered segments map-from file
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_misordered_segments().string() } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_simple_mapfrom_result_file() );
+	BOOST_CHECK_EQUAL( regex_count( err_ss.str(), regex{ R"(parsing segments from entry.*building segments from bounds, found preceding stop after start)" } ), 1 );
+	err_ss.str( "" );
+}
+
+
+
+
+
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+
+BOOST_AUTO_TEST_CASE(handles_batch) {
+	// When calling perform_map_clusters with options: an batch input file and the --read-batches-from-input flag
+	execute_perform_map_clusters( { eg_batch_input_file().string(),
+		"--" + clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT } );
+
+	// Then expect the correct error message in the error stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_batch_result_file() );
+}
 
 BOOST_AUTO_TEST_SUITE_END()

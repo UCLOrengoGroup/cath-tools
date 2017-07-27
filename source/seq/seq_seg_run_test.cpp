@@ -493,6 +493,10 @@ BOOST_AUTO_TEST_SUITE_END()
 // BOOST_AUTO_TEST_SUITE(middle)
 
 BOOST_AUTO_TEST_CASE(middle) {
+	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 0, 0       )         ),  0.0 );
+	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 0, 1       )         ),  0.5 );
+	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 1, 1       )         ),  1.0 );
+
 	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 2, 2       )         ),  2.0 );
 	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 2, 3       )         ),  2.5 );
 	BOOST_CHECK_EQUAL( middle_index( make_seq_seg_run_from_res_indices( 1, 3       )         ),  2.0 );

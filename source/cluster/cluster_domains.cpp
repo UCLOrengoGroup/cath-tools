@@ -26,9 +26,24 @@
 using namespace cath::clust::detail;
 using namespace cath::common;
 
+using boost::accumulate;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
 using std::string;
+
+/// \brief Get the number of entries in the specified cluster_domains
+///
+/// \relates cluster_domains
+size_t cath::clust::num_entries(const cluster_domains &arg_cluster_domains ///< The cluster_domains to query
+                                ) {
+	return accumulate(
+		arg_cluster_domains
+			| transformed( [] (const seq_id_and_domain_cluster_ids_pair &x) {
+				return x.dom_cluster_ids.size();
+			} ),
+		0_z
+	);
+}
 
 /// \brief Generate a string describing the specified cluster_domains
 ///

@@ -60,12 +60,12 @@ namespace cath {
 			/// \brief A const_iterator type alias as part of making this a range over seq_id_and_domain_cluster_ids_pairs
 			using const_iterator = detail::seq_id_and_domain_cluster_ids_pair_vec_citr;
 
-			cluster_domains & add_domain(const common::id_of_string::id_type &,
-			                             seq::seq_seg_run_opt,
-			                             const cluster_id_t &);
+			clust_entry_problem add_domain(const common::id_of_string::id_type &,
+			                               seq::seq_seg_run_opt,
+			                               const cluster_id_t &);
 
 			bool empty() const;
-			size_t size() const;
+			size_t num_seqs() const;
 
 			const_iterator begin() const;
 			const_iterator end() const;
@@ -73,10 +73,10 @@ namespace cath {
 
 		/// \brief Add a domain with the specified (optional) segments in the specified cluster
 		///        under the specified sequence ID
-		inline cluster_domains & cluster_domains::add_domain(const common::id_of_string::id_type &arg_seq_id,    ///< The ID of the sequence on which the domain to add appears
-		                                                     seq::seq_seg_run_opt                 arg_segments,  ///< The (optional) segments of the domain to add
-		                                                     const cluster_id_t                  &arg_cluster_id ///< The cluster ID of the domain to add
-		                                                     ) {
+		inline clust_entry_problem cluster_domains::add_domain(const common::id_of_string::id_type &arg_seq_id,    ///< The ID of the sequence on which the domain to add appears
+		                                                       seq::seq_seg_run_opt                 arg_segments,  ///< The (optional) segments of the domain to add
+		                                                       const cluster_id_t                  &arg_cluster_id ///< The cluster ID of the domain to add
+		                                                       ) {
 			// Find an iterator to the part of seq_domains where this entry this entry's
 			// seq_id_and_domain_cluster_ids_pair is or would be
 			const auto find_itr = boost::range::lower_bound(
@@ -86,15 +86,24 @@ namespace cath {
 					return x.seq_id < y;
 				}
 			);
+
 			// Insert a seq_id_and_domain_cluster_ids_pair if necessary and, either way, grab an iterator to
 			// the one to which the domain should be added
 			const auto emplace_itr = ( find_itr == common::cend( seq_domains ) || find_itr->seq_id != arg_seq_id )
 				? seq_domains.insert( find_itr, detail::seq_id_and_domain_cluster_ids_pair{ arg_seq_id, domain_cluster_ids{} } )
 				: find_itr;
 
-			// Add the domain and return *this
-			emplace_itr->dom_cluster_ids.emplace_back( arg_segments, arg_cluster_id );
-			return *this;
+			// Add the domain
+			auto &the_domain_cluster_ids = emplace_itr->dom_cluster_ids;
+
+			for (const auto &the_domain_cluster_id : the_domain_cluster_ids) {
+				const auto intrcn = interaction( arg_segments, the_domain_cluster_id.segments );
+				if ( intrcn != clust_entry_problem::NONE ) {
+					return intrcn;
+				}
+			}
+			the_domain_cluster_ids.emplace_back( arg_segments, arg_cluster_id );
+			return clust_entry_problem::NONE;
 		}
 
 		/// \brief Return whether this is empty
@@ -103,7 +112,9 @@ namespace cath {
 		}
 
 		/// \brief Return the number of seq_id_and_domain_cluster_ids_pairs
-		inline size_t cluster_domains::size() const {
+		///
+		/// This is called num_seqs() rather than size() to avoid it mistakenly being used for num_entries())
+		inline size_t cluster_domains::num_seqs() const {
 			return seq_domains.size();
 		}
 
@@ -117,8 +128,12 @@ namespace cath {
 			return common::cend  ( seq_domains );
 		}
 
+		size_t num_entries(const cluster_domains &);
+
 		std::string to_string(const cluster_domains &,
 		                      const common::id_of_string &);
+
+
 
 	} // namespace clust
 } // namespace cath
