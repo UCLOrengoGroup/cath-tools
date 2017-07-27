@@ -37,24 +37,24 @@ env:
 # - TOOLS="ANALYZE" # Use scan_build, which builds with Clang's static analyzer
 
 before_install:
-  - if [ "$TRAVIS_OS_NAME" == "linux"                      ]; then export BUILD_FILE_SUFFIX=".ubuntu14.04"; else export BUILD_FILE_SUFFIX=".macos"                   ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ $CC =~ ^clang ]; then export CXX="clang++-4.0" CC="clang-4.0"                                                           ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ $CC =~ ^gcc   ]; then export CXX="g++-6"   CC="gcc-6"                                                                   ; fi
-  - if [ "$TRAVIS_OS_NAME" == "osx"   ] && [ $CC =~ ^gcc   ]; then export CXX="g++-4.8" CC="gcc-4.8"                                                                 ; fi # Default gcc on osx is just a front-end for LLVM
-  - if [ "$BUILDTYPE" =~ SAN$                              ]; then export CMAKE_BUILD_TYPE="RELEASE"                                                                 ; fi
-  - if [ "$BUILDTYPE" == "ASAN"                            ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer"            ; fi
-# - if [ "$BUILDTYPE" == "MSAN"                            ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=memory  -fno-omit-frame-pointer"            ; fi
-# - if [ "$BUILDTYPE" == "UBSAN"                           ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=undefined                      "            ; fi
-# - if [ "$BUILDTYPE" == "ANALYZE"                         ]; then export CMAKE_BUILD_TYPE="RELEASE" ; export WRAPPER="scan_build-3.6 " ; fi else export WRAPPER=" " ; fi
-  - if [ "$BUILDTYPE" =~ SAN$         ] && [ $CC =~ ^gcc   ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fuse-ld=gold"                                         ; fi
-  - if [ "$BUILDTYPE" == "RELEASE"                         ]; then export CMAKE_BUILD_TYPE="RELEASE"       ; export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}"             ; fi
-# - if [ "$BUILDTYPE" == "DEBUG"                           ]; then export CMAKE_BUILD_TYPE="DEBUG"         ; export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}"               ; fi
-# - if [ "$BUILDTYPE" == "RELWITHDEBINFO"                  ]; then export CMAKE_BUILD_TYPE="RELWITHDEBINFO"; export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}"               ; fi
-# - if [                                     $CC =~ ^clang ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -stdlib=libc++ " ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux"                        ]; then export BUILD_FILE_SUFFIX=".ubuntu14.04"; else export BUILD_FILE_SUFFIX=".macos"                   ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^clang ]; then export CXX="clang++-4.0" CC="clang-4.0"                                                           ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^gcc   ]; then export CXX="g++-6"   CC="gcc-6"                                                                   ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx"   ] && [ "$CC" =~ ^gcc   ]; then export CXX="g++-4.8" CC="gcc-4.8"                                                                 ; fi # Default gcc on osx is just a front-end for LLVM
+  - if [ "$BUILDTYPE" =~ SAN$                                ]; then export CMAKE_BUILD_TYPE="RELEASE"                                                                 ; fi
+  - if [ "$BUILDTYPE" == "ASAN"                              ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer"            ; fi
+# - if [ "$BUILDTYPE" == "MSAN"                              ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=memory  -fno-omit-frame-pointer"            ; fi
+# - if [ "$BUILDTYPE" == "UBSAN"                             ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=undefined                      "            ; fi
+# - if [ "$BUILDTYPE" == "ANALYZE"                           ]; then export CMAKE_BUILD_TYPE="RELEASE" ; export WRAPPER="scan_build-3.6 " ; fi else export WRAPPER=" " ; fi
+  - if [ "$BUILDTYPE" =~ SAN$         ] && [ "$CC" =~ ^gcc   ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fuse-ld=gold"                                         ; fi
+  - if [ "$BUILDTYPE" == "RELEASE"                           ]; then export CMAKE_BUILD_TYPE="RELEASE"       ; export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}"             ; fi
+# - if [ "$BUILDTYPE" == "DEBUG"                             ]; then export CMAKE_BUILD_TYPE="DEBUG"         ; export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}"               ; fi
+# - if [ "$BUILDTYPE" == "RELWITHDEBINFO"                    ]; then export CMAKE_BUILD_TYPE="RELWITHDEBINFO"; export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}"               ; fi
+# - if [                                     "$CC" =~ ^clang ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -stdlib=libc++ " ; fi
 
 install:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ $CC =~ ^clang ]; then sudo apt-get update  -qq                                  ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ $CC =~ ^clang ]; then sudo apt-get install -qq libc++-dev libc++1 libc++abi-dev ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^clang ]; then sudo apt-get update  -qq                                  ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^clang ]; then sudo apt-get install -qq libc++-dev libc++1 libc++abi-dev ; fi
 
 addons:
   apt:
