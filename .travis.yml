@@ -38,9 +38,9 @@ env:
 
 before_install:
   - export SUSAN="sarandon";
-  - if [ "$TRAVIS_OS_NAME" == "linux"                        ]; then export MARY="quite contrary";                                                                     ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^clang ]; then export TRACY="flick";                                                                             ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^gcc   ]; then export ANNE="Cleaves";                                                                            ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux"                        ]; then export MARY="quite contrary"                                                                      ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^clang ]; then export TRACY="flick"                                                                              ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^gcc   ]; then export ANNE="Cleaves"                                                                             ; fi
   - if [ "$TRAVIS_OS_NAME" == "linux"                        ]; then export BUILD_FILE_SUFFIX=".ubuntu14.04"; else export BUILD_FILE_SUFFIX=".macos"                   ; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^clang ]; then export CXX="clang++-4.0" CC="clang-4.0"                                                           ; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" =~ ^gcc   ]; then export CXX="g++-6"   CC="gcc-6"                                                                   ; fi
