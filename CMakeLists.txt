@@ -4,6 +4,8 @@ cmake_minimum_required (VERSION 2.8.8)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	find_program   ( LSB_RELEASE lsb_release )
 	execute_process( COMMAND ${LSB_RELEASE} -cs OUTPUT_VARIABLE LSB_RELEASE_CODE OUTPUT_STRIP_TRAILING_WHITESPACE)
+ELSE()
+	set( LSB_RELEASE_CODE ${CMAKE_SYSTEM_NAME} )
 ENDIF()
 
 # TODO: Consider using GSL_RANGE_CHECK_OFF, at least in release builds
@@ -49,7 +51,7 @@ else()
 	SET( GSL_LIB_SUFFIX "${GSL_STATIC_LIB}" "${GSLCBLAS_STATIC_LIB}" )
 endif()
 
-if ( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
+if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
 	set( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 endif()
 
