@@ -31,10 +31,10 @@ env:
  #- BUILDTYPE=DEBUG
  - BUILDTYPE=RELEASE
  #- BUILDTYPE=RELWITHDEBINFO
- - TOOLS=ASAN    # Address sanitizer
-# - TOOLS=MSAN    # Memory sanitizer              (commented out because it requires rebuilding the standard library!)
-# - TOOLS=UBSAN   # Undefined-behaviour sanitizer (commented out due to failures in boost: /usr/include/boost/serialization/singleton.hpp:132:13: runtime error: reference binding to null pointer of type 'const boost::serialization::extended_type_info_typeid<cath::score::aligned_pair_score>')
-# - TOOLS="ANALYZE" # Use scan_build, which builds with Clang's static analyzer
+ - BUILDTYPE=ASAN    # Address sanitizer
+# - BUILDTYPE=MSAN    # Memory sanitizer              (commented out because it requires rebuilding the standard library!)
+# - BUILDTYPE=UBSAN   # Undefined-behaviour sanitizer (commented out due to failures in boost: /usr/include/boost/serialization/singleton.hpp:132:13: runtime error: reference binding to null pointer of type 'const boost::serialization::extended_type_info_typeid<cath::score::aligned_pair_score>')
+# - BUILDTYPE="ANALYZE" # Use scan_build, which builds with Clang's static analyzer
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux"                        ]; then export BUILD_FILE_SUFFIX=".ubuntu14.04"; else export BUILD_FILE_SUFFIX=".macos"                   ; fi
