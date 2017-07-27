@@ -39,7 +39,6 @@
 #include <map>
 
 using namespace boost::algorithm;
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
@@ -47,6 +46,7 @@ using namespace std;
 
 using boost::algorithm::is_any_of;
 using boost::algorithm::token_compress_on;
+using boost::filesystem::path;
 using boost::irange;
 using boost::lexical_cast;
 

@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_QUAD_FIND_ACTION_CHECK_H
 
 #include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/tools/old/impl.hpp>
 
 #include "common/algorithm/contains.hpp"
 #include "exception/out_of_range_exception.hpp"
@@ -102,7 +103,7 @@ namespace cath {
 
 			const double sq_dist       = detail::squared_distance( arg_cache_a, arg_cache_b );
 			const double sq_dist_check = detail::squared_distance( a_indices, b_indices, protein_a, protein_b );
-			if ( ! boost::test_tools::check_is_close( sq_dist, sq_dist_check, boost::test_tools::percent_tolerance( 0.001 ) ) ) {
+			if ( ! boost::test_tools::check_is_close( sq_dist, sq_dist_check, boost::math::fpc::percent_tolerance( 0.001 ) ) ) {
 				BOOST_THROW_EXCEPTION(common::out_of_range_exception(
 					"Squared distance is different (from vcies: "
 					+ std::to_string( sq_dist )

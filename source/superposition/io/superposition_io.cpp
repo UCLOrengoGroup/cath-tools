@@ -44,7 +44,6 @@
 
 #include <fstream>
 
-using namespace boost::filesystem;
 using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
@@ -55,6 +54,7 @@ using namespace std;
 
 using boost::adaptors::map_values;
 using boost::algorithm::any_of;
+using boost::filesystem::path;
 using boost::irange;
 using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;

@@ -29,9 +29,10 @@
 #include "common/test_predicate/files_equal.hpp"
 #include "test/global_test_constants.hpp"
 
-using namespace boost::filesystem;
 using namespace cath::common;
 using namespace std;
+
+using boost::filesystem::path;
 
 namespace cath {
 	namespace test {

@@ -51,13 +51,13 @@
 #include <string>
 #include <vector>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::file;
 using namespace cath::sec;
 using namespace std;
 
 using boost::algorithm::any_of;
+using boost::filesystem::path;
 using boost::lexical_cast;
 using boost::numeric_cast;
 

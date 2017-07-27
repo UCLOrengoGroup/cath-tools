@@ -24,8 +24,9 @@
 
 #include "common/test_predicate/files_equal.hpp"
 
-using namespace boost::filesystem;
 using namespace cath;
+
+using boost::filesystem::path;
 
 namespace cath {
 	namespace test {

@@ -30,12 +30,13 @@
 
 #include <random>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::score;
 using namespace cath::index::filter;
 using namespace std;
+
+using boost::filesystem::path;
 
 namespace cath {
 	namespace test {

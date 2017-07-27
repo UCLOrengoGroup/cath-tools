@@ -48,7 +48,6 @@
 #include "outputter/superposition_outputter/superposition_outputter_list.hpp"
 #include "superposition/superposition_context.hpp"
 
-using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath;
 using namespace cath::align;

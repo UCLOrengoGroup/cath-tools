@@ -29,11 +29,12 @@
 
 #include <fstream>
 
-using namespace boost::filesystem;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;
 using namespace std;
+
+using boost::filesystem::path;
 
 constexpr json_style json_file_superposition_outputter::DEFAULT_JSON_STYLE;
 

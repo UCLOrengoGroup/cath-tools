@@ -29,7 +29,6 @@
 #include "common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 
-using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
@@ -39,6 +38,7 @@ using namespace std;
 using boost::adaptors::filtered;
 using boost::algorithm::any_of;
 using boost::filesystem::is_empty;
+using boost::filesystem::path;
 using boost::none;
 using boost::numeric_cast;
 

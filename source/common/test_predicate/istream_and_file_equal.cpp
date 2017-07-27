@@ -25,11 +25,12 @@
 
 #include <fstream>
 
-using namespace boost::filesystem;
 using namespace boost::test_tools;
 using namespace cath;
 using namespace cath::common;
 using namespace std;
+
+using boost::filesystem::path;
 
 /// \brief Ctor for istream_and_file_equal
 istream_and_file_equal::istream_and_file_equal(const bool          &arg_overwrite_diff_expected_with_got, ///< TODOCUMENT

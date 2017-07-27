@@ -31,13 +31,14 @@
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
 
-using namespace boost::filesystem;
 using namespace boost::log;
 using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 using namespace std;
+
+using boost::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<pdbs_acquirer> domain_defn_pdbs_acquirer::do_clone() const {

@@ -25,7 +25,6 @@
 #include "structure/structure_type_aliases.hpp"
 #include "test/global_test_constants.hpp"
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;

@@ -39,7 +39,6 @@
 #include <fstream>
 #include <iostream>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;

@@ -36,7 +36,6 @@
 #include <fstream>
 
 using namespace boost::algorithm;
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
@@ -46,6 +45,7 @@ using namespace std;
 
 using boost::algorithm::is_any_of;
 using boost::algorithm::token_compress_on;
+using boost::filesystem::path;
 
 /// \brief Ctor for domain_definition_list
 domain_definition_list::domain_definition_list(domain_definition_vec arg_domain_definitions

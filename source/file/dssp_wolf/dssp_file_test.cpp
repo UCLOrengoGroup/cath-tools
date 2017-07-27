@@ -48,7 +48,6 @@
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/global_test_constants.hpp"
 
-using namespace boost::filesystem;
 using namespace boost::math::constants;
 using namespace boost::math;
 using namespace cath;
@@ -57,6 +56,7 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace std;
 
+using boost::filesystem::path;
 using boost::numeric_cast;
 using boost::range::sort;
 

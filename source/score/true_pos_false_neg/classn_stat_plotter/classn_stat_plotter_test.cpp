@@ -31,10 +31,11 @@
 #include "score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
 #include "test/global_test_constants.hpp"
 
-using namespace boost::filesystem;
 using namespace cath::common;
 using namespace cath::score;
 using namespace std; // ***** TEMPORARY *****
+
+using boost::filesystem::path;
 
 namespace cath {
 	namespace test {

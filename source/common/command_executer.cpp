@@ -28,11 +28,11 @@
 
 #include <sys/wait.h>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace std;
 
+using boost::filesystem::path;
 using boost::range::join;
 
 /// \brief Execute a system command, allowing searching within PATH but not using the shell to process the command

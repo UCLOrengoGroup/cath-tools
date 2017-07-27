@@ -28,6 +28,7 @@
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/tools/old/impl.hpp>
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
@@ -56,9 +57,9 @@ using boost::icontains;
 using boost::irange;
 using boost::is_any_of;
 using boost::make_optional;
+using boost::math::fpc::percent_tolerance;
 using boost::none;
 using boost::test_tools::check_is_close;
-using boost::test_tools::percent_tolerance;
 using boost::token_compress_on;
 using std::get;
 using std::getline;
@@ -136,7 +137,7 @@ str_opt cath::sec::difference_string(const string         &arg_context_str,     
 		}
 
 		const auto rounded_calc_energy = stod( ( format("%3.1f") % arg_hbond_half_opt->energy ).str() );
-		if ( ! check_is_close( arg_dsspfile_hbond_opt->energy, rounded_calc_energy, boost::test_tools::percent_tolerance( 0.0001 ) ) ) {
+		if ( ! check_is_close( arg_dsspfile_hbond_opt->energy, rounded_calc_energy, percent_tolerance( 0.0001 ) ) ) {
 			return "DSSP calculated bond energy of "
 				+ ::std::to_string( arg_dsspfile_hbond_opt->energy )
 				+ " doesn't match calculated energy of "

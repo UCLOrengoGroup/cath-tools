@@ -47,7 +47,6 @@
 #include <boost/range/algorithm_ext/is_sorted.hpp>
 #endif
 
-using namespace boost::filesystem;
 using namespace cath::common;
 using namespace cath::index::filter;
 using namespace cath::index::filter::detail;
@@ -55,6 +54,7 @@ using namespace cath::score;
 using namespace std;
 
 using boost::accumulate;
+using boost::filesystem::path;
 using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::lower_bound;

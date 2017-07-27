@@ -35,12 +35,12 @@
 
 #include <algorithm>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
 using namespace std;
 
+using boost::filesystem::path;
 using boost::range::set_intersection;
 
 /// \brief TODOCUMENT

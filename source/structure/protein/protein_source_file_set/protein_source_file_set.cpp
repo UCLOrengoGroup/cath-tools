@@ -42,7 +42,6 @@
 
 #include <map>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
@@ -52,6 +51,7 @@ using namespace std;
 
 using boost::adaptors::filtered;
 using boost::assign::ptr_push_back;
+using boost::filesystem::path;
 using boost::lexical_cast;
 using boost::none;
 using boost::ptr_vector;

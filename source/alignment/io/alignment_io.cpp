@@ -53,7 +53,6 @@
 #include <iostream>
 
 using namespace boost::algorithm;
-using namespace boost::filesystem;
 using namespace boost::log;
 using namespace cath;
 using namespace cath::align;
@@ -61,11 +60,12 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace std;
 
-using boost::algorithm::join;
 using boost::algorithm::is_any_of;
 using boost::algorithm::is_space;
+using boost::algorithm::join;
 using boost::algorithm::starts_with;
 using boost::algorithm::trim_copy;
+using boost::filesystem::path;
 using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;

@@ -47,7 +47,6 @@
 
 #include <fstream>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::align::detail;
@@ -56,6 +55,7 @@ using namespace cath::common;
 using namespace cath::index;
 using namespace std;
 
+using boost::filesystem::path;
 using boost::lexical_cast;
 using boost::numeric_cast;
 

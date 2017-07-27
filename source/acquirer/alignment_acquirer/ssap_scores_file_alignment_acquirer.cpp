@@ -43,13 +43,14 @@
 
 #include <fstream>
 
-using namespace boost::filesystem;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::sup;
 using namespace cath::opts;
 using namespace std;
+
+using boost::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<alignment_acquirer> ssap_scores_file_alignment_acquirer::do_clone() const {

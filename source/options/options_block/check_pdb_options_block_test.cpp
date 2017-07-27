@@ -27,11 +27,12 @@
 #include "options/options_block/check_pdb_options_block.hpp"
 #include "options/options_block/options_block_tester.hpp"
 
-using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
+
+using boost::filesystem::path;
 
 namespace cath {
 	namespace test {

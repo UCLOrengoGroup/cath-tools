@@ -21,6 +21,7 @@
 #include "align_based_superposition_acquirer.hpp"
 
 #include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/tools/old/impl.hpp>
 #include <boost/tuple/tuple.hpp>
 
 #include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
@@ -52,8 +53,8 @@ using namespace cath::opts;
 using namespace cath::sup;
 
 using boost::filesystem::path;
+using boost::math::fpc::percent_tolerance;
 using boost::test_tools::check_is_close;
-using boost::test_tools::percent_tolerance;
 using std::endl;
 using std::ifstream;
 using std::ostream;

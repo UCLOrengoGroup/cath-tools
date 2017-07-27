@@ -25,7 +25,6 @@
 #include "common/clone/make_uptr_clone.hpp"
 #include "display_colour/display_colour_list.hpp"
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;

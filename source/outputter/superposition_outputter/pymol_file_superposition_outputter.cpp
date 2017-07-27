@@ -30,11 +30,12 @@
 
 #include <fstream>
 
-using namespace boost::filesystem;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;
 using namespace std;
+
+using boost::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<superposition_outputter> pymol_file_superposition_outputter::do_clone() const {

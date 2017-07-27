@@ -37,7 +37,6 @@
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/global_test_constants.hpp"
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;

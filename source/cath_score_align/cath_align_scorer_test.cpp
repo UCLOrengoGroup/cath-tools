@@ -32,7 +32,6 @@
 #include <fstream>
 #include <sstream>
 
-using namespace boost::filesystem;
 using namespace cath::common;
 using namespace std;
 

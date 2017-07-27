@@ -32,13 +32,13 @@
 #include <cstdio>
 #include <iostream>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::file;
 using namespace cath::common;
 using namespace cath::geom;
 using namespace std;
 
+using boost::filesystem::path;
 using boost::numeric_cast;
 
 /// \brief TODOCUMENT

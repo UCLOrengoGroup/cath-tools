@@ -48,7 +48,6 @@
 #include <chrono>
 #include <iostream>
 
-using namespace boost::filesystem;
 using namespace boost::math::constants;
 using namespace cath::align;
 using namespace cath::align::detail;
@@ -59,6 +58,7 @@ using namespace cath::index::detail;
 using namespace std;
 using namespace std::chrono;
 
+using boost::filesystem::path;
 using boost::lexical_cast;
 using boost::numeric_cast;
 

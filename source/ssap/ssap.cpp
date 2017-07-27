@@ -165,7 +165,6 @@
 #include <string>
 
 using namespace boost::algorithm;
-using namespace boost::filesystem;
 using namespace boost::log;
 using namespace boost::log::trivial;
 using namespace cath;
@@ -178,6 +177,7 @@ using namespace cath::geom;
 using namespace cath::sup;
 using namespace cath::opts;
 
+using boost::filesystem::path;
 using boost::irange;
 using boost::lexical_cast;
 using boost::none;

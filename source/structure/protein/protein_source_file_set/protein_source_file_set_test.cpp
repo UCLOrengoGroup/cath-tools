@@ -32,11 +32,11 @@
 #include <iostream>
 #include <random>
 
-using namespace boost::filesystem;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath;
 
+using boost::filesystem::path;
 using std::cerr;
 using std::string;
 

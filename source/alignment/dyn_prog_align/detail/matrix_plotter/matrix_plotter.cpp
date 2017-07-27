@@ -33,11 +33,11 @@
 
 #include <limits>
 
-using namespace boost::filesystem;
 using namespace cath::align::detail;
 using namespace cath::common;
 using namespace std;
 
+using boost::filesystem::path;
 using boost::irange;
 using boost::numeric_cast;
 

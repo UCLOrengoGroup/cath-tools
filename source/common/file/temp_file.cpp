@@ -29,11 +29,12 @@
 
 #include <iostream> // *** TEMPORARY ***
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace std;
 
+using boost::filesystem::path;
+using boost::filesystem::temp_directory_path;
 using boost::none;
 
 /// \brief Constructor for temp_file.

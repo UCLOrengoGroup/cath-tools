@@ -33,7 +33,6 @@
 #include <iostream>
 
 using namespace boost::algorithm;
-using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath;
 using namespace cath::align;
@@ -43,6 +42,7 @@ using namespace cath::sup;
 using namespace std;
 
 using boost::algorithm::join;
+using boost::filesystem::path;
 using boost::lexical_cast;
 using boost::none;
 

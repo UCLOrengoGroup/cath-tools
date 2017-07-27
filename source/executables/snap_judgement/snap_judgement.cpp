@@ -32,10 +32,11 @@
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/global_test_constants.hpp"
 
-using namespace boost::filesystem;
 using namespace cath::common;
 using namespace cath::scan;
 using namespace std;
+
+using boost::filesystem::path;
 
 namespace cath {
 

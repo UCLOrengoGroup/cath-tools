@@ -76,7 +76,6 @@
 #include <iterator>
 #include <iostream>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
@@ -84,6 +83,7 @@ using namespace cath::common::test;
 using namespace cath::score;
 using namespace std;
 
+using boost::filesystem::path;
 using boost::irange;
 
 namespace cath {

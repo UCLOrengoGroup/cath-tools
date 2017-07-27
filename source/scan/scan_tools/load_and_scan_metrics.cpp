@@ -32,18 +32,18 @@
 
 #include <fstream>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::scan;
 using namespace cath::scan::detail;
 
-using boost::algorithm::join;
 using boost::adaptors::transformed;
+using boost::algorithm::join;
+using boost::filesystem::path;
 using boost::range::max_element;
 using std::ofstream;
-using std::to_string;
 using std::string;
+using std::to_string;
 
 /// \brief TODOCUMENT
 load_and_scan_metrics::load_and_scan_metrics(const hrc_duration &arg_load_files_durn, ///< TODOCUMENT

@@ -26,11 +26,12 @@
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
 
-using namespace boost::filesystem;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 using namespace std;
+
+using boost::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<pdbs_acquirer> file_list_pdbs_acquirer::do_clone() const {

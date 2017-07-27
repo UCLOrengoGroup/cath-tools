@@ -37,7 +37,6 @@
 #include <fstream>
 
 using namespace boost::algorithm;
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
@@ -48,6 +47,7 @@ using boost::algorithm::is_lower;
 using boost::algorithm::is_space;
 using boost::algorithm::starts_with;
 using boost::algorithm::trim_copy;
+using boost::filesystem::path;
 using boost::lexical_cast;
 
 /// \brief Parse a dssp_file object from an istream

@@ -25,11 +25,11 @@
 
 #include <fstream>
 
-using namespace boost::filesystem;
 using namespace boost::test_tools;
 using namespace cath;
 using namespace cath::common;
 
+using boost::filesystem::path;
 using std::getenv;
 using std::ifstream;
 using std::string;

@@ -34,13 +34,13 @@
 
 #include <iostream>
 
-using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 
+using boost::filesystem::path;
 using boost::none;
 
 const string alignment_output_options_block::PO_ALN_TO_CATH_ALN_FILE   ( "aln-to-cath-aln-file"   );

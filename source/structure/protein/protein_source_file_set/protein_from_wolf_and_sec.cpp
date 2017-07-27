@@ -31,11 +31,12 @@
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
 using namespace std;
+
+using boost::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<protein_source_file_set> protein_from_wolf_and_sec::do_clone() const {

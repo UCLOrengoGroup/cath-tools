@@ -40,13 +40,13 @@
 
 #include <fstream>
 
-using namespace boost::filesystem;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 using namespace cath::sup;
 
+using boost::filesystem::path;
 using std::cerr;
 using std::ifstream;
 using std::make_pair;

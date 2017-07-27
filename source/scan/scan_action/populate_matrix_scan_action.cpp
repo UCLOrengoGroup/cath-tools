@@ -26,13 +26,13 @@
 #include "alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
-using namespace boost::filesystem;
 using namespace cath::align;
 using namespace cath::align::detail;
 using namespace cath::common;
 using namespace cath::scan;
 // using namespace std;
 
+using boost::filesystem::path;
 using boost::numeric_cast;
 
 /// \brief TODOCUMENT

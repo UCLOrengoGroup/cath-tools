@@ -29,12 +29,13 @@
 
 #include <iostream>
 
-using namespace boost::filesystem;
 using namespace boost::log;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;
 using namespace std;
+
+using boost::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<superposition_outputter> pymol_view_superposition_outputter::do_clone() const {

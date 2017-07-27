@@ -31,11 +31,12 @@
 
 #include <fstream>
 
-using namespace boost::filesystem;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
+
+using boost::filesystem::path;
 
 namespace cath {
 	namespace test {

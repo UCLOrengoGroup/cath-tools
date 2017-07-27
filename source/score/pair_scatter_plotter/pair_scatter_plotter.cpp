@@ -27,6 +27,8 @@
 //using namespace cath::score;
 //using namespace std;
 
+//using boost::filesystem::path;
+
 //using gnuplotio::Gnuplot;
 
 //void pair_scatter_plotter::plot(const path               &arg_output_file_stem, ///< TODOCUMENT

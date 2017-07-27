@@ -56,7 +56,6 @@
 #include <fstream>
 #include <iostream>
 
-using namespace boost::filesystem;
 using namespace boost::log;
 using namespace boost::math::constants;
 using namespace cath;
@@ -72,6 +71,7 @@ using boost::algorithm::any_of;
 using boost::algorithm::is_space;
 using boost::algorithm::join;
 using boost::algorithm::starts_with;
+using boost::filesystem::path;
 using boost::irange;
 using boost::lexical_cast;
 using boost::make_optional;
