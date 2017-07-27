@@ -38,10 +38,8 @@ env:
 
 before_install:
   - export SUSAN="sarandon";
-  - if [[ $TRAVIS_OS_NAME == linux                        ]]; then export MARY="quite contrary"                                                                      ; fi
-  - if [[ $TRAVIS_OS_NAME == linux                        ]]; then echo $CC                                                                                          ; fi
-  - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^clang ]]; then export TRACY="flick"                                                                            ; fi
-  - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^gcc   ]]; then export ANNE="Cleaves"                                                                             ; fi
+  - if [[ $TRAVIS_OS_NAME == osx                          ]]; then brew update                                                                                       ; fi
+  - if [[ $TRAVIS_OS_NAME == osx                          ]]; then brew install gsl                                                                                  ; fi
   - if [[ $TRAVIS_OS_NAME == linux                        ]]; then export BUILD_FILE_SUFFIX=".ubuntu14.04"; else export BUILD_FILE_SUFFIX=".macos"                   ; fi
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^clang ]]; then export CXX="clang++-4.0" CC="clang-4.0"                                                           ; fi
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^gcc   ]]; then export CXX="g++-6"   CC="gcc-6"                                                                   ; fi
@@ -89,16 +87,6 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
 
 script:
-  - echo "SUSAN $SUSAN"
-  - echo "MARY  $MARY"
-  - echo "TRACY $TRACY"
-  - echo "ANNE  $ANNE"
-  - echo "CC    $CC"
-  - echo "CXX   $CXX"
-  - which $CC
-  - which $CXX
-  - $CC  --version
-  - $CXX --version
   - make -j 2 -k -C release_build
   - release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
   - release_build/cath-superpose --version
