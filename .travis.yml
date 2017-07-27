@@ -1,15 +1,16 @@
 # It's better that these Travis files explicitly specify:
 # sudo:false
 # which then allows them to be run in a Docker-style container
-# but this file currently having to use sudo to get a recent Boost (1.57.0) because
-# the whitelisted boost-latest ppa respoistory:
+# but this file currently having to use sudo to get a recent Boost (1.60.0) because
+# the whitelisted boost-latest ppa repository:
 # https://launchpad.net/~boost-latest/+archive/ubuntu/ppa
 # currently only offers Boost <= v1.55.0.
-# If/when Boost >= v1.57.0 gets added to boost-latest, then
+# If/when Boost >= v1.60.0 gets added to boost-latest, then
 # use that instead of the sudo commands and then uncomment sudo: false
 #sudo: false
+dist: trusty
 language: cpp
-dist: precise
+sudo: required
 
 notifications:
   slack: cathupdate:9wDvWdLmrVhxI4JcsOFlkxir
@@ -18,92 +19,95 @@ notifications:
       - i.sillitoe@ucl.ac.uk
       - t.lewis@ucl.ac.uk
 
+os:
+  - linux
+  - osx
+
 compiler:
   - clang
   - gcc
 
 env:
- - TOOLS=OFF
+ #- BUILDTYPE=DEBUG
+ - BUILDTYPE=RELEASE
+ #- BUILDTYPE=RELWITHDEBINFO
  - TOOLS=ASAN    # Address sanitizer
 # - TOOLS=MSAN    # Memory sanitizer              (commented out because it requires rebuilding the standard library!)
 # - TOOLS=UBSAN   # Undefined-behaviour sanitizer (commented out due to failures in boost: /usr/include/boost/serialization/singleton.hpp:132:13: runtime error: reference binding to null pointer of type 'const boost::serialization::extended_type_info_typeid<cath::score::aligned_pair_score>')
 # - TOOLS="ANALYZE" # Use scan_build, which builds with Clang's static analyzer
 
-matrix:
-# GCC is expected to fail for now because it doesn't successfully link against
-# the Boost libraries (it gives messages like:
-#     `.text._ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED2Ev'
-#     referenced in section
-#     `.text._ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED1Ev[_ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED1Ev]'
-#     of /usr/lib/gcc/x86_64-linux-gnu/4.9/../../../../lib/libboost_log.a(default_sink.o):
-#     defined in discarded section
-#     `.text._ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED2Ev[_ZN5boost16exception_detail19error_info_injectorISt13runtime_errorED5Ev]'
-#     of /usr/lib/gcc/x86_64-linux-gnu/4.9/../../../../lib/libboost_log.a(default_sink.o)
-# )
-  allow_failures:
-    - compiler: gcc
-#  exclude:
-#    # ATM, GCC doesn't implement the memory sanitizer
-#    - compiler: gcc
-#      env: TOOLS=MSAN
-##    - compiler: gcc
-##      env: TOOLS="ANALYZE"
-
-#before_install:
-# - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CXX" == "clang++" ]; then sudo apt-get update  -qq            ; fi
-# - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CXX" == "clang++" ]; then sudo apt-get install -qq libc++-dev ; fi
+before_install:
+  - if [ "$TRAVIS_OS_NAME" == "linux"                      ]; then export BUILD_FILE_SUFFIX=".ubuntu14.04"; else export BUILD_FILE_SUFFIX=".macos"                   ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ $CC =~ ^clang ]; then export CXX="clang++-4.0" CC="clang-4.0"                                                           ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ $CC =~ ^gcc   ]; then export CXX="g++-6"   CC="gcc-6"                                                                   ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx"   ] && [ $CC =~ ^gcc   ]; then export CXX="g++-4.8" CC="gcc-4.8"                                                                 ; fi # Default gcc on osx is just a front-end for LLVM
+  - if [ "$BUILDTYPE" =~ SAN$                              ]; then export CMAKE_BUILD_TYPE="RELEASE"                                                                 ; fi
+  - if [ "$BUILDTYPE" == "ASAN"                            ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer"            ; fi
+# - if [ "$BUILDTYPE" == "MSAN"                            ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=memory  -fno-omit-frame-pointer"            ; fi
+# - if [ "$BUILDTYPE" == "UBSAN"                           ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=undefined                      "            ; fi
+# - if [ "$BUILDTYPE" == "ANALYZE"                         ]; then export CMAKE_BUILD_TYPE="RELEASE" ; export WRAPPER="scan_build-3.6 " ; fi else export WRAPPER=" " ; fi
+  - if [ "$BUILDTYPE" =~ SAN$         ] && [ $CC =~ ^gcc   ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fuse-ld=gold"                                         ; fi
+  - if [ "$BUILDTYPE" == "RELEASE"                         ]; then export CMAKE_BUILD_TYPE="RELEASE"       ; export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}"             ; fi
+# - if [ "$BUILDTYPE" == "DEBUG"                           ]; then export CMAKE_BUILD_TYPE="DEBUG"         ; export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}"               ; fi
+# - if [ "$BUILDTYPE" == "RELWITHDEBINFO"                  ]; then export CMAKE_BUILD_TYPE="RELWITHDEBINFO"; export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}"               ; fi
+# - if [                                     $CC =~ ^clang ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -stdlib=libc++ " ; fi
 
 install:
-  #- if [ "$CXX"   == "clang++" ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -stdlib=libc++ "                            ; fi # Fails to link to -lc++ even with the "apt-get install -qq libc++-dev" above - think it'd work under Trusty
-  - if [ "$CXX"   == "g++"     ]; then export CXX="g++-4.9"     CC="gcc-4.9"                                                  ; fi
-  - if [ "$CXX"   == "clang++" ]; then export CXX="clang++-3.6" CC="clang-3.6"                                                ; fi
-  - if [ "$TOOLS" == "ASAN"    ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer" ; fi
-  - if [ "$TOOLS" == "MSAN"    ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=memory  -fno-omit-frame-pointer" ; fi
-  - if [ "$TOOLS" == "UBSAN"   ]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=undefined                      " ; fi
-#  - if [ "$TOOLS" == "ANALYZE" ]; then export WRAPPER="scan_build-3.6 " ; fi else export WRAPPER=" "; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ $CC =~ ^clang ]; then sudo apt-get update  -qq                                  ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ $CC =~ ^clang ]; then sudo apt-get install -qq libc++-dev libc++1 libc++abi-dev ; fi
 
 addons:
   apt:
     sources:
-    - kalakris-cmake
-    - llvm-toolchain-precise-3.6
+    - llvm-toolchain-trusty-4.0
     - ubuntu-toolchain-r-test
     packages:
-    - clang-3.6
-    - cmake
-    - gcc-4.9
-    - g++-4.9
+    - clang-4.0
+    - g++-6
+    - gcc-6
     - libgsl0-dev
     - ninja-build
   artifacts:
     paths:
-    - release_build/cath-assign-domains
-    - release_build/cath-refine-align
-    - release_build/cath-resolve-hits
-    - release_build/cath-ssap
-    - release_build/cath-superpose
+    - release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
+    #- release_build/cath-map-clusters.$BUILD_FILE_SUFFIX
+    - release_build/cath-refine-align.$BUILD_FILE_SUFFIX
+    - release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX
+    - release_build/cath-ssap.$BUILD_FILE_SUFFIX
+    - release_build/cath-superpose.$BUILD_FILE_SUFFIX
 
 before_script:
-  - sudo add-apt-repository ppa:afrank/boost -y
-  - sudo apt-get update -q
-  - sudo apt-get install libboost1.57-all libboost1.57-all-dev
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:samuel-bachmann/boost -y ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update -q                               ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libboost1.60-all-dev            ; fi
   - mkdir release_build && cd release_build
   - cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}" ..
   - cd $TRAVIS_BUILD_DIR
 
-script: ninja -j 2 -k 0 -C release_build && release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes && release_build/cath-superpose --version
+script:
+  - ninja -j 2 -k 0 -C release_build
+  - release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
+  - release_build/cath-superpose --version
+  - mv release_build/cath-assign-domains release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
+# - mv release_build/cath-map-clusters release_build/cath-map-clusters.$BUILD_FILE_SUFFIX
+  - mv release_build/cath-refine-align   release_build/cath-refine-align.$BUILD_FILE_SUFFIX
+  - mv release_build/cath-resolve-hits   release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX
+  - mv release_build/cath-ssap           release_build/cath-ssap.$BUILD_FILE_SUFFIX
+  - mv release_build/cath-superpose      release_build/cath-superpose.$BUILD_FILE_SUFFIX
+
 deploy:
   provider: releases
   api_key:
     secure: ywyguRbIJMXgFRffEahFyqNoTL86bb1LO0W9IfufNTCDYPTquhMLFda7D7J0E4OEzAyB9PAcQPzBZL3C7HjZwJH7nmNQLc/+ie4WxEQrOAZsx2gQGXpscJN09dpFlhRZMWpZa0G5HdYAu1IxnU470uuKx1BNSeGl6zZbHIzHW8V/euzlAfbzkzt6H8NLE+g4oCEjK3H7ETEQbETWB63crkNa+RP0xwVXbtotTeFqqR6f7hTdwnEYRY8w51T32dq+dyg0QpmHJhyqKa3ALcNAc8PJgcCXcVUlL0/pj9O4r7EH4BGiOpfXMzcwLyVtpnC7MZXkCbAlQqCEL0it7BWZAuesNy4AFpJjPsnvLC5XNrcf3qRrcGPyYWLK9lGJCV3ZTwhAdWnMJyidt+91Lwus7qHJ9BGx5hCOc/VxSMyRZyrcoZnAlDulpOkVOiqoeReAGNQD4IQhYsWIKevaXb+oaW/0XLKi4MA7ckHXSuqpUlbyJsuW/J5zvpP8J5QO+rzqwDWa4D8644ZLtAG8gYzYVm/OpA4B/7uzE8i8TNgVhK3dY6DsOgHwBgFc5OSfj499De4rSWNR+Zit5TFLVJWTrpmQPNV/M8lrLMjtUbFLHpHagUk7Rk4GxSdu6ZO2Kpci7IyvO9PZ6gJnHS8UMYHBzruatDOm3o0Z1ck35dEUH1E=
   file:
-    - release_build/cath-assign-domains
-    - release_build/cath-refine-align
-    - release_build/cath-resolve-hits
-    - release_build/cath-ssap
-    - release_build/cath-superpose
+    - release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
+#   - release_build/cath-map-clusters.$BUILD_FILE_SUFFIX
+    - release_build/cath-refine-align.$BUILD_FILE_SUFFIX
+    - release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX
+    - release_build/cath-ssap.$BUILD_FILE_SUFFIX
+    - release_build/cath-superpose.$BUILD_FILE_SUFFIX
   skip_cleanup: true
   on:
+    condition: "$BUILDTYPE == RELEASE && $CC =~ ^gcc"
+    repo: UCLOrengoGroup/cath-tools
     tags: true
-
-# repo: UCLOrengoGroup/cath-tools
