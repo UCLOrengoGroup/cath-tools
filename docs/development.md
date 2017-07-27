@@ -39,37 +39,37 @@ Example CMake Commands
 **clang_debug**
 
 ~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
 ~~~~~
 
 **clang_release**
 
 ~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE                               -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE                               -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
 ~~~~~
 
 **clang_relwithdebinfo**
 
 ~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
 ~~~~~
 
 **gcc_debug**
 
 ~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT=/opt/boost_1_60_0_gcc_build                                                                                                              ..
 ~~~~~
 
 **gcc_release**
 
 ~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE                               -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE                               -DBOOST_ROOT=/opt/boost_1_60_0_gcc_build                                                                                                              ..
 ~~~~~
 
 **gcc_relwithdebinfo**
 
 ~~~~~no-highlight
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              ..
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBOOST_ROOT=/opt/boost_1_60_0_gcc_build                                                                                                              ..
 ~~~~~
 
 Consider using ninja instead of make
@@ -101,9 +101,9 @@ mkdir build-analyze && cd build-analyze
 setenv CCC_CC  clang
 setenv CCC_CXX clang++
 # For Clang 3.6
-/usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.6/ccc-analyzer"         -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.6/c++-analyzer"         -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+/usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.6/ccc-analyzer"         -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.6/c++-analyzer"         -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
 # For Clang 3.8
-/usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.8/libexec/ccc-analyzer" -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.8/libexec/c++-analyzer" -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+/usr/bin/cmake -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER="/usr/share/clang/scan-build-3.8/libexec/ccc-analyzer" -DCMAKE_CXX_COMPILER="/usr/share/clang/scan-build-3.8/libexec/c++-analyzer" -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
 scan-build make
 ~~~~~
 
@@ -117,13 +117,13 @@ Checking headers compile independently
 Clang:
 
 ~~~~~no-highlight
-find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source VAR
+find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR clang++ -DBOOST_LOG -std=c++1y -stdlib=libc++ -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_clang.dummy.header.o -isystem /opt/boost_1_60_0_clang_build/include -isystem rapidjson/include -I source VAR
 ~~~~~
 
 GCC:
 
 ~~~~~no-highlight
-find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR g++     -DBOOST_LOG -std=c++1y                -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_gcc.dummy.header.o   -isystem /opt/boost_1_58_0_gcc_build/include   -I source VAR
+find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR g++     -DBOOST_LOG -std=c++1y                -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_gcc.dummy.header.o   -isystem /opt/boost_1_60_0_gcc_build/include   -I source VAR
 ~~~~~
 
 
@@ -131,7 +131,7 @@ Fixing trailing namespace comments
 ----------------------------------
 
 ~~~~~no-highlight
-find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy -fix -checks=llvm-namespace-comment VAR -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source || true"
+find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy -fix -checks=llvm-namespace-comment VAR -- -std=c++1y -isystem /opt/boost_1_60_0_clang_build/include -isystem rapidjson/include -I source || true"
 ~~~~~
 
 
@@ -143,7 +143,7 @@ Whilst the header guards start with one underscore (contrary to clang-tidy's pre
 
 ~~~~~no-highlight
 find $PWD/source -type f -iname '*.hpp' | sort | grep -vw 'third_party_code' | sed 's/\.hpp$//g' | xargs -I VAR -P 8 ln -s VAR.hpp VAR.h
-find $PWD/source -type l -iname '*.h'   | sort | xargs -I VAR -P 4 /bin/tcsh -c "clang-tidy -fix -checks=llvm-header-guard VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source || true"
+find $PWD/source -type l -iname '*.h'   | sort | xargs -I VAR -P 4 /bin/tcsh -c "clang-tidy -fix -checks=llvm-header-guard VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_60_0_clang_build/include -isystem rapidjson/include -I source || true"
 find $PWD/source -type l -iname '*.h'   | sort | xargs rm -f
 find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | xargs sed -i 's/#ifndef __CATH_TOOLS_SOURCE_/#ifndef _CATH_TOOLS_SOURCE_/g'
 find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | xargs sed -i 's/#define __CATH_TOOLS_SOURCE_/#define _CATH_TOOLS_SOURCE_/g'
@@ -156,7 +156,7 @@ find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | x
 
 ~~~~~no-highlight
 find $PWD/source -type f -iname '*.hpp' | sort | grep -vw 'third_party_code' | sed 's/\.hpp$//g' | xargs -I VAR -P 8 ln -s VAR.hpp VAR.h
-find $PWD/source -type l -iname '*.h'   | sort | xargs -I VAR -P 4 /bin/tcsh -c "clang-tidy -fix -checks=llvm-header-guard VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source || true"
+find $PWD/source -type l -iname '*.h'   | sort | xargs -I VAR -P 4 /bin/tcsh -c "clang-tidy -fix -checks=llvm-header-guard VAR -- -x c++ -std=c++1y -isystem /opt/boost_1_60_0_clang_build/include -isystem rapidjson/include -I source || true"
 find $PWD/source -type l -iname '*.h'   | sort | xargs rm -f
 find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | sed 's/\.h$//g' | xargs -I VAR diff -C1 VAR.hpp VAR.h
 find $PWD/source -type f -iname '*.h'   | sort | grep -vw 'third_party_code' | sed 's/\.h$//g' | xargs -I VAR mv       VAR.h   VAR.hpp
@@ -176,9 +176,9 @@ Would like to use:
 ~~~~~no-highlight
 clang-tidy '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -list-checks --
 clang-tidy '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -dump-config --
-find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy VAR '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source || true"
+find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy VAR '-checks=*,-llvm-header-guard,-llvm-namespace-comment,-google-readability-namespace-comments,-google-build-using-namespace,-misc-use-override,-google-readability-function' -- -std=c++1y -isystem /opt/boost_1_60_0_clang_build/include -isystem rapidjson/include -I source || true"
 
-find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy VAR '-checks=*,-llvm-header-guard' - -- -std=c++1y -isystem /opt/boost_1_58_0_clang_build/include -isystem rapidjson/include -I source || true"
+find source -iname '*.?pp' | sort | grep third_party_code -v | xargs -P 4 -I VAR /bin/tcsh -c "clang-tidy VAR '-checks=*,-llvm-header-guard' - -- -std=c++1y -isystem /opt/boost_1_60_0_clang_build/include -isystem rapidjson/include -I source || true"
 ~~~~~
 
 

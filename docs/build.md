@@ -17,7 +17,7 @@ git clone https://github.com/UCLOrengoGroup/cath-tools.git
 
 There are three further dependencies/prerequisites...
 
-### Boost ( v1.57.0 / v1.58.0 )
+### Boost ( v1.60.0 / v1.61.0 )
 
 This is used heavily throughout the code. Both headers and compiled library files are needed.
 
@@ -68,7 +68,7 @@ With default Ubuntu config, this will build with GCC against GCC's standard libr
 To build against Clang's C++ library (libc++) rather than GCC's (libstdc++), you'll need a version of Boost built with Clang and libc++. If you have one, you can use a cmake command like:
 
 ~~~~~no-highlight
-$ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+$ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
 ~~~~~
 
 Running the Build Tests
@@ -106,12 +106,12 @@ export BUILD_ROOT_DIR=WHATEVER_YOU_HAVE_CHOSEN_AS_YOUR_BUILD_ROOT_DIRECTORY
 Build Boost:
 
 ~~~~~no-highlight
-mkdir -p ${BUILD_ROOT_DIR}/boost_1_58_0_build/{include,lib}
+mkdir -p ${BUILD_ROOT_DIR}/boost_1_60_0_build/{include,lib}
 cd ${BUILD_ROOT_DIR}/
-wget "http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz"
-tar -zxvf boost_1_58_0.tar.gz
-cd ${BUILD_ROOT_DIR}/boost_1_58_0/
-./bootstrap.sh --prefix=${BUILD_ROOT_DIR}/boost_1_58_0_build
+wget "http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.tar.gz"
+tar -zxvf boost_1_60_0.tar.gz
+cd ${BUILD_ROOT_DIR}/boost_1_60_0/
+./bootstrap.sh --prefix=${BUILD_ROOT_DIR}/boost_1_60_0_build
 ./b2 -j2         --layout=tagged variant=release
 ./b2 -j2 install --layout=tagged variant=release
 ~~~~~
@@ -120,11 +120,11 @@ Build cath-tools:
 
 ~~~~~no-highlight
 cd ${BUILD_ROOT_DIR}/
-git clone --recursive https://github.com/UCLOrengoGroup/cath-tools.git
+git clone https://github.com/UCLOrengoGroup/cath-tools.git
 
 mkdir -p ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
 cd       ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=${BUILD_ROOT_DIR}/boost_1_58_0_build ..
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=${BUILD_ROOT_DIR}/boost_1_60_0_build ..
 cd       ${BUILD_ROOT_DIR}/cath-tools/
 make -C gcc_relwithdebinfo -k -j2
 ls -l ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
