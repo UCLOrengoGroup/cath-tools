@@ -66,7 +66,6 @@ addons:
     - g++-6
     - gcc-6
     - libgsl0-dev
-    - ninja-build
   artifacts:
     paths:
     - release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
@@ -81,11 +80,17 @@ before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update -q                               ; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libboost1.60-all-dev            ; fi
   - mkdir release_build && cd release_build
-  - cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}" ..
+  - cmake -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}" ..
   - cd $TRAVIS_BUILD_DIR
 
 script:
-  - ninja -j 2 -k 0 -C release_build
+  - echo "CC  $CC"
+  - echo "CXX $CXX"
+  - which $CC
+  - which $CXX
+  - $CC  --version
+  - $CXX --version
+  - make -j 2 -k -C release_build
   - release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
   - release_build/cath-superpose --version
   - mv release_build/cath-assign-domains release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
