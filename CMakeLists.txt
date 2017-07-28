@@ -1,10 +1,11 @@
 cmake_minimum_required (VERSION 2.8.8)
 
-# If on Ubuntu, get the Ubuntu release codename
+# If on Linux, get the release codename
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	find_program   ( LSB_RELEASE lsb_release )
 	execute_process( COMMAND ${LSB_RELEASE} -cs OUTPUT_VARIABLE LSB_RELEASE_CODE OUTPUT_STRIP_TRAILING_WHITESPACE)
 ELSE()
+	# Else set LSB_RELEASE_CODE to something else so the upcoming STREQUAL makes sense
 	set( LSB_RELEASE_CODE ${CMAKE_SYSTEM_NAME} )
 ENDIF()
 
@@ -55,7 +56,9 @@ if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
 	set( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 endif()
 
-find_library( RT_LIBRARY rt )
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+	find_library( RT_LIBRARY rt )
+ENDIF()
 
 find_package(Boost 1.55 REQUIRED filesystem iostreams log_setup log program_options serialization system thread unit_test_framework)
 
