@@ -1,6 +1,11 @@
 # Summary of changes in cath-tools releases
 
 
+### [v0.14.2](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.14.2) Add MacOS executables (via the automatic Travis-CI build)
+
+2017-07-28 &nbsp; 
+
+
 ### [v0.14.1](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.14.1) Update cath-resolve-hits' options to allow multiple outputs per run; deprecate some previous options
 
 2017-05-31 &nbsp; 
