@@ -40,16 +40,11 @@ before_install:
   - export SUSAN="sarandon";
   - if [[ $TRAVIS_OS_NAME == osx                          ]]; then brew update                                                                                       ; fi
   - if [[ $TRAVIS_OS_NAME == osx                          ]]; then brew install gsl                                                                                  ; fi
+  - if [[ $TRAVIS_OS_NAME == osx                          ]]; then brew install ninja                                                                                ; fi
   - if [[ $TRAVIS_OS_NAME == linux                        ]]; then export BUILD_FILE_SUFFIX="ubuntu14.04"; else export BUILD_FILE_SUFFIX="macos"                     ; fi
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^clang ]]; then export CXX="clang++-4.0" CC="clang-4.0"                                                           ; fi
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^gcc   ]]; then export CXX="g++-6"   CC="gcc-6"                                                                   ; fi
-  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then export CXX="g++-4.8" CC="gcc-4.8"                                                                 ; fi # Default gcc on osx is just a front-end for LLVM
-  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then echo $CC                                                                                          ; fi
-  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then echo $CXX                                                                                         ; fi
-  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then which $CC                                                                                         ; fi
-  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then which $CXX                                                                                        ; fi
-  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then which gcc-4.8                                                                                     ; fi
-  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then which g++-4.8                                                                                     ; fi
+#  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then export CXX="g++-4.8" CC="gcc-4.8"                                                                 ; fi # Default gcc on osx is just a front-end for LLVM
   - if [[ $BUILDTYPE =~ SAN$                              ]]; then export CMAKE_BUILD_TYPE="RELEASE"                                                                 ; fi
   - if [[ $BUILDTYPE == ASAN                              ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer"            ; fi
 # - if [[ $BUILDTYPE == MSAN                              ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=memory  -fno-omit-frame-pointer"            ; fi
@@ -75,6 +70,7 @@ addons:
     - g++-6
     - gcc-6
     - libgsl0-dev
+    - ninja-build
   artifacts:
     paths:
     - release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
@@ -89,11 +85,11 @@ before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update -q                               ; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libboost1.60-all-dev            ; fi
   - mkdir release_build && cd release_build
-  - cmake -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}" ..
+  - cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}" ..
   - cd $TRAVIS_BUILD_DIR
 
 script:
-  - make -j 2 -k -C release_build
+  - ninja -j 2 -k -C release_build
   - release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
   - release_build/cath-superpose --version
   - mv release_build/cath-assign-domains release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
