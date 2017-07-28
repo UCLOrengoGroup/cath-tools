@@ -132,6 +132,7 @@
 #include "common/container/vector_of_vector.hpp"
 #include "common/difference.hpp"
 #include "common/file/open_fstream.hpp"
+#include "common/logger.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/string/booled_to_string.hpp"
 #include "common/temp_check_offset_1.hpp"
@@ -379,8 +380,11 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 	// If the options are invalid or specify to do_nothing, then just return
 	const auto &error_or_help_string = arg_cath_ssap_options.get_error_or_help_string();
 	if ( error_or_help_string ) {
-		arg_stdout << error_or_help_string << endl;
-		return;
+		logger::log_and_exit(
+			logger::return_code::GENERIC_FAILURE_RETURN_CODE,
+			*error_or_help_string,
+			ref( arg_stdout )
+		);
 	}
 
 	global_debug = arg_cath_ssap_options.get_old_ssap_options().get_debug();

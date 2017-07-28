@@ -29,9 +29,15 @@ using namespace cath;
 using namespace std;
 
 /// \brief TODOCUMENT
-void logger::log_and_exit(const return_code &arg_return_code, ///< TODOCUMENT
-                          const string      &exit_message     ///< TODOCUMENT
+void logger::log_and_exit(const return_code     &arg_return_code,    ///< TODOCUMENT
+                          const string          &exit_message,       ///< TODOCUMENT
+                          const ostream_ref_opt &arg_message_ostream ///< TODOCUMENT
                           ) {
-	BOOST_LOG_TRIVIAL( error ) << exit_message;
+	if ( arg_message_ostream ) {
+		arg_message_ostream->get() << exit_message;
+	}
+	else {
+		BOOST_LOG_TRIVIAL( error ) << exit_message;
+	}
 	exit( static_cast<int>( arg_return_code ) );
 }

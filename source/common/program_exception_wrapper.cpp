@@ -74,7 +74,7 @@ int program_exception_wrapper::run_program(int      arg_c,   ///< The main()-sty
 	// Check that some arguments have been provided
 	if (arg_c <= 0) {
 		arg_os << "Cannot run_program() without a strictly positive number of arguments (the program name should be the first)" << endl;
-		return static_cast<int>( logger::return_code::EXCEPTION_WITHOUT_SPECIFIC_RETCODE );
+		return static_cast<int>( logger::return_code::GENERIC_FAILURE_RETURN_CODE );
 	}
 
 	// Try calling do_run_program with the arguments.
@@ -107,20 +107,20 @@ int program_exception_wrapper::run_program(int      arg_c,   ///< The main()-sty
 		arg_os << ", caught a boost::exception:\n";
 		arg_os << diagnostic_information(e);
 		arg_os << "\n" << endl;
-		return static_cast<int>( logger::return_code::EXCEPTION_WITHOUT_SPECIFIC_RETCODE );
+		return static_cast<int>( logger::return_code::GENERIC_FAILURE_RETURN_CODE );
 	}
 	catch (const std::exception &e) {
 		output_catch_context(arg_os, arg_v[ 0 ] );
 		arg_os << ", caught a std::exception:\n";
 		arg_os << e.what();
 		arg_os << "\n" << endl;
-		return static_cast<int>( logger::return_code::EXCEPTION_WITHOUT_SPECIFIC_RETCODE );
+		return static_cast<int>( logger::return_code::GENERIC_FAILURE_RETURN_CODE );
 	}
 	catch (...) {
 		output_catch_context(arg_os, arg_v[ 0 ] );
 		arg_os << ", caught an exception of unrecognised type";
 		arg_os << "\n" << endl;
-		return static_cast<int>( logger::return_code::EXCEPTION_WITHOUT_SPECIFIC_RETCODE );
+		return static_cast<int>( logger::return_code::GENERIC_FAILURE_RETURN_CODE );
 	}
 
 	return static_cast<int>( logger::return_code::SUCCESS );
