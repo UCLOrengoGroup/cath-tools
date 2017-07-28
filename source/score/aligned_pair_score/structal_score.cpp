@@ -46,9 +46,10 @@ using namespace cath::common;
 using namespace cath::geom;
 using namespace cath::score;
 using namespace cath::score::detail;
- using namespace cath::sup;
+using namespace cath::sup;
 using namespace std;
 
+using boost::inner_product;
 using boost::numeric_cast;
 using boost::range::join;
 

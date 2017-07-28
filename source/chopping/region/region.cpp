@@ -372,7 +372,7 @@ string cath::chop::to_string(const region &arg_region ///< The region to describ
                              ) {
 	str_vec parts;
 	if ( has_chain_label( arg_region ) ) {
-		parts.push_back( "chain:"      +      to_string( get_chain_label( arg_region ) ) );
+		parts.push_back( "chain:"      +      get_chain_label( arg_region ).to_string()  );
 	}
 	if ( has_names( arg_region ) ) {
 		parts.push_back( "start_name:" +      to_string( get_start_name ( arg_region ) ) );

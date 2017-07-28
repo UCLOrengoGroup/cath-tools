@@ -47,6 +47,7 @@ using namespace cath::score::detail;
 using namespace cath::sup;
 using namespace std;
 
+using boost::inner_product;
 using boost::numeric_cast;
 using boost::range::join;
 

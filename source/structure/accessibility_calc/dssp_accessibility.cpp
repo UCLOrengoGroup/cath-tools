@@ -45,6 +45,7 @@ using namespace cath::scan::detail;
 using namespace cath::sec::detail;
 
 using boost::irange;
+using boost::make_optional;
 using boost::math::constants::pi;
 using boost::none;
 using boost::numeric_cast;

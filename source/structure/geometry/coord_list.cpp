@@ -36,6 +36,7 @@ using namespace std;
 
 using boost::accumulate;
 using boost::numeric_cast;
+using boost::inner_product;
 
 /// \brief Constructor for coord_list from a vector of coords.
 coord_list::coord_list(coord_vec arg_coords ///< The vector of coords with which this coord_list should be initialised

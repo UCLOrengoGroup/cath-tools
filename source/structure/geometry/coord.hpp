@@ -336,6 +336,7 @@ namespace cath {
 		                                const coord &,
 		                                const coord &);
 
+		std::string to_string(const coord &);
 		std::ostream & operator<<(std::ostream &,
 		                          const coord &);
 

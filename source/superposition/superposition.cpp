@@ -24,6 +24,7 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/range/algorithm/for_each.hpp>
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
 #include "common/algorithm/transform_build.hpp"
@@ -53,6 +54,7 @@ using boost::algorithm::any_of;
 using boost::algorithm::is_any_of;
 using boost::algorithm::token_compress_on;
 using boost::lexical_cast;
+using boost::range::for_each;
 using std::make_tuple;
 
 //const double superposition::INVALID_RMSD(-1.0);

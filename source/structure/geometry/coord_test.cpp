@@ -33,6 +33,8 @@ using namespace cath::common;
 using namespace cath::geom;
 using namespace std;
 
+using boost::lexical_cast;
+
 namespace cath {
 	namespace test {
 
@@ -50,6 +52,22 @@ namespace cath {
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(coord_test_suite, cath::test::coord_test_suite_fixture)
+
+
+BOOST_AUTO_TEST_SUITE(string_conversion)
+
+BOOST_AUTO_TEST_CASE(to_string_works) {
+	BOOST_CHECK_EQUAL( to_string( coord{ 800.0, 100.0, 400.0 } ), "coord[      800,       100,       400]" );
+	BOOST_CHECK_EQUAL( to_string( coord{ 8.125, 1.125, 4.125 } ), "coord[    8.125,     1.125,     4.125]" );
+}
+
+BOOST_AUTO_TEST_CASE(lexical_cast_works) {
+	BOOST_CHECK_EQUAL( lexical_cast<string>( coord{ 800.0, 100.0, 400.0 } ), "coord[      800,       100,       400]" );
+	BOOST_CHECK_EQUAL( lexical_cast<string>( coord{ 8.125, 1.125, 4.125 } ), "coord[    8.125,     1.125,     4.125]" );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 
 /// \brief Check equality
 BOOST_AUTO_TEST_CASE(equality) {

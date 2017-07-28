@@ -33,6 +33,7 @@ using namespace cath::common;
 
 using boost::algorithm::any_of;
 using boost::irange;
+using boost::make_optional;
 using boost::none;
 
 /// \brief Sanity check this regions_limiter and throw if there's a problem

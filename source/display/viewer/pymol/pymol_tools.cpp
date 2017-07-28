@@ -113,7 +113,7 @@ string pymol_tools::pymol_res_seln_str(const string         &arg_name,    ///< T
 	return R"(/")"
 		+ arg_name
 		+ R"("//)"
-		+ ( ( *the_chain_label_opt == chain_label( ' ' ) ) ? ""s : to_string( *the_chain_label_opt ) )
+		+ ( ( *the_chain_label_opt == chain_label( ' ' ) ) ? ""s : the_chain_label_opt->to_string() )
 		+ "/"
 		+ (
 			has_any_strictly_negative_residue_numbers( arg_res_ids )

@@ -95,7 +95,7 @@ coord_vec cath::geom::restrict_to_single_linkage_extension_copy(coord_vec     ar
                                                                 ) {
 	restrict_to_single_linkage_extension(
 		arg_coords,
-		next( begin( arg_coords ), arg_core_end_offset ),
+		std::next( begin( arg_coords ), static_cast<ptrdiff_t>( arg_core_end_offset ) ),
 		arg_extension_distance
 	);
 	return arg_coords;

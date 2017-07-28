@@ -28,6 +28,8 @@
 using namespace cath::rslv;
 using namespace cath::seq;
 
+using boost::make_optional;
+
 BOOST_AUTO_TEST_SUITE(seq_seg_boundary_fns_test_suite)
 
 BOOST_AUTO_TEST_CASE(handles_example) {

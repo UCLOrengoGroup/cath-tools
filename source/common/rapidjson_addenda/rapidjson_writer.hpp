@@ -142,7 +142,7 @@ namespace cath {
 			}
 
 			/// \brief Write a uint value to the JSON
-			rapidjson_writer & write_value(const uint &arg_value ///< The uint value to write to the JSON
+			rapidjson_writer & write_value(const unsigned int &arg_value ///< The uint value to write to the JSON
 			                               ) {
 				writer.Uint( arg_value );
 				return *this;

@@ -23,9 +23,10 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm.hpp>
-#include <boost/range.hpp>
 #include <boost/range/algorithm/lower_bound.hpp>
+#include <boost/range/algorithm/sort.hpp>
 #include <boost/range/numeric.hpp>
+#include <boost/range/sub_range.hpp>
 
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
@@ -59,6 +60,7 @@ using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::lower_bound;
 using boost::range::nth_element;
+using boost::range::sort;
 using boost::rational_cast;
 using boost::sub_range;
 

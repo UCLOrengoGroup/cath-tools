@@ -42,6 +42,8 @@ using boost::adaptors::filtered;
 using boost::adaptors::transformed;
 using boost::algorithm::any_of;
 using boost::irange;
+using boost::range::binary_search;
+using boost::range::partition;
 using std::tie;
 
 /// \brief Get the res_index_key_coord_and_dist values for the specified PDB, restricted

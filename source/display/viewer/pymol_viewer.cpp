@@ -305,8 +305,8 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 							selection_strings.push_back( pymol_tools::pymol_res_seln_str(
 								entry_name,
 								residue_id_vec{
-									next( common::cbegin( res_ids ), begin_and_end.first  ),
-									next( common::cbegin( res_ids ), begin_and_end.second )
+									std::next( common::cbegin( res_ids ), static_cast<ptrdiff_t>( begin_and_end.first  ) ),
+									std::next( common::cbegin( res_ids ), static_cast<ptrdiff_t>( begin_and_end.second ) )
 								}
 							) );
 						}

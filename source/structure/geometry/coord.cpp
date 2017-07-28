@@ -21,6 +21,7 @@
 #include "coord.hpp"
 
 #include <boost/algorithm/clamp.hpp>
+#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -37,6 +38,7 @@ using namespace cath::geom;
 using namespace std;
 
 using boost::algorithm::clamp;
+using boost::format;
 using boost::lexical_cast;
 using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;
@@ -151,20 +153,27 @@ doub_angle cath::geom::planar_angle_between(const coord &arg_plane_ortho, ///< T
 	return ( sign >= 0.0 ) ? ang_rads : -ang_rads;
 }
 
-/// \brief TODOCUMENT
-///
-/// This sends the
+/// \brief Generate a string describing the specified coord
 ///
 /// \relates coord
-ostream & cath::geom::operator<<(ostream     &arg_os,   ///< TODOCUMENT
-                                 const coord &arg_coord ///< TODOCUMENT
+string cath::geom::to_string(const coord &arg_coord ///< The coord to describe
+                             ) {
+	return "coord["
+		+ ( format( R"(%9g)"  ) % arg_coord.get_x() ).str()
+		+ ", "
+		+ ( format( R"(%9g)" ) % arg_coord.get_y() ).str()
+		+ ", "
+		+ ( format( R"(%9g)"  ) % arg_coord.get_z() ).str()
+		+ "]";
+}
+
+/// \brief Insert a description of the specified coord into the specified ostream
+///
+/// \relates coord
+ostream & cath::geom::operator<<(ostream     &arg_os,   ///< The ostream into which the description should be inserted
+                                 const coord &arg_coord ///< The coord to describe
                                  ) {
-//	ostringstream output_ss;
-	arg_os << "coord[" << right << setw( 9 ) << arg_coord.get_x();
-	arg_os << ", "     << right << setw( 9 ) << arg_coord.get_y();
-	arg_os << ", "     << right << setw( 9 ) << arg_coord.get_z();
-	arg_os << "]";
-//	arg_os << output_ss.str();
+	arg_os << to_string( arg_coord );
 	return arg_os;
 }
 

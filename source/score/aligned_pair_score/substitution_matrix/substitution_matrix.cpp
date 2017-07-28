@@ -41,7 +41,9 @@ using namespace cath::common;
 using namespace cath::score;
 using namespace std;
 
+using boost::find;
 using boost::numeric_cast;
+using boost::range::lower_bound;
 using boost::range::max_element;
 
 /// \brief TODOCUMENT
