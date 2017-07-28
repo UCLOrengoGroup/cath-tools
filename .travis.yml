@@ -89,7 +89,7 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
 
 script:
-  - ninja -j 2 -k -C release_build
+  - ninja -j 2 -k 0 -C release_build
   - release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
   - release_build/cath-superpose --version
   - mv release_build/cath-assign-domains release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
