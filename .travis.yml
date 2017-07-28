@@ -2,7 +2,7 @@
 # sudo:false
 # which then allows them to be run in a Docker-style container
 # but this file currently having to use sudo to get a recent Boost (1.60.0) because
-# the whitelisted boost-latest ppa repository:
+# the white-listed boost-latest ppa repository:
 # https://launchpad.net/~boost-latest/+archive/ubuntu/ppa
 # currently only offers Boost <= v1.55.0.
 # If/when Boost >= v1.60.0 gets added to boost-latest, then
@@ -37,14 +37,14 @@ env:
 # - BUILDTYPE="ANALYZE" # Use scan_build, which builds with Clang's static analyzer
 
 before_install:
-  - export SUSAN="sarandon";
   - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then brew update                                                                                       ; fi
   - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then brew install gsl                                                                                  ; fi
   - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then brew install ninja                                                                                ; fi
+  - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fvisibility=default"                                  ; fi # To tackle warnings like: "direct access in [...] to global weak symbol [...] means the weak symbol cannot be overridden at runtime"
   - if [[ $TRAVIS_OS_NAME == linux                                                  ]]; then export BUILD_FILE_SUFFIX="ubuntu14.04"; else export BUILD_FILE_SUFFIX="macos"                     ; fi
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^clang                           ]]; then export CXX="clang++-4.0" CC="clang-4.0"                                                           ; fi
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^gcc                             ]]; then export CXX="g++-6"   CC="gcc-6"                                                                   ; fi
-# - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc                             ]]; then export CXX="g++-4.8" CC="gcc-4.8"                                                                 ; fi # Default gcc on osx is just a front-end for LLVM
+# - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc                             ]]; then export CXX="g++-4.8" CC="gcc-4.8"                                                                 ; fi # Default gcc on osx is just a front-end for LLVM so should be able to use this to explicitly request the real GCC 4.8. It isn't working right now - maybe just needs a more recent osx_image (https://docs.travis-ci.com/user/reference/osx/#OS-X-Version) ? Not worth spending more time on now.
   - if [[ $BUILDTYPE =~ SAN$                                                        ]]; then export CMAKE_BUILD_TYPE="RELEASE"                                                                 ; fi
   - if [[ $BUILDTYPE == ASAN                                                        ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer"            ; fi
 # - if [[ $BUILDTYPE == MSAN                                                        ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=memory  -fno-omit-frame-pointer"            ; fi
