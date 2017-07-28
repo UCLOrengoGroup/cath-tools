@@ -44,6 +44,12 @@ before_install:
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^clang ]]; then export CXX="clang++-4.0" CC="clang-4.0"                                                           ; fi
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^gcc   ]]; then export CXX="g++-6"   CC="gcc-6"                                                                   ; fi
   - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then export CXX="g++-4.8" CC="gcc-4.8"                                                                 ; fi # Default gcc on osx is just a front-end for LLVM
+  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then echo $CC                                                                                          ; fi
+  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then echo $CXX                                                                                         ; fi
+  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then which $CC                                                                                         ; fi
+  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then which $CXX                                                                                        ; fi
+  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then which gcc-4.8                                                                                     ; fi
+  - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc   ]]; then which g++-4.8                                                                                     ; fi
   - if [[ $BUILDTYPE =~ SAN$                              ]]; then export CMAKE_BUILD_TYPE="RELEASE"                                                                 ; fi
   - if [[ $BUILDTYPE == ASAN                              ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer"            ; fi
 # - if [[ $BUILDTYPE == MSAN                              ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=memory  -fno-omit-frame-pointer"            ; fi
