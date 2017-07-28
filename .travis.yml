@@ -36,11 +36,17 @@ env:
 # - BUILDTYPE=UBSAN   # Undefined-behaviour sanitizer (commented out due to failures in boost: /usr/include/boost/serialization/singleton.hpp:132:13: runtime error: reference binding to null pointer of type 'const boost::serialization::extended_type_info_typeid<cath::score::aligned_pair_score>')
 # - BUILDTYPE="ANALYZE" # Use scan_build, which builds with Clang's static analyzer
 
+matrix:
+  fast_finish: true
+  allow_failures:
+    - compiler: gcc
+      env:      BUILDTYPE=ASAN
+
 before_install:
   - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then brew update                                                                                       ; fi
   - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then brew install gsl                                                                                  ; fi
   - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then brew install ninja                                                                                ; fi
-  - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden"       ; fi # To tackle warnings like: "direct access in [...] to global weak symbol [...] means the weak symbol cannot be overridden at runtime"
+# - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden"       ; fi # This was an attempt to remove warnings like: "direct access in [...] to global weak symbol [...] means the weak symbol cannot be overridden at runtime" but none of "-fvisibility=default", "-fvisibility=hidden" or "-fvisibility=hidden -fvisibility-inlines-hidden" worked
   - if [[ $TRAVIS_OS_NAME == linux                                                  ]]; then export BUILD_FILE_SUFFIX="ubuntu14.04"; else export BUILD_FILE_SUFFIX="macos"                     ; fi
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^clang                           ]]; then export CXX="clang++-4.0" CC="clang-4.0"                                                           ; fi
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^gcc                             ]]; then export CXX="g++-6"   CC="gcc-6"                                                                   ; fi
