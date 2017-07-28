@@ -61,9 +61,13 @@ foreach my $struc_id1 ( @struc_ids ) {
 				my $cath_ssap_exe = which( $cath_ssap_name )
 					|| confess "Unable to find SSAP executable \"$cath_ssap_name\" - please sure it is executable and located in one of the directories in your PATH";
 				my ($ssap_stdout, $ssap_stderr);
-				run3( [ $cath_ssap_exe, $struc_id1, $struc_id2 ], undef, \$ssap_stdout, \$ssap_stderr);
-				if ( $CHILD_ERROR ) {
-					confess "Error when running cath-ssap for $struc_id1 vs $struc_id2 (stdout: \"$ssap_stdout\"; stderr: \"$ssap_stderr\")";
+				run3( [ $cath_ssap_exe, $struc_id1, $struc_id2 ], undef, \$ssap_stdout, \$ssap_stderr );
+
+				# TODO: cath-ssap is just been improved now to return a non-zero error code when it fails.
+				#       Once that change has propagated out a bit, remove this additional regex check
+				#       that's being used to workaround cath-ssap always returning a SUCCESS error code
+				if ( $CHILD_ERROR || $ssap_stdout !~ /\s+\d+\s+\d+\s+[\d\.]+\s+/ ) {
+					confess "Error when running cath-ssap for $struc_id1 vs $struc_id2 (\n\tstdout: \"$ssap_stdout\";\n\tstderr: \"$ssap_stderr\"\n)";
 				}
 				$scores_file->spew($ssap_stdout);
 			}
