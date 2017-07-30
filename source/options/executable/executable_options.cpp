@@ -244,7 +244,11 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 	// If help was requested, then provide it
 	if ( the_help_block.get_help() ) {
 		// std::cerr << "Getting help\n";
-		error_or_help_string = misc_help_version_options_block::get_help_string( visible_po_desc, get_help_prefix_string(), get_help_suffix_string() );
+		error_or_help_string = misc_help_version_options_block::get_help_string(
+			visible_po_desc,
+			get_help_prefix_string(),
+			get_help_suffix_string()
+		);
 		return;
 	}
 
