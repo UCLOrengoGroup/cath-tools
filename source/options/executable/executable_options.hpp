@@ -139,7 +139,7 @@ namespace cath {
 			void parse_options(const int &,
 			                   const char * const []);
 
-			const str_opt & get_error_or_help_string() const;
+			str_opt get_error_or_help_string() const;
 		};
 
 		/// \brief Try a program options action and handle any exceptions that are thrown

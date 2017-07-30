@@ -60,7 +60,7 @@ void cath_align_scorer::score(const cath_score_align_options &arg_cath_score_ali
 	// If the options are invalid or specify to do_nothing, then just return
 	const auto &error_or_help_string = arg_cath_score_align_options.get_error_or_help_string();
 	if ( error_or_help_string ) {
-		arg_stdout << *error_or_help_string << endl;
+		arg_stdout << *error_or_help_string;
 		return;
 	}
 

@@ -27,6 +27,7 @@
 #include "common/argc_argv_faker.hpp"
 #include "common/file/find_file.hpp"
 #include "common/file/open_fstream.hpp"
+#include "common/optional/make_optional_if.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "options/executable/env_var_option_name_handler.hpp"
 #include "options/options_block/misc_help_version_options_block.hpp"
@@ -362,11 +363,16 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 ///
 /// \returns Any error or help string generated during parsing,
 ///          or otherwise an empty string
-const str_opt & executable_options::get_error_or_help_string() const {
+str_opt executable_options::get_error_or_help_string() const {
 	if ( ! processed_options) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get error/help string because the options haven't yet been processed"));
 	}
-	return error_or_help_string;
+	return make_optional_if_fn(
+		static_cast<bool>( error_or_help_string ),
+		[&] () {
+			return trim_right_copy( *error_or_help_string ) + "\n";
+		}
+	);
 }
 
 

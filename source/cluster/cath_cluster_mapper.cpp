@@ -71,7 +71,7 @@ void cath::clust::perform_map_clusters(const clustmap_options &arg_opts,    ///<
 	// If the options are invalid or specify to do_nothing, then just return
 	const auto &error_or_help_string = arg_opts.get_error_or_help_string();
 	if ( error_or_help_string ) {
-		arg_stdout << *error_or_help_string << "\n";
+		arg_stdout << *error_or_help_string;
 		return;
 	}
 
