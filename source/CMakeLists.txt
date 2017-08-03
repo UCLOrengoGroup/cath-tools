@@ -2390,8 +2390,12 @@ add_library(
 
 add_executable(
 	build-test
+		$<TARGET_OBJECTS:testsources_biocore>
+		$<TARGET_OBJECTS:testsources_chopping>
+		$<TARGET_OBJECTS:testsources_cluster>
 		$<TARGET_OBJECTS:testsources_common>
 		$<TARGET_OBJECTS:testsources_remain>
+		$<TARGET_OBJECTS:testsources_seq>
 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
 )
 
