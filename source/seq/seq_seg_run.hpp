@@ -124,6 +124,7 @@ namespace cath {
 
 		std::string get_segments_string(const seq_seg_run &);
 		std::string to_string(const seq_seg_run &);
+		std::string to_string(const seq_seg_run_opt &);
 		std::ostream & operator<<(std::ostream &,
 		                          const seq_seg_run &);
 		bool operator==(const seq_seg_run &,

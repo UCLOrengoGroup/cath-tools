@@ -65,6 +65,20 @@ string cath::seq::to_string(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_
 	return "seq_seg_run[" + get_segments_string( arg_seq_seg_run ) + "]";
 }
 
+/// \brief Generate a string describing the specified seq_seg_run
+///
+/// \relates seq_seg_run
+string cath::seq::to_string(const seq_seg_run_opt &arg_seq_seg_run_opt ///< The seq_seg_run_opt to describe
+                            ) {
+	return "seq_seg_run["
+		+ (
+			arg_seq_seg_run_opt
+				? get_segments_string( *arg_seq_seg_run_opt )
+				: "WCD"
+		)
+		+ "]";
+}
+
 /// \brief Insert a description of the specified seq_seg_run into the specified ostream
 ///
 /// \relates seq_seg_run
