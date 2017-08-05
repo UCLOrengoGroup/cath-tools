@@ -52,6 +52,7 @@
 #include <vector>
 
 using namespace cath;
+using namespace cath::chop;
 using namespace cath::file;
 using namespace cath::sec;
 using namespace std;
@@ -150,26 +151,30 @@ protein cath::read_protein_from_dssp_and_pdb(const path             &arg_dssp,  
 /// \brief Read a DSSP and a PDB file and build them into a protein
 ///
 /// \relatesalso protein
-protein cath::read_protein_from_pdb(const path   &arg_pdb,   ///< A PDB file
-                                    const string &arg_name,  ///< The name to set as the title of the protein
-                                    ostream      &arg_stderr ///< TODOCUMENT
+protein cath::read_protein_from_pdb(const path           &arg_pdb_file, ///< A PDB file
+                                    const string         &arg_name,     ///< The name to set as the title of the protein
+                                    const region_vec_opt &arg_regions,  ///< The regions to which the resulting protein should be restricted
+                                    ostream              &arg_stderr    ///< The ostream to which any warnings/errors should be written
                                     ) {
+	pdb new_pdb = arg_regions
+		? get_regions_limited_pdb( arg_regions, read_pdb_file( arg_pdb_file ) )
+		:                                       read_pdb_file( arg_pdb_file );
 	return build_protein_of_pdb_and_name(
-		read_pdb_file( arg_pdb ),
+		std::move( new_pdb ),
 		arg_name,
 		ref( arg_stderr )
 	);
 }
 
-/// \brief Read a DSSP and a PDB file and build them into a protein
+/// \brief Make a protein from a PDB and calculated DSSP data
 ///
 /// \relatesalso protein
-protein cath::read_protein_from_pdb_and_calc_dssp(const path            &arg_pdb,    ///< A PDB file
-                                                  const string          &arg_name,   ///< The name to set as the title of the protein
-                                                  const ostream_ref_opt &arg_ostream ///< An optional reference to an ostream to which any logging should be sent
+protein cath::make_protein_from_pdb_and_calc_dssp(const pdb             &arg_pdb,      ///< A PDB
+                                                  const string          &arg_name,     ///< The name to set as the title of the protein
+                                                  const ostream_ref_opt &arg_ostream   ///< An optional reference to an ostream to which any logging should be sent
                                                   ) {
 	const pdb the_pdb = backbone_complete_subset_of_pdb(
-		read_pdb_file( arg_pdb ),
+		arg_pdb,
 		arg_ostream
 	).first;
 	protein the_protein = build_protein_of_pdb_and_name(
@@ -185,14 +190,14 @@ protein cath::read_protein_from_pdb_and_calc_dssp(const path            &arg_pdb
 	return the_protein;
 }
 
-/// \brief Read a DSSP and a PDB file and build them into a protein
+/// \brief Make a protein from a PDB and calculated DSSP and sec data
 ///
 /// \relatesalso protein
-protein cath::read_protein_from_pdb_and_calc_dssp_and_sec(const path            &arg_pdb,    ///< A PDB file
+protein cath::make_protein_from_pdb_and_calc_dssp_and_sec(const pdb             &arg_pdb,    ///< A PDB
                                                           const string          &arg_name,   ///< The name to set as the title of the protein
                                                           const ostream_ref_opt &arg_ostream ///< An optional reference to an ostream to which any logging should be sent
                                                           ) {
-	protein the_protein = read_protein_from_pdb_and_calc_dssp(
+	protein the_protein = make_protein_from_pdb_and_calc_dssp(
 		arg_pdb,
 		arg_name,
 		arg_ostream
@@ -204,6 +209,43 @@ protein cath::read_protein_from_pdb_and_calc_dssp_and_sec(const path            
 		arg_ostream
 	);
 	return the_protein;
+}
+
+
+/// \brief Read a DSSP and a PDB file and build them into a protein
+///
+/// \relatesalso protein
+protein cath::read_protein_from_pdb_and_calc_dssp(const path            &arg_pdb_file, ///< A PDB file
+                                                  const string          &arg_name,     ///< The name to set as the title of the protein
+                                                  const region_vec_opt  &arg_regions,  ///< The regions to which the resulting protein should be restricted
+                                                  const ostream_ref_opt &arg_ostream   ///< An optional reference to an ostream to which any logging should be sent
+                                                  ) {
+	pdb new_pdb = arg_regions
+		? get_regions_limited_pdb( arg_regions, read_pdb_file( arg_pdb_file ) )
+		:                                       read_pdb_file( arg_pdb_file );
+	return make_protein_from_pdb_and_calc_dssp(
+		std::move( new_pdb ),
+		arg_name,
+		arg_ostream
+	);
+}
+
+/// \brief Read a DSSP and a PDB file and build them into a protein
+///
+/// \relatesalso protein
+protein cath::read_protein_from_pdb_and_calc_dssp_and_sec(const path            &arg_pdb_file, ///< A PDB file
+                                                          const string          &arg_name,     ///< The name to set as the title of the protein
+                                                          const region_vec_opt  &arg_regions,  ///< The regions to which the resulting protein should be restricted
+                                                          const ostream_ref_opt &arg_ostream   ///< An optional reference to an ostream to which any logging should be sent
+                                                          ) {
+	pdb new_pdb = arg_regions
+		? get_regions_limited_pdb( arg_regions, read_pdb_file( arg_pdb_file ) )
+		:                                       read_pdb_file( arg_pdb_file );
+	return make_protein_from_pdb_and_calc_dssp_and_sec(
+		std::move( new_pdb ),
+		arg_name,
+		arg_ostream
+	);
 }
 
 /// \brief Construct a protein object from parsed WOLF and sec files

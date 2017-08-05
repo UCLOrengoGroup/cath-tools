@@ -1069,6 +1069,7 @@ set(
 		structure/protein/protein_source_file_set/protein_from_pdb_dssp_and_sec.cpp
 		structure/protein/protein_source_file_set/protein_from_wolf_and_sec.cpp
 		structure/protein/protein_source_file_set/protein_source_file_set.cpp
+		structure/protein/protein_source_file_set/restrict_protein_source_file_set.cpp
 )
 
 set(

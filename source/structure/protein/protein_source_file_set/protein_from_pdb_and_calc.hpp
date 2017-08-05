@@ -21,15 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_FROM_PDB_AND_CALC_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_FROM_PDB_AND_CALC_H
 
-#include "structure/protein/protein_source_file_set/protein_source_file_set.hpp"
+#include "structure/protein/protein_source_file_set/restrict_protein_source_file_set.hpp"
 
 namespace cath {
 
-	/// \brief Concrete protein_source_file_set for reading each protein from a PDB file
+	/// \brief Concrete restrict_protein_source_file_set for reading each protein from a PDB file
 	///        (and then calculating the DSSP/sec_file information)
 	///
 	/// If you don't need the extra calculations, you can just use protein_from_pdb
-	class protein_from_pdb_and_calc final : public protein_source_file_set {
+	class protein_from_pdb_and_calc final : public restrict_protein_source_file_set {
 	private:
 		std::unique_ptr<protein_source_file_set> do_clone() const final;
 
@@ -39,9 +39,10 @@ namespace cath {
 
 		bool do_makes_ssap_ready_protein() const final;
 
-		protein do_read_files(const file::data_file_path_map &,
-		                      const std::string &,
-		                      std::ostream &) const final;
+		protein do_read_and_restrict_files(const file::data_file_path_map &,
+		                                   const std::string &,
+		                                   const chop::region_vec_opt &,
+		                                   std::ostream &) const final;
 	};
 
 } // namespace cath

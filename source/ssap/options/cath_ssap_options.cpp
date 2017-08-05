@@ -139,9 +139,9 @@ str_opt cath_ssap_options::do_get_error_or_help_string() const {
 		}
 	}
 
-	// if ( get_domains().size() > 2 ) {
-	// 	return "Cannot specify regions more than twice for cath-ssap"s;
-	// }
+	if ( get_domains().size() > 2 ) {
+		return "Cannot specify regions more than twice for cath-ssap"s;
+	}
 
 	return none;
 }
@@ -192,7 +192,7 @@ void cath_ssap_options::check_ok_to_use() const {
 cath_ssap_options::cath_ssap_options() : the_detail_help_options_block( detail_help_spec() ) {
 	super::add_options_block( the_ssap_options_block        );
 	super::add_options_block( the_data_dirs_options_block   );
-	// super::add_options_block( the_align_regions_ob          );
+	super::add_options_block( the_align_regions_ob          );
 	super::add_options_block( the_detail_help_options_block );
 }
 
@@ -206,10 +206,10 @@ const data_dirs_spec & cath_ssap_options::get_data_dirs_spec() const {
 	return the_data_dirs_options_block.get_data_dirs_spec();
 }
 
-// /// \brief A getter for the cath_ssap_options
-// const domain_vec & cath_ssap_options::get_domains() const {
-// 	return the_align_regions_ob.get_align_domains();
-// }
+/// \brief A getter for the cath_ssap_options
+const domain_vec & cath_ssap_options::get_domains() const {
+	return the_align_regions_ob.get_align_domains();
+}
 
 /// \brief Return the string containing help on the SSAP matches format
 string cath::opts::get_ssap_matches_format_help_string() {

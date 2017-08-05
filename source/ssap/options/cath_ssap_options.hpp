@@ -25,7 +25,7 @@
 #include "options/executable/executable_options.hpp"
 #include "options/options_block/detail_help_options_block.hpp"
 #include "ssap/options/old_ssap_options_block.hpp"
-// #include "superposition/options/align_regions_options_block.hpp"
+#include "superposition/options/align_regions_options_block.hpp"
 
 namespace cath {
 	namespace opts {
@@ -48,8 +48,8 @@ namespace cath {
 			/// \brief TODOCUMENT
 			data_dirs_options_block         the_data_dirs_options_block;
 
-			// /// \brief The align_regions_options_block for align regions options
-			// align_regions_options_block     the_align_regions_ob;
+			/// \brief The align_regions_options_block for align regions options
+			align_regions_options_block     the_align_regions_ob;
 
 			/// \brief TODOCUMENT
 			detail_help_options_block       the_detail_help_options_block;
@@ -71,7 +71,7 @@ namespace cath {
 
 			const old_ssap_options_block & get_old_ssap_options() const;
 			const data_dirs_spec &         get_data_dirs_spec() const;
-			// const chop::domain_vec &       get_domains() const;
+			const chop::domain_vec &       get_domains() const;
 
 			static const std::string PROGRAM_NAME;
 		};

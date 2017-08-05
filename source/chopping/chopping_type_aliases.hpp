@@ -28,11 +28,15 @@
 
 #include <vector>
 
+namespace cath { namespace chop { class domain; } }
+namespace cath { namespace chop { class domain_definition; } }
+namespace cath { namespace chop { class region; } }
+
 namespace cath {
 	namespace chop {
-		class domain;
-		class domain_definition;
-		class region;
+
+		/// \brief Type alias for an optional domains
+		using domain_opt            = boost::optional<domain>;
 
 		/// \brief Type alias for a vector of domains
 		using domain_vec            = std::vector<domain>;

@@ -57,9 +57,9 @@ namespace cath {
 	                                 std::ostream & = std::cerr);
 
 	prot_prot_pair read_protein_pair(const std::string &,
-	                                 const chop::region_vec_opt &,
+	                                 const chop::domain_opt &,
 	                                 const std::string &,
-	                                 const chop::region_vec_opt &,
+	                                 const chop::domain_opt &,
 	                                 const opts::data_dirs_spec &,
 	                                 const protein_source_file_set &,
 	                                 const path_opt &,
@@ -90,8 +90,8 @@ namespace cath {
 	protein read_protein_data_from_ssap_options_files(const opts::data_dirs_spec &,
 	                                                  const std::string &,
 	                                                  const protein_source_file_set &,
-	                                                  const path_opt & = boost::none,
-	                                                  const chop::region_vec_opt & = boost::none,
+	                                                  const path_opt &,
+	                                                  const chop::domain_opt &,
 	                                                  std::ostream & = std::cerr);
 
 	clique read_clique_file(const boost::filesystem::path &);

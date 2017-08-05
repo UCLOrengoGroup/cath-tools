@@ -24,6 +24,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
 
+#include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 
 #include <iostream>
@@ -63,15 +64,30 @@ namespace cath {
 
 	protein read_protein_from_pdb(const boost::filesystem::path &,
 	                              const std::string & = "",
+	                              const chop::region_vec_opt & = boost::none,
 	                              std::ostream & = std::cerr);
+
+
+
+	protein make_protein_from_pdb_and_calc_dssp(const file::pdb &,
+	                                            const std::string &,
+	                                            const ostream_ref_opt & = boost::none );
+
+	protein make_protein_from_pdb_and_calc_dssp_and_sec(const file::pdb &,
+	                                                    const std::string &,
+	                                                    const ostream_ref_opt & = boost::none );
 
 	protein read_protein_from_pdb_and_calc_dssp(const boost::filesystem::path &,
 	                                            const std::string & = "",
+	                                            const chop::region_vec_opt & = boost::none,
 	                                            const ostream_ref_opt & = boost::none );
 
 	protein read_protein_from_pdb_and_calc_dssp_and_sec(const boost::filesystem::path &,
 	                                                    const std::string & = "",
+	                                                    const chop::region_vec_opt & = boost::none,
 	                                                    const ostream_ref_opt & = boost::none );
+
+
 
 	protein protein_from_wolf_and_sec(const file::wolf_file &,
 	                                  const file::sec_file &,

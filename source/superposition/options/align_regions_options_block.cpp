@@ -66,7 +66,8 @@ void align_regions_options_block::do_add_visible_options_to_description(options_
 				->notifier     ( align_regions_notifier ),
 			( "Handle region(s) " + regions_varname + " as the alignment part of the structure.\n"
 				+ "May be specified multiple times, in correspondence with the structures.\n"
-				+ "Format is: D[5inwB02]251-348:B,408-416A:B" ).c_str()
+				+ "Format is: D[5inwB02]251-348:B,408-416A:B\n"
+				+ "(Put " + regions_varname + R"( in quotes to prevent the square brackets confusing your shell ("No match")))").c_str()
 		);
 }
 

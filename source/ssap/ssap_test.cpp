@@ -22,6 +22,7 @@
 
 #include <boost/optional.hpp> // ***** TEMPORARY *****
 
+#include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"

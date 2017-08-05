@@ -61,6 +61,16 @@ namespace cath {
 		                              const std::string &,
 		                              std::ostream &) const = 0;
 
+		/// \brief Virtual method with which each concrete protein_source_file_set may define how to do_read_files() and
+		///        restrict the result to the specified regions.
+		///
+		/// The default implementation uses restrict_to_regions_copy() but a concrete protein_source_file_set
+		/// may override (and then probably implement do_read_files() terms of that)
+		virtual protein do_read_and_restrict_files(const file::data_file_path_map &,
+		                                           const std::string &,
+		                                           const chop::region_vec_opt &,
+		                                           std::ostream &) const;
+
 	public:
 		protein_source_file_set() = default;
 		virtual ~protein_source_file_set() noexcept = default;
@@ -80,6 +90,12 @@ namespace cath {
 		                   const chop::region_vec_opt &,
 		                   std::ostream &) const;
 	};
+
+	protein read_protein_from_files(const protein_source_file_set &,
+	                                const opts::data_dirs_spec &,
+	                                const std::string &,
+	                                const chop::domain_opt &,
+	                                std::ostream &);
 
 	protein read_protein_from_files(const protein_source_file_set &,
 	                                const boost::filesystem::path &,

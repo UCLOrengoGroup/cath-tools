@@ -325,14 +325,12 @@ prot_prot_pair cath::read_protein_pair(const cath_ssap_options &arg_cath_ssap_op
                                        ostream                 &arg_stderr             ///< TODOCUMENT
                                        ) {
 	const auto &the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
-	// const auto &the_domains      = arg_cath_ssap_options.get_domains();
-	// region_vec_opt regions_a = make_optional_if_fn( the_domains.size() > 0, [&] () { const domain &dom = the_domains[ 0 ]; return region_vec{ common::cbegin( dom ), common::cend( dom ) }; } );
-	// region_vec_opt regions_b = make_optional_if_fn( the_domains.size() > 1, [&] () { const domain &dom = the_domains[ 1 ]; return region_vec{ common::cbegin( dom ), common::cend( dom ) }; } );
+	const auto &the_domains      = arg_cath_ssap_options.get_domains();
 	return read_protein_pair(
 		the_ssap_options.get_protein_name_a(),
-		none,
+		make_optional_if_fn( the_domains.size() > 0, [&] () { return the_domains[ 0 ]; } ),
 		the_ssap_options.get_protein_name_b(),
-		none,
+		make_optional_if_fn( the_domains.size() > 1, [&] () { return the_domains[ 1 ]; } ),
 		arg_cath_ssap_options.get_data_dirs_spec(),
 		*the_ssap_options.get_protein_source_files(),
 		the_ssap_options.get_opt_domin_file(),
@@ -342,9 +340,9 @@ prot_prot_pair cath::read_protein_pair(const cath_ssap_options &arg_cath_ssap_op
 
 /// \brief Read a pair of proteins following the specification in arg_ssap_options
 prot_prot_pair cath::read_protein_pair(const string                  &arg_protein_name_a,          ///< TODOCUMENT
-                                       const region_vec_opt          &arg_regions_a,               ///< TODOCUMENT
+                                       const domain_opt              &arg_domain_a,                ///< TODOCUMENT
                                        const string                  &arg_protein_name_b,          ///< TODOCUMENT
-                                       const region_vec_opt          &arg_regions_b,               ///< TODOCUMENT
+                                       const domain_opt              &arg_domain_b,                ///< TODOCUMENT
                                        const data_dirs_spec          &arg_data_dirs_spec,          ///< TODOCUMENT
                                        const protein_source_file_set &arg_protein_source_file_set, ///< TODOCUMENT
                                        const path_opt                &arg_domin_file,              ///< TODOCUMENT
@@ -355,7 +353,7 @@ prot_prot_pair cath::read_protein_pair(const string                  &arg_protei
 		arg_protein_name_a,
 		arg_protein_source_file_set,
 		arg_domin_file,
-		arg_regions_a,
+		arg_domain_a,
 		arg_stderr
 	);
 	const protein protein_b = read_protein_data_from_ssap_options_files(
@@ -363,7 +361,7 @@ prot_prot_pair cath::read_protein_pair(const string                  &arg_protei
 		arg_protein_name_b,
 		arg_protein_source_file_set,
 		none,
-		arg_regions_b,
+		arg_domain_b,
 		arg_stderr
 	);
 	return make_pair(protein_a, protein_b);
@@ -799,7 +797,7 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
                                                         const string                  &arg_protein_name,            ///< The name of the protein that is to be read from files
                                                         const protein_source_file_set &arg_protein_source_file_set, ///< TODOCUMENT
                                                         const path_opt                &arg_domin_file,              ///< Optional domin file
-                                                        const region_vec_opt          &arg_regions,                 ///< The regions to which the resulting protein should be restricted
+                                                        const domain_opt              &arg_domain,                  ///< The domain to which the resulting protein should be restricted
                                                         ostream                       &arg_stderr                   ///< TODOCUMENT
                                                         ) {
 	// Report which files are being used
@@ -815,10 +813,11 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 	}
 
 	// Create a protein object from the name, wolf file and sec file
-	protein new_protein_to_populate = arg_protein_source_file_set.read_files(
+	protein new_protein_to_populate = read_protein_from_files(
+		arg_protein_source_file_set,
 		arg_data_dirs,
 		arg_protein_name,
-		arg_regions,
+		arg_domain,
 		arg_stderr
 	);
 

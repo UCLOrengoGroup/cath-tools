@@ -30,6 +30,7 @@
 #include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 
@@ -59,14 +60,15 @@ bool protein_from_pdb::do_makes_ssap_ready_protein() const {
 }
 
 /// \brief Grab the specified PDB, DSSP and SEC filenames and then use them in read_dssp_pdb_and_sec_files()
-protein protein_from_pdb::do_read_files(const data_file_path_map &arg_filename_of_data_file, ///< The pre-loaded map of file types to filenames
-                                        const string             &arg_protein_name,          ///< The name of the structure to be loaded
-                                        ostream                  &arg_stderr                 ///< The ostream to which warnings/errors should be written
-                                        ) const {
-	const path &pdb_file  = arg_filename_of_data_file.at( data_file::PDB );
+protein protein_from_pdb::do_read_and_restrict_files(const data_file_path_map &arg_filename_of_data_file, ///< The pre-loaded map of file types to filenames
+                                                     const string             &arg_protein_name,          ///< The name of the structure to be loaded
+                                                     const region_vec_opt     &arg_regions,               ///< The regions to which the resulting protein should be restricted
+                                                     ostream                  &arg_stderr                 ///< The ostream to which warnings/errors should be written
+                                                     ) const {
 	return read_protein_from_pdb(
-		pdb_file,
+		arg_filename_of_data_file.at( data_file::PDB ),
 		arg_protein_name,
+		arg_regions,
 		arg_stderr
 	);
 }

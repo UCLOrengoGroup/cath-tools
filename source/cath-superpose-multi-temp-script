@@ -19,18 +19,27 @@ my $SSAP_SCORES_SUFFIX    = ".scores";
 
 # Check the script's arguments
 if ( scalar(@ARGV) < 4 ) {
-	confess "Usage: $PROGRAM_NAME temp_dir struc_id1 struc_id2 struc_id3 ...\n\t";
+	die "Usage: $PROGRAM_NAME temp_dir struc_id1 struc_id2 struc_id3 ...\n\n"
+		. "Align regions may also be specified in the same list in the format: D[5inwB02]251-348:B,408-416A:B\n\n"
+		. "Those specifications must be in one-to-one correspondence with the struc_ids.\n"
+		. "(Put the specifications in quotes to prevent the square brackets confusing your shell (\"No match\"))\n";
 }
 my ( $temp_dir_name, @struc_ids ) = @ARGV;
-@struc_ids = uniq( sort( @struc_ids ) ) ;
+@struc_ids = sort( @struc_ids );
 
-# my @choppings = grep { $ARG =~ /^D\[/ } @struc_ids;
-# @struc_ids    = grep { $ARG !~ /^D\[/ } @struc_ids;
+my @choppings = grep { $ARG =~ /^D\[.*\]/ } @struc_ids;
+@struc_ids    = grep { $ARG !~ /^D\[.*\]/ } @struc_ids;
 
-# warn Dumper( [ \@struc_ids, \@choppings ] );
+if ( scalar( @choppings ) != scalar( @struc_ids ) ) {
+	confess 'If specifying domains\' regions, the number specified ('
+		. scalar( @choppings )
+		. ') must match the number of structures ('
+		. scalar( @struc_ids )
+		. ")\n ";
+}
 
 # Check the directory exists
-my $temp_dir = dir($temp_dir_name)->absolute();
+my $temp_dir = dir( $temp_dir_name )->absolute();
 if ( ! -d $temp_dir ) {
 	$temp_dir->mkpath()
 		or confess "Directory \"$temp_dir\" doesn't not exist and unable to make it : $OS_ERROR";
@@ -44,26 +53,38 @@ chdir $temp_dir
 # Loop over the struc pairs
 # (only the half matrix is required so only consider pairs where $struc_id1 lt $struc_id2)
 my @scores_lines;
-foreach my $struc_id1 ( @struc_ids ) {
-	foreach my $struc_id2 ( @struc_ids ) {
-		if ( $struc_id1 lt $struc_id2 ) {
+foreach my $struc_idx1 ( 0 .. $#struc_ids ) {
+	foreach my $struc_idx2 ( 0 .. $#struc_ids ) {
+		if ( $struc_idx1 < $struc_idx2 ) {
+			my $struc_id1      = $struc_ids[ $struc_idx1 ];
+			my $struc_id2      = $struc_ids[ $struc_idx2 ];
+			my $chopping_1     = ( scalar( @choppings ) > 0 ? $choppings[ $struc_idx1 ] : undef );
+			my $chopping_2     = ( scalar( @choppings ) > 0 ? $choppings[ $struc_idx2 ] : undef );
 			my $alignment_file = $temp_dir->file( $struc_id1.$struc_id2.$SSAP_ALIGNMENT_SUFFIX );
 			my $scores_file    = $temp_dir->file( $struc_id1.$struc_id2.$SSAP_SCORES_SUFFIX    );
+			my $struc_label_1  = $struc_id1 . ( $chopping_1 ? " (with $chopping_1)" : '' );
+			my $struc_label_2  = $struc_id2 . ( $chopping_2 ? " (with $chopping_2)" : '' );
 			
 			# If both files already exist then say so
 			if ( -s $alignment_file && -s $scores_file ) {
-				warn localtime(time())." : cath-ssap files already exist for $struc_id1 vs $struc_id2\n";
+				warn localtime(time())." : cath-ssap files already exist for $struc_label_1 vs $struc_label_2\n";
 			}
 			# Otherwise perform the cath-ssap and write the scores to a file
 			else {
-				warn localtime(time())." : Performing cath-ssap for $struc_id1 vs $struc_id2\n";
+				warn localtime(time())." : Performing cath-ssap for $struc_label_1 vs $struc_label_2\n";
 				my $cath_ssap_name = 'cath-ssap';
 				my $cath_ssap_exe = which( $cath_ssap_name )
 					|| confess "Unable to find SSAP executable \"$cath_ssap_name\" - please sure it is executable and located in one of the directories in your PATH";
 				my ($ssap_stdout, $ssap_stderr);
-				run3( [ $cath_ssap_exe, $struc_id1, $struc_id2 ], undef, \$ssap_stdout, \$ssap_stderr );
+				run3( [
+					$cath_ssap_exe,
+					$struc_id1,
+					$struc_id2,
+					( defined( $chopping_1 ) ? ( '--align-regions', $chopping_1 ) : () ),
+					( defined( $chopping_2 ) ? ( '--align-regions', $chopping_2 ) : () ),
+				], undef, \$ssap_stdout, \$ssap_stderr );
 
-				# TODO: cath-ssap is just been improved now to return a non-zero error code when it fails.
+				# TODO: cath-ssap is just being improved now to return a non-zero error code when it fails.
 				#       Once that change has propagated out a bit, remove this additional regex check
 				#       that's being used to workaround cath-ssap always returning a SUCCESS error code
 				if ( $CHILD_ERROR || $ssap_stdout !~ /\s+\d+\s+\d+\s+[\d\.]+\s+/ ) {
@@ -91,8 +112,11 @@ my $scores_file = $temp_dir->file( "ssap_scores.$md5_of_ids" );
 $scores_file->spew( join( "\n", @scores_lines )."\n" );
 
 # Print some suggestion commands
-say "";
-say "Now, try running command like: ";
-say "  cath-superpose --ssap-scores-infile $scores_file --pdb-infile \$PDBDIR/".join( " --pdb-infile \$PDBDIR/", @struc_ids )." --sup-to-pymol-file $md5_of_ids.pml";
+say '';
+say 'Now, try running command like: ';
+say '  cath-superpose --ssap-scores-infile ' . $scores_file
+	. join( '', map { ' --pdb-infile $PDBDIR/' . $ARG        ; } @struc_ids )
+	. join( '', map { ' --align-regions \''    . $ARG . '\'' ; } @choppings )
+	. " --sup-to-pymol-file $md5_of_ids.pml";
 say "  pymol $md5_of_ids.pml";
 

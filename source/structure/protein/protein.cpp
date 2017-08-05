@@ -34,6 +34,7 @@
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
+#include "exception/not_implemented_exception.hpp"
 #include "ssap/context_res.hpp"
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
@@ -451,12 +452,15 @@ coord cath::view_vector(const protein &arg_protein,    ///< TODOCUMENT
 	);
 }
 
-/// \brief TODOCUMENT
+/// \brief Restrict the specified, existing protein to the specified regions
 ///
 /// \relates protein
-void cath::restrict_to_regions(protein              &/*arg_protein*/, ///< TODOCUMENT
-                               const region_vec_opt &/*arg_regions*/  ///< TODOCUMENT
+void cath::restrict_to_regions(protein              &/*arg_protein*/, ///< The initial protein to restrict
+                               const region_vec_opt &/*arg_regions*/  ///< The regions to which the resulting protein should be restricted
                                ) {
+
+	BOOST_THROW_EXCEPTION(not_implemented_exception("Cannot yet restrict to regions with this combination of input files"));
+
 // 	residue_vec residues_to_keep;
 // 	residues_to_keep.reserve( arg_protein.get_length() );
 

@@ -25,12 +25,13 @@
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/transform.hpp>
 
+#include "chopping/domain/domain.hpp"
+#include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
 #include "file/options/data_dirs_options_block.hpp"
 #include "structure/protein/protein.hpp"
-
-#include "chopping/region/region.hpp"
 #include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
 #include "structure/protein/protein_source_file_set/protein_from_pdb_and_calc.hpp"
 #include "structure/protein/protein_source_file_set/protein_from_pdb_and_dssp_and_calc.hpp"
@@ -56,6 +57,21 @@ using boost::lexical_cast;
 using boost::none;
 using boost::ptr_vector;
 using boost::range::transform;
+
+/// \brief Read a PDB and restrict it by the specified regions
+protein protein_source_file_set::do_read_and_restrict_files(const data_file_path_map &arg_filename_of_data_file, ///< The pre-loaded map of file types to filenames
+                                                            const string             &arg_protein_name,          ///< The name of the protein that is to be read from files
+                                                            const region_vec_opt     &arg_regions,               ///< The regions to which the resulting protein should be restricted
+                                                            ostream                  &arg_stderr                 ///< The ostream to which any warnings/errors should be written
+                                                            ) const {
+	protein the_protein = do_read_files( arg_filename_of_data_file, arg_protein_name, arg_stderr );
+	return arg_regions
+		? restrict_to_regions_copy(
+			std::move( the_protein ),
+			arg_regions
+		)
+		: the_protein;
+}
 
 /// \brief Standard approach to achieving a virtual copy-ctor
 unique_ptr<protein_source_file_set> protein_source_file_set::clone() const {
@@ -89,10 +105,32 @@ protein protein_source_file_set::read_files(const data_dirs_spec &arg_data_dirs,
 		arg_data_dirs,
 		arg_protein_name
 	);
-	return restrict_to_regions_copy(
-		do_read_files( filename_of_data_file, arg_protein_name, arg_stderr ),
-		arg_regions
+	return do_read_and_restrict_files( filename_of_data_file, arg_protein_name, arg_regions, arg_stderr );
+}
+
+/// \brief Read a protein from the specified files and apply any name from the optional domain
+///
+/// \relates protein_source_file_set
+protein cath::read_protein_from_files(const protein_source_file_set &arg_source_file_set, /// The protein_source_file_set specifying which set of files should be used to build the protein
+                                      const data_dirs_spec          &arg_data_dirs,       ///< The data_dirs_options_block to specify how things should be done
+                                      const string                  &arg_protein_name,    ///< The name of the protein that is to be read from files
+                                      const domain_opt              &arg_domain,          ///< The domain to which the resulting protein should be restricted
+                                      ostream                       &arg_stderr           ///< The ostream to which any warnings/errors should be written
+                                      ) {
+	const region_vec_opt regions = make_optional_if_fn(
+		static_cast<bool>( arg_domain ),
+		[&] () { return region_vec{ common::cbegin( *arg_domain ), common::cend( *arg_domain ) }; }
 	);
+	protein the_protein = arg_source_file_set.read_files(
+		arg_data_dirs,
+		arg_protein_name,
+		regions,
+		arg_stderr
+	);
+	if ( arg_domain && has_domain_id( *arg_domain ) ) {
+		the_protein.set_title( get_domain_id( *arg_domain ) );
+	}
+	return the_protein;
 }
 
 /// \brief TODOCUMENT
