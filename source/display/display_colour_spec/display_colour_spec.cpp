@@ -24,6 +24,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/map.hpp>
+
 #include <boost/range/irange.hpp>
 #include <boost/range/join.hpp>
 
@@ -165,7 +166,7 @@ display_colour_vec cath::get_all_colours(const display_colour_spec &arg_colour_s
                                          ) {
 	const display_colour_vec pdb_colours     = get_pdb_colours    ( arg_colour_spec );
 	const display_colour_vec residue_colours = get_residue_colours( arg_colour_spec );
-	return sort_uniq_build<display_colour_vec>( join( pdb_colours, residue_colours ) );
+	return sort_uniq_build<display_colour_vec>( boost::range::join( pdb_colours, residue_colours ) );
 }
 
 /// \brief Get a list of the indices of all PDBs of the specified colour
@@ -216,6 +217,7 @@ void cath::colour_viewer_with_spec(const display_colour_spec &arg_colour_spec,  
 		arg_viewer,
 		get_pdbs( arg_alignment_context ),
 		cleaned_names,
+		colour_category::STRUC_OR_RES,
 		arg_os
 	);
 
@@ -227,7 +229,7 @@ void cath::colour_viewer_with_spec(const display_colour_spec &arg_colour_spec,  
 		for (const auto &pdb_and_res_index : pdb_and_res_indices) {
 			const size_t &pdb_index = pdb_and_res_index.first;
 			arg_os << arg_viewer.get_colour_pdb_residues_str(
-				generate_colour_name( colour_ctr, num_colours ),
+				generate_colour_name( colour_ctr, num_colours,colour_category::STRUC_OR_RES ),
 				cleaned_names[ pdb_index ],
 				transform_build<residue_id_vec>(
 					pdb_and_res_index.second,

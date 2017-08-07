@@ -23,8 +23,9 @@
 
 #include <boost/optional.hpp>
 
-#include "display_colour/display_colour_type_aliases.hpp"
+#include "display/colour_category.hpp"
 #include "display_colour/display_colour.hpp"
+#include "display_colour/display_colour_type_aliases.hpp"
 
 namespace cath { class viewer; }
 namespace cath { namespace file { class pdb_list; } }
@@ -90,6 +91,7 @@ namespace cath {
 		                               const viewer &,
 		                               const file::pdb_list &,
 		                               const str_vec &,
+		                               const colour_category &,
 		                               std::ostream &);
 	} // namespace detail
 

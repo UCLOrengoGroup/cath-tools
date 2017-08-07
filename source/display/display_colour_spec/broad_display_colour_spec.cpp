@@ -164,6 +164,7 @@ void cath::detail::colour_base_and_pdbs_impl(const display_colour_vec        &ar
                                              const viewer                    &arg_viewer,                   ///< The viewer to specify how to render the instructions
                                              const pdb_list                  &/*arg_pdbs*/,                 ///< The key regions of the structures
                                              const str_vec                   &arg_cleaned_names_for_viewer, ///< The (viewer-cleaned) names for the structures to be coloured
+                                             const colour_category           &arg_colour_category,          ///< The category of colouring (structure-only or structure-or-residue)
                                              ostream                         &arg_os                        ///< The ostream to which the instructions should be written
                                              ) {
 	const size_t num_colours = arg_colours.size();
@@ -172,21 +173,20 @@ void cath::detail::colour_base_and_pdbs_impl(const display_colour_vec        &ar
 		arg_viewer.define_colour(
 			arg_os,
 			arg_colours[ colour_ctr ],
-			generate_colour_name( colour_ctr, num_colours )
+			generate_colour_name( colour_ctr, num_colours, arg_colour_category )
 		);
 	}
 
 	if ( has_base_colour( arg_colour_spec ) ) {
-		const string base_colour_name = "base_colour";
-		arg_viewer.define_colour( arg_os, get_base_colour( arg_colour_spec ), base_colour_name );
-		arg_os << arg_viewer.get_colour_base_str( base_colour_name );
+		arg_viewer.define_colour( arg_os, get_base_colour( arg_colour_spec ), base_colour_name() );
+		arg_os << arg_viewer.get_colour_base_str( base_colour_name() );
 	}
 
 	for (const size_t colour_ctr : irange( 0_z, num_colours ) ) {
 		const size_vec pdb_indices = get_pdbs_of_colour( arg_colour_spec, arg_colours[ colour_ctr ] );
 		for (const size_t &pdb_index : pdb_indices) {
 			arg_os << arg_viewer.get_colour_pdb_str(
-				generate_colour_name( colour_ctr, num_colours ),
+				generate_colour_name( colour_ctr, num_colours, arg_colour_category ),
 				arg_cleaned_names_for_viewer[ pdb_index  ]
 			);
 		}
@@ -209,6 +209,7 @@ void cath::colour_viewer_with_spec(const broad_display_colour_spec &arg_broad_sp
 		arg_viewer,
 		arg_pdbs,
 		arg_cleaned_names_for_viewer,
+		colour_category::STRUC_ONLY,
 		arg_os
 	);
 }

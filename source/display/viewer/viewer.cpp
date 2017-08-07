@@ -283,22 +283,35 @@ void cath::output_superposition_to_viewer(ostream                          &arg_
 	arg_viewer.write_end( arg_ostream );
 }
 
+/// \brief The name of the base-colour
+string cath::base_colour_name() {
+	return "base_colour";
+}
+
 /// \brief Generate a name to use in the viewer for the specified colour index
 ///        in the specified number of colours
-string cath::generate_colour_name(const size_t &arg_colour_index, ///< The index of the colour to name
-                                  const size_t &arg_num_colours   ///< The total number of colours
+string cath::generate_colour_name(const size_t          &arg_colour_index,   ///< The index of the colour to name
+                                  const size_t          &arg_num_colours,    ///< The total number of colours
+                                  const colour_category &arg_colour_category ///< The category of colouring (structure-only or structure-or-residue)
                                   ) {
 	const size_t num_width  = lexical_cast<string>( max( static_cast<size_t>( 1_z ), arg_num_colours ) - 1 ).length();
-	const string format_str = "%0" + ::std::to_string( num_width ) + "d";
-	return "cath_tools_defined_colour_"
+	const string format_str = R"(%0)" + ::std::to_string( num_width ) + "d";
+	return "cath_tools_defined_"
+		+ ( arg_colour_category == colour_category::STRUC_ONLY ? "struc_only"s : "struc_or_res"s )
+		+ "_colour_"
 		+ ( format( format_str ) % arg_colour_index ).str();
 }
 
 /// \brief Generate names to use in the viewer for the specified number of colours
-str_vec cath::generate_colour_names(const size_t &arg_num_colours ///< The total number of colours
+str_vec cath::generate_colour_names(const size_t          &arg_num_colours,    ///< The total number of colours
+                                    const colour_category &arg_colour_category ///< The category of colouring (structure-only or structure-or-residue)
                                     ) {
 	return transform_build<str_vec>(
 		irange( 0_z, arg_num_colours ),
-		[&] (const size_t &x) { return generate_colour_name( x, arg_num_colours ); }
+		[&] (const size_t &x) { return generate_colour_name(
+			x,
+			arg_num_colours,
+			arg_colour_category
+		); }
 	);
 }

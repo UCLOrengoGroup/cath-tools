@@ -127,7 +127,7 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 	const display_colour_spec  colour_spec     = get_colour_spec( colourer, arg_html_align_outputter.get_strucs_context(), the_alignment );
 	const display_colour_vec   colours         = get_all_colours( colour_spec );
 	const size_t               num_colours     = colours.size();
-	const str_vec              colour_names    = generate_colour_names( num_colours );
+	const str_vec              colour_names    = generate_colour_names( num_colours, colour_category::STRUC_OR_RES );
 
 	const size_display_colour_map      &colour_of_pdb_map         = get_clr_of_pdb( colour_spec );
 	const size_size_display_colour_map &colour_of_pdb_and_res_map = colour_spec.get_clr_of_pdb_and_res();

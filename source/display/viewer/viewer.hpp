@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_VIEWER_H
 
 #include "common/type_aliases.hpp"
+#include "display/colour_category.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 #include <string>
@@ -126,10 +127,14 @@ namespace cath {
 	std::string colour_of_index_from_colours_string(const size_t &,
 	                                                const std::string &);
 
-	std::string generate_colour_name(const size_t &,
-	                                 const size_t &);
+	std::string base_colour_name();
 
-	str_vec generate_colour_names(const size_t &);
+	std::string generate_colour_name(const size_t &,
+	                                 const size_t &,
+	                                 const colour_category &);
+
+	str_vec generate_colour_names(const size_t &,
+	                              const colour_category &);
 
 	/// \brief NVI pass-through to the virtual do_accepts_multiple_colourings()
 	inline bool viewer::accepts_multiple_colourings() const {
