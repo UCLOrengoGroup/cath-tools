@@ -77,11 +77,11 @@ foreach my $struc_idx1 ( 0 .. $#struc_ids ) {
 
 			# If both files already exist then say so
 			if ( -s $alignment_file && -s $scores_file ) {
-				warn localtime(time())." : cath-ssap files already exist for $struc_label_1 vs $struc_label_2\n";
+				warn localtime(time())." : cath-ssap files already exist for $pref_id1 vs $pref_id2\n";
 			}
 			# Otherwise perform the cath-ssap and write the scores to a file
 			else {
-				warn localtime(time())." : Performing cath-ssap for $struc_label_1 vs $struc_label_2\n";
+				warn localtime(time())." : Performing cath-ssap for $pref_id1 vs $pref_id2\n";
 				my $cath_ssap_name = 'cath-ssap';
 				my $cath_ssap_exe = which( $cath_ssap_name )
 					|| confess "Unable to find SSAP executable \"$cath_ssap_name\" - please sure it is executable and located in one of the directories in your PATH";
@@ -98,7 +98,7 @@ foreach my $struc_idx1 ( 0 .. $#struc_ids ) {
 				#       Once that change has propagated out a bit, remove this additional regex check
 				#       that's being used to workaround cath-ssap always returning a SUCCESS error code
 				if ( $CHILD_ERROR || $ssap_stdout !~ /\s+\d+\s+\d+\s+[\d\.]+\s+/ ) {
-					confess "Error when running cath-ssap for $struc_id1 vs $struc_id2 (\n\tstdout: \"$ssap_stdout\";\n\tstderr: \"$ssap_stderr\"\n)";
+					confess "Error when running cath-ssap for $pref_id1 vs $pref_id2 (\n\tstdout: \"$ssap_stdout\";\n\tstderr: \"$ssap_stderr\"\n)";
 				}
 				$scores_file->spew($ssap_stdout);
 			}
