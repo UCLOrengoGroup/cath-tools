@@ -2408,6 +2408,11 @@ add_executable(
 )
 
 add_executable(
+	cath-map-clusters
+		${NORMSOURCES_EXECUTABLES_CATH_MAP_CLUSTERS}
+)
+
+add_executable(
 	cath-refine-align
 		${NORMSOURCES_EXECUTABLES_CATH_REFINE_ALIGN}
 )
@@ -2473,6 +2478,7 @@ add_executable(
 
 target_link_libraries( build-test          normsources_cath_refine_align normsources_cath_superpose normsources_cluster normsources_resolve_hits normsources_test normsources_seq normsources_options normsources_remain normsources_biocore normsources_common normsources_chopping normsources_display_colour normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 target_link_libraries( cath-assign-domains normsources_cath_assign_domains                                                                                                        normsources_options normsources_remain normsources_biocore normsources_common normsources_chopping normsources_display_colour normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-map-clusters   normsources_cluster                                                                                                    normsources_seq normsources_options                                        normsources_common                                                 normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 target_link_libraries( cath-refine-align   normsources_cath_refine_align                                                                                                          normsources_options normsources_remain normsources_biocore normsources_common normsources_chopping normsources_display_colour normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 target_link_libraries( cath-resolve-hits   normsources_resolve_hits                                                                                               normsources_seq normsources_options                    normsources_biocore normsources_common                      normsources_display_colour normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 target_link_libraries( cath-score-align    normsources_cath_score_align                                                                                                           normsources_options normsources_remain normsources_biocore normsources_common normsources_chopping normsources_display_colour normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
@@ -2492,11 +2498,6 @@ target_link_libraries( mod-test-seq         normsources_test normsources_seq    
 if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 
 	add_executable(
-		cath-map-clusters
-			${NORMSOURCES_EXECUTABLES_CATH_MAP_CLUSTERS}
-	)
-
-	add_executable(
 		snap-judgement
 			${NORMSOURCES_EXECUTABLES_SNAP_JUDGEMENT}
 	)
@@ -2506,7 +2507,6 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 			${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
 	)
 
-	target_link_libraries( cath-map-clusters   normsources_cluster   normsources_seq                                                                        normsources_exception normsources_options normsources_common pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 	target_link_libraries( check-pdb                                 normsources_remain normsources_biocore normsources_chopping normsources_display_colour normsources_exception normsources_options normsources_common pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 	target_link_libraries( snap-judgement normsources_cath_superpose normsources_remain normsources_biocore normsources_chopping normsources_display_colour normsources_exception normsources_options normsources_common pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 

@@ -72,7 +72,7 @@ size_t overlap_frac_distn::get_num_in_range(const double &arg_lower_fraction, //
                                             const double &arg_upper_fraction  ///< The upper fraction, which is exclusive and can go over 1
                                             ) const {
 	for (const double &fraction : { arg_lower_fraction, arg_upper_fraction  } ) {
-		if ( ! isfinite( fraction ) || fraction < 0.0 ) {
+		if ( ! boost::math::isfinite( fraction ) || fraction < 0.0 ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get num from overlap_frac_distn in range with invalid fraction"));
 		}
 	}
