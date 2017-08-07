@@ -46,17 +46,26 @@ To prepare a new multiple superposition, create a temporary directory for your d
 
 ~~~~~no-highlight
 mkdir /tmp/my_dir
-cath-superpose-multi-temp-script /tmp/my_dir 1aldA00 1b57A00 1fq0A00 1ok4A00
+cath-superpose-multi-temp-script /tmp/my_dir 2vxnA00 2y7eB00 3b4uA00 1p1xB00
 ~~~~~
 
 This performs the necessary `cath-ssap`s, writes out a file containing the pairwise scores and then prints out two commands: a `cath-superpose` command to use this data to superpose the structures and write out a [PyMOL](https://www.pymol.org/) script file, and a [PyMOL](https://www.pymol.org/) command to view it. Eg:
 
 ~~~~~no-highlight
-cath-superpose --ssap-scores-infile /tmp/my_dir/ssap_scores.2ff3bab40f9f9c1659ff8f63ba66baf1 --pdb-infile $PDBDIR/1aldA00 --pdb-infile $PDBDIR/1b57A00 --pdb-infile $PDBDIR/1fq0A00 --pdb-infile $PDBDIR/1ok4A00 --sup-to-pymol-file 2ff3bab40f9f9c1659ff8f63ba66baf1.pml
-pymol 2ff3bab40f9f9c1659ff8f63ba66baf1.pml
+cath-superpose --ssap-scores-infile /tmp/my_dir/ssap_scores.a861b298bf224759c5a6279581157f88 --pdb-infile $PDBDIR/1p1xB00 --pdb-infile $PDBDIR/2vxnA00 --pdb-infile $PDBDIR/2y7eB00 --pdb-infile $PDBDIR/3b4uA00 --sup-to-pymol-file a861b298bf224759c5a6279581157f88.pml
+pymol a861b298bf224759c5a6279581157f88.pml
 ~~~~~
 
 Now, you can customise the `cath-superpose` command to suit your needs.
+
+You can also specify corresponding pairs of structures and the regions of the structures that you want to align and superpose:
+
+~~~~~no-highlight
+mkdir /tmp/my_dir
+cath-superpose-multi-temp-script /tmp/my_dir 2vxn 'D[2vxnA00]2-250:A' 2y7e 'D[2y7eB00]-2-275:B' 3b4u 'D[3b4uA00]4-290:A' 1p1x 'D[1p1xB00]1000-1250:B'
+~~~~~
+
+The format is like: `D[5inwB02]251-348:B,408-416A:B`. Put <regions> in quotes to prevent the square brackets confusing your shell ("No match").
 
 Usage
 -----
