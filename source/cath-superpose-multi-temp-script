@@ -30,13 +30,21 @@ my ( $temp_dir_name, @struc_ids ) = @ARGV;
 my @choppings = grep { $ARG =~ /^D\[.*\]/ } @struc_ids;
 @struc_ids    = grep { $ARG !~ /^D\[.*\]/ } @struc_ids;
 
-if ( scalar( @choppings ) != scalar( @struc_ids ) ) {
+if ( scalar( @choppings ) != 0 && scalar( @choppings ) != scalar( @struc_ids ) ) {
 	confess 'If specifying domains\' regions, the number specified ('
 		. scalar( @choppings )
 		. ') must match the number of structures ('
 		. scalar( @struc_ids )
 		. ")\n ";
 }
+
+my @pref_ids = map {
+	my $index    = $ARG;
+	my $chopping = ( scalar( @choppings ) > 0 ) && $choppings[ $index ];
+	( defined( $chopping ) && $chopping =~ /^D\[(.*)\]/ )
+		? $1
+		: $struc_ids[ $index ];
+} ( 0 .. scalar( @struc_ids ) );
 
 # Check the directory exists
 my $temp_dir = dir( $temp_dir_name )->absolute();
@@ -60,11 +68,13 @@ foreach my $struc_idx1 ( 0 .. $#struc_ids ) {
 			my $struc_id2      = $struc_ids[ $struc_idx2 ];
 			my $chopping_1     = ( scalar( @choppings ) > 0 ? $choppings[ $struc_idx1 ] : undef );
 			my $chopping_2     = ( scalar( @choppings ) > 0 ? $choppings[ $struc_idx2 ] : undef );
-			my $alignment_file = $temp_dir->file( $struc_id1.$struc_id2.$SSAP_ALIGNMENT_SUFFIX );
-			my $scores_file    = $temp_dir->file( $struc_id1.$struc_id2.$SSAP_SCORES_SUFFIX    );
+			my $pref_id1       = $pref_ids[ $struc_idx1 ];
+			my $pref_id2       = $pref_ids[ $struc_idx2 ];
+			my $alignment_file = $temp_dir->file( $pref_id1 . $pref_id2 . $SSAP_ALIGNMENT_SUFFIX );
+			my $scores_file    = $temp_dir->file( $pref_id1 . $pref_id2 . $SSAP_SCORES_SUFFIX    );
 			my $struc_label_1  = $struc_id1 . ( $chopping_1 ? " (with $chopping_1)" : '' );
 			my $struc_label_2  = $struc_id2 . ( $chopping_2 ? " (with $chopping_2)" : '' );
-			
+
 			# If both files already exist then say so
 			if ( -s $alignment_file && -s $scores_file ) {
 				warn localtime(time())." : cath-ssap files already exist for $struc_label_1 vs $struc_label_2\n";
