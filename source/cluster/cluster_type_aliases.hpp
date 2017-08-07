@@ -37,7 +37,7 @@ namespace cath { namespace clust { struct potential_map; } }
 
 namespace cath {
 	namespace clust {
-		
+
 		/// \brief Type alias for a vector of cluster_domains entries
 		using cluster_domains_vec      = std::vector<cluster_domains>;
 

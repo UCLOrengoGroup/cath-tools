@@ -99,7 +99,7 @@ size_t cath::clust::get_num_mapped_entries(const map_results &arg_map_results //
 /// \relates map_results
 string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,   ///< The old clusters
                                    const new_cluster_data     &arg_new_clusters,   ///< The new clusters
-                                   const map_results          &arg_map_results,    ///< The map_results 
+                                   const map_results          &arg_map_results,    ///< The map_results
                                    const str_opt              &arg_batch_id,       ///< An optional identifier for the mapped batch
                                    const bool                 &arg_include_headers ///< Whether to include the headers for the columns
                                    ) {
@@ -155,7 +155,7 @@ string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,
 /// \relates map_results
 string cath::clust::longer_results_string(const old_cluster_data_opt &arg_old_clusters, ///< The old clusters
                                           const new_cluster_data     &arg_new_clusters, ///< The new clusters
-                                          const map_results          &arg_map_results,  ///< The map_results 
+                                          const map_results          &arg_map_results,  ///< The map_results
                                           const str_opt              &arg_batch_id      ///< An optional identifier for the mapped batch
                                           ) {
 	const auto &chosen_maps                  = arg_map_results.chosen_maps;

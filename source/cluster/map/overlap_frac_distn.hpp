@@ -61,7 +61,7 @@ namespace cath {
 			static constexpr size_t num_gaps = detail::power_of_ten( num_dec_places );
 
 			static_assert( num_gaps == 10000, "" );
-			
+
 			/// \brief The total number of bins
 			///
 			/// This must be 1 + 10 ^ num_dec_places

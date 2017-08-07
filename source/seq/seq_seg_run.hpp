@@ -515,7 +515,7 @@ namespace cath {
 				}
 			}
 		}
-		
+
 		/// \brief Return whether the two specified seq_seg_runs overlap with each other
 		///
 		/// This requires there to be a genuine overlap of segments, not just that one

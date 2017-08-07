@@ -344,7 +344,7 @@ namespace cath {
 
 			return segments;
 		}
-		
+
 		/// \brief Whether the segments in the first specified seq_seg_run never extend outside
 		///        those in the second specified seq_seg_run
 		///
