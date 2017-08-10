@@ -291,6 +291,16 @@ BOOST_AUTO_TEST_CASE(problem_case) {
 	);
 }
 
+BOOST_AUTO_TEST_CASE(gene3d_example) {
+	const auto a = make_seq_seg_run_from_res_indices( 158, 220, 237, 331 );
+	const auto b = make_seq_seg_run_from_res_indices( 176,           316 );
+
+	BOOST_CHECK_EQUAL( fraction_overlap_over_shorter( a, b ), 125.0 / 141.0 ); // ~88.652%
+	BOOST_CHECK_EQUAL( fraction_overlap_over_longer ( a, b ), 125.0 / 158.0 ); // ~79.114%
+	BOOST_CHECK_EQUAL( fraction_overlap_over_shorter( b, a ), 125.0 / 141.0 ); // ~88.652%
+	BOOST_CHECK_EQUAL( fraction_overlap_over_longer ( b, a ), 125.0 / 158.0 ); // ~79.114%
+}
+
 BOOST_AUTO_TEST_SUITE(covering_functions)
 
 
