@@ -6,33 +6,23 @@ cath-ssap
 The binary for SSAP is called `cath-ssap`. For usage, run `cath-ssap --help` or see [below](#usage).
 
 Preparing to run SSAP
-------------------------
+---------------------
 
-For each protein structure, `cath-ssap` requires a PDB file, a DSSP (or wolf) file and a sec file. To generate these from PDB files, you can use:
+`cath-ssap` needs to know where to find PDB files. You can tell it using the `--pdb-path` option, which allows you to specify multiple directories in the order they should be searched by separating them with colons (`:`), eg:
 
- * [`dssp`](http://swift.cmbi.ru.nl/gv/dssp), the CMBI tool for generating DSSP files from PDB files
- * [`secmake`](http://github.com/UCLOrengoGroup/secmake), a tool for generating sec files from PDB + DSSP files
+`cath-ssap --pdb-path .:/global_pdbs 1cukA01 1bvsA01`
 
-Once you've prepared your PDB, DSSP/wolf and sec files, you need to tell `cath-ssap` where to find them. We recommend you use the path options to manage your list of directories to search. This can be done by specifying command-line options every time you run `cath-ssap`, but it may be easier to permanently add suitable environment variables to your profile. For example to tell the the cath-tools to search for the files in the current directory (aka `.`) and then your global directories, add environment variables to your profile as follows:
+Similarly, you can specify the style of prefix/suffix you use for your PDB files, with the `--pdb-prefix` and `--pdb-suffix` options.
 
-~~~~~no-highlight
-CATH_TOOLS_PDB_PATH  .:/global/data/directories/pdb
-CATH_TOOLS_DSSP_PATH .:/global/data/directories/dssp
-CATH_TOOLS_SEC_PATH  .:/global/data/directories/sec
-~~~~~
-
-Similarly, if you use a different style of prefix/suffix for your files, you can specify these with command line options or with these environment variables:
+Since these options' values will typically be fairly stable, it can be tedious to specify them every time. Fortunately, the cath-tools allow their all their command-line options to also be specified via environment variables, eg:
 
 ~~~~~no-highlight
-CATH_TOOLS_PDB_PREFIX
-CATH_TOOLS_DSSP_PREFIX
-CATH_TOOLS_SEC_PREFIX
-CATH_TOOLS_PDB_SUFFIX
-CATH_TOOLS_DSSP_SUFFIX
-CATH_TOOLS_SEC_SUFFIX
+export CATH_TOOLS_PDB_PATH=.:/global/data/directories/pdb
+export CATH_TOOLS_PDB_PREFIX=pdb
+export CATH_TOOLS_PDB_SUFFIX=.ent
 ~~~~~
 
-The defaults values for all these parameters are included in the usage information (run `cath-ssap --help` or see [below](#usage)).
+The defaults values for these parameters are included in the usage information (run `cath-ssap --help` or see [below](#usage)).
 
 Running SSAP
 ------------
@@ -107,6 +97,24 @@ Detailed help:
 
 Please tell us your cath-tools bugs/suggestions : https://github.com/UCLOrengoGroup/cath-tools/issues/new
 ~~~~~
+
+
+
+DSSP, WOLF and sec
+------------------
+
+`cath-ssap` is also able to read its input from other combinations of input files:
+
+ * PDB and DSSP
+ * PDB, DSSP and SEC
+ * WOLF and SEC
+
+To generate DSSP and sec files from PDB files, you can use:
+
+ * [`dssp`](http://swift.cmbi.ru.nl/gv/dssp), the CMBI tool for generating DSSP files from PDB files
+ * [`secmake`](http://github.com/UCLOrengoGroup/secmake), a tool for generating sec files from PDB + DSSP files
+
+Once you've prepared these files, you need to tell `cath-ssap` where to find them. This can be done in the same way as for PDBs (see [above](#preparing-to-run-ssap)) using the environment variables `CATH_TOOLS_DSSP_PATH` and `CATH_TOOLS_SEC_PATH` (and for non-standard prefixes/suffixes `CATH_TOOLS_DSSP_PREFIX`, `CATH_TOOLS_SEC_PREFIX`, `CATH_TOOLS_DSSP_SUFFIX` and `CATH_TOOLS_SEC_SUFFIX`).
 
 
 Feedback
