@@ -24,7 +24,8 @@
 #include <boost/utility/string_ref.hpp>
 
 #include "cluster/cluster_info.hpp"
-#include "cluster/cluster_name_ider.hpp"
+#include "cluster/cluster_type_aliases.hpp"
+#include "common/container/id_of_str_bidirnl.hpp"
 #include "seq/seq_seg_run.hpp"
 
 #include <string>
@@ -38,7 +39,7 @@ namespace cath {
 			/// \brief The lookup between name and ID
 			///
 			/// The IDs for this can be used as to index into the sizes
-			cluster_name_ider ider;
+			common::id_of_str_bidirnl ider;
 
 			/// \brief The info of the clusters
 			cluster_info_vec infos;
@@ -56,7 +57,7 @@ namespace cath {
 			const cluster_info & get_info_of_cluster_of_id(const cluster_id_t &) const;
 			const std::string & get_name_of_cluster_of_id(const cluster_id_t &) const;
 
-			const cluster_name_ider & get_ider() const;
+			const common::id_of_str_bidirnl & get_ider() const;
 		};
 
 		/// \brief Add a cluster with the specified name
@@ -106,8 +107,8 @@ namespace cath {
 			return ider.get_name_of_id( arg_cluster_id );
 		}
 
-		/// \brief Get the cluster_name_ider used to ID the clusters
-		inline const cluster_name_ider & clusters_info::get_ider() const {
+		/// \brief Get the id_of_str_bidirnl used to ID the clusters
+		inline const common::id_of_str_bidirnl & clusters_info::get_ider() const {
 			return ider;
 		}
 

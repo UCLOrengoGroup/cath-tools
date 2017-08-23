@@ -1,9 +1,9 @@
 /// \file
-/// \brief The cluster_name_ider test suite
+/// \brief The id_of_str_bidirnl test suite
 
 /// \copyright
-/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
-/// Copyright (C) 2011, Orengo Group, University College London
+/// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
+/// Copyright (C) 2007, Tony Lewis
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
 #include <boost/optional/optional_io.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "cluster/cluster_name_ider.hpp"
+#include "common/container/id_of_str_bidirnl.hpp"
 
 #include <string>
 
-using namespace cath::clust;
+using namespace cath::common;
 using namespace std::literals::string_literals;
 
 using boost::make_optional;
@@ -33,10 +33,10 @@ using boost::none;
 using boost::string_ref;
 using std::string;
 
-BOOST_AUTO_TEST_SUITE(cluster_name_ider_test_suite)
+BOOST_AUTO_TEST_SUITE(id_of_str_bidirnl_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	cluster_name_ider the_ider;
+	id_of_str_bidirnl the_ider;
 
 	BOOST_CHECK      (   the_ider.empty()   );
 	BOOST_CHECK_EQUAL(   the_ider.size(), 0 );
@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(from_string_views) {
 	const string motorcycle_str{ "motorcycle" };
 	const string emptiness_str { "emptiness"  };
 
-	cluster_name_ider the_ider;
+	id_of_str_bidirnl the_ider;
 
 	BOOST_CHECK      (   the_ider.empty()   );
 	BOOST_CHECK_EQUAL(   the_ider.size(), 0 );
@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE(from_string_views) {
 BOOST_AUTO_TEST_SUITE(largest_number_if_names_all_numeric_integers_fn)
 
 BOOST_AUTO_TEST_CASE(returns_largest_negative) {
-	cluster_name_ider the_ider;
+	id_of_str_bidirnl the_ider;
 
 	the_ider.add_name( "-6"s );
 	the_ider.add_name( "-7"s );
@@ -121,7 +121,7 @@ BOOST_AUTO_TEST_CASE(returns_largest_negative) {
 }
 
 BOOST_AUTO_TEST_CASE(handles_non_numeric) {
-	cluster_name_ider the_ider;
+	id_of_str_bidirnl the_ider;
 
 	the_ider.add_name( "-6"s  );
 	the_ider.add_name( "-7"s  );
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE(handles_non_numeric) {
 
 
 BOOST_AUTO_TEST_CASE(rejects_scientific_notation) {
-	cluster_name_ider the_ider;
+	id_of_str_bidirnl the_ider;
 
 	the_ider.add_name( "1e2"s  );
 
@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE(rejects_scientific_notation) {
 }
 
 BOOST_AUTO_TEST_CASE(rejects_empty) {
-	cluster_name_ider the_ider;
+	id_of_str_bidirnl the_ider;
 
 	the_ider.add_name( ""s  );
 
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE(rejects_empty) {
 }
 
 BOOST_AUTO_TEST_CASE(rejects_single_dash) {
-	cluster_name_ider the_ider;
+	id_of_str_bidirnl the_ider;
 
 	the_ider.add_name( "-"s  );
 

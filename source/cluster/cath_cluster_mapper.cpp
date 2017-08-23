@@ -30,7 +30,7 @@
 #include "cluster/map/map_results.hpp"
 #include "cluster/new_cluster_data.hpp"
 #include "cluster/old_cluster_data.hpp"
-#include "common/container/id_of_string.hpp"
+#include "common/container/id_of_str_bidirnl.hpp"
 #include "common/file/ofstream_list.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/file/path_or_istream.hpp"
@@ -137,7 +137,7 @@ void cath::clust::perform_map_clusters(const clustmap_input_spec   &arg_input_sp
 		const auto        &job_new_clustmemb_file = job.get_new_cluster_membership_file();
 		const auto        &job_old_clustmemb_file = job.get_old_cluster_membership_file();
 
-		id_of_string seq_ider;
+		id_of_str_bidirnl seq_ider;
 
 		auto &the_istream = istream_wrapper.set_path( job_new_clustmemb_file ).get_istream();
 		const new_cluster_data new_to_clusters = parse_new_membership( the_istream, seq_ider, ref( arg_stderr ) );

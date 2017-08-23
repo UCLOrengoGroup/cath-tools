@@ -24,7 +24,7 @@
 #include "cluster/cluster_list.hpp"
 #include "cluster/clusters_info.hpp"
 #include "common/boost_addenda/range/accumulate_proj.hpp"
-#include "common/container/id_of_string.hpp"
+#include "common/container/id_of_str_bidirnl.hpp"
 #include "common/cpp17/invoke.hpp"
 
 #include <functional>
@@ -34,19 +34,19 @@ namespace cath {
 
 		/// \brief Store the data associated with old "to" clusters
 		///
-		/// This uses a reference to an external id_of_string for mapping
+		/// This uses a reference to an external id_of_str_bidirnl for mapping
 		/// from sequences names to IDs. This allows the same IDs to be shared
 		/// with other data structures.
 		///
 		/// \todo Currently unable to check for clashing re-use of sequences?
 		class old_cluster_data final {
 		private:
-			/// \brief A reference_wrapper to an id_of_string object
-			std::reference_wrapper<common::id_of_string> id_of_seq_name;
+			/// \brief A reference_wrapper to an id_of_str_bidirnl object
+			std::reference_wrapper<common::id_of_str_bidirnl> id_of_seq_name;
 
 			/// \brief Basic information on the cluster
 			///
-			/// \todo Is it worthwhile to have this rather than just cluster_name_ider?
+			/// \todo Is it worthwhile to have this rather than just id_of_str_bidirnl?
 			///
 			/// Probably not because the clusters store the sizes. Consider switching.
 			clusters_info clust_info;
@@ -61,10 +61,10 @@ namespace cath {
 			/// \brief An iterator type alias that just duplicates const_iterator to appease some Boost code (Range?)
 			using iterator = const_iterator;
 
-			explicit old_cluster_data(common::id_of_string &) noexcept;
+			explicit old_cluster_data(common::id_of_str_bidirnl &) noexcept;
 
-			/// Prevent construction from an id_of_string rvalue
-			old_cluster_data(const common::id_of_string &&) = delete;
+			/// Prevent construction from an id_of_str_bidirnl rvalue
+			old_cluster_data(const common::id_of_str_bidirnl &&) = delete;
 
 			clust_entry_problem add_entry(const boost::string_ref &,
 			                              const boost::string_ref &,
@@ -72,7 +72,7 @@ namespace cath {
 			                              seq::seq_seg_run_opt);
 
 			const clusters_info & get_clust_info() const;
-			const common::id_of_string & get_id_of_seq_name() const;
+			const common::id_of_str_bidirnl & get_id_of_seq_name() const;
 
 			bool empty() const;
 			size_t size() const;
@@ -82,8 +82,8 @@ namespace cath {
 			const_iterator end() const;
 		};
 
-		/// \brief Ctor from an id_of_string reference
-		inline old_cluster_data::old_cluster_data(common::id_of_string &arg_id_of_str ///< The id_of_string to use to map from sequences names to IDs
+		/// \brief Ctor from an id_of_str_bidirnl reference
+		inline old_cluster_data::old_cluster_data(common::id_of_str_bidirnl &arg_id_of_str ///< The id_of_str_bidirnl to use to map from sequences names to IDs
 		                                          ) noexcept : id_of_seq_name{ arg_id_of_str } {
 		}
 
@@ -101,7 +101,7 @@ namespace cath {
 					arg_domain_id,
 					arg_segments
 				);
-				const common::id_of_string::id_type &seq_id = id_of_seq_name.get().emplace( arg_seq_id.to_string() ).second;
+				const size_t &seq_id = id_of_seq_name.get().add_name( arg_seq_id.to_string() );
 				return clusters.add_domain_to_cluster(
 					cluster_id,
 					seq_id,
@@ -119,7 +119,7 @@ namespace cath {
 		}
 
 		/// \brief Get the map from sequence name to sequence ID from the specified old_cluster_data
-		inline const common::id_of_string & old_cluster_data::get_id_of_seq_name() const {
+		inline const common::id_of_str_bidirnl & old_cluster_data::get_id_of_seq_name() const {
 			return id_of_seq_name.get();
 		}
 

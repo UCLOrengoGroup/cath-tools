@@ -120,8 +120,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 							arg_domain_out_stream->get()
 								<< dom_map_result_tag
 								<< " "
-								<< string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
-								// << arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+								<< arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 								<< get_segments_suffix_string( old_dom_clust_id.segments )
 								<< " "
 								<< get_name_of_cluster_of_id( *arg_old_clusters, old_dom_clust_id.cluster_id )
@@ -146,8 +145,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 							if ( old_dom_cluster_ids.size() != 1 || new_dom_clust_ids.size() != 1 || front( new_dom_clust_ids ).segments ) {
 								BOOST_THROW_EXCEPTION(invalid_argument_exception(
 									"Inconsistent whole-chain-domain on seq "
-									+ string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
-									// + arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+									+ arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 								));
 							}
 
@@ -158,13 +156,11 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 								arg_domain_out_stream->get()
 									<< dom_map_result_tag
 									<< " "
-									<< string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
-									// << arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+									<< arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 									<< " "
 									<< get_name_of_cluster_of_id( *arg_old_clusters, old_dom_clust_id.cluster_id )
 									<< " 100 "
-									<< string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
-									// << arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+									<< arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 									<< " "
 									<< get_name_of_cluster_of_id( arg_new_clusters, equiv_new.cluster_id )
 									<< "\n";
@@ -192,8 +188,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 						if ( any_of( new_dom_clust_ids, [&] (const domain_cluster_id &x) { return ! x.segments; } ) ) {
 							BOOST_THROW_EXCEPTION(invalid_argument_exception(
 								"Inconsistent whole-chain-domain on seq "
-								+ string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
-								// + arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+								+ arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 							));
 						}
 
@@ -217,16 +212,14 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 							arg_domain_out_stream->get()
 								<< dom_map_result_tag
 								<< " "
-								<< string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
-								// << arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+								<< arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 								<< get_segments_suffix_string( old_segments_opt )
 								<< " "
 								<< get_name_of_cluster_of_id( *arg_old_clusters, old_dom_clust_id.cluster_id )
 								<< " "
 								<< ( 100.0 * best_ol )
 								<< " "
-								<< string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
-								// << arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+								<< arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 								<< get_segments_suffix_string( new_with_best_ol_over_longer.segments )
 								<< " "
 								<< get_name_of_cluster_of_id( arg_new_clusters, new_with_best_ol_over_longer.cluster_id )

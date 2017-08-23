@@ -1448,7 +1448,6 @@ set(
 		cluster/cath_cluster_mapper_test.cpp
 		cluster/cluster_entry_test.cpp
 		cluster/cluster_info_test.cpp
-		cluster/cluster_name_ider_test.cpp
 		cluster/clusters_info_test.cpp
 		cluster/clustmap_options_test.cpp
 		${TESTSOURCES_CLUSTER_DETAIL}
@@ -1514,6 +1513,7 @@ set(
 
 set(
 	TESTSOURCES_COMMON_CONTAINER
+		common/container/id_of_str_bidirnl_test.cpp
 		common/container/id_of_string_ref_test.cpp
 		common/container/id_of_string_test.cpp
 		common/container/id_of_string_view_test.cpp

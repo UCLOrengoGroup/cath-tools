@@ -43,15 +43,10 @@ std::string cath::clust::to_string(const new_cluster_data &arg_new_cluster_data 
 	using std::to_string;
 
 	// Grab the id_of_seq_name of the new_cluster_data
-	const id_of_string &id_of_seq_name = get_id_of_seq_name( arg_new_cluster_data );
+	const id_of_str_bidirnl &id_of_seq_name = get_id_of_seq_name( arg_new_cluster_data );
 
 	// Get a sorted list of the sequence names
-	const auto sorted_seq_names = sort_build<str_vec>(
-		id_of_seq_name
-			| transformed( [&] (const pair<const string, id_of_string::id_type> &x) {
-				return x.first;
-			} )
-	);
+	const auto sorted_seq_names = sort_build<str_vec>( id_of_seq_name );
 
 	// Return a string summarising the new_cluster_data
 	return "new_cluster_data["

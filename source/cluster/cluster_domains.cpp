@@ -23,6 +23,8 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
+#include "common/container/id_of_str_bidirnl.hpp"
+
 using namespace cath::clust::detail;
 using namespace cath::common;
 
@@ -48,14 +50,14 @@ size_t cath::clust::num_entries(const cluster_domains &arg_cluster_domains ///< 
 /// \brief Generate a string describing the specified cluster_domains
 ///
 /// \relates cluster_domains
-string cath::clust::to_string(const cluster_domains &arg_cluster_domains, ///< The cluster_domains to describe
-                              const id_of_string    &arg_id_of_string     ///< The id_of_string that mapped from seq name to ID
+string cath::clust::to_string(const cluster_domains   &arg_cluster_domains, ///< The cluster_domains to describe
+                              const id_of_str_bidirnl &arg_ider             ///< The id_of_str_bidirnl that mapped from seq name to ID
                               ) {
 	return join(
 		arg_cluster_domains
 			| transformed( [&] (const seq_id_and_domain_cluster_ids_pair &x) {
 				return
-					string_of_id( arg_id_of_string, x.seq_id )
+					  arg_ider.get_name_of_id( x.seq_id )
 					+ "("
 					+ to_string( x.dom_cluster_ids, false )
 					+ ")";

@@ -97,12 +97,12 @@ inline void warn_if_neccessary(const clust_entry_problem &arg_problem,          
 }
 
 /// \brief Parse the data for old "from" clusters from a cluster membership istream
-old_cluster_data cath::clust::parse_old_membership(istream               &arg_istream,        ///< The istream to parse from
-                                                   id_of_string          &arg_id_of_string,   ///< The id_of_string to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+old_cluster_data cath::clust::parse_old_membership(istream               &arg_istream,           ///< The istream to parse from
+                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
 	bool warned_duplicate = false;
-	old_cluster_data result{ arg_id_of_string };
+	old_cluster_data result{ arg_id_of_str_bidirnl };
 	seq_seg_run_parser segs_parser;
 	string line;
 	while ( getline( arg_istream, line ) ) {
@@ -154,31 +154,31 @@ old_cluster_data cath::clust::parse_old_membership(istream               &arg_is
 }
 
 /// \brief Parse the data for old "from" clusters from a cluster membership istream
-old_cluster_data cath::clust::parse_old_membership(const string &arg_input,                   ///< The string to parse from
-                                                   id_of_string &arg_id_of_string,            ///< The id_of_string to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+old_cluster_data cath::clust::parse_old_membership(const string          &arg_input,             ///< The string to parse from
+                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
 	istringstream in_ss{ arg_input };
-	return parse_old_membership( in_ss, arg_id_of_string, arg_ostream_ref_opt );
+	return parse_old_membership( in_ss, arg_id_of_str_bidirnl, arg_ostream_ref_opt );
 }
 
 /// \brief Parse the data for old "from" clusters from a cluster membership istream
-old_cluster_data cath::clust::parse_old_membership(const path &arg_input,                     ///< The file to parse from
-                                                   id_of_string &arg_id_of_string,            ///< The id_of_string to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+old_cluster_data cath::clust::parse_old_membership(const path            &arg_input,             ///< The file to parse from
+                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
 	ifstream in_stream;
 	open_ifstream( in_stream, arg_input );
-	return parse_old_membership( in_stream, arg_id_of_string, arg_ostream_ref_opt );
+	return parse_old_membership( in_stream, arg_id_of_str_bidirnl, arg_ostream_ref_opt );
 }
 
 /// \brief Parse the data for new "to" clusters from a cluster membership istream
-new_cluster_data cath::clust::parse_new_membership(istream               &arg_istream,        ///< The istream to parse from
-                                                   id_of_string          &arg_id_of_string,   ///< The id_of_string to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+new_cluster_data cath::clust::parse_new_membership(istream               &arg_istream,           ///< The istream to parse from
+                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
 	bool warned_duplicate = false;
-	new_cluster_data result{ arg_id_of_string };
+	new_cluster_data result{ arg_id_of_str_bidirnl };
 	seq_seg_run_parser segs_parser;
 	string line;
 	while ( getline( arg_istream, line ) ) {
@@ -230,20 +230,20 @@ new_cluster_data cath::clust::parse_new_membership(istream               &arg_is
 }
 
 /// \brief Parse the data for new "to" clusters from a cluster membership istream
-new_cluster_data cath::clust::parse_new_membership(const string          &arg_input,          ///< The string to parse from
-                                                   id_of_string          &arg_id_of_string,   ///< The id_of_string to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+new_cluster_data cath::clust::parse_new_membership(const string          &arg_input,             ///< The string to parse from
+                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
 	istringstream in_ss{ arg_input };
-	return parse_new_membership( in_ss, arg_id_of_string, arg_ostream_ref_opt );
+	return parse_new_membership( in_ss, arg_id_of_str_bidirnl, arg_ostream_ref_opt );
 }
 
 /// \brief Parse the data for new "to" clusters from a cluster membership istream
-new_cluster_data cath::clust::parse_new_membership(const path            &arg_input,          ///< The file to parse from
-                                                   id_of_string          &arg_id_of_string,   ///< The id_of_string to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+new_cluster_data cath::clust::parse_new_membership(const path            &arg_input,             ///< The file to parse from
+                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
 	ifstream in_stream;
 	open_ifstream( in_stream, arg_input );
-	return parse_new_membership( in_stream, arg_id_of_string, arg_ostream_ref_opt );
+	return parse_new_membership( in_stream, arg_id_of_str_bidirnl, arg_ostream_ref_opt );
 }

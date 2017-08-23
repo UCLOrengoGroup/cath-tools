@@ -32,7 +32,7 @@ namespace cath {
 
 		/// \brief Store the data associated with new "to" clusters
 		///
-		/// This uses a reference to an external id_of_string for mapping
+		/// This uses a reference to an external id_of_str_bidirnl for mapping
 		/// from sequences names to IDs. This allows the same IDs to be shared
 		/// with other data structures.
 		class new_cluster_data final {
@@ -44,10 +44,10 @@ namespace cath {
 			clusters_info clust_info;
 
 		public:
-			explicit new_cluster_data(common::id_of_string &) noexcept;
+			explicit new_cluster_data(common::id_of_str_bidirnl &) noexcept;
 
-			/// Prevent construction from an id_of_string rvalue
-			new_cluster_data(const common::id_of_string &&) = delete;
+			/// Prevent construction from an id_of_str_bidirnl rvalue
+			new_cluster_data(const common::id_of_str_bidirnl &&) = delete;
 
 			clust_entry_problem add_entry(const boost::string_ref &,
 			                              const boost::string_ref &,
@@ -58,8 +58,8 @@ namespace cath {
 			const clusters_info & get_clust_info() const;
 		};
 
-		/// \brief Ctor from an id_of_string reference
-		inline new_cluster_data::new_cluster_data(common::id_of_string &arg_id_of_str ///< The id_of_string to use to map from sequences names to IDs
+		/// \brief Ctor from an id_of_str_bidirnl reference
+		inline new_cluster_data::new_cluster_data(common::id_of_str_bidirnl &arg_id_of_str ///< The id_of_str_bidirnl to use to map from sequences names to IDs
 		                                          ) noexcept : dom_clust_ids{ arg_id_of_str } {
 		}
 
@@ -148,16 +148,16 @@ namespace cath {
 		/// \brief Get the map from sequence name to sequence ID from the specified new_cluster_data
 		///
 		/// \relates new_cluster_data
-		inline const common::id_of_string & get_id_of_seq_name(const new_cluster_data &arg_new_cluster_data ///< The new_cluster_data to query
-		                                                       ) {
+		inline const common::id_of_str_bidirnl & get_id_of_seq_name(const new_cluster_data &arg_new_cluster_data ///< The new_cluster_data to query
+		                                                            ) {
 			return arg_new_cluster_data.get_dom_clust_ids().get_id_of_seq_name();
 		}
 
 		/// \brief Get whether there is a non-empty domain_cluster_ids associated with the specified sequence id in the specified new_cluster_data
 		///
 		/// \relates new_cluster_data
-		inline bool has_domain_cluster_ids_of_seq_id(const new_cluster_data              &arg_new_cluster_data, ///< The new_cluster_data to query
-		                                             const common::id_of_string::id_type &arg_seq_id            ///< The id of the sequence of interest
+		inline bool has_domain_cluster_ids_of_seq_id(const new_cluster_data &arg_new_cluster_data, ///< The new_cluster_data to query
+		                                             const cluster_id_t     &arg_seq_id            ///< The id of the sequence of interest
 		                                             ) {
 			return has_domain_cluster_ids_of_seq_id( arg_new_cluster_data.get_dom_clust_ids(), arg_seq_id );
 		}
@@ -165,8 +165,8 @@ namespace cath {
 		/// \brief Get the domain_cluster_ids associated with the specified sequence id in the specified new_cluster_data
 		///
 		/// \relates new_cluster_data
-		inline const domain_cluster_ids & get_domain_cluster_ids_of_seq_id(const new_cluster_data              &arg_new_cluster_data, ///< The new_cluster_data to query
-		                                                                   const common::id_of_string::id_type &arg_seq_id            ///< The id of the sequence of interest
+		inline const domain_cluster_ids & get_domain_cluster_ids_of_seq_id(const new_cluster_data &arg_new_cluster_data, ///< The new_cluster_data to query
+		                                                                   const cluster_id_t     &arg_seq_id            ///< The id of the sequence of interest
 		                                                                   ) {
 			return arg_new_cluster_data.get_dom_clust_ids()[ arg_seq_id ];
 		}

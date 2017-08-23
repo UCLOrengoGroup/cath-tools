@@ -63,9 +63,8 @@ namespace cath {
 416 126c3de59272d9c6d2de490d47f9f19d
 )";
 
-			/// \brief A id_of_string for mapping the seq names to ID numbers
-			// cluster_name_ider seq_id_mapper; remove include of id_of_string
-			id_of_string seq_id_mapper;
+			/// \brief A id_of_str_bidirnl for mapping the seq names to ID numbers
+			id_of_str_bidirnl seq_id_mapper;
 
 			/// \brief Example old_cluster_data parsed from the old_membership_str
 			const old_cluster_data old_data = parse_old_membership( old_membership_str, seq_id_mapper );

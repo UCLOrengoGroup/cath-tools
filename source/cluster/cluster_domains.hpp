@@ -22,7 +22,8 @@
 #define _CATH_TOOLS_SOURCE_CLUSTER_CLUSTER_DOMAINS_H
 
 #include "cluster/domain_cluster_ids.hpp"
-#include "common/container/id_of_string.hpp"
+
+namespace cath { namespace common { class id_of_str_bidirnl; } }
 
 namespace cath {
 	namespace clust {
@@ -34,7 +35,7 @@ namespace cath {
 			/// \brief Store a seq_id and the corresponding domain_cluster_ids
 			struct seq_id_and_domain_cluster_ids_pair final {
 				/// \brief The seq_id of a sequence
-				common::id_of_string::id_type seq_id;
+				cluster_id_t seq_id;
 
 				/// \brief The domain_cluster_ids of the domains on the sequence
 				domain_cluster_ids dom_cluster_ids;
@@ -60,7 +61,7 @@ namespace cath {
 			/// \brief A const_iterator type alias as part of making this a range over seq_id_and_domain_cluster_ids_pairs
 			using const_iterator = detail::seq_id_and_domain_cluster_ids_pair_vec_citr;
 
-			clust_entry_problem add_domain(const common::id_of_string::id_type &,
+			clust_entry_problem add_domain(const cluster_id_t &,
 			                               seq::seq_seg_run_opt,
 			                               const cluster_id_t &);
 
@@ -73,9 +74,9 @@ namespace cath {
 
 		/// \brief Add a domain with the specified (optional) segments in the specified cluster
 		///        under the specified sequence ID
-		inline clust_entry_problem cluster_domains::add_domain(const common::id_of_string::id_type &arg_seq_id,    ///< The ID of the sequence on which the domain to add appears
-		                                                       seq::seq_seg_run_opt                 arg_segments,  ///< The (optional) segments of the domain to add
-		                                                       const cluster_id_t                  &arg_cluster_id ///< The cluster ID of the domain to add
+		inline clust_entry_problem cluster_domains::add_domain(const cluster_id_t   &arg_seq_id,    ///< The ID of the sequence on which the domain to add appears
+		                                                       seq::seq_seg_run_opt  arg_segments,  ///< The (optional) segments of the domain to add
+		                                                       const cluster_id_t   &arg_cluster_id ///< The cluster ID of the domain to add
 		                                                       ) {
 			// Find an iterator to the part of seq_domains where this entry this entry's
 			// seq_id_and_domain_cluster_ids_pair is or would be
@@ -131,7 +132,7 @@ namespace cath {
 		size_t num_entries(const cluster_domains &);
 
 		std::string to_string(const cluster_domains &,
-		                      const common::id_of_string &);
+		                      const common::id_of_str_bidirnl &);
 
 
 

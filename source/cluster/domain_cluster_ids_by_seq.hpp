@@ -25,30 +25,30 @@
 #include <boost/utility/string_ref.hpp>
 
 #include "cluster/domain_cluster_ids.hpp"
-#include "common/container/id_of_string.hpp"
+#include "common/container/id_of_str_bidirnl.hpp"
 
 namespace cath {
 	namespace clust {
 
 		/// \brief Store domain_cluster_ids under the name of the entry (sequence) to which it belongs
 		///
-		/// This tallies domain_cluster_ids to entry (sequence) names via a reference_wrapper to an id_of_string
+		/// This tallies domain_cluster_ids to entry (sequence) names via a reference_wrapper to an id_of_str_bidirnl
 		class domain_cluster_ids_by_seq final {
 		private:
 			/// \brief A vector of domain_cluster_ids objects
 			///
-			/// The numbering tallies with that of the id_of_string
+			/// The numbering tallies with that of the id_of_str_bidirnl
 			std::vector<domain_cluster_ids> domain_cluster_ids_of_seq_id;
 
-			/// \brief A reference_wrapper to an id_of_string object
-			std::reference_wrapper<common::id_of_string> id_of_seq_name;
+			/// \brief A reference_wrapper to an id_of_str_bidirnl object
+			std::reference_wrapper<common::id_of_str_bidirnl> id_of_seq_name;
 
 		public:
-			explicit domain_cluster_ids_by_seq(common::id_of_string &);
+			explicit domain_cluster_ids_by_seq(common::id_of_str_bidirnl &);
 
-			/// \brief Disallow construction from a temporary id_of_string
+			/// \brief Disallow construction from a temporary id_of_str_bidirnl
 			///        because this stores a reference
-			domain_cluster_ids_by_seq(const common::id_of_string &&) = delete;
+			domain_cluster_ids_by_seq(const common::id_of_str_bidirnl &&) = delete;
 
 			clust_entry_problem add(const boost::string_ref &,
 			                        domain_cluster_id);
@@ -56,19 +56,19 @@ namespace cath {
 			bool empty() const;
 			size_t size() const;
 
-			const common::id_of_string & get_id_of_seq_name() const;
+			const common::id_of_str_bidirnl & get_id_of_seq_name() const;
 
 			const domain_cluster_ids & operator[](const size_t &) const;
 		};
 
-		/// \brief Ctor from an id_of_string
-		inline domain_cluster_ids_by_seq::domain_cluster_ids_by_seq(common::id_of_string &arg_id_of_seq_name ///< The id_of_string to use to map from entry (sequence) names to numeric IDs
+		/// \brief Ctor from an id_of_str_bidirnl
+		inline domain_cluster_ids_by_seq::domain_cluster_ids_by_seq(common::id_of_str_bidirnl &arg_id_of_seq_name ///< The id_of_str_bidirnl to use to map from entry (sequence) names to numeric IDs
 		                                                            ) : id_of_seq_name{ arg_id_of_seq_name } {
 		}
 
 		/// \brief Add the specified domain_cluster_id under the sequence with the specified name
 		///
-		/// \TODO try using a id_of_string_view instead of the id_of_string because
+		/// \TODO try using a id_of_str_bidirnl_view instead of the id_of_str_bidirnl because
 		///       that might not be (much) more expensive when storing a new string
 		///       and can avoid making a new string when it doesn't need to store.
 		///       That said, there's probably less reuse of IDs than for clusters
@@ -76,7 +76,7 @@ namespace cath {
 		inline clust_entry_problem domain_cluster_ids_by_seq::add(const boost::string_ref &arg_seq_id,           ///< The name of the sequence under which to store the domain_cluster_id
 		                                                          domain_cluster_id        arg_domain_cluster_id ///< The domain_cluster_id to store
 		                                                          ) {
-			const auto &id = id_of_seq_name.get().emplace( arg_seq_id.to_string() ).second;
+			const auto &id = id_of_seq_name.get().add_name( arg_seq_id.to_string() );
 			if ( id >= domain_cluster_ids_of_seq_id.size() ) {
 				domain_cluster_ids_of_seq_id.resize( id + 1 );
 			}
@@ -104,7 +104,7 @@ namespace cath {
 		}
 
 		/// \brief Get the id_of_seq_name lookup from sequence name to sequence ID
-		inline const common::id_of_string & domain_cluster_ids_by_seq::get_id_of_seq_name() const {
+		inline const common::id_of_str_bidirnl & domain_cluster_ids_by_seq::get_id_of_seq_name() const {
 			return id_of_seq_name.get();
 		}
 
@@ -117,17 +117,17 @@ namespace cath {
 		/// \brief Get the cluster ID of the sequence with the specified name from the specified domain_cluster_ids_by_seq
 		///
 		/// \relates domain_cluster_ids_by_seq
-		inline common::id_of_string::id_type get_cluster_id_of_seq_name(const domain_cluster_ids_by_seq &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
-		                                                                const std::string               &arg_seq_name                ///< The name of the sequence of interest
-		                                                                ) {
-			return arg_dom_cluster_ids_by_seq.get_id_of_seq_name()[ arg_seq_name ];
+		inline cluster_id_t get_cluster_id_of_seq_name(const domain_cluster_ids_by_seq &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
+		                                               const std::string               &arg_seq_name                ///< The name of the sequence of interest
+		                                               ) {
+			return arg_dom_cluster_ids_by_seq.get_id_of_seq_name().get_id_of_name( arg_seq_name );
 		}
 
 		/// \brief Get whether there is a non-empty domain_cluster_ids for the sequence with the specified id in the specified domain_cluster_ids_by_seq
 		///
 		/// \relates domain_cluster_ids_by_seq
-		inline bool has_domain_cluster_ids_of_seq_id(const domain_cluster_ids_by_seq     &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
-		                                             const common::id_of_string::id_type &arg_seq_id                  ///< The id of the sequence of interest
+		inline bool has_domain_cluster_ids_of_seq_id(const domain_cluster_ids_by_seq &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
+		                                             const cluster_id_t              &arg_seq_id                  ///< The id of the sequence of interest
 		                                             ) {
 			return (
 				arg_seq_id < arg_dom_cluster_ids_by_seq.size()
