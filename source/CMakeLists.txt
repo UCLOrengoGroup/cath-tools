@@ -318,6 +318,7 @@ set(
 	NORMSOURCES_CLUSTER_OPTIONS_SPEC
 		cluster/options/spec/clust_mapping_spec.cpp
 		cluster/options/spec/clustmap_input_spec.cpp
+		cluster/options/spec/clustmap_output_spec.cpp
 )
 
 set(

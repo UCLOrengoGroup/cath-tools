@@ -30,6 +30,7 @@ Output:
   --append-batch-id <id>                Append batch ID <id> as an extra column in the results output (equivalent to the first column in a --multi-batch-file input file)
   --output-to-file <file>               Write output to file <file> (or, if unspecified, to stdout)
   --summarise-to-file <file>            Print a summary of the renumbering to file <file>
+  --print-entry-results                 Output the entry (domain)-level mapping results
 
 The input cluster-membership data should contain lines like:
 

@@ -52,6 +52,7 @@ namespace cath {
 			static boost::filesystem::path eg_renumbering_summary_file();
 			static boost::filesystem::path eg_batch_input_file();
 			static boost::filesystem::path eg_batch_result_file();
+			static boost::filesystem::path eg_entry_mapping_result_file();
 
 			static boost::filesystem::path eg_simple_mapfrom_result_file();
 			static boost::filesystem::path eg_mapfrom_dom_ol_50_result_file();

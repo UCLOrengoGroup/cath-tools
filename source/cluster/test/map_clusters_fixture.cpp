@@ -114,6 +114,11 @@ path map_clusters_fixture::eg_batch_result_file() {
 	return map_clusters_test_data_dir() / "batch_result";
 }
 
+/// \brief Get the test file for the cath-map-clusters example entry-mapping result file
+path map_clusters_fixture::eg_entry_mapping_result_file() {
+	return map_clusters_test_data_dir() / "entry_mapping_result";
+}
+
 /// \brief Get the test file for the cath-map-clusters example simple map-from result file
 path map_clusters_fixture::eg_simple_mapfrom_result_file() {
 	return map_clusters_test_data_dir() / "example.result.simplemapfrom";

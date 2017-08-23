@@ -29,6 +29,7 @@ using namespace cath::opts;
 
 using boost::filesystem::path;
 using boost::none;
+using boost::program_options::bool_switch;
 using boost::program_options::options_description;
 using boost::program_options::value;
 using boost::program_options::variables_map;
@@ -36,13 +37,16 @@ using std::string;
 using std::unique_ptr;
 
 /// \brief The option name for a batch ID to optionally append as a last column to the output
-const string clustmap_output_options_block::PO_APPEND_BATCH_ID   { "append-batch-id"   };
+const string clustmap_output_options_block::PO_APPEND_BATCH_ID      { "append-batch-id"     };
 
 /// \brief The option name for an optional file to which output should be redirected
-const string clustmap_output_options_block::PO_OUTPUT_TO_FILE    { "output-to-file"    };
+const string clustmap_output_options_block::PO_OUTPUT_TO_FILE       { "output-to-file"      };
 
 /// \brief The option name for an optional file to which a Markdown summary should be written
-const string clustmap_output_options_block::PO_SUMMARISE_TO_FILE { "summarise-to-file" };
+const string clustmap_output_options_block::PO_SUMMARISE_TO_FILE    { "summarise-to-file"   };
+
+/// \brief The option name for whether to print out per-domain mapping info
+const string clustmap_output_options_block::PO_PRINT_DOMAIN_MAPPING { "print-entry-results" };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> clustmap_output_options_block::do_clone() const {
@@ -60,32 +64,44 @@ void clustmap_output_options_block::do_add_visible_options_to_description(option
 	const string id_varname     { "<id>"   };
 	const string file_varname   { "<file>" };
 
-	const auto append_batch_id_notifier   = [&] (const string &x) { the_spec.set_append_batch_id  ( x ); };
-	const auto output_to_file_notifier    = [&] (const path   &x) { the_spec.set_output_to_file   ( x ); };
-	const auto summarise_to_file_notifier = [&] (const path   &x) { the_spec.set_summarise_to_file( x ); };
+	const auto append_batch_id_notifier      = [&] (const string &x) { the_spec.set_append_batch_id     ( x ); };
+	const auto output_to_file_notifier       = [&] (const path   &x) { the_spec.set_output_to_file      ( x ); };
+	const auto summarise_to_file_notifier    = [&] (const path   &x) { the_spec.set_summarise_to_file   ( x ); };
+	const auto print_domain_mapping_notifier = [&] (const bool   &x) { the_spec.set_print_domain_mapping( x ); };
 
 	arg_desc.add_options()
 		(
 			PO_APPEND_BATCH_ID.c_str(),
 			value<string>()
-				->value_name   ( id_varname                 )
-				->notifier     ( append_batch_id_notifier   ),
-			( "Append batch ID " + id_varname + " as an extra column in the results output (equivalent to the first column in a --multi-batch-file input file)" ).c_str()
+				->value_name   ( id_varname                                         )
+				->notifier     ( append_batch_id_notifier                           ),
+			( "Append batch ID " + id_varname + " as an extra column in the results output "
+				"(equivalent to the first column in a --multi-batch-file input file)" ).c_str()
 		)
 		(
 			PO_OUTPUT_TO_FILE.c_str(),
 			value<path>()
-				->value_name   ( file_varname               )
-				->notifier     ( output_to_file_notifier    ),
+				->value_name   ( file_varname                                       )
+				->notifier     ( output_to_file_notifier                            ),
 			( "Write output to file " + file_varname + " (or, if unspecified, to stdout)" ).c_str()
 		)
 		(
 			PO_SUMMARISE_TO_FILE.c_str(),
 			value<path>()
-				->value_name   ( file_varname               )
-				->notifier     ( summarise_to_file_notifier ),
+				->value_name   ( file_varname                                       )
+				->notifier     ( summarise_to_file_notifier                         ),
 			( "Print a summary of the renumbering to file " + file_varname ).c_str()
+		)
+		(
+			( PO_PRINT_DOMAIN_MAPPING ).c_str(),
+			bool_switch()
+				->notifier     ( print_domain_mapping_notifier                      )
+				->default_value( clustmap_output_spec::DEFAULT_PRINT_DOMAIN_MAPPING ),
+			"Output the entry (domain)-level mapping results"
 		);
+
+		static_assert( ! clustmap_output_spec::DEFAULT_PRINT_DOMAIN_MAPPING,
+			"If clustmap_output_spec::DEFAULT_PRINT_DOMAIN_MAPPING isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Generate a description of any problem that makes the specified clustmap_output_options_block invalid
@@ -101,6 +117,7 @@ str_vec clustmap_output_options_block::do_get_all_options_names() const {
 		clustmap_output_options_block::PO_APPEND_BATCH_ID,
 		clustmap_output_options_block::PO_OUTPUT_TO_FILE,
 		clustmap_output_options_block::PO_SUMMARISE_TO_FILE,
+		clustmap_output_options_block::PO_PRINT_DOMAIN_MAPPING,
 	};
 }
 

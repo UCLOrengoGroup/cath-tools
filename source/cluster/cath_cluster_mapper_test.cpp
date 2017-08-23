@@ -623,4 +623,16 @@ BOOST_AUTO_TEST_CASE(handles_batch) {
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_batch_result_file() );
 }
 
+
+BOOST_AUTO_TEST_CASE(provides_entry_level_output) {
+	// When calling perform_map_clusters with options: an input file, a map-from file and the --print-entry-results flag
+	execute_perform_map_clusters( { eg_input_file().string(),
+		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
+		"--" + clustmap_output_options_block::PO_PRINT_DOMAIN_MAPPING } );
+
+	// Then expect the correct results in the output stream
+	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_entry_mapping_result_file() );
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()

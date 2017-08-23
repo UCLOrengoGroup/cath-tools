@@ -148,11 +148,18 @@ void cath::clust::perform_map_clusters(const clustmap_input_spec   &arg_input_sp
 			[&] () { return parse_old_membership( *job_old_clustmemb_file, seq_ider, ref( arg_stderr )  ); }
 		);
 
-		const auto results = map_clusters( old_from_clusters, new_to_clusters, arg_mapping_spec );
+		const auto results = map_clusters(
+			old_from_clusters,
+			new_to_clusters,
+			arg_mapping_spec,
+			make_optional_if( arg_output_spec.get_print_domain_mapping(), the_ostreams.front() )
+		);
 
-		for (auto &the_ostream : the_ostreams) {
-			the_ostream.get() << results_string( old_from_clusters, new_to_clusters, results, job_batch_id, ( job_idx == 0 ) );
-			// the_ostream.get() << longer_results_string( old_from_clusters, new_to_clusters, results, job_batch_id );
+		if ( ! arg_output_spec.get_print_domain_mapping() ) {
+			for (auto &the_ostream : the_ostreams) {
+				the_ostream.get() << results_string( old_from_clusters, new_to_clusters, results, job_batch_id, ( job_idx == 0 ) );
+				// the_ostream.get() << longer_results_string( old_from_clusters, new_to_clusters, results, job_batch_id );
+			}
 		}
 
 		if ( old_from_clusters ) {

@@ -45,6 +45,7 @@ namespace cath {
 			static const std::string PO_APPEND_BATCH_ID;
 			static const std::string PO_OUTPUT_TO_FILE;
 			static const std::string PO_SUMMARISE_TO_FILE;
+			static const std::string PO_PRINT_DOMAIN_MAPPING;
 
 			const clustmap_output_spec & get_clustmap_output_spec() const;
 		};
