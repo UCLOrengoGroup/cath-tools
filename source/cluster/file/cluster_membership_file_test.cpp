@@ -24,6 +24,8 @@
 #include "cluster/file/cluster_membership_file.hpp"
 #include "cluster/map/map_clusters.hpp"
 #include "cluster/options/spec/clust_mapping_spec.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
+#include "exception/runtime_error_exception.hpp"
 
 namespace cath { namespace test { } }
 
@@ -62,6 +64,7 @@ namespace cath {
 )";
 
 			/// \brief A id_of_string for mapping the seq names to ID numbers
+			// cluster_name_ider seq_id_mapper; remove include of id_of_string
 			id_of_string seq_id_mapper;
 
 			/// \brief Example old_cluster_data parsed from the old_membership_str
@@ -69,6 +72,18 @@ namespace cath {
 
 			/// \brief Example new_cluster_data parsed from the new_membership_str
 			const new_cluster_data new_data = parse_new_membership( new_membership_str, seq_id_mapper );
+
+			/// \brief Example of input that's invalid due to only having one entry per line
+			const string single_column_input_str         = "a\nb\nc\n";
+
+			/// \brief Example of input that's invalid due to only having one entry per line (even though it's surrounded by space characters)
+			const string space_single_column_input_str   = " a \n b \n c \n";
+
+			/// \brief Example of input that's valid despite having trailing whitespace
+			const string trailing_space_input_str        = "a 1 \nb 2 \nc 3 \n";
+
+			/// \brief Example of input that's invalid due to having a spurious extra column
+			const string spurious_extra_column_input_str = "a 1 x\nb 2 y\nc 3 z\n";
 
 		};
 	}
@@ -147,5 +162,68 @@ BOOST_AUTO_TEST_CASE(new_cluster_info_third) {
 // 	map_clusters( old_data, new_data, clust_mapping_spec{} );
 // 	BOOST_CHECK( true );
 // }
+
+
+BOOST_AUTO_TEST_SUITE(edge_case_input)
+
+
+
+BOOST_AUTO_TEST_SUITE(throws_on_single_column)
+
+BOOST_AUTO_TEST_CASE(throws_on_old_parse_of_single_column) {
+	BOOST_CHECK_THROW( parse_old_membership( single_column_input_str, seq_id_mapper ), runtime_error_exception );
+}
+
+BOOST_AUTO_TEST_CASE(throws_on_new_parse_of_single_column) {
+	BOOST_CHECK_THROW( parse_new_membership( single_column_input_str, seq_id_mapper ), runtime_error_exception );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+
+BOOST_AUTO_TEST_SUITE(throws_on_space_single_column)
+
+BOOST_AUTO_TEST_CASE(throws_on_old_parse_of_space_single_column) {
+	BOOST_CHECK_THROW( parse_old_membership( space_single_column_input_str, seq_id_mapper ), runtime_error_exception );
+}
+
+BOOST_AUTO_TEST_CASE(throws_on_new_parse_of_space_single_column) {
+	BOOST_CHECK_THROW( parse_new_membership( space_single_column_input_str, seq_id_mapper ), runtime_error_exception );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+
+BOOST_AUTO_TEST_SUITE(accepts_trailing_space)
+
+BOOST_AUTO_TEST_CASE(old_parse_accepts_trailing_space) {
+	BOOST_CHECK_NO_THROW_DIAG( parse_old_membership( trailing_space_input_str, seq_id_mapper ) );
+}
+
+BOOST_AUTO_TEST_CASE(new_parse_accepts_trailing_space) {
+	BOOST_CHECK_NO_THROW_DIAG( parse_new_membership( trailing_space_input_str, seq_id_mapper ) );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+
+BOOST_AUTO_TEST_SUITE(rejects_spurious_extra_column)
+
+BOOST_AUTO_TEST_CASE(throws_on_old_parse_of_spurious_extra_column) {
+	BOOST_CHECK_THROW( parse_old_membership( spurious_extra_column_input_str, seq_id_mapper ), runtime_error_exception );
+}
+
+BOOST_AUTO_TEST_CASE(throws_on_new_parse_of_spurious_extra_column) {
+	BOOST_CHECK_THROW( parse_new_membership( spurious_extra_column_input_str, seq_id_mapper ), runtime_error_exception );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_AUTO_TEST_SUITE_END()
+
 
 BOOST_AUTO_TEST_SUITE_END()

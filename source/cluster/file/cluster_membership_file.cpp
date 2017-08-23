@@ -30,6 +30,7 @@
 #include "common/file/open_fstream.hpp"
 #include "common/optional/make_optional_if.hpp"
 #include "common/string/string_parse_tools.hpp"
+#include "exception/runtime_error_exception.hpp"
 #include "seq/seq_seg_run_parser.hpp"
 
 #include <fstream>
@@ -107,8 +108,16 @@ old_cluster_data cath::clust::parse_old_membership(istream               &arg_is
 	while ( getline( arg_istream, line ) ) {
 		const auto cluster_id_itrs = find_field_itrs( line, CLUSTER_ID_OFFSET                                               );
 		const auto domain_id_itrs  = find_field_itrs( line, DOMAIN_ID_OFFSET, 1 + CLUSTER_ID_OFFSET, cluster_id_itrs.second );
-		/// \TODO Check there are no more fields (but allow whitespace)
 
+		// Check that the line doesn't have too few or too many fields
+		if ( domain_id_itrs.first == domain_id_itrs.second ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot parse cluster membership from line with fewer than two fields"));
+		}
+		if ( find_itr_before_first_non_space( domain_id_itrs.second, common::cend( line ) ) != common::cend( line ) ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot parse cluster membership from line with more than two fields"));
+		}
+
+		/// \TODO Check there are no more fields (but allow whitespace)
 		const auto         slash_index          = make_string_ref( domain_id_itrs ).find_last_of( '/' );
 		const bool         has_segs             = ( slash_index != string_ref::npos );
 		const auto         pre_split_point_itr  = has_segs ? next( domain_id_itrs.first, debug_numeric_cast<ptrdiff_t>( slash_index     ) )
@@ -175,7 +184,14 @@ new_cluster_data cath::clust::parse_new_membership(istream               &arg_is
 	while ( getline( arg_istream, line ) ) {
 		const auto cluster_id_itrs = find_field_itrs( line, CLUSTER_ID_OFFSET                                               );
 		const auto domain_id_itrs  = find_field_itrs( line, DOMAIN_ID_OFFSET, 1 + CLUSTER_ID_OFFSET, cluster_id_itrs.second );
-		/// \TODO Check there are no more fields (but allow whitespace)
+
+		// Check that the line doesn't have too few or too many fields
+		if ( domain_id_itrs.first == domain_id_itrs.second ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot parse cluster membership from line with fewer than two fields"));
+		}
+		if ( find_itr_before_first_non_space( domain_id_itrs.second, common::cend( line ) ) != common::cend( line ) ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot parse cluster membership from line with more than two fields"));
+		}
 
 		const auto         slash_index          = make_string_ref( domain_id_itrs ).find_last_of( '/' );
 		const bool         has_segs             = ( slash_index != string_ref::npos );
