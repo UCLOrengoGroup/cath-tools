@@ -33,6 +33,22 @@
 using namespace cath::common::literals;
 
 namespace cath {
+	namespace common {
+
+		/// \brief Type alias for a tuple of string, size_t and double
+		///
+		/// \TODO Move to common/type_aliases.hpp
+		using str_size_doub_tpl     = std::tuple<std::string, size_t, double>;
+
+		/// \brief Type alias for a vector of str_size_doub_tpl
+		///
+		/// \TODO Move to common/type_aliases.hpp
+		using str_size_doub_tpl_vec = std::vector<str_size_doub_tpl>;
+
+	} // namespace common
+} // namespace cath
+
+namespace cath {
 	namespace clust {
 
 		namespace detail {
@@ -112,9 +128,14 @@ namespace cath {
 			overlap_frac_distn & operator+=(const overlap_frac_distn &);
 			size_t get_num_in_range(const double &,
 			                        const double &) const;
+			size_t get_num_at_fraction(const double &) const;
 			double get_frac_at_percentile(const double &,
 			                              const zeroes_policy & = zeroes_policy::INCLUDE) const;
 		};
+
+		size_t get_num_in_open_closed_range(const overlap_frac_distn &,
+		                                    const double &,
+		                                    const double &);
 
 		overlap_frac_distn build_overlap_frac_distn_from_overlap_fractions(const doub_vec &);
 		doub_doub_pair_vec percentile_data(const overlap_frac_distn &,
@@ -125,6 +146,16 @@ namespace cath {
 		                                      const std::string &,
 		                                      const std::string &,
 		                                      const overlap_frac_distn::zeroes_policy & = overlap_frac_distn::zeroes_policy::INCLUDE);
+
+		common::str_size_doub_tpl_vec histogram_data(const overlap_frac_distn &,
+		                                             const size_t & = 0);
+
+		std::string histogram_markdown_table(const overlap_frac_distn &,
+		                                     const std::string &,
+		                                     const std::string &,
+		                                     const std::string &,
+		                                     const size_t & = 0);
+
 
 		/// \brief Get the overlap fraction corresponding to the bin of the specified index
 		inline constexpr double overlap_frac_distn::get_fraction_of_index(const size_t &arg_index ///< The index of the bin of interest

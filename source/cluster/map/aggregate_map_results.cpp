@@ -245,6 +245,19 @@ Excluding completely-unmapped domains:
 		overlap_frac_distn::zeroes_policy::EXCLUDE
 	) + R"(
 
+Histogram of domain mapping percentages
+
+)"
+	+ histogram_markdown_table(
+		highest_old_dom_ol_fracs,
+		"Domain overlap",
+		"Number of map-from domains",
+		"Percentage of map-from domains",
+		arg_aggregate_map_results.get_num_with_nothing_on_parent()
+	)
+	+ R"(
+
+
 Cluster Mapping
 ==
 

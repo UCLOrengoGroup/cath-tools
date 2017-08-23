@@ -25,6 +25,7 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/irange.hpp>
 
+#include "common/boost_addenda/range/max_proj_element.hpp"
 #include "common/algorithm/transform_build.hpp"
 
 using namespace cath;
@@ -32,12 +33,14 @@ using namespace cath::clust;
 using namespace cath::common;
 
 #include <numeric>
+#include <tuple>
 
 using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::format;
 using boost::irange;
 using std::accumulate;
+using std::get;
 using std::make_pair;
 using std::max;
 using std::min;
@@ -86,6 +89,18 @@ size_t overlap_frac_distn::get_num_in_range(const double &arg_lower_fraction, //
 	);
 }
 
+/// \brief Get the number at the specified fraction
+size_t overlap_frac_distn::get_num_at_fraction(const double &arg_fraction ///< The fraction to query
+                                               ) const {
+	if ( ! boost::math::isfinite( arg_fraction ) || arg_fraction < 0.0 || arg_fraction > 1.0 ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get_num_at_fraction() from overlap_frac_distn with invalid fraction"));
+	}
+	return *next(
+		common::cbegin( *this ),
+		static_cast<ptrdiff_t>( round( get_index_of_fraction( arg_fraction ) ) )
+	);
+}
+
 /// \brief Get the overlap fraction to be found at the specified percentile
 ///
 /// This uses the nearest-rank percentile (that does no interpolation and just takes the value at the i-th place
@@ -104,6 +119,18 @@ double overlap_frac_distn::get_frac_at_percentile(const double        &arg_perce
 	const size_t nth = max( 1_z, static_cast<size_t>( ceil( arg_percentile / 100.0 * static_cast<double>( num_fractions ) ) ) ) - 1_z;
 
 	return get_fraction_of_index( find_index_of_nth( nth + zeroes_offset ) );
+}
+
+/// \brief Get the number in the specified half open-closed range
+///
+/// \relates overlap_frac_distn
+size_t cath::clust::get_num_in_open_closed_range(const overlap_frac_distn &arg_overlap_frac_distn, ///< The overlap_frac_distn to query
+                                                 const double             &arg_lower_fraction,     ///< The lower fraction, which is exclusive
+                                                 const double             &arg_upper_fraction      ///< The upper fraction, which is inclusive
+                                                 ) {
+	return arg_overlap_frac_distn.get_num_in_range( arg_lower_fraction, arg_upper_fraction )
+		- arg_overlap_frac_distn.get_num_at_fraction( arg_lower_fraction )
+		+ arg_overlap_frac_distn.get_num_at_fraction( arg_upper_fraction );
 }
 
 /// \brief Build a overlap_frac_distn from the specified list of overlap fractions
@@ -158,6 +185,95 @@ string cath::clust::percentile_markdown_table(const overlap_frac_distn          
 						+ ( format( R"(%)" + to_string( arg_percentile_title.length() ) + "d" ) % x.first  ).str()
 						+ " |"
 						+ ( format( R"(%)" + to_string( arg_value_title.length()      ) + "d" ) % x.second ).str()
+						+ R"(% |)";
+				} ),
+			""
+		);
+}
+
+/// \brief Get histogram data for the specified overlap_frac_distn given the specified
+///        number of domains that mapped at 0% with nothing on the parent sequence
+///
+/// \relates overlap_frac_distn
+str_size_doub_tpl_vec cath::clust::histogram_data(const overlap_frac_distn &arg_overlap_frac_distn,        ///< The overlap_frac_distn to query
+                                                  const size_t             &arg_num_with_nothing_on_parent ///< The number of domains that mapped at 0% with nothing on the parent sequence
+                                                  ) {
+	using std::to_string;
+
+	const size_t total       = arg_overlap_frac_distn.size();
+	const size_t num_at_zero = arg_overlap_frac_distn.get_num_at_fraction( 0.0 );
+
+	if ( arg_num_with_nothing_on_parent > num_at_zero || num_at_zero > total ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("The number at zero is incompatible with the arg_num_with_nothing_on_parent or total"));
+	}
+
+	str_size_pair_vec results = { {
+		str_size_pair{ R"(All)",                                        total                                        },
+		             { R"(0% (with no other match on the sequence))",   arg_num_with_nothing_on_parent               },
+		             { R"(0% (with some other match on the sequence))", num_at_zero - arg_num_with_nothing_on_parent },
+	} };
+
+	for (const size_t &frac_tenth : irange( 0_z, 10_z ) ) {
+		const size_t range_pc_begin   = 10 *       frac_tenth;
+		const size_t range_pc_end     = 10 * ( 1 + frac_tenth );
+		const double range_frac_begin = static_cast<double>( range_pc_begin ) / 100.0;
+		const double range_frac_end   = static_cast<double>( range_pc_end   ) / 100.0;
+		results.emplace_back(
+			to_string( range_pc_begin ) + R"(% < x <= )" + to_string( range_pc_end ) + R"(%)",
+			get_num_in_open_closed_range( arg_overlap_frac_distn, range_frac_begin, range_frac_end )
+		);
+	}
+
+	return transform_build<str_size_doub_tpl_vec>(
+		results,
+		[&] (const str_size_pair &x) {
+			return make_tuple( x.first, x.second, 100.0 * static_cast<double>( x.second ) / static_cast<double>( total ) );
+		}
+	);
+}
+
+/// \brief Generate a Markdown histogram string for the specified overlap_frac_distn
+///
+/// \relates overlap_frac_distn
+string cath::clust::histogram_markdown_table(const overlap_frac_distn &arg_overlap_frac_distn,        ///< The overlap_frac_distn to query
+                                             const string             &arg_range_title,               ///< The title for the range column
+                                             const string             &arg_value_title,               ///< The title for the values column
+                                             const string             &arg_percent_title,             ///< The title for the percent column
+                                             const size_t             &arg_num_with_nothing_on_parent ///< The number of domains that mapped at 0% with nothing on the parent sequence
+                                             ) {
+	using std::to_string;
+
+	const auto data = histogram_data( arg_overlap_frac_distn, arg_num_with_nothing_on_parent );
+
+	const size_t longest_first_col_length = data.empty()
+		? 0_z
+		: max_proj(
+			data,
+			std::less<>{},
+			[] (const str_size_doub_tpl &x) {
+				return get<0>( x ).length();
+			}
+		);
+
+	return
+		  "| "  + ( format( R"(%)" + to_string( longest_first_col_length ) + "s"   ) % arg_range_title ).str()
+		+ " | " + arg_value_title
+		+ " | " + arg_percent_title
+		+ " |\n"
+		+ "|-"  + string( longest_first_col_length,   '-' )
+		+ "-|-" + string( arg_value_title.length(),   '-' )
+		+ "-|-" + string( arg_percent_title.length(), '-' )
+		+ "-|"
+		+ join(
+			data
+				| transformed( [&] (const str_size_doub_tpl &x) {
+					return
+						  "\n| "
+						+ ( format( R"(%)" + to_string( longest_first_col_length   ) + "s"   ) % get<0>( x ) ).str()
+						+ " | "
+						+ ( format( R"(%)" + to_string( arg_value_title.length()   ) + "d"   ) % get<1>( x ) ).str()
+						+ " |"
+						+ ( format( R"(%)" + to_string( arg_percent_title.length() ) + ".3g" ) % get<2>( x ) ).str()
 						+ R"(% |)";
 				} ),
 			""
