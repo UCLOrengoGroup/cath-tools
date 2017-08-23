@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CLUSTER_MAP_MAP_CLUSTERS_H
 #define _CATH_TOOLS_SOURCE_CLUSTER_MAP_MAP_CLUSTERS_H
 
+#include <boost/optional.hpp>
+
 #include "cluster/cluster_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 
@@ -36,7 +38,8 @@ namespace cath {
 
 		map_results map_clusters(const old_cluster_data_opt &,
 		                         const new_cluster_data &,
-		                         const clust_mapping_spec &);
+		                         const clust_mapping_spec &,
+		                         const ostream_ref_opt & = boost::none );
 
 		size_vec get_info_ordered_indices_of_unmapped_new_clusters(const potential_map_vec &,
 		                                                           const new_cluster_data &);

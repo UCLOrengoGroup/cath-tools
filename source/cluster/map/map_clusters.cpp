@@ -50,17 +50,25 @@ using boost::sub_range;
 using std::deque;
 using std::less;
 using std::max;
+using std::string;
 using std::vector;
 
 /// \brief Map old clusters to new clusters
 ///
 /// \todo Consider trying to break this long function up further
-map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_clusters, ///< The old clusters
-                                      const new_cluster_data     &arg_new_clusters, ///< The new clusters
-                                      const clust_mapping_spec   &arg_mapping_spec  ///< The specification for the mapping
+map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_clusters,     ///< The old clusters
+                                      const new_cluster_data     &arg_new_clusters,     ///< The new clusters
+                                      const clust_mapping_spec   &arg_mapping_spec,     ///< The specification for the mapping
+                                      const ostream_ref_opt      &arg_domain_out_stream ///< An optional stream to which individual domain mappings should be printed
                                       ) {
+	const string dom_map_result_tag = "DOMAIN-MAP-RESULT";
+
 	// Grab the number of new clusters
 	const size_t num_new_clusters = get_num_clusters( arg_new_clusters );
+
+	if ( arg_domain_out_stream ) {
+		arg_domain_out_stream->get() << "# Columns: tag(" << dom_map_result_tag << ") old_domain cluster_of_old_domain best_overlap_pc (best_new_domain) (cluster_of_best_new_domain) # [where last two columns absent if no new domains on the sequence]\n";
+	}
 
 	// Prepare some data structures
 	doub_vec           highest_old_clust_overlap_fractions;
@@ -73,6 +81,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 
 	// If there are old clusters perform a mapping
 	if ( arg_old_clusters ) {
+
 		// Grab the number of old clusters and initialise num_mapped_by_new_cluster & num_mapped_by_old_cluster
 		const size_t num_old_clusters = arg_old_clusters->size();
 		num_mapped_by_new_cluster.resize( num_new_clusters, 0 );
@@ -104,6 +113,21 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 				if ( ! has_domain_cluster_ids_of_seq_id( arg_new_clusters, seq_id ) ) {
 					num_with_nothing_on_parent += old_dom_cluster_ids.size();
 					highest_old_dom_overlap_fractions.add_overlap_fraction( 0.0, old_dom_cluster_ids.size() );
+
+					// If arg_domain_out_stream, print out the name of any old seq ID for which *nothing* could be found
+					if ( arg_domain_out_stream ) {
+						for (const auto &old_dom_clust_id : old_dom_cluster_ids) {
+							arg_domain_out_stream->get()
+								<< dom_map_result_tag
+								<< " "
+								<< string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
+								// << arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+								<< get_segments_suffix_string( old_dom_clust_id.segments )
+								<< " "
+								<< get_name_of_cluster_of_id( *arg_old_clusters, old_dom_clust_id.cluster_id )
+								<< " 0\n";
+						}
+					}
 				}
 
 				// Otherwise, analyse the new clusters' entries on the sequence
@@ -123,11 +147,31 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 								BOOST_THROW_EXCEPTION(invalid_argument_exception(
 									"Inconsistent whole-chain-domain on seq "
 									+ string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
+									// + arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 								));
 							}
 
+							const auto &equiv_new = front( new_dom_clust_ids );
+
+							// If arg_domain_out_stream, print out the name of any old seq ID for which *nothing* could be found
+							if ( arg_domain_out_stream ) {
+								arg_domain_out_stream->get()
+									<< dom_map_result_tag
+									<< " "
+									<< string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
+									// << arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+									<< " "
+									<< get_name_of_cluster_of_id( *arg_old_clusters, old_dom_clust_id.cluster_id )
+									<< " 100 "
+									<< string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
+									// << arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+									<< " "
+									<< get_name_of_cluster_of_id( arg_new_clusters, equiv_new.cluster_id )
+									<< "\n";
+							}
+
 							// ...and record that the entries are equivalent 
-							record_mapping_fn( front( new_dom_clust_ids ).cluster_id );
+							record_mapping_fn( equiv_new.cluster_id );
 							highest_old_dom_overlap_fractions.add_overlap_fraction( 1.0 );
 							continue;
 						}
@@ -149,6 +193,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 							BOOST_THROW_EXCEPTION(invalid_argument_exception(
 								"Inconsistent whole-chain-domain on seq "
 								+ string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
+								// + arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 							));
 						}
 
@@ -167,6 +212,26 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 
 						// Record the best overlap
 						highest_old_dom_overlap_fractions.add_overlap_fraction( best_ol );
+
+						if ( arg_domain_out_stream ) {
+							arg_domain_out_stream->get()
+								<< dom_map_result_tag
+								<< " "
+								<< string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
+								// << arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+								<< get_segments_suffix_string( old_segments_opt )
+								<< " "
+								<< get_name_of_cluster_of_id( *arg_old_clusters, old_dom_clust_id.cluster_id )
+								<< " "
+								<< ( 100.0 * best_ol )
+								<< " "
+								<< string_of_id( arg_old_clusters->get_id_of_seq_name(), seq_id )
+								// << arg_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
+								<< get_segments_suffix_string( new_with_best_ol_over_longer.segments )
+								<< " "
+								<< get_name_of_cluster_of_id( arg_new_clusters, new_with_best_ol_over_longer.cluster_id )
+								<< "\n";
+						}
 
 						// If the best entry is above the threshold, record it
 						// Note: it is important that this remains a strict >
