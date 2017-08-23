@@ -25,8 +25,8 @@ using std::string;
 BOOST_AUTO_TEST_SUITE(mapping_tool_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	const string old_cluster_file_str = R"(
-		)";
+	// const string old_cluster_file_str = R"(
+	// 	)";
 	BOOST_CHECK( true );
 }
 
