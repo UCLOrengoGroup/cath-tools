@@ -32,9 +32,12 @@
 using namespace cath::align;
 using namespace cath::align::detail;
 using namespace cath::common;
-using namespace std;
+using namespace cath::file;
 
+using boost::filesystem::path;
 using boost::lexical_cast;
+using std::get;
+using std::string;
 
 /// \brief A convenience function to append a glued row to the end of an alignment
 void cath::align::detail::append_glued_row(alignment                  &arg_alignment,     ///< The alignment to which the glued row should be appended
@@ -205,4 +208,3 @@ alignment cath::align::build_alignment_from_parts(const size_size_alignment_tupl
 
 	return builder.get_alignment();
 }
-

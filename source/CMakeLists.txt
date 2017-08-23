@@ -26,6 +26,7 @@ add_library( ct_cath_refine_align   ${NORMSOURCES_CATH_REFINE_ALIGN}   )
 add_library( ct_cath_score_align    ${NORMSOURCES_CATH_SCORE_ALIGN}    )
 add_library( ct_cath_superpose      ${NORMSOURCES_CATH_SUPERPOSE}      )
 add_library( ct_chopping            ${NORMSOURCES_CHOPPING}            )
+add_library( ct_clustagglom         ${NORMSOURCES_SRC_CLUSTAGGLOM}     )
 add_library( ct_cluster             ${NORMSOURCES_CLUSTER}             )
 add_library( ct_common              ${NORMSOURCES_SRC_COMMON}          )
 add_library( ct_display_colour      ${NORMSOURCES_DISPLAY_COLOUR}      )
@@ -35,8 +36,9 @@ add_library( ct_resolve_hits        ${NORMSOURCES_RESOLVE_HITS}        )
 add_library( ct_seq                 ${NORMSOURCES_SEQ}                 )
 add_library( ct_test                ${NORMSOURCES_SRC_TEST}            )
 
-target_include_directories( ct_common PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common>   )
-target_include_directories( ct_test   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>     )
+target_include_directories( ct_clustagglom PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_clustagglom> )
+target_include_directories( ct_common      PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common>      )
+target_include_directories( ct_test        PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>        )
 
 # TODO: Try to eradicate these...
 target_include_directories( ct_biocore             PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> )
@@ -58,6 +60,7 @@ target_link_libraries     ( ct_cath_refine_align   PUBLIC ct_common             
 target_link_libraries     ( ct_cath_score_align    PUBLIC ct_common                                                        )
 target_link_libraries     ( ct_cath_superpose      PUBLIC ct_common                                                        )
 target_link_libraries     ( ct_chopping            PUBLIC ct_common ct_biocore                                             )
+target_link_libraries     ( ct_clustagglom         PUBLIC ct_common                                                        )
 target_link_libraries     ( ct_cluster             PUBLIC ct_common                                                        )
 target_link_libraries     ( ct_common              PUBLIC Boost::boost Boost::log Boost::thread Boost::timer ${RT_LIBRARY} )
 target_link_libraries     ( ct_display_colour      PUBLIC ct_common                                                        )
@@ -89,22 +92,24 @@ set(
 		${TESTSOURCES_UNI_SUPERPOSITION}
 )
 
-add_library( testsrcs_biocore      OBJECT ${TESTSOURCES_BIOCORE}      )
-add_library( testsrcs_chopping     OBJECT ${TESTSOURCES_CHOPPING}     )
-add_library( testsrcs_cluster      OBJECT ${TESTSOURCES_CLUSTER}      )
-add_library( testsrcs_common       OBJECT ${TESTSOURCES_SRC_COMMON}   )
-add_library( testsrcs_remain       OBJECT ${TESTSOURCES_REMAIN}       )
-add_library( testsrcs_resolve_hits OBJECT ${TESTSOURCES_RESOLVE_HITS} )
-add_library( testsrcs_seq          OBJECT ${TESTSOURCES_SEQ}          )
+add_library( testsrcs_biocore      OBJECT ${TESTSOURCES_BIOCORE}         )
+add_library( testsrcs_chopping     OBJECT ${TESTSOURCES_CHOPPING}        )
+add_library( testsrcs_clustagglom  OBJECT ${TESTSOURCES_SRC_CLUSTAGGLOM} )
+add_library( testsrcs_cluster      OBJECT ${TESTSOURCES_CLUSTER}         )
+add_library( testsrcs_common       OBJECT ${TESTSOURCES_SRC_COMMON}      )
+add_library( testsrcs_remain       OBJECT ${TESTSOURCES_REMAIN}          )
+add_library( testsrcs_resolve_hits OBJECT ${TESTSOURCES_RESOLVE_HITS}    )
+add_library( testsrcs_seq          OBJECT ${TESTSOURCES_SEQ}             )
 
 # These should really use target_link_libraries() to their corresponding library but CMake can't seem to do that
-target_include_directories( testsrcs_biocore      PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test> )
-target_include_directories( testsrcs_common       PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test> )
-target_include_directories( testsrcs_chopping     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test> )
-target_include_directories( testsrcs_cluster      PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test> )
-target_include_directories( testsrcs_remain       PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test> )
-target_include_directories( testsrcs_resolve_hits PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test> )
-target_include_directories( testsrcs_seq          PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test> )
+target_include_directories( testsrcs_biocore      PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>                                                                )
+target_include_directories( testsrcs_common       PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>                                                                )
+target_include_directories( testsrcs_chopping     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>                                                                )
+target_include_directories( testsrcs_clustagglom  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_clustagglom> )
+target_include_directories( testsrcs_cluster      PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>                                                                )
+target_include_directories( testsrcs_remain       PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>                                                                )
+target_include_directories( testsrcs_resolve_hits PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>                                                                )
+target_include_directories( testsrcs_seq          PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>                                                                )
 
 # TODO: Try to eradicate these...
 target_include_directories( testsrcs_biocore      PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> )
@@ -122,6 +127,7 @@ add_executable(
 	build-test
 		$<TARGET_OBJECTS:testsrcs_biocore>
 		$<TARGET_OBJECTS:testsrcs_chopping>
+		$<TARGET_OBJECTS:testsrcs_clustagglom>
 		$<TARGET_OBJECTS:testsrcs_cluster>
 		$<TARGET_OBJECTS:testsrcs_common>
 		$<TARGET_OBJECTS:testsrcs_remain>
@@ -141,14 +147,14 @@ add_executable( cath-superpose      ${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}   
 #####################################################################
 #####################################################################
 
-target_link_libraries( build-test          PRIVATE ct_cath_refine_align ct_cath_superpose ct_cluster ct_resolve_hits ct_test ct_seq ct_remain ct_options ct_biocore ct_chopping ct_display_colour Boost::filesystem Boost::iostreams Boost::serialization Boost::unit_test_framework ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-assign-domains PRIVATE ct_cath_assign_domains                                                           ct_remain ct_options ct_biocore ct_chopping ct_display_colour Boost::filesystem Boost::iostreams Boost::serialization                            ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-map-clusters   PRIVATE ct_cluster                                                                ct_seq           ct_options            ct_chopping                                                                                                      ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-refine-align   PRIVATE ct_cath_refine_align                                                             ct_remain ct_options ct_biocore ct_chopping ct_display_colour                   Boost::iostreams Boost::serialization                            ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-resolve-hits   PRIVATE ct_resolve_hits                                                           ct_seq           ct_options ct_biocore ct_chopping ct_display_colour                                                                                                      )
-target_link_libraries( cath-score-align    PRIVATE ct_cath_score_align                                                              ct_remain ct_options ct_biocore ct_chopping ct_display_colour Boost::filesystem Boost::iostreams Boost::serialization                            ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-ssap           PRIVATE                                                                                  ct_remain ct_options ct_biocore ct_chopping ct_display_colour Boost::filesystem Boost::iostreams Boost::serialization                            ${GSL_LIB_SUFFIX} )
-target_link_libraries( cath-superpose      PRIVATE ct_cath_superpose                                                                ct_remain ct_options ct_biocore ct_chopping ct_display_colour                   Boost::iostreams Boost::serialization                            ${GSL_LIB_SUFFIX} )
+target_link_libraries( build-test          PRIVATE ct_cath_refine_align ct_cath_superpose ct_clustagglom ct_cluster ct_resolve_hits ct_test ct_seq ct_remain ct_options ct_biocore ct_chopping ct_display_colour Boost::filesystem Boost::iostreams Boost::serialization Boost::unit_test_framework ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-assign-domains PRIVATE ct_cath_assign_domains                                                                          ct_remain ct_options ct_biocore ct_chopping ct_display_colour Boost::filesystem Boost::iostreams Boost::serialization                            ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-map-clusters   PRIVATE ct_cluster                                                                               ct_seq           ct_options            ct_chopping                                                                                                      ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-refine-align   PRIVATE ct_cath_refine_align                                                                            ct_remain ct_options ct_biocore ct_chopping ct_display_colour                   Boost::iostreams Boost::serialization                            ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-resolve-hits   PRIVATE ct_resolve_hits                                                                          ct_seq           ct_options ct_biocore ct_chopping ct_display_colour                                                                                                      )
+target_link_libraries( cath-score-align    PRIVATE ct_cath_score_align                                                                             ct_remain ct_options ct_biocore ct_chopping ct_display_colour Boost::filesystem Boost::iostreams Boost::serialization                            ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-ssap           PRIVATE                                                                                                 ct_remain ct_options ct_biocore ct_chopping ct_display_colour Boost::filesystem Boost::iostreams Boost::serialization                            ${GSL_LIB_SUFFIX} )
+target_link_libraries( cath-superpose      PRIVATE ct_cath_superpose                                                                               ct_remain ct_options ct_biocore ct_chopping ct_display_colour                   Boost::iostreams Boost::serialization                            ${GSL_LIB_SUFFIX} )
 
 #####################################################################
 #####################################################################
@@ -159,6 +165,7 @@ IF ( BUILD_EXTRA_CATH_TESTS )
 
 	add_executable( mod-test-biocore      $<TARGET_OBJECTS:testsrcs_biocore>      ${TESTSOURCES_EXECUTABLES_BUILD_TEST} )
 	add_executable( mod-test-chopping     $<TARGET_OBJECTS:testsrcs_chopping>     ${TESTSOURCES_EXECUTABLES_BUILD_TEST} )
+	add_executable( mod-test-clustagglom  $<TARGET_OBJECTS:testsrcs_clustagglom>  ${TESTSOURCES_EXECUTABLES_BUILD_TEST} )
 	add_executable( mod-test-cluster      $<TARGET_OBJECTS:testsrcs_cluster>      ${TESTSOURCES_EXECUTABLES_BUILD_TEST} )
 	add_executable( mod-test-common       $<TARGET_OBJECTS:testsrcs_common>       ${TESTSOURCES_EXECUTABLES_BUILD_TEST} )
 	add_executable( mod-test-resolve-hits $<TARGET_OBJECTS:testsrcs_resolve_hits> ${TESTSOURCES_EXECUTABLES_BUILD_TEST} )
@@ -166,6 +173,7 @@ IF ( BUILD_EXTRA_CATH_TESTS )
 
 	target_link_libraries( mod-test-biocore      PRIVATE ct_test                                                                            ct_biocore Boost::filesystem                                                          Boost::unit_test_framework                   )
 	target_link_libraries( mod-test-chopping     PRIVATE ct_test ct_chopping                                                                ct_biocore                   Boost::program_options                                   Boost::unit_test_framework                   )
+	target_link_libraries( mod-test-clustagglom  PRIVATE ct_test ct_clustagglom  ct_seq ct_options ct_chopping                              ct_biocore                                                                            Boost::unit_test_framework                   )
 	target_link_libraries( mod-test-cluster      PRIVATE ct_test ct_cluster      ct_seq ct_options ct_chopping                              ct_biocore                                                                            Boost::unit_test_framework                   )
 	target_link_libraries( mod-test-common       PRIVATE ct_test ct_common                                                                             Boost::filesystem                        Boost::serialization Boost::timer Boost::unit_test_framework ${GSL_LIB_SUFFIX} )
 	target_link_libraries( mod-test-resolve-hits PRIVATE ct_test ct_resolve_hits ct_seq ct_chopping ct_options ct_display_colour ct_options ct_biocore Boost::filesystem                                                          Boost::unit_test_framework                   )

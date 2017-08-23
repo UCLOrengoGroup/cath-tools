@@ -23,12 +23,10 @@
 
 #include <boost/optional/optional_fwd.hpp>
 
-#include <cstddef>
 #include <vector>
 
 namespace cath { namespace clust { class cluster_domains; } }
 namespace cath { namespace clust { class cluster_info; } }
-namespace cath { namespace clust { class cluster_list; } }
 namespace cath { namespace clust { class old_cluster_data; } }
 namespace cath { namespace clust { namespace detail { class mapping_job; } } }
 namespace cath { namespace clust { namespace detail { struct seq_id_and_domain_cluster_ids_pair; } } }

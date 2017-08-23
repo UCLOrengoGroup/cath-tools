@@ -394,6 +394,38 @@ set(
 )
 
 set(
+	NORMSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_FILE
+		src_clustagglom/clustagglom/file/dissimilarities_file.cpp
+		src_clustagglom/clustagglom/file/names_file.cpp
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_HIERARCHY
+		src_clustagglom/clustagglom/hierarchy/hierarchy_fn.cpp
+		src_clustagglom/clustagglom/hierarchy/hierarchy_group.cpp
+		src_clustagglom/clustagglom/hierarchy/hierarchy_layer.cpp
+		src_clustagglom/clustagglom/hierarchy/hierarchy_value.cpp
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM
+		src_clustagglom/clustagglom/calc_complete_linkage_merge_list.cpp
+		${NORMSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_FILE}
+		src_clustagglom/clustagglom/get_sorting_scores.cpp
+		src_clustagglom/clustagglom/hierarchy.cpp
+		${NORMSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_HIERARCHY}
+		src_clustagglom/clustagglom/link_list.cpp
+		src_clustagglom/clustagglom/links.cpp
+		src_clustagglom/clustagglom/make_clusters_from_merges.cpp
+		src_clustagglom/clustagglom/merge.cpp
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTAGGLOM
+		${NORMSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM}
+)
+
+set(
 	NORMSOURCES_SRC_COMMON_COMMON_ALGORITHM
 		src_common/common/algorithm/random_split.cpp
 )
@@ -1494,6 +1526,44 @@ set(
 	TESTSOURCES_SEQ
 		seq/seq_seg_run_test.cpp
 		seq/seq_seg_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_DETAIL
+		src_clustagglom/clustagglom/detail/clust_id_pot_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_FILE
+		src_clustagglom/clustagglom/file/dissimilarities_file_test.cpp
+		src_clustagglom/clustagglom/file/names_file_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_HIERARCHY
+		src_clustagglom/clustagglom/hierarchy/hierarchy_group_test.cpp
+		src_clustagglom/clustagglom/hierarchy/hierarchy_layer_test.cpp
+		src_clustagglom/clustagglom/hierarchy/hierarchy_value_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM
+		src_clustagglom/clustagglom/calc_complete_linkage_merge_list_test.cpp
+		src_clustagglom/clustagglom/clustagglom_fixture.cpp
+		${TESTSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_DETAIL}
+		${TESTSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_FILE}
+		${TESTSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_HIERARCHY}
+		src_clustagglom/clustagglom/hierarchy_test.cpp
+		src_clustagglom/clustagglom/link_list_test.cpp
+		src_clustagglom/clustagglom/link_test.cpp
+		src_clustagglom/clustagglom/links_test.cpp
+		src_clustagglom/clustagglom/make_clusters_from_merges_test.cpp
+		src_clustagglom/clustagglom/merge_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTAGGLOM
+		${TESTSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM}
 )
 
 set(
