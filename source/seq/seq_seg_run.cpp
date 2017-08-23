@@ -57,6 +57,16 @@ string cath::seq::get_segments_string(const seq_seg_run &arg_seq_seg_run ///< Th
 	);
 }
 
+/// \brief Generate a string describing the segments of the specified string or an empty string if none
+///
+/// If not none, the result is the same as returned from get_segments_string() prefixed by '/'
+///
+/// \relates seq_seg_run
+string cath::seq::get_segments_suffix_string(const seq_seg_run_opt &arg_seq_seg_run ///< The seq_seg_run whose segments should be described
+                                             ) {
+	return arg_seq_seg_run ? ( "/" + get_segments_string( *arg_seq_seg_run ) ) : "";
+}
+
 /// \brief Generate a string describing the specified seq_seg_run
 ///
 /// \relates seq_seg_run
