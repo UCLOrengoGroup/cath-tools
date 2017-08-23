@@ -135,6 +135,18 @@ string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,
 				} ),
 			""
 		)
+		// + join(
+		// 	other_maps
+		// 		| transformed( [&] (const potential_map &the_map) {
+		// 			return
+		// 				  get_name_of_cluster_of_id(  arg_new_clusters, the_map.new_cluster_idx )
+		// 				+ " "
+		// 				+ get_name_of_cluster_of_id( *arg_old_clusters, the_map.old_cluster_idx )
+		// 				+ ( arg_batch_id ? ( " " + *arg_batch_id ) : "" )
+		// 				+ " other\n";
+		// 		} ),
+		// 	""
+		// )
 		+ join(
 			irange( 0_z, unmapped_new_cluster_indices.size() )
 				| transformed( [&] (const size_t &new_cluster_index_index) {
