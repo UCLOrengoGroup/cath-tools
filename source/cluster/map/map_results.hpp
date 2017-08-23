@@ -84,6 +84,9 @@ namespace cath {
 			/// \brief The total number of mapped entries for each of the old clusters, indexed by their clusters' indices
 			size_vec num_mapped_by_old_cluster;
 
+			/// \brief The number of entries which got a domain overlap of 0 *because there were no matching entries on the parent at all*
+			size_t num_with_nothing_on_parent;
+
 			/// \brief The highest overlap fraction (over largest) for each of the old domains
 			overlap_frac_distn highest_old_dom_overlap_fractions;
 

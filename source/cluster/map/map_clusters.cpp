@@ -65,6 +65,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 	// Prepare some data structures
 	doub_vec           highest_old_clust_overlap_fractions;
 	overlap_frac_distn highest_old_dom_overlap_fractions;
+	size_t             num_with_nothing_on_parent = 0;
 	potential_map_vec  chosen_maps;
 	potential_map_vec  potential_maps;
 	size_vec           num_mapped_by_new_cluster;
@@ -101,6 +102,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 
 				// If the new clusters have no entries on the sequence then record overlaps of 0 for all the old domains
 				if ( ! has_domain_cluster_ids_of_seq_id( arg_new_clusters, seq_id ) ) {
+					num_with_nothing_on_parent += old_dom_cluster_ids.size();
 					highest_old_dom_overlap_fractions.add_overlap_fraction( 0.0, old_dom_cluster_ids.size() );
 				}
 
@@ -240,6 +242,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 		),
 		num_mapped_by_new_cluster,
 		num_mapped_by_old_cluster,
+		num_with_nothing_on_parent,
 		std::move( highest_old_dom_overlap_fractions ),
 		build_overlap_frac_distn_from_overlap_fractions( highest_old_clust_overlap_fractions ),
 		arg_mapping_spec

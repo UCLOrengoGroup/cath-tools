@@ -30,8 +30,6 @@
 #include "common/file/open_fstream.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
-#include <fstream>
-
 using namespace cath::clust;
 using namespace cath::common;
 
@@ -82,6 +80,11 @@ const size_t & aggregate_map_results::get_num_mapped_entries() const {
 	return num_mapped_entries;
 }
 
+/// \brief Getter for the number of entries which got a domain overlap of 0 *because there were no matching entries on the parent at all*
+const size_t & aggregate_map_results::get_num_with_nothing_on_parent() const {
+	return num_with_nothing_on_parent;
+}
+
 /// \brief Getter for the highest overlap fraction (over largest) for each of the old domains
 const overlap_frac_distn & aggregate_map_results::get_highest_old_dom_overlap_fractions() const {
 	return highest_old_dom_overlap_fractions;
@@ -107,12 +110,12 @@ aggregate_map_results & aggregate_map_results::add_map_results(const map_results
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot add map_results that were performed under a different clust_mapping_spec to an aggregate_map_results"));
 	}
 
-	const size_t  curr_num_mapped_clusters       = arg_map_results.chosen_maps.size();
-	const size_t  curr_num_old_clusters          = get_num_clusters      ( arg_old_clusters );
-	const size_t  curr_num_new_clusters          = get_num_clusters      ( arg_new_clusters );
-	const size_t  curr_num_old_entries           = get_num_entries       ( arg_old_clusters );
-	const size_t  curr_num_new_entries           = get_num_entries       ( arg_new_clusters );
-	const size_t  curr_num_mapped_entries        = ::cath::clust::get_num_mapped_entries( arg_map_results  );
+	const size_t  curr_num_mapped_clusters = arg_map_results.chosen_maps.size();
+	const size_t  curr_num_old_clusters    = get_num_clusters      ( arg_old_clusters );
+	const size_t  curr_num_new_clusters    = get_num_clusters      ( arg_new_clusters );
+	const size_t  curr_num_old_entries     = get_num_entries       ( arg_old_clusters );
+	const size_t  curr_num_new_entries     = get_num_entries       ( arg_new_clusters );
+	const size_t  curr_num_mapped_entries  = ::cath::clust::get_num_mapped_entries( arg_map_results  );
 
 	if ( curr_num_mapped_clusters > curr_num_old_clusters || curr_num_mapped_clusters > curr_num_new_clusters ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Cannot have mapped more clusters than there are old/new clusters"));
@@ -124,6 +127,7 @@ aggregate_map_results & aggregate_map_results::add_map_results(const map_results
 	num_old_entries                     += curr_num_old_entries;
 	num_new_entries                     += curr_num_new_entries;
 	num_mapped_entries                  += curr_num_mapped_entries;
+	num_with_nothing_on_parent          += arg_map_results.num_with_nothing_on_parent;
 
 	highest_old_dom_overlap_fractions   += arg_map_results.highest_old_dom_overlap_fractions;
 	highest_old_clust_overlap_fractions += arg_map_results.highest_old_clust_overlap_fractions;

@@ -32,9 +32,9 @@ using namespace cath::common;
 BOOST_AUTO_TEST_SUITE(map_results_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL( get_num_mapped_entries( map_results{ {}, {}, {}, {          }, {          }, {}, {}, {} } ), 0                          );
-	BOOST_CHECK_EQUAL( get_num_mapped_entries( map_results{ {}, {}, {}, { 5_z, 4_z }, { 3_z, 6_z }, {}, {}, {} } ), 9                          );
-	BOOST_CHECK_THROW( get_num_mapped_entries( map_results{ {}, {}, {}, { 5_z, 4_z }, { 3_z, 7_z }, {}, {}, {} } ), invalid_argument_exception );
+	BOOST_CHECK_EQUAL( get_num_mapped_entries( map_results{ {}, {}, {}, {          }, {          }, 0, {}, {}, {} } ), 0                          );
+	BOOST_CHECK_EQUAL( get_num_mapped_entries( map_results{ {}, {}, {}, { 5_z, 4_z }, { 3_z, 6_z }, 0, {}, {}, {} } ), 9                          );
+	BOOST_CHECK_THROW( get_num_mapped_entries( map_results{ {}, {}, {}, { 5_z, 4_z }, { 3_z, 7_z }, 0, {}, {}, {} } ), invalid_argument_exception );
 }
 
 // BOOST_AUTO_TEST_CASE(basic) {
