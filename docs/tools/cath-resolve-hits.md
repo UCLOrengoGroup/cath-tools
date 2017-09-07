@@ -200,7 +200,10 @@ If hit's match ID is like `dc_72a964d791dea7a3dd35a8bbf49385b8` (matches `/^dc_\
 If the conditional-evalue is &le; 0.001 but the independent-value is > 0.001, then quarter the bitscore when parsing the hit.
 
 
+### Notes on Possible Future Features
 
+ * Add support for parsing hmmsearch's alignment output (`-A <f>: save multiple alignment of all hits to file <s>`).
+ * Add support for parsing results from other scanning tools (eg BLAST etc)
 
 Feedback
 --------
