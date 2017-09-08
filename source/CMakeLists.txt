@@ -1832,6 +1832,7 @@ set(
 
 set(
 	TESTSOURCES_RESOLVE_HITS_OPTIONS_SPEC
+		resolve_hits/options/spec/crh_filter_spec_test.cpp
 		resolve_hits/options/spec/crh_single_output_spec_test.cpp
 )
 
