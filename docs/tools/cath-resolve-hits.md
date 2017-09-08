@@ -113,7 +113,7 @@ Hit preference:
                                                  (<val> may be negative to prefer shorter; 0 leaves scores unaffected)
   --high-scores-preference <val> (=0)            Prefer higher scores to degree <val>
                                                  (<val> may be negative to reduce preference for higher scores; 0 leaves scores unaffected)
-  --apply-cath-rules                             Apply rules specific to CATH-Gene3D during the parsing and processing
+  --apply-cath-rules                             [DEPRECATED] Apply rules specific to CATH-Gene3D during the parsing and processing
   --naive-greedy                                 Use a naive, greedy approach to resolving (not recommended except for comparison)
 
 Hit filtering:
@@ -140,7 +140,7 @@ HTML:
   --html-exclude-rejected-hits                   Exclude hits rejected by the score filters from the HTML
 
 Detailed help:
-  --cath-rules-help                              Show help on the rules activated by the --apply-cath-rules option
+  --cath-rules-help                              Show help on the rules activated by the (DEPRECATED) --apply-cath-rules option
   --raw-format-help                              Show help about the raw input formats (raw_with_scores and raw_with_evalues)
 
 The standard output is one line per selected hit, preceded by header lines (beginning "#"), the last of which (beginning "#FIELDS") lists the fields in the file, typically:
