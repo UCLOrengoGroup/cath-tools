@@ -332,10 +332,10 @@ namespace cath {
 								( hmm_to + 1.0 - hmm_from ) / debug_numeric_cast<double>( *prefix_hmm_length )
 							);
 							if ( hmm_coverage < *min_hmm_coverage ) {
-								return hmm_coverage::TOO_LOW;
+								return detail::hmm_coverage::TOO_LOW;
 							}
 						}
-						return hmm_coverage::OK;
+						return detail::hmm_coverage::OK;
 					} ();
 
 					summaries.push_back( hmmsearch_summary{
