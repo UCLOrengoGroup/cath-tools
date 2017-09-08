@@ -146,6 +146,19 @@ str_opt crh_options::do_get_error_or_help_string() const {
 			+ ")";
 	}
 
+	// Complain if using MIN_HMM_COVERAGE / MIN_DC_HMM_COVERAGE for any format other than HMMSEARCH_OUT
+	if ( input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
+		for (const string &hmm_cov_opt : { crh_filter_options_block::PO_MIN_HMM_COVERAGE,
+		                                   crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE } ) {
+			if ( specifies_option( vm, hmm_cov_opt ) ) {
+				return "Cannot specify --"
+					+ hmm_cov_opt
+					+ " unless using input format "
+					+ to_string( hits_input_format_tag::HMMSEARCH_OUT );
+			}
+		}
+	}
+
 	// If no error or help string, then return none
 	return none;
 }

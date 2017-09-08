@@ -29,6 +29,7 @@
 #include "common/file/read_string_from_file.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/file/temp_file.hpp"
+#include "common/test_predicate/files_equal.hpp"
 #include "common/test_predicate/istream_and_file_equal.hpp"
 #include "resolve_hits/cath_hit_resolver.hpp"
 #include "resolve_hits/options/options_block/crh_filter_options_block.hpp"
@@ -574,5 +575,48 @@ BOOST_AUTO_TEST_CASE(json_from_domtblout__deprecated_opts) {
 
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_SUITE(hmm_coverage)
+
+BOOST_AUTO_TEST_CASE(hmm_coverage__neither) {
+	execute_perform_resolve_hits( {
+		(CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.hmmsearch_out.in" ).string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT,         to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE,   TEMP_TEST_FILE_FILENAME.string()
+	} );
+	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.out.cov_neither" );
+}
+
+BOOST_AUTO_TEST_CASE(hmm_coverage__discontinuous) {
+	execute_perform_resolve_hits( {
+		(CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.hmmsearch_out.in" ).string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string(),
+		"--" + crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE + "=99.9"
+	} );
+	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.out.cov_dc" );
+}
+
+BOOST_AUTO_TEST_CASE(hmm_coverage__all) {
+	execute_perform_resolve_hits( {
+		(CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.hmmsearch_out.in" ).string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string(),
+		"--" + crh_filter_options_block::PO_MIN_HMM_COVERAGE    + "=60.0"
+	} );
+	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.out.cov_all" );
+}
+
+BOOST_AUTO_TEST_CASE(hmm_coverage__all_and_discontinuous) {
+	execute_perform_resolve_hits( {
+		(CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.hmmsearch_out.in" ).string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string(),
+		"--" + crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE + "=99.9",
+		"--" + crh_filter_options_block::PO_MIN_HMM_COVERAGE    + "=60.0"
+	} );
+	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.out.cov_both" );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()

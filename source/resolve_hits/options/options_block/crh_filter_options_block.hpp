@@ -38,6 +38,7 @@ namespace cath {
 			std::unique_ptr<opts::options_block> do_clone() const final;
 			std::string do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
+			void do_add_hidden_options_to_description(boost::program_options::options_description &) final;
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 			str_vec do_get_all_options_names() const final;
 
@@ -47,6 +48,8 @@ namespace cath {
 			static const std::string PO_WORST_PERMISSIBLE_SCORE;
 			static const std::string PO_FILTER_QUERY_ID;
 			static const std::string PO_LIMIT_QUERIES;
+			static const std::string PO_MIN_HMM_COVERAGE;
+			static const std::string PO_MIN_DC_HMM_COVERAGE;
 
 			const crh_filter_spec & get_crh_filter_spec() const;
 		};

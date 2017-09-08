@@ -166,6 +166,12 @@ const path & global_test_constants::CRH_CATH_DC_HANDLING_DATA_DIR() {
 	return crh_cath_dc_handling_data_dir;
 }
 
+/// \brief Test constant for the cath-resolve-hits hmm coverage test data subdirectory
+const path & global_test_constants::CRH_HMM_COVERAGE_DATA_DIR() {
+	static const path crh_hmm_coverage_data_dir( CRH_TEST_DATA_DIR() / "hmm_coverage" );
+	return crh_hmm_coverage_data_dir;
+}
+
 /// \brief TODOCUMENT
 const path & global_test_constants::NONEXISTENT_FILE() {
 	static const path nonexistent_file( "filename_of_nonexistent_file" );

@@ -23,7 +23,9 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 
+#include "common/boost_addenda/make_string_ref.hpp"
 #include "common/string/string_parse_tools.hpp"
+#include "exception/out_of_range_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "resolve_hits/file/cath_id_score_category.hpp"
 #include "resolve_hits/file/detail/hmmsearch_aln.hpp"
@@ -36,6 +38,15 @@
 namespace cath {
 	namespace rslv {
 		namespace detail {
+
+			/// \brief Whether the hmm coverage is OK or has failed a required threshold
+			///
+			/// The hmm threshold is the fraction of the HMM involved in the hmmsearch hit
+			/// (`( hmm_to + 1 - hmm_from ) / hmm_length`)
+			enum class hmm_coverage {
+				OK,     ///< The hmm coverage is OK
+				TOO_LOW ///< The hmm coverage has failed a required threshold
+			};
 
 			/// \brief Contain data to represent an hmmsearch output summary line for a hit
 			struct hmmsearch_summary final {
@@ -63,6 +74,9 @@ namespace cath {
 
 				/// \brief The hit's independent evalue
 				double        independent_evalue;
+
+				/// \brief Whether the hmm coverage for the hit is OK
+				hmm_coverage  hmm_coverage_is_ok;
 			};
 
 			/// Type alias for a vector of hmmsearch_summary entries
@@ -95,18 +109,27 @@ namespace cath {
 				/// \brief Whether a hit has already been skipped for having a negative bitscore
 				bool skipped_for_negtv_bitscore = false;
 
+				/// \brief The match ID parsed from the last prefix line (/^Query: /) if any
+				str_opt  prefix_match_id;
+
+				/// \brief The hmm length parsed from the last prefix line (/^Query: /) if any
+				size_opt prefix_hmm_length;
+
+				void advance_to_block_or_prefix();
+				bool line_is_at_prefix() const;
+				bool line_is_empty() const;
+				bool line_is_summary() const;
+
 			public:
 				explicit hmmsearch_parser(std::istream &);
 				hmmsearch_parser(const std::istream &&) = delete;
 
 				bool end_of_istream() const;
 
-				bool line_is_empty() const;
 				bool line_is_at_block() const;
 				bool line_is_at_aln() const;
 				bool line_is_at_pipeline_stats() const;
 				bool line_is_summary_header() const;
-				bool line_is_summary() const;
 
 				bool alignment_is_empty() const;
 
@@ -115,7 +138,8 @@ namespace cath {
 				void advance_line_to_block();
 				void advance_line_until_next_aln();
 
-				void parse_summary_from_header(const bool &);
+				void parse_summary_from_header(const bool &,
+				                               const crh_filter_spec &);
 				void parse_alignment_section();
 				void finish_alignment(read_and_process_mgr &,
 				                      const bool &,
@@ -134,11 +158,43 @@ namespace cath {
 				static constexpr size_t LINE_BITSCORE_OFFSET    =  2;
 				static constexpr size_t LINE_COND_EVALUE_OFFSET =  4;
 				static constexpr size_t LINE_INDP_EVALUE_OFFSET =  5;
+				static constexpr size_t LINE_HMM_FROM_OFFSET    =  6;
+				static constexpr size_t LINE_HMM_TO_OFFSET      =  7;
 				static constexpr size_t LINE_ALI_FROM_OFFSET    =  9;
 				static constexpr size_t LINE_ALI_TO_OFFSET      = 10;
 				static constexpr size_t LINE_ENV_FROM_OFFSET    = 12;
 				static constexpr size_t LINE_ENV_TO_OFFSET      = 13;
 			};
+
+			/// \brief Advance the istream to the next block or prefix
+			inline void hmmsearch_parser::advance_to_block_or_prefix() {
+				if ( ! line_is_at_prefix() && ! line_is_at_block() ) {
+					while (
+						getline( the_istream.get(), line )
+						&&
+						! line_is_at_prefix()
+						&&
+						! line_is_at_block()
+						&&
+						! end_of_istream()
+					) {}
+				}
+			}
+
+			/// \brief Whether the current line is at a prefix
+			inline bool hmmsearch_parser::line_is_at_prefix() const {
+				return boost::algorithm::starts_with( line, "Query: " );
+			}
+
+			/// \brief Whether the current line is empty
+			inline bool hmmsearch_parser::line_is_empty() const {
+				return line.empty();
+			}
+
+			/// \brief Whether the current line is a summary line
+			inline bool hmmsearch_parser::line_is_summary() const {
+				return regex_search( line, is_summary_line_regex );
+			}
 
 			/// \brief Ctor from the istream from which the data should be read
 			inline hmmsearch_parser::hmmsearch_parser(std::istream &arg_istream ///< The istream from which the data should be read
@@ -148,11 +204,6 @@ namespace cath {
 			/// \brief Whether the end of the input data has been reached
 			inline bool hmmsearch_parser::end_of_istream() const {
 				return ! the_istream.get();
-			}
-
-			/// \brief Whether the current line is empty
-			inline bool hmmsearch_parser::line_is_empty() const {
-				return line.empty();
 			}
 
 			/// \brief Whether the current line is at the start of a block
@@ -173,11 +224,6 @@ namespace cath {
 			/// \brief Whether the current line is a summary header
 			inline bool hmmsearch_parser::line_is_summary_header() const {
 				return boost::algorithm::contains( line, "core  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc" );
-			}
-
-			/// \brief Whether the current line is a summary line
-			inline bool hmmsearch_parser::line_is_summary() const {
-				return regex_search( line, is_summary_line_regex );
 			}
 
 			/// \brief Whether the parsed alignment is empty
@@ -201,8 +247,37 @@ namespace cath {
 
 			/// \brief Advance lines until the start of a new block
 			inline void hmmsearch_parser::advance_line_to_block() {
-				if ( ! line_is_at_block() ) {
-					while ( getline( the_istream.get(), line ) && ! line_is_at_block() ) {}
+				prefix_hmm_length = boost::none;
+				prefix_match_id   = boost::none;
+
+				while ( ! line_is_at_block() && ! end_of_istream() ) {
+					advance_to_block_or_prefix();
+
+					if ( line_is_at_prefix() && ! end_of_istream() ) {
+						const auto line_end = common::cend( line );
+						const auto match_id_begin_itr = common::find_itr_before_first_non_space( next( common::cbegin( line ), 7 ), line_end );
+						const auto match_id_end_itr   = common::find_itr_before_first_space    ( match_id_begin_itr,                line_end );
+						const auto length_pre_itr     = common::find_itr_before_first_non_space( match_id_end_itr,                  line_end );
+
+						if (
+							distance( length_pre_itr, line_end ) < 5
+							||
+							*std::prev( line_end ) != ']'
+							||
+							! boost::algorithm::starts_with( common::make_string_ref( length_pre_itr, line_end ), "[M=" )
+						) {
+							BOOST_THROW_EXCEPTION(common::out_of_range_exception(
+								"Cannot parse HMM length out of hmmsearch line \""
+								+ line
+								+ "\""
+							));
+						}
+
+						prefix_match_id.emplace( match_id_begin_itr, match_id_end_itr );
+						prefix_hmm_length = common::parse_uint_from_field( next( length_pre_itr, 3 ), prev( line_end ) );
+
+						getline( the_istream.get(), line );
+					}
 				}
 
 				if ( ! end_of_istream() ) {
@@ -221,8 +296,14 @@ namespace cath {
 			}
 
 			/// \brief Parse a summary from the current summary header line
-			inline void hmmsearch_parser::parse_summary_from_header(const bool &arg_apply_cath_policies /// Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
+			inline void hmmsearch_parser::parse_summary_from_header(const bool            &arg_apply_cath_policies, ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
+			                                                        const crh_filter_spec &arg_filter_spec          ///< The filter spec, used to determine which hits to exclude on inadequate hmm coverage
 			                                                        ) {
+				// Get the min hmm coverage for this specific match ID
+				const doub_opt min_hmm_coverage = static_cast<bool>( prefix_match_id )
+					? hmm_coverage_for_match( arg_filter_spec, *prefix_match_id )
+					: boost::none;
+
 				summaries.clear();
 				summary_ctr = 0;
 				advance_line();
@@ -240,6 +321,23 @@ namespace cath {
 					const double conditional_evalue = common::parse_double_from_field( cond_evalue_itrs.first, cond_evalue_itrs.second );
 					const double independent_evalue = common::parse_double_from_field( indp_evalue_itrs.first, indp_evalue_itrs.second );
 
+					// Calculate the hmm coverage status
+					const hmm_coverage hmm_coverage_status = [&] () {
+						if ( min_hmm_coverage && prefix_hmm_length ) {
+							const auto hmm_from_itrs = common::find_field_itrs( line, LINE_HMM_FROM_OFFSET, 1 + LINE_INDP_EVALUE_OFFSET, indp_evalue_itrs.second );
+							const auto hmm_to_itrs   = common::find_field_itrs( line, LINE_HMM_TO_OFFSET,   1 + LINE_HMM_FROM_OFFSET,    hmm_from_itrs.second    );
+							const auto hmm_from      = common::parse_double_from_field( hmm_from_itrs.first, hmm_from_itrs.second );
+							const auto hmm_to        = common::parse_double_from_field( hmm_to_itrs.first,   hmm_to_itrs.second   );
+							const auto hmm_coverage  = (
+								( hmm_to + 1.0 - hmm_from ) / debug_numeric_cast<double>( *prefix_hmm_length )
+							);
+							if ( hmm_coverage < *min_hmm_coverage ) {
+								return hmm_coverage::TOO_LOW;
+							}
+						}
+						return hmm_coverage::OK;
+					} ();
+
 					summaries.push_back( hmmsearch_summary{
 						common::parse_double_from_field( bitscore_itrs.first, bitscore_itrs.second ),
 						common::parse_uint_from_field  ( env_from_itrs.first, env_from_itrs.second ),
@@ -255,7 +353,8 @@ namespace cath {
 							independent_evalue
 						),
 						conditional_evalue,
-						independent_evalue
+						independent_evalue,
+						hmm_coverage_status
 					} );
 
 					advance_line();
@@ -288,6 +387,16 @@ namespace cath {
 					std::get<2>( aln_results )
 				);
 
+				if ( prefix_match_id && *prefix_match_id != id_a ) {
+					BOOST_THROW_EXCEPTION(common::runtime_error_exception(
+						"Whilst parsing hmmsearch output, found ID \""
+						+ id_a
+						+ "\" that mismatches previously recorded ID \""
+						+ *prefix_match_id
+						+ "\""
+					));
+				}
+
 				const auto     &summ          = summaries[ summary_ctr ];
 
 				if ( summ.bitscore <= 0 ) {
@@ -303,7 +412,7 @@ namespace cath {
 						skipped_for_negtv_bitscore = true;
 					}
 				}
-				else {
+				else if ( summ.hmm_coverage_is_ok == hmm_coverage::OK ) {
 					const auto           id_score_cat  = cath_score_category_of_id( id_a, arg_apply_cath_policies );
 					const bool           apply_dc_cat  = ( id_score_cat == cath_id_score_category::DC_TYPE );
 					const seq::residx_t &start         = apply_dc_cat ? summ.ali_from : summ.env_from;

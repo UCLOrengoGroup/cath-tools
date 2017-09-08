@@ -87,7 +87,10 @@ void cath::rslv::parse_hmmsearch_out(read_and_process_mgr &arg_read_and_process_
 		}
 
 		if ( parser.line_is_summary_header() ) {
-			parser.parse_summary_from_header( arg_apply_cath_policies );
+			parser.parse_summary_from_header(
+				arg_apply_cath_policies,
+				arg_read_and_process_mgr.get_filter_spec()
+			);
 			parser.advance_line_until_next_aln();
 
 			while ( ! parser.line_is_at_block() && ! parser.line_is_at_pipeline_stats() ) {

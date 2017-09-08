@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_FILTER_SPEC_H
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_FILTER_SPEC_H
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <boost/optional.hpp>
 #include <boost/utility/string_ref.hpp>
 
@@ -29,6 +30,8 @@
 #include "exception/invalid_argument_exception.hpp"
 #include "resolve_hits/hit_score_type.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
+
+#include <regex>
 
 namespace cath {
 	namespace rslv {
@@ -54,6 +57,12 @@ namespace cath {
 			/// \brief The (optional) maximum number of queries to process
 			size_opt   limit_queries;
 
+			/// \brief The (optional) minimum coverage fraction of an HMM for a hit to be considered
+			doub_opt   min_hmm_coverage_frac;
+
+			/// \brief The (optional) minimum coverage fraction of an HMM for a discontinuous hit (/^\dc_{32}$/) to be considered
+			doub_opt   min_dc_hmm_coverage_frac;
+
 		public:
 			/// \brief The default value for the worst permissible evalue before a hit is ignored
 			static constexpr resscr_t DEFAULT_WORST_PERMISSIBLE_EVALUE   = static_cast<resscr_t>( 0.001 );
@@ -66,12 +75,16 @@ namespace cath {
 			const resscr_opt & get_worst_permissible_score() const;
 			const str_vec & get_filter_query_ids() const;
 			const size_opt & get_limit_queries() const;
+			const doub_opt & get_min_hmm_coverage_frac() const;
+			const doub_opt & get_min_dc_hmm_coverage_frac() const;
 
 			crh_filter_spec & set_worst_permissible_evalue(const resscr_t &);
 			crh_filter_spec & set_worst_permissible_bitscore(const resscr_t &);
 			crh_filter_spec & set_worst_permissible_score(const resscr_opt &);
 			crh_filter_spec & set_filter_query_ids(const str_vec &);
 			crh_filter_spec & set_limit_queries(const size_opt &);
+			crh_filter_spec & set_min_hmm_coverage_frac(const doub_opt &);
+			crh_filter_spec & set_min_dc_hmm_coverage_frac(const doub_opt &);
 		};
 
 		crh_filter_spec make_accept_all_filter_spec();
@@ -116,6 +129,33 @@ namespace cath {
 				&&
 				! common::contains( arg_filter_query_ids, arg_query_id )
 			);
+		}
+
+		/// \brief Return the min-hmm-coverage value to be required of the specified ID under the specified crh_filter_spec
+		///        or none if no value is required
+		///
+		/// \TODO Consider extracting common code from this and cath_score_category_of_id()
+		///
+		/// \relates crh_filter_spec
+		inline doub_opt hmm_coverage_for_match(const crh_filter_spec &arg_filter_spec, ///< The filter_spec to apply
+		                                       const std::string     &arg_match_id     ///< The match ID under consideration
+		                                       ) {
+			static const std::regex  dc_regex        { R"(^dc_\w{32}$)" };
+			static const std::string dc_prefix_suffix{ "dc_"            };
+
+			// If a min_dc_hmm_coverage fraction has been specified then that takes precedence if
+			// this is a /^dc_\w{32}$/ query ID so check that and return the min_dc_hmm_coverage fraction if so
+			const auto &min_dc_hmm_coverage_frac = arg_filter_spec.get_min_dc_hmm_coverage_frac();
+			if ( min_dc_hmm_coverage_frac ) {
+				if ( arg_match_id.length() == 35 && boost::algorithm::starts_with( arg_match_id, dc_prefix_suffix ) ) {
+					if ( regex_search( common::cbegin( arg_match_id ), common::cend( arg_match_id ), dc_regex ) ) {
+						return min_dc_hmm_coverage_frac;
+					}
+				}
+			}
+
+			// Otherwise return any min_hmm_coverage fraction that has been specified (or none if none)
+			return arg_filter_spec.get_min_hmm_coverage_frac();
 		}
 
 	} // namespace rslv

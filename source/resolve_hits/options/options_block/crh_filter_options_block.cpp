@@ -35,6 +35,7 @@ using namespace cath::rslv;
 using boost::format;
 using boost::none;
 using boost::program_options::options_description;
+using boost::program_options::validation_error;
 using boost::program_options::value;
 using boost::program_options::variables_map;
 using std::string;
@@ -54,6 +55,12 @@ const string crh_filter_options_block::PO_FILTER_QUERY_ID            { "filter-q
 
 /// \brief The option name for the maximum number of query IDs to process
 const string crh_filter_options_block::PO_LIMIT_QUERIES              { "limit-queries"              };
+
+/// \brief The option name for the (optional) minimum coverage fraction of an HMM for a hit to be considered
+const string crh_filter_options_block::PO_MIN_HMM_COVERAGE           { "min-hmm-coverage"           };
+
+/// \brief The option name for the (optional) minimum coverage fraction of an HMM for a discontinuous hit (/^\dc_{32}$/) to be considered
+const string crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE        { "min-dc-hmm-coverage"        };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_filter_options_block::do_clone() const {
@@ -123,6 +130,47 @@ void crh_filter_options_block::do_add_visible_options_to_description(options_des
 				->implicit_value( 1                                                   ),
 			( "Only process the first " + num_varname
 			  + " query protein(s) encountered in the input data" ).c_str()
+		);
+}
+
+/// \brief Add a hidden option to the options_description for the hmm coverage options
+void crh_filter_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+                                                                    ) {
+	const string percent_varname{ "<percent>" };
+
+	const auto check_pc_fn = [] (const double &x, const string &y) {
+		using std::to_string;
+		if ( ! ( x >= 0.0 && x <= 100.0 ) ) {
+			throw validation_error{
+				validation_error::invalid_option_value,
+				y,
+				to_string( x )
+			};
+		}
+	};
+
+	const auto min_hmm_cvg_ntfr    = [&] (const double &x) { check_pc_fn( x, PO_MIN_HMM_COVERAGE    ); the_spec.set_min_hmm_coverage_frac   ( x / 100.0 ); };
+	const auto min_dc_hmm_cvg_ntfr = [&] (const double &x) { check_pc_fn( x, PO_MIN_DC_HMM_COVERAGE ); the_spec.set_min_dc_hmm_coverage_frac( x / 100.0 ); };
+
+	arg_desc.add_options()
+		(
+			PO_MIN_HMM_COVERAGE.c_str(),
+			value<double>()
+				->value_name    ( percent_varname     )
+				->notifier      ( min_hmm_cvg_ntfr    )
+				->implicit_value( 50.0                ),
+			( "In hmmsearch_out input, ignore any hits for which 100.0 * ( hmm_to + 1 - hmm_from ) / hmm_length  <  "
+				+ percent_varname ).c_str()
+		)
+		(
+			PO_MIN_DC_HMM_COVERAGE.c_str(),
+			value<double>()
+				->value_name    ( percent_varname     )
+				->notifier      ( min_dc_hmm_cvg_ntfr )
+				->implicit_value( 80.0                ),
+			( R"(In hmmsearch_out input, ignore any /^\dc_{32}$/ hits for which 100.0 * ( hmm_to + 1 - hmm_from ) / hmm_length  <  )"
+				+ percent_varname + "\n"
+				R"((overriding any --worst-hmm-coverage value for those /^\dc_{32}$/ hits))" ).c_str()
 		);
 }
 

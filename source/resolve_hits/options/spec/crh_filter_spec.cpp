@@ -20,7 +20,10 @@
 
 #include "crh_filter_spec.hpp"
 
+#include "exception/invalid_argument_exception.hpp"
+
 using namespace cath;
+using namespace cath::common;
 using namespace cath::rslv;
 
 constexpr resscr_t crh_filter_spec::DEFAULT_WORST_PERMISSIBLE_EVALUE;
@@ -49,6 +52,16 @@ const str_vec & crh_filter_spec::get_filter_query_ids() const {
 /// \brief Getter for the (optional) maximum number of queries to process
 const size_opt & crh_filter_spec::get_limit_queries() const {
 	return limit_queries;
+}
+
+/// \brief Getter for the default value for the worst permissible evalue before a hit is ignored
+const doub_opt & crh_filter_spec::get_min_hmm_coverage_frac() const {
+	return min_hmm_coverage_frac;
+}
+
+/// \brief Getter for the default value for the worst permissible bitscore before a hit is ignored
+const doub_opt & crh_filter_spec::get_min_dc_hmm_coverage_frac() const {
+	return min_dc_hmm_coverage_frac;
 }
 
 /// \brief Setter for the worst permissible evalue before a hit is ignored
@@ -83,6 +96,26 @@ crh_filter_spec & crh_filter_spec::set_filter_query_ids(const str_vec &arg_filte
 crh_filter_spec & crh_filter_spec::set_limit_queries(const size_opt &arg_limit_queries ///< The (optional) maximum number of queries to process
                                                      ) {
 	limit_queries = arg_limit_queries;
+	return *this;
+}
+
+/// \brief Setter for the default value for the worst permissible evalue before a hit is ignored
+crh_filter_spec & crh_filter_spec::set_min_hmm_coverage_frac(const doub_opt &arg_min_hmm_coverage_frac ///< The default value for the worst permissible evalue before a hit is ignored
+                                                             ) {
+	if ( ! ( arg_min_hmm_coverage_frac >= 0.0 && arg_min_hmm_coverage_frac <= 1.0 ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("min_hmm_coverage_frac must be between 0 and 1 (inclusive)"));
+	}
+	min_hmm_coverage_frac = arg_min_hmm_coverage_frac;
+	return *this;
+}
+
+/// \brief Setter for the default value for the worst permissible bitscore before a hit is ignored
+crh_filter_spec & crh_filter_spec::set_min_dc_hmm_coverage_frac(const doub_opt &arg_min_dc_hmm_coverage_frac ///< The default value for the worst permissible bitscore before a hit is ignored
+                                                                ) {
+	if ( ! ( arg_min_dc_hmm_coverage_frac >= 0.0 && arg_min_dc_hmm_coverage_frac <= 1.0 ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("min_dc_hmm_coverage_frac must be between 0 and 1 (inclusive)"));
+	}
+	min_dc_hmm_coverage_frac = arg_min_dc_hmm_coverage_frac;
 	return *this;
 }
 
