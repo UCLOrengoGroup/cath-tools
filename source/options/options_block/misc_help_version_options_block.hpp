@@ -39,19 +39,24 @@ namespace cath {
 		private:
 			using super = options_block;
 
+			/// \brief Whether hidden_help has been requested
+			bool hidden_help = false;
+
 			/// \brief Whether help has been requested
-			bool help    = false;
+			bool help        = false;
 
 			/// \brief Whether version information has been requested
-			bool version = false;
+			bool version     = false;
 
 			std::unique_ptr<options_block> do_clone() const final;
 			std::string do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
+			void do_add_hidden_options_to_description(boost::program_options::options_description &) final;
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 			str_vec do_get_all_options_names() const final;
 
 		public:
+			const bool & get_hidden_help() const;
 			const bool & get_help() const;
 			const bool & get_version() const;
 
@@ -64,6 +69,7 @@ namespace cath {
 			static const std::string CATH_TOOLS_VERSION;
 			static const std::string CATH_TOOLS_VERSION_DATE;
 
+			static const std::string PO_HIDDEN_HELP;
 			static const std::string PO_HELP;
 			static const std::string PO_VERSION;
 		};

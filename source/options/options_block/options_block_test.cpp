@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(clone_works, options_block_type, all_options_block
 BOOST_AUTO_TEST_CASE_TEMPLATE(get_options_description_works, options_block_type, all_options_block_types) {
 	options_block_type the_options_block(construct_options_block_for_testing<options_block_type>());
 	BOOST_CHECK_NO_THROW_DIAG( const options_description desc = the_options_block.get_visible_options_description( 100 ) );
-	BOOST_CHECK_NO_THROW_DIAG( const options_description desc = the_options_block.get_hidden_options_description (     ) );
+	BOOST_CHECK_NO_THROW_DIAG( const options_description desc = the_options_block.get_hidden_options_description ( 100 ) );
 }
 
 /// \brief Check that each type of options_block will return an options_description from get_options_description()

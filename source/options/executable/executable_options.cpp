@@ -147,8 +147,11 @@ void executable_options::add_all_options_to_description(options_description &arg
                                                         options_block       &arg_options_block,       ///< The options_block from which the options to be added should be drawn
                                                         const size_t        &arg_prog_ops_line_length ///< The length of the line to use
                                                         ) {
-	arg_options_description.add( arg_options_block.get_hidden_options_description (                          ) );
 	arg_options_description.add( arg_options_block.get_visible_options_description( arg_prog_ops_line_length ) );
+	const auto hidden_opts_block = arg_options_block.get_hidden_options_description ( arg_prog_ops_line_length );
+	if ( ! hidden_opts_block.options().empty() ) {
+		arg_options_description.add( hidden_opts_block );
+	}
 }
 
 /// \brief Add the visible options of the specified options_block to the specified options_description
@@ -241,11 +244,10 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 		add_visble_options_to_description( visible_po_desc, the_options_block_ref.get(), DEFAULT_PROG_OPS_LINE_LENGTH );
 	}
 
-	// If help was requested, then provide it
-	if ( the_help_block.get_help() ) {
-		// std::cerr << "Getting help\n";
+	// If (hidden) help was requested, then provide it
+	if ( the_help_block.get_help() || the_help_block.get_hidden_help() ) {
 		error_or_help_string = misc_help_version_options_block::get_help_string(
-			visible_po_desc,
+			( the_help_block.get_hidden_help() ? full_po_desc : visible_po_desc ),
 			get_help_prefix_string(),
 			get_help_suffix_string()
 		);

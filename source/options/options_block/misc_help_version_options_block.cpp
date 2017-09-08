@@ -42,6 +42,9 @@ const string misc_help_version_options_block::CATH_TOOLS_VERSION      { CATH_TOO
 /// The program's most recent update date
 const string misc_help_version_options_block::CATH_TOOLS_VERSION_DATE { CATH_TOOLS_GIT_DATE    };
 
+/// \brief The option name for the hidden help option
+const string misc_help_version_options_block::PO_HIDDEN_HELP          { "hidden-help"          };
+
 /// \brief The option name for the help option
 const string misc_help_version_options_block::PO_HELP                 { "help"                 };
 
@@ -72,6 +75,13 @@ void misc_help_version_options_block::do_add_visible_options_to_description(opti
 		( ( PO_VERSION + ",v" ).c_str(), bool_switch( &version )->default_value( false ), "Output version information" );
 }
 
+/// \brief Add a hidden option to the options_description for the hidden help option
+void misc_help_version_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+                                                                           ) {
+	arg_desc.add_options()
+		( ( PO_HIDDEN_HELP ).c_str(), bool_switch( &hidden_help )->default_value( false ), "Output help message including all hidden options" );
+}
+
 /// \brief Identify any conflicts that make the currently stored options invalid
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
@@ -88,6 +98,11 @@ str_vec misc_help_version_options_block::do_get_all_options_names() const {
 		misc_help_version_options_block::PO_HELP,
 		misc_help_version_options_block::PO_VERSION,
 	};
+}
+
+/// \brief Get the hidden_help flag
+const bool & misc_help_version_options_block::get_hidden_help() const {
+	return hidden_help;
 }
 
 /// \brief Get the help flag
