@@ -211,7 +211,7 @@ str_str_str_pair_map crh_options::detail_help_spec() {
 		{
 			"cath-rules-help",
 			{
-				"Show help on the rules activated by the --"
+				"Show help on the rules activated by the (DEPRECATED) --"
 					+ crh_score_options_block::PO_APPLY_CATH_RULES
 					+ " option",
 				get_crh_cath_rules_help_string()
@@ -303,6 +303,10 @@ string cath::rslv::get_crh_cath_rules_help_string() {
 	+ R"(]
 ------------------------------------
 
+[*DEPRECATED*] (please raise a GitHub issue if you want --)"
+	+ crh_score_options_block::PO_APPLY_CATH_RULES
+	+ R"( to be kept)
+
 The --)"
 	+ crh_score_options_block::PO_APPLY_CATH_RULES
 	+ R"( option applies the following CATH-Gene3D specific rules when parsing from )"
@@ -318,5 +322,9 @@ If hit's match ID is like "dc_72a964d791dea7a3dd35a8bbf49385b8" (matches /^dc_\w
 	+ R"(file (ie keep the hit as one continuous segment)
 
 If the conditional-evalue is <= 0.001 but the independent-value is > 0.001, then quarter the bitscore when parsing the hit.
+
+[*DEPRECATED*] (please raise a GitHub issue if you want --)"
+	+ crh_score_options_block::PO_APPLY_CATH_RULES
+	+ R"( to be kept)
 )";
 }

@@ -98,7 +98,7 @@ void crh_score_options_block::do_add_visible_options_to_description(options_desc
 			bool_switch()
 				->notifier     ( apply_cath_rules_notifier                       )
 				->default_value( crh_score_spec::DEFAULT_APPLY_CATH_RULES        ),
-			"Apply rules specific to CATH-Gene3D during the parsing and processing"
+			"[DEPRECATED] Apply rules specific to CATH-Gene3D during the parsing and processing"
 		)
 		(
 			( PO_NAIVE_GREEDY ).c_str(),
