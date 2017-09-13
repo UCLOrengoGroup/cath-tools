@@ -143,6 +143,8 @@ namespace cath {
 			static const std::string PO_MIN_SUP_SCORE;
 			static const std::string PO_RASMOL_SCRIPT;
 			static const std::string PO_XML_SUP;
+
+			static constexpr char PO_CHAR_OUT_FILE = 'o';
 		};
 
 		bool has_clique_file(const old_ssap_options_block &);

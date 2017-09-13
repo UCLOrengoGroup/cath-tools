@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE(fails_on_attempt_to_mix_deprecated_options_with_new) {
 	} );
 
 	// Then expect the correct error message in the output stream
-	BOOST_CHECK_EQUAL( output_ss.str(), "cath-resolve-hits: Cannot mix old, deprecated options (--output-file) with new, replacement options (--quiet, --json-output-to-file). Please use the new options only.\nSee 'cath-resolve-hits --help' for usage.\n" );
+	BOOST_CHECK_EQUAL( output_ss.str(), "cath-resolve-hits: Cannot mix old, deprecated options (--output-file) with new, replacement options (--quiet, --json-output-to-file). Please use the new options only.\nSee 'cath-resolve-hits -h' for usage.\n" );
 }
 
 

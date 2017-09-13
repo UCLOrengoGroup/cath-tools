@@ -83,8 +83,8 @@ positional_options_description executable_options::get_positional_options() {
 string executable_options::get_standard_usage_error_string() const {
 	return "See '"
 	       + get_program_name()
-	       + " --"
-	       + misc_help_version_options_block::PO_HELP
+	       + " -"
+	       + misc_help_version_options_block::PO_CHAR_HELP
 	       + "' for usage.";
 }
 

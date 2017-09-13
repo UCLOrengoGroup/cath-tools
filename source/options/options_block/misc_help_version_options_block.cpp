@@ -51,6 +51,12 @@ const string misc_help_version_options_block::PO_HELP                 { "help"  
 /// \brief The option name for the version option
 const string misc_help_version_options_block::PO_VERSION              { "version"              };
 
+/// \brief The single-character for the help option
+constexpr char misc_help_version_options_block::PO_CHAR_HELP;
+
+/// \brief The single-character for the version option
+constexpr char misc_help_version_options_block::PO_CHAR_VERSION;
+
 /// \brief A standard do_clone method
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
@@ -70,9 +76,11 @@ string misc_help_version_options_block::do_get_block_name() const {
 /// This is a concrete definition of a virtual method that's pure in options_block
 void misc_help_version_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
                                                                             ) {
+	const string PO_HELP_W_CHAR    = PO_HELP    + ',' + PO_CHAR_HELP;
+	const string PO_VERSION_W_CHAR = PO_VERSION + ',' + PO_CHAR_VERSION;
 	arg_desc.add_options()
-		( ( PO_HELP    + ",h" ).c_str(), bool_switch( &help    )->default_value( false ), "Output help message"        )
-		( ( PO_VERSION + ",v" ).c_str(), bool_switch( &version )->default_value( false ), "Output version information" );
+		( PO_HELP_W_CHAR    . c_str(), bool_switch( &help    )->default_value( false ), "Output help message"        )
+		( PO_VERSION_W_CHAR . c_str(), bool_switch( &version )->default_value( false ), "Output version information" );
 }
 
 /// \brief Add a hidden option to the options_description for the hidden help option

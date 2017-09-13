@@ -72,6 +72,9 @@ namespace cath {
 			static const std::string PO_HIDDEN_HELP;
 			static const std::string PO_HELP;
 			static const std::string PO_VERSION;
+
+			static constexpr char PO_CHAR_HELP    = 'h';
+			static constexpr char PO_CHAR_VERSION = 'v';
 		};
 	} // namespace opts
 } // namespace cath
