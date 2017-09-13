@@ -203,7 +203,7 @@ If the conditional-evalue is &le; 0.001 but the independent-value is > 0.001, th
 ### Notes on Possible Future Features
 
  * Add support for parsing hmmsearch's alignment output (`-A <f>: save multiple alignment of all hits to file <s>`).
- * Add support for parsing results from other scanning tools (eg BLAST etc)
+ * Add support for parsing results from other formats (eg [Blast Tabular](http://bergmanlab.genetics.uga.edu/?p=41), as also used by [MMseqs2](https://github.com/soedinglab/MMseqs2))
 
 Feedback
 --------
