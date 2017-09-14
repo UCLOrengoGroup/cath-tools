@@ -43,7 +43,7 @@ string cath::rslv::to_string(const full_hit_list &arg_full_hit_list ///< The ful
                              ) {
 	return "full_hit_list["
 		+ ::std::to_string( arg_full_hit_list.size() )
-		+ "full_hits]";
+		+ " full_hits]";
 }
 
 /// \brief Insert a description of the specified full_hit_list into the specified ostream

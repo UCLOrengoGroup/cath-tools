@@ -73,11 +73,11 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(full_hit_list_test_suite, full_hit_list_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(to_string_works) {
-	BOOST_CHECK_EQUAL( to_string( eg_full_hit_list ), "full_hit_list[6full_hits]" );
+	BOOST_CHECK_EQUAL( to_string( eg_full_hit_list ), "full_hit_list[6 full_hits]" );
 }
 
 BOOST_AUTO_TEST_CASE(insertion_operator_works) {
-	BOOST_CHECK_EQUAL( lexical_cast<string>( eg_full_hit_list ), "full_hit_list[6full_hits]" );
+	BOOST_CHECK_EQUAL( lexical_cast<string>( eg_full_hit_list ), "full_hit_list[6 full_hits]" );
 }
 
 BOOST_AUTO_TEST_CASE(get_first_label_works) {

@@ -349,7 +349,7 @@ string cath::rslv::to_string(const calc_hit_list &arg_calc_hit_list ///< The cal
                              ) {
 	return "calc_hit_list["
 		+ ::std::to_string( arg_calc_hit_list.size() )
-		+ "hits]";
+		+ " hits]";
 }
 
 /// \brief Insert a description of the specified calc_hit_list into the specified ostream
