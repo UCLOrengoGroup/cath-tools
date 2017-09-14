@@ -2264,6 +2264,12 @@ add_library(
 )
 
 add_library(
+	testsources_resolve_hits
+	OBJECT
+		${TESTSOURCES_RESOLVE_HITS}
+)
+
+add_library(
 	testsources_seq
 	OBJECT
 		${TESTSOURCES_SEQ}
@@ -2283,7 +2289,6 @@ set(
 		${TESTSOURCES_FILE}
 		${TESTSOURCES_OPTIONS}
 		${TESTSOURCES_OUTPUTTER}
-		${TESTSOURCES_RESOLVE_HITS}
 		${TESTSOURCES_SCAN}
 		${TESTSOURCES_SCORE}
 		${TESTSOURCES_SSAP}
@@ -2400,6 +2405,7 @@ add_executable(
 		$<TARGET_OBJECTS:testsources_cluster>
 		$<TARGET_OBJECTS:testsources_common>
 		$<TARGET_OBJECTS:testsources_remain>
+		$<TARGET_OBJECTS:testsources_resolve_hits>
 		$<TARGET_OBJECTS:testsources_seq>
 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
 )
@@ -2439,42 +2445,6 @@ add_executable(
 		${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}
 )
 
-add_executable(
-	mod-test-biocore
-		$<TARGET_OBJECTS:testsources_biocore>
-		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
-)
-
-add_executable(
-	mod-test-chopping
-		$<TARGET_OBJECTS:testsources_chopping>
-		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
-)
-
-add_executable(
-	mod-test-cluster
-		$<TARGET_OBJECTS:testsources_cluster>
-		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
-)
-
-add_executable(
-	mod-test-common
-		$<TARGET_OBJECTS:testsources_common>
-		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
-)
-
-add_executable(
-	mod-test-seq
-		$<TARGET_OBJECTS:testsources_seq>
-		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
-)
-
-# add_executable(
-# 	mod-test-exception
-# 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
-# 		${TESTSOURCES_EXCEPTION}
-# )
-
 #####################################################################
 #####################################################################
 
@@ -2487,17 +2457,70 @@ target_link_libraries( cath-score-align    normsources_cath_score_align         
 target_link_libraries( cath-ssap                                                                                                                                                  normsources_options normsources_remain normsources_biocore normsources_common normsources_chopping normsources_display_colour normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 target_link_libraries( cath-superpose      normsources_cath_superpose                                                                                                             normsources_options normsources_remain normsources_biocore normsources_common normsources_chopping normsources_display_colour normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 
-target_link_libraries( mod-test-biocore     normsources_test normsources_chopping                                     normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( mod-test-chopping    normsources_test normsources_chopping                                     normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( mod-test-cluster     normsources_test normsources_cluster  normsources_seq normsources_options normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( mod-test-common      normsources_test                                                          normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( mod-test-seq         normsources_test normsources_seq                                          normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-# target_link_libraries( mod-test-exception normsources_test                                                          normsources_biocore                    normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+#####################################################################
+#####################################################################
+
+option(BUILD_EXTRA_CATH_TESTS "BUILD_EXTRA_CATH_TESTS" OFF)
+if ( BUILD_EXTRA_CATH_TESTS )
+
+	add_executable(
+		mod-test-biocore
+			$<TARGET_OBJECTS:testsources_biocore>
+			${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+	)
+
+	add_executable(
+		mod-test-chopping
+			$<TARGET_OBJECTS:testsources_chopping>
+			${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+	)
+
+	add_executable(
+		mod-test-cluster
+			$<TARGET_OBJECTS:testsources_cluster>
+			${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+	)
+
+	add_executable(
+		mod-test-common
+			$<TARGET_OBJECTS:testsources_common>
+			${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+	)
+
+	add_executable(
+		mod-test-resolve-hits
+			$<TARGET_OBJECTS:testsources_resolve_hits>
+			${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+	)
+
+	add_executable(
+		mod-test-seq
+			$<TARGET_OBJECTS:testsources_seq>
+			${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+	)
+
+	# add_executable(
+	# 	mod-test-exception
+	# 		${TESTSOURCES_EXECUTABLES_BUILD_TEST}
+	# 		${TESTSOURCES_EXCEPTION}
+	# )
+
+	target_link_libraries( mod-test-biocore      normsources_test normsources_chopping                                                                    normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+	target_link_libraries( mod-test-chopping     normsources_test normsources_chopping                                                                    normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+	target_link_libraries( mod-test-cluster      normsources_test normsources_cluster  normsources_seq normsources_options                                normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+	target_link_libraries( mod-test-common       normsources_test                                                                                         normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+	target_link_libraries( mod-test-resolve-hits normsources_test normsources_resolve_hits normsources_seq normsources_display_colour normsources_options normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+	target_link_libraries( mod-test-seq          normsources_test normsources_seq                                                                         normsources_biocore normsources_common normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+	# target_link_libraries( mod-test-exception  normsources_test                                                                                         normsources_biocore                    normsources_exception pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
+
+endif ( )
 
 #####################################################################
 #####################################################################
 
-if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
+option(BUILD_EXTRA_CATH_TOOLS "BUILD_EXTRA_CATH_TOOLS" OFF)
+
+if ( BUILD_EXTRA_CATH_TOOLS )
 
 	add_executable(
 		snap-judgement
@@ -2512,7 +2535,7 @@ if ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
 	target_link_libraries( check-pdb                                 normsources_remain normsources_biocore normsources_chopping normsources_display_colour normsources_exception normsources_options normsources_common pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 	target_link_libraries( snap-judgement normsources_cath_superpose normsources_remain normsources_biocore normsources_chopping normsources_display_colour normsources_exception normsources_options normsources_common pthread ${Boost_LIBRARIES} ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
 
-endif ( DEFINED ENV{BUILD_EXTRA_CATH_TOOLS} )
+endif ()
 
 #####################################################################
 #####################################################################
