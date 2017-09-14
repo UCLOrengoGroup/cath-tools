@@ -45,14 +45,14 @@
 
 /// \todo Write some decent unit tests for sorted_insert and then remove this code
 #ifndef NDEBUG
-#include <boost/range/algorithm_ext/is_sorted.hpp>
+#include <boost/algorithm/cxx11/is_sorted.hpp>
+using boost::algorithm::is_sorted;
 #endif
 
 using namespace cath::common;
 using namespace cath::index::filter;
 using namespace cath::index::filter::detail;
 using namespace cath::score;
-using namespace std;
 
 using boost::accumulate;
 using boost::filesystem::path;
@@ -63,6 +63,11 @@ using boost::range::nth_element;
 using boost::range::sort;
 using boost::rational_cast;
 using boost::sub_range;
+using std::cerr;
+using std::end;
+using std::endl;
+using std::make_pair;
+using std::to_string;
 
 /// \brief Sort the filter_vs_full_score objects by full_score (ascending) to uphold that class invariant
 void filter_vs_full_score_list::sort_filter_vs_full_scores() {
