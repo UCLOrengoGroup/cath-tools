@@ -94,13 +94,15 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		}
 	}
 
-	// Check that if the output_hmmsearch_aln option's enabled, the input format is HMMSEARCH_OUT
-	if ( the_out_spec.get_output_hmmsearch_aln() && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
+	// Check that if the output_hmmer_aln option's enabled, the input format is HMMSCAN_OUT / HMMSEARCH_OUT
+	if ( the_out_spec.get_output_hmmer_aln() && input_format != hits_input_format_tag::HMMSCAN_OUT  && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
 		return "Cannot use the --"
-			+ crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN
+			+ crh_output_options_block::PO_OUTPUT_HMMER_ALN
 			+ " option if using "
 			+ to_string( input_format )
 			+ " input format, must be using "
+			+ to_string( hits_input_format_tag::HMMSCAN_OUT   )
+			+ " or "
 			+ to_string( hits_input_format_tag::HMMSEARCH_OUT );
 	}
 
@@ -113,9 +115,9 @@ str_opt crh_options::do_get_error_or_help_string() const {
 
 	// Store a map from the score type to the valid formats for which that "--worst-permissible-[...]" option may be specified
 	const auto formats_for_worst_perm_opt_of_score = map< hit_score_type, hits_input_format_tag_vec >{
-		{ hit_score_type::FULL_EVALUE, { hits_input_format_tag::RAW_WITH_EVALUES,                                      }, },
-		{ hit_score_type::BITSCORE,    { hits_input_format_tag::HMMER_DOMTBLOUT, hits_input_format_tag::HMMSEARCH_OUT, }, },
-		{ hit_score_type::CRH_SCORE,   { hits_input_format_tag::RAW_WITH_SCORES                                        }, },
+		{ hit_score_type::FULL_EVALUE, { hits_input_format_tag::RAW_WITH_EVALUES,                                                                          }, },
+		{ hit_score_type::BITSCORE,    { hits_input_format_tag::HMMER_DOMTBLOUT, hits_input_format_tag::HMMSCAN_OUT, hits_input_format_tag::HMMSEARCH_OUT, }, },
+		{ hit_score_type::CRH_SCORE,   { hits_input_format_tag::RAW_WITH_SCORES                                                                            }, },
 	};
 	//
 

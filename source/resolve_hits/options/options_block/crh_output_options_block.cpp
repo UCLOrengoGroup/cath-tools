@@ -62,8 +62,8 @@ const string crh_output_options_block::PO_JSON_OUTPUT_TO_FILE  { "json-output-to
 /// \brief The option name for an optional file to which the CSS should be output
 const string crh_output_options_block::PO_EXPORT_CSS_FILE      { "export-css-file"      };
 
-/// \brief The option name for whether to output a summary of the hmmsearch output alignment
-const string crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN { "output-hmmsearch-aln" };
+/// \brief The option name for whether to output a summary of the HMMER alignment
+const string crh_output_options_block::PO_OUTPUT_HMMER_ALN     { "output-hmmer-aln"     };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_output_options_block::do_clone() const {
@@ -151,22 +151,22 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 /// \brief Add any hidden options to the provided options_description
 void crh_output_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
                                                                     ) {
-	const auto output_hmmsearch_aln_notifier = [&] (const bool &x) { the_spec.set_output_hmmsearch_aln( x ); };
+	const auto output_hmmer_aln_notifier = [&] (const bool &x) { the_spec.set_output_hmmer_aln( x ); };
 
 	deprecated_single_output_ob.add_hidden_options_to_description ( arg_desc );
 	deprecated_single_output_ob.add_visible_options_to_description( arg_desc );
 
 	arg_desc.add_options()
 		(
-			PO_OUTPUT_HMMSEARCH_ALN.c_str(),
+			PO_OUTPUT_HMMER_ALN.c_str(),
 			bool_switch()
-				->notifier     ( output_hmmsearch_aln_notifier                        )
-				->default_value( crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN ),
-			"Print a summary of the hmmsearch alignment in the output"
+				->notifier     ( output_hmmer_aln_notifier                 )
+				->default_value( crh_output_spec::DEFAULT_OUTPUT_HMMER_ALN ),
+			"Print a summary of the hmmer alignment in the output"
 		);
 
-	static_assert( ! crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN,
-		"If crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN isn't false, it might mess up the bool switch in here" );
+	static_assert( ! crh_output_spec::DEFAULT_OUTPUT_HMMER_ALN,
+		"If crh_output_spec::DEFAULT_OUTPUT_HMMER_ALN isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_output_options_block invalid
@@ -236,7 +236,7 @@ str_vec crh_output_options_block::get_all_non_deprecated_option_names_that_do_no
 	return {
 		crh_output_options_block::PO_OUTPUT_TRIMMED_HITS,
 		crh_output_options_block::PO_EXPORT_CSS_FILE,
-		crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN,
+		crh_output_options_block::PO_OUTPUT_HMMER_ALN,
 	};
 }
 

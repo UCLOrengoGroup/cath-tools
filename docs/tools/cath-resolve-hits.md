@@ -93,7 +93,8 @@ Miscellaneous:
 Input:
   --input-format <format> (=raw_with_scores)     Parse the input data from <format>, one of available formats:
                                                     hmmer_domtblout  - HMMER domtblout format (must assume all hits are continuous)
-                                                    hmmsearch_out    - HMMer hmmsearch output format (can be used to deduce discontinuous hits)
+                                                    hmmscan_out      - HMMER hmmscan output format (can be used to deduce discontinuous hits)
+                                                    hmmsearch_out    - HMMER hmmsearch output format (can be used to deduce discontinuous hits)
                                                     raw_with_scores  - "raw" format with scores
                                                     raw_with_evalues - "raw" format with evalues
   --min-gap-length <length> (=30)                When parsing starts/stops from alignment data, ignore gaps of less than <length> residues

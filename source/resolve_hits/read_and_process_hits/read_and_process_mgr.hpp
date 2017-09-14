@@ -245,7 +245,7 @@ namespace cath {
 		                                          std::string              arg_label,      ///< The label associated with the new hit
 		                                          const double            &arg_score,      ///< The score associated with the new hit
 		                                          const hit_score_type    &arg_score_type, ///< The type of the score
-		                                          hit_extras_store         arg_hit_extras  ///< Any hmmsearch aligned regions or else none
+		                                          hit_extras_store         arg_hit_extras  ///< Any HMMER aligned regions or else none
 		                                          ) {
 			// If this hit's score doesn't meet the filter and such hits don't need to be kept, then skip it
 			if ( ! processors.wants_hits_that_fail_score_filter() ) {

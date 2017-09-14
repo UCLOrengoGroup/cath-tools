@@ -37,10 +37,10 @@ namespace cath {
 			path_vec            hits_text_files;
 
 			/// \brief Whether to suppress the default output of hits text to stdout
-			bool                quiet           = DEFAULT_QUIET;
+			bool                quiet            = DEFAULT_QUIET;
 
 			/// \brief Whether to output the hits starts/stops *after* trimming
-			hit_boundary_output boundary_output = DEFAULT_BOUNDARY_OUTPUT;
+			hit_boundary_output boundary_output  = DEFAULT_BOUNDARY_OUTPUT;
 
 			/// \brief Any files to which a summary of the input should be output
 			path_vec            summarise_files;
@@ -54,18 +54,18 @@ namespace cath {
 			/// \brief Any files to which the HTML's CSS should be output
 			path_opt            export_css_file;
 
-			/// \brief Whether to output a summary of the hmmsearch output alignment
-			bool                output_hmmsearch_aln = DEFAULT_OUTPUT_HMMSEARCH_ALN;
+			/// \brief Whether to output a summary of the HMMER alignment
+			bool                output_hmmer_aln = DEFAULT_OUTPUT_HMMER_ALN;
 
 		public:
 			/// \brief The default value for whether to suppress the default output of hits text to stdout
-			static constexpr bool                DEFAULT_QUIET           = false;
+			static constexpr bool                DEFAULT_QUIET            = false;
 
 			/// \brief The default value for whether to output the hits starts/stops *after* trimming
-			static constexpr hit_boundary_output DEFAULT_BOUNDARY_OUTPUT = hit_boundary_output::ORIG;
+			static constexpr hit_boundary_output DEFAULT_BOUNDARY_OUTPUT  = hit_boundary_output::ORIG;
 
-			/// \brief The default value for whether to output a summary of the hmmsearch output alignment
-			static constexpr bool                DEFAULT_OUTPUT_HMMSEARCH_ALN = false;
+			/// \brief The default value for whether to output a summary of the HMMER alignment
+			static constexpr bool                DEFAULT_OUTPUT_HMMER_ALN = false;
 
 			const path_vec & get_hits_text_files() const;
 			const bool & get_quiet() const;
@@ -74,7 +74,7 @@ namespace cath {
 			const path_vec & get_html_output_files() const;
 			const path_vec & get_json_output_files() const;
 			const path_opt & get_export_css_file() const;
-			const bool & get_output_hmmsearch_aln() const;
+			const bool & get_output_hmmer_aln() const;
 
 			crh_output_spec & set_hits_text_files(const path_vec &);
 			crh_output_spec & set_quiet(const bool &);
@@ -83,7 +83,7 @@ namespace cath {
 			crh_output_spec & set_html_output_files(const path_vec &);
 			crh_output_spec & set_json_output_files(const path_vec &);
 			crh_output_spec & set_export_css_file(const path_opt &);
-			crh_output_spec & set_output_hmmsearch_aln(const bool &);
+			crh_output_spec & set_output_hmmer_aln(const bool &);
 		};
 
 		bool has_html_output(const crh_output_spec &);

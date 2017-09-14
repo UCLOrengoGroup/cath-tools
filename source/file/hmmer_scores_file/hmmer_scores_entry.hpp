@@ -21,7 +21,7 @@ namespace cath {
 namespace cath {
 	namespace file {
 
-		/// \brief Represent data from a line of HMMer data
+		/// \brief Represent data from a line of HMMER data
 		class hmmer_scores_entry final : private boost::equality_comparable<hmmer_scores_entry> {
 		private:
 			/// \brief Name of protein 1
@@ -57,29 +57,29 @@ namespace cath {
 			/// \brief Expected number of domains
 			double expected_num_doms;
 
-			/// \brief "Number of discrete regions defined" (from HMMer documentation)
+			/// \brief "Number of discrete regions defined" (from HMMER documentation)
 			size_t reg;
 
-			/// \brief "Number of regions that appeared to be multidomain" (from HMMer documentation)
+			/// \brief "Number of regions that appeared to be multidomain" (from HMMER documentation)
 			size_t clu;
 
 			/// \brief "For envelopes that were defined by stochastic traceback clustering, how many of them overlap
-			///         other envelopes" (from HMMer documentation)
+			///         other envelopes" (from HMMER documentation)
 			size_t ov;
 
-			/// \brief "The total number of envelopes" (from HMMer documentation)
+			/// \brief "The total number of envelopes" (from HMMER documentation)
 			size_t env;
 
-			/// \brief "Number of domains defined" (from HMMer documentation)
+			/// \brief "Number of domains defined" (from HMMER documentation)
 			size_t dom;
 
-			/// \brief "Number of domains satisfying reporting threshold" (from HMMer documentation)
+			/// \brief "Number of domains satisfying reporting threshold" (from HMMER documentation)
 			size_t rep;
 
-			/// \brief "Number of domains satisfying inclusion thresholds" (from HMMer documentation)
+			/// \brief "Number of domains satisfying inclusion thresholds" (from HMMER documentation)
 			size_t inc;
 
-			/// \brief "The target’s description line, as free text" (from HMMer documentation)
+			/// \brief "The target’s description line, as free text" (from HMMER documentation)
 			std::string description;
 
 		public:

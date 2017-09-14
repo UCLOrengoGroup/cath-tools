@@ -35,7 +35,8 @@ namespace cath {
 		/// \brief Represent the different formats in which resolve-hits input data can be read
 		enum class hits_input_format_tag : char {
 			HMMER_DOMTBLOUT, ///< HMMER domtblout format (must assume all hits are continuous)
-			HMMSEARCH_OUT,   ///< HMMer hmmsearch output format (can be used to deduce discontinuous hits)
+			HMMSCAN_OUT,     ///< HMMER hmmscan output format (can be used to deduce discontinuous hits)
+			HMMSEARCH_OUT,   ///< HMMER hmmsearch output format (can be used to deduce discontinuous hits)
 			RAW_WITH_SCORES, ///< "raw" format with scores
 			RAW_WITH_EVALUES ///< "raw" format with evalues
 		};
@@ -44,8 +45,9 @@ namespace cath {
 		using hits_input_format_tag_vec = std::vector<hits_input_format_tag>;
 
 		/// \brief A constexpr list of all hits_input_format_tags
-		static constexpr std::array<hits_input_format_tag, 4> all_hits_input_format_tags { {
+		static constexpr std::array<hits_input_format_tag, 5> all_hits_input_format_tags { {
 			hits_input_format_tag::HMMER_DOMTBLOUT,
+			hits_input_format_tag::HMMSCAN_OUT,
 			hits_input_format_tag::HMMSEARCH_OUT,
 			hits_input_format_tag::RAW_WITH_SCORES,
 			hits_input_format_tag::RAW_WITH_EVALUES

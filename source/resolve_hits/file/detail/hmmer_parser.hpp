@@ -50,8 +50,8 @@ namespace cath {
 				TOO_LOW ///< The hmm coverage has failed a required threshold
 			};
 
-			/// \brief Contain data to represent an hmmsearch output summary line for a hit
-			struct hmmsearch_summary final {
+			/// \brief Contain data to represent a HMMER output summary line for a hit
+			struct hmmer_summary final {
 				/// \brief The hit's bitscore
 				double        bitscore;
 
@@ -81,10 +81,10 @@ namespace cath {
 				hmm_coverage  hmm_coverage_is_ok;
 			};
 
-			/// Type alias for a vector of hmmsearch_summary entries
-			using hmmsearch_summary_vec = std::vector<hmmsearch_summary>;
+			/// Type alias for a vector of hmmer_summary entries
+			using hmmer_summary_vec = std::vector<hmmer_summary>;
 
-			/// \brief Parse hmmsearch output data
+			/// \brief Parse HMMER output data
 			class hmmer_parser final {
 			private:
 				/// \brief The HMMER format to parse
@@ -103,7 +103,7 @@ namespace cath {
 				std::regex is_summary_line_regex{ R"(^\s*\d+\s+[\!\?])" };
 
 				/// \brief The result of parsing any summaries
-				hmmsearch_summary_vec summaries;
+				hmmer_summary_vec summaries;
 
 				/// \brief A counter for working through summary lines whilst parsing the following alignments
 				size_t summary_ctr = 0;
@@ -119,6 +119,9 @@ namespace cath {
 
 				/// \brief The hmm length parsed from the last prefix line (/^Query: /) if any
 				size_opt prefix_hmm_length;
+
+				template <typename T>
+				inline static auto get_query_id_impl(T &arg_hmmer_parser) -> decltype( *arg_hmmer_parser.query_id );
 
 				void advance_to_block_or_prefix();
 				bool line_is_at_prefix() const;
@@ -162,8 +165,8 @@ namespace cath {
 				std::string & get_query_id();
 				const std::string & get_query_id() const;
 
-				hmmsearch_summary_vec & get_summaries();
-				const hmmsearch_summary_vec & get_summaries() const;
+				hmmer_summary_vec & get_summaries();
+				const hmmer_summary_vec & get_summaries() const;
 
 				static constexpr size_t LINE_BITSCORE_OFFSET    =  2;
 				static constexpr size_t LINE_COND_EVALUE_OFFSET =  4;
@@ -175,6 +178,35 @@ namespace cath {
 				static constexpr size_t LINE_ENV_FROM_OFFSET    = 12;
 				static constexpr size_t LINE_ENV_TO_OFFSET      = 13;
 			};
+
+			/// \brief const-agnostic implementation of get_query_id()
+			///
+			/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
+			/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
+			template <typename T>
+			inline auto hmmer_parser::get_query_id_impl(T &arg_hmmer_parser ///< The (const / non-const) hmmer_parser on which the get_query_id() is being called
+			                                            ) -> decltype( *arg_hmmer_parser.query_id ) {
+				/* the complex logic around getting a possibly-const reference to my_bar */
+				if ( ! arg_hmmer_parser.query_id ) {
+					BOOST_THROW_EXCEPTION(common::runtime_error_exception(
+						"Whilst parsing "
+						+ ( arg_hmmer_parser.format == hmmer_format::HMMSEARCH ? "hmmsearch"s : "hmmscan"s )
+						+ " input, was unable to retrieve a query ID when required."
+						+ (
+							arg_hmmer_parser.prefix_match_id
+							?
+								" Another ID ("
+								+ *arg_hmmer_parser.prefix_match_id
+								+ ") was present - perhaps this is actually "
+								+ ( arg_hmmer_parser.format != hmmer_format::HMMSEARCH ? "hmmsearch"s : "hmmscan"s )
+								+ " output?"
+							: ""s
+						)
+					));
+				}
+				return *arg_hmmer_parser.query_id;
+			}
+
 
 			/// \brief Advance the istream to the next block or prefix
 			inline void hmmer_parser::advance_to_block_or_prefix() {
@@ -260,7 +292,7 @@ namespace cath {
 			/// \brief Advance one line
 			inline void hmmer_parser::advance_line() {
 				if ( ! getline( the_istream.get(), line ) ) {
-					BOOST_THROW_EXCEPTION(common::runtime_error_exception("Unexpectedly hit end of hmmsearch output file"));
+					BOOST_THROW_EXCEPTION(common::runtime_error_exception("Unexpectedly hit end of hmmsearch/hmmscan output file"));
 				}
 			}
 
@@ -298,7 +330,7 @@ namespace cath {
 
 						) {
 							BOOST_THROW_EXCEPTION(common::out_of_range_exception(
-								"Cannot parse HMM length out of hmmsearch line \""
+								"Cannot parse HMM length out of hmmsearch/hmmscan line \""
 								+ line
 								+ "\""
 							));
@@ -369,7 +401,7 @@ namespace cath {
 						return detail::hmm_coverage::OK;
 					} ();
 
-					summaries.push_back( hmmsearch_summary{
+					summaries.push_back( hmmer_summary{
 						common::parse_double_from_field( bitscore_itrs.first, bitscore_itrs.second ),
 						common::parse_uint_from_field  ( env_from_itrs.first, env_from_itrs.second ),
 						common::parse_uint_from_field  ( env_to_itrs.first,   env_to_itrs.second   ),
@@ -410,7 +442,7 @@ namespace cath {
 			inline void hmmer_parser::finish_alignment(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which complete hits should be added
 			                                           const bool           &arg_apply_cath_policies,  ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
 			                                           const seq::residx_t  &arg_min_gap_length,       ///< The minimum length for a gap to be considered a gap
-			                                           const bool           &arg_parse_hmmer_aln       ///< Whether to parse the hmmsearch alignment information for outputting later
+			                                           const bool           &arg_parse_hmmer_aln       ///< Whether to parse the HMMER alignment information for outputting later
 			                                           ) {
 				auto              aln_results   = the_aln.process_aln( arg_min_gap_length, arg_parse_hmmer_aln );
 				std::string      &id_a          = std::get<0>( aln_results );
@@ -422,12 +454,21 @@ namespace cath {
 
 				if ( prefix_match_id && *prefix_match_id != id_a ) {
 					BOOST_THROW_EXCEPTION(common::runtime_error_exception(
-						"Whilst parsing hmmsearch output, found ID \""
+						"Whilst parsing "
+						+ ( format == hmmer_format::HMMSEARCH ? "hmmsearch"s : "hmmscan"s )
+						+ " output, found ID \""
 						+ id_a
 						+ "\" that mismatches previously recorded ID \""
 						+ *prefix_match_id
-						+ "\" "
-						+ ( format == hmmer_format::HMMSEARCH ? "hmmsearch" : "hmmscan" )
+						+ "\"."
+						+ (
+							( query_id && *query_id == id_a )
+							?
+								+ " But the other ID matches so perhaps this is actually "
+								+ ( format != hmmer_format::HMMSEARCH ? "hmmsearch"s : "hmmscan"s )
+								+ " output?"
+							: ""
+						)
 					));
 				}
 
@@ -498,21 +539,21 @@ namespace cath {
 
 			/// \brief Non-const getter for the query ID
 			inline std::string & hmmer_parser::get_query_id() {
-				return *query_id;
+				return get_query_id_impl( *this );
 			}
 
 			/// \brief Const getter for query ID
 			inline const std::string & hmmer_parser::get_query_id() const {
-				return *query_id;
+				return get_query_id_impl( *this );
 			}
 
 			/// \brief Non-const getter for the parsed summaries
-			inline hmmsearch_summary_vec & hmmer_parser::get_summaries() {
+			inline hmmer_summary_vec & hmmer_parser::get_summaries() {
 				return summaries;
 			}
 
 			/// \brief Const getter for the parsed summaries
-			inline const hmmsearch_summary_vec & hmmer_parser::get_summaries() const {
+			inline const hmmer_summary_vec & hmmer_parser::get_summaries() const {
 				return summaries;
 			}
 

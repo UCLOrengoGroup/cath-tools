@@ -271,10 +271,10 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_big_trim) {
 }
 
 
-BOOST_AUTO_TEST_CASE(handles_output_hmmsearch_aln) {
+BOOST_AUTO_TEST_CASE(handles_output_hmmer_aln) {
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN
+		"--" + crh_output_options_block::PO_OUTPUT_HMMER_ALN
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME() );
@@ -311,10 +311,10 @@ BOOST_AUTO_TEST_CASE(handles_dc_correctly) {
 	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
 }
 
-BOOST_AUTO_TEST_CASE(rejects_output_hmmsearch_aln_for_non_hmmsearch_format) {
+BOOST_AUTO_TEST_CASE(rejects_output_hmmer_aln_for_non_hmmsearch_format) {
 	execute_perform_resolve_hits( {
 		(CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.in" ).string(),
-		"--" + crh_output_options_block::PO_OUTPUT_HMMSEARCH_ALN,
+		"--" + crh_output_options_block::PO_OUTPUT_HMMER_ALN,
 	} );
 	BOOST_CHECK( boost::algorithm::contains( output_ss.str(), "Cannot use" ) );
 }
@@ -615,6 +615,46 @@ BOOST_AUTO_TEST_CASE(hmm_coverage__all_and_discontinuous) {
 		"--" + crh_filter_options_block::PO_MIN_HMM_COVERAGE    + "=60.0"
 	} );
 	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.out.cov_both" );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE(hmmscan_format)
+
+BOOST_AUTO_TEST_CASE(seqs_hmmsearch) {
+	execute_perform_resolve_hits( {
+		( CRH_HMMSCAN_DATA_DIR() / "seqs.hmmsearch" ).string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string()
+	} );
+	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, CRH_HMMSCAN_DATA_DIR() / "seqs.hmmsearch.out" );
+}
+
+BOOST_AUTO_TEST_CASE(seqs_hmmscan) {
+	execute_perform_resolve_hits( {
+		( CRH_HMMSCAN_DATA_DIR() / "seqs.hmmscan" ).string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSCAN_OUT ),
+		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string()
+	} );
+	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, CRH_HMMSCAN_DATA_DIR() / "seqs.hmmscan.out" );
+}
+
+BOOST_AUTO_TEST_CASE(p53_p63_hmmscan) {
+	execute_perform_resolve_hits( {
+		( CRH_HMMSCAN_DATA_DIR() / "p53_p63.hmmscan" ).string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSCAN_OUT ),
+		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string()
+	} );
+	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, CRH_HMMSCAN_DATA_DIR() / "p53_p63.hmmscan.out" );
+}
+
+BOOST_AUTO_TEST_CASE(single_sequence_hmmscan_out) {
+	execute_perform_resolve_hits( {
+		( CRH_HMMSCAN_DATA_DIR() / "single_sequence.hmmscan.out" ).string(),
+		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSCAN_OUT ),
+		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string()
+	} );
+	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, CRH_HMMSCAN_DATA_DIR() / "single_sequence.hmmscan.out.out" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

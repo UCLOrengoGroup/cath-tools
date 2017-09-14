@@ -32,7 +32,7 @@ namespace cath { namespace rslv { class read_and_process_mgr; } }
 namespace cath {
 	namespace rslv {
 
-		// /// \brief Calculate the Jon's scoring scheme for the specified scores from HMMer (and optionally cath_id_score_category)
+		// /// \brief Calculate the Jon's scoring scheme for the specified scores from HMMER (and optionally cath_id_score_category)
 		// ///
 		// /// Issues:
 		// ///  * Dividing by a constant should affect the algorithm. So can it be dropped?
@@ -41,9 +41,9 @@ namespace cath {
 		// ///     sp|Q14807|KIF22_HUMAN -            665 2h58A00_round_1      -            284   4.2e-96  308.5   0.0   2   2      0.36      0.72   -4.0   0.0    83   111   577   605   569   623 0.65 Kinesin-like protein KIF22 OS=Homo sapiens GN=KIF22 PE=1 SV=5
 		// ///                      0.00048828125
 		// ///    For now, will add 2^-10 = 1/1024 ~= 0.0009765625 which should make scores positive
-		// inline constexpr resscr_t jon_score_of_hmmer_scores(const resscr_t               &arg_bitscore,                                      ///< The HMMer bit-score
-		//                                                     const resscr_t               &arg_cond_evalue,                                   ///< The HMMer conditional evalue
-		//                                                     const resscr_t               &arg_indp_evalue,                                   ///< The HMMer independent evalue
+		// inline constexpr resscr_t jon_score_of_hmmer_scores(const resscr_t               &arg_bitscore,                                      ///< The HMMER bit-score
+		//                                                     const resscr_t               &arg_cond_evalue,                                   ///< The HMMER conditional evalue
+		//                                                     const resscr_t               &arg_indp_evalue,                                   ///< The HMMER independent evalue
 		//                                                     const cath_id_score_category &arg_cath_category = cath_id_score_category::NORMAL ///< (optional) The type of id, allowing for Jon's special handling of certain match ID types
 		//                                                     ) {
 		// 	constexpr resscr_t STD_DENOMINATOR = static_cast<resscr_t>( 50.000 );

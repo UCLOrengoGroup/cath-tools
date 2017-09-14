@@ -64,7 +64,7 @@ namespace cath {
 			static constexpr bool MIN_GAP_LENGTH       =    30;
 
 			/// \brief Whether to parse/output hmmsearch output alignment information
-			static constexpr bool OUTPUT_HMMSEARCH_ALN =  true;
+			static constexpr bool OUTPUT_HMMER_ALN     =  true;
 
 			/// \brief Test whether the result of parsing the specified type of HMMER data from
 			///        the specified file matches the specified data
@@ -78,7 +78,7 @@ namespace cath {
 						arg_hmmer_format,
 						APPLY_CATH_POLICIES,
 						MIN_GAP_LENGTH,
-						OUTPUT_HMMSEARCH_ALN
+						OUTPUT_HMMER_ALN
 					),
 					[] (const str_calc_hit_list_pair &x) {
 						return make_pair( x.first, x.second.get_full_hits() );
@@ -95,7 +95,7 @@ namespace cath {
 
 constexpr bool hmmer_parser_test_suite_fixture::APPLY_CATH_POLICIES;
 constexpr bool hmmer_parser_test_suite_fixture::MIN_GAP_LENGTH;
-constexpr bool hmmer_parser_test_suite_fixture::OUTPUT_HMMSEARCH_ALN;
+constexpr bool hmmer_parser_test_suite_fixture::OUTPUT_HMMER_ALN;
 
 BOOST_FIXTURE_TEST_SUITE(hmmer_parser_test_suite, hmmer_parser_test_suite_fixture)
 
@@ -187,6 +187,28 @@ BOOST_AUTO_TEST_CASE(parses_ians_single_sequence_hmmscan_out_correctly) {
 				} }
 			),
 		} }
+	);
+}
+
+BOOST_AUTO_TEST_CASE(hmmsearch_input_with_hmmscan_tag) {
+	BOOST_CHECK_THROW(
+		test_parse(
+			CRH_HMMSCAN_DATA_DIR() / "seqs.hmmsearch",
+			hmmer_format::HMMSCAN,
+			{}
+		),
+		runtime_error_exception
+	);
+}
+
+BOOST_AUTO_TEST_CASE(hmmscan_input_with_hmmsearch_tag) {
+	BOOST_CHECK_THROW(
+		test_parse(
+			CRH_HMMSCAN_DATA_DIR() / "seqs.hmmscan",
+			hmmer_format::HMMSEARCH,
+			{}
+		),
+		runtime_error_exception
 	);
 }
 

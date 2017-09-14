@@ -60,7 +60,7 @@ namespace cath {
 			static const std::string PO_HTML_OUTPUT_TO_FILE;
 			static const std::string PO_JSON_OUTPUT_TO_FILE;
 			static const std::string PO_EXPORT_CSS_FILE;
-			static const std::string PO_OUTPUT_HMMSEARCH_ALN;
+			static const std::string PO_OUTPUT_HMMER_ALN;
 
 			const crh_output_spec & get_crh_output_spec() const;
 			const crh_single_output_options_block & get_deprecated_single_output_options_block() const;

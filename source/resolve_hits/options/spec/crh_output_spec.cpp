@@ -42,7 +42,7 @@ using std::string;
 
 constexpr bool                crh_output_spec::DEFAULT_QUIET;
 constexpr hit_boundary_output crh_output_spec::DEFAULT_BOUNDARY_OUTPUT;
-constexpr bool                crh_output_spec::DEFAULT_OUTPUT_HMMSEARCH_ALN;
+constexpr bool                crh_output_spec::DEFAULT_OUTPUT_HMMER_ALN;
 
 /// \brief Getter for any files to which hits text should be output
 const path_vec & crh_output_spec::get_hits_text_files() const {
@@ -79,9 +79,9 @@ const path_opt & crh_output_spec::get_export_css_file() const {
 	return export_css_file;
 }
 
-/// \brief Getter for whether to output a summary of the hmmsearch output alignment
-const bool & crh_output_spec::get_output_hmmsearch_aln() const {
-	return output_hmmsearch_aln;
+/// \brief Getter for whether to output a summary of the HMMER alignment
+const bool & crh_output_spec::get_output_hmmer_aln() const {
+	return output_hmmer_aln;
 }
 
 /// \brief Setter for any files to which hits text should be output
@@ -133,10 +133,10 @@ crh_output_spec & crh_output_spec::set_export_css_file(const path_opt &arg_expor
 	return *this;
 }
 
-/// \brief Setter for whether to output a summary of the hmmsearch output alignment
-crh_output_spec & crh_output_spec::set_output_hmmsearch_aln(const bool &arg_output_hmmsearch_aln ///< Whether to output a summary of the hmmsearch output alignment
-                                                            ) {
-	output_hmmsearch_aln = arg_output_hmmsearch_aln;
+/// \brief Setter for whether to output a summary of the HMMER alignment
+crh_output_spec & crh_output_spec::set_output_hmmer_aln(const bool &arg_output_hmmer_aln ///< Whether to output a summary of the HMMER alignment
+                                                        ) {
+	output_hmmer_aln = arg_output_hmmer_aln;
 	return *this;
 }
 

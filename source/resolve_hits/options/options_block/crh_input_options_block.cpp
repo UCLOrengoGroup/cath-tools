@@ -149,7 +149,7 @@ str_opt crh_input_options_block::do_invalid_string(const variables_map &arg_vari
                                                    ) const {
 
 	if ( specifies_option( arg_variables_map, PO_MIN_GAP_LENGTH ) ) {
-		if ( the_spec.get_input_format() != hits_input_format_tag::HMMSEARCH_OUT ) {
+		if ( the_spec.get_input_format() != hits_input_format_tag::HMMSCAN_OUT && the_spec.get_input_format() != hits_input_format_tag::HMMSEARCH_OUT ) {
 			return "Cannot specify the minimum gap length for input formats that don't involve parsing gaps out of an alignment"s;
 		}
 	}

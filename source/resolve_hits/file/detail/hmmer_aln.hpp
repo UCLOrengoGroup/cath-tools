@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_DETAIL_HMMSEARCH_ALN_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_DETAIL_HMMSEARCH_ALN_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_DETAIL_HMMER_ALN_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_DETAIL_HMMER_ALN_H
 
 #include <boost/optional.hpp>
 #include <boost/range/combine.hpp>
@@ -39,7 +39,7 @@ namespace cath {
 	namespace rslv {
 		namespace detail {
 
-			/// \brief Represent whether a certain alignment position (from hmmsearch output) contains entries from
+			/// \brief Represent whether a certain alignment position (from hmmsearch/hmmscan output) contains entries from
 			///        the first sequence, the second or both
 			enum class aln_presence : char {
 				A,   ///< Contains only an entry from the first  sequence
@@ -56,7 +56,7 @@ namespace cath {
 			/// \brief Type alias for a vector of aln_stretch types
 			using aln_stretch_vec = std::vector<aln_stretch>;
 
-			/// \brief Represent an alignment parsed from an hmmsearch output
+			/// \brief Represent an alignment parsed from an hmmsearch/hmmscan output
 			///
 			/// Parsing the alignment is made more difficult because:
 			///  * the alignment can be split over multiple blocks
@@ -171,7 +171,7 @@ namespace cath {
 			}
 
 			/// \brief Update the aligned regions based on the parsed information
-			inline void hmmer_aln::update_aligned_regions(const bool &arg_parse_hmmer_aln ///< Whether to actually bother parsing this hmmsearch alignment information
+			inline void hmmer_aln::update_aligned_regions(const bool &arg_parse_hmmer_aln ///< Whether to actually bother parsing this HMMER alignment information
 			                                              ) {
 				aligned_regions.clear();
 				if ( arg_parse_hmmer_aln ) {
@@ -251,7 +251,7 @@ namespace cath {
 
 					assert( char_b != GAP_CHAR_B || char_a != GAP_CHAR_A );
 					if ( char_b == GAP_CHAR_B && char_a == GAP_CHAR_A ) {
-						BOOST_THROW_EXCEPTION(common::runtime_error_exception("hmmsearch alignment files shouldn't contain alignment positions that have gaps on both sides"));
+						BOOST_THROW_EXCEPTION(common::runtime_error_exception("HMMER alignment files shouldn't contain alignment positions that have gaps on both sides"));
 					}
 
 					const aln_presence presence = ( char_a == GAP_CHAR_A ) ? aln_presence::B :
@@ -271,7 +271,7 @@ namespace cath {
 			///
 			/// This should always be called after add_b()
 			inline std::tuple<std::string &, seq::seq_seg_vec &, alnd_rgn_vec &> hmmer_aln::process_aln(const seq::residx_t &arg_min_gap_length, ///< The minimum length for a gap to be considered a gap
-			                                                                                            const bool          &arg_parse_hmmer_aln ///< Whether to parse the hmmsearch alignment information for outputting later
+			                                                                                            const bool          &arg_parse_hmmer_aln ///< Whether to parse the HMMER alignment information for outputting later
 			                                                                                            ) {
 				update_segments       ( arg_min_gap_length      );
 				update_aligned_regions( arg_parse_hmmer_aln );
