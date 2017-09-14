@@ -26,8 +26,8 @@
 #include "exception/not_implemented_exception.hpp"
 #include "exception/out_of_range_exception.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
-#include "resolve_hits/file/hmmer_hmmsearch_domtblout.hpp"
-#include "resolve_hits/file/hmmer_hmmsearch_out.hpp"
+#include "resolve_hits/file/parse_domain_hits_table.hpp"
+#include "resolve_hits/file/parse_hmmer_out.hpp"
 #include "resolve_hits/html_output/resolve_hits_html_outputter.hpp"
 #include "resolve_hits/options/crh_options.hpp"
 #include "resolve_hits/options/spec/crh_score_spec.hpp"
@@ -136,9 +136,10 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 				break;
 			}
 			case ( hits_input_format_tag::HMMSEARCH_OUT ) : {
-				parse_hmmsearch_out(
+				parse_hmmer_out(
 					the_read_and_process_mgr,
 					the_istream_ref,
+					hmmer_format::HMMSEARCH,
 					score_spec.get_apply_cath_rules(),
 					in_spec.get_min_gap_length(),
 					out_spec.get_output_hmmsearch_aln()

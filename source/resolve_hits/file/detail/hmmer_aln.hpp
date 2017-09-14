@@ -1,5 +1,5 @@
 /// \file
-/// \brief The hmmsearch_aln class header
+/// \brief The hmmer_aln class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -77,7 +77,7 @@ namespace cath {
 			///   404421f6d00e5b5f33713585fb60b9bf 878 DSGPYFCRA 886
 			///                                        *******76 PP
 			/// ~~~~~
-			class hmmsearch_aln final {
+			class hmmer_aln final {
 			private:
 				/// \brief The ID of the first protein
 				///
@@ -145,8 +145,8 @@ namespace cath {
 			};
 
 			/// \brief Update the segments based on the parsed information
-			inline void hmmsearch_aln::update_segments(const seq::residx_t &arg_min_gap_length ///< The minimum length for a missing stretch to be considered a gap
-			                                           ) {
+			inline void hmmer_aln::update_segments(const seq::residx_t &arg_min_gap_length ///< The minimum length for a missing stretch to be considered a gap
+			                                       ) {
 				segments.clear();
 				seq::seq_arrow arrow_b = seq::arrow_before_res( *start_b );
 				for (const aln_stretch &stretch : stretches) {
@@ -171,10 +171,10 @@ namespace cath {
 			}
 
 			/// \brief Update the aligned regions based on the parsed information
-			inline void hmmsearch_aln::update_aligned_regions(const bool &arg_parse_hmmsearch_aln ///< Whether to actually bother parsing this hmmsearch alignment information
-			                                                  ) {
+			inline void hmmer_aln::update_aligned_regions(const bool &arg_parse_hmmer_aln ///< Whether to actually bother parsing this hmmsearch alignment information
+			                                              ) {
 				aligned_regions.clear();
-				if ( arg_parse_hmmsearch_aln ) {
+				if ( arg_parse_hmmer_aln ) {
 					seq::seq_arrow arrow_a = seq::arrow_before_res( *start_a );
 					seq::seq_arrow arrow_b = seq::arrow_before_res( *start_b );
 					for (const aln_stretch &stretch : stretches) {
@@ -196,8 +196,8 @@ namespace cath {
 				}
 			}
 
-			/// \brief Reset this hmmsearch_aln to be reused
-			inline void hmmsearch_aln::reset() {
+			/// \brief Reset this hmmer_aln to be reused
+			inline void hmmer_aln::reset() {
 				id_a.clear();
 				id_b.clear();
 				start_a = boost::none;
@@ -209,8 +209,8 @@ namespace cath {
 			/// \brief Add the data from a first alignment line
 			///
 			/// This should always be called before add_b() and after reset() or add_b() 
-			inline void hmmsearch_aln::add_a(const std::string &arg_line ///< The first alignment line (eg "                   1aqkL01_round_1   3 ppsvsvspgesvtlsCtasssnigssyylhWyqqkpgqapklliysasnrasgvpdrfsgsksgtsatLtisslqae 79 ")
-			                                 ) {
+			inline void hmmer_aln::add_a(const std::string &arg_line ///< The first alignment line (eg "                   1aqkL01_round_1   3 ppsvsvspgesvtlsCtasssnigssyylhWyqqkpgqapklliysasnrasgvpdrfsgsksgtsatLtisslqae 79 ")
+			                             ) {
 				const auto id_itrs    = common::find_field_itrs( arg_line, LINE_ID_OFFSET                                              );
 				const auto start_itrs = common::find_field_itrs( arg_line, LINE_START_OFFSET, 1 + LINE_ID_OFFSET,    id_itrs.second    );
 				const auto aln_itrs   = common::find_field_itrs( arg_line, LINE_ALN_OFFSET,   1 + LINE_START_OFFSET, start_itrs.second );
@@ -227,8 +227,8 @@ namespace cath {
 			/// \brief Add the data from a second alignment line
 			///
 			/// This should always be called after add_a() and before add_a() or process_aln()
-			inline void hmmsearch_aln::add_b(const std::string &arg_line ///< The second alignment line (eg "  404421f6d00e5b5f33713585fb60b9bf 811 SRSVMVKKGDTALLQCAVSGDK---PINIVWMRSGKNTLN-----PSTNYKISVK--QEATPDGVSAELQIRTVDAT 877")
-			                                 ) {
+			inline void hmmer_aln::add_b(const std::string &arg_line ///< The second alignment line (eg "  404421f6d00e5b5f33713585fb60b9bf 811 SRSVMVKKGDTALLQCAVSGDK---PINIVWMRSGKNTLN-----PSTNYKISVK--QEATPDGVSAELQIRTVDAT 877")
+			                             ) {
 				constexpr char GAP_CHAR_A = '.';
 				constexpr char GAP_CHAR_B = '-';
 
@@ -251,7 +251,7 @@ namespace cath {
 
 					assert( char_b != GAP_CHAR_B || char_a != GAP_CHAR_A );
 					if ( char_b == GAP_CHAR_B && char_a == GAP_CHAR_A ) {
-						BOOST_THROW_EXCEPTION(common::runtime_error_exception("hmmsearch aligment files shouldn't contain alignment positions that have gaps on both sides"));
+						BOOST_THROW_EXCEPTION(common::runtime_error_exception("hmmsearch alignment files shouldn't contain alignment positions that have gaps on both sides"));
 					}
 
 					const aln_presence presence = ( char_a == GAP_CHAR_A ) ? aln_presence::B :
@@ -267,19 +267,19 @@ namespace cath {
 				}
 			}
 
-			/// \brief Process the alignment that has been loaded into this hmmsearch_aln
+			/// \brief Process the alignment that has been loaded into this hmmer_aln
 			///
 			/// This should always be called after add_b()
-			inline std::tuple<std::string &, seq::seq_seg_vec &, alnd_rgn_vec &> hmmsearch_aln::process_aln(const seq::residx_t &arg_min_gap_length,     ///< The minimum length for a gap to be considered a gap
-			                                                                                                const bool          &arg_parse_hmmsearch_aln ///< Whether to parse the hmmsearch alignment information for outputting later
-			                                                                                                ) {
+			inline std::tuple<std::string &, seq::seq_seg_vec &, alnd_rgn_vec &> hmmer_aln::process_aln(const seq::residx_t &arg_min_gap_length, ///< The minimum length for a gap to be considered a gap
+			                                                                                            const bool          &arg_parse_hmmer_aln ///< Whether to parse the hmmsearch alignment information for outputting later
+			                                                                                            ) {
 				update_segments       ( arg_min_gap_length      );
-				update_aligned_regions( arg_parse_hmmsearch_aln );
+				update_aligned_regions( arg_parse_hmmer_aln );
 				return std::tie( id_a, segments, aligned_regions );
 			}
 
 			/// \brief Return whether the stretches are empty (ie none has been parsed in)
-			inline bool hmmsearch_aln::empty() const {
+			inline bool hmmer_aln::empty() const {
 				return stretches.empty();
 			}
 

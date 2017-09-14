@@ -21,6 +21,7 @@
 #include "full_hit_list.hpp"
 
 #include <boost/optional.hpp>
+#include <boost/range/algorithm/equal.hpp>
 
 #include "common/boost_addenda/range/max_proj_element.hpp"
 #include "resolve_hits/full_hit.hpp"
@@ -33,6 +34,7 @@ using namespace cath::seq;
 
 using boost::make_optional;
 using boost::none;
+using boost::range::equal;
 using std::ostream;
 using std::string;
 
@@ -49,11 +51,20 @@ string cath::rslv::to_string(const full_hit_list &arg_full_hit_list ///< The ful
 /// \brief Insert a description of the specified full_hit_list into the specified ostream
 ///
 /// \relates full_hit_list
-ostream & cath::rslv::operator<<(ostream             &arg_ostream, ///< The ostream into which the description should be inserted
+ostream & cath::rslv::operator<<(ostream             &arg_ostream,      ///< The ostream into which the description should be inserted
                                  const full_hit_list &arg_full_hit_list ///< The full_hit_list to describe
                                  ) {
 	arg_ostream << to_string( arg_full_hit_list );
 	return arg_ostream;
+}
+
+/// \brief Return whether the two specified full_hit_lists are identical
+///
+/// \relates full_hit_list
+bool cath::rslv::operator==(const full_hit_list &arg_lhs, ///< The first  full_hit_list to compare
+                            const full_hit_list &arg_rhs  ///< The second full_hit_list to compare
+                            ) {
+	return equal( arg_lhs, arg_rhs );
 }
 
 /// \brief Get the maximum stop residue of all the full_hits in the specified full_hit_list

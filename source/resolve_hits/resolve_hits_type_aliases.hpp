@@ -30,6 +30,7 @@
 #include <vector>
 
 namespace cath { namespace rslv { class calc_hit; } }
+namespace cath { namespace rslv { class calc_hit_list; } }
 namespace cath { namespace rslv { class crh_segment_spec; } }
 namespace cath { namespace rslv { class full_hit; } }
 namespace cath { namespace rslv { class full_hit_list; } }
@@ -111,6 +112,12 @@ namespace cath {
 
 		/// \brief Type alias for an optional seg_boundary_pair_vec
 		using seg_boundary_pair_vec_opt     = boost::optional<seg_boundary_pair_vec>;
+
+		/// \brief Type alias for a pair of string and calc_hit_list
+		using str_calc_hit_list_pair        = std::pair<std::string, calc_hit_list>;
+
+		/// \brief Type alias for a vector of str_calc_hit_list_pair values
+		using str_calc_hit_list_pair_vec    = std::vector<str_calc_hit_list_pair>;
 
 		/// \brief Type alias for a pair of string and full_hit
 		using str_full_hit_pair             = std::pair<std::string, full_hit>;

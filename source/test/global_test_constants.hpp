@@ -57,6 +57,7 @@ namespace cath {
 		static const boost::filesystem::path              & CRH_TEST_DATA_DIR();
 		static const boost::filesystem::path              & CRH_CATH_DC_HANDLING_DATA_DIR();
 		static const boost::filesystem::path              & CRH_HMM_COVERAGE_DATA_DIR();
+		static const boost::filesystem::path              & CRH_HMMSCAN_DATA_DIR();
 
 		static const boost::filesystem::path              & NONEXISTENT_FILE();
 

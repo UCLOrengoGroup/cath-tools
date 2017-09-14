@@ -72,6 +72,7 @@ namespace cath {
 				const ref_vec<std::ostream> & get_ostreams();
 
 			public:
+				hits_processor() noexcept = default;
 				explicit hits_processor(std::ostream &) noexcept;
 				explicit hits_processor(ref_vec<std::ostream>) noexcept;
 				virtual ~hits_processor() noexcept = default;

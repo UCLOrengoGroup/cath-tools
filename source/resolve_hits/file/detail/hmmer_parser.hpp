@@ -1,5 +1,5 @@
 /// \file
-/// \brief The hmmsearch_parser class header
+/// \brief The hmmer_parser class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,17 +18,19 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_DETAIL_HMMSEARCH_PARSER_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_DETAIL_HMMSEARCH_PARSER_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_DETAIL_HMMER_PARSER_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_DETAIL_HMMER_PARSER_H
 
 #include <boost/algorithm/string/predicate.hpp>
+#include <boost/optional/optional_io.hpp>
 
 #include "common/boost_addenda/make_string_ref.hpp"
 #include "common/string/string_parse_tools.hpp"
 #include "exception/out_of_range_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "resolve_hits/file/cath_id_score_category.hpp"
-#include "resolve_hits/file/detail/hmmsearch_aln.hpp"
+#include "resolve_hits/file/detail/hmmer_aln.hpp"
+#include "resolve_hits/file/hmmer_format.hpp"
 #include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 
@@ -83,8 +85,11 @@ namespace cath {
 			using hmmsearch_summary_vec = std::vector<hmmsearch_summary>;
 
 			/// \brief Parse hmmsearch output data
-			class hmmsearch_parser final {
+			class hmmer_parser final {
 			private:
+				/// \brief The HMMER format to parse
+				hmmer_format format;
+
 				/// \brief The current line (allows memory to be reused between calls to getline)
 				std::string line;
 
@@ -92,7 +97,7 @@ namespace cath {
 				std::reference_wrapper<std::istream> the_istream;
 
 				/// \brief The current query ID
-				std::string query_id;
+				str_opt query_id;
 
 				/// \brief A regular expression for detecting summary lines
 				std::regex is_summary_line_regex{ R"(^\s*\d+\s+[\!\?])" };
@@ -104,7 +109,7 @@ namespace cath {
 				size_t summary_ctr = 0;
 
 				/// \brief The current alignment being parsed
-				hmmsearch_aln the_aln;
+				hmmer_aln the_aln;
 
 				/// \brief Whether a hit has already been skipped for having a negative bitscore
 				bool skipped_for_negtv_bitscore = false;
@@ -120,9 +125,14 @@ namespace cath {
 				bool line_is_empty() const;
 				bool line_is_summary() const;
 
+				str_opt & get_prefix_id();
+				str_opt & get_block_id();
+
 			public:
-				explicit hmmsearch_parser(std::istream &);
-				hmmsearch_parser(const std::istream &&) = delete;
+				hmmer_parser(const hmmer_format &,
+				             std::istream &);
+				hmmer_parser(const hmmer_format &,
+				             const std::istream &&) = delete;
 
 				bool end_of_istream() const;
 
@@ -167,7 +177,7 @@ namespace cath {
 			};
 
 			/// \brief Advance the istream to the next block or prefix
-			inline void hmmsearch_parser::advance_to_block_or_prefix() {
+			inline void hmmer_parser::advance_to_block_or_prefix() {
 				if ( ! line_is_at_prefix() && ! line_is_at_block() ) {
 					while (
 						getline( the_istream.get(), line )
@@ -182,71 +192,87 @@ namespace cath {
 			}
 
 			/// \brief Whether the current line is at a prefix
-			inline bool hmmsearch_parser::line_is_at_prefix() const {
+			inline bool hmmer_parser::line_is_at_prefix() const {
 				return boost::algorithm::starts_with( line, "Query: " );
 			}
 
 			/// \brief Whether the current line is empty
-			inline bool hmmsearch_parser::line_is_empty() const {
+			inline bool hmmer_parser::line_is_empty() const {
 				return line.empty();
 			}
 
 			/// \brief Whether the current line is a summary line
-			inline bool hmmsearch_parser::line_is_summary() const {
+			inline bool hmmer_parser::line_is_summary() const {
 				return regex_search( line, is_summary_line_regex );
 			}
 
+			/// \brief Get whichever ID is associated with the prefix
+			///
+			/// This is different when parsing hmmsearch / hmmscan output
+			inline str_opt & hmmer_parser::get_prefix_id() {
+				return ( format == hmmer_format::HMMSEARCH ) ? prefix_match_id : query_id;
+			}
+
+			/// \brief Get whichever ID is associated with the block
+			///
+			/// This is different when parsing hmmsearch / hmmscan output
+			inline str_opt & hmmer_parser::get_block_id() {
+				return ( format == hmmer_format::HMMSEARCH ) ? query_id        : prefix_match_id;
+			}
+
 			/// \brief Ctor from the istream from which the data should be read
-			inline hmmsearch_parser::hmmsearch_parser(std::istream &arg_istream ///< The istream from which the data should be read
-			                                          ) : the_istream( arg_istream ) {
+			inline hmmer_parser::hmmer_parser(const hmmer_format &arg_format, ///< The HMMER format to parse
+			                                  std::istream       &arg_istream ///< The istream from which the data should be read
+			                                  ) : format     { arg_format  },
+			                                      the_istream{ arg_istream } {
 			}
 
 			/// \brief Whether the end of the input data has been reached
-			inline bool hmmsearch_parser::end_of_istream() const {
+			inline bool hmmer_parser::end_of_istream() const {
 				return ! the_istream.get();
 			}
 
 			/// \brief Whether the current line is at the start of a block
-			inline bool hmmsearch_parser::line_is_at_block() const {
+			inline bool hmmer_parser::line_is_at_block() const {
 				return boost::algorithm::starts_with( line, ">> " );
 			}
 
 			/// \brief Whether the current line is at an alignment
-			inline bool hmmsearch_parser::line_is_at_aln() const {
+			inline bool hmmer_parser::line_is_at_aln() const {
 				return boost::algorithm::starts_with( line, "  == domain" );
 			}
 
 			/// \brief Whether the current line is the start of pipeline statistics
-			inline bool hmmsearch_parser::line_is_at_pipeline_stats() const {
+			inline bool hmmer_parser::line_is_at_pipeline_stats() const {
 				return boost::algorithm::starts_with( line, "Internal pipeline statistics summary" );
 			}
 
 			/// \brief Whether the current line is a summary header
-			inline bool hmmsearch_parser::line_is_summary_header() const {
+			inline bool hmmer_parser::line_is_summary_header() const {
 				return boost::algorithm::contains( line, "core  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc" );
 			}
 
 			/// \brief Whether the parsed alignment is empty
-			inline bool hmmsearch_parser::alignment_is_empty() const {
+			inline bool hmmer_parser::alignment_is_empty() const {
 				return the_aln.empty();
 			}
 
 			/// \brief Advance one line
-			inline void hmmsearch_parser::advance_line() {
+			inline void hmmer_parser::advance_line() {
 				if ( ! getline( the_istream.get(), line ) ) {
 					BOOST_THROW_EXCEPTION(common::runtime_error_exception("Unexpectedly hit end of hmmsearch output file"));
 				}
 			}
 
 			/// \brief Advance lines until an non-empty line is reached
-			inline void hmmsearch_parser::advance_line_to_nonempty() {
+			inline void hmmer_parser::advance_line_to_nonempty() {
 				if ( line_is_empty() ) {
 					while ( getline( the_istream.get(), line ) && line_is_empty() ) {}
 				}
 			}
 
 			/// \brief Advance lines until the start of a new block
-			inline void hmmsearch_parser::advance_line_to_block() {
+			inline void hmmer_parser::advance_line_to_block() {
 				prefix_hmm_length = boost::none;
 				prefix_match_id   = boost::none;
 
@@ -264,7 +290,12 @@ namespace cath {
 							||
 							*std::prev( line_end ) != ']'
 							||
-							! boost::algorithm::starts_with( common::make_string_ref( length_pre_itr, line_end ), "[M=" )
+							(
+								! boost::algorithm::starts_with( common::make_string_ref( length_pre_itr, line_end ), "[M=" )
+								&&
+								! boost::algorithm::starts_with( common::make_string_ref( length_pre_itr, line_end ), "[L=" )
+							)
+
 						) {
 							BOOST_THROW_EXCEPTION(common::out_of_range_exception(
 								"Cannot parse HMM length out of hmmsearch line \""
@@ -273,7 +304,7 @@ namespace cath {
 							));
 						}
 
-						prefix_match_id.emplace( match_id_begin_itr, match_id_end_itr );
+						get_prefix_id().emplace( match_id_begin_itr, match_id_end_itr );
 						prefix_hmm_length = common::parse_uint_from_field( next( length_pre_itr, 3 ), prev( line_end ) );
 
 						getline( the_istream.get(), line );
@@ -284,21 +315,21 @@ namespace cath {
 					const auto query_id_begin_itr = common::find_itr_before_first_non_space( next( common::cbegin( line ), 3 ), common::cend( line ) );
 					const auto query_id_end_itr   = common::find_itr_before_first_space    ( query_id_begin_itr,                common::cend( line ) );
 
-					query_id.assign( query_id_begin_itr, query_id_end_itr );
+					get_block_id().emplace( query_id_begin_itr, query_id_end_itr );
 				}
 			}
 
 			/// \brief Advance lines until the start of the next alignment
-			inline void hmmsearch_parser::advance_line_until_next_aln() {
+			inline void hmmer_parser::advance_line_until_next_aln() {
 				if ( ! line_is_at_aln() ) {
 					while ( getline( the_istream.get(), line ) && ! line_is_at_aln() ) {}
 				}
 			}
 
 			/// \brief Parse a summary from the current summary header line
-			inline void hmmsearch_parser::parse_summary_from_header(const bool            &arg_apply_cath_policies, ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
-			                                                        const crh_filter_spec &arg_filter_spec          ///< The filter spec, used to determine which hits to exclude on inadequate hmm coverage
-			                                                        ) {
+			inline void hmmer_parser::parse_summary_from_header(const bool            &arg_apply_cath_policies, ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
+			                                                    const crh_filter_spec &arg_filter_spec          ///< The filter spec, used to determine which hits to exclude on inadequate hmm coverage
+			                                                    ) {
 				// Get the min hmm coverage for this specific match ID
 				const doub_opt min_hmm_coverage = static_cast<bool>( prefix_match_id )
 					? hmm_coverage_for_match( arg_filter_spec, *prefix_match_id )
@@ -362,8 +393,10 @@ namespace cath {
 			}
 
 			/// \brief Parse the current alignment section
-			inline void hmmsearch_parser::parse_alignment_section() {
-				advance_line();
+			inline void hmmer_parser::parse_alignment_section() {
+				if ( boost::algorithm::ends_with( line, " RF" ) ) {
+					advance_line();
+				}
 				the_aln.add_a( line );
 				advance_line();
 				advance_line();
@@ -374,16 +407,16 @@ namespace cath {
 			}
 
 			/// \brief Finish the current alignment
-			inline void hmmsearch_parser::finish_alignment(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which complete hits should be added
-			                                               const bool           &arg_apply_cath_policies,  ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
-			                                               const seq::residx_t  &arg_min_gap_length,       ///< The minimum length for a gap to be considered a gap
-			                                               const bool           &arg_parse_hmmsearch_aln   ///< Whether to parse the hmmsearch alignment information for outputting later
-			                                               ) {
-				auto              aln_results   = the_aln.process_aln( arg_min_gap_length, arg_parse_hmmsearch_aln );
+			inline void hmmer_parser::finish_alignment(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which complete hits should be added
+			                                           const bool           &arg_apply_cath_policies,  ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
+			                                           const seq::residx_t  &arg_min_gap_length,       ///< The minimum length for a gap to be considered a gap
+			                                           const bool           &arg_parse_hmmer_aln       ///< Whether to parse the hmmsearch alignment information for outputting later
+			                                           ) {
+				auto              aln_results   = the_aln.process_aln( arg_min_gap_length, arg_parse_hmmer_aln );
 				std::string      &id_a          = std::get<0>( aln_results );
 				seq::seq_seg_vec &segs          = std::get<1>( aln_results );
 				auto              alnd_rngs_opt = boost::make_optional(
-					arg_parse_hmmsearch_aln,
+					arg_parse_hmmer_aln,
 					std::get<2>( aln_results )
 				);
 
@@ -393,7 +426,8 @@ namespace cath {
 						+ id_a
 						+ "\" that mismatches previously recorded ID \""
 						+ *prefix_match_id
-						+ "\""
+						+ "\" "
+						+ ( format == hmmer_format::HMMSEARCH ? "hmmsearch" : "hmmscan" )
 					));
 				}
 
@@ -432,14 +466,14 @@ namespace cath {
 					segs.back ().set_stop_arrow ( seq::arrow_after_res ( stop  ) );
 
 					hit_extras_store extras;
-					if ( arg_parse_hmmsearch_aln ) {
+					if ( arg_parse_hmmer_aln ) {
 						extras.push_back< hit_extra_cat::ALND_RGNS >( to_string( std::get<2>( aln_results ) ) );
 					}
 					extras.push_back< hit_extra_cat::COND_EVAL >( summ.conditional_evalue );
 					extras.push_back< hit_extra_cat::INDP_EVAL >( summ.independent_evalue );
 
 					arg_read_and_process_mgr.add_hit(
-						query_id,
+						*query_id,
 						std::move( segs ),
 						std::move( id_a ),
 						summ.bitscore / bitscore_divisor( arg_apply_cath_policies, summ.evalues_are_susp ),
@@ -453,32 +487,32 @@ namespace cath {
 			}
 
 			/// \brief Non-const getter for the current line
-			inline std::string & hmmsearch_parser::get_line() {
+			inline std::string & hmmer_parser::get_line() {
 				return line;
 			}
 
 			/// \brief Const getter for the current line
-			inline const std::string & hmmsearch_parser::get_line() const {
+			inline const std::string & hmmer_parser::get_line() const {
 				return line;
 			}
 
 			/// \brief Non-const getter for the query ID
-			inline std::string & hmmsearch_parser::get_query_id() {
-				return query_id;
+			inline std::string & hmmer_parser::get_query_id() {
+				return *query_id;
 			}
 
 			/// \brief Const getter for query ID
-			inline const std::string & hmmsearch_parser::get_query_id() const {
-				return query_id;
+			inline const std::string & hmmer_parser::get_query_id() const {
+				return *query_id;
 			}
 
 			/// \brief Non-const getter for the parsed summaries
-			inline hmmsearch_summary_vec & hmmsearch_parser::get_summaries() {
+			inline hmmsearch_summary_vec & hmmer_parser::get_summaries() {
 				return summaries;
 			}
 
 			/// \brief Const getter for the parsed summaries
-			inline const hmmsearch_summary_vec & hmmsearch_parser::get_summaries() const {
+			inline const hmmsearch_summary_vec & hmmer_parser::get_summaries() const {
 				return summaries;
 			}
 

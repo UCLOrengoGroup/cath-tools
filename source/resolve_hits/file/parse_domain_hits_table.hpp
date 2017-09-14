@@ -1,5 +1,5 @@
 /// \file
-/// \brief The hmmer_hmmsearch_domtblout class header
+/// \brief The parse_domain_hits_table class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_HMMER_HMMSEARCH_DOMTBLOUT_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_HMMER_HMMSEARCH_DOMTBLOUT_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_PARSE_DOMAIN_HITS_TABLE_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_PARSE_DOMAIN_HITS_TABLE_H
 
 #include <boost/filesystem/path.hpp>
 

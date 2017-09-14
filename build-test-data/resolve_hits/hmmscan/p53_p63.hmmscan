@@ -1,0 +1,259 @@
+# hmmscan :: search sequence(s) against a profile database
+# HMMER 3.1b2 (February 2015); http://hmmer.org/
+# Copyright (C) 2015 Howard Hughes Medical Institute.
+# Freely distributed under the GNU General Public License (GPLv3).
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query sequence file:             p53_p63.fa
+# target HMM database:             ../finbris/main.hmm
+# output directed to file:         p53_p63.hmmscan
+# domain reporting threshold:      E-value <= 0.001
+# domain inclusion threshold:      E-value <= 0.001
+# sequence search space set to:    20000
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       sp|P04637|P53_HUMAN  [L=393]
+Description: Cellular tumor antigen p53 OS=Homo sapiens GN=TP53 PE=1 SV=4
+Scores for complete sequence (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Model      Description
+    ------- ------ -----    ------- ------ -----   ---- --  --------   -----------
+    1.6e-86  289.8   0.5      2e-86  289.4   0.5    1.1  1  3d06A00-i1  
+     0.0025   17.7   0.1     0.0051   16.7   0.1    1.4  1  2mw4A00-i1  
+  ------ inclusion threshold ------
+      0.026   14.6   0.6       0.14   12.2   0.0    2.3  1  5hp0A00-i2  
+
+
+Domain annotation for each model (and alignments):
+>> 3d06A00-i1  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  289.4   0.5   2.1e-89     2e-86       2     200 .]      95     293 ..      94     293 .. 0.99
+
+  Alignments for each domain:
+  == domain 1  score: 289.4 bits;  conditional E-value: 2.1e-89
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RF
+           3d06A00-i1   2 stlpstedypGeynFelsleesktskskswvYSeklnklfikmnktlpvqfkvskeppeglfiRampvysksekvqepVeRCpnhasesd 91 
+                          s++ps+++y+G+y+F+l++ +s+t+ks++++YS+ lnk+f++++kt+pvq++v+++pp+g+++Ram++y++s++++e+V+RCp+h+++sd
+  sp|P04637|P53_HUMAN  95 SSVPSQKTYQGSYGFRLGFLHSGTAKSVTCTYSPALNKMFCQLAKTCPVQLWVDSTPPPGTRVRAMAIYKQSQHMTEVVRRCPHHERCSD 184
+                          689*************************************************************************************** PP
+
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RF
+           3d06A00-i1  92 senlapkehvlrcegnseaeyvedpeserhsvvvplekpqagsesvtvlykFmCknSClggmnRrpiklvftLenesgevlgrqslevki 181
+                          s++lap++h++r+egn ++ey++d++++rhsvvvp+e+p++gs+++t++y++mC++SC+ggmnRrpi +++tLe++sg++lgr+s+ev++
+  sp|P04637|P53_HUMAN 185 SDGLAPPQHLIRVEGNLRVEYLDDRNTFRHSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNRRPILTIITLEDSSGNLLGRNSFEVRV 274
+                          ****************************************************************************************** PP
+
+                          xxxxxxxxxxxxxxxxxxx RF
+           3d06A00-i1 182 CacpkRDkkkeekklkkkg 200
+                          Cacp+RD+++ee++l+kkg
+  sp|P04637|P53_HUMAN 275 CACPGRDRRTEEENLRKKG 293
+                          **************99975 PP
+
+>> 2mw4A00-i1  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   16.7   0.1   5.4e-06    0.0051       6      31 ..     327     352 ..     324     354 .. 0.91
+
+  Alignments for each domain:
+  == domain 1  score: 16.7 bits;  conditional E-value: 5.4e-06
+                          xxxxxxxxxxxxxxxxxxxxxxxxxx RF
+           2mw4A00-i1   6 vYtLnirGkRkFekvkeYkeaLDLlD 31 
+                           +tL+irG+ +Fe  +e  eaL+L D
+  sp|P04637|P53_HUMAN 327 YFTLQIRGRERFEMFRELNEALELKD 352
+                          58*********************977 PP
+
+>> 5hp0A00-i2  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?   12.2   0.0   0.00015      0.14      98     122 .]      37      61 ..      28      61 .. 0.92
+
+  Alignments for each domain:
+  == domain 1  score: 12.2 bits;  conditional E-value: 0.00015
+                          xxxxxxxxxxxxxxxxxxxxxxxxx RF
+           5hp0A00-i2  98 qqaleelalspddieqlltedpgpd 122
+                          +qa+++l+lspddieq++tedpgpd
+  sp|P04637|P53_HUMAN  37 SQAMDDLMLSPDDIEQWFTEDPGPD 61 
+                          789********************98 PP
+
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query sequence(s):                         1  (393 residues searched)
+Target model(s):                       95280  (16346457 nodes)
+Passed MSV filter:                      1764  (0.0185139); expected 1905.6 (0.02)
+Passed bias filter:                     1493  (0.0156696); expected 1905.6 (0.02)
+Passed Vit filter:                        78  (0.00081864); expected 95.3 (0.001)
+Passed Fwd filter:                        21  (0.000220403); expected 1.0 (1e-05)
+Initial search space (Z):              20000  [as set by --Z on cmdline]
+Domain search space  (domZ):              21  [number of targets reported over threshold]
+# CPU time: 1.88u 1.23s 00:00:03.11 Elapsed: 00:00:36.17
+# Mc/sec: 177.61
+//
+Query:       sp|Q9H3D4|P63_HUMAN  [L=680]
+Description: Tumor protein 63 OS=Homo sapiens GN=TP63 PE=1 SV=1
+Scores for complete sequence (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Model      Description
+    ------- ------ -----    ------- ------ -----   ---- --  --------   -----------
+    7.4e-97  323.5   0.2    7.4e-97  323.5   0.2    1.8  1  2xwcA00-i1  
+       0.13   12.9   0.0       0.38   11.4   0.0    1.8  1  2eaoA01-i2  
+       0.13   12.7   0.1       0.42   11.0   0.0    1.9  0  2kg5A01-i1  
+       0.13   12.8   0.0       0.37   11.3   0.0    1.7  1  3hilA00-i2  
+       0.16   12.4   0.0        0.4   11.1   0.0    1.7  0  4nl9D01-i2  
+
+
+Domain annotation for each model (and alignments):
+>> 2xwcA00-i1  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  323.5   0.2   1.9e-99   7.4e-97       3     203 ..     163     363 ..     161     367 .. 0.99
+
+  Alignments for each domain:
+  == domain 1  score: 323.5 bits;  conditional E-value: 1.9e-99
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RF
+           2xwcA00-i1   3 pvlpstedypGpynFevsldesstakssswtyseklnklfikmnktlpvqfkvsspppeglfiRampvysksehvsepVeRCpnHelekd 92 
+                          p++ps++dypGp++F+vs+++sstaks++wtys++l+kl+++++kt+p+q+kv +ppp+g++iRampvy+k+ehv+e+V+RCpnHel+++
+  sp|Q9H3D4|P63_HUMAN 163 PAIPSNTDYPGPHSFDVSFQQSSTAKSATWTYSTELKKLYCQIAKTCPIQIKVMTPPPQGAVIRAMPVYKKAEHVTEVVKRCPNHELSRE 252
+                          89**************************************************************************************** PP
+
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RF
+           2xwcA00-i1  93 knegksapashvircegnsaaeyvedpvtgrhsvvvpleapqagsesstvlykFmCknSClggmnRrpikliftLetedgevlgrrslev 182
+                          +neg+ ap sh+ir+egns+a+yvedp+tgr+sv+vp+e+pq+g+e++tvly+FmC++SC+ggmnRrpi +i+tLet+dg+vlgrr++e+
+  sp|Q9H3D4|P63_HUMAN 253 FNEGQIAPPSHLIRVEGNSHAQYVEDPITGRQSVLVPYEPPQVGTEFTTVLYNFMCNSSCVGGMNRRPILIIVTLETRDGQVLGRRCFEA 342
+                          ****************************************************************************************** PP
+
+                          xxxxxxxxxxxxxxxxxxxxx RF
+           2xwcA00-i1 183 kiCacPkRDkkkeekklreae 203
+                          +iCacP+RD+k++e+++r+++
+  sp|Q9H3D4|P63_HUMAN 343 RICACPGRDRKADEDSIRKQQ 363
+                          ****************99976 PP
+
+>> 2eaoA01-i2  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?   11.4   0.0   0.00097      0.38       3      45 ..     549     591 ..     548     602 .. 0.88
+
+  Alignments for each domain:
+  == domain 1  score: 11.4 bits;  conditional E-value: 0.00097
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RF
+           2eaoA01-i2   3 veeWLeslgLeqYtenFlnagyddletlarlteedLkeigitk 45 
+                          + ++L +lg++ +++ F+ +g +++ ++ + + +dL +++i  
+  sp|Q9H3D4|P63_HUMAN 549 IVSFLARLGCSSCLDYFTTQGLTTIYQIEHYSMDDLASLKIPE 591
+                          6689**********************************99965 PP
+
+>> 2kg5A01-i1  
+   [No individual domains that satisfy reporting thresholds (although complete target did)]
+
+>> 3hilA00-i2  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?   11.3   0.0   0.00095      0.37       7      49 ..     549     591 ..     547     601 .. 0.89
+
+  Alignments for each domain:
+  == domain 1  score: 11.3 bits;  conditional E-value: 0.00095
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RF
+           3hilA00-i2   7 VseWLesigLeqYaenFvengyddleflaelteedLkeigitk 49 
+                          + ++L+++g++   + F+ +g++++ ++ + + +dL  ++i  
+  sp|Q9H3D4|P63_HUMAN 549 IVSFLARLGCSSCLDYFTTQGLTTIYQIEHYSMDDLASLKIPE 591
+                          6789*********************************999964 PP
+
+>> 4nl9D01-i2  
+   [No individual domains that satisfy reporting thresholds (although complete target did)]
+
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query sequence(s):                         1  (680 residues searched)
+Target model(s):                       95280  (16346457 nodes)
+Passed MSV filter:                      6103  (0.0640533); expected 1905.6 (0.02)
+Passed bias filter:                     3606  (0.0378463); expected 1905.6 (0.02)
+Passed Vit filter:                       190  (0.00199412); expected 95.3 (0.001)
+Passed Fwd filter:                        51  (0.000535264); expected 1.0 (1e-05)
+Initial search space (Z):              20000  [as set by --Z on cmdline]
+Domain search space  (domZ):              51  [number of targets reported over threshold]
+# CPU time: 3.26u 1.21s 00:00:04.47 Elapsed: 00:00:22.01
+# Mc/sec: 505.02
+//
+Query:       sp|O15350|P73_HUMAN  [L=636]
+Description: Tumor protein p73 OS=Homo sapiens GN=TP73 PE=1 SV=1
+Scores for complete sequence (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Model      Description
+    ------- ------ -----    ------- ------ -----   ---- --  --------   -----------
+    2.4e-98  328.4   0.0    4.2e-98  327.6   0.0    1.4  1  2xwcA00-i1  
+       0.12   12.6   0.0       0.23   11.7   0.0    1.4  1  2eaoA01-i1  
+       0.13   12.9   0.0       0.28   11.7   0.0    1.5  0  2kivA01-i1  
+       0.17   11.9   0.0       0.37   10.8   0.0    1.5  0  5j8yD00-i2  
+        0.2   12.1   0.0        0.4   11.1   0.0    1.5  0  1x9xA00-i2  
+       0.24   11.9   1.0       0.63   10.6   0.1    2.2  0  2l14B00-i1  
+
+
+Domain annotation for each model (and alignments):
+>> 2xwcA00-i1  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  327.6   0.0  1.6e-100   4.2e-98       3     205 ..     113     315 ..     111     318 .. 0.99
+
+  Alignments for each domain:
+  == domain 1  score: 327.6 bits;  conditional E-value: 1.6e-100
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RF
+           2xwcA00-i1   3 pvlpstedypGpynFevsldesstakssswtyseklnklfikmnktlpvqfkvsspppeglfiRampvysksehvsepVeRCpnHelekd 92 
+                          pv+ps++dypGp++Fev++++sstaks++wtys+ l+kl+++++kt+p+q+kvs+ppp+g+ iRampvy+k+ehv+++V+RCpnHel +d
+  sp|O15350|P73_HUMAN 113 PVIPSNTDYPGPHHFEVTFQQSSTAKSATWTYSPLLKKLYCQIAKTCPIQIKVSTPPPPGTAIRAMPVYKKAEHVTDVVKRCPNHELGRD 202
+                          89**************************************************************************************** PP
+
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RF
+           2xwcA00-i1  93 knegksapashvircegnsaaeyvedpvtgrhsvvvpleapqagsesstvlykFmCknSClggmnRrpikliftLetedgevlgrrslev 182
+                          +neg+sapash+ir+egn+ ++yv+dpvtgr+svvvp+e+pq+g+e++t+ly+FmC++SC+ggmnRrpi +i+tLe++dg+vlgrrs+e 
+  sp|O15350|P73_HUMAN 203 FNEGQSAPASHLIRVEGNNLSQYVDDPVTGRQSVVVPYEPPQVGTEFTTILYNFMCNSSCVGGMNRRPILIIITLEMRDGQVLGRRSFEG 292
+                          ****************************************************************************************** PP
+
+                          xxxxxxxxxxxxxxxxxxxxxxx RF
+           2xwcA00-i1 183 kiCacPkRDkkkeekklreaeal 205
+                          +iCacP+RD+k++e+++re++al
+  sp|O15350|P73_HUMAN 293 RICACPGRDRKADEDHYREQQAL 315
+                          *******************9875 PP
+
+>> 2eaoA01-i1  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?   11.7   0.0   0.00087      0.23       5      44 ..     495     534 ..     492     548 .. 0.91
+
+  Alignments for each domain:
+  == domain 1  score: 11.7 bits;  conditional E-value: 0.00087
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RF
+           2eaoA01-i1   5 eWLesikleqYkenFlsnGydslefvtqmteedLeeiGIt 44 
+                            L  ++ + + e F s+G++s+  ++++t edL +++I 
+  sp|O15350|P73_HUMAN 495 SFLTGLGCPNCIEYFTSQGLQSIYHLQNLTIEDLGALKIP 534
+                          57999*******************************9996 PP
+
+>> 2kivA01-i1  
+   [No individual domains that satisfy reporting thresholds (although complete target did)]
+
+>> 5j8yD00-i2  
+   [No individual domains that satisfy reporting thresholds (although complete target did)]
+
+>> 1x9xA00-i2  
+   [No individual domains that satisfy reporting thresholds (although complete target did)]
+
+>> 2l14B00-i1  
+   [No individual domains that satisfy reporting thresholds (although complete target did)]
+
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query sequence(s):                         1  (636 residues searched)
+Target model(s):                       95280  (16346457 nodes)
+Passed MSV filter:                      1654  (0.0173594); expected 1905.6 (0.02)
+Passed bias filter:                     1525  (0.0160055); expected 1905.6 (0.02)
+Passed Vit filter:                       174  (0.0018262); expected 95.3 (0.001)
+Passed Fwd filter:                        76  (0.000797649); expected 1.0 (1e-05)
+Initial search space (Z):              20000  [as set by --Z on cmdline]
+Domain search space  (domZ):              76  [number of targets reported over threshold]
+# CPU time: 2.30u 0.98s 00:00:03.28 Elapsed: 00:00:09.67
+# Mc/sec: 1075.11
+//
+[ok]

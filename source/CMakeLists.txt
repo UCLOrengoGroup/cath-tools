@@ -691,8 +691,8 @@ set(
 
 set(
 	NORMSOURCES_RESOLVE_HITS_FILE_DETAIL
-		resolve_hits/file/detail/hmmsearch_aln.cpp
-		resolve_hits/file/detail/hmmsearch_parser.cpp
+		resolve_hits/file/detail/hmmer_aln.cpp
+		resolve_hits/file/detail/hmmer_parser.cpp
 )
 
 set(
@@ -701,8 +701,8 @@ set(
 		resolve_hits/file/cath_id_score_category.cpp
 		${NORMSOURCES_RESOLVE_HITS_FILE_DETAIL}
 		resolve_hits/file/hits_input_format_tag.cpp
-		resolve_hits/file/hmmer_hmmsearch_domtblout.cpp
-		resolve_hits/file/hmmer_hmmsearch_out.cpp
+		resolve_hits/file/parse_domain_hits_table.cpp
+		resolve_hits/file/parse_hmmer_out.cpp
 )
 
 set(
@@ -744,6 +744,7 @@ set(
 
 set(
 	NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR
+		resolve_hits/read_and_process_hits/hits_processor/gather_hits_processor.cpp
 		resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.cpp
 		resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.cpp
 		resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.cpp
@@ -1810,8 +1811,14 @@ set(
 )
 
 set(
+	TESTSOURCES_RESOLVE_HITS_FILE_DETAIL
+		resolve_hits/file/detail/hmmer_parser_test.cpp
+)
+
+set(
 	TESTSOURCES_RESOLVE_HITS_FILE
 		resolve_hits/file/cath_id_score_category_test.cpp
+		${TESTSOURCES_RESOLVE_HITS_FILE_DETAIL}
 )
 
 set(

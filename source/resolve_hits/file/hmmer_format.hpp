@@ -1,5 +1,5 @@
 /// \file
-/// \brief The hmmsearch_aln definitions
+/// \brief The hmmer_format header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,10 +18,19 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hmmsearch_aln.hpp"
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_HMMER_FORMAT_H
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_HMMER_FORMAT_H
 
-using namespace cath::rslv::detail;
+namespace cath {
+	namespace rslv {
 
-constexpr size_t hmmsearch_aln::LINE_ID_OFFSET;
-constexpr size_t hmmsearch_aln::LINE_START_OFFSET;
-constexpr size_t hmmsearch_aln::LINE_ALN_OFFSET;
+		/// \brief Represent the HMMER formats that can be parsed
+		enum class hmmer_format {
+			HMMSEARCH,  ///< The format output by hmmsearch
+			HMMSCAN     ///< The format output by hmmscan
+		};
+
+	} // namespace rslv
+} // namespace cath
+
+#endif

@@ -1,5 +1,5 @@
 /// \file
-/// \brief The hmmsearch_parser definitions
+/// \brief The hmmer_parser definitions
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,16 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "hmmsearch_parser.hpp"
+#include "hmmer_parser.hpp"
 
 using namespace cath::rslv::detail;
 
-constexpr size_t hmmsearch_parser::LINE_BITSCORE_OFFSET;
-constexpr size_t hmmsearch_parser::LINE_COND_EVALUE_OFFSET;
-constexpr size_t hmmsearch_parser::LINE_INDP_EVALUE_OFFSET;
-constexpr size_t hmmsearch_parser::LINE_HMM_FROM_OFFSET;
-constexpr size_t hmmsearch_parser::LINE_HMM_TO_OFFSET;
-constexpr size_t hmmsearch_parser::LINE_ALI_FROM_OFFSET;
-constexpr size_t hmmsearch_parser::LINE_ALI_TO_OFFSET;
-constexpr size_t hmmsearch_parser::LINE_ENV_FROM_OFFSET;
-constexpr size_t hmmsearch_parser::LINE_ENV_TO_OFFSET;
+constexpr size_t hmmer_parser::LINE_BITSCORE_OFFSET;
+constexpr size_t hmmer_parser::LINE_COND_EVALUE_OFFSET;
+constexpr size_t hmmer_parser::LINE_INDP_EVALUE_OFFSET;
+constexpr size_t hmmer_parser::LINE_HMM_FROM_OFFSET;
+constexpr size_t hmmer_parser::LINE_HMM_TO_OFFSET;
+constexpr size_t hmmer_parser::LINE_ALI_FROM_OFFSET;
+constexpr size_t hmmer_parser::LINE_ALI_TO_OFFSET;
+constexpr size_t hmmer_parser::LINE_ENV_FROM_OFFSET;
+constexpr size_t hmmer_parser::LINE_ENV_TO_OFFSET;
