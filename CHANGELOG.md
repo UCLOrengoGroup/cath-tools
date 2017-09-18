@@ -1,6 +1,21 @@
 # Summary of changes in cath-tools releases
 
 
+### [v0.15.2](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.15.2) Teach cath-resolve-hits to parse hmmscan output
+
+2017-09-14 &nbsp; 
+
+
+### [v0.15.1](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.15.1) Deprecate cath-resolve-hits' --apply-cath-rules option
+
+2017-09-08 &nbsp; 
+
+
+### [v0.14.4](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.14.4) cath-map-clusters: a new tool to map between different ways of clustering your data
+
+2017-08-07 &nbsp; 
+
+
 ### [v0.14.2](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.14.2) Add MacOS executables (via the automatic Travis-CI build)
 
 2017-07-28 &nbsp; 
