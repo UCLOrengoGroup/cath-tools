@@ -73,8 +73,8 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - clang-4.0
-    - g++-6
-    - gcc-6
+    - g++-4.9
+    - gcc-4.9
     - libgsl0-dev
     - ninja-build
   artifacts:
