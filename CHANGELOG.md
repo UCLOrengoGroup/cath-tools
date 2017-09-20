@@ -1,6 +1,15 @@
 # Summary of changes in cath-tools releases
 
 
+### [v0.15.3](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.15.3) Improve compatibility of Travis-CI Ubuntu executables with older Ubuntus
+
+2017-09-20 &nbsp; The changes to the Travis-CI build in [v0.14.2](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.14.2) meant that the resulting executables didn't work on Ubuntu &le; 16.04 (out-of-the-box).
+
+This release improves things so that the executables should now work on Ubuntu &ge; 14.10.
+
+See [42](https://github.com/UCLOrengoGroup/cath-tools/issues/42) and [a2d5fa12d1eb0fb0936cf0b1e2ab32ccb48aaaac](https://github.com/UCLOrengoGroup/cath-tools/commit/a2d5fa12d1eb0fb0936cf0b1e2ab32ccb48aaaac) for more info.
+
+
 ### [v0.15.2](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.15.2) Teach cath-resolve-hits to parse hmmscan output
 
 2017-09-14 &nbsp; 
