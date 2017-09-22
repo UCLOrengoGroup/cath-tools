@@ -78,9 +78,9 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		return string{};
 	}
 
-	const variables_map &vm           = get_variables_map();
+	const variables_map &local_vm           = get_variables_map();
 	const auto          &input_format = get_crh_input_spec().get_input_format();
-	if ( specifies_option( vm, crh_score_options_block::PO_APPLY_CATH_RULES ) ) {
+	if ( specifies_option( local_vm, crh_score_options_block::PO_APPLY_CATH_RULES ) ) {
 		if ( input_format != hits_input_format_tag::HMMER_DOMTBLOUT && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
 			return "The --"
 				+ crh_score_options_block::PO_APPLY_CATH_RULES
@@ -128,7 +128,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		const auto           &valid_formats = format_worse_conf.second;
 		const string         &option_name   = worst_perm_opt_name_of_score.at( score_type );
 
-		if ( specifies_option( vm, option_name ) ) {
+		if ( specifies_option( local_vm, option_name ) ) {
 			if ( ! contains( valid_formats, input_format ) ) {
 				return "Cannot set worst permissible "
 					+ to_string( score_type   )
@@ -141,7 +141,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		}
 	}
 
-	if ( specifies_options_from_block( vm, crh_html_options_block{} ) && ! has_any_html_output( the_output_ob ) ) {
+	if ( specifies_options_from_block( local_vm, crh_html_options_block{} ) && ! has_any_html_output( the_output_ob ) ) {
 		return
 			"Cannot specify HTML options without outputting any HTML (with --"
 			+ crh_output_options_block::PO_HTML_OUTPUT_TO_FILE
@@ -152,7 +152,7 @@ str_opt crh_options::do_get_error_or_help_string() const {
 	if ( input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
 		for (const string &hmm_cov_opt : { crh_filter_options_block::PO_MIN_HMM_COVERAGE,
 		                                   crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE } ) {
-			if ( specifies_option( vm, hmm_cov_opt ) ) {
+			if ( specifies_option( local_vm, hmm_cov_opt ) ) {
 				return "Cannot specify --"
 					+ hmm_cov_opt
 					+ " unless using input format "

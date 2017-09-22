@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE(find_file_works) {
 	temp_file_stream.close();
 
 	const string full_path = temp_file_filename.parent_path().string() + ":" + EXAMPLE_PATH_STR;
-	const string basename  = path(temp_file_filename.filename()).string();
+	const string basename  = temp_file_filename.filename().string();
 
 	BOOST_CHECK_EQUAL(
 		temp_file_filename,

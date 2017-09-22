@@ -94,7 +94,7 @@ using all_common_residue_selection_policy_types = boost::mpl::list<common_residu
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE_TEMPLATE(constructor, common_residue_selection_policy_type, all_common_residue_selection_policy_types) {
 	const common_residue_selection_policy_type my_policy{};
-	BOOST_CHECK_NO_THROW_DIAG(const common_residue_selection_policy_type my_policy{});
+	BOOST_CHECK_NO_THROW_DIAG(const common_residue_selection_policy_type yr_policy{});
 }
 
 /// \brief TODOCUMENT

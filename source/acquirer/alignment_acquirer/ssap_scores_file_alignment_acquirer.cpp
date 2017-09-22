@@ -61,8 +61,8 @@ unique_ptr<alignment_acquirer> ssap_scores_file_alignment_acquirer::do_clone() c
 pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_alignment_and_orderer(const pdb_list &arg_pdbs ///< TODOCUMENT
                                                                                                      ) const {
 	// Parse the SSAP scores file
-	const path                     ssap_scores_file = get_ssap_scores_file();
-	const pair<str_vec, size_size_pair_doub_map> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file( ssap_scores_file );
+	const path                     ssaps_filename = get_ssap_scores_file();
+	const pair<str_vec, size_size_pair_doub_map> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file( ssaps_filename );
 	const str_vec                 &names            = ssap_scores_data.first;
 	const size_size_pair_doub_map &scores           = ssap_scores_data.second;
 
@@ -73,7 +73,7 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 			+ ", which doesn't match the "
 			+ ::std::to_string( names.size() )
 			+ " structures required for combining with the SSAP scores file \""
-			+ ssap_scores_file.string()
+			+ ssaps_filename.string()
 			+ "\""
 		));
 	}
@@ -87,7 +87,7 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 //	// TODOCUMENT
 	ostringstream stderr;
 	const size_size_alignment_tuple_vec spanning_alignments = get_spanning_alignments(
-		ssap_scores_file.parent_path(),
+		ssaps_filename.parent_path(),
 		names,
 		arg_pdbs,
 		spanning_tree,
@@ -104,7 +104,7 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 		return make_pair( new_alignment, my_orderer );
 	}
 
-//	BOOST_LOG_TRIVIAL( warning )<< "About to attempt to build protein list using data that's been read from ssap_scores_file (with " << arg_pdbs.size() << " pdbs and " << names.size() << " names)";
+//	BOOST_LOG_TRIVIAL( warning )<< "About to attempt to build protein list using data that's been read from ssaps_filename (with " << arg_pdbs.size() << " pdbs and " << names.size() << " names)";
 
 	const protein_list proteins_of_pdbs     = build_protein_list_of_pdb_list_and_names( arg_pdbs, names );
 	const alignment    scored_new_alignment = score_alignment_copy( residue_scorer(), new_alignment, proteins_of_pdbs );
@@ -155,12 +155,12 @@ size_size_alignment_tuple_vec ssap_scores_file_alignment_acquirer::get_spanning_
 }
 
 /// \brief Ctor for ssap_scores_file_alignment_acquirer
-ssap_scores_file_alignment_acquirer::ssap_scores_file_alignment_acquirer(const path &arg_ssap_scores_file ///< TODOCUMENT
-                                                                         ) : ssap_scores_file(arg_ssap_scores_file) {
+ssap_scores_file_alignment_acquirer::ssap_scores_file_alignment_acquirer(const path &arg_ssap_scores_filename ///< TODOCUMENT
+                                                                         ) : ssap_scores_filename{ arg_ssap_scores_filename } {
 }
 
 /// \brief TODOCUMENT
 path ssap_scores_file_alignment_acquirer::get_ssap_scores_file() const {
-	return ssap_scores_file;
+	return ssap_scores_filename;
 }
 

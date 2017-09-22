@@ -206,7 +206,7 @@ namespace cath {
 					boost::algorithm::any_of(
 						next( common::cbegin( x ) ),
 						common::cend( x ),
-						[] (const auto &x) { return ! boost::algorithm::is_digit()( x ); }
+						[] (const auto &y) { return ! boost::algorithm::is_digit()( y ); }
 					)
 				);
 			};

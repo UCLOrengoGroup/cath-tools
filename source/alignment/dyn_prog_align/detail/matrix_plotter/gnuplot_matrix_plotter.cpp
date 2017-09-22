@@ -48,9 +48,7 @@ void gnuplot_matrix_plotter::do_plot_minor_corner_arrow(const size_t &arg_from_x
                                                         const size_t &arg_to_x,   ///< TODOCUMENT
                                                         const size_t &arg_to_y    ///< TODOCUMENT
                                                         ) {
-	const size_t length_a   = get_length_a();
-	const size_t length_b   = get_length_b();
-	const size_t max_length = max(length_a, length_b);
+	const size_t max_length = max( get_length_a(), get_length_b() );
 	preplot_commands << "set   arrow from ";
 	preplot_commands << numeric_cast<double>( arg_from_x ) - 0.5;
 	preplot_commands << ", ";
@@ -68,9 +66,7 @@ void gnuplot_matrix_plotter::do_write_centre_score(const size_t &arg_x,    ///< 
                                                    const size_t &arg_y,    ///< TODOCUMENT
                                                    const double &arg_score ///< TODOCUMENT
                                                    ) {
-	const size_t length_a   = get_length_a();
-	const size_t length_b   = get_length_b();
-	const size_t max_length = max(length_a, length_b);
+	const size_t max_length = max( get_length_a(), get_length_b() );
 	preplot_commands << "set label ";
 	preplot_commands << counter++;
 	preplot_commands << " \"";
@@ -87,9 +83,7 @@ void gnuplot_matrix_plotter::do_write_corner_score(const size_t &arg_x,    ///< 
                                                    const size_t &arg_y,    ///< TODOCUMENT
                                                    const double &arg_score ///< TODOCUMENT
                                                    ) {
-	const size_t length_a   = get_length_a();
-	const size_t length_b   = get_length_b();
-	const size_t max_length = max(length_a, length_b);
+	const size_t max_length = max( get_length_a(), get_length_b() );
 	preplot_commands << "set label ";
 	preplot_commands << counter++;
 	preplot_commands << " \"";
@@ -109,26 +103,26 @@ void gnuplot_matrix_plotter::do_finish(const path &arg_output_stem ///< TODOCUME
 	const path the_data_file = replace_extension_copy( arg_output_stem, ".data.txt" );
 	Gnuplot gp("tee " + gnuplot_file.string() + " | gnuplot"); // Write to an intermediate gnuplot file
 
-	const size_t length_a   = get_length_a();
-	const size_t length_b   = get_length_b();
-	const size_t max_length = max(length_a, length_b);
+	const size_t lcl_length_a   = get_length_a();
+	const size_t lcl_length_b   = get_length_b();
+	const size_t lcl_max_length = max(lcl_length_a, lcl_length_b);
 
 	gp << "set   terminal postscript color\n";
 	gp << "set   output " << eps_file << "\n";
-	gp << "set   size ratio " << numeric_cast<double>(length_a) / numeric_cast<double>(length_b) << "\n";
+	gp << "set   size ratio " << numeric_cast<double>(lcl_length_a) / numeric_cast<double>(lcl_length_b) << "\n";
 	gp << "set   palette defined (0 \"white\", 1 0.1 0.1 0.1)\n";
 //	gp << "set   palette defined (0 \"white\", 0.2 0.2 0.2 0.2, 1 \"black\")\n";
 	gp << "set   autoscale x2fix\n";
 	gp << "set   autoscale yfix\n";
-	gp << "set   x2tics 1 rotate font \", " << 350.0 / numeric_cast<double>( max_length + 1 ) << "\"\n";
-	gp << "set   ytics  1 rotate font \", " << 350.0 / numeric_cast<double>( max_length + 1 ) << "\"\n";
+	gp << "set   x2tics 1 rotate font \", " << 350.0 / numeric_cast<double>( lcl_max_length + 1 ) << "\"\n";
+	gp << "set   ytics  1 rotate font \", " << 350.0 / numeric_cast<double>( lcl_max_length + 1 ) << "\"\n";
 	gp << "set   tics scale 0,0.001\n";
 	gp << "unset xtics\n";
 	gp << "set   mx2tics 2\n";
 	gp << "set   mytics  2\n";
 	gp << "unset colorbox\n";
 	gp << "set   yrange [] reverse\n";
-	gp << "set   grid front mx2tics mytics linewidth " << 20.0 / numeric_cast<double>( max_length + 1) << " lt -1 lc rgb 'white'\n";
+	gp << "set   grid front mx2tics mytics linewidth " << 20.0 / numeric_cast<double>( lcl_max_length + 1) << " lt -1 lc rgb 'white'\n";
 
 	gp << preplot_commands.str();
 

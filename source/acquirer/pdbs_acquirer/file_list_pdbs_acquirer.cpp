@@ -51,7 +51,7 @@ pdb_list_str_vec_pair file_list_pdbs_acquirer::do_get_pdbs_and_names(istream &/*
 		const path &input_filename = files[ input_file_ctr ];
 		const pdb my_new_pdb = read_pdb_file( input_filename );
 		pdbs.push_back( my_new_pdb );
-		names.push_back( ( path( input_filename.stem() ) ).string() );
+		names.push_back( ( input_filename.stem() ).string() );
 	}
 	return make_pair( pdbs, names );
 }

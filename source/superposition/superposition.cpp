@@ -205,9 +205,9 @@ superposition::superposition(const vector<indices_and_coord_lists_type> &arg_ind
 
 /// \brief TODOCUMENT
 superposition::superposition(coord_vec    arg_translations, ///< TODOCUMENT
-                             rotation_vec rotations         ///< TODOCUMENT
+                             rotation_vec arg_rotations     ///< TODOCUMENT
                              ) : translations{ std::move( arg_translations ) },
-                                 rotations   { std::move( rotations        ) } {
+                                 rotations   { std::move( arg_rotations    ) } {
 }
 
 /// \brief TODOCUMENT

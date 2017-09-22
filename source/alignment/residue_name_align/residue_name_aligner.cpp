@@ -80,7 +80,7 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 	vector<residue_name_align_map> maps;
 	maps.reserve(num_lists);
 	for (const residue_name_vec &residue_list : arg_residue_lists) {
-		maps.push_back( residue_name_align_map( make_residue_name_align_map( residue_list ) ) );
+		maps.push_back( make_residue_name_align_map( residue_list ) );
 	}
 
 	// Data structures to create the alignment:

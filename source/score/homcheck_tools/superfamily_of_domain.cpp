@@ -52,8 +52,8 @@ bool superfamily_of_domain::is_created_sf(const string &arg_superfamily ///< The
 }
 
 /// \brief Ctor from a vector<pair<string, string>> where each pair contains domain ID and the corresponding superfamily ID
-superfamily_of_domain::superfamily_of_domain(const str_str_pair_vec &sf_of_dom ///< The domain ID -> superfamily ID data from which this superfamily_of_domain should be constructed
-                                             ) : sf_of_dom( common::cbegin( sf_of_dom ), common::cend( sf_of_dom ) ) {
+superfamily_of_domain::superfamily_of_domain(const str_str_pair_vec &arg_sf_of_dom ///< The domain ID -> superfamily ID data from which this superfamily_of_domain should be constructed
+                                             ) : sf_of_dom( common::cbegin( arg_sf_of_dom ), common::cend( arg_sf_of_dom ) ) {
 	const is_valid_superfamily_id is_valid_sf_pred{};
 	for (const auto &x: sf_of_dom) {
 		if ( ! is_valid_sf_pred( x.second ) ) {

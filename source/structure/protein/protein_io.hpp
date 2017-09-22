@@ -89,17 +89,17 @@ namespace cath {
 
 
 
-	protein protein_from_wolf_and_sec(const file::wolf_file &,
-	                                  const file::sec_file &,
-	                                  const std::string & = "",
-	                                  const ostream_ref_opt & = std::ref( std::cerr ) );
+	protein make_protein_from_wolf_and_sec(const file::wolf_file &,
+	                                       const file::sec_file &,
+	                                       const std::string & = "",
+	                                       const ostream_ref_opt & = std::ref( std::cerr ) );
 
-	protein protein_from_dssp_pdb_and_sec(const file::dssp_file &,
-	                                      const file::pdb &,
-	                                      const file::sec_file &,
-	                                      const file::dssp_skip_policy &,
-	                                      const std::string & = "",
-	                                      const ostream_ref_opt & = std::ref( std::cerr ) );
+	protein make_protein_from_dssp_pdb_and_sec(const file::dssp_file &,
+	                                           const file::pdb &,
+	                                           const file::sec_file &,
+	                                           const file::dssp_skip_policy &,
+	                                           const std::string & = "",
+	                                           const ostream_ref_opt & = std::ref( std::cerr ) );
 
 	void add_name_and_paint_sec_file_onto_protein(protein &,
 	                                              const file::sec_file &,

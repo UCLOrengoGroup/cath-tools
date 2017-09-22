@@ -648,8 +648,8 @@ ssap_scores cath::fast_ssap(const protein                 &arg_protein_a,    ///
 		BOOST_LOG_TRIVIAL( info ) << "Function: fast_ssap:  pass=" << pass_ctr;
 		global_align_pass = ( pass_ctr > 1 );
 		if ( pass_ctr == 1 || ( pass_ctr == 2 && global_res_score ) ) {
-			const pair<ssap_scores, alignment> scores_and_alignment = compare( arg_protein_a, arg_protein_b, pass_ctr, residue_querier(), arg_ssap_options, arg_data_dirs, sec_struc_alignment );
-			new_ssap_scores = scores_and_alignment.first;
+			const pair<ssap_scores, alignment> tmp_scores_and_aln = compare( arg_protein_a, arg_protein_b, pass_ctr, residue_querier(), arg_ssap_options, arg_data_dirs, sec_struc_alignment );
+			new_ssap_scores = tmp_scores_and_aln.first;
 		}
 	}
 
@@ -749,9 +749,9 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 			const aln_posn_type a_position   = get_a_offset_1_position_of_index( new_alignment, alignment_ctr );
 			const aln_posn_type b_position   = get_b_offset_1_position_of_index( new_alignment, alignment_ctr );
 			const int           a_matrix_idx = get_window_matrix_a_index__offset_1(length_a, length_b, global_window, a_position, b_position);
-			const double        score        = numeric_cast<double>( global_upper_score_matrix.get( b_position, numeric_cast<size_t>( a_matrix_idx ) ) );
-			scores.push_back( score / 10.0 + 0.5 );
-//			cerr << "Retrieved score:\t" << score << ",\twhich normalises to: " << ( score / 10.0 + 0.5 ) << endl;
+			const double        local_score  = numeric_cast<double>( global_upper_score_matrix.get( b_position, numeric_cast<size_t>( a_matrix_idx ) ) );
+			scores.push_back( local_score / 10.0 + 0.5 );
+//			cerr << "Retrieved score:\t" << local_score << ",\twhich normalises to: " << ( local_score / 10.0 + 0.5 ) << endl;
 		}
 		else {
 			scores.push_back( none );
@@ -2043,7 +2043,7 @@ ssap_scores cath::plot_aln(const protein                 &arg_protein_a,     ///
 
 			if (score_is_high_enough) {
 				BOOST_LOG_TRIVIAL( info ) << "Function: print_aln";
-				const path alignment_out_file = path(arg_ssap_options.get_alignment_dir()) / (arg_protein_a.get_title() + arg_protein_b.get_title() + ".list");
+				const path alignment_out_file = arg_ssap_options.get_alignment_dir() / ( arg_protein_a.get_title() + arg_protein_b.get_title() + ".list" );
 				write_alignment_as_cath_ssap_legacy_format(alignment_out_file, arg_alignment, arg_protein_a, arg_protein_b);
 			}
 		}

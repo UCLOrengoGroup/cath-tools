@@ -135,10 +135,10 @@ calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const full_hit_list   
 				trim_seq_seg_copy( back ( filtered_segs ), overlap_trim_spec ).get_stop_arrow(),
 				transform_build<seq_seg_vec>(
 					filtered_segs | adjacented,
-					[&] (const pair<seq_seg, seq_seg> &x) {
+					[&] (const pair<seq_seg, seq_seg> &y) {
 						return seq_seg{
-							trim_seq_seg_copy( x.first,  overlap_trim_spec ).get_stop_arrow(),
-							trim_seq_seg_copy( x.second, overlap_trim_spec ).get_start_arrow()
+							trim_seq_seg_copy( y.first,  overlap_trim_spec ).get_stop_arrow(),
+							trim_seq_seg_copy( y.second, overlap_trim_spec ).get_start_arrow()
 						};
 					}
 				),

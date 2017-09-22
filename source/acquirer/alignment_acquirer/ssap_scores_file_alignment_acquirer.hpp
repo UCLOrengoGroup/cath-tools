@@ -35,7 +35,7 @@ namespace cath {
 		class ssap_scores_file_alignment_acquirer final : public alignment_acquirer {
 		private:
 			using super = alignment_acquirer;
-			boost::filesystem::path ssap_scores_file;
+			boost::filesystem::path ssap_scores_filename;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
 			std::pair<align::alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const final;

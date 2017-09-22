@@ -85,18 +85,18 @@ size_t matrix_plotter::get_window_width() const {
 /// \brief Ctor for matrix_plotter
 matrix_plotter::matrix_plotter(const size_t &arg_length_a, ///< The length of the first  entry (the number of rows    in the matrix)
                                const size_t &arg_length_b  ///< The length of the second entry (the number of columns in the matrix)
-                               ) : length_a ( arg_length_a ),
-                                   length_b ( arg_length_b ),
-                                   simplified_windowless ( true ) {
+                               ) : length_a              { arg_length_a },
+                                   length_b              { arg_length_b },
+                                   simplified_windowless { true         } {
 }
 
 /// \brief Ctor for matrix_plotter
 matrix_plotter::matrix_plotter(const size_t &arg_length_a,    ///< The length of the first  entry (the number of rows    in the matrix)
                                const size_t &arg_length_b,    ///< The length of the second entry (the number of columns in the matrix)
                                const size_t &arg_window_width ///< The window width to use when plotting
-                               ) : length_a(arg_length_a),
-                                   length_b(arg_length_b),
-                                   window_width(arg_window_width) {
+                               ) : length_a     { arg_length_a     },
+                                   length_b     { arg_length_b     },
+                                   window_width { arg_window_width } {
 }
 
 /// \brief Plot the original scores for the matrix
@@ -104,17 +104,17 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &arg_scorer ///< Th
                                  ) {
 	check_lengths_match( arg_scorer.get_length_a(), arg_scorer.get_length_b() );
 
-	const size_t length_a     = get_length_a();
-	const size_t length_b     = get_length_b();
-	const size_t window_width = get_window_width();
+	const size_t lcl_length_a     = get_length_a();
+	const size_t lcl_length_b     = get_length_b();
+	const size_t lcl_window_width = get_window_width();
 
-	doub_vec_vec scores( length_a, doub_vec( length_b, 0.0 ) );
+	doub_vec_vec scores( lcl_length_a, doub_vec( lcl_length_b, 0.0 ) );
 
 	if ( simplified_windowless ) {
 		const auto score_of_idx_tpl = [&] (const tuple<size_t, size_t> &x) { return numeric_cast<double>( arg_scorer.get_score( get<0>( x ), get<1>( x ) ) ); };
 
-		const auto index_range_a     = irange( 0_z, length_a );
-		const auto index_range_b     = irange( 0_z, length_b );
+		const auto index_range_a     = irange( 0_z, lcl_length_a );
+		const auto index_range_b     = irange( 0_z, lcl_length_b );
 		const auto index_range_cross = cross( index_range_a, index_range_b );
 		const auto the_minmax = minmax_element(
 			common::cbegin( index_range_cross ),
@@ -140,22 +140,22 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &arg_scorer ///< Th
 
 		double min_score = numeric_limits<double>::max();
 		double max_score = numeric_limits<double>::min();
-		for (size_t ctr_b = 0; ctr_b < length_b; ++ctr_b) {
+		for (size_t ctr_b = 0; ctr_b < lcl_length_b; ++ctr_b) {
 
 			/// \todo Tidy up this window stuff:
 			///        * remove the need to worry about offset 1 here
 			///        * provide a function that returns the start/stop as a pair
 			///        * move towards abstracting iterating over windowed matrices into an iterator of windowed_matrix<>
 			const size_t window_start_a = get_window_start_a_for_b__offset_1(
-				length_a,
-				length_b,
-				window_width,
+				lcl_length_a,
+				lcl_length_b,
+				lcl_window_width,
 				ctr_b + 1
 			) - 1;
 			const size_t window_stop_a = get_window_stop_a_for_b__offset_1(
-				length_a,
-				length_b,
-				window_width,
+				lcl_length_a,
+				lcl_length_b,
+				lcl_window_width,
 				ctr_b + 1
 			) - 1;
 			for (size_t ctr_a = window_start_a; ctr_a <= window_stop_a; ++ctr_a) {
@@ -184,26 +184,26 @@ void matrix_plotter::plot_return_path_matrix(const return_path_matrix &arg_retur
 	check_lengths_match( arg_return_path_matrix.get_length_a(), arg_return_path_matrix.get_length_b() );
 	check_window_width_matches( arg_return_path_matrix.get_window_width() );
 
-	const size_t length_a     = get_length_a();
-	const size_t length_b     = get_length_b();
-	const size_t window_width = get_window_width();
+	const size_t lcl_length_a     = get_length_a();
+	const size_t lcl_length_b     = get_length_b();
+	const size_t lcl_window_width = get_window_width();
 
-	for (size_t ctr_b = 0; ctr_b < length_b; ++ctr_b) {
+	for (size_t ctr_b = 0; ctr_b < lcl_length_b; ++ctr_b) {
 
 		/// \todo Tidy up this window stuff:
 		///        * remove the need to worry about offset 1 here
 		///        * provide a function that returns the start/stop as a pair
 		///        * move towards abstracting iterating over windowed matrices into an iterator of windowed_matrix<>
 		const size_t window_start_a = get_window_start_a_for_b__offset_1(
-			length_a,
-			length_b,
-			window_width,
+			lcl_length_a,
+			lcl_length_b,
+			lcl_window_width,
 			ctr_b + 1
 		) - 1;
 		const size_t window_stop_a = get_window_stop_a_for_b__offset_1(
-			length_a,
-			length_b,
-			window_width,
+			lcl_length_a,
+			lcl_length_b,
+			lcl_window_width,
 			ctr_b + 1
 		) - 1;
 		for (size_t ctr_a = window_start_a; ctr_a <= window_stop_a; ++ctr_a) {
@@ -222,26 +222,26 @@ void matrix_plotter::plot_accumulated_scores(const score_accumulation_matrix &ar
 	check_lengths_match( arg_score_accumulation_matrix.get_length_a(), arg_score_accumulation_matrix.get_length_b() );
 	check_window_width_matches( arg_score_accumulation_matrix.get_window_width() );
 
-	const size_t length_a     = get_length_a();
-	const size_t length_b     = get_length_b();
-	const size_t window_width = get_window_width();
+	const size_t lcl_length_a     = get_length_a();
+	const size_t lcl_length_b     = get_length_b();
+	const size_t lcl_window_width = get_window_width();
 
-	for (size_t ctr_b = 0; ctr_b < length_b; ++ctr_b) {
+	for (size_t ctr_b = 0; ctr_b < lcl_length_b; ++ctr_b) {
 
 		/// \todo Tidy up this window stuff:
 		///        * remove the need to worry about offset 1 here
 		///        * provide a function that returns the start/stop as a pair
 		///        * move towards abstracting iterating over windowed matrices into an iterator of windowed_matrix<>
 		const size_t window_start_a = get_window_start_a_for_b__offset_1(
-			length_a,
-			length_b,
-			window_width,
+			lcl_length_a,
+			lcl_length_b,
+			lcl_window_width,
 			ctr_b + 1
 		) - 1;
 		const size_t window_stop_a = get_window_stop_a_for_b__offset_1(
-			length_a,
-			length_b,
-			window_width,
+			lcl_length_a,
+			lcl_length_b,
+			lcl_window_width,
 			ctr_b + 1
 		) - 1;
 		for (size_t ctr_a = window_start_a; ctr_a <= window_stop_a; ++ctr_a) {

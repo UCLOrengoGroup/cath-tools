@@ -66,15 +66,15 @@ argc_argv_faker::argc_argv_faker(const str_vec &arg_arguments
 }
 
 /// \brief Constructor for argc_argv_faker from const argv-style arguments.
-argc_argv_faker::argc_argv_faker(const int &argc,
-                                 const char * const argv[]
+argc_argv_faker::argc_argv_faker(const int          &arg_argc,
+                                 const char * const  arg_argv[]
                                  ) {
 	str_vec argument_strings;
-	argument_strings.reserve( numeric_cast<size_t>( argc ) );
-	for (int arg_ctr = 0; arg_ctr < argc; ++arg_ctr) {
-		argument_strings.push_back(argv[arg_ctr]);
+	argument_strings.reserve( numeric_cast<size_t>( arg_argc ) );
+	for (int arg_ctr = 0; arg_ctr < arg_argc; ++arg_ctr) {
+		argument_strings.push_back( arg_argv[ arg_ctr ] );
 	}
-	init(argument_strings);
+	init( argument_strings );
 }
 
 /// \brief Get the argc-like of the data with which this argc_argv_faker was constructed

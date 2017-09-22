@@ -70,9 +70,9 @@ str_opt clustmap_options::do_get_error_or_help_string() const {
 			+ ")";
 	}
 
-	const variables_map &vm = get_variables_map();
+	const variables_map &local_vm = get_variables_map();
 
-	if ( specified_clust_thresh_options( vm ) && ! map_from_clustmemb_file && ! read_batches_from_input ) {
+	if ( specified_clust_thresh_options( local_vm ) && ! map_from_clustmemb_file && ! read_batches_from_input ) {
 		return "Cannot specify mapping threshold options (--"
 			+ join( clust_thresh_option_names(), ", --" )
 			+ ") if not specifying map-from file (--"

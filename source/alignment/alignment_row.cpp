@@ -277,11 +277,11 @@ alignment_row cath::align::join(const alignment_row &arg_joinee_a, ///< TODOCUME
                                 const alignment_row &arg_joinee_b  ///< TODOCUMENT
                                 ) {
 	// Grab the total number of entries
-	const size_t num_entries = arg_joinee_a.num_entries() + arg_joinee_b.num_entries();
+	const size_t total_num_entries = arg_joinee_a.num_entries() + arg_joinee_b.num_entries();
 
 	// Prepare a positions to be populated
 	aln_posn_opt_vec positions;
-	positions.reserve( num_entries );
+	positions.reserve( total_num_entries );
 
 	// Loop over the two joinees, populating positions
 	for ( const alignment_row &joinee : { cref( arg_joinee_a ), cref( arg_joinee_b ) } ) {

@@ -70,7 +70,7 @@ protein cath::read_protein_from_wolf_and_sec_files(const path            &arg_wo
                                                    const string          &arg_name,          ///< The name to set as the title of the protein
                                                    const ostream_ref_opt &arg_stderr         ///< An optional reference to an ostream to which any logging should be performed
                                                    ) {
-	return protein_from_wolf_and_sec(
+	return make_protein_from_wolf_and_sec(
 		read_wolf( arg_wolf_filename ),
 		read_sec(  arg_sec_filename  ),
 		arg_name,
@@ -253,11 +253,11 @@ protein cath::read_protein_from_pdb_and_calc_dssp_and_sec(const path            
 /// \relatesalso protein
 /// \relatesalso wolf_file
 /// \relatesalso sec_file
-protein cath::protein_from_wolf_and_sec(const wolf_file       &arg_wolf,  ///< The parsed wolf_file object
-                                        const sec_file        &arg_sec,   ///< The parsed sec
-                                        const string          &arg_name,  ///< The name to set as the title of the protein
-                                        const ostream_ref_opt &arg_stderr ///< An optional reference to an ostream to which any logging should be performed
-                                        ) {
+protein cath::make_protein_from_wolf_and_sec(const wolf_file       &arg_wolf,  ///< The parsed wolf_file object
+                                             const sec_file        &arg_sec,   ///< The parsed sec
+                                             const string          &arg_name,  ///< The name to set as the title of the protein
+                                             const ostream_ref_opt &arg_stderr ///< An optional reference to an ostream to which any logging should be performed
+                                             ) {
 	// Create a protein from the wolf file, set its title, paint the sec_file onto it and then return it
 	return add_name_and_paint_sec_file_onto_protein_copy(
 		protein_from_wolf(arg_wolf),
@@ -273,13 +273,13 @@ protein cath::protein_from_wolf_and_sec(const wolf_file       &arg_wolf,  ///< T
 /// \relatesalso dssp_file
 /// \relatesalso pdb
 /// \relatesalso sec_file
-protein cath::protein_from_dssp_pdb_and_sec(const dssp_file        &arg_dssp,             ///< The parsed DSSP file
-                                            const pdb              &arg_pdb,              ///< The parsed PDB file
-                                            const sec_file         &arg_sec,              ///< The parsed sec file
-                                            const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to limit the protein to those residues that were present in the DSSP
-                                            const string           &arg_name,             ///< The name to set as the title of the protein
-                                            const ostream_ref_opt  &arg_stderr            ///< An optional reference to an ostream to which any logging should be performed
-                                            ) {
+protein cath::make_protein_from_dssp_pdb_and_sec(const dssp_file        &arg_dssp,             ///< The parsed DSSP file
+                                                 const pdb              &arg_pdb,              ///< The parsed PDB file
+                                                 const sec_file         &arg_sec,              ///< The parsed sec file
+                                                 const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to limit the protein to those residues that were present in the DSSP
+                                                 const string           &arg_name,             ///< The name to set as the title of the protein
+                                                 const ostream_ref_opt  &arg_stderr            ///< An optional reference to an ostream to which any logging should be performed
+                                                 ) {
 	// Create a protein from the DSSP and PDB, set its title, paint the sec_file onto it and then return it
 	return add_name_and_paint_sec_file_onto_protein_copy(
 		protein_from_dssp_and_pdb(
