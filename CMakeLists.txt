@@ -63,7 +63,16 @@ ENDIF()
 find_package(Boost 1.55 REQUIRED filesystem iostreams log_setup log program_options serialization system thread timer unit_test_framework)
 
 # Default flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -W -Wall -Werror -Wextra -Wsign-compare -Wsign-conversion -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftabstop=2")
+#
+# New warnings (not included in -Wextra) to consider using come GCC 6 : -Wduplicated-cond     -Wnull-dereference
+# New warnings (not included in -Wextra) to consider using come GCC 7 : -Wduplicated-branches -Wrestrict
+#
+# Not using the following due to excessive false-positives
+#  * -Wdouble-promotion
+#  * -Wold-style-cast   (fires in common/third_party_code/gnuplot-iostream.h)
+#  * -Wuseless-cast
+#
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic -ftabstop=2")
 
 # Append debug compiler flags with setting of _GLIBCXX_DEBUG
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG")
