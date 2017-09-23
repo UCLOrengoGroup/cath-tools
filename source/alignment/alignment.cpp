@@ -105,10 +105,10 @@ alignment::size_type alignment::reserved_length() const {
 ///
 /// It is useful to allow an alignment with one entry so that cath-superpose doesn't
 /// have to treat that as a special case.
-alignment::alignment(const size_type &num_entries ///< TODOCUMENT
-                     ) : positions      ( num_entries ),
-                         logical_length ( 0           ) {
-	if (num_entries < 1) {
+alignment::alignment(const size_type &arg_num_entries ///< TODOCUMENT
+                     ) : positions      ( arg_num_entries ),
+                         logical_length ( 0               ) {
+	if ( arg_num_entries < 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot currently create alignment of with no entries"));
 	}
 }
