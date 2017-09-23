@@ -121,8 +121,8 @@ alignment::alignment(const aln_posn_opt_vec_vec &arg_lists ///< TODOCUMENT
                      ) : positions      ( arg_lists.size() ),
                          logical_length ( 0                ) {
 	// If there isn't at least one list, then throw a wobbly
-	const size_type num_entries = arg_lists.size();
-	if (num_entries < 1) {
+	const size_type the_num_entries = arg_lists.size();
+	if (the_num_entries < 1) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot construct an alignment from zero lists"));
 	}
 
@@ -139,10 +139,10 @@ alignment::alignment(const aln_posn_opt_vec_vec &arg_lists ///< TODOCUMENT
 
 	// Step through the alignment, adding the new bunch of positions
 	for (size_t index = 0; index < input_length; ++index ) {
-		aln_posn_opt_vec new_positions( num_entries );
+		aln_posn_opt_vec new_positions( the_num_entries );
 
 		bool has_position_for_some_entry = false;
-		for (alignment::size_type entry = 0; entry < num_entries; ++entry) {
+		for (alignment::size_type entry = 0; entry < the_num_entries; ++entry) {
 			const aln_posn_opt &position = arg_lists[ entry ][ index ];
 			has_position_for_some_entry  = ( position || has_position_for_some_entry );
 			new_positions[ entry ]       = position;
