@@ -22,9 +22,11 @@
 #define _CATH_TOOLS_SOURCE_FILE_STRUCS_CONTEXT_H
 
 #include "chopping/chopping_type_aliases.hpp"
+#include "chopping/region/region.hpp"
 #include "common/type_aliases.hpp"                  // for str_vec
 #include "exception/invalid_argument_exception.hpp"
 #include "file/name_set/name_set_list.hpp"
+#include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_list.hpp"                    // for pdb_list
 
 namespace cath {

@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FULL_HIT_LIST_H
 
 #include "common/cpp14/cbegin_cend.hpp"
+#include "resolve_hits/full_hit.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 
 namespace cath {
