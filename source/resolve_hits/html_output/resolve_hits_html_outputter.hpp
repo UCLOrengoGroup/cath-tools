@@ -40,7 +40,7 @@ namespace cath {
 	namespace rslv {
 
 		/// \brief The context in which a hit is being rendered into an HTML row
-		enum class hit_row_context {
+		enum class hit_row_context : char {
 			HIGHLIGHT,    ///< An input data row that is being highlighted as containing a hit that appears in the results
 			NORMAL,       ///< A normal input data row
 			RESULT,       ///< A result row

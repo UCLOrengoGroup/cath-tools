@@ -43,7 +43,7 @@ namespace cath {
 		                                           const size_t  &);
 
 		/// \brief The types of secondary structure processed by Prosec
-		enum class prosec_sec_type {
+		enum class prosec_sec_type : bool {
 			ALPHA_HELIX, ///< Alpha-helix (as used in Prosec)
 			BETA_STRAND  ///< Beta-strand (as used in Prosec)
 			// THREE_TEN_HELIX ///< 3-10 helix  (as used in Prosec)

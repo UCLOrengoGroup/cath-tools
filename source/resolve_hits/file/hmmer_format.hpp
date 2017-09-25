@@ -25,7 +25,7 @@ namespace cath {
 	namespace rslv {
 
 		/// \brief Represent the HMMER formats that can be parsed
-		enum class hmmer_format {
+		enum class hmmer_format : bool {
 			HMMSEARCH,  ///< The format output by hmmsearch
 			HMMSCAN     ///< The format output by hmmscan
 		};

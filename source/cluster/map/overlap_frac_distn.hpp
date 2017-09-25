@@ -101,7 +101,7 @@ namespace cath {
 		public:
 
 			/// \brief What to do about zero overlap factions when calculating statistics
-			enum class zeroes_policy {
+			enum class zeroes_policy : bool {
 				INCLUDE, ///< Include the zeroes as normal
 				EXCLUDE  ///< Exclude the zeroes from calculations (ie calculate as if they weren't there)
 			};

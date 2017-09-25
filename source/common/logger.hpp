@@ -36,7 +36,7 @@ namespace cath {
 		logger() = delete;
 
 		/// \brief TODOCUMENT
-		enum class return_code {
+		enum class return_code : char {
 			SUCCESS                              =  EXIT_SUCCESS, ///< TODOCUMENT
 			GENERIC_FAILURE_RETURN_CODE          =  EXIT_FAILURE, ///< TODOCUMENT
 			TOO_FEW_PDBS_FOR_ALIGNMENT           = 10,            ///< TODOCUMENT

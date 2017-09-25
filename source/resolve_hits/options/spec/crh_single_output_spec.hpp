@@ -31,7 +31,7 @@ namespace cath {
 	namespace rslv {
 
 		/// \brief Represent the different cath-resolve-hits output formats
-		enum class crh_out_format {
+		enum class crh_out_format : char {
 			STANDARD,
 			SUMMARY,
 			HTML,

@@ -37,7 +37,7 @@ namespace cath {
 	namespace scan {
 
 		/// \brief TODOCUMENT
-		enum class sod {
+		enum class sod : bool {
 			SPARSE,
 			DENSE
 		};

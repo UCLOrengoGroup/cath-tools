@@ -56,7 +56,7 @@ namespace cath {
 	using char_char_3_arr_str_tpl_vec = std::vector<char_char_3_arr_str_tpl>;
 
 	/// \brief Represent the type of amino_acid record
-	enum class amino_acid_type {
+	enum class amino_acid_type : char {
 		AA,      ///< A standard amino_acid amino acid record (!)
 		HETATOM, ///< A HETATM amino acid record
 		DNA      ///< A DNA/RNA amino acid record

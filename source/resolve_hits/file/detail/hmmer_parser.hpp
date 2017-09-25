@@ -45,7 +45,7 @@ namespace cath {
 			///
 			/// The hmm threshold is the fraction of the HMM involved in the hmmsearch hit
 			/// (`( hmm_to + 1 - hmm_from ) / hmm_length`)
-			enum class hmm_coverage {
+			enum class hmm_coverage : bool {
 				OK,     ///< The hmm coverage is OK
 				TOO_LOW ///< The hmm coverage has failed a required threshold
 			};

@@ -42,7 +42,7 @@ namespace cath { namespace align { class alignment; } }
 namespace cath {
 	namespace align {
 
-		enum class fot {
+		enum class fot : bool {
 			FROM,
 			TO
 		};
