@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CLUSTER_OPTIONS_CLUSTMAP_OPTIONS_H
-#define _CATH_TOOLS_SOURCE_CLUSTER_OPTIONS_CLUSTMAP_OPTIONS_H
+#ifndef _CATH_TOOLS_SOURCE_CLUSTER_CLUSTMAP_OPTIONS_H
+#define _CATH_TOOLS_SOURCE_CLUSTER_CLUSTMAP_OPTIONS_H
 
 #include "cluster/options/options_block/clust_mapping_options_block.hpp"
 #include "cluster/options/options_block/clustmap_input_options_block.hpp"
