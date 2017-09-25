@@ -9,7 +9,6 @@ pages:
   - cath-ssap           : tools/cath-ssap.md
   - cath-superpose      : tools/cath-superpose.md
 - Build                 : build.md
-- Development           : development.md
 - License               : license.md
 - References            : references.md
 
