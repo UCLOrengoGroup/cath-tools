@@ -70,19 +70,6 @@ Please tell us your cath-tools bugs/suggestions : https://github.com/UCLOrengoGr
 
 If neither of a pair of clusters is preferred by one criterion, the comparison drops down to the next.
 
-Notes on Possible Future Features
----------------------------------
-
- * In batch mode, add a table to the summary with a row per batch
- * Possibly split  "Domains from Map-From Clusters" numbers entry
- * Add new number start point (and could be an extra optional column in the multi-batch file)
- * JSON output (in separate files for batch mode? if so, perhaps: find last dot before mismatch point of basenames and replace remaining with new output suffix)
- * Sequence pill figures?
- * Multi-layered renumbering:
-   * For multi-layered renumbering, prefer newest version of any family.
-   * For multi-layered renumbering, may be best if any conflict ordering preferred mapping from older families.
-
-
 Feedback
 --------
 
