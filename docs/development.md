@@ -123,7 +123,7 @@ find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR
 GCC:
 
 ~~~~~no-highlight
-find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR g++     -DBOOST_LOG -std=c++1y                -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_gcc.dummy.header.o   -isystem /opt/boost_1_60_0_gcc_build/include   -I source VAR
+find source -iname '*.hpp' | sort | grep third_party_code -v | xargs -P 4 -I VAR g++     -DBOOST_LOG -std=c++1y                -W -Wall -Werror -Wextra -Wno-unused-const-variable -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -c -o /tmp/.comp_gcc.dummy.header.o   -isystem /opt/boost_1_60_0_gcc_build/include   -isystem rapidjson/include -I source VAR
 ~~~~~
 
 
