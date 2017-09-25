@@ -177,8 +177,8 @@ namespace cath {
 		template <typename T>
 		using clptr_vec = std::vector< common::clone_ptr< T > >;
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 namespace cath {
 	class protein;

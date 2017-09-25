@@ -53,7 +53,7 @@ namespace cath {
 				return results;
 			}
 
-	}
+	} // namespace common
 
 	namespace rslv {
 		namespace detail {

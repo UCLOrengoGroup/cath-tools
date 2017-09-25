@@ -148,7 +148,7 @@ namespace cath {
 
 			/// \brief Type alias for a unique_ptr to a hits_processor
 			using hits_processor_uptr = std::unique_ptr<hits_processor>;
-		}
+		} // namespace detail
 
 	} // namespace rslv
 } // namespace cath

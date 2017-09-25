@@ -43,7 +43,7 @@ namespace cath {
 					return std::hash<std::decay_t<T>>{}( arg_value.get() );
 				}
 			};
-		}
+		} // namespace detail
 
 	} // namespace common
 } // namespace cath

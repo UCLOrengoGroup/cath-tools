@@ -63,7 +63,7 @@ namespace cath {
 					: power_of_ten( arg_expt - 1, 10_z * arg_result )
 				);
 			}
-		}
+		} // namespace detail
 
 		/// \brief Store the distribution of overlap fractions using a bunch of bin counts
 		class overlap_frac_distn final : private boost::addable<overlap_frac_distn> {

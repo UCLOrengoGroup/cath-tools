@@ -99,7 +99,7 @@ namespace cath {
 			                       ) {
 				return ( arg_lhs.get() == arg_rhs.get() );
 			}
-		}
+		} // namespace detail
 	} // namespace common
 } // namespace cath
 

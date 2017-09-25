@@ -402,7 +402,7 @@ namespace cath {
 					}...
 				} };
 			}
-		}
+		} // namespace detail
 
 		/// \brief Make a seq_seg_run from the even list of residue start/stop indices
 		///
@@ -515,7 +515,7 @@ namespace cath {
 					}
 				}
 			}
-		}
+		} // namespace detail
 
 		/// \brief Return whether the two specified seq_seg_runs overlap with each other
 		///

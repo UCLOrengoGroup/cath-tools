@@ -31,7 +31,7 @@ namespace cath {
 		namespace detail {
 			geom::detail::gsl_matrix_wrp cross_covariance_matrix(const geom::coord_list &,
 			                                                     const geom::coord_list &);
-		}
+		} // namespace detail
 
 		geom::rotation superpose_fit_1st_to_2nd(const geom::coord_list &,
 		                                        const geom::coord_list &);

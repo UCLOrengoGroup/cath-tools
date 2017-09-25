@@ -41,7 +41,7 @@ namespace cath {
 				domain_cluster_ids dom_cluster_ids;
 			};
 
-		}
+		} // namespace detail
 
 
 

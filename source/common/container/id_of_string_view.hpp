@@ -40,7 +40,7 @@ namespace cath {
 					return boost::hash_range( arg_value.begin(), arg_value.end() );
 				}
 			};
-		}
+		} // namespace detail
 
 		/// \brief Map boost:string_ref to numeric IDs that count incrementally from 0
 		///
