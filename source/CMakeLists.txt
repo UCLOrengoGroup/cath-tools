@@ -1466,6 +1466,7 @@ set(
 
 set(
 	TESTSOURCES_COMMON_ALGORITHM
+		common/algorithm/are_same_test.cpp
 		common/algorithm/constexpr_find_test.cpp
 		common/algorithm/constexpr_floor_test.cpp
 		common/algorithm/constexpr_integer_rounding_test.cpp
