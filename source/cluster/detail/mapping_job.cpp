@@ -89,7 +89,7 @@ mapping_job_vec cath::clust::detail::read_batch_mapping_file(istream &arg_istrea
 			path{ parts[ 1 ] },
 			make_optional_if_fn(
 				parts.size() >= 3,
-				[&] () { return path{ parts[ 2 ] }; }
+				[&] { return path{ parts[ 2 ] }; }
 			)
 		);
 	}

@@ -155,7 +155,7 @@ hits_processor_list cath::rslv::detail::make_hits_processors(ofstream_list      
 		const path_vec &summarise_files   = arg_output_spec.get_summarise_files();
 		const path_vec &html_output_files = arg_output_spec.get_html_output_files();
 		const path_vec &json_output_files = arg_output_spec.get_json_output_files();
-		const path_vec  hits_text_files   = [&] () {
+		const path_vec  hits_text_files   = [&] {
 			path_vec temp_hits_text_files = arg_output_spec.get_hits_text_files();
 			if ( ! arg_output_spec.get_quiet() && ! has_any_out_files_matching( arg_output_spec, arg_ofstreams.get_flag() ) ) {
 				temp_hits_text_files.push_back( arg_ofstreams.get_flag() );

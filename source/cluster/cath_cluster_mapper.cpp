@@ -145,7 +145,7 @@ void cath::clust::perform_map_clusters(const clustmap_input_spec   &arg_input_sp
 
 		const old_cluster_data_opt old_from_clusters = make_optional_if_fn(
 			static_cast<bool>( job_old_clustmemb_file ),
-			[&] () { return parse_old_membership( *job_old_clustmemb_file, seq_ider, ref( arg_stderr )  ); }
+			[&] { return parse_old_membership( *job_old_clustmemb_file, seq_ider, ref( arg_stderr )  ); }
 		);
 
 		const auto results = map_clusters(

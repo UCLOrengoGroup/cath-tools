@@ -42,7 +42,7 @@ namespace cath {
 		/// \code
 		/// const doub_vec ten_rands = generate_n_build<doub_vec>(
 		///     10,
-		///     []() { return rand(); }
+		///     [] { return rand(); }
 		/// );
 		///
 		/// Pre-C++11, this will invoke at least one inefficient call to the container's copy-ctor to return it

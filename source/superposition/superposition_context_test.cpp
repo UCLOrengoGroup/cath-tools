@@ -180,7 +180,7 @@ BOOST_AUTO_TEST_CASE(get_supn_content_pdb_works) {
 //
 // 	BOOST_REQUIRE( is_directory( pdb_dir  ) );
 //
-// 	const path_vec sorted_pdb_files = [&] () {
+// 	const path_vec sorted_pdb_files = [&] {
 // 		path_vec results;
 // 		for (const directory_entry &pdb_entry : directory_iterator( pdb_dir ) ) {
 // 			const path &pdb_file = pdb_entry.path();

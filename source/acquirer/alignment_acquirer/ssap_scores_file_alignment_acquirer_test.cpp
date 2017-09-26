@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 	} );
 
 	// Use a lambda to enclose the log_to_ostream_guard whilst allowing the result to be passed back out
-	const auto aln_and_sptree = [&] () {
+	const auto aln_and_sptree = [&] {
 		ostringstream parse_ss;
 		const log_to_ostream_guard parse_log_guard{ parse_ss };
 		return the_acquirer.get_alignment_and_spanning_tree( the_pdbs );

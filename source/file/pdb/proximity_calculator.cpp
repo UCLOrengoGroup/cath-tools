@@ -206,7 +206,7 @@ void cath::file::restrict_to_linkage_proximate(coord_vec                  &arg_c
                                                ) {
 	restrict_to_single_linkage_extension(
 		arg_coords,
-		[&] () {
+		[&] {
 			return partition(
 				arg_coords,
 				[&] (const coord &x) {

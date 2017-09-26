@@ -155,7 +155,7 @@ namespace cath {
 			const auto &length = arg_protein.get_length();
 			return generate_n_build<view_cache_index_entry_vec>(
 				arg_num_entries,
-				[&] () {
+				[&] {
 					const auto index_pair = pick_random_pair( 0_z, length - 1, arg_rng );
 					return make_view_cache_index_entry(
 						arg_protein,
@@ -222,7 +222,7 @@ namespace cath {
 			}
 			return generate_n_build<hrc_duration_vec>(
 				arg_num_repeats,
-				[&] () { return time_comparison( arg_vcies_pair ); }
+				[&] { return time_comparison( arg_vcies_pair ); }
 			);
 		}
 	}  // namespace test

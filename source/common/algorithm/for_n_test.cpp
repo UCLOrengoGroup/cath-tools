@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(for_n_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	int n = 10;
-	for_n( 5, [&] () { ++n;} );
+	for_n( 5, [&] { ++n; } );
 	BOOST_CHECK_EQUAL( n, 15 );
 }
 

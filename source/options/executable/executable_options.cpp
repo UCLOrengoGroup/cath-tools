@@ -214,7 +214,7 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 	// );
 
 	// return prog_opts_try(
-	// 	[&] () {
+	// 	[&] {
 	// 		const auto parsed = arg_parser.run();
 	// 		store( parsed, arg_vm );
 	// 		notify( arg_vm );
@@ -224,7 +224,7 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 
 	prog_opts_try(
 		error_or_help_string,
-		[&] () {
+		[&] {
 			const auto parsed = command_line_parser( new_argc, new_argv )
 				.options( full_po_desc )
 				.allow_unregistered()
@@ -274,7 +274,7 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 	//  specified via environment variables so it comes first)
 	prog_opts_try(
 		error_or_help_string,
-		[&] () {
+		[&] {
 			store(
 				command_line_parser(
 					new_argc,
@@ -297,7 +297,7 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 	//  specified via environment variables so it comes first)
 	prog_opts_try(
 		error_or_help_string,
-		[&] () {
+		[&] {
 			store(
 				parse_environment(
 					full_po_desc,
@@ -320,7 +320,7 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 		ifstream config_file_stream;
 		prog_opts_try(
 			error_or_help_string,
-			[&] () {
+			[&] {
 				open_ifstream(config_file_stream, CATH_TOOLS_CONF_FILE);
 				store( parse_config_file( config_file_stream, full_po_desc, true ), vm );
 				config_file_stream.close();
@@ -333,7 +333,7 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 	// post-parsing hooks to get called
 	prog_opts_try(
 		error_or_help_string,
-		[&] () { notify( vm ); }
+		[&] { notify( vm ); }
 	);
 
 	if ( error_or_help_string ) {
@@ -346,7 +346,7 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 	for (const auto &options_block_ref : all_options_blocks) {
 		const auto block_invalid_string = options_block_ref.get().invalid_string( vm );
 		if ( block_invalid_string ) {
-			prog_opts_try( error_or_help_string, [&] () {
+			prog_opts_try( error_or_help_string, [&] {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(*block_invalid_string));
 			} );
 			return;
@@ -375,7 +375,7 @@ str_opt executable_options::get_error_or_help_string() const {
 	}
 	return make_optional_if_fn(
 		static_cast<bool>( error_or_help_string ),
-		[&] () {
+		[&] {
 			return trim_right_copy( *error_or_help_string ) + "\n";
 		}
 	);

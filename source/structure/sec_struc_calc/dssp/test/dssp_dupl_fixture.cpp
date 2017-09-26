@@ -207,7 +207,7 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &arg_dssp_dupl_res_
 			+ "). "
 	);
 
-	const auto normal_index_of_dssp_index = [&] () {
+	const auto normal_index_of_dssp_index = [&] {
 		size_vec result( num_dssp_dupl_res, 0 );
 		for (const size_t &x : irange( 0_z, dssp_non_null_indices.size() ) ) {
 			result[ dssp_non_null_indices[ x ] ] = x;

@@ -338,7 +338,7 @@ namespace cath {
 		const aa_variant_t * const aa_ptr = boost::get<aa_variant_t>( &data );
 		return common::make_optional_if_fn(
 			aa_ptr != nullptr,
-			[&] () { return get_label<char, 0>( *aa_ptr ); }
+			[&] { return get_label<char, 0>( *aa_ptr ); }
 		);
 	}
 

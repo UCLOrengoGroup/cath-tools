@@ -87,7 +87,7 @@ namespace cath {
 				BOOST_REQUIRE( is_directory( arg_dssp_dir ) );
 				BOOST_REQUIRE( is_directory( arg_pdb_dir  ) );
 
-				const path_vec sorted_dssp_files = [&] () {
+				const path_vec sorted_dssp_files = [&] {
 					path_vec results;
 					for (const directory_entry &dssp_entry : directory_iterator( arg_dssp_dir ) ) {
 						const path &dssp_file = dssp_entry.path();

@@ -161,7 +161,7 @@ private:
 			std::cerr << "\t" << cell_size << std::endl;
 			info_quantity memory_usage;
 			const auto build_durn = time_execution(
-				[&] () {
+				[&] {
 					const T store_wrapper_a{
 						std::integral_constant< sod, Sod >{},
 						arg_protein_a,

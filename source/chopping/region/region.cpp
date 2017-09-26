@@ -405,7 +405,7 @@ void cath::chop::validate(any           &arg_prev_value,    ///< TODOCUMENT
                           domain *,
                           int
                           ) {
-	arg_prev_value = [&] () {
+	arg_prev_value = [&] {
 		// Standard validate boilerplate:
 		//  * Make sure no previous assignment to 'a' was made.
 		//  * Extract the first string from 'arg_value_strings'.

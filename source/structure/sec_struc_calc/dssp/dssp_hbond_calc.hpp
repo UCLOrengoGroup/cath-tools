@@ -130,7 +130,7 @@ namespace cath {
 		                                                        const file::pdb_residue                  &arg_residue_i,      ///< The first residue
 		                                                        const file::pdb_residue                  &arg_residue_j       ///< The second residue
 		                                                        ) {
-			const auto pseudo_h = [&] () {
+			const auto pseudo_h = [&] {
 				if ( arg_residue_i_prev ) {
 					const auto prev_c_to_o = get_oxygen_coord( *arg_residue_i_prev )
 					                         -

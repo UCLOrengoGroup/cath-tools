@@ -328,9 +328,9 @@ prot_prot_pair cath::read_protein_pair(const cath_ssap_options &arg_cath_ssap_op
 	const auto &the_domains      = arg_cath_ssap_options.get_domains();
 	return read_protein_pair(
 		the_ssap_options.get_protein_name_a(),
-		make_optional_if_fn( the_domains.size() > 0, [&] () { return the_domains[ 0 ]; } ),
+		make_optional_if_fn( the_domains.size() > 0, [&] { return the_domains[ 0 ]; } ),
 		the_ssap_options.get_protein_name_b(),
-		make_optional_if_fn( the_domains.size() > 1, [&] () { return the_domains[ 1 ]; } ),
+		make_optional_if_fn( the_domains.size() > 1, [&] { return the_domains[ 1 ]; } ),
 		arg_cath_ssap_options.get_data_dirs_spec(),
 		*the_ssap_options.get_protein_source_files(),
 		the_ssap_options.get_opt_domin_file(),

@@ -45,9 +45,9 @@ namespace cath {
 			rapidjson_writer<Style> the_writer;
 
 			// Perform the specified function on the writer, within arg_extra_depth levels of array
-			for_n( arg_extra_depth, [&] () { the_writer.start_array(); } );
+			for_n( arg_extra_depth, [&] { the_writer.start_array(); } );
 			invoke( std::forward<Fn>( arg_fn ), the_writer );
-			for_n( arg_extra_depth, [&] () { the_writer.end_array();   } );
+			for_n( arg_extra_depth, [&] { the_writer.end_array();   } );
 
 			// Grab the C-style string
 			const char * const c_string   = the_writer.get_c_string();

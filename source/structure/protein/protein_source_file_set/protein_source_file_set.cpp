@@ -119,7 +119,7 @@ protein cath::read_protein_from_files(const protein_source_file_set &arg_source_
                                       ) {
 	const region_vec_opt regions = make_optional_if_fn(
 		static_cast<bool>( arg_domain ),
-		[&] () { return region_vec{ common::cbegin( *arg_domain ), common::cend( *arg_domain ) }; }
+		[&] { return region_vec{ common::cbegin( *arg_domain ), common::cend( *arg_domain ) }; }
 	);
 	protein the_protein = arg_source_file_set.read_files(
 		arg_data_dirs,

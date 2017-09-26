@@ -93,7 +93,7 @@ namespace cath {
 
 				// Build a string of rules separated by |s
 				const auto num_fence_posts = ( num_strings > 0 ) ? ( num_strings + 1 ) : 0;
-				const auto bar_str_closure = [&] () { return bar; };
+				const auto bar_str_closure = [&] { return bar; };
 				const std::string rules    = boost::algorithm::join(
 					common::generate_n_build<str_vec>( num_fence_posts, bar_str_closure ),
 					rule_septr

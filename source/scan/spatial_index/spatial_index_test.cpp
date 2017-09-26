@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 
 	// 		const auto make_start_time = high_resolution_clock::now();
 	// 		// const auto lattice         = make_sparse_lattice( protein_a, cell_size );
-	// 		const auto lattice = [&] () {
+	// 		const auto lattice = [&] {
 	// 			if ( spatial_try_val == spatial_try::SPARSE_FROM_PROT || spatial_try_val == spatial_try::SPARSE_FROM_SCAN ) {
 	// 				return make_sparse_lattice ( protein_a, cell_size );
 	// 			}

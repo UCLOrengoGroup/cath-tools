@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(size_and_empty_work) {
 
 BOOST_AUTO_TEST_CASE(accesses_work) {
 	const bool correct_parse_hits = summarise_hits_processor{ test_ss_ref_vec }.wants_hits_that_fail_score_filter();
-	const auto the_list = [&] () {
+	const auto the_list = [&] {
 		hits_processor_list temp_list;
 		temp_list
 			.add_processor( summarise_hits_processor{ test_ss_ref_vec } )

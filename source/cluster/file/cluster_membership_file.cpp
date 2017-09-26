@@ -132,7 +132,7 @@ old_cluster_data cath::clust::parse_old_membership(istream               &arg_is
 				entry_name,
 				make_optional_if_fn(
 					has_segs,
-					[&] () {
+					[&] {
 						return segs_parser.parse( next( pre_split_point_itr ), domain_id_itrs.second );
 					}
 				)
@@ -207,7 +207,7 @@ new_cluster_data cath::clust::parse_new_membership(istream               &arg_is
 				entry_name,
 				make_optional_if_fn(
 					has_segs,
-					[&] () {
+					[&] {
 						return segs_parser.parse( next( pre_split_point_itr ), domain_id_itrs.second );
 					}
 				)

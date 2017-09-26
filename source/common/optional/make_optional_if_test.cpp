@@ -36,8 +36,8 @@ BOOST_AUTO_TEST_CASE(make_optional_if_works) {
 }
 
 BOOST_AUTO_TEST_CASE(make_optional_if_fn_works) {
-	BOOST_CHECK_EQUAL( make_optional_if_fn( true,  [] () {                      return 1; } ), optional<int>{ 1    } );
-	BOOST_CHECK_EQUAL( make_optional_if_fn( false, [] () { BOOST_CHECK( false); return 1; } ), optional<int>{ none } );
+	BOOST_CHECK_EQUAL( make_optional_if_fn( true,  [] {                      return 1; } ), optional<int>{ 1    } );
+	BOOST_CHECK_EQUAL( make_optional_if_fn( false, [] { BOOST_CHECK( false); return 1; } ), optional<int>{ none } );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

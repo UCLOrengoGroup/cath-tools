@@ -385,7 +385,7 @@ namespace cath {
 					const double independent_evalue = common::parse_double_from_field( indp_evalue_itrs.first, indp_evalue_itrs.second );
 
 					// Calculate the hmm coverage status
-					const hmm_coverage hmm_coverage_status = [&] () {
+					const hmm_coverage hmm_coverage_status = [&] {
 						if ( min_hmm_coverage && prefix_hmm_length ) {
 							const auto hmm_from_itrs = common::find_field_itrs( line, LINE_HMM_FROM_OFFSET, 1 + LINE_INDP_EVALUE_OFFSET, indp_evalue_itrs.second );
 							const auto hmm_to_itrs   = common::find_field_itrs( line, LINE_HMM_TO_OFFSET,   1 + LINE_HMM_FROM_OFFSET,    hmm_from_itrs.second    );

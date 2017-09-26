@@ -135,7 +135,7 @@ namespace cath {
 				arg_cluster_info.get_total_sqrt_length()
 				&&
 				arg_cluster_info.get_total_mid_point_index(),
-				[&] () {
+				[&] {
 					return (
 						static_cast<double>( *arg_cluster_info.get_total_mid_point_index() )
 						/
