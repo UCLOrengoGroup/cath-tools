@@ -24,7 +24,7 @@
 #include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
 
 namespace cath {
-	namespace opts {
+	namespace align {
 
 		/// \brief TODOCUMENT
 		class residue_name_alignment_acquirer final : public alignment_acquirer {
@@ -35,10 +35,10 @@ namespace cath {
 			static constexpr double RES_ALIGN_SCORE_CONSTANT = 10.0;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
-			std::pair<align::alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const final;
+			std::pair<alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const final;
 		};
 
-	} // namespace opts
+	} // namespace align
 } // namespace cath
 
 #endif

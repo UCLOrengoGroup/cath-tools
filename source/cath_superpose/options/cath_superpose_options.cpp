@@ -226,7 +226,7 @@ const domain_vec & cath_superpose_options::get_domains() const {
 /// \relates cath_superpose_options
 unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const cath_superpose_options &arg_cath_superpose_options ///< The cath_superpose_options to query
                                                                         ) {
-	return get_alignment_acquirer( arg_cath_superpose_options.get_alignment_input_spec() );
+	return align::get_alignment_acquirer( arg_cath_superpose_options.get_alignment_input_spec() );
 }
 
 /// \brief Get alignment and spanning tree as implied by the specified cath_superpose_options

@@ -63,7 +63,7 @@ pair<alignment, superpose_orderer> cora_aln_file_alignment_acquirer::do_get_alig
 	const size_t num_pdbs = arg_pdbs.size();
 	ifstream my_aln_stream;
 	open_ifstream(my_aln_stream, get_cora_alignment_file());
-	const alignment     new_alignment = read_alignment_from_cath_cora_legacy_format( my_aln_stream, arg_pdbs, cerr );
+	const alignment     new_alignment = read_alignment_from_cath_cora_legacy_format( my_aln_stream, arg_pdbs, ostream_ref{ cerr } );
 	my_aln_stream.close();
 
 	const protein_list proteins_of_pdbs = build_protein_list_of_pdb_list( arg_pdbs );

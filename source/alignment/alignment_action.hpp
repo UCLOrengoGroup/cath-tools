@@ -23,8 +23,8 @@
 
 #include "alignment/align_type_aliases.hpp"
 
-namespace cath { namespace align { class alignment; } }
 namespace cath { class protein_list; }
+namespace cath { namespace align { class alignment; } }
 
 namespace cath {
 	namespace align {

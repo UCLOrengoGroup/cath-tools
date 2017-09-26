@@ -48,26 +48,26 @@ namespace cath {
 		alignment read_alignment_from_cath_ssap_legacy_format(const boost::filesystem::path &,
 		                                                      const protein &,
 		                                                      const protein &,
-		                                                      std::ostream & = std::cerr);
+		                                                      const ostream_ref_opt & = std::ref( std::cerr ) );
 
 		alignment read_alignment_from_cath_ssap_legacy_format(std::istream &,
 		                                                      const protein &,
 		                                                      const protein &,
-		                                                      std::ostream & = std::cerr);
+		                                                      const ostream_ref_opt & = std::ref( std::cerr ) );
 
 		alignment read_alignment_from_cath_ssap_legacy_format(std::istream &,
 		                                                      const file::pdb &,
 		                                                      const file::pdb &,
-		                                                      std::ostream & = std::cerr);
+		                                                      const ostream_ref_opt & = std::ref( std::cerr ) );
 
 		alignment read_alignment_from_cath_ssap_legacy_format(std::istream &,
 		                                                      const residue_id_vec &,
 		                                                      const residue_id_vec &,
-		                                                      std::ostream & = std::cerr);
+		                                                      const ostream_ref_opt & = std::ref( std::cerr ) );
 
 		alignment read_alignment_from_cath_cora_legacy_format(std::istream &,
 		                                                      const file::pdb_list &,
-		                                                      std::ostream & = std::cerr);
+		                                                      const ostream_ref_opt & = std::ref( std::cerr ) );
 
 		str_str_pair_vec read_ids_and_sequences_from_fasta(std::istream &);
 
@@ -113,7 +113,7 @@ namespace cath {
 		                                               const residue_id_vec &,
 		                                               const char &,
 		                                               const residue_name &,
-		                                               std::ostream & = std::cerr);
+		                                               const ostream_ref_opt &);
 
 		void write_alignment_as_cath_ssap_legacy_format(const boost::filesystem::path &,
 		                                                const alignment &,

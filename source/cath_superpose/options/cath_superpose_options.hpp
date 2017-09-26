@@ -42,8 +42,8 @@
 
 namespace boost { namespace program_options { class options_description; } }
 namespace cath { namespace align { class alignment; } }
+namespace cath { namespace align { class alignment_acquirer; } }
 namespace cath { namespace file { class strucs_context; } }
-namespace cath { namespace opts { class alignment_acquirer; } }
 namespace cath { namespace opts { class pdbs_acquirer; } }
 namespace cath { namespace opts { class selection_policy_acquirer; } }
 namespace cath { namespace sup { class superposition_context; } }
@@ -119,7 +119,7 @@ namespace cath {
 			static const std::string PROGRAM_NAME;
 		};
 
-		std::unique_ptr<const alignment_acquirer> get_alignment_acquirer(const cath_superpose_options &);
+		std::unique_ptr<const align::alignment_acquirer> get_alignment_acquirer(const cath_superpose_options &);
 		std::pair<align::alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const cath_superpose_options &,
 		                                                                                const file::pdb_list &);
 

@@ -28,7 +28,7 @@
 #include <vector>
 
 namespace cath { namespace align { class alignment; } }
-namespace cath { namespace align { class pdb_list; } }
+namespace cath { namespace file { class pdb_list; } }
 
 namespace cath {
 	namespace align {

@@ -75,7 +75,7 @@ pair<alignment, superpose_orderer> ssap_aln_file_alignment_acquirer::do_get_alig
 			my_aln_stream,
 			arg_pdbs[alignment::PAIR_A_IDX],
 			arg_pdbs[alignment::PAIR_B_IDX],
-			cerr
+			ostream_ref{ cerr }
 		);
 		my_aln_stream.close();
 		// Set an arbitrary score to ensure that the spanning tree will connect the two entries

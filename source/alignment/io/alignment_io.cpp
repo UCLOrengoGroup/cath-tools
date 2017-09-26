@@ -33,6 +33,7 @@
 
 #include "alignment/align_type_aliases.hpp"
 #include "alignment/pair_alignment.hpp"
+#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/file/open_fstream.hpp"
@@ -78,10 +79,10 @@ const double MIN_FRAC_OF_PDB_RESIDUES_IN_SEQ( 0.7 );
 /// \relatesalso protein
 ///
 /// The proteins are used for extracting the lists of residues, which are used for finding the indices of residues.
-alignment cath::align::read_alignment_from_cath_ssap_legacy_format(const path    &arg_alignment_file, ///< TODOCUMENT
-                                                                   const protein &arg_protein_a,      ///< TODOCUMENT
-                                                                   const protein &arg_protein_b,      ///< TODOCUMENT
-                                                                   ostream       &arg_stderr          ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_ssap_legacy_format(const path            &arg_alignment_file, ///< TODOCUMENT
+                                                                   const protein         &arg_protein_a,      ///< TODOCUMENT
+                                                                   const protein         &arg_protein_b,      ///< TODOCUMENT
+                                                                   const ostream_ref_opt &arg_ostream         ///< TODOCUMENT
                                                                    ) {
 	ifstream alignment_ifstream;
 	open_ifstream( alignment_ifstream, arg_alignment_file );
@@ -89,7 +90,7 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(const path   
 		alignment_ifstream,
 		arg_protein_a,
 		arg_protein_b,
-		arg_stderr
+		arg_ostream
 	);
 	alignment_ifstream.close();
 	return new_alignment;
@@ -101,16 +102,16 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(const path   
 /// \relatesalso protein
 ///
 /// The proteins are used for extracting the lists of residues, which are used for finding the indices of residues.
-alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream       &arg_istream,   ///< TODOCUMENT
-                                                                   const protein &arg_protein_a, ///< TODOCUMENT
-                                                                   const protein &arg_protein_b, ///< TODOCUMENT
-                                                                   ostream       &arg_stderr     ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream               &arg_istream,   ///< TODOCUMENT
+                                                                   const protein         &arg_protein_a, ///< TODOCUMENT
+                                                                   const protein         &arg_protein_b, ///< TODOCUMENT
+                                                                   const ostream_ref_opt &arg_ostream    ///< TODOCUMENT
                                                                    ) {
 	return read_alignment_from_cath_ssap_legacy_format(
 		arg_istream,
 		get_residue_ids( arg_protein_a ),
 		get_residue_ids( arg_protein_b ),
-		arg_stderr
+		arg_ostream
 	);
 }
 
@@ -120,16 +121,16 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 /// \relatesalso pdb
 ///
 /// The pdbs are used for extracting the lists of residues, which are used for finding the indices of residues.
-alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream   &arg_istream, ///< TODOCUMENT
-                                                                   const pdb &arg_pdb_a,   ///< TODOCUMENT
-                                                                   const pdb &arg_pdb_b,   ///< TODOCUMENT
-                                                                   ostream   &arg_stderr   ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream               &arg_istream, ///< TODOCUMENT
+                                                                   const pdb             &arg_pdb_a,   ///< TODOCUMENT
+                                                                   const pdb             &arg_pdb_b,   ///< TODOCUMENT
+                                                                   const ostream_ref_opt &arg_ostream   ///< TODOCUMENT
                                                                    ) {
 	return read_alignment_from_cath_ssap_legacy_format(
 		arg_istream,
 		arg_pdb_a.get_residue_ids_of_first_chain__backbone_unchecked(),
 		arg_pdb_b.get_residue_ids_of_first_chain__backbone_unchecked(),
-		arg_stderr
+		arg_ostream
 	);
 }
 
@@ -142,10 +143,10 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream   &ar
 /// Should this parse based on:
 ///  - exact column positions (hence breaking if an extra space is added) or
 ///  - whitespace splitting (hence breaking if a column is missing, eg with an insert as a space rather than a 0)
-alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream              &arg_istream,   ///< TODOCUMENT
-                                                                   const residue_id_vec &arg_res_ids_a, ///< TODOCUMENT
-                                                                   const residue_id_vec &arg_res_ids_b, ///< TODOCUMENT
-                                                                   ostream              &arg_stderr     ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream               &arg_istream,   ///< TODOCUMENT
+                                                                   const residue_id_vec  &arg_res_ids_a, ///< TODOCUMENT
+                                                                   const residue_id_vec  &arg_res_ids_b, ///< TODOCUMENT
+                                                                   const ostream_ref_opt &arg_ostream    ///< TODOCUMENT
                                                                    ) {
 	arg_istream.exceptions( ios::badbit );
 
@@ -173,8 +174,8 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 		// For each side, move the PDB position forward if necessary
 		const residue_name res_name_a    = make_residue_name_with_non_insert_char( res_num_a, insert_a, '0');
 		const residue_name res_name_b    = make_residue_name_with_non_insert_char( res_num_b, insert_b, '0' );
-		const size_opt     find_a_result = search_for_residue_in_residue_ids( pos_a, arg_res_ids_a, amino_acid_a, res_name_a, arg_stderr );
-		const size_opt     find_b_result = search_for_residue_in_residue_ids( pos_b, arg_res_ids_b, amino_acid_b, res_name_b, arg_stderr );
+		const size_opt     find_a_result = search_for_residue_in_residue_ids( pos_a, arg_res_ids_a, amino_acid_a, res_name_a, arg_ostream );
+		const size_opt     find_b_result = search_for_residue_in_residue_ids( pos_b, arg_res_ids_b, amino_acid_b, res_name_b, arg_ostream );
 		pos_a = find_a_result.value_or( pos_a );
 		pos_b = find_b_result.value_or( pos_b );
 
@@ -255,9 +256,9 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 ///   - Last Column-2: No. of alpha residues at this position (dddd)
 ///   - Last Column-1: No. of beta  residues at this position (dddd)
 ///   - Last Column: Structural Conservation Score (dd)
-alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream        &arg_istream, ///< TODOCUMENT
-                                                                   const pdb_list &arg_pdbs,    ///< TODOCUMENT
-                                                                   ostream        &arg_stderr   ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream               &arg_istream, ///< TODOCUMENT
+                                                                   const pdb_list        &arg_pdbs,    ///< TODOCUMENT
+                                                                   const ostream_ref_opt &arg_ostream  ///< TODOCUMENT
                                                                    ) {
 	const size_t CHARS_IN_MAIN_DATA_LINE_START = 14;
 	const size_t CHARS_IN_MAIN_DATA_LINE_PROT  = 11;
@@ -357,7 +358,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 					residues_ids,
 					amino_acid,
 					res_name,
-					arg_stderr
+					arg_ostream
 				);
 				data_col.push_back( find_result ? aln_posn_opt( ( *find_result ) + 1 ) : aln_posn_opt( none ) );
 				if ( find_result ) {
@@ -747,11 +748,11 @@ alignment cath::align::read_alignment_from_fasta(istream                  &arg_i
 }
 
 /// \brief Convenience function for read_alignment_from_cath_ssap_legacy_format() to use
-aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t         &arg_pos,          ///< TODOCUMENT
-                                                            const residue_id_vec &arg_residue_ids,  ///< TODOCUMENT
-                                                            const char           &arg_amino_acid,   ///< TODOCUMENT
-                                                            const residue_name   &arg_residue_name, ///< TODOCUMENT
-                                                            ostream              &/*arg_stderr*/    ///< TODOCUMENT
+aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t          &arg_pos,          ///< TODOCUMENT
+                                                            const residue_id_vec  &arg_residue_ids,  ///< TODOCUMENT
+                                                            const char            &arg_amino_acid,   ///< TODOCUMENT
+                                                            const residue_name    &arg_residue_name, ///< TODOCUMENT
+                                                            const ostream_ref_opt &arg_ostream        ///< TODOCUMENT
                                                             ) {
 	if ( ! have_consistent_chain_labels( arg_residue_ids ) ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
@@ -784,8 +785,9 @@ aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t        
 		}
 
 		const size_t new_pos = numeric_cast<size_t>( distance( common::cbegin( arg_residue_ids ), res_itr ) );
-		if ( new_pos != arg_pos + 1 && ( new_pos != 0 || arg_pos != 0 ) ) {
+		if ( new_pos != arg_pos + 1 && ( new_pos != 0 || arg_pos != 0 ) && arg_ostream ) {
 			const size_t jump = new_pos - (arg_pos + 1);
+			const log_to_ostream_guard ostream_log_guard{ arg_ostream.get().get() };
 			BOOST_LOG_TRIVIAL( warning ) << "Missing some residues whilst loading alignment: jumped "
 			                             << jump
 			                             << " position(s) from residue "

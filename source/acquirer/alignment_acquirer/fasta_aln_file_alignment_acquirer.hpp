@@ -26,7 +26,7 @@
 #include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
 
 namespace cath {
-	namespace opts {
+	namespace align {
 
 		/// \brief TODOCUMENT
 		class fasta_aln_file_alignment_acquirer final : public alignment_acquirer {
@@ -36,7 +36,7 @@ namespace cath {
 			boost::filesystem::path fasta_alignment_file;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
-			std::pair<align::alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const final;
+			std::pair<alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const final;
 
 		public:
 			explicit fasta_aln_file_alignment_acquirer(const boost::filesystem::path &);
@@ -44,7 +44,7 @@ namespace cath {
 			boost::filesystem::path get_fasta_alignment_file() const;
 		};
 
-	} // namespace opts
+	} // namespace align
 } // namespace cath
 
 #endif

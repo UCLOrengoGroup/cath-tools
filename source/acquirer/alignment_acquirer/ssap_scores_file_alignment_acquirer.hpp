@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_SSAP_SCORES_FILE_ALIGNMENT_ACQUIRER_H
 
 #include <boost/filesystem.hpp>
+#include <boost/optional.hpp>
 
 #include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "alignment/align_type_aliases.hpp"
@@ -29,7 +30,7 @@
 namespace cath { namespace align { class alignment; } }
 
 namespace cath {
-	namespace opts {
+	namespace align {
 
 		/// \brief TODOCUMENT
 		class ssap_scores_file_alignment_acquirer final : public alignment_acquirer {
@@ -38,13 +39,7 @@ namespace cath {
 			boost::filesystem::path ssap_scores_filename;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
-			std::pair<align::alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const final;
-
-			align::size_size_alignment_tuple_vec get_spanning_alignments(const boost::filesystem::path &,
-			                                                             const str_vec &,
-			                                                             const file::pdb_list &,
-			                                                             const size_size_pair_vec &,
-			                                                             std::ostream &) const;
+			std::pair<alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const final;
 
 		public:
 			explicit ssap_scores_file_alignment_acquirer(const boost::filesystem::path &);
@@ -52,7 +47,19 @@ namespace cath {
 			boost::filesystem::path get_ssap_scores_file() const;
 		};
 
-	} // namespace opts
+		size_size_alignment_tuple_vec get_spanning_alignments(const file::pdb_list &,
+		                                                      const str_vec &,
+		                                                      const size_size_pair_vec &,
+		                                                      const boost::filesystem::path &,
+		                                                      const ostream_ref_opt & = boost::none);
+
+		alignment build_multi_alignment(const file::pdb_list &,
+		                                const str_vec &,
+		                                const size_size_pair_doub_map &,
+		                                const boost::filesystem::path &,
+		                                const ostream_ref_opt & = boost::none);
+
+	} // namespace align
 } // namespace cath
 
 #endif

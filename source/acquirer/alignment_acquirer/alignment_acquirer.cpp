@@ -118,8 +118,8 @@ pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanni
 /// NOTE: Keep this code in sync with get_num_acquirers()
 ///
 /// \relates alignment_input_spec
-uptr_vec<alignment_acquirer> cath::opts::get_alignment_acquirers(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
-                                                                 ) {
+uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
+                                                                  ) {
 	uptr_vec<alignment_acquirer> alignment_acquirers;
 
 	// If the alignment is to be created by reading a legacy CORA alignment file, do that
@@ -156,8 +156,8 @@ uptr_vec<alignment_acquirer> cath::opts::get_alignment_acquirers(const alignment
 /// \brief Construct suitable alignment_acquirer objects implied by the specified alignment_input_options_block
 ///
 /// \relates alignment_input_options_block
-uptr_vec<alignment_acquirer> cath::opts::get_alignment_acquirers(const alignment_input_options_block &arg_alignment_input_options_block ///< The alignment_input_options_block to query
-                                                                 ) {
+uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignment_input_options_block &arg_alignment_input_options_block ///< The alignment_input_options_block to query
+                                                                  ) {
 	return get_alignment_acquirers( arg_alignment_input_options_block.get_alignment_input_spec() );
 }
 
@@ -165,8 +165,8 @@ uptr_vec<alignment_acquirer> cath::opts::get_alignment_acquirers(const alignment
 ///        (or throw an invalid_argument_exception if fewer/more are implied)
 ///
 /// \relates alignment_input_spec
-unique_ptr<alignment_acquirer> cath::opts::get_alignment_acquirer(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
-                                                                  ) {
+unique_ptr<alignment_acquirer> cath::align::get_alignment_acquirer(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
+                                                                   ) {
 	const auto alignment_acquirers = get_alignment_acquirers( arg_alignment_input_spec );
 	if ( alignment_acquirers.size() != 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Attempt to get alignment_acquirer failed because the number of alignment_acquirers isn't one"));

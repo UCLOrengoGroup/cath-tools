@@ -22,6 +22,7 @@
 
 #include "alignment/alignment.hpp"
 #include "alignment/alignment_action.hpp"
+#include "alignment/alignment_action.hpp"
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/io/outputter/horiz_align_outputter.hpp" /// *** TEMPORARY? ***
 #include "alignment/residue_score/residue_scorer.hpp"
@@ -81,24 +82,16 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 	// Make a superpose_orderer from the scores
 	const superpose_orderer my_orderer = make_superpose_orderer( scores );
 
-	// Use the superpose_orderer code to get a spanning tree, ordered in descending order of score
-	const size_size_pair_vec spanning_tree = get_spanning_tree_ordered_by_desc_score( scores );
-
-//	// TODOCUMENT
-	ostringstream stderr;
-	const size_size_alignment_tuple_vec spanning_alignments = get_spanning_alignments(
-		ssaps_filename.parent_path(),
-		names,
+	// Construct the new alignment
+	const alignment new_alignment = build_multi_alignment(
 		arg_pdbs,
-		spanning_tree,
-		stderr
+		names,
+		scores,
+		ssaps_filename.parent_path(),
+		ostream_ref{ cerr }
 	);
 
 	// TODOCUMENT
-	const bool      single_pdb    = ( arg_pdbs.size() == 1 );
-	const alignment new_alignment = single_pdb ? make_single_alignment( front( arg_pdbs ).get_num_residues() )
-	                                           : build_alignment_from_parts( spanning_alignments, build_protein_list_of_pdb_list( arg_pdbs ) );
-
 	if ( names.empty() ) {
 		// Return the results
 		return make_pair( new_alignment, my_orderer );
@@ -119,41 +112,6 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 	return make_pair( scored_new_alignment, my_orderer );
 }
 
-/// \brief TODOCUMENT
-///
-/// \TODO Consider taking an ostream_ref_opt argument rather than ostream
-///       (fix all errors, *then* provide default of boost::none)
-size_size_alignment_tuple_vec ssap_scores_file_alignment_acquirer::get_spanning_alignments(const path               &arg_alignment_dir, ///< TODOCUMENT
-                                                                                           const str_vec            &arg_names,         ///< TODOCUMENT
-                                                                                           const pdb_list           &arg_pdbs,          ///< TODOCUMENT
-                                                                                           const size_size_pair_vec &arg_spanning_tree, ///< TODOCUMENT
-                                                                                           ostream                  &arg_stderr         ///< TODOCUMENT
-                                                                                           ) const {
-	size_size_alignment_tuple_vec spanning_alignments;
-	spanning_alignments.reserve( spanning_alignments.size() );
-	for (const size_size_pair &spanning_branch : arg_spanning_tree) {
-		const size_t   &first_index    = spanning_branch.first;
-		const size_t   &second_index   = spanning_branch.second;
-		const pdb      &first_pdb      = arg_pdbs [ first_index  ];
-		const pdb      &second_pdb     = arg_pdbs [ second_index ];
-		const string   &first_name     = arg_names[ first_index  ];
-		const string   &second_name    = arg_names[ second_index ];
-		const path      alignment_file = arg_alignment_dir / ( first_name + second_name + ".list" );
-		const alignment new_alignment  = read_alignment_from_cath_ssap_legacy_format(
-			alignment_file,
-			build_protein_of_pdb( first_pdb,  ref( arg_stderr ) ).first,
-			build_protein_of_pdb( second_pdb, ref( arg_stderr ) ).first,
-			arg_stderr
-		);
-		spanning_alignments.emplace_back(
-			first_index,
-			second_index,
-			new_alignment
-		);
-	}
-	return spanning_alignments;
-}
-
 /// \brief Ctor for ssap_scores_file_alignment_acquirer
 ssap_scores_file_alignment_acquirer::ssap_scores_file_alignment_acquirer(const path &arg_ssap_scores_filename ///< TODOCUMENT
                                                                          ) : ssap_scores_filename{ arg_ssap_scores_filename } {
@@ -164,3 +122,59 @@ path ssap_scores_file_alignment_acquirer::get_ssap_scores_file() const {
 	return ssap_scores_filename;
 }
 
+/// \brief TODOCUMENT
+size_size_alignment_tuple_vec cath::align::get_spanning_alignments(const pdb_list           &arg_pdbs,           ///< The PDBs to be aligned
+                                                                   const str_vec            &arg_names,          ///< The names of the structures to be aligned
+                                                                   const size_size_pair_vec &arg_spanning_tree,  ///< TODOCUMENT
+                                                                   const path               &arg_alignments_dir, ///< The directory containing alignments for the structures
+                                                                   const ostream_ref_opt    &arg_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
+                                                                   ) {
+	size_size_alignment_tuple_vec spanning_alignments;
+	spanning_alignments.reserve( spanning_alignments.size() );
+	for (const size_size_pair &spanning_branch : arg_spanning_tree) {
+		const size_t   &first_index    = spanning_branch.first;
+		const size_t   &second_index   = spanning_branch.second;
+		const pdb      &first_pdb      = arg_pdbs [ first_index  ];
+		const pdb      &second_pdb     = arg_pdbs [ second_index ];
+		const string   &first_name     = arg_names[ first_index  ];
+		const string   &second_name    = arg_names[ second_index ];
+		const path      alignment_file = arg_alignments_dir / ( first_name + second_name + ".list" );
+		const alignment new_alignment  = read_alignment_from_cath_ssap_legacy_format(
+			alignment_file,
+			build_protein_of_pdb( first_pdb,  arg_ostream ).first,
+			build_protein_of_pdb( second_pdb, arg_ostream ).first,
+			arg_ostream
+		);
+		spanning_alignments.emplace_back(
+			first_index,
+			second_index,
+			new_alignment
+		);
+	}
+	return spanning_alignments;
+}
+
+/// \brief Build an alignment between the specified PDBs & names using the specified scores and directory of SSAP alignments
+alignment cath::align::build_multi_alignment(const pdb_list                &arg_pdbs,           ///< The PDBs to be aligned
+                                             const str_vec                 &arg_names,          ///< The names of the structures to be aligned
+                                             const size_size_pair_doub_map &arg_scores,         ///< The SSAP scores between the structures
+                                             const path                    &arg_alignments_dir, ///< The directory containing alignments for the structures
+                                             const ostream_ref_opt         &arg_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
+                                             ) {
+	// If there's only one PDB just build a single alignment for that
+	if ( arg_pdbs.size() == 1 ) {
+		return make_single_alignment( front( arg_pdbs ).get_num_residues() );
+	}
+
+	// ...otherwise build an alignment from parts
+	return build_alignment_from_parts(
+		get_spanning_alignments(
+			arg_pdbs,
+			arg_names,
+			get_spanning_tree_ordered_by_desc_score( arg_scores ),
+			arg_alignments_dir,
+			arg_ostream
+		),
+		build_protein_list_of_pdb_list( arg_pdbs )
+	);
+}

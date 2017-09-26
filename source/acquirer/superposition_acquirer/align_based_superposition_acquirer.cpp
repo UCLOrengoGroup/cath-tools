@@ -265,7 +265,7 @@ superposition cath::opts::hacky_multi_ssap_fuction(const pdb_list               
 			ssap_aln_stream,
 			arg_pdbs[index_1],
 			arg_pdbs[index_2],
-			arg_stderr
+			ostream_ref{ arg_stderr }
 		);
 		ssap_aln_stream.close();
 //		arg_stderr << "New alignment is " << the_alignment << endl;

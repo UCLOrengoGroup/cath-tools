@@ -215,7 +215,7 @@ const domain_vec & cath_refine_align_options::get_domains() const {
 /// \relates cath_refine_align_options
 unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const cath_refine_align_options &arg_cath_refine_align_options ///< The cath_refine_align_options to query
                                                                         ) {
-	return get_alignment_acquirer( arg_cath_refine_align_options.get_alignment_input_spec() );
+	return align::get_alignment_acquirer( arg_cath_refine_align_options.get_alignment_input_spec() );
 }
 
 /// \brief Get the single pdbs_acquirer implied by the specified cath_refine_align_options

@@ -37,7 +37,7 @@ namespace cath { namespace opts {class pdbs_acquirer; } }
 namespace cath { namespace sup { class superpose_orderer; } }
 
 namespace cath {
-	namespace opts {
+	namespace align {
 
 		/// \brief TODOCUMENT
 		class alignment_acquirer {
@@ -46,7 +46,7 @@ namespace cath {
 			virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
 			
 			/// \brief TODOCUMENT
-			virtual std::pair<align::alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const = 0;
+			virtual std::pair<alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const = 0;
 
 		protected:
 			/// \brief The minimum number of residues that are required in "residue name" aligning
@@ -67,14 +67,14 @@ namespace cath {
 			alignment_acquirer & operator=(const alignment_acquirer &) = default;
 			alignment_acquirer & operator=(alignment_acquirer &&) noexcept = default;
 
-			std::pair<align::alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const file::pdb_list &) const;
+			std::pair<alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const file::pdb_list &) const;
 		};
 
-		uptr_vec<alignment_acquirer> get_alignment_acquirers(const alignment_input_spec &);
-		uptr_vec<alignment_acquirer> get_alignment_acquirers(const alignment_input_options_block &);
+		uptr_vec<alignment_acquirer> get_alignment_acquirers(const opts::alignment_input_spec &);
+		uptr_vec<alignment_acquirer> get_alignment_acquirers(const opts::alignment_input_options_block &);
 
-		std::unique_ptr<alignment_acquirer> get_alignment_acquirer(const alignment_input_spec &);
-	} // namespace opts
+		std::unique_ptr<alignment_acquirer> get_alignment_acquirer(const opts::alignment_input_spec &);
+	} // namespace align
 } // namespace cath
 
 #endif
