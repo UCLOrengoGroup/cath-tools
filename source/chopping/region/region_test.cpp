@@ -20,6 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include <boost/optional/optional_io.hpp>
+
 #include "chopping/chopping_type_aliases.hpp"
 #include "chopping/region/region.hpp"
 #include "common/test_tools.hpp"
@@ -27,6 +29,8 @@
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common::test;
+
+using boost::none;
 
 BOOST_AUTO_TEST_SUITE(region_test_suite)
 
@@ -43,6 +47,10 @@ BOOST_AUTO_TEST_CASE(equality_works) {
 		make_simple_region( 121, 232 ),
 		make_simple_region( 'K', 121, 232 )
 	} );
+}
+
+BOOST_AUTO_TEST_CASE(locating_of_whole_chain_region_returns_none) {
+	BOOST_TEST( get_residue_locating( make_simple_region( 'A' ) ) == none );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -25,7 +25,7 @@
 #include <boost/operators.hpp>
 
 #include "biocore/chain_label.hpp"
-// #include "chopping/chopping_type_aliases.hpp"
+#include "chopping/chopping_type_aliases.hpp"
 #include "chopping/region/region_comparison.hpp"
 #include "chopping/residue_location/residue_location.hpp"
 
@@ -108,7 +108,7 @@ namespace cath {
 		const size_t & get_start_index(const region &);
 		const size_t & get_stop_index(const region &);
 
-		residue_locating get_residue_locating(const region &);
+		residue_locating_opt get_residue_locating(const region &);
 
 		size_t get_length(const region &);
 

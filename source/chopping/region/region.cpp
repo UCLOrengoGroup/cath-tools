@@ -24,6 +24,7 @@
 #include <boost/program_options.hpp>
 
 #include "chopping/chopping_format/sillitoe_chopping_format.hpp"
+#include "common/optional/make_optional_if.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
@@ -256,9 +257,12 @@ const size_t & cath::chop::get_stop_index(const region &arg_region ///< TODOCUME
 /// \brief TODOCUMENT
 ///
 /// \relates region
-residue_locating cath::chop::get_residue_locating(const region &arg_region ///< TODOCUMENT
-                                      ) {
-	return get_residue_locating( arg_region.get_start_residue() );
+residue_locating_opt cath::chop::get_residue_locating(const region &arg_region ///< TODOCUMENT
+                                                      ) {
+	return make_optional_if_fn(
+		arg_region.has_starts_stops(),
+		[&] { return get_residue_locating( arg_region.get_start_residue() ); }
+	);
 }
 
 /// \brief TODOCUMENT

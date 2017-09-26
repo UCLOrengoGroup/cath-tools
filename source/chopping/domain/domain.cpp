@@ -24,6 +24,7 @@
 
 #include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
+#include "common/algorithm/are_same.hpp"
 #include "common/boost_addenda/range/front.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -39,18 +40,16 @@ using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::none;
 using boost::range::equal;
+using std::equal_to;
 using std::ostream;
 using std::string;
 
 /// \brief TODOCUMENT
 void domain::sanity_check() const {
-	if ( ! segments.empty() ) {
-		const residue_locating seg_res_locating = get_residue_locating( segments.front() );
-		for (const region &segment : segments) {
-			if ( get_residue_locating( segment ) != seg_res_locating ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot construct a domain from segments with different methods of locating residues (names and/or indices)"));
-			}
-		}
+	if ( ! are_same( segments, equal_to<>{}, [] (const region &x) { return get_residue_locating( x ); } ) ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception(
+			"Cannot construct a domain from segments with different methods of locating residues (names and/or indices)"
+		));
 	}
 }
 

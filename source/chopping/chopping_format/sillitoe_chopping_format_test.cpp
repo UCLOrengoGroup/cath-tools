@@ -80,6 +80,11 @@ BOOST_AUTO_TEST_CASE(parses_domain_name) {
 	BOOST_CHECK_EQUAL( sillitoe_chopping_format{}.parse_domain( "D[1qdmC02]192-247:C,103S-104S:C,248-318:C" ), expected );
 }
 
+BOOST_AUTO_TEST_CASE(parses_whole_chain_region) {
+	const domain expected{ { make_simple_region( 'B' ) }, "1o7iB" };
+	BOOST_TEST( sillitoe_chopping_format{}.parse_domain( "D[1o7iB]:B" ) == expected );
+}
+
 // Example:
 // 1qdm D[1qdmC01]1-191:C  D[1qdmC02]192-247:C,103S-104S:C,248-318:C  F319-1318:C
 
