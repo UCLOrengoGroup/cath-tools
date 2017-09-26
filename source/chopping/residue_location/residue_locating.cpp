@@ -21,9 +21,36 @@
 #include "residue_locating.hpp"
 
 #include "exception/invalid_argument_exception.hpp"
+#include "exception/out_of_range_exception.hpp"
 
 using namespace cath::chop;
 using namespace cath::common;
+
+using std::ostream;
+using std::string;
+
+/// \brief Generate a string describing the specified residue_locating
+///
+/// \relates residue_locating
+string cath::chop::to_string(const residue_locating &arg_residue_locating ///< The residue_locating to describe
+                             ) {
+	switch ( arg_residue_locating ) {
+		case ( residue_locating::INDEX          ) : { return "res_loc_index"          ; }
+		case ( residue_locating::NAME           ) : { return "res_loc_name"           ; }
+		case ( residue_locating::NAME_AND_INDEX ) : { return "res_loc_name_and_index" ; }
+	}
+	BOOST_THROW_EXCEPTION(out_of_range_exception("residue_locating value not recognised"));
+}
+
+/// \brief Insert a description of the specified residue_locating into the specified ostream
+///
+/// \relates residue_locating
+ostream & cath::chop::operator<<(ostream                &arg_os,              ///< The ostream into which the description should be inserted
+                                 const residue_locating &arg_residue_locating ///< The residue_locating to describe
+                                 ) {
+	arg_os << to_string( arg_residue_locating );
+	return arg_os;
+}
 
 /// \brief TODOCUMENT
 ///

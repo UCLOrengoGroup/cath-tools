@@ -21,6 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CHOPPING_RESIDUE_LOCATION_RESIDUE_LOCATING_H
 #define _CATH_TOOLS_SOURCE_CHOPPING_RESIDUE_LOCATION_RESIDUE_LOCATING_H
 
+#include <iosfwd>
+#include <string>
+
 namespace cath {
 	namespace chop {
 
@@ -30,6 +33,10 @@ namespace cath {
 			NAME,          ///< TODOCUMENT
 			NAME_AND_INDEX ///< TODOCUMENT
 		};
+
+		std::string to_string(const residue_locating &);
+		std::ostream & operator<<(std::ostream &,
+		                          const residue_locating &);
 
 		residue_locating make_residue_locating_of_has_name_and_has_index(const bool &,
 		                                                                 const bool &);
