@@ -283,11 +283,11 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 		}
 
 		// Skip any comment lines
-		while (getline(arg_istream, line_string) && starts_with(line_string, "#CC")) {
+		while ( getline( arg_istream, line_string ) && starts_with( line_string, "#" ) ) {
 		}
 
 		// Grab the number of proteins and ensure the alignment matches
-		const size_t num_proteins = lexical_cast<size_t>(line_string);
+		const size_t num_proteins = lexical_cast<size_t>( line_string );
 		if (num_proteins != arg_pdbs.size()) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Number of PDBs in CORA file is " + lexical_cast<string>(num_proteins) + ", which does not match " + lexical_cast<string>(arg_pdbs.size())));
 		}
