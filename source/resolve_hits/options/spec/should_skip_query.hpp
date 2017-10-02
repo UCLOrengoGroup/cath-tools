@@ -27,7 +27,7 @@
 namespace cath {
 	namespace rslv {
 
-		/// \brief Return whether the specified query ID should be skipped based limiting the number of queryies
+		/// \brief Return whether the specified query ID should be skipped based limiting the number of queries
 		///        to the specified (optional) number given the specified record of previously seen query IDs
 		inline bool should_skip_query_by_num(const size_opt          &arg_limit_queries, ///< The (optional) number of queries to which processing should be limited
 		                                     const std::string       &arg_query_id,      ///< The query ID string to check
@@ -42,7 +42,7 @@ namespace cath {
 			);
 		}
 
-		/// \brief Return whether the specified query ID should be skipped based limiting the number of queryies
+		/// \brief Return whether the specified query ID should be skipped based limiting the number of queries
 		///        to the specified (optional) number given the specified record of previously seen query IDs
 		inline bool should_skip_query_by_num(const size_opt          &arg_limit_queries, ///< The (optional) number of queries to which processing should be limited
 		                                     const boost::string_ref &arg_query_id,      ///< The query ID string_ref to check
