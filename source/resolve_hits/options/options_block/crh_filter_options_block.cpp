@@ -159,7 +159,7 @@ void crh_filter_options_block::do_add_hidden_options_to_description(options_desc
 				->value_name    ( percent_varname     )
 				->notifier      ( min_hmm_cvg_ntfr    )
 				->implicit_value( 50.0                ),
-			( "In hmmsearch_out input, ignore any hits for which 100.0 * ( hmm_to + 1 - hmm_from ) / hmm_length  <  "
+			( "[IN PUBLIC GENE3D COMMAND] In hmmsearch_out input, ignore any hits for which 100.0 * ( hmm_to + 1 - hmm_from ) / hmm_length  <  "
 				+ percent_varname ).c_str()
 		)
 		(
@@ -168,7 +168,7 @@ void crh_filter_options_block::do_add_hidden_options_to_description(options_desc
 				->value_name    ( percent_varname     )
 				->notifier      ( min_dc_hmm_cvg_ntfr )
 				->implicit_value( 80.0                ),
-			( R"(In hmmsearch_out input, ignore any /^\dc_{32}$/ hits for which 100.0 * ( hmm_to + 1 - hmm_from ) / hmm_length  <  )"
+			( R"([IN PUBLIC GENE3D COMMAND] In hmmsearch_out input, ignore any /^\dc_{32}$/ hits for which 100.0 * ( hmm_to + 1 - hmm_from ) / hmm_length  <  )"
 				+ percent_varname + "\n"
 				R"((overriding any --worst-hmm-coverage value for those /^\dc_{32}$/ hits))" ).c_str()
 		);

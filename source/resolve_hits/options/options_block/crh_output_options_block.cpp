@@ -162,7 +162,7 @@ void crh_output_options_block::do_add_hidden_options_to_description(options_desc
 			bool_switch()
 				->notifier     ( output_hmmer_aln_notifier                 )
 				->default_value( crh_output_spec::DEFAULT_OUTPUT_HMMER_ALN ),
-			"Print a summary of the hmmer alignment in the output"
+			"[IN PUBLIC GENE3D COMMAND] Print a summary of the hmmer alignment in the output"
 		);
 
 	static_assert( ! crh_output_spec::DEFAULT_OUTPUT_HMMER_ALN,
