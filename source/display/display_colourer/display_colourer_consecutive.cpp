@@ -20,12 +20,11 @@
 
 #include "display_colourer_consecutive.hpp"
 
-#include <boost/range/irange.hpp>
 
 #include "alignment/alignment_context.hpp"
 #include "chopping/region/region.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
-#include "common/size_t_literal.hpp"
 #include "display/display_colour_spec/display_colour_spec.hpp"
 #include "display/viewer/viewer.hpp"
 #include "display_colour/display_colour.hpp"
@@ -41,7 +40,6 @@ using namespace cath::common;
 using namespace cath::detail;
 using namespace cath::sup;
 
-using boost::irange;
 using std::string;
 using std::unique_ptr;
 
@@ -56,7 +54,7 @@ broad_display_colour_spec display_colourer_consecutive::do_get_colour_spec_from_
 	// Create a new display_colour_spec and populate it for the entries with colours
 	broad_display_colour_spec new_spec;
 	new_spec.colour_base( display_colour::BLACK );
-	for (const size_t entry_ctr : irange( 0_z, arg_regions.size() ) ) {
+	for (const size_t entry_ctr : indices( arg_regions.size() ) ) {
 		// const auto entry_regions = arg_regions[ entry_ctr ];
 		// if ( entry_regions ) {
 		new_spec.colour_pdb(

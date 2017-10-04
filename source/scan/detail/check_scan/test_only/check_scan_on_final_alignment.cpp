@@ -32,9 +32,9 @@
 #include "alignment/pair_alignment.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "common/difference.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "scan/detail/check_scan/test_only/alignment_scan_comparison.hpp"
 #include "scan/detail/check_scan/test_only/quad_and_rep_criteria_result.hpp"
@@ -42,12 +42,10 @@
 #include "scan/detail/quad_criteria_are_met_by.hpp"
 #include "scan/detail/res_pair/functions/res_pair_core_functions.hpp"
 #include "scan/detail/res_pair/multi_struc_res_rep_pair.hpp"
-//#include "scan/detail/res_pair/single_struc_res_pair.hpp"
 #include "scan/detail/scan_type_aliases.hpp"
 #include "scan/detail/stride/rep_strider.hpp"
 #include "scan/detail/stride/roled_scan_stride.hpp"
 #include "scan/quad_criteria.hpp"
-//#include "scan/scan_stride.hpp"
 #include "ssap/context_res.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/protein/protein.hpp"
@@ -69,8 +67,8 @@ using namespace std;
 
 using boost::accumulate;
 using boost::algorithm::join;
-using boost::numeric_cast;
 using boost::irange;
+using boost::numeric_cast;
 using boost::range::set_intersection;
 using boost::range::set_symmetric_difference;
 
@@ -246,7 +244,7 @@ alignment_scan_comparison check_scan_on_final_alignment::do_check(const alignmen
                                                                   const quad_criteria &arg_criteria,   ///< TODOCUMENT
                                                                   const scan_stride   &arg_scan_stride ///< TODOCUMENT
                                                                   ) const {
-	const auto aln_range = irange( 0_z, arg_alignment.length() );
+	const auto aln_range = indices( arg_alignment.length() );
 	cerr << "SHOULD THE RANGE BE 7.0 RATHER THAN SQRT(40.0)????\n";
 	return accumulate(
 		cross( aln_range, aln_range ),

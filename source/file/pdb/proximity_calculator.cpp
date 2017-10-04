@@ -24,10 +24,11 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/partition.hpp>
 
-#include "common/algorithm/copy_build.hpp"
 #include "chopping/region/regions_limiter.hpp"
+#include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_uniq_build.hpp"
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "file/pdb/pdb.hpp"
 #include "structure/geometry/restrict_to_single_linkage_extension.hpp"
 
@@ -41,7 +42,6 @@ using namespace cath::geom;
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
 using boost::algorithm::any_of;
-using boost::irange;
 using boost::range::binary_search;
 using boost::range::partition;
 using std::tie;
@@ -55,7 +55,7 @@ res_index_key_coord_and_dist_vec proximity_calculator::get_res_indices_key_coord
 	regions_limiter the_limiter{ arg_regions };
 
 	// Loop over the residues (tracking the index)
-	for (const size_t &res_ctr : irange( 0_z, arg_pdb.get_num_residues() ) ) {
+	for (const size_t &res_ctr : indices( arg_pdb.get_num_residues() ) ) {
 		const auto &res        = arg_pdb.get_residue_of_index__backbone_unchecked( res_ctr );
 
 		// If this residue is included in the regions and isn't empty...

@@ -25,6 +25,7 @@
 #include <boost/algorithm/cxx11/none_of.hpp>
 
 #include "common/algorithm/constexpr_modulo_fns.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
@@ -195,7 +196,7 @@ BOOST_AUTO_TEST_CASE(chinese_remainder_coprime_pair_works) {
 	// This can ranges can be extended higher for more comprehensive testing
 	// (have used 1-10 and 0-100 at the time of writing)
 	const auto mod_range   = irange( 1_z,  5_z );
-	const auto index_range = irange( 0_z, 20_z );
+	const auto index_range = indices( 20_z );
 
 	for (const auto &mods_tuple : cross( mod_range, mod_range ) ) {
 		const auto &mod_a = get<0>( mods_tuple );

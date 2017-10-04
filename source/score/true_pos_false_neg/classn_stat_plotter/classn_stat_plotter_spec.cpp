@@ -21,10 +21,9 @@
 #include "classn_stat_plotter_spec.hpp"
 
 #include <boost/optional.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/transform_build.hpp"
-#include "common/size_t_literal.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "score/true_pos_false_neg/classn_stat_pair_series.hpp"
 #include "score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
 
@@ -33,7 +32,6 @@ using namespace cath::common;
 using namespace cath::score;
 using namespace std;
 
-using boost::irange;
 using boost::none;
 using boost::optional;
 
@@ -71,7 +69,7 @@ vector<pair<string, str_opt>> cath::score::get_series_to_plot_or_make_default(co
 	}
 
 	return transform_build<vector<pair<string, str_opt>>>(
-		irange( 0_z, arg_list.size() ),
+		indices( arg_list.size() ),
 		[&] (const size_t &x) {
 			return make_pair( arg_list[ x].get_name(), none );
 		}

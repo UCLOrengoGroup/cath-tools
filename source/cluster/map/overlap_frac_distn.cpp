@@ -23,10 +23,10 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/format.hpp>
 #include <boost/range/adaptor/transformed.hpp>
-#include <boost/range/irange.hpp>
 
-#include "common/boost_addenda/range/max_proj_element.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
+#include "common/boost_addenda/range/max_proj_element.hpp"
 
 using namespace cath;
 using namespace cath::clust;
@@ -38,7 +38,6 @@ using namespace cath::common;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::format;
-using boost::irange;
 using std::accumulate;
 using std::get;
 using std::make_pair;
@@ -56,7 +55,7 @@ size_t overlap_frac_distn::find_index_of_nth(const size_t &arg_n ///< The index 
 	size_t sum = 0;
 
 	// \TODO Come C++17 and structured bindings, use here
-	for (const boost::tuple<const size_t &, size_t> &value_and_index : combine( *this, irange( 0_z, num_posns ) ) ) {
+	for (const boost::tuple<const size_t &, size_t> &value_and_index : combine( *this, indices( num_posns ) ) ) {
 		const size_t &value = value_and_index.get<0>();
 		const size_t &index = value_and_index.get<1>();
 
@@ -213,7 +212,7 @@ str_size_doub_tpl_vec cath::clust::histogram_data(const overlap_frac_distn &arg_
 		             { R"(0% (with some other match on the sequence))", num_at_zero - arg_num_with_nothing_on_parent },
 	} };
 
-	for (const size_t &frac_tenth : irange( 0_z, 10_z ) ) {
+	for (const size_t &frac_tenth : indices( 10_z ) ) {
 		const size_t range_pc_begin   = 10 *       frac_tenth;
 		const size_t range_pc_end     = 10 * ( 1 + frac_tenth );
 		const double range_frac_begin = static_cast<double>( range_pc_begin ) / 100.0;

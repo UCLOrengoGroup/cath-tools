@@ -22,13 +22,11 @@
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_CALC_HIT_H
 
 #include <boost/range/adaptor/transformed.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
 #include "common/algorithm/append.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
@@ -36,7 +34,6 @@
 #include "seq/seq_seg.hpp"
 #include "seq/seq_seg_run.hpp"
 
-using namespace cath::common::literals;
 
 namespace cath {
 	namespace rslv {

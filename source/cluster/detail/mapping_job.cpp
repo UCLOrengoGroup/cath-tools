@@ -25,7 +25,6 @@
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/optional/make_optional_if.hpp"
-#include "common/size_t_literal.hpp"
 
 #include <fstream>
 

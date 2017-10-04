@@ -20,12 +20,13 @@
 
 #include <boost/core/ignore_unused.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/algorithm/contains.hpp"
 #include "common/boost_addenda/range/adaptor/limited.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
+#include "common/size_t_literal.hpp"
 #include "structure/geometry/orientation_covering.hpp"
 #include "structure/geometry/quat_rot.hpp"
 #include "test/global_test_constants.hpp"
@@ -33,11 +34,11 @@
 #include <random>
 
 using namespace cath::common;
+using namespace cath::common::literals;
 using namespace cath::geom;
 using namespace std;
 
 using boost::ignore_unused;
-using boost::irange;
 using boost::numeric_cast;
 
 namespace cath {
@@ -227,7 +228,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(mid_point_is_halfway, quat_rot_type, all_quat_rot_
 //
 //	size_t repeat_ctr = 0;
 //	while ( repeat_ctr < num_repeats ) {
-////	for (const auto &repeat_ctr : irange( 0_z, num_repeats ) ) {
+////	for (const auto &repeat_ctr : indices( num_repeats ) ) {
 ////		ignore_unused( repeat_ctr );
 //		const auto quat_rot_1 = make_random_quat_rot<quat_rot_type>( the_rng );
 //		const auto quat_rot_2 = make_random_quat_rot<quat_rot_type>( the_rng );

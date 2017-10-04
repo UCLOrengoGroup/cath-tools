@@ -21,7 +21,6 @@
 #include "aligned_pair_score.hpp"
 
 #include <boost/filesystem/path.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/serialization/unique_ptr.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -84,7 +83,6 @@ using namespace cath::score;
 using namespace std;
 
 using boost::filesystem::path;
-using boost::irange;
 
 namespace cath {
 	namespace test {

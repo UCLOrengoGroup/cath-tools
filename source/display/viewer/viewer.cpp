@@ -31,6 +31,7 @@
 #include "alignment/alignment_context.hpp"
 #include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/size_t_literal.hpp"
 #include "display/display_colourer/display_colourer.hpp"
 #include "display/display_colourer/display_colourer_consecutive.hpp"
@@ -56,7 +57,6 @@ using namespace cath::sup;
 
 using boost::algorithm::is_space;
 using boost::format;
-using boost::irange;
 using boost::lexical_cast;
 using boost::numeric_cast;
 using std::max;
@@ -307,7 +307,7 @@ str_vec cath::generate_colour_names(const size_t          &arg_num_colours,    /
                                     const colour_category &arg_colour_category ///< The category of colouring (structure-only or structure-or-residue)
                                     ) {
 	return transform_build<str_vec>(
-		irange( 0_z, arg_num_colours ),
+		indices( arg_num_colours ),
 		[&] (const size_t &x) { return generate_colour_name(
 			x,
 			arg_num_colours,

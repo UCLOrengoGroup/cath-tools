@@ -46,7 +46,6 @@ using namespace cath::opts;
 using namespace cath::sup;
 using namespace std::literals::string_literals;
 
-using boost::irange;
 using boost::none;
 using boost::program_options::variables_map;
 using std::istream;

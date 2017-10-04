@@ -7,14 +7,13 @@
 #include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/remove_copy_if.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/hash/pair_hash.hpp"
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/prc_scores_file/detail/prc_scores_line_parser.hpp"
 #include "file/prc_scores_file/prc_scores_entry.hpp"
@@ -31,7 +30,6 @@ using namespace std;
 using boost::adaptors::filtered;
 using boost::algorithm::trim_left;
 using boost::filesystem::path;
-using boost::irange;
 
 /// \brief TODOCUMENT
 prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_vec &arg_prc_scores_entries ///< TODOCUMENT
@@ -41,7 +39,7 @@ prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_v
 	unordered_map<str_str_pair, size_t, pair_hash> index_of_previously_seen;
 
 	return transform_build<prc_scores_entry_vec>(
-		irange( 0_z, arg_prc_scores_entries.size() )
+		indices( arg_prc_scores_entries.size() )
 			| filtered(
 				[&] (const size_t &x) {
 					const auto &entry     = arg_prc_scores_entries[ x ];

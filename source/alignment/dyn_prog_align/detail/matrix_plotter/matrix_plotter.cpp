@@ -21,11 +21,11 @@
 #include "matrix_plotter.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/range/irange.hpp>
 
 #include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
 #include "alignment/dyn_prog_align/detail/score_accumulation_matrix.hpp"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -38,7 +38,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::filesystem::path;
-using boost::irange;
 using boost::numeric_cast;
 
 /// \brief TODOCUMENT
@@ -113,8 +112,8 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &arg_scorer ///< Th
 	if ( simplified_windowless ) {
 		const auto score_of_idx_tpl = [&] (const tuple<size_t, size_t> &x) { return numeric_cast<double>( arg_scorer.get_score( get<0>( x ), get<1>( x ) ) ); };
 
-		const auto index_range_a     = irange( 0_z, lcl_length_a );
-		const auto index_range_b     = irange( 0_z, lcl_length_b );
+		const auto index_range_a     = indices( lcl_length_a );
+		const auto index_range_b     = indices( lcl_length_b );
 		const auto index_range_cross = cross( index_range_a, index_range_b );
 		const auto the_minmax = minmax_element(
 			common::cbegin( index_range_cross ),

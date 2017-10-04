@@ -23,7 +23,6 @@
 
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
-#include <boost/range/irange.hpp>
 
 #include "alignment/common_atom_selection_policy/common_atom_select_cb_policy.hpp" // ***** TEMPORARY *****
 #include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"

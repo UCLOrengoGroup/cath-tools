@@ -29,7 +29,6 @@
 // #include <boost/algorithm/string/predicate.hpp>
 // #include <boost/algorithm/string/trim.hpp>
 // #include <boost/lexical_cast.hpp>
-// #include <boost/range/irange.hpp>
 
 // #include "common/algorithm/copy_build.hpp"
 // #include "common/algorithm/sort_uniq_copy.hpp"
@@ -38,7 +37,6 @@
 // #include "common/boost_addenda/string_algorithm/split_build.hpp"
 // #include "common/debug_numeric_cast.hpp"
 // #include "common/file/open_fstream.hpp"
-// #include "common/size_t_literal.hpp"
 // #include "structure/geometry/quat_rot.hpp"
 // #include "exception/invalid_argument_exception.hpp"
 // #include "exception/runtime_error_exception.hpp"
@@ -50,7 +48,6 @@
 // #include <iostream> // ***** TEMPORARY *****
 // #include <fstream>
 
-// using namespace cath::common::literals;
 
 namespace cath {
 	namespace geom {

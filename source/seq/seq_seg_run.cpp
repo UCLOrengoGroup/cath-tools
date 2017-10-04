@@ -23,6 +23,7 @@
 #include <boost/range.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "seq/seq_seg_run.hpp"
 
 #include <string>
@@ -34,7 +35,6 @@ using namespace std::literals::string_literals;
 using boost::adaptors::transformed;
 using boost::algorithm::all_of;
 using boost::algorithm::join;
-using boost::irange;
 using std::ostream;
 using std::string;
 
@@ -47,7 +47,7 @@ using std::string;
 string cath::seq::get_segments_string(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run whose segments should be described
                                       ) {
 	return join(
-		boost::irange( 0_z, arg_seq_seg_run.get_num_segments() )
+		indices( arg_seq_seg_run.get_num_segments() )
 			| boost::adaptors::transformed( [&] (const size_t &x) {
 				return ::std::to_string( get_start_res_index_of_segment( arg_seq_seg_run, x ) )
 				     + "-"
@@ -109,7 +109,7 @@ bool cath::seq::operator==(const seq_seg_run &arg_lhs, ///< The first  seq_seg_r
 		( arg_lhs.get_num_segments() == arg_rhs.get_num_segments() )
 		&&
 		all_of(
-			irange( 0_z, arg_lhs.get_num_segments() ),
+			indices( arg_lhs.get_num_segments() ),
 			[&] (const size_t &seg_ctr) {
 				return (
 					arg_lhs.get_start_arrow_of_segment( seg_ctr ) == arg_rhs.get_start_arrow_of_segment( seg_ctr )

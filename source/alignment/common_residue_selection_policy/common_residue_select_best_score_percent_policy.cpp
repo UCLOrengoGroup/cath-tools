@@ -32,8 +32,8 @@
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_uniq_build.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 #include <algorithm>
@@ -47,7 +47,6 @@ using namespace std;
 
 using boost::lexical_cast;
 using boost::accumulate;
-using boost::irange;
 using boost::range::find_if;
 using boost::range::sort;
 using boost::range::stable_sort;
@@ -68,7 +67,7 @@ size_vec common_residue_select_best_score_percent_policy::do_select_common_resid
 
 	// Build a stable_sorted list of indices in descending order of the score to which each corresponds
 	const auto score_sorted_indices = stable_sort_build<size_vec>(
-		irange( 0_z, min_scores.size() ),
+		indices( min_scores.size() ),
 		[&] (const size_t &x, const size_t &y) {
 			return ( min_scores.at( x ) > min_scores.at( y ) );
 		}

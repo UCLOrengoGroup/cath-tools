@@ -20,6 +20,7 @@
 
 #include "read_and_process_mgr.hpp"
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/range/min_proj_element.hpp"
 #include "common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -40,7 +41,6 @@ using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::rslv::detail;
 
-using boost::irange;
 using boost::size;
 using std::forward;
 using std::future;
@@ -66,14 +66,14 @@ constexpr bool read_and_process_mgr::DEFAULT_INPUT_HITS_ARE_GROUPED;
 // 	};
 
 // 	const auto sorted_indices = sort_build<size_vec>(
-// 		irange( 0_z, size( arg_range ) ),
+// 		indices( size( arg_range ) ),
 // 		comp_fn
 // 	);
 
 // 	size_vec ranks( size( arg_range ), 0_z );
 
 // 	size_t ctr = 0;
-// 	for (const size_t &index : irange( 0_z, size( arg_range ) ) ) {
+// 	for (const size_t &index : indices( size( arg_range ) ) ) {
 // 		const size_t &prev_sorted_index  = sorted_indices[ index - 1 ];
 // 		const size_t &this_sorted_index  = sorted_indices[ index     ];
 // 		if ( index == 0 || comp_fn( prev_sorted_index, this_sorted_index ) ) {
@@ -96,7 +96,7 @@ constexpr bool read_and_process_mgr::DEFAULT_INPUT_HITS_ARE_GROUPED;
 // 		std::less<>{},
 // 		[&] (const calc_hit &x) {
 // 			const size_t hit_idx = *boost::find_if(
-// 				irange( 0_z, arg_hits.size() ),
+// 				indices( arg_hits.size() ),
 // 				[&] (const size_t &y) {
 // 					return ( arg_hits[ y ] == x );
 // 				}

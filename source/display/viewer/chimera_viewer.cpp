@@ -33,9 +33,8 @@
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/batch/batch_functions.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/size_t_literal.hpp"
-
 #include "display/viewer/pymol/pymol_tools.hpp"
 #include "display_colour/display_colour.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -62,7 +61,6 @@ using boost::algorithm::join;
 using boost::algorithm::replace_all_copy;
 using boost::edge_weight_t;
 using boost::graph_traits;
-using boost::irange;
 using boost::lexical_cast;
 using boost::no_property;
 using boost::property;
@@ -305,7 +303,7 @@ void cath::detail::write_chimera_global_alignment(ostream                     &a
 
 						const size_t num_res_ids     = res_ids.size();
 						const size_t num_res_batches = num_batches( num_res_ids, chimera_viewer::RESIDUE_BATCH_SIZE, broken_batch_tol::PERMIT );
-						for (const size_t &batch_ctr : irange( 0_z, num_res_batches ) ) {
+						for (const size_t &batch_ctr : indices( num_res_batches ) ) {
 							const size_size_pair begin_and_end = batch_begin_and_end(
 								num_res_ids,
 								chimera_viewer::RESIDUE_BATCH_SIZE,
@@ -423,7 +421,7 @@ string chimera_viewer::do_get_colour_pdb_residues_str(const string         &arg_
 	return "colour " + arg_colour_name + ", "
 		+ join(
 			transform_build<str_vec>(
-				irange( 0_z, num_res_batches ),
+				indices( num_res_batches ),
 				[&] (const size_t &batch_idx) {
 					return pymol_tools::pymol_res_seln_str(
 						arg_pdb_name,

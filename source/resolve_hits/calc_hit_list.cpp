@@ -43,6 +43,7 @@
 #include "common/boost_addenda/range/adaptor/adjacented.hpp"
 #include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/file/open_fstream.hpp"
@@ -111,7 +112,7 @@ calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const full_hit_list   
 	bool hit_failed_seg_length = false;
 
 	return transform_build<calc_hit_vec>(
-		irange( 0_z, arg_full_hit_list.size() )
+		indices( arg_full_hit_list.size() )
 			| filtered( [&] (const size_t &x) {
 				const full_hit &full_hit_x = arg_full_hit_list[ x ];
 				if ( empty( full_hit_x.get_segments() | filtered( seg_long_enough_fn ) ) ) {
@@ -170,7 +171,7 @@ calc_hit_vec cath::rslv::make_sorted_pruned_calc_hit_vec(const full_hit_list    
 
 	seq_seg_vec trimmed_segs;
 
-	for (const size_t &full_hit_ctr : irange( 0_z, arg_full_hit_list.size() ) ) {
+	for (const size_t &full_hit_ctr : indices( arg_full_hit_list.size() ) ) {
 		const full_hit &the_full_hit = arg_full_hit_list[ full_hit_ctr ];
 
 		if ( ! score_passes_filter( arg_filter_spec, the_full_hit.get_score(), the_full_hit.get_score_type() ) ) {

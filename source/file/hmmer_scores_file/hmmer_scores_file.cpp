@@ -7,12 +7,11 @@
 #include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/remove_copy_if.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/file/open_fstream.hpp"
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/hmmer_scores_file/hmmer_scores_entry.hpp"
 
@@ -27,7 +26,6 @@ using namespace std;
 using boost::adaptors::filtered;
 using boost::algorithm::trim_left;
 using boost::filesystem::path;
-using boost::irange;
 
 /// \brief TODOCUMENT
 hmmer_scores_entry_vec hmmer_scores_file::remove_duplicates(const hmmer_scores_entry_vec &arg_hmmer_scores_entries ///< TODOCUMENT
@@ -37,7 +35,7 @@ hmmer_scores_entry_vec hmmer_scores_file::remove_duplicates(const hmmer_scores_e
 	str_str_pair_size_map index_of_previously_seen;
 
 	return transform_build<hmmer_scores_entry_vec>(
-		irange( 0_z, arg_hmmer_scores_entries.size() )
+		indices( arg_hmmer_scores_entries.size() )
 			| filtered(
 				[&] (const size_t &x) {
 					const auto &entry     = arg_hmmer_scores_entries[ x ];

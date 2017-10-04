@@ -30,7 +30,6 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/binary_search.hpp>
 #include <boost/range/algorithm/count_if.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/transform_build.hpp"
@@ -38,6 +37,7 @@
 #include "common/boost_addenda/range/adaptor/adjacented.hpp"
 #include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
@@ -72,7 +72,6 @@ using boost::algorithm::is_space;
 using boost::algorithm::join;
 using boost::algorithm::starts_with;
 using boost::filesystem::path;
-using boost::irange;
 using boost::lexical_cast;
 using boost::make_optional;
 using boost::none;
@@ -255,7 +254,7 @@ size_t cath::file::get_index_of_backbone_complete_index(const pdb    &arg_pdb,  
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to get_residue_ca_coord_of_backbone_complete_index() for index >= number of residues"));
 	}
 	size_t count = 0;
-	for (const size_t &index : irange( 0_z, arg_pdb.get_num_residues() ) ) {
+	for (const size_t &index : indices( arg_pdb.get_num_residues() ) ) {
 		const pdb_residue &the_res = arg_pdb.get_residue_of_index__backbone_unchecked( index );
 		if ( is_backbone_complete( the_res ) ) {
 			if ( count == arg_index ) {
@@ -330,7 +329,7 @@ size_t cath::file::get_index_of_region_limited_backbone_complete_index(const pdb
 	regions_limiter limiter{ arg_regions };
 
 	size_t count = 0;
-	for (const size_t &index : irange( 0_z, arg_pdb.get_num_residues() ) ) {
+	for (const size_t &index : indices( arg_pdb.get_num_residues() ) ) {
 		const pdb_residue &the_res = arg_pdb.get_residue_of_index__backbone_unchecked( index );
 		if ( limiter.update_residue_is_included( the_res.get_residue_id() ) && is_backbone_complete( the_res ) ) {
 			if ( count == arg_index ) {
@@ -638,7 +637,7 @@ ostream & cath::file::write_pdb_file(ostream               &arg_os,             
 	regions_limiter the_regions_limiter{ arg_regions_limiter };
 	const auto &num_residues = arg_pdb.get_num_residues();
 //	size_t atom_ctr = 1;
-	for (const size_t &residue_ctr : irange( 0_z, num_residues ) ) {
+	for (const size_t &residue_ctr : indices( num_residues ) ) {
 		const pdb_residue &the_residue = arg_pdb.get_residue_of_index__backbone_unchecked( residue_ctr );
 		if ( the_regions_limiter.update_residue_is_included( the_residue.get_residue_id() ) ) {
 			write_pdb_file_entry( arg_os, the_residue );
@@ -720,7 +719,7 @@ size_vec cath::file::indices_of_residues_following_chain_breaks(const pdb &arg_p
 	constexpr double INTER_C_TO_N_DIST_FOR_NEIGHBOURS = 2.5;
 
 	return copy_build<size_vec>(
-		irange( 0_z, arg_pdb.get_num_residues() )
+		indices( arg_pdb.get_num_residues() )
 			| filtered( [&] (const size_t &x) {
 				if ( x == 0 ) {
 					return false;
@@ -816,7 +815,7 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 	// It isn't good enough to check pairs of consecutive indices because
 	// this should replicate DSSP and that requires checking between pairs of
 	// consecutive *non-skipped* residues (straddling any gaps in indices where necessary)
-	const auto non_skipped_residues_indices = irange( 0_z, num_residues )
+	const auto non_skipped_residues_indices = indices( num_residues )
 		| filtered( [&] (const size_t &x) {
 			return (
 				( arg_dssp_angle_skipping == dssp_skip_angle_skipping::DONT_BREAK_ANGLES )
@@ -967,7 +966,7 @@ pair<protein, protein_info> cath::file::build_protein_of_pdb(const pdb          
 
 	return {
 		build_protein( transform_build<residue_vec>(
-			irange( 0_z, num_residues ),
+			indices( num_residues ),
 			[&] (const size_t &x) {
 				const pdb_residue &the_residue = backbone_complete_pdb_subset.get_residue_of_index__backbone_unchecked( x );
 				const auto        &phi         = phi_and_psi_angles[ x ].first;
@@ -1017,7 +1016,7 @@ size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb     
 
 	// Return the indices corresponding to residues with any atoms with non-standard alt_locn values
 	return copy_build<size_set>(
-		irange( 0_z, num_residues )
+		indices( num_residues )
 			| filtered( [&] (const size_t &x) {
 				return dssp_will_skip_residue(
 					backbone_complete_pdb_subset.get_residue_of_index__backbone_unchecked( x )

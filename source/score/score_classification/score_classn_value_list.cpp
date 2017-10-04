@@ -31,17 +31,16 @@
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/sort.hpp>
 #include <boost/range/algorithm.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/copy_build.hpp"
-#include "common/algorithm/transform_build.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/adaptor/equal_grouped.hpp"
 #include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/sorted_insert.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "score/score_classification/value_list_scaling.hpp"
 #include "score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
@@ -60,7 +59,6 @@ using boost::adaptors::transformed;
 //using boost::algorithm::join;
 using boost::const_rend;
 using boost::filesystem::path;
-using boost::irange;
 using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::count_if;
@@ -292,7 +290,7 @@ str_size_pair_vec cath::score::get_sorted_instance_labels_and_indices(const scor
                                                                       ) {
 	return sort_copy(
 		transform_build<str_size_pair_vec>(
-			irange( 0_z, arg_score_classn_value_list.size() ),
+			indices( arg_score_classn_value_list.size() ),
 			[&] (const size_t &x) { return make_pair( arg_score_classn_value_list[ x ].get_instance_label(), x ); }
 		),
 		[] (const str_size_pair &x, const str_size_pair &y) { return x.first < y.first; }
@@ -380,14 +378,14 @@ doub_doub_pair_vec cath::score::correlated_data(const score_classn_value_list &a
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get correlated data for score_classn_value_lists with mismatching instance labels"));
 	}
 	const auto index_b_of_label = transform_build<str_size_map>(
-		irange( 0_z, arg_score_classn_values_b.size() ),
+		indices( arg_score_classn_values_b.size() ),
 		[&] (const size_t &x) {
 			return make_pair( arg_score_classn_values_b[ x ].get_instance_label(), x );
 		}
 	);
 
 	return transform_build<doub_doub_pair_vec>(
-		irange( 0_z, arg_score_classn_values_a.size() ),
+		indices( arg_score_classn_values_a.size() ),
 		[&] (const size_t &x) {
 			const auto &score_classn_value_a = arg_score_classn_values_a[ x ];
 			const auto &instance_label       = score_classn_value_a.get_instance_label();

@@ -22,6 +22,7 @@
 
 #include <boost/range/adaptor/transformed.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "scan/detail/scan_index_store/scan_index_lattice_store.hpp"
 #include "scan/detail/scan_index_store/scan_index_store_helper.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer.hpp"
@@ -30,12 +31,12 @@
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_y_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_z_keyer_part.hpp"
 
+using namespace cath::common;
 using namespace cath::file;
 using namespace cath::scan;
 using namespace cath::scan::detail;
 
 using boost::adaptors::transformed;
-using boost::irange;
 using std::vector;
 
 namespace cath {
@@ -81,7 +82,7 @@ locn_index_store cath::scan::make_sparse_lattice(const protein &arg_protein,   /
                                                  const float   &arg_max_dist   ///< TODOCUMENT
                                                  ) {
 	return simple_spatial_lattice_store_maker< sod::SPARSE, vector< simple_locn_index > >{}(
-		irange( 0_z, arg_protein.get_length() )
+		indices( arg_protein.get_length() )
 			| transformed( [&] (const size_t &x) {
 				return make_simple_locn_index_of_ca( arg_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
 			} ),
@@ -96,7 +97,7 @@ locn_index_store cath::scan::make_dense_lattice(const protein &arg_protein,   //
                                                 const float   &arg_max_dist   ///< TODOCUMENT
                                                 ) {
 	return simple_spatial_lattice_store_maker< sod::DENSE, vector< simple_locn_index > >{}(
-		irange( 0_z, arg_protein.get_length() )
+		indices( arg_protein.get_length() )
 			| transformed( [&] (const size_t &x) {
 				return make_simple_locn_index_of_ca( arg_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
 			} ),
@@ -111,7 +112,7 @@ locn_index_store cath::scan::make_sparse_lattice(const pdb   &arg_pdb,       ///
                                                  const float &arg_max_dist   ///< TODOCUMENT
                                                  ) {
 	return simple_spatial_lattice_store_maker< sod::SPARSE, vector< simple_locn_index > >{}(
-		irange( 0_z, arg_pdb.get_num_residues() )
+		indices( arg_pdb.get_num_residues() )
 			| transformed( [&] (const size_t &x) {
 				return make_simple_locn_index_of_ca( arg_pdb.get_residue_of_index__backbone_unchecked( x ), debug_numeric_cast<unsigned int>( x ) );
 			} ),
@@ -126,7 +127,7 @@ locn_index_store cath::scan::make_dense_lattice(const pdb   &arg_pdb,       ///<
                                                 const float &arg_max_dist   ///< TODOCUMENT
                                                 ) {
 	return simple_spatial_lattice_store_maker< sod::DENSE, vector< simple_locn_index > >{}(
-		irange( 0_z, arg_pdb.get_num_residues() )
+		indices( arg_pdb.get_num_residues() )
 			| transformed( [&] (const size_t &x) {
 				return make_simple_locn_index_of_ca( arg_pdb.get_residue_of_index__backbone_unchecked( x ), debug_numeric_cast<unsigned int>( x ) );
 			} ),

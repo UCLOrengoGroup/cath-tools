@@ -25,7 +25,6 @@
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/map.hpp>
 
-#include <boost/range/irange.hpp>
 #include <boost/range/join.hpp>
 
 #include "alignment/alignment_context.hpp"
@@ -34,7 +33,7 @@
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_uniq_build.hpp"
 #include "common/algorithm/transform_build.hpp"
-#include "common/size_t_literal.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "display/viewer/viewer.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb.hpp"
@@ -48,7 +47,6 @@ using namespace cath::file;
 using boost::adaptors::filtered;
 using boost::adaptors::map_keys;
 using boost::adaptors::map_values;
-using boost::irange;
 using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
@@ -224,7 +222,7 @@ void cath::colour_viewer_with_spec(const display_colour_spec &arg_colour_spec,  
 	const pdb_list &pdbs         = get_pdbs( arg_alignment_context );
 	const size_t    num_colours  = colours.size();
 
-	for (const size_t &colour_ctr : irange( 0_z, num_colours ) ) {
+	for (const size_t &colour_ctr : indices( num_colours ) ) {
 		const auto pdb_and_res_indices = get_residues_of_colour( arg_colour_spec, colours[ colour_ctr ] );
 		for (const auto &pdb_and_res_index : pdb_and_res_indices) {
 			const size_t &pdb_index = pdb_and_res_index.first;

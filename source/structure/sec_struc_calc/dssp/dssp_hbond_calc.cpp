@@ -20,10 +20,8 @@
 
 #include "dssp_hbond_calc.hpp"
 
-#include <boost/range/irange.hpp>
 
 #include "common/debug_numeric_cast.hpp"
-#include "common/size_t_literal.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "scan/spatial_index/spatial_index.hpp"
 #include "structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
@@ -33,7 +31,6 @@ using namespace cath::file;
 using namespace cath::scan;
 using namespace cath::sec;
 
-using boost::irange;
 using std::make_pair;
 
 /// \brief Calculate the bifur_hbond_list list of (possibly bifurcating) hbonds between

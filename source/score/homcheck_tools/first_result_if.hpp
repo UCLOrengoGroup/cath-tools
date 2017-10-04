@@ -7,21 +7,19 @@
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/sort.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/optional.hpp>
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/adaptor/limited.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "file/file_type_aliases.hpp"
 #include "score/homcheck_tools/ssaps_and_prcs_of_query.hpp"
 
 #include <vector>
 
-using namespace cath::common::literals;
 
 namespace cath { namespace homcheck { class ssaps_and_prcs_of_query; } }
 
@@ -36,7 +34,7 @@ namespace cath {
 			                          LT_FN      arg_less_than, ///< The less-than function to determine which results should come first ("lower" comes earlier)
 			                          PRED_FN    arg_pred       ///< The predicate to specify acceptable results
 			                          ) -> decltype( boost::make_optional( std::cref( arg_results[ 0 ] ) ) ) {
-				auto indices = common::copy_build<size_vec>( boost::irange( 0_z, arg_results.size() ) );
+				auto indices = common::copy_build<size_vec>( common::indices( arg_results.size() ) );
 				boost::range::sort(
 					indices,
 					[&] (const size_t &x, const size_t &y) {
@@ -62,7 +60,7 @@ namespace cath {
 			                             ) -> std::vector< std::remove_const_t< std::remove_reference_t< decltype( arg_results[ 0 ] ) > > > {
 				using result_type        = std::remove_const_t< std::remove_reference_t< decltype( arg_results[ 0 ] ) > >;
 				using result_vector_type = std::vector<result_type>;
-				auto indices = common::copy_build<size_vec>( boost::irange( 0_z, arg_results.size() ) );
+				auto indices = common::copy_build<size_vec>( common::indices( arg_results.size() ) );
 				boost::range::sort(
 					indices,
 					[&] (const size_t &x, const size_t &y) {

@@ -26,13 +26,12 @@
 #include <boost/logic/tribool_io.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/range/algorithm/adjacent_find.hpp>
-#include <boost/range/irange.hpp>
 
 #include "alignment/alignment.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/tribool/tribool.hpp"
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "score/aligned_pair_score/aligned_pair_score.hpp"
 
@@ -46,7 +45,6 @@ using namespace cath::common;
 using namespace cath::score;
 using namespace std;
 
-using boost::irange;
 using boost::lexical_cast;
 using boost::range::adjacent_find;
 
@@ -82,7 +80,7 @@ void cath::score::warn_on_duplicate_human_friendly_names(const aligned_pair_scor
                                                          ) {
 	const size_t num_scores = arg_aligned_pair_score_value_list.size();
 	const auto sorted_human_friendly_names = sort_copy( transform_build<str_vec>(
-		irange( 0_z, num_scores ),
+		indices( num_scores ),
 		[&] (const size_t &x) {
 			const auto &score = arg_aligned_pair_score_value_list.get_aligned_pair_score_of_index( x );
 			return score.human_friendly_short_name();
@@ -101,7 +99,7 @@ str_vec cath::score::get_all_names(const aligned_pair_score_value_list &arg_alig
                                    ) {
 	const size_t num_score_values = arg_aligned_pair_score_value_list.size();
 	return transform_build<str_vec>(
-		irange( 0_z, num_score_values ),
+		indices( num_score_values ),
 		[&] (const size_t &x) { return arg_aligned_pair_score_value_list.get_aligned_pair_score_of_index( x ).human_friendly_short_name(); }
 	);
 }

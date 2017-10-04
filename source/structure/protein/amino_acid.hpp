@@ -23,12 +23,12 @@
 
 #include <boost/operators.hpp>
 #include <boost/optional.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/utility/string_ref.hpp>
 #include <boost/variant.hpp>
 
 #include "common/algorithm/contains.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/char_arr_type_aliases.hpp"
 #include "common/cpp17/invoke.hpp"
 #include "common/function/ident.hpp"
@@ -168,7 +168,7 @@ namespace cath {
 	inline std::unordered_map<T, uint> amino_acid::build_index_unordered_map(Proj &&arg_proj ///< An optional projection function to apply to each of the elements
 	                                                                         ) {
 		std::unordered_map<T, uint> index_map;
-		for (const uint &amino_acid_ctr : boost::irange( 0u, static_cast<uint>( LETTER_CODE_AND_NAME_LIST().size() ) ) ) {
+		for (const uint &amino_acid_ctr : common::indices( static_cast<uint>( LETTER_CODE_AND_NAME_LIST().size() ) ) ) {
 			index_map.emplace(
 				common::invoke(
 					std::forward<Proj>( arg_proj ),

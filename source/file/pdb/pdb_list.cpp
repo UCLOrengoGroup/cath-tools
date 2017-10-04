@@ -24,6 +24,7 @@
 #include <boost/range/combine.hpp>
 
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
@@ -43,7 +44,6 @@ using namespace cath::file;
 using namespace std;
 
 using boost::filesystem::path;
-using boost::irange;
 using boost::range::combine;
 
 /// \brief Ctor from a vector<pdb>
@@ -254,7 +254,7 @@ residue_id_vec_vec cath::file::get_residue_ids_of_first_chains__backbone_uncheck
 residue_id_vec_vec cath::file::get_backbone_complete_residue_ids(const pdb_list &arg_pdb_list ///< The PDBs to query
                                                                  ) {
 	return transform_build<residue_id_vec_vec>(
-		irange( 0_z, arg_pdb_list.size() ),
+		indices( arg_pdb_list.size() ),
 		[&] (const size_t &x) {
 			return get_backbone_complete_residue_ids( arg_pdb_list[ x ] );
 		}
@@ -267,7 +267,7 @@ residue_id_vec_vec cath::file::get_backbone_complete_residue_ids(const pdb_list 
 residue_id_vec_vec cath::file::get_backbone_complete_residue_ids_of_first_chains(const pdb_list &arg_pdb_list ///< The PDBs to query
                                                                                  ) {
 	return transform_build<residue_id_vec_vec>(
-		irange( 0_z, arg_pdb_list.size() ),
+		indices( arg_pdb_list.size() ),
 		[&] (const size_t &x) {
 			return get_backbone_complete_residue_ids_of_first_chain( arg_pdb_list[ x ] );
 		}

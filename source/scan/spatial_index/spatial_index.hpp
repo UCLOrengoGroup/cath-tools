@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_SCAN_SPATIAL_INDEX_SPATIAL_INDEX_H
 #define _CATH_TOOLS_SOURCE_SCAN_SPATIAL_INDEX_SPATIAL_INDEX_H
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "common/constexpr_ignore_unused.hpp"
 #include "common/size_t_literal.hpp"
@@ -98,7 +99,7 @@ namespace cath {
 			const float max_squared_dist = arg_max_dist * arg_max_dist;
 			const simple_locn_crit the_crit{ max_squared_dist };
 
-			for (const size_t &the_res_idx : boost::irange( 0_z, arg_protein.get_length() ) ) {
+			for (const size_t &the_res_idx : common::indices( arg_protein.get_length() ) ) {
 				const auto &the_res = arg_protein.get_residue_ref_of_index( the_res_idx );
 				const auto  data    = make_simple_locn_index_of_ca( the_res, debug_numeric_cast<unsigned int>( the_res_idx ) );
 				for (const auto &key : common::cross( the_keyer.make_close_keys( data, the_crit ) ) ) {
@@ -131,7 +132,7 @@ namespace cath {
 			const float max_squared_dist = arg_max_dist * arg_max_dist;
 			const simple_locn_crit the_crit{ max_squared_dist };
 
-			for (const size_t &the_res_idx : boost::irange( 0_z, arg_pdb.get_num_residues() ) ) {
+			for (const size_t &the_res_idx : common::indices( arg_pdb.get_num_residues() ) ) {
 				const auto &the_res = arg_pdb.get_residue_of_index__backbone_unchecked( the_res_idx );
 				const auto  data    = make_simple_locn_index_of_ca( the_res, debug_numeric_cast<unsigned int>( the_res_idx ) );
 				for (const auto &key : common::cross( the_keyer.make_close_keys( data, the_crit ) ) ) {
@@ -163,7 +164,7 @@ namespace cath {
 			const float max_squared_dist = arg_max_dist * arg_max_dist;
 			// const simple_locn_crit the_crit{ max_squared_dist };
 
-			for (const size_t &the_res_idx : boost::irange( 0_z, arg_protein.get_length() ) ) {
+			for (const size_t &the_res_idx : common::indices( arg_protein.get_length() ) ) {
 				const auto &the_res = arg_protein.get_residue_ref_of_index( the_res_idx );
 				const auto  data    = make_simple_locn_index_of_ca( the_res, debug_numeric_cast<unsigned int>( the_res_idx ) );
 				const auto &key = the_keyer.make_key( data );

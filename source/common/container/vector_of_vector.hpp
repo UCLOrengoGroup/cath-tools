@@ -22,9 +22,8 @@
 #define _CATH_TOOLS_SOURCE_COMMON_CONTAINER_VECTOR_OF_VECTOR_H
 
 #include <boost/range/combine.hpp>
-#include <boost/range/irange.hpp>
 
-#include "common/size_t_literal.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 #include <iostream>
@@ -101,7 +100,7 @@ namespace cath {
 		                                             ) : length_a( arg_init_list.size()                                 ),
 		                                                 length_b( ( length_a > 0 ) ? arg_init_list.begin()->size() : 0 ),
 		                                                 data    ( length_a * length_b                                  ) {
-			for (const auto &x_idx_and_rng : boost::combine( boost::irange( 0_z, arg_init_list.size() ), arg_init_list ) ) {
+			for (const auto &x_idx_and_rng : boost::combine( indices( arg_init_list.size() ), arg_init_list ) ) {
 				const size_t                   &x_idx = boost::get<0>( x_idx_and_rng );
 				const std::initializer_list<T> &rng   = boost::get<1>( x_idx_and_rng );
 
@@ -110,7 +109,7 @@ namespace cath {
 						"The nested initializer_list for vector_of_vector ctor must be rectangular (ie all inner intializer_list<T>s should have the same size)"
 					));
 				}
-				for (const auto &y_idx_and_val : boost::combine( boost::irange( 0_z, rng.size() ), rng ) ) {
+				for (const auto &y_idx_and_val : boost::combine( indices( rng.size() ), rng ) ) {
 					const size_t &y_idx = boost::get<0>( y_idx_and_val );
 					const T      &value = boost::get<1>( y_idx_and_val );
 					this->set( x_idx, y_idx, value );

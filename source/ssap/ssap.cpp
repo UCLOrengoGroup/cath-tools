@@ -129,6 +129,7 @@
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "chopping/domain/domain.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/container/vector_of_vector.hpp"
 #include "common/difference.hpp"
 #include "common/file/open_fstream.hpp"
@@ -179,7 +180,6 @@ using namespace cath::sup;
 using namespace cath::opts;
 
 using boost::filesystem::path;
-using boost::irange;
 using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
@@ -985,7 +985,7 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 				false
 			);
 			BOOST_LOG_TRIVIAL( debug ) << "Setting secondary structure alignment : " << *arg_opt_ss_alignment;;
-			for (const size_t &alignment_ctr : irange( 0_z, arg_opt_ss_alignment->length() ) ) {
+			for (const size_t &alignment_ctr : indices( arg_opt_ss_alignment->length() ) ) {
 				if ( has_both_positions_of_index( *arg_opt_ss_alignment, alignment_ctr ) ) {
 					sec_struc_match_matrix.set(
 						get_b_offset_1_position_of_index( *arg_opt_ss_alignment, alignment_ctr ),

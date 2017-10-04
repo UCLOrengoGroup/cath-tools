@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/container/id_of_string_ref.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
@@ -33,7 +33,6 @@ using namespace cath;
 using namespace cath::common;
 using namespace cath::test;
 
-using boost::irange;
 using std::string;
 
 namespace cath {
@@ -91,7 +90,7 @@ BOOST_AUTO_TEST_CASE(fast) {
 
 	str_vec strings;
 	strings.reserve( MAX );
-	for (const size_t &ctr : irange( 0_z, MAX ) ) {
+	for (const size_t &ctr : indices( MAX ) ) {
 		strings.emplace_back( to_string( ctr ) );
 	}
 

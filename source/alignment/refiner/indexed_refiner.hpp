@@ -24,6 +24,7 @@
 #include "alignment/align_type_aliases.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "common/type_aliases.hpp"
 #include "scan/detail/scan_index_store/scan_index_hash_store.hpp"
@@ -64,7 +65,7 @@ namespace cath {
 		// 		constexpr float MAX_DIST = 7.0; // ??????????????????????
 		// 		constexpr scan::simple_locn_crit the_crit{ indexed_refiner_constants::MAX_SQ_DIST };
 
-		// 		const auto the_range = boost::irange( 0_z, arg_protein.get_length() )
+		// 		const auto the_range = common::indices( arg_protein.get_length() )
 		// 			| transformed( [&] (const size_t &x) {
 		// 				return scan::make_simple_locn_index_of_ca( arg_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
 		// 			} );
@@ -88,7 +89,7 @@ namespace cath {
 		// 		);
 
 		// 		// make_dense_lattice_store_impl(
-		// 		// 	irange( 0_z, arg_protein.get_length() )
+		// 		// 	common::indices( arg_protein.get_length() )
 		// 		// 		| transformed( [&] (const size_t &x) {
 		// 		// 			return make_simple_locn_index_of_ca( arg_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
 		// 		// 		} ),
@@ -119,7 +120,7 @@ namespace cath {
 		                                const fot                         &arg_from_or_to, ///< TODOCUMENT
 		                                const size_t                      &arg_index       ///< TODOCUMENT
 		                                ) {
-			return boost::irange( 0u, debug_numeric_cast<unsigned int>( arg_rotns.size() ) )
+			return common::indices( debug_numeric_cast<unsigned int>( arg_rotns.size() ) )
 				| boost::adaptors::transformed( [&] (const unsigned int &x) {
 					return scan::make_simple_locn_index(
 						view_vector_of_rotns_coords_and_indices(
@@ -138,7 +139,7 @@ namespace cath {
 		                              const std::vector<geom::coord>    &arg_coords,    ///< TODOCUMENT
 		                              const fot                         &arg_from_or_to ///< TODOCUMENT
 		                              ) {
-			const auto index_range = boost::irange( 0u, debug_numeric_cast<unsigned int>( arg_rotns.size() ) );
+			const auto index_range = common::indices( debug_numeric_cast<unsigned int>( arg_rotns.size() ) );
 			return common::cross( index_range, index_range )
 				| boost::adaptors::transformed( [&] (const std::tuple<unsigned int, unsigned int> &x) {
 					return scan::make_simple_locn_index(
@@ -157,7 +158,7 @@ namespace cath {
 		inline auto make_rotns_and_coords(const protein &arg_protein ///< TODOCUMENT
 		                                  ) {
 			std::pair<std::vector<geom::rotation>, std::vector<geom::coord>> result;
-			for (const size_t &x : boost::irange( 0_z, arg_protein.get_length() ) ) {
+			for (const size_t &x : common::indices( arg_protein.get_length() ) ) {
 				result . first  . push_back( arg_protein.get_residue_ref_of_index( x ).get_frame()             );
 				result . second . push_back( arg_protein.get_residue_ref_of_index( x ).get_carbon_beta_coord() );
 			}
@@ -193,9 +194,9 @@ namespace cath {
 			std::vector<scan::simple_locn_index> lists;
 			lists.reserve( length );
 
-			for (const size_t &outer_index : boost::irange( 0_z, length ) ) {
+			for (const size_t &outer_index : common::indices( length ) ) {
 				lists.clear();
-				for (const size_t &inner_index : boost::irange( 0u, debug_numeric_cast<unsigned int>( length ) ) ) {
+				for (const size_t &inner_index : common::indices( debug_numeric_cast<unsigned int>( length ) ) ) {
 					const auto the_view = view_vector_of_rotns_coords_and_indices(
 						rotns_and_coords.first,
 						rotns_and_coords.second,

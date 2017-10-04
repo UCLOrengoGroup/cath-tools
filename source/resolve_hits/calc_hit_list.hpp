@@ -25,6 +25,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/range/algorithm/sort.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/chrono/duration_to_seconds_string.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "resolve_hits/calc_hit.hpp"
@@ -83,7 +84,7 @@ namespace cath {
 						return false;
 					}
 
-					for (const size_t &seg_ctr : boost::irange( 0_z, get_num_segments( x ) ) ) {
+					for (const size_t &seg_ctr : common::indices( get_num_segments( x ) ) ) {
 						const auto lhs_seg_tie = std::tie( get_start_arrow_of_segment( x, seg_ctr ), get_stop_arrow_of_segment( x, seg_ctr ) );
 						const auto rhs_seg_tie = std::tie( get_start_arrow_of_segment( y, seg_ctr ), get_stop_arrow_of_segment( y, seg_ctr ) );
 						if ( lhs_seg_tie < rhs_seg_tie) {

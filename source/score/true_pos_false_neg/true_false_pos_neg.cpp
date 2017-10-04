@@ -20,7 +20,6 @@
 
 #include "true_false_pos_neg.hpp"
 
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "score/true_pos_false_neg/true_false_pos_neg.hpp"
 

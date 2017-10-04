@@ -25,10 +25,10 @@
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
-#include <boost/range/irange.hpp>
 
 #include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/property_tree/make_ptree_of.hpp"
 #include "common/size_t_literal.hpp"
@@ -55,7 +55,6 @@ using namespace std;
 using boost::adaptors::map_values;
 using boost::algorithm::any_of;
 using boost::filesystem::path;
-using boost::irange;
 using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;
 
@@ -237,7 +236,7 @@ exit
 
 	// Translate each PDB to midpoint, based on CoG of equivalent positions
 	// (This is important for structures with low overlap)
-	for (const size_t pdb_ctr : irange( 0_z, num_entries ) ) {
+	for (const size_t pdb_ctr : indices( num_entries ) ) {
 		write_superposed_pdb_to_ostream(
 			arg_os,
 			arg_superposition,
@@ -448,7 +447,7 @@ void cath::sup::save_to_ptree(ptree               &arg_ptree,        ///< The pt
 	arg_ptree.put_child( transformations_key, ptree{} );
 	auto &transformations_ptree = arg_ptree.get_child( transformations_key );
 
-	for (const size_t &index : irange( 0_z, arg_superposition.get_num_entries() ) ) {
+	for (const size_t &index : indices( arg_superposition.get_num_entries() ) ) {
 		ptree transformation_ptree;
 		transformation_ptree.put_child( superposition_io_consts::TRANSLATION_KEY, make_ptree_of( arg_superposition.get_translation_of_index( index ) ) );
 		transformation_ptree.put_child( superposition_io_consts::ROTATION_KEY,    make_ptree_of( arg_superposition.get_rotation_of_index   ( index ) ) );

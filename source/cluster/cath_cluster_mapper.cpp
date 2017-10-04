@@ -30,6 +30,7 @@
 #include "cluster/map/map_results.hpp"
 #include "cluster/new_cluster_data.hpp"
 #include "cluster/old_cluster_data.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/container/id_of_str_bidirnl.hpp"
 #include "common/file/ofstream_list.hpp"
 #include "common/file/open_fstream.hpp"
@@ -46,7 +47,6 @@ using namespace cath::common;
 using namespace cath::opts;
 
 using boost::filesystem::path;
-using boost::irange;
 using std::ifstream;
 using std::istream;
 using std::ostream;
@@ -131,7 +131,7 @@ void cath::clust::perform_map_clusters(const clustmap_input_spec   &arg_input_sp
 	);
 
 	// \TODO Come C++17 and structured bindings, use here
-	for (const size_t &job_idx : irange( 0_z, jobs.size() ) ) {
+	for (const size_t &job_idx : indices( jobs.size() ) ) {
 		const mapping_job &job                    = jobs[ job_idx ];
 		const auto        &job_batch_id           = job.get_batch_id();
 		const auto        &job_new_clustmemb_file = job.get_new_cluster_membership_file();

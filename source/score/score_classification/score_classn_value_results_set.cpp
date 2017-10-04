@@ -42,6 +42,7 @@
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "common/boost_addenda/range/adaptor/limited.hpp"
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/tribool/tribool.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/out_of_range_exception.hpp"
@@ -189,7 +190,7 @@ void score_classn_value_results_set::add_aligned_pair_score_value_list(const ali
                                                                        ) {
 	const size_t num_score_values = arg_aligned_pair_score_value_list.size();
 	if ( empty() ) {
-		for (const size_t &score_value_ctr : irange( 0_z, num_score_values ) ) {
+		for (const size_t &score_value_ctr : indices( num_score_values ) ) {
 			const auto   &score            = arg_aligned_pair_score_value_list.get_aligned_pair_score_of_index( score_value_ctr );
 			const string &name             = score.human_friendly_short_name();
 			const bool   &higher_is_better = is_true( score.higher_is_better() );
@@ -202,7 +203,7 @@ void score_classn_value_results_set::add_aligned_pair_score_value_list(const ali
 		const str_set new_names_set( common::cbegin( new_names ), common::cend( new_names ) );
 		const size_t  num_series     = size();
 		const auto    existing_names = transform_build<str_vec>(
-			irange( 0_z, num_series ),
+			indices( num_series ),
 			[&] (const size_t &x) { return get_name_of_index( *this, x ); }
 		);
 
@@ -213,7 +214,7 @@ void score_classn_value_results_set::add_aligned_pair_score_value_list(const ali
 		}
 	}
 
-	for (const size_t &score_value_ctr : irange( 0_z, num_score_values ) ) {
+	for (const size_t &score_value_ctr : indices( num_score_values ) ) {
 		const auto   &value            = arg_aligned_pair_score_value_list.get_value_of_index             ( score_value_ctr );
 		const auto   &score            = arg_aligned_pair_score_value_list.get_aligned_pair_score_of_index( score_value_ctr );
 		const string &name             = score.human_friendly_short_name();
@@ -337,7 +338,7 @@ void cath::score::detail::write_to_svm_light_data_files_impl(const score_classn_
 			// Next output the data in the format : '1:value_1 2:value_2 [...] n:value_n'
 			out_stream << join(
 				transform_build<str_vec>(
-					irange( 0_z, arg_results.size() ),
+					indices( arg_results.size() ),
 					[&] (const size_t &x) {
 						const auto &scaling      = arg_value_list_scalings[ x ];
 						const auto  scaled_score = scale_value_copy( scaling, arg_results[ x ][ index ].get_score_value() );
@@ -503,7 +504,7 @@ string cath::score::get_name_of_index(const score_classn_value_results_set &arg_
 str_vec cath::score::get_names(const score_classn_value_results_set &arg_results_set ///< TODOCUMENT
                                ) {
 	return transform_build<str_vec>(
-		irange( 0_z, arg_results_set.size() ),
+		indices( arg_results_set.size() ),
 		[&] (const size_t &x) {
 			return get_name_of_index( arg_results_set, x );
 		}
@@ -543,7 +544,7 @@ named_true_false_pos_neg_list_list cath::score::make_named_true_false_pos_neg_li
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return named_true_false_pos_neg_list_list{
 		transform_build<named_true_false_pos_neg_list_vec>(
-			irange( 0_z, arg_score_classn_value_results_set.size() ),
+			indices( arg_score_classn_value_results_set.size() ),
 			[&] (const size_t &x) {
 				const auto &name   = get_name_of_index( arg_score_classn_value_results_set, x );
 				const auto &scores = arg_score_classn_value_results_set.get_score_classn_value_list_of_name( name );

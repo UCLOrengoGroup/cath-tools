@@ -21,6 +21,7 @@
 #include "naive_greedy_hit_resolver.hpp"
 
 #include "common/algorithm/sort_uniq_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "resolve_hits/algo/scored_arch_proxy_fn.hpp"
 #include "resolve_hits/scored_hit_arch.hpp"
@@ -29,7 +30,6 @@ using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::rslv::detail;
 
-using boost::irange;
 using std::numeric_limits;
 
 /// \brief Naively, greedily resolve hits
@@ -39,7 +39,7 @@ scored_hit_arch cath::rslv::naive_greedy_resolve_hits(const calc_hit_list &arg_h
 
 	// Get a vector of the indices of the hits in descending order of score
 	const auto hit_indices_best_to_worst = sort_build<hitidx_vec>(
-		irange( 0_z, arg_hits.size() ),
+		indices( arg_hits.size() ),
 		[&] (const hitidx_t &x, const hitidx_t &y) {
 			return ( arg_hits[ y ].get_score() < arg_hits[ x ].get_score() );
 		}

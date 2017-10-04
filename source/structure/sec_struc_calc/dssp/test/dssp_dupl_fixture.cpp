@@ -26,11 +26,11 @@
 #include <boost/format.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/filtered.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/tools/old/impl.hpp>
 
 #include "common/algorithm/copy_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/file/open_fstream.hpp"
@@ -54,7 +54,6 @@ using boost::algorithm::trim_copy;
 using boost::filesystem::path;
 using boost::format;
 using boost::icontains;
-using boost::irange;
 using boost::is_any_of;
 using boost::make_optional;
 using boost::math::fpc::percent_tolerance;
@@ -188,7 +187,7 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &arg_dssp_dupl_res_
 	const auto arg_bifur_hbonds  = arg_bifur_hbond_list.size();
 
 	const auto dssp_non_null_indices = copy_build<size_vec>(
-		irange( 0_z, num_dssp_dupl_res )
+		indices( num_dssp_dupl_res )
 			| filtered(
 				[&] (const size_t &x) {
 					return ! arg_dssp_dupl_res_vec[ x ].pdb_residue_name.is_null();
@@ -209,13 +208,13 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &arg_dssp_dupl_res_
 
 	const auto normal_index_of_dssp_index = [&] {
 		size_vec result( num_dssp_dupl_res, 0 );
-		for (const size_t &x : irange( 0_z, dssp_non_null_indices.size() ) ) {
+		for (const size_t &x : indices( dssp_non_null_indices.size() ) ) {
 			result[ dssp_non_null_indices[ x ] ] = x;
 		}
 		return result;
 	}();
 
-	for (const size_t &index : irange( 0_z, min( num_dssp_dupl_res, arg_bifur_hbonds ) ) ) {
+	for (const size_t &index : indices( min( num_dssp_dupl_res, arg_bifur_hbonds ) ) ) {
 		const auto diff_str = difference_string( arg_dssp_dupl_res_vec[ dssp_non_null_indices[ index ] ], arg_bifur_hbond_list[ index ], normal_index_of_dssp_index );
 		if ( diff_str ) {
 			return ( num_prob ? *num_prob : string{} ) + *diff_str;

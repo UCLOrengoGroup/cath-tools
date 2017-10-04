@@ -6,12 +6,10 @@
 
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/sort.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/optional.hpp>
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "file/file_type_aliases.hpp"
 #include "score/homcheck_tools/ssap_and_prc.hpp"
@@ -28,7 +26,6 @@ namespace cath { namespace homcheck { class ssap_and_prc; } }
 namespace cath { namespace homcheck { class superfamily_of_domain; } }
 namespace cath { namespace score { class rbf_model; } }
 
-using namespace cath::common::literals;
 
 namespace cath {
 	namespace homcheck {

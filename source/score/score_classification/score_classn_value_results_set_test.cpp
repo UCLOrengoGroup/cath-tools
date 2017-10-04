@@ -37,6 +37,7 @@
 #include "common/algorithm/set_union_build.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "file/hmmer_scores_file/hmmer_scores_entry.hpp"
 #include "file/hmmer_scores_file/hmmer_scores_file.hpp"
@@ -501,7 +502,7 @@ namespace cath {
 			                                                          const size_t &arg_num          ///< TODOCUMENT
 			                                                          ) {
 				return transform_build<vector<pair<string, str_opt>>>(
-					irange( 0_z, arg_num ),
+					indices( arg_num ),
 					[&] (const size_t &x) {
 						const string title_string = x == 0 ? string{ ""          }
 						                                   : string{ " notitle " };

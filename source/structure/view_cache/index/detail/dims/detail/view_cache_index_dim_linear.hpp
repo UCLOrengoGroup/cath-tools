@@ -28,6 +28,7 @@
 
 #include "common/algorithm/constexpr_clamp.hpp"
 #include "common/algorithm/constexpr_floor.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/size_t_literal.hpp"
@@ -351,7 +352,7 @@ namespace cath {
 					if ( ! arg_query_cells.empty() && ! arg_match_cells.empty() ) {
 						const size_t &num_query_cells = arg_query_cells.size();
 
-						for (const size_t &cell_ctr : boost::irange( 0_z, num_query_cells ) ) {
+						for (const size_t &cell_ctr : common::indices( num_query_cells ) ) {
 							const auto &query_cell = arg_query_cells[ cell_ctr ];
 							if ( ! query_cell.empty() ) {
 

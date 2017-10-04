@@ -25,6 +25,7 @@
 #include <boost/optional.hpp>
 
 #include "chopping/region/regions_limiter.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -210,7 +211,7 @@ namespace cath {
 		                                                         const size_t &arg_index ///< The index of the query residue
 		                                                         ) {
 			const auto &chain = get_chain_label( arg_pdb.get_residue_of_index__backbone_unchecked( arg_index ) );
-			for (const size_t &index : boost::irange( 0_z, arg_index ) | boost::adaptors::reversed ) {
+			for (const size_t &index : common::indices( arg_index ) | boost::adaptors::reversed ) {
 				if ( chain == get_chain_label( arg_pdb.get_residue_of_index__backbone_unchecked( index ) ) ) {
 					return index;
 				}

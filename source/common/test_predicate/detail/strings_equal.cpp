@@ -22,11 +22,10 @@
 
 #include <boost/range/irange.hpp>
 
-#include "common/size_t_literal.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath::common;
-using namespace cath::common::literals;
 using namespace cath::test::detail;
 
 using boost::irange;
@@ -41,7 +40,7 @@ size_t cath::test::detail::index_of_first_difference(const string &arg_string1, 
 	// Step through the characters up to the end of the shorter string
 	// and return the index of the first difference found, if any
 	const size_t min_length = min( arg_string1.length(), arg_string2.length() );
-	for (const size_t &char_ctr : irange( 0_z, min_length ) ) {
+	for (const size_t &char_ctr : indices( min_length ) ) {
 		if ( arg_string1[ char_ctr ] != arg_string2[ char_ctr ] ) {
 			return char_ctr;
 		}

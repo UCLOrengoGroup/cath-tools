@@ -56,7 +56,6 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 
-using boost::irange;
 using boost::lexical_cast;
 using boost::none;
 using boost::ptr_vector;

@@ -21,18 +21,16 @@
 #include "regions_limiter.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
-#include <boost/range/irange.hpp>
 
 #include "biocore/residue_id.hpp"
 #include "chopping/region/region.hpp"
-#include "common/size_t_literal.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath::chop;
 using namespace cath::common;
 
 using boost::algorithm::any_of;
-using boost::irange;
 using boost::make_optional;
 using boost::none;
 
@@ -109,7 +107,7 @@ bool regions_limiter::update_residue_is_included(const residue_id &arg_residue_i
 
 	// If not currently within a region, loop over the regions
 	const auto num_regions = regions->get().size();
-	for (const size_t &region_ctr : irange( 0_z, num_regions ) ) {
+	for (const size_t &region_ctr : indices( num_regions ) ) {
 		const region &the_region = regions->get()[ region_ctr ];
 
 		// If this region specifies start and stop

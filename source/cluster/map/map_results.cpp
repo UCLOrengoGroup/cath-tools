@@ -30,6 +30,7 @@
 #include "cluster/map/aggregate_map_results.hpp"
 #include "cluster/new_cluster_data.hpp"
 #include "cluster/old_cluster_data.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/file/open_fstream.hpp"
 #include "exception/out_of_range_exception.hpp"
 
@@ -42,7 +43,6 @@ using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::filesystem::path;
 using boost::format;
-using boost::irange;
 using boost::lexical_cast;
 using boost::numeric_cast;
 using std::ofstream;
@@ -148,7 +148,7 @@ string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,
 		// 	""
 		// )
 		+ join(
-			irange( 0_z, unmapped_new_cluster_indices.size() )
+			indices( unmapped_new_cluster_indices.size() )
 				| transformed( [&] (const size_t &new_cluster_index_index) {
 					const size_t &new_cluster_index = unmapped_new_cluster_indices[ new_cluster_index_index ];
 					return
@@ -236,7 +236,7 @@ string cath::clust::longer_results_string(const old_cluster_data_opt &arg_old_cl
 		)
 		+ "\n"
 		+ join(
-			irange( 0_z, unmapped_new_cluster_indices.size() )
+			indices( unmapped_new_cluster_indices.size() )
 				| transformed( [&] (const size_t &new_cluster_index_index) {
 					const size_t &new_cluster_index = unmapped_new_cluster_indices[ new_cluster_index_index ];
 					return

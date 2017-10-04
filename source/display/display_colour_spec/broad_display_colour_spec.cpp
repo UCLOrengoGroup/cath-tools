@@ -24,13 +24,12 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/map.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/range/join.hpp>
 
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_uniq_build.hpp"
-#include "common/size_t_literal.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "display/viewer/viewer.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
@@ -41,7 +40,6 @@ using namespace cath::file;
 using boost::adaptors::filtered;
 using boost::adaptors::map_keys;
 using boost::adaptors::map_values;
-using boost::irange;
 using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
@@ -169,7 +167,7 @@ void cath::detail::colour_base_and_pdbs_impl(const display_colour_vec        &ar
                                              ) {
 	const size_t num_colours = arg_colours.size();
 
-	for (const size_t &colour_ctr : irange( 0_z, num_colours ) ) {
+	for (const size_t &colour_ctr : indices( num_colours ) ) {
 		arg_viewer.define_colour(
 			arg_os,
 			arg_colours[ colour_ctr ],
@@ -182,7 +180,7 @@ void cath::detail::colour_base_and_pdbs_impl(const display_colour_vec        &ar
 		arg_os << arg_viewer.get_colour_base_str( base_colour_name() );
 	}
 
-	for (const size_t colour_ctr : irange( 0_z, num_colours ) ) {
+	for (const size_t colour_ctr : indices( num_colours ) ) {
 		const size_vec pdb_indices = get_pdbs_of_colour( arg_colour_spec, arg_colours[ colour_ctr ] );
 		for (const size_t &pdb_index : pdb_indices) {
 			arg_os << arg_viewer.get_colour_pdb_str(

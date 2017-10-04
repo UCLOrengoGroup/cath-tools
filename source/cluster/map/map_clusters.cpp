@@ -24,7 +24,6 @@
 #include <boost/optional.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/stable_partition.hpp>
-#include <boost/range/irange.hpp>
 
 #include "cluster/map/map_results.hpp"
 #include "cluster/new_cluster_data.hpp"
@@ -32,6 +31,7 @@
 #include "cluster/options/spec/clust_mapping_spec.hpp"
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_uniq_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/type_aliases.hpp"
 
 using namespace cath;
@@ -43,7 +43,6 @@ using namespace cath::seq;
 using boost::adaptors::filtered;
 using boost::algorithm::any_of;
 using boost::find_if;
-using boost::irange;
 using boost::none;
 using boost::range::stable_partition;
 using boost::sub_range;
@@ -88,7 +87,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 		num_mapped_by_old_cluster.resize( num_old_clusters, 0 );
 
 		// For each old cluster
-		for (const size_t &old_cluster_idx : irange( 0_z, num_old_clusters ) ) {
+		for (const size_t &old_cluster_idx : indices( num_old_clusters ) ) {
 			const cluster_domains &old_cluster = ( *arg_old_clusters ) [ old_cluster_idx ];
 
 			// Initialise a store of the number of equivalents to this old cluster for each of the new clusters
@@ -237,7 +236,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 			}
 
 			// At the end of the old cluster, store any potential new maps
-			for (const size_t &new_cluster_idx : irange( 0_z, num_new_clusters ) ) {
+			for (const size_t &new_cluster_idx : indices( num_new_clusters ) ) {
 				if ( new_clust_equivs[ new_cluster_idx ] > 0 ) {
 					potential_maps.emplace_back(
 						old_cluster_idx,
@@ -322,7 +321,7 @@ size_vec cath::clust::get_info_ordered_indices_of_unmapped_new_clusters(const po
 
 	// Build a size_vec of the indices of the unmapped new clusters, sorted using cluster_info
 	return sort_build<size_vec>(
-		irange( 0_z, num_new_clusters )
+		indices( num_new_clusters )
 			| filtered( [&] (const size_t &x) { return ! mapped_new_clusters[ x ]; } ),
 		[&] (const size_t &x, const size_t &y) {
 			return (

@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_TO_PHI_KEYER_PART_H
 #define _CATH_TOOLS_SOURCE_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_TO_PHI_KEYER_PART_H
 
-//#include <boost/range/irange.hpp>
 //#include <boost/range/join.hpp>
 
 #include "scan/detail/res_pair/multi_struc_res_rep_pair.hpp"

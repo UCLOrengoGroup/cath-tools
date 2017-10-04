@@ -3,13 +3,11 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/range/algorithm/sort.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/file/open_fstream.hpp"
-#include "common/size_t_literal.hpp"
 #include "file/prc_scores_file/prc_scores_entry.hpp"
 #include "file/prc_scores_file/prc_scores_file.hpp"
 #include "file/ssap_scores_file/ssap_scores_entry.hpp"
@@ -27,7 +25,6 @@ using namespace std;
 
 using boost::filesystem::directory_iterator;
 using boost::filesystem::path;
-using boost::irange;
 using boost::range::sort;
 
 namespace cath {

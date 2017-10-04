@@ -22,19 +22,17 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_copy.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;
 using namespace std;
 
-using boost::irange;
 using boost::numeric_cast;
 using boost::range::random_shuffle;
 
@@ -47,16 +45,16 @@ size_vec_size_vec_pair cath::common::random_split(mt19937       &arg_rng,       
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot create random split with fraction in first outside range [0, 1]"));
 	}
 
-	auto indices = copy_build<size_vec>( irange( 0_z, arg_num_instances ) );
+	auto the_indices = copy_build<size_vec>( indices( arg_num_instances ) );
 
-//	random_shuffle( indices, arg_rng );
-	shuffle( begin( indices ), end( indices ), arg_rng );
+//	random_shuffle( the_indices, arg_rng );
+	shuffle( begin( the_indices ), end( the_indices ), arg_rng );
 
 	const auto num_in_first  = numeric_cast<size_t>( round( arg_fraction_in_first * numeric_cast<double>( arg_num_instances ) ) );
-	const auto cut_point_itr = next( cath::common::cbegin( indices ), numeric_cast<ptrdiff_t>( num_in_first ) );
+	const auto cut_point_itr = next( cath::common::cbegin( the_indices ), numeric_cast<ptrdiff_t>( num_in_first ) );
 
 	return make_pair(
-		sort_copy( size_vec{ cath::common::cbegin( indices ), cut_point_itr                 } ),
-		sort_copy( size_vec{ cut_point_itr,                   cath::common::cend( indices ) } )
+		sort_copy( size_vec{ cath::common::cbegin( the_indices ), cut_point_itr                 } ),
+		sort_copy( size_vec{ cut_point_itr,                   cath::common::cend( the_indices ) } )
 	);
 }

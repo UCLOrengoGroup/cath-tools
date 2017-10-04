@@ -23,6 +23,7 @@
 #include <boost/range/irange.hpp>
 
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -150,7 +151,7 @@ sec_struc_planar_angles_vec_vec cath::file::calc_planar_angles(const sec_file_re
 		return {};
 	}
 	return transform_build<sec_struc_planar_angles_vec_vec>(
-		irange( 0_z, arg_sec_file_records.size() - 1 ),
+		indices( arg_sec_file_records.size() - 1 ),
 		[&] (const size_t &x) {
 			return transform_build<sec_struc_planar_angles_vec>(
 				irange( x + 1_z, arg_sec_file_records.size() ),

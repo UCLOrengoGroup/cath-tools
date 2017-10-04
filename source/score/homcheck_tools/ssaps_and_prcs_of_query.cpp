@@ -8,13 +8,12 @@
 #include <boost/log/trivial.hpp>
 #include <boost/range/algorithm/for_each.hpp>
 #include <boost/range/algorithm/max_element.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/adaptor/adjacented.hpp"
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/hash/pair_hash.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/prc_scores_file/prc_scores_entry.hpp"
@@ -34,7 +33,6 @@ using namespace cath::score;
 using namespace std;
 
 using boost::algorithm::all_of;
-using boost::irange;
 using boost::make_optional;
 using boost::none;
 using boost::optional;
@@ -246,7 +244,7 @@ ssaps_and_prcs_of_query cath::homcheck::make_ssaps_and_prcs_of_query(const ssap_
 	}
 
 	const auto prc_index_of_ids = transform_build<unordered_map<str_str_pair, size_t, pair_hash> >(
-		irange( 0_z, arg_prcs.size() ),
+		indices( arg_prcs.size() ),
 		[&] (const size_t &x) {
 			const auto &the_prc = arg_prcs[ x ];
 			return make_pair( make_pair( the_prc.get_name_1(), the_prc.get_name_2() ), x );

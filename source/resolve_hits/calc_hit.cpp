@@ -23,6 +23,7 @@
 #include <boost/range.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "resolve_hits/calc_hit.hpp"
 
 #include <string>
@@ -34,7 +35,6 @@ using namespace std::literals::string_literals;
 using boost::adaptors::transformed;
 using boost::algorithm::all_of;
 using boost::algorithm::join;
-using boost::irange;
 using std::ostream;
 using std::string;
 
@@ -47,7 +47,7 @@ using std::string;
 string cath::rslv::get_segments_string(const calc_hit &arg_hit ///< The calc_hit whose segments should be described
                                        ) {
 	return join(
-		boost::irange( 0_z, get_num_segments( arg_hit ) )
+		indices( get_num_segments( arg_hit ) )
 			| boost::adaptors::transformed( [&] (const size_t &x) {
 				return ::std::to_string( get_start_res_index_of_segment( arg_hit, x ) )
 				     + "-"
@@ -95,7 +95,7 @@ bool cath::rslv::operator==(const calc_hit &arg_lhs, ///< The first  calc_hit to
 		( arg_lhs.get_label_idx()     == arg_rhs.get_label_idx()     )
 		&&
 		all_of(
-			irange( 0_z, get_num_segments( arg_lhs ) ),
+			indices( get_num_segments( arg_lhs ) ),
 			[&] (const size_t &seg_ctr) {
 				return (
 					get_start_arrow_of_segment( arg_lhs, seg_ctr ) == get_start_arrow_of_segment( arg_rhs, seg_ctr )

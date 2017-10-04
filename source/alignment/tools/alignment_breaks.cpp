@@ -30,6 +30,7 @@
 #include "common/algorithm/set_union_build.hpp"
 #include "common/algorithm/sets_are_disjoint.hpp"
 #include "common/boost_addenda/range/adaptor/adjacented.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/size_t_literal.hpp"
 
 using namespace cath;
@@ -120,7 +121,7 @@ size_size_pair_vec cath::align::get_alignment_break_pairs(const alignment &arg_a
 	size_size_pair_vec break_pairs;
 	break_pairs.reserve( num_alignment_breaks );
 
-	for (const size_t &idx_one : irange( 0_z, num_alignment_breaks ) ) {
+	for (const size_t &idx_one : indices( num_alignment_breaks ) ) {
 		for (const size_t &idx_two : irange( idx_one, num_alignment_breaks ) ) {
 			const size_t &break_one = alignment_breaks[ idx_one ];
 			const size_t &break_two = alignment_breaks[ idx_two ];

@@ -20,7 +20,6 @@
 
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/test_tools.hpp>
 
@@ -30,6 +29,7 @@
 #include "common/boost_addenda/range/adaptor/equal_grouped.hpp"
 #include "common/boost_addenda/range/adaptor/lexical_casted.hpp"
 #include "common/boost_addenda/range/adaptor/limited.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
@@ -42,7 +42,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::adaptors::filtered;
-using boost::irange;
 using boost::range::for_each;
 using boost::sub_range;
 
@@ -155,7 +154,7 @@ BOOST_AUTO_TEST_CASE(adjacented_works) {
 
 BOOST_AUTO_TEST_CASE(adjacented_of_irange_works) {
 	BOOST_CHECK_EQUAL_RANGES(
-		copy_build<size_size_pair_vec>( irange( 0_z, 4_z ) | adjacented ),
+		copy_build<size_size_pair_vec>( indices( 4_z ) | adjacented ),
 		size_size_pair_vec{ { 0, 1 }, { 1, 2 }, { 2, 3 } }
 	);
 }
@@ -163,7 +162,7 @@ BOOST_AUTO_TEST_CASE(adjacented_of_irange_works) {
 BOOST_AUTO_TEST_CASE(adjacented_of_filtered_irange_works) {
 	BOOST_CHECK_EQUAL_RANGES(
 		copy_build<size_size_pair_vec>(
-			irange( 0_z, 5_z )
+			indices( 5_z )
 				| filtered( [] (const int &x) { return ( x % 2 == 0 ); } )
 				| adjacented
 		),

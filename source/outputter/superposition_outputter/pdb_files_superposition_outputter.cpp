@@ -20,23 +20,20 @@
 
 #include "pdb_files_superposition_outputter.hpp"
 
-#include <boost/range/irange.hpp>
 
 #include "chopping/region/region.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
-#include "common/size_t_literal.hpp"
 #include "file/pdb/pdb.hpp"
 #include "superposition/io/superposition_io.hpp"
 #include "superposition/superposition_context.hpp"
 
-using namespace cath::common::literals;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 using namespace cath::sup;
 
 using boost::filesystem::path;
-using boost::irange;
 using std::ostream;
 using std::unique_ptr;
 
@@ -53,7 +50,7 @@ void pdb_files_superposition_outputter::do_output_superposition(const superposit
 	const name_set_list &name_sets = get_name_sets( arg_supn_context );
 	const str_vec       &names     = get_supn_pdb_file_names( name_sets );
 
-	for (const size_t &pdb_ctr : irange( 0_z, pdbs.size() ) ) {
+	for (const size_t &pdb_ctr : indices( pdbs.size() ) ) {
 		write_superposed_pdb_to_file(
 			arg_supn_context.get_superposition(),
 			( output_dir / names[ pdb_ctr ] ).string(),

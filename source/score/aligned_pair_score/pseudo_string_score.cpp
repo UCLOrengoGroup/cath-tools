@@ -33,7 +33,6 @@
 #include "common/clone/make_uptr_clone.hpp"
 //#include "common/difference.hpp"
 #include "common/less_than_helper.hpp"
-//#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/not_implemented_exception.hpp"
 //#include "exception/out_of_range_exception.hpp"

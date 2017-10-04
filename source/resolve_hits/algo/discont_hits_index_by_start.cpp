@@ -30,6 +30,7 @@
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 
 using namespace cath::common;
 using namespace cath::rslv;
@@ -53,7 +54,7 @@ res_arr_idx_pair_vec discont_hits_index_by_start::calc_disconts(const calc_hit_l
                                                                 ) {
 	return sort_copy(
 		copy_build<res_arr_idx_pair_vec>(
-			irange( 0_z, arg_calc_hit_list.size() )
+			indices( arg_calc_hit_list.size() )
 				| filtered   ( [&] (const size_t &x) {
 					return is_discontig( arg_calc_hit_list[ x ] );
 				} )
@@ -106,7 +107,7 @@ string cath::rslv::detail::to_string(const discont_hits_index_by_start &arg_dhib
 	return 
 		"discont_hits_index_by_start[ "
 		+ join(
-			irange( 0_z, arg_dhibs.size() )
+			indices( arg_dhibs.size() )
 				| transformed( [&] (const size_t &x) { return to_string( arg_dhibs.get_discont_hit_of_index_index( x ) ); } ),
 			", "
 		)

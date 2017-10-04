@@ -31,8 +31,8 @@
 #include "biocore/residue_id.hpp"
 #include "chopping/region/regions_limiter.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/not_implemented_exception.hpp"
 #include "ssap/context_res.hpp"
@@ -327,7 +327,7 @@ void cath::label_residues_with_sec_strucs(protein               &arg_protein,   
 
 	// Loop over all the secondary structures
 	const size_t num_sec_strucs = arg_protein.get_num_sec_strucs();
-	for (const size_t &sec_struc_ctr : irange( 0_z, num_sec_strucs ) ) {
+	for (const size_t &sec_struc_ctr : indices( num_sec_strucs ) ) {
 
 		// Grab data from the secondary structure
 		const auto &my_sec_struc    = arg_protein.get_sec_struc_ref_of_index(sec_struc_ctr);
@@ -481,7 +481,7 @@ void cath::restrict_to_regions(protein              &/*arg_protein*/, ///< The i
 // 	size_vec sec_struc_index_conv;
 // 	sec_struc_index_conv.reserve( num_sec_strucs );
 
-// 	for (const size_t &sec_struc_ctr : irange( 0_z, num_sec_strucs ) ) {
+// 	for (const size_t &sec_struc_ctr : indices( num_sec_strucs ) ) {
 // 		const sec_struc &my_sec_struc = arg_protein.get_sec_struc_ref_of_index(sec_struc_ctr);
 
 // 		// Look to see if we want to exclude this sec_struc

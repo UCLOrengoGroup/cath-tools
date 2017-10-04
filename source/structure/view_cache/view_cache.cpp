@@ -20,9 +20,8 @@
 
 #include "view_cache.hpp"
 
-#include <boost/range/irange.hpp>
 
-#include "common/size_t_literal.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "ssap/context_res.hpp"
 #include "ssap/ssap.hpp"
 #include "structure/protein/protein.hpp"
@@ -31,7 +30,6 @@ using namespace cath::common;
 using namespace cath::geom;
 using namespace cath::index;
 
-using boost::irange;
 
 /// \brief Private static method that implements the process of building the views from proteins
 coord_vec_vec view_cache::build_views(const protein &arg_protein ///< The protein which the view_cache should be built to represent
@@ -44,8 +42,8 @@ coord_vec_vec view_cache::build_views(const protein &arg_protein ///< The protei
 	}
 
 	// Loop over the all from-versus-to residue pairs and add the resulting views
-	for (const size_t &from_res_ctr : irange( 0_z, num_residues ) ) {
-		for (const size_t &to_res_ctr : irange( 0_z, num_residues ) ) {
+	for (const size_t &from_res_ctr : indices( num_residues ) ) {
+		for (const size_t &to_res_ctr : indices( num_residues ) ) {
 			coord_vec &view_of_from = new_views[ from_res_ctr ];
 			view_of_from.push_back( view_vector_of_residue_pair(
 				arg_protein.get_residue_ref_of_index( from_res_ctr ),

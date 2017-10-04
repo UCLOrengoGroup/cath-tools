@@ -30,6 +30,7 @@
 #include "common/boost_addenda/range/adaptor/equal_grouped.hpp"
 #include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/size_t_literal.hpp"
 #include "file/sec/sec_file.hpp"
 #include "file/sec/sec_file_record.hpp"
@@ -179,7 +180,7 @@ size_size_pair_vec cath::sec::get_sec_starts_and_stops(const protein &arg_protei
 	constexpr size_t MIN_SEC_STRUC_LENGTH = 4_z;
 
 	return copy_build<size_size_pair_vec>(
-		irange( 0_z, arg_protein.get_length() )
+		indices( arg_protein.get_length() )
 			// Group according to secondary structure corresponding to index in protein
 			| equal_grouped( [&] (const size_t &x, const size_t &y) {
 				return (
@@ -256,7 +257,7 @@ string cath::sec::get_pymol_script_text(const protein             &arg_protein, 
                                         const sec_file_record_vec &arg_sec_file_records ///< The sec_file_records to represent in PyMOL script
                                         ) {
 	return join(
-		irange( 0_z, arg_sec_file_records.size() )
+		indices( arg_sec_file_records.size() )
 			| transformed( [&] (const size_t &x) {
 				return get_pymol_script_text( arg_protein, arg_sec_file_records[ x ], x );
 			} ),

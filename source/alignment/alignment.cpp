@@ -35,7 +35,7 @@
 
 #include "alignment/alignment_row.hpp"
 #include "common/algorithm/copy_build.hpp"
-#include "common/size_t_literal.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/temp_check_offset_1.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
@@ -336,7 +336,7 @@ bool cath::align::has_position_of_all_entries_of_index(const alignment &arg_alig
                                                        const size_t    &arg_index      ///< TODOCUMENT
                                                        ) {
 	return all_of(
-		irange( 0_z, arg_alignment.num_entries() ),
+		indices( arg_alignment.num_entries() ),
 		[&] (const size_t &x) { return has_position_of_entry_of_index( arg_alignment, x, arg_index ); }
 	);
 }
@@ -438,7 +438,7 @@ size_vec cath::align::entries_present_at_index(const alignment            &arg_a
                                                const alignment::size_type &arg_index      ///< TODOCUMENT
                                                ) {
 	return copy_build<size_vec>(
-		irange( 0_z, arg_alignment.num_entries() )
+		indices( arg_alignment.num_entries() )
 			| filtered(
 				[&] (const size_t &x) {
 					return has_position_of_entry_of_index( arg_alignment, x, arg_index );
@@ -455,7 +455,7 @@ size_vec cath::align::entries_present_in_index_range(const alignment &arg_alignm
                                                      const size_t    &arg_end_index    ///< One-past-end index of the range to be inspected
                                                      ) {
 	return copy_build<size_vec>(
-		irange( 0_z, arg_alignment.num_entries() )
+		indices( arg_alignment.num_entries() )
 			| filtered(
 				[&] (const size_t &x) {
 					return has_positions_of_entry_in_index_range( arg_alignment, x, arg_begin_index, arg_end_index );
@@ -569,7 +569,7 @@ size_t cath::align::num_present_positions_of_both_entries(const alignment       
                                                           const alignment::size_type &arg_entry_b    ///< TODOCUMENT
                                                           ) {
 	return numeric_cast<size_t>( count_if(
-		irange( 0_z, arg_alignment.length() ),
+		indices( arg_alignment.length() ),
 		[&] (const size_t &x) {
 			return has_position_of_both_entries_of_index( arg_alignment, arg_entry_a, arg_entry_b, x );
 		}
@@ -582,7 +582,7 @@ size_t cath::align::num_present_positions_of_both_entries(const alignment       
 size_t cath::align::num_present_positions_of_all_entries(const alignment &arg_alignment ///< TODOCUMENT
                                                          ) {
 	return numeric_cast<size_t>( count_if(
-		irange( 0_z, arg_alignment.length() ),
+		indices( arg_alignment.length() ),
 		[&] (const size_t &x) {
 			return has_position_of_all_entries_of_index( arg_alignment, x );
 		}
@@ -671,7 +671,7 @@ aln_posn_opt cath::align::get_max_last_present_position(const alignment &arg_ali
 
 	 // Loop over the entries to find the max_last_present_position
 	 aln_posn_opt max_last_present_position;
-	 for (const auto &entry_ctr : irange( 0_z, num_entries ) ) {
+	 for (const auto &entry_ctr : indices( num_entries ) ) {
 	 	max_last_present_position = max(
 	 		max_last_present_position,
 	 		get_last_present_position_of_entry( arg_alignment, entry_ctr )

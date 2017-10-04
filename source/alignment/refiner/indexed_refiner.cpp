@@ -27,6 +27,7 @@
 #include <boost/range/adaptor/transformed.hpp>
 
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/chrono/duration_to_seconds_string.hpp"
 #include "common/cpp17/invoke.hpp"
 #include "common/metaprogramming/combine_params_lists_with_template_list.hpp"
@@ -178,7 +179,7 @@ private:
 
 
 
-					for (const auto &aln_index : irange( 0_z, arg_alignment.length() ) ) {
+					for (const auto &aln_index : indices( arg_alignment.length() ) ) {
 						if ( has_both_positions_of_index( arg_alignment, aln_index ) ) {
 							const auto &a_posn = get_a_position_of_index( arg_alignment, aln_index );
 							const auto &b_posn = get_b_position_of_index( arg_alignment, aln_index );

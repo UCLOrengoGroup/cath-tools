@@ -23,13 +23,12 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/optional.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/algorithm/string/classification.hpp>
 
 #include "alignment/alignment.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 
 using namespace cath;
@@ -39,7 +38,6 @@ using namespace std;
 
 using boost::algorithm::is_any_of;
 using boost::algorithm::is_space;
-using boost::irange;
 using boost::join;
 using boost::make_optional;
 using boost::none;
@@ -69,7 +67,7 @@ string cath::align::detail::scaffold_line_of_alignment_entry(const alignment &ar
                                                              const size_t    &arg_entry      ///< The index of the alignment entry for which the scaffold line should be made
                                                              ) {
 	return transform_build<string>(
-		irange( 0_z, arg_alignment.length() ),
+		indices( arg_alignment.length() ),
 		[&] (const size_t &x) {
 			return has_position_of_entry_of_index( arg_alignment, arg_entry, x ) ? 'X' : ' ';
 		}
@@ -126,7 +124,7 @@ alignment cath::align::alignment_of_scaffold(const string &arg_scaffold ///< The
 str_vec cath::align::scaffold_lines_of_alignment(const alignment &arg_alignment ///< The alignment from which the scaffold lines should be generated
                                                  ) {
 	return transform_build<str_vec>(
-		irange( 0_z, arg_alignment.num_entries() ),
+		indices( arg_alignment.num_entries() ),
 		[&] (const size_t &entry) {
 			return detail::scaffold_line_of_alignment_entry( arg_alignment, entry );
 		}

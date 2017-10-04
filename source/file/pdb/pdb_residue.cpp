@@ -26,12 +26,10 @@
 #include <boost/math/constants/constants.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/reversed.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/boost_addenda/range/front.hpp"
 #include "common/boost_addenda/range/max_proj_element.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "structure/protein/residue.hpp"
@@ -49,7 +47,6 @@ using boost::adaptors::reversed;
 using boost::adaptors::filtered;
 using boost::algorithm::any_of;
 using boost::algorithm::join;
-using boost::irange;
 using boost::lexical_cast;
 using boost::none;
 

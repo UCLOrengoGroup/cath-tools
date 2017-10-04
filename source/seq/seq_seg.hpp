@@ -28,6 +28,7 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/constexpr_min_max.hpp"
 #include "common/json_style.hpp"
 #include "common/rapidjson_addenda/rapidjson_writer.hpp"
@@ -365,7 +366,7 @@ namespace cath {
 			const size_t num_segments_rhs = arg_seq_segs_b.size();
 
 			size_t rhs_ctr = 0;
-			for (const auto &lhs_ctr : boost::irange( 0_z, num_segments_lhs ) ) {
+			for (const auto &lhs_ctr : common::indices( num_segments_lhs ) ) {
 				while ( rhs_ctr < num_segments_rhs && arg_seq_segs_a[ lhs_ctr ].get_stop_arrow() > arg_seq_segs_b[ rhs_ctr ].get_stop_arrow() ) {
 					++rhs_ctr;
 				}
@@ -425,7 +426,7 @@ namespace cath {
 			const auto combine_fn = [&] (const resarw_t &x) {
 				result ^= hasher( x ) + 0x9e3779b9 + ( result << 6 ) + ( result >> 2 );
 			};
-			for (const size_t &seg_ctr : boost::irange( 0_z, arg_seq_segs.size() ) ) {
+			for (const size_t &seg_ctr : common::indices( arg_seq_segs.size() ) ) {
 				combine_fn( arg_seq_segs[ seg_ctr ].get_start_arrow().get_index() );
 				combine_fn( arg_seq_segs[ seg_ctr ].get_stop_arrow() .get_index() );
 			}

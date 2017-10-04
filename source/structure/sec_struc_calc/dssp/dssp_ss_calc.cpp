@@ -33,7 +33,7 @@
 
 #include "common/algorithm/append.hpp"
 #include "common/algorithm/transform_build.hpp"
-// #include "common/boost_addenda/range/adaptor/lexical_casted.hpp" // ***** TEMPORARY *****
+#include "common/boost_addenda/range/indices.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc_type.hpp"
@@ -733,7 +733,7 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 
 	const auto beta_bridges = set_bridges_contexts_copy( remove_bridges_to_chain_break_residues_copy(
 		transform_build<beta_bridge_vec_vec>(
-			irange( 0_z, arg_bifur_hbond_list.size() ),
+			indices( arg_bifur_hbond_list.size() ),
 			[&] (const size_t &x) {
 				return has_beta_bridge( arg_bifur_hbond_list, x );
 			}
@@ -741,12 +741,12 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 		arg_break_indices
 	) );
 
-	// for (const size_t &beta_bridges_ctr : irange( 0_z, beta_bridges.size() ) ) {
+	// for (const size_t &beta_bridges_ctr : indices( beta_bridges.size() ) ) {
 	// 	std::cerr << beta_bridges_ctr << "\t" << join ( beta_bridges[ beta_bridges_ctr ] | lexical_casted<string>(), ", " ) << "\n";
 	// }
 
 	sec_struc_type_vec results( arg_bifur_hbond_list.size(), sec_struc_type::COIL );
-	for (const size_t &beta_bridge_idx_1 : irange( 0_z, beta_bridges.size() ) ) {
+	for (const size_t &beta_bridge_idx_1 : indices( beta_bridges.size() ) ) {
 		for (const size_t &beta_bridge_idx_2 : irange( beta_bridge_idx_1, min( beta_bridges.size(), beta_bridge_idx_1 + 3 ) ) ) {
 			for (const auto &bridge_1 : beta_bridges[ beta_bridge_idx_1 ] ) {
 				for (const auto &bridge_2 : beta_bridges[ beta_bridge_idx_2 ] ) {
@@ -772,7 +772,7 @@ sec_struc_type_vec cath::sec::calc_sec_strucs(const bifur_hbond_list &arg_bifur_
 	}
 
 	// Label the residues
-	for (const size_t &bifur_bond_ctr : irange( 0_z, arg_bifur_hbond_list.size() ) ) {
+	for (const size_t &bifur_bond_ctr : indices( arg_bifur_hbond_list.size() ) ) {
 		// std::cerr << bifur_bond_ctr << "\t" << arg_bifur_hbond_list [ bifur_bond_ctr ];
 		// std::cerr <<  "  [";
 		// std::cerr << ( is_n_helix_bonded_to_later( arg_bifur_hbond_list, arg_break_indices, bifur_bond_ctr, 4 ) ? "4"s : " "s );

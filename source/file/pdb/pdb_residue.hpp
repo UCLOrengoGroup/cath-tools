@@ -29,6 +29,7 @@
 
 #include "biocore/chain_label.hpp"
 #include "biocore/residue_id.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -188,7 +189,7 @@ namespace cath {
 		inline std::array<boost::optional<size_t>, 5> pdb_residue::make_core_atom_indices(const pdb_atom_vec &arg_pdb_atoms ///< The list of atoms to index
 		                                                                                  ) {
 			std::array<boost::optional<size_t>, 5> results;
-			for (const size_t &atom_ctr : boost::irange( 0_z, arg_pdb_atoms.size() ) ) {
+			for (const size_t &atom_ctr : common::indices( arg_pdb_atoms.size() ) ) {
 
 				const pdb_atom            &the_atom = arg_pdb_atoms[ atom_ctr ];
 				const coarse_element_type &element  = get_coarse_element_type( the_atom );
@@ -419,7 +420,7 @@ namespace cath {
 		//                                                      const coarse_element_type &arg_element      ///< The type of atom to retrieve
 		//                                                      ) {
 		// 	size_opt best_seen_atom_ctr;
-		// 	for (const size_t &atom_ctr : boost::irange( 0_z, arg_pdb_residue.get_num_atoms() ) | boost::adaptors::reversed) {
+		// 	for (const size_t &atom_ctr : common::indices( arg_pdb_residue.get_num_atoms() ) | boost::adaptors::reversed) {
 		// 		const pdb_atom &the_atom = arg_pdb_residue.get_atom_cref_of_index( atom_ctr );
 		// 		if ( get_coarse_element_type( the_atom ) == arg_element ) {
 		// 			if ( alt_locn_is_dssp_accepted( the_atom ) ) {

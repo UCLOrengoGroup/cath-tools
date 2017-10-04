@@ -25,12 +25,11 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/count_if.hpp>
-#include <boost/range/irange.hpp>
 
 #include "biocore/residue_id.hpp"
 #include "common/algorithm/copy_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/size_t_literal.hpp"
 #include "file/dssp_wolf/tally_residue_ids.hpp"
 #include "file/pdb/dssp_skip_policy.hpp"
 #include "file/pdb/pdb.hpp"
@@ -50,7 +49,6 @@ using namespace std;
 
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
-using boost::irange;
 using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::count_if;
@@ -126,7 +124,7 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_f
 
 	// Loop over the residues
 	size_t alignment_ctr = 0;
-	for (const size_t &pdb_residue_ctr : irange( 0_z, num_pdb_residues ) ) {
+	for (const size_t &pdb_residue_ctr : indices( num_pdb_residues ) ) {
 		const residue        &the_pdb_residue = pdb_protein.get_residue_ref_of_index( pdb_residue_ctr );
 		const residue_makeup &res_makeup      = pdb_prot_info.residue_makeups[ pdb_residue_ctr ];
 

@@ -28,7 +28,6 @@
 
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
-#include "common/size_t_literal.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
 #include "file/pdb/pdb.hpp"
@@ -56,7 +55,6 @@ using namespace cath::test;
 using boost::filesystem::directory_entry;
 using boost::filesystem::directory_iterator;
 using boost::filesystem::path;
-using boost::irange;
 using boost::none;
 using boost::range::sort;
 using std::ostringstream;

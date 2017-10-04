@@ -24,6 +24,7 @@
 #include "cluster/cluster_list.hpp"
 #include "cluster/clusters_info.hpp"
 #include "common/boost_addenda/range/accumulate_proj.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/container/id_of_str_bidirnl.hpp"
 #include "common/cpp17/invoke.hpp"
 
@@ -181,7 +182,7 @@ namespace cath {
 		inline size_t get_num_entries(const old_cluster_data &arg_old_cluster_data ///< The old_cluster_data to query
 		                              ) {
 			return common::accumulate_proj(
-				boost::irange( 0_z, get_num_clusters( arg_old_cluster_data ) ),
+				common::indices( get_num_clusters( arg_old_cluster_data ) ),
 				0_z,
 				std::plus<>{},
 				[&] (const size_t &x) { return get_size_of_cluster_of_id( arg_old_cluster_data, x ); }

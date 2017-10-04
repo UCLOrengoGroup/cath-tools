@@ -31,6 +31,7 @@
 
 #include "common/algorithm/sort_uniq_build.hpp"
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "display_colour/display_colour_gradient.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
@@ -213,7 +214,7 @@ string resolve_hits_html_outputter::hit_html(const html_hit         &arg_html_hi
 	);
 
 	return join(
-		irange( 0_z, the_full_hit.get_segments().size() )
+		indices( the_full_hit.get_segments().size() )
 			| transformed( [&] (const size_t &x_idx) {
 				const seq_seg &x = the_full_hit.get_segments()[ x_idx ];
 
@@ -762,7 +763,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 		}
 	) };
 	const auto sorted_indices = sort_build<size_vec>(
-		irange( 0_z, the_full_hit_list.size() ),
+		indices( the_full_hit_list.size() ),
 		[&] (const size_t &x, const size_t &y) {
 			const auto neg_x_score = -get_crh_score( the_full_hit_list[ x ], arg_score_spec );
 			const auto neg_y_score = -get_crh_score( the_full_hit_list[ y ], arg_score_spec );

@@ -20,7 +20,6 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/core/ignore_unused.hpp>
-#include <boost/range/irange.hpp>
 #include <boost/range/combine.hpp>
 #include <boost/range/numeric.hpp>
 #include <boost/test/auto_unit_test.hpp>
@@ -28,6 +27,7 @@
 #include "alignment/pair_alignment.hpp"
 #include "common/algorithm/generate_n_build.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/chrono/chrono_type_aliases.hpp"
 #include "common/random/pick_random_pair.hpp"
 #include "common/size_t_literal.hpp"
@@ -52,7 +52,6 @@ using namespace std::chrono;
 
 using boost::accumulate;
 using boost::ignore_unused;
-using boost::irange;
 using boost::numeric_cast;
 using boost::range::combine;
 
@@ -191,7 +190,7 @@ namespace cath {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot build random_vcie pairs if the alignment has fewer than two residues"));
 			}
 			vcie_vcie_vec_pair results;
-			for (const auto &entry_ctr : irange( 0_z, arg_num_entries ) ) {
+			for (const auto &entry_ctr : indices( arg_num_entries ) ) {
 				ignore_unused( entry_ctr );
 				const auto  index_pair = pick_random_pair( 0_z, num_present_posn_indices - 1, arg_rng );
 				const auto &index_1    = present_posn_indices[ index_pair.first  ];

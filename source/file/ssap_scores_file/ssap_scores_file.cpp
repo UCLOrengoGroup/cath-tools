@@ -25,13 +25,12 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/file/open_fstream.hpp"
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/ssap_scores_file/ssap_scores_entry.hpp"
 
@@ -47,7 +46,6 @@ using namespace std;
 using boost::algorithm::is_any_of;
 using boost::algorithm::token_compress_on;
 using boost::filesystem::path;
-using boost::irange;
 using boost::lexical_cast;
 
 /// \brief Parse a vector of ssap_scores_entry objects from the specified istream
@@ -156,7 +154,7 @@ pair<str_vec, size_size_pair_doub_map> ssap_scores_file::parse_ssap_scores_file(
 str_str_pair_bool_map cath::file::make_arbitrary_is_positive_data(const ssap_scores_entry_vec &arg_ssap_scores_entries ///< The arg_ssap_scores_entries from which to extract pairs to be made negative or positive
                                                                   ) {
 	return transform_build<str_str_pair_bool_map>(
-		irange( 0_z, arg_ssap_scores_entries.size() ),
+		indices( arg_ssap_scores_entries.size() ),
 		[&] (const size_t &x) {
 			const auto &the_ssap_scores_entry = arg_ssap_scores_entries[ x ];
 			return make_pair(

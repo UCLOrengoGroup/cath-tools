@@ -21,12 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_SEQ_SEQ_SEG_RUN_H
 #define _CATH_TOOLS_SOURCE_SEQ_SEQ_SEG_RUN_H
 
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/append.hpp"
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/algorithm/variadic_and.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp17/invoke.hpp"
 #include "seq/seq_arrow.hpp"
 #include "seq/seq_seg.hpp"
@@ -114,7 +114,7 @@ namespace cath {
 			const auto combine_fn = [&] (const resarw_t &x) {
 				result ^= hasher( x ) + 0x9e3779b9 + ( result << 6 ) + ( result >> 2 );
 			};
-			for (const size_t &seg_ctr : boost::irange( 0_z, arg_seq_seg_run.get_num_segments() ) ) {
+			for (const size_t &seg_ctr : common::indices( arg_seq_seg_run.get_num_segments() ) ) {
 				combine_fn( arg_seq_seg_run.get_start_arrow_of_segment( seg_ctr ).get_index() );
 				combine_fn( arg_seq_seg_run.get_stop_arrow_of_segment ( seg_ctr ).get_index() );
 			}
@@ -257,7 +257,7 @@ namespace cath {
 		inline const seq_seg_vec get_seq_segs(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
 		                                      ) {
 			return common::transform_build<seq_seg_vec>(
-				boost::irange( 0_z, arg_seq_seg_run.get_num_segments() ),
+				common::indices( arg_seq_seg_run.get_num_segments() ),
 				[&] (const size_t &x) {
 					return get_seq_seg_of_seg_idx( arg_seq_seg_run, x );
 				}
@@ -358,7 +358,7 @@ namespace cath {
 		inline residx_t get_total_length(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
 		                                 ) {
 			return boost::accumulate(
-				boost::irange( 0_z, arg_seq_seg_run.get_num_segments() )
+				common::indices( arg_seq_seg_run.get_num_segments() )
 					| boost::adaptors::transformed( [&] (const size_t &x) {
 						return get_length_of_seq_seg( arg_seq_seg_run, x );
 					} ),
@@ -373,7 +373,7 @@ namespace cath {
 		inline double middle_index(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to query
 		                           ) {
 			return boost::accumulate(
-				boost::irange( 0_z, arg_seq_seg_run.get_num_segments() )
+				common::indices( arg_seq_seg_run.get_num_segments() )
 					| boost::adaptors::transformed( [&] (const size_t &x) {
 						return (
 							get_length_of_seq_seg( arg_seq_seg_run, x )
@@ -474,7 +474,7 @@ namespace cath {
 			                                                        const seq_arrow   &arg_arrow        ///< The arrow to compare to
 			                                                        ) {
 				const size_t num_segs       = arg_seq_seg_run.get_num_segments();
-				const auto   seg_nums_range = boost::irange( 0_z, num_segs );
+				const auto   seg_nums_range = common::indices( num_segs );
 				const auto   result_itr     = lower_bound(
 					seg_nums_range,
 					arg_arrow,
@@ -557,8 +557,8 @@ namespace cath {
 			}
 			// Otherwise, it turns out to be measurably faster to just do all-vs-all
 			else {
-				for (const auto &seg_ctr_a : boost::irange( 0_z, num_segs_a ) ) {
-					for (const auto &seg_ctr_b : boost::irange( 0_z, num_segs_b ) ) {
+				for (const auto &seg_ctr_a : common::indices( num_segs_a ) ) {
+					for (const auto &seg_ctr_b : common::indices( num_segs_b ) ) {
 						const bool seg_overlap = are_overlapping(
 							get_seq_seg_of_seg_idx( arg_seq_seg_run_a, seg_ctr_a ),
 							get_seq_seg_of_seg_idx( arg_seq_seg_run_b, seg_ctr_b )
@@ -663,7 +663,7 @@ namespace cath {
 			const size_t num_segments_rhs = arg_seq_seg_run_b.get_num_segments();
 
 			size_t rhs_ctr = 0;
-			for (const auto &lhs_ctr : boost::irange( 0_z, num_segments_lhs ) ) {
+			for (const auto &lhs_ctr : common::indices( num_segments_lhs ) ) {
 				while ( rhs_ctr < num_segments_rhs && arg_seq_seg_run_a.get_stop_arrow_of_segment( lhs_ctr ) > arg_seq_seg_run_b.get_stop_arrow_of_segment( rhs_ctr ) ) {
 					++rhs_ctr;
 				}

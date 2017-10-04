@@ -23,12 +23,11 @@
 #include <boost/log/trivial.hpp> // ***** TEMPORARY *****
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/sort.hpp> // ***** TEMPORARY *****
-#include <boost/range/irange.hpp>
 
 #include "common/boost_addenda/range/adaptor/limited.hpp" // ***** TEMPORARY *****
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/chrono/duration_to_seconds_string.hpp"
 #include "common/file/simple_file_read_write.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "scan/scan_action/record_scores_scan_action.hpp"
 #include "scan/scan_tools/all_vs_all.hpp"
@@ -48,7 +47,6 @@ using namespace cath::score;
 using namespace std;
 using namespace std::chrono;
 
-using boost::irange;
 using boost::numeric_cast;
 using boost::range::sort;
 
@@ -118,7 +116,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 //
 //	BOOST_LOG_TRIVIAL( warning ) << "Did stuff - took " << durn_to_seconds_string        ( do_stuff_durn )
 //	                             << " ("                << durn_to_rate_per_second_string( do_stuff_durn ) << ")";
-//	const auto prot_idx_range  = irange( 0_z, proteins.size() );
+//	const auto prot_idx_range  = indices( proteins.size() );
 //	cerr << "       ";
 //	for (const size_t match_index : prot_idx_range) {
 //		cerr << "  " << ids[ match_index ];

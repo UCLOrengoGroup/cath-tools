@@ -22,10 +22,9 @@
 #define _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_FOR_N_H
 
 #include <boost/core/ignore_unused.hpp>
-#include <boost/range/irange.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp17/invoke.hpp"
-#include "common/size_t_literal.hpp"
 
 #include <cstddef>
 
@@ -37,7 +36,7 @@ namespace cath {
 		void for_n(const size_t  &arg_n, ///< The number of time to invoke the callable
 		           Fn           &&arg_fn ///< The callable to invoke the specified number of times
 		           ) {
-			for (const auto &x : boost::irange( 0_z, arg_n ) ) {
+			for (const auto &x : indices( arg_n ) ) {
 				boost::ignore_unused( x );
 				invoke( std::forward<Fn>( arg_fn ) );
 			}

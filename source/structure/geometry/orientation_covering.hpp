@@ -29,16 +29,15 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/min_element.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/file/open_fstream.hpp"
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "structure/geometry/quat_rot.hpp"
@@ -48,7 +47,6 @@
 // #include <cmath>
 #include <fstream>
 
-using namespace cath::common::literals;
 
 namespace cath {
 	namespace geom {
@@ -317,7 +315,7 @@ namespace cath {
 		size_vec_vec calc_neighbours(const orientation_covering_impl<T> &arg_orientations, ///< TODOCUMENT
 		                             const geom::angle<A>               &arg_search_radius ///< TODOCUMENT
 		                             ) {
-			const auto orientation_index_range = boost::irange( 0_z, arg_orientations.size() );
+			const auto orientation_index_range = common::indices( arg_orientations.size() );
 
 			return common::transform_build<size_vec_vec>(
 				orientation_index_range,

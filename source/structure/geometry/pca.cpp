@@ -20,7 +20,6 @@
 
 #include "pca.hpp"
 
-#include <boost/range/irange.hpp>
 
 #include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
@@ -40,7 +39,6 @@ using namespace cath::common::literals;
 using namespace cath::geom;
 using namespace cath::geom::detail;
 
-using boost::irange;
 
 /// \brief Build a matrix of the specified points, offset by subtracting their specified centre-of-gravity
 ///

@@ -25,13 +25,12 @@
 #include <boost/log/trivial.hpp> // ***** TEMPORARY? *****
 #include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm/find.hpp>
-#include <boost/range/irange.hpp>
 
 #include "biocore/residue_id.hpp"
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/is_uniq_for_unordered.hpp"
 #include "common/boost_addenda/range/adaptor/lexical_casted.hpp"
-#include "common/size_t_literal.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 #include <set>
@@ -42,7 +41,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::algorithm::join;
-using boost::irange;
 using boost::lexical_cast;
 using boost::range::adjacent_find;
 
@@ -95,7 +93,7 @@ size_size_pair_vec cath::file::tally_residue_ids(const residue_id_vec &arg_pdb_r
 
 	// Loop through the DSSP/WOLF residues, whilst also indexing through the PDB residues
 	size_t pdb_residue_ctr = 0;
-	for (const size_t &dssp_residue_ctr : irange( 0_z, num_dssp_or_wolf_residues ) ) {
+	for (const size_t &dssp_residue_ctr : indices( num_dssp_or_wolf_residues ) ) {
 
 		// Grab the DSSP/WOLF residue name
 		const residue_id &dssp_or_wolf_res_id      = arg_dssp_or_wolf_residue_ids[ dssp_residue_ctr ];

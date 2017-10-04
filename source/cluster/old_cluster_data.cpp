@@ -22,14 +22,15 @@
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
-#include <boost/range/irange.hpp>
+
+#include "common/boost_addenda/range/indices.hpp"
 
 using namespace cath::clust;
+using namespace cath::common;
 
 using boost::adaptors::transformed;
 using boost::optional;
 using boost::algorithm::join;
-using boost::irange;
 
 /// \brief Generate a string describing the specified old_cluster_data
 ///
@@ -43,7 +44,7 @@ std::string cath::clust::to_string(const old_cluster_data &arg_old_cluster_data 
 		+ to_string( get_num_clusters( arg_old_cluster_data ) )
 		+ " clusters, clusters{ "
 		+ join(
-			irange( 0_z, get_num_clusters( arg_old_cluster_data ) )
+			indices( get_num_clusters( arg_old_cluster_data ) )
 				| transformed( [&] (const size_t &x) {
 					return to_string( x )
 						+ R"((")"

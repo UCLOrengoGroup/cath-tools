@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/range/irange.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/container/id_of_string.hpp"
 #include "common/size_t_literal.hpp"
 
@@ -29,7 +29,6 @@ namespace cath { namespace test { } }
 using namespace cath::common;
 using namespace cath::test;
 
-using boost::irange;
 
 namespace cath {
 	namespace test {
@@ -86,7 +85,7 @@ BOOST_AUTO_TEST_CASE(fast) {
 
 	id_of_string the_ios;
 	the_ios.reserve( MAX );
-	for (const size_t &ctr : irange( 0_z, MAX ) ) {
+	for (const size_t &ctr : indices( MAX ) ) {
 		the_ios.emplace( to_string( ctr ) );
 	}
 	BOOST_CHECK_EQUAL( the_ios[   "7" ],   7 );

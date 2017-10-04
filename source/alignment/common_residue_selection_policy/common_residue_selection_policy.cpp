@@ -23,16 +23,15 @@
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
-#include <boost/range/irange.hpp>
 
 #include "alignment/alignment.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.hpp"
 #include "common/algorithm/copy_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "common/cpp14/make_unique.hpp"
-#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
 
@@ -42,7 +41,6 @@ using namespace std;
 
 using boost::adaptors::filtered;
 using boost::assign::ptr_push_back;
-using boost::irange;
 using boost::lexical_cast;
 using boost::ptr_vector;
 
@@ -71,7 +69,7 @@ vector<alignment::size_type> common_residue_selection_policy::select_common_resi
 
 	// Grab the indices of the positions that are in common between the entries arg_entry_a and arg_entry_b
 	const auto original_indices = copy_build<aln_size_vec>(
-		irange( 0_z, arg_alignment.length() )
+		indices( arg_alignment.length() )
 			| filtered(
 				[&] (const size_t &x) {
 					return (

@@ -22,10 +22,9 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
-#include <boost/range/irange.hpp>
 
 #include "common/algorithm/copy_build.hpp"
-#include "common/size_t_literal.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/temp_check_offset_1.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "structure/protein/protein.hpp"
@@ -37,7 +36,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::adaptors::filtered;
-using boost::irange;
 
 /// \brief TODOCUMENT
 ///
@@ -395,7 +393,7 @@ size_t cath::align::num_present_positions_of_both_entries(const alignment &arg_a
 size_vec cath::align::indices_of_present_positions_of_both_entries(const alignment &arg_alignment ///< TODOCUMENT
                                                                    ) {
 	return copy_build<size_vec>(
-		irange( 0_z, arg_alignment.length() - 1 )
+		indices( arg_alignment.length() - 1 )
 			| filtered( [&] (const size_t &x) { return has_both_positions_of_index( arg_alignment, x ); } )
 	);
 }

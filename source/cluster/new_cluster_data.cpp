@@ -25,13 +25,13 @@
 #include <boost/range/adaptor/transformed.hpp>
 
 #include "common/algorithm/sort_uniq_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 
 using namespace cath::common;
 
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
-using boost::irange;
 using std::pair;
 using std::string;
 
@@ -53,7 +53,7 @@ std::string cath::clust::to_string(const new_cluster_data &arg_new_cluster_data 
 		+ to_string( get_num_clusters( arg_new_cluster_data ) )
 		+ " clusters, cluster_sizes{ "
 		+ join(
-			irange( 0_z, get_num_clusters( arg_new_cluster_data ) )
+			indices( get_num_clusters( arg_new_cluster_data ) )
 				| transformed( [&] (const size_t &x) {
 					return to_string( x )
 						+ R"((")"
