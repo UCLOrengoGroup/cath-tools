@@ -71,6 +71,9 @@ namespace cath {
 			const geom::coord & get_translation_of_index(const size_t &) const;
 			const geom::rotation & get_rotation_of_index(const size_t &) const;
 
+			superposition & post_translate(const geom::coord &);
+			superposition & post_rotate(const geom::rotation &);
+
 			static constexpr size_t               NUM_ENTRIES_IN_PAIRWISE_SUPERPOSITION     = 2;
 			static constexpr size_t               INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION  = 0;
 			static constexpr size_t               INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION = 1;
@@ -80,7 +83,15 @@ namespace cath {
 			} };
 			static const     chain_label_vec      SUPERPOSITION_CHAIN_LABELS;
 		};
-		
+
+		void post_translate_and_rotate(superposition &,
+		                               const geom::coord &,
+		                               const geom::rotation & = geom::rotation::IDENTITY_ROTATION() );
+
+		superposition post_translate_and_rotate_copy(superposition,
+		                                             const geom::coord &,
+		                                             const geom::rotation & = geom::rotation::IDENTITY_ROTATION() );
+
 		void transform(const superposition &,
 		               const size_t &,
 		               geom::coord &);

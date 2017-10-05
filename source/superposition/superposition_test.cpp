@@ -74,6 +74,29 @@ namespace cath {
 			} };
 
 			const double rmsd_between_1_and_2 = { 0.12978869963736103 };
+
+			/// \brief Check that superposition returned by post_translate_and_rotate() has the
+			///        same effect on 7 key points as applying the parts separately
+			void check_post_translate_and_rotate(const coord    &arg_orig_supn_transltn, ///< The translation part of the original superposition to apply first
+			                                     const rotation &arg_orig_supn_rottn,    ///< The translation part of the original superposition to apply first
+			                                     const coord    &arg_translation,        ///< The translation to apply after the superposition
+			                                     const rotation &arg_rotation            ///< The rotation to apply last, after the translation
+			                                     ) {
+				constexpr size_t IDX = 0;
+				const superposition orig_supn{ { arg_orig_supn_transltn }, { arg_orig_supn_rottn } };
+				const superposition ptar_supn = post_translate_and_rotate_copy( orig_supn, arg_translation, arg_rotation );
+				for (const coord &x : {  coord::ORIGIN_COORD,
+				                         coord::UNIT_X,  coord::UNIT_Y,  coord::UNIT_Z,
+				                        -coord::UNIT_X, -coord::UNIT_Y, -coord::UNIT_Z } ) {
+					BOOST_CHECK_EQUAL(
+						transform_copy( ptar_supn, IDX, x ),
+						rotate_copy(
+							arg_rotation,
+							transform_copy( orig_supn, IDX, x ) + arg_translation
+						)
+					);
+				}
+			}
 		};
 	}  // namespace test
 }  // namespace cath
@@ -148,6 +171,27 @@ BOOST_AUTO_TEST_CASE(rmsd) {
 		calc_pairwise_superposition_rmsd(coord_list_1, coord_list_2),
 		ACCURACY_PERCENTAGE()
 	);
+}
+
+BOOST_AUTO_TEST_CASE(post_translate_and_rotate_work) {
+	const auto rotations = {
+		rotation::ROTATE_X_TO_Y_TO_Z_TO_X(),
+		rotation::ROTATE_X_TO_Z_TO_Y_TO_X(),
+	};
+	const auto translations = {
+		coord{ 1.0, 2.0, 3.0 },
+		coord{ 3.0, 1.0, 2.0 },
+		coord{ 2.0, 3.0, 1.0 },
+	};
+	for (const coord &orig_trans : translations) {
+		for (const rotation &orig_rotn : rotations) {
+			for (const coord &post_trans : translations) {
+				for (const rotation &post_rotn : rotations) {
+					check_post_translate_and_rotate( orig_trans, orig_rotn, post_trans, post_rotn );
+				}
+			}
+		}
+	}
 }
 
 BOOST_AUTO_TEST_SUITE_END()

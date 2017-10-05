@@ -25,6 +25,7 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range/algorithm/for_each.hpp>
+#include <boost/range/combine.hpp>
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
 #include "common/algorithm/transform_build.hpp"
@@ -54,6 +55,7 @@ using boost::algorithm::any_of;
 using boost::algorithm::is_any_of;
 using boost::algorithm::token_compress_on;
 using boost::lexical_cast;
+using boost::range::combine;
 using boost::range::for_each;
 using std::make_tuple;
 
@@ -225,6 +227,52 @@ const coord & superposition::get_translation_of_index(const size_t &arg_index //
 const rotation & superposition::get_rotation_of_index(const size_t &arg_index ///< TODOCUMENT
                                                       ) const {
 	return rotations[arg_index];
+}
+
+/// \brief Modify the superposition so that it has the same effect as applying the original superposition and then the specified translation
+superposition & superposition::post_translate(const coord &arg_translation ///< The post-superposition translation to add into the superposition
+                                              ) {
+	// \TODO Come C++17 and structured bindings, use here
+	for (const boost::tuple<coord &, const rotation &> &x : combine( translations, rotations ) ) {
+		auto       &the_trans = x.get<0>();
+		const auto &the_rotn  = x.get<1>();
+		the_trans += rotate_copy( transpose_copy( the_rotn ), arg_translation );
+	}
+	return *this;
+}
+
+/// \brief Modify the superposition so that it has the same effect as applying the original superposition and then the specified rotation
+superposition & superposition::post_rotate(const rotation &arg_rotation ///< The post-superposition rotation to add into the superposition
+                                           ) {
+	for (rotation &the_rotn : rotations) {
+		// \todo Consider adding a `rotation & left_multiply_by(const rotation &);` method to rotation and using it here
+		the_rotn = arg_rotation * the_rotn;
+	}
+	return *this;
+}
+
+/// \brief Modify the specified superposition so that it has the same effect as
+///        applying the original superposition and then the specified translation and then rotation
+///
+/// \relates superposition
+void cath::sup::post_translate_and_rotate(superposition  &arg_superposition, ///< The superposition to modify
+                                          const coord    &arg_translation,   ///< The translation to apply after the superposition
+                                          const rotation &arg_rotation       ///< The rotation to apply last, after the translation
+                                          ) {
+	arg_superposition.post_translate( arg_translation );
+	arg_superposition.post_rotate   ( arg_rotation    );
+}
+
+/// \brief Modify and return a copy of the specified superposition so that it has the same effect as
+///        applying the original superposition and then the specified translation and then rotation
+///
+/// \relates superposition
+superposition cath::sup::post_translate_and_rotate_copy(superposition   arg_superposition, ///< The superposition from which a copy should be taken, so it can be modified and returned
+                                                        const coord    &arg_translation,   ///< The translation to apply after the superposition
+                                                        const rotation &arg_rotation       ///< The rotation to apply last, after the translation
+                                                        ) {
+	post_translate_and_rotate( arg_superposition, arg_translation, arg_rotation );
+	return arg_superposition;
 }
 
 /// \brief TODOCUMENT
