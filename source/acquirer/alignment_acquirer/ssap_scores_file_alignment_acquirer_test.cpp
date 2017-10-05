@@ -81,5 +81,28 @@ G----------DPQVLRG-GHCKWFNVM----------GFG--FISMTEGSPL--ENPVDVFVHQSKLYMGFRSLKEGEP
 )"
 		);
 }
+
+BOOST_AUTO_TEST_CASE(accepts_empty_scores_and_single_structure) {
+	const ssap_scores_file_alignment_acquirer the_acquirer( TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR() / "empty.ssap_scores" );
+	const pdb_list the_pdbs = read_pdb_files( {
+		TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR() / "1o7iB00"
+	} );
+
+	// Use a lambda to enclose the log_to_ostream_guard whilst allowing the result to be passed back out
+	const auto aln_and_sptree = [&] {
+		ostringstream parse_ss;
+		const log_to_ostream_guard parse_log_guard{ parse_ss };
+		return the_acquirer.get_alignment_and_spanning_tree( the_pdbs );
+	} ();
+
+	BOOST_CHECK_EQUAL(
+		alignment_as_fasta_string( aln_and_sptree.first, the_pdbs, { "1o7iB00" } ),
+		R"(>1o7iB00
+MEEKVGNLKPNMESVNVTVRVLEASEARQIQTKNGVRTISEAIVGDETGRVKLTLWGKHAGSIKEGQVVKIENAWTTAFKGQVQLNAGSKTKIAEASEDGFPESSQIPENTPTA
+)"
+		);
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()
 
