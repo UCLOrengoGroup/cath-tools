@@ -71,6 +71,24 @@ BOOST_AUTO_TEST_CASE(rotation_to_x_axis_and_x_y_plane_works) {
 	BOOST_CHECK_LE   ( dot_product( coord(0.0, 0.0, 1.0), rotated_b), rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS );
 }
 
+BOOST_AUTO_TEST_CASE(rotate_x_to_y_to_z_to_x_is_correct) {
+	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), coord::UNIT_X ) == coord::UNIT_Y );
+	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), coord::UNIT_Y ) == coord::UNIT_Z );
+	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), coord::UNIT_Z ) == coord::UNIT_X );
+}
+
+BOOST_AUTO_TEST_CASE(rotate_x_to_z_to_y_to_x_is_correct) {
+	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), coord::UNIT_X ) == coord::UNIT_Z );
+	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), coord::UNIT_Z ) == coord::UNIT_Y );
+	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), coord::UNIT_Y ) == coord::UNIT_X );
+}
+
+BOOST_AUTO_TEST_CASE(identity_rotation_is_correct) {
+	BOOST_TEST( rotate_copy( rotation::IDENTITY_ROTATION(), coord::UNIT_X ) == coord::UNIT_X );
+	BOOST_TEST( rotate_copy( rotation::IDENTITY_ROTATION(), coord::UNIT_Y ) == coord::UNIT_Y );
+	BOOST_TEST( rotate_copy( rotation::IDENTITY_ROTATION(), coord::UNIT_Z ) == coord::UNIT_Z );
+}
+
 /// \brief Check that this example (1c0pA01, residue 999) can be used to produce a similar but more accurate rotation
 BOOST_AUTO_TEST_CASE(tidy_rotation_does_not_always_throw) {
 	BOOST_CHECK_NO_THROW_DIAG(
