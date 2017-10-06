@@ -1059,6 +1059,7 @@ set(
 		structure/geometry/coord.cpp
 		structure/geometry/coord_list.cpp
 		${NORMSOURCES_STRUCTURE_GEOMETRY_DETAIL}
+		structure/geometry/orient.cpp
 		structure/geometry/pca.cpp
 		structure/geometry/restrict_to_single_linkage_extension.cpp
 		structure/geometry/rotation.cpp
@@ -1175,6 +1176,7 @@ set(
 		${NORMSOURCES_SUPERPOSITION_IO}
 		${NORMSOURCES_SUPERPOSITION_OPTIONS}
 		superposition/superpose_orderer.cpp
+		superposition/superpose_orient.cpp
 		superposition/superposition.cpp
 		superposition/superposition_content_spec.cpp
 		superposition/superposition_context.cpp
@@ -2111,6 +2113,7 @@ set(
 		structure/geometry/angle_test.cpp
 		structure/geometry/coord_list_test.cpp
 		structure/geometry/coord_test.cpp
+		structure/geometry/orient_test.cpp
 		structure/geometry/orientation_covering_test.cpp
 		structure/geometry/pca_test.cpp
 		structure/geometry/quat_rot_test.cpp
