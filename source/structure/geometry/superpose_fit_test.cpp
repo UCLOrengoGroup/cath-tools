@@ -25,11 +25,10 @@ namespace cath { namespace test { } }
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
 #include "structure/geometry/rotation.hpp"
-#include "superposition/superpose_fit.hpp"
+#include "structure/geometry/superpose_fit.hpp"
 
 using namespace cath;
 using namespace cath::geom;
-using namespace cath::sup;
 using namespace cath::test;
 
 namespace cath {

@@ -20,13 +20,12 @@
 
 #include "superpose_fit.hpp"
 
-#include <boost/range/combine.hpp>
-
 #include "common/gsl/get_determinant.hpp"
 #include "common/gsl/gsl_matrix_wrp.hpp"
 #include "common/gsl/gsl_vector_wrp.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "structure/geometry/coord_list.hpp"
+#include "structure/geometry/detail/cross_covariance_matrix.hpp"
 #include "structure/geometry/rotation.hpp"
 
 #include <gsl/gsl_blas.h>
@@ -35,39 +34,6 @@
 using namespace cath::common;
 using namespace cath::geom;
 using namespace cath::geom::detail;
-
-using boost::range::combine;
-
-/// \brief Calculate the cross-covariance matrix for the specified coord_lists
-///
-/// For speeding up, could try using a std:array<double, 9> and a gsl_matrix_view of it
-/// (but then don't use a subroutine for the array, else it'll get destroyed on return)
-gsl_matrix_wrp cross_covariance_matrix(const coord_list &arg_coords_a, ///< The first  list of coords to superpose
-                                       const coord_list &arg_coords_b  ///< The second list of coords to superpose
-                                       ) {
-	gsl_matrix_wrp result{ 3, 3 };
-	gsl_matrix_set_zero( result.get_ptr() );
-
-	/// \TODO Come C++17 and structure bindings, use here
-	for (const auto &coord_pair : combine( arg_coords_a, arg_coords_b ) ) {
-		const coord &coord_a = coord_pair.get<0>();
-		const coord &coord_b = coord_pair.get<1>();
-
-		gsl_matrix_wrp_increment( result, 0, 0, coord_a.get_x() * coord_b.get_x() );
-		gsl_matrix_wrp_increment( result, 0, 1, coord_a.get_x() * coord_b.get_y() );
-		gsl_matrix_wrp_increment( result, 0, 2, coord_a.get_x() * coord_b.get_z() );
-
-		gsl_matrix_wrp_increment( result, 1, 0, coord_a.get_y() * coord_b.get_x() );
-		gsl_matrix_wrp_increment( result, 1, 1, coord_a.get_y() * coord_b.get_y() );
-		gsl_matrix_wrp_increment( result, 1, 2, coord_a.get_y() * coord_b.get_z() );
-
-		gsl_matrix_wrp_increment( result, 2, 0, coord_a.get_z() * coord_b.get_x() );
-		gsl_matrix_wrp_increment( result, 2, 1, coord_a.get_z() * coord_b.get_y() );
-		gsl_matrix_wrp_increment( result, 2, 2, coord_a.get_z() * coord_b.get_z() );
-	}
-
-	return result;
-}
 
 /// \brief Find the rotation that, when applied to the first specified coord_list,
 ///        best superposes it onto the second specified coord list
@@ -78,9 +44,9 @@ gsl_matrix_wrp cross_covariance_matrix(const coord_list &arg_coords_a, ///< The 
 ///      else bad stuff might happen (most likely: meaningless results will be returned)
 ///
 /// This uses the Kabsch algorithm, eg see https://en.wikipedia.org/wiki/Kabsch_algorithm
-rotation cath::sup::superpose_fit_1st_to_2nd(const coord_list &arg_coords_a, ///< The first  list of coords to superpose onto the second
-                                             const coord_list &arg_coords_b  ///< The second list of coords
-                                             ) {
+rotation cath::geom::superpose_fit_1st_to_2nd(const coord_list &arg_coords_a, ///< The first  list of coords to superpose onto the second
+                                              const coord_list &arg_coords_b  ///< The second list of coords
+                                              ) {
 	// Check the sizes match
 	if ( arg_coords_a.size() != arg_coords_b.size() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("This subroutine cannot fit lists of coordinates of different length"));
@@ -155,8 +121,8 @@ rotation cath::sup::superpose_fit_1st_to_2nd(const coord_list &arg_coords_a, ///
 ///
 /// \pre Both arg_coords_a and arg_coords_b must be translated to have the their centres of gravity at the origin
 ///      else bad stuff might happen (most likely: meaningless results will be returned)
-rotation cath::sup::superpose_fit_2nd_to_1st(const coord_list &arg_coords_a, ///< The first  list of coords
-                                             const coord_list &arg_coords_b  ///< The second list of coords to superpose onto the first
-                                             ) {
+rotation cath::geom::superpose_fit_2nd_to_1st(const coord_list &arg_coords_a, ///< The first  list of coords
+                                              const coord_list &arg_coords_b  ///< The second list of coords to superpose onto the first
+                                              ) {
 	return superpose_fit_1st_to_2nd( arg_coords_b, arg_coords_a );
 }

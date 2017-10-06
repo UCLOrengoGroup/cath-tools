@@ -38,7 +38,7 @@
 #include "file/pdb/pdb_residue.hpp"
 #include "structure/geometry/coord_list.hpp"
 #include "structure/geometry/rotation.hpp"
-#include "superposition/superpose_fit.hpp"
+#include "structure/geometry/superpose_fit.hpp"
 
 #include <deque>
 #include <fstream>

@@ -1049,13 +1049,20 @@ set(
 )
 
 set(
+	NORMSOURCES_STRUCTURE_GEOMETRY_DETAIL
+		structure/geometry/detail/cross_covariance_matrix.cpp
+)
+
+set(
 	NORMSOURCES_STRUCTURE_GEOMETRY
 		structure/geometry/angle.cpp
 		structure/geometry/coord.cpp
 		structure/geometry/coord_list.cpp
+		${NORMSOURCES_STRUCTURE_GEOMETRY_DETAIL}
 		structure/geometry/pca.cpp
 		structure/geometry/restrict_to_single_linkage_extension.cpp
 		structure/geometry/rotation.cpp
+		structure/geometry/superpose_fit.cpp
 )
 
 set(
@@ -1167,7 +1174,6 @@ set(
 	NORMSOURCES_SUPERPOSITION
 		${NORMSOURCES_SUPERPOSITION_IO}
 		${NORMSOURCES_SUPERPOSITION_OPTIONS}
-		superposition/superpose_fit.cpp
 		superposition/superpose_orderer.cpp
 		superposition/superposition.cpp
 		superposition/superposition_content_spec.cpp
@@ -2110,6 +2116,7 @@ set(
 		structure/geometry/quat_rot_test.cpp
 		structure/geometry/restrict_to_single_linkage_extension_test.cpp
 		structure/geometry/rotation_test.cpp
+		structure/geometry/superpose_fit_test.cpp
 )
 
 set(
@@ -2232,7 +2239,6 @@ set(
 	TESTSOURCES_SUPERPOSITION
 		${TESTSOURCES_SUPERPOSITION_IO}
 		${TESTSOURCES_SUPERPOSITION_OPTIONS}
-		superposition/superpose_fit_test.cpp
 		superposition/superpose_orderer_test.cpp
 		superposition/superposition_context_test.cpp
 		superposition/superposition_test.cpp
