@@ -62,7 +62,7 @@ unique_ptr<alignment_acquirer> ssap_scores_file_alignment_acquirer::do_clone() c
 pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_alignment_and_orderer(const pdb_list &arg_pdbs ///< TODOCUMENT
                                                                                                      ) const {
 	// Parse the SSAP scores file
-	const path                     ssaps_filename = get_ssap_scores_file();
+	const path                    ssaps_filename    = get_ssap_scores_file();
 	const pair<str_vec, size_size_pair_doub_map> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file( ssaps_filename );
 	const str_vec                 &names            = ssap_scores_data.first;
 	const size_size_pair_doub_map &scores           = ssap_scores_data.second;

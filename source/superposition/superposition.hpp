@@ -36,7 +36,7 @@ namespace cath { namespace geom { class coord_list; } }
 namespace cath {
 	namespace sup {
 
-		/// \brief The centres of gravity and the rotation matrix arising from superposing  structures (coord_lists)
+		/// \brief The centres of gravity and the rotation matrix arising from superposing structures (coord_lists)
 		///
 		/// For now the object is read-only after construction and the coord_list objects
 		/// must be provided at construction. This keeps things simpler.

@@ -546,7 +546,7 @@ namespace cath {
 
 			init_from_values( val_00, val_01, val_02,
 			                  val_10, val_11, val_12,
-						      val_20, val_21, val_22 );
+			                  val_20, val_21, val_22 );
 		}
 
 		/// \brief Get a specific row from a rotation object's rotation matrix

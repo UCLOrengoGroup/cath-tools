@@ -220,13 +220,13 @@ size_t superposition::get_num_entries() const {
 /// \brief TODOCUMENT
 const coord & superposition::get_translation_of_index(const size_t &arg_index ///< TODOCUMENT
                                                       ) const {
-	return translations[arg_index];
+	return translations[ arg_index ];
 }
 
 /// \brief TODOCUMENT
 const rotation & superposition::get_rotation_of_index(const size_t &arg_index ///< TODOCUMENT
                                                       ) const {
-	return rotations[arg_index];
+	return rotations[ arg_index ];
 }
 
 /// \brief Modify the superposition so that it has the same effect as applying the original superposition and then the specified translation
