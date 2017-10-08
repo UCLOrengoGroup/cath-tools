@@ -32,7 +32,7 @@ namespace cath {
 		/// for which the phi/psi angles are always skipped
 		enum class dssp_skip_angle_skipping : bool {
 			BREAK_ANGLES,     ///< Break the chain of phi/psi angles at residues DSSP would skip
-			DONT_BREAK_ANGLES ///< Process phi/psi angles normally for residues that that DSSP would skip
+			DONT_BREAK_ANGLES ///< Process phi/psi angles normally for residues that DSSP would skip
 			                  ///< (but still break phi/psi angles at genuine breaks in the chain)
 		};
 

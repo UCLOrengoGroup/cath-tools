@@ -42,7 +42,7 @@ namespace cath {
 			/// \brief Type trait for whether the first type is a template of the second template type
 			///
 			/// This is the partial specialisation that matches all template types with type parameters that can be used
-			/// to instantiate the specified template type. This just then checks whether whether the two template types
+			/// to instantiate the specified template type. This just then checks whether the two template types
 			/// are the same when instantiated with those same type parameters.
 			///
 			/// The use of void_t is necessary to take this specialisation out when the second (template) type

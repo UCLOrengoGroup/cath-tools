@@ -56,7 +56,7 @@ namespace cath {
 		bool         do_temp_hacky_is_residue() const final;
 
 	public:
-		/// As in the SSAP paper(s), the a and b values values are used to convert the distance into a score
+		/// As in the SSAP paper(s), the a and b values are used to convert the distance into a score
 		/// for dynamic programming. The inherited code (this is being written in August 2013), which
 		/// appears to use the square of the distance between residues rather than the distance as indicated
 		/// in the SSAP paper. Otherwise, the formula for the score s the same: \f$ s = \frac{a}{b + d^2} \f$

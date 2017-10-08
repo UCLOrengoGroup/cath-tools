@@ -47,7 +47,7 @@ namespace cath {
 			/// \brief The list of segments
 			seq::seq_seg_vec segments;
 
-			/// \brief The the label for this full_hit
+			/// \brief The label for this full_hit
 			std::string label;
 
 			/// \brief The score associated with this full_hit

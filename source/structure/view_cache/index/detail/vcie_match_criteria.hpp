@@ -165,7 +165,7 @@ namespace cath {
 			///
 			/// \todo The require_matching_directions test has been removed because this function needs to be very fast and
 			///       the view_cache_index should already ensure that only matching direction entries are compared.
-			///       However, it may cause confusion that the function can can now accept naked pairs of entries with different directions.
+			///       However, it may cause confusion that the function can now accept naked pairs of entries with different directions.
 			///       Try to reduce the chance of that unexpected behaviour biting some poor unsuspecting soul.
 			///
 			/// IMPORTANT: This result should only be considered if both vcies also pass the single vcie test above.

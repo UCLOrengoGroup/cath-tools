@@ -124,7 +124,7 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 				equivalent_indices.push_back( value );
 			}
 
-			// Check whether inserting this row of of equivalents would involve skipping anything
+			// Check whether inserting this row of equivalents would involve skipping anything
 			bool found_skip_here = false;
 			for (size_t entry_check_ctr = 0; entry_check_ctr < num_lists; ++entry_check_ctr) {
 				const aln_posn_opt &position = equivalent_indices[entry_check_ctr];

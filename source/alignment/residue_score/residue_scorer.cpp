@@ -96,7 +96,7 @@ alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alig
 			// For some reason, using the following commented code lead to a crash on the release build on orengobuild64.
 			// The crash didn't occur on debug/relwithdebinfo builds on ob64 or any build on bsmlx62 (Ubuntu).
 			// I couldn't see any other problems when using the code without BOOST_FOREACH() (eg valgrind ran clean).
-			// When using the BOOST_FOREACH() code, the crash disappeared on adding a bunch of of debug statements.
+			// When using the BOOST_FOREACH() code, the crash disappeared on adding a bunch of debug statements.
 			//
 			//
 			//			for (const size_t &common_entry_a : common_entries) {

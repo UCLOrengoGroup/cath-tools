@@ -147,7 +147,7 @@ namespace cath {
 		///
 		/// \relates seq_arrow
 		inline constexpr seq_arrow operator-(const seq_arrow &arg_res_arrow, ///< The seq_arrow whose copy should be decremented and returned
-		                                     const residx_t  &arg_offset     ///< The offset by which to decrement the the copy of the seq_arrow
+		                                     const residx_t  &arg_offset     ///< The offset by which to decrement the copy of the seq_arrow
 		                                     ) {
 
 
@@ -168,7 +168,7 @@ namespace cath {
 		///
 		/// \relates seq_arrow
 		inline constexpr seq_arrow operator+(const seq_arrow &arg_res_arrow, ///< The seq_arrow whose copy should be incremented and returned
-		                                     const residx_t  &arg_offset     ///< The offset by which to increment the the copy of the seq_arrow
+		                                     const residx_t  &arg_offset     ///< The offset by which to increment the copy of the seq_arrow
 		                                     ) {
 			return arrow_before_res( arg_res_arrow.res_after() + arg_offset );
 		}
