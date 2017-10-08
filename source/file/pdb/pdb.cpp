@@ -1048,6 +1048,8 @@ pdb cath::file::get_regions_limited_pdb(const region_vec_opt &arg_regions, ///< 
 		}
 	}
 
+	warn_if_specified_regions_remain_unseen( the_limiter );
+
 	pdb result_pdb;
 	result_pdb.set_residues( std::move( residues ) );
 	return result_pdb;

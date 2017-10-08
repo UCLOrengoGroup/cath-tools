@@ -99,4 +99,30 @@ BOOST_AUTO_TEST_CASE(multiple_segments) {
 	BOOST_CHECK_EQUAL( the_limiter.update_residue_is_included( make_residue_id( 'D', 2 ) ), false );
 }
 
+BOOST_AUTO_TEST_CASE(warn_str_if_unseen_regions_works_with_residues) {
+	const region_vec the_regions = { make_simple_region( 'A', 2, 3 ), make_simple_region( 'A', 4, 5 ) , make_simple_region( 'A', 6, 7 ) };
+	regions_limiter the_limiter{ the_regions };
+	the_limiter.update_residue_is_included( make_residue_id( 'A', 4 ) );
+	BOOST_REQUIRE( warn_str_if_specified_regions_remain_unseen( the_limiter ) );
+	BOOST_CHECK_EQUAL(
+		*warn_str_if_specified_regions_remain_unseen( the_limiter ),
+		"Unable to find anything corresponding to region(s) : "
+		"region[ chain:A, start_name:2, stop_name:3 ], "
+		"region[ chain:A, start_name:6, stop_name:7 ]"
+	);
+	the_limiter.update_residue_is_included( make_residue_id( 'A', 5 ) );
+	the_limiter.update_residue_is_included( make_residue_id( 'A', 2 ) );
+	the_limiter.update_residue_is_included( make_residue_id( 'A', 3 ) );
+	the_limiter.update_residue_is_included( make_residue_id( 'A', 6 ) );
+	BOOST_CHECK( ! warn_str_if_specified_regions_remain_unseen( the_limiter ) );
+}
+
+BOOST_AUTO_TEST_CASE(warn_str_if_unseen_regions_works_with_chains) {
+	const region_vec the_regions = { make_simple_region( 'A') };
+	regions_limiter the_limiter{ the_regions };
+	BOOST_CHECK(   warn_str_if_specified_regions_remain_unseen( the_limiter ) );
+	the_limiter.update_residue_is_included( make_residue_id( 'A', 4 ) );
+	BOOST_CHECK( ! warn_str_if_specified_regions_remain_unseen( the_limiter ) );
+}
+
 BOOST_AUTO_TEST_SUITE_END()

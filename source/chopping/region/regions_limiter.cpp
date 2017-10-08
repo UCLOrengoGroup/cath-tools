@@ -21,16 +21,27 @@
 #include "regions_limiter.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
+#include <boost/algorithm/string/join.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "biocore/residue_id.hpp"
 #include "chopping/region/region.hpp"
+#include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
+#include "common/optional/make_optional_if.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
+using namespace cath;
 using namespace cath::chop;
+using namespace cath::chop::detail;
 using namespace cath::common;
 
+using boost::adaptors::filtered;
+using boost::adaptors::transformed;
 using boost::algorithm::any_of;
+using boost::algorithm::join;
 using boost::make_optional;
 using boost::none;
 
@@ -51,7 +62,8 @@ void regions_limiter::sanity_check() const {
 ///
 /// \pre arg_regions must be non-overlapping in the context of the residue_ids they will be used to limit
 regions_limiter::regions_limiter(const region_vec &arg_regions ///< The regions to which a series of residue_ids should be restricted
-                                 ) : regions{ arg_regions } {
+                                 ) : regions     { arg_regions                                            },
+                                     regions_seen{ region_seen_vec( arg_regions.size(), region_seen::NO ) } {
 	sanity_check();
 }
 
@@ -63,6 +75,11 @@ regions_limiter::regions_limiter(const region_vec_opt &arg_regions
                                  ) : regions{
                                      	arg_regions
                                      	? make_optional( std::cref( *arg_regions ) )
+                                     	: none
+                                     },
+                                     regions_seen{
+                                     	arg_regions
+                                     	? make_optional( region_seen_vec( arg_regions->size(), region_seen::NO ) )
                                      	: none
                                      } {
 	sanity_check();
@@ -119,15 +136,18 @@ bool regions_limiter::update_residue_is_included(const residue_id &arg_residue_i
 					active_region_idx = region_ctr;
 				}
 
-				// ...and either way, return true
+				// ...and either way, mark the region as seen and return true
+				regions_seen.get()[ region_ctr ] = region_seen::YES;
 				return true;
 			}
 		}
 		// Else this region is a whole-chain region
 		else {
-			// If inside this whole-chain region's chain, then make this the active region and return true
+			// If inside this whole-chain region's chain, then make this the active region,
+			// mark the region as seen and return true
 			if ( arg_residue_id.get_chain_label() == get_chain_label( the_region ) ) {
 				active_region_idx = region_ctr;
+				regions_seen.get()[ region_ctr ] = region_seen::YES;
 				return true;
 			}
 		}
@@ -135,4 +155,56 @@ bool regions_limiter::update_residue_is_included(const residue_id &arg_residue_i
 
 	// Otherwise, not inside any region so return false
 	return false;
+}
+
+/// \brief Return any specified regions that remain unseen
+region_vec regions_limiter::unseen_regions() const {
+	// If not restricting to any regions, then just return the empty results
+	if ( ! regions ) {
+		return {};
+	}
+
+	// Otherwise, build a vector of any regions that haven't been seen
+	return transform_build<region_vec>(
+		indices( regions->get().size() )
+			| filtered( [&] (const size_t &region_idx) {
+				return ( regions_seen.get()[ region_idx ] == region_seen::NO );
+			} ),
+		[&] (const size_t &region_idx) {
+			return regions->get()[ region_idx ];
+		}
+	);
+}
+
+/// \brief Return a string describing any of the specified regions_limiter's specified regions that it hasn't yet seen
+///        or return none if no regions were specified or all have been seen
+///
+/// \relates regions_limiter
+str_opt cath::chop::warn_str_if_specified_regions_remain_unseen(const regions_limiter &arg_regions ///< The regions_limiter to query
+                                                                ) {
+	const auto unseen_regions = arg_regions.unseen_regions();
+	return make_optional_if_fn(
+		! unseen_regions.empty(),
+		[&] {
+			return
+				"Unable to find anything corresponding to region(s) : "
+				+ join(
+					unseen_regions
+						| transformed( [] (const region &x) { return to_string( x ); } ),
+					", "
+				);
+		}
+	);
+}
+
+/// \brief Warn about any of the specified regions_limiter's specified regions that it hasn't yet seen
+///        or do nothing if no regions were specified or all have been seen
+///
+/// \relates regions_limiter
+void cath::chop::warn_if_specified_regions_remain_unseen(const regions_limiter &arg_regions ///< The regions_limiter to query
+                                                         ) {
+	const auto warn_str = warn_str_if_specified_regions_remain_unseen( arg_regions );
+	if ( warn_str ) {
+		BOOST_LOG_TRIVIAL( warning ) << *warn_str;
+	}
 }

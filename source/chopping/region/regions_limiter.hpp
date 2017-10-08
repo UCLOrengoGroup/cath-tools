@@ -31,6 +31,22 @@ namespace cath { class residue_id; }
 namespace cath {
 	namespace chop {
 
+		namespace detail {
+
+			/// \brief Represent whether a region has been seen during the use of a regions_limiter
+			enum class region_seen : bool {
+				YES, ///< Yes, the region has     been seen
+				NO   ///< No,  the region has not been seen
+			};
+
+			/// \brief Type alias for a vector of region_seen values
+			using region_seen_vec = std::vector<region_seen>;
+
+			/// \brief Type alias for an optional region_seen_vec
+			using region_seen_vec_opt = boost::optional<region_seen_vec>;
+
+		} // namespace chop
+
 		/// \brief Implement limiting a series of residue_ids to an (optional) list of regions
 		///
 		/// The regions are stored by reference.
@@ -43,6 +59,9 @@ namespace cath {
 		private:
 			/// \brief An optional reference_wrapper to a vector of regions
 			region_vec_cref_opt regions;
+
+			/// \brief Store which of the specified regions have been seen (or none if no regions were specified)
+			detail::region_seen_vec_opt regions_seen;
 
 			/// \brief The currently active region, or none if none is active
 			size_opt active_region_idx;
@@ -59,7 +78,13 @@ namespace cath {
 			regions_limiter(const region_vec &&) = delete;
 
 			bool update_residue_is_included(const residue_id &);
+
+			region_vec unseen_regions() const;
 		};
+
+		str_opt warn_str_if_specified_regions_remain_unseen(const regions_limiter &);
+
+		void warn_if_specified_regions_remain_unseen(const regions_limiter &);
 
 	} // namespace chop
 } // namespace cath
