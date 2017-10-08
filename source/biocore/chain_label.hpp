@@ -39,6 +39,7 @@ namespace cath {
 		char chain_char = 0;
 
 		constexpr const char & get_char() const;
+		constexpr char get_char_with_zero_for_space() const;
 
 	public:
 		constexpr chain_label() noexcept = default;
@@ -54,6 +55,11 @@ namespace cath {
 		return chain_char;
 	}
 
+	/// \brief TODOCUMENT
+	inline constexpr char chain_label::get_char_with_zero_for_space() const {
+		return ( get_char() == ' ' ) ? '0' : get_char();
+	}
+
 	/// \brief Ctor for chain_label
 	inline constexpr chain_label::chain_label(const char &arg_chain_char ///< TODOCUMENT
 	                                          ) : chain_char( arg_chain_char ) {
@@ -65,17 +71,29 @@ namespace cath {
 	}
 
 	/// \brief TODOCUMENT
+	///
+	/// \relates chain_label
 	inline constexpr bool operator==(const chain_label &arg_chain_label_a, ///< TODOCUMENT
 	                                 const chain_label &arg_chain_label_b  ///< TODOCUMENT
 	                                 ) {
-		return ( arg_chain_label_a.get_char() == arg_chain_label_b.get_char() );
+		return (
+			arg_chain_label_a.get_char_with_zero_for_space()
+			==
+			arg_chain_label_b.get_char_with_zero_for_space()
+		);
 	}
 
 	/// \brief TODOCUMENT
+	///
+	/// \relates chain_label
 	inline constexpr bool operator<(const chain_label &arg_chain_label_a, ///< TODOCUMENT
 	                                const chain_label &arg_chain_label_b  ///< TODOCUMENT
 	                                ) {
-		return ( arg_chain_label_a.get_char() < arg_chain_label_b.get_char() );
+		return (
+			arg_chain_label_a.get_char_with_zero_for_space()
+			<
+			arg_chain_label_b.get_char_with_zero_for_space()
+		);
 	}
 
 	std::ostream & operator<<(std::ostream &,
