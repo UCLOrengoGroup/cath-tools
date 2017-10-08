@@ -25,6 +25,7 @@
 
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/size_t_literal.hpp"
 #include "file/pdb/pdb.hpp"
 #include "structure/geometry/coord.hpp"
@@ -87,6 +88,10 @@ BOOST_AUTO_TEST_CASE(gets_eg_res_accessibility_surface_area_correct) {
 	const auto &the_res = parsed_pdb.get_residue_of_index__backbone_unchecked( 3 );
 	BOOST_REQUIRE_EQUAL( the_res.get_residue_id(), make_residue_id( 'A', 1002 ) );
 	BOOST_CHECK_EQUAL  ( round( get_accessibility_surface_area( the_res, parsed_pdb ) ), 138 );
+}
+
+BOOST_AUTO_TEST_CASE(calc_accessibilities_with_scanning_does_not_throw_or_error_on_empty_pdb) {
+	BOOST_CHECK_NO_THROW_DIAG( calc_accessibilities_with_scanning( pdb{} ) );
 }
 
 BOOST_AUTO_TEST_CASE(gets_pdb_accessibility_surface_area_correct) {

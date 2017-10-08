@@ -265,6 +265,11 @@ doub_vec cath::sec::calc_accessibilities_with_scanning(const pdb &arg_pdb ///< T
                                                        ) {
 	constexpr float MAX_DIST  = static_cast<float>( dssp_ball_constants::MAX_ATOM_DIST ); // 6.54
 	constexpr float CELL_SIZE = 13.0;
+
+	if ( arg_pdb.empty() ) {
+		return {};
+	}
+
 	const auto the_store = make_access_atom_lattice<sod::SPARSE>( arg_pdb, CELL_SIZE, MAX_DIST );
 
 	const auto keyer = make_res_pair_keyer(

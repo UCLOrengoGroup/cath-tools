@@ -28,6 +28,7 @@
 
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
 #include "file/pdb/pdb.hpp"
@@ -154,6 +155,10 @@ BOOST_FIXTURE_TEST_SUITE(dssp_hbond_calc_test_suite, dssp_hbond_calc_test_suite_
 
 
 BOOST_AUTO_TEST_SUITE(engineered_test_examples)
+
+BOOST_AUTO_TEST_CASE(does_not_throw_or_error_on_empty_pdb) {
+	BOOST_CHECK_NO_THROW_DIAG( dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb( pdb{} ) );
+}
 
 BOOST_AUTO_TEST_CASE(uses_core_atoms_for_amino_acid) {
 	// This affects the hbond calculation because it affects whether the amino acid is
