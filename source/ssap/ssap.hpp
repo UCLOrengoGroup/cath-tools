@@ -150,7 +150,8 @@ namespace cath {
 	                      const opts::data_dirs_spec &);
 
 	void save_zero_scores(const protein &,
-	                      const protein &);
+	                      const protein &,
+	                      const ptrdiff_t &);
 
 	void print_ssap_scores(std::ostream &,
 	                       const double &,

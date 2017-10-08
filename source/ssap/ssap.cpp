@@ -462,9 +462,6 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 	const old_ssap_options_block &the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
 	const data_dirs_spec         &the_data_dirs    = arg_cath_ssap_options.get_data_dirs_spec();
 
-	// Run SSAP
-	align_proteins( proteins.first, proteins.second, the_ssap_options, the_data_dirs );
-
 	// Choose the stream to which to output the results
 	//
 	// (it's a bit ugly to have this code here but:
@@ -478,6 +475,18 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 		open_ofstream(file_out_stream, the_ssap_options.get_output_filename());
 	}
 	ostream &output_stream = the_ssap_options.get_output_to_file() ? file_out_stream : arg_stdout;
+
+	if ( proteins.first.get_length() == 0 || proteins.second.get_length() == 0 ) {
+		save_zero_scores( proteins.first, proteins.second, 2 );
+		// output_stream << "global_ssa/*p_line1" << "\n";
+		// output_stream <<  global_ssap_line1  << "\n";
+		// output_stream << "global_ssa*/p_line2" << "\n";
+		output_stream <<  global_ssap_line2  << "\n";
+		exit( static_cast<int>( logger::return_code::SUCCESS ) );
+	}
+
+	// Run SSAP
+	align_proteins( proteins.first, proteins.second, the_ssap_options, the_data_dirs );
 
 	// Print the results
 	print_ssap_scores(
@@ -784,7 +793,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 			//                                 " please consider raising a new issue at https://github.com/UCLOrengoGroup/cath-tools/issues";
 
 			// v1.14 JEB - Save zero scores
-			save_zero_scores(arg_protein_a, arg_protein_b);
+			save_zero_scores( arg_protein_a, arg_protein_b, global_run_counter );
 			global_res_score = false;
 		}
 	}
@@ -824,6 +833,18 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 	// Re-calculate if there is a domin file
 	if ( arg_domin_file ) {
 		remove_domin_res( new_protein_to_populate, *arg_domin_file, ref( arg_stderr ) );
+	}
+
+	if ( new_protein_to_populate.get_length() == 0 ) {
+		BOOST_LOG_TRIVIAL( warning )
+			<< "After reading protein "
+			<< arg_protein_name
+			<< (
+				arg_domain
+				? ( " (" + to_string( *arg_domain ) + ")" )
+				: string{}
+			)
+			<< " from file(s), got no residues";
 	}
 
 	// Return the newly created protein object
@@ -1828,20 +1849,21 @@ bool cath::save_ssap_scores(const alignment               &arg_alignment,    ///
 
 
 /// \brief TODOCUMENT
-void cath::save_zero_scores(const protein &arg_protein_a, ///< The first protein
-                            const protein &arg_protein_b  ///< The second protein
+void cath::save_zero_scores(const protein   &arg_protein_a,  ///< The first protein
+                            const protein   &arg_protein_b,  ///< The second protein
+                            const ptrdiff_t &arg_run_counter ///< The run counter
                             ) {
-		BOOST_LOG_TRIVIAL( info ) << "Function: save_zero_scores()";
-	
-	if (global_run_counter == 1) {
+	BOOST_LOG_TRIVIAL( info ) << "Function: save_zero_scores()";
+
+	if ( arg_run_counter == 1 ) {
 		snprintf(
 			global_ssap_line1,
 			SSAP_LINE_LENGTH - 1,
 			"%6s  %6s %4d %4d %6.2f %4d %4d %4d %6.2f",
 			arg_protein_a.get_title().c_str(),
 			arg_protein_b.get_title().c_str(),
-			0,
-			0,
+			numeric_cast<int>( arg_protein_a.get_length() ),
+			numeric_cast<int>( arg_protein_b.get_length() ),
 			0.0,
 			0,
 			0,
@@ -1851,15 +1873,15 @@ void cath::save_zero_scores(const protein &arg_protein_a, ///< The first protein
 		
 		global_ssap_score1 = 0.0;
 	}
-	else if (global_run_counter == 2) {
+	else if ( arg_run_counter == 2 ) {
 		snprintf(
 			global_ssap_line2,
 			SSAP_LINE_LENGTH - 1,
 			"%6s  %6s %4d %4d %6.2f %4d %4d %4d %6.2f %6.2f",
 			arg_protein_a.get_title().c_str(),
 			arg_protein_b.get_title().c_str(),
-			0,
-			0,
+			numeric_cast<int>( arg_protein_a.get_length() ),
+			numeric_cast<int>( arg_protein_b.get_length() ),
 			0.0,
 			0,
 			0,
@@ -1867,7 +1889,7 @@ void cath::save_zero_scores(const protein &arg_protein_a, ///< The first protein
 			0.0,
 			0.0
 		);
-	
+
 		global_ssap_score2 = 0.0;
 	}
 }
