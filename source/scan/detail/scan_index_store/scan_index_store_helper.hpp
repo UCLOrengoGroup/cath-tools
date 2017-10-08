@@ -85,6 +85,10 @@ namespace cath {
 				                ) {
 					using value_t = common::range_value_t< Rng >;
 
+					if ( boost::empty( arg_rng ) ) {
+						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot make a scan_index_store for an empty range"));
+					}
+
 					const auto mins_maxs = common::tuple_mins_maxs_element(
 						arg_rng
 							| boost::adaptors::transformed( [&] (const value_t &value) { return arg_keyer.make_key( value ); } )
@@ -114,6 +118,9 @@ namespace cath {
 				                ) {
 					using value_t = common::range_value_t< Rng >;
 
+					if ( boost::empty( arg_rng ) ) {
+						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot make a scan_index_store for an empty range"));
+					}
 					const auto mins_maxs = common::mins_maxs_tuple_pair_mins_maxs_element(
 						arg_rng
 							| boost::adaptors::transformed( [&] (const value_t &value) {
