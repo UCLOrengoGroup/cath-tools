@@ -77,14 +77,6 @@ addons:
     - gcc-4.9
     - libgsl0-dev
     - ninja-build
-  artifacts:
-    paths:
-    - release_build/cath-assign-domains.$BUILD_FILE_SUFFIX
-    - release_build/cath-map-clusters.$BUILD_FILE_SUFFIX
-    - release_build/cath-refine-align.$BUILD_FILE_SUFFIX
-    - release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX
-    - release_build/cath-ssap.$BUILD_FILE_SUFFIX
-    - release_build/cath-superpose.$BUILD_FILE_SUFFIX
 
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:samuel-bachmann/boost -y ; fi
