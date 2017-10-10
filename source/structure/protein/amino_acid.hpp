@@ -418,6 +418,14 @@ namespace cath {
 		return ( arg_amino_acid.get_type() == amino_acid_type::AA );
 	}
 
+	/// \brief Return whether the specified amino_acid is for water (HOH)
+	///
+	/// \relates amino_acid
+	inline bool is_water(const amino_acid &arg_amino_acid ///< The amino_acid to query
+	                     ) {
+		return ( arg_amino_acid.get_code() == char_3_arr{{ 'H', 'O', 'H' }} );
+	}
+
 	char_3_arr get_code_of_amino_acid_letter(const char &);
 	std::string get_code_str_of_amino_acid_letter(const char &);
 

@@ -439,6 +439,14 @@ namespace cath {
 			return common::string_ref_of_null_term_char_arr( arg_pdb_atom.get_charge() );
 		}
 
+		/// \brief Return whether the specified pdb_atom's amino_acid is for water (HOH)
+		///
+		/// \relates pdb_atom
+		inline bool is_water(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+		                     ) {
+			return is_water( arg_pdb_atom.get_amino_acid() );
+		}
+
 	} // namespace file
 } // namespace cath
 

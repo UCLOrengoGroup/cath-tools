@@ -106,5 +106,10 @@ BOOST_AUTO_TEST_CASE(less_than_works) {
 	BOOST_CHECK_EQUAL( amino_acid( "MSP", pdb_record::HETATM ), amino_acid( "MSP", pdb_record::HETATM ) );
 }
 
+BOOST_AUTO_TEST_CASE(is_water_works) {
+	BOOST_CHECK(   is_water( amino_acid( "HOH", pdb_record::HETATM ) ) );
+	BOOST_CHECK( ! is_water( amino_acid( "MSP", pdb_record::HETATM ) ) );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
