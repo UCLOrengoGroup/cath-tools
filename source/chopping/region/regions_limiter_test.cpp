@@ -125,4 +125,28 @@ BOOST_AUTO_TEST_CASE(warn_str_if_unseen_regions_works_with_chains) {
 	BOOST_CHECK( ! warn_str_if_specified_regions_remain_unseen( the_limiter ) );
 }
 
+BOOST_AUTO_TEST_CASE(matches_zero_chain_in_regions_with_start_stop_to_space_chain) {
+	const region_vec the_regions = { make_simple_region( '0', 2, 3 ) };
+	regions_limiter the_limiter{ the_regions };
+	the_limiter.update_residue_is_included( make_residue_id( ' ', 2 ) );
+	the_limiter.update_residue_is_included( make_residue_id( ' ', 3 ) );
+	BOOST_CHECK( ! warn_str_if_specified_regions_remain_unseen( the_limiter ) );
+}
+
+BOOST_AUTO_TEST_CASE(matches_zero_chain_in_regions_without_start_stop_to_space_chain) {
+	const region_vec the_regions = { make_simple_region( '0' ) };
+	regions_limiter the_limiter{ the_regions };
+	the_limiter.update_residue_is_included( make_residue_id( ' ', 2 ) );
+	the_limiter.update_residue_is_included( make_residue_id( ' ', 3 ) );
+	BOOST_CHECK( ! warn_str_if_specified_regions_remain_unseen( the_limiter ) );
+}
+
+BOOST_AUTO_TEST_CASE(does_not_match_one_chain_in_regions_without_start_stop_to_space_chain) {
+	const region_vec the_regions = { make_simple_region( '1' ) };
+	regions_limiter the_limiter{ the_regions };
+	the_limiter.update_residue_is_included( make_residue_id( ' ', 2 ) );
+	the_limiter.update_residue_is_included( make_residue_id( ' ', 3 ) );
+	BOOST_CHECK(  warn_str_if_specified_regions_remain_unseen( the_limiter ) );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
