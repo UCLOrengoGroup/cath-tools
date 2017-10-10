@@ -235,21 +235,17 @@ pdb cath::sup::get_supn_content_pdb(const pdb                        &arg_pdb,  
 
 	const proximity_calculator prox_calc{ arg_pdb, *arg_regions };
 
-	const chain_label_set  nearby_dna_chains      = include_dna_within_distance
-	                                                ? nearby_dna_rna_chain_labels(
-	                                                	arg_pdb,
-	                                                	prox_calc,
-	                                                	*include_dna_within_distance
-	                                                )
-	                                                : chain_label_set{};
-	const pdb_residue_vec  nearby_post_ter_coords = include_organic_within_distance
-	                                                ? get_nearby_post_ter_res_atoms(
-	                                                	arg_pdb,
-	                                                	prox_calc,
-	                                                	*include_organic_within_distance,
-	                                                	EXTEND_DIST
-	                                                )
-	                                                : pdb_residue_vec{};
+	const chain_label_set nearby_dna_chains = nearby_dna_rna_chain_labels(
+		arg_pdb,
+		prox_calc,
+		include_dna_within_distance
+	);
+	const pdb_residue_vec nearby_post_ter_coords = get_nearby_post_ter_res_atoms(
+		arg_pdb,
+		prox_calc,
+		include_organic_within_distance,
+		EXTEND_DIST
+	);
 
 	// Form a list of regions that includes the originals,
 	// plus any DNA chains that have been found nearby

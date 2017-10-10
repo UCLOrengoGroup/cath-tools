@@ -332,6 +332,25 @@ coord_vec cath::file::get_all_coords(const pdb_residue_vec &arg_pdb_residues ///
 	return results;
 }
 
+/// \brief Get all coordinates of all the pdb_atoms in the specified pdb_residues
+///
+/// \relates pdb_residue
+coord_coord_linkage_pair_vec cath::file::get_all_coords_with_linkage(const pdb_residue_vec &arg_pdb_residues ///< The pdb_residues to query
+                                                                     ) {
+	coord_coord_linkage_pair_vec results;
+	for (const pdb_residue &res : arg_pdb_residues) {
+		for (const pdb_atom &atom : res) {
+			results.emplace_back(
+				atom.get_coord(),
+				is_water( atom )
+					? coord_linkage::ADD_ONLY
+					: coord_linkage::ADD_AND_LINK
+			);
+		}
+	}
+	return results;
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_residue

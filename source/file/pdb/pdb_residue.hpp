@@ -36,6 +36,7 @@
 #include "file/file_type_aliases.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/residue_makeup.hpp"
+#include "structure/geometry/coord_linkage.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 #include <vector>
@@ -149,6 +150,8 @@ namespace cath {
 		bool dssp_will_skip_residue(const pdb_residue &);
 
 		geom::coord_vec get_all_coords(const pdb_residue_vec &);
+
+		geom::coord_coord_linkage_pair_vec get_all_coords_with_linkage(const pdb_residue_vec &);
 
 		std::ostream & operator<<(std::ostream &,
 		                          const pdb_residue_vec &);

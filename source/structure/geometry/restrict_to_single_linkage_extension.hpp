@@ -21,18 +21,19 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_RESTRICT_TO_SINGLE_LINKAGE_EXTENSION_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_RESTRICT_TO_SINGLE_LINKAGE_EXTENSION_H
 
+#include "structure/geometry/coord_linkage.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 namespace cath {
 	namespace geom {
 
-		void restrict_to_single_linkage_extension(coord_vec &,
-		                                          const coord_vec_itr &,
+		void restrict_to_single_linkage_extension(coord_coord_linkage_pair_vec &,
+		                                          const coord_coord_linkage_pair_vec_itr &,
 		                                          const double &);
 
-		coord_vec restrict_to_single_linkage_extension_copy(coord_vec,
-		                                                    const size_t &,
-		                                                    const double &);
+		coord_coord_linkage_pair_vec restrict_to_single_linkage_extension_copy(coord_coord_linkage_pair_vec,
+		                                                                       const size_t &,
+		                                                                       const double &);
 
 	} // namespace geom
 } // namespace cath

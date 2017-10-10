@@ -187,7 +187,7 @@ chain_label_set cath::file::nearby_dna_rna_chain_labels(const pdb               
                                                         const doub_opt             &arg_dist_opt   ///< The maximum distance to the original PDB
                                                         ) {
 	if ( arg_dist_opt ) {
-		return nearby_dna_rna_chain_labels( arg_pdb, arg_prox_calc, arg_dist_opt );
+		return nearby_dna_rna_chain_labels( arg_pdb, arg_prox_calc, *arg_dist_opt );
 	}
 	return {};
 }
@@ -199,40 +199,39 @@ chain_label_set cath::file::nearby_dna_rna_chain_labels(const pdb               
 /// The returned data may be unsorted
 ///
 /// \relates proximity_calculator
-void cath::file::restrict_to_linkage_proximate(coord_vec                  &arg_coords,            ///< The coord vector to modify
-                                               const proximity_calculator &arg_prox_calc,         ///< The proximity_calculator to query
-                                               const double               &arg_primary_distance,  ///< The maximum primary allowed distance to the PDB
-                                               const double               &arg_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
+void cath::file::restrict_to_linkage_proximate(coord_coord_linkage_pair_vec &arg_coords,            ///< The coord vector to modify
+                                               const proximity_calculator   &arg_prox_calc,         ///< The proximity_calculator to query
+                                               const double                 &arg_primary_distance,  ///< The maximum primary allowed distance to the PDB
+                                               const double                 &arg_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
                                                ) {
 	restrict_to_single_linkage_extension(
 		arg_coords,
-		[&] {
-			return partition(
-				arg_coords,
-				[&] (const coord &x) {
-					return arg_prox_calc.is_within_distance(
-						x,
-						arg_primary_distance
-					);
-				}
-			);
-		} (),
+		partition(
+			arg_coords,
+			[&] (const coord_coord_linkage_pair &x) {
+				return arg_prox_calc.is_within_distance(
+					x.first,
+					arg_primary_distance
+				);
+			}
+		),
 		arg_extension_distance
 	);
 }
 
-/// \brief Return a copy of the specified coord_vec, restricted to those coords that are within the specified primary distance
-///        to the original PDB of the specified proximity_calculator and those coords that can be reached
-///        from them through other coords in steps of the specified extension distance or less
+/// \brief Return a copy of the specified coord_coord_linkage_pair_vec, restricted to those coords that are
+///        within the specified primary distance to the original PDB of the specified proximity_calculator
+///        and those coords that can be reached from them through other coords in steps of the specified
+///        extension distance or less
 ///
 /// The returned data may be unsorted
 ///
 /// \relates proximity_calculator
-coord_vec cath::file::restrict_to_linkage_proximate_copy(coord_vec                   arg_coords,            ///< The coord vector to copy and return modified version of
-                                                         const proximity_calculator &arg_prox_calc,         ///< The proximity_calculator to query
-                                                         const double               &arg_primary_distance,  ///< The maximum primary allowed distance to the PDB
-                                                         const double               &arg_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
-                                                         ) {
+coord_coord_linkage_pair_vec cath::file::restrict_to_linkage_proximate_copy(coord_coord_linkage_pair_vec  arg_coords,            ///< The coord vector to copy and return modified version of
+                                                                            const proximity_calculator   &arg_prox_calc,         ///< The proximity_calculator to query
+                                                                            const double                 &arg_primary_distance,  ///< The maximum primary allowed distance to the PDB
+                                                                            const double                 &arg_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
+                                                                            ) {
 	restrict_to_linkage_proximate( arg_coords, arg_prox_calc, arg_primary_distance, arg_extension_distance );
 	return arg_coords;
 }
@@ -245,16 +244,18 @@ pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb             
                                                           const double               &arg_primary_distance,  ///< The maximum primary allowed distance to the PDB
                                                           const double               &arg_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
                                                           ) {
-	// Create a function object for less-than-comparing coords
+	// Create a function object for less-than-comparing the coord part of the coord_coord_linkage_pairs
 	//
 	// (this isn't an operator<() for coord because it doesn't make sense in most
 	//  contexts but it makes sense for sorting a list of coords so that the list can
 	//  be binary_search()-ed)
-	const auto coord_less_fn = [] (const coord &lhs, const coord &rhs) {
+	const auto coord_less_fn = [] (const coord_coord_linkage_pair &lhs, const coord_coord_linkage_pair &rhs) {
+		const auto &l = lhs.first;
+		const auto &r = rhs.first;
 		return (
-			tie( lhs.get_x(), lhs.get_y(), lhs.get_z() )
+			tie( l.get_x(), l.get_y(), l.get_z() )
 			<
-			tie( rhs.get_x(), rhs.get_y(), rhs.get_z() )
+			tie( r.get_x(), r.get_y(), r.get_z() )
 		);
 	};
 
@@ -262,9 +263,9 @@ pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb             
 	// (within arg_primary_distance) according to proximity_calculator or
 	// are connected to any such through a chain of others with a maximum
 	// link distance of arg_extension_distance
-	const coord_vec resorted_nearbys = sort_copy(
+	const coord_coord_linkage_pair_vec resorted_nearbys = sort_copy(
 		restrict_to_linkage_proximate_copy(
-			get_all_coords( arg_pdb.get_post_ter_residues() ),
+			get_all_coords_with_linkage( arg_pdb.get_post_ter_residues() ),
 			arg_prox_calc,
 			arg_primary_distance,
 			arg_extension_distance
@@ -279,7 +280,7 @@ pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb             
 				res | filtered( [&] (const pdb_atom &atom) {
 					return binary_search(
 						resorted_nearbys,
-						atom.get_coord(),
+						std::make_pair( atom.get_coord(), coord_linkage::ADD_ONLY ),
 						coord_less_fn
 					);
 				} )
@@ -297,4 +298,24 @@ pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb             
 	);
 }
 
-
+/// \brief Get a pdb_residue_vec of those post-TER residues in the specified PDB that are
+///        nearby to the original PDB of the specified proximity_calculator (within the specified primary distance
+///        or reachable from there through other coords in steps of the specified extension distance or less)
+///        or an empty set if the distance is none
+///
+/// \relates proximity_calculator
+pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb                  &arg_pdb,               ///< The PDB with the post-TER records to query
+                                                          const proximity_calculator &arg_prox_calc,         ///< The proximity_calculator to query
+                                                          const doub_opt             &arg_primary_distance,  ///< The maximum primary allowed distance to the PDB
+                                                          const double               &arg_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
+                                                          ) {
+	if ( arg_primary_distance ) {
+		return get_nearby_post_ter_res_atoms(
+			arg_pdb,
+			arg_prox_calc,
+			*arg_primary_distance,
+			arg_extension_distance
+		);
+	}
+	return {};
+}

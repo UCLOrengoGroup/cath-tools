@@ -26,6 +26,7 @@
 #include "chopping/chopping_type_aliases.hpp"
 #include "file/file_type_aliases.hpp"
 #include "structure/geometry/coord.hpp"
+#include "structure/geometry/coord_linkage.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 #include <functional>
@@ -114,19 +115,24 @@ namespace cath {
 		                                            const proximity_calculator &,
 		                                            const doub_opt &);
 
-		void restrict_to_linkage_proximate(geom::coord_vec &,
+		void restrict_to_linkage_proximate(geom::coord_coord_linkage_pair_vec &,
 		                                   const proximity_calculator &,
 		                                   const double &,
 		                                   const double &);
 
-		geom::coord_vec restrict_to_linkage_proximate_copy(geom::coord_vec,
-		                                                   const proximity_calculator &,
-		                                                   const double &,
-		                                                   const double &);
+		geom::coord_coord_linkage_pair_vec restrict_to_linkage_proximate_copy(geom::coord_coord_linkage_pair_vec,
+		                                                                      const proximity_calculator &,
+		                                                                      const double &,
+		                                                                      const double &);
 
 		pdb_residue_vec get_nearby_post_ter_res_atoms(const pdb &,
 		                                              const proximity_calculator &,
 		                                              const double &,
+		                                              const double &);
+
+		pdb_residue_vec get_nearby_post_ter_res_atoms(const pdb &,
+		                                              const proximity_calculator &,
+		                                              const doub_opt &,
 		                                              const double &);
 
 	} // namespace file
