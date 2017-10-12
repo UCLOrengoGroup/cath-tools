@@ -500,7 +500,7 @@ set dash_width,  0.7
 set dash_radius, 0.02
 set seq_view_label_mode, 1
 set ribbon_width, 1.5
-orient
+orient ( polymer and not resn A+C+G+T+U )
 cmd.wizard( "message", ")" << advert_msg << R"(" );
 feedback enable,all,output
 )";
