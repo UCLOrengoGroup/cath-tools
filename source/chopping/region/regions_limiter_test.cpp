@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(warn_str_if_unseen_regions_works_with_residues) {
 }
 
 BOOST_AUTO_TEST_CASE(warn_str_if_unseen_regions_works_with_chains) {
-	const region_vec the_regions = { make_simple_region( 'A') };
+	const region_vec the_regions = { make_simple_region( 'A' ) };
 	regions_limiter the_limiter{ the_regions };
 	BOOST_CHECK(   warn_str_if_specified_regions_remain_unseen( the_limiter ) );
 	the_limiter.update_residue_is_included( make_residue_id( 'A', 4 ) );
