@@ -46,6 +46,7 @@ using namespace cath::opts;
 using boost::none;
 using std::cerr;
 using std::istream;
+using std::make_pair;
 using std::pair;
 using std::unique_ptr;
 using std::vector;
@@ -59,13 +60,13 @@ unique_ptr<pdbs_acquirer> pdbs_acquirer::clone() const {
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
 ///       (fix all errors, *then* provide default of boost::none)
-pdb_list_str_vec_pair pdbs_acquirer::get_pdbs_and_names(istream    &arg_istream,                ///< TODOCUMENT
-                                                        const bool &arg_remove_partial_residues ///< TODOCUMENT
-                                                        ) const {
-	pair<pdb_list, str_vec> pdbs_and_names = do_get_pdbs_and_names( arg_istream );
+pdb_list_name_set_list_pair pdbs_acquirer::get_pdbs_and_names(istream    &arg_istream,                ///< TODOCUMENT
+                                                              const bool &arg_remove_partial_residues ///< TODOCUMENT
+                                                              ) const {
+	pair<pdb_list, name_set_list> pdbs_and_names = do_get_pdbs_and_names( arg_istream );
 	// Create a vector of PDBs to be superposed
-	pdb_list &pdbs  = pdbs_and_names.first;
-	str_vec  &names = pdbs_and_names.second;
+	pdb_list      &pdbs  = pdbs_and_names.first;
+	name_set_list &names = pdbs_and_names.second;
 
 	// Check the number of source files and then grab them
 //	if (pdbs.size() < 2) {
@@ -77,7 +78,13 @@ pdb_list_str_vec_pair pdbs_acquirer::get_pdbs_and_names(istream    &arg_istream,
 
 	// If the number of names doesn't match the number of PDBs then throw a wobbly
 	if ( names.size() != pdbs.size() ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("The number of names doesn't match the number of PDBs"));
+		BOOST_THROW_EXCEPTION(invalid_argument_exception(
+			"The number of names ("
+			+ std::to_string( names.size() )
+			+ ") doesn't match the number of PDBs ("
+			+ std::to_string( pdbs.size() )
+			+ ")"
+		));
 	}
 
 	return arg_remove_partial_residues ? make_pair( pdb_list_of_backbone_complete_subset_pdbs( pdbs, ref( cerr ) ), names )
@@ -155,21 +162,20 @@ pair<str_opt_vec, region_vec_opt_vec> strip_domain_vec(domain_vec arg_domains //
 ///
 /// In the future, it may be worth building more interesting types (than str_vec) to record both the provenance (arg_names_from_acq)
 /// and user-specified names (arg_ids) of the structure
-strucs_context cath::opts::combine_acquired_pdbs_and_names_with_ids_and_domains(pdb_list   arg_pdbs,           ///< The PDBs obtained from a pdbs_acquirer
-                                                                                str_vec    arg_names_from_acq, ///< The names obtained from a pdbs_acquirer
-                                                                                str_vec    specified_ids,      ///< Alternative IDs
-                                                                                domain_vec arg_domains         ///< Regions for the strucs_context
+strucs_context cath::opts::combine_acquired_pdbs_and_names_with_ids_and_domains(pdb_list      arg_pdbs,           ///< The PDBs obtained from a pdbs_acquirer
+                                                                                name_set_list arg_names_from_acq, ///< The names obtained from a pdbs_acquirer
+                                                                                str_vec       specified_ids,      ///< Alternative IDs
+                                                                                domain_vec    arg_domains         ///< Regions for the strucs_context
                                                                                 ) {
 	auto stripped_domain_vec = strip_domain_vec( std::move( arg_domains ) );
 
 	stripped_domain_vec.second.resize( arg_names_from_acq.size(), none );
 
 	return {
-		std::move( arg_pdbs                   ),
-		build_name_set_list(
-			std::move( arg_names_from_acq        ),
-			std::move( specified_ids             ),
-			std::move( stripped_domain_vec.first )
+		std::move( arg_pdbs ),
+		add_specified_ids_copy(
+			std::move( arg_names_from_acq ),
+			std::move( specified_ids )
 		),
 		std::move( stripped_domain_vec.second )
 	};

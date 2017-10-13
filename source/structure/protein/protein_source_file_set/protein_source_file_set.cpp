@@ -48,7 +48,6 @@ using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
-using namespace std;
 
 using boost::adaptors::filtered;
 using boost::assign::ptr_push_back;
@@ -57,6 +56,12 @@ using boost::lexical_cast;
 using boost::none;
 using boost::ptr_vector;
 using boost::range::transform;
+using std::back_inserter;
+using std::make_pair;
+using std::ostream;
+using std::ostringstream;
+using std::string;
+using std::unique_ptr;
 
 /// \brief Read a PDB and restrict it by the specified regions
 protein protein_source_file_set::do_read_and_restrict_files(const data_file_path_map &arg_filename_of_data_file, ///< The pre-loaded map of file types to filenames
@@ -83,6 +88,11 @@ data_file_vec protein_source_file_set::get_file_set() const {
 	return do_get_file_set();
 }
 
+/// \brief An NVI pass-through method to get the primary file
+data_file protein_source_file_set::get_primary_file() const {
+	return do_get_primary_file();
+}
+
 /// \brief An NVI pass-through method to get the equivalent protein_file_combn value
 protein_file_combn protein_source_file_set::get_protein_file_combn() const {
 	return do_get_protein_file_combn();
@@ -105,7 +115,16 @@ protein protein_source_file_set::read_files(const data_dirs_spec &arg_data_dirs,
 		arg_data_dirs,
 		arg_protein_name
 	);
-	return do_read_and_restrict_files( filename_of_data_file, arg_protein_name, arg_regions, arg_stderr );
+
+	return do_read_and_restrict_files(
+		filename_of_data_file,
+		arg_protein_name,
+		arg_regions,
+		arg_stderr
+	).set_name_set( name_set{
+		get_primary_file_from_map( *this, filename_of_data_file ),
+		arg_protein_name
+	} );
 }
 
 /// \brief Read a protein from the specified files and apply any name from the optional domain
@@ -128,7 +147,7 @@ protein cath::read_protein_from_files(const protein_source_file_set &arg_source_
 		arg_stderr
 	);
 	if ( arg_domain && has_domain_id( *arg_domain ) ) {
-		the_protein.set_title( get_domain_id( *arg_domain ) );
+		the_protein.get_name_set().set_domain_name_from_regions( get_domain_id( *arg_domain ) );
 	}
 	return the_protein;
 }
@@ -191,6 +210,18 @@ data_file_path_map cath::get_filename_of_data_file(const protein_source_file_set
 		[&] (const data_file &x) {
 			return make_pair( x, find_file( arg_data_dirs, x, arg_protein_name ) );
 		}
+	);
+}
+
+/// \brief Return the file in the specified data_file_path_map corresponding to
+///        the specified protein_source_file_set's primary file
+///
+/// \relates protein_source_file_set
+path cath::get_primary_file_from_map(const protein_source_file_set &arg_protein_source_file_set, ///< The protein_source_file_set to query
+                                     const data_file_path_map      &arg_filename_of_data_file    ///< The data_file_path_map to query
+                                     ) {
+	return arg_filename_of_data_file.at(
+		arg_protein_source_file_set.get_primary_file()
 	);
 }
 

@@ -43,9 +43,9 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(name_set_test_suite, name_set_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK_EQUAL( to_string( name_set( "a"             ) ), R"(name_set[name_from_acq:"a"])"                          );
-	BOOST_CHECK_EQUAL( to_string( name_set( "a", "b"s       ) ), R"(name_set[name_from_acq:"a", spec_id:"b"])"             );
-	BOOST_CHECK_EQUAL( to_string( name_set( "a", "b"s, "c"s ) ), R"(name_set[name_from_acq:"a", spec_id:"b", dom_id:"c"])" );
+	BOOST_CHECK_EQUAL( to_string( name_set( "a"s             ) ), R"(name_set[name_from_acq:"a"])"                          );
+	BOOST_CHECK_EQUAL( to_string( name_set( "a"s, "b"s       ) ), R"(name_set[name_from_acq:"a", spec_id:"b"])"             );
+	BOOST_CHECK_EQUAL( to_string( name_set( "a"s, "b"s, "c"s ) ), R"(name_set[name_from_acq:"a", spec_id:"b", dom_id:"c"])" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

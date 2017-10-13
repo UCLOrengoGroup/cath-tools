@@ -83,9 +83,6 @@ namespace cath {
 		protein_list build_protein_list_of_pdb_list(const pdb_list &);
 
 		protein_list build_protein_list_of_pdb_list_and_names(const pdb_list &,
-		                                                      const str_vec &);
-
-		protein_list build_protein_list_of_pdb_list_and_names(const pdb_list &,
 		                                                      const name_set_list &);
 
 		amino_acid_vec_vec get_amino_acid_lists(const pdb_list &);

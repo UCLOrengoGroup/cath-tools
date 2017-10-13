@@ -20,12 +20,13 @@
 
 #include "istream_pdbs_acquirer.hpp"
 
-#include <boost/lexical_cast.hpp>
-
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
-#include "file/pdb/pdb_list.hpp"
+#include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
 
 using namespace cath::common;
@@ -41,22 +42,29 @@ unique_ptr<pdbs_acquirer> istream_pdbs_acquirer::do_clone() const {
 }
 
 /// \brief TODOCUMENT
-pdb_list_str_vec_pair istream_pdbs_acquirer::do_get_pdbs_and_names(istream &arg_istream ///< TODOCUMENT
-                                                                   ) const {
-	// Create a vector of PDBs to be superposed
-	pdb_list pdbs;
-	str_vec names;
+pdb_list_name_set_list_pair istream_pdbs_acquirer::do_get_pdbs_and_names(istream &arg_istream ///< TODOCUMENT
+                                                                         ) const {
+	using std::to_string;
 
 	// Read PDBs from the_istream
-	pdbs = read_end_separated_pdb_files( arg_istream );
-	names.assign( pdbs.size(), string() );
-	for (size_t names_ctr = 0; names_ctr < names.size(); ++names_ctr) {
-		names[ names_ctr ] = "PDB_"
-		                     + lexical_cast<string>( names_ctr + 1 )
-		                     + "_from_stdin (with "
-		                     + lexical_cast<string>( pdbs[ names_ctr ].get_num_atoms() )
-		                     + " atoms)";
-	}
-	return make_pair( pdbs, names );
+	const pdb_list pdbs = read_end_separated_pdb_files( arg_istream );
+
+	return make_pair(
+		pdbs,
+		name_set_list{
+			transform_build<name_set_vec>(
+				indices( pdbs.size() ),
+				[&] (const size_t &x) {
+					return name_set{
+						"PDB_"
+						+ to_string( x + 1 )
+						+ "_from_stdin (with "
+						+ to_string( pdbs[ x ].get_num_atoms() )
+						+ " atoms)"
+					};
+				}
+			)
+		}
+	);
 }
 

@@ -46,7 +46,7 @@ namespace cath {
 			virtual std::unique_ptr<pdbs_acquirer> do_clone() const = 0;
 			
 			/// \brief TODOCUMENT
-			virtual std::pair<file::pdb_list, str_vec> do_get_pdbs_and_names(std::istream &) const = 0;
+			virtual file::pdb_list_name_set_list_pair do_get_pdbs_and_names(std::istream &) const = 0;
 
 		public:
 			pdbs_acquirer() = default;
@@ -58,8 +58,8 @@ namespace cath {
 			pdbs_acquirer & operator=(const pdbs_acquirer &) = default;
 			pdbs_acquirer & operator=(pdbs_acquirer &&) noexcept = default;
 
-			file::pdb_list_str_vec_pair get_pdbs_and_names(std::istream &,
-			                                               const bool &) const;
+			file::pdb_list_name_set_list_pair get_pdbs_and_names(std::istream &,
+			                                                     const bool &) const;
 		};
 
 		uptr_vec<pdbs_acquirer> get_pdbs_acquirers(const pdb_input_spec &);
@@ -68,7 +68,7 @@ namespace cath {
 		std::unique_ptr<pdbs_acquirer> get_pdbs_acquirer(const pdb_input_spec &);
 
 		file::strucs_context combine_acquired_pdbs_and_names_with_ids_and_domains(file::pdb_list,
-		                                                                          str_vec,
+		                                                                          file::name_set_list,
 		                                                                          str_vec,
 		                                                                          chop::domain_vec);
 

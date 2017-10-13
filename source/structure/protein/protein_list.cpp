@@ -76,12 +76,23 @@ const protein & protein_list::operator[](const size_t &arg_index ///< TODOCUMENT
 	return proteins[arg_index];
 }
 
-/// \brief TODOCUMENT
-protein_list::const_iterator protein_list::begin() const {
+/// \brief Standard non-const begin() operator to provide range access
+auto protein_list::begin() -> iterator{
+	return std::begin( proteins );
+}
+
+/// \brief Standard non-const end() operator to provide range access
+auto protein_list::end() -> iterator{
+	return std::end( proteins );
+}
+
+/// \brief Standard const begin() operator to provide range access
+auto protein_list::begin() const -> const_iterator {
 	return common::cbegin( proteins );
 }
-/// \brief TODOCUMENT
-protein_list::const_iterator protein_list::end() const {
+
+/// \brief Standard const end() operator to provide range access
+auto protein_list::end() const -> const_iterator {
 	return common::cend( proteins );
 }
 

@@ -996,11 +996,11 @@ pair<protein, protein_info> cath::file::build_protein_of_pdb(const pdb          
 ///
 /// \relates protein
 protein cath::file::build_protein_of_pdb_and_name(const pdb             &arg_pdb,    ///< TODOCUMENT
-                                                  const string          &arg_name,   ///< TODOCUMENT
+                                                  const name_set        &arg_name,   ///< TODOCUMENT
                                                   const ostream_ref_opt &arg_ostream ///< An optional reference to an ostream to which any logging should be sent
                                                   ) {
 	protein new_protein = build_protein_of_pdb( arg_pdb, arg_ostream ).first;
-	new_protein.set_title( arg_name );
+	new_protein.set_name_set( arg_name );
 	return new_protein;
 }
 

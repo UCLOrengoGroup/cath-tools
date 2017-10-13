@@ -24,6 +24,7 @@
 #include <boost/optional.hpp>
 
 #include "common/type_aliases.hpp"
+#include "file/name_set/name_set.hpp"
 #include "file/pdb/dssp_skip_policy.hpp"
 #include "structure/structure_type_aliases.hpp"
 
@@ -57,7 +58,7 @@ namespace cath {
 		protein protein_from_dssp_and_pdb(const dssp_file &,
 		                                  const pdb &,
 		                                  const dssp_skip_policy & = dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES,
-		                                  const std::string & = "",
+		                                  const file::name_set & = file::name_set{},
 		                                  const ostream_ref_opt & = boost::none );
 
 		residue_id_vec get_residue_ids(const dssp_file &,

@@ -380,9 +380,16 @@ void cath::scan::detail::print_highlight_rep_pymol_commands(ostream             
 /// \relates
 void cath::scan::detail::print_highlight_rep_pymol_commands(ostream                             &arg_os,               ///< TODOCUMENT
                                                             const check_scan_on_final_alignment &arg_csofa,            ///< TODOCUMENT
-			                                                const protein                       &arg_protein,          ///< TODOCUMENT
-			                                                const roled_scan_stride             &arg_roled_scan_stride ///< TODOCUMENT
-			                                                ) {
-	print_highlight_rep_pymol_commands( arg_os, arg_protein.get_title(), arg_csofa.get_rep_name_lists( arg_protein, arg_roled_scan_stride ) );
+                                                            const protein                       &arg_protein,          ///< TODOCUMENT
+                                                            const roled_scan_stride             &arg_roled_scan_stride ///< TODOCUMENT
+                                                            ) {
+	print_highlight_rep_pymol_commands(
+		arg_os,
+		get_domain_or_specified_or_name_from_acq( arg_protein ),
+		arg_csofa.get_rep_name_lists(
+			arg_protein,
+			arg_roled_scan_stride
+		)
+	);
 }
 

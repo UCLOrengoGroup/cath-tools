@@ -27,6 +27,7 @@
 #include "chopping/chopping_type_aliases.hpp"
 #include "common/temp_check_offset_1.hpp"
 #include "exception/invalid_argument_exception.hpp"
+#include "file/name_set/name_set.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/protein/amino_acid.hpp"
 #include "structure/protein/residue.hpp"
@@ -46,7 +47,7 @@ namespace cath {
 	class protein final {
 	private:
 		/// \brief TODOCUMENT
-		std::string title;
+		file::name_set the_name_set;
 
 		/// \brief TODOCUMENT
 		residue_vec residues;
@@ -64,13 +65,14 @@ namespace cath {
 		using sec_struc_crange = boost::sub_range<const sec_struc_vec>;
 
 		protein() = default;
-		protein(std::string,
+		protein(file::name_set,
 		        residue_vec);
-		void set_title(std::string);
-		void set_residues(residue_vec);
-		void set_sec_strucs(sec_struc_vec);
+		protein & set_name_set(file::name_set);
+		protein & set_residues(residue_vec);
+		protein & set_sec_strucs(sec_struc_vec);
 
-		std::string get_title() const;
+		file::name_set & get_name_set();
+		const file::name_set & get_name_set() const;
 
 		inline residue & get_residue_ref_of_index(const size_t &);
 		inline const residue & get_residue_ref_of_index(const size_t &) const;
@@ -150,10 +152,10 @@ namespace cath {
 	const residue & get_residue_ref_of_index__offset_1(const protein &,
 	                                                   const size_t &);
 
-	protein build_protein(const residue_vec &);
+	protein build_protein(residue_vec);
 
-	protein build_protein(const residue_vec &,
-	                      const sec_struc_vec &);
+	protein build_protein(residue_vec,
+	                      sec_struc_vec);
 
 	residue_id get_pdb_residue_id_of_index(const protein &,
 	                                       const size_t &);
@@ -201,6 +203,8 @@ namespace cath {
 
 	protein restrict_to_regions_copy(protein,
 	                                 const chop::region_vec_opt &);
+
+	std::string get_domain_or_specified_or_name_from_acq(const protein &);
 
 	/// \brief TODOCUMENT
 	///

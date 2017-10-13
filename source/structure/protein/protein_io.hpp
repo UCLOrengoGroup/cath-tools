@@ -26,6 +26,7 @@
 
 #include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"
+#include "file/name_set/name_set.hpp"
 
 #include <iostream>
 
@@ -103,12 +104,12 @@ namespace cath {
 
 	void add_name_and_paint_sec_file_onto_protein(protein &,
 	                                              const file::sec_file &,
-	                                              const std::string & = "",
+	                                              const file::name_set & = file::name_set{},
 	                                              const ostream_ref_opt & = std::ref( std::cerr ) );
 
 	protein add_name_and_paint_sec_file_onto_protein_copy(protein,
 	                                                      const file::sec_file &,
-	                                                      const std::string & = "",
+	                                                      const file::name_set & = file::name_set{},
 	                                                      const ostream_ref_opt & = std::ref( std::cerr ) );
 
 	void paint_sec_file_onto_protein(protein &,

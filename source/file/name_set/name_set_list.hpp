@@ -41,6 +41,9 @@ namespace cath {
 			name_set_vec name_sets;
 
 		public:
+			/// \brief A iterator type alias as part of making this a range over name_sets
+			using iterator = name_set_vec::iterator;
+
 			/// \brief A const_iterator type alias as part of making this a range over name_sets
 			using const_iterator = name_set_vec::const_iterator;
 
@@ -51,8 +54,11 @@ namespace cath {
 			bool empty() const;
 			size_t size() const;
 
+			name_set & operator[](const size_t &);
 			const name_set & operator[](const size_t &) const;
 
+			iterator begin();
+			iterator end();
 			const_iterator begin() const;
 			const_iterator end() const;
 		};
@@ -73,9 +79,25 @@ namespace cath {
 		}
 
 		/// \brief Return the name_set stored at the specified index
+		inline name_set & name_set_list::operator[](const size_t &arg_index ///< The index of the name_set to return
+		                                            ) {
+			return name_sets[ arg_index ];
+		}
+
+		/// \brief Return the name_set stored at the specified index
 		inline const name_set & name_set_list::operator[](const size_t &arg_index ///< The index of the name_set to return
 		                                                  ) const {
 			return name_sets[ arg_index ];
+		}
+
+		/// \brief Standard begin() method, as part of making this into a range over the name_sets
+		inline auto name_set_list::begin() -> iterator {
+			return std::begin( name_sets );
+		}
+
+		/// \brief Standard begin() method, as part of making this into a range over the name_sets
+		inline auto name_set_list::end() -> iterator {
+			return std::end( name_sets );
 		}
 
 		/// \brief Standard const begin() method, as part of making this into a range over the name_sets
@@ -89,8 +111,8 @@ namespace cath {
 		}
 
 		name_set_list build_name_set_list(str_vec,
-		                                  str_vec,
-		                                  str_opt_vec);
+		                                  str_vec = str_vec{},
+		                                  str_opt_vec = str_opt_vec{});
 
 		std::string to_string(const name_set_list &);
 
@@ -109,6 +131,16 @@ namespace cath {
 		str_vec get_supn_json_names(const name_set_list &);
 		str_vec get_supn_pdb_file_names(const name_set_list &);
 		str_vec get_viewer_names(const name_set_list &);
+
+		void add_specified_ids(name_set_list &,
+		                       str_vec);
+		name_set_list add_specified_ids_copy(name_set_list,
+		                                     str_vec);
+
+		void add_domain_names_from_regions(name_set_list &,
+		                                   str_opt_vec);
+		name_set_list add_domain_names_from_regions_copy(name_set_list,
+		                                                 str_opt_vec);
 
 	} // namespace file
 } // namespace cath

@@ -42,6 +42,13 @@ using std::string;
 
 BOOST_AUTO_TEST_SUITE(protein_source_file_set_test_suite)
 
+BOOST_AUTO_TEST_CASE(file_set_contains_primary_file) {
+	const auto all_source_file_sets = get_all_protein_source_file_sets();
+	for (const auto &x : all_source_file_sets) {
+		BOOST_TEST( contains( x.get_file_set(), x.get_primary_file() ) );
+	}
+}
+
 // Commented-out test to load a large list of proteins via their PDB+DSSP+SEC files to check for any breaking errors
 BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK( true );

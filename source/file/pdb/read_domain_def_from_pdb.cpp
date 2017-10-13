@@ -32,19 +32,24 @@ using namespace cath::file;
 using namespace cath::opts;
 
 using boost::filesystem::path;
+using std::make_pair;
+using std::pair;
 
 /// \brief TODOCUMENT
-pdb cath::file::read_domain_from_pdb(const domain_definition &arg_read_domain_def_from_pdb, ///< TODOCUMENT
-                                     const data_dirs_spec    &arg_data_dirs_spec            ///< TODOCUMENT
-                                     ) {
+pair<path, pdb> cath::file::read_domain_from_pdb(const domain_definition &arg_read_domain_def_from_pdb, ///< TODOCUMENT
+                                                 const data_dirs_spec    &arg_data_dirs_spec            ///< TODOCUMENT
+                                                 ) {
 	const path pdb_file = find_file(
 		arg_data_dirs_spec,
 		data_file::PDB,
 		arg_read_domain_def_from_pdb.get_pdb_name()
 	);
-	return read_domain_from_pdb_file(
+	return make_pair(
 		pdb_file,
-		arg_read_domain_def_from_pdb.get_domain()
+		read_domain_from_pdb_file(
+			pdb_file,
+			arg_read_domain_def_from_pdb.get_domain()
+		)
 	);
 }
 

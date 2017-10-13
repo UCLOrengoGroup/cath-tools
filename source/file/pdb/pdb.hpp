@@ -155,7 +155,7 @@ namespace cath {
 		                                                      const dssp_skip_policy & = dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES);
 
 		protein build_protein_of_pdb_and_name(const pdb &,
-		                                      const std::string &,
+		                                      const name_set &,
 		                                      const ostream_ref_opt & = boost::none);
 
 		size_set get_protein_res_indices_that_dssp_might_skip(const pdb &,

@@ -34,6 +34,7 @@ namespace cath { class chain_label; }
 namespace cath { class residue_id; }
 namespace cath { namespace file { class hmmer_scores_entry; } }
 namespace cath { namespace file { class name_set; } }
+namespace cath { namespace file { class name_set_list; } }
 namespace cath { namespace file { class pdb; } }
 namespace cath { namespace file { class pdb_atom; } }
 namespace cath { namespace file { class pdb_list; } }
@@ -59,8 +60,8 @@ namespace cath {
 		/// \brief TODOCUMENT
 		using pdb_residue_vec = std::vector<pdb_residue>;
 
-		/// \brief TODOCUMENT
-		using pdb_list_str_vec_pair = std::pair<pdb_list, str_vec>;
+		/// \brief Type alias for a pair of pdb_list and name_set_list
+		using pdb_list_name_set_list_pair = std::pair<pdb_list, name_set_list>;
 
 		/// \brief TODOCUMENT
 		using pdb_vec = std::vector<pdb>;

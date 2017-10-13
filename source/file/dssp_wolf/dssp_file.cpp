@@ -88,7 +88,7 @@ dssp_file::const_iterator dssp_file::end() const {
 protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_file,        ///< The dssp_file object for a given structure
                                               const pdb              &arg_pdb_file,         ///< The dssp_file object for a given structure
                                               const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to exclude residues that are in the PDB but not the DSSP
-                                              const string           &arg_name,             ///< The name to set as the title of the protein
+                                              const name_set         &arg_name_set,         ///< The name_set to set as the title of the protein
                                               const ostream_ref_opt  &arg_ostream           ///< An optional reference to an ostream to which any logging should be sent
                                               ) {
 	// Build a rough protein object from the pdb object
@@ -151,7 +151,7 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_f
 	}
 
 	// Construct a new protein from the new list of residues
-	return { arg_name, new_residues };
+	return { arg_name_set, new_residues };
 }
 
 /// \brief Extract the names of the residues of the specified dssp_file

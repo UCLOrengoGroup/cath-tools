@@ -48,6 +48,11 @@ data_file_vec protein_from_wolf_and_sec::do_get_file_set() const {
 	return { data_file::WOLF, data_file::SEC };
 }
 
+/// \brief Return that this policy's primary file is the PDB file
+data_file protein_from_wolf_and_sec::do_get_primary_file() const {
+	return data_file::WOLF;
+}
+
 /// \brief Return that the equivalent protein_file_combn value for this is WOLF_SEC
 protein_file_combn protein_from_wolf_and_sec::do_get_protein_file_combn() const {
 	return protein_file_combn::WOLF_SEC;

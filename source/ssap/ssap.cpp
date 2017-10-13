@@ -1799,8 +1799,8 @@ bool cath::save_ssap_scores(const alignment               &arg_alignment,    ///
 			global_ssap_line1,
 			SSAP_LINE_LENGTH - 1,
 			"%6s  %6s %4zu %4zu %6.2f %4zu %4zu %4zu %6.2f",
-			arg_protein_a.get_title().c_str(),
-			arg_protein_b.get_title().c_str(),
+			get_domain_or_specified_or_name_from_acq( arg_protein_a ).c_str(),
+			get_domain_or_specified_or_name_from_acq( arg_protein_b ).c_str(),
 			arg_protein_a.get_length(),
 			arg_protein_b.get_length(),
 			select_score,
@@ -1824,8 +1824,8 @@ bool cath::save_ssap_scores(const alignment               &arg_alignment,    ///
 			global_ssap_line2,
 			SSAP_LINE_LENGTH - 1,
 			"%6s  %6s %4zu %4zu %6.2f %4zu %4zu %4zu %6.2f",
-			arg_protein_a.get_title().c_str(),
-			arg_protein_b.get_title().c_str(),
+			get_domain_or_specified_or_name_from_acq( arg_protein_a ).c_str(),
+			get_domain_or_specified_or_name_from_acq( arg_protein_b ).c_str(),
 			arg_protein_a.get_length(),
 			arg_protein_b.get_length(),
 			select_score,
@@ -1859,15 +1859,15 @@ void cath::save_zero_scores(const protein   &arg_protein_a,  ///< The first prot
 		snprintf(
 			global_ssap_line1,
 			SSAP_LINE_LENGTH - 1,
-			"%6s  %6s %4d %4d %6.2f %4d %4d %4d %6.2f",
-			arg_protein_a.get_title().c_str(),
-			arg_protein_b.get_title().c_str(),
-			numeric_cast<int>( arg_protein_a.get_length() ),
-			numeric_cast<int>( arg_protein_b.get_length() ),
+			"%6s  %6s %4zu %4zu %6.2f %4zu %4zu %4zu %6.2f",
+			get_domain_or_specified_or_name_from_acq( arg_protein_a ).c_str(),
+			get_domain_or_specified_or_name_from_acq( arg_protein_b ).c_str(),
+			arg_protein_a.get_length(),
+			arg_protein_b.get_length(),
 			0.0,
-			0,
-			0,
-			0,
+			0ul,
+			0ul,
+			0ul,
 			0.0
 		);
 		
@@ -1877,15 +1877,15 @@ void cath::save_zero_scores(const protein   &arg_protein_a,  ///< The first prot
 		snprintf(
 			global_ssap_line2,
 			SSAP_LINE_LENGTH - 1,
-			"%6s  %6s %4d %4d %6.2f %4d %4d %4d %6.2f %6.2f",
-			arg_protein_a.get_title().c_str(),
-			arg_protein_b.get_title().c_str(),
-			numeric_cast<int>( arg_protein_a.get_length() ),
-			numeric_cast<int>( arg_protein_b.get_length() ),
+			"%6s  %6s %4zu %4zu %6.2f %4zu %4zu %4zu %6.2f %6.2f",
+			get_domain_or_specified_or_name_from_acq( arg_protein_a ).c_str(),
+			get_domain_or_specified_or_name_from_acq( arg_protein_b ).c_str(),
+			arg_protein_a.get_length(),
+			arg_protein_b.get_length(),
 			0.0,
-			0,
-			0,
-			0,
+			0ul,
+			0ul,
+			0ul,
 			0.0,
 			0.0
 		);
@@ -1953,8 +1953,18 @@ size_doub_pair cath::superpose(const protein                 &arg_protein_a,    
 
 	// If an XML superposition file has been requested, write one
 	if ( arg_score_is_high_enough && arg_ssap_options.get_write_xml_sup() ) {
-		const auto xml_outname = arg_protein_a.get_title() + arg_protein_b.get_title() + ".superpose.xml";
-		write_xml_sup_filename( my_superposition, xml_outname, { arg_protein_a.get_title(), arg_protein_b.get_title() } );
+		const auto xml_outname =
+			  get_domain_or_specified_or_name_from_acq( arg_protein_a )
+			+ get_domain_or_specified_or_name_from_acq( arg_protein_b )
+			+ ".superpose.xml";
+		write_xml_sup_filename(
+			my_superposition,
+			xml_outname,
+			{
+				get_domain_or_specified_or_name_from_acq( arg_protein_a ),
+				get_domain_or_specified_or_name_from_acq( arg_protein_b )
+			}
+		);
 	}
 
 	const auto sup_file_extension_fn = [] (const sup_pdbs_script_policy &x) {
@@ -1966,10 +1976,14 @@ size_doub_pair cath::superpose(const protein                 &arg_protein_a,    
 
 	// If a sup file has been requested, write one
 	if ( arg_score_is_high_enough && has_superposition_dir( arg_ssap_options ) ) {
-		const auto pdb1_filename   = find_file( arg_data_dirs, data_file::PDB,  arg_protein_a.get_title() );
-		const auto pdb2_filename   = find_file( arg_data_dirs, data_file::PDB,  arg_protein_b.get_title() );
+		const auto pdb1_filename   = find_file( arg_data_dirs, data_file::PDB,  arg_protein_a.get_name_set() );
+		const auto pdb2_filename   = find_file( arg_data_dirs, data_file::PDB,  arg_protein_b.get_name_set() );
 		const auto sup_file_suffix = sup_file_extension_fn( arg_ssap_options.get_write_rasmol_script() );
-		const auto basename        = ( arg_protein_a.get_title() + arg_protein_b.get_title() + sup_file_suffix );
+		const auto basename        = (
+			  get_domain_or_specified_or_name_from_acq( arg_protein_a )
+			+ get_domain_or_specified_or_name_from_acq( arg_protein_b )
+			+ sup_file_suffix
+		);
 		const auto outname         = get_superposition_dir( arg_ssap_options ) / basename;
 
 		// Write the superposed PDB file
@@ -2064,9 +2078,23 @@ ssap_scores cath::plot_aln(const protein                 &arg_protein_a,     ///
 			}
 
 			if (score_is_high_enough) {
-				BOOST_LOG_TRIVIAL( info ) << "Function: print_aln";
-				const path alignment_out_file = arg_ssap_options.get_alignment_dir() / ( arg_protein_a.get_title() + arg_protein_b.get_title() + ".list" );
-				write_alignment_as_cath_ssap_legacy_format(alignment_out_file, arg_alignment, arg_protein_a, arg_protein_b);
+				BOOST_LOG_TRIVIAL( info ) << "Function: print_aln"
+					<< " "
+					<< to_string( arg_protein_a.get_name_set() )
+					<< " "
+					<< to_string( arg_protein_b.get_name_set() )
+					;
+				const path alignment_out_file = arg_ssap_options.get_alignment_dir() / (
+					  get_domain_or_specified_or_name_from_acq( arg_protein_a )
+					+ get_domain_or_specified_or_name_from_acq( arg_protein_b )
+					+ ".list"
+				);
+				write_alignment_as_cath_ssap_legacy_format(
+					alignment_out_file,
+					arg_alignment,
+					arg_protein_a,
+					arg_protein_b
+				);
 			}
 		}
 	}

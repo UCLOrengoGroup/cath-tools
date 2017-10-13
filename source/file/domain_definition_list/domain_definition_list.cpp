@@ -27,6 +27,7 @@
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/file/open_fstream.hpp"
+#include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
@@ -41,11 +42,15 @@ using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
-using namespace std;
 
 using boost::algorithm::is_any_of;
 using boost::algorithm::token_compress_on;
 using boost::filesystem::path;
+using boost::none;
+using std::ifstream;
+using std::istream;
+using std::make_pair;
+using std::string;
 
 /// \brief Ctor for domain_definition_list
 domain_definition_list::domain_definition_list(domain_definition_vec arg_domain_definitions
@@ -102,12 +107,12 @@ domain_definition_list cath::file::parse_domain_definition_file(istream &arg_dom
 }
 
 /// \brief TODOCUMENT
-pdb_list_str_vec_pair cath::file::read_domains_from_pdbs(const domain_definition_list &arg_domain_definition_list, ///< TODOCUMENT
-                                                         const data_dirs_spec         &arg_data_dirs_spec          ///< TODOCUMENT
-                                                         ) {
+pdb_list_name_set_list_pair cath::file::read_domains_from_pdbs(const domain_definition_list &arg_domain_definition_list, ///< TODOCUMENT
+                                                               const data_dirs_spec         &arg_data_dirs_spec          ///< TODOCUMENT
+                                                               ) {
 	const size_t num_domain_definitions = arg_domain_definition_list.size();
 	pdb_list pdbs;
-	str_vec  names;
+	name_set_vec names;
 	pdbs.reserve ( num_domain_definitions );
 	names.reserve( num_domain_definitions );
 
@@ -116,9 +121,9 @@ pdb_list_str_vec_pair cath::file::read_domains_from_pdbs(const domain_definition
 		if ( ! has_domain_id( the_domain ) ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Domain definitions to be read from PDBs do not have domain IDs"));
 		}
-		names.push_back( get_domain_id( the_domain ) );
-		pdbs.push_back ( read_domain_from_pdb( domain_defn, arg_data_dirs_spec ) );
+		auto file_and_pdb = read_domain_from_pdb( domain_defn, arg_data_dirs_spec );
+		names.emplace_back( std::move( file_and_pdb.first  ), none, get_domain_id( the_domain ) );
+		pdbs.push_back ( std::move( file_and_pdb.second ) );
 	}
-	return make_pair( pdbs, names );
+	return make_pair( pdbs, name_set_list{ std::move( names ) } );
 }
-

@@ -25,6 +25,7 @@
 #include "alignment/alignment.hpp"
 #include "cath_score_align/options/cath_score_align_options.hpp"
 #include "exception/not_implemented_exception.hpp"
+#include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
@@ -64,11 +65,11 @@ void cath_align_scorer::score(const cath_score_align_options &arg_cath_score_ali
 		return;
 	}
 
-	const auto          pdbs_acquirer_ptr = get_pdbs_acquirer( arg_cath_score_align_options );
-	const auto          pdbs_and_names    = pdbs_acquirer_ptr->get_pdbs_and_names( arg_istream, true );
-	const pdb_list     &pdbs              = pdbs_and_names.first;
-	const str_vec      &names             = pdbs_and_names.second;
-	const protein_list  proteins          = build_protein_list_of_pdb_list_and_names( pdbs, names );
+	const auto           pdbs_acquirer_ptr = get_pdbs_acquirer( arg_cath_score_align_options );
+	const auto           pdbs_and_names    = pdbs_acquirer_ptr->get_pdbs_and_names( arg_istream, true );
+	const pdb_list      &pdbs              = pdbs_and_names.first;
+	const name_set_list &names             = pdbs_and_names.second;
+	const protein_list  proteins           = build_protein_list_of_pdb_list_and_names( pdbs, names );
 
 	// An alignment is required but this should have been checked elsewhere
 	const auto       alignment_acq_ptr  = get_alignment_acquirer( arg_cath_score_align_options );

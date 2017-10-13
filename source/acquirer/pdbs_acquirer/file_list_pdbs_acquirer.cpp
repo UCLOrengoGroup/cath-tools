@@ -21,17 +21,20 @@
 #include "file_list_pdbs_acquirer.hpp"
 
 #include "common/clone/make_uptr_clone.hpp"
-#include "file/pdb/pdb_list.hpp"
+#include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
+#include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
 
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
-using namespace std;
 
 using boost::filesystem::path;
+using std::istream;
+using std::make_pair;
+using std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<pdbs_acquirer> file_list_pdbs_acquirer::do_clone() const {
@@ -39,11 +42,11 @@ unique_ptr<pdbs_acquirer> file_list_pdbs_acquirer::do_clone() const {
 }
 
 /// \brief TODOCUMENT
-pdb_list_str_vec_pair file_list_pdbs_acquirer::do_get_pdbs_and_names(istream &/*arg_istream*/ ///< TODOCUMENT
-                                                                     ) const {
+pdb_list_name_set_list_pair file_list_pdbs_acquirer::do_get_pdbs_and_names(istream &/*arg_istream*/ ///< TODOCUMENT
+                                                                           ) const {
 	// Create a vector of PDBs to be superposed
 	pdb_list pdbs;
-	str_vec names;
+	name_set_vec names;
 
 	// Otherwise, load the PDBs from files
 	const size_t num_input_files = files.size();
@@ -51,9 +54,9 @@ pdb_list_str_vec_pair file_list_pdbs_acquirer::do_get_pdbs_and_names(istream &/*
 		const path &input_filename = files[ input_file_ctr ];
 		const pdb my_new_pdb = read_pdb_file( input_filename );
 		pdbs.push_back( my_new_pdb );
-		names.push_back( ( input_filename.stem() ).string() );
+		names.emplace_back( input_filename );
 	}
-	return make_pair( pdbs, names );
+	return make_pair( pdbs, name_set_list{ std::move( names ) } );
 }
 
 /// \brief Ctor for file_list_pdbs_acquirer.

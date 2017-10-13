@@ -48,6 +48,7 @@ using namespace boost::log;
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
+using namespace cath::file;
 using namespace cath::geom;
 using namespace std;
 
@@ -59,33 +60,41 @@ using boost::range::find_if;
 using boost::range::for_each;
 
 /// \brief TODOCUMENT
-protein::protein(string      arg_title,   ///< TODOCUMENT
-                 residue_vec arg_residues ///< TODOCUMENT
-                 ) : title    ( std::move( arg_title    ) ),
-                     residues ( std::move( arg_residues ) ) {
+protein::protein(name_set    arg_name_set, ///< TODOCUMENT
+                 residue_vec arg_residues  ///< TODOCUMENT
+                 ) : the_name_set { std::move( arg_name_set ) },
+                     residues     { std::move( arg_residues ) } {
 }
 
 /// \brief TODOCUMENT
-void protein::set_title(string arg_title ///< TODOCUMENT
-                        ) {
-	title = std::move( arg_title );
+protein & protein::set_name_set(name_set arg_name_set ///< TODOCUMENT
+                                ) {
+	the_name_set = std::move( arg_name_set );
+	return *this;
 }
 
 /// \brief TODOCUMENT
-void protein::set_residues(residue_vec arg_residues ///< TODOCUMENT
-                           ) {
+protein & protein::set_residues(residue_vec arg_residues ///< TODOCUMENT
+                                ) {
 	residues = std::move( arg_residues );
+	return *this;
 }
 
 /// \brief TODOCUMENT
-void protein::set_sec_strucs(sec_struc_vec arg_sec_strucs ///< TODOCUMENT
-                             ) {
+protein & protein::set_sec_strucs(sec_struc_vec arg_sec_strucs ///< TODOCUMENT
+                                  ) {
 	sec_strucs = std::move( arg_sec_strucs );
+	return *this;
 }
 
 /// \brief TODOCUMENT
-string protein::get_title() const {
-	return title;
+name_set & protein::get_name_set() {
+	return the_name_set;
+}
+
+/// \brief TODOCUMENT
+const name_set & protein::get_name_set() const {
+	return the_name_set;
 }
 
 /// \brief TODOCUMENT
@@ -135,20 +144,20 @@ protein::sec_struc_crange protein::get_sec_strucs() const {
 }
 
 /// \brief TODOCUMENT
-protein cath::build_protein(const residue_vec &arg_residues ///< TODOCUMENT
+protein cath::build_protein(residue_vec arg_residues ///< TODOCUMENT
                             ) {
 	protein new_protein;
-	new_protein.set_residues(arg_residues);
+	new_protein.set_residues( std::move( arg_residues ) );
 	return new_protein;
 }
 
 /// \brief TODOCUMENT
-protein cath::build_protein(const residue_vec   &arg_residues,  ///< TODOCUMENT
-                            const sec_struc_vec &arg_sec_strucs ///< TODOCUMENT
+protein cath::build_protein(residue_vec   arg_residues,  ///< TODOCUMENT
+                            sec_struc_vec arg_sec_strucs ///< TODOCUMENT
                             ) {
 	protein new_protein;
-	new_protein.set_residues(arg_residues);
-	new_protein.set_sec_strucs(arg_sec_strucs);
+	new_protein.set_residues  ( std::move( arg_residues   ) );
+	new_protein.set_sec_strucs( std::move( arg_sec_strucs ) );
 	return new_protein;
 }
 
@@ -339,13 +348,13 @@ void cath::label_residues_with_sec_strucs(protein               &arg_protein,   
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(
 				"Secondary structure has a start of " + lexical_cast<string>(sec_struc_start) +
 				", which is greater than its stop "   + lexical_cast<string>(sec_struc_stop) +
-				" for protein " + arg_protein.get_title()
+				" for protein " + get_domain_or_specified_or_name_from_acq( arg_protein )
 			));
 		}
 		if ( sec_struc_stop > num_residues ) {
 			BOOST_LOG_TRIVIAL( warning ) << "Ignoring (part of) secondary structure because it has a stop of " << sec_struc_stop
 			                             << ", which is greater than the number of residues " << num_residues
-			                             << " for protein " << arg_protein.get_title()
+			                             << " for protein " << arg_protein.get_name_set()
 			                             << " (this is probably because the secondary structure has been read from a sec file"
 			                             << ", which refers to residues by their sequential order"
 			                             << ", whereas the residues have been read from a dssp or wolf file"
@@ -364,13 +373,13 @@ void cath::label_residues_with_sec_strucs(protein               &arg_protein,   
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(
 				"Secondary structure has a start of " + lexical_cast<string>(sec_struc_start) +
 				", which is not greater than the preceding secondary structure's start of " + lexical_cast<string>(prev_start) +
-				" for protein " + arg_protein.get_title()
+				" for protein " + get_domain_or_specified_or_name_from_acq( arg_protein )
 			));
 		}
 		if ( there_is_a_preceding_ss && sec_struc_start <= prev_stop ) {
 			BOOST_LOG_TRIVIAL( warning ) << "Secondary structure starts at residue number " << lexical_cast<string>(sec_struc_start)
 			                             << ", which overlaps with the end of the previous secondary structure at residue number " << lexical_cast<string>(prev_stop)
-			                             << " for protein " << arg_protein.get_title()
+			                             << " for protein " << arg_protein.get_name_set()
 			                             << " - will use the previous secondary structure to label residue(s) within overlapping region.";
 		}
 
@@ -628,3 +637,10 @@ protein cath::restrict_to_regions_copy(protein               arg_protein, ///< T
 	return arg_protein;
 }
 
+/// \brief Get the domain or specified name from the specified protein
+///
+/// \relates protein
+string cath::get_domain_or_specified_or_name_from_acq(const protein &arg_protein ///< The protein to query
+                                                      ) {
+	return get_domain_or_specified_or_name_from_acq( arg_protein.get_name_set() );
+}

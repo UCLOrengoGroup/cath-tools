@@ -51,8 +51,8 @@ namespace cath {
 		domain_definition_list parse_domain_definition_file(const boost::filesystem::path &);
 		domain_definition_list parse_domain_definition_file(std::istream &);
 
-		pdb_list_str_vec_pair read_domains_from_pdbs(const domain_definition_list &,
-		                                             const opts::data_dirs_spec &);
+		pdb_list_name_set_list_pair read_domains_from_pdbs(const domain_definition_list &,
+		                                                   const opts::data_dirs_spec &);
 
 	} // namespace file
 } // namespace cath

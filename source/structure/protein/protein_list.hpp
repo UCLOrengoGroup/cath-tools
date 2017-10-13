@@ -46,6 +46,7 @@ namespace cath {
 		protein & operator[](const size_t &);
 		const protein & operator[](const size_t &) const;
 
+		using iterator        = protein_vec::iterator;
 		using const_iterator  = protein_vec::const_iterator;
 		using const_pointer   = protein_vec::const_pointer;
 		using const_reference = protein_vec::const_reference;
@@ -53,6 +54,8 @@ namespace cath {
 		using size_type       = protein_vec::size_type;
 		using value_type      = protein_vec::value_type;
 
+		iterator begin();
+		iterator end();
 		const_iterator begin() const;
 		const_iterator end() const;
 	};

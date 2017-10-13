@@ -193,32 +193,18 @@ protein_list cath::file::build_protein_list_of_pdb_list(const pdb_list &arg_pdb_
 /// \relates pdb_list
 ///
 /// \relates protein_list
-protein_list cath::file::build_protein_list_of_pdb_list_and_names(const pdb_list &arg_pdb_list, ///< TODOCUMENT
-                                                                  const str_vec  &arg_names     ///< TODOCUMENT
+protein_list cath::file::build_protein_list_of_pdb_list_and_names(const pdb_list      &arg_pdb_list, ///< TODOCUMENT
+                                                                  const name_set_list &arg_name_sets ///< TODOCUMENT
                                                                   ) {
-	const size_t num_names = arg_names.size();
+	const size_t num_names = arg_name_sets.size();
 	if ( arg_pdb_list.size() != num_names ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to make proteins from pdb_list and names because the numbers mismatch"));
 	}
 	protein_list new_proteins = build_protein_list_of_pdb_list( arg_pdb_list );
-	for (size_t protein_ctr = 0; protein_ctr < num_names; ++protein_ctr) {
-		new_proteins[ protein_ctr ].set_title( arg_names[ protein_ctr ] );
+	for (boost::tuple<protein &, const name_set &> &&x : combine( new_proteins, arg_name_sets ) ) {
+		x.get<0>().set_name_set( x.get<1>() );
 	}
 	return new_proteins;
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_list
-///
-/// \relates protein_list
-protein_list cath::file::build_protein_list_of_pdb_list_and_names(const pdb_list      &arg_pdb_list, ///< TODOCUMENT
-                                                                  const name_set_list &arg_name_sets ///< TODOCUMENT
-                                                                  ) {
-	return build_protein_list_of_pdb_list_and_names(
-		arg_pdb_list,
-		get_protein_list_names( arg_name_sets )
-	);
 }
 
 /// \brief TODOCUMENT

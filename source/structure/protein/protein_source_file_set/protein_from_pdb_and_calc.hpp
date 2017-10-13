@@ -35,6 +35,8 @@ namespace cath {
 
 		file::data_file_vec do_get_file_set() const final;
 
+		file::data_file do_get_primary_file() const final;
+
 		protein_file_combn do_get_protein_file_combn() const final;
 
 		bool do_makes_ssap_ready_protein() const final;

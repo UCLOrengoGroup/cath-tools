@@ -25,6 +25,7 @@
 #include "chopping/domain/domain_definition.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "file/domain_definition_list/domain_definition_list.hpp"
+#include "file/name_set/name_set_list.hpp"
 #include "file/options/data_dirs_spec.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
@@ -46,8 +47,8 @@ unique_ptr<pdbs_acquirer> domain_defn_pdbs_acquirer::do_clone() const {
 }
 
 /// \brief TODOCUMENT
-pdb_list_str_vec_pair domain_defn_pdbs_acquirer::do_get_pdbs_and_names(istream &/*arg_istream*/ ///< TODOCUMENT
-                                                                       ) const {
+pdb_list_name_set_list_pair domain_defn_pdbs_acquirer::do_get_pdbs_and_names(istream &/*arg_istream*/ ///< TODOCUMENT
+                                                                             ) const {
 	const domain_definition_list the_dom_defns = parse_domain_definition_file( domain_defn_file );
 	BOOST_LOG_TRIVIAL( warning ) << "Currently using a hard-coded domain PDB directory : /cath/data/current/pdb";
 	return read_domains_from_pdbs( the_dom_defns, build_data_dirs_spec_of_dir( "/cath/data/current/pdb" ) );

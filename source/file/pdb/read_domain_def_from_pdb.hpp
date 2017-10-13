@@ -32,8 +32,8 @@ namespace cath { namespace file { class pdb; } }
 namespace cath {
 	namespace file {
 
-		pdb read_domain_from_pdb(const chop::domain_definition &,
-		                         const opts::data_dirs_spec &);
+		std::pair<boost::filesystem::path, pdb> read_domain_from_pdb(const chop::domain_definition &,
+		                                                             const opts::data_dirs_spec &);
 
 		pdb read_domain_from_pdb_file(const boost::filesystem::path &,
 		                              const chop::domain &);

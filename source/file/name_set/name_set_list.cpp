@@ -24,8 +24,10 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/combine.hpp>
+#include <boost/range/irange.hpp>
 
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 
 using namespace cath;
 using namespace cath::common;
@@ -36,7 +38,7 @@ using boost::algorithm::all_of;
 using boost::algorithm::join;
 using boost::none;
 using boost::range::combine;
-using std::move;
+using std::min;
 using std::ostream;
 using std::string;
 using std::vector;
@@ -54,7 +56,7 @@ name_set_list cath::file::build_name_set_list(str_vec     arg_names_from_acq, //
 	str_opt_vec ids;
 	ids.reserve( arg_names_from_acq.size() );
 	for (string &the_string : arg_ids) {
-		ids.push_back( move( the_string ) );
+		ids.push_back( std::move( the_string ) );
 	}
 	ids.resize( arg_names_from_acq.size(), none );
 
@@ -191,4 +193,50 @@ str_vec cath::file::get_supn_pdb_file_names(const name_set_list &arg_name_sets /
 str_vec cath::file::get_viewer_names(const name_set_list &arg_name_sets ///< The name_set_list to query
                                      ) {
 	return get_domain_or_specified_or_from_acq_names( arg_name_sets );
+}
+
+/// \brief Add the specified specified IDs into the specified name_set_list
+///
+/// \relates name_set_list
+void cath::file::add_specified_ids(name_set_list &arg_name_set_list, ///< The name_set_list to modify
+                                   str_vec        arg_specified_ids  ///< The specified specified IDs to set
+                                   ) {
+	for (const size_t &index : indices( min( arg_name_set_list.size(), arg_specified_ids.size() ) ) ) {
+		arg_name_set_list[ index ].set_specified_id(
+			std::move( arg_specified_ids[ index ] )
+		);
+	}
+}
+
+/// \brief Copy the specified name_set_list, add the specified specified IDs and return
+///
+/// \relates name_set_list
+name_set_list cath::file::add_specified_ids_copy(name_set_list arg_name_set_list, ///< The source name_set_list
+                                                 str_vec       arg_specified_ids  ///< The specified specified IDs to set
+                                                 ) {
+	add_specified_ids( arg_name_set_list, std::move( arg_specified_ids ) );
+	return arg_name_set_list;
+}
+
+/// \brief Add the specified domain names from regions into the specified name_set_list
+///
+/// \relates name_set_list
+void cath::file::add_domain_names_from_regions(name_set_list &arg_name_set_list, ///< The name_set_list to modify
+                                               str_opt_vec    arg_names          ///< The specified domain names to set
+                                               ) {
+	for (const size_t &index : indices( min( arg_name_set_list.size(), arg_names.size() ) ) ) {
+		arg_name_set_list[ index ].set_domain_name_from_regions(
+			std::move( arg_names[ index ] )
+		);
+	}
+}
+
+/// \brief Copy the specified name_set_list, add the specified domain names from regions and return
+///
+/// \relates name_set_list
+name_set_list cath::file::add_domain_names_from_regions_copy(name_set_list arg_name_set_list, ///< The source name_set_list
+                                                             str_opt_vec   arg_names          ///< The specified domain names to set
+                                                             ) {
+	add_domain_names_from_regions( arg_name_set_list, std::move( arg_names ) );
+	return arg_name_set_list;
 }

@@ -48,6 +48,9 @@ namespace cath {
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the list of files it reads
 		virtual file::data_file_vec do_get_file_set() const = 0;
 
+		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the primary file it reads (which must be one of those returned by do_get_file_set())
+		virtual file::data_file do_get_primary_file() const = 0;
+
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the equivalent protein_file_combn value
 		virtual protein_file_combn do_get_protein_file_combn() const = 0;
 
@@ -83,6 +86,7 @@ namespace cath {
 		std::unique_ptr<protein_source_file_set> clone() const;
 
 		file::data_file_vec get_file_set() const;
+		file::data_file get_primary_file() const;
 		protein_file_combn get_protein_file_combn() const;
 		bool makes_ssap_ready_protein() const;
 		protein read_files(const opts::data_dirs_spec &,
@@ -110,6 +114,9 @@ namespace cath {
 	file::data_file_path_map get_filename_of_data_file(const protein_source_file_set &,
 	                                                   const opts::data_dirs_spec &,
 	                                                   const std::string &);
+
+	boost::filesystem::path get_primary_file_from_map(const protein_source_file_set &,
+	                                                  const file::data_file_path_map &);
 
 	using protein_source_file_set_pvec = boost::ptr_vector<protein_source_file_set>;
 	using protein_file_combn_vec = std::vector<protein_file_combn>;

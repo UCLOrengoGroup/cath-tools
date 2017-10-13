@@ -40,6 +40,7 @@
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
+#include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
@@ -926,7 +927,7 @@ ostream & cath::align::write_alignment_as_fasta_alignment(ostream            &ar
 		const protein &the_protein = arg_proteins[ entry_ctr ];
 
 		// Output the title (ie name of this protein)
-		arg_os << ">" << the_protein.get_title() << "\n";
+		arg_os << ">" << get_domain_or_specified_or_name_from_acq( the_protein ) << "\n";
 
 		// Loop over the indices of the alignment
 		for (size_t aln_index = 0; aln_index < length; ++aln_index) {
@@ -948,10 +949,10 @@ ostream & cath::align::write_alignment_as_fasta_alignment(ostream            &ar
 /// \brief Output an alignment in FASTA format
 ///
 /// \relates alignment
-ostream & cath::align::write_alignment_as_fasta_alignment(ostream         &arg_os,        ///< TODOCUMENT
-                                                          const alignment &arg_alignment, ///< TODOCUMENT
-                                                          const pdb_list  &arg_pdbs,      ///< TODOCUMENT
-                                                          const str_vec   &arg_names      ///< TODOCUMENT
+ostream & cath::align::write_alignment_as_fasta_alignment(ostream             &arg_os,        ///< TODOCUMENT
+                                                          const alignment     &arg_alignment, ///< TODOCUMENT
+                                                          const pdb_list      &arg_pdbs,      ///< TODOCUMENT
+                                                          const name_set_list &arg_names      ///< TODOCUMENT
                                                           ) {
 	return write_alignment_as_fasta_alignment(
 		arg_os,
@@ -963,8 +964,8 @@ ostream & cath::align::write_alignment_as_fasta_alignment(ostream         &arg_o
 /// \brief Output an alignment in FASTA format
 ///
 /// \relates alignment
-string cath::align::alignment_as_fasta_string(const alignment    &arg_alignment, ///< TODOCUMENT
-                                              const protein_list &arg_proteins   ///< TODOCUMENT
+string cath::align::alignment_as_fasta_string(const alignment    &arg_alignment, ///< The alignment to represent in FASTA format
+                                              const protein_list &arg_proteins   ///< The proteins corresponding to the entries in the alignment
                                               ) {
 	ostringstream the_out_ss;
 	write_alignment_as_fasta_alignment( the_out_ss, arg_alignment, arg_proteins);
@@ -974,11 +975,21 @@ string cath::align::alignment_as_fasta_string(const alignment    &arg_alignment,
 /// \brief Output an alignment in FASTA format
 ///
 /// \relates alignment
-string cath::align::alignment_as_fasta_string(const alignment &arg_alignment, ///< TODOCUMENT
-                                              const pdb_list  &arg_pdbs,      ///< TODOCUMENT
-                                              const str_vec   &arg_names      ///< TODOCUMENT
+string cath::align::alignment_as_fasta_string(const alignment     &arg_alignment, ///< The alignment to represent in FASTA format
+                                              const pdb_list      &arg_pdbs,      ///< The PDBs corresponding to the entries in the alignment
+                                              const name_set_list &arg_names      ///< The names corresponding to the entries in the alignment
                                               ) {
 	ostringstream the_out_ss;
-	write_alignment_as_fasta_alignment( the_out_ss, arg_alignment, arg_pdbs, arg_names);
+	write_alignment_as_fasta_alignment( the_out_ss, arg_alignment, arg_pdbs, arg_names );
 	return the_out_ss.str();
+}
+
+/// \brief Output an alignment in FASTA format
+///
+/// \relates alignment
+std::string cath::align::alignment_as_fasta_string(const alignment &arg_alignment, ///< The alignment to represent in FASTA format
+                                                   const pdb_list  &arg_pdbs,      ///< The PDBs corresponding to the entries in the alignment
+                                                   const str_vec   &arg_names      ///< The names corresponding to the entries in the alignment
+                                                   ) {
+	return alignment_as_fasta_string( arg_alignment, arg_pdbs, build_name_set_list( arg_names ) );
 }

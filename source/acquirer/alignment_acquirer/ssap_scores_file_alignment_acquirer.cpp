@@ -29,6 +29,7 @@
 #include "common/boost_addenda/range/front.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/file/open_fstream.hpp"
+#include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
@@ -101,7 +102,7 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 
 //	BOOST_LOG_TRIVIAL( warning )<< "About to attempt to build protein list using data that's been read from ssaps_filename (with " << arg_pdbs.size() << " pdbs and " << names.size() << " names)";
 
-	const protein_list proteins_of_pdbs     = build_protein_list_of_pdb_list_and_names( arg_pdbs, names );
+	const protein_list proteins_of_pdbs     = build_protein_list_of_pdb_list_and_names( arg_pdbs, build_name_set_list( names ) );
 	const alignment    scored_new_alignment = score_alignment_copy( residue_scorer(), new_alignment, proteins_of_pdbs );
 
 

@@ -32,14 +32,13 @@
 #include <iostream>
 #include <string>
 
-namespace cath { namespace file { class pdb; } }
-namespace cath { namespace file { class pdb_list; } }
 namespace cath { class protein; }
 namespace cath { class protein_list; }
-
+namespace cath { namespace file { class name_set_list; } }
+namespace cath { namespace file { class pdb; } }
+namespace cath { namespace file { class pdb_list; } }
 
 namespace cath {
-
 	namespace align {
 
 		/// \todo Organise these into three class hierarchies: alignment_format, alignment_reader and alignment_writer
@@ -136,10 +135,14 @@ namespace cath {
 		std::ostream & write_alignment_as_fasta_alignment(std::ostream &,
 		                                                  const alignment &,
 		                                                  const file::pdb_list &,
-		                                                  const str_vec &);
+		                                                  const file::name_set_list &);
 
 		std::string alignment_as_fasta_string(const alignment &,
 		                                      const protein_list &);
+
+		std::string alignment_as_fasta_string(const alignment &,
+		                                      const file::pdb_list &,
+		                                      const file::name_set_list &);
 
 		std::string alignment_as_fasta_string(const alignment &,
 		                                      const file::pdb_list &,
