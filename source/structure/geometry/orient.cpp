@@ -20,6 +20,7 @@
 
 #include "orient.hpp"
 
+// #include <boost/range/join.hpp>
 #include <boost/range/numeric.hpp>
 
 #include "common/boost_addenda/range/indices.hpp"
@@ -39,6 +40,7 @@ using namespace cath::geom::detail;
 using namespace cath::geom;
 
 using boost::accumulate;
+// using boost::range::join;
 
 /// \brief Calculate the x and y coordinates of the later-weighted centre of gravity
 ///        (in which each coordinate is given a weight that increases linearly throughout the coords)
@@ -66,14 +68,18 @@ doub_doub_pair cath::geom::detail::x_and_y_of_later_weighted_cog(const coord_lis
 /// the positive x/y quadrant (which makes the result independent of the structures' initial orientations and more stable).
 ///
 /// Note: the order of the coordinates matters
-coord_rot_pair cath::geom::get_orienting_transformation(const coord_list &arg_coords ///< The coords (that have already been superposed) to orient
+coord_rot_pair cath::geom::get_orienting_transformation(const coord_list &arg_core_coords ///< The coords (that have already been superposed) to orient
+                                                        // const coord_list &arg_extra_coords ///< TODOCUMENT
                                                         ) {
+	const auto all_coords = arg_core_coords;
+	// const auto all_coords = join( arg_core_coords, arg_extra_coords );
+
 	// Get the centre-of-gravity of the coords and calculate a centred bunch of coords
-	const coord cog = centre_of_gravity( arg_coords );
-	const coord_list centred_coords = arg_coords - cog;
+	const coord cog = centre_of_gravity( all_coords );
+	const coord_list centred_all_coords = all_coords - cog;
 
 	// Grab a cross-covariance matrix
-	auto x_cov_mat = cross_covariance_matrix( centred_coords, centred_coords );
+	auto x_cov_mat = cross_covariance_matrix( centred_all_coords, centred_all_coords );
 
 	// Do a singular value decomposition of the matrix into svd_left . S. svd_right ^T
 	gsl_matrix_wrp  V    { 3, 3 };
@@ -106,7 +112,7 @@ coord_rot_pair cath::geom::get_orienting_transformation(const coord_list &arg_co
 	const auto x_y_of_wcog_of_init_orientn = x_and_y_of_later_weighted_cog(
 		rotate_copy(
 			initial_orientation,
-			centred_coords
+			arg_core_coords - cog
 		)
 	);
 

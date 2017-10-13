@@ -20,6 +20,7 @@
 
 #include "align_based_superposition_acquirer.hpp"
 
+#include <boost/range/numeric.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/tools/old/impl.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -30,7 +31,10 @@
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
 #include "alignment/io/alignment_io.hpp"
+#include "alignment/pair_alignment.hpp"
 #include "chopping/region/region.hpp"
+#include "common/algorithm/sort_copy.hpp"
+#include "common/algorithm/transform_build.hpp"
 #include "common/file/open_fstream.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb.hpp"
@@ -38,10 +42,12 @@
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
 #include "structure/geometry/coord_list.hpp"
+#include "superposition/superpose_orient.hpp"
 #include "superposition/superposition.hpp"
 #include "superposition/superposition_context.hpp"
 
 #include <fstream>
+#include <tuple>
 
 using namespace cath;
 using namespace cath::align;
@@ -52,14 +58,20 @@ using namespace cath::geom;
 using namespace cath::opts;
 using namespace cath::sup;
 
+using boost::accumulate;
 using boost::filesystem::path;
 using boost::math::fpc::percent_tolerance;
 using boost::test_tools::check_is_close;
 using std::endl;
+using std::get;
 using std::ifstream;
+using std::make_pair;
+using std::make_tuple;
+using std::map;
 using std::ostream;
 using std::pair;
 using std::string;
+using std::tuple;
 using std::vector;
 
 /// \brief TODOCUMENT
@@ -153,7 +165,11 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 	}
 
 	// Construct a superposition and use it to output the PDBs
-	const superposition the_superposition{ indices_and_coord_lists };
+	const superposition the_superposition = orient_superposition_copy(
+		superposition{ indices_and_coord_lists },
+		get_alignment(),
+		restricted_pdbs
+	);
 
 	return {
 		the_superposition,
@@ -242,6 +258,15 @@ superposition cath::opts::hacky_multi_ssap_fuction(const pdb_list               
                                                    const selection_policy_acquirer &arg_selection_policy_acquirer, ///< TODOCUMENT
                                                    ostream                         &arg_stderr                     ///< TODOCUMENT
                                                    ) {
+	// Store the indices within alignments that each entry/index pair is aligned with something else
+	//
+	// This is pretty messy but will hopefully not be around too much longer
+	//
+	// \todo Get rid of hacky_multi_ssap_fuction() and hence rid of this
+	using size_size_pair_size_vec_map = map<size_size_pair, size_vec>;
+	size_size_pair_size_vec_map aln_idcs_of_entry_and_idx;
+
+
 	vector <superposition::indices_and_coord_lists_type> indices_and_coord_lists;
 	indices_and_coord_lists.reserve(arg_spanning_tree.size());
 	for (const size_size_pair &tree_edge : arg_spanning_tree) {
@@ -271,6 +296,16 @@ superposition cath::opts::hacky_multi_ssap_fuction(const pdb_list               
 //		arg_stderr << "New alignment is " << the_alignment << endl;
 
 //		arg_stderr << "Extracting common coords between " << name_1 << " and " << name_2 << endl;
+		check_alignment_is_a_pair( the_alignment );
+		for (const auto &aln_index : indices( the_alignment.length() ) ) {
+			if ( has_both_positions_of_index( the_alignment, aln_index ) ) {
+				const auto entry_indx_a = make_pair( index_1, get_a_position_of_index( the_alignment, aln_index ) );
+				aln_idcs_of_entry_and_idx[ entry_indx_a ].push_back( aln_index );
+				const auto entry_indx_b = make_pair( index_2, get_b_position_of_index( the_alignment, aln_index ) );
+				aln_idcs_of_entry_and_idx[ entry_indx_b ].push_back( aln_index );
+			}
+		}
+
 		const common_residue_select_best_score_percent_policy best_score_percent_policy;
 		const common_residue_select_all_policy                select_all_policy{};
 		const pair<coord_list, coord_list> all_common_coords = alignment_coord_extractor::get_common_coords(
@@ -311,5 +346,58 @@ superposition cath::opts::hacky_multi_ssap_fuction(const pdb_list               
 			arg_stderr << "Superposed using " << arg_selection_policy_acquirer.get_descriptive_name() << " and actual full RMSD is : " << actual_full_rmsd << endl;
 		}
 	}
-	return superposition(indices_and_coord_lists);
+
+	if ( aln_idcs_of_entry_and_idx.empty() ) {
+		for (const size_t &entry : indices( arg_pdbs.size() ) ) {
+			const pdb &the_pdb = arg_pdbs[ entry ];
+			for (const size_t &index : indices( the_pdb.get_num_residues() ) ) {
+				aln_idcs_of_entry_and_idx[ make_pair( entry, index ) ].push_back( index );
+			}
+		}
+	}
+
+	const auto mean_aln_idx_entry_index_vec = sort_copy(
+		transform_build< vector< tuple< double, size_t, size_t > > >(
+			aln_idcs_of_entry_and_idx,
+			[] (const auto &x) {
+				const auto &entry       = x.first.first;
+				const auto &index       = x.first.second;
+				const auto &aln_indices = x.second;
+				if ( aln_indices.empty() ) {
+					BOOST_THROW_EXCEPTION(out_of_range_exception("Cannot find the mean of an empty list of alignment indices"));
+				}
+				return make_tuple(
+					accumulate(
+						aln_indices,
+						0.0,
+						[] (const double &result, const size_t &aln_index) {
+							return result + static_cast<double>( aln_index );
+						}
+					) / static_cast<double>( aln_indices.size() ),
+					entry,
+					index
+				);
+			}
+		)
+	);
+
+	// Construct the unoriented superposition
+	const superposition unoriented_supn{ indices_and_coord_lists };
+
+	// Construct an oriented superposition
+	return orient_superposition_copy(
+		unoriented_supn,
+		coord_list{ transform_build<coord_vec>(
+			mean_aln_idx_entry_index_vec,
+			[&] (const tuple<double, size_t, size_t> &x) {
+				return transform_copy(
+					unoriented_supn,
+					get<1>( x ),
+					arg_pdbs[ get<1>( x ) ].get_residue_ca_coord_of_index__backbone_unchecked(
+						get<2>( x )
+					)
+				);
+			}
+		) }
+	);
 }
