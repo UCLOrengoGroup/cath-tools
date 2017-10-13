@@ -36,7 +36,7 @@ using namespace std;
 ///
 /// \relates protein_file_combn
 unique_ptr<const protein_source_file_set> cath::get_protein_source_file_set(const protein_file_combn &arg_protein_file_combn /// The protein_file_combn to be converted
-                                                                          ) {
+                                                                            ) {
 	switch ( arg_protein_file_combn ) {
 		case( protein_file_combn::WOLF_SEC          ) : { return { common::make_unique< protein_from_wolf_and_sec          >() }; break; }
 		case( protein_file_combn::PDB               ) : { return { common::make_unique< protein_from_pdb                   >() }; break; }
