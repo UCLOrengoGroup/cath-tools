@@ -42,6 +42,7 @@ namespace cath {
 			void do_output_alignment(const align::alignment_context &,
 			                         std::ostream &) const final;
 			bool do_involves_display_spec() const final;
+			std::string do_get_name() const final;
 
 		public:
 			file_alignment_outputter(const boost::filesystem::path &,

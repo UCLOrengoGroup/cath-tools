@@ -40,6 +40,7 @@ namespace cath {
 			void do_output_alignment(const align::alignment_context &,
 			                         std::ostream &) const final;
 			bool do_involves_display_spec() const final;
+			std::string do_get_name() const final;
 
 		public:
 			explicit html_ostream_alignment_outputter(const display_colourer &);

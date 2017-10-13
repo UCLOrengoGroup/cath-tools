@@ -63,3 +63,7 @@ file_alignment_outputter::file_alignment_outputter(const path                &ar
                                                        ostream_alignment_outputter_ptr( arg_alignment_outputter.clone() ) {
 }
 
+/// \brief Get a name for this alignment_outputter
+string file_alignment_outputter::do_get_name() const {
+	return "File[" + ostream_alignment_outputter_ptr->get_name() + "]";
+}

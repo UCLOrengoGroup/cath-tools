@@ -86,3 +86,7 @@ bool cath_aln_ostream_alignment_outputter::do_involves_display_spec() const {
 	return false;
 }
 
+/// \brief Get a name for this alignment_outputter
+string cath_aln_ostream_alignment_outputter::do_get_name() const {
+	return "CATH";
+}

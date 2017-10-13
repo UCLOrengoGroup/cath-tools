@@ -69,3 +69,8 @@ html_ostream_alignment_outputter cath::opts::make_html_ostream_alignment_outputt
                                                                                    ) {
 	return html_ostream_alignment_outputter( *get_display_colourer( arg_display_spec, make_default_light_colour_gradient() ) );
 }
+
+/// \brief Get a name for this alignment_outputter
+string html_ostream_alignment_outputter::do_get_name() const {
+	return "HTML";
+}
