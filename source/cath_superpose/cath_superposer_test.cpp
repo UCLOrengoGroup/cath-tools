@@ -28,6 +28,7 @@
 #include "common/argc_argv_faker.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/file/temp_file.hpp"
+#include "common/regex/regex_replace_file.hpp"
 #include "common/test_predicate/files_equal.hpp"
 #include "common/test_predicate/istream_and_file_equal.hpp"
 #include "test/global_test_constants.hpp"
@@ -102,6 +103,14 @@ void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_use_c
 			                           << test_stderr.str()
 			                           << "\"";
 		}
+
+		// Blank out the version number in the superposition
+		regex_replace_file(
+			output_file,
+			std::regex{ R"(cath-superpose \(v\d+\.\d+\.\d+\-\d+\-\w{8}\))" },
+			"cath-superpose (vX.X.X-X-XXXXXXXX)"
+		);
+
 		BOOST_CHECK_FILES_EQUAL(              output_file, arg_expected_output_file );
 //		BOOST_CHECK_FILES_EQUAL_OR_OVERWRITE( output_file, arg_expected_output_file );
 	}
