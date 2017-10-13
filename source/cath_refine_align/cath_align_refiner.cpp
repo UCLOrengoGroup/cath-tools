@@ -77,8 +77,11 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 	}
 
 	// Grab the PDBs and their IDs
-	const strucs_context  context  = get_pdbs_and_names( arg_cath_refine_align_options, arg_istream, true );
-	const pdb_list       &raw_pdbs = context.get_pdbs();
+	const strucs_context  context      = get_pdbs_and_names( arg_cath_refine_align_options, arg_istream, true );
+	const pdb_list       &raw_pdbs     = context.get_pdbs();
+
+	// TODO: Populate this name summarising the overall group so it can be used, eg in superposition scripts
+	const string          overall_name{};
 
 	const pdb_list backbone_complete_subset_pdbs = pdb_list_of_backbone_complete_region_limited_subset_pdbs(
 		raw_pdbs,
@@ -144,5 +147,5 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
 	const superposition_outputter_list sup_outputters = arg_cath_refine_align_options.get_superposition_outputters();
-	use_all_superposition_outputters( sup_outputters, aln_based_sup_acq.get_superposition( arg_stderr ), arg_stdout, arg_stderr );
+	use_all_superposition_outputters( sup_outputters, aln_based_sup_acq.get_superposition( arg_stderr ), arg_stdout, arg_stderr, overall_name );
 }

@@ -32,6 +32,7 @@
 #include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
+#include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
 #include "display/display_colourer/display_colourer.hpp"
 #include "display/display_colourer/display_colourer_consecutive.hpp"
@@ -45,6 +46,7 @@
 #include "file/pdb/pdb_residue.hpp"
 #include "superposition/superposition_context.hpp"
 
+#include <fstream>
 #include <sstream>
 
 using namespace boost::algorithm;
@@ -56,10 +58,14 @@ using namespace cath::file;
 using namespace cath::sup;
 
 using boost::algorithm::is_space;
+using boost::filesystem::path;
 using boost::format;
 using boost::lexical_cast;
 using boost::numeric_cast;
+using boost::string_ref;
+using std::flush;
 using std::max;
+using std::ofstream;
 using std::ostream;
 using std::setfill;
 using std::setw;
@@ -153,9 +159,10 @@ void viewer::write_alignment_extras(ostream                     &arg_ostream,   
 }
 
 /// \brief TODOCUMENT
-void viewer::write_end(ostream &arg_ostream ///< TODOCUMENT
+void viewer::write_end(ostream          &arg_os,  ///< TODOCUMENT
+                       const string_ref &arg_name ///< TODOCUMENT
                        ) const {
-	do_write_end(arg_ostream);
+	do_write_end( arg_os, arg_name );
 }
 
 /// \brief Strip
@@ -222,7 +229,8 @@ void cath::output_superposition_to_viewer(ostream                          &arg_
                                           const display_spec               &arg_display_spec,            ///< The specification for how to display the superposition
                                           const superposition_context      &arg_superposition_context,   ///< The superposition_context to output
                                           const superposition_content_spec &arg_content_spec,            ///< The specification of what should be included in the superposition
-                                          const missing_aln_policy         &arg_missing_aln_policy       ///< Whether to warn or throw if no alignment is present
+                                          const missing_aln_policy         &arg_missing_aln_policy,      ///< Whether to warn or throw if no alignment is present
+                                          const string_ref                 &arg_name                     ///< A name for the superposition (to write out so users of the viewer know what they're looking at)
                                           ) {
 	// Write the start of the viewer output
 	arg_viewer.write_start(arg_ostream);
@@ -280,7 +288,36 @@ void cath::output_superposition_to_viewer(ostream                          &arg_
 	}
 
 	// Write the start of the viewer output
-	arg_viewer.write_end( arg_ostream );
+	arg_viewer.write_end( arg_ostream, arg_name );
+}
+
+/// \brief Output instructions from the specified viewer for the specified superposition_context to
+///        the specified file, using the specified display_spec and only_warn flat
+///
+/// \relates viewer
+void cath::output_superposition_to_viewer_file(const path                       &arg_out_file,                ///< The ostream to which the data should be written
+                                               viewer                           &arg_viewer,                  ///< The viewer defining the instructions to be written
+                                               const display_spec               &arg_display_spec,            ///< The specification for how to display the superposition
+                                               const superposition_context      &arg_superposition_context,   ///< The superposition_context to output
+                                               const superposition_content_spec &arg_content_spec,            ///< The specification of what should be included in the superposition
+                                               const missing_aln_policy         &arg_missing_aln_policy,      ///< Whether to warn or throw if no alignment is present
+                                               const string_ref                 &arg_name                     ///< A name for the superposition (to write out so users of the viewer know what they're looking at)
+                                               ) {
+	ofstream pymol_file_ostream;
+	open_ofstream( pymol_file_ostream, arg_out_file );
+
+	output_superposition_to_viewer(
+		pymol_file_ostream,
+		arg_viewer,
+		arg_display_spec,
+		arg_superposition_context,
+		arg_content_spec,
+		arg_missing_aln_policy,
+		arg_name
+	);
+	pymol_file_ostream << flush;
+	pymol_file_ostream.close();
+
 }
 
 /// \brief The name of the base-colour

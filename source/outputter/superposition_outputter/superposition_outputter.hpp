@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_OUTPUTTER_SUPERPOSITION_OUTPUTTER_SUPERPOSITION_OUTPUTTER_H
 #define _CATH_TOOLS_SOURCE_OUTPUTTER_SUPERPOSITION_OUTPUTTER_SUPERPOSITION_OUTPUTTER_H
 
+#include <boost/utility/string_ref_fwd.hpp>
+
 #include <iosfwd>
 #include <memory>
 
@@ -37,7 +39,8 @@ namespace cath {
 			
 			/// \brief TODOCUMENT
 			virtual void do_output_superposition(const sup::superposition_context &,
-			                                     std::ostream &) const = 0;
+			                                     std::ostream &,
+			                                     const boost::string_ref &) const = 0;
 			
 			/// \brief TODOCUMENT
 			virtual bool do_involves_display_spec() const = 0;
@@ -53,7 +56,8 @@ namespace cath {
 			superposition_outputter & operator=(superposition_outputter &&) noexcept = default;
 
 			void output_superposition(const sup::superposition_context &,
-			                          std::ostream &) const;
+			                          std::ostream &,
+			                          const boost::string_ref &) const;
 			bool involves_display_spec() const;
 		};
 

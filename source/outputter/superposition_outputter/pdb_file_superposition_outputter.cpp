@@ -29,9 +29,13 @@
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;
-using namespace std;
 
 using boost::filesystem::path;
+using boost::string_ref;
+using std::flush;
+using std::ofstream;
+using std::ostream;
+using std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<superposition_outputter> pdb_file_superposition_outputter::do_clone() const {
@@ -40,13 +44,14 @@ unique_ptr<superposition_outputter> pdb_file_superposition_outputter::do_clone()
 
 /// \brief TODOCUMENT
 void pdb_file_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-                                                               ostream                     &/*arg_ostream*/            ///< TODOCUMENT
+                                                               ostream                     &/*arg_ostream*/,           ///< TODOCUMENT
+                                                               const string_ref            &arg_name                   ///< A name for the superposition (so users of the superposition know what it represents)
                                                                ) const {
 	ofstream pdb_ostream;
 	open_ofstream( pdb_ostream, output_file );
 
 	ostream_superposition_outputter stream_outputter{ content_spec };
-	stream_outputter.output_superposition( arg_superposition_context, pdb_ostream );
+	stream_outputter.output_superposition( arg_superposition_context, pdb_ostream, arg_name );
 
 	pdb_ostream << flush;
 	pdb_ostream.close();

@@ -64,6 +64,7 @@ using boost::graph_traits;
 using boost::lexical_cast;
 using boost::no_property;
 using boost::property;
+using boost::string_ref;
 using boost::undirectedS;
 using boost::vecS;
 using std::make_pair;
@@ -445,7 +446,8 @@ void chimera_viewer::do_write_alignment_extras(ostream                     &arg_
 }
 
 /// \brief TODOCUMENT
-void chimera_viewer::do_write_end(ostream &arg_os ///< TODOCUMENT
+void chimera_viewer::do_write_end(ostream          &arg_os,  ///< TODOCUMENT
+                                  const string_ref &arg_name ///< TODOCUMENT
                                   ) const {
 	arg_os << R"(show cartoon
 set cartoon_smooth_loops,1
@@ -461,7 +463,12 @@ set seq_view_label_mode, 1
 set ribbon_width, 1.5
 orient ( polymer and not resn A+C+G+T+U )
 feedback enable,all,output
-)";
+)"
+	<< (
+		arg_name.empty()
+		? ""
+		: ( "print \"" + arg_name.to_string() + "\"\n" )
+	);
 }
 
 /// \brief TODOCUMENT

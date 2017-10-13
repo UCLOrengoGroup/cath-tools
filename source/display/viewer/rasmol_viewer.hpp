@@ -46,7 +46,8 @@ namespace cath {
 		                                           const residue_id_vec &) const final;
 		void do_write_alignment_extras(std::ostream &,
 		                               const sup::superposition_context &) const final;
-		void do_write_end(std::ostream &) const final;
+		void do_write_end(std::ostream &,
+		                  const boost::string_ref &) const final;
 	};
 
 } // namespace cath

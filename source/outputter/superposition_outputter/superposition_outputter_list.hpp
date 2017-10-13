@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_OUTPUTTER_SUPERPOSITION_OUTPUTTER_SUPERPOSITION_OUTPUTTER_LIST_H
 
 #include <boost/ptr_container/ptr_vector.hpp>
+#include <boost/utility/string_ref_fwd.hpp>
 
 #include <iosfwd>
 
@@ -50,7 +51,8 @@ namespace cath {
 		void use_all_superposition_outputters(const superposition_outputter_list &,
 		                                      const sup::superposition_context &,
 		                                      std::ostream &,
-		                                      std::ostream &);
+		                                      std::ostream &,
+		                                      const boost::string_ref &);
 
 		bool any_superposition_outputters_involve_display_spec(const superposition_outputter_list &);
 	} // namespace opts

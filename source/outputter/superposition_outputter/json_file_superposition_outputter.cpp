@@ -32,9 +32,11 @@
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;
-using namespace std;
 
 using boost::filesystem::path;
+using boost::string_ref;
+using std::ostream;
+using std::unique_ptr;
 
 constexpr json_style json_file_superposition_outputter::DEFAULT_JSON_STYLE;
 
@@ -45,7 +47,8 @@ unique_ptr<superposition_outputter> json_file_superposition_outputter::do_clone(
 
 /// \brief TODOCUMENT
 void json_file_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< The superpositon_context object to output
-                                                                ostream                     &/*arg_ostream*/            ///< An ostream object to which any warnings/errors may be written (currently ignored)
+                                                                ostream                     &/*arg_ostream*/,           ///< An ostream object to which any warnings/errors may be written (currently ignored)
+                                                                const string_ref            &/*arg_name*/               ///< A name for the superposition (so users of the superposition know what it represents)
                                                                 ) const {
 	write_to_json_file( output_file, arg_superposition_context, the_json_style );
 }

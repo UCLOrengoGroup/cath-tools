@@ -21,6 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_VIEWER_H
 #define _CATH_TOOLS_SOURCE_DISPLAY_VIEWER_VIEWER_H
 
+#include <boost/utility/string_ref.hpp>
+#include <boost/filesystem/path.hpp>
+
 #include "common/type_aliases.hpp"
 #include "display/colour_category.hpp"
 #include "structure/structure_type_aliases.hpp"
@@ -65,7 +68,8 @@ namespace cath {
 		                              const display_colourer &);
 		virtual void do_write_alignment_extras(std::ostream &,
 		                                       const sup::superposition_context &) const = 0;
-		virtual void do_write_end(std::ostream &) const = 0;
+		virtual void do_write_end(std::ostream &,
+		                          const boost::string_ref &) const = 0;
 
 	public:
 		viewer() = default;
@@ -100,7 +104,8 @@ namespace cath {
 		                   const display_colourer &);
 		void write_alignment_extras(std::ostream &,
 		                            const sup::superposition_context &) const;
-		void write_end(std::ostream &) const;
+		void write_end(std::ostream &,
+		               const boost::string_ref &) const;
 	};
 
 	std::string clean_name_for_viewer(const std::string &);
@@ -122,7 +127,16 @@ namespace cath {
 	                                    const display_spec &,
 	                                    const sup::superposition_context &,
 	                                    const sup::superposition_content_spec &,
-	                                    const missing_aln_policy & = missing_aln_policy::THROW);
+	                                    const missing_aln_policy & = missing_aln_policy::THROW,
+	                                    const boost::string_ref & = "");
+
+	void output_superposition_to_viewer_file(const boost::filesystem::path &,
+	                                         viewer &,
+	                                         const display_spec &,
+	                                         const sup::superposition_context &,
+	                                         const sup::superposition_content_spec &,
+	                                         const missing_aln_policy & = missing_aln_policy::THROW,
+	                                         const boost::string_ref & = "");
 
 	std::string colour_of_index_from_colours_string(const size_t &,
 	                                                const std::string &);

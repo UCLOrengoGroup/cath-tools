@@ -28,7 +28,10 @@
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;
-using namespace std;
+
+using boost::string_ref;
+using std::ostream;
+using std::unique_ptr;
 
 /// \brief Standard approach to achieving a virtual copy-ctor
 unique_ptr<superposition_outputter> superposition_outputter::clone() const {
@@ -37,11 +40,13 @@ unique_ptr<superposition_outputter> superposition_outputter::clone() const {
 
 /// \brief TODOCUMENT
 void superposition_outputter::output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-                                                   ostream &arg_ostream ///< TODOCUMENT
+                                                   ostream                     &arg_ostream,               ///< TODOCUMENT
+                                                   const string_ref            &arg_name                   ///< A name for the superposition (so users of the superposition know what it represents)
                                                    ) const {
 	do_output_superposition(
 		arg_superposition_context,
-		arg_ostream
+		arg_ostream,
+		arg_name
 	);
 }
 

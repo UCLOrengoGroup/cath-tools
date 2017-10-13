@@ -30,6 +30,8 @@ using namespace cath::common;
 using namespace cath::sup;
 using namespace std;
 
+using boost::string_ref;
+
 /// \brief TODOCUMENT
 string rasmol_viewer::do_default_executable() const {
 	return "rasmol";
@@ -82,6 +84,9 @@ void rasmol_viewer::do_write_alignment_extras(ostream                     &/*arg
 }
 
 /// \brief TODOCUMENT
-void rasmol_viewer::do_write_end(ostream &) const {
+void rasmol_viewer::do_write_end(ostream          &/*arg_os*/,  ///< TODOCUMENT
+                                 const string_ref &/*arg_name*/ ///< TODOCUMENT
+                                 ) const {
+
 	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_viewer::do_write_end"));
 }

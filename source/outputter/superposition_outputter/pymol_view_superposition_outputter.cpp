@@ -33,9 +33,11 @@ using namespace boost::log;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;
-using namespace std;
 
 using boost::filesystem::path;
+using boost::string_ref;
+using std::ostream;
+using std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<superposition_outputter> pymol_view_superposition_outputter::do_clone() const {
@@ -44,7 +46,8 @@ unique_ptr<superposition_outputter> pymol_view_superposition_outputter::do_clone
 
 /// \brief TODOCUMENT
 void pymol_view_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-                                                                 ostream                     &arg_ostream                ///< TODOCUMENT
+                                                                 ostream                     &arg_ostream,               ///< TODOCUMENT
+                                                                 const string_ref            &arg_name                   ///< A name for the superposition (so users of the superposition know what it represents)
                                                                  ) const {
 	const temp_file pymol_script_filename(".%%%%-%%%%-%%%%-%%%%.pml");
 	const pymol_file_superposition_outputter pymol_file_outputter(
@@ -52,7 +55,7 @@ void pymol_view_superposition_outputter::do_output_superposition(const superposi
 		the_display_spec,
 		content_spec
 	);
-	pymol_file_outputter.output_superposition(arg_superposition_context, arg_ostream);
+	pymol_file_outputter.output_superposition( arg_superposition_context, arg_ostream, arg_name );
 
 	const bool pymol_success = command_executer::execute(
 		pymol_program,

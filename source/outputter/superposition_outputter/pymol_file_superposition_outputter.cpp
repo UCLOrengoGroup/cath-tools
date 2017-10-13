@@ -20,22 +20,18 @@
 
 #include "pymol_file_superposition_outputter.hpp"
 
-#include "chopping/region/region.hpp"
 #include "common/clone/make_uptr_clone.hpp"
-#include "common/file/open_fstream.hpp"
 #include "display/viewer/pymol_viewer.hpp"
-#include "display_colour/display_colour_list.hpp"
-#include "file/pdb/pdb.hpp"
 #include "superposition/superposition_context.hpp"
-
-#include <fstream>
 
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;
-using namespace std;
 
 using boost::filesystem::path;
+using boost::string_ref;
+using std::ostream;
+using std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<superposition_outputter> pymol_file_superposition_outputter::do_clone() const {
@@ -44,23 +40,19 @@ unique_ptr<superposition_outputter> pymol_file_superposition_outputter::do_clone
 
 /// \brief TODOCUMENT
 void pymol_file_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-                                                                 ostream                     &/*arg_ostream*/            ///< TODOCUMENT
+                                                                 ostream                     &/*arg_ostream*/,           ///< TODOCUMENT
+                                                                 const string_ref            &arg_name                   ///< A name for the superposition (so users of the superposition know what it represents)
                                                                  ) const {
-	ofstream pymol_file_ostream;
-	open_ofstream( pymol_file_ostream, output_file );
-
-	pymol_viewer the_viewer{};
-
-	output_superposition_to_viewer(
-		pymol_file_ostream,
-		the_viewer,
+	pymol_viewer the_pymol_viewer{};
+	output_superposition_to_viewer_file(
+		output_file,
+		the_pymol_viewer,
 		the_display_spec,
 		arg_superposition_context,
 		content_spec,
-		missing_aln_policy::WARN_AND_COLOUR_CONSECUTIVELY
+		missing_aln_policy::WARN_AND_COLOUR_CONSECUTIVELY,
+		arg_name
 	);
-	pymol_file_ostream << flush;
-	pymol_file_ostream.close();
 }
 
 /// \brief TODOCUMENT

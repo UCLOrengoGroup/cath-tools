@@ -31,7 +31,10 @@
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;
-using namespace std;
+
+using boost::string_ref;
+using std::ostream;
+using std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<superposition_outputter> ostream_superposition_outputter::do_clone() const {
@@ -40,7 +43,8 @@ unique_ptr<superposition_outputter> ostream_superposition_outputter::do_clone() 
 
 /// \brief TODOCUMENT
 void ostream_superposition_outputter::do_output_superposition(const superposition_context &arg_supn_context, ///< TODOCUMENT
-                                                              ostream                     &arg_ostream       ///< TODOCUMENT
+                                                              ostream                     &arg_ostream,      ///< TODOCUMENT
+                                                              const string_ref            &/*arg_name*/      ///< A name for the superposition (so users of the superposition know what it represents)
                                                               ) const {
 	write_superposed_pdbs_to_ostream(
 		arg_ostream,

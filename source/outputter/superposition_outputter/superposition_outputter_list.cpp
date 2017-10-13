@@ -26,7 +26,9 @@
 
 using namespace cath::opts;
 using namespace cath::sup;
-using namespace std;
+
+using boost::string_ref;
+using std::ostream;
 
 /// \brief TODOCUMENT
 void superposition_outputter_list::push_back(const superposition_outputter &arg_outputter ///< TODOCUMENT
@@ -60,11 +62,12 @@ superposition_outputter_list::const_iterator superposition_outputter_list::end()
 void cath::opts::use_all_superposition_outputters(const superposition_outputter_list &arg_superposition_outputters, ///< TODOCUMENT
                                                   const superposition_context        &arg_superposition_context,    ///< TODOCUMENT
                                                   ostream                            &arg_stdout,                   ///< TODOCUMENT
-                                                  ostream                            &/*arg_stderr*/                ///< TODOCUMENT
+                                                  ostream                            &/*arg_stderr*/,               ///< TODOCUMENT
+                                                  const string_ref                   &arg_name                      ///< A name for the superposition (so users of the superposition know what it represents)
                                                   ) {
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
 	for (const superposition_outputter &outputter : arg_superposition_outputters) {
-		outputter.output_superposition(arg_superposition_context, arg_stdout);
+		outputter.output_superposition( arg_superposition_context, arg_stdout, arg_name );
 	}
 }
 
