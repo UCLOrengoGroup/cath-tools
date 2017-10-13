@@ -31,6 +31,7 @@
 
 using namespace cath;
 using namespace cath::common;
+using namespace cath::test;
 
 using boost::test_tools::predicate_result;
 using std::istream;

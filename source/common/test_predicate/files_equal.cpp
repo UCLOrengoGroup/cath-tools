@@ -25,8 +25,8 @@
 
 #include <fstream>
 
-using namespace cath;
 using namespace cath::common;
+using namespace cath::test;
 
 using boost::filesystem::path;
 using boost::test_tools::predicate_result;
@@ -34,19 +34,19 @@ using std::getenv;
 using std::ifstream;
 using std::string;
 
-const string files_equal::FILENAME_NAME_PREFIX("file ");
+/// \brief TODOCUMENT
+const string files_equal::FILENAME_NAME_PREFIX{ "file " };
 
 /// \brief Ctor for files_equal
-files_equal::files_equal(const bool          &arg_overwrite_diff_expected_with_got, ///< TODOCUMENT
-                         const str_size_type &arg_diff_half_width                   ///< TODOCUMENT
-                         ) : overwrite_diff_expected_with_got( arg_overwrite_diff_expected_with_got ),
-                             diff_half_width                 ( arg_diff_half_width             ) {
+files_equal::files_equal(const bootstrap_mode &arg_bootstrapping,  ///< TODOCUMENT
+                         const str_size_type  &arg_diff_half_width ///< TODOCUMENT
+                         ) : bootstrapping   { arg_bootstrapping   },
+                             diff_half_width { arg_diff_half_width } {
 }
 
 /// \brief Ctor for files_equal
 files_equal::files_equal(const str_size_type &arg_diff_half_width ///< TODOCUMENT
-                         ) : overwrite_diff_expected_with_got( false               ),
-                             diff_half_width                 ( arg_diff_half_width ) {
+                         ) : diff_half_width { arg_diff_half_width } {
 }
 
 /// \brief TODOCUMENT
@@ -66,11 +66,7 @@ predicate_result files_equal::operator()(const path &arg_filename1, ///< TODOCUM
 	open_ifstream( file_ifstream1, arg_filename1 );
 
 	// ...and then just use a istream_and_file_equal
-	istream_and_file_equal the_istream_and_file_equal(
-		( overwrite_diff_expected_with_got || ( getenv( "BOOTSTRAP_TESTS" ) != nullptr ) ),
-		diff_half_width
-	);
-	const predicate_result the_result = the_istream_and_file_equal(
+	const predicate_result the_result = istream_and_file_equal{ bootstrapping, diff_half_width }(
 		file_ifstream1,
 		FILENAME_NAME_PREFIX + arg_filename1.string(),
 		arg_filename2

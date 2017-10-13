@@ -218,7 +218,6 @@ BOOST_AUTO_TEST_CASE(file_domtbl) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_DOMTBL_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_DOMTBL_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch) {
@@ -227,7 +226,6 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_big_gap) {
@@ -237,7 +235,6 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_big_gap) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_small_gap) {
@@ -247,7 +244,6 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_small_gap) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_trimmed) {
@@ -257,7 +253,6 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_trimmed) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_big_trim) {
@@ -267,7 +262,6 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_big_trim) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME() );
 }
 
 
@@ -278,7 +272,6 @@ BOOST_AUTO_TEST_CASE(handles_output_hmmer_aln) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_raw_evalue) {
@@ -287,7 +280,6 @@ BOOST_AUTO_TEST_CASE(file_raw_evalue) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_RAW_EVALUE_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_EVALUE_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_raw_score) {
@@ -296,7 +288,6 @@ BOOST_AUTO_TEST_CASE(file_raw_score) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_OUT_FILENAME() );
 }
 
 
@@ -308,7 +299,6 @@ BOOST_AUTO_TEST_CASE(handles_dc_correctly) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
 }
 
 BOOST_AUTO_TEST_CASE(rejects_output_hmmer_aln_for_non_hmmsearch_format) {
@@ -381,7 +371,6 @@ BOOST_AUTO_TEST_CASE(file_domtbl) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch) {
@@ -392,7 +381,6 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_raw_evalue) {
@@ -403,7 +391,6 @@ BOOST_AUTO_TEST_CASE(file_raw_evalue) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_raw_score) {
@@ -414,7 +401,6 @@ BOOST_AUTO_TEST_CASE(file_raw_score) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL             ( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -431,7 +417,6 @@ BOOST_AUTO_TEST_CASE(summarise) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(summarise__deprecated_opts) {
@@ -445,7 +430,6 @@ BOOST_AUTO_TEST_CASE(summarise__deprecated_opts) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
 
 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-summarise\-to\-file \-)" } ) );
 }
@@ -491,7 +475,6 @@ BOOST_AUTO_TEST_CASE(html) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(html__deprecated_opts) {
@@ -509,7 +492,6 @@ BOOST_AUTO_TEST_CASE(html__deprecated_opts) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
 
 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-html\-output\-to\-file \-)" } ) );
 }
@@ -527,7 +509,6 @@ BOOST_AUTO_TEST_CASE(json_from_hmmsearch_out) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(json_from_domtblout) {
@@ -538,7 +519,6 @@ BOOST_AUTO_TEST_CASE(json_from_domtblout) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(json_from_hmmsearch_out__deprecated_opts) {
@@ -552,7 +532,6 @@ BOOST_AUTO_TEST_CASE(json_from_hmmsearch_out__deprecated_opts) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
 
 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-json\-output\-to\-file \-)" } ) );
 }
@@ -568,7 +547,6 @@ BOOST_AUTO_TEST_CASE(json_from_domtblout__deprecated_opts) {
 	} );
 	istringstream istream_of_output{ output_ss.str() };
 	BOOST_CHECK_ISTREAM_AND_FILE_EQUAL( istream_of_output, "got_ss", CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
-	// BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( istream_of_output, "got_ss", CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
 
 	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-json\-output\-to\-file \-)" } ) );
 }

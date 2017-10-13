@@ -24,46 +24,46 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/test/test_tools.hpp>
 
+#include "common/test_predicate/bootstrap_mode.hpp"
 #include "common/test_predicate/istreams_equal.hpp"
 
 #include <string>
 
 namespace cath {
-
-	/// \brief TODOCUMENT
-	///
-	/// Note that the operator() will empty the string
-	class string_matches_file final {
-	private:
-		/// \brief TODOCUMENT
-		bool overwrite_diff_expected_with_got = DEFAULT_OVERWRITE_DIFF_EXPECTED_WITH_GOT;
+	namespace test {
 
 		/// \brief TODOCUMENT
-		str_size_type  diff_half_width        = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
+		///
+		/// Note that the operator() will empty the string
+		class string_matches_file final {
+		private:
+			/// \brief When to bootstrap the test file (ie replace it with the "got" content if mismatching)
+			bootstrap_mode bootstrapping   = DEFAULT_BOOTSTRAPPING;
 
-	public:
-		/// \brief TODOCUMENT
-		static constexpr bool           DEFAULT_OVERWRITE_DIFF_EXPECTED_WITH_GOT = false;
+			/// \brief TODOCUMENT
+			str_size_type  diff_half_width = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
 
-		/// \brief TODOCUMENT
-		static constexpr str_size_type  DEFAULT_DIFF_HALF_WIDTH                  = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
 
-		string_matches_file() noexcept = default;
-		explicit string_matches_file(const bool &,
-		                             const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
-		explicit string_matches_file(const str_size_type &);
-		boost::test_tools::predicate_result operator()(const std::string &,
-		                                               const boost::filesystem::path &) const;
-	};
+			/// \brief Default value for when to bootstrap the test file (ie replace it with the "got" content if mismatching)
+			static constexpr bootstrap_mode DEFAULT_BOOTSTRAPPING = bootstrap_mode::IF_ENV;
 
+		public:
+			/// \brief TODOCUMENT
+			static constexpr str_size_type  DEFAULT_DIFF_HALF_WIDTH                  = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
+
+			string_matches_file() noexcept = default;
+			explicit string_matches_file(const bootstrap_mode &,
+			                             const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
+			explicit string_matches_file(const str_size_type &);
+			boost::test_tools::predicate_result operator()(const std::string &,
+			                                               const boost::filesystem::path &) const;
+		};
+
+	} // namespace test
 } // namespace cath
 
-#define BOOST_WARN_STRING_MATCHES_FILE(                 F1, S1 ) BOOST_WARN   ( ( cath::string_matches_file(      ) ( ( (F1) ), ( (S1) ) ) ) )
-#define BOOST_CHECK_STRING_MATCHES_FILE(                F1, S1 ) BOOST_CHECK  ( ( cath::string_matches_file(      ) ( ( (F1) ), ( (S1) ) ) ) )
-#define BOOST_REQUIRE_STRING_MATCHES_FILE(              F1, S1 ) BOOST_REQUIRE( ( cath::string_matches_file(      ) ( ( (F1) ), ( (S1) ) ) ) )
-
-#define BOOST_WARN_STRING_MATCHES_FILE_OR_OVERWRITE(    F1, S1 ) BOOST_WARN   ( ( cath::string_matches_file( true ) ( ( (F1) ), ( (S1) ) ) ) )
-#define BOOST_CHECK_STRING_MATCHES_FILE_OR_OVERWRITE(   F1, S1 ) BOOST_CHECK  ( ( cath::string_matches_file( true ) ( ( (F1) ), ( (S1) ) ) ) )
-#define BOOST_REQUIRE_STRING_MATCHES_FILE_OR_OVERWRITE( F1, S1 ) BOOST_REQUIRE( ( cath::string_matches_file( true ) ( ( (F1) ), ( (S1) ) ) ) )
+#define BOOST_WARN_STRING_MATCHES_FILE(    F1, S1 ) BOOST_WARN   ( ( cath::test::string_matches_file( ) ( ( (F1) ), ( (S1) ) ) ) )
+#define BOOST_CHECK_STRING_MATCHES_FILE(   F1, S1 ) BOOST_CHECK  ( ( cath::test::string_matches_file( ) ( ( (F1) ), ( (S1) ) ) ) )
+#define BOOST_REQUIRE_STRING_MATCHES_FILE( F1, S1 ) BOOST_REQUIRE( ( cath::test::string_matches_file( ) ( ( (F1) ), ( (S1) ) ) ) )
 
 #endif

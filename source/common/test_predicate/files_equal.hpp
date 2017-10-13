@@ -24,37 +24,41 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/test/test_tools.hpp>
 
+#include "common/test_predicate/bootstrap_mode.hpp"
 #include "common/test_predicate/istreams_equal.hpp"
 
 namespace cath {
-
-	/// \brief TODOCUMENT
-	class files_equal final {
-	private:
-		/// \brief TODOCUMENT
-		bool overwrite_diff_expected_with_got;
+	namespace test {
 
 		/// \brief TODOCUMENT
-		str_size_type diff_half_width;
+		class files_equal final {
+		private:
+			/// \brief When to bootstrap the test file (ie replace it with the "got" content if mismatching)
+			bootstrap_mode bootstrapping  = DEFAULT_BOOTSTRAPPING;
 
-	public:
-		explicit files_equal(const bool &,
-		                     const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
-		explicit files_equal(const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
+			/// \brief TODOCUMENT
+			str_size_type  diff_half_width = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
 
-		boost::test_tools::predicate_result operator()(const boost::filesystem::path &,
-		                                               const boost::filesystem::path &) const;
 
-		static const std::string FILENAME_NAME_PREFIX;
-	};
+			/// \brief Default value for when to bootstrap the test file (ie replace it with the "got" content if mismatching)
+			static constexpr bootstrap_mode DEFAULT_BOOTSTRAPPING = bootstrap_mode::IF_ENV;
+
+		public:
+			explicit files_equal(const bootstrap_mode &,
+			                     const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
+			explicit files_equal(const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
+
+			boost::test_tools::predicate_result operator()(const boost::filesystem::path &,
+			                                               const boost::filesystem::path &) const;
+
+			static const std::string FILENAME_NAME_PREFIX;
+		};
+
+	} // namespace test
 } // namespace cath
 
-#define BOOST_WARN_FILES_EQUAL(                 S1, S2 )   BOOST_WARN(    ( cath::files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )
-#define BOOST_CHECK_FILES_EQUAL(                S1, S2 )   BOOST_CHECK(   ( cath::files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )
-#define BOOST_REQUIRE_FILES_EQUAL(              S1, S2 )   BOOST_REQUIRE( ( cath::files_equal(      ) ( ( (S1) ), ( (S2) ) ) ) )
-
-#define BOOST_WARN_FILES_EQUAL_OR_OVERWRITE(    S1, S2 )   BOOST_WARN(    ( cath::files_equal( true ) ( ( (S1) ), ( (S2) ) ) ) )
-#define BOOST_CHECK_FILES_EQUAL_OR_OVERWRITE(   S1, S2 )   BOOST_CHECK(   ( cath::files_equal( true ) ( ( (S1) ), ( (S2) ) ) ) )
-#define BOOST_REQUIRE_FILES_EQUAL_OR_OVERWRITE( S1, S2 )   BOOST_REQUIRE( ( cath::files_equal( true ) ( ( (S1) ), ( (S2) ) ) ) )
+#define BOOST_WARN_FILES_EQUAL(    S1, S2 ) BOOST_WARN(    ( cath::test::files_equal( ) ( ( (S1) ), ( (S2) ) ) ) )
+#define BOOST_CHECK_FILES_EQUAL(   S1, S2 ) BOOST_CHECK(   ( cath::test::files_equal( ) ( ( (S1) ), ( (S2) ) ) ) )
+#define BOOST_REQUIRE_FILES_EQUAL( S1, S2 ) BOOST_REQUIRE( ( cath::test::files_equal( ) ( ( (S1) ), ( (S2) ) ) ) )
 
 #endif

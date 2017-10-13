@@ -377,6 +377,7 @@ set(
 
 set(
 	NORMSOURCES_COMMON_TEST_PREDICATE
+		common/test_predicate/bootstrap_mode.cpp
 		${NORMSOURCES_COMMON_TEST_PREDICATE_DETAIL}
 		common/test_predicate/files_equal.cpp
 		common/test_predicate/istream_and_file_equal.cpp

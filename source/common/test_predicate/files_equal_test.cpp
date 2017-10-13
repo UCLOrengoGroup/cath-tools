@@ -24,7 +24,7 @@
 
 #include "common/test_predicate/files_equal.hpp"
 
-using namespace cath;
+using namespace cath::test;
 
 using boost::filesystem::path;
 
@@ -80,14 +80,14 @@ BOOST_AUTO_TEST_CASE(the_same_file_does_not_comapare_equal) {
 
 /// \brief Check that a file does not compare equal if it is the same but shorter/longer
 BOOST_AUTO_TEST_CASE(longer_and_shorter_files_do_not_compare_equal) {
-	BOOST_CHECK( !files_equal()( compare_file,        compare_file_longer ) );
-	BOOST_CHECK( !files_equal()( compare_file_longer, compare_file        ) );
+	BOOST_CHECK( !files_equal( bootstrap_mode::NEVER )( compare_file,        compare_file_longer ) );
+	BOOST_CHECK( !files_equal( bootstrap_mode::NEVER )( compare_file_longer, compare_file        ) );
 }
 
 /// \brief Check that a file does not compare equal to different file
 BOOST_AUTO_TEST_CASE(different_files_do_not_compare_equal) {
-	BOOST_CHECK( !files_equal()( compare_file,        compare_file_diff   ) );
-	BOOST_CHECK( !files_equal()( compare_file_diff,   compare_file        ) );
+	BOOST_CHECK( !files_equal( bootstrap_mode::NEVER )( compare_file,        compare_file_diff   ) );
+	BOOST_CHECK( !files_equal( bootstrap_mode::NEVER )( compare_file_diff,   compare_file        ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

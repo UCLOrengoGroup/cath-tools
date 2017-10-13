@@ -22,7 +22,7 @@
 
 #include "common/test_predicate/istreams_equal.hpp"
 
-using namespace cath;
+using namespace cath::test;
 
 using std::istringstream;
 using std::string;

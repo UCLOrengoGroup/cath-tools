@@ -112,11 +112,9 @@ void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_use_c
 		);
 
 		BOOST_CHECK_FILES_EQUAL(              output_file, arg_expected_output_file );
-//		BOOST_CHECK_FILES_EQUAL_OR_OVERWRITE( output_file, arg_expected_output_file );
 	}
 	else {
 		BOOST_CHECK_ISTREAM_AND_FILE_EQUAL(              test_stdout, "stdout_from_cath_superpose", arg_expected_output_file );
-//		BOOST_CHECK_ISTREAM_AND_FILE_EQUAL_OR_OVERWRITE( test_stdout, "stdout_from_cath_superpose", arg_expected_output_file );
 	}
 }
 

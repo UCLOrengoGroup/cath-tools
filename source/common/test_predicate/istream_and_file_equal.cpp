@@ -26,8 +26,8 @@
 
 #include <fstream>
 
-using namespace cath;
 using namespace cath::common;
+using namespace cath::test;
 
 using boost::filesystem::path;
 using boost::test_tools::predicate_result;
@@ -38,16 +38,15 @@ using std::string;
 using boost::filesystem::path;
 
 /// \brief Ctor for istream_and_file_equal
-istream_and_file_equal::istream_and_file_equal(const bool          &arg_overwrite_diff_expected_with_got, ///< TODOCUMENT
-                                               const str_size_type &arg_diff_half_width                   ///< TODOCUMENT
-                                               ) : overwrite_diff_expected_with_got( arg_overwrite_diff_expected_with_got ),
-                                                   diff_half_width(arg_diff_half_width) {
+istream_and_file_equal::istream_and_file_equal(const bootstrap_mode &arg_bootstrapping,  ///< TODOCUMENT
+                                               const str_size_type  &arg_diff_half_width ///< TODOCUMENT
+                                               ) : bootstrapping   { arg_bootstrapping   },
+                                                   diff_half_width { arg_diff_half_width } {
 }
 
 /// \brief Ctor for istream_and_file_equal
 istream_and_file_equal::istream_and_file_equal(const str_size_type &arg_diff_half_width ///< TODOCUMENT
-                                               ) : overwrite_diff_expected_with_got( false               ),
-                                                   diff_half_width                 ( arg_diff_half_width ) {
+                                               ) : diff_half_width{ arg_diff_half_width } {
 }
 
 /// \brief TODOCUMENT
@@ -66,9 +65,9 @@ predicate_result istream_and_file_equal::operator()(istream      &arg_istream, /
 		files_equal::FILENAME_NAME_PREFIX + arg_filename.string()
 	);
 
-	// If overwrite_diff_expected_with_got and the result's negative,
+	// If `should_overwrite( bootstrapping )` and the result is negative,
 	// overwrite the expected (arg_filename) with the got (arg_istream)
-	if ( ! the_result && ( overwrite_diff_expected_with_got || ( getenv( "BOOTSTRAP_TESTS" ) != nullptr ) ) ) {
+	if ( ! the_result && should_overwrite( bootstrapping ) ) {
 		spew( arg_filename, arg_istream );
 	}
 

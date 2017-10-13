@@ -28,12 +28,15 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_monitor.hpp>
 
+#include "common/test_predicate/bootstrap_mode.hpp"
+
 #include <iostream>
 
-using namespace boost::log;
-using namespace boost::log::trivial;
-using namespace boost::unit_test;
-using namespace std;
+using boost::log::trivial::info;
+using boost::log::trivial::severity;
+using boost::unit_test::unit_test_monitor;
+using std::cerr;
+using std::endl;
 
 namespace cath {
 	namespace test {
@@ -51,6 +54,9 @@ namespace cath {
 		class prepare_for_test_global_fixture final {
 		public:
 			prepare_for_test_global_fixture();
+			~prepare_for_test_global_fixture();
+
+			static void warn_if_bootstrapping();
 		};
 
 		/// \brief TODOCUMENT
@@ -60,6 +66,28 @@ namespace cath {
 //				severity >= trace
 			);
 			unit_test_monitor.register_exception_translator<boost::exception>( &boost_exception_translator );
+
+			// Try to warn if in bootstrapping mode
+			warn_if_bootstrapping();
+		}
+
+		/// \brief In the dtor, try to warn if in bootstrapping mode
+		prepare_for_test_global_fixture::~prepare_for_test_global_fixture() {
+			try {
+				warn_if_bootstrapping();
+			}
+			catch (...) {
+			}
+		}
+
+		/// \brief Print a conspicuous warning if bootstrapping is turned on
+		void prepare_for_test_global_fixture::warn_if_bootstrapping() {
+			if ( bootstrap_env_var_is_set() ) {
+				BOOST_LOG_TRIVIAL( warning )
+					<< "\033[1m Environment variable "
+					<< get_bootstrap_env_var()
+					<<" is set, so test files are being bootstrapped\033[0m";
+			}
 		}
 
 		/// \brief TODOCUMENT
