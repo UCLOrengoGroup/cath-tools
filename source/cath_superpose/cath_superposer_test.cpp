@@ -107,7 +107,7 @@ void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_use_c
 		// Blank out the version number in the superposition
 		regex_replace_file(
 			output_file,
-			std::regex{ R"(cath-superpose \(v\d+\.\d+\.\d+\-\d+\-g?\w{8}\))" },
+			std::regex{ R"(cath-superpose \((v\d+\.\d+\.\d+\-\d+\-g?\w{8})?\))" },
 			"cath-superpose (vX.X.X-X-XXXXXXXX)"
 		);
 
