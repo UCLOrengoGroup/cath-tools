@@ -71,6 +71,13 @@ namespace cath {
 		                                                                          str_vec,
 		                                                                          str_vec,
 		                                                                          chop::domain_vec);
+
+		file::strucs_context get_strucs_context(const pdbs_acquirer &,
+		                                        std::istream &,
+		                                        const bool &,
+		                                        const str_vec &,
+		                                        const chop::domain_vec &);
+
 	} // namespace opts
 } // namespace cath
 

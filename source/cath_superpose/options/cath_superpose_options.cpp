@@ -255,13 +255,10 @@ strucs_context cath::opts::get_pdbs_and_names(const cath_superpose_options &arg_
                                               istream                      &arg_istream,                ///< The istream, which may contain PDB data
                                               const bool                   &arg_remove_partial_residues ///< Whether to remove partial residues from the PDB data
                                               ) {
-	// Grab the PDBs and names
-	const auto   pdbs_acquireer_ptr = get_pdbs_acquirer( arg_cath_sup_opts );
-	auto         pdbs_and_names     = pdbs_acquireer_ptr->get_pdbs_and_names( arg_istream, arg_remove_partial_residues );
-
-	return combine_acquired_pdbs_and_names_with_ids_and_domains(
-		std::move( pdbs_and_names.first  ),
-		std::move( pdbs_and_names.second ),
+	return get_strucs_context(
+		*get_pdbs_acquirer( arg_cath_sup_opts ),
+		arg_istream,
+		arg_remove_partial_residues,
 		arg_cath_sup_opts.get_ids(),
 		arg_cath_sup_opts.get_domains()
 	);

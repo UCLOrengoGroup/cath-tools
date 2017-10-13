@@ -174,3 +174,27 @@ strucs_context cath::opts::combine_acquired_pdbs_and_names_with_ids_and_domains(
 		std::move( stripped_domain_vec.second )
 	};
 }
+
+/// \brief Use the specified PDBs acquirer to get PDBs and names and combine with the specified IDs and domains
+///        to create a strucs_context
+///
+/// \relates pdbs_acquirer
+strucs_context cath::opts::get_strucs_context(const pdbs_acquirer &arg_pdbs_acquirer,           ///< The pdbs_acquirer to use to get the PDBs
+                                              istream             &arg_istream,                 ///< The istream, which may contain PDB data
+                                              const bool          &arg_remove_partial_residues, ///< Whether to remove partial residues from the PDB data
+                                              const str_vec       &arg_ids,                     ///< The IDs to set on the acquired strucs_context
+                                              const domain_vec    &arg_domains                  ///< The domains to set on the acquired strucs_context
+                                              ) {
+	// Grab the PDBs and names
+	auto pdbs_and_names = arg_pdbs_acquirer.get_pdbs_and_names(
+		arg_istream,
+		arg_remove_partial_residues
+	);
+
+	return combine_acquired_pdbs_and_names_with_ids_and_domains(
+		std::move( pdbs_and_names.first  ),
+		std::move( pdbs_and_names.second ),
+		arg_ids,
+		arg_domains
+	);
+}
