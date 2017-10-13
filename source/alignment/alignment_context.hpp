@@ -53,6 +53,9 @@ namespace cath {
 			const file::strucs_context & get_strucs_context() const;
 		};
 
+		alignment_context make_restricted_alignment_context(alignment,
+		                                                    file::strucs_context);
+
 		const file::pdb_list & get_pdbs(const alignment_context &);
 		const file::name_set_list & get_name_sets(const alignment_context &);
 		const chop::region_vec_opt_vec & get_regions(const alignment_context &);

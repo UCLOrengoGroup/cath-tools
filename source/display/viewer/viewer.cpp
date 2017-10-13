@@ -279,7 +279,7 @@ void cath::output_superposition_to_viewer(ostream                          &arg_
 			*display_colourer_ptr,
 			arg_ostream,
 			arg_viewer,
-			make_alignment_context( arg_superposition_context )
+			make_restricted_alignment_context( arg_superposition_context )
 		);
 
 		// If there is an alignment then do magic with it

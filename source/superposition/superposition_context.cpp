@@ -336,8 +336,8 @@ superposition_context cath::sup::load_pdbs_from_names_copy(superposition_context
 /// \relates superposition_context
 ///
 /// \relatesalso alignment_context
-alignment_context cath::sup::make_alignment_context(const superposition_context &arg_superposition_context ///< TODOCUMENT
-                                                    ) {
+alignment_context cath::sup::make_restricted_alignment_context(const superposition_context &arg_superposition_context ///< TODOCUMENT
+                                                               ) {
 	if ( ! arg_superposition_context.has_alignment() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("WARNING: Unable to extract alignment from superposition_context with no alignment"));
 	}

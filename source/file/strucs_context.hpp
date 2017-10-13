@@ -101,6 +101,14 @@ namespace cath {
 			return arg_strucs_context.get_name_sets().size();
 		}
 
+		void restrict_pdbs(strucs_context &);
+
+		strucs_context restrict_pdbs_copy(strucs_context);
+
+		size_t get_num_regions_set(const strucs_context &);
+
+		std::string to_string(const strucs_context &);
+
 		file::pdb_list get_restricted_pdbs(const strucs_context &);
 
 	} // namespace file

@@ -84,6 +84,19 @@ pdb_list cath::align::get_restricted_pdbs(const alignment_context &arg_alignment
   return get_restricted_pdbs( arg_alignment_context.get_strucs_context() );
 }
 
+/// \brief Make an alignment context of the specified alignment and strucs_context, with the
+///        PDBs restricted according to the regions in the strucs_context
+///
+/// \relates alignment_context
+alignment_context cath::align::make_restricted_alignment_context(alignment      arg_alignment,     ///< The alignment from which to build the alignment_context
+                                                                 strucs_context arg_strucs_context ///< The strucs_context from which to build the alignment_context
+                                                                 ) {
+	return {
+		std::move( arg_alignment ),
+		restrict_pdbs_copy( std::move( arg_strucs_context ) )
+	};
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_context

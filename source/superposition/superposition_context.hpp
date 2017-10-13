@@ -109,7 +109,7 @@ namespace cath {
 		superposition_context load_pdbs_from_names_copy(superposition_context,
 		                                                const opts::data_dirs_spec &);
 
-		align::alignment_context make_alignment_context(const superposition_context &);
+		align::alignment_context make_restricted_alignment_context(const superposition_context &);
 
 		superposition_context superposition_context_from_ptree(const boost::property_tree::ptree &);
 

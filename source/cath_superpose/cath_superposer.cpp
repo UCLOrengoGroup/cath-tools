@@ -78,7 +78,7 @@ void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose
 	if ( the_sup_context.has_alignment() ) {
 		use_all_alignment_outputters(
 			arg_cath_superpose_options.get_alignment_outputters(),
-			make_alignment_context( the_sup_context ),
+			make_restricted_alignment_context( the_sup_context ),
 			arg_stdout,
 			arg_stderr
 		);
