@@ -22,9 +22,12 @@
 #define _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_CONTEXT_H
 
 #include "alignment/alignment.hpp" // for alignment
+#include "chopping/chopping_type_aliases.hpp"
 #include "file/strucs_context.hpp"
 
+namespace cath { namespace align { class alignment_acquirer; } }
 namespace cath { namespace file { class name_set_list; } }
+namespace cath { namespace opts { class pdbs_acquirer; } }
 namespace cath { namespace sup { class superposition; } }
 namespace cath { namespace sup { class superposition_context; } }
 
@@ -64,6 +67,13 @@ namespace cath {
 
 		sup::superposition_context make_superposition_context(const alignment_context &,
 		                                                      const sup::superposition &);
+
+		alignment_context get_alignment_context(const alignment_acquirer &,
+		                                        const opts::pdbs_acquirer &,
+		                                        std::istream &,
+		                                        const bool &,
+		                                        const str_vec &,
+		                                        const chop::domain_vec &);
 
 	} // namespace align
 } // namespace cath

@@ -21,6 +21,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "alignment/io/alignment_io.hpp"
+#include "chopping/region/region.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/pair_insertion_operator.hpp"

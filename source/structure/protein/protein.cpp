@@ -461,6 +461,22 @@ coord cath::view_vector(const protein &arg_protein,    ///< TODOCUMENT
 	);
 }
 
+/// \brief Get the indices of the residues in the specified protein within the specified regions
+///
+/// \relates protein
+size_vec cath::get_indices_of_residues_within_regions(const protein        &arg_protein, ///< The protein to query
+                                                      const region_vec_opt &arg_regions  ///< The regions to query
+                                                      ) {
+	size_vec result;
+	regions_limiter the_limiter{ arg_regions };
+	for (const size_t &res_idx : indices( arg_protein.get_length() ) ) {
+		if ( the_limiter.update_residue_is_included( get_pdb_residue_id_of_index( arg_protein, res_idx ) ) ) {
+			result.push_back( res_idx );
+		}
+	}
+	return result;
+}
+
 /// \brief Restrict the specified, existing protein to the specified regions
 ///
 /// \relates protein

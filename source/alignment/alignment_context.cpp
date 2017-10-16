@@ -20,6 +20,8 @@
 
 #include "alignment_context.hpp"
 
+#include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
+#include "acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 #include "chopping/region/region.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
@@ -30,7 +32,10 @@ using namespace cath;
 using namespace cath::align;
 using namespace cath::chop;
 using namespace cath::file;
+using namespace cath::opts;
 using namespace cath::sup;
+
+using std::istream;
 
 /// \brief Ctor for alignment_context
 alignment_context::alignment_context(alignment      arg_alignment, ///< TODOCUMENT
@@ -110,4 +115,29 @@ superposition_context cath::align::make_superposition_context(const alignment_co
 		arg_alignment_context.get_strucs_context(),
 		arg_alignment_context.get_alignment()
 	);
+}
+
+/// \brief Get an alignment context
+///
+/// \relates alignment_acquirer
+alignment_context cath::align::get_alignment_context(const alignment_acquirer &arg_alignment_acquirer,      ///< The alignment_acquirer to use to get the alignment
+                                                     const pdbs_acquirer      &arg_pdbs_acquirer,           ///< The pdbs_acquirer to use to get the PDBs
+                                                     istream                  &arg_istream,                 ///< The istream, which may contain PDB data
+                                                     const bool               &arg_remove_partial_residues, ///< Whether to remove partial residues from the PDB data
+                                                     const str_vec            &arg_ids,                     ///< The IDs to set on the acquired strucs_context
+                                                     const domain_vec         &arg_domains                  ///< The domains to set on the acquired strucs_context
+                                                     ) {
+	const auto the_strucs_context = get_strucs_context(
+		arg_pdbs_acquirer,
+		arg_istream,
+		arg_remove_partial_residues,
+		arg_ids,
+		arg_domains
+	);
+	return {
+		arg_alignment_acquirer
+			.get_alignment_and_spanning_tree( get_restricted_pdbs( the_strucs_context ) )
+			.first,
+		the_strucs_context
+	};
 }

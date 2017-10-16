@@ -1776,7 +1776,9 @@ set(
 
 set(
 	TESTSOURCES_OUTPUTTER_ALIGNMENT_OUTPUTTER
+		outputter/alignment_outputter/alignment_outputter_fixture.cpp
 		outputter/alignment_outputter/alignment_outputter_list_test.cpp
+		outputter/alignment_outputter/ssap_ostream_alignment_outputter_test.cpp
 )
 
 set(

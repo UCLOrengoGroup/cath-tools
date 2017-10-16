@@ -35,6 +35,7 @@
 #include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath::align;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
@@ -48,18 +49,22 @@ unique_ptr<alignment_outputter> ssap_ostream_alignment_outputter::do_clone() con
 void ssap_ostream_alignment_outputter::do_output_alignment(const alignment_context &arg_alignment_context, ///< TODOCUMENT
                                                            ostream                 &arg_ostream            ///< TODOCUMENT
                                                            ) const {
-	const alignment &the_alignment = arg_alignment_context.get_alignment();
+	const region_vec_opt_vec &regions_opts  = get_regions( arg_alignment_context );
+	const alignment          &the_alignment = arg_alignment_context.get_alignment();
 	check_alignment_is_a_pair( the_alignment );
 
 	const protein_list temp_protein_list = build_protein_list_of_pdb_list_and_names(
 		get_pdbs      ( arg_alignment_context ),
 		get_name_sets ( arg_alignment_context )
 	);
+
 	output_alignment_to_cath_ssap_legacy_format(
 		arg_ostream,
 		the_alignment,
 		temp_protein_list[ 0 ],
-		temp_protein_list[ 1 ]
+		temp_protein_list[ 1 ],
+		regions_opts     [ 0 ],
+		regions_opts     [ 1 ]
 	);
 }
 

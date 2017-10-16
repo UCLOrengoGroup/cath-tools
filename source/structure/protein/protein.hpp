@@ -198,6 +198,9 @@ namespace cath {
 	                        const size_t &,
 	                        const size_t &);
 
+	size_vec get_indices_of_residues_within_regions(const protein &,
+	                                                const chop::region_vec_opt &);
+
 	void restrict_to_regions(protein &,
 	                         const chop::region_vec_opt &);
 

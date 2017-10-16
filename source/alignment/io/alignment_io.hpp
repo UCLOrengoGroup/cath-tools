@@ -25,6 +25,7 @@
 
 #include "alignment/align_type_aliases.hpp"
 #include "alignment/alignment.hpp"
+#include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "structure/structure_type_aliases.hpp"
 
@@ -117,12 +118,22 @@ namespace cath {
 		void write_alignment_as_cath_ssap_legacy_format(const boost::filesystem::path &,
 		                                                const alignment &,
 		                                                const protein &,
-		                                                const protein &);
+		                                                const protein &,
+		                                                const chop::region_vec_opt & = boost::none,
+		                                                const chop::region_vec_opt & = boost::none);
 
 		std::ostream & output_alignment_to_cath_ssap_legacy_format(std::ostream &,
 		                                                           const alignment &,
 		                                                           const protein &,
-		                                                           const protein &);
+		                                                           const protein &,
+		                                                           const chop::region_vec_opt & = boost::none,
+		                                                           const chop::region_vec_opt & = boost::none);
+
+		std::string to_cath_ssap_legacy_format_alignment_string(const alignment &,
+		                                                        const protein &,
+		                                                        const protein &,
+		                                                        const chop::region_vec_opt & = boost::none,
+		                                                        const chop::region_vec_opt & = boost::none);
 
 		void write_alignment_as_fasta_alignment(const boost::filesystem::path &,
 		                                        const alignment &,

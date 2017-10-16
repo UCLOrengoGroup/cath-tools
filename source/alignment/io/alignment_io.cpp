@@ -27,9 +27,11 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/trim.hpp>
+#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "alignment/align_type_aliases.hpp"
 #include "alignment/pair_alignment.hpp"
@@ -58,16 +60,19 @@ using namespace boost::algorithm;
 using namespace boost::log;
 using namespace cath;
 using namespace cath::align;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace std;
 
+using boost::adaptors::transformed;
 using boost::algorithm::is_any_of;
 using boost::algorithm::is_space;
 using boost::algorithm::join;
 using boost::algorithm::starts_with;
 using boost::algorithm::trim_copy;
 using boost::filesystem::path;
+using boost::format;
 using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
@@ -810,17 +815,26 @@ aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t        
 /// \brief Prints residue numbers in alignment
 ///
 /// \relates alignment
-void cath::align::write_alignment_as_cath_ssap_legacy_format(const path      &arg_output_file, ///< TODOCUMENT
-                                                             const alignment &arg_alignment,   ///< TODOCUMENT
-                                                             const protein   &seq_a,           ///< TODOCUMENT
-                                                             const protein   &seq_b            ///< TODOCUMENT
+void cath::align::write_alignment_as_cath_ssap_legacy_format(const path           &arg_output_file, ///< TODOCUMENT
+                                                             const alignment      &arg_alignment,   ///< TODOCUMENT
+                                                             const protein        &arg_seq_a,       ///< TODOCUMENT
+                                                             const protein        &arg_seq_b,       ///< TODOCUMENT
+                                                             const region_vec_opt &arg_regions_a,   ///< TODOCUMENT
+                                                             const region_vec_opt &arg_regions_b    ///< TODOCUMENT
                                                              ) {
 	ofstream aln_out_stream;
 	open_ofstream( aln_out_stream, arg_output_file );
 
 	// Try here to catch any I/O exceptions
 	try {
-		output_alignment_to_cath_ssap_legacy_format(aln_out_stream, arg_alignment, seq_a, seq_b);
+		output_alignment_to_cath_ssap_legacy_format(
+			aln_out_stream,
+			arg_alignment,
+			arg_seq_a,
+			arg_seq_b,
+			arg_regions_a,
+			arg_regions_b
+		);
 
 		// Close the file
 		aln_out_stream.close();
@@ -841,50 +855,80 @@ void cath::align::write_alignment_as_cath_ssap_legacy_format(const path      &ar
 /// \brief Outputs an alignment in the legacy CATH format for SSAP
 ///
 /// \relates alignment
-ostream & cath::align::output_alignment_to_cath_ssap_legacy_format(ostream         &arg_os,            ///< The ostream to which the data should be output
-                                                                   const alignment &arg_alignment, ///< The alignment to output
-                                                                   const protein   &seq_a,         ///< The first protein in the alignment
-                                                                   const protein   &seq_b          ///< The second protein in the alignment
+ostream & cath::align::output_alignment_to_cath_ssap_legacy_format(ostream              &arg_os,        ///< The ostream to which the data should be output
+                                                                   const alignment      &arg_alignment, ///< The alignment to output
+                                                                   const protein        &arg_seq_a,     ///< The first protein in the alignment
+                                                                   const protein        &arg_seq_b,     ///< The second protein in the alignment
+                                                                   const region_vec_opt &arg_regions_a, ///< TODOCUMENT
+                                                                   const region_vec_opt &arg_regions_b  ///< TODOCUMENT
                                                                    ) {
-	if (!arg_alignment.is_scored()) {
+	arg_os << to_cath_ssap_legacy_format_alignment_string(
+		arg_alignment,
+		arg_seq_a,
+		arg_seq_b,
+		arg_regions_a,
+		arg_regions_b
+	);
+
+	return arg_os;
+}
+
+/// \brief Generate a string representing the specified alignment in the legacy CATH format for SSAP
+///
+/// \relates alignment
+string cath::align::to_cath_ssap_legacy_format_alignment_string(const alignment      &arg_alignment, ///< The alignment to output
+                                                                const protein        &arg_seq_a,     ///< The first protein in the alignment
+                                                                const protein        &arg_seq_b,     ///< The second protein in the alignment
+                                                                const region_vec_opt &arg_regions_a, ///< TODOCUMENT
+                                                                const region_vec_opt &arg_regions_b  ///< TODOCUMENT
+                                                                ) {
+	const auto region_res_indices_a = get_indices_of_residues_within_regions( arg_seq_a, arg_regions_a );
+	const auto region_res_indices_b = get_indices_of_residues_within_regions( arg_seq_b, arg_regions_b );
+
+	if ( ! arg_alignment.is_scored() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot output legacy format for alignment that has not been scored"));
 	}
 
-	const int NO_SCORE = 0;
+	constexpr int NO_SCORE = 0;
 
-	for (size_t alignment_ctr = 0; alignment_ctr < arg_alignment.length(); ++alignment_ctr) {
-		const bool has_posn_a = has_a_position_of_index( arg_alignment, alignment_ctr );
-		const bool has_posn_b = has_b_position_of_index( arg_alignment, alignment_ctr );
+	return join(
+		indices( arg_alignment.length() )
+			| transformed( [&] (const size_t &alignment_ctr) {
+				const bool has_posn_a = has_a_position_of_index( arg_alignment, alignment_ctr );
+				const bool has_posn_b = has_b_position_of_index( arg_alignment, alignment_ctr );
 
-		// Grab the score if both sides of the alignment are present or set it to NO_SCORE (0) otherwise
-		const int score = (has_posn_a && has_posn_b)
-		                  ? numeric_cast<int>( get_mean_score_of_index( arg_alignment, alignment_ctr ) )
-		                  : NO_SCORE;
+				// Grab the score if both sides of the alignment are present or 0 otherwise
+				const int score = ( has_posn_a && has_posn_b )
+				                  ? numeric_cast<int>( get_mean_score_of_index( arg_alignment, alignment_ctr ) )
+				                  : NO_SCORE;
 
-		// Then convert to a %3d string
-		ostringstream score_ss;
-		score_ss << setw(3) << score; // ****** %3d ******
-		const string score_string = score_ss.str();
-
-		// Grab whichever of the two residues are present in the alignment
-		const residue &residue_a = has_posn_a
-		                           ? get_residue_ref_of_index__offset_1( seq_a, get_a_offset_1_position_of_index(arg_alignment, alignment_ctr) )
-		                           : residue::NULL_RESIDUE;
-		const residue &residue_b = has_posn_b
-		                           ? get_residue_ref_of_index__offset_1( seq_b, get_b_offset_1_position_of_index(arg_alignment, alignment_ctr) )
-		                           : residue::NULL_RESIDUE;
-
-		// Build up a string for this line in the alignment
-		const string left_side_string  = has_posn_a
-		                                 ? ssap_legacy_alignment_left_side_string( residue_a )
-		                                 : ssap_legacy_alignment_left_side_gap_string();
-		const string right_side_string = has_posn_b
-		                                 ? ssap_legacy_alignment_right_side_string( residue_b )
-		                                 : ssap_legacy_alignment_right_side_gap_string();
-		arg_os << left_side_string << "  " << score_string << "  " + right_side_string << "\n";
-	}
-
-	return arg_os;
+				// Build a string for the line
+				return
+					(
+						has_posn_a
+						? ssap_legacy_alignment_left_side_string(
+							arg_seq_a.get_residue_ref_of_index(
+								region_res_indices_a[ get_a_position_of_index( arg_alignment, alignment_ctr ) ]
+							)
+						)
+						: ssap_legacy_alignment_left_side_gap_string()
+					)
+					+ "  "
+					+ ( boost::format( "%3d") % score ).str()
+					+ "  "
+					+ (
+						has_posn_b
+						? ssap_legacy_alignment_right_side_string(
+							arg_seq_b.get_residue_ref_of_index(
+								region_res_indices_b[ get_b_position_of_index( arg_alignment, alignment_ctr ) ]
+							)
+						)
+						: ssap_legacy_alignment_right_side_gap_string()
+					)
+					+ "\n";
+			} ),
+		""
+	);
 }
 
 /// \brief Output an alignment in FASTA format
