@@ -20,6 +20,22 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
+#include "chopping/domain/domain.hpp"
+#include "file/name_set/name_set_list.hpp"
+#include "file/strucs_context.hpp"
+#include "test/global_test_constants.hpp"
+
+namespace cath{ namespace test { } }
+
+using namespace cath;
+using namespace cath::chop;
+using namespace cath::file;
+using namespace cath::opts;
+using namespace cath::test;
+
+using std::istringstream;
+
 namespace cath {
 	namespace test {
 
@@ -27,15 +43,35 @@ namespace cath {
 		struct pdbs_acquirer_test_suite_fixture {
 		protected:
 			~pdbs_acquirer_test_suite_fixture() noexcept = default;
+
+			istringstream input_ss;
 		};
 
 	}
 }  // namespace cath
 
-BOOST_FIXTURE_TEST_SUITE(pdbs_acquirer_test_suite, cath::test::pdbs_acquirer_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(pdbs_acquirer_test_suite, pdbs_acquirer_test_suite_fixture)
 
-/// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_CHECK( true );
+BOOST_AUTO_TEST_CASE(regions_names_make_it_into_strucs_context) {
+	constexpr bool remove_partial_residues = false;
+
+	const name_set_list got_name_sets = get_strucs_context(
+		file_list_pdbs_acquirer{ {
+			global_test_constants::TEST_SOURCE_DATA_DIR() / "1c0pA01",
+			global_test_constants::TEST_SOURCE_DATA_DIR() / "1hdoA00",
+		} },
+		input_ss,
+		remove_partial_residues,
+		str_vec{},
+		domain_vec{ {
+			domain{ {}, "domain_1c0pA01" },
+			domain{ {}, "domain_1hdoA00" },
+		} }
+	).get_name_sets();
+
+	const str_vec expected = { "domain_1c0pA01", "domain_1hdoA00" };
+
+	BOOST_TEST( get_domain_or_specified_or_from_acq_names( got_name_sets ) == expected );
 }
+
 BOOST_AUTO_TEST_SUITE_END()

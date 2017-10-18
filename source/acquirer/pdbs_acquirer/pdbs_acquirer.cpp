@@ -173,9 +173,12 @@ strucs_context cath::opts::combine_acquired_pdbs_and_names_with_ids_and_domains(
 
 	return {
 		std::move( arg_pdbs ),
-		add_specified_ids_copy(
-			std::move( arg_names_from_acq ),
-			std::move( specified_ids )
+		add_domain_names_from_regions_copy(
+			add_specified_ids_copy(
+				std::move( arg_names_from_acq ),
+				std::move( specified_ids )
+			),
+			std::move( stripped_domain_vec.first )
 		),
 		std::move( stripped_domain_vec.second )
 	};
