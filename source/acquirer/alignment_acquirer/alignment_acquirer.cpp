@@ -61,7 +61,13 @@ unique_ptr<alignment_acquirer> alignment_acquirer::clone() const {
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
+///
+/// Acquire an alignment for the specified PDBs and return it along with a spanning tree that can be
+/// used for superposing the corresponding structures
+///
+/// The order of the edges in the spanning tree doesn't matter and the scores are discarded
+/// because none of that matters for superposing
+pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< The PDBs to which the alignment should correspond
                                                                                         ) const {
 	using std::to_string;
 
