@@ -33,6 +33,7 @@
 #include "common/algorithm/sort_uniq_build.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
+#include "common/boost_addenda/range/stable_sort_proj.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
@@ -66,11 +67,10 @@ size_vec common_residue_select_best_score_percent_policy::do_select_common_resid
 	);
 
 	// Build a stable_sorted list of indices in descending order of the score to which each corresponds
-	const auto score_sorted_indices = stable_sort_build<size_vec>(
-		indices( min_scores.size() ),
-		[&] (const size_t &x, const size_t &y) {
-			return ( min_scores.at( x ) > min_scores.at( y ) );
-		}
+	const auto score_sorted_indices = stable_sort_proj_copy(
+		copy_build<size_vec>( indices( min_scores.size() ) ),
+		std::greater<>{},
+		[&] (const size_t &x) { return min_scores.at( x ); }
 	);
 
 	// Calculate the total score of all values and the cutoff for best_score_percentage % of it
