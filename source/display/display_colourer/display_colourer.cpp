@@ -65,35 +65,23 @@ const score_colour_handler_opt & display_colourer::get_score_colour_handler_opt(
 /// \brief TODOCUMENT
 display_colour_spec display_colourer::get_colour_spec(const alignment_context &arg_alignment_context ///< TODOCUMENT
                                                       ) const {
-	return do_get_colour_spec( arg_alignment_context );
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates display_colourer
-display_colour_spec cath::get_colour_spec(const display_colourer   &arg_colourer, ///< TODOCUMENT
-                                          const strucs_context     &arg_context,  ///< TODOCUMENT
-                                          const alignment          &arg_alignment ///< TODOCUMENT
-                                          ) {
-	const alignment::size_type num_entries   = arg_alignment.num_entries();
-	const alignment::size_type aln_length    = arg_alignment.length();
+	const alignment &aln         = arg_alignment_context.get_alignment();
+	const auto       num_entries = aln.num_entries();
+	const auto       aln_length  = aln.length();
 
 	if ( aln_length <= 0 || num_entries <= 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to colour the alignment_context because the alignment is empty"));
 	}
-	if ( num_entries != get_num_entries( arg_context ) ) {
+	if ( num_entries != get_num_entries( arg_alignment_context ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to colour the alignment_context because the number of entries doesn't match the number in the structures context"));
 	}
-	auto &&result_spec = arg_colourer.get_colour_spec( alignment_context{
-		arg_alignment,
-		arg_context
-	} );
+	auto &&result_spec = do_get_colour_spec( arg_alignment_context );
 
-	return has_score_colour_handler( arg_colourer )
+	return has_score_colour_handler( *this )
 		? adjust_display_colour_spec_copy(
 			std::forward< decltype( result_spec ) >( result_spec ),
-			get_score_colour_handler( arg_colourer ),
-			arg_alignment
+			get_score_colour_handler( *this ),
+			aln
 		)
 		: result_spec;
 }
@@ -134,6 +122,16 @@ unique_ptr<const display_colourer> cath::get_display_colourer(const display_spec
 		return { common::make_unique< display_colourer_alignment   >( arg_colour_gradient,                 colour_handler ) };
 	}
 	return { common::make_unique< display_colourer_consecutive >( get_colour_list( arg_display_spec ), colour_handler ) };
+}
+
+/// \brief TODOCUMENT
+///
+/// \relates display_colourer
+display_colour_spec cath::get_colour_spec(const display_colourer &arg_display_colourer, ///< TODOCUMENT
+                                          const strucs_context   &arg_strucs_context,   ///< TODOCUMENT
+                                          const alignment        &arg_alignment         ///< TODOCUMENT
+                                          ) {
+	return arg_display_colourer.get_colour_spec( alignment_context{ arg_alignment, arg_strucs_context } );
 }
 
 /// \brier Helper guard to notify a viewer at the start and end of a colouring with a display_colourer

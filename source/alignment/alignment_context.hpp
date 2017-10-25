@@ -63,6 +63,8 @@ namespace cath {
 		const file::name_set_list & get_name_sets(const alignment_context &);
 		const chop::region_vec_opt_vec & get_regions(const alignment_context &);
 
+		size_t get_num_entries(const alignment_context &);
+
 		file::pdb_list get_restricted_pdbs(const alignment_context &);
 
 		sup::superposition_context make_superposition_context(const alignment_context &,
