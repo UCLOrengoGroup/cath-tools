@@ -34,7 +34,6 @@ namespace cath {
 
 BOOST_FIXTURE_TEST_SUITE(alignment_acquirer_test_suite, cath::test::alignment_acquirer_test_suite_fixture)
 
-/// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK( true );
 }
