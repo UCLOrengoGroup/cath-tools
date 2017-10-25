@@ -23,8 +23,33 @@
 
 #include <boost/range/metafunctions.hpp>
 
+#include "common/cpp17/void_t.hpp"
+
+#include <vector>
+
 namespace cath {
 	namespace common {
+		namespace detail {
+
+			/// \brief Primary template for implementation of range_const_reference
+			///
+			/// By default, use range_reference<const T>
+			template <typename T, typename = detail::void_t<> >
+			struct range_const_reference_impl {
+				using type = typename boost::range_reference<const T>::type;
+			};
+
+			/// \brief Specialization of template for implementation of range_const_reference
+			///
+			/// If T has a const_reference member type, then prefer to use that
+			///
+			/// This uses the void_t trick to remove this specialisation if T doesn't contain a const_reference member type.
+			template <typename T>
+			struct range_const_reference_impl< T, detail::void_t< typename T::const_reference > > {
+				using type = typename T::const_reference;
+			};
+
+		} // namespace detail
 
 		template <typename T>
 		using range_iterator_t               = typename boost::range_iterator<T>::type;
@@ -39,7 +64,7 @@ namespace cath {
 		using range_reference_t              = typename boost::range_reference<T>::type;
 
 		template <typename T>
-		using range_const_reference_t        = typename boost::range_reference<const T>::type;
+		using range_const_reference_t        = typename detail::range_const_reference_impl<T>::type;
 
 		template <typename T>
 		using range_pointer_t                = typename boost::range_pointer<T>::type;
