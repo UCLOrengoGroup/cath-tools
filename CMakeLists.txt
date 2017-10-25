@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.8)
+cmake_minimum_required (VERSION 2.8.12)
 
 # If on Linux, get the release codename
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -63,6 +63,8 @@ ENDIF()
 find_package(Boost 1.55 REQUIRED filesystem iostreams log_setup log program_options serialization system thread timer unit_test_framework)
 
 # Default flags
+#
+# TODO: Consider using add_compile_options() instead of set(CMAKE_CXX_FLAGS [...])
 #
 # New warnings (not included in -Wextra) to consider using come GCC 6 : -Wduplicated-cond     -Wnull-dereference
 # New warnings (not included in -Wextra) to consider using come GCC 7 : -Wduplicated-branches -Wrestrict
