@@ -33,6 +33,12 @@ namespace std {
 	///
 	/// It's rather unpleasant to be putting this into the std namespace, which is bad practice
 	/// Unfortunately, this is the way to get things to work in the Boost Test library.
+	///
+	/// \TODO Come Boost 1.64.0, use `boost_test_print_type` instead, see:
+	///  * http://www.boost.org/libs/test/doc/html/boost_test/test_output/test_tools_support_for_logging/testing_tool_output_disable.html#boost_test.test_output.test_tools_support_for_logging.testing_tool_output_disable.user_type_customization_point_fo
+	///  * https://svn.boost.org/trac10/ticket/12540
+	///
+	/// \TODO Move this into a module for test code - this shouldn't be included with any non-test code
 	template <typename T, typename U>
 	ostream & operator<<(ostream          &arg_os,
 	                     const pair<T, U> &arg_pair
