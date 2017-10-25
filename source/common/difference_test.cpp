@@ -36,8 +36,8 @@ BOOST_AUTO_TEST_SUITE(difference_test_suite)
 BOOST_AUTO_TEST_CASE(basic) {
 	const size_t five( 5_z );
 	const size_t nine( 9_z );
-    BOOST_CHECK_EQUAL( difference( five,  nine ), 4_z );
-    BOOST_CHECK_EQUAL( difference( nine,  five ), 4_z );
+	BOOST_CHECK_EQUAL( difference( five,  nine ), 4_z );
+	BOOST_CHECK_EQUAL( difference( nine,  five ), 4_z );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

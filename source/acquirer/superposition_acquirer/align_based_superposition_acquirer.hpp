@@ -35,7 +35,7 @@ namespace cath { namespace sup { class superposition; } }
 
 namespace cath {
 	namespace opts {
-	
+
 		/// \brief TODOCUMENT
 		class align_based_superposition_acquirer final : public cath::opts::superposition_acquirer {
 		private:

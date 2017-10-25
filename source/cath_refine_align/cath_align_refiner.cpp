@@ -132,7 +132,6 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 ////	cout << the_scores_and_values << flush;
 ////	write_alignment_as_fasta_alignment( cout, refined_alignment, proteins );
 
-
 	// Construct an align_based_superposition_acquirer from the data and return the superposition it generates
 	const align_based_superposition_acquirer aln_based_sup_acq(
 		scored_refined_alignment,
