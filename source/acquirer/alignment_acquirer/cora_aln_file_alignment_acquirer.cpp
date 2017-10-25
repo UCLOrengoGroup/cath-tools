@@ -23,6 +23,7 @@
 #include "alignment/alignment.hpp"
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/residue_score/residue_scorer.hpp"
+#include "common/boost_addenda/graph/spanning_tree.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/file/open_fstream.hpp"
 #include "file/pdb/pdb.hpp"
@@ -34,15 +35,15 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
-#include "superposition/superpose_orderer.hpp"
 
 #include <fstream>
 
+using namespace cath;
 using namespace cath::align;
+using namespace cath::align::detail;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
-using namespace cath::sup;
 
 using boost::filesystem::path;
 using std::cerr;
@@ -57,8 +58,8 @@ unique_ptr<alignment_acquirer> cora_aln_file_alignment_acquirer::do_clone() cons
 }
 
 /// \brief TODOCUMENT
-pair<alignment, superpose_orderer> cora_aln_file_alignment_acquirer::do_get_alignment_and_orderer(const pdb_list &arg_pdbs ///< TODOCUMENT
-                                                                                                  ) const {
+pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
+                                                                                                         ) const {
 	// Construct an alignment from the CORA alignment file
 	const size_t num_pdbs = arg_pdbs.size();
 	ifstream my_aln_stream;
@@ -69,13 +70,11 @@ pair<alignment, superpose_orderer> cora_aln_file_alignment_acquirer::do_get_alig
 	const protein_list proteins_of_pdbs = build_protein_list_of_pdb_list( arg_pdbs );
 	const alignment scored_new_alignment = score_alignment_copy( residue_scorer(), new_alignment, proteins_of_pdbs );
 
-	// Construct a superpose_orderer and set arbitrary scores to ensure that the spanning tree will connect the entries
-	superpose_orderer my_orderer(num_pdbs);
-	for (size_t link_ctr = 1; link_ctr < num_pdbs; ++link_ctr) {
-		my_orderer.set_score( link_ctr, 0, 0.0 );
-	}
-	// Return the results
-	return make_pair( scored_new_alignment, my_orderer );
+	// Return the results with a simple spanning tree that will connect the entries
+	return make_pair(
+		scored_new_alignment,
+		make_simple_unweighted_spanning_tree( num_pdbs )
+	);
 }
 
 /// \brief Ctor for cora_aln_file_alignment_acquirer

@@ -1176,7 +1176,6 @@ set(
 	NORMSOURCES_SUPERPOSITION
 		${NORMSOURCES_SUPERPOSITION_IO}
 		${NORMSOURCES_SUPERPOSITION_OPTIONS}
-		superposition/superpose_orderer.cpp
 		superposition/superpose_orient.cpp
 		superposition/superposition.cpp
 		superposition/superposition_content_spec.cpp
@@ -2252,7 +2251,6 @@ set(
 	TESTSOURCES_SUPERPOSITION
 		${TESTSOURCES_SUPERPOSITION_IO}
 		${TESTSOURCES_SUPERPOSITION_OPTIONS}
-		superposition/superpose_orderer_test.cpp
 		superposition/superposition_context_test.cpp
 		superposition/superposition_test.cpp
 )

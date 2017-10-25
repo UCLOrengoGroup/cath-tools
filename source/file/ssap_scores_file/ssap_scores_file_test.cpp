@@ -19,6 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/algorithm/string/join.hpp>
+#include <boost/range/algorithm/find_if.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
@@ -36,6 +37,9 @@ using namespace cath::score;
 using namespace std;
 
 using boost::algorithm::join;
+using boost::range::find_if;
+
+BOOST_TEST_DONT_PRINT_LOG_VALUE( size_size_doub_tpl_vec::const_iterator )
 
 namespace cath {
 	namespace test {
@@ -99,14 +103,18 @@ BOOST_AUTO_TEST_CASE(parse_into_ssap_scores_entries) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	const pair<str_vec, size_size_pair_doub_map> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file(ssap_scores_iss);
-	const str_vec                 got_ids    = ssap_scores_data.first;
-	const size_size_pair_doub_map got_scores = ssap_scores_data.second;
+	const pair<str_vec, size_size_doub_tpl_vec> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file(ssap_scores_iss);
+	const str_vec                got_ids    = ssap_scores_data.first;
+	const size_size_doub_tpl_vec got_scores = ssap_scores_data.second;
 	const str_vec expected_ids = { "1n0hA01", "1ni4B01", "1ozhA01", "1pvdA01", "1trkA02", "2c3mA01", "2ihtA01", "2o1xA02" };
 	BOOST_CHECK_EQUAL_RANGES( expected_ids, got_ids );
-	BOOST_CHECK_EQUAL(  28_z, got_scores.size() );
-	const size_size_pair zero_and_one = make_pair( 0_z, 1_z );
-	BOOST_CHECK_EQUAL( 81.01, got_scores.find( zero_and_one )->second );
+	BOOST_TEST( got_scores.size() == 28_z );
+	const auto got_zero_and_one_score_itr = find_if(
+		got_scores,
+		[] (const auto &x) { return ( get<0>( x ) == 0 && get<1>( x ) == 1 ); }
+	);
+	BOOST_REQUIRE_NE( got_zero_and_one_score_itr, common::cend( got_scores ) );
+	BOOST_TEST( get<2>( *got_zero_and_one_score_itr ) == 81.01 );
 }
 
 BOOST_AUTO_TEST_CASE(score_classn_value_list__from__ssap_scores_entry_vec) {

@@ -138,9 +138,9 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 			);
 			exit( 0 ); //< Convince the compiler that this isn't a non-returning path out of the lambda
 		}
-	}();
-	const alignment &the_alignment    = aln_and_spn_tree.first;
-	const auto      &spanning_tree    = aln_and_spn_tree.second;
+	} ();
+	const alignment &the_alignment = aln_and_spn_tree.first;
+	const auto      &spanning_tree = aln_and_spn_tree.second;
 
 	// \todo Remove this hacky code and fix it
 	const path ssap_scores_file = arg_cath_sup_opts.get_alignment_input_spec().get_ssap_scores_file();

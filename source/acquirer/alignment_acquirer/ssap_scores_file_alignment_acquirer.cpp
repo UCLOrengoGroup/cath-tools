@@ -20,12 +20,17 @@
 
 #include "ssap_scores_file_alignment_acquirer.hpp"
 
+#include <boost/range/adaptor/transformed.hpp>
+
 #include "alignment/alignment.hpp"
 #include "alignment/alignment_action.hpp"
 #include "alignment/alignment_action.hpp"
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/io/outputter/horiz_align_outputter.hpp" /// *** TEMPORARY? ***
 #include "alignment/residue_score/residue_scorer.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/graph/spanning_tree.hpp"
+#include "common/boost_addenda/graph/spanning_tree.hpp"
 #include "common/boost_addenda/range/front.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/file/open_fstream.hpp"
@@ -41,18 +46,24 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"               /// *** TEMPORARY? ***
 #include "structure/protein/sec_struc_planar_angles.hpp" /// *** TEMPORARY? ***
-#include "superposition/superpose_orderer.hpp"
 
 #include <fstream>
 
+using namespace cath;
 using namespace cath::align;
+using namespace cath::align::detail;
 using namespace cath::common;
 using namespace cath::file;
-using namespace cath::sup;
 using namespace cath::opts;
-using namespace std;
 
+using boost::adaptors::transformed;
 using boost::filesystem::path;
+using std::cerr;
+using std::get;
+using std::make_pair;
+using std::pair;
+using std::string;
+using std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<alignment_acquirer> ssap_scores_file_alignment_acquirer::do_clone() const {
@@ -60,13 +71,13 @@ unique_ptr<alignment_acquirer> ssap_scores_file_alignment_acquirer::do_clone() c
 }
 
 /// \brief TODOCUMENT
-pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_alignment_and_orderer(const pdb_list &arg_pdbs ///< TODOCUMENT
-                                                                                                     ) const {
+pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
+                                                                                                            ) const {
 	// Parse the SSAP scores file
-	const path                    ssaps_filename    = get_ssap_scores_file();
-	const pair<str_vec, size_size_pair_doub_map> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file( ssaps_filename );
-	const str_vec                 &names            = ssap_scores_data.first;
-	const size_size_pair_doub_map &scores           = ssap_scores_data.second;
+	const path                    ssaps_filename   = get_ssap_scores_file();
+	const auto                    ssap_scores_data = ssap_scores_file::parse_ssap_scores_file( ssaps_filename );
+	const str_vec                &names            = ssap_scores_data.first;
+	const size_size_doub_tpl_vec &scores           = ssap_scores_data.second;
 
 	if ( names.size() != arg_pdbs.size() ) {
 		if ( names.size() != 0 && arg_pdbs.size() != 1 ) {
@@ -82,8 +93,17 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 		}
 	}
 
-	// Make a superpose_orderer from the scores
-	const superpose_orderer my_orderer = make_superpose_orderer( scores );
+	// Make a spanning-tree from the scores
+	const auto get_edge_fn  = [] (const size_size_doub_tpl &x) { return make_pair( get<0>( x ), get<1>( x ) ); };
+	const auto get_score_fn = [] (const size_size_doub_tpl &x) { return get<2>( x );                           };
+	const auto spanning_tree = transform_build<size_size_pair_vec>(
+		calc_max_spanning_tree(
+			scores | transformed( get_edge_fn  ),
+			scores | transformed( get_score_fn ),
+			names.size()
+		),
+		get_edge_fn
+	);
 
 	// Construct the new alignment
 	const alignment new_alignment = build_multi_alignment(
@@ -97,7 +117,7 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 	// TODOCUMENT
 	if ( names.empty() ) {
 		// Return the results
-		return make_pair( new_alignment, my_orderer );
+		return make_pair( new_alignment, spanning_tree );
 	}
 
 //	BOOST_LOG_TRIVIAL( warning )<< "About to attempt to build protein list using data that's been read from ssaps_filename (with " << arg_pdbs.size() << " pdbs and " << names.size() << " names)";
@@ -112,7 +132,7 @@ pair<alignment, superpose_orderer> ssap_scores_file_alignment_acquirer::do_get_a
 //	cerr << endl;
 
 	// Return the results
-	return make_pair( scored_new_alignment, my_orderer );
+	return make_pair( scored_new_alignment, spanning_tree );
 }
 
 /// \brief Ctor for ssap_scores_file_alignment_acquirer
@@ -126,17 +146,17 @@ path ssap_scores_file_alignment_acquirer::get_ssap_scores_file() const {
 }
 
 /// \brief TODOCUMENT
-size_size_alignment_tuple_vec cath::align::get_spanning_alignments(const pdb_list           &arg_pdbs,           ///< The PDBs to be aligned
-                                                                   const str_vec            &arg_names,          ///< The names of the structures to be aligned
-                                                                   const size_size_pair_vec &arg_spanning_tree,  ///< TODOCUMENT
-                                                                   const path               &arg_alignments_dir, ///< The directory containing alignments for the structures
-                                                                   const ostream_ref_opt    &arg_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
+size_size_alignment_tuple_vec cath::align::get_spanning_alignments(const pdb_list               &arg_pdbs,           ///< The PDBs to be aligned
+                                                                   const str_vec                &arg_names,          ///< The names of the structures to be aligned
+                                                                   const size_size_doub_tpl_vec &arg_spanning_tree,  ///< TODOCUMENT
+                                                                   const path                   &arg_alignments_dir, ///< The directory containing alignments for the structures
+                                                                   const ostream_ref_opt        &arg_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                                    ) {
 	size_size_alignment_tuple_vec spanning_alignments;
 	spanning_alignments.reserve( spanning_alignments.size() );
-	for (const size_size_pair &spanning_branch : arg_spanning_tree) {
-		const size_t   &first_index    = spanning_branch.first;
-		const size_t   &second_index   = spanning_branch.second;
+	for (const size_size_doub_tpl &spanning_branch : arg_spanning_tree) {
+		const size_t   &first_index    = get<0>( spanning_branch );
+		const size_t   &second_index   = get<1>( spanning_branch );
 		const pdb      &first_pdb      = arg_pdbs [ first_index  ];
 		const pdb      &second_pdb     = arg_pdbs [ second_index ];
 		const string   &first_name     = arg_names[ first_index  ];
@@ -158,11 +178,11 @@ size_size_alignment_tuple_vec cath::align::get_spanning_alignments(const pdb_lis
 }
 
 /// \brief Build an alignment between the specified PDBs & names using the specified scores and directory of SSAP alignments
-alignment cath::align::build_multi_alignment(const pdb_list                &arg_pdbs,           ///< The PDBs to be aligned
-                                             const str_vec                 &arg_names,          ///< The names of the structures to be aligned
-                                             const size_size_pair_doub_map &arg_scores,         ///< The SSAP scores between the structures
-                                             const path                    &arg_alignments_dir, ///< The directory containing alignments for the structures
-                                             const ostream_ref_opt         &arg_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
+alignment cath::align::build_multi_alignment(const pdb_list               &arg_pdbs,           ///< The PDBs to be aligned
+                                             const str_vec                &arg_names,          ///< The names of the structures to be aligned
+                                             const size_size_doub_tpl_vec &arg_scores,         ///< The SSAP scores between the structures
+                                             const path                   &arg_alignments_dir, ///< The directory containing alignments for the structures
+                                             const ostream_ref_opt        &arg_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                              ) {
 	// If there's only one PDB just build a single alignment for that
 	if ( arg_pdbs.size() == 1 ) {
@@ -174,7 +194,7 @@ alignment cath::align::build_multi_alignment(const pdb_list                &arg_
 		get_spanning_alignments(
 			arg_pdbs,
 			arg_names,
-			get_spanning_tree_ordered_by_desc_score( arg_scores ),
+			calc_max_spanning_tree( arg_scores, arg_pdbs.size() ),
 			arg_alignments_dir,
 			arg_ostream
 		),

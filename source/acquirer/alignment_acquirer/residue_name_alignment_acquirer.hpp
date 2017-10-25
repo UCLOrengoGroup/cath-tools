@@ -35,7 +35,7 @@ namespace cath {
 			static constexpr double RES_ALIGN_SCORE_CONSTANT = 10.0;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
-			std::pair<alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const final;
+			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::pdb_list &) const final;
 		};
 
 	} // namespace align

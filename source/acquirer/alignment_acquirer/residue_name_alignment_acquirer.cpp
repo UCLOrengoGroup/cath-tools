@@ -28,6 +28,7 @@
 #include "alignment/residue_name_align/residue_name_aligner.hpp"
 #include "alignment/residue_score/residue_scorer.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/graph/spanning_tree.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
@@ -38,12 +39,13 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
-#include "superposition/superpose_orderer.hpp"
 #include "superposition/superposition.hpp"
 
 #include <iostream>
 
+using namespace cath;
 using namespace cath::align;
+using namespace cath::align::detail;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
@@ -61,8 +63,8 @@ unique_ptr<alignment_acquirer> residue_name_alignment_acquirer::do_clone() const
 }
 
 /// \brief TODOCUMENT
-pair<alignment, superpose_orderer> residue_name_alignment_acquirer::do_get_alignment_and_orderer(const pdb_list &arg_pdbs ///< TODOCUMENT
-                                                                                                 ) const {
+pair<alignment, size_size_pair_vec> residue_name_alignment_acquirer::do_get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
+                                                                                                        ) const {
 	const protein_list proteins_of_pdbs = build_protein_list_of_pdb_list( arg_pdbs );
 	const size_t &num_pdbs = arg_pdbs.size();
 
@@ -90,31 +92,29 @@ pair<alignment, superpose_orderer> residue_name_alignment_acquirer::do_get_align
 
 	// For each pair, determine the number of residues in common and the RMSD
 //	cerr << "Choosing spanning tree to use for superposing:" << endl;
-	superpose_orderer my_orderer(num_pdbs);
-	for (size_t pdb_ctr_1 = 0; pdb_ctr_1 < num_pdbs; ++pdb_ctr_1) {
-		for (size_t pdb_ctr_2 = 0; pdb_ctr_2 < num_pdbs; ++pdb_ctr_2) {
-			if (pdb_ctr_1 > pdb_ctr_2) {
-				const pair<coord_list, coord_list> all_common_coords = alignment_coord_extractor::get_common_coords(
-					new_alignment,
-					arg_pdbs[ pdb_ctr_1 ],
-					arg_pdbs[ pdb_ctr_2 ],
-					common_residue_select_all_policy(),
-					common_atom_select_ca_policy(),
-					pdb_ctr_1,
-					pdb_ctr_2
-				);
-				const size_t num_common_coords = all_common_coords.first.size();
-				if (num_common_coords > MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR) {
-					const double rmsd = calc_pairwise_superposition_rmsd(all_common_coords.first, all_common_coords.second);
-					const double score = numeric_cast<double>(num_common_coords) / (RES_ALIGN_SCORE_CONSTANT + rmsd);
-//					cerr << "  - Comparing " << pdb_ctr_1;
-//					cerr << "\tand " << pdb_ctr_2;
-//					cerr << "\t--- num_common_coords : " << num_common_coords;
-//					cerr << "\t, rmsd : " << rmsd;
-//					cerr << "\t, score : " << score;
-//					cerr << endl;
-					my_orderer.set_score(pdb_ctr_1, pdb_ctr_2, score);
-				}
+	size_size_doub_tpl_vec edges;
+	for (const size_t &pdb_ctr_1 : indices( num_pdbs ) ) {
+		for (const size_t &pdb_ctr_2 : indices( pdb_ctr_1 ) ) {
+			const pair<coord_list, coord_list> all_common_coords = alignment_coord_extractor::get_common_coords(
+				new_alignment,
+				arg_pdbs[ pdb_ctr_1 ],
+				arg_pdbs[ pdb_ctr_2 ],
+				common_residue_select_all_policy(),
+				common_atom_select_ca_policy(),
+				pdb_ctr_1,
+				pdb_ctr_2
+			);
+			const size_t num_common_coords = all_common_coords.first.size();
+			if ( num_common_coords > MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR ) {
+				const double rmsd  = calc_pairwise_superposition_rmsd( all_common_coords.first, all_common_coords.second );
+				const double score = numeric_cast<double>( num_common_coords ) / ( RES_ALIGN_SCORE_CONSTANT + rmsd );
+				// cerr << "  - Comparing " << pdb_ctr_1;
+				// cerr << "\tand " << pdb_ctr_2;
+				// cerr << "\t--- num_common_coords : " << num_common_coords;
+				// cerr << "\t, rmsd : " << rmsd;
+				// cerr << "\t, score : " << score;
+				// cerr << "\n";
+				edges.emplace_back( pdb_ctr_1, pdb_ctr_2, score );
 			}
 		}
 	}
@@ -124,6 +124,9 @@ pair<alignment, superpose_orderer> residue_name_alignment_acquirer::do_get_align
 //	cerr << endl;
 
 	// Return the results
-	return make_pair(new_alignment, my_orderer);
+	return make_pair(
+		new_alignment,
+		get_edges_of_spanning_tree( calc_max_spanning_tree( edges, num_pdbs ) )
+	);
 }
 

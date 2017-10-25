@@ -28,7 +28,6 @@
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
-#include "superposition/superpose_orderer.hpp"
 #include "test/global_test_constants.hpp"
 
 namespace cath { namespace test { } }

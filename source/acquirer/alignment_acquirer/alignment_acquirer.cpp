@@ -28,6 +28,7 @@
 #include "acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.hpp"
 #include "acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 #include "alignment/alignment.hpp"
+#include "common/algorithm/transform_build.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "common/logger.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -39,17 +40,18 @@
 #include "file/pdb/pdb_residue.hpp"
 #include "options/options_block/alignment_input_options_block.hpp"
 #include "options/options_block/alignment_input_spec.hpp"
-#include "superposition/superpose_orderer.hpp"
 
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
-using namespace cath::sup;
-using namespace std;
 
-// using boost::lexical_cast;
+using boost::irange;
+using std::make_pair;
+using std::make_unique;
+using std::pair;
+using std::unique_ptr;
 
 constexpr size_t alignment_acquirer::MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR;
 
@@ -59,58 +61,41 @@ unique_ptr<alignment_acquirer> alignment_acquirer::clone() const {
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const pdb_list &arg_pdbs
+pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
                                                                                         ) const {
-	// Call the concrete class's implementation of do_get_alignment_and_orderer() and grab the resulting alignment and superpose_orderer
-	const pair<alignment, superpose_orderer> alignment_and_orderer = do_get_alignment_and_orderer(arg_pdbs);
-	const alignment         &new_alignment = alignment_and_orderer.first;
-	const superpose_orderer &my_orderer    = alignment_and_orderer.second;
+	using std::to_string;
+
+	// Call the concrete class's implementation of do_get_alignment_and_orderer() and grab the resulting alignment and spanning_tree
+	const pair<alignment, size_size_pair_vec> alignment_and_orderer = do_get_alignment_and_spanning_tree( arg_pdbs );
+
+	const size_t num_alignment_entries = alignment_and_orderer.first.num_entries();
+	const size_t num_span_tree_entries = alignment_and_orderer.second.size();
 
 	// Check that both are of the correct size
 	const size_t num_pdbs = arg_pdbs.size();
-	if ( new_alignment.num_entries() != num_pdbs ) {
+	if ( num_alignment_entries != num_pdbs ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
 			"Number of entries in alignment ("
-			+ ::std::to_string( new_alignment.num_entries() )
+			+ to_string( num_alignment_entries )
 			+ ") does not match expected number ("
-			+ ::std::to_string( num_pdbs                    )
+			+ to_string( num_pdbs              )
 			+ ")"
 		));
 	}
-	if ( my_orderer.get_num_items()  != num_pdbs  ) {
+	if ( ( num_span_tree_entries > 0 || num_pdbs > 0 ) && num_span_tree_entries + 1 != num_pdbs ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
-			"Number of entries in superpose_orderer ("
-			+ ::std::to_string( my_orderer.get_num_items() )
+			"Number of entries in spanning tree between aligned entries ("
+			+ to_string( num_span_tree_entries                                         )
 			+ ") does not match expected number ("
-			+ ::std::to_string( num_pdbs                    )
-			+ ")"
+			+ to_string( num_pdbs                                                      )
+			+ ") - perhaps there aren't enough PDBs with pairs overlapping by at least "
+			+ to_string( alignment_acquirer::MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR )
+			+ " residues"
 		));
-	}
-
-	// Try to construct a spanning tree
-	// Catch any failures and report them sensibly
-	size_size_pair_vec spanning_tree;
-	try {
-//		spanning_tree = get_spanning_tree( my_orderer );
-		spanning_tree = get_spanning_tree_ordered_by_desc_score( my_orderer );
-	}
-	/// \todo Make the condition of this error message come from the method by which the orderer was populated
-	catch (const invalid_argument_exception &err) {
-		logger::log_and_exit(
-			logger::return_code::INSUFFICIENT_RESIDUE_NAME_OVERLAPS,
-			"Cannot construct a tree connecting all PDBs with pairs overlapping by at least " + ::std::to_string( alignment_acquirer::MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR ) + " residues"
-		);
-	}
-
-	// If the size of the spanning tree isn't one less than the number of PDBs then throw a wobbly
-	//
-	/// \todo Also check the size of the alignment matches?
-	if ( spanning_tree.size() + 1 != num_pdbs ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("The spanning tree does not correctly cover the number of PDBs"));
 	}
 
 	// Return the resulting alignment and spanning tree
-	return { new_alignment, spanning_tree };
+	return alignment_and_orderer;
 }
 
 /// \brief Construct suitable alignment_acquirer objects implied by the specified alignment_input_spec
@@ -120,6 +105,7 @@ pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanni
 /// \relates alignment_input_spec
 uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
                                                                   ) {
+	using std::to_string;
 	uptr_vec<alignment_acquirer> alignment_acquirers;
 
 	// If the alignment is to be created by reading a legacy CORA alignment file, do that
@@ -145,8 +131,8 @@ uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignmen
 
 	if ( alignment_acquirers.size() != get_num_acquirers( arg_alignment_input_spec ) ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception(
-			"The number of alignment acquirers "     + ::std::to_string( alignment_acquirers.size() )
-			+ " doesn't match the expected number (" + ::std::to_string( get_num_acquirers( arg_alignment_input_spec ) ) + ")"
+			"The number of alignment acquirers "     + to_string( alignment_acquirers.size() )
+			+ " doesn't match the expected number (" + to_string( get_num_acquirers( arg_alignment_input_spec ) ) + ")"
 		));
 	}
 

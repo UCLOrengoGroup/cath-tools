@@ -34,7 +34,6 @@ namespace cath { namespace opts { class cath_refine_align_options; } }
 namespace cath { namespace opts { class cath_score_align_options; } }
 namespace cath { namespace opts { class cath_superpose_options; } }
 namespace cath { namespace opts {class pdbs_acquirer; } }
-namespace cath { namespace sup { class superpose_orderer; } }
 
 namespace cath {
 	namespace align {
@@ -46,7 +45,7 @@ namespace cath {
 			virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
 			
 			/// \brief TODOCUMENT
-			virtual std::pair<alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const = 0;
+			virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::pdb_list &) const = 0;
 
 		protected:
 			/// \brief The minimum number of residues that are required in "residue name" aligning

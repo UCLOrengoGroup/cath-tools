@@ -39,7 +39,7 @@ namespace cath {
 			boost::filesystem::path ssap_scores_filename;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
-			std::pair<alignment, sup::superpose_orderer> do_get_alignment_and_orderer(const file::pdb_list &) const final;
+			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::pdb_list &) const final;
 
 		public:
 			explicit ssap_scores_file_alignment_acquirer(const boost::filesystem::path &);
@@ -49,13 +49,13 @@ namespace cath {
 
 		size_size_alignment_tuple_vec get_spanning_alignments(const file::pdb_list &,
 		                                                      const str_vec &,
-		                                                      const size_size_pair_vec &,
+		                                                      const size_size_doub_tpl_vec &,
 		                                                      const boost::filesystem::path &,
 		                                                      const ostream_ref_opt & = boost::none);
 
 		alignment build_multi_alignment(const file::pdb_list &,
 		                                const str_vec &,
-		                                const size_size_pair_doub_map &,
+		                                const size_size_doub_tpl_vec &,
 		                                const boost::filesystem::path &,
 		                                const ostream_ref_opt & = boost::none);
 

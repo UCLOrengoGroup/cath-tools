@@ -43,9 +43,9 @@ namespace cath {
 
 			static ssap_scores_entry_vec parse_ssap_scores_file_simple(const boost::filesystem::path &);
 
-			static std::pair<str_vec, size_size_pair_doub_map> parse_ssap_scores_file(std::istream &);
+			static std::pair<str_vec, size_size_doub_tpl_vec> parse_ssap_scores_file(std::istream &);
 
-			static std::pair<str_vec, size_size_pair_doub_map> parse_ssap_scores_file(const boost::filesystem::path &);
+			static std::pair<str_vec, size_size_doub_tpl_vec> parse_ssap_scores_file(const boost::filesystem::path &);
 		};
 
 		str_str_pair_bool_map make_arbitrary_is_positive_data(const ssap_scores_entry_vec &);

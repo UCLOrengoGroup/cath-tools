@@ -23,6 +23,7 @@
 #include "alignment/alignment.hpp"
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/residue_score/residue_scorer.hpp" // ***** TEMPORARY *****
+#include "common/boost_addenda/graph/spanning_tree.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/logger.hpp"
@@ -36,15 +37,15 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp" // ***** TEMPORARY *****
 #include "structure/protein/sec_struc_planar_angles.hpp" // ***** TEMPORARY *****
-#include "superposition/superpose_orderer.hpp"
 
 #include <fstream>
 
+using namespace cath;
 using namespace cath::align;
+using namespace cath::align::detail;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
-using namespace cath::sup;
 
 using boost::filesystem::path;
 using std::cerr;
@@ -60,8 +61,8 @@ unique_ptr<alignment_acquirer> ssap_aln_file_alignment_acquirer::do_clone() cons
 }
 
 /// \brief TODOCUMENT
-pair<alignment, superpose_orderer> ssap_aln_file_alignment_acquirer::do_get_alignment_and_orderer(const pdb_list &arg_pdbs ///< TODOCUMENT
-                                                                                                  ) const {
+pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
+                                                                                                         ) const {
 	const size_t num_pdbs = arg_pdbs.size();
 	if ( num_pdbs != 2 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Superposing with a SSAP alignment requires exactly two PDBs"));
@@ -69,7 +70,6 @@ pair<alignment, superpose_orderer> ssap_aln_file_alignment_acquirer::do_get_alig
 	ifstream my_aln_stream;
 	open_ifstream(my_aln_stream, get_ssap_alignment_file());
 	alignment new_alignment( num_pdbs );
-	superpose_orderer my_orderer( num_pdbs );
 	try {
 		new_alignment = read_alignment_from_cath_ssap_legacy_format(
 			my_aln_stream,
@@ -78,8 +78,6 @@ pair<alignment, superpose_orderer> ssap_aln_file_alignment_acquirer::do_get_alig
 			ostream_ref{ cerr }
 		);
 		my_aln_stream.close();
-		// Set an arbitrary score to ensure that the spanning tree will connect the two entries
-		my_orderer.set_score(alignment::PAIR_B_IDX, alignment::PAIR_A_IDX, 0.0);
 	}
 	catch (const runtime_error_exception &er) {
 		logger::log_and_exit(
@@ -93,7 +91,10 @@ pair<alignment, superpose_orderer> ssap_aln_file_alignment_acquirer::do_get_alig
 	score_alignment( residue_scorer(), new_alignment, proteins_of_pdbs );
 
 	// Return the results
-	return make_pair( new_alignment, my_orderer );
+	return make_pair(
+		new_alignment,
+		make_simple_unweighted_spanning_tree( num_pdbs )
+	);
 }
 
 /// \brief Ctor for ssap_aln_file_alignment_acquirer

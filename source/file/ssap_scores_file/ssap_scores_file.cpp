@@ -82,11 +82,8 @@ ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(const path
 }
 
 /// \brief TODOCUMENT
-pair<str_vec, size_size_pair_doub_map> ssap_scores_file::parse_ssap_scores_file(istream &arg_ssap_scores_is ///< TODOCUMENT
-                                                                                ) {
-	using str_str_pair = pair<string, string>;
-	using str_str_pair_doub_map = map<str_str_pair, double>;
-
+pair<str_vec, size_size_doub_tpl_vec> ssap_scores_file::parse_ssap_scores_file(istream &arg_ssap_scores_is ///< TODOCUMENT
+                                                                               ) {
 	const auto entries = parse_ssap_scores_file_simple( arg_ssap_scores_is );
 
 	str_vec               id1s;
@@ -116,14 +113,14 @@ pair<str_vec, size_size_pair_doub_map> ssap_scores_file::parse_ssap_scores_file(
 	}
 
 	// Build a map of the scores based on the indices
-	size_size_pair_doub_map score_of_index_pair;
-	for (const str_str_pair_doub_map::value_type &score_data : score_of_ids) {
+	size_size_doub_tpl_vec score_of_index_pair;
+	for (const auto &score_data : score_of_ids) {
 		const string &id1        = score_data.first.first;
 		const string &id2        = score_data.first.second;
 		const double &ssap_score = score_data.second;
-		const size_t  index_1    = index_of_id[id1];
-		const size_t  index_2    = index_of_id[id2];
-		score_of_index_pair[make_pair(index_1, index_2)] = ssap_score;
+		const size_t  index_1    = index_of_id[ id1 ];
+		const size_t  index_2    = index_of_id[ id2 ];
+		score_of_index_pair.emplace_back( index_1, index_2, ssap_score );
 
 		// TEMPORARY DEBUG STATEMENTS
 //		cerr << "id1 is " << id1;
@@ -139,11 +136,11 @@ pair<str_vec, size_size_pair_doub_map> ssap_scores_file::parse_ssap_scores_file(
 }
 
 /// \brief TODOCUMENT
-pair<str_vec, size_size_pair_doub_map> ssap_scores_file::parse_ssap_scores_file(const path &arg_ssap_scores_file ///< TODOCUMENT
-                                                                                ) {
+pair<str_vec, size_size_doub_tpl_vec> ssap_scores_file::parse_ssap_scores_file(const path &arg_ssap_scores_file ///< TODOCUMENT
+                                                                               ) {
 	ifstream ssap_scores_ifstream;
 	open_ifstream( ssap_scores_ifstream, arg_ssap_scores_file );
-	const pair<str_vec, size_size_pair_doub_map> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file(ssap_scores_ifstream);
+	const pair<str_vec, size_size_doub_tpl_vec> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file(ssap_scores_ifstream);
 	ssap_scores_ifstream.close();
 	return ssap_scores_data;
 }
