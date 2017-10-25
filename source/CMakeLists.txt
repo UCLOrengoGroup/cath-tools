@@ -352,12 +352,18 @@ set(
 )
 
 set(
+	NORMSOURCES_COMMON_BOOST_ADDENDA_GRAPH
+		common/boost_addenda/graph/spanning_tree.cpp
+)
+
+set(
 	NORMSOURCES_COMMON_BOOST_ADDENDA_LOG
 		common/boost_addenda/log/log_to_ostream_guard.cpp
 )
 
 set(
 	NORMSOURCES_COMMON_BOOST_ADDENDA
+		${NORMSOURCES_COMMON_BOOST_ADDENDA_GRAPH}
 		${NORMSOURCES_COMMON_BOOST_ADDENDA_LOG}
 )
 
@@ -1481,6 +1487,11 @@ set(
 )
 
 set(
+	TESTSOURCES_COMMON_BOOST_ADDENDA_GRAPH
+		common/boost_addenda/graph/spanning_tree_test.cpp
+)
+
+set(
 	TESTSOURCES_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR
 		common/boost_addenda/range/adaptor/adaptor_test.cpp
 )
@@ -1508,6 +1519,7 @@ set(
 
 set(
 	TESTSOURCES_COMMON_BOOST_ADDENDA
+		${TESTSOURCES_COMMON_BOOST_ADDENDA_GRAPH}
 		${TESTSOURCES_COMMON_BOOST_ADDENDA_RANGE}
 		${TESTSOURCES_COMMON_BOOST_ADDENDA_TRIBOOL}
 )
