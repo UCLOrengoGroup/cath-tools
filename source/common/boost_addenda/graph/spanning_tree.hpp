@@ -173,6 +173,8 @@ namespace cath {
 		size_size_doub_tpl_vec calc_min_spanning_tree(const size_size_doub_tpl_vec &,
 		                                              const size_t &);
 		size_size_pair_vec get_edges_of_spanning_tree(const size_size_doub_tpl_vec &);
+		size_size_doub_tpl_vec order_spanning_tree_from_start(const size_size_doub_tpl_vec &,
+		                                                      const size_t &);
 
 	} // namespace common
 } // namespace cath

@@ -111,4 +111,60 @@ BOOST_AUTO_TEST_CASE(gets_simple_problem_correct) {
 	BOOST_TEST( calc_min_spanning_tree( edges_and_scores, num_items ) == expected_min, per_element{} );
 }
 
+/// \dot
+/// digraph example {
+///     graph [ ratio=auto ]
+///     node  [ shape=circle, fontname=Helvetica, fontsize=10, style=filled, color=indigo, fontcolor=white ];
+///     edge  [ fontname=Helvetica, fontsize=10, arrowhead=open, dir="both" ];
+///
+///      0 ->  5 [label =  "3" ];
+///      1 ->  6 [label =  "7" ];
+///      2 ->  6 [label =  "7" ];
+///      3 ->  6 [label = "10" ];
+///      3 ->  9 [label =  "0" ];
+///      4 ->  7 [label =  "1" ];
+///      4 ->  8 [label =  "9" ];
+///      4 -> 12 [label =  "9" ];
+///      5 ->  7 [label =  "8" ];
+///      7 ->  9 [label =  "6" ];
+///      7 -> 10 [label =  "2" ];
+///     10 -> 11 [label =  "5" ];
+///     13 ->  9 [label =  "4" ];
+/// }
+/// \enddot
+BOOST_AUTO_TEST_CASE(test_a) {
+	const size_size_doub_tpl_vec input = {
+		{  0,  5,  3.0 },
+		{  1,  6,  7.0 },
+		{  2,  6,  7.0 },
+		{  3,  6, 10.0 },
+		{  3,  9,  0.0 },
+		{  4,  7,  1.0 },
+		{  4,  8,  9.0 },
+		{  4, 12,  9.0 },
+		{  5,  7,  8.0 },
+		{  7,  9,  6.0 },
+		{  7, 10,  2.0 },
+		{ 10, 11,  5.0 },
+		{ 13,  9,  4.0 },
+	};
+
+	const size_size_doub_tpl_vec expected = {
+		{  0,  5,  3.0 },
+		{  5,  7,  8.0 },
+		{  7,  9,  6.0 },
+		{ 13,  9,  4.0 },
+		{  7, 10,  2.0 },
+		{ 10, 11,  5.0 },
+		{  4,  7,  1.0 },
+		{  4, 12,  9.0 },
+		{  4,  8,  9.0 },
+		{  3,  9,  0.0 },
+		{  3,  6, 10.0 },
+		{  2,  6,  7.0 },
+		{  1,  6,  7.0 },
+	};
+	BOOST_TEST( order_spanning_tree_from_start( input, 0 ) == expected, per_element{} );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
