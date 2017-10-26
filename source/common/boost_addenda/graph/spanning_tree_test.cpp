@@ -61,52 +61,52 @@ BOOST_AUTO_TEST_SUITE_END()
 /// \brief Check that the correct spanning tree is generated from real data from 3.90.400.10
 BOOST_AUTO_TEST_CASE(spanning_tree_for_3_90_400_10) {
 	const size_size_doub_tpl_vec edges_and_scores = {
-		{ 0, 1, 85.40 }, // should be 3rd in max spanning tree
-		{ 0, 2, 86.25 },
-		{ 0, 3, 87.96 }, // should be 2nd in max spanning tree
-		{ 1, 2, 85.21 },
-		{ 1, 3, 84.20 },
-		{ 2, 3, 88.34 }, // should be 1st in max spanning tree
+		size_size_doub_tpl{ 0, 1, 85.40 }, // should be 3rd in max spanning tree
+		size_size_doub_tpl{ 0, 2, 86.25 },
+		size_size_doub_tpl{ 0, 3, 87.96 }, // should be 2nd in max spanning tree
+		size_size_doub_tpl{ 1, 2, 85.21 },
+		size_size_doub_tpl{ 1, 3, 84.20 },
+		size_size_doub_tpl{ 2, 3, 88.34 }, // should be 1st in max spanning tree
 	};
 	constexpr size_t num_items = 4;
 
 	const size_size_doub_tpl_vec expected_max = {
-		{ 2, 3, 88.34 },
-		{ 0, 3, 87.96 },
-		{ 0, 1, 85.40 },
+		size_size_doub_tpl{ 2, 3, 88.34 },
+		size_size_doub_tpl{ 0, 3, 87.96 },
+		size_size_doub_tpl{ 0, 1, 85.40 },
 	};
 	BOOST_TEST( calc_max_spanning_tree( edges_and_scores, num_items ) == expected_max, per_element{} );
 
 	const size_size_doub_tpl_vec expected_min = {
-		{ 1, 3, 84.20 },
-		{ 1, 2, 85.21 },
-		{ 0, 1, 85.40 },
+		size_size_doub_tpl{ 1, 3, 84.20 },
+		size_size_doub_tpl{ 1, 2, 85.21 },
+		size_size_doub_tpl{ 0, 1, 85.40 },
 	};
 	BOOST_TEST( calc_min_spanning_tree( edges_and_scores, num_items ) == expected_min, per_element{} );
 }
 
 BOOST_AUTO_TEST_CASE(gets_simple_problem_correct) {
 	const size_size_doub_tpl_vec edges_and_scores = {
-		{ 0, 1, -4.0 },
-		{ 0, 2, 80.0 },
-		{ 1, 2, 72.0 },
-		{ 1, 3, 10.0 },
-		{ 2, 3, 61.0 },
+		size_size_doub_tpl{ 0, 1, -4.0 },
+		size_size_doub_tpl{ 0, 2, 80.0 },
+		size_size_doub_tpl{ 1, 2, 72.0 },
+		size_size_doub_tpl{ 1, 3, 10.0 },
+		size_size_doub_tpl{ 2, 3, 61.0 },
 	};
 	constexpr size_t num_items = 4;
 
 	// Construct the got results and the expected results and then compare
 	const size_size_doub_tpl_vec expected_max = {
-		{ 0, 2, 80.0 },
-		{ 1, 2, 72.0 },
-		{ 2, 3, 61.0 }
+		size_size_doub_tpl{ 0, 2, 80.0 },
+		size_size_doub_tpl{ 1, 2, 72.0 },
+		size_size_doub_tpl{ 2, 3, 61.0 }
 	};
 	BOOST_TEST( calc_max_spanning_tree( edges_and_scores, num_items ) == expected_max, per_element{} );
 
 	const size_size_doub_tpl_vec expected_min = {
-		{ 0, 1, -4.0 },
-		{ 1, 3, 10.0 },
-		{ 2, 3, 61.0 }
+		size_size_doub_tpl{ 0, 1, -4.0 },
+		size_size_doub_tpl{ 1, 3, 10.0 },
+		size_size_doub_tpl{ 2, 3, 61.0 }
 	};
 	BOOST_TEST( calc_min_spanning_tree( edges_and_scores, num_items ) == expected_min, per_element{} );
 }
