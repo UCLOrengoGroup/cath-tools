@@ -41,8 +41,6 @@ unique_ptr<hits_processor> write_html_hits_processor::do_clone() const {
 	return { make_uptr_clone( *this ) };
 }
 
-template <typename...> class type_printer;
-
 /// \brief Process the specified data
 ///
 /// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
