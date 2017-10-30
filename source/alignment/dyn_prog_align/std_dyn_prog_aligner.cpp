@@ -21,6 +21,7 @@
 #include "std_dyn_prog_aligner.hpp"
 
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/adaptor/reversed.hpp>
 
 #include "alignment/alignment.hpp"
 #include "alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.hpp" // ***** TEMPORARY *****
@@ -37,6 +38,7 @@ using namespace cath::align::gap;
 using namespace cath::common;
 using namespace std;
 
+using boost::adaptors::reversed;
 using boost::numeric_cast;
 
 /// \brief A standard do_clone method.
@@ -160,10 +162,8 @@ score_alignment_pair std_dyn_prog_aligner::do_align(const dyn_prog_score_source 
 	the_return_path.reset(        length_a, length_b, window_width );
 	the_accumulated_scores.reset( length_a, length_b, window_width );
 
-	for (size_t index_a_offset_1 = length_a; index_a_offset_1 > 0; --index_a_offset_1) {
-		const size_t index_a = index_a_offset_1 - 1;
-		for (size_t index_b_offset_1 = length_b; index_b_offset_1 > 0; --index_b_offset_1) {
-			const size_t index_b = index_b_offset_1 - 1;
+	for (const size_t &index_a : indices( length_a ) | reversed ) {
+		for (const size_t &index_b : indices( length_b ) | reversed ) {
 
 			const path_step_score_map score_of_path_step = get_total_scores_of_path_steps_from_point(
 				the_accumulated_scores,

@@ -63,6 +63,7 @@ using boost::algorithm::join;
 using boost::algorithm::replace_all_copy;
 using boost::edge_weight_t;
 using boost::graph_traits;
+using boost::irange;
 using boost::lexical_cast;
 using boost::no_property;
 using boost::property;
@@ -108,7 +109,7 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &arg_
 		const string         &name_a        = names      [ entry_ctr_a ];
 		const residue_id_vec &residue_ids_a = residue_ids[ entry_ctr_a ];
 
-		for (size_t entry_ctr_b = entry_ctr_a+1; entry_ctr_b < num_entries; ++entry_ctr_b) {
+		for (const size_t &entry_ctr_b : irange( entry_ctr_a + 1, num_entries ) ) {
 			const string         &name_b        = names      [ entry_ctr_b ];
 			const residue_id_vec &residue_ids_b = residue_ids[ entry_ctr_b ];
 
@@ -203,7 +204,7 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 		// ????
 		const size_t num_present_posns = num_present_positions_of_index( the_alignment, aln_index );
 		for (const size_t &entry_a : indices( num_entries ) ) {
-			for (size_t entry_b = entry_a + 1; entry_b < num_entries; ++entry_b) {
+			for (const size_t &entry_b : irange( entry_a + 1, num_entries ) ) {
 
 				const aln_posn_opt posn_a = the_alignment.position_of_entry_of_index( entry_a, aln_index );
 				const aln_posn_opt posn_b = the_alignment.position_of_entry_of_index( entry_b, aln_index );

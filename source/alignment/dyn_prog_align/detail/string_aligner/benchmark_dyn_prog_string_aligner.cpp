@@ -33,13 +33,15 @@
 #include <string>
 
 using namespace cath;
-using namespace cath::align::gap;
 using namespace cath::align::detail;
+using namespace cath::align::gap;
 using namespace cath::common;
 using namespace std;
 
-using boost::adaptors::reverse;
+using boost::adaptors::reversed;
+using boost::irange;
 using boost::numeric_cast;
+using boost::range::reverse;
 
 /// \brief TODOCUMENT
 void benchmark_dyn_prog_string_aligner::make_ends_spaces(string &arg_string ///< TODOCUMENT
@@ -50,7 +52,7 @@ void benchmark_dyn_prog_string_aligner::make_ends_spaces(string &arg_string ///<
 		}
 		letter = ' ';
 	}
-	for (char &letter : reverse( arg_string) ) {
+	for (char &letter : arg_string | reversed ) {
 		if (letter != '-') {
 			break;
 		}
@@ -249,11 +251,11 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 	else if (seq_2_tail_length > seq_1_tail_length) {
 		aligned_1 += string( numeric_cast<size_t>( seq_2_tail_length - seq_1_tail_length ), '-');
 	}
-	for (ptrdiff_t tail_1_ctr = numeric_cast<ptrdiff_t>(length_a) - 1; tail_1_ctr >= numeric_cast<ptrdiff_t>( best_seq_1_end ); --tail_1_ctr) {
-		aligned_1 += arg_string_a[ numeric_cast<size_t>( tail_1_ctr ) ];
+	for (const size_t &tail_1_ctr : irange( best_seq_1_end, length_a ) | reversed ) {
+		aligned_1 += arg_string_a[ tail_1_ctr ];
 	}
-	for (ptrdiff_t tail_2_ctr = numeric_cast<ptrdiff_t>(length_b) - 1; tail_2_ctr >= numeric_cast<ptrdiff_t>( best_seq_2_end ); --tail_2_ctr) {
-		aligned_2 += arg_string_b[ numeric_cast<size_t>( tail_2_ctr ) ];
+	for (const size_t &tail_2_ctr : irange( best_seq_2_end, length_b ) | reversed ) {
+		aligned_2 += arg_string_b[ tail_2_ctr ];
 	}
 
 	// Now work back through the matrix, appending to aligned1 and aligned2
@@ -264,15 +266,15 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 		ptrdiff_t new_seq_2_ctr = prev_seq_2_posn_matrix[ max_length * numeric_cast<size_t>( seq_1_ctr ) + numeric_cast<size_t>( seq_2_ctr ) ];
 		//cerr << "(" << seq1Ctr << "," << seq2Ctr << ") -> (" << newSeq1Ctr << "," << newSeq2Ctr << ")" << endl;
 		if (seq_1_ctr - new_seq_1_ctr > 1) {
-			aligned_2 += string( numeric_cast<size_t>( seq_1_ctr - new_seq_1_ctr - 1 ), '-');
-			for (ptrdiff_t ins_1_ctr = seq_1_ctr-1; ins_1_ctr > new_seq_1_ctr; ins_1_ctr--) {
-				aligned_1 += arg_string_a[ numeric_cast<size_t>( ins_1_ctr ) ];
+			aligned_2 += string( numeric_cast<size_t>( seq_1_ctr - new_seq_1_ctr - 1 ), '-' );
+			for (const size_t &ins_1_ctr : irange( numeric_cast<size_t>( new_seq_1_ctr + 1 ), numeric_cast<size_t>( seq_1_ctr ) ) | reversed) {
+				aligned_1 += arg_string_a[ ins_1_ctr ];
 			}
 		}
 		else if (seq_2_ctr - new_seq_2_ctr > 1) {
-			aligned_1 += string( numeric_cast<size_t>( seq_2_ctr - new_seq_2_ctr - 1 ), '-');
-			for (ptrdiff_t ins_2_ctr = seq_2_ctr-1; ins_2_ctr > new_seq_2_ctr; ins_2_ctr--) {
-				aligned_2 += arg_string_b[ numeric_cast<size_t>( ins_2_ctr ) ];
+			aligned_1 += string( numeric_cast<size_t>( seq_2_ctr - new_seq_2_ctr - 1 ), '-' );
+			for (const size_t &ins_2_ctr : irange( numeric_cast<size_t>( new_seq_2_ctr + 1 ), numeric_cast<size_t>( seq_2_ctr ) ) | reversed ) {
+				aligned_2 += arg_string_b[ ins_2_ctr ];
 			}
 		}
 		aligned_2 += arg_string_b[ numeric_cast<size_t>( new_seq_2_ctr ) ];
@@ -282,11 +284,11 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 	}
 
 	// Finally construct the heads
-	for (ptrdiff_t head1Ctr = seq_1_ctr-1; head1Ctr >= 0; --head1Ctr) {
-		aligned_1 += arg_string_a[ numeric_cast<size_t>( head1Ctr ) ];
+	for (const size_t &head_1_ctr : indices( numeric_cast<size_t>( seq_1_ctr ) ) | reversed ) {
+		aligned_1 += arg_string_a[ head_1_ctr ];
 	}
-	for (ptrdiff_t head2Ctr = seq_2_ctr-1; head2Ctr >= 0; --head2Ctr) {
-		aligned_2 += arg_string_b[ numeric_cast<size_t>( head2Ctr ) ];
+	for (const size_t &head_2_ctr : indices( numeric_cast<size_t>( seq_2_ctr ) ) | reversed ) {
+		aligned_2 += arg_string_b[ head_2_ctr ];
 	}
 	if (seq_1_ctr > seq_2_ctr) {
 		aligned_2 += string( numeric_cast<size_t>( seq_1_ctr - seq_2_ctr ), '-' );

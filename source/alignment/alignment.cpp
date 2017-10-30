@@ -25,6 +25,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 #include <boost/range/algorithm/max_element.hpp>
@@ -50,11 +51,12 @@ using namespace cath::align;
 using namespace cath::common;
 using namespace std;
 
+using boost::accumulate;
 using boost::adaptors::filtered;
+using boost::adaptors::reversed;
 using boost::adaptors::transformed;
 using boost::algorithm::all_of;
 using boost::algorithm::any_of;
-using boost::accumulate;
 using boost::irange;
 using boost::lexical_cast;
 using boost::none;
@@ -534,8 +536,7 @@ size_vec cath::align::num_present_positions_by_entry(const alignment &arg_alignm
 aln_size_opt cath::align::get_index_of_first_present_position_of_entry(const alignment            &arg_alignment, ///< The alignment to be queried
                                                                        const alignment::size_type &arg_entry      ///< The entry whose first present position is to be found
                                                                        ) {
-	const alignment::size_type aln_length = arg_alignment.length();
-	for (const alignment::size_type &index : indices( aln_length ) ) {
+	for (const alignment::size_type &index : indices( arg_alignment.length() ) ) {
 		if ( has_position_of_entry_of_index( arg_alignment, arg_entry, index ) ) {
 			return index;
 		}
@@ -551,9 +552,7 @@ aln_size_opt cath::align::get_index_of_first_present_position_of_entry(const ali
 aln_size_opt cath::align::get_index_of_last_present_position_of_entry(const alignment            &arg_alignment, ///< The alignment to be queried
                                                                       const alignment::size_type &arg_entry      ///< The entry whose last present position is to be found
                                                                       ) {
-	const alignment::size_type aln_length = arg_alignment.length();
-	for ( alignment::size_type index_offset_1 = aln_length; index_offset_1 > 0; --index_offset_1 ) {
-		const alignment::size_type index = index_offset_1 - 1;
+	for (const alignment::size_type &index : indices( arg_alignment.length() ) | reversed) {
 		if ( has_position_of_entry_of_index( arg_alignment, arg_entry, index ) ) {
 			return index;
 		}
@@ -598,8 +597,7 @@ aln_size_opt cath::align::get_index_of_first_present_position_of_both_entries(co
                                                                               const alignment::size_type &arg_entry_a,   ///< The first entry whose last present position is to be found
                                                                               const alignment::size_type &arg_entry_b    ///< The second entry whose last present position is to be found
                                                                               ) {
-	const alignment::size_type aln_length = arg_alignment.length();
-	for (const alignment::size_type &index : indices( aln_length ) ) {
+	for (const alignment::size_type &index : indices( arg_alignment.length() ) ) {
 		if ( has_position_of_both_entries_of_index( arg_alignment, arg_entry_a, arg_entry_b, index ) ) {
 			return index;
 		}
@@ -616,9 +614,7 @@ aln_size_opt cath::align::get_index_of_last_present_position_of_both_entries(con
                                                                              const alignment::size_type &arg_entry_a,   ///< The first entry whose last present position is to be found
                                                                              const alignment::size_type &arg_entry_b    ///< The second entry whose last present position is to be found
                                                                              ) {
-	const alignment::size_type aln_length = arg_alignment.length();
-	for ( alignment::size_type index_offset_1 = aln_length; index_offset_1 > 0; --index_offset_1 ) {
-		const alignment::size_type index = index_offset_1 - 1;
+	for (const alignment::size_type &index : indices( arg_alignment.length() ) | reversed) {
 		if ( has_position_of_both_entries_of_index( arg_alignment, arg_entry_a, arg_entry_b, index ) ) {
 			return index;
 		}

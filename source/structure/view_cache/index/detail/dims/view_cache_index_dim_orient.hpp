@@ -241,7 +241,7 @@ namespace cath {
 				const int min_cell_index = std::max( 0,         cell_index_of_value_in_current( value - search_radius ) );
 				const int max_cell_index = std::min( num_cells, cell_index_of_value_in_current( value + search_radius ) );
 
-				for (int cell_index = min_cell_index; cell_index <= max_cell_index; ++cell_index) {
+				for (const int &cell_index : irange( min_cell_index, max_cell_index + 1 ) ) {
 					arg_cells[ cell_index ].perform_action_on_matches( arg_entry, arg_criteria, arg_action );
 				}
 			}

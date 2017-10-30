@@ -32,6 +32,7 @@
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "common/cpp14/make_unique.hpp"
+#include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
 
@@ -41,6 +42,7 @@ using namespace std;
 
 using boost::adaptors::filtered;
 using boost::assign::ptr_push_back;
+using boost::irange;
 using boost::lexical_cast;
 using boost::ptr_vector;
 
@@ -100,9 +102,11 @@ vector<alignment::size_type> common_residue_selection_policy::select_common_resi
 	}
 
 	// Sanity check that the common_coords values are strictly increasing
-	for (size_t common_residue_ctr = 1; common_residue_ctr < common_coords.size(); ++common_residue_ctr) {
-		if (common_coords[common_residue_ctr] <= common_coords[common_residue_ctr-1]) {
-			BOOST_THROW_EXCEPTION(runtime_error_exception("common_residue_selection_policy generated common coords that are not strictly increasing"));
+	if ( ! common_coords.empty() ) {
+		for (const size_t &common_residue_ctr : irange( 1_z, common_coords.size() ) ) {
+			if (common_coords[common_residue_ctr] <= common_coords[common_residue_ctr-1]) {
+				BOOST_THROW_EXCEPTION(runtime_error_exception("common_residue_selection_policy generated common coords that are not strictly increasing"));
+			}
 		}
 	}
 

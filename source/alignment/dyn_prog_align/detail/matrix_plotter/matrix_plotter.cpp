@@ -38,6 +38,7 @@ using namespace cath::common;
 using namespace std;
 
 using boost::filesystem::path;
+using boost::irange;
 using boost::numeric_cast;
 
 /// \brief TODOCUMENT
@@ -157,7 +158,7 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &arg_scorer ///< Th
 				lcl_window_width,
 				ctr_b + 1
 			) - 1;
-			for (size_t ctr_a = window_start_a; ctr_a <= window_stop_a; ++ctr_a) {
+			for (const size_t &ctr_a : irange( window_start_a, window_stop_a + 1 ) ) {
 				const double score = numeric_cast<double>( arg_scorer.get_score( ctr_a, ctr_b ) );
 				scores[ctr_a][ctr_b] = score;
 
@@ -205,7 +206,7 @@ void matrix_plotter::plot_return_path_matrix(const return_path_matrix &arg_retur
 			lcl_window_width,
 			ctr_b + 1
 		) - 1;
-		for (size_t ctr_a = window_start_a; ctr_a <= window_stop_a; ++ctr_a) {
+		for (const size_t &ctr_a : irange( window_start_a, window_stop_a + 1 ) ) {
 			const path_step      next_step  = arg_return_path_matrix.get_path_step_towards_end_at_point( ctr_a, ctr_b );
 			const size_size_pair next_point = indices_of_point_after_path_step(next_step, ctr_a, ctr_b);
 
@@ -243,7 +244,7 @@ void matrix_plotter::plot_accumulated_scores(const score_accumulation_matrix &ar
 			lcl_window_width,
 			ctr_b + 1
 		) - 1;
-		for (size_t ctr_a = window_start_a; ctr_a <= window_stop_a; ++ctr_a) {
+		for (const size_t &ctr_a : irange( window_start_a, window_stop_a + 1 ) ) {
 			const score_type score = arg_score_accumulation_matrix.get_score_towards_end_at_point( ctr_a, ctr_b );
 			// (pair flipped due to switching from matrix order (row index then column index) to graph order (x then y))
 			do_write_corner_score( ctr_b, ctr_a, numeric_cast<double>(score) );

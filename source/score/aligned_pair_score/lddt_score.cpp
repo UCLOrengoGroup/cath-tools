@@ -59,6 +59,7 @@ using namespace std;
 
 using boost::accumulate;
 using boost::algorithm::none_of;
+using boost::irange;
 using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
@@ -122,7 +123,7 @@ score_value lddt_score::do_calculate(const alignment &arg_alignment, ///< The pa
 
 	// Loop over the pairs of residues
 	for (const size_t &res_ctr_1 : indices( num_common_residues ) ) {
-		for (size_t res_ctr_2 = res_ctr_1 + 1; res_ctr_2 < num_common_residues; ++res_ctr_2) {
+		for (const size_t &res_ctr_2 : irange( res_ctr_1 + 1, num_common_residues ) ) {
 
 			const size_t &num_atoms_1 = common_coords_by_residue.first[res_ctr_1].size();
 			const size_t &num_atoms_2 = common_coords_by_residue.first[res_ctr_2].size();

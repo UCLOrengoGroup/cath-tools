@@ -628,8 +628,8 @@ void cath::restrict_to_regions(protein              &/*arg_protein*/, ///< The i
 
 // //	const size_t num_residues_to_keep = residues_to_keep.size();
 // //
-// //	for (size_t i = 1; i <= num_residues_to_keep; ++i) {
-// //		residue &newp = residues_to_keep[i-1];
+// //	for (const size_t &i : indices( num_residues_to_keep ) ) {
+// //		residue &newp = residues_to_keep[ i ];
 // //
 // //		// Disulfide information (not sure it's important)
 // //		if ( islower(newp.get_amino_acid()) ) {

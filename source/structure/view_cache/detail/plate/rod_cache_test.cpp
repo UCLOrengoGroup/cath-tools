@@ -33,6 +33,8 @@ using namespace cath::common;
 using namespace cath::index::detail;
 using namespace std;
 
+using boost::irange;
+
 namespace cath {
 	namespace test {
 
@@ -241,8 +243,8 @@ BOOST_AUTO_TEST_CASE(exceptions_for_small_entries) {
 /// \brief Perform thorough checks on conversions between indices and rod/notch on all matrices up to 20x20
 BOOST_AUTO_TEST_CASE(all_sizes_and_indices) {
 	const auto max_size = 20_z;
-	for (size_t size_a = 1; size_a < max_size; ++size_a) {
-		for (size_t size_b = 1; size_b < max_size; ++size_b) {
+	for (const size_t &size_a : irange( 1_z, max_size ) ) {
+		for (const size_t &size_b : irange( 1_z, max_size ) ) {
 
 			// Check that all entries with index_b of 0 have 0 notch and appropriate rod values
 			for (const size_t &index_a : indices( size_a ) ) {

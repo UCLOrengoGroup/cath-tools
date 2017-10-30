@@ -55,6 +55,7 @@ using namespace std;
 using boost::adaptors::map_values;
 using boost::algorithm::any_of;
 using boost::filesystem::path;
+using boost::irange;
 using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;
 
@@ -109,7 +110,7 @@ void cath::sup::write_xml_sup(ostream              &arg_ostream,       ///< TODO
 		arg_ostream << "  </structure" << entry_ctr+1 << ">\n";
 	}
 
-	for (size_t rotation_ctr = 1; rotation_ctr < num_entries; ++rotation_ctr) {
+	for (const size_t &rotation_ctr : irange( 1_z, num_entries ) ) {
 		const rotation sup_rotn = arg_superposition.get_rotation_of_index(rotation_ctr);
 		for (const size_t &dim_ctr_1 : indices( coord::NUM_DIMS ) ) {
 			arg_ostream << "  <rotationmatrix name=\"row" << dim_ctr_1+1 << "\"";

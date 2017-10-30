@@ -117,6 +117,7 @@
 #include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional/optional_io.hpp>
+#include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/stable_sort.hpp>
 
 #include "alignment/alignment_coord_extractor.hpp"
@@ -180,7 +181,9 @@ using namespace cath::geom;
 using namespace cath::sup;
 using namespace cath::opts;
 
+using boost::adaptors::reversed;
 using boost::filesystem::path;
+using boost::irange;
 using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
@@ -393,68 +396,64 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 
 //	const protein &protein_a = proteins.first;
 //	const protein &protein_b = proteins.second;
-//	const size_t num_res_a = protein_a.get_length();
-//	const size_t num_res_b = protein_b.get_length();
-//	for (const size_t &ctr_a : indices( num_res_a ) ) {
-//		for (const size_t &ctr_b : indices( num_res_b ) ) {
+//	for (const size_t &ctr_a : indices( protein_a.get_length() ) ) {
+//		for (const size_t &ctr_b : indices( protein_b.get_length() ) ) {
 ////			if ( ctr_a + 1 != 20 || ctr_b + 1 != 15 ) {
 ////				continue;
 ////			}
-//			const residue &residue_a = protein_a.get_residue_ref_of_index( ctr_a );
-//			const residue &residue_b = protein_b.get_residue_ref_of_index( ctr_b );
-//			const bool result = residues_have_similar_area_angle_props(residue_a, residue_b);
-//			cerr << "angle_props :\t" << ctr_a + 1;
-//			cerr << "\t" << ctr_b + 1;
-//			cerr << "\t" << result;
-//			cerr << endl;
+//			std::cerr << "angle_props :"
+//				"\t" << ctr_a + 1
+//				"\t" << ctr_b + 1
+//				"\t" << residues_have_similar_area_angle_props(
+//					protein_a.get_residue_ref_of_index( ctr_a ),
+//					protein_b.get_residue_ref_of_index( ctr_b )
+//				)
+//				"\n" << std::flush;
 //		}
 //	}
 //	exit(0);
-
-
-//	const size_t num_res_a = protein_a.get_length();
-//	const size_t num_res_b = protein_b.get_length();
-//	for (size_t a_view_from_index = 1; a_view_from_index <= num_res_a; ++a_view_from_index) {
-//		for (size_t b_view_from_index = 1; b_view_from_index <= num_res_b; ++b_view_from_index) {
-//			const residue &residue_a_view_from = get_residue_ref_of_index__offset_1( protein_a, a_view_from_index );
-//			const residue &residue_b_view_from = protein_b.get_residue_ref_of_index__offset_1(b_view_from_index );
-//			for (size_t a_dest_to_index = 1; a_dest_to_index <= num_res_a; ++a_dest_to_index) {
-//				for (size_t b_dest_to_index = 1; b_dest_to_index <= num_res_b; ++b_dest_to_index) {
-////					if ( a_view_from_index != 38 || b_view_from_index != 30 || a_dest_to_index != 15 || b_dest_to_index != 2 ) {
+//
+//
+//	for (const size_t &a_view_from_index : indices( protein_a.get_length() ) ) {
+//		for (const size_t &b_view_from_index : indices( protein_b.get_length() ) ) {
+//			for (const size_t &a_dest_to_index : indices( protein_a.get_length() ) ) {
+//				for (const size_t &b_dest_to_index : indices( protein_b.get_length() ) ) {
+////					if ( a_view_from_index!= 37 || b_view_from_index != 29 || a_dest_to_index != 14 || b_dest_to_index != 1 ) {
 ////					  continue;
 ////					}
-//					const residue &residue_a_dest_to = protein_a.get_residue_ref_of_index__offset_1( a_dest_to_index );
-//					const residue &residue_b_dest_to = protein_b.get_residue_ref_of_index__offset_1( b_dest_to_index );
-//					cerr << "res";
-//					cerr << "\t" << a_view_from_index;
-//					cerr << "\t" << b_view_from_index;
-//					cerr << "\t" << a_dest_to_index;
-//					cerr << "\t" << b_dest_to_index;
-//					cerr << "\t" << context_res(
-//						residue_a_view_from, residue_b_view_from,
-//						residue_a_dest_to,   residue_b_dest_to
-//					);
-//					cerr << endl;
+//					std::cerr << "res";
+//						<< "\t" << ( a_view_from_index + 1 )
+//						<< "\t" << ( b_view_from_index + 1 )
+//						<< "\t" << ( a_dest_to_index   + 1 )
+//						<< "\t" << ( b_dest_to_index   + 1 )
+//						<< "\t" << context_res(
+//							protein_a.get_residue_ref_of_index( a_view_from_index ),
+//							protein_b.get_residue_ref_of_index( b_view_from_index ),
+//							protein_a.get_residue_ref_of_index( a_dest_to_index   ),
+//							protein_b.get_residue_ref_of_index( b_dest_to_index   )
+//						)
+//						<< "\n" << std::flush;
 //				}
 //			}
 //		}
 //	}
-
-//	const size_t num_ss_a = protein_a.get_num_sec_strucs();
-//	const size_t num_ss_b = protein_b.get_num_sec_strucs();
-//	for (const size_t &ctr_a : indices( num_ss_a ) ) {
-//		for (const size_t &ctr_b : indices( num_ss_b ) ) {
-//			const sec_struc &sec_struc_a = protein_a.get_sec_struc_ref_of_index( ctr_a );
-//			const sec_struc &sec_struc_b = protein_b.get_sec_struc_ref_of_index( ctr_b );
-//			for (size_t ctr_i = 1; ctr_i <= num_ss_a; ++ctr_i) {
-//				for (size_t ctr_j = 1; ctr_j <= num_ss_b; ++ctr_j) {
-//					cerr << "sec";
-//					cerr << "\t" << ctr_a;
-//					cerr << "\t" << ctr_b;
-//					cerr << "\t" << ctr_i;
-//					cerr << "\t" << ctr_j;
-//					cerr << "\t" << context_sec(protein_a, protein_b, sec_struc_a, sec_struc_b, ctr_i, ctr_j);
-//					cerr << endl;
+//
+//	for (const size_t &ctr_a : indices( protein_a.get_num_sec_strucs() ) ) {
+//		for (const size_t &ctr_b : indices( protein_b.get_num_sec_strucs() ) ) {
+//			for (const size_t &ctr_i : indices( protein_a.get_num_sec_strucs() ) ) {
+//				for (const size_t &ctr_j : indices( protein_b.get_num_sec_strucs() ) ) {
+//					std::cerr << "sec"
+//						<< "\t" << ctr_a << "\t" << ctr_b
+//						<< "\t" << ctr_i << "\t" << ctr_j
+//						<< "\t" << context_sec(
+//							protein_a,
+//							protein_b,
+//							ctr_a,
+//							ctr_b,
+//							ctr_i,
+//							ctr_j
+//						)
+//						<< "\n" << std::flush;
 //				}
 //			}
 //		}
@@ -608,7 +607,7 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 		global_num_selections  =     0;
 
 		// Perform two residue alignment passes
-		for (size_t pass_ctr = 1; pass_ctr <= 2; ++pass_ctr) {
+		for (const size_t &pass_ctr : { 1_z, 2_z } ) {
 			BOOST_LOG_TRIVIAL( info ) << "Function: alnseq:  pass=" << pass_ctr;
 
 			global_align_pass = ( pass_ctr > 1 );
@@ -654,7 +653,7 @@ ssap_scores cath::fast_ssap(const protein                 &arg_protein_a,    ///
 	global_num_selections  =     0;
 
 	// Perform two residue alignment passes
-	for (size_t pass_ctr = 1; pass_ctr <= 2; ++pass_ctr) {
+	for (const size_t &pass_ctr  : { 1_z, 2_z } ) {
 		BOOST_LOG_TRIVIAL( info ) << "Function: fast_ssap:  pass=" << pass_ctr;
 		global_align_pass = ( pass_ctr > 1 );
 		if ( pass_ctr == 1 || ( pass_ctr == 2 && global_res_score ) ) {
@@ -756,10 +755,10 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	scores.reserve( new_alignment.length() );
 	for (const size_t &alignment_ctr : indices( new_alignment.length() ) ) {
 		if ( has_both_positions_of_index( new_alignment, alignment_ctr  )) {
-			const aln_posn_type a_position   = get_a_offset_1_position_of_index( new_alignment, alignment_ctr );
-			const aln_posn_type b_position   = get_b_offset_1_position_of_index( new_alignment, alignment_ctr );
-			const int           a_matrix_idx = get_window_matrix_a_index__offset_1(length_a, length_b, global_window, a_position, b_position);
-			const double        local_score  = numeric_cast<double>( global_upper_score_matrix.get( b_position, numeric_cast<size_t>( a_matrix_idx ) ) );
+			const aln_posn_type a_position             = get_a_offset_1_position_of_index( new_alignment, alignment_ctr );
+			const aln_posn_type b_position             = get_b_offset_1_position_of_index( new_alignment, alignment_ctr );
+			const int           a_matrix_idx__offset_1 = get_window_matrix_a_index__offset_1(length_a, length_b, global_window, a_position, b_position);
+			const double        local_score            = numeric_cast<double>( global_upper_score_matrix.get( b_position, numeric_cast<size_t>( a_matrix_idx__offset_1 ) ) );
 			scores.push_back( local_score / 10.0 + 0.5 );
 //			cerr << "Retrieved score:\t" << local_score << ",\twhich normalises to: " << ( local_score / 10.0 + 0.5 ) << endl;
 		}
@@ -900,7 +899,6 @@ clique cath::read_clique_file(const path &arg_filename ///< The clique file to r
 	return new_clique_file;
 }
 
-
 /// \brief Prepare the mask matrices for the next comparison
 ///
 /// This currently only gets called from one location, which is when performing the first
@@ -914,8 +912,9 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 	const size_t length_b = arg_protein_b.get_length();
 
 	// Initialise arrays
-	for (size_t residue_ctr_b = 0; residue_ctr_b <= length_b; ++residue_ctr_b ) {
-		for (size_t residue_ctr_a = 0; residue_ctr_a <= length_a; ++residue_ctr_a ) {
+	// (are the `+ 1`s deliberate? necessary?)
+	for (const size_t &residue_ctr_b : indices( length_b + 1 ) ) {
+		for (const size_t &residue_ctr_a : indices( length_a + 1 ) ) {
 			global_upper_res_mask_matrix.set( residue_ctr_b, residue_ctr_a, false );
 			global_upper_ss_mask_matrix.set ( residue_ctr_b, residue_ctr_a, false );
 			global_lower_mask_matrix.set    ( residue_ctr_b, residue_ctr_a, false );
@@ -932,10 +931,13 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 		const int boundary = 5; // Amount to add to boundary
 
 		// Set equivalent residues in secondary structures for protein A and protein b
-		for (size_t ctr_b = length_b; ctr_b > 0; --ctr_b) {
-			const residue &residue_b = get_residue_ref_of_index__offset_1(arg_protein_b, ctr_b);
-			for (size_t ctr_a = length_a; ctr_a > 0; --ctr_a) {
-				const residue &residue_a = get_residue_ref_of_index__offset_1(arg_protein_a, ctr_a);
+		for (const size_t &ctr_b : indices( length_b ) | reversed ) {
+			for (const size_t &ctr_a : indices( length_a ) | reversed ) {
+
+				const residue &residue_a       = arg_protein_a.get_residue_ref_of_index( ctr_a );
+				const residue &residue_b       = arg_protein_b.get_residue_ref_of_index( ctr_b );
+				const size_t   ctr_a__offset_1 = ctr_a + 1;
+				const size_t   ctr_b__offset_1 = ctr_b + 1;
 
 				// Look to see if they match any secondary structures
 				for (const size_t &k : indices( clique_size ) ) {
@@ -947,13 +949,13 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 					if ( ( pdb_number( residue_a ) != 0 )    && ( pdb_number( residue_b ) != 0 )  &&
 					       pdb_number( residue_b ) >= bstart &&   pdb_number( residue_b ) <= bend &&
 					       pdb_number( residue_a ) >= astart &&   pdb_number( residue_a ) <= aend ) {
-						global_lower_mask_matrix.set( ctr_b, ctr_a, true );
+						global_lower_mask_matrix.set( ctr_b__offset_1, ctr_a__offset_1, true );
 						break;
 					}
 				}
 
 				// Match regions between secondary structures
-				for (size_t k = 0; k < clique_size - 1; ++k) {
+				for (const size_t &k : indices( clique_size - 1 ) ) {
 					int bstart = atoi( clique_data.equivs[ k + 1 ].protb_start ) + boundary;
 					int bend   = atoi( clique_data.equivs[ k     ].protb_end   ) - boundary;
 					int astart = atoi( clique_data.equivs[ k + 1 ].prota_start ) + boundary;
@@ -962,7 +964,7 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 					if ( ( pdb_number( residue_a ) != 0 )   && ( pdb_number( residue_b ) != 0 ) &&
 					       pdb_number( residue_b ) < bstart &&   pdb_number( residue_b ) > bend &&
 					       pdb_number( residue_a ) < astart &&   pdb_number( residue_a ) > aend ) {
-						global_lower_mask_matrix.set( ctr_b, ctr_a, true );
+						global_lower_mask_matrix.set( ctr_b__offset_1, ctr_a__offset_1, true );
 						break;
 					}
 				}
@@ -976,18 +978,20 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 		const int lastb   = atoi( clique_data.equivs[ clique_size - 1 ].protb_end   ) - boundary;
 
 		// Set equivalent pairs at beginning and end of alignment
-		for (size_t ctr_b = length_b; ctr_b > 0; --ctr_b) {
-			const residue &residue_b = get_residue_ref_of_index__offset_1(arg_protein_b, ctr_b);
-			for (size_t ctr_a = length_a; ctr_a > 0; --ctr_a) {
-				const residue &residue_a = get_residue_ref_of_index__offset_1(arg_protein_a, ctr_a);
+		for (const size_t &ctr_b : indices( length_b ) | reversed ) {
+			for (const size_t &ctr_a : indices( length_a ) | reversed ) {
+				const residue &residue_a       = arg_protein_a.get_residue_ref_of_index( ctr_a );
+				const residue &residue_b       = arg_protein_b.get_residue_ref_of_index( ctr_b );
+				const size_t   ctr_a__offset_1 = ctr_a + 1;
+				const size_t   ctr_b__offset_1 = ctr_b + 1;
 
 				// Tail end of alignment
 				if ( pdb_number( residue_a ) > lasta  && pdb_number( residue_b ) > lastb  ) {
-					global_lower_mask_matrix.set( ctr_b, ctr_a, true );
+					global_lower_mask_matrix.set( ctr_b__offset_1, ctr_a__offset_1, true );
 				}
 				// Start of alignment
 				if ( pdb_number( residue_a ) < firsta && pdb_number( residue_b ) < firstb ) {
-					global_lower_mask_matrix.set( ctr_b, ctr_a, true );
+					global_lower_mask_matrix.set( ctr_b__offset_1, ctr_a__offset_1, true );
 				}
 			}
 		}
@@ -1025,14 +1029,22 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 	global_num_selections = 0;
 	size_t total_num_residues_considered = 0;
 	size_t num_residues_selected         = 0;
-	for (size_t residue_ctr_b = length_b; residue_ctr_b > 0; --residue_ctr_b) {
-		const residue &residue_b    = get_residue_ref_of_index__offset_1(arg_protein_b, residue_ctr_b);
-		const size_t   window_start = get_window_start_a_for_b__offset_1( length_a, length_b, global_window, residue_ctr_b );
-		const size_t   window_stop  = get_window_stop_a_for_b__offset_1 ( length_a, length_b, global_window, residue_ctr_b );
+	for (const size_t &residue_ctr_b : indices( length_b ) | reversed ) {
+		const size_t   residue_ctr_b__offset_1 = residue_ctr_b + 1;
+		const residue &residue_b               = arg_protein_b.get_residue_ref_of_index( residue_ctr_b );
+		const size_t   window_start_offset_1   = get_window_start_a_for_b__offset_1( length_a, length_b, global_window, residue_ctr_b__offset_1 );
+		const size_t   window_stop_offset_1    = get_window_stop_a_for_b__offset_1 ( length_a, length_b, global_window, residue_ctr_b__offset_1 );
 
-		for (size_t residue_ctr_a = window_stop; residue_ctr_a >= window_start; --residue_ctr_a ) {
-			const residue &residue_a    = get_residue_ref_of_index__offset_1(arg_protein_a, residue_ctr_a);
-			const int      a_matrix_idx = get_window_matrix_a_index__offset_1(length_a, length_b, global_window, residue_ctr_a, residue_ctr_b);
+		for (const size_t &residue_ctr_a : irange( window_start_offset_1 - 1, window_stop_offset_1 ) | reversed ) {
+			const size_t   residue_ctr_a__offset_1 = residue_ctr_a + 1;
+			const residue &residue_a               = arg_protein_a.get_residue_ref_of_index( residue_ctr_a );
+			const int      a_matrix_idx__offset_1  = get_window_matrix_a_index__offset_1(
+				length_a,
+				length_b,
+				global_window,
+				residue_ctr_a__offset_1,
+				residue_ctr_b__offset_1
+			);
 
 			++total_num_residues_considered;
 
@@ -1040,9 +1052,9 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 			if ( global_doing_fast_ssap ) {
 				// Use clique method
 				if ( arg_clique_file ) {
-					if ( global_lower_mask_matrix.get( residue_ctr_b, residue_ctr_a ) && residues_have_similar_area_angle_props( residue_a, residue_b ) ) {
+					if ( global_lower_mask_matrix.get( residue_ctr_b__offset_1, residue_ctr_a__offset_1 ) && residues_have_similar_area_angle_props( residue_a, residue_b ) ) {
 						++num_residues_selected;
-						global_upper_res_mask_matrix.set( residue_ctr_b, numeric_cast<size_t>( a_matrix_idx ), true );
+						global_upper_res_mask_matrix.set( residue_ctr_b__offset_1, numeric_cast<size_t>( a_matrix_idx__offset_1 ), true );
 					}
 				}
 				// If no clique data is present, use built-in secondary structure method
@@ -1052,13 +1064,13 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 				         && sec_struc_match_matrix.get( residue_b.get_sec_struc_number(), residue_a.get_sec_struc_number() )
 				         && residues_have_similar_area_angle_props(residue_a, residue_b) ) {
 					++num_residues_selected;
-					global_upper_res_mask_matrix.set( residue_ctr_b, numeric_cast<size_t>( a_matrix_idx ), true );
+					global_upper_res_mask_matrix.set( residue_ctr_b__offset_1, numeric_cast<size_t>( a_matrix_idx__offset_1 ), true );
 				}
 			}
 			else {
 				if (residues_have_similar_area_angle_props(residue_a, residue_b)) {
 					++num_residues_selected;
-					global_upper_res_mask_matrix.set( residue_ctr_b, numeric_cast<size_t>( a_matrix_idx ), true );
+					global_upper_res_mask_matrix.set( residue_ctr_b__offset_1, numeric_cast<size_t>( a_matrix_idx__offset_1 ), true );
 				}
 			}
 		}
@@ -1085,33 +1097,35 @@ void cath::select_pairs(const protein       &arg_protein_a,    ///< The first pr
 	size_t total_num_entries_considered = 0;
 
 	// Compare properties of residue/SS pairs for each cell in matrix window
-	for (size_t ctr_b = length_b; ctr_b > 0; --ctr_b) {
-		const size_t window_start = get_window_start_a_for_b__offset_1( length_a, length_b, global_window, ctr_b );
-		const size_t window_stop  = get_window_stop_a_for_b__offset_1(  length_a, length_b, global_window, ctr_b );
+	for (const size_t &ctr_b : indices( length_b ) | reversed ) {
+		const size_t ctr_b__offset_1 = ctr_b + 1;
+		const size_t window_start__offset_1 = get_window_start_a_for_b__offset_1( length_a, length_b, global_window, ctr_b__offset_1 );
+		const size_t window_stop__offset_1  = get_window_stop_a_for_b__offset_1 ( length_a, length_b, global_window, ctr_b__offset_1 );
 
-		for (size_t ctr_a = window_stop; ctr_a >= window_start; --ctr_a ) {
+		for (const size_t &ctr_a : irange( window_start__offset_1 - 1, window_stop__offset_1 ) | reversed ) {
+			const size_t ctr_a__offset_1 = ctr_a + 1;
 			++total_num_entries_considered;
-			const int a_matrix_idx = get_window_matrix_a_index__offset_1(length_a, length_b, global_window, ctr_a, ctr_b);
-	
+			const int a_matrix_idx__offset_1 = get_window_matrix_a_index__offset_1( length_a, length_b, global_window, ctr_a__offset_1, ctr_b__offset_1 );
+
 			// First pass:
 			//   for residues:             select if areas/angles similar
 			//   for secondary structures: select if both are of same type
 			if ( arg_pass == 1 ) {
-				if ( arg_entry_querier.are_similar__offset_1(arg_protein_a, arg_protein_b, ctr_a, ctr_b) ) {
+				if ( arg_entry_querier.are_similar__offset_1( arg_protein_a, arg_protein_b, ctr_a__offset_1, ctr_b__offset_1 ) ) {
 					++num_entries_selected;
-					global_lower_mask_matrix.set   ( ctr_b, ctr_a, true );
-					global_upper_ss_mask_matrix.set( ctr_b, ctr_a, true );
+					global_lower_mask_matrix.set   ( ctr_b__offset_1, ctr_a__offset_1, true );
+					global_upper_ss_mask_matrix.set( ctr_b__offset_1, ctr_a__offset_1, true );
 				}
 				else {
-					global_lower_mask_matrix.set   ( ctr_b, ctr_a, false );
-					global_upper_ss_mask_matrix.set( ctr_b, ctr_a, false );
+					global_lower_mask_matrix.set   ( ctr_b__offset_1, ctr_a__offset_1, false );
+					global_upper_ss_mask_matrix.set( ctr_b__offset_1, ctr_a__offset_1, false );
 				}
 			}
 			// Subsequent passes (must be residues):
 			//   select 20 highest scoring residue pairs from first pass
 			else {
-				const score_type score = global_upper_score_matrix.get( ctr_b, numeric_cast<size_t>( a_matrix_idx ) );
-				update_best_pair_selections( selected_pairs, selected_pair(ctr_a, ctr_b, score), NUM_SELECTIONS_TO_SAVE );
+				const score_type score = global_upper_score_matrix.get( ctr_b__offset_1, numeric_cast<size_t>( a_matrix_idx__offset_1 ) );
+				update_best_pair_selections( selected_pairs, selected_pair( ctr_a__offset_1, ctr_b__offset_1, score ), NUM_SELECTIONS_TO_SAVE );
 			}
 		}
 	}
@@ -1286,18 +1300,20 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 
 	// Reverse-iterate over the elements in arg_protein_b
 	// (or over the selections if using them)
-	for (size_t ctr_b = length_b; ctr_b > 0; --ctr_b) {
+	for (const size_t &ctr_b : indices( length_b ) | reversed ) {
+		const size_t ctr_b__offset_1 = ctr_b + 1;
 		// Calculate the arg_protein_a window start/stop for this arg_protein_b entry
 		// (or just set them both from the selected pair if using selections)
-		const size_t window_start = using_selections ? global_selections[ctr_b].first
-		                                             : get_window_start_a_for_b__offset_1( length_a, length_b, global_window, ctr_b );
-		const size_t window_stop  = using_selections ? global_selections[ctr_b].first
-		                                             : get_window_stop_a_for_b__offset_1(  length_a, length_b, global_window, ctr_b );
-		const size_t jval         = using_selections ? global_selections[ctr_b].second
-		                                             : ctr_b;
+		const size_t window_start__offset_1 = using_selections ? global_selections[ctr_b__offset_1].first
+		                                                       : get_window_start_a_for_b__offset_1( length_a, length_b, global_window, ctr_b__offset_1 );
+		const size_t window_stop__offset_1  = using_selections ? global_selections[ctr_b__offset_1].first
+		                                                       : get_window_stop_a_for_b__offset_1(  length_a, length_b, global_window, ctr_b__offset_1 );
+		const size_t jval                   = using_selections ? global_selections[ctr_b__offset_1].second
+		                                                       : ctr_b__offset_1;
 
 		// Iterate over the window that's been calculated
-		for (size_t ctr_a = window_stop; ctr_a >= window_start; --ctr_a ) {
+		for (const size_t &ctr_a : irange( window_start__offset_1 - 1, window_stop__offset_1 ) | reversed ) {
+			const size_t ctr_a__offset_1 = ctr_a + 1;
 			// Determine whether this pair should be compared:
 			//  - If using selections,           then true, else
 			//  - If using residues,             then consult global_upper_res_mask_matrix, else
@@ -1305,11 +1321,11 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 			bool should_compare_pair = true;
 			if ( ! using_selections ) {
 				if ( res_not_ss__hacky ) {
-					const int a_matrix_idx = get_window_matrix_a_index__offset_1( length_a, length_b, global_window, ctr_a, ctr_b );
-					should_compare_pair = global_upper_res_mask_matrix.get( ctr_b, numeric_cast<size_t>( a_matrix_idx ) );
+					const int a_matrix_idx__offset_1 = get_window_matrix_a_index__offset_1( length_a, length_b, global_window, ctr_a__offset_1, ctr_b__offset_1 );
+					should_compare_pair = global_upper_res_mask_matrix.get( ctr_b__offset_1, numeric_cast<size_t>( a_matrix_idx__offset_1 ) );
 				}
 				else {
-					should_compare_pair = global_upper_ss_mask_matrix.get( ctr_b, ctr_a );
+					should_compare_pair = global_upper_ss_mask_matrix.get( ctr_b__offset_1, ctr_a__offset_1 );
 				}
 			}
 
@@ -1320,7 +1336,7 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 				const auto compare_result = compare_upper_cell(
 					arg_protein_a,
 					arg_protein_b,
-					ctr_a,
+					ctr_a__offset_1,
 					jval,
 					arg_entry_querier,
 					normalisation
@@ -1442,19 +1458,19 @@ compare_upper_cell_result cath::compare_upper_cell(const protein       &arg_prot
 		if (has_both_positions_of_index(my_alignment, alignment_ctr)) {
 			const aln_posn_type a_dest_to_index__offset_1 = get_a_offset_1_position_of_index( my_alignment, alignment_ctr );
 			const aln_posn_type b_dest_to_index__offset_1 = get_b_offset_1_position_of_index( my_alignment, alignment_ctr );
-			const int           a_matrix_idx              = get_window_matrix_a_index__offset_1(length_a, length_b, global_window, a_dest_to_index__offset_1, b_dest_to_index__offset_1);
+			const int           a_matrix_idx__offset_1    = get_window_matrix_a_index__offset_1(length_a, length_b, global_window, a_dest_to_index__offset_1, b_dest_to_index__offset_1);
 			const score_type    score_addend              = arg_entry_querier.distance_score__offset_1(
 				arg_protein_a,                   arg_protein_b,
 				arg_a_view_from_index__offset_1, arg_b_view_from_index__offset_1,
 				a_dest_to_index__offset_1,       b_dest_to_index__offset_1
 			);
-			global_upper_score_matrix.get( b_dest_to_index__offset_1, numeric_cast<size_t>( a_matrix_idx ) ) += score_addend;
+			global_upper_score_matrix.get( b_dest_to_index__offset_1, numeric_cast<size_t>( a_matrix_idx__offset_1 ) ) += score_addend;
 //			cerr << "At\t" << ( arg_a_view_from_index__offset_1 - 1 );
 //			cerr << "\t"   << ( arg_b_view_from_index__offset_1 - 1 );
 //			cerr << "\t"   << ( a_dest_to_index__offset_1       - 1 );
 //			cerr << "\t"   << ( b_dest_to_index__offset_1       - 1 );
 //			cerr << "\tadding score:\t" << score_addend;
-//			cerr << "\tto get:\t" << global_upper_score_matrix[b_dest_to_index__offset_1][ numeric_cast<size_t>( a_matrix_idx ) ];
+//			cerr << "\tto get:\t" << global_upper_score_matrix[b_dest_to_index__offset_1][ numeric_cast<size_t>( a_matrix_idx__offset_1 ) ];
 //			cerr <<"\t["   << get_plural_name(arg_entry_querier) << "]" << endl;
 		}
 	}

@@ -468,9 +468,8 @@ calc_hit_vec_citr_vec cath::rslv::identify_redundant_hits(const calc_hit_vec  &a
 		const auto active_hitrs_end = common::cend( active_hit_itrs );
 		auto active_hit_write_itr   = std::begin  ( active_hit_itrs );
 
-		for (auto active_hitrs_read_itr = common::cbegin( active_hit_itrs ); active_hitrs_read_itr != active_hitrs_end; ++active_hitrs_read_itr) {
-			const auto &active_hit_itr = *active_hitrs_read_itr;
-			const auto &active_hit     = *active_hit_itr;
+		for (const auto &active_hit_itr : active_hit_itrs ) {
+			const auto &active_hit = *active_hit_itr;
 
 			if ( get_start_arrow( active_hit ) < get_stop_arrow( this_hit ) ) {
 				const auto result = first_hit_is_better( this_hit, active_hit, arg_full_hits );
@@ -478,8 +477,8 @@ calc_hit_vec_citr_vec cath::rslv::identify_redundant_hits(const calc_hit_vec  &a
 					to_be_removed_itrs.push_back( active_hit_itr );
 				}
 				else {
-					if ( active_hit_write_itr != active_hitrs_read_itr ) {
-						*active_hit_write_itr = *active_hitrs_read_itr;
+					if ( &*active_hit_write_itr != &active_hit_itr ) {
+						*active_hit_write_itr = active_hit_itr;
 					}
 					++active_hit_write_itr;
 

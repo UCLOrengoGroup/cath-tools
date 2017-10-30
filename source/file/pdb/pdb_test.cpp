@@ -44,6 +44,7 @@ using namespace std;
 
 using boost::algorithm::icontains;
 using boost::algorithm::join;
+using boost::irange;
 
 namespace cath {
 	namespace test {
@@ -83,7 +84,7 @@ BOOST_FIXTURE_TEST_SUITE(pdb_test_suite, cath::test::pdb_test_suite_fixture)
 BOOST_AUTO_TEST_CASE(check_parsing_of_end_separators) {
 	const size_t MAX_NUM_CONSECUTIVE_ENDS(3);
 	for (const size_t &num_before_ends : indices( MAX_NUM_CONSECUTIVE_ENDS ) ) {
-		for (size_t num_between_ends = 1; num_between_ends < MAX_NUM_CONSECUTIVE_ENDS; ++num_between_ends) {
+		for (const size_t &num_between_ends : irange( 1_z, MAX_NUM_CONSECUTIVE_ENDS ) ) {
 			for (const size_t &num_after_ends : indices( MAX_NUM_CONSECUTIVE_ENDS ) ) {
 				stringstream end_separated_stream;
 				end_separated_stream << join(str_vec(num_before_ends,  "END"), "\n") << "\n";

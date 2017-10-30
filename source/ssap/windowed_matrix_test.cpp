@@ -37,6 +37,7 @@ using namespace cath::common;
 using namespace std;
 
 using boost::adaptors::reversed;
+using boost::irange;
 using boost::numeric_cast;
 using boost::range::find;
 
@@ -256,9 +257,9 @@ BOOST_AUTO_TEST_CASE(full_transpose) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(throws_if_window_too_thin) {
-	const size_t MIN_DIM_VALUE(2);
-	const size_t MAX_VALUE(10);
-	for (size_t smaller_dim_ctr = MIN_DIM_VALUE; smaller_dim_ctr < MAX_VALUE; ++smaller_dim_ctr) {
+	constexpr size_t MIN_DIM_VALUE =  2;
+	constexpr size_t MAX_VALUE     = 10;
+	for (const size_t &smaller_dim_ctr : irange( MIN_DIM_VALUE, MAX_VALUE ) ) {
 		for (const size_t &dim_diff_ctr : indices( MAX_VALUE ) ) {
 			BOOST_CHECK_THROW(get_window_start_a_for_b__offset_1( smaller_dim_ctr,                smaller_dim_ctr + dim_diff_ctr, dim_diff_ctr, 1 ), invalid_argument_exception);
 			BOOST_CHECK_THROW(get_window_start_a_for_b__offset_1( smaller_dim_ctr + dim_diff_ctr, smaller_dim_ctr,                dim_diff_ctr, 1 ), invalid_argument_exception);

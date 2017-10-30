@@ -37,6 +37,7 @@ using namespace cath::align::gap;
 using namespace cath::common;
 using namespace std;
 
+using boost::irange;
 using boost::lexical_cast;
 using boost::numeric_cast;
 
@@ -73,7 +74,7 @@ size_t cath::align::gap::detail::get_naive_num_gaps_of_entry(const alignment &ar
 
 	// Generate a vector representing of unique presence flags
 	vector<bool> uniq_presence_list;
-	for (alignment::size_type aln_ctr = *index_of_first_present_position; aln_ctr <= *index_of_last_present_position; ++aln_ctr) {
+	for (const alignment::size_type &aln_ctr : irange( *index_of_first_present_position, *index_of_last_present_position + 1 ) ) {
 		const bool present = has_position_of_entry_of_index( arg_alignment, arg_entry, aln_ctr );
 		if (uniq_presence_list.empty() || ( uniq_presence_list.back() != present ) ) {
 			uniq_presence_list.push_back(present);
@@ -117,7 +118,7 @@ size_size_pair cath::align::gap::detail::gap_open_and_extend_counts_of_pair_in_a
 		bool gap_open_in_b = false;
 
 		// Loop from the first simultaneous appearance to the last
-		for (size_t index = *first_index; index < *last_index; ++index) {
+		for (const size_t &index : irange( *first_index, *last_index ) ) {
 			// If this has a position in both entries then close both gaps
 			if ( has_position_of_both_entries_of_index( arg_alignment, arg_entry_a, arg_entry_b, index ) ) {
 				gap_open_in_a = false;
@@ -281,7 +282,7 @@ float_score_float_score_pair cath::align::gap::gap_open_and_extend_counts_of_ali
 	// Loop over distinct pairs, to accumulate the open/extend counts for each
 	size_size_pair total_open_and_extend_counts = make_pair( 0_z, 0_z );
 	for (const size_t &entry_a : indices( num_entries ) ) {
-		for (size_t entry_b = entry_a; entry_b < num_entries; ++entry_b) {
+		for (const size_t &entry_b : irange( entry_a, num_entries ) ) {
 			// Calculate the counts for the pair and add them to the running count
 			const size_size_pair pair_couts = detail::gap_open_and_extend_counts_of_pair_in_alignment(
 				arg_alignment,

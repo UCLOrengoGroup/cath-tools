@@ -105,7 +105,7 @@ namespace cath {
 							BOOST_CHECK_EQUAL(correct_answer_size, num_positions);
 
 							// Check that each of the positions in the alignment match what is expected
-							for (size_t position_ctr  = 0; position_ctr < min(correct_answer_size, num_positions); ++position_ctr) {
+							for (const size_t &position_ctr : indices( min( correct_answer_size, num_positions ) ) ) {
 								const aln_posn_opt position     = my_alignment.position_of_entry_of_index( index_ctr, position_ctr );
 								const bool         has_position = static_cast<bool>( position );
 								BOOST_CHECK_EQUAL( correct_presence_list[position_ctr], has_position );

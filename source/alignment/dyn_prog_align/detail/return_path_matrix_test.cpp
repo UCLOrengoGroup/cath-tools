@@ -30,6 +30,8 @@ using namespace cath::align::detail;
 using namespace cath::common;
 using namespace std;
 
+using boost::irange;
+
 namespace cath {
 	namespace test {
 
@@ -73,7 +75,7 @@ return_path_matrix cath::test::return_path_matrix_test_suite_fixture::make_rando
 		);
 		const size_t &start = b_window_start_and_stop.first;
 		const size_t &stop  = b_window_start_and_stop.second;
-		for (size_t ctr_b = start; ctr_b <= stop; ++ctr_b) {
+		for (const size_t &ctr_b : irange( start, stop + 1 ) ) {
 			path_step possible_random_step = make_random_step();
 			while ( ( possible_random_step == path_step::INSERT_INTO_FIRST && ctr_b == start ) || ( possible_random_step == path_step::INSERT_INTO_SECOND && ctr_b == stop ) ) {
 				possible_random_step = make_random_step();

@@ -22,10 +22,12 @@
 
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/range/adaptor/reversed.hpp>
 
 #include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
 #include "alignment/gap/gap_penalty.hpp"
 #include "alignment/pair_alignment.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/type_aliases.hpp"
@@ -41,6 +43,8 @@ using namespace cath::align::gap;
 using namespace cath::common;
 using namespace std;
 
+using boost::adaptors::reversed;
+using boost::irange;
 using boost::lexical_cast;
 using boost::numeric_cast;
 
@@ -136,7 +140,7 @@ ssap_code_dyn_prog_aligner::size_size_int_int_score_tuple ssap_code_dyn_prog_ali
 	row_scores_flipflop_matrix.assign( 2, score_vec( arg_window_width + 2, VERY_POOR_SCORE ) );
 
 	// Initialise various variable for the right-most column
-	for (size_t a_dest_to_index = 0; a_dest_to_index <= arg_window_width + 1; ++a_dest_to_index) {
+	for (const size_t &a_dest_to_index : indices( arg_window_width + 2 ) ) {
 		row_scores_flipflop_matrix[ 0 ][ a_dest_to_index ] = VERY_POOR_SCORE;
 		row_scores_flipflop_matrix[ 1 ][ a_dest_to_index ] = VERY_POOR_SCORE;
 		arg_path_matrix[ a_dest_to_index ][ length_b ]     = 0;
@@ -144,31 +148,33 @@ ssap_code_dyn_prog_aligner::size_size_int_int_score_tuple ssap_code_dyn_prog_ali
 	}
 
 	// Compare each element in protein B with each element in protein A within window
-	for (size_t ctr_b = length_b; ctr_b > 0; --ctr_b) {
+	for (const size_t &ctr_b : indices( length_b ) | reversed ) {
+		const size_t ctr_b__offset_1  = ctr_b + 1;
 		score_type best_row_score = VERY_POOR_SCORE;
 		size_t     best_row_index = 0;
 
 		// Set pointer to element in protein B
-		const size_t window_start = get_window_start_a_for_b__offset_1( length_a, length_b, arg_window_width, ctr_b );
-		const size_t window_stop  = get_window_stop_a_for_b__offset_1 ( length_a, length_b, arg_window_width, ctr_b );
+		const size_t window_start__offset_1 = get_window_start_a_for_b__offset_1( length_a, length_b, arg_window_width, ctr_b__offset_1 );
+		const size_t window_stop__offset_1  = get_window_stop_a_for_b__offset_1 ( length_a, length_b, arg_window_width, ctr_b__offset_1 );
 
 		// Set window range, if comparing residues, window is set by selected residues
 		if ( --enter < 0 ) {
 			enter = debug_numeric_cast<int>(arg_window_width) - 1;
 		}
 
-		if ( window_stop == length_a ) {
-			arg_path_matrix[length_a - window_start][ctr_b] = 0;
+		if ( window_stop__offset_1 == length_a ) {
+			arg_path_matrix[length_a - window_start__offset_1][ctr_b__offset_1] = 0;
 		}
 
-		for (size_t ctr_a = window_stop; ctr_a >= window_start; --ctr_a ) {
-			const int a_matrix_idx = get_window_matrix_a_index__offset_1(length_a, length_b, arg_window_width, ctr_a, ctr_b);
+		for (const size_t &ctr_a : irange( window_start__offset_1 - 1, window_stop__offset_1 ) | reversed ) {
+			const size_t ctr_a__offset_1 = ctr_a + 1;
+			const int a_matrix_idx = get_window_matrix_a_index__offset_1(length_a, length_b, arg_window_width, ctr_a__offset_1, ctr_b__offset_1);
 			int       rat          = enter + a_matrix_idx;
 
-//			cerr << "Getting score from " << ctr_a << " (os1) and " << ctr_b << " (os1) : " << get_score__offset_1(arg_scorer, ctr_a, ctr_b) << endl;
-			row_scores_flipflop_matrix[flip_flop_current][ numeric_cast<size_t>( a_matrix_idx ) ] = get_score__offset_1( arg_scorer, ctr_a, ctr_b );
+//			cerr << "Getting score from " << ctr_a__offset_1 << " (os1) and " << ctr_b__offset_1 << " (os1) : " << get_score__offset_1(arg_scorer, ctr_a__offset_1, ctr_b__offset_1) << endl;
+			row_scores_flipflop_matrix[flip_flop_current][ numeric_cast<size_t>( a_matrix_idx ) ] = get_score__offset_1( arg_scorer, ctr_a__offset_1, ctr_b__offset_1 );
 
-			if ( ctr_a == length_a || ctr_b == length_b ) {
+			if ( ctr_a__offset_1 == length_a || ctr_b__offset_1 == length_b ) {
 				continue;
 			}
 
@@ -181,10 +187,10 @@ ssap_code_dyn_prog_aligner::size_size_int_int_score_tuple ssap_code_dyn_prog_ali
 			if ( rat >= debug_numeric_cast<int>(arg_window_width) ) {
 				rat -= debug_numeric_cast<int>(arg_window_width);
 			}
-			if (ctr_a == window_start && !edge_set) {
+			if (ctr_a__offset_1 == window_start__offset_1 && !edge_set) {
 				best_scores_in_column           [ numeric_cast<size_t>( rat ) ] = VERY_POOR_SCORE;
-				indices_of_best_scores_in_column[ numeric_cast<size_t>( rat ) ] = ctr_b;
-				if ( ctr_a == 1 ) {
+				indices_of_best_scores_in_column[ numeric_cast<size_t>( rat ) ] = ctr_b__offset_1;
+				if ( ctr_a__offset_1 == 1 ) {
 					edge_set = true;
 				}
 			}
@@ -201,41 +207,41 @@ ssap_code_dyn_prog_aligner::size_size_int_int_score_tuple ssap_code_dyn_prog_ali
 			// accumulate diagonal score
 			if ( diag_score >= col_score && diag_score >= row_score ) {
 				row_scores_flipflop_matrix[flip_flop_current][ numeric_cast<size_t>( a_matrix_idx ) ] += diag_score;
-				arg_path_matrix[ numeric_cast<size_t>( a_matrix_idx ) ][ctr_b]                         = 1;
+				arg_path_matrix[ numeric_cast<size_t>( a_matrix_idx ) ][ctr_b__offset_1]                         = 1;
 			}
 			// Else if row score is better than column score, accumulate maximum score from row
 			else if ( row_score > col_score ) {
 				row_scores_flipflop_matrix[flip_flop_current][ numeric_cast<size_t>( a_matrix_idx ) ] +=   row_score;
-				arg_path_matrix[ numeric_cast<size_t>( a_matrix_idx ) ][ctr_b]                         =   numeric_cast<int>( best_row_index - ctr_a + 1 );
+				arg_path_matrix[ numeric_cast<size_t>( a_matrix_idx ) ][ctr_b__offset_1]                         =   numeric_cast<int>( best_row_index - ctr_a__offset_1 + 1 );
 			}
 			// Else accumulate maximum score from column
 			else {
 				row_scores_flipflop_matrix[flip_flop_current][ numeric_cast<size_t>( a_matrix_idx ) ] +=   col_score;
-				arg_path_matrix[ numeric_cast<size_t>( a_matrix_idx ) ][ctr_b]                         = - numeric_cast<int>( best_col_index - ctr_b + 1 );
+				arg_path_matrix[ numeric_cast<size_t>( a_matrix_idx ) ][ctr_b__offset_1]                         = - numeric_cast<int>( best_col_index - ctr_b__offset_1 + 1 );
 			}
 
 			// If diagonal score greater than previous maximum for row or column, save
 			if (diag_score > best_row_score) {
 				best_row_score = diag_score;
-				best_row_index = ctr_a;
+				best_row_index = ctr_a__offset_1;
 			}
 			if (diag_score > best_col_score) {
 				best_scores_in_column[ numeric_cast<size_t>( rat ) ]            = diag_score;
-				indices_of_best_scores_in_column[ numeric_cast<size_t>( rat ) ] = ctr_b;
+				indices_of_best_scores_in_column[ numeric_cast<size_t>( rat ) ] = ctr_b__offset_1;
 			}
 
 			// Save highest score in matrix and cell coordinates
 			if ( row_scores_flipflop_matrix[flip_flop_current][ numeric_cast<size_t>( a_matrix_idx ) ] >= best_score ) {
 				best_score   = row_scores_flipflop_matrix[flip_flop_current][ numeric_cast<size_t>( a_matrix_idx ) ];
 				final_path_a = a_matrix_idx;
-				final_path_b = numeric_cast<int>( ctr_b );
+				final_path_b = numeric_cast<int>( ctr_b__offset_1 );
 				mat_a        = 1;
 				mat_b        = 1;
-				if ( ctr_a == 1 ) {
-					mat_b = ctr_b;
+				if ( ctr_a__offset_1 == 1 ) {
+					mat_b = ctr_b__offset_1;
 				}
-				if ( ctr_b == 1 ) {
-					mat_a = ctr_a;
+				if ( ctr_b__offset_1 == 1 ) {
+					mat_a = ctr_a__offset_1;
 				}
 			}
 		}
@@ -294,8 +300,8 @@ alignment ssap_code_dyn_prog_aligner::traceback(const size_t      &arg_length_a,
 	///     After calling trace, posa[aln->length] : 777, lena: 531, posb[aln->length] : 46, lenb: 46
 	if (get_last_a_offset_1_position(new_alignment) > arg_length_a) {
 //		cerr << endl;
-//		for (size_t ctr_a = 0; ctr_a <= length_a; ++ctr_a) {
-//			for (size_t ctr_b = 0; ctr_b <= length_b; ++ctr_b) {
+//		for (const size_t &ctr_a : indices( length_a + 1 ) ) {
+//			for (const size_t &ctr_b : indices( length_b + 1 ) ) {
 //				cerr << path_matrix[ctr_a][ctr_b] << "\t";
 //			}
 //			cerr << endl;
@@ -358,12 +364,12 @@ void ssap_code_dyn_prog_aligner::traceback_recursive(alignment         &arg_alig
 	                                      [ numeric_cast<size_t>( arg_path_index_b ) ];
 
 	// Insertions in sequence A from arg_previous_mat_i + 1 to arg_mat_i - 1 (inclusive)
-	for (int ctr_a = arg_previous_mat_a + 1; ctr_a < arg_mat_a; ++ctr_a) {
+	for (const int &ctr_a : irange( arg_previous_mat_a + 1, arg_mat_a ) ) {
 		append_position_a_offset_1( arg_alignment, numeric_cast<size_t>( ctr_a ) );
 	}
 
 	// Insertions in sequence B  from arg_previous_mat_j + 1 to arg_mat_j - 1 (inclusive)
-	for (int ctr_b = arg_previous_mat_b + 1; ctr_b < arg_mat_b; ++ctr_b) {
+	for (const int &ctr_b : irange( arg_previous_mat_b + 1, arg_mat_b ) ) {
 		append_position_b_offset_1( arg_alignment, numeric_cast<size_t>( ctr_b ) );
 	}
 
