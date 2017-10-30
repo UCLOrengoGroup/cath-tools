@@ -24,6 +24,7 @@
 
 #include "alignment/alignment_coord_extractor.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/less_than_helper.hpp"
 #include "exception/out_of_range_exception.hpp"
 #include "structure/geometry/coord.hpp"
@@ -157,7 +158,7 @@ pair<coord_list_vec, coord_list_vec> score_common_coord_handler::get_common_coor
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Lists of common coordinates have mismatching numbers of residues"));
 	}
 	const size_t num_residues = common_coords.first.size();
-	for (size_t res_ctr = 0; res_ctr < num_residues; ++res_ctr) {
+	for (const size_t &res_ctr : indices( num_residues ) ) {
 		if ( common_coords.first[res_ctr].size() != common_coords.second[res_ctr].size() ) {
 			BOOST_THROW_EXCEPTION(out_of_range_exception(
 				"Lists of common coordinates have mismatching numbers of atoms for common residue "

@@ -77,7 +77,7 @@ bool cath::align::alignment_contains_pair(const alignment &arg_alignment, ///< T
 	check_alignment_is_a_pair( arg_alignment );
 
 	const size_t length = arg_alignment.length();
-	for (size_t index = 0; index < length; ++index) {
+	for (const size_t &index : indices( length ) ) {
 		const aln_posn_opt &posn_a = arg_alignment.position_of_entry_of_index( alignment::PAIR_A_IDX, index );
 		const aln_posn_opt &posn_b = arg_alignment.position_of_entry_of_index( alignment::PAIR_B_IDX, index );
 		if ( posn_a && *posn_a == arg_posn_a && posn_b && *posn_b == arg_posn_b ) {

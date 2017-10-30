@@ -28,6 +28,7 @@
 
 #include "biocore/residue_id.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/file/simple_file_read_write.hpp"
@@ -229,7 +230,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 		++combi_residue_ctr;
 	}
 
-	for (size_t pdb_residue_ctr = 0; pdb_residue_ctr < num_pdb_residues; ++pdb_residue_ctr) {
+	for (const size_t &pdb_residue_ctr : indices( num_pdb_residues ) ) {
 		const pdb_residue &the_pdb_residue = the_pdb_file.get_residue_of_index__backbone_unchecked(pdb_residue_ctr);
 		const residue     &built_residue   = combi_prot_with_all_pdb_residues.get_residue_ref_of_index( pdb_residue_ctr );
 		BOOST_CHECK_EQUAL( the_pdb_residue.get_residue_id(),                               built_residue.get_pdb_residue_id()     );
@@ -256,7 +257,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::compare_residue_frames_from_
 	BOOST_REQUIRE_EQUAL(num_pdb_residues, num_wolf_residues);
 
 	doub_angle_vec angles_between_frame_pairs;
-	for (size_t residue_ctr = 0; residue_ctr < num_pdb_residues; ++residue_ctr) {
+	for (const size_t &residue_ctr : indices( num_pdb_residues ) ) {
 		const residue &wolf_residue     = the_wolf_file.get_residue_of_index( residue_ctr );
 		const residue &pdb_prot_residue = pdb_prot.get_residue_ref_of_index( residue_ctr );
 

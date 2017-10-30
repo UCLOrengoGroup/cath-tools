@@ -25,6 +25,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "alignment/alignment.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
@@ -135,8 +136,8 @@ float_score_type cath::align::get_max_score(const alignment_residue_scores &arg_
 	float_score_type max_score = 0.0;
 	const size_t num_entries = arg_scores.get_num_entries();
 	const size_t length      = arg_scores.get_length();
-	for (size_t entry = 0; entry < num_entries; ++entry) {
-		for (size_t index = 0; index < length; ++index) {
+	for (const size_t &entry : indices( num_entries ) ) {
+		for (const size_t &index : indices( length ) ) {
 			if ( has_score( arg_scores, entry, index ) ) {
 				max_score = max( max_score, get_unnormalised_score( arg_scores, entry, index, arg_to_all_other_entries ) );
 			}

@@ -114,7 +114,7 @@ void cath::score::save_to_ptree(ptree                               &arg_ptree, 
 	arg_ptree.put_child( "scores", ptree() );
 	auto &ptree_scores_array = arg_ptree.get_child( "scores" );
 
-	for (size_t score_ctr = 0; score_ctr < num_scores; ++score_ctr) {
+	for (const size_t &score_ctr : indices( num_scores ) ) {
 		arg_score_value_list.get_value_of_index(score_ctr);
 		const score_value         the_score_value           = arg_score_value_list.get_value_of_index( score_ctr );
 		const aligned_pair_score &the_score_type            = arg_score_value_list.get_aligned_pair_score_of_index( score_ctr );
@@ -166,7 +166,7 @@ aligned_pair_score_value_list cath::score::make_aligned_pair_score_value_list(co
 
 	// Loop over the scores
 	const size_t num_scores = arg_scores.size();
-	for (size_t score_ctr = 0; score_ctr < num_scores; ++score_ctr) {
+	for (const size_t &score_ctr : indices( num_scores ) ) {
 		const aligned_pair_score &score = arg_scores[score_ctr];
 
 		// Calculate the value for the score and append it to the new aligned_pair_score_value_list
@@ -185,7 +185,7 @@ ostream & cath::score::operator<<(ostream                             &arg_os,  
                                   const aligned_pair_score_value_list &arg_aligned_pair_score_value_list ///< TODOCUMENT
                                   ) {
 	const size_t num_scores = arg_aligned_pair_score_value_list.size();
-	for (size_t score_ctr = 0; score_ctr < num_scores; ++score_ctr) {
+	for (const size_t &score_ctr : indices( num_scores ) ) {
 		const aligned_pair_score &score = arg_aligned_pair_score_value_list.get_aligned_pair_score_of_index(score_ctr);
 		const score_value         value = arg_aligned_pair_score_value_list.get_value_of_index(score_ctr);
 		arg_os << score.human_friendly_short_name();

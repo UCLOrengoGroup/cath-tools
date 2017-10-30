@@ -138,11 +138,11 @@ alignment::alignment(const aln_posn_opt_vec_vec &arg_lists ///< TODOCUMENT
 	reserve( input_length );
 
 	// Step through the alignment, adding the new bunch of positions
-	for (size_t index = 0; index < input_length; ++index ) {
+	for (const size_t &index : indices( input_length ) ) {
 		aln_posn_opt_vec new_positions( the_num_entries );
 
 		bool has_position_for_some_entry = false;
-		for (alignment::size_type entry = 0; entry < the_num_entries; ++entry) {
+		for (const alignment::size_type &entry : indices( the_num_entries ) ) {
 			const aln_posn_opt &position = arg_lists[ entry ][ index ];
 			has_position_for_some_entry  = ( position || has_position_for_some_entry );
 			new_positions[ entry ]       = position;
@@ -235,7 +235,7 @@ void alignment::set_scores(const alignment_residue_scores &arg_scores ///< TODOC
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Length of scores does not match the length of the alignment"));
 	}
 	const size_t the_length = length();
-	for (size_t index_ctr = 0; index_ctr < the_length; ++index_ctr) {
+	for (const size_t &index_ctr : indices( the_length ) ) {
 		if ( arg_scores.get_num_present_entries_of_index( index_ctr ) != num_present_positions_of_index( *this, index_ctr ) ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Number of present positions at index does not match the equivalent in the alignment"));
 		}
@@ -257,11 +257,11 @@ size_size_pair_opt cath::align::first_non_consecutive_entry_positions(const alig
 	const alignment::size_type length      = arg_alignment.length();
 
 	// Loop over the entries
-	for (size_t entry = 0; entry < num_entries; ++entry) {
+	for (const size_t &entry : indices( num_entries ) ) {
 
 		// Loop over the indices for the entry, keeping track of the expected positions
 		size_t expected_position = 0;
-		for (size_t index = 0; index < length; ++index) {
+		for (const size_t &index : indices( length ) ) {
 			// If there is a position...
 			if ( has_position_of_entry_of_index( arg_alignment, entry,index ) ) {
 				// If the found position doesn't match the expected position, return the entry and expected position
@@ -395,8 +395,8 @@ bool cath::align::operator==(const alignment &arg_aln_a, ///< TODOCUMENT
 	// Otherwise, check each of the positions match
 	const alignment::size_type length      = arg_aln_a.length();
 	const alignment::size_type num_entries = arg_aln_a.num_entries();
-	for (alignment::size_type index_ctr = 0; index_ctr < length; ++index_ctr) {
-		for (alignment::size_type entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const alignment::size_type &index_ctr : indices( length ) ) {
+		for (const alignment::size_type &entry_ctr : indices( num_entries ) ) {
 			const aln_posn_opt &a_position = arg_aln_a.position_of_entry_of_index( entry_ctr, index_ctr );
 			const aln_posn_opt &b_position = arg_aln_b.position_of_entry_of_index( entry_ctr, index_ctr );
 			if ( a_position != b_position ) {
@@ -419,9 +419,9 @@ ostream & cath::align::operator<<(ostream         &arg_ostream,  ///< The stream
 
 	arg_ostream << "alignment[";
 	arg_ostream << length << " positions: ";
-	for (alignment::size_type index_ctr = 0; index_ctr < length; ++index_ctr) {
+	for (const alignment::size_type &index_ctr : indices( length ) ) {
 		arg_ostream << ((index_ctr > 0) ? "; " : "");
-		for (alignment::size_type entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+		for (const alignment::size_type &entry_ctr : indices( num_entries ) ) {
 			const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
 			arg_ostream << ( ( entry_ctr > 0 ) ? " <-> " : "" );
 			arg_ostream << ( position ? lexical_cast<string>( *position ) : "" );
@@ -481,7 +481,7 @@ size_vec cath::align::num_present_positions_by_index(const alignment &arg_alignm
 	const size_t length = arg_alignment.length();
 	size_vec num_present_positions;
 	num_present_positions.reserve( length );
-	for (size_t index_ctr = 0; index_ctr < length; ++index_ctr) {
+	for (const size_t &index_ctr : indices( length ) ) {
 		num_present_positions.push_back( num_present_positions_of_index( arg_alignment, index_ctr ) );
 	}
 	return num_present_positions;
@@ -495,7 +495,7 @@ size_vec cath::align::present_positions_of_entry(const alignment            &arg
                                                  ) {
 	const alignment::size_type aln_length = arg_alignment.length();
 	size_vec present_positions;
-	for ( alignment::size_type index = 0; index < aln_length; ++index ) {
+	for (const alignment::size_type &index : indices( aln_length ) ) {
 		if ( has_position_of_entry_of_index( arg_alignment, arg_entry, index ) ) {
 			present_positions.push_back( index );
 		}
@@ -520,7 +520,7 @@ size_vec cath::align::num_present_positions_by_entry(const alignment &arg_alignm
 	const size_t num_entries = arg_alignment.num_entries();
 	size_vec num_present_positions;
 	num_present_positions.reserve( num_entries );
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		num_present_positions.push_back( num_present_positions_of_entry( arg_alignment, entry_ctr ) );
 	}
 	return num_present_positions;
@@ -535,7 +535,7 @@ aln_size_opt cath::align::get_index_of_first_present_position_of_entry(const ali
                                                                        const alignment::size_type &arg_entry      ///< The entry whose first present position is to be found
                                                                        ) {
 	const alignment::size_type aln_length = arg_alignment.length();
-	for ( alignment::size_type index = 0; index < aln_length; ++index ) {
+	for (const alignment::size_type &index : indices( aln_length ) ) {
 		if ( has_position_of_entry_of_index( arg_alignment, arg_entry, index ) ) {
 			return index;
 		}
@@ -599,7 +599,7 @@ aln_size_opt cath::align::get_index_of_first_present_position_of_both_entries(co
                                                                               const alignment::size_type &arg_entry_b    ///< The second entry whose last present position is to be found
                                                                               ) {
 	const alignment::size_type aln_length = arg_alignment.length();
-	for ( alignment::size_type index = 0; index < aln_length; ++index ) {
+	for (const alignment::size_type &index : indices( aln_length ) ) {
 		if ( has_position_of_both_entries_of_index( arg_alignment, arg_entry_a, arg_entry_b, index ) ) {
 			return index;
 		}
@@ -726,7 +726,7 @@ float_score_vec cath::align::get_mean_score_by_index(const alignment &arg_alignm
 	const size_t length = arg_alignment.length();
 	float_score_vec mean_score_by_index;
 	mean_score_by_index.reserve( length );
-	for (size_t index_ctr = 0; index_ctr < length; ++index_ctr) {
+	for (const size_t &index_ctr : indices( length ) ) {
 		mean_score_by_index.push_back( get_mean_score_of_index( arg_alignment, index_ctr ) );
 	}
 	return mean_score_by_index;
@@ -740,7 +740,7 @@ float_score_vec cath::align::get_total_score_by_index(const alignment &arg_align
 	const size_t length = arg_alignment.length();
 	float_score_vec total_score_by_index;
 	total_score_by_index.reserve( length );
-	for (size_t index_ctr = 0; index_ctr < length; ++index_ctr) {
+	for (const size_t &index_ctr : indices( length ) ) {
 		total_score_by_index.push_back( get_total_score_of_index( arg_alignment, index_ctr ) );
 	}
 	return total_score_by_index;
@@ -811,7 +811,7 @@ alignment cath::align::set_empty_scores_copy(alignment arg_alignment ///< TODOCU
 alignment cath::align::make_single_alignment(const size_t &arg_length
                                              ) {
 	alignment new_alignment( 1 );
-	for (size_t index_ctr = 0; index_ctr < arg_length; ++index_ctr) {
+	for (const size_t &index_ctr : indices( arg_length ) ) {
 		new_alignment.set_position_value( 0, index_ctr, index_ctr );
 	}
 	return new_alignment;
@@ -866,8 +866,8 @@ alignment cath::align::make_permuted_alignment(const alignment &arg_alignment,  
 
 	// Construct a new permuted alignment
 	alignment new_alignment( num_entries );
-	for (size_t index = 0; index < aln_length; ++index) {
-		for (size_t entry = 0; entry < num_entries; ++entry) {
+	for (const size_t &index : indices( aln_length ) ) {
+		for (const size_t &entry : indices( num_entries ) ) {
 			const size_t permuted_entry = arg_permutation[ entry ];
 			const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry, index );
 			if ( position ) {
@@ -902,7 +902,7 @@ void cath::align::append_row(alignment           &arg_alignment, ///< TODOCUMENT
 	}
 
 	// Add each of the entries
-	for (alignment::size_type entry_ctr = 0; entry_ctr < aln_num_entries; ++entry_ctr) {
+	for (const alignment::size_type &entry_ctr : indices( aln_num_entries ) ) {
 		const aln_posn_opt &position = arg_aln_row.position_of_entry( entry_ctr );
 		if ( position ) {
 			set_position_value( arg_alignment, entry_ctr, aln_length, *position );

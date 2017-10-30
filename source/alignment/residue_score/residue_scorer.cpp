@@ -26,6 +26,7 @@
 #include "alignment/alignment.hpp"
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/residue_score/alignment_residue_scores.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "ssap/context_res.hpp"
 #include "ssap/ssap.hpp"
 #include "structure/entry_querier/residue_querier.hpp"
@@ -61,13 +62,13 @@ alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alig
 //	cerr << horiz_align_outputter( arg_alignment ) << endl;
 
 	/// Loop down the length of the alignment
-	for (size_t from_index = 0; from_index < length; ++from_index) {
+	for (const size_t &from_index : indices( length ) ) {
 		const size_vec from_entries = entries_present_at_index( arg_alignment, from_index );
 		if ( from_entries.size() <= 1 ) {
 			continue;
 		}
 
-		for (size_t to_index = 0; to_index < length; ++to_index) {
+		for (const size_t &to_index : indices( length ) ) {
 			const size_vec to_entries = entries_present_at_index( arg_alignment, to_index );
 			if ( to_entries.size() <= 1 ) {
 				continue;
@@ -107,9 +108,9 @@ alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alig
 			////						fprintf(stderr, "yes\n");
 
 			const size_t common_entries_size = common_entries.size();
-			for (size_t comm_ent_ctr_a = 0; comm_ent_ctr_a < common_entries_size; ++comm_ent_ctr_a) {
+			for (const size_t &comm_ent_ctr_a : indices( common_entries_size ) ) {
 //				fprintf(stderr, "comm_ent_ctr_a : %ld\n", comm_ent_ctr_a);
-				for (size_t comm_ent_ctr_b = 0; comm_ent_ctr_b < common_entries_size; ++comm_ent_ctr_b) {
+				for (const size_t &comm_ent_ctr_b : indices( common_entries_size ) ) {
 //					fprintf(stderr, "comm_ent_ctr_b : %ld\n", comm_ent_ctr_b);
 					if ( comm_ent_ctr_a < comm_ent_ctr_b ) {
 //						fprintf(stderr, "comm_ent_ctr_a <  comm_ent_ctr_b\n" );
@@ -156,8 +157,8 @@ alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alig
 	}
 
 	score_opt_vec_vec scores( num_entries, score_opt_vec( length ) );
-	for (size_t index_ctr = 0; index_ctr < length; ++index_ctr) {
-		for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &index_ctr : indices( length ) ) {
+		for (const size_t &entry_ctr : indices( num_entries ) ) {
 			if ( has_position_of_entry_of_index( arg_alignment, entry_ctr, index_ctr ) ) {
 				const float_score_type &numerator   = numerators  [ entry_ctr ][ index_ctr ];
 				const float_score_type &denominator = denominators[ entry_ctr ][ index_ctr ];

@@ -26,6 +26,7 @@
 
 #include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "file/pdb/pdb.hpp"
 

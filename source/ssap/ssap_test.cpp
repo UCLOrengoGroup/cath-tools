@@ -25,6 +25,7 @@
 #include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/size_t_literal.hpp"
@@ -116,10 +117,10 @@ void cath::test::ssap_pair_fixture<ID1, ID2>::check_context_sec_scores_as_expect
 		  num_sec_strucs_1 * num_sec_strucs_1
 		* num_sec_strucs_2 * num_sec_strucs_2
 	);
-	for (size_t sec_struc_from_ctr_1 = 0; sec_struc_from_ctr_1 < num_sec_strucs_1; ++sec_struc_from_ctr_1) {
-		for (size_t sec_struc_from_ctr_2 = 0; sec_struc_from_ctr_2 < num_sec_strucs_2; ++sec_struc_from_ctr_2) {
-			for (size_t sec_struc_to_ctr_1 = 0; sec_struc_to_ctr_1 < num_sec_strucs_1; ++sec_struc_to_ctr_1) {
-				for (size_t sec_struc_to_ctr_2 = 0; sec_struc_to_ctr_2 < num_sec_strucs_2; ++sec_struc_to_ctr_2) {
+	for (const size_t &sec_struc_from_ctr_1 : indices( num_sec_strucs_1 ) ) {
+		for (const size_t &sec_struc_from_ctr_2 : indices( num_sec_strucs_2 ) ) {
+			for (const size_t &sec_struc_to_ctr_1 : indices( num_sec_strucs_1 ) ) {
+				for (const size_t &sec_struc_to_ctr_2 : indices( num_sec_strucs_2 ) ) {
 					const score_type context_sec_score = context_sec(
 						prot1,
 						prot2,
@@ -152,8 +153,8 @@ void cath::test::ssap_pair_fixture<ID1, ID2>::check_residues_have_similar_area_a
 	const size_t num_residues_2 = prot2.get_length();
 	vector<bool> got_residues_similar;
 	got_residues_similar.reserve( num_residues_1 * num_residues_2 );
-	for (size_t residue_ctr_1 = 0; residue_ctr_1 < num_residues_1; ++residue_ctr_1) {
-		for (size_t residue_ctr_2 = 0; residue_ctr_2 < num_residues_2; ++residue_ctr_2) {
+	for (const size_t &residue_ctr_1 : indices( num_residues_1 ) ) {
+		for (const size_t &residue_ctr_2 : indices( num_residues_2 ) ) {
 			const bool residues_similar = residues_have_similar_area_angle_props(
 				prot1.get_residue_ref_of_index( residue_ctr_1 ),
 				prot2.get_residue_ref_of_index( residue_ctr_2 )

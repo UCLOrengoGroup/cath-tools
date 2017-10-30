@@ -20,6 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -45,7 +46,7 @@ BOOST_AUTO_TEST_SUITE(amino_acid_test_suite)
 BOOST_AUTO_TEST_CASE(simple_conversion) {
 	BOOST_REQUIRE_EQUAL(CODES.size(), NAMES.size());
 	BOOST_REQUIRE_EQUAL(CODES.size(), LETTERS.size());
-	for (size_t letter_ctr = 0; letter_ctr < CODES.size(); ++letter_ctr) {
+	for (const size_t &letter_ctr : indices( CODES.size() ) ) {
 		const string &code   = CODES[letter_ctr];
 		const string &name   = NAMES[letter_ctr];
 		const char   &letter = LETTERS[letter_ctr];

@@ -22,6 +22,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "common/argc_argv_faker.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
@@ -64,7 +65,7 @@ void cath::test::argc_argv_faker_test_suite_fixture::test_args(const str_vec &ar
 	// Check the argc_argv_faker gives the correct result for get_argc() and get_argv()
 	BOOST_CHECK_EQUAL(num_args, my_argc_argv_faker.get_argc());
 	char * * args_ptr = my_argc_argv_faker.get_argv();
-	for (size_t arg_ctr = 0; arg_ctr < num_args; ++arg_ctr) {
+	for (const size_t &arg_ctr : indices( num_args ) ) {
 		BOOST_CHECK_EQUAL( arg_args[ arg_ctr ], args_ptr[ arg_ctr ] );
 	}
 	BOOST_CHECK_EQUAL(args_ptr[num_args], static_cast<char *>( nullptr ));

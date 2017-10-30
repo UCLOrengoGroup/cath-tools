@@ -35,6 +35,7 @@
 #include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
 #include "common/algorithm/copy_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/difference.hpp"
 #include "common/less_than_helper.hpp"
@@ -120,14 +121,14 @@ score_value lddt_score::do_calculate(const alignment &arg_alignment, ///< The pa
 	}
 
 	// Loop over the pairs of residues
-	for (size_t res_ctr_1 = 0; res_ctr_1 < num_common_residues; ++res_ctr_1) {
+	for (const size_t &res_ctr_1 : indices( num_common_residues ) ) {
 		for (size_t res_ctr_2 = res_ctr_1 + 1; res_ctr_2 < num_common_residues; ++res_ctr_2) {
 
 			const size_t &num_atoms_1 = common_coords_by_residue.first[res_ctr_1].size();
 			const size_t &num_atoms_2 = common_coords_by_residue.first[res_ctr_2].size();
 
-			for (size_t atom_ctr_1 = 0; atom_ctr_1 < num_atoms_1; ++atom_ctr_1) {
-				for (size_t atom_ctr_2 = 0; atom_ctr_2 < num_atoms_2; ++atom_ctr_2) {
+			for (const size_t &atom_ctr_1 : indices( num_atoms_1 ) ) {
+				for (const size_t &atom_ctr_2 : indices( num_atoms_2 ) ) {
 					const double distance_a  = distance_between_points(
 						common_coords_by_residue.first[  res_ctr_1 ][ atom_ctr_1 ],
 						common_coords_by_residue.first[  res_ctr_2 ][ atom_ctr_2 ]

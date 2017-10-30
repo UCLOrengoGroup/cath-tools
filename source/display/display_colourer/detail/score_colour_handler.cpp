@@ -24,12 +24,14 @@
 #include <numeric>
 
 #include "alignment/alignment.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/type_aliases.hpp"
 #include "display/display_colour_spec/display_colour_spec.hpp"
 #include "display_colour/display_colour.hpp"
 #include "display_colour/display_colour_type_aliases.hpp"
 
 using namespace cath;
+using namespace cath::common;
 using namespace cath::detail;
 using namespace cath::align;
 using namespace std;
@@ -113,8 +115,8 @@ void cath::detail::adjust_display_colour_spec(display_colour_spec        &arg_co
 	const alignment::size_type aln_length    = arg_alignment.length();
 
 	if ( arg_score_colour_handler.get_show_scores_if_present() ) {
-		for (alignment::size_type entry = 0; entry < num_entries; ++entry) {
-			for (size_t index = 0; index < aln_length; ++index) {
+		for (const alignment::size_type &entry : indices( num_entries ) ) {
+			for (const size_t &index : indices( aln_length ) ) {
 				const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry, index );
 				if ( position ) {
 					const display_colour_opt &base_col = get_base_clr( arg_colour_spec );

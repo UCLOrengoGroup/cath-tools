@@ -36,6 +36,7 @@
 #include "alignment/refiner/detail/alignment_split_list.hpp"
 #include "alignment/refiner/detail/alignment_split_mapping.hpp"
 #include "alignment/residue_score/residue_scorer.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/file/open_fstream.hpp"
 #include "exception/not_implemented_exception.hpp"
 #include "ssap/ssap.hpp"
@@ -141,7 +142,7 @@ bool_aln_pair alignment_refiner::iterate_step_for_alignment_split(const alignmen
 //	cerr << "number of entries in half b of split is " << mapping_b.num_entries() << endl;
 
 	const alignment::size_type alignment_length = arg_alignment.length();
-	for (size_t aln_ctr = 0; aln_ctr < alignment_length; ++aln_ctr) {
+	for (const size_t &aln_ctr : indices( alignment_length ) ) {
 		const size_opt mapping_index_a = mapping_a.index_of_orig_aln_index( aln_ctr );
 		const size_opt mapping_index_b = mapping_b.index_of_orig_aln_index( aln_ctr );
 		if ( ! mapping_index_a || ! mapping_index_b ) {
@@ -167,8 +168,8 @@ bool_aln_pair alignment_refiner::iterate_step_for_alignment_split(const alignmen
 //				const residue &residue_a = protein_a.get_residue_ref_of_index( a_position );
 //				const residue &residue_b = protein_b.get_residue_ref_of_index( b_position );
 
-				for (size_t res_ctr_a = 0; res_ctr_a < length_a; ++res_ctr_a) {
-					for (size_t res_ctr_b = 0; res_ctr_b < length_b; ++res_ctr_b) {
+				for (const size_t &res_ctr_a : indices( length_a ) ) {
+					for (const size_t &res_ctr_b : indices( length_b ) ) {
 						if ( res_ctr_a != a_position && res_ctr_b != b_position ) {
 							const size_t   other_mapping_index_a = mapping_a.index_of_protein_index( present_entry_a, res_ctr_a );
 							const size_t   other_mapping_index_b = mapping_b.index_of_protein_index( present_entry_b, res_ctr_b );
@@ -201,8 +202,8 @@ bool_aln_pair alignment_refiner::iterate_step_for_alignment_split(const alignmen
 	}
 
 	float_score_vec_vec avg_scores( full_length_a, float_score_vec( full_length_b, 0 ) );
-	for (size_t ctr_a = 0; ctr_a < full_length_a; ++ctr_a) {
-		for (size_t ctr_b = 0; ctr_b < full_length_b; ++ctr_b) {
+	for (const size_t &ctr_a : indices( full_length_a ) ) {
+		for (const size_t &ctr_b : indices( full_length_b ) ) {
 			avg_scores[ctr_a][ctr_b] = (from_alignment_scores[ctr_a][ctr_b] + to_alignment_scores[ctr_a][ctr_b]) / 2.0;
 		}
 	}

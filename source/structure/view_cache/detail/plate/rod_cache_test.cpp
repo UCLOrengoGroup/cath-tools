@@ -20,6 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/pair_insertion_operator.hpp"
 #include "common/size_t_literal.hpp"
@@ -244,7 +245,7 @@ BOOST_AUTO_TEST_CASE(all_sizes_and_indices) {
 		for (size_t size_b = 1; size_b < max_size; ++size_b) {
 
 			// Check that all entries with index_b of 0 have 0 notch and appropriate rod values
-			for (size_t index_a = 0; index_a < size_a; ++index_a) {
+			for (const size_t &index_a : indices( size_a ) ) {
 				BOOST_CHECK_EQUAL(
 					get_rod_and_notch_of_indices( index_a, 0, size_a, size_b ),
 					make_pair( size_a - 1 - index_a, 0_z )
@@ -252,15 +253,15 @@ BOOST_AUTO_TEST_CASE(all_sizes_and_indices) {
 			}
 
 			// Check that all entries with index_b of 0 have 0 notch and appropriate rod values
-			for (size_t index_b = 0; index_b < size_b; ++index_b) {
+			for (const size_t &index_b : indices( size_b ) ) {
 				BOOST_CHECK_EQUAL(
 					get_rod_and_notch_of_indices( 0, index_b, size_a, size_b ),
 					make_pair( size_a - 1 + index_b, 0_z )
 				);
 			}
 
-			for (size_t index_a = 0; index_a < size_a; ++index_a) {
-				for (size_t index_b = 0; index_b < size_b; ++index_b) {
+			for (const size_t &index_a : indices( size_a ) ) {
+				for (const size_t &index_b : indices( size_b ) ) {
 					// Check that converting to rod/notch and back returns the original results
 					const size_size_pair  rod_and_notch = get_rod_and_notch_of_indices( index_a, index_b, size_a, size_b );
 					const size_t &rod   = rod_and_notch.first;

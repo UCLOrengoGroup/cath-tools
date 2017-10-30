@@ -29,6 +29,7 @@
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/not_implemented_exception.hpp"
@@ -157,7 +158,7 @@ superposition::superposition(const vector<indices_and_coord_lists_type> &arg_ind
 	while ( any_of( inputs_processed, logical_not<bool>() ) ) {
 		bool made_progress = false;
 
-		for (size_t input_ctr = 0; input_ctr < arg_indices_and_coord_lists.size(); ++input_ctr) {
+		for (const size_t &input_ctr : indices( arg_indices_and_coord_lists.size() ) ) {
 			if ( ! inputs_processed[input_ctr]) {
 				const indices_and_coord_lists_type &indices_and_coord_lists_entry = arg_indices_and_coord_lists[input_ctr];
 				const size_t     &index_a      = get<0>( indices_and_coord_lists_entry );
@@ -395,7 +396,7 @@ bool cath::sup::operator==(const superposition &arg_sup_a, ///< TODOCUMENT
 
 	// Otherwise, check each of the positions match
 	const size_t num_entries = arg_sup_a.get_num_entries();
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		if (arg_sup_a.get_translation_of_index(entry_ctr) != arg_sup_b.get_translation_of_index(entry_ctr) ) {
 			return false;
 		}
@@ -419,7 +420,7 @@ ostream & cath::sup::operator<<(ostream             &arg_ostream,      ///< The 
 	arg_ostream << "superposition[";
 	arg_ostream << num_entries;
 	arg_ostream << " entries:";
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		arg_ostream << (entry_ctr > 0 ? "; " : " ");
 		arg_ostream << arg_superposition.get_translation_of_index(entry_ctr);
 		arg_ostream << ", ";
@@ -440,7 +441,7 @@ bool cath::sup::are_close(const superposition &arg_sup_1,  ///< TODOCUMENT
 	if (num_entries != arg_sup_2.get_num_entries()) {
 		return false;
 	}
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		const bool translations_are_close = (
 			arg_sup_1.get_translation_of_index(entry_ctr) == arg_sup_2.get_translation_of_index(entry_ctr)
 		);
@@ -466,7 +467,7 @@ void cath::sup::write_superposition(ostream             &arg_os,           ///< 
 	const streamsize old_precision = arg_os.precision();
 	arg_os.precision(30);
 	const size_t num_entries = arg_superposition.get_num_entries();
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		const coord    entry_translation = arg_superposition.get_translation_of_index( entry_ctr );
 		const rotation entry_rotation    = arg_superposition.get_rotation_of_index(    entry_ctr );
 		arg_os << entry_translation.get_x() << " " << entry_translation.get_y() << " " << entry_translation.get_z();

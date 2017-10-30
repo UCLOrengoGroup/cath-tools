@@ -20,6 +20,7 @@
 
 #include "file_list_pdbs_acquirer.hpp"
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
@@ -50,7 +51,7 @@ pdb_list_name_set_list_pair file_list_pdbs_acquirer::do_get_pdbs_and_names(istre
 
 	// Otherwise, load the PDBs from files
 	const size_t num_input_files = files.size();
-	for (size_t input_file_ctr = 0; input_file_ctr < num_input_files; ++input_file_ctr) {
+	for (const size_t &input_file_ctr : indices( num_input_files ) ) {
 		const path &input_filename = files[ input_file_ctr ];
 		const pdb my_new_pdb = read_pdb_file( input_filename );
 		pdbs.push_back( my_new_pdb );

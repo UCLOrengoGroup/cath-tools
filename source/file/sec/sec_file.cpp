@@ -58,7 +58,7 @@ sec_file::sec_file(sec_file_record_vec             arg_sec_file_records,   ///< 
 			+ ")"
 		));
 	}
-	for (size_t planar_ctr = 0; planar_ctr < inter_planar_angles.size(); ++planar_ctr) {
+	for (const size_t &planar_ctr : indices( inter_planar_angles.size() ) ) {
 		if ( inter_planar_angles.size() - planar_ctr != inter_planar_angles[planar_ctr].size() ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("The number of entries in one of the inter_planar_angles does not match expected"));
 		}
@@ -118,10 +118,10 @@ sec_struc_vec cath::file::make_sec_struc_list(const sec_file &arg_sec_file ///< 
 	//    (sec_struc_planar_angles::NULL_SEC_STRUC_PLANAR_ANGLES)
 	//  - for the sec_struc_planar_angles to preceding sec_strucs, just copy (without alteration) the sec_struc_planar_angles from
 	//    that sec_struc to this
-	for (size_t sec_struc_ctr_a = 0; sec_struc_ctr_a < new_sec_strucs.size(); ++sec_struc_ctr_a) {
+	for (const size_t &sec_struc_ctr_a : indices( new_sec_strucs.size() ) ) {
 		sec_struc_planar_angles_vec new_planar_angles;
 		new_planar_angles.reserve(new_sec_strucs.size());
-		for (size_t sec_struc_ctr_b = 0; sec_struc_ctr_b < new_sec_strucs.size(); ++sec_struc_ctr_b) {
+		for (const size_t &sec_struc_ctr_b : indices( new_sec_strucs.size() ) ) {
 			if (sec_struc_ctr_a == sec_struc_ctr_b) {
 				new_planar_angles.push_back(sec_struc_planar_angles::NULL_SEC_STRUC_PLANAR_ANGLES);
 			}

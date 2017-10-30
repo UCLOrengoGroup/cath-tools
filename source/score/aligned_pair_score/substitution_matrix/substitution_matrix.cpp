@@ -24,6 +24,7 @@
 #include <boost/range/algorithm.hpp>
 
 #include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/invert_permutation.hpp"
 #include "common/less_than_helper.hpp"
@@ -118,9 +119,9 @@ score_vec_vec substitution_matrix::reorder_scores(const amino_acid_vec &arg_orig
 	score_vec_vec scores( num_amino_acids, score_vec( num_amino_acids, 0 ) );
 
 	// Loop over the new matrix, populating its scores from the old matrix
-	for (size_t new_aa_index_a = 0; new_aa_index_a < num_amino_acids; ++new_aa_index_a) {
+	for (const size_t &new_aa_index_a : indices( num_amino_acids ) ) {
 		const size_t orig_aa_index_a = back_permutation[ new_aa_index_a ];
-		for (size_t new_aa_index_b = 0; new_aa_index_b < num_amino_acids; ++new_aa_index_b) {
+		for (const size_t &new_aa_index_b : indices( num_amino_acids ) ) {
 			const size_t orig_aa_index_b = back_permutation[ new_aa_index_b ];
 			scores[ new_aa_index_a ][ new_aa_index_b ] = arg_scores[ orig_aa_index_a ][ orig_aa_index_b ];
 		}
@@ -148,8 +149,8 @@ score_type substitution_matrix::highest_score_of_scores(const score_vec &arg_sco
 /// \pre The matrix must be symmetric else an out_of_range_exception will be thrown
 void substitution_matrix::check_is_symmetric() const {
 	const size_t num_amino_acids = amino_acids.size();
-	for (size_t index_a = 0; index_a < num_amino_acids; ++index_a) {
-		for (size_t index_b = 0; index_b < num_amino_acids; ++index_b) {
+	for (const size_t &index_a : indices( num_amino_acids ) ) {
+		for (const size_t &index_b : indices( num_amino_acids ) ) {
 			if ( scores[ index_a ][ index_b ] != scores[ index_b ][ index_a ] ) {
 				BOOST_THROW_EXCEPTION(out_of_range_exception("The substitution_matrix data isn't symmetric"));
 			}

@@ -27,6 +27,7 @@
 #include "alignment/residue_name_align/detail/residue_name_align_map.hpp"
 #include "alignment/residue_score/residue_scorer.hpp"
 #include "biocore/residue_name.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 #include <string>
@@ -97,7 +98,7 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 		bool found_non_skipping = false;
 		size_t entry_of_non_skipping = 0;
 		// Search to find an entry for which a new entry can be inserted into the alignment
-		for (size_t entry_ctr = 0; entry_ctr < num_lists; ++entry_ctr) {
+		for (const size_t &entry_ctr : indices( num_lists ) ) {
 
 			// If this entry is complete, then continue to the next entry
 			// otherwise, grab the next residue string for this entry
@@ -126,7 +127,7 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 
 			// Check whether inserting this row of equivalents would involve skipping anything
 			bool found_skip_here = false;
-			for (size_t entry_check_ctr = 0; entry_check_ctr < num_lists; ++entry_check_ctr) {
+			for (const size_t &entry_check_ctr : indices( num_lists ) ) {
 				const aln_posn_opt &position = equivalent_indices[entry_check_ctr];
 				if ( position && *position != next_index_to_add_for_lists[ entry_check_ctr ] ) {
 					if ( *position < next_index_to_add_for_lists[entry_check_ctr]) {
@@ -166,7 +167,7 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 			}
 
 			// Insert the new positions and increment the relevant indices in next_index_to_add_for_lists
-			for (size_t entry_check_ctr = 0; entry_check_ctr < num_lists; ++entry_check_ctr) {
+			for (const size_t &entry_check_ctr : indices( num_lists ) ) {
 				const bool &should_insert_entry = equivalent_presences[ entry_check_ctr ];
 				const aln_posn_opt value = should_insert_entry ? next_index_to_add_for_lists[ entry_check_ctr ]
 				                                               : aln_posn_opt( none );

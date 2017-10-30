@@ -25,6 +25,7 @@
 
 #include "alignment/gap/gap_penalty.hpp"
 #include "alignment/pair_alignment.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -279,7 +280,7 @@ float_score_float_score_pair cath::align::gap::gap_open_and_extend_counts_of_ali
 
 	// Loop over distinct pairs, to accumulate the open/extend counts for each
 	size_size_pair total_open_and_extend_counts = make_pair( 0_z, 0_z );
-	for (size_t entry_a = 0; entry_a < num_entries; ++entry_a) {
+	for (const size_t &entry_a : indices( num_entries ) ) {
 		for (size_t entry_b = entry_a; entry_b < num_entries; ++entry_b) {
 			// Calculate the counts for the pair and add them to the running count
 			const size_size_pair pair_couts = detail::gap_open_and_extend_counts_of_pair_in_alignment(
@@ -323,7 +324,7 @@ size_t cath::align::gap::get_naive_num_gaps(const alignment &arg_alignment ///< 
 	// Loop over the entries in the alignment and add up the number of gaps of each
 	size_t num_gaps = 0;
 	const alignment::size_type num_entries = arg_alignment.num_entries();
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		num_gaps += detail::get_naive_num_gaps_of_entry( arg_alignment, entry_ctr );
 	}
 

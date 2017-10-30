@@ -33,6 +33,7 @@
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "alignment/refiner/alignment_refiner.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/difference.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "ssap/context_res.hpp"
@@ -116,8 +117,8 @@ view_cache_index cath::index::build_view_cache_index(const double              &
 		view_cache_index_tail               (                          )
 	) );
 	const size_t num_residues = arg_protein.get_length();
-	for (size_t from_ctr = 0; from_ctr < num_residues; ++from_ctr) {
-		for (size_t to_ctr = 0; to_ctr < num_residues; ++to_ctr) {
+	for (const size_t &from_ctr : indices( num_residues ) ) {
+		for (const size_t &to_ctr : indices( num_residues ) ) {
 			const view_cache_index_entry the_entry = make_view_cache_index_entry( arg_protein, from_ctr, to_ctr );
 			if ( arg_criteria( the_entry ) ) {
 				new_view_cache_index.store( the_entry );
@@ -262,12 +263,12 @@ high_resolution_clock::duration cath::index::process_quads_complete(const protei
 
 	const auto scan_start_time = high_resolution_clock::now();
 
-	for (size_t from_a = 0; from_a < num_entries_a; ++from_a) {
-		for (size_t to_a = 0; to_a < num_entries_a; ++to_a) {
+	for (const size_t &from_a : indices( num_entries_a ) ) {
+		for (const size_t &to_a : indices( num_entries_a ) ) {
 			if ( from_a != to_a ) {
 				const size_size_pair indices_a( from_a, to_a );
-				for (size_t from_b = 0; from_b < num_entries_b; ++from_b) {
-					for (size_t to_b = 0; to_b < num_entries_b; ++to_b) {
+				for (const size_t &from_b : indices( num_entries_b ) ) {
+					for (const size_t &to_b : indices( num_entries_b ) ) {
 						if ( from_b != to_b ) {
 							const size_size_pair indices_b( from_b, to_b );
 							if ( arg_criteria( indices_a, indices_b, arg_protein_a, arg_protein_b ) ) {

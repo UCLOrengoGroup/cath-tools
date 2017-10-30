@@ -21,12 +21,14 @@
 #include "alignment_split_list.hpp"
 
 #include "alignment/alignment.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 
 #include <iostream>
 
 using namespace cath;
 using namespace cath::align::detail;
+using namespace cath::common;
 
 /// \brief TODOCUMENT
 void alignment_split_list::insert(const alignment_split &arg_alignment_split ///< TODOCUMENT
@@ -59,7 +61,7 @@ alignment_split_list cath::align::detail::get_single_alignment_splits(const alig
                                                                       ) {
 	const size_t num_entries = arg_alignment.num_entries();
 	alignment_split_list new_alignment_splits;
-	for (size_t aln_entry = 0; aln_entry < num_entries; ++aln_entry) {
+	for (const size_t &aln_entry : indices( num_entries ) ) {
 		const alignment_split single_split = make_single_alignment_split( aln_entry, num_entries );
 		if ( is_valid_split( single_split) ) {
 			new_alignment_splits.insert( get_least_version( single_split ) );
@@ -74,7 +76,7 @@ alignment_split_list cath::align::detail::get_preexisting_alignment_splits(const
 	const size_t num_entries = arg_alignment.num_entries();
 	const size_t aln_length  = arg_alignment.length();
 	alignment_split_list new_alignment_splits;
-	for (size_t aln_index = 0; aln_index < aln_length; ++aln_index) {
+	for (const size_t &aln_index : indices( aln_length ) ) {
 		const size_vec present_positions = entries_present_at_index( arg_alignment, aln_index );
 		const alignment_split multi_split = make_alignment_split( present_positions, num_entries );
 		if ( is_valid_split( multi_split) ) {

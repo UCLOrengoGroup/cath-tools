@@ -20,6 +20,7 @@
 
 #include "common_residue_select_all_policy.hpp"
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 
 using namespace cath;
@@ -35,7 +36,7 @@ size_vec common_residue_select_all_policy::do_select_common_residues(const align
                                                                      ) const {
 	size_vec index_indices;
 	index_indices.reserve(arg_indices.size());
-	for (size_t index_ctr = 0; index_ctr < arg_indices.size(); ++index_ctr) {
+	for (const size_t &index_ctr : indices( arg_indices.size() ) ) {
 		index_indices.push_back(index_ctr);
 	}
 	return index_indices;

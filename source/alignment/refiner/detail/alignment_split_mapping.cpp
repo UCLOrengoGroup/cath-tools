@@ -28,6 +28,7 @@
 #include "alignment/alignment_row.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "alignment/refiner/detail/alignment_split.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "structure/protein/protein.hpp"
@@ -69,7 +70,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,
 	}
 
 	// Loop along the length of the original alignment
-	for (size_t orig_aln_index = 0; orig_aln_index < orig_length; ++orig_aln_index) {
+	for (const size_t &orig_aln_index : indices( orig_length ) ) {
 
 		const alignment_row local_row = get_row_of_entries_of_alignment( arg_alignment, orig_aln_entries, orig_aln_index );
 
@@ -78,7 +79,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,
 
 			// For each entry that's present at this index,
 			// insert any missing residues into the local_aln, recording where each has gone
-			for (size_t entry = 0; entry < orig_aln_entries.size(); ++entry) {
+			for (const size_t &entry : indices( orig_aln_entries.size() ) ) {
 				// Grab some details for this entry:
 				//  * a reference to the relevant entry of index_of_pdb_res_index
 				//  * the equivalent entry in the original alignment
@@ -100,7 +101,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,
 
 			// For each entry that's present at this index,
 			// record where the residue for this index's row will go
-			for (size_t entry = 0; entry < orig_aln_entries.size(); ++entry) {
+			for (const size_t &entry : indices( orig_aln_entries.size() ) ) {
 				// Grab some details for this entry:
 				//  * a reference to the relevant entry of index_of_pdb_res_index
 				//  * the equivalent entry in the original alignment
@@ -123,7 +124,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,
 	}
 
 	// Append any extra residues that are missing at the end of the original alignment
-	for (size_t entry = 0; entry < orig_aln_entries.size(); ++entry) {
+	for (const size_t &entry : indices( orig_aln_entries.size() ) ) {
 		// Grab some details for this entry:
 		//  * a reference to the relevant entry of index_of_pdb_res_index
 		//  * the equivalent entry in the original alignment
@@ -257,7 +258,7 @@ size_vec cath::align::detail::get_orig_entries(const alignment_split_mapping &ar
 	const size_t num_entries = arg_aln_mapping.num_entries();
 	size_vec orig_entries;
 	orig_entries.reserve( num_entries );
-	for (size_t entry = 0; entry < num_entries; ++entry) {
+	for (const size_t &entry : indices( num_entries ) ) {
 		orig_entries.push_back( arg_aln_mapping.orig_aln_entry_of_entry( entry ) );
 	}
 	return orig_entries;
@@ -272,7 +273,7 @@ alignment_row cath::align::detail::get_row_of_alignment(const alignment_split_ma
 	const size_t num_entries = arg_aln_mapping.num_entries();
 	aln_posn_opt_vec positions;
 	positions.reserve( num_entries );
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		const aln_posn_opt position = arg_aln_mapping.position_of_entry_of_index( entry_ctr, arg_index );
 		positions.push_back( position );
 	}
@@ -319,7 +320,7 @@ size_vec cath::align::detail::present_orig_aln_entries_of_index(const alignment_
                                                                 ) {
 	const size_t orig_aln_num_entries = arg_aln_mapping.orig_aln_num_entries();
 	size_vec present_positions;
-	for (size_t orig_aln_entry_ctr = 0; orig_aln_entry_ctr < orig_aln_num_entries; ++orig_aln_entry_ctr) {
+	for (const size_t &orig_aln_entry_ctr : indices( orig_aln_num_entries ) ) {
 		const size_opt entry = arg_aln_mapping.entry_of_orig_aln_entry( orig_aln_entry_ctr );
 		if ( entry && has_position_of_entry_of_index( arg_aln_mapping, *entry, arg_index ) ) {
 			present_positions.push_back( orig_aln_entry_ctr );
@@ -362,7 +363,7 @@ alignment cath::align::detail::build_alignment(const alignment               &ar
 	alignment new_alignment( num_entries_a + num_entries_b );
 	new_alignment.reserve( inter_mapping_aln_length );
 
-	for (size_t inter_mapping_index = 0; inter_mapping_index < inter_mapping_aln_length; ++inter_mapping_index) {
+	for (const size_t &inter_mapping_index : indices( inter_mapping_aln_length ) ) {
 		const aln_posn_opt a_position = a_position_of_index( arg_inter_mapping_alignment, inter_mapping_index );
 		const aln_posn_opt b_position = b_position_of_index( arg_inter_mapping_alignment, inter_mapping_index );
 		if ( ! a_position && ! b_position) {

@@ -23,6 +23,8 @@
 
 #include <boost/range/irange.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
+
 namespace cath {
 	namespace common{
 

@@ -19,6 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "file/pdb/pdb.hpp"
 #include "structure/geometry/coord.hpp"
@@ -80,7 +81,7 @@ BOOST_AUTO_TEST_CASE(pdb_ca_coord_querying) {
 	my_pdb.read_file(EXAMPLE_A_PDB_FILENAME().string());
 	coord_vec first_ca_coords;
 	first_ca_coords.reserve(EXPECTED_FIRST_CA_COORDS.size());
-	for (size_t residue_ctr = 0; residue_ctr < EXPECTED_FIRST_CA_COORDS.size(); ++residue_ctr) {
+	for (const size_t &residue_ctr : indices( EXPECTED_FIRST_CA_COORDS.size() ) ) {
 		first_ca_coords.push_back(my_pdb.get_residue_ca_coord_of_index__backbone_unchecked(residue_ctr));
 	}
 	BOOST_CHECK_EQUAL_RANGES( EXPECTED_FIRST_CA_COORDS, first_ca_coords );

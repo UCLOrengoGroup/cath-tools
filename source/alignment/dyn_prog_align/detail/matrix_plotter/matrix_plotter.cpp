@@ -139,7 +139,7 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &arg_scorer ///< Th
 
 		double min_score = numeric_limits<double>::max();
 		double max_score = numeric_limits<double>::min();
-		for (size_t ctr_b = 0; ctr_b < lcl_length_b; ++ctr_b) {
+		for (const size_t &ctr_b : indices( lcl_length_b ) ) {
 
 			/// \todo Tidy up this window stuff:
 			///        * remove the need to worry about offset 1 here
@@ -187,7 +187,7 @@ void matrix_plotter::plot_return_path_matrix(const return_path_matrix &arg_retur
 	const size_t lcl_length_b     = get_length_b();
 	const size_t lcl_window_width = get_window_width();
 
-	for (size_t ctr_b = 0; ctr_b < lcl_length_b; ++ctr_b) {
+	for (const size_t &ctr_b : indices( lcl_length_b ) ) {
 
 		/// \todo Tidy up this window stuff:
 		///        * remove the need to worry about offset 1 here
@@ -225,7 +225,7 @@ void matrix_plotter::plot_accumulated_scores(const score_accumulation_matrix &ar
 	const size_t lcl_length_b     = get_length_b();
 	const size_t lcl_window_width = get_window_width();
 
-	for (size_t ctr_b = 0; ctr_b < lcl_length_b; ++ctr_b) {
+	for (const size_t &ctr_b : indices( lcl_length_b ) ) {
 
 		/// \todo Tidy up this window stuff:
 		///        * remove the need to worry about offset 1 here

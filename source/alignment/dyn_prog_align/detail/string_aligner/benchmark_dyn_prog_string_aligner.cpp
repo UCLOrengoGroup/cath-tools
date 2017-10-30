@@ -25,6 +25,7 @@
 #include <boost/range/algorithm/reverse.hpp>
 
 #include "alignment/gap/gap_penalty.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/not_implemented_exception.hpp"
 
@@ -116,10 +117,10 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 	}
 
 	// Loop over all the residues in the first sequence
-	for (size_t seq_1_ctr = 0; seq_1_ctr < length_a; ++seq_1_ctr) {
+	for (const size_t &seq_1_ctr : indices( length_a ) ) {
 		// If we are on the first residue (index 0), then process separately
 		if (seq_1_ctr == 0) {
-			for (size_t seq_2_ctr = 0; seq_2_ctr < length_b; ++seq_2_ctr) {
+			for (const size_t &seq_2_ctr : indices( length_b ) ) {
 				best_row_index[seq_2_ctr] = 0;
 
 				// If residues seq1Ctr and seq2Ctr are a good match then set matrix entries to 1
@@ -149,7 +150,7 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 			score_type prev_value     = 0;
 
 			// Loop over the residues in the second sequence
-			for (size_t seq_2_ctr = 0; seq_2_ctr < length_b; ++seq_2_ctr) {
+			for (const size_t &seq_2_ctr : indices( length_b ) ) {
 				ptrdiff_t prev_seq_1_posn = numeric_cast<ptrdiff_t>( seq_1_ctr ) - 1;
 				if (prev_seq_1_posn < 0) {
 					prev_seq_1_posn = 0;

@@ -22,6 +22,7 @@
 #include <boost/test/output_test_stream.hpp>
 
 #include "alignment/residue_name_align/detail/residue_name_align_map.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 #include <vector>
@@ -65,7 +66,7 @@ BOOST_FIXTURE_TEST_SUITE(residue_name_align_map_test_suite, cath::test::residue_
 /// \brief Check that the residue_name_align_map does what you'd expect via its get_index_of_residue_name() and contains_residue_name() methods
 BOOST_AUTO_TEST_CASE(indexing_works) {
 	const residue_name_align_map my_map( valid_names );
-	for (size_t name_ctr = 0; name_ctr < valid_names.size(); ++name_ctr) {
+	for (const size_t &name_ctr : indices( valid_names.size() ) ) {
 		const string name = valid_names[name_ctr];
 		BOOST_CHECK_EQUAL( name_ctr, my_map.get_index_of_residue_name_string( name ) );
 		BOOST_CHECK_EQUAL( true,     my_map.contains_residue_name_string    ( name ) );

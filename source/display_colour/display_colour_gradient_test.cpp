@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE(default_has_correct_properties) {
 	BOOST_CHECK_EQUAL( display_colour(1.0, 0.5, 0.0), get_colour_of_index( default_colour_gradient, 3 * ( num_steps + 1 ) + half_way ) );
 	BOOST_CHECK_EQUAL( display_colour::RED,           get_colour_of_index( default_colour_gradient, 4 * ( num_steps + 1 )            ) );
 
-//	for (size_t colour_ctr = 0; colour_ctr < num_colours; ++colour_ctr) {
+//	for (const size_t &colour_ctr : indices( num_colours ) ) {
 //		cerr << colour_ctr << "\t" << get_colour_of_index(default_colour_gradient, colour_ctr) << endl;
 //	}
 }

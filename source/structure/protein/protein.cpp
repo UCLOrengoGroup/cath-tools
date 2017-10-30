@@ -540,7 +540,7 @@ void cath::restrict_to_regions(protein              &/*arg_protein*/, ///< The i
 
 // 	// Update pair data
 // 	const size_t num_sec_strucs_to_keep = sec_strucs_to_keep.size();
-// 	for (size_t new_sec_struc_ctr_i = 0; new_sec_struc_ctr_i < num_sec_strucs_to_keep; ++new_sec_struc_ctr_i) {
+// 	for (const size_t &new_sec_struc_ctr_i : indices( num_sec_strucs_to_keep ) ) {
 // 		const size_t    &old_sec_struc_index_i = sec_struc_index_conv[new_sec_struc_ctr_i];
 // 		const sec_struc &old_sec_struc         = arg_protein.get_sec_struc_ref_of_index( old_sec_struc_index_i );
 
@@ -572,7 +572,7 @@ void cath::restrict_to_regions(protein              &/*arg_protein*/, ///< The i
 // 	residues_to_keep.reserve(protein_length);
 
 // 	// Look for residues to exclude
-// 	for (size_t residue_ctr = 0; residue_ctr < protein_length; ++residue_ctr) {
+// 	for (const size_t &residue_ctr : indices( protein_length ) ) {
 // 		const residue &my_residue = arg_protein.get_residue_ref_of_index(residue_ctr);
 // 		bool           found      = false;
 

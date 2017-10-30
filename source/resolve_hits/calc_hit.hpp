@@ -34,7 +34,6 @@
 #include "seq/seq_seg.hpp"
 #include "seq/seq_seg_run.hpp"
 
-
 namespace cath {
 	namespace rslv {
 

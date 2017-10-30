@@ -540,8 +540,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotate_point_by_quat_rots, quat_rot_type, all_quat
 //
 //    BOOST_REQUIRE_EQUAL( rotns.size(), quats.size() );
 //
-//    for (size_t ctr_a = 0; ctr_a < rotns.size(); ++ctr_a) {
-//    	for (size_t ctr_b = 0; ctr_b < rotns.size(); ++ctr_b) {
+//    for (const size_t &ctr_a : indices( rotns.size() ) ) {
+//    	for (const size_t &ctr_b : indices( rotns.size() ) ) {
 //    		const angle rotn_angle_a_to_b = angle_between_rotations( rotns[ ctr_a ], rotns[ ctr_b ] );
 //    		const angle rotn_angle_b_to_a = angle_between_rotations( rotns[ ctr_b ], rotns[ ctr_a ] );
 //    		const angle quat_angle_a_to_b = angle_between_quat_rots( quats[ ctr_a ], quats[ ctr_b ] );

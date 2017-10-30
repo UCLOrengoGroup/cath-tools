@@ -23,6 +23,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
@@ -46,15 +47,15 @@ double common_residue_select_min_score_policy::get_score_cutoff() const {
 /// \brief TODOCUMENT
 size_vec common_residue_select_min_score_policy::do_select_common_residues_with_scores(const doub_doub_pair_vec &arg_scores ///< TODOCUMENT
                                                                                        ) const {
-	size_vec indices;
-	indices.reserve( arg_scores.size() );
-	for (size_t index_ctr = 0; index_ctr < arg_scores.size(); ++index_ctr) {
+	size_vec the_indices;
+	the_indices.reserve( arg_scores.size() );
+	for (const size_t &index_ctr : indices( arg_scores.size() ) ) {
 		const doub_doub_pair &score_pair = arg_scores[index_ctr];
 		if ( min( score_pair.first, score_pair.second ) > get_score_cutoff() ) {
-			indices.push_back( index_ctr );
+			the_indices.push_back( index_ctr );
 		}
 	}
-	return indices;
+	return the_indices;
 }
 
 /// \brief TODOCUMENT

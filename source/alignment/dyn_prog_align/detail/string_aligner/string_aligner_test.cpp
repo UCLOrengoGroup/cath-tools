@@ -28,9 +28,11 @@
 #include "alignment/dyn_prog_align/detail/string_aligner/benchmark_dyn_prog_string_aligner.hpp"
 #include "alignment/dyn_prog_align/detail/string_aligner/gen_dyn_prog_string_aligner.hpp"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.hpp"
-#include "alignment/gap/gap_penalty.hpp"
 #include "alignment/dyn_prog_align/ssap_code_dyn_prog_aligner.hpp"
 #include "alignment/dyn_prog_align/std_dyn_prog_aligner.hpp"
+#include "alignment/gap/gap_penalty.hpp"
+#include "common/algorithm/for_n.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/pair_insertion_operator.hpp"
 #include "common/size_t_literal.hpp"
 
@@ -84,10 +86,13 @@ string cath::test::string_aligner_fixture::make_random_sequence(const size_t &ar
 
 	string new_sequence;
 	new_sequence.reserve(length);
-	for (size_t char_ctr = 0; char_ctr < length; ++char_ctr) {
-		const auto random_alphabet_index = uniform_int_distribution<size_t>{ 0, AA_TEST_ALPHABET.size() - 1 }( rng );
-		new_sequence.push_back( AA_TEST_ALPHABET[ random_alphabet_index ] );
-	}
+	for_n(
+		length,
+		[&] {
+			const auto random_alphabet_index = uniform_int_distribution<size_t>{ 0, AA_TEST_ALPHABET.size() - 1 }( rng );
+			new_sequence.push_back( AA_TEST_ALPHABET[ random_alphabet_index ] );
+		}
+	);
 	return new_sequence;
 }
 
@@ -156,7 +161,7 @@ BOOST_FIXTURE_TEST_SUITE(string_aligner_test_suite, cath::test::string_aligner_f
 //	const size_t num_tests         = 1000;
 //	const size_t min_string_length = 2;
 //	const size_t max_string_length = 10;
-//	for (size_t test_repeat_ctr = 0; test_repeat_ctr < num_tests; ++test_repeat_ctr) {
+//	for (const size_t &test_repeat_ctr : indices( num_tests ) ) {
 //
 //		auto         rng    = default_random_engine{ random_device{}() };
 //		const auto   gap_pen = uniform_int_distribution<size_t>{ 0, max_string_length / 2 - 1 }( rng );

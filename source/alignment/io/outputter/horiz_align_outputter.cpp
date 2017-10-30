@@ -25,10 +25,12 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "alignment/alignment.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 
 #include <iomanip>
 
 using namespace cath::align;
+using namespace cath::common;
 using namespace std;
 
 using boost::lexical_cast;
@@ -66,9 +68,9 @@ ostream & cath::align::operator<<(ostream                     &arg_os,          
 
 	// Loop over the positions, and output them
 	arg_os << "alignment[";
-	for (alignment::size_type entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const alignment::size_type &entry_ctr : indices( num_entries ) ) {
 		arg_os << "\n\t";
-		for (alignment::size_type index_ctr = 0; index_ctr < length; ++index_ctr) {
+		for (const alignment::size_type &index_ctr : indices( length ) ) {
 			arg_os << " ";
 			const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
 			if ( position ) {

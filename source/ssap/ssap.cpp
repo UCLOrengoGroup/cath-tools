@@ -129,6 +129,7 @@
 #include "alignment/io/alignment_io.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "chopping/domain/domain.hpp"
+#include "common/algorithm/for_n.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/container/vector_of_vector.hpp"
 #include "common/difference.hpp"
@@ -394,8 +395,8 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 //	const protein &protein_b = proteins.second;
 //	const size_t num_res_a = protein_a.get_length();
 //	const size_t num_res_b = protein_b.get_length();
-//	for (size_t ctr_a = 0; ctr_a < num_res_a; ++ctr_a) {
-//		for (size_t ctr_b = 0; ctr_b < num_res_b; ++ctr_b) {
+//	for (const size_t &ctr_a : indices( num_res_a ) ) {
+//		for (const size_t &ctr_b : indices( num_res_b ) ) {
 ////			if ( ctr_a + 1 != 20 || ctr_b + 1 != 15 ) {
 ////				continue;
 ////			}
@@ -441,8 +442,8 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 
 //	const size_t num_ss_a = protein_a.get_num_sec_strucs();
 //	const size_t num_ss_b = protein_b.get_num_sec_strucs();
-//	for (size_t ctr_a = 0; ctr_a < num_ss_a; ++ctr_a) {
-//		for (size_t ctr_b = 0; ctr_b < num_ss_b; ++ctr_b) {
+//	for (const size_t &ctr_a : indices( num_ss_a ) ) {
+//		for (const size_t &ctr_b : indices( num_ss_b ) ) {
 //			const sec_struc &sec_struc_a = protein_a.get_sec_struc_ref_of_index( ctr_a );
 //			const sec_struc &sec_struc_b = protein_b.get_sec_struc_ref_of_index( ctr_b );
 //			for (size_t ctr_i = 1; ctr_i <= num_ss_a; ++ctr_i) {
@@ -753,7 +754,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	// Save scores to alignment
 	score_opt_vec scores;
 	scores.reserve( new_alignment.length() );
-	for (size_t alignment_ctr = 0; alignment_ctr < new_alignment.length(); ++alignment_ctr) {
+	for (const size_t &alignment_ctr : indices( new_alignment.length() ) ) {
 		if ( has_both_positions_of_index( new_alignment, alignment_ctr  )) {
 			const aln_posn_type a_position   = get_a_offset_1_position_of_index( new_alignment, alignment_ctr );
 			const aln_posn_type b_position   = get_b_offset_1_position_of_index( new_alignment, alignment_ctr );
@@ -873,24 +874,27 @@ clique cath::read_clique_file(const path &arg_filename ///< The clique file to r
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Parsing error in reading clique file"));
 	}
 	sscanf(&buffer.front(), "%zu", &new_clique_file.cliquesize);
-	for (size_t clique_ctr = 0; clique_ctr < new_clique_file.cliquesize; ++clique_ctr) {
-		const char * const buffer_fgets_return_2 = fgets(&buffer.front(), MAX_CLIQUE_FILE_BUFFER_LENGTH-1, in);
-		if (buffer_fgets_return_2 != nullptr) {
-			BOOST_THROW_EXCEPTION(runtime_error_exception("Parsing error in reading clique file"));
+	for_n(
+		new_clique_file.cliquesize,
+		[&] {
+			const char * const buffer_fgets_return_2 = fgets(&buffer.front(), MAX_CLIQUE_FILE_BUFFER_LENGTH-1, in);
+			if (buffer_fgets_return_2 != nullptr) {
+				BOOST_THROW_EXCEPTION(runtime_error_exception("Parsing error in reading clique file"));
+			}
+			sec_struc_equivalency new_equivalency;
+			sscanf(
+				&buffer.front(),
+				"%zu %s %s %zu %s %s\n",
+				&new_equivalency.prota_ssnum,
+				 new_equivalency.prota_start,
+				 new_equivalency.prota_end,
+				&new_equivalency.protb_ssnum,
+				 new_equivalency.protb_start,
+				 new_equivalency.protb_end
+			);
+			new_clique_file.equivs.push_back(new_equivalency);
 		}
-		sec_struc_equivalency new_equivalency;
-		sscanf(
-			&buffer.front(),
-			"%zu %s %s %zu %s %s\n",
-			&new_equivalency.prota_ssnum,
-			 new_equivalency.prota_start,
-			 new_equivalency.prota_end,
-			&new_equivalency.protb_ssnum,
-			 new_equivalency.protb_start,
-			 new_equivalency.protb_end
-		);
-		new_clique_file.equivs.push_back(new_equivalency);
-	}
+	);
 	fclose(in);
 
 	return new_clique_file;
@@ -934,7 +938,7 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 				const residue &residue_a = get_residue_ref_of_index__offset_1(arg_protein_a, ctr_a);
 
 				// Look to see if they match any secondary structures
-				for (size_t k = 0; k < clique_size; ++k) {
+				for (const size_t &k : indices( clique_size ) ) {
 					int bstart = atoi( clique_data.equivs[k].protb_start ) - boundary;
 					int bend   = atoi( clique_data.equivs[k].protb_end   ) + boundary;
 					int astart = atoi( clique_data.equivs[k].prota_start ) - boundary;
@@ -1115,7 +1119,7 @@ void cath::select_pairs(const protein       &arg_protein_a,    ///< The first pr
 	// For second pass and residue comparisons, copy selected residues into select structure
 	if ( global_align_pass && arg_entry_querier.temp_hacky_is_residue() ) {
 		global_selections.assign( NUM_SELECTIONS_TO_SAVE + 1, make_pair( 0_z, 0_z ) );
-		for (size_t selected_ctr = 0; selected_ctr < selected_pairs.size(); ++selected_ctr) {
+		for (const size_t &selected_ctr : indices( selected_pairs.size() ) ) {
 			// Index is calculated to put the selection at the end of the positions with indices 1..NUM_TO_SAVE
 			const size_t index_in_global_selections = NUM_SELECTIONS_TO_SAVE + 1 - ( selected_pairs.size() - selected_ctr );
 			global_selections[ index_in_global_selections ] = make_pair(
@@ -1434,7 +1438,7 @@ compare_upper_cell_result cath::compare_upper_cell(const protein       &arg_prot
 	}
 
 	// If yes, trace distance (lower) level alignment path, onto residue (upper) level matrix
-	for (size_t alignment_ctr = 0; alignment_ctr < my_alignment.length(); ++alignment_ctr) {
+	for (const size_t &alignment_ctr : indices( my_alignment.length() ) ) {
 		if (has_both_positions_of_index(my_alignment, alignment_ctr)) {
 			const aln_posn_type a_dest_to_index__offset_1 = get_a_offset_1_position_of_index( my_alignment, alignment_ctr );
 			const aln_posn_type b_dest_to_index__offset_1 = get_b_offset_1_position_of_index( my_alignment, alignment_ctr );
@@ -1574,14 +1578,14 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 	vector<vector<score_type> > final_score_matrix( max_alignment_length, vector<score_type>( max_alignment_length , 0 ) );
 
 	// FOR EACH CELL ALONG FINAL PATH COMPARE VECTORS TO OTHER RESIDUES ON PATH
-	for (size_t alignment_ctr_i = 0; alignment_ctr_i < arg_alignment.length(); ++alignment_ctr_i) {
+	for (const size_t &alignment_ctr_i : indices( arg_alignment.length() ) ) {
 		const bool i_has_both_posns = has_both_positions_of_index( arg_alignment, alignment_ctr_i );
 
 		if (i_has_both_posns) {
 			const aln_posn_type i_posn_a = get_a_offset_1_position_of_index( arg_alignment, alignment_ctr_i );
 			const aln_posn_type i_posn_b = get_b_offset_1_position_of_index( arg_alignment, alignment_ctr_i );
 
-			for (size_t alignment_ctr_j = 0; alignment_ctr_j < arg_alignment.length(); ++alignment_ctr_j) {
+			for (const size_t &alignment_ctr_j : indices( arg_alignment.length() ) ) {
 				const bool j_has_both_posns = has_both_positions_of_index( arg_alignment, alignment_ctr_j );
 
 				if (j_has_both_posns) {
@@ -1624,7 +1628,7 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 
 //	cerr << "maxscore at start is            : " << maxscore << endl;
 
-	for (size_t alignment_ctr = 0; alignment_ctr < arg_alignment.length(); ++alignment_ctr) {
+	for (const size_t &alignment_ctr : indices( arg_alignment.length() ) ) {
 		const bool has_both_posns = has_both_positions_of_index( arg_alignment, alignment_ctr );
 
 		if ( has_both_posns ) {
@@ -1748,7 +1752,7 @@ double cath::calculate_sequence_identity(const alignment &arg_alignment, ///< Th
                                          ) {
 	// For each residue pair in the alignment, increment num_amino_acid_matches if the amino acids match
 	size_t num_amino_acid_matches = 0;
-	for (size_t alignment_ctr = 0; alignment_ctr < arg_alignment.length(); ++alignment_ctr) {
+	for (const size_t &alignment_ctr : indices( arg_alignment.length() ) ) {
 		if (has_both_positions_of_index(arg_alignment, alignment_ctr)) {
 			const residue &residue_a = get_a_residue_cref_of_index(arg_alignment, arg_protein_a, alignment_ctr);
 			const residue &residue_b = get_b_residue_cref_of_index(arg_alignment, arg_protein_b, alignment_ctr);

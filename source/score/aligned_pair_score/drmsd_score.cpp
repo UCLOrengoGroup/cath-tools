@@ -29,6 +29,7 @@
 #include "alignment/alignment.hpp"
 #include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "exception/out_of_range_exception.hpp"
 #include "structure/geometry/coord_list.hpp"
@@ -83,7 +84,7 @@ score_value drmsd_score::do_calculate(const alignment &arg_alignment, ///< The p
 
 	// Loop over the pairs
 	double total_squared_deviation = 0.0;
-	for (size_t coord_ctr_1 = 0; coord_ctr_1 < num_common_coords; ++coord_ctr_1) {
+	for (const size_t &coord_ctr_1 : indices( num_common_coords ) ) {
 		for (size_t coord_ctr_2 = coord_ctr_1 + 1; coord_ctr_2 < num_common_coords; ++coord_ctr_2) {
 
 			// Get the two equivalent distances between these pairs of atoms and add

@@ -26,6 +26,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include "common/algorithm/contains.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
@@ -78,7 +79,7 @@ namespace cath {
 				const size_t second_dimension_size = get_second_dimension_size(arg_test_matrix);
 				bool_deq_vec transposed_matrix(second_dimension_size);
 				for (const bool_deq &entry : arg_test_matrix) {
-					for (size_t second_dim_ctr = 0; second_dim_ctr < second_dimension_size; ++second_dim_ctr) {
+					for (const size_t &second_dim_ctr : indices( second_dimension_size ) ) {
 						transposed_matrix[second_dim_ctr].push_back(entry[second_dim_ctr]);
 					}
 				}
@@ -113,7 +114,7 @@ namespace cath {
 				const size_t first_dimension_size  = arg_test_matrix.size();
 				const size_t second_dimension_size = get_second_dimension_size(arg_test_matrix);
 
-				for (size_t entry_ctr = 0; entry_ctr < first_dimension_size; ++entry_ctr) {
+				for (const size_t &entry_ctr : indices( first_dimension_size ) ) {
 					const bool_deq       &entry            = arg_test_matrix[entry_ctr];
 					const size_size_pair  first_and_last   = get_indices_of_first_and_last_trues(entry);
 					const size_t         &first_true_index = first_and_last.first;
@@ -258,7 +259,7 @@ BOOST_AUTO_TEST_CASE(throws_if_window_too_thin) {
 	const size_t MIN_DIM_VALUE(2);
 	const size_t MAX_VALUE(10);
 	for (size_t smaller_dim_ctr = MIN_DIM_VALUE; smaller_dim_ctr < MAX_VALUE; ++smaller_dim_ctr) {
-		for (size_t dim_diff_ctr = 0; dim_diff_ctr < MAX_VALUE; ++dim_diff_ctr) {
+		for (const size_t &dim_diff_ctr : indices( MAX_VALUE ) ) {
 			BOOST_CHECK_THROW(get_window_start_a_for_b__offset_1( smaller_dim_ctr,                smaller_dim_ctr + dim_diff_ctr, dim_diff_ctr, 1 ), invalid_argument_exception);
 			BOOST_CHECK_THROW(get_window_start_a_for_b__offset_1( smaller_dim_ctr + dim_diff_ctr, smaller_dim_ctr,                dim_diff_ctr, 1 ), invalid_argument_exception);
 			BOOST_CHECK_THROW(get_window_stop_a_for_b__offset_1(  smaller_dim_ctr,                smaller_dim_ctr + dim_diff_ctr, dim_diff_ctr, 1 ), invalid_argument_exception);

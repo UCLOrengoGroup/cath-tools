@@ -23,6 +23,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/shared_array.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
@@ -71,7 +72,7 @@ argc_argv_faker::argc_argv_faker(const int          &arg_argc,
                                  ) {
 	str_vec argument_strings;
 	argument_strings.reserve( numeric_cast<size_t>( arg_argc ) );
-	for (int arg_ctr = 0; arg_ctr < arg_argc; ++arg_ctr) {
+	for (const int &arg_ctr : indices( arg_argc ) ) {
 		argument_strings.push_back( arg_argv[ arg_ctr ] );
 	}
 	init( argument_strings );
@@ -105,7 +106,7 @@ ostream & cath::operator<<(ostream               &arg_os,             ///< The o
                            ) {
 	const int            &argc = arg_argc_argv_faker.get_argc();
 	const char * const *  argv = arg_argc_argv_faker.get_argv();
-	for (size_t arg_ctr = 0; arg_ctr < numeric_cast<size_t>(argc); ++arg_ctr) {
+	for (const size_t &arg_ctr : indices( numeric_cast<size_t>(argc) ) ) {
 		arg_os << ((arg_ctr > 0) ? ", " : "");
 		arg_os << argv[arg_ctr];
 	}

@@ -36,6 +36,7 @@
 #include "alignment/alignment.hpp"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.hpp"
 #include "alignment/gap/gap_penalty.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -191,7 +192,7 @@ score_type cath::align::detail::get_score_of_aligned_sequence_strings(const stri
 	// Count the number of matching characters
 	const string::size_type str_length = arg_aligned_string_a.length();
 	size_t num_matches = 0;
-	for (string::size_type char_ctr = 0; char_ctr < str_length; ++char_ctr) {
+	for (const string::size_type &char_ctr : indices( str_length ) ) {
 		if ( arg_aligned_string_a[ char_ctr ] == arg_aligned_string_b[ char_ctr ] ) {
 			++num_matches;
 		}
@@ -272,7 +273,7 @@ str_vec cath::align::detail::format_alignment_strings(const alignment      &arg_
 	str_vec formatted_strings( num_entries, string( alignment_length, ' ' ) );
 
 	// Loop over the alignment's length
-	for (size_t alignment_entry = 0; alignment_entry < num_entries; ++alignment_entry) {
+	for (const size_t &alignment_entry : indices( num_entries ) ) {
 		// Grab references to this entry's (input) sequence string and (output) formatted string
 		// and grab the input string's length
 		string                  &formatted_string  = formatted_strings[ alignment_entry ];
@@ -280,7 +281,7 @@ str_vec cath::align::detail::format_alignment_strings(const alignment      &arg_
 		const string::size_type  seq_string_length = sequence_string.length();
 
 		// Loop over each index in the alignment
-		for (size_t alignment_idx = 0; alignment_idx < alignment_length; ++alignment_idx) {
+		for (const size_t &alignment_idx : indices( alignment_length ) ) {
 			// Note whether the non-space part of the string has started and whether it's finished
 			const bool   has_non_space        =  ! all( formatted_string, is_space() );
 

@@ -109,7 +109,7 @@ const str_vec & ids_options_block::get_ids() const {
 
 // 	str_vec all_ids;
 // 	all_ids.reserve( num_ids );
-// 	for (size_t id_ctr = 0; id_ctr < num_ids; ++id_ctr) {
+// 	for (const size_t &id_ctr : indices( num_ids ) ) {
 // 		all_ids.push_back( arg_block.get_id_of_index( id_ctr ) );
 // 	}
 

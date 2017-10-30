@@ -20,8 +20,10 @@
 
 #include "wolf_file_io.hpp"
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "file/dssp_wolf/wolf_file.hpp"
 #include "structure/geometry/coord.hpp"
@@ -39,6 +41,7 @@ using namespace cath::geom;
 using namespace std;
 
 using boost::filesystem::path;
+using boost::ignore_unused;
 using boost::numeric_cast;
 
 /// \brief TODOCUMENT
@@ -94,7 +97,8 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 	residue_vec residues;
 	residues.reserve(length);
 	// Read through file saving data for selected chain
-	for (size_t residue_ctr = 0; residue_ctr < length; ++residue_ctr) {
+	for (const size_t &residue_ctr : indices( length ) ) {
+		ignore_unused( residue_ctr );
 
 		int       number; // The number of the residue in the WOLF file perhaps?
 		int       pdb_name_number;

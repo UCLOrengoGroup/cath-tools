@@ -104,7 +104,7 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &arg_
 	const alignment::size_type aln_length  = the_alignment.length();
 	const residue_id_vec_vec   residue_ids = get_backbone_complete_residue_ids_of_first_chains( pdbs );
 
-	for (size_t entry_ctr_a = 0; entry_ctr_a < num_entries; ++entry_ctr_a) {
+	for (const size_t &entry_ctr_a : indices( num_entries ) ) {
 		const string         &name_a        = names      [ entry_ctr_a ];
 		const residue_id_vec &residue_ids_a = residue_ids[ entry_ctr_a ];
 
@@ -113,7 +113,7 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &arg_
 			const residue_id_vec &residue_ids_b = residue_ids[ entry_ctr_b ];
 
 			bool added_pair_distances(false);
-			for (alignment::size_type aln_posn_ctr = 0; aln_posn_ctr < aln_length; ++aln_posn_ctr) {
+			for (const alignment::size_type &aln_posn_ctr : indices( aln_length ) ) {
 				const aln_posn_opt position_a = the_alignment.position_of_entry_of_index( entry_ctr_a, aln_posn_ctr );
 				const aln_posn_opt position_b = the_alignment.position_of_entry_of_index( entry_ctr_b, aln_posn_ctr );
 				if ( position_a && position_b) {
@@ -191,7 +191,7 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 
 	/// ???
 	bool added_distances(false);
-	for (alignment::size_type aln_index = 0; aln_index < aln_length; ++aln_index) {
+	for (const alignment::size_type &aln_index : indices( aln_length ) ) {
 		// Prepare some type aliases that are useful for this
 		using Graph = adjacency_list < vecS, vecS, undirectedS, no_property, property <edge_weight_t, double> >;
 		using edge_desc = graph_traits < Graph >::edge_descriptor;
@@ -202,7 +202,7 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 
 		// ????
 		const size_t num_present_posns = num_present_positions_of_index( the_alignment, aln_index );
-		for (size_t entry_a = 0; entry_a < num_entries; ++entry_a) {
+		for (const size_t &entry_a : indices( num_entries ) ) {
 			for (size_t entry_b = entry_a + 1; entry_b < num_entries; ++entry_b) {
 
 				const aln_posn_opt posn_a = the_alignment.position_of_entry_of_index( entry_a, aln_index );
@@ -268,9 +268,9 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 	if ( the_alignment.is_scored() ) {
 		coreness_str_res_id_vec_map_map core_res_ids_of_entry_name;
 		const alignment_residue_scores &the_scores = the_alignment.get_alignment_residue_scores();
-		for (size_t entry = 0; entry < num_entries; ++entry) {
+		for (const size_t &entry : indices( num_entries ) ) {
 			const string &entry_name = names[ entry ];
-			for (alignment::size_type index = 0; index < aln_length; ++index) {
+			for (const alignment::size_type &index : indices( aln_length ) ) {
 				if ( has_score( the_scores, entry, index ) ) {
 					const coreness is_core = ( get_score( the_scores, entry, index, true, true ) > 0.25 )
 					                         ? coreness::CORE
@@ -366,7 +366,7 @@ void pymol_viewer::do_write_load_pdbs(ostream             &arg_os,            //
                                       const str_vec       &arg_names          ///< TODOCUMENT
                                       ) const {
 	const size_t num_pdbs = arg_pdbs.size();
-	for (size_t pdb_ctr = 0; pdb_ctr < num_pdbs; ++pdb_ctr) {
+	for (const size_t &pdb_ctr : indices( num_pdbs ) ) {
 		arg_os << "cmd.read_pdbstr(\"\"\"";
 		ostringstream superposed_pdb_ss;
 		write_superposed_pdb_to_ostream( superposed_pdb_ss, arg_superposition, arg_pdbs[pdb_ctr], pdb_ctr );

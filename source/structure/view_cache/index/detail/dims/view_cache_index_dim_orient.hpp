@@ -125,7 +125,7 @@ namespace cath {
 
 				for (const frame_quat_rot &anchor : arg_anchor_quat_rots) {
 					size_vec local_neighbours;
-					for (size_t neighbour_ctr = 0; neighbour_ctr < num_anchor_quat_rots; ++neighbour_ctr) {
+					for (const size_t &neighbour_ctr : indices( num_anchor_quat_rots ) ) {
 						const frame_quat_rot &neighbour = arg_anchor_quat_rots[ neighbour_ctr ];
 						if ( angle_between_quat_rots( anchor, neighbour ) / 2.0 < arg_search_radius ) {
 							local_neighbours.push_back( neighbour_ctr );

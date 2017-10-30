@@ -105,7 +105,7 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 		const double standard_rmsd = calc_pairwise_superposition_rmsd( all_common_coords.first, all_common_coords.second);
 //		size_t num_within_three_angstroms = 0;
 //		size_t num_within_five_angstroms  = 0;
-//		for (size_t coord_ctr = 0; coord_ctr < all_common_coords.first.size(); ++coord_ctr) {
+//		for (const size_t &coord_ctr : indices( all_common_coords.first.size() ) ) {
 //			const coord coord_a = all_common_coords.first[coord_ctr];
 //			const coord coord_b = all_common_coords.second[coord_ctr];
 //			const double distance = distance_between_points(coord_a, coord_b);

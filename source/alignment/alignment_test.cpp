@@ -27,6 +27,7 @@
 #include "alignment/io/align_scaffold.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "alignment/test/alignment_fixture.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/pair_insertion_operator.hpp"
@@ -67,7 +68,7 @@ namespace cath {
 				}
 
 				// Loop through the length of the alignment
-				for (size_t index_ctr = 0; index_ctr < arg_aln.length(); ++index_ctr) {
+				for (const size_t &index_ctr : indices( arg_aln.length() ) ) {
 					// If this is a pair alignment, check has_both_positions_of_index()
 					const bool is_last  = (index_ctr +1 == arg_aln.length());
 					const bool is_pair_alignment = (arg_lists.size() == 2_z);
@@ -79,7 +80,7 @@ namespace cath {
 					}
 
 					// Loop over the entries
-					for (size_t entry_ctr = 0; entry_ctr < arg_lists.size(); ++entry_ctr) {
+					for (const size_t &entry_ctr : indices( arg_lists.size() ) ) {
 						// Check has_position_of_index_of_entry()
 						const aln_posn_opt entry = arg_lists[entry_ctr][index_ctr];
 						BOOST_REQUIRE_EQUAL(
@@ -210,7 +211,7 @@ BOOST_AUTO_TEST_CASE(append_a_b_and_both) {
 	BOOST_REQUIRE_EQUAL(aln_list_a.size(), aln_list_b.size());
 	alignment new_aln_a_b(alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT);
 	alignment new_aln_b_a(alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT);
-	for ( size_t ctr = 0; ctr < aln_list_a.size(); ++ctr ) {
+	for (const size_t &ctr : indices( aln_list_a.size() ) ) {
 		const aln_posn_opt &a_posn = aln_list_a[ctr];
 		const aln_posn_opt &b_posn = aln_list_b[ctr];
 
@@ -257,7 +258,7 @@ BOOST_AUTO_TEST_CASE(scores) {
 		set_pair_alignment_duplicate_scores( copy_alignment, example_scores );
 		BOOST_CHECK(copy_alignment.is_scored());
 		size_t score_ctr = 0;
-		for (size_t aln_ctr = 0; aln_ctr < example_scores.size(); ++aln_ctr) {
+		for (const size_t &aln_ctr : indices( example_scores.size() ) ) {
 			if (has_both_positions_of_index(copy_alignment, aln_ctr)) {
 				BOOST_CHECK_EQUAL(
 					example_scores[score_ctr],

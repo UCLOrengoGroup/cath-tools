@@ -228,7 +228,7 @@ residue_id_vec_vec cath::file::get_residue_ids_of_first_chains__backbone_uncheck
 	const size_t num_pdbs = arg_pdb_list.size();
 	residue_id_vec_vec residue_ids;
 	residue_ids.reserve( num_pdbs );
-	for (size_t pdb_ctr = 0; pdb_ctr < num_pdbs; ++pdb_ctr) {
+	for (const size_t &pdb_ctr : indices( num_pdbs ) ) {
 		residue_ids.push_back( arg_pdb_list[ pdb_ctr ].get_residue_ids_of_first_chain__backbone_unchecked() );
 	}
 	return residue_ids;

@@ -21,11 +21,13 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "test/global_test_constants.hpp"
 
 #include <random>
 
 using namespace cath::align::detail;
+using namespace cath::common;
 using namespace std;
 
 namespace cath {
@@ -64,7 +66,7 @@ return_path_matrix cath::test::return_path_matrix_test_suite_fixture::make_rando
                                                                                                      const size_t &arg_window_width ///< TODOCUMENT
                                                                                                      ) const {
 	return_path_matrix new_path(arg_length_a, arg_length_b, arg_window_width);
-	for (size_t ctr_a = 0; ctr_a < arg_length_a; ++ctr_a) {
+	for (const size_t &ctr_a : indices( arg_length_a ) ) {
 		const size_size_pair b_window_start_and_stop = get_b_window_start_and_stop_for_a_index(
 			new_path,
 			ctr_a
@@ -87,7 +89,7 @@ BOOST_FIXTURE_TEST_SUITE(return_path_matrix_test_suite, cath::test::return_path_
 
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(basic) {
-//	for (size_t ctr = 0; ctr < 5; ++ctr) {
+//	for (const size_t &ctr : indices( 5 ) ) {
 //		cerr << make_random_return_path_matrix(13,  9, 7) << endl;
 //		cerr << endl << endl << endl << endl << endl << endl;
 //		cerr << make_random_return_path_matrix( 9, 13, 7) << endl;

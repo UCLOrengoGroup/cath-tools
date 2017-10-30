@@ -20,12 +20,14 @@
 
 #include "wolf_file.hpp"
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath;
+using namespace cath::common;
 using namespace cath::file;
 using namespace std;
 
@@ -56,7 +58,7 @@ protein cath::file::protein_from_wolf(const wolf_file &arg_wolf_file ///< The wo
 	const wolf_file::size_type num_wolf_residues = arg_wolf_file.get_num_residues();
 	residue_vec wolf_residues;
 	wolf_residues.reserve(num_wolf_residues);
-	for (wolf_file::size_type wolf_residue_ctr = 0; wolf_residue_ctr < num_wolf_residues; ++wolf_residue_ctr) {
+	for (const wolf_file::size_type &wolf_residue_ctr : indices( num_wolf_residues ) ) {
 		wolf_residues.push_back(arg_wolf_file.get_residue_of_index(wolf_residue_ctr));
 	}
 

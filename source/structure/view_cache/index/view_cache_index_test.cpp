@@ -40,6 +40,7 @@
 
 using namespace cath;
 using namespace cath::align;
+using namespace cath::common;
 using namespace cath::index;
 using namespace cath::index::detail;
 using namespace cath::geom;
@@ -111,7 +112,7 @@ BOOST_FIXTURE_TEST_SUITE(view_cache_index_test_suite, cath::test::view_cache_ind
 //	const size_t num_repeats = 1;
 //	using durn_vec = vector<high_resolution_clock::duration>;
 //	durn_vec durations;
-//	for (size_t repeat_ctr = 0; repeat_ctr < num_repeats; ++repeat_ctr) {
+//	for (const size_t &repeat_ctr : indices( num_repeats ) ) {
 //		quad_find_action_check indexed_action( protein_a, protein_b, the_criteria );
 //		durations.push_back( process_quads_indexed(
 //			protein_a,

@@ -23,6 +23,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "alignment/alignment.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath::align;
@@ -104,7 +105,7 @@ aln_posn_type cath::align::get_position_of_entry(const alignment_row &arg_row,  
 bool cath::align::any_entries_present(const alignment_row &arg_alignment_row ///< TODOCUMENT
                                       ) {
 	const size_t num_entries = arg_alignment_row.num_entries();
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		if ( has_position_of_entry( arg_alignment_row, entry_ctr ) ) {
 			return true;
 		}
@@ -154,7 +155,7 @@ alignment_row cath::align::get_row_of_alignment(const alignment &arg_alignment, 
 	const size_t num_entries = arg_alignment.num_entries();
 	aln_posn_opt_vec positions;
 	positions.reserve( num_entries );
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry_ctr, arg_index );
 		positions.push_back( position );
 	}
@@ -288,7 +289,7 @@ alignment_row cath::align::join(const alignment_row &arg_joinee_a, ///< TODOCUME
 
 		// Loop over the entries in the joinee
 		const size_t num_entries = joinee.num_entries();
-		for ( size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr ) {
+		for (const size_t &entry_ctr : indices( num_entries ) ) {
 			// Append the position to positions
 			const aln_posn_opt position = joinee.position_of_entry( entry_ctr );
 			positions.push_back( position );
@@ -312,7 +313,7 @@ void cath::align::set_positions_of_entries_from_row(aln_posn_opt_vec    &arg_pos
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Number of entries in does not match number of entries in entry list"));
 	}
 
-	for (size_t entry_ctr = 0; entry_ctr < num_source_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_source_entries ) ) {
 		const size_t new_entry = arg_entries[ entry_ctr ];
 //		cerr << "entry_ctr is " << entry_ctr << " and new_entry is " << new_entry << endl;
 		if ( new_entry >= num_dest_entries ) {
@@ -373,7 +374,7 @@ const alignment_row cath::align::remove_entry_from_row(const alignment_row &arg_
 	positions.reserve( num_entries );
 
 	// Loop over the entries in arg_aln_row
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		// If this isn't the entry to be removed then copy it to has_positions and positions
 		if ( arg_entry != entry_ctr ) {
 			// Append the position to positions
@@ -393,7 +394,7 @@ aln_posn_opt_vec cath::align::get_has_posns_and_posns(const alignment_row &arg_a
                                                       ) {
 	const size_t num_entries = arg_aln_row.num_entries();
 	aln_posn_opt_vec new_positions( num_entries );
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		const aln_posn_opt position = arg_aln_row.position_of_entry( entry_ctr );
 		new_positions[ entry_ctr ] = position;
 	}

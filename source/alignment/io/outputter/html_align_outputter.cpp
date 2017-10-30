@@ -24,10 +24,11 @@
 #include <boost/math/special_functions/round.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "chopping/region/region.hpp"
 #include "alignment/alignment.hpp"
 #include "alignment/alignment_context.hpp"
+#include "chopping/region/region.hpp"
 #include "common/algorithm/contains.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "display/display_colour_spec/display_colour_spec.hpp"
 #include "display/display_colourer/display_colourer.hpp"
 #include "display/viewer/viewer.hpp"
@@ -155,7 +156,7 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 )";
 
 	str_str_map colour_name_of_hex_string;
-	for (size_t colour_ctr = 0; colour_ctr < num_colours; ++colour_ctr) {
+	for (const size_t &colour_ctr : indices( num_colours ) ) {
 		const display_colour &colour      = colours      [ colour_ctr ];
 		const string         &colour_name = colour_names [ colour_ctr ];
 		const string         &colour_hex  = hex_string_of_colour( colour );
@@ -172,14 +173,14 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 )";
 
 	// Loop over the positions, and output them
-	for (alignment::size_type entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const alignment::size_type &entry_ctr : indices( num_entries ) ) {
 		const pdb    &the_pdb     = pdbs [ entry_ctr ];
 		const string &name        = names[ entry_ctr ];
 		const auto   &pdb_regions = regions[ entry_ctr ];
 		arg_os << "<div class=\"seq\">";
 		arg_os << "<div class=\"seq-name\">&gt;" << name << "</div>";
 		arg_os << "<div class=\"seq-res\">";
-		for (alignment::size_type index_ctr = 0; index_ctr < length; ++index_ctr) {
+		for (const alignment::size_type &index_ctr : indices( length ) ) {
 			const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
 			if ( position ) {
 				const char           amino_acid_letter  = get_amino_acid_letter_tolerantly( get_residue_of_region_limited_backbone_complete_index( the_pdb, *position, pdb_regions ) );

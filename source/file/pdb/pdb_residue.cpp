@@ -28,6 +28,7 @@
 #include <boost/range/adaptor/reversed.hpp>
 
 #include "common/boost_addenda/range/front.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/range/max_proj_element.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -192,7 +193,7 @@ ostream & cath::file::write_pdb_file_entry(ostream           &arg_os,     ///< T
                                            const pdb_residue &arg_residue ///< TODOCUMENT
                                            ) {
 	const size_t num_atoms = arg_residue.get_num_atoms();
-	for (size_t atom_ctr = 0; atom_ctr < num_atoms; ++atom_ctr) {
+	for (const size_t &atom_ctr : indices( num_atoms ) ) {
 		const pdb_atom &atom = arg_residue.get_atom_cref_of_index(atom_ctr);
 		write_pdb_file_entry(
 			arg_os,

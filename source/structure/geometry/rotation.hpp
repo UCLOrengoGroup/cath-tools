@@ -28,8 +28,9 @@
 #include <boost/operators.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 
-#include "common/property_tree/read_from_ptree.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/difference.hpp"
+#include "common/property_tree/read_from_ptree.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/out_of_range_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
@@ -343,8 +344,8 @@ namespace cath {
 			// Check that the multiplying by the transpose gives (close to) the identity matrix
 			//
 			// NOTE: Cannot just call transpose_of() here because that uses a constructor which starts an infinite recursion
-			for (size_t check_row_ctr = 0; check_row_ctr < coord::NUM_DIMS; ++check_row_ctr) {
-				for (size_t check_col_ctr = 0; check_col_ctr < coord::NUM_DIMS; ++check_col_ctr) {
+			for (const size_t &check_row_ctr : common::indices( coord::NUM_DIMS ) ) {
+				for (const size_t &check_col_ctr : common::indices( coord::NUM_DIMS ) ) {
 					// Can't use IDENTITY_ROTATION here because these call may have been triggered by IDENTITY_ROTATION's ctor
 					const double correct_value = (check_row_ctr == check_col_ctr) ? 1.0 : 0.0;
 

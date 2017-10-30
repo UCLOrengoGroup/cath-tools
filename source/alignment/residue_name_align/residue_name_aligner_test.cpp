@@ -25,6 +25,7 @@
 #include "alignment/alignment.hpp"
 #include "alignment/residue_name_align/residue_name_aligner.hpp"
 #include "biocore/residue_name.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
@@ -66,7 +67,7 @@ namespace cath {
 
 				// Construct a vector containing the indices of the lists
 				size_vec permutation_indices(num_lists, 0);
-				for (size_t index_ctr = 0; index_ctr < num_lists; ++index_ctr) {
+				for (const size_t &index_ctr : indices( num_lists ) ) {
 					permutation_indices[index_ctr] = index_ctr;
 				}
 
@@ -92,7 +93,7 @@ namespace cath {
 						const alignment::size_type num_positions = my_alignment.length();
 
 						// Check each of the alignment entries in turn
-						for (size_t index_ctr = 0; index_ctr < num_lists; ++index_ctr) {
+						for (const size_t &index_ctr : indices( num_lists ) ) {
 							// Grab the correct answer list under the current permutation
 							const size_t permutation_index           = permutation_indices[index_ctr];
 							const bool_deq &correct_presence_list = arg_correct_presence_lists[permutation_index];

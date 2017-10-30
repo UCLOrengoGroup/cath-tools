@@ -21,6 +21,7 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/size_t_literal.hpp"
 #include "structure/entry_querier/residue_querier.hpp"
 #include "structure/entry_querier/sec_struc_querier.hpp"
@@ -55,8 +56,8 @@ BOOST_AUTO_TEST_CASE(num_comparable) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(exclusions_work_for_a_few_sec_struc_values) {
-	for (size_t ctr_a = 0; ctr_a < exclusion_value_test_max; ++ctr_a) {
-		for (size_t ctr_b = 0; ctr_b < exclusion_value_test_max; ++ctr_b) {
+	for (const size_t &ctr_a : indices( exclusion_value_test_max ) ) {
+		for (const size_t &ctr_b : indices( exclusion_value_test_max ) ) {
 			const bool not_excluded = (ctr_a != ctr_b);
 			BOOST_CHECK_EQUAL( not_excluded, pair_is_not_excluded(example_sec_struc_querier, ctr_a, ctr_b) );
 			BOOST_CHECK_EQUAL( not_excluded, pair_is_not_excluded(example_sec_struc_querier, ctr_b, ctr_a) );
@@ -66,8 +67,8 @@ BOOST_AUTO_TEST_CASE(exclusions_work_for_a_few_sec_struc_values) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(exclusions_work_for_a_few_residue_values) {
-	for (size_t ctr_a = 0; ctr_a < exclusion_value_test_max; ++ctr_a) {
-		for (size_t ctr_b = 0; ctr_b < exclusion_value_test_max; ++ctr_b) {
+	for (const size_t &ctr_a : indices( exclusion_value_test_max ) ) {
+		for (const size_t &ctr_b : indices( exclusion_value_test_max ) ) {
 			const bool not_excluded = (ctr_b > ctr_a)
 			                          ? (ctr_b - ctr_a) > 5
 			                          : (ctr_a - ctr_b) > 5;

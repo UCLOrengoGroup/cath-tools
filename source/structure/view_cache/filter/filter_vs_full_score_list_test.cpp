@@ -20,6 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/algorithm/for_n.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/size_t_literal.hpp"
 #include "score/true_pos_false_neg/classn_num_stat.hpp"
@@ -72,13 +73,16 @@ filter_vs_full_score_list cath::test::filter_vs_full_score_list_test_suite_fixtu
 
 	// Loop over the number of entries, building a vector of filter_vs_full_score objects
 	filter_vs_full_score_vec new_filter_vs_full_scores;
-	for (size_t entry_ctr = 0; entry_ctr < arg_num_entries; ++entry_ctr) {
-		const double full_score         = full_score_distn( rng );
-		const double raw_filter_score   = full_score * full_score;
-		const double clean_filter_score = raw_filter_score * pre_noise_scaling + noise_width / 2.0;
-		const double filter_score       = clean_filter_score + noise_distn( rng );
-		new_filter_vs_full_scores.push_back( filter_vs_full_score( 100.0 * filter_score, 100.0 * full_score ) );
-	}
+	for_n(
+		arg_num_entries,
+		[&] {
+			const double full_score         = full_score_distn( rng );
+			const double raw_filter_score   = full_score * full_score;
+			const double clean_filter_score = raw_filter_score * pre_noise_scaling + noise_width / 2.0;
+			const double filter_score       = clean_filter_score + noise_distn( rng );
+			new_filter_vs_full_scores.push_back( filter_vs_full_score( 100.0 * filter_score, 100.0 * full_score ) );
+		}
+	);
 
 	// Return a filter_vs_full_score_list from the vector of filter_vs_full_score objects
 	return filter_vs_full_score_list( new_filter_vs_full_scores );

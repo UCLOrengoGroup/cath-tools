@@ -98,7 +98,7 @@ void cath::sup::write_xml_sup(ostream              &arg_ostream,       ///< TODO
 	arg_ostream << "<?xml version=\"1.0\"?>\n";
 	arg_ostream << "<root>\n";
 
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		const coord centre_of_gravity = -arg_superposition.get_translation_of_index(entry_ctr);
 		arg_ostream << "  <structure" << entry_ctr+1 << " id=\"" << arg_ids[entry_ctr];
 		arg_ostream << "\">\n";
@@ -111,9 +111,9 @@ void cath::sup::write_xml_sup(ostream              &arg_ostream,       ///< TODO
 
 	for (size_t rotation_ctr = 1; rotation_ctr < num_entries; ++rotation_ctr) {
 		const rotation sup_rotn = arg_superposition.get_rotation_of_index(rotation_ctr);
-		for (size_t dim_ctr_1 = 0; dim_ctr_1 < coord::NUM_DIMS; ++dim_ctr_1) {
+		for (const size_t &dim_ctr_1 : indices( coord::NUM_DIMS ) ) {
 			arg_ostream << "  <rotationmatrix name=\"row" << dim_ctr_1+1 << "\"";
-			for (size_t dim_ctr_2 = 0; dim_ctr_2 < coord::NUM_DIMS; ++dim_ctr_2) {
+			for (const size_t &dim_ctr_2 : indices( coord::NUM_DIMS ) ) {
 				// NOTE: transposing the matrix to be consistent with legacy behaviour
 				arg_ostream << " col" << dim_ctr_2+1 << "=\"" << sup_rotn.get_value(dim_ctr_2, dim_ctr_1) << "\"";
 			}

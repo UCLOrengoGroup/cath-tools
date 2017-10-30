@@ -22,6 +22,7 @@
 
 #include <boost/lexical_cast.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
@@ -40,7 +41,7 @@ size_vec cath::invert_permutation(const size_vec &arg_permutation ///< The permu
 	const size_t permutation_size        = arg_permutation.size();
 	const size_t not_yet_populated_value = permutation_size + 1;
 	size_vec results(permutation_size, not_yet_populated_value);
-	for (size_t permutation_from = 0; permutation_from < permutation_size; ++permutation_from) {
+	for (const size_t &permutation_from : indices( permutation_size ) ) {
 		const size_t &permutation_to = arg_permutation[ permutation_from ];
 		if ( permutation_to >= permutation_size ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(

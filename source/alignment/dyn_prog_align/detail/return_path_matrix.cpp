@@ -27,10 +27,11 @@
 #include "alignment/alignment.hpp"
 #include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
 #include "alignment/gap/gap_penalty.hpp"
-//#include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "ssap/windowed_matrix.hpp"
+//#include "common/algorithm/copy_build.hpp"
 
 using namespace cath;
 using namespace cath::align;
@@ -279,7 +280,7 @@ ostream & cath::align::detail::operator<<(ostream                  &arg_os,     
 
 	const path_size_type length_a = arg_return_path_matrix.get_length_a();
 	const path_size_type length_b = arg_return_path_matrix.get_length_b();
-	for (path_size_type ctr_a = 0; ctr_a < length_a; ++ctr_a) {
+	for (const path_size_type &ctr_a : indices( length_a ) ) {
 		const size_size_pair b_window_start_and_stop     = get_b_window_start_and_stop_for_a_index(
 			arg_return_path_matrix,
 			ctr_a
@@ -289,7 +290,7 @@ ostream & cath::align::detail::operator<<(ostream                  &arg_os,     
 			max(numeric_cast<path_size_type>(1), ctr_a) - 1
 		);
 		str_str_str_str_tpl lines;
-		for (path_size_type ctr_b = 0; ctr_b < length_b; ++ctr_b) {
+		for (const path_size_type &ctr_b : indices( length_b ) ) {
 			const bool within_window = (ctr_b >= b_window_start_and_stop.first && ctr_b <= b_window_start_and_stop.second);
 			if ( !within_window ) {
 				get<0>( lines ) += ".      ";

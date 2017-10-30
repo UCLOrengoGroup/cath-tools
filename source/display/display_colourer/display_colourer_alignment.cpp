@@ -27,6 +27,7 @@
 #include "alignment/alignment_context.hpp"
 #include "alignment/io/outputter/horiz_align_outputter.hpp"
 #include "chopping/region/region.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "display/display_colour_spec/display_colour_spec.hpp"
 #include "display/viewer/viewer.hpp"
@@ -77,7 +78,7 @@ display_colour_spec display_colourer_alignment::do_get_colour_spec(const alignme
 	new_spec.colour_base( display_colour::BLACK );
 
 	// Loop along the length of the alignment
-	for (size_t index = 0; index < aln_length; ++index) {
+	for (const size_t &index : indices( aln_length ) ) {
 		// If this isn't the first index in the alignment, then increment scores_so_far
 		// by the score encountered when moving from the previous residue to this
 		// (half the previous residue's score plus half this residue's score)
@@ -90,7 +91,7 @@ display_colour_spec display_colourer_alignment::do_get_colour_spec(const alignme
 		const display_colour the_colour = get_colour_of_fraction( gradient, fraction_through );
 
 		// For each entry, determine whether there is a position in the alignment and store the colour there if so
-		for (alignment::size_type entry = 0; entry < num_entries; ++entry) {
+		for (const alignment::size_type &entry : indices( num_entries ) ) {
 			const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry, index );
 			if ( position ) {
 				new_spec.colour_pdb_residue( entry, *position, the_colour );

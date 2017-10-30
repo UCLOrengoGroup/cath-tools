@@ -36,6 +36,7 @@
 #include "alignment/align_type_aliases.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/file/open_fstream.hpp"
@@ -337,7 +338,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 
 			// Loop over the indices of the proteins
 			size_t num_present_posns(0);
-			for (size_t prot_ctr = 0; prot_ctr < num_proteins; ++prot_ctr) {
+			for (const size_t &prot_ctr : indices( num_proteins ) ) {
 				// Prepare string and other data for this protein
 				const size_t        prot_string_offset = CHARS_IN_MAIN_DATA_LINE_START + prot_ctr * CHARS_IN_MAIN_DATA_LINE_PROT;
 				const string        prot_string        = line_string.substr( prot_string_offset, CHARS_IN_MAIN_DATA_LINE_PROT );
@@ -411,8 +412,8 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 
 		// Create a scores matrix and then empty any cells that are absent from the alignment
 		score_opt_vec_vec all_scores( new_alignment.num_entries(), scores );
-		for (size_t entry = 0; entry < new_alignment.num_entries(); ++entry) {
-			for (size_t index = 0; index < new_alignment.length(); ++index) {
+		for (const size_t &entry : indices( new_alignment.num_entries() ) ) {
+			for (const size_t &index : indices( new_alignment.length() ) ) {
 				if ( ! has_position_of_entry_of_index( new_alignment, entry, index ) ) {
 					all_scores[ entry ][ index ] = none;
 				}
@@ -502,7 +503,7 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 	size_t pdb_ctr         = 0;
 
 	// Loop along the sequence
-	for (size_t seq_ctr = 0; seq_ctr < sequence_length; ++seq_ctr) {
+	for (const size_t &seq_ctr : indices( sequence_length ) ) {
 		const char &sequence_char = arg_sequence_string[ seq_ctr ];
 
 		// If this is a '-' character then add none to the back of new_posns
@@ -709,7 +710,7 @@ alignment cath::align::read_alignment_from_fasta(istream                  &arg_i
 
 		aln_posn_opt_vec_vec positions;
 		positions.reserve( num_entries );
-		for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+		for (const size_t &entry_ctr : indices( num_entries ) ) {
 			const amino_acid_vec &amino_acids     = arg_amino_acid_lists      [ entry_ctr ];
 			const string         &name            = arg_names     [ entry_ctr ];
 			const str_str_pair   &id_and_sequence = sequence_of_id[ entry_ctr ];
@@ -967,14 +968,14 @@ ostream & cath::align::write_alignment_as_fasta_alignment(ostream            &ar
 	}
 
 	// Loop over the entries in the alignment
-	for (size_t entry_ctr = 0; entry_ctr < num_entries; ++entry_ctr) {
+	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		const protein &the_protein = arg_proteins[ entry_ctr ];
 
 		// Output the title (ie name of this protein)
 		arg_os << ">" << get_domain_or_specified_or_name_from_acq( the_protein ) << "\n";
 
 		// Loop over the indices of the alignment
-		for (size_t aln_index = 0; aln_index < length; ++aln_index) {
+		for (const size_t &aln_index : indices( length ) ) {
 			// If this entry has no position at this index, output a '-' character
 			// otherwise, use the position at this index to output the amino acid letter
 			const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry_ctr, aln_index );

@@ -21,6 +21,7 @@
 #include "alignment_split.hpp"
 
 #include "common/algorithm/contains.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/out_of_range_exception.hpp"
@@ -110,7 +111,7 @@ alignment_split cath::align::detail::make_opposite_version(const alignment_split
 	const size_t    num_entries        = arg_alignment_split.get_num_entries();
 	const size_set &first_half_entries = arg_alignment_split.get_first_half_entries();
 	alignment_split new_split( num_entries );
-	for (size_t new_first_half_ctr = 0; new_first_half_ctr < num_entries; ++new_first_half_ctr) {
+	for (const size_t &new_first_half_ctr : indices( num_entries ) ) {
 		if ( ! contains( first_half_entries, new_first_half_ctr ) ) {
 			new_split.add_first_half_entry( new_first_half_ctr );
 		}

@@ -24,7 +24,6 @@
 using namespace cath::scan::detail;
 //using namespace std;
 
-
 /// \brief TODOCUMENT
 ///
 /// \relates scan_stride

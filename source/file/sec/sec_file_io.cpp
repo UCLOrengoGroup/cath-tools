@@ -24,6 +24,7 @@
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/lexical_cast_line.hpp"
@@ -106,7 +107,7 @@ sec_file cath::file::read_sec(istream &arg_istream ///< The istream from which t
 	new_planar_angles.reserve(num_sec_strucs);
 
 	// Read data for secondary structures
-	for (size_t sec_record_ctr = 0; sec_record_ctr < num_sec_strucs; ++sec_record_ctr) {
+	for (const size_t &sec_record_ctr : indices( num_sec_strucs ) ) {
 		// Parse the next line as a sec main line
 		string sec_main_line;
 		getline(arg_istream, sec_main_line);

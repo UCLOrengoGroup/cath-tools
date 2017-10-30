@@ -34,6 +34,7 @@
 #include "alignment/gap/gap_penalty.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "common/algorithm/copy_build.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/less_than_helper.hpp"
 #include "score/length_getter/length_of_longer_getter.hpp"
@@ -80,12 +81,12 @@ score_size_pair ssap_score::calculate_total_score_and_num_quads(const alignment 
 
 	score_value the_score = 0.0;
 	size_t      num_quads = 0;
-	for (size_t from_ctr = 0; from_ctr < length; ++from_ctr) {
+	for (const size_t &from_ctr : indices( length ) ) {
 		if ( has_both_positions_of_index( arg_alignment, from_ctr ) ) {
 			const aln_posn_type a_from = get_a_position_of_index( arg_alignment, from_ctr );
 			const aln_posn_type b_from = get_b_position_of_index( arg_alignment, from_ctr );
 
-			for (size_t to_ctr = 0; to_ctr < length; ++to_ctr) {
+			for (const size_t &to_ctr : indices( length ) ) {
 				if ( has_both_positions_of_index( arg_alignment, to_ctr ) ) {
 					const aln_posn_type a_to = get_a_position_of_index( arg_alignment, to_ctr );
 					const aln_posn_type b_to = get_b_position_of_index( arg_alignment, to_ctr );

@@ -748,7 +748,7 @@ ostream & cath::file::operator<<(ostream   &arg_os,         ///< TODOCUMENT
 	arg_os << "PDB[";
 
 	const size_t num_residues = arg_pdb_residue.get_num_residues();
-	for (size_t residue_ctr = 0; residue_ctr < num_residues; ++residue_ctr) {
+	for (const size_t &residue_ctr : indices( num_residues ) ) {
 		arg_os << arg_pdb_residue.get_residue_of_index__backbone_unchecked(residue_ctr);
 	}
 	return arg_os;
@@ -895,7 +895,7 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 	new_pdb_residues.reserve(num_residues);
 
 	// Loop over the residues in the input pdb
-	for (size_t residue_ctr = 0; residue_ctr < num_residues; ++residue_ctr) {
+	for (const size_t &residue_ctr : indices( num_residues ) ) {
 		const pdb_residue &the_residue = arg_pdb.get_residue_of_index__backbone_unchecked( residue_ctr );
 		const bool seen_res_id = common::contains( seen_residue_ids, the_residue.get_residue_id() );
 		if ( ! seen_res_id ) {

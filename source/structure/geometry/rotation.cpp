@@ -28,6 +28,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
+#include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/runtime_error_exception.hpp"
 #include "structure/geometry/angle.hpp"
@@ -79,8 +80,8 @@ constexpr double rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS;
 bool cath::geom::operator==(const rotation &arg_rot_a, ///< TODOCUMENT
                             const rotation &arg_rot_b  ///< TODOCUMENT
                             ) {
-	for (size_t new_row_ctr = 0; new_row_ctr < coord::NUM_DIMS; ++new_row_ctr) {
-		for (size_t new_col_ctr = 0; new_col_ctr < coord::NUM_DIMS; ++new_col_ctr) {
+	for (const size_t &new_row_ctr : indices( coord::NUM_DIMS ) ) {
+		for (const size_t &new_col_ctr : indices( coord::NUM_DIMS ) ) {
 			if ( difference( arg_rot_a.get_value( new_row_ctr, new_col_ctr ), arg_rot_b.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS ) {
 				return false;
 			}
@@ -97,9 +98,9 @@ std::ostream & cath::geom::operator<<(std::ostream   &arg_os,      ///< TODOCUME
                                       const rotation &arg_rotation ///< TODOCUMENT
                                       ) {
 	arg_os << "rotation[";
-	for (size_t new_row_ctr = 0; new_row_ctr < coord::NUM_DIMS; ++new_row_ctr) {
+	for (const size_t &new_row_ctr : indices( coord::NUM_DIMS ) ) {
 		arg_os << ((new_row_ctr == 0) ? "" : "; ");
-		for (size_t new_col_ctr = 0; new_col_ctr < coord::NUM_DIMS; ++new_col_ctr) {
+		for (const size_t &new_col_ctr : indices( coord::NUM_DIMS ) ) {
 			arg_os << ((new_col_ctr == 0) ? "" : ", ");
 			arg_os << right << setw( 7 ) << arg_rotation.get_value(new_row_ctr, new_col_ctr);
 		}
@@ -116,8 +117,8 @@ std::ostream & cath::geom::operator<<(std::ostream   &arg_os,      ///< TODOCUME
 bool cath::geom::are_close(const rotation &arg_rotn_1, ///< TODOCUMENT
                            const rotation &arg_rotn_2  ///< TODOCUMENT
                            ) {
-	for (size_t new_row_ctr = 0; new_row_ctr < coord::NUM_DIMS; ++new_row_ctr) {
-		for (size_t new_col_ctr = 0; new_col_ctr < coord::NUM_DIMS; ++new_col_ctr) {
+	for (const size_t &new_row_ctr : indices( coord::NUM_DIMS ) ) {
+		for (const size_t &new_col_ctr : indices( coord::NUM_DIMS ) ) {
 			if ( difference( arg_rotn_1.get_value( new_row_ctr, new_col_ctr ), arg_rotn_2.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS ) {
 				return false;
 			}
@@ -171,8 +172,8 @@ rotation cath::geom::tidy_rotation(const double &val_00, const double &val_01, c
 
 //	cerr << endl;
 //	size_t value_index_ctr_temp = 0;
-//	for (size_t col_ctr = 0; col_ctr < coord::NUM_DIMS; ++col_ctr) {
-//		for (size_t row_ctr = 0; row_ctr < coord::NUM_DIMS; ++row_ctr) {
+//	for (const size_t &col_ctr : indices( coord::NUM_DIMS ) ) {
+//		for (const size_t &row_ctr : indices( coord::NUM_DIMS ) ) {
 //			cerr << "Row "
 //			<< lexical_cast<string>( row_ctr )
 //			<< " and column "
@@ -190,8 +191,8 @@ rotation cath::geom::tidy_rotation(const double &val_00, const double &val_01, c
 //	}
 
 	size_t value_index_ctr = 0;
-	for (size_t row_ctr = 0; row_ctr < coord::NUM_DIMS; ++row_ctr) {
-		for (size_t col_ctr = 0; col_ctr < coord::NUM_DIMS; ++col_ctr) {
+	for (const size_t &row_ctr : indices( coord::NUM_DIMS ) ) {
+		for (const size_t &col_ctr : indices( coord::NUM_DIMS ) ) {
 			if ( difference( values[ value_index_ctr ], new_rotation.get_value( row_ctr, col_ctr ) ) > arg_tolerance ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(
 					"Unable to create rotation that is within tolerance "

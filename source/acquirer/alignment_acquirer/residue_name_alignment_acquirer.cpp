@@ -29,6 +29,7 @@
 #include "alignment/residue_score/residue_scorer.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/graph/spanning_tree.hpp"
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
