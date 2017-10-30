@@ -854,8 +854,7 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 /// \brief Read Clique file
 clique cath::read_clique_file(const path &arg_filename ///< The clique file to read
                               ) {
-
-	const size_t MAX_CLIQUE_FILE_BUFFER_LENGTH(10000);
+	constexpr size_t MAX_CLIQUE_FILE_BUFFER_LENGTH = 10000;
 	char_vec buffer(MAX_CLIQUE_FILE_BUFFER_LENGTH, 0);
 
 	FILE *in;
@@ -928,7 +927,7 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 		const size_t clique_size = clique_data.equivs.size();
 
 		// Ollie's variables
-		const int boundary = 5; // Amount to add to boundary
+		constexpr int boundary = 5; // Amount to add to boundary
 
 		// Set equivalent residues in secondary structures for protein A and protein b
 		for (const size_t &ctr_b : indices( length_b ) | reversed ) {

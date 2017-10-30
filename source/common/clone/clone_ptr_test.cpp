@@ -49,8 +49,8 @@ using namespace std;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( nullptr_t )
 
-const auto CONCRETE1_METHOD_RESULT = 3984756_z;
-const auto CONCRETE2_METHOD_RESULT = 836_z;
+constexpr size_t CONCRETE1_METHOD_RESULT = 3984756;
+constexpr size_t CONCRETE2_METHOD_RESULT =     836;
 
 namespace cath {
 	namespace test {

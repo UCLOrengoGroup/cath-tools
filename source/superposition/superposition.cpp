@@ -487,10 +487,10 @@ void cath::sup::write_superposition(ostream             &arg_os,           ///< 
 /// \brief TODOCUMENT
 superposition cath::sup::read_superposition(istream &arg_is ///< TODOCUMENT
 		                                    ) {
+	constexpr size_t CORRECT_NUM_PARTS = 12;
 	coord_vec    translations;
 	rotation_vec rotations;
-	const size_t CORRECT_NUM_PARTS(12);
-	string line_string;
+	string       line_string;
 	while ( getline( arg_is, line_string ) ) {
 		const str_vec line_parts = split_build<str_vec>( line_string, is_any_of( " " ), token_compress_on );
 		if (line_parts.size() != CORRECT_NUM_PARTS) {

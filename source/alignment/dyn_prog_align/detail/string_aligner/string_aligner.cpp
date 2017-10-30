@@ -207,7 +207,7 @@ score_type cath::align::detail::get_score_of_aligned_sequence_strings(const stri
 	const size_t         total_gap_extends = gap_counts_a.second + gap_counts_b.second;
 
 	// Return the score for the matches less the penalties for the gaps
-	const score_type score_per_match = 1;
+	constexpr score_type score_per_match = 1;
 
 	return   ( numeric_cast<score_type>( num_matches       ) * score_per_match                          )
 	       - ( numeric_cast<score_type>( total_gap_opens   ) * arg_gap_penalty.get_open_gap_penalty()   )

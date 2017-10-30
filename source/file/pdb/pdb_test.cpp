@@ -82,7 +82,7 @@ BOOST_FIXTURE_TEST_SUITE(pdb_test_suite, cath::test::pdb_test_suite_fixture)
 /// \brief Test the parsing of END separated pdbs by sticking every combination of 0-3 ENDS before, between and after two 1-atom PDBs
 ///        (except there must be at least one END between)
 BOOST_AUTO_TEST_CASE(check_parsing_of_end_separators) {
-	const size_t MAX_NUM_CONSECUTIVE_ENDS(3);
+	constexpr size_t MAX_NUM_CONSECUTIVE_ENDS =3;
 	for (const size_t &num_before_ends : indices( MAX_NUM_CONSECUTIVE_ENDS ) ) {
 		for (const size_t &num_between_ends : irange( 1_z, MAX_NUM_CONSECUTIVE_ENDS ) ) {
 			for (const size_t &num_after_ends : indices( MAX_NUM_CONSECUTIVE_ENDS ) ) {

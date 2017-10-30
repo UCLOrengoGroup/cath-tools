@@ -242,7 +242,7 @@ BOOST_AUTO_TEST_CASE(exceptions_for_small_entries) {
 
 /// \brief Perform thorough checks on conversions between indices and rod/notch on all matrices up to 20x20
 BOOST_AUTO_TEST_CASE(all_sizes_and_indices) {
-	const auto max_size = 20_z;
+	constexpr size_t max_size = 20;
 	for (const size_t &size_a : irange( 1_z, max_size ) ) {
 		for (const size_t &size_b : irange( 1_z, max_size ) ) {
 

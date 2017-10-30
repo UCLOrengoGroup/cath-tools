@@ -165,7 +165,7 @@ void cath::test::aligned_pair_score_fixture::check_ssap_scores(const alignment  
                                                                const score_value &arg_accurate_score_over_num_aligned ///< TODOCUMENT
                                                                ) const {
 	const ssap_scores the_ssap_scores = calculate_log_score( arg_alignment, arg_protein_a, arg_protein_b, residue_querier() );
-	const size_t      exclude         = 5;
+	constexpr size_t exclude = 5;
 	BOOST_CHECK_CLOSE(
 		ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( arg_alignment, arg_protein_a, arg_protein_b ),
 		the_ssap_scores.get_ssap_score_over_larger(),

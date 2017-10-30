@@ -23,7 +23,10 @@
 #include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "ssap/selected_pair.hpp"
 
+namespace cath { namespace test { } }
+
 using namespace cath;
+using namespace cath::test;
 
 namespace cath {
 	namespace test {
@@ -34,16 +37,21 @@ namespace cath {
 			~selected_pair_test_suite_fixture() noexcept = default;
 
 		public:
-			const size_t     TEST_INDEX_A      =  3;
-			const size_t     TEST_INDEX_B      =  5;
-			const score_type TEST_SCORE        = 10;
-			const score_type TEST_HIGHER_SCORE = 20;
+			static constexpr size_t     TEST_INDEX_A      =  3;
+			static constexpr size_t     TEST_INDEX_B      =  5;
+			static constexpr score_type TEST_SCORE        = 10;
+			static constexpr score_type TEST_HIGHER_SCORE = 20;
 		};
 
 	}  // namespace test
 }  // namespace cath
 
-BOOST_FIXTURE_TEST_SUITE(selected_pair_test_suite, cath::test::selected_pair_test_suite_fixture)
+constexpr size_t     selected_pair_test_suite_fixture::TEST_INDEX_A;
+constexpr size_t     selected_pair_test_suite_fixture::TEST_INDEX_B;
+constexpr score_type selected_pair_test_suite_fixture::TEST_SCORE;
+constexpr score_type selected_pair_test_suite_fixture::TEST_HIGHER_SCORE;
+
+BOOST_FIXTURE_TEST_SUITE(selected_pair_test_suite, selected_pair_test_suite_fixture)
 
 /// \brief Check that the basic ctor doesn't throw
 BOOST_AUTO_TEST_CASE(ctor_does_not_throw) {

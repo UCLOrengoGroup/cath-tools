@@ -267,9 +267,9 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
                                                                    const pdb_list        &arg_pdbs,    ///< TODOCUMENT
                                                                    const ostream_ref_opt &arg_ostream  ///< TODOCUMENT
                                                                    ) {
-	const size_t CHARS_IN_MAIN_DATA_LINE_START = 14;
-	const size_t CHARS_IN_MAIN_DATA_LINE_PROT  = 11;
-	const size_t CHARS_IN_MAIN_DATA_LINE_END   = 18;
+	constexpr size_t CHARS_IN_MAIN_DATA_LINE_START = 14;
+	constexpr size_t CHARS_IN_MAIN_DATA_LINE_PROT  = 11;
+	constexpr size_t CHARS_IN_MAIN_DATA_LINE_END   = 18;
 
 	if (arg_pdbs.empty()) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot load a CORA legacy alignment with 0 PDB entries"));

@@ -26,8 +26,11 @@
 #include "structure/entry_querier/residue_querier.hpp"
 #include "structure/entry_querier/sec_struc_querier.hpp"
 
+namespace cath { namespace test { } }
+
 using namespace cath;
 using namespace cath::common;
+using namespace cath::test;
 
 namespace cath {
 	namespace test {
@@ -37,7 +40,7 @@ namespace cath {
 			~entry_querier_test_suite_fixture() noexcept = default;
 
 		public:
-			const size_t            exclusion_value_test_max = 10;	
+			static constexpr size_t exclusion_value_test_max = 10;
 			const residue_querier   example_residue_querier{};
 			const sec_struc_querier example_sec_struc_querier{};
 		};
@@ -45,7 +48,9 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-BOOST_FIXTURE_TEST_SUITE(entry_querier_test_suite, cath::test::entry_querier_test_suite_fixture)
+constexpr size_t entry_querier_test_suite_fixture::exclusion_value_test_max;
+
+BOOST_FIXTURE_TEST_SUITE(entry_querier_test_suite, entry_querier_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(num_comparable) {

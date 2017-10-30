@@ -23,7 +23,10 @@
 #include "display_colour/display_colour.hpp"
 #include "display_colour/display_colour_list.hpp"
 
+namespace cath { namespace test { } }
+
 using namespace cath;
+using namespace cath::test;
 
 namespace cath {
 	namespace test {
@@ -34,13 +37,15 @@ namespace cath {
 			~display_colour_list_test_suite_fixture() noexcept = default;
 
 		public:
-			const size_t NUM_COLOURS_IN_DEFAULT_COLOURS_STRING = 23;
+			static constexpr size_t NUM_COLOURS_IN_DEFAULT_COLOURS_STRING = 23;
 		};
 
 	}  // namespace test
 }  // namespace cath
 
-BOOST_FIXTURE_TEST_SUITE(display_colour_list_test_suite, cath::test::display_colour_list_test_suite_fixture)
+constexpr size_t display_colour_list_test_suite_fixture::NUM_COLOURS_IN_DEFAULT_COLOURS_STRING;
+
+BOOST_FIXTURE_TEST_SUITE(display_colour_list_test_suite, display_colour_list_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(default_colour_string_produces_list_with_sensible_properties) {

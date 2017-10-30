@@ -224,7 +224,7 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 			make_residue_name_with_non_insert_char( pdb_name_number, pdb_name_insert, ' ' )
 		};
 
-		const int sec_struc_number(0);
+		constexpr int sec_struc_number = 0;
 		const sec_struc_type the_sec_struc_type(sec_struc_type::COIL);
 		residues.push_back(residue(
 			res_id,

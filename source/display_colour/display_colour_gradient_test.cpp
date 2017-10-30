@@ -63,10 +63,10 @@ BOOST_AUTO_TEST_CASE(ctor_throws_with_no_colours) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(default_has_correct_properties) {
-	const size_t num_steps   ( 63                 );
-	const size_t half_way    (  1 + num_steps / 2 );
-	const size_t num_points  (  5                 );
-	const size_t num_colours ( (num_steps + 1) * (num_points - 1) + 1 );
+	constexpr size_t num_steps   = 63                ;
+	constexpr size_t half_way    =  1 + num_steps / 2;
+	constexpr size_t num_points  =  5                ;
+	constexpr size_t num_colours = ( num_steps + 1 ) * ( num_points - 1 ) + 1;
 
 	const display_colour_gradient default_colour_gradient = make_default_colour_gradient();
 
