@@ -22,12 +22,12 @@
 
 #include <boost/filesystem/path.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/file/temp_file.hpp"
 #include "common/size_t_literal.hpp"
-#include "common/test_predicate/files_equal.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "test/global_test_constants.hpp"
+#include "test/predicate/files_equal.hpp"
 
 using namespace cath::common;
 using namespace std;

@@ -22,10 +22,8 @@
 
 #include "alignment/io/alignment_io.hpp"
 #include "chopping/region/region.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/pair_insertion_operator.hpp"
-#include "common/test_predicate/istreams_equal.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
@@ -35,7 +33,9 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "test/global_test_constants.hpp"
+#include "test/predicate/istreams_equal.hpp"
 
 #include <fstream>
 #include <iostream>

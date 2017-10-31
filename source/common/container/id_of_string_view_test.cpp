@@ -18,6 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "boost/optional/optional_io.hpp"
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/range/indices.hpp"
@@ -33,6 +34,7 @@ using namespace cath;
 using namespace cath::common;
 using namespace cath::test;
 
+using boost::make_optional;
 using std::string;
 
 namespace cath {
@@ -65,20 +67,20 @@ BOOST_AUTO_TEST_CASE(basic) {
 
 	BOOST_CHECK      ( ! the_ios.empty()   );
 	BOOST_CHECK_EQUAL(   the_ios.size(), 1 );
-	BOOST_CHECK_EQUAL(   the_ios[ example_string_zero ], 0 );
+	BOOST_CHECK_EQUAL(   the_ios[ example_string_zero ], make_optional( 0_z ) );
 
 	BOOST_CHECK_EQUAL(   the_ios.emplace( example_string_zero ).second, 0 );
 
 	BOOST_CHECK      ( ! the_ios.empty()   );
 	BOOST_CHECK_EQUAL(   the_ios.size(), 1 );
-	BOOST_CHECK_EQUAL(   the_ios[ example_string_zero ], 0 );
+	BOOST_CHECK_EQUAL(   the_ios[ example_string_zero ], make_optional( 0_z ) );
 
 	BOOST_CHECK_EQUAL(   the_ios.emplace( example_string_one ).second, 1 );
 
 	BOOST_CHECK      ( ! the_ios.empty()   );
 	BOOST_CHECK_EQUAL(   the_ios.size(), 2 );
-	BOOST_CHECK_EQUAL(   the_ios[ example_string_zero ], 0 );
-	BOOST_CHECK_EQUAL(   the_ios[ example_string_one  ], 1 );
+	BOOST_CHECK_EQUAL(   the_ios[ example_string_zero ], make_optional( 0_z ) );
+	BOOST_CHECK_EQUAL(   the_ios[ example_string_one  ], make_optional( 1_z ) );
 
 	BOOST_CHECK_EQUAL(   the_ios.emplace( example_string_two   ).second, 2 );
 	BOOST_CHECK_EQUAL(   the_ios.emplace( example_string_three ).second, 3 );
@@ -102,8 +104,8 @@ BOOST_AUTO_TEST_CASE(fast) {
 
 	string seven        {   "7" };
 	string ninenineseven{ "997" };
-	BOOST_CHECK_EQUAL( the_ios[ seven         ],   7 );
-	BOOST_CHECK_EQUAL( the_ios[ ninenineseven ], 997 );
+	BOOST_CHECK_EQUAL( the_ios[ seven         ], make_optional(   7_z ) );
+	BOOST_CHECK_EQUAL( the_ios[ ninenineseven ], make_optional( 997_z ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

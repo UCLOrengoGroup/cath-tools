@@ -24,11 +24,11 @@
 #include "chopping/region/region.hpp"
 #include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/property_tree/from_json_string.hpp"
 #include "common/property_tree/to_json_string.hpp"
 #include "file/options/data_dirs_options_block.hpp"
 #include "superposition/superposition_content_spec.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "test/superposition_fixture.hpp"
 
 using namespace cath;

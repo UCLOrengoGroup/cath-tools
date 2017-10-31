@@ -21,9 +21,9 @@
 #include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.hpp"
 #include "resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
 #include <sstream>
 

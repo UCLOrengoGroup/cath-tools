@@ -22,8 +22,8 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/type_aliases.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 
 using namespace cath;
 using namespace cath::common;

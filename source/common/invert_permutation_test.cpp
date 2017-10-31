@@ -22,7 +22,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "test/global_test_constants.hpp"
 
 using namespace cath;

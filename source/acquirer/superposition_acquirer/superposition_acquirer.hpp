@@ -50,7 +50,7 @@ namespace cath {
 			sup::superposition_context get_superposition(std::ostream &) const;
 
 			/// \brief TODOCUMENT
-			static constexpr double PERCENT_TOLERANCE_FOR_EQUAL_RMSDS = 0.0001;
+			static constexpr double TOLERANCE_FOR_EQUAL_RMSDS = 0.000001;
 		};
 
 	} // namespace opts

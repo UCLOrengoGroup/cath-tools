@@ -89,7 +89,7 @@ namespace cath {
 		inline size_t id_of_str_bidirnl::add_name(const boost::string_ref &arg_name ///< The name to add
 		                                          ) {
 			if ( ids_by_name.contains( arg_name ) ) {
-				return ids_by_name[ arg_name ];
+				return *ids_by_name[ arg_name ];
 			}
 			names_by_id.push_back( arg_name.to_string() );
 			const size_t &id = ids_by_name.emplace( boost::string_ref{ names_by_id.back() } ).second;
@@ -119,7 +119,7 @@ namespace cath {
 		inline size_t id_of_str_bidirnl::add_name(std::string &&arg_name ///< The name to add
 		                                          ) {
 			if ( ids_by_name.contains( arg_name ) ) {
-				return ids_by_name[ arg_name ];
+				return *ids_by_name[ arg_name ];
 			}
 			names_by_id.push_back( std::move( arg_name ) );
 			const size_t &id = ids_by_name.emplace( boost::string_ref{ names_by_id.back() } ).second;
@@ -147,13 +147,13 @@ namespace cath {
 		/// \brief Get the ID associated with the specified name
 		inline auto id_of_str_bidirnl::get_id_of_name(const boost::string_ref &arg_name ///< The name to query
 		                                              ) const -> size_t {
-			return ids_by_name[ arg_name ];
+			return *ids_by_name[ arg_name ];
 		}
 
 		/// \brief Get the ID associated with the specified name
 		inline auto id_of_str_bidirnl::get_id_of_name(const std::string &arg_name ///< The name to query
 		                                              ) const -> size_t {
-			return ids_by_name[ arg_name ];
+			return *ids_by_name[ arg_name ];
 		}
 
 		/// \brief Return whether the id_of_str_bidirnl is empty

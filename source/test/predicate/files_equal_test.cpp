@@ -21,8 +21,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "test/global_test_constants.hpp"
-
-#include "common/test_predicate/files_equal.hpp"
+#include "test/predicate/files_equal.hpp"
 
 using namespace cath::test;
 

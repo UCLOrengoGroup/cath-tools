@@ -21,7 +21,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "cluster/map/aggregate_map_results.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
 using namespace cath::clust;
 

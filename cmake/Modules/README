@@ -1,1 +1,13 @@
-These files were downloaded from https://github.com/Kitware/CMake/tree/1b28e3b28b86de40ceb6d402b6f41f30eb0c8b59/Modules
+These files were downloaded on 1st November 2017 from https://github.com/Kitware/CMake/tree/master/Modules at [a0d00a1](https://github.com/Kitware/CMake/commit/a0d00a17102d2740c1cf4b55fbf37308c7283f20) (ie https://github.com/Kitware/CMake/tree/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules)
+
+~~~
+wget "https://raw.githubusercontent.com/Kitware/CMake/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules/CMakeParseArguments.cmake"
+wget "https://raw.githubusercontent.com/Kitware/CMake/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules/FindBoost.cmake"
+wget "https://raw.githubusercontent.com/Kitware/CMake/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules/FindGSL.cmake"
+wget "https://raw.githubusercontent.com/Kitware/CMake/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules/FindPackageHandleStandardArgs.cmake"
+wget "https://raw.githubusercontent.com/Kitware/CMake/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules/FindPackageMessage.cmake"
+~~~
+
+The local version of `FindBoost` is being used here because the version that came with CMake 3.5.2 on Ubuntu 16.10
+tried to link the `relwithdebinfo` build against the debug libraries (which can cause problems if, eg, the debug build
+uses `-D_GLIBCXX_DEBUG`).

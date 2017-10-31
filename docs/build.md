@@ -26,10 +26,9 @@ This is used heavily throughout the code. Both headers and compiled library file
 $ sudo apt-get install libboost-all-dev
 ~~~~~
 
-### CMake ( &ge; v2.8.8 )
+### CMake ( &ge; v3.2 )
 
 This is used to build the software.
-
 
 ~~~~~no-highlight
 [Ubuntu]
@@ -54,7 +53,6 @@ Building the Code
 -----------------
 
 Once the dependencies are in place, the code can be built with:
-
 
 ~~~~~no-highlight
 $ cmake -DCMAKE_BUILD_TYPE=RELEASE .

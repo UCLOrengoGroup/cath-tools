@@ -23,11 +23,11 @@
 #include <boost/mpl/list.hpp>
 #include <boost/optional.hpp>
 
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "options/options_block/alignment_input_options_block.hpp"
 #include "options/options_block/detail_help_options_block.hpp"
 #include "options/options_block/options_block_tester.hpp"
 #include "options/options_block/pdb_input_options_block.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
 using namespace boost::program_options;
 using namespace cath;

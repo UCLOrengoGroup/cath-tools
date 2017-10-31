@@ -21,9 +21,9 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/rapidjson_addenda/to_rapidjson_string.hpp"
 #include "seq/seq_seg.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 
 using namespace cath::common;
 using namespace cath::seq;

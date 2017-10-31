@@ -1,6 +1,4 @@
 /// \file
-
-
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
@@ -17,21 +15,21 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#include <boost/test/auto_unit_test.hpp>
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
+#include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
 
 #include <vector>

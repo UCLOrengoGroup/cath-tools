@@ -18,21 +18,20 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/auto_unit_test.hpp>
-
 #include <boost/mpl/list.hpp>
+#include <boost/test/auto_unit_test.hpp>
 
 #include "alignment/alignment.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_min_score_policy.hpp"
 #include "alignment/pair_alignment.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/size_t_literal.hpp"
-#include "common/test_tools.hpp"
 #include "exception/invalid_argument_exception.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
+#include "test/test_tools.hpp"
 
 #include <limits>
 

@@ -18,16 +18,15 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/filesystem/path.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include <boost/filesystem/path.hpp>
-
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/file/find_file.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/file/temp_file.hpp"
 #include "common/type_aliases.hpp"
 #include "file/options/data_dirs_spec.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 
 #include <fstream>
 

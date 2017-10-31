@@ -18,13 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/auto_unit_test.hpp>
+#include "alignment_action.hpp"
 
-#include "alignment/alignment_action.hpp"
+#include <boost/test/auto_unit_test.hpp>
 
 #include "alignment/alignment.hpp"
 #include "alignment/io/alignment_io.hpp"
-#include "common/test_predicate/istream_and_file_equal.hpp"
 #include "file/pdb/dssp_skip_policy.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_io.hpp"
@@ -33,6 +32,7 @@
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/global_test_constants.hpp"
+#include "test/predicate/istream_and_file_equal.hpp"
 
 using namespace cath;
 using namespace cath::align;

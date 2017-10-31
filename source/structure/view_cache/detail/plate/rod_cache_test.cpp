@@ -18,15 +18,14 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/graph/adjacency_list.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/pair_insertion_operator.hpp"
 #include "common/size_t_literal.hpp"
 #include "structure/view_cache/detail/plate/rod_cache.hpp"
-
-#include <boost/graph/adjacency_list.hpp>
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
 using namespace cath;
 using namespace cath::common;

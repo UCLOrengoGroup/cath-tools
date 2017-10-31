@@ -23,7 +23,7 @@
 #include "chopping/chopping_type_aliases.hpp"
 #include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
-#include "common/test_tools.hpp"
+#include "test/test_tools.hpp"
 
 using namespace cath::chop;
 using namespace cath::common::test;

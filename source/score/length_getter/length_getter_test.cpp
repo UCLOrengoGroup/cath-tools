@@ -20,11 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-//#include "common/algorithm/constexpr_for_n.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
+#include "score/length_getter/geometric_mean_length_getter.hpp"
 #include "score/length_getter/length_getter_enum.hpp"
 #include "score/length_getter/length_getter_types.hpp"
-#include "score/length_getter/geometric_mean_length_getter.hpp"
 #include "score/length_getter/length_of_first_getter.hpp"
 #include "score/length_getter/length_of_longer_getter.hpp"
 #include "score/length_getter/length_of_second_getter.hpp"
@@ -35,6 +33,8 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
+//#include "common/algorithm/constexpr_for_n.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 

@@ -21,7 +21,7 @@
 #include "files_equal.hpp"
 
 #include "common/file/open_fstream.hpp"
-#include "common/test_predicate/istream_and_file_equal.hpp"
+#include "test/predicate/istream_and_file_equal.hpp"
 
 #include <fstream>
 

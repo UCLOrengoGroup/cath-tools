@@ -29,10 +29,10 @@
 #include "common/algorithm/copy_build.hpp"
 #include "common/file/temp_file.hpp"
 #include "common/regex/regex_count.hpp"
-#include "common/test_predicate/files_equal.hpp"
-#include "common/test_predicate/string_matches_file.hpp"
 #include "common/type_aliases.hpp"
 #include "options/options_block/misc_help_version_options_block.hpp"
+#include "test/predicate/files_equal.hpp"
+#include "test/predicate/string_matches_file.hpp"
 
 #include <regex>
 #include <sstream>

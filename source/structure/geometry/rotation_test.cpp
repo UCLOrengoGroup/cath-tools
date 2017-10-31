@@ -22,7 +22,6 @@
 #include <boost/math/constants/constants.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/property_tree/from_json_string.hpp"
 #include "common/property_tree/to_json_string.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -30,6 +29,7 @@
 #include "structure/geometry/angle.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/rotation.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
 
 using namespace boost::math::constants;

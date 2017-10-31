@@ -28,7 +28,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_monitor.hpp>
 
-#include "common/test_predicate/bootstrap_mode.hpp"
+#include "test/predicate/bootstrap_mode.hpp"
 
 #include <iostream>
 

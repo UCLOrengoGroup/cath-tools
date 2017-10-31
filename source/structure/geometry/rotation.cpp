@@ -24,9 +24,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/property_tree/json_parser.hpp>
-
 #include <boost/property_tree/ptree.hpp>
-#include <boost/test/floating_point_comparison.hpp>
 
 #include "common/boost_addenda/range/indices.hpp"
 #include "exception/invalid_argument_exception.hpp"
@@ -38,7 +36,6 @@
 #include <iostream> // **** TEMPORARY ****
 
 using namespace boost::math;
-using namespace boost::test_tools;
 using namespace cath::common;
 using namespace cath::geom;
 using namespace std;

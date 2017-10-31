@@ -23,8 +23,8 @@
 #include "common/file/open_fstream.hpp"
 #include "common/file/slurp.hpp"
 #include "common/file/spew.hpp"
-#include "common/test_predicate/detail/strings_equal.hpp"
-#include "common/test_predicate/files_equal.hpp"
+#include "test/predicate/detail/strings_equal.hpp"
+#include "test/predicate/files_equal.hpp"
 
 #include <fstream>
 

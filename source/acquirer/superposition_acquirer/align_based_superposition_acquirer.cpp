@@ -20,9 +20,8 @@
 
 #include "align_based_superposition_acquirer.hpp"
 
+#include <boost/math/special_functions/relative_difference.hpp>
 #include <boost/range/numeric.hpp>
-#include <boost/test/floating_point_comparison.hpp>
-#include <boost/test/tools/old/impl.hpp>
 #include <boost/tuple/tuple.hpp>
 
 #include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
@@ -60,8 +59,6 @@ using namespace cath::sup;
 
 using boost::accumulate;
 using boost::filesystem::path;
-using boost::math::fpc::percent_tolerance;
-using boost::test_tools::check_is_close;
 using std::endl;
 using std::get;
 using std::ifstream;
@@ -159,7 +156,11 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 			superposition::INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION,  all_common_coords.first,
 			superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION, all_common_coords.second
 		);
-		if ( ! check_is_close(actual_full_rmsd, standard_rmsd, percent_tolerance(PERCENT_TOLERANCE_FOR_EQUAL_RMSDS))) {
+
+		// For reference, epsilon_difference() / relative_difference() on x86_64 Linux 4.8.0-59-generic #64-Ubuntu SMP is :
+		//  * double : 2^52
+		//  * float  : 2^23
+		if ( boost::math::relative_difference( actual_full_rmsd, standard_rmsd ) > TOLERANCE_FOR_EQUAL_RMSDS ) {
 			arg_stderr << "Superposed using " << the_selection_policy_acquirer.get_descriptive_name() << " and actual full RMSD is : " << actual_full_rmsd << endl;
 		}
 	}
@@ -342,7 +343,10 @@ superposition cath::opts::hacky_multi_ssap_fuction(const pdb_list               
 			superposition::INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION,  all_common_coords.first,
 			superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION, all_common_coords.second
 		);
-		if (!check_is_close(actual_full_rmsd, standard_rmsd, percent_tolerance(superposition_acquirer::PERCENT_TOLERANCE_FOR_EQUAL_RMSDS))) {
+		// For reference, epsilon_difference() / relative_difference() on x86_64 Linux 4.8.0-59-generic #64-Ubuntu SMP is :
+		//  * double : 2^52
+		//  * float  : 2^23
+		if ( boost::math::relative_difference( actual_full_rmsd, standard_rmsd ) > superposition_acquirer::TOLERANCE_FOR_EQUAL_RMSDS ) {
 			arg_stderr << "Superposed using " << arg_selection_policy_acquirer.get_descriptive_name() << " and actual full RMSD is : " << actual_full_rmsd << endl;
 		}
 	}

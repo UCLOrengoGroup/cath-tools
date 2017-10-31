@@ -24,8 +24,8 @@
 #include <boost/range/concepts.hpp>
 #include <boost/test/test_tools.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 
 namespace cath {
 	namespace common {

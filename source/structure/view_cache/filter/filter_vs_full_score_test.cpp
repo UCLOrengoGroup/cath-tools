@@ -21,10 +21,10 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/test_tools.hpp"
 #include "score/true_pos_false_neg/classn_outcome.hpp"
-#include "structure/view_cache/filter/filter_vs_full_score.hpp"
 #include "structure/view_cache/filter/detail/filter_vs_full_score_less.hpp"
+#include "structure/view_cache/filter/filter_vs_full_score.hpp"
+#include "test/test_tools.hpp"
 
 using namespace cath::common::test;
 using namespace cath::index::filter;

@@ -24,12 +24,12 @@
 #include "alignment/alignment.hpp"
 #include "alignment/io/align_scaffold.hpp"
 #include "alignment/tools/alignment_breaks.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/pair_insertion_operator.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
-//#include "exception/invalid_argument_exception.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 //#include "alignment/test/alignment_fixture.hpp"
+//#include "exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::align;

@@ -21,10 +21,10 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "structure/protein/amino_acid.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
 using namespace cath;
 using namespace cath::common;

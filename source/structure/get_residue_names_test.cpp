@@ -22,12 +22,12 @@
 
 #include <boost/filesystem.hpp>
 
-#include "file/pdb/pdb.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/file/open_fstream.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
+#include "file/pdb/pdb.hpp"
 #include "structure/protein/residue.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "test/global_test_constants.hpp"
 
 #include <fstream>

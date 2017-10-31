@@ -23,9 +23,9 @@
 
 #include "alignment/align_type_aliases.hpp"
 #include "alignment/refiner/detail/alignment_split_mapping.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/size_t_literal.hpp"
 #include "exception/invalid_argument_exception.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
 #include <iostream>
 

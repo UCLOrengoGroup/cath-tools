@@ -21,8 +21,8 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/algorithm/constexpr_for_n.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "score/true_pos_false_neg/classn_rate_stat.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
 
 using namespace cath::common;

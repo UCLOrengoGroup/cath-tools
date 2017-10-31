@@ -25,12 +25,9 @@
 #include "common/algorithm/copy_build.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/file/read_string_from_file.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/file/temp_file.hpp"
-#include "common/test_predicate/files_equal.hpp"
-#include "common/test_predicate/istream_and_file_equal.hpp"
 #include "resolve_hits/cath_hit_resolver.hpp"
 #include "resolve_hits/options/options_block/crh_filter_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_html_options_block.hpp"
@@ -40,7 +37,10 @@
 #include "resolve_hits/options/options_block/crh_segment_options_block.hpp"
 #include "resolve_hits/options/options_block/crh_single_output_options_block.hpp"
 #include "resolve_hits/test/resolve_hits_fixture.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
+#include "test/predicate/files_equal.hpp"
+#include "test/predicate/istream_and_file_equal.hpp"
 
 #include <regex>
 

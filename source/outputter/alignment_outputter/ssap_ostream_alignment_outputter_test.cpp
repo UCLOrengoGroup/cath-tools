@@ -21,11 +21,11 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "alignment/alignment_context.hpp"
-#include "common/test_predicate/files_equal.hpp"
-#include "outputter/alignment_outputter/alignment_outputter_fixture.hpp"
 #include "outputter/alignment_outputter/file_alignment_outputter.hpp"
 #include "outputter/alignment_outputter/ssap_ostream_alignment_outputter.hpp"
+#include "outputter/alignment_outputter/test/alignment_outputter_fixture.hpp"
 #include "test/global_test_constants.hpp"
+#include "test/predicate/files_equal.hpp"
 
 using namespace cath;
 using namespace cath::opts;

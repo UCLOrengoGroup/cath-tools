@@ -22,13 +22,13 @@
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
-#include "file/ssap_scores_file/ssap_scores_file.hpp"
 #include "file/ssap_scores_file/ssap_scores_entry.hpp"
 #include "file/ssap_scores_file/ssap_scores_entry_to_score_classn_value.hpp"
+#include "file/ssap_scores_file/ssap_scores_file.hpp"
 #include "score/score_classification/label_pair_is_positive/label_pair_is_positive.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 
 using namespace cath;
 using namespace cath::common;

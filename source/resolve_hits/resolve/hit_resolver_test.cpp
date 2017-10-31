@@ -22,11 +22,11 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/file/ofstream_list.hpp"
-#include "common/test_predicate/istreams_equal.hpp"
 #include "resolve_hits/options/spec/crh_spec.hpp"
 #include "resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
 #include "resolve_hits/resolve/hit_resolver.hpp"
 #include "resolve_hits/test/resolve_hits_fixture.hpp"
+#include "test/predicate/istreams_equal.hpp"
 
 namespace cath { namespace test { } }
 

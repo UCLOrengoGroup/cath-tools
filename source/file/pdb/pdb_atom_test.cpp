@@ -1,6 +1,4 @@
 /// \file
-
-
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
@@ -20,9 +18,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb_atom.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
 #include <iostream>
 

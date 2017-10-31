@@ -27,7 +27,7 @@
 #include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/test/floating_point_comparison.hpp>
-#include <boost/test/tools/old/impl.hpp>
+#include <boost/test/tools/old/impl.hpp> // For check_is_close
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"

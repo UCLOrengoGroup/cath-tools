@@ -22,9 +22,11 @@
 #define _CATH_TOOLS_SOURCE_COMMON_CONTAINER_ID_OF_STRING_VIEW_H
 
 #include <boost/functional/hash.hpp>
+#include <boost/optional.hpp>
 #include <boost/utility/string_ref.hpp>
 
 #include "common/cpp14/cbegin_cend.hpp"
+#include "common/optional/make_optional_if.hpp"
 
 #include <unordered_map>
 
@@ -84,9 +86,13 @@ namespace cath {
 			}
 
 			/// \brief Get the ID corresponding to the specified string
-			inline id_type operator[](const boost::string_ref &arg_string ///< The string to lookup
-			                          ) const {
-				return the_map.find( arg_string )->second;
+			inline boost::optional<id_type> operator[](const boost::string_ref &arg_string ///< The string to lookup
+			                                           ) const {
+				const auto find_itr = the_map.find( arg_string );
+				return make_optional_if_fn(
+					find_itr != common::cend( the_map ),
+					[&] { return find_itr->second; }
+				);
 			}
 
 			/// \brief Return whether this contains the specified boost::string_ref

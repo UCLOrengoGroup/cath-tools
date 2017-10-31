@@ -25,9 +25,9 @@
 #include "common/file/open_fstream.hpp"
 #include "common/file/temp_file.hpp"
 #include "common/size_t_literal.hpp"
-#include "common/test_predicate/files_equal.hpp"
-#include "common/test_predicate/istream_and_file_equal.hpp"
 #include "test/global_test_constants.hpp"
+#include "test/predicate/files_equal.hpp"
+#include "test/predicate/istream_and_file_equal.hpp"
 
 #include <fstream>
 #include <sstream>

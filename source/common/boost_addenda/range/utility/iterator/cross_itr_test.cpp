@@ -19,15 +19,14 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/algorithm/string/trim.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/test_tools.hpp>
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/type_aliases.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 
 #include <algorithm>
 #include <tuple>

@@ -18,23 +18,22 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/auto_unit_test.hpp>
-
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional/optional_io.hpp>
+#include <boost/test/auto_unit_test.hpp>
 #include <boost/test/output_test_stream.hpp>
 
 #include "alignment/io/align_scaffold.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "alignment/test/alignment_fixture.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/pair_insertion_operator.hpp"
 #include "common/size_t_literal.hpp"
-#include "common/test_tools.hpp"
 #include "common/type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
+#include "test/test_tools.hpp"
 
 #include <utility>
 

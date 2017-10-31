@@ -18,13 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "sec_calc.hpp"
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "sec_calc.hpp"
-
 #include "common/boost_addenda/range/front.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "common/pair_insertion_operator.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
@@ -35,6 +34,7 @@
 #include "structure/protein/protein.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "test/global_test_constants.hpp"
 
 using namespace cath;

@@ -19,16 +19,15 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/test/auto_unit_test.hpp>
-
 #include <boost/test/output_test_stream.hpp>
 
-#include "common/test_tools.hpp"
-#include "test/global_test_constants.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
 #include "structure/structure_type_aliases.hpp"
-#include "superposition/superposition.hpp"
 #include "superposition/io/superposition_io.hpp"
+#include "superposition/superposition.hpp"
+#include "test/global_test_constants.hpp"
+#include "test/test_tools.hpp"
 
 //#include <iostream> // *** TEMPORARY ***
 #include <vector>

@@ -21,12 +21,12 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
-#include "common/test_tools.hpp"
 #include "display_colour/display_colour.hpp"
 #include "display_colour/display_colour_type_aliases.hpp"
 #include "exception/invalid_argument_exception.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
+#include "test/test_tools.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -22,7 +22,7 @@
 
 #include "common/file/open_fstream.hpp"
 #include "common/file/spew.hpp"
-#include "common/test_predicate/files_equal.hpp"
+#include "test/predicate/files_equal.hpp"
 
 #include <fstream>
 

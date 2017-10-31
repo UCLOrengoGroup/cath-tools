@@ -22,9 +22,9 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/algorithm/sort_uniq_build.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/restrict_to_single_linkage_extension.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 
 namespace cath { namespace test { } }
 

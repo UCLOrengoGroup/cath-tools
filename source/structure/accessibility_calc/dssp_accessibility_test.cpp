@@ -24,11 +24,11 @@
 #include <boost/math/constants/constants.hpp>
 
 #include "common/algorithm/transform_build.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
-#include "common/boost_addenda/test/boost_check_no_throw_diag.hpp"
 #include "common/size_t_literal.hpp"
 #include "file/pdb/pdb.hpp"
 #include "structure/geometry/coord.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
 
 // #include <iostream> // ***** TEMPORARY *****

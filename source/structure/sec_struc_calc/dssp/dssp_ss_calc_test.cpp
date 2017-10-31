@@ -25,7 +25,6 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
 #include "file/pdb/pdb.hpp"
@@ -34,6 +33,7 @@
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "structure/sec_struc_calc/dssp/test/dssp_dupl_fixture.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "test/global_test_constants.hpp"
 
 namespace cath { namespace test { } }

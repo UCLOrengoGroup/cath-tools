@@ -1,6 +1,4 @@
 /// \file
-
-
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
@@ -17,13 +15,14 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
 #include "file/pdb/pdb.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/structure_type_aliases.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "test/global_test_constants.hpp"
 
 using namespace cath;

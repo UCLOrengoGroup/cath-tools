@@ -22,8 +22,8 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "common/test_predicate/detail/strings_equal.hpp"
 #include "exception/invalid_argument_exception.hpp"
+#include "test/predicate/detail/strings_equal.hpp"
 
 #include <algorithm>
 #include <iostream>

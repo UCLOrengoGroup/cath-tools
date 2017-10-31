@@ -21,7 +21,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "cluster/map/overlap_frac_distn.hpp"
-#include "common/boost_addenda/test/boost_check_equal_ranges.hpp"
+#include "test/boost_addenda/boost_check_equal_ranges.hpp"
 
 using namespace cath::clust;
 using namespace cath::common;

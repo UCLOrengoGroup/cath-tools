@@ -27,7 +27,6 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/test/floating_point_comparison.hpp>
 
 #include "exception/invalid_argument_exception.hpp"
 #include "exception/out_of_range_exception.hpp"

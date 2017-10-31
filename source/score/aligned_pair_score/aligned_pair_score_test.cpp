@@ -34,7 +34,6 @@
 #include "alignment/residue_score/residue_scorer.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/size_t_literal.hpp"
-#include "common/test_tools.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
@@ -71,6 +70,7 @@
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/global_test_constants.hpp"
+#include "test/test_tools.hpp"
 
 #include <iterator>
 #include <iostream>

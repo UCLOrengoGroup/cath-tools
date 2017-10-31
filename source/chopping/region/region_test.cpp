@@ -24,7 +24,7 @@
 
 #include "chopping/chopping_type_aliases.hpp"
 #include "chopping/region/region.hpp"
-#include "common/test_tools.hpp"
+#include "test/test_tools.hpp"
 
 using namespace cath;
 using namespace cath::chop;
