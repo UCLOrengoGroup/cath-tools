@@ -1,4 +1,6 @@
 /// \file
+/// \brief The hmmer_scores_file test suite
+
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
 /// Copyright (C) 2011, Orengo Group, University College London
