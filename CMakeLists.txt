@@ -30,6 +30,10 @@ configure_file( "source/cath_tools_git_version.hpp.in"
                 )
 
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/" )
+IF ( ${CMAKE_VERSION} VERSION_GREATER "3.5.0" )
+	set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/FindBoostModules/" )
+ENDIF ()
+MESSAGE( STATUS "CMAKE_MODULE_PATH : " ${CMAKE_MODULE_PATH} )
 
 # It'd be good to be able to tell FindGSL.cmake that we want static libraries (on all except Ubuntu 16.10 (yakkety))
 # and then use the target GSL::gsl but FindGSL.cmake doesn't appear to support that at present.
