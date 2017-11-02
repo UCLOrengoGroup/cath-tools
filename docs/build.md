@@ -35,6 +35,15 @@ This is used to build the software.
 $ sudo apt-get install cmake
 ~~~~~
 
+Downloading and running a recent CMake can sometimes be as simple as:
+
+~~~
+wget "https://cmake.org/files/v3.9/cmake-3.9.4-Linux-x86_64.tar.gz"
+tar -zxvf cmake-3.9.4-Linux-x86_64.tar.gz cmake-3.9.4-Linux-x86_64/bin/cmake
+tar -zxvf cmake-3.9.4-Linux-x86_64.tar.gz cmake-3.9.4-Linux-x86_64/share/cmake-3.9/Modules
+cmake-3.9.4-Linux-x86_64/bin/cmake --version
+~~~
+
 *NOTE for UCL SMB users*: If running cmake gives you errors like:
 
 ~~~~~no-highlight
