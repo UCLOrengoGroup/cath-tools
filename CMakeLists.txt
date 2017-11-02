@@ -2,6 +2,8 @@ cmake_minimum_required (VERSION 3.2)
 
 # Note: to use libc++, pass -DCMAKE_CXX_FLAGS="-stdlib=libc++" to cmake
 
+MESSAGE( STATUS "Running under CMake v" ${CMAKE_VERSION} )
+
 # If on Linux, get the release codename
 IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
 	find_program   ( LSB_RELEASE lsb_release )
@@ -36,7 +38,6 @@ ENDIF()
 IF ( ${CMAKE_VERSION} VERSION_LESS    "3.3.0" )
 	SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/FindBoostModules_lt_3.3.0/" )
 ENDIF()
-MESSAGE( STATUS "CMAKE_MODULE_PATH : " ${CMAKE_MODULE_PATH} )
 
 # It'd be good to be able to tell FindGSL.cmake that we want static libraries (on all except Ubuntu 16.10 (yakkety))
 # and then use the target GSL::gsl but FindGSL.cmake doesn't appear to support that at present.
