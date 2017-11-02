@@ -8,7 +8,7 @@ IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
 	execute_process( COMMAND ${LSB_RELEASE} -cs OUTPUT_VARIABLE LSB_RELEASE_CODE OUTPUT_STRIP_TRAILING_WHITESPACE)
 ELSE()
 	# Else set LSB_RELEASE_CODE to something else so the upcoming STREQUAL makes sense
-	set( LSB_RELEASE_CODE ${CMAKE_SYSTEM_NAME} )
+	SET( LSB_RELEASE_CODE ${CMAKE_SYSTEM_NAME} )
 ENDIF()
 
 execute_process(
@@ -29,10 +29,13 @@ configure_file( "source/cath_tools_git_version.hpp.in"
                 "source/cath_tools_git_version.hpp"
                 )
 
-set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/" )
+SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/" )
 IF ( ${CMAKE_VERSION} VERSION_GREATER "3.5.0" )
-	set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/FindBoostModules/" )
-ENDIF ()
+	SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/FindBoostModules_gt_3.5.0/" )
+ENDIF()
+IF ( ${CMAKE_VERSION} VERSION_LESS    "3.3.0" )
+	SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/FindBoostModules_lt_3.3.0/" )
+ENDIF()
 MESSAGE( STATUS "CMAKE_MODULE_PATH : " ${CMAKE_MODULE_PATH} )
 
 # It'd be good to be able to tell FindGSL.cmake that we want static libraries (on all except Ubuntu 16.10 (yakkety))
@@ -49,14 +52,14 @@ endforeach(loop_var)
 if( BUILD_SHARED_LIBS )
 	add_definitions( -DBOOST_ALL_DYN_LINK )
 	add_definitions( -DBOOST_LOG_DYN_LINK )
-	set( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
+	SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 else()
-	set( Boost_USE_STATIC_LIBS ON )
+	SET( Boost_USE_STATIC_LIBS ON )
 	SET( GSL_LIB_SUFFIX "${GSL_STATIC_LIB}" "${GSLCBLAS_STATIC_LIB}" )
 endif()
 
 if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
-	set( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
+	SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 	MESSAGE( STATUS "Since this is running on Ubuntu 16.10 (yakkety), overriding GSL libraries to be : " ${GSL_LIB_SUFFIX} )
 endif()
 
@@ -65,7 +68,7 @@ IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
 ENDIF()
 
 # For useful information on getting CMake to work with Boost, type the following command: `cmake --help-module FindBoost`
-# or add `set( Boost_DEBUG "ON" )` to this file to get helpful debug information when running CMake
+# or add `SET( Boost_DEBUG "ON" )` to this file to get helpful debug information when running CMake
 find_package( Boost 1.60 REQUIRED filesystem iostreams log program_options serialization unit_test_framework )
 
 # Compiler options
@@ -74,8 +77,8 @@ find_package( Boost 1.60 REQUIRED filesystem iostreams log program_options seria
 #  * -Wdouble-promotion
 #  * -Wold-style-cast   (fires in common/third_party_code/gnuplot-iostream.h)
 #  * -Wuseless-cast
-set( CMAKE_CXX_STANDARD   14    )
-set( CMAKE_CXX_EXTENSIONS "OFF" )
+SET( CMAKE_CXX_STANDARD   14    )
+SET( CMAKE_CXX_EXTENSIONS "OFF" )
 add_compile_options(
 	-W
 	-Wall
@@ -119,8 +122,8 @@ add_compile_options( $<$<NOT:$<CONFIG:DEBUG>>:-DGSL_RANGE_CHECK_OFF> )
 
 add_definitions( -DRAPIDJSON_HAS_STDSTRING=1 )
 
-set( CMAKE_INCLUDE_CURRENT_DIR      ON )
-set( CMAKE_RUNTIME_OUTPUT_DIRECTORY .. )
+SET( CMAKE_INCLUDE_CURRENT_DIR      ON )
+SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY .. )
 
 if ( DEFINED ENV{BUILD_REVISION_NUMBER} )
   add_definitions( -DBUILD_REVISION_NUMBER=$ENV{BUILD_REVISION_NUMBER} )
