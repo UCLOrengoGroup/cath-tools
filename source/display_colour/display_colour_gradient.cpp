@@ -24,8 +24,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-#include "display_colour/display_colour.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "display_colour/display_colour.hpp"
 
 using namespace boost::algorithm;
 using namespace cath;

@@ -26,8 +26,8 @@
 #include <boost/fusion/include/map_tie.hpp>
 
 #include "common/algorithm/constexpr_find.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/size_t_literal.hpp"
 #include "score/true_pos_false_neg/classn_outcome.hpp"
 #include "score/true_pos_false_neg/classn_stat.hpp"
 #include "score/true_pos_false_neg/true_false_pos_neg.hpp"

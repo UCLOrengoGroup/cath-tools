@@ -38,10 +38,10 @@
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/difference.hpp"
-#include "common/less_than_helper.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/exception/not_implemented_exception.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/less_than_helper.hpp"
+#include "common/size_t_literal.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
 

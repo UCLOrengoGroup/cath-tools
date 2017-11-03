@@ -24,8 +24,8 @@
 #include <boost/program_options.hpp>
 
 #include "chopping/chopping_format/sillitoe_chopping_format.hpp"
-#include "common/optional/make_optional_if.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/optional/make_optional_if.hpp"
 
 using namespace cath;
 using namespace cath::chop;

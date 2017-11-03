@@ -21,9 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_DYN_PROG_SCORE_SOURCE_H
 #define _CATH_TOOLS_SOURCE_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_DYN_PROG_SCORE_SOURCE_H
 
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/temp_check_offset_1.hpp"
 #include "common/type_aliases.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 
 namespace cath {
 	namespace align {

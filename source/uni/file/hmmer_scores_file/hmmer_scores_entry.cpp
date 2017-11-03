@@ -24,8 +24,8 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/runtime_error_exception.hpp"
+#include "common/type_aliases.hpp"
 #include "file/hmmer_scores_file/hmmer_scores_entry.hpp"
 
 #include <iostream> /// ***** TEMPORARY *****

@@ -27,8 +27,8 @@
 #include <boost/lexical_cast.hpp>
 
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/type_aliases.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 

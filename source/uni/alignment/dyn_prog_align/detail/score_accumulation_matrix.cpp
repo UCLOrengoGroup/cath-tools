@@ -25,8 +25,8 @@
 
 #include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
 #include "alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/type_aliases.hpp"
 #include "ssap/windowed_matrix.hpp"
 
 using namespace cath;

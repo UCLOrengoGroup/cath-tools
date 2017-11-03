@@ -25,9 +25,9 @@
 
 #include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
-#include "common/program_options/validator.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/program_options/validator.hpp"
 #include "superposition/superposition_content_spec.hpp"
 
 using namespace cath;

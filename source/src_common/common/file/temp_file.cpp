@@ -24,8 +24,8 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/type_aliases.hpp"
 
 #include <iostream> // *** TEMPORARY ***
 

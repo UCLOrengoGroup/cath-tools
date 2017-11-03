@@ -28,8 +28,8 @@
 
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/file/open_fstream.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/file/open_fstream.hpp"
 
 #include <fstream>
 

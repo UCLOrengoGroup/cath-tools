@@ -21,7 +21,6 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-// #include "common/file/spew.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "resolve_hits/full_hit.hpp"
 #include "resolve_hits/full_hit_list.hpp"
@@ -30,6 +29,7 @@
 #include "resolve_hits/options/spec/crh_segment_spec.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 #include "resolve_hits/trim/trim_spec.hpp"
+// #include "common/file/spew.hpp"
 
 #include <cmath>
 #include <iostream>

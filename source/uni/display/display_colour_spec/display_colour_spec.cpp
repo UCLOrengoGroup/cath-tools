@@ -34,8 +34,8 @@
 #include "common/algorithm/sort_uniq_build.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "display/viewer/viewer.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "display/viewer/viewer.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_residue.hpp"
 

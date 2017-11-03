@@ -26,8 +26,8 @@
 #include <boost/utility/string_ref.hpp>
 
 #include "common/algorithm/sort_uniq_build.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/runtime_error_exception.hpp"
+#include "common/type_aliases.hpp"
 #include "resolve_hits/calc_hit.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
 #include "resolve_hits/detail/full_hit_prune_builder.hpp"

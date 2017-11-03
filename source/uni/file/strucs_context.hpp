@@ -23,8 +23,8 @@
 
 #include "chopping/chopping_type_aliases.hpp"
 #include "chopping/region/region.hpp"
-#include "common/type_aliases.hpp"                  // for str_vec
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/type_aliases.hpp"                  // for str_vec
 #include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_list.hpp"                    // for pdb_list

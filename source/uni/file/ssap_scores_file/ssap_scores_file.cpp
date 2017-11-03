@@ -30,8 +30,8 @@
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
-#include "common/file/open_fstream.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/file/open_fstream.hpp"
 #include "file/ssap_scores_file/ssap_scores_entry.hpp"
 
 #include <fstream>

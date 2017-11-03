@@ -27,10 +27,10 @@
 #include "cluster/old_cluster_data.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/debug_numeric_cast.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/optional/make_optional_if.hpp"
 #include "common/string/string_parse_tools.hpp"
-#include "common/exception/runtime_error_exception.hpp"
 #include "seq/seq_seg_run_parser.hpp"
 
 #include <fstream>

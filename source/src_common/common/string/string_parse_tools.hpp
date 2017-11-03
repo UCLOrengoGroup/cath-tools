@@ -32,9 +32,9 @@
 #include "common/boost_addenda/make_string_ref.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/debug_numeric_cast.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/runtime_error_exception.hpp"
+#include "common/type_aliases.hpp"
 
 #include <string>
 

@@ -37,8 +37,8 @@
 #include "alignment/refiner/detail/alignment_split_mapping.hpp"
 #include "alignment/residue_score/residue_scorer.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/file/open_fstream.hpp"
 #include "common/exception/not_implemented_exception.hpp"
+#include "common/file/open_fstream.hpp"
 #include "ssap/ssap.hpp"
 #include "structure/entry_querier/residue_querier.hpp" // ***** TEMPORARY *****
 #include "structure/protein/protein.hpp"

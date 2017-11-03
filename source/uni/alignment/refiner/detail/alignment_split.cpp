@@ -22,9 +22,9 @@
 
 #include "common/algorithm/contains.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/size_t_literal.hpp"
 
 using namespace cath;
 using namespace cath::align::detail;

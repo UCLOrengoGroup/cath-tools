@@ -24,8 +24,8 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/type_aliases.hpp"
 #include "file/prc_scores_file/prc_scores_entry.hpp"
 #include "file/prc_scores_file/prc_scores_file.hpp"
 #include "file/ssap_scores_file/ssap_scores_entry.hpp"

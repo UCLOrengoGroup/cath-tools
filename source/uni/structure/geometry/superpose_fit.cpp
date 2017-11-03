@@ -20,10 +20,10 @@
 
 #include "superpose_fit.hpp"
 
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/gsl/get_determinant.hpp"
 #include "common/gsl/gsl_matrix_wrp.hpp"
 #include "common/gsl/gsl_vector_wrp.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 #include "structure/geometry/coord_list.hpp"
 #include "structure/geometry/detail/cross_covariance_matrix.hpp"
 #include "structure/geometry/rotation.hpp"

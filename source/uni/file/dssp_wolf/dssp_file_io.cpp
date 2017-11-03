@@ -27,9 +27,9 @@
 #include <boost/log/trivial.hpp>
 
 #include "biocore/chain_label.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
-#include "common/exception/runtime_error_exception.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "structure/protein/residue.hpp"
 

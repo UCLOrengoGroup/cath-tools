@@ -23,8 +23,8 @@
 
 #include "common/argc_argv_faker.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::common;

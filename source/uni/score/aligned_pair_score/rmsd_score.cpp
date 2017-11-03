@@ -29,8 +29,8 @@
 #include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
 #include "common/clone/make_uptr_clone.hpp"
-#include "common/less_than_helper.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/less_than_helper.hpp"
 #include "structure/geometry/coord_list.hpp"
 #include "superposition/superposition.hpp"
 

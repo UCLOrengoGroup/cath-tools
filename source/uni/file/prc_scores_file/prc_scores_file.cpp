@@ -29,9 +29,9 @@
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/hash/pair_hash.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 #include "file/prc_scores_file/detail/prc_scores_line_parser.hpp"
 #include "file/prc_scores_file/prc_scores_entry.hpp"
 

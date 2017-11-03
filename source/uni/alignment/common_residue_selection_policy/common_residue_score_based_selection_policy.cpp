@@ -20,7 +20,6 @@
 
 #include "common_residue_score_based_selection_policy.hpp"
 
-
 #include "alignment/alignment.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/runtime_error_exception.hpp"

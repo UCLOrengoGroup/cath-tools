@@ -25,8 +25,8 @@
 #include "alignment/alignment_coord_extractor.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/less_than_helper.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/less_than_helper.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
 

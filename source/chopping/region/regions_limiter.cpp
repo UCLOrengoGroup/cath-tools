@@ -30,8 +30,8 @@
 #include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/optional/make_optional_if.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/optional/make_optional_if.hpp"
 
 using namespace cath;
 using namespace cath::chop;

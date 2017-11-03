@@ -26,9 +26,9 @@
 #include "alignment/alignment.hpp"
 #include "alignment/gap/alignment_gap.hpp"
 #include "alignment/gap/gap_penalty.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 
 using namespace boost::algorithm;
 using namespace cath;

@@ -20,8 +20,8 @@
 
 #include "dyn_prog_score_source.hpp"
 
-#include "common/temp_check_offset_1.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/temp_check_offset_1.hpp"
 
 using namespace cath;
 using namespace cath::align;

@@ -28,9 +28,9 @@
 #include <boost/operators.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/json_style.hpp"
 #include "common/property_tree/read_from_ptree.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 
 namespace cath { namespace geom { template <typename T> class angle; } }
 namespace cath { namespace geom { using doub_angle = angle<double>; } }

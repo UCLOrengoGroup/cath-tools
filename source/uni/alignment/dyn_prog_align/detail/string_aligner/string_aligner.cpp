@@ -38,9 +38,9 @@
 #include "alignment/gap/gap_penalty.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/size_t_literal.hpp"
 
 #include <algorithm>
 #include <string>

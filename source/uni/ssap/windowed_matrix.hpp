@@ -27,10 +27,10 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "common/debug_numeric_cast.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/temp_check_offset_1.hpp"
 #include "common/type_aliases.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 
 #include <cmath>
 #include <cstdlib>

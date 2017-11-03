@@ -20,13 +20,12 @@
 
 #include "pca.hpp"
 
-
 #include "common/boost_addenda/range/back.hpp"
 #include "common/boost_addenda/range/front.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/gsl/gsl_matrix_wrp.hpp"
 #include "common/gsl/gsl_vector_wrp.hpp"
 #include "common/size_t_literal.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
 #include "structure/geometry/line.hpp"

@@ -26,15 +26,15 @@
 //#include <boost/numeric/conversion/cast.hpp>
 //#include <boost/range/join.hpp>
 
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
+#include "common/exception/not_implemented_exception.hpp"
+#include "common/less_than_helper.hpp"
 //#include "alignment/alignment.hpp"
 //#include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
 //#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
 //#include "common/algorithm/copy_build.hpp"
-#include "common/clone/make_uptr_clone.hpp"
 //#include "common/difference.hpp"
-#include "common/less_than_helper.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
-#include "common/exception/not_implemented_exception.hpp"
 //#include "common/exception/out_of_range_exception.hpp"
 //#include "structure/geometry/coord.hpp"
 //#include "structure/geometry/coord_list.hpp"

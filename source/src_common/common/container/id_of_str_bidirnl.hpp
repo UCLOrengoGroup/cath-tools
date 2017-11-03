@@ -31,8 +31,8 @@
 #include "common/boost_addenda/range/max_proj_element.hpp"
 #include "common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "common/container/id_of_string_view.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/type_aliases.hpp"
 
 #include <string>
 

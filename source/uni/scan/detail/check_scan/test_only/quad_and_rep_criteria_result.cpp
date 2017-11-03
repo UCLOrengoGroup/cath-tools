@@ -20,8 +20,8 @@
 
 #include "quad_and_rep_criteria_result.hpp"
 
-#include "common/less_than_helper.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/less_than_helper.hpp"
 
 using namespace cath::common;
 using namespace cath::scan::detail;

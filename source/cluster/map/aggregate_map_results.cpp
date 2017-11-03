@@ -27,8 +27,8 @@
 #include "cluster/map/map_results.hpp"
 #include "cluster/new_cluster_data.hpp"
 #include "cluster/old_cluster_data.hpp"
-#include "common/file/open_fstream.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/file/open_fstream.hpp"
 
 using namespace cath::clust;
 using namespace cath::common;

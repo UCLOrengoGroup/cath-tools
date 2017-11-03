@@ -25,8 +25,8 @@
 
 #include "biocore/residue_name.hpp"
 #include "common/algorithm/contains.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::align::detail;

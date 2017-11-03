@@ -20,8 +20,8 @@
 
 #include "old_matrix_dyn_prog_score_source.hpp"
 
-//#include "common/exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 #include "ssap/windowed_matrix.hpp"
+//#include "common/exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
 using namespace cath;
 using namespace cath::align;

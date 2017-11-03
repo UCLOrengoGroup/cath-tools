@@ -23,10 +23,10 @@
 #include <boost/lexical_cast.hpp>
 
 #include "common/boost_addenda/range/indices.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/lexical_cast_line.hpp"
 #include "common/type_aliases.hpp"
-#include "common/exception/runtime_error_exception.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
 #include "file/dssp_wolf/wolf_file.hpp"

@@ -25,9 +25,9 @@
 #include <boost/lexical_cast.hpp>
 
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/type_aliases.hpp"
-#include "common/exception/runtime_error_exception.hpp"
 #include "score/score_classification/score_classn_value.hpp"
 #include "score/score_classification/score_classn_value_better_value.hpp"
 #include "score/score_type_aliases.hpp"

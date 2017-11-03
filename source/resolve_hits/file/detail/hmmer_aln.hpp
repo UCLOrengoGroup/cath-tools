@@ -26,8 +26,8 @@
 #include <boost/utility/string_ref.hpp>
 
 #include "common/boost_addenda/make_string_ref.hpp"
-#include "common/string/string_parse_tools.hpp"
 #include "common/exception/runtime_error_exception.hpp"
+#include "common/string/string_parse_tools.hpp"
 #include "resolve_hits/file/alnd_rgn.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 #include "seq/seq_arrow.hpp"

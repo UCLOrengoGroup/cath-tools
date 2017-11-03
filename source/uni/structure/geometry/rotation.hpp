@@ -30,10 +30,10 @@
 
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/difference.hpp"
-#include "common/property_tree/read_from_ptree.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/out_of_range_exception.hpp"
 #include "common/exception/runtime_error_exception.hpp"
+#include "common/property_tree/read_from_ptree.hpp"
+#include "common/type_aliases.hpp"
 #include "structure/geometry/angle.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"

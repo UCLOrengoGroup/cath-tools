@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "common/exception/invalid_argument_exception.hpp"
 #include "display_colour/display_colour.hpp"
 #include "display_colour/display_colour_gradient.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
 using namespace cath;

@@ -25,8 +25,8 @@
 #include <boost/range/sub_range.hpp>
 
 #include "chopping/chopping_type_aliases.hpp"
-#include "common/temp_check_offset_1.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/temp_check_offset_1.hpp"
 #include "file/name_set/name_set.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/protein/amino_acid.hpp"

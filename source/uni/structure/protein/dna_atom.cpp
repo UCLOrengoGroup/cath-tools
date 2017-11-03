@@ -20,8 +20,8 @@
 
 #include "amino_acid.hpp"
 
-#include "common/string/char_arr_to_string.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/string/char_arr_to_string.hpp"
 
 using namespace cath;
 using namespace cath::common;

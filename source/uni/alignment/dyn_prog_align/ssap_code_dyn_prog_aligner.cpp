@@ -30,9 +30,9 @@
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/debug_numeric_cast.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/not_implemented_exception.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/type_aliases.hpp"
 #include "ssap/windowed_matrix.hpp"
 
 #include <cassert> // **** TEMPORARY *****

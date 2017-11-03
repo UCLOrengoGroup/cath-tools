@@ -30,17 +30,17 @@
 // #include <boost/algorithm/string/trim.hpp>
 // #include <boost/lexical_cast.hpp>
 
+#include "structure/geometry/orientation_covering.hpp"
 // #include "common/algorithm/copy_build.hpp"
 // #include "common/algorithm/sort_uniq_copy.hpp"
 // #include "common/algorithm/transform_build.hpp"
 // #include "common/boost_addenda/range/range_concept_type_aliases.hpp"
 // #include "common/boost_addenda/string_algorithm/split_build.hpp"
 // #include "common/debug_numeric_cast.hpp"
-// #include "common/file/open_fstream.hpp"
-// #include "structure/geometry/quat_rot.hpp"
 // #include "common/exception/invalid_argument_exception.hpp"
 // #include "common/exception/runtime_error_exception.hpp"
-#include "structure/geometry/orientation_covering.hpp"
+// #include "common/file/open_fstream.hpp"
+// #include "structure/geometry/quat_rot.hpp"
 // #include "structure/structure_type_aliases.hpp"
 
 // // #include <algorithm>

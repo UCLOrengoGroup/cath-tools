@@ -37,8 +37,8 @@
 #include "alignment/alignment_row.hpp"
 #include "common/algorithm/copy_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/temp_check_offset_1.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/temp_check_offset_1.hpp"
 
 #include <algorithm>
 #include <ostream>

@@ -26,10 +26,10 @@
 #include "alignment/gap/gap_penalty.hpp"
 #include "alignment/pair_alignment.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/size_t_literal.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/size_t_literal.hpp"
+#include "common/type_aliases.hpp"
 
 using namespace cath;
 using namespace cath::align;

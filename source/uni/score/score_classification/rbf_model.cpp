@@ -29,10 +29,10 @@
 
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
-#include "common/file/open_fstream.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/exception/not_implemented_exception.hpp"
 #include "common/exception/runtime_error_exception.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/size_t_literal.hpp"
 #include "file/prc_scores_file/prc_scores_entry.hpp"
 #include "file/ssap_scores_file/ssap_scores_entry.hpp"
 #include "score/homcheck_tools/ssap_and_prc.hpp"

@@ -21,9 +21,9 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "cluster/map/map_results.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::clust;

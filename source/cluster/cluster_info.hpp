@@ -24,9 +24,9 @@
 #include <boost/operators.hpp>
 #include <boost/utility/string_ref.hpp>
 
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/optional/make_optional_if.hpp"
 #include "common/type_aliases.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 #include "seq/seq_seg_run.hpp"
 
 #include <string>

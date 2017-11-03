@@ -24,8 +24,8 @@
 
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/size_t_literal.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"

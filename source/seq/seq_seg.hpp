@@ -30,10 +30,10 @@
 
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/constexpr_min_max.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/json_style.hpp"
 #include "common/rapidjson_addenda/rapidjson_writer.hpp"
 #include "common/size_t_literal.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 #include "seq/seq_arrow.hpp"
 
 using namespace cath::common::literals;

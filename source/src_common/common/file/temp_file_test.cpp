@@ -22,8 +22,8 @@
 
 #include <boost/filesystem.hpp>
 
-#include "common/file/open_fstream.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/file/open_fstream.hpp"
 #include "common/file/temp_file.hpp"
 
 #include <fstream>

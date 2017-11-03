@@ -22,8 +22,8 @@
 #define _CATH_TOOLS_SOURCE_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_FROM_TO_INDEX_KEYER_PART_H
 
 #include "common/constexpr_ignore_unused.hpp"
-#include "common/tuple/make_tuple_with_skips.hpp"
 #include "common/exception/not_implemented_exception.hpp"
+#include "common/tuple/make_tuple_with_skips.hpp"
 #include "scan/spatial_index/simple_locn_index.hpp"
 
 namespace cath {

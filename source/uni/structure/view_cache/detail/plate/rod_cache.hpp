@@ -21,8 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_DETAIL_PLATE_ROD_CACHE_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_DETAIL_PLATE_ROD_CACHE_H
 
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/type_aliases.hpp"
 #include "structure/view_cache/index/view_cache_index_entry.hpp"
 
 namespace cath {

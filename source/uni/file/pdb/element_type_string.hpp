@@ -25,8 +25,8 @@
 
 #include "common/boost_addenda/string_ref_of_char_arr.hpp"
 #include "common/char_arr_type_aliases.hpp"
-#include "common/string/string_parse_tools.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/string/string_parse_tools.hpp"
 #include "file/pdb/coarse_element_type.hpp"
 
 #include <string>

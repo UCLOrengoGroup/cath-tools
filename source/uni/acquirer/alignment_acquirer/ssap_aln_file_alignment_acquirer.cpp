@@ -25,9 +25,9 @@
 #include "alignment/residue_score/residue_scorer.hpp" // ***** TEMPORARY *****
 #include "common/boost_addenda/graph/spanning_tree.hpp"
 #include "common/clone/make_uptr_clone.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/logger.hpp"
-#include "common/exception/runtime_error_exception.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"

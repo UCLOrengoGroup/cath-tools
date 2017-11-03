@@ -28,8 +28,8 @@
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/file/open_fstream.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/file/open_fstream.hpp"
 #include "file/hmmer_scores_file/hmmer_scores_entry.hpp"
 
 #include <fstream>

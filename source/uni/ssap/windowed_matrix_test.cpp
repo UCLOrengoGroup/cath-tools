@@ -28,8 +28,8 @@
 #include "common/algorithm/contains.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/size_t_literal.hpp"
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
 using namespace cath;

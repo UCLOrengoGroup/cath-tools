@@ -30,8 +30,8 @@
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_uniq_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "display/viewer/viewer.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "display/viewer/viewer.hpp"
 
 using namespace cath;
 using namespace cath::common;

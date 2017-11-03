@@ -20,8 +20,8 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "display/options/display_spec.hpp"
 #include "common/exception/not_implemented_exception.hpp"
+#include "display/options/display_spec.hpp"
 #include "options/options_block/options_block_tester.hpp"
 #include "outputter/superposition_output_options/superposition_output_options_block.hpp"
 #include "outputter/superposition_outputter/superposition_outputter.hpp"

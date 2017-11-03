@@ -23,10 +23,10 @@
 #include "common/cpp14/make_unique.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
+#include "structure/protein/protein_source_file_set/protein_from_pdb_and_calc.hpp"
 #include "structure/protein/protein_source_file_set/protein_from_pdb_and_dssp_and_calc.hpp"
 #include "structure/protein/protein_source_file_set/protein_from_pdb_dssp_and_sec.hpp"
 #include "structure/protein/protein_source_file_set/protein_from_wolf_and_sec.hpp"
-#include "structure/protein/protein_source_file_set/protein_from_pdb_and_calc.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -32,9 +32,9 @@
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "common/cpp14/make_unique.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/runtime_error_exception.hpp"
+#include "common/size_t_literal.hpp"
 
 using namespace cath::align;
 using namespace cath::common;

@@ -31,9 +31,9 @@
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/debug_numeric_cast.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/not_implemented_exception.hpp"
+#include "common/size_t_literal.hpp"
 #include "structure/view_cache/index/detail/vcie_match_criteria.hpp"
 #include "structure/view_cache/index/view_cache_index_entry.hpp"
 

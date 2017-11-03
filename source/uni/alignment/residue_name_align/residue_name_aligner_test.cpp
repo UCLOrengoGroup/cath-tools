@@ -26,8 +26,8 @@
 #include "alignment/residue_name_align/residue_name_aligner.hpp"
 #include "biocore/residue_name.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/size_t_literal.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/size_t_literal.hpp"
 
 #include <deque>
 #include <vector>

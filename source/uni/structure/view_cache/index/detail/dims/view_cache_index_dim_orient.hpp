@@ -37,9 +37,9 @@
 
 #include "common/algorithm/sort_uniq_copy.hpp"
 #include "common/debug_numeric_cast.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/not_implemented_exception.hpp"
+#include "common/type_aliases.hpp"
 #include "structure/view_cache/index/detail/vcie_match_criteria.hpp"
 #include "structure/view_cache/index/detail/view_cache_index_type_aliases.hpp"
 #include "structure/view_cache/index/view_cache_index_entry.hpp"

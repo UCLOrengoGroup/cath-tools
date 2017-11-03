@@ -20,11 +20,11 @@
 
 #include "cath_hit_resolver.hpp"
 
+#include "common/exception/not_implemented_exception.hpp"
+#include "common/exception/out_of_range_exception.hpp"
 #include "common/file/ofstream_list.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/logger.hpp"
-#include "common/exception/not_implemented_exception.hpp"
-#include "common/exception/out_of_range_exception.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
 #include "resolve_hits/file/parse_domain_hits_table.hpp"
 #include "resolve_hits/file/parse_hmmer_out.hpp"

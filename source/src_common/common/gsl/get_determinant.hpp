@@ -21,9 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_COMMON_GSL_GET_DETERMINANT_H
 #define _CATH_TOOLS_SOURCE_COMMON_GSL_GET_DETERMINANT_H
 
+#include "common/exception/invalid_argument_exception.hpp"
 #include "common/gsl/gsl_matrix_wrp.hpp"
 #include "common/gsl/gsl_permutation_wrp.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
 
 #include <gsl/gsl_linalg.h>
 #include <gsl/gsl_vector.h>

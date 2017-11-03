@@ -19,6 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "res_pair_dirn.hpp"
+
 #include "common/exception/invalid_argument_exception.hpp"
 
 using namespace cath::common;

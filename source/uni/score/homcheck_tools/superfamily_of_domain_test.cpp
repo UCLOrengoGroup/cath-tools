@@ -20,9 +20,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/runtime_error_exception.hpp"
+#include "common/type_aliases.hpp"
 #include "score/homcheck_tools/superfamily_of_domain.hpp"
 
 using namespace cath::common;

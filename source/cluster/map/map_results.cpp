@@ -31,8 +31,8 @@
 #include "cluster/new_cluster_data.hpp"
 #include "cluster/old_cluster_data.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "common/file/open_fstream.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/file/open_fstream.hpp"
 
 #include <fstream>
 

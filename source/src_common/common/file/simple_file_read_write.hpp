@@ -31,9 +31,9 @@
 
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/cpp17/apply.hpp"
+#include "common/exception/out_of_range_exception.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/type_aliases.hpp"
-#include "common/exception/out_of_range_exception.hpp"
 
 #include <fstream>
 

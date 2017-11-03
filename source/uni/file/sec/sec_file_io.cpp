@@ -26,11 +26,11 @@
 
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/lexical_cast_line.hpp"
 #include "common/type_aliases.hpp"
-#include "common/exception/invalid_argument_exception.hpp"
-#include "common/exception/runtime_error_exception.hpp"
 #include "file/sec/sec_file.hpp"
 #include "file/sec/sec_file_record.hpp"
 #include "structure/protein/sec_struc.hpp"

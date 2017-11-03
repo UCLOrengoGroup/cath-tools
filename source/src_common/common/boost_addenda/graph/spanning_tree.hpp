@@ -29,8 +29,8 @@
 #include "common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "common/boost_addenda/range/stable_sort_proj.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "common/type_aliases.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/type_aliases.hpp"
 
 #include <tuple>
 #include <vector>

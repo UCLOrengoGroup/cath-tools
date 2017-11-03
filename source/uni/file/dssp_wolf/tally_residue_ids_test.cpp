@@ -21,8 +21,8 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "biocore/residue_id.hpp"
-#include "common/pair_insertion_operator.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/pair_insertion_operator.hpp"
 #include "file/dssp_wolf/tally_residue_ids.hpp"
 #include "test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"
