@@ -20,7 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "options/options_block/detail_help_options_block.hpp"
 #include "options/options_block/options_block_tester.hpp"
 

@@ -24,7 +24,7 @@
 #include "acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 #include "alignment/alignment.hpp"
 #include "cath_score_align/options/cath_score_align_options.hpp"
-#include "exception/not_implemented_exception.hpp"
+#include "common/exception/not_implemented_exception.hpp"
 #include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"

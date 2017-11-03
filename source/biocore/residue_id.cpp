@@ -23,7 +23,7 @@
 #include <boost/algorithm/cxx11/any_of.hpp>
 
 #include "common/cpp14/cbegin_cend.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 #include <iostream>
 #include <string>

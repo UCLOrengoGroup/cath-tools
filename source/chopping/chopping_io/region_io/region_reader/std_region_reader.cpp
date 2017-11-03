@@ -21,7 +21,7 @@
 #include "std_region_reader.hpp"
 
 #include "chopping/region/region.hpp"
-#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
+#include "common/exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
 #include <iostream> // ***** TEMPORARY *****
 

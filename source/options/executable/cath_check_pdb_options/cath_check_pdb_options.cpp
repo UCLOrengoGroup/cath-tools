@@ -24,7 +24,7 @@
 #include <boost/shared_array.hpp>
 
 #include "common/argc_argv_faker.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 #include <fstream>
 

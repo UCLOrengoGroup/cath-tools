@@ -24,7 +24,7 @@
 #include "cluster/file/cluster_membership_file.hpp"
 #include "cluster/map/map_clusters.hpp"
 #include "cluster/options/spec/clust_mapping_spec.hpp"
-#include "exception/runtime_error_exception.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
 namespace cath { namespace test { } }

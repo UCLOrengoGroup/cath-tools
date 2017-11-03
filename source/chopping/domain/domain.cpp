@@ -27,7 +27,7 @@
 #include "common/algorithm/are_same.hpp"
 #include "common/boost_addenda/range/front.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 #include <string>
 

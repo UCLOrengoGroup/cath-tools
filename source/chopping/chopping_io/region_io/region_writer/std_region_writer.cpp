@@ -20,7 +20,7 @@
 
 #include "std_region_writer.hpp"
 
-#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
+#include "common/exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
 #include <iostream> // ***** TEMPORARY *****
 

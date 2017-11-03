@@ -32,7 +32,7 @@
 #include "common/logger.hpp"
 #include "common/type_aliases.hpp"
 #include "display/options/display_spec.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"

@@ -27,7 +27,7 @@
 
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/front.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "resolve_hits/options/options_block/crh_output_options_block.hpp"
 
 using namespace cath;

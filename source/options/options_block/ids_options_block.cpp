@@ -25,8 +25,8 @@
 #include <boost/program_options.hpp>
 
 #include "common/clone/make_uptr_clone.hpp"
-#include "exception/invalid_argument_exception.hpp"
-#include "exception/out_of_range_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
+#include "common/exception/out_of_range_exception.hpp"
 
 #include <iostream>
 

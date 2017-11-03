@@ -28,7 +28,7 @@
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 using namespace cath::common::literals;
 

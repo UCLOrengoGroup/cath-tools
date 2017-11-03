@@ -22,7 +22,7 @@
 
 #include <boost/format.hpp>
 
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 using namespace cath::common;
 using namespace cath::rslv;

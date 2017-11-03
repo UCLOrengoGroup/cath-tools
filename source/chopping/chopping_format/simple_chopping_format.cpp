@@ -25,8 +25,8 @@
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/debug_numeric_cast.hpp"
-#include "exception/invalid_argument_exception.hpp"
-#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
+#include "common/exception/invalid_argument_exception.hpp"
+#include "common/exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
 #include <iostream> // ***** TEMPORARY *****
 

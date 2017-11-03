@@ -28,7 +28,7 @@
 #include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"

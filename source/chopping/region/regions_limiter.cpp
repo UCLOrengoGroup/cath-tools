@@ -31,7 +31,7 @@
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/optional/make_optional_if.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::chop;

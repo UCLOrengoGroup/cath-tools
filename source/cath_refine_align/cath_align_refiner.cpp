@@ -30,7 +30,7 @@
 #include "alignment/residue_score/residue_scorer.hpp"
 #include "cath_refine_align/options/cath_refine_align_options.hpp"
 #include "chopping/region/region.hpp"
-#include "exception/not_implemented_exception.hpp"
+#include "common/exception/not_implemented_exception.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"

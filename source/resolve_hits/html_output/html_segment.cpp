@@ -25,7 +25,7 @@
 #include <boost/range/adaptor/transformed.hpp>
 
 #include "common/debug_numeric_cast.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 #include <string>
 

@@ -23,7 +23,7 @@
 #include <boost/utility/string_ref.hpp>
 
 #include "common/cpp14/cbegin_cend.hpp"
-#include "exception/out_of_range_exception.hpp"
+#include "common/exception/out_of_range_exception.hpp"
 
 #include <regex>
 

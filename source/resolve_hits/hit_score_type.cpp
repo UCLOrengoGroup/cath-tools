@@ -20,7 +20,7 @@
 
 #include "hit_score_type.hpp"
 
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 using std::ostream;
 using std::string;

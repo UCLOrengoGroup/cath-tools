@@ -22,7 +22,7 @@
 
 #include "chopping/domain/domain.hpp"
 #include "common/clone/make_uptr_clone.hpp"
-#include "exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
+#include "common/exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
 #include <iostream> // ***** TEMPORARY *****
 

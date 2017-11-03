@@ -28,7 +28,7 @@
 #include "common/file/find_file.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/optional/make_optional_if.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "options/executable/env_var_option_name_handler.hpp"
 #include "options/options_block/misc_help_version_options_block.hpp"
 

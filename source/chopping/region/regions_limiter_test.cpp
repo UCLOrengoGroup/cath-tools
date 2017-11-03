@@ -23,7 +23,7 @@
 #include "biocore/residue_id.hpp"
 #include "chopping/region/region.hpp"
 #include "chopping/region/regions_limiter.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::chop;

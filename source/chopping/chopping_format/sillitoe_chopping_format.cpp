@@ -25,7 +25,7 @@
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/debug_numeric_cast.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 #include <cctype>
 

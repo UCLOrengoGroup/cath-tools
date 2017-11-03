@@ -20,7 +20,7 @@
 
 #include "residue_location.hpp"
 
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "structure/structure_type_aliases.hpp"
 
 using namespace cath;

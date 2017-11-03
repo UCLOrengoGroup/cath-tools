@@ -23,7 +23,7 @@
 
 #include <boost/operators.hpp>
 
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "seq/seq_type_aliases.hpp"
 
 #include <iosfwd>

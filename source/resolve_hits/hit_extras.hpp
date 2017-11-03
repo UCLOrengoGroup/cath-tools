@@ -27,7 +27,7 @@
 
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/cpp17/invoke.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 #include <type_traits>
 #include <vector>

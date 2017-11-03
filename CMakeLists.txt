@@ -28,8 +28,11 @@ execute_process(
 )
 
 configure_file( "source/cath_tools_git_version.hpp.in"
-                "source/cath_tools_git_version.hpp"
+                "source/cath_tools_git_version/cath_tools_git_version.hpp"
                 )
+
+include_directories( $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/source/cath_tools_git_version> )
+
 
 SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/" )
 IF ( ${CMAKE_VERSION} VERSION_GREATER "3.5.0" )
@@ -116,14 +119,12 @@ endif()
 include_directories( SYSTEM ${Boost_INCLUDE_DIR} )
 include_directories( SYSTEM ${GSL_INCLUDE_DIR}   )
 include_directories( SYSTEM rapidjson/include    )
-include_directories( source                      )
 
 # Define GSL_RANGE_CHECK_OFF in non-debug builds
 add_compile_options( $<$<NOT:$<CONFIG:DEBUG>>:-DGSL_RANGE_CHECK_OFF> )
 
 add_definitions( -DRAPIDJSON_HAS_STDSTRING=1 )
 
-SET( CMAKE_INCLUDE_CURRENT_DIR      ON )
 SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY .. )
 
 if ( DEFINED ENV{BUILD_REVISION_NUMBER} )
@@ -133,4 +134,4 @@ if ( DEFINED ENV{BUILD_BRANCH_NAME} )
   add_definitions( -DBUILD_BRANCH_NAME=$ENV{BUILD_BRANCH_NAME} )
 endif ( DEFINED ENV{BUILD_BRANCH_NAME} )
 
-add_subdirectory   ( source )
+add_subdirectory( source )

@@ -22,7 +22,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 // #include "common/file/spew.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "resolve_hits/full_hit.hpp"
 #include "resolve_hits/full_hit_list.hpp"
 #include "resolve_hits/html_output/resolve_hits_html_outputter.hpp"

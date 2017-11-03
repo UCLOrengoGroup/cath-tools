@@ -21,7 +21,7 @@
 #include "write_json_hits_processor.hpp"
 
 #include "common/clone/make_uptr_clone.hpp"
-#include "exception/out_of_range_exception.hpp"
+#include "common/exception/out_of_range_exception.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
 #include "resolve_hits/full_hit_list_fns.hpp"
 #include "resolve_hits/resolve/hit_resolver.hpp"

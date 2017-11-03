@@ -24,7 +24,7 @@
 #include <boost/core/ignore_unused.hpp>
 
 #include "common/boost_addenda/range/back.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "resolve_hits/algo/scored_arch_proxy.hpp"
 #include "resolve_hits/hit_arch.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"

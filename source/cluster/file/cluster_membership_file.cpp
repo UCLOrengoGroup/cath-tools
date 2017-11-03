@@ -30,7 +30,7 @@
 #include "common/file/open_fstream.hpp"
 #include "common/optional/make_optional_if.hpp"
 #include "common/string/string_parse_tools.hpp"
-#include "exception/runtime_error_exception.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 #include "seq/seq_seg_run_parser.hpp"
 
 #include <fstream>

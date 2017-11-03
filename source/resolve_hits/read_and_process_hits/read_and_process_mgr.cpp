@@ -23,7 +23,7 @@
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/boost_addenda/range/min_proj_element.hpp"
 #include "common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
 #include "resolve_hits/options/spec/crh_input_spec.hpp"
 #include "resolve_hits/options/spec/crh_spec.hpp"

@@ -28,7 +28,7 @@
 
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/adaptor/adjacented.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 #include <iostream>
 

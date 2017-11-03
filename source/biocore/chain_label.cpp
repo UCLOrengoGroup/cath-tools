@@ -22,7 +22,7 @@
 
 #include <boost/algorithm/string/classification.hpp>
 
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 using namespace boost::algorithm;
 using namespace cath;

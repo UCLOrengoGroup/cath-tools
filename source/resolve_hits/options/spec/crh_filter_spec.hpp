@@ -27,7 +27,7 @@
 
 #include "common/algorithm/contains.hpp"
 #include "common/type_aliases.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "resolve_hits/hit_score_type.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 

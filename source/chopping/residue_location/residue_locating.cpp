@@ -20,8 +20,8 @@
 
 #include "residue_locating.hpp"
 
-#include "exception/invalid_argument_exception.hpp"
-#include "exception/out_of_range_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
+#include "common/exception/out_of_range_exception.hpp"
 
 using namespace cath::chop;
 using namespace cath::common;

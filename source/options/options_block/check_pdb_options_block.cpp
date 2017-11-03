@@ -23,7 +23,7 @@
 #include <boost/optional.hpp>
 
 #include "common/clone/make_uptr_clone.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 
 using namespace cath;
 using namespace cath::common;

@@ -23,7 +23,7 @@
 
 #include <boost/spirit/include/qi.hpp>
 
-#include "exception/runtime_error_exception.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 #include "seq/seq_seg_run.hpp"
 #include "seq/seq_type_aliases.hpp"
 

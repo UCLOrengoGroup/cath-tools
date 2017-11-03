@@ -30,7 +30,7 @@
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/program_options/validator.hpp"
-#include "exception/runtime_error_exception.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 
 #include <string>
 

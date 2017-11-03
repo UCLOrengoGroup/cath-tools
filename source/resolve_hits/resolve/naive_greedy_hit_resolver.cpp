@@ -22,7 +22,7 @@
 
 #include "common/algorithm/sort_uniq_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
-#include "exception/invalid_argument_exception.hpp"
+#include "common/exception/invalid_argument_exception.hpp"
 #include "resolve_hits/algo/scored_arch_proxy_fn.hpp"
 #include "resolve_hits/scored_hit_arch.hpp"
 

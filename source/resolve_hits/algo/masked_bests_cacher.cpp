@@ -29,7 +29,7 @@
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
-#include "exception/out_of_range_exception.hpp"
+#include "common/exception/out_of_range_exception.hpp"
 #include "resolve_hits/algo/discont_hits_index_by_start.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
 

@@ -30,7 +30,6 @@
 #include "structure/protein/residue.hpp"
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
-#include "test/global_test_constants.hpp"
 
 using namespace cath::common;
 using namespace cath::scan;

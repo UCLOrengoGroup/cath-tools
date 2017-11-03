@@ -26,8 +26,8 @@
 
 #include "common/boost_addenda/make_string_ref.hpp"
 #include "common/string/string_parse_tools.hpp"
-#include "exception/out_of_range_exception.hpp"
-#include "exception/runtime_error_exception.hpp"
+#include "common/exception/out_of_range_exception.hpp"
+#include "common/exception/runtime_error_exception.hpp"
 #include "resolve_hits/file/cath_id_score_category.hpp"
 #include "resolve_hits/file/detail/hmmer_aln.hpp"
 #include "resolve_hits/file/hmmer_format.hpp"

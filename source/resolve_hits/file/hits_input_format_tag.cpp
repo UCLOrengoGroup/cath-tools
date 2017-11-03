@@ -23,7 +23,7 @@
 #include <boost/algorithm/string/case_conv.hpp>
 
 #include "common/program_options/validator.hpp"
-#include "exception/out_of_range_exception.hpp"
+#include "common/exception/out_of_range_exception.hpp"
 
 #include <map>
 
