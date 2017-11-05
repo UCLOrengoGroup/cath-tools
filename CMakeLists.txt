@@ -103,15 +103,19 @@ add_compile_options(
 	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,7.0.0>>:-Wrestrict>
 )
 
-# Append debug compiler flags with setting of _GLIBCXX_DEBUG
-add_compile_options($<$<CONFIG:DEBUG>:-D_GLIBCXX_DEBUG>)
+# Append _GLIBCXX_DEBUG to GCC debug build to enable the debug mode of libstdc++
+#
+# ("By default, error messages are formatted to fit on lines of about 78 characters.
+#   The environment variable GLIBCXX_DEBUG_MESSAGE_LENGTH can be used to request a different length."
+#  Could consider ~150)
+add_compile_options( $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:DEBUG>>:-D_GLIBCXX_DEBUG> )
 
 # *** TEMPORARY *** Prevent clang v3.6.0 from failing on Boost Concept checks due to unused local typedefs 
 add_compile_options($<$<AND:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_VERSION:3.6.0>>:-Wno-unused-local-typedef>)
 
 # Add colour diagnostics when using Clang with Ninja
 if ( CMAKE_GENERATOR STREQUAL "Ninja" )
-	add_compile_options($<$<CXX_COMPILER_ID:Clang>:-fcolor-diagnostics>)
+	add_compile_options( $<$<CXX_COMPILER_ID:Clang>:-fcolor-diagnostics> )
 endif()
 
 # Add handling of includes and library links
