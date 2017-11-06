@@ -48,7 +48,7 @@ unique_ptr<options_block> align_regions_options_block::do_clone() const {
 
 /// \brief Define this block's name (used as a header for the block in the usage)
 string align_regions_options_block::do_get_block_name() const {
-	return "Segment overlap/removal";
+	return "Regions";
 }
 
 /// \brief Add this block's options to the provided options_description
