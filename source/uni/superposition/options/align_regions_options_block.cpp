@@ -53,7 +53,7 @@ string align_regions_options_block::do_get_block_name() const {
 
 /// \brief Add this block's options to the provided options_description
 void align_regions_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
-                                                                      ) {
+                                                                        ) {
 	const string regions_varname { "<regions>" };
 
 	const auto align_regions_notifier = [&] (const domain_vec &x) { align_domains = x; };
@@ -74,7 +74,7 @@ void align_regions_options_block::do_add_visible_options_to_description(options_
 /// \brief Generate a description of any problem that makes the specified align_regions_options_block invalid
 ///        or none otherwise
 str_opt align_regions_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
-                                                     ) const {
+                                                       ) const {
 	return none;
 }
 
