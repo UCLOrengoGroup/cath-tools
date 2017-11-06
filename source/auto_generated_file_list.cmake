@@ -182,6 +182,11 @@ set(
 )
 
 set(
+	NORMSOURCES_EXECUTABLES_CATH_EXTRACT_PDB
+		executables/cath_extract_pdb/cath_extract_pdb.cpp
+)
+
+set(
 	NORMSOURCES_EXECUTABLES_CATH_MAP_CLUSTERS
 		executables/cath_map_clusters/cath_map_clusters.cpp
 )
@@ -220,6 +225,7 @@ set(
 	NORMSOURCES_EXECUTABLES
 		${NORMSOURCES_EXECUTABLES_CATH_ASSIGN_DOMAINS}
 		${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
+		${NORMSOURCES_EXECUTABLES_CATH_EXTRACT_PDB}
 		${NORMSOURCES_EXECUTABLES_CATH_MAP_CLUSTERS}
 		${NORMSOURCES_EXECUTABLES_CATH_REFINE_ALIGN}
 		${NORMSOURCES_EXECUTABLES_CATH_RESOLVE_HITS}
@@ -235,8 +241,14 @@ set(
 )
 
 set(
+	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_EXTRACT_PDB_OPTIONS
+		options/executable/cath_extract_pdb_options/cath_extract_pdb_options.cpp
+)
+
+set(
 	NORMSOURCES_OPTIONS_EXECUTABLE
 		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS}
+		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_EXTRACT_PDB_OPTIONS}
 		options/executable/env_var_option_name_handler.cpp
 		options/executable/executable_options.cpp
 )
@@ -247,6 +259,7 @@ set(
 		options/options_block/alignment_input_spec.cpp
 		options/options_block/check_pdb_options_block.cpp
 		options/options_block/detail_help_options_block.cpp
+		options/options_block/extract_pdb_options_block.cpp
 		options/options_block/ids_options_block.cpp
 		options/options_block/misc_help_version_options_block.cpp
 		options/options_block/options_block.cpp
@@ -1369,6 +1382,7 @@ set(
 		options/options_block/alignment_input_options_block_test.cpp
 		options/options_block/check_pdb_options_block_test.cpp
 		options/options_block/detail_help_options_block_test.cpp
+		options/options_block/extract_pdb_options_block_test.cpp
 		options/options_block/misc_help_version_options_block_test.cpp
 		options/options_block/options_block_test.cpp
 		options/options_block/pdb_input_options_block_test.cpp

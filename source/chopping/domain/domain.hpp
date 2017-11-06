@@ -70,6 +70,8 @@ namespace cath {
 			const_iterator end() const;
 		};
 
+		region_vec_opt get_regions_opt(const domain_opt &);
+
 		bool operator==(const domain &,
 		                const domain &);
 

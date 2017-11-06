@@ -28,6 +28,7 @@
 #include "common/boost_addenda/range/front.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/optional/make_optional_if.hpp"
 
 #include <string>
 
@@ -113,6 +114,24 @@ domain::const_iterator domain::begin() const {
 /// \brief TODOCUMENT
 domain::const_iterator domain::end() const {
 	return common::cend( segments );
+}
+
+/// \brief Get any regions from the specified optional domain or none if none
+///
+/// \relates domain
+///
+/// \relatesalso region
+region_vec_opt cath::chop::get_regions_opt(const domain_opt &arg_domain_opt ///< The optional domain from which any regions should be extracted
+                                           ) {
+	return make_optional_if_fn(
+		static_cast<bool>( arg_domain_opt ),
+		[&] {
+			return region_vec{
+				common::cbegin( *arg_domain_opt ),
+				common::cend  ( *arg_domain_opt ),
+			};
+		}
+	);
 }
 
 /// \brief Return whether the two specified domains are identical

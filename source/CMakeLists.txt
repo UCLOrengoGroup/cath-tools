@@ -164,12 +164,12 @@ IF ( BUILD_EXTRA_CATH_TESTS )
 	add_executable( mod-test-resolve-hits $<TARGET_OBJECTS:testsrcs_resolve_hits> ${TESTSOURCES_EXECUTABLES_BUILD_TEST} )
 	add_executable( mod-test-seq          $<TARGET_OBJECTS:testsrcs_seq>          ${TESTSOURCES_EXECUTABLES_BUILD_TEST} )
 
-	target_link_libraries( mod-test-biocore      PRIVATE ct_test                                                                 ct_biocore Boost::filesystem                                             Boost::unit_test_framework                   )
-	target_link_libraries( mod-test-chopping     PRIVATE ct_test ct_chopping                                                     ct_biocore                   Boost::program_options                      Boost::unit_test_framework                   )
-	target_link_libraries( mod-test-cluster      PRIVATE ct_test ct_cluster      ct_seq ct_chopping                   ct_options ct_biocore                                                               Boost::unit_test_framework                   )
-	target_link_libraries( mod-test-common       PRIVATE ct_test ct_common                                                                  Boost::filesystem                        Boost::serialization Boost::unit_test_framework ${GSL_LIB_SUFFIX} )
-	target_link_libraries( mod-test-resolve-hits PRIVATE ct_test ct_resolve_hits ct_seq ct_chopping ct_display_colour ct_options ct_biocore Boost::filesystem                                             Boost::unit_test_framework                   )
-	target_link_libraries( mod-test-seq          PRIVATE ct_test                 ct_seq                                          ct_biocore                                                               Boost::unit_test_framework                   )
+	target_link_libraries( mod-test-biocore      PRIVATE ct_test                                                                            ct_biocore Boost::filesystem                                             Boost::unit_test_framework                   )
+	target_link_libraries( mod-test-chopping     PRIVATE ct_test ct_chopping                                                                ct_biocore                   Boost::program_options                      Boost::unit_test_framework                   )
+	target_link_libraries( mod-test-cluster      PRIVATE ct_test ct_cluster      ct_seq ct_options ct_chopping                              ct_biocore                                                               Boost::unit_test_framework                   )
+	target_link_libraries( mod-test-common       PRIVATE ct_test ct_common                                                                             Boost::filesystem                        Boost::serialization Boost::unit_test_framework ${GSL_LIB_SUFFIX} )
+	target_link_libraries( mod-test-resolve-hits PRIVATE ct_test ct_resolve_hits ct_seq ct_chopping ct_options ct_display_colour ct_options ct_biocore Boost::filesystem                                             Boost::unit_test_framework                   )
+	target_link_libraries( mod-test-seq          PRIVATE ct_test                 ct_seq ct_options ct_chopping                              ct_biocore                                                               Boost::unit_test_framework                   )
 
 ENDIF()
 
@@ -180,11 +180,13 @@ option (BUILD_EXTRA_CATH_TOOLS "BUILD_EXTRA_CATH_TOOLS" OFF )
 
 IF ( BUILD_EXTRA_CATH_TOOLS )
 
-	add_executable( snap-judgement ${NORMSOURCES_EXECUTABLES_SNAP_JUDGEMENT} )
-	add_executable( check-pdb      ${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB} )
+	add_executable( cath-extract-pdb ${NORMSOURCES_EXECUTABLES_CATH_EXTRACT_PDB} )
+	add_executable( check-pdb        ${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}   )
+	add_executable( snap-judgement   ${NORMSOURCES_EXECUTABLES_SNAP_JUDGEMENT}   )
 
-	target_link_libraries( check-pdb      PRIVATE                   ct_remain ct_biocore ct_chopping ct_display_colour ct_options Boost::filesystem Boost::iostreams Boost::serialization ${GSL_LIB_SUFFIX} )
-	target_link_libraries( snap-judgement PRIVATE ct_cath_superpose ct_remain ct_biocore ct_chopping ct_display_colour ct_options                   Boost::iostreams Boost::serialization ${GSL_LIB_SUFFIX} )
+	target_link_libraries( cath-extract-pdb PRIVATE                   ct_remain ct_biocore ct_chopping ct_display_colour ct_options                                    Boost::iostreams Boost::serialization ${GSL_LIB_SUFFIX} )
+	target_link_libraries( check-pdb        PRIVATE                   ct_remain ct_biocore ct_chopping ct_display_colour ct_options                  Boost::filesystem Boost::iostreams Boost::serialization ${GSL_LIB_SUFFIX} )
+	target_link_libraries( snap-judgement   PRIVATE ct_cath_superpose ct_remain ct_biocore ct_chopping ct_display_colour ct_options                                    Boost::iostreams Boost::serialization ${GSL_LIB_SUFFIX} )
 
 ENDIF()
 
