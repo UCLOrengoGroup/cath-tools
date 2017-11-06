@@ -22,6 +22,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
+#include "chopping/region/region.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
@@ -30,20 +31,24 @@
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "src_common/common/file/temp_file.hpp"
 #include "test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
+#include "test/predicate/files_equal.hpp"
 
 #include <vector>
 
 using namespace boost::algorithm;
 using namespace cath;
+using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace std;
 
 using boost::algorithm::icontains;
 using boost::algorithm::join;
+using boost::filesystem::path;
 using boost::irange;
 
 namespace cath {
@@ -273,6 +278,22 @@ END
 
 	BOOST_CHECK_EQUAL( the_pdb.get_num_residues(), 2  );
 	BOOST_CHECK_EQUAL( test_ss.str(),              "" );
+}
+
+BOOST_AUTO_TEST_CASE(writes_partial_pdb_correctly) {
+	const auto parsed_pdb = read_pdb_file( global_test_constants::EXAMPLE_A_PDB_FILENAME() );
+
+	const temp_file temp_test{ ".pdb_test_output.%%%%-%%%%-%%%%-%%%%" };
+	const path temp_test_file = get_filename( temp_test );
+
+	write_pdb_file(
+		temp_test_file,
+		parsed_pdb,
+		{ { make_simple_region( 'A', 1321, 1324 ) } }
+	);
+
+	const path expected{ TEST_EXAMPLE_PDBS_DATA_DIR() / "1c0pA01.1321-1324:A" };
+	BOOST_CHECK_FILES_EQUAL( temp_test_file, expected );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

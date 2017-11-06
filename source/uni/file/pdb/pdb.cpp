@@ -27,10 +27,13 @@
 #include <boost/log/trivial.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/binary_search.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 
+#include "biocore/residue_id.hpp"
+#include "chopping/region/region.hpp"
 #include "common/algorithm/copy_build.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
@@ -55,6 +58,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <tuple>
 
 using namespace boost::log;
 using namespace boost::math::constants;
@@ -65,6 +69,7 @@ using namespace cath::file;
 using namespace cath::geom;
 
 using boost::adaptors::filtered;
+using boost::adaptors::reversed;
 using boost::adaptors::transformed;
 using boost::algorithm::all;
 using boost::algorithm::any_of;
@@ -76,12 +81,14 @@ using boost::lexical_cast;
 using boost::make_optional;
 using boost::none;
 using boost::numeric_cast;
+using boost::optional;
 using boost::range::binary_search;
 using boost::range::count_if;
 using std::get;
 using std::ifstream;
 using std::istream;
 using std::make_pair;
+using std::make_tuple;
 using std::ofstream;
 using std::ostream;
 using std::ostringstream;
@@ -91,6 +98,7 @@ using std::set;
 using std::setw;
 using std::string;
 using std::stringstream;
+using std::tuple;
 using std::vector;
 
 const string pdb::PDB_RECORD_STRING_TER ( "TER   " );
@@ -130,7 +138,7 @@ void pdb::append_to_file(const path &arg_filename ///< TODOCUMENT
 	// Try here to catch any I/O exceptions
 	try {
 		write_pdb_file(pdb_appstream, *this);
-	
+
 		// Close the file
 		pdb_appstream.close();
 	}
@@ -611,15 +619,15 @@ pdb_list cath::file::read_end_separated_pdb_files(istream &arg_in_stream ///< TO
 ///        restricted to the specified regions and written in the specified mode
 ///
 /// \relates pdb
-string cath::file::to_pdb_file_string(const pdb             &arg_pdb,             ///< The pdb to describe
-                                      const regions_limiter &arg_regions_limiter, ///< Optional specification of regions to which the written records should be restricted
-                                      const pdb_write_mode  &arg_pdb_write_mode   ///< Whether this is the only/last part of the PDB file
+string cath::file::to_pdb_file_string(const pdb            &arg_pdb,           ///< The pdb to describe
+                                      const region_vec_opt &arg_regions,       ///< Optional specification of regions to which the written records should be restricted
+                                      const pdb_write_mode &arg_pdb_write_mode ///< Whether this is the only/last part of the PDB file
                                       ) {
 	ostringstream output_ss;
 	write_pdb_file(
 		output_ss,
 		arg_pdb,
-		arg_regions_limiter,
+		arg_regions,
 		arg_pdb_write_mode
 	);
 	return output_ss.str();
@@ -629,41 +637,72 @@ string cath::file::to_pdb_file_string(const pdb             &arg_pdb,           
 ///        restricted to the specified regions and written in the specified mode
 ///
 /// \relates pdb
-ostream & cath::file::write_pdb_file(ostream               &arg_os,              ///< The ostream into which the PDB file should be inserted
-                                     const pdb             &arg_pdb,             ///< The pdb to describe
-                                     const regions_limiter &arg_regions_limiter, ///< Optional specification of regions to which the written records should be restricted
-                                     const pdb_write_mode  &arg_pdb_write_mode   ///< Whether this is the only/last part of the PDB file
+ostream & cath::file::write_pdb_file(ostream              &arg_os,            ///< The ostream into which the PDB file should be inserted
+                                     const pdb            &arg_pdb,           ///< The pdb to describe
+                                     const region_vec_opt &arg_regions,       ///< Optional specification of regions to which the written records should be restricted
+                                     const pdb_write_mode &arg_pdb_write_mode ///< Whether this is the only/last part of the PDB file
                                      ) {
-	regions_limiter the_regions_limiter{ arg_regions_limiter };
-	const auto &num_residues = arg_pdb.get_num_residues();
-//	size_t atom_ctr = 1;
-	for (const size_t &residue_ctr : indices( num_residues ) ) {
-		const pdb_residue &the_residue = arg_pdb.get_residue_of_index__backbone_unchecked( residue_ctr );
-		if ( the_regions_limiter.update_residue_is_included( the_residue.get_residue_id() ) ) {
-			write_pdb_file_entry( arg_os, the_residue );
-		}
+	// Use a regions_limiter for extracting the correct regions
+	regions_limiter the_regions_limiter{ arg_regions };
 
-		const auto &the_chain_label = get_chain_label( the_residue );
+	// Prepare a vector of the pdb_atoms to output (each stored alongside its residue_id)
+	//
+	// In principle, this could be better done with lazy evaluation but that requires an adaptor like range-v3's view::join
+	const res_id_pdb_atom_pair_vec main_atoms = [&] {
+		res_id_pdb_atom_pair_vec the_atoms;
 
-		if ( residue_ctr + 1 == num_residues
-		     || get_chain_label( arg_pdb.get_residue_of_index__backbone_unchecked( residue_ctr + 1 ) ) != the_chain_label
-		     ) {
-			const auto last_atom = the_residue.empty() ? none : make_optional( back( the_residue ) );
-			const string residue_name_with_insert_or_space = make_residue_name_string_with_insert_or_space(
-				get_residue_name( the_residue )
-			);
-			arg_os << pdb::PDB_RECORD_STRING_TER
-				<< right
-				<< setw( 5 ) << ( last_atom ? ( last_atom->get_atom_serial() + 1u ) : 0u )
-				<< "      "
-				<<              ( last_atom ?   last_atom->get_amino_acid() : amino_acid{ 'X' } )
-				<< " "
-				<< the_chain_label
-				<< setw( 5 ) << residue_name_with_insert_or_space
-				<< "                                                     \n";
+		// Loop over the residues
+		for (const size_t &residue_ctr : indices( arg_pdb.get_num_residues() ) ) {
+			const pdb_residue &the_residue = arg_pdb.get_residue_of_index__backbone_unchecked( residue_ctr );
+			const residue_id  &the_res_id  = the_residue.get_residue_id();
+
+			// If the residue is included, copy over its atoms
+			if ( the_regions_limiter.update_residue_is_included( the_res_id ) ) {
+				for (const pdb_atom &the_atom : the_residue) {
+					the_atoms.emplace_back( the_res_id, the_atom );
+				}
+			}
 		}
+		return the_atoms;
+	} ();
+
+	// Grab the details of the last residue_id/pdb_atom pair or make one up if there aren't any
+	const optional<tuple<residue_id, size_t, amino_acid>> last_atom_details =
+		( ! main_atoms.empty() )
+		? make_tuple(
+			back( main_atoms ).first,
+			static_cast<size_t>( back( main_atoms ).second.get_atom_serial() ),
+			back( main_atoms ).second.get_amino_acid()
+		)
+		: make_tuple(
+			make_residue_id( ' ', 1 ),
+			0_z,
+			amino_acid{ 'X' }
+		) ;
+
+
+	// Write all these pre-TER atom records
+	for (const res_id_pdb_atom_pair &main_atom : main_atoms) {
+		write_pdb_file_entry( arg_os, main_atom.first, main_atom.second );
+		arg_os << "\n";
 	}
 
+	// Write out the TER record
+	const auto &the_chain_label = get<0>( *last_atom_details ).get_chain_label();
+	const string residue_name_with_insert_or_space = make_residue_name_string_with_insert_or_space(
+		get<0>( *last_atom_details ).get_residue_name()
+	);
+	arg_os << pdb::PDB_RECORD_STRING_TER
+		<< right
+		<< setw( 5 ) << ( get<1>( *last_atom_details ) + 1 )
+		<< "      "
+		<<                get<2>( *last_atom_details )
+		<< " "
+		<< the_chain_label
+		<< setw( 5 ) << residue_name_with_insert_or_space
+		<< "                                                     \n";
+
+	// Write out any post-TER records
 	for (const pdb_residue &the_residue : arg_pdb.get_post_ter_residues() ) {
 		write_pdb_file_entry( arg_os, the_residue );
 	}
@@ -673,6 +712,13 @@ ostream & cath::file::write_pdb_file(ostream               &arg_os,             
 		arg_os << "END   \n";
 	}
 
+	// Warn if the regions_limiter didn't see all the regions it hoped to
+	const auto warn_str = warn_str_if_specified_regions_remain_unseen( the_regions_limiter );
+	if ( warn_str ) {
+		BOOST_LOG_TRIVIAL( warning ) << *warn_str;
+	}
+
+	// Return the ostream
 	return arg_os;
 }
 
@@ -680,17 +726,17 @@ ostream & cath::file::write_pdb_file(ostream               &arg_os,             
 ///        restricted to the specified regions and written in the specified mode
 ///
 /// \relates pdb
-void cath::file::write_pdb_file(const path            &arg_filename,        ///< The file to which the PDB file should be written
-                                const pdb             &arg_pdb,             ///< The pdb to describe
-                                const regions_limiter &arg_regions_limiter, ///< Optional specification of regions to which the written records should be restricted
-                                const pdb_write_mode  &arg_pdb_write_mode   ///< Whether this is the only/last part of the PDB file
+void cath::file::write_pdb_file(const path           &arg_filename,      ///< The file to which the PDB file should be written
+                                const pdb            &arg_pdb,           ///< The pdb to describe
+                                const region_vec_opt &arg_regions,       ///< Optional specification of regions to which the written records should be restricted
+                                const pdb_write_mode &arg_pdb_write_mode ///< Whether this is the only/last part of the PDB file
                                 ) {
 	ofstream out_ofstream;
 	open_ofstream( out_ofstream, arg_filename );
 	write_pdb_file(
 		out_ofstream,
 		arg_pdb,
-		arg_regions_limiter,
+		arg_regions,
 		arg_pdb_write_mode
 	);
 	out_ofstream.close();

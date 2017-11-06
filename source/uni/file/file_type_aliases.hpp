@@ -93,6 +93,13 @@ namespace cath {
 		using hmmer_scores_entry_vec = std::vector<hmmer_scores_entry>;
 
 
+		/// \brief Type alias for pair of residue_id and pdb_atom
+		using res_id_pdb_atom_pair     = std::pair<residue_id, pdb_atom>;
+
+		/// \brief Type alias for a vector of res_id_pdb_atom_pair values
+		using res_id_pdb_atom_pair_vec = std::vector<res_id_pdb_atom_pair>;
+
+
 		/// \brief Type alias for a reference_wrapper of a const ssap_scores_entry>
 		using ssap_scores_entry_cref     = std::reference_wrapper<const ssap_scores_entry>;
 

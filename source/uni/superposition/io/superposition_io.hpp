@@ -70,7 +70,7 @@ namespace cath {
 		                                               file::pdb,
 		                                               const size_t &,
 		                                               const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                               const chop::regions_limiter & = chop::regions_limiter{},
+		                                               const chop::region_vec_opt & = boost::none,
 		                                               const file::pdb_write_mode & = file::pdb_write_mode::ONLY_OR_LAST_PDB);
 
 		std::ostream & write_superposed_pdbs_to_ostream(std::ostream &,
@@ -78,28 +78,28 @@ namespace cath {
 		                                                const file::pdb_list,
 		                                                const sup_pdbs_script_policy &,
 		                                                const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                                const chop::regions_limiter & = chop::regions_limiter{});
+		                                                const chop::region_vec_opt & = boost::none);
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const boost::filesystem::path &,
 		                                  const file::pdb &,
 		                                  const size_t &,
 		                                  const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                  const chop::regions_limiter & = chop::regions_limiter{});
+		                                  const chop::region_vec_opt & = boost::none);
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const boost::filesystem::path &,
 		                                  const file::pdb_list &,
 		                                  const sup_pdbs_script_policy &,
 		                                  const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                  const chop::regions_limiter & = chop::regions_limiter{});
+		                                  const chop::region_vec_opt & = boost::none);
 
 		void write_superposed_pdb_from_files(const superposition &,
 		                                     const boost::filesystem::path &,
 		                                     const path_vec &,
 		                                     const sup_pdbs_script_policy &,
 		                                     const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                     const chop::regions_limiter & = chop::regions_limiter{});
+		                                     const chop::region_vec_opt & = boost::none);
 
 		superposition superposition_from_ptree(const boost::property_tree::ptree &);
 
