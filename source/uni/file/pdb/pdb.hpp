@@ -121,6 +121,7 @@ namespace cath {
 		pdb read_pdb_file(std::istream &);
 		std::istream & read_pdb_file(std::istream &,
 		                             pdb &);
+		pdb read_pdb(const std::string &);
 		pdb_list read_end_separated_pdb_files(std::istream &);
 
 		std::string to_pdb_file_string(const pdb &,
@@ -134,6 +135,10 @@ namespace cath {
 		                    const pdb &,
 		                    const chop::region_vec_opt & = boost::none,
 		                    const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
+
+		std::string pdb_file_to_string(const pdb &,
+		                               const chop::region_vec_opt & = boost::none,
+		                               const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
 
 		amino_acid_vec get_amino_acid_list(const pdb &);
 

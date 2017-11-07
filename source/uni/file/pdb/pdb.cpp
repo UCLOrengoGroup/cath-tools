@@ -58,6 +58,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <tuple>
 
 using namespace boost::log;
@@ -87,6 +88,7 @@ using boost::range::count_if;
 using std::get;
 using std::ifstream;
 using std::istream;
+using std::istringstream;
 using std::make_pair;
 using std::make_tuple;
 using std::ofstream;
@@ -577,6 +579,15 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 	return input_stream;
 }
 
+/// \brief Parse a pdb from the specified string
+///
+/// \relates pdb
+pdb cath::file::read_pdb(const string &arg_string ///< The string containing the PDB data
+                         ) {
+	istringstream in_ss{ arg_string };
+	return read_pdb_file( in_ss );
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
@@ -740,6 +751,23 @@ void cath::file::write_pdb_file(const path           &arg_filename,      ///< Th
 		arg_pdb_write_mode
 	);
 	out_ofstream.close();
+}
+
+/// \brief Write the specified PDB to a string
+///
+/// \relates pdb
+string cath::file::pdb_file_to_string(const pdb            &arg_pdb,           ///< The pdb to describe
+                                      const region_vec_opt &arg_regions,       ///< Optional specification of regions to which the written records should be restricted
+                                      const pdb_write_mode &arg_pdb_write_mode ///< Whether this is the only/last part of the PDB file
+                                      ) {
+	ostringstream out_ss;
+	write_pdb_file(
+		out_ss,
+		arg_pdb,
+		arg_regions,
+		arg_pdb_write_mode
+	);
+	return out_ss.str();
 }
 
 /// \brief TODOCUMENT

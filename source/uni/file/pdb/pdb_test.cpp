@@ -280,6 +280,44 @@ END
 	BOOST_CHECK_EQUAL( test_ss.str(),              "" );
 }
 
+BOOST_AUTO_TEST_CASE(handles_very_large_temperature_factor_number_a) {
+	// From 2pyi (as of ~April 2017 I think)
+	// Atom 6358 has a very large temperature factor that can overflow the field
+	const string pdb_data = R"(ATOM   6351  N   ILE A 805      15.633  14.745  13.895  1.00 14.96           N  
+ATOM   6352  CA  ILE A 805      15.277  13.957  15.076  1.00 14.96           C  
+ATOM   6353  C   ILE A 805      15.671  12.494  14.877  1.00 14.94           C  
+ATOM   6354  O   ILE A 805      16.311  11.888  15.742  1.00 14.77           O  
+ATOM   6355  CB  ILE A 805      13.774  14.071  15.424  1.00 14.94           C  
+ATOM   6356  CG1 ILE A 805      13.408  15.522  15.764  1.00 15.09           C  
+ATOM   6357  CG2 ILE A 805      13.423  13.123  16.576  1.00 15.41           C  
+ATOM   6358  CD1 ILE A 805      11.913  15.784  15.849  1.001511.0           C  
+TER    6359      ILE A 805                                                      
+END   
+)";
+	BOOST_TEST( pdb_file_to_string( read_pdb( pdb_data ) ) == pdb_data );
+}
+
+BOOST_AUTO_TEST_CASE(handles_very_large_temperature_factor_number_b) {
+	// From 2qlm (as of ~April 2017 I think)
+	// Atom 850 has a very large temperature factor that can overflow the field
+	const string pdb_data = R"(ATOM    850  N   TYR A 113      -2.998  15.281  42.352  1.003106.0           N  
+ATOM    851  CA  TYR A 113      -4.266  15.757  41.788  1.00 31.85           C  
+ATOM    852  C   TYR A 113      -5.440  15.471  42.728  1.00 31.76           C  
+ATOM    853  O   TYR A 113      -6.257  16.360  42.988  1.00 31.50           O  
+ATOM    854  CB  TYR A 113      -4.519  15.135  40.405  1.00 32.84           C  
+ATOM    855  CG  TYR A 113      -5.862  15.488  39.790  1.00 34.00           C  
+ATOM    856  CD1 TYR A 113      -6.090  16.749  39.235  1.00 35.44           C  
+ATOM    857  CD2 TYR A 113      -6.903  14.559  39.763  1.00 35.50           C  
+ATOM    858  CE1 TYR A 113      -7.322  17.078  38.670  1.00 35.89           C  
+ATOM    859  CE2 TYR A 113      -8.143  14.876  39.200  1.00 36.07           C  
+ATOM    860  CZ  TYR A 113      -8.342  16.137  38.654  1.00 35.90           C  
+ATOM    861  OH  TYR A 113      -9.562  16.460  38.098  1.00 36.20           O  
+TER     862      TYR A 113                                                      
+END   
+)";
+	BOOST_TEST( pdb_file_to_string( read_pdb( pdb_data ) ) == pdb_data );
+}
+
 BOOST_AUTO_TEST_CASE(writes_partial_pdb_correctly) {
 	const auto parsed_pdb = read_pdb_file( global_test_constants::EXAMPLE_A_PDB_FILENAME() );
 
