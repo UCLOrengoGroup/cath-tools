@@ -37,6 +37,7 @@
 #include "test/global_test_constants.hpp"
 #include "test/predicate/files_equal.hpp"
 
+#include <regex>
 #include <vector>
 
 using namespace boost::algorithm;
@@ -44,12 +45,16 @@ using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
-using namespace std;
 
 using boost::algorithm::icontains;
 using boost::algorithm::join;
 using boost::filesystem::path;
 using boost::irange;
+using std::istringstream;
+using std::ostringstream;
+using std::regex;
+using std::string;
+using std::stringstream;
 
 namespace cath {
 	namespace test {
@@ -253,7 +258,7 @@ ATOM   1265  O   ASP A 167      -5.724  12.440  90.910  1.00 15.07           O  
 
 	const pdb the_pdb = read_pdb_file( input_ss );
 
-	BOOST_CHECK_EQUAL( the_pdb.get_num_residues(), 3  );
+	BOOST_CHECK_EQUAL( the_pdb.get_num_residues(), 4  );
 	BOOST_CHECK_EQUAL( test_ss.str(),              "" );
 }
 
@@ -278,6 +283,31 @@ END
 
 	BOOST_CHECK_EQUAL( the_pdb.get_num_residues(), 2  );
 	BOOST_CHECK_EQUAL( test_ss.str(),              "" );
+}
+
+BOOST_AUTO_TEST_CASE(handles_clashing_residue_names) {
+	ostringstream test_ss;
+	const log_to_ostream_guard the_guard{ test_ss };
+
+	// From 4tsw (as of ~April 2017 I think)
+	// This has two different residues called 103 on chain B (and the same happens on C, D, E and F)
+	const string pdb_data = R"(ATOM   2241  N   ARG B 103      30.036  20.481  30.582  1.00 67.41           N  
+ATOM   2242  CA  ARG B 103      28.981  21.363  30.110  1.00 69.06           C  
+ATOM   2243  C   ARG B 103      28.668  22.406  31.174  1.00 68.80           C  
+ATOM   2244  O   ARG B 103      29.483  22.638  32.071  1.00 69.14           O  
+ATOM   2245  CB  ARG B 103      27.725  20.557  29.768  1.00 71.39           C  
+ATOM   2246  H   ARG B 103      29.950  20.114  31.491  1.00  0.00           H  
+ATOM   2247  N   GLU B 103      27.492  23.017  31.036  1.00 69.00           N  
+ATOM   2248  CA  GLU B 103      26.946  24.055  31.918  1.00 69.65           C  
+ATOM   2249  C   GLU B 103      26.058  24.961  31.066  1.00 71.54           C  
+ATOM   2250  O   GLU B 103      26.334  25.177  29.877  1.00 72.21           O  
+ATOM   2251  CB  GLU B 103      28.051  24.882  32.590  1.00 67.34           C  
+ATOM   2252  H   GLU B 103      26.896  22.772  30.305  1.00  0.00           H  
+TER    2253      GLU B 103                                                      
+END   
+)";
+	BOOST_TEST( pdb_file_to_string( read_pdb( pdb_data ) ) == pdb_data );
+	BOOST_CHECK( regex_search( test_ss.str(), regex{ R"(found conflicting consecutive entries for residue "B:103")" } ) );
 }
 
 BOOST_AUTO_TEST_CASE(handles_very_large_temperature_factor_number_a) {

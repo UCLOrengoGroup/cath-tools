@@ -512,19 +512,13 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			const pdb_atom   &atom                   = new_entry.second;
 			const char_3_arr  amino_acid_3_char_code = get_amino_acid_code( atom );
 
-			// If there are previously seen atoms that don't match this chain/res_id,
-			// then add those atoms' residue and reset prev_atoms
-			if ( ! prev_atoms.empty() && res_id != prev_res_id ) {
-				add_atoms_and_reset_fn( prev_res_id.get_chain_label() );
-			}
-
 			// Some PDBs (eg 4tsw) may have erroneous consecutive duplicate residues.
 			// Though that's a bit rubbish, it shouldn't break the whole comparison
-			// so if that's detected, just warn and move on (without appending to new_residues).
+			// so if that's detected, just warn and move on.
 			if (
 				is_atom
 				&&
-				! prev_atoms.empty()
+				res_id == prev_res_id
 				&&
 				prev_amino_acid_3_char_code
 				&&
@@ -539,18 +533,25 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 					                             << char_arr_to_string( *prev_amino_acid_3_char_code )
 					                             << "\" and then \""
 					                             << char_arr_to_string( amino_acid_3_char_code )
-					                             << "\") - ignoring latter entry (and any further entries)";
+					                             << "\") - won't warn about any further entries.";
 					prev_warned_conflict = true;
 				}
 			}
-			// Otherwise update the records of previously seen atoms
-			else {
-				if ( is_atom ) {
-					prev_amino_acid_3_char_code = amino_acid_3_char_code;
+
+			// If this is the start of a new residue...
+			const bool new_residue = ( res_id != prev_res_id || amino_acid_3_char_code != prev_amino_acid_3_char_code );
+			if ( new_residue ) {
+				// If there are previously seen atoms then add those atoms' residue and reset prev_atoms
+				if ( ! prev_atoms.empty() ) {
+					add_atoms_and_reset_fn( prev_res_id.get_chain_label() );
 				}
+
+				// Update the records of previously seen atoms
+				prev_amino_acid_3_char_code = amino_acid_3_char_code;
 				prev_res_id = res_id;
-				prev_atoms.push_back( atom );
 			}
+
+			prev_atoms.push_back( atom );
 		}
 		else if ( boost::algorithm::starts_with( line_string, "ENDMDL" ) ) {
 			break;
