@@ -39,7 +39,6 @@ using boost::adaptors::filtered;
 using boost::algorithm::any_of;
 using boost::filesystem::is_empty;
 using boost::filesystem::path;
-using boost::none;
 using boost::numeric_cast;
 
 /// \brief A string to use to separate (valid values and their descriptions) from each other

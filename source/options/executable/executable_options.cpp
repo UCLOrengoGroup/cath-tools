@@ -41,7 +41,6 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace std::literals::string_literals;
 
-using boost::ends_with;
 using boost::filesystem::path;
 using boost::program_options::command_line_parser;
 using boost::program_options::options_description;

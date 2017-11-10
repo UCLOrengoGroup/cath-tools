@@ -42,7 +42,6 @@ using namespace std;
 
 using boost::algorithm::any_of;
 using boost::lexical_cast;
-using boost::property_tree::json_parser::read_json;
 using boost::property_tree::ptree;
 
 /// \brief The identity rotation

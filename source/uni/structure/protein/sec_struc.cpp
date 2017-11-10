@@ -34,8 +34,6 @@ using namespace cath::common;
 using namespace cath::geom;
 using namespace std;
 
-using boost::math::isfinite;
-
 ///// \brief A static black sec_struc object
 //const sec_struc sec_struc::NULL_SEC_STRUC(
 //	0,

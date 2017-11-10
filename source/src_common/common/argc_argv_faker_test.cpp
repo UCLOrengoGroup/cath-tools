@@ -30,8 +30,6 @@ using namespace cath;
 using namespace cath::common;
 using namespace std;
 
-using boost::numeric_cast;
-
 namespace cath {
 	namespace test {
 

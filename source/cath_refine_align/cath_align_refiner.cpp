@@ -58,8 +58,6 @@ using namespace cath::opts;
 using namespace cath::score;
 using namespace std;
 
-using boost::ptr_vector;
-
 /// \brief Perform a cath-refine-align job as specified by the cath_superpose_options argument
 ///
 /// The input and output stream parameters default to cin and cout respectively but are configurable,

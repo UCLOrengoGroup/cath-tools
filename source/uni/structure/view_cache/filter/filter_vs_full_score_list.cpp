@@ -56,7 +56,6 @@ using namespace cath::score;
 
 using boost::accumulate;
 using boost::filesystem::path;
-using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::lower_bound;
 using boost::range::nth_element;

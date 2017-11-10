@@ -41,8 +41,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::algorithm::join;
-using boost::lexical_cast;
-using boost::range::adjacent_find;
 
 /// \brief Tally up the residue records parsed from a PDB file with those parsed from a corresponding DSSP/WOLF file
 ///

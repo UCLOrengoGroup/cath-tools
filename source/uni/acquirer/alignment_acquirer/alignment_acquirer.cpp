@@ -47,8 +47,6 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 
-using boost::irange;
-using std::make_pair;
 using std::make_unique;
 using std::pair;
 using std::unique_ptr;

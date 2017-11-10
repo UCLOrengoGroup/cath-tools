@@ -32,7 +32,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::algorithm::is_upper;
-using boost::numeric_cast;
 
 /// \brief Check that the specified string is valid (current checks: all characters are upper-case letters)
 ///        and throw invalid_argument_exception if not

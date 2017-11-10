@@ -46,7 +46,6 @@ using boost::algorithm::join;
 using boost::algorithm::replace_all_copy;
 using boost::filesystem::path;
 using boost::lexical_cast;
-using boost::range::combine;
 using boost::range::join;
 using gnuplotio::Gnuplot;
 

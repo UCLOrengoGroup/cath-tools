@@ -61,7 +61,6 @@ using boost::accumulate;
 using boost::algorithm::none_of;
 using boost::irange;
 using boost::lexical_cast;
-using boost::none;
 using boost::numeric_cast;
 using boost::range::join;
 

@@ -53,9 +53,7 @@ using namespace cath::opts;
 using namespace cath::sup;
 
 using boost::filesystem::path;
-using boost::lexical_cast;
 using boost::none;
-using boost::ptr_vector;
 using std::string;
 
 /// \brief The name of the program that uses this executable_options

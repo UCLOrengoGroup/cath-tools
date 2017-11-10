@@ -40,10 +40,6 @@ using namespace cath::file;
 using namespace cath::score;
 using namespace std;
 
-using boost::filesystem::directory_iterator;
-using boost::filesystem::path;
-using boost::range::sort;
-
 namespace cath {
 	namespace test {
 

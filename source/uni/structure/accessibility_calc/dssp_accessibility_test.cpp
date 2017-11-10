@@ -39,7 +39,6 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::sec;
 
-using boost::math::constants::pi;
 using boost::numeric_cast;
 
 BOOST_AUTO_TEST_SUITE(dssp_accessibility_test_suite)

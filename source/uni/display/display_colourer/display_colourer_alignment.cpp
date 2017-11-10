@@ -47,7 +47,6 @@ using namespace cath::detail;
 using namespace cath::sup;
 
 using boost::accumulate;
-using boost::lexical_cast;
 using std::string;
 using std::unique_ptr;
 

@@ -48,7 +48,6 @@ using namespace std;
 using namespace std::chrono;
 
 using boost::numeric_cast;
-using boost::range::sort;
 
 namespace cath {
 	namespace test {

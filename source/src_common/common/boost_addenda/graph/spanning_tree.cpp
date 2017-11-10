@@ -42,7 +42,6 @@ using std::make_pair;
 using std::make_tuple;
 using std::max;
 using std::min;
-using std::set;
 using std::vector;
 
 /// \brief Get a simple ( 0 <-> 1 <-> 2 <-> ... <-> (arg_num_items -1) spanning tree)

@@ -65,12 +65,9 @@ using boost::format;
 using boost::irange;
 using boost::make_optional;
 using boost::none;
-using std::get;
 using std::make_pair;
 using std::string;
 using std::tie;
-using std::tuple;
-using std::vector;
 
 string upper_first_lower_rest(const string &arg_string
                               ) {

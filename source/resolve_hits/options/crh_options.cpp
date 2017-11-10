@@ -32,9 +32,7 @@ using boost::none;
 using boost::program_options::positional_options_description;
 using boost::program_options::variables_map;
 using std::map;
-using std::pair;
 using std::string;
-using std::vector;
 
 /// The name of the program that uses this executable_options
 const string crh_options::PROGRAM_NAME("cath-resolve-hits");

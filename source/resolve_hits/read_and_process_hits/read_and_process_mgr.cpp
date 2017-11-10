@@ -41,13 +41,7 @@ using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::rslv::detail;
 
-using boost::size;
-using std::forward;
-using std::future;
-using std::launch;
-using std::move;
 using std::ostream;
-using std::ref;
 using std::string;
 
 constexpr bool read_and_process_mgr::DEFAULT_INPUT_HITS_ARE_GROUPED;

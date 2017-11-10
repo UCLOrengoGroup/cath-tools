@@ -45,7 +45,6 @@ using namespace cath::common::test;
 using namespace std;
 
 using boost::none;
-using boost::numeric_cast;
 
 namespace cath {
 	namespace test {

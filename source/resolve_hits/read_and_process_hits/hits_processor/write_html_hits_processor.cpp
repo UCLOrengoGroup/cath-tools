@@ -32,7 +32,6 @@ using namespace cath::rslv::detail;
 
 using std::move;
 using std::ostream;
-using std::reference_wrapper;
 using std::string;
 using std::unique_ptr;
 

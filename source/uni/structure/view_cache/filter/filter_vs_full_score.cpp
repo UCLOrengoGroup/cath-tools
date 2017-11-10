@@ -41,7 +41,6 @@ using namespace std;
 using boost::algorithm::is_any_of;
 using boost::algorithm::starts_with;
 using boost::algorithm::token_compress_on;
-using boost::lexical_cast;
 
 const string filter_vs_full_score::STRING_PREFIX( "filter_vs_full_score[" );
 const string filter_vs_full_score::STRING_SUFFIX( "]"                     );

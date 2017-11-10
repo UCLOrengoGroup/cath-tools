@@ -61,14 +61,11 @@ using boost::algorithm::is_space;
 using boost::filesystem::path;
 using boost::format;
 using boost::lexical_cast;
-using boost::numeric_cast;
 using boost::string_ref;
 using std::flush;
 using std::max;
 using std::ofstream;
 using std::ostream;
-using std::setfill;
-using std::setw;
 using std::string;
 using std::unique_ptr;
 

@@ -33,9 +33,6 @@ using namespace cath::common;
 using namespace cath::score;
 using namespace std;
 
-using boost::accumulate;
-using boost::range_value;
-
 /// \brief TODOCUMENT
 classn_stat_pair_series::classn_stat_pair_series(doub_doub_pair_vec arg_data, ///< TODOCUMENT
                                                  string             arg_name  ///< TODOCUMENT

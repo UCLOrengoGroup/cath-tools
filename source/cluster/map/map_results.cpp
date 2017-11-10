@@ -43,8 +43,6 @@ using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::filesystem::path;
 using boost::format;
-using boost::lexical_cast;
-using boost::numeric_cast;
 using std::ofstream;
 using std::string;
 

@@ -36,7 +36,6 @@ using namespace cath::index::detail;
 using namespace std;
 
 using boost::algorithm::is_any_of;
-using boost::lexical_cast;
 using boost::numeric_cast;
 
 /// \brief Ctor to fully populate a vcie_match_criteria

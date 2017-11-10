@@ -43,7 +43,6 @@ using namespace cath::align::detail;
 using namespace cath::common;
 using namespace std;
 
-using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
 using boost::range::lower_bound;

@@ -42,15 +42,11 @@ using namespace cath::seq;
 
 using boost::adaptors::filtered;
 using boost::algorithm::any_of;
-using boost::find_if;
 using boost::none;
 using boost::range::stable_partition;
-using boost::sub_range;
-using std::deque;
 using std::less;
 using std::max;
 using std::string;
-using std::vector;
 
 /// \brief Map old clusters to new clusters
 ///

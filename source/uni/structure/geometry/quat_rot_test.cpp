@@ -41,7 +41,6 @@ using namespace cath::geom;
 using namespace gnuplotio;
 using namespace std;
 
-using boost::filesystem::path;
 using boost::geometry::cs::cartesian;
 using boost::geometry::model::point;
 using boost::mpl::contains;

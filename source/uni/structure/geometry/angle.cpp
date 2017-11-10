@@ -39,5 +39,3 @@ using namespace boost::math::constants;
 using namespace cath::common;
 using namespace cath::geom;
 using namespace std;
-
-using boost::lexical_cast;

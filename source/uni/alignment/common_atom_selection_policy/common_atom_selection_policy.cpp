@@ -40,7 +40,6 @@ using namespace cath::geom;
 using namespace std;
 
 using boost::assign::ptr_push_back;
-using boost::lexical_cast;
 using boost::ptr_vector;
 
 /// \brief NVI pass-through method to the concrete class's do_select_common_atoms() which defines how the policy extracts common atoms from a pair of residues

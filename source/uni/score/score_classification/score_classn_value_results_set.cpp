@@ -62,8 +62,6 @@ using namespace cath::score;
 using namespace cath::score::detail;
 using namespace std;
 
-using boost::adaptors::sliced;
-using boost::adaptors::transformed;
 using boost::algorithm::join;
 //using boost::algorithm::join; // ***** TEMPORARY *****
 using boost::filesystem::path;
@@ -75,7 +73,6 @@ using boost::range::find_if;
 using boost::range::includes;
 using boost::range::is_sorted;
 using boost::range::lower_bound;
-using boost::range::set_difference;
 using boost::range::sort;
 
 /// \brief Determine whether the score_classn_value_lists is correctly sorted+uniqued on the names

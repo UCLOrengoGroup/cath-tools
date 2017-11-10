@@ -36,8 +36,6 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace cath;
 
-using boost::filesystem::path;
-using std::cerr;
 using std::string;
 
 BOOST_AUTO_TEST_SUITE(protein_source_file_set_test_suite)

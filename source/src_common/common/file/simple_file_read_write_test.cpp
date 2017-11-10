@@ -32,8 +32,6 @@
 using namespace cath::common;
 using namespace std;
 
-using boost::filesystem::path;
-
 namespace cath {
 	namespace test {
 		using test_tuple_t   = std::tuple<double, size_t, bool, int, string>;

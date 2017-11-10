@@ -33,7 +33,6 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::rslv;
 
-using boost::algorithm::any_of;
 using boost::none;
 using boost::program_options::bool_switch;
 using boost::program_options::options_description;

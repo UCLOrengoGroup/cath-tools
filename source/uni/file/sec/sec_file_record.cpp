@@ -37,8 +37,6 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace std;
 
-using boost::math::isfinite;
-
 /// \brief Check that the unit direction vector has a length vaguely close to one
 void sec_file_record::check_unit_dirn_length() {
 	if ( difference( 1.0, length( get_unit_dirn() ) ) > 0.1 ) {

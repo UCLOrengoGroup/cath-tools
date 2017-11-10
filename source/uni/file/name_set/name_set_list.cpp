@@ -41,7 +41,6 @@ using boost::range::combine;
 using std::min;
 using std::ostream;
 using std::string;
-using std::vector;
 
 /// \brief Build a name_set_list from str_vec and a str_opt_vec
 ///

@@ -35,8 +35,6 @@ using namespace cath::common;
 using namespace cath::score;
 using namespace std; // ***** TEMPORARY *****
 
-using boost::filesystem::path;
-
 namespace cath {
 	namespace test {
 

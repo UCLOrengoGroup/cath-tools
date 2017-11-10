@@ -40,7 +40,6 @@ using boost::algorithm::join;
 using boost::format;
 using std::accumulate;
 using std::get;
-using std::make_pair;
 using std::max;
 using std::min;
 using std::string;

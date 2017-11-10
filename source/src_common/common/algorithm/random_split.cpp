@@ -34,7 +34,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::numeric_cast;
-using boost::range::random_shuffle;
 
 /// \brief Randomly split the integers [ 0 .. arg_num_instances ) into two vectors, with arg_fraction_in_first (eg 0.5) of them in the first
 size_vec_size_vec_pair cath::common::random_split(mt19937       &arg_rng,              ///< TODOCUMENT

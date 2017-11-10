@@ -31,7 +31,6 @@ using namespace cath::file;
 using namespace std;
 
 using boost::adaptors::transformed;
-using boost::lexical_cast;
 using boost::range::max_element;
 
 /// \brief TODOCUMENT

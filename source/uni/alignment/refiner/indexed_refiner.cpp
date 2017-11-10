@@ -51,7 +51,6 @@ using boost::algorithm::replace_all_copy;
 // using boost::container::small_vector;
 using boost::filesystem::path;
 using boost::irange;
-using boost::lexical_cast;
 using std::chrono::high_resolution_clock;
 using std::pair;
 using std::string;

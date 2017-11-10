@@ -38,13 +38,8 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace std;
 
-using boost::algorithm::trim_copy;
-using boost::algorithm::trim_left_copy;
-using boost::algorithm::trim_right;
 using boost::format;
 using boost::io::ios_flags_saver;
-using boost::lexical_cast;
-using boost::string_ref;
 
 constexpr size_t pdb_atom::MIN_NUM_PDB_COLS;
 constexpr size_t pdb_atom::MAX_NUM_PDB_COLS;

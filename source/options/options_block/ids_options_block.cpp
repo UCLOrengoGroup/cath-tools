@@ -36,7 +36,6 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 
-using boost::lexical_cast;
 using boost::none;
 
 const string ids_options_block::PO_ID( "id" ); ///< The option name for the id option

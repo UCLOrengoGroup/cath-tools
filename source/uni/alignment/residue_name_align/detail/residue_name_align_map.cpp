@@ -34,7 +34,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::lexical_cast;
-using boost::numeric_cast;
 
 /// \brief Ctor for residue_name_align_map
 residue_name_align_map::residue_name_align_map(const str_vec &arg_residue_name_strings ///< The list of residue names to be indexed

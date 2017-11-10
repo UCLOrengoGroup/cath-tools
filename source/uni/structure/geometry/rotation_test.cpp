@@ -37,8 +37,6 @@ using namespace cath;
 using namespace cath::common;
 using namespace cath::geom;
 
-using boost::lexical_cast;
-
 namespace cath {
 	namespace test {
 

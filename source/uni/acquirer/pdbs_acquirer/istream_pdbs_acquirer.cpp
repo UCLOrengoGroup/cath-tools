@@ -34,8 +34,6 @@ using namespace cath::file;
 using namespace cath::opts;
 using namespace std;
 
-using boost::lexical_cast;
-
 /// \brief A standard do_clone method.
 unique_ptr<pdbs_acquirer> istream_pdbs_acquirer::do_clone() const {
 	return { make_uptr_clone( *this ) };

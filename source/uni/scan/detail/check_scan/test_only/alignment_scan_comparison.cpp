@@ -42,7 +42,6 @@ using namespace std;
 
 using boost::adaptors::map_keys;
 using boost::algorithm::join;
-using boost::lexical_cast;
 
 /// \brief TODOCUMENT
 alignment_scan_comparison & alignment_scan_comparison::operator+=(const pair<quad_and_rep_criteria_result, double> &arg_result_and_score ///< TODOCUMENT

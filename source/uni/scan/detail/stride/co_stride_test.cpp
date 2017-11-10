@@ -29,8 +29,6 @@ using namespace cath::scan::detail;
 using namespace cath::scan::detail::detail;
 using namespace std;
 
-using boost::none;
-
 namespace cath {
 	namespace test {
 

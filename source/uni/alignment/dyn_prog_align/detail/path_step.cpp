@@ -32,8 +32,6 @@ using namespace cath::align;
 using namespace cath::align::detail;
 using namespace std;
 
-using boost::numeric_cast;
-
 /// \brief TODOCUMENT
 const path_step_vec path_step_helper::ALL_PATH_STEPS = { path_step::ALIGN_PAIR,
                                                          path_step::INSERT_INTO_FIRST,

@@ -29,7 +29,6 @@
 #include "resolve_hits/options/spec/crh_segment_spec.hpp"
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 #include "resolve_hits/trim/trim_spec.hpp"
-// #include "common/file/spew.hpp"
 
 #include <cmath>
 #include <iostream>
@@ -41,9 +40,6 @@ using namespace cath::rslv;
 using namespace cath::seq;
 using namespace cath::test;
 using namespace std::literals::string_literals;
-
-using std::log;
-using std::pow;
 
 namespace cath {
 	namespace test {

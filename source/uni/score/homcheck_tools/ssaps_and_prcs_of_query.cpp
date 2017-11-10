@@ -49,11 +49,7 @@ using namespace cath::score;
 using namespace std;
 
 using boost::algorithm::all_of;
-using boost::make_optional;
-using boost::none;
-using boost::optional;
 using boost::range::for_each;
-using boost::range::max_element;
 
 /// \brief Check that the class invariants hold
 ///

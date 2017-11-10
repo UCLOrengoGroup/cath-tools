@@ -37,8 +37,6 @@ using namespace cath::score;
 using namespace cath::index::filter;
 using namespace std;
 
-using boost::filesystem::path;
-
 namespace cath {
 	namespace test {
 

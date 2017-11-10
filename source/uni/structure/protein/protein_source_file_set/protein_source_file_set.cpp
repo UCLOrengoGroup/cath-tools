@@ -54,7 +54,6 @@ using boost::assign::ptr_push_back;
 using boost::filesystem::path;
 using boost::lexical_cast;
 using boost::none;
-using boost::ptr_vector;
 using boost::range::transform;
 using std::back_inserter;
 using std::make_pair;

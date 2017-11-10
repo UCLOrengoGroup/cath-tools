@@ -44,14 +44,12 @@ using namespace cath::file;
 using namespace cath::geom;
 
 using boost::lexical_cast;
-using boost::math::isnormal;
 using boost::numeric_cast;
 using std::get;
 using std::map;
 using std::ostream;
 using std::ostringstream;
 using std::right;
-using std::round;
 using std::setw;
 using std::string;
 using std::tuple;

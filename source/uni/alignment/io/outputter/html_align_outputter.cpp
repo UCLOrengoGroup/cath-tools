@@ -47,8 +47,6 @@ using namespace cath::file;
 using namespace cath::sup;
 using namespace std;
 
-using boost::lexical_cast;
-
 /// \brief Ctor for html_align_outputter
 html_align_outputter::html_align_outputter(const alignment          &arg_alignment, ///< The alignment to be output
                                            const strucs_context     &arg_context,   ///< TODOCUMENT

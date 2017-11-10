@@ -39,7 +39,6 @@ using boost::adaptors::filtered;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::range::adjacent_find;
-using boost::range::sort;
 using std::ostream;
 using std::pair;
 using std::string;

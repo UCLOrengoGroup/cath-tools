@@ -37,10 +37,7 @@ using namespace cath::common;
 using namespace cath::scan;
 using namespace cath::scan::detail;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
 using boost::filesystem::path;
-using boost::range::max_element;
 using std::ofstream;
 using std::string;
 using std::to_string;

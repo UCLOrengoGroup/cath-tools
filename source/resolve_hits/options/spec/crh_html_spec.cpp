@@ -22,8 +22,6 @@
 
 using namespace cath::rslv;
 
-using boost::none;
-
 constexpr bool   crh_html_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY;
 constexpr size_t crh_html_spec::DEFAULT_MAX_NUM_NON_SOLN_HITS;
 constexpr bool   crh_html_spec::DEFAULT_EXCLUDE_REJECTED_HITS;

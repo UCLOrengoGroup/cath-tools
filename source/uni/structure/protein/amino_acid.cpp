@@ -36,11 +36,6 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace std;
 
-using boost::algorithm::all;
-using boost::algorithm::is_print;
-using boost::algorithm::to_upper_copy;
-using boost::algorithm::trim_copy;
-
 constexpr size_t amino_acid::NUM_HETATM_CHARS;
 
 /// \brief TODOCUMENT

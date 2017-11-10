@@ -59,7 +59,6 @@ using boost::adaptors::transformed;
 //using boost::algorithm::join;
 using boost::const_rend;
 using boost::filesystem::path;
-using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::count_if;
 using boost::range::equal;

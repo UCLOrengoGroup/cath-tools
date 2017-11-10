@@ -42,7 +42,6 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace std;
 
-using boost::lexical_cast;
 using std::cref;
 
 alignment_coord_extractor::residue_cref_residue_cref_pair_vec alignment_coord_extractor::get_common_residues(const alignment                       &arg_alignment,        ///< The alignment to determine which residues should be as close as possible to which

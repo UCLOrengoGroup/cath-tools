@@ -35,8 +35,6 @@ using namespace cath;
 using namespace cath::common;
 using namespace std;
 
-using boost::lexical_cast;
-
 /// \brief Private method for converting two indices to a internal index
 size_t windowed_matrix::get_internal_index(const size_type &/*arg_index_a*/,
                                            const size_type &/*arg_index_b*/

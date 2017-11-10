@@ -43,10 +43,7 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace std;
 
-using boost::algorithm::is_any_of;
-using boost::algorithm::token_compress_on;
 using boost::filesystem::path;
-using boost::lexical_cast;
 
 /// \brief Parse a vector of ssap_scores_entry objects from the specified istream
 ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(istream &arg_ssap_scores_is ///< The istream of SSAP scores data from which to parse the ssap_scores_entry objects

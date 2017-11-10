@@ -54,7 +54,6 @@ using namespace std;
 using boost::accumulate;
 using boost::adaptors::filtered;
 using boost::adaptors::reversed;
-using boost::adaptors::transformed;
 using boost::algorithm::all_of;
 using boost::algorithm::any_of;
 using boost::irange;
@@ -62,7 +61,6 @@ using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
 using boost::range::count_if;
-using boost::range::max_element;
 
 constexpr alignment::size_type alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT;
 constexpr alignment::size_type alignment::PAIR_A_IDX;

@@ -51,9 +51,7 @@ using namespace cath::align;
 using namespace cath::common;
 using namespace cath::opts;
 
-using boost::lexical_cast;
 using boost::none;
-using boost::ptr_vector;
 using std::string;
 using std::unique_ptr;
 

@@ -35,7 +35,6 @@ using namespace cath::chop;
 using namespace cath::common;
 
 using boost::string_ref;
-using std::distance;
 using std::find;
 using std::next;
 using std::string;

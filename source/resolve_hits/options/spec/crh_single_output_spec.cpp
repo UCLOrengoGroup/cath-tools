@@ -41,9 +41,7 @@ using boost::algorithm::join;
 using boost::filesystem::path;
 using boost::make_optional;
 using boost::none;
-using boost::range::count_if;
 using std::string;
-using std::vector;
 
 constexpr bool                crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;
 constexpr bool                crh_single_output_spec::DEFAULT_JSON_OUTPUT;

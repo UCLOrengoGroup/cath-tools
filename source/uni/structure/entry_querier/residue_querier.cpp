@@ -30,8 +30,6 @@
 using namespace cath;
 using namespace std;
 
-using boost::numeric_cast;
-
 constexpr float_score_type residue_querier::RESIDUE_A_VALUE;
 constexpr float_score_type residue_querier::RESIDUE_B_VALUE;
 constexpr float_score_type residue_querier::RESIDUE_MIN_SCORE_CUTOFF;

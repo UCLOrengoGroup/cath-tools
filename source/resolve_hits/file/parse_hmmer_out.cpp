@@ -38,7 +38,6 @@ using namespace cath::seq;
 using boost::filesystem::path;
 using std::ifstream;
 using std::istream;
-using std::make_unique;
 
 /// \brief Parse HMMER output data from the specified file and pass the hits to the specified read_and_process_mgr
 void cath::rslv::parse_hmmer_out_file(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which the hits should be passed for processing

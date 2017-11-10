@@ -32,7 +32,6 @@ using namespace cath::common;
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
-using std::pair;
 using std::string;
 
 /// \brief Generate a string describing the specified new_cluster_data

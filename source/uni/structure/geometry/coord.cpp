@@ -38,8 +38,6 @@ using namespace std;
 
 using boost::algorithm::clamp;
 using boost::format;
-using boost::lexical_cast;
-using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;
 
 //const double LENGTH_CHECK_PRECISION_PERCENTAGE_TOLERANCE( 1E-10 );

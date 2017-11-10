@@ -34,7 +34,6 @@ using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 
-using boost::filesystem::path;
 using std::ostream;
 using std::string;
 using std::unique_ptr;

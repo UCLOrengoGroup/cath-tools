@@ -34,7 +34,6 @@ using namespace cath::common;
 using boost::make_optional;
 using boost::none;
 using std::string;
-using std::unique_ptr;
 
 /// \brief A string value to use internally to indicate colours haven't been specified
 ///

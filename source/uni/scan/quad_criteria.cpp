@@ -37,7 +37,6 @@ using namespace cath::scan::detail;
 using namespace std;
 
 using boost::algorithm::is_any_of;
-using boost::lexical_cast;
 using boost::numeric_cast;
 
 /// \brief Ctor to fully populate a quad_criteria

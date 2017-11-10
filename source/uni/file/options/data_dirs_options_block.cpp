@@ -40,7 +40,6 @@ using namespace std;
 using boost::algorithm::replace_all_copy;
 using boost::algorithm::to_lower_copy;
 using boost::filesystem::path;
-using boost::lexical_cast;
 using boost::none;
 using boost::program_options::options_description;
 using boost::program_options::value;

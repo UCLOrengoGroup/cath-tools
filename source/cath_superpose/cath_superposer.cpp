@@ -50,7 +50,6 @@ using namespace cath::sup;
 using namespace std;
 
 using boost::filesystem::path;
-using boost::ptr_vector;
 
 /// \brief Perform a cath-superpose job as specified by the cath_superpose_options argument
 ///

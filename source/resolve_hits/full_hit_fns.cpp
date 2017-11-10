@@ -34,7 +34,6 @@ using namespace cath::seq;
 using namespace std::literals::string_literals;
 
 using boost::format;
-using boost::lexical_cast;
 using boost::make_optional;
 using boost::none;
 using std::string;

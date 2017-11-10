@@ -38,9 +38,6 @@ using namespace cath::common::literals;
 using namespace cath::geom;
 using namespace std;
 
-using boost::ignore_unused;
-using boost::numeric_cast;
-
 namespace cath {
 	namespace test {
 

@@ -36,7 +36,6 @@ using namespace cath::rslv::detail;
 using namespace std::literals::string_literals;
 
 using boost::format;
-using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::max_element;
 using boost::range::min_element;

@@ -25,8 +25,6 @@
 using namespace cath::rslv;
 using namespace cath::seq;
 
-using std::make_pair;
-
 BOOST_AUTO_TEST_SUITE(trim_spec_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {

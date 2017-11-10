@@ -194,7 +194,6 @@ using boost::range::stable_sort;
 using std::abs;
 using std::boolalpha;
 using std::deque;
-using std::endl;
 using std::fill_n;
 using std::fixed;
 using std::make_pair;

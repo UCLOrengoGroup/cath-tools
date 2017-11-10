@@ -30,8 +30,6 @@ using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::rslv::detail;
 
-using std::numeric_limits;
-
 /// \brief Naively, greedily resolve hits
 scored_hit_arch cath::rslv::naive_greedy_resolve_hits(const calc_hit_list &arg_hits ///< The hits to resolve
                                                       ) {

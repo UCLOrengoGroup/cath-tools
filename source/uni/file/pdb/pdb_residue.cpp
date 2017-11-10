@@ -44,12 +44,10 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace std;
 
-using boost::adaptors::reversed;
 using boost::adaptors::filtered;
 using boost::algorithm::any_of;
 using boost::algorithm::join;
 using boost::lexical_cast;
-using boost::none;
 
 /// \brief TODOCUMENT
 ///

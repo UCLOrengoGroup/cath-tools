@@ -38,7 +38,6 @@ using namespace cath::opts;
 using boost::filesystem::path;
 using std::cerr;
 using std::cout;
-using std::endl;
 using std::ifstream;
 using std::string;
 

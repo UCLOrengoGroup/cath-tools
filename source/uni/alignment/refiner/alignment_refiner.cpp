@@ -56,10 +56,6 @@ using namespace cath::common;
 using namespace cath::index;
 using namespace std;
 
-using boost::filesystem::path;
-using boost::lexical_cast;
-using boost::numeric_cast;
-
 /// \brief TODOCUMENT
 bool_aln_pair alignment_refiner::iterate_step(const alignment       &arg_alignment,       ///< TODOCUMENT
                                               const protein_list    &arg_proteins,        ///< TODOCUMENT

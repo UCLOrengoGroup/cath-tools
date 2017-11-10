@@ -33,7 +33,6 @@ using namespace cath::file;
 using namespace cath::opts;
 
 using boost::filesystem::path;
-using boost::make_optional;
 using std::cout;
 using std::string;
 

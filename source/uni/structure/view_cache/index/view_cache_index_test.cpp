@@ -47,8 +47,6 @@ using namespace cath::geom;
 using namespace std;
 using namespace std::chrono;
 
-using boost::numeric_cast;
-
 namespace cath {
 	namespace test {
 

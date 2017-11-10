@@ -56,10 +56,8 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 
-using boost::adaptors::transformed;
 using boost::filesystem::path;
 using std::cerr;
-using std::get;
 using std::make_pair;
 using std::pair;
 using std::string;

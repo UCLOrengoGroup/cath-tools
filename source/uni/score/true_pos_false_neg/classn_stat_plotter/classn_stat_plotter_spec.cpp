@@ -33,7 +33,6 @@ using namespace cath::score;
 using namespace std;
 
 using boost::none;
-using boost::optional;
 
 /// \brief TODOCUMENT
 classn_stat_plotter_spec::classn_stat_plotter_spec(str_vec                                       arg_pre_plot_strs,              ///< TODOCUMENT

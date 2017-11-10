@@ -35,8 +35,6 @@ using namespace cath;
 using namespace cath::common;
 using namespace std;
 
-using boost::algorithm::trim;
-
 BOOST_TEST_DONT_PRINT_LOG_VALUE( bool_size_str_tpl     )
 BOOST_TEST_DONT_PRINT_LOG_VALUE( bool_size_str_tpl_vec )
 

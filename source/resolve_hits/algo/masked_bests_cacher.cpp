@@ -43,8 +43,6 @@ using boost::adaptors::transformed;
 using boost::algorithm::all_of;
 using boost::algorithm::any_of;
 using boost::range::max_element;
-using boost::range::upper_bound;
-using boost::sub_range;
 
 /// \brief Build a masked_bests_cacher to handle the caching of best results in the specified masked_bests_cache
 ///        whilst scanning from the specified start position with the specified hits and mask

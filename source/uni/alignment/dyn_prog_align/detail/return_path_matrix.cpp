@@ -41,7 +41,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::adaptors::map_values;
-using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::numeric_cast;
 using boost::range::max_element;

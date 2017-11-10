@@ -38,16 +38,11 @@ using namespace cath::common;
 using namespace cath::rslv;
 using namespace cath::seq;
 
-using boost::adaptors::transformed;
 using boost::algorithm::is_any_of;
-using boost::algorithm::join;
 using boost::any;
 using boost::lexical_cast;
-using boost::optional;
-using boost::adaptors::filtered;
 using std::istream;
 using std::ostream;
-using std::stoul;
 using std::string;
 
 /// \brief Generate a short string describing the specified trim_spec

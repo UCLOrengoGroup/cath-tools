@@ -50,10 +50,7 @@ using namespace cath::index::detail;
 using namespace std;
 using namespace std::chrono;
 
-using boost::accumulate;
 using boost::ignore_unused;
-using boost::numeric_cast;
-using boost::range::combine;
 
 namespace cath {
 	namespace test {

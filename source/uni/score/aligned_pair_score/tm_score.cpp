@@ -49,7 +49,6 @@ using namespace std;
 
 using boost::inner_product;
 using boost::numeric_cast;
-using boost::range::join;
 
 //BOOST_CLASS_EXPORT(tm_score)
 

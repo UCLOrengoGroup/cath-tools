@@ -47,14 +47,11 @@ using namespace cath::file;
 using boost::adaptors::filtered;
 using boost::adaptors::map_keys;
 using boost::adaptors::map_values;
-using boost::lexical_cast;
 using boost::none;
-using boost::numeric_cast;
 using boost::range::join;
 using std::make_pair;
 using std::ostream;
 using std::ostringstream;
-using std::setfill;
 using std::string;
 
 /// \brief Ctor from a broad_display_colour_spec

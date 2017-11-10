@@ -30,7 +30,6 @@ using namespace cath::test;
 
 using boost::filesystem::path;
 using boost::test_tools::predicate_result;
-using std::getenv;
 using std::ifstream;
 using std::string;
 

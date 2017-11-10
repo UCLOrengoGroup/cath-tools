@@ -53,7 +53,6 @@ using namespace std;
 //using boost::algorithm::is_space;
 //using boost::algorithm::join;
 using boost::logic::tribool;
-using boost::range::find;
 
 /// \brief Return a map of the different concrete aligned_pair_score types by the human_friendly_short_name string they return
 ///

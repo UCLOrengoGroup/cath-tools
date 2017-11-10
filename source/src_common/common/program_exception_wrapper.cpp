@@ -30,11 +30,8 @@
 using namespace boost::log;
 using namespace boost::log::expressions;
 using namespace boost::log::trivial;
-//using namespace cath;
 using namespace cath::common;
 using namespace std;
-
-using boost::numeric_cast;
 
 /// \brief A simple private function to provide a standard way of outputting the context of a catch to a stream.
 void program_exception_wrapper::output_catch_context(ostream            &arg_os,

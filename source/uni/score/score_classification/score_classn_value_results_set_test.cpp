@@ -68,17 +68,13 @@ using namespace std;
 
 using boost::adaptors::map_keys;
 using boost::algorithm::icontains;
-using boost::algorithm::join; // ***** TEMPORARY *****
 using boost::filesystem::path;
 using boost::irange;
 using boost::is_space;
 using boost::make_optional;
 using boost::none;
-using boost::numeric_cast;
 using boost::optional;
-using boost::range::combine;
 using boost::range::copy;
-using boost::range::insert;
 using boost::token_compress_on;
 
 namespace cath {

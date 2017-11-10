@@ -36,7 +36,6 @@ using namespace cath;
 using namespace cath::common;
 using namespace std;
 
-using boost::adaptors::reversed;
 using boost::irange;
 using boost::numeric_cast;
 using boost::range::find;

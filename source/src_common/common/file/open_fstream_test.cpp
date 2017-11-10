@@ -30,7 +30,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::filesystem::path;
-using boost::none;
 
 namespace cath {
 	namespace test {

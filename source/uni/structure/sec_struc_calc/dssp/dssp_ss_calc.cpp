@@ -51,7 +51,6 @@ using namespace cath::sec::detail;
 using boost::adaptors::reversed;
 using boost::algorithm::any_of;
 using boost::algorithm::clamp;
-using boost::algorithm::join;
 using boost::algorithm::none_of;
 using boost::format;
 using boost::irange;
@@ -65,7 +64,6 @@ using std::max;
 using std::min;
 using std::ostream;
 using std::string;
-using std::vector;
 
 constexpr size_t sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE;
 constexpr size_t sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE;

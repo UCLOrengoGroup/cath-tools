@@ -49,7 +49,6 @@ using namespace std;
 
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
-using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::count_if;
 

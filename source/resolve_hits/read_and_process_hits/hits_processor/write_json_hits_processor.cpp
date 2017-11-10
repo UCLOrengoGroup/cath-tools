@@ -32,10 +32,8 @@ using namespace cath::rslv::detail;
 
 using std::move;
 using std::ostream;
-using std::reference_wrapper;
 using std::string;
 using std::unique_ptr;
-using std::vector;
 
 /// \brief A standard do_clone method
 unique_ptr<hits_processor> write_json_hits_processor::do_clone() const {

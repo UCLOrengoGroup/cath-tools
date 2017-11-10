@@ -48,7 +48,6 @@ using namespace std::literals::string_literals;
 
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
-using boost::algorithm::clamp;
 using boost::algorithm::join;
 using boost::format;
 using boost::integer_range;

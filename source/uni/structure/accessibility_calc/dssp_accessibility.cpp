@@ -50,7 +50,6 @@ using boost::math::constants::pi;
 using boost::none;
 using boost::numeric_cast;
 using boost::range::count;
-using std::pair;
 using std::plus;
 using std::sqrt;
 using std::vector;

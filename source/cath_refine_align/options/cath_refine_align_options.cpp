@@ -56,9 +56,7 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::opts;
 
-using boost::lexical_cast;
 using boost::none;
-using boost::ptr_vector;
 using std::istream;
 using std::string;
 using std::unique_ptr;

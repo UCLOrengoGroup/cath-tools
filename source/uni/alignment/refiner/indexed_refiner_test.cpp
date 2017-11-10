@@ -32,8 +32,6 @@
 using namespace cath;
 using namespace cath::align;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
 using std::string;
 
 namespace cath {

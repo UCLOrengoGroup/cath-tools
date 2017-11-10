@@ -42,7 +42,6 @@ using namespace cath::common;
 using namespace std;
 
 using boost::adaptors::filtered;
-using boost::range::for_each;
 using boost::sub_range;
 
 namespace std {

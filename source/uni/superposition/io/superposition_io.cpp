@@ -56,7 +56,6 @@ using boost::adaptors::map_values;
 using boost::algorithm::any_of;
 using boost::filesystem::path;
 using boost::irange;
-using boost::property_tree::json_parser::write_json;
 using boost::property_tree::ptree;
 
 const string superposition_io_consts::ENTRIES_KEY         = "entries";

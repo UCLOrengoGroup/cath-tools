@@ -43,10 +43,6 @@ using namespace cath::rslv::detail;
 using namespace cath::seq;
 
 using boost::ignore_unused;
-using boost::none;
-using boost::range::sort;
-using boost::sub_range;
-using std::make_pair;
 using std::numeric_limits;
 
 // POSSIBLY TODO:

@@ -49,9 +49,6 @@ using namespace std;
 using boost::lexical_cast;
 using boost::accumulate;
 using boost::range::find_if;
-using boost::range::sort;
-using boost::range::stable_sort;
-using boost::sub_range;
 
 constexpr double common_residue_select_best_score_percent_policy::MIN_BEST_SCORE_PERCENTAGE;
 constexpr double common_residue_select_best_score_percent_policy::MAX_BEST_SCORE_PERCENTAGE;

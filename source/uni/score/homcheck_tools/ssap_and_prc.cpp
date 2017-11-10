@@ -35,7 +35,6 @@ using namespace cath::file;
 using namespace cath::homcheck;
 using namespace std;
 
-using boost::lexical_cast;
 using boost::optional;
 using cath::score::rbf_model;
 
