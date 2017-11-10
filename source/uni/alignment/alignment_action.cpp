@@ -192,7 +192,8 @@ alignment cath::align::glue_two_alignments(const alignment &arg_alignment_a,    
 ///
 /// \relates alignment
 alignment cath::align::build_alignment_from_parts(const size_size_alignment_tuple_vec &arg_spanning_alignments, ///< TODOCUMENT
-                                                  const protein_list                  &arg_proteins             ///< TODOCUMENT
+                                                  const protein_list                  &arg_proteins,            ///< TODOCUMENT
+                                                  const aln_glue_style                &arg_strategy             ///< The approach that should be used for glueing alignments together
                                                   ) {
 	const size_t num_entries = arg_spanning_alignments.size() + 1;
 	alignment new_alignment( num_entries );
@@ -200,7 +201,7 @@ alignment cath::align::build_alignment_from_parts(const size_size_alignment_tupl
 	multi_align_builder builder( num_entries );
 
 	for (const size_size_alignment_tuple &branch_alignment : arg_spanning_alignments) {
-		add_alignment_branch( builder, branch_alignment, arg_proteins );
+		add_alignment_branch( builder, branch_alignment, arg_proteins, arg_strategy );
 	}
 
 	return builder.get_alignment();

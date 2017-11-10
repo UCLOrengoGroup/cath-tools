@@ -70,6 +70,17 @@ namespace cath {
 			                  const index::view_cache_list &,
 			                  const gap::gap_penalty &);
 
+			alignment iterate_join(const alignment &,
+			                       const protein_list &,
+			                       const gap::gap_penalty &,
+			                       const size_vec &);
+
+			alignment iterate_join(const alignment &,
+			                       const protein_list &,
+			                       const index::view_cache_list &,
+			                       const gap::gap_penalty &,
+			                       const size_vec &);
+
 		};
 	} // namespace align
 

@@ -22,6 +22,13 @@
 #define _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_ACTION_H
 
 #include "alignment/align_type_aliases.hpp"
+#include "alignment/aln_glue_style.hpp"
+#include "common/algorithm/transform_build.hpp"
+#include "common/boost_addenda/graph/spanning_tree.hpp"
+#include "common/boost_addenda/range/front.hpp"
+#include "alignment/alignment.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
 
 namespace cath { class protein_list; }
 namespace cath { namespace align { class alignment; } }
@@ -50,7 +57,73 @@ namespace cath {
 		                              const size_t & = 0);
 
 		alignment build_alignment_from_parts(const size_size_alignment_tuple_vec &,
-		                                     const protein_list &);
+		                                     const protein_list &,
+		                                     const aln_glue_style &);
+
+		/// \brief Build an alignment between the specified proteins with specified similarity scores with the specified approach
+		///        using the specified function to get pairwise alignments
+		template <typename Fn>
+		std::pair<alignment, size_size_doub_tpl_vec> build_alignment(const protein_list            &arg_proteins, ///< The proteins for which the alignment is to be built
+		                                                             const size_size_doub_tpl_vec  &arg_scores,   ///< The scores between the proteins in the alignment
+		                                                             const aln_glue_style          &arg_strategy, ///< The approach that should be used for glueing alignments together
+		                                                             Fn                           &&arg_fn        ///< A callback function for getting the alignment between the two proteins of the specified indices
+		                                                             ) {
+			// If there's only zero/one protein(s), just return an appropriate simple alignment
+			if ( arg_proteins.empty() ) {
+				return { alignment{ 0 }, size_size_doub_tpl_vec{} };
+			}
+			if ( arg_proteins.size() == 1 ) {
+				return {
+					make_single_alignment( common::front( arg_proteins ).get_length() ),
+					size_size_doub_tpl_vec{}
+				};
+			}
+
+			// Get a spanning tree
+			const auto spanning_tree = [&] {
+				auto lcl_span_tree = common::calc_max_spanning_tree( arg_scores, arg_proteins.size() );
+
+				// If aln_glue_style::INCREMENTALLY_WITH_PAIR_REFINING, order spanning tree
+				if ( arg_strategy == aln_glue_style::INCREMENTALLY_WITH_PAIR_REFINING ) {
+					// At present, just start incremental building from the first entry in the spanning tree
+					//
+					// It might be better if this was chosen by a process like: repeatedly
+					// find the worst score and then restrict to larger side of the remaining
+					// tree until there's only one link left
+					constexpr size_t START_INDEX = 0;
+					lcl_span_tree = common::order_spanning_tree_from_start( lcl_span_tree, START_INDEX );
+				}
+				return lcl_span_tree;
+			} ();
+
+			// Get alignments
+			const auto alignments_tree = common::transform_build<size_size_alignment_tuple_vec>(
+				spanning_tree,
+				[&] (const size_size_doub_tpl &spanning_tree_edge) {
+					const size_t &index_a = std::get<0>( spanning_tree_edge );
+					const size_t &index_b = std::get<1>( spanning_tree_edge );
+					return std::make_tuple(
+						index_a,
+						index_b,
+						common::invoke(
+							arg_fn,
+							index_a,
+							index_b
+						)
+					);
+				}
+			);
+
+			// Make with build_alignment_from_parts
+			return make_pair(
+				build_alignment_from_parts(
+					alignments_tree,
+					arg_proteins,
+					arg_strategy
+				),
+				spanning_tree
+			);
+		}
 
 	} // namespace align
 } // namespace cath

@@ -49,7 +49,9 @@ namespace cath {
 				const_iterator end() const;
 			};
 
-			alignment_split_list get_single_alignment_splits(const alignment &);
+			alignment_split_list make_list_of_alignment_split(const alignment &,
+			                                                  const size_vec &);
+			alignment_split_list get_all_single_alignment_splits(const alignment &);
 			alignment_split_list get_preexisting_alignment_splits(const alignment &);
 			alignment_split_list get_standard_alignment_splits(const alignment &);
 			void add_alignment_splits(alignment_split_list &,

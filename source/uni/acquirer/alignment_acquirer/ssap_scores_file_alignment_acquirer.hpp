@@ -53,11 +53,11 @@ namespace cath {
 		                                                      const boost::filesystem::path &,
 		                                                      const ostream_ref_opt & = boost::none);
 
-		alignment build_multi_alignment(const file::pdb_list &,
-		                                const str_vec &,
-		                                const size_size_doub_tpl_vec &,
-		                                const boost::filesystem::path &,
-		                                const ostream_ref_opt & = boost::none);
+		std::pair<alignment, size_size_pair_vec> build_multi_alignment(const file::pdb_list &,
+		                                                               const str_vec &,
+		                                                               const size_size_doub_tpl_vec &,
+		                                                               const boost::filesystem::path &,
+		                                                               const ostream_ref_opt & = boost::none);
 
 	} // namespace align
 } // namespace cath

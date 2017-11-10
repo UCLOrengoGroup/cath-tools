@@ -92,10 +92,11 @@ const multi_align_group & multi_align_builder::get_group_of_index(const size_t &
 }
 
 /// \brief Add an alignment branch to join two entries that currently exist in separate groups
-void multi_align_builder::add_alignment_branch(const size_t       &arg_entry_a,     ///< The index of the first  entry to be joined
-                                               const size_t       &arg_entry_b,     ///< The index of the second entry to be joined
-                                               const alignment    &arg_alignment,   ///< The alignment between the two entries (with entries in the same order)
-                                               const protein_list &/*arg_proteins*/     ///< The PDBs associated with the entries whose alignment is being built
+void multi_align_builder::add_alignment_branch(const size_t         &arg_entry_a,   ///< The index of the first  entry to be joined
+                                               const size_t         &arg_entry_b,   ///< The index of the second entry to be joined
+                                               const alignment      &arg_alignment, ///< The alignment between the two entries (with entries in the same order)
+                                               const protein_list   &arg_proteins,  ///< The PDBs associated with the entries whose alignment is being built
+                                               const aln_glue_style &arg_strategy   ///< The approach that should be used for glueing alignments together
                                                ) {
 	// Find the groups currently containing the two specified entries
 	const size_t group_index_a = find_group_of_entry( arg_entry_a );
@@ -124,19 +125,32 @@ void multi_align_builder::add_alignment_branch(const size_t       &arg_entry_a, 
 	//  (ie glue group_b into group_a by identifying entry_b from the two groups)
 	group_a.glue_in_copy_of_group( group_b, arg_entry_b );
 
-	// // Refine the join between the two groups
-	// group_a.refine_join(
-	// 	the_refiner,
-	// 	make_subset_protein_list( arg_proteins, group_a.get_entries() ),
-	// 	gap_penalty( 50, 0 )
-	// );
+	if ( arg_strategy != aln_glue_style::SIMPLY ) {
+		// Refine the join between the two groups
+		std::cerr << "Doing the light refining\n" << std::flush;
+		std::cerr << "group_a is " << group_a << "\n";
+		std::cerr << "group_b is " << group_b << "\n";
+		group_a.refine_join(
+			the_refiner,
+			make_subset_protein_list( arg_proteins, group_a.get_entries() ),
+			gap_penalty( 50, 0 ),
+			group_b.get_entries()
+		);
+		std::cerr << "Completed the light refining\n" << std::flush;
 
-	// // Refine the alignment
-	// group_a.refine_alignment(
-	// 	the_refiner,
-	// 	make_subset_protein_list( arg_proteins, group_a.get_entries() ),
-	// 	gap_penalty( 50, 0 )
-	// );
+		if ( arg_strategy == aln_glue_style::WITH_HEAVY_REFINING ) {
+			std::cerr << "Doing the heavy refining\n" << std::flush;
+			// Refine the whole alignment
+			group_a.refine_alignment(
+				the_refiner,
+				make_subset_protein_list( arg_proteins, group_a.get_entries() ),
+				gap_penalty( 50, 0 )
+			);
+		}
+		else {
+			std::cerr << "Not doing the heavy refining\n" << std::flush;
+		}
+	}
 
 	// Update all the group indices of the entries in group_a
 	update_group_index_of_entry( group_index_a );
@@ -214,12 +228,14 @@ ostream & cath::align::detail::operator<<(ostream                   &arg_os,    
 /// \relates multi_align_builder
 void cath::align::detail::add_alignment_branch(multi_align_builder             &arg_multi_align_builder, ///< The multi_align_builder to which the branch should be added
                                                const size_size_alignment_tuple &arg_branch_alignment,    ///< The details of the branch to be added
-                                               const protein_list              &arg_proteins_list        ///< The PDBs associated
+                                               const protein_list              &arg_proteins_list,       ///< The PDBs associated
+                                               const aln_glue_style            &arg_strategy             ///< The approach that should be used for glueing alignments together
                                                ) {
 	arg_multi_align_builder.add_alignment_branch(
 		get<0>( arg_branch_alignment ),
 		get<1>( arg_branch_alignment ),
 		get<2>( arg_branch_alignment ),
-		arg_proteins_list
+		arg_proteins_list,
+		arg_strategy
 	);
 }

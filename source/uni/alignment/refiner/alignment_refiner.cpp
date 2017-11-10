@@ -292,3 +292,34 @@ alignment alignment_refiner::iterate(const alignment       &arg_alignment,      
 	return curr_alignment;
 }
 
+
+/// \brief TODOCUMENT
+alignment alignment_refiner::iterate_join(const alignment    &arg_alignment,   ///< TODOCUMENT
+                                          const protein_list &arg_proteins,    ///< TODOCUMENT
+                                          const gap_penalty  &arg_gap_penalty, ///< TODOCUMENT
+                                          const size_vec     &arg_group        ///< TODOCUMENT
+                                          ) {
+	return iterate_join(
+		arg_alignment,
+		arg_proteins,
+		view_cache_list( arg_proteins ),
+		arg_gap_penalty,
+		arg_group
+	);
+}
+
+/// \brief TODOCUMENT
+alignment alignment_refiner::iterate_join(const alignment       &arg_alignment,       ///< TODOCUMENT
+                                          const protein_list    &arg_proteins,        ///< TODOCUMENT
+                                          const view_cache_list &arg_view_cache_list, ///< TODOCUMENT
+                                          const gap_penalty     &arg_gap_penalty,     ///< TODOCUMENT
+                                          const size_vec        &arg_group            ///< TODOCUMENT
+                                          ) {
+	return iterate_step_for_alignment_split_list(
+		arg_alignment,
+		arg_proteins,
+		arg_view_cache_list,
+		arg_gap_penalty,
+		make_list_of_alignment_split( arg_alignment, arg_group )
+	).second;
+}

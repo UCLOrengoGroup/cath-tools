@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_ALIGNMENT_DETAIL_MULTI_ALIGN_BUILDER_H
 
 #include "alignment/align_type_aliases.hpp"
+#include "alignment/aln_glue_style.hpp"
 #include "alignment/detail/multi_align_group.hpp"
 #include "alignment/refiner/alignment_refiner.hpp"
 
@@ -65,7 +66,8 @@ namespace cath {
 				void add_alignment_branch(const size_t &,
 				                          const size_t &,
 				                          const alignment &,
-				                          const protein_list &);
+				                          const protein_list &,
+				                          const aln_glue_style &);
 
 				alignment get_alignment() const;
 			};
@@ -75,7 +77,8 @@ namespace cath {
 
 			void add_alignment_branch(multi_align_builder &,
 			                          const size_size_alignment_tuple &,
-			                          const protein_list &);
+			                          const protein_list &,
+			                          const aln_glue_style &);
 		} // namespace detail
 	} // namespace align
 } // namespace cath

@@ -102,7 +102,8 @@ BOOST_AUTO_TEST_CASE(build_alignment_from_parts_works) {
 			make_tuple( 0, 3, aln_1g5aA03_1zjaA02 ),
 			make_tuple( 0, 1, aln_1g5aA03_1r7aA02 )
 		},
-		all_proteins
+		all_proteins,
+		aln_glue_style::SIMPLY
 	);
 
 	// Check that the alignment matches the expected

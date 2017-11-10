@@ -57,8 +57,20 @@ alignment_split_list::const_iterator alignment_split_list::end() const {
 }
 
 /// \brief TODOCUMENT
-alignment_split_list cath::align::detail::get_single_alignment_splits(const alignment &arg_alignment ///< TODOCUMENT
-                                                                      ) {
+alignment_split_list cath::align::detail::make_list_of_alignment_split(const alignment &arg_alignment, ///< TODOCUMENT
+                                                                       const size_vec  &arg_indices    ///< TODOCUMENT
+                                                                       ) {
+	alignment_split_list new_alignment_splits;
+	new_alignment_splits.insert( make_alignment_split(
+		arg_indices,
+		arg_alignment.num_entries()
+	) );
+	return new_alignment_splits;
+}
+
+/// \brief TODOCUMENT
+alignment_split_list cath::align::detail::get_all_single_alignment_splits(const alignment &arg_alignment ///< TODOCUMENT
+                                                                          ) {
 	const size_t num_entries = arg_alignment.num_entries();
 	alignment_split_list new_alignment_splits;
 	for (const size_t &aln_entry : indices( num_entries ) ) {
@@ -90,7 +102,7 @@ alignment_split_list cath::align::detail::get_preexisting_alignment_splits(const
 alignment_split_list cath::align::detail::get_standard_alignment_splits(const alignment &arg_alignment ///< TODOCUMENT
                                                                         ) {
 	return add_alignment_splits_copy(
-		get_single_alignment_splits     ( arg_alignment ),
+		get_all_single_alignment_splits ( arg_alignment ),
 		get_preexisting_alignment_splits( arg_alignment )
 	);
 }

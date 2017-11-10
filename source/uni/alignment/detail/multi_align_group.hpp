@@ -46,13 +46,12 @@ namespace cath {
 				/// These entries are in the same order as the entries in the alignment
 				size_vec  entries;
 
-			// public:
+			public:
 				void refine_join(alignment_refiner &,
 				                 const protein_list &,
 				                 const gap::gap_penalty &,
-				                 const size_opt & = boost::none);
+				                 const size_vec &);
 
-			public:
 				explicit multi_align_group(const size_t &);
 				multi_align_group(alignment,
 				                  const size_t &,

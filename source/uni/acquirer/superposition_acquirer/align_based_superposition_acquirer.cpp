@@ -150,6 +150,13 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 			common_coords.second
 		);
 
+		// std::cerr
+		// 	<< "Superposing based on "
+		// 	<< common_coords.first
+		// 	<< " and "
+		// 	<< common_coords.second
+		// 	<< "\n";
+
 		const superposition pairwise_sup = create_pairwise_superposition(common_coords.first, common_coords.second);
 		const double actual_full_rmsd = calc_rmsd_between_superposed_entries(
 			pairwise_sup,
@@ -336,6 +343,8 @@ superposition cath::opts::hacky_multi_ssap_fuction(const pdb_list               
 			index_2,
 			common_coords.second
 		);
+
+		// std::cerr << "Superposing based on coords\n" << common_coords.first << " and\n" << common_coords.second << "\n";
 
 		const superposition pairwise_sup = create_pairwise_superposition(common_coords.first, common_coords.second);
 		const double actual_full_rmsd = calc_rmsd_between_superposed_entries(
