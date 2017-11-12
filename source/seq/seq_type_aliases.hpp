@@ -56,6 +56,9 @@ namespace cath {
 		/// \brief Type alias for a vector residx_t
 		using residx_vec                = std::vector<residx_t>;
 
+		/// \brief Type alias for a pair of seq_arrows
+		using seq_arr_seq_arr_pair      = std::pair<seq_arrow, seq_arrow>;
+
 		/// \brief Type alias for an optional seq_seg
 		using seq_seg_opt               = boost::optional<seq_seg>;
 

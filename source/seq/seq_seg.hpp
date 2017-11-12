@@ -55,8 +55,8 @@ namespace cath {
 			/// \brief The stop boundary of the segment
 			seq_arrow stop;
 
-			static constexpr bool sanity_check(const seq_arrow &,
-			                                   const seq_arrow &);
+			static constexpr seq_arr_seq_arr_pair sanity_check(const seq_arrow &,
+			                                                   const seq_arrow &);
 
 		public:
 			constexpr seq_seg(const seq_arrow &,
@@ -81,10 +81,10 @@ namespace cath {
 		/// \brief Sanity check this seq_seg and throw an exception if a problem is detected
 		///
 		/// \todo Come GCC >= 5 (with relaxed constexpr), make this code nicer
-		constexpr bool seq_seg::sanity_check(const seq_arrow &arg_start, ///< The start position
-		                                     const seq_arrow &arg_stop   ///< The stop position
-		                                     ) {
-			return ( arg_start < arg_stop ) ? true
+		constexpr seq_arr_seq_arr_pair seq_seg::sanity_check(const seq_arrow &arg_start, ///< The start position
+		                                                     const seq_arrow &arg_stop   ///< The stop position
+		                                                     ) {
+			return ( arg_start < arg_stop ) ? std::make_pair( arg_start, arg_stop )
 			                                : throw std::invalid_argument( "Cannot create seq_seg with start residue before the stop residue" );
 		}
 
@@ -95,9 +95,7 @@ namespace cath {
 		                                  const seq_arrow &arg_stop   ///< The residue boundary of the segment's stop
 		                                  ) : start{ arg_start },
 		                                      stop {
-		                                      	sanity_check( arg_start, arg_stop )
-		                                      	? arg_stop
-		                                      	: arg_stop
+		                                      	sanity_check( arg_start, arg_stop ).second
 		                                      } {
 		}
 
