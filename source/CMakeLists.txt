@@ -61,7 +61,7 @@ target_link_libraries     ( ct_chopping            PUBLIC ct_common ct_biocore  
 target_link_libraries     ( ct_cluster             PUBLIC ct_common                                                        )
 target_link_libraries     ( ct_common              PUBLIC Boost::boost Boost::log Boost::thread Boost::timer ${RT_LIBRARY} )
 target_link_libraries     ( ct_display_colour      PUBLIC ct_common                                                        )
-target_link_libraries     ( ct_options             PUBLIC ct_common Boost::program_options                                 )
+target_link_libraries     ( ct_options             PUBLIC ct_common ct_chopping Boost::program_options                     )
 target_link_libraries     ( ct_remain              PUBLIC ct_common                                                        )
 target_link_libraries     ( ct_resolve_hits        PUBLIC ct_common                                                        )
 target_link_libraries     ( ct_seq                 PUBLIC ct_common                                                        )
