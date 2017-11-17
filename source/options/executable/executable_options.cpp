@@ -141,6 +141,16 @@ void executable_options::add_options_block(options_block &arg_options_block ///<
 	all_options_blocks.push_back( arg_options_block );
 }
 
+/// \brief Add a string into the options usage
+///
+/// This is implemented by adding a no-options string_options_block.
+/// The slight annoyance is that it will automatically append a ':'.
+void executable_options::add_string(string arg_string ///< The string to add into the options usage
+                                    ) {
+	string_obj_blocks.emplace_back( arg_string );
+	all_options_blocks.push_back( string_obj_blocks.back() );
+}
+
 /// \brief Add all the options of the specified options_block to the specified options_description
 void executable_options::add_all_options_to_description(options_description &arg_options_description, ///< The options_description to which the options should be added
                                                         options_block       &arg_options_block,       ///< The options_block from which the options to be added should be drawn

@@ -29,6 +29,7 @@
 #include "common/boost_addenda/program_options/set_opt_str_from_prog_opts_try.hpp"
 #include "common/path_type_aliases.hpp"
 #include "common/type_aliases.hpp"
+#include "options/options_block/string_options_block.hpp"
 
 #include <string>
 #include <vector>
@@ -68,6 +69,16 @@ namespace cath {
 			static const     boost::filesystem::path CATH_TOOLS_CONF_FILE;
 			
 			static path_vec CATH_TOOLS_CONF_FILE_SEARCH_PATH();
+
+			/// \brief A list of string_options_block objects that just serve to put strings
+			///        the options usage message
+			///
+			/// They are stored here:
+			///  * because all_options_blocks stores reference and
+			///  * so that the clients can add strings without having to worry about string_options_block lifetimes
+			///
+			/// Using deque not vector because the all_options_blocks references mustn't get invalidated
+			std::deque<string_options_block> string_obj_blocks;
 
 			/// \brief A list of (references to) the options blocks to be processed during parsing
 			std::vector<std::reference_wrapper<options_block>> all_options_blocks;
@@ -119,6 +130,7 @@ namespace cath {
 			const boost::program_options::variables_map & get_variables_map() const;
 
 			void add_options_block(options_block &);
+			void add_string(std::string);
 
 			static void add_all_options_to_description(boost::program_options::options_description &,
 			                                           options_block &,
