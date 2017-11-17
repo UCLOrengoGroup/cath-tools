@@ -2449,16 +2449,16 @@ color black
 color density, ss s
 color rutherfordium, ss h
 scene F1, store, message="Colour by secondary structure", color=1, view=0, active=0, rep=0, frame=0
-set_color cath_tools_defined_struc_or_res_colour_0, [0,0,1]
-set_color cath_tools_defined_struc_or_res_colour_1, [0,1,0]
-set_color cath_tools_defined_struc_or_res_colour_2, [1,0,0]
-set_color cath_tools_defined_struc_or_res_colour_3, [1,1,0]
+set_color ct_strc_or_res_colr_0, [0,0,1]
+set_color ct_strc_or_res_colr_1, [0,1,0]
+set_color ct_strc_or_res_colr_2, [1,0,0]
+set_color ct_strc_or_res_colr_3, [1,1,0]
 set_color base_colour, [0,0,0]
 colour base_colour
-colour cath_tools_defined_struc_or_res_colour_0, "1g5aA03"
-colour cath_tools_defined_struc_or_res_colour_1, "1wzaA02"
-colour cath_tools_defined_struc_or_res_colour_2, "1r7aA02"
-colour cath_tools_defined_struc_or_res_colour_3, "1zjaA02"
+colour ct_strc_or_res_colr_0, "1g5aA03"
+colour ct_strc_or_res_colr_1, "1wzaA02"
+colour ct_strc_or_res_colr_2, "1r7aA02"
+colour ct_strc_or_res_colr_3, "1zjaA02"
 scene F2, store, message="Colour by structure", color=1, view=0, active=0, rep=0, frame=0
 distance alignment, /"1g5aA03"//A/187/CA, /"1r7aA02"//A/88/CA
 distance alignment, /"1g5aA03"//A/188/CA, /"1r7aA02"//A/89/CA

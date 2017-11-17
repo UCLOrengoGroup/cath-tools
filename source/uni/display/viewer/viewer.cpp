@@ -330,9 +330,10 @@ string cath::generate_colour_name(const size_t          &arg_colour_index,   ///
                                   ) {
 	const size_t num_width  = lexical_cast<string>( max( static_cast<size_t>( 1_z ), arg_num_colours ) - 1 ).length();
 	const string format_str = R"(%0)" + ::std::to_string( num_width ) + "d";
-	return "cath_tools_defined_"
-		+ ( arg_colour_category == colour_category::STRUC_ONLY ? "struc_only"s : "struc_or_res"s )
-		+ "_colour_"
+
+	return "ct_"
+		+ ( arg_colour_category == colour_category::STRUC_ONLY ? "strc"s : "strc_or_res"s )
+		+ "_colr_"
 		+ ( format( format_str ) % arg_colour_index ).str();
 }
 
