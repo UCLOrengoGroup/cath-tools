@@ -131,7 +131,52 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 	const size_display_colour_map      &colour_of_pdb_map         = get_clr_of_pdb( colour_spec );
 	const size_size_display_colour_map &colour_of_pdb_and_res_map = colour_spec.get_clr_of_pdb_and_res();
 
-	arg_os << R"(<html>
+	arg_os << "<html>\n";
+
+	if ( false ) {
+		arg_os << R"(
+<html>
+
+<head>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	        crossorigin="anonymous"></script>
+
+	<script>
+
+		$(function() {
+
+			jQuery.fn.order = function(asc, fn) {
+				fn = fn || function (el) {
+					return $(el).text().replace(/^\s+|\s+$/g, '');
+				};
+				var T = asc !== false ? 1 : -1,
+					F = asc !== false ? -1 : 1;
+				this.sort(function (a, b) {
+					a = fn(a), b = fn(b);
+					if (a == b) return 0;
+					return a < b ? F : T;
+				});
+				this.each(function (i) {
+					this.parentNode.appendChild(this);
+				});
+			};
+
+			$('#aln_container .seq').order(true, function (el) {
+				var seq = $(el).find('.seq-name').first().text()
+				var seqid = seq.split(/\s+/)[0];
+				return seqid;
+			});
+
+		});
+
+	</script>
+
+</head>
+)";
+	}
+
+	arg_os << R"(
 <style>
 #aln_container {
 	font-family : "Liberation Mono", courier, monospace;
