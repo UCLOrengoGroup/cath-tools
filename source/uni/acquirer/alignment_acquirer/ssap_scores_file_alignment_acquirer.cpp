@@ -63,6 +63,8 @@ using std::pair;
 using std::string;
 using std::unique_ptr;
 
+constexpr aln_glue_style ssap_scores_file_alignment_acquirer::DEFAULT_ALN_GLUE_STYLE;
+
 /// \brief A standard do_clone method.
 unique_ptr<alignment_acquirer> ssap_scores_file_alignment_acquirer::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -97,6 +99,7 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 		names,
 		scores,
 		ssaps_filename.parent_path(),
+		get_glue_style(),
 		ostream_ref{ cerr }
 	);
 	const alignment          &new_alignment = aln_and_spantree.first;
@@ -113,7 +116,6 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 	const protein_list proteins_of_pdbs     = build_protein_list_of_pdb_list_and_names( arg_pdbs, build_name_set_list( names ) );
 	const alignment    scored_new_alignment = score_alignment_copy( residue_scorer(), new_alignment, proteins_of_pdbs );
 
-
 //	cerr << "Did generate alignment : \n";
 //	cerr << horiz_align_outputter( scored_new_alignment ) << endl;
 //	write_alignment_as_fasta_alignment( cerr, scored_new_alignment, build_protein_list_of_pdb_list( arg_pdbs ) );
@@ -124,8 +126,10 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 }
 
 /// \brief Ctor for ssap_scores_file_alignment_acquirer
-ssap_scores_file_alignment_acquirer::ssap_scores_file_alignment_acquirer(const path &arg_ssap_scores_filename ///< TODOCUMENT
-                                                                         ) : ssap_scores_filename{ arg_ssap_scores_filename } {
+ssap_scores_file_alignment_acquirer::ssap_scores_file_alignment_acquirer(const path           &arg_ssap_scores_filename, ///< TODOCUMENT
+                                                                         const aln_glue_style &arg_aln_glue_style        ///< The approach that should be used for glueing alignments together
+                                                                         ) : ssap_scores_filename { arg_ssap_scores_filename },
+                                                                             glue_style           { arg_aln_glue_style       } {
 }
 
 /// \brief TODOCUMENT
@@ -133,20 +137,24 @@ path ssap_scores_file_alignment_acquirer::get_ssap_scores_file() const {
 	return ssap_scores_filename;
 }
 
+/// \brief Get the approach that should be used for glueing alignments together
+const aln_glue_style & ssap_scores_file_alignment_acquirer::get_glue_style() const {
+	return glue_style;
+}
+
 /// \brief Build an alignment between the specified PDBs & names using the specified scores and directory of SSAP alignments
 pair<alignment, size_size_pair_vec> cath::align::build_multi_alignment(const pdb_list               &arg_pdbs,           ///< The PDBs to be aligned
                                                                        const str_vec                &arg_names,          ///< The names of the structures to be aligned
                                                                        const size_size_doub_tpl_vec &arg_scores,         ///< The SSAP scores between the structures
                                                                        const path                   &arg_alignments_dir, ///< The directory containing alignments for the structures
+                                                                       const aln_glue_style         &arg_aln_glue_style, ///< The approach that should be used for glueing alignments together
                                                                        const ostream_ref_opt        &arg_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                                        ) {
 	const protein_list prots = build_protein_list_of_pdb_list( arg_pdbs );
 	auto aln_and_spantree = build_alignment(
 		prots,
 		arg_scores,
-		// aln_glue_style::INCREMENTALLY_WITH_PAIR_REFINING,
-		aln_glue_style::SIMPLY,
-		// aln_glue_style::WITH_HEAVY_REFINING,
+		arg_aln_glue_style,
 
 		// Lambda to define how to get the alignment corresponding to the pair of proteins
 		// corresponding to the specified indices
