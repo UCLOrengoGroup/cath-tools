@@ -183,19 +183,19 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 	font-size   : 9pt;
 	overflow-x  : auto;
 	width       : 100%;
-	}
+}
 #aln_container .seq      {
 	position    : relative;
 	white-space : pre;
 	width       : 100%;
-	}
+}
 #aln_container .seq-name {
 	float       : left;
 	width       : 100px;
-	}
+}
 #aln_container .seq-res  {
 	margin-left : 110px;
-	}
+}
 )";
 
 	str_str_map colour_name_of_hex_string;
