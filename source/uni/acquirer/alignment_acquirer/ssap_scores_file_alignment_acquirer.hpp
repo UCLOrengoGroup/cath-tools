@@ -26,7 +26,7 @@
 
 #include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "alignment/align_type_aliases.hpp"
-#include "uni/alignment/aln_glue_style.hpp"
+#include "alignment/aln_glue_style.hpp"
 
 namespace cath { namespace align { class alignment; } }
 
