@@ -50,6 +50,7 @@ namespace cath {
 			/// \brief Ctor
 			name_set_list() noexcept = default;
 			explicit name_set_list(name_set_vec);
+			explicit name_set_list(const size_t &);
 
 			bool empty() const;
 			size_t size() const;
@@ -66,6 +67,11 @@ namespace cath {
 		/// \brief Ctor from vector of name_sets
 		inline name_set_list::name_set_list(name_set_vec arg_name_sets ///< The vector of name_sets from which to construct this name_set_list
 		                                    ) : name_sets{ std::move( arg_name_sets ) } {
+		}
+
+		/// \brief Ctor from a number of empty name_sets to create
+		inline name_set_list::name_set_list(const size_t &arg_size
+		                                    ) : name_sets{ name_set_vec( arg_size ) } {
 		}
 
 		/// \brief Return whether this is empty
