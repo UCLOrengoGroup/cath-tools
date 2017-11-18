@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_H
 
 #include "chopping/chopping_type_aliases.hpp"
+#include "chopping/domain/domain.hpp"
 #include "common/type_aliases.hpp"
 #include "file/file_type_aliases.hpp"
 
@@ -75,8 +76,8 @@ namespace cath {
 		file::strucs_context get_strucs_context(const pdbs_acquirer &,
 		                                        std::istream &,
 		                                        const bool &,
-		                                        const str_vec &,
-		                                        const chop::domain_vec &);
+		                                        const str_vec & = str_vec{},
+		                                        const chop::domain_vec & = chop::domain_vec{});
 
 	} // namespace opts
 } // namespace cath

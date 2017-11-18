@@ -78,7 +78,7 @@ namespace cath {
 
 		pdb_list pdb_list_of_backbone_complete_region_limited_subset_pdbs(const pdb_list &,
 		                                                                  const chop::region_vec_opt_vec &,
-		                                                                  const ostream_ref_opt &);
+		                                                                  const ostream_ref_opt & = boost::none);
 
 		protein_list build_protein_list_of_pdb_list(const pdb_list &);
 
