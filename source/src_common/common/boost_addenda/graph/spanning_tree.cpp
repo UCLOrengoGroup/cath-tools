@@ -20,14 +20,17 @@
 
 #include "spanning_tree.hpp"
 
+#include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/irange.hpp>
 
 #include "common/boost_addenda/range/indices.hpp"
+#include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
 
 #include <algorithm>
+#include <fstream>
 #include <set>
 #include <tuple>
 #include <vector>
@@ -37,11 +40,15 @@ using namespace cath::common;
 
 using boost::adaptors::filtered;
 using boost::adaptors::transformed;
+using boost::algorithm::join;
+using boost::filesystem::path;
 using boost::irange;
 using std::make_pair;
 using std::make_tuple;
 using std::max;
 using std::min;
+using std::ofstream;
+using std::string;
 using std::vector;
 
 /// \brief Get a simple ( 0 <-> 1 <-> 2 <-> ... <-> (arg_num_items -1) spanning tree)
@@ -174,3 +181,36 @@ size_size_doub_tpl_vec cath::common::order_spanning_tree_from_start(const size_s
 	);
 }
 
+/// \brief Create a graphviz string representing the specified spanning tree
+string cath::common::make_graphviz_string_of_spanning_tree(const size_size_doub_tpl_vec &arg_spanning_tree ///< The tree to represent in graphviz format
+                                                           ) {
+	using std::to_string;
+	return "digraph example {\n"
+		+ join(
+			indices( arg_spanning_tree.size() )
+				| transformed( [&] (const size_t &x) {
+					return
+						  to_string( get<0>( arg_spanning_tree[ x ] ) )
+						+ " -> "
+						+ to_string( get<1>( arg_spanning_tree[ x ] ) )
+						+ " [ "
+						+ to_string( get<2>( arg_spanning_tree[ x ] ) )
+						+ ", "
+						+ to_string( x )
+						+ "]"
+						+ "\n";
+				} ),
+			""
+		)
+		+ "}\n";
+}
+
+/// \brief Write the specified spanning tree as a graphviz string to the specified file
+void cath::common::write_graphviz_string_of_spanning_tree(const size_size_doub_tpl_vec &arg_spanning_tree, ///< The spanning tree to represent in the specified file as a graphviz string
+                                                          const path                   &arg_file           ///< The file to write to
+                                                          ) {
+	ofstream output_stream;
+	open_ofstream( output_stream, arg_file );
+	output_stream << make_graphviz_string_of_spanning_tree( arg_spanning_tree );
+	output_stream.close();
+}

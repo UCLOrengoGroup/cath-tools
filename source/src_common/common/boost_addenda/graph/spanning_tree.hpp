@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_SUPERPOSITION_SPANNING_TREE_H
 #define _CATH_TOOLS_SOURCE_SUPERPOSITION_SPANNING_TREE_H
 
+#include <boost/filesystem/path.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/kruskal_min_spanning_tree.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -175,6 +176,9 @@ namespace cath {
 		size_size_pair_vec get_edges_of_spanning_tree(const size_size_doub_tpl_vec &);
 		size_size_doub_tpl_vec order_spanning_tree_from_start(const size_size_doub_tpl_vec &,
 		                                                      const size_t &);
+		std::string make_graphviz_string_of_spanning_tree(const size_size_doub_tpl_vec &);
+		void write_graphviz_string_of_spanning_tree(const size_size_doub_tpl_vec &,
+		                                            const boost::filesystem::path &);
 
 	} // namespace common
 } // namespace cath
