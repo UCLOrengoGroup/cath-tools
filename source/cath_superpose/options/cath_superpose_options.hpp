@@ -121,7 +121,7 @@ namespace cath {
 
 		std::unique_ptr<const align::alignment_acquirer> get_alignment_acquirer(const cath_superpose_options &);
 		std::pair<align::alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const cath_superpose_options &,
-		                                                                                const file::pdb_list &);
+		                                                                                const file::strucs_context &);
 
 		std::unique_ptr<const pdbs_acquirer> get_pdbs_acquirer(const cath_superpose_options &);
 		file::strucs_context get_pdbs_and_names(const cath_superpose_options &,

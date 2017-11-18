@@ -29,6 +29,7 @@
 #include "alignment/aln_glue_style.hpp"
 
 namespace cath { namespace align { class alignment; } }
+namespace cath { namespace file { class pdb_list; } }
 
 namespace cath {
 	namespace align {
@@ -43,7 +44,7 @@ namespace cath {
 			aln_glue_style glue_style = aln_glue_style::SIMPLY;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
-			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::pdb_list &) const final;
+			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &) const final;
 
 		public:
 			/// \brief The default for the approach that should be used for glueing alignments together
@@ -55,12 +56,6 @@ namespace cath {
 			boost::filesystem::path get_ssap_scores_file() const;
 			const aln_glue_style & get_glue_style() const;
 		};
-
-		size_size_alignment_tuple_vec get_spanning_alignments(const file::pdb_list &,
-		                                                      const str_vec &,
-		                                                      const size_size_doub_tpl_vec &,
-		                                                      const boost::filesystem::path &,
-		                                                      const ostream_ref_opt & = boost::none);
 
 		std::pair<alignment, size_size_pair_vec> build_multi_alignment(const file::pdb_list &,
 		                                                               const str_vec &,

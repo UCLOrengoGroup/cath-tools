@@ -24,10 +24,7 @@
 #include "alignment/alignment.hpp"
 #include "alignment/io/alignment_io.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
-#include "file/pdb/pdb.hpp"
-#include "file/pdb/pdb_atom.hpp"
-#include "file/pdb/pdb_list.hpp"
-#include "file/pdb/pdb_residue.hpp"
+#include "file/strucs_context.hpp"
 #include "test/global_test_constants.hpp"
 
 namespace cath { namespace test { } }
@@ -66,7 +63,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 	const auto aln_and_sptree = [&] {
 		ostringstream parse_ss;
 		const log_to_ostream_guard parse_log_guard{ parse_ss };
-		return the_acquirer.get_alignment_and_spanning_tree( the_pdbs );
+		return the_acquirer.get_alignment_and_spanning_tree( strucs_context{ the_pdbs } );
 	} ();
 
 	BOOST_CHECK_EQUAL(
@@ -127,7 +124,7 @@ BOOST_AUTO_TEST_CASE(accepts_empty_scores_and_single_structure) {
 	const auto aln_and_sptree = [&] {
 		ostringstream parse_ss;
 		const log_to_ostream_guard parse_log_guard{ parse_ss };
-		return the_acquirer.get_alignment_and_spanning_tree( the_pdbs );
+		return the_acquirer.get_alignment_and_spanning_tree( strucs_context{ the_pdbs } );
 	} ();
 
 	BOOST_CHECK_EQUAL(

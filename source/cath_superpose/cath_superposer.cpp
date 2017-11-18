@@ -102,9 +102,8 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 
 	// Grab the PDBs and their IDs
 	const strucs_context  context  = get_pdbs_and_names( arg_cath_sup_opts, arg_istream, false );
-	const pdb_list       &raw_pdbs = context.get_pdbs();
 
-	if ( raw_pdbs.empty() ) {
+	if ( context.get_pdbs().empty() ) {
 		logger::log_and_exit(
 			logger::return_code::NO_PDB_FILES_LOADED,
 			"No valid PDBs were loaded"
@@ -116,19 +115,18 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	if ( json_sup_infile ) {
 		return set_pdbs_copy(
 			read_from_json_file<superposition_context>( *json_sup_infile ),
-			raw_pdbs
+			context.get_pdbs()
 		);
 	}
 
 	// Get the alignment and corresponding spanning tree
-	const pdb_list backbone_complete_subset_pdbs = pdb_list_of_backbone_complete_region_limited_subset_pdbs(
-		raw_pdbs,
-		context.get_regions(),
+	const auto backbone_complete_strucs_context = strucs_context_of_backbone_complete_region_limited_subset_pdbs(
+		context,
 		ref( arg_stderr )
 	);
-	const auto       aln_and_spn_tree = [&] {
+	const auto aln_and_spn_tree = [&] {
 		try {
-			return get_alignment_and_spanning_tree( arg_cath_sup_opts, backbone_complete_subset_pdbs );
+			return get_alignment_and_spanning_tree( arg_cath_sup_opts, backbone_complete_strucs_context );
 		}
 		catch (const std::exception &e) {
 			logger::log_and_exit(
@@ -146,14 +144,14 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	if ( ! ssap_scores_file.empty() ) {
 		return {
 			hacky_multi_ssap_fuction(
-				backbone_complete_subset_pdbs,
+				backbone_complete_strucs_context.get_pdbs(),
 				get_multi_ssap_alignment_file_names( context.get_name_sets() ),
 				spanning_tree,
 				ssap_scores_file.parent_path(),
 				arg_cath_sup_opts.get_selection_policy_acquirer(),
 				arg_stderr
 			),
-			context, ///< Importantly, this contains the raw_pdbs, not backbone_complete_subset_pdbs, so that superpositions include stripped residues (eg HETATM only residues). /// \todo Consider adding fast, simple test that ssap_scores_file superposition output includes HETATMs.
+			context, ///< Importantly, this contains the raw structures, not backbone_complete_subset, so that superpositions include stripped residues (eg HETATM only residues). /// \todo Consider adding fast, simple test that ssap_scores_file superposition output includes HETATMs.
 			the_alignment
 		};
 	}

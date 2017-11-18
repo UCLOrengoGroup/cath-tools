@@ -232,9 +232,9 @@ unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const ca
 ///
 /// \relates cath_superpose_options
 pair<alignment, size_size_pair_vec> cath::opts::get_alignment_and_spanning_tree(const cath_superpose_options &arg_cath_sup_opts, ///< The options to specify how to get the alignment and spanning tree
-                                                                                const pdb_list               &arg_pdbs           ///< The PDBs to use
+                                                                                const strucs_context         &arg_strucs         ///< The structures to use
                                                                                 ) {
-	return get_alignment_acquirer( arg_cath_sup_opts )->get_alignment_and_spanning_tree( arg_pdbs );
+	return get_alignment_acquirer( arg_cath_sup_opts )->get_alignment_and_spanning_tree( arg_strucs );
 }
 
 /// \brief Get the single pdbs_acquirer implied by the specified cath_superpose_options

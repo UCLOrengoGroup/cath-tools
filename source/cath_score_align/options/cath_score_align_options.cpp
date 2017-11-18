@@ -31,6 +31,7 @@
 #include "alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
+#include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
 #include "common/argc_argv_faker.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
@@ -49,9 +50,11 @@
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
+using namespace cath::file;
 using namespace cath::opts;
 
 using boost::none;
+using std::istream;
 using std::string;
 using std::unique_ptr;
 
@@ -163,4 +166,20 @@ unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const ca
 unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_score_align_options &arg_cath_score_align_options ///< The cath_score_align_options to query
                                                               ) {
 	return get_pdbs_acquirer( arg_cath_score_align_options.get_pdb_input_spec() );
+}
+
+/// \brief Get PDBs and names as implied by the specified cath_score_align_options
+///
+/// Throws an invalid_argument_exception if the cath_score_align_options isn't configured to read PDBs
+///
+/// \relates cath_score_align_options
+strucs_context cath::opts::get_pdbs_and_names(const cath_score_align_options &arg_cath_score_align_options, ///< The options to specify how to get the PDBs and names
+                                              istream                        &arg_istream,                  ///< The istream, which may contain PDB data
+                                              const bool                     &arg_remove_partial_residues   ///< Whether to remove partial residues from the PDB data
+                                              ) {
+	return get_strucs_context(
+		*get_pdbs_acquirer( arg_cath_score_align_options ),
+		arg_istream,
+		arg_remove_partial_residues
+	);
 }

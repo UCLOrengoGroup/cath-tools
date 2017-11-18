@@ -31,10 +31,6 @@
 #include "cath_refine_align/options/cath_refine_align_options.hpp"
 #include "chopping/region/region.hpp"
 #include "common/exception/not_implemented_exception.hpp"
-#include "file/pdb/pdb.hpp"
-#include "file/pdb/pdb_atom.hpp"
-#include "file/pdb/pdb_list.hpp"
-#include "file/pdb/pdb_residue.hpp"
 #include "outputter/alignment_outputter/alignment_outputter.hpp"
 #include "outputter/alignment_outputter/alignment_outputter_list.hpp"
 #include "outputter/superposition_outputter/superposition_outputter.hpp"
@@ -76,27 +72,21 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 
 	// Grab the PDBs and their IDs
 	const strucs_context  context      = get_pdbs_and_names( arg_cath_refine_align_options, arg_istream, true );
-	const pdb_list       &raw_pdbs     = context.get_pdbs();
 
 	// TODO: Populate this name summarising the overall group so it can be used, eg in superposition scripts
 	const string          overall_name{};
 
-	const pdb_list backbone_complete_subset_pdbs = pdb_list_of_backbone_complete_region_limited_subset_pdbs(
-		raw_pdbs,
-		context.get_regions(),
+	const auto backbone_complete_strucs_context = strucs_context_of_backbone_complete_region_limited_subset_pdbs(
+		context,
 		ref( arg_stderr )
 	);
 
-	const protein_list    proteins = build_protein_list_of_pdb_list_and_names(
-		backbone_complete_subset_pdbs,
-		context.get_name_sets()
-	);
-
 	// An alignment is required but this should have been checked elsewhere
-	const auto                aln_acq_ptr        = get_alignment_acquirer( arg_cath_refine_align_options );
-	const auto                alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree( backbone_complete_subset_pdbs );
-	const alignment          &the_alignment      = alignment_and_tree.first;
-	const size_size_pair_vec &spanning_tree      = alignment_and_tree.second;
+	const protein_list  proteins           = build_protein_list( backbone_complete_strucs_context );
+	const auto          aln_acq_ptr        = get_alignment_acquirer( arg_cath_refine_align_options );
+	const auto          alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree( backbone_complete_strucs_context );
+	const alignment    &the_alignment      = alignment_and_tree.first;
+	const auto         &spanning_tree      = alignment_and_tree.second;
 
 //	if ( proteins.size() != 2 || the_alignment.num_entries() != 2 ) {
 //		BOOST_THROW_EXCEPTION(not_implemented_exception("Currently only able to score alignments of more than two structures"));

@@ -27,13 +27,9 @@
 #include <utility>
 
 namespace cath { namespace align { class alignment; } }
-namespace cath { namespace file { class pdb_list; } }
+namespace cath { namespace file { class strucs_context; } }
 namespace cath { namespace opts { class alignment_input_options_block; } }
 namespace cath { namespace opts { class alignment_input_spec; } }
-namespace cath { namespace opts { class cath_refine_align_options; } }
-namespace cath { namespace opts { class cath_score_align_options; } }
-namespace cath { namespace opts { class cath_superpose_options; } }
-namespace cath { namespace opts {class pdbs_acquirer; } }
 
 namespace cath {
 	namespace align {
@@ -45,7 +41,7 @@ namespace cath {
 			virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
 			
 			/// \brief TODOCUMENT
-			virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::pdb_list &) const = 0;
+			virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &) const = 0;
 
 		protected:
 			/// \brief The minimum number of residues that are required in "residue name" aligning
@@ -66,7 +62,7 @@ namespace cath {
 			alignment_acquirer & operator=(const alignment_acquirer &) = default;
 			alignment_acquirer & operator=(alignment_acquirer &&) noexcept = default;
 
-			std::pair<alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const file::pdb_list &) const;
+			std::pair<alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const file::strucs_context &) const;
 		};
 
 		uptr_vec<alignment_acquirer> get_alignment_acquirers(const opts::alignment_input_spec &);

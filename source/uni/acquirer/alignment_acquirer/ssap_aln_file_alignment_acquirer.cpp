@@ -28,10 +28,7 @@
 #include "common/exception/runtime_error_exception.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/logger.hpp"
-#include "file/pdb/pdb.hpp"
-#include "file/pdb/pdb_atom.hpp"
-#include "file/pdb/pdb_list.hpp"
-#include "file/pdb/pdb_residue.hpp"
+#include "file/strucs_context.hpp"
 #include "structure/protein/protein.hpp" // ***** TEMPORARY *****
 #include "structure/protein/protein_list.hpp" // ***** TEMPORARY *****
 #include "structure/protein/residue.hpp"
@@ -61,9 +58,10 @@ unique_ptr<alignment_acquirer> ssap_aln_file_alignment_acquirer::do_clone() cons
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
                                                                                                          ) const {
-	const size_t num_pdbs = arg_pdbs.size();
+	const auto   &the_pdbs = arg_strucs_context.get_pdbs();
+	const size_t  num_pdbs = the_pdbs.size();
 	if ( num_pdbs != 2 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Superposing with a SSAP alignment requires exactly two PDBs"));
 	}
@@ -73,8 +71,8 @@ pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_ali
 	try {
 		new_alignment = read_alignment_from_cath_ssap_legacy_format(
 			my_aln_stream,
-			arg_pdbs[alignment::PAIR_A_IDX],
-			arg_pdbs[alignment::PAIR_B_IDX],
+			the_pdbs[alignment::PAIR_A_IDX],
+			the_pdbs[alignment::PAIR_B_IDX],
 			ostream_ref{ cerr }
 		);
 		my_aln_stream.close();
@@ -87,7 +85,7 @@ pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_ali
 		);
 	}
 
-	const protein_list proteins_of_pdbs = build_protein_list_of_pdb_list( arg_pdbs );
+	const protein_list proteins_of_pdbs = build_protein_list( arg_strucs_context );
 	score_alignment( residue_scorer(), new_alignment, proteins_of_pdbs );
 
 	// Return the results

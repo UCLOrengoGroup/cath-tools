@@ -31,10 +31,7 @@
 #include "common/boost_addenda/graph/spanning_tree.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/clone/make_uptr_clone.hpp"
-#include "file/pdb/pdb.hpp"
-#include "file/pdb/pdb_atom.hpp"
-#include "file/pdb/pdb_list.hpp"
-#include "file/pdb/pdb_residue.hpp"
+#include "file/strucs_context.hpp"
 #include "structure/geometry/coord_list.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/residue.hpp"
@@ -64,15 +61,16 @@ unique_ptr<alignment_acquirer> residue_name_alignment_acquirer::do_clone() const
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> residue_name_alignment_acquirer::do_get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> residue_name_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
                                                                                                         ) const {
-	const protein_list proteins_of_pdbs = build_protein_list_of_pdb_list( arg_pdbs );
-	const size_t &num_pdbs = arg_pdbs.size();
+	const protein_list  proteins_of_pdbs = build_protein_list( arg_strucs_context );
+	const auto         &the_pdbs         = arg_strucs_context.get_pdbs();
+	const size_t        num_pdbs         = the_pdbs.size();
 
 	// Grab lists of the names of the residues in each PDB
 	residue_name_vec_vec residue_names_of_pdbs;
 	residue_names_of_pdbs.reserve( num_pdbs );
-	for (const pdb &my_pdb : arg_pdbs) {
+	for (const pdb &my_pdb : the_pdbs) {
 		residue_names_of_pdbs.push_back(
 			transform_build<residue_name_vec>(
 				my_pdb.get_residue_ids_of_first_chain__backbone_unchecked(),
@@ -98,8 +96,8 @@ pair<alignment, size_size_pair_vec> residue_name_alignment_acquirer::do_get_alig
 		for (const size_t &pdb_ctr_2 : indices( pdb_ctr_1 ) ) {
 			const pair<coord_list, coord_list> all_common_coords = alignment_coord_extractor::get_common_coords(
 				new_alignment,
-				arg_pdbs[ pdb_ctr_1 ],
-				arg_pdbs[ pdb_ctr_2 ],
+				the_pdbs[ pdb_ctr_1 ],
+				the_pdbs[ pdb_ctr_2 ],
 				common_residue_select_all_policy(),
 				common_atom_select_ca_policy(),
 				pdb_ctr_1,

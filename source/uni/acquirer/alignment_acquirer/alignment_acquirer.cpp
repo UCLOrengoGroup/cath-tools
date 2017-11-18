@@ -34,10 +34,7 @@
 #include "common/exception/out_of_range_exception.hpp"
 #include "common/exception/runtime_error_exception.hpp"
 #include "common/logger.hpp"
-#include "file/pdb/pdb.hpp"
-#include "file/pdb/pdb_atom.hpp"
-#include "file/pdb/pdb_list.hpp"
-#include "file/pdb/pdb_residue.hpp"
+#include "file/strucs_context.hpp"
 #include "options/options_block/alignment_input_options_block.hpp"
 #include "options/options_block/alignment_input_spec.hpp"
 
@@ -65,18 +62,18 @@ unique_ptr<alignment_acquirer> alignment_acquirer::clone() const {
 ///
 /// The order of the edges in the spanning tree doesn't matter and the scores are discarded
 /// because none of that matters for superposing
-pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< The PDBs to which the alignment should correspond
+pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< The structures to which the alignment should correspond
                                                                                         ) const {
 	using std::to_string;
 
 	// Call the concrete class's implementation of do_get_alignment_and_orderer() and grab the resulting alignment and spanning_tree
-	const pair<alignment, size_size_pair_vec> alignment_and_orderer = do_get_alignment_and_spanning_tree( arg_pdbs );
+	const pair<alignment, size_size_pair_vec> alignment_and_orderer = do_get_alignment_and_spanning_tree( arg_strucs_context );
 
 	const size_t num_alignment_entries = alignment_and_orderer.first.num_entries();
 	const size_t num_span_tree_entries = alignment_and_orderer.second.size();
 
 	// Check that both are of the correct size
-	const size_t num_pdbs = arg_pdbs.size();
+	const size_t num_pdbs = arg_strucs_context.get_pdbs().size();
 	if ( num_alignment_entries != num_pdbs ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
 			"Number of entries in alignment ("

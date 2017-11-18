@@ -144,7 +144,7 @@ alignment_context cath::align::get_alignment_context(const alignment_acquirer &a
 	);
 	return {
 		arg_alignment_acquirer
-			.get_alignment_and_spanning_tree( get_restricted_pdbs( the_strucs_context ) )
+			.get_alignment_and_spanning_tree( restrict_pdbs_copy( the_strucs_context ) )
 			.first,
 		the_strucs_context
 	};

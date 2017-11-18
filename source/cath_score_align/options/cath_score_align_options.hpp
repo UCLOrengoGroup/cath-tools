@@ -30,6 +30,7 @@
 #include <vector>
 
 namespace cath { namespace align { class alignment_acquirer; } }
+namespace cath { namespace file { class strucs_context; } }
 namespace cath { namespace opts { class pdbs_acquirer; } }
 
 namespace cath {
@@ -43,10 +44,10 @@ namespace cath {
 			static const std::string STANDARD_USAGE_ERROR_STRING;
 
 			/// \brief TODOCUMENT
-			alignment_input_options_block      the_alignment_input_options_block;
+			alignment_input_options_block the_alignment_input_options_block;
 
 			/// \brief TODOCUMENT
-			pdb_input_options_block            the_pdb_input_options_block;
+			pdb_input_options_block       the_pdb_input_options_block;
 
 			std::string do_get_program_name() const final;
 			str_opt do_get_error_or_help_string() const final;
@@ -68,6 +69,10 @@ namespace cath {
 
 		std::unique_ptr<const align::alignment_acquirer> get_alignment_acquirer(const cath_score_align_options &);
 		std::unique_ptr<const pdbs_acquirer> get_pdbs_acquirer(const cath_score_align_options &);
+		file::strucs_context get_pdbs_and_names(const cath_score_align_options &,
+		                                        std::istream &,
+		                                        const bool &);
+
 	} // namespace opts
 } // namespace cath
 

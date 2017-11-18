@@ -35,12 +35,9 @@
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/file/open_fstream.hpp"
 #include "file/name_set/name_set_list.hpp"
-#include "file/pdb/pdb.hpp"
-#include "file/pdb/pdb_atom.hpp"
-#include "file/pdb/pdb_list.hpp"
-#include "file/pdb/pdb_residue.hpp"
 #include "file/pdb/protein_info.hpp"
 #include "file/ssap_scores_file/ssap_scores_file.hpp"
+#include "file/strucs_context.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_list.hpp"
 #include "structure/protein/residue.hpp"
@@ -71,19 +68,21 @@ unique_ptr<alignment_acquirer> ssap_scores_file_alignment_acquirer::do_clone() c
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
                                                                                                             ) const {
 	// Parse the SSAP scores file
-	const path                    ssaps_filename   = get_ssap_scores_file();
-	const auto                    ssap_scores_data = ssap_scores_file::parse_ssap_scores_file( ssaps_filename );
-	const str_vec                &names            = ssap_scores_data.first;
-	const size_size_doub_tpl_vec &scores           = ssap_scores_data.second;
+	const pdb_list &the_pdbs         = arg_strucs_context.get_pdbs();
+	const size_t    num_pdbs         = the_pdbs.size();
+	const path      ssaps_filename   = get_ssap_scores_file();
+	const auto      ssap_scores_data = ssap_scores_file::parse_ssap_scores_file( ssaps_filename );
+	const str_vec  &names            = ssap_scores_data.first;
+	const auto     &scores           = ssap_scores_data.second;
 
-	if ( names.size() != arg_pdbs.size() ) {
-		if ( names.size() != 0 && arg_pdbs.size() != 1 ) {
+	if ( names.size() != num_pdbs ) {
+		if ( names.size() != 0 && num_pdbs != 1 ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception(
 				"The number of PDBs is "
-				+ ::std::to_string( arg_pdbs.size()         )
+				+ ::std::to_string( num_pdbs         )
 				+ ", which doesn't match the "
 				+ ::std::to_string( names.size() )
 				+ " structures required for combining with the SSAP scores file \""
@@ -95,7 +94,7 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 
 	// Construct the new alignment
 	const auto aln_and_spantree = build_multi_alignment(
-		arg_pdbs,
+		the_pdbs,
 		names,
 		scores,
 		ssaps_filename.parent_path(),
@@ -111,14 +110,17 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 		return make_pair( new_alignment, spanning_tree );
 	}
 
-//	BOOST_LOG_TRIVIAL( warning )<< "About to attempt to build protein list using data that's been read from ssaps_filename (with " << arg_pdbs.size() << " pdbs and " << names.size() << " names)";
+//	BOOST_LOG_TRIVIAL( warning )<< "About to attempt to build protein list using data that's been read from ssaps_filename (with " << num_pdbs << " pdbs and " << names.size() << " names)";
 
-	const protein_list proteins_of_pdbs     = build_protein_list_of_pdb_list_and_names( arg_pdbs, build_name_set_list( names ) );
+	const protein_list proteins_of_pdbs     = build_protein_list_of_pdb_list_and_names(
+		arg_strucs_context.get_pdbs(),
+		build_name_set_list( names )
+	);
 	const alignment    scored_new_alignment = score_alignment_copy( residue_scorer(), new_alignment, proteins_of_pdbs );
 
 //	cerr << "Did generate alignment : \n";
 //	cerr << horiz_align_outputter( scored_new_alignment ) << endl;
-//	write_alignment_as_fasta_alignment( cerr, scored_new_alignment, build_protein_list_of_pdb_list( arg_pdbs ) );
+//	write_alignment_as_fasta_alignment( cerr, scored_new_alignment, build_protein_list_of_pdb_list( arg_strucs_context ) );
 //	cerr << endl;
 
 	// Return the results

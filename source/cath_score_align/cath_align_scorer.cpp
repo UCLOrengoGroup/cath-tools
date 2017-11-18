@@ -28,8 +28,8 @@
 #include "file/name_set/name_set_list.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
-#include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "file/strucs_context.hpp"
 #include "score/aligned_pair_score_list/aligned_pair_score_list_factory.hpp"
 #include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
 #include "score/aligned_pair_score_list/score_value_list_outputter/score_value_list_json_outputter.hpp"
@@ -63,15 +63,13 @@ void cath_align_scorer::score(const cath_score_align_options &arg_cath_score_ali
 		return;
 	}
 
-	const auto           pdbs_acquirer_ptr = get_pdbs_acquirer( arg_cath_score_align_options );
-	const auto           pdbs_and_names    = pdbs_acquirer_ptr->get_pdbs_and_names( arg_istream, true );
-	const pdb_list      &pdbs              = pdbs_and_names.first;
-	const name_set_list &names             = pdbs_and_names.second;
-	const protein_list  proteins           = build_protein_list_of_pdb_list_and_names( pdbs, names );
+	// Grab the PDBs and their IDs
+	const strucs_context context  = get_pdbs_and_names( arg_cath_score_align_options, arg_istream, false );
+	const protein_list   proteins = build_protein_list( context );
 
 	// An alignment is required but this should have been checked elsewhere
 	const auto       alignment_acq_ptr  = get_alignment_acquirer( arg_cath_score_align_options );
-	const auto       alignment_and_tree = alignment_acq_ptr->get_alignment_and_spanning_tree( pdbs );
+	const auto       alignment_and_tree = alignment_acq_ptr->get_alignment_and_spanning_tree( context );
 	const alignment &the_alignment      = alignment_and_tree.first;
 	// const auto      &spanning_tree      = alignment_and_tree.second;
 

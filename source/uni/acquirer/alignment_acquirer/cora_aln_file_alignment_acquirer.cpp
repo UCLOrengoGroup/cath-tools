@@ -26,10 +26,7 @@
 #include "common/boost_addenda/graph/spanning_tree.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/file/open_fstream.hpp"
-#include "file/pdb/pdb.hpp"
-#include "file/pdb/pdb_atom.hpp"
-#include "file/pdb/pdb_list.hpp"
-#include "file/pdb/pdb_residue.hpp"
+#include "file/strucs_context.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_list.hpp"
 #include "structure/protein/residue.hpp"
@@ -58,16 +55,17 @@ unique_ptr<alignment_acquirer> cora_aln_file_alignment_acquirer::do_clone() cons
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
                                                                                                          ) const {
 	// Construct an alignment from the CORA alignment file
-	const size_t num_pdbs = arg_pdbs.size();
+	const auto   &the_pdbs = arg_strucs_context.get_pdbs();
+	const size_t  num_pdbs = the_pdbs.size();
 	ifstream my_aln_stream;
 	open_ifstream(my_aln_stream, get_cora_alignment_file());
-	const alignment     new_alignment = read_alignment_from_cath_cora_legacy_format( my_aln_stream, arg_pdbs, ostream_ref{ cerr } );
+	const alignment     new_alignment = read_alignment_from_cath_cora_legacy_format( my_aln_stream, the_pdbs, ostream_ref{ cerr } );
 	my_aln_stream.close();
 
-	const protein_list proteins_of_pdbs = build_protein_list_of_pdb_list( arg_pdbs );
+	const protein_list proteins_of_pdbs = build_protein_list( arg_strucs_context );
 	const alignment scored_new_alignment = score_alignment_copy( residue_scorer(), new_alignment, proteins_of_pdbs );
 
 	// Return the results with a simple spanning tree that will connect the entries

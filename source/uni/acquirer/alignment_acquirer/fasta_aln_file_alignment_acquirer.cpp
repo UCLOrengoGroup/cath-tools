@@ -26,10 +26,7 @@
 #include "common/boost_addenda/graph/spanning_tree.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/file/open_fstream.hpp"
-#include "file/pdb/pdb.hpp"
-#include "file/pdb/pdb_atom.hpp"
-#include "file/pdb/pdb_list.hpp"
-#include "file/pdb/pdb_residue.hpp"
+#include "file/strucs_context.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_list.hpp"
 #include "structure/protein/residue.hpp"
@@ -54,10 +51,10 @@ unique_ptr<alignment_acquirer> fasta_aln_file_alignment_acquirer::do_clone() con
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> fasta_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const pdb_list &arg_pdbs ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> fasta_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
                                                                                                           ) const {
 	// Construct an alignment from the FASTA alignment file
-	const protein_list proteins_of_pdbs = build_protein_list_of_pdb_list( arg_pdbs );
+	const protein_list proteins_of_pdbs = build_protein_list( arg_strucs_context );
 	const alignment new_alignment = read_alignment_from_fasta_file( get_fasta_alignment_file(), proteins_of_pdbs, cerr );
 
 	const alignment scored_new_alignment = score_alignment_copy( residue_scorer(), new_alignment, proteins_of_pdbs );
@@ -65,7 +62,7 @@ pair<alignment, size_size_pair_vec> fasta_aln_file_alignment_acquirer::do_get_al
 	// Return the results
 	return make_pair(
 		scored_new_alignment,
-		make_simple_unweighted_spanning_tree( arg_pdbs.size() )
+		make_simple_unweighted_spanning_tree( proteins_of_pdbs.size() )
 	);
 }
 
