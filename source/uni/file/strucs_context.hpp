@@ -45,6 +45,9 @@ namespace cath {
 			chop::region_vec_opt_vec regions;
 
 		public:
+			explicit strucs_context(file::pdb_list);
+			strucs_context(file::pdb_list,
+			               name_set_list);
 			strucs_context(file::pdb_list,
 			               name_set_list,
 			               chop::region_vec_opt_vec);
@@ -57,6 +60,25 @@ namespace cath {
 		};
 
 		size_t get_num_entries(const strucs_context &);
+
+		/// \brief Ctor for strucs_context
+		inline strucs_context::strucs_context(pdb_list arg_pdbs ///< The PDBs of the structures
+		                                      ) : strucs_context{
+		                                          	arg_pdbs,
+		                                          	name_set_list           ( arg_pdbs.size() ),
+		                                          	chop::region_vec_opt_vec( arg_pdbs.size() )
+		                                          } {
+		}
+
+		/// \brief Ctor for strucs_context
+		inline strucs_context::strucs_context(pdb_list      arg_pdbs,     ///< The PDBs of the structures
+		                                      name_set_list arg_name_sets ///< The IDs of the structures
+		                                      ) : strucs_context{
+		                                          	arg_pdbs,
+		                                          	arg_name_sets,
+		                                          	chop::region_vec_opt_vec( arg_pdbs.size() )
+		                                          } {
+		}
 
 		/// \brief Ctor for strucs_context
 		inline strucs_context::strucs_context(pdb_list                 arg_pdbs,      ///< The PDBs of the structures
@@ -101,6 +123,12 @@ namespace cath {
 			return arg_strucs_context.get_name_sets().size();
 		}
 
+		strucs_context strucs_context_of_backbone_complete_subset_pdbs(const strucs_context &,
+		                                                               const ostream_ref_opt & = boost::none);
+
+		strucs_context strucs_context_of_backbone_complete_region_limited_subset_pdbs(const strucs_context &,
+		                                                                              const ostream_ref_opt & = boost::none);
+
 		void restrict_pdbs(strucs_context &);
 
 		strucs_context restrict_pdbs_copy(strucs_context);
@@ -110,6 +138,8 @@ namespace cath {
 		std::string to_string(const strucs_context &);
 
 		file::pdb_list get_restricted_pdbs(const strucs_context &);
+
+		protein_list build_protein_list(const strucs_context &);
 
 	} // namespace file
 } // namespace cath

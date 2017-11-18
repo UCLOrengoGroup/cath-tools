@@ -29,7 +29,13 @@
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "file/pdb/pdb.hpp"
+#include "file/strucs_context.hpp"
+#include "structure/protein/protein.hpp"
+#include "structure/protein/protein_list.hpp"
+#include "structure/protein/sec_struc.hpp"
+#include "structure/protein/sec_struc_planar_angles.hpp"
 
+using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
@@ -38,6 +44,40 @@ using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::range::count_if;
 using std::string;
+
+/// \brief Build a strucs_context from the specified one that contains the backbone-complete subsets of the PDBs
+///
+/// \relates strucs_context
+strucs_context cath::file::strucs_context_of_backbone_complete_subset_pdbs(const strucs_context  &arg_strucs_context, ///< The strucs_context to use as a source
+                                                                           const ostream_ref_opt &arg_ostream         ///< An optional reference to an ostream to which any logging should be sent
+                                                                           ) {
+	return {
+		pdb_list_of_backbone_complete_subset_pdbs(
+			arg_strucs_context.get_pdbs(),
+			arg_ostream
+		),
+		arg_strucs_context.get_name_sets(),
+		arg_strucs_context.get_regions()
+	};
+}
+
+/// \brief Build a strucs_context from the specified one that contains the backbone-complete subsets of the PDBs
+///        and is restricted to the regions specified in the strucs_context
+///
+/// \relates strucs_context
+strucs_context cath::file::strucs_context_of_backbone_complete_region_limited_subset_pdbs(const strucs_context     &arg_strucs_context, ///< The strucs_context to use as a source
+                                                                                          const ostream_ref_opt    &arg_ostream         ///< An optional reference to an ostream to which any logging should be sent
+                                                                                          ) {
+	return {
+		pdb_list_of_backbone_complete_region_limited_subset_pdbs(
+			arg_strucs_context.get_pdbs(),
+			arg_strucs_context.get_regions(),
+			arg_ostream
+		),
+		arg_strucs_context.get_name_sets(),
+		arg_strucs_context.get_regions()
+	};
+}
 
 /// \brief Restrict the PDBs in the specified strucs_context according to its regions
 ///
@@ -115,4 +155,15 @@ pdb_list cath::file::get_restricted_pdbs(const strucs_context &arg_strucs_contex
 			}
 		)
 	};
+}
+
+/// \brief Make a protein list from the PDBs and names in the specified strucs_context
+///
+/// \relates strucs_context
+protein_list cath::file::build_protein_list(const strucs_context &arg_strucs_context ///< The strucs_context from which to build the protein_list
+                                            ) {
+	return build_protein_list_of_pdb_list_and_names(
+		arg_strucs_context.get_pdbs(),
+		arg_strucs_context.get_name_sets()
+	);
 }
