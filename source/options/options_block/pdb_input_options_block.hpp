@@ -30,9 +30,6 @@ namespace cath {
 		/// \brief An options block for specifying how PDBs should be read in
 		class pdb_input_options_block final : public cath::opts::options_block {
 		private:
-			static const std::string PO_PDB_INFILE;
-			static const std::string PO_PDBS_FROM_STDIN;
-
 			/// \brief The pdb_input_spec to be configured by this options block
 			pdb_input_spec the_pdb_input_spec;
 
@@ -43,6 +40,9 @@ namespace cath {
 			str_vec do_get_all_options_names() const final;
 
 		public:
+			static const std::string PO_PDB_INFILE;
+			static const std::string PO_PDBS_FROM_STDIN;
+
 			const pdb_input_spec & get_pdb_input_spec() const;
 		};
 

@@ -32,12 +32,6 @@ namespace cath {
 		private:
 			using super = options_block;
 
-			static const std::string PO_RES_NAME_ALIGN;
-			static const std::string PO_FASTA_ALIGN_INFILE;
-			static const std::string PO_SSAP_ALIGN_INFILE;
-			static const std::string PO_CORA_ALIGN_INFILE;
-			static const std::string PO_SSAP_SCORE_INFILE;
-
 			/// \brief The alignment_input_spec to be configured by this options block
 			alignment_input_spec the_alignment_input_spec;
 
@@ -48,6 +42,12 @@ namespace cath {
 			str_vec do_get_all_options_names() const final;
 
 		public:
+			static const std::string PO_RES_NAME_ALIGN;
+			static const std::string PO_FASTA_ALIGN_INFILE;
+			static const std::string PO_SSAP_ALIGN_INFILE;
+			static const std::string PO_CORA_ALIGN_INFILE;
+			static const std::string PO_SSAP_SCORE_INFILE;
+
 			const alignment_input_spec & get_alignment_input_spec() const;
 		};
 

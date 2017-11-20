@@ -47,14 +47,6 @@ namespace cath {
 
 			using super = options_block;
 
-			static const std::string PO_SUP_FILE;
-			static const std::string PO_SUP_FILES_DIR;
-			static const std::string PO_SUP_TO_STDOUT;
-			static const std::string PO_SUP_TO_PYMOL;
-			static const std::string PO_PYMOL_PROGRAM;
-			static const std::string PO_SUP_TO_PYMOL_FILE;
-			static const std::string PO_SUP_TO_JSON_FILE;
-
 			static const std::string DEFAULT_PYMOL_PROGRAM;
 
 			boost::filesystem::path sup_to_pdb_file;
@@ -80,6 +72,14 @@ namespace cath {
 			boost::filesystem::path get_json_file() const;
 
 		public:
+			static const std::string PO_SUP_FILE;
+			static const std::string PO_SUP_FILES_DIR;
+			static const std::string PO_SUP_TO_STDOUT;
+			static const std::string PO_SUP_TO_PYMOL;
+			static const std::string PO_PYMOL_PROGRAM;
+			static const std::string PO_SUP_TO_PYMOL_FILE;
+			static const std::string PO_SUP_TO_JSON_FILE;
+
 			/// \todo Consider adding a sister get_superposition_outputters() for getting outputters
 			///       that don't require a display_spec / superposition_content_spec
 			superposition_outputter_list get_superposition_outputters(const display_spec &,

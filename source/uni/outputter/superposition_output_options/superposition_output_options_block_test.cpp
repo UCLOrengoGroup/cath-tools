@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(unparsed_has_no_json_file) {
 BOOST_AUTO_TEST_CASE(parses_option_for_to_json_file) {
 	const auto parsed_block = parse_into_options_block_copy(
 		superposition_output_options_block{},
-		{ "--sup-to-json-file", "the_filename" }
+		{ "--" + superposition_output_options_block::PO_SUP_TO_JSON_FILE, "the_filename" }
 	);
 	BOOST_CHECK_EQUAL( parsed_block.get_json_file(), path( "the_filename" ) );
 }
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(parses_option_for_to_json_file) {
 BOOST_AUTO_TEST_CASE(option_for_to_json_file) {
 	const auto parsed_block = parse_into_options_block_copy(
 		superposition_output_options_block{},
-		{ "--sup-to-json-file", "the_filename" }
+		{ "--" + superposition_output_options_block::PO_SUP_TO_JSON_FILE, "the_filename" }
 	);
 	const auto outputters = parsed_block.get_superposition_outputters( display_spec{ "", false, false, false, false } );
 	BOOST_CHECK_EQUAL( outputters.size(), 1 );

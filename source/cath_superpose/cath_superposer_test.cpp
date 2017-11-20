@@ -135,6 +135,7 @@ void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_std_i
 	stdin_like_ifstream.close();
 }
 
+/// \TODO Remove hard-coded option name strings
 
 BOOST_FIXTURE_TEST_SUITE(cath_superposer_test_suite, cath::test::cath_superposer_test_suite_fixture)
 
@@ -142,9 +143,9 @@ BOOST_FIXTURE_TEST_SUITE(cath_superposer_test_suite, cath::test::cath_superposer
 BOOST_AUTO_TEST_CASE(basic_genome3d_use_case) {
 	check_cath_superposer_std_in_use_case(
 		{ "cath-superpose",
-		  "--pdbs-from-stdin",
-		  "--sup-to-stdout",
-		  "--res-name-align" },
+		  "--" + pdb_input_options_block::PO_PDBS_FROM_STDIN,
+		  "--" + superposition_output_options_block::PO_SUP_TO_STDOUT,
+		  "--" + alignment_input_options_block::PO_RES_NAME_ALIGN },
 		MULTIPLE_B4DXN4_MODELS_FILE,
 		CORRECT_B4DXN4_STDOUT_SUP_FILE,
 		false
@@ -158,9 +159,9 @@ BOOST_AUTO_TEST_CASE(basic_genome3d_use_case) {
 //	istringstream empty_stdin;
 //	check_cath_superposer_use_case(
 //		{ "cath-superpose",
-//		  "--pdbs-from-stdin",
-//		  "--sup-to-stdout",
-//		  "--res-name-align" },
+//		  "--" + pdb_input_options_block::PO_PDBS_FROM_STDIN,
+//		  "--" + superposition_output_options_block::PO_SUP_TO_STDOUT,
+//		  "--" + alignment_input_options_block::PO_RES_NAME_ALIGN,
 //		empty_stdin,
 //		CORRECT_B4DXN4_STDOUT_SUP_FILE,
 //		false
@@ -171,10 +172,10 @@ BOOST_AUTO_TEST_CASE(basic_genome3d_use_case) {
 BOOST_AUTO_TEST_CASE(genome3d_gradient_colour_alignment_use_case) {
 	check_cath_superposer_std_in_use_case(
 		{ "cath-superpose",
-		  "--pdbs-from-stdin",
-		  "--sup-to-pymol-file",
+		  "--" + pdb_input_options_block::PO_PDBS_FROM_STDIN,
+		  "--" + superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
 		  get_filename( temp_cath_superposer_output_file ).string(),
-		  "--res-name-align",
+		  "--" + alignment_input_options_block::PO_RES_NAME_ALIGN,
 		  "--gradient-colour-alignment" },
 		MULTIPLE_E9PB15_MODELS_FILE,
 		CORRECT_E9PB15_PYMOL_SUP_FILE,
@@ -186,10 +187,10 @@ BOOST_AUTO_TEST_CASE(genome3d_gradient_colour_alignment_use_case) {
 BOOST_AUTO_TEST_CASE(genome3d_single_gradient_colour_alignment_use_case) {
 	check_cath_superposer_std_in_use_case(
 		{ "cath-superpose",
-		  "--pdbs-from-stdin",
-		  "--sup-to-pymol-file",
+		  "--" + pdb_input_options_block::PO_PDBS_FROM_STDIN,
+		  "--" + superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
 		  get_filename( temp_cath_superposer_output_file ).string(),
-		  "--res-name-align",
+		  "--" + alignment_input_options_block::PO_RES_NAME_ALIGN,
 		  "--gradient-colour-alignment" },
 		TEST_RESIDUE_IDS_DATA_DIR() / "B4DXN4.DomSerf.1.pdb",
 		CORRECT_B4DXN4_SINGLE_GRAD_PYMOL_FILE,
@@ -202,7 +203,7 @@ BOOST_AUTO_TEST_CASE(genome3d_big_tails_use_case) {
 	istringstream empty_stdin;
 	check_cath_superposer_use_case(
 		{ "cath-superpose",
-		  "--res-name-align",
+		  "--" + alignment_input_options_block::PO_RES_NAME_ALIGN,
 		  "--pdb-infile",
 		  ( TEST_RESIDUE_IDS_DATA_DIR() / "Q9HAU8.DomSerf.1.pdb"     ).string(),
 		  "--pdb-infile",
@@ -211,7 +212,7 @@ BOOST_AUTO_TEST_CASE(genome3d_big_tails_use_case) {
 		  ( TEST_RESIDUE_IDS_DATA_DIR() / "Q9HAU8.SUPERFAMILY.2.pdb" ).string(),
 		  "--pdb-infile",
 		  ( TEST_RESIDUE_IDS_DATA_DIR() / "Q9HAU8.VIVACE.1.pdb"      ).string(),
-		  "--sup-to-pymol-file",
+		  "--" + superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
 		  get_filename( temp_cath_superposer_output_file ).string(),
 		  "--gradient-colour-alignment" },
 		empty_stdin,
@@ -235,7 +236,7 @@ BOOST_AUTO_TEST_CASE(multi_ssap_3_90_400_10_use_case) {
 		  ( TEST_MULTI_SSAP_SUPERPOSE_DIR() / "1wzaA02" ).string(),
 		  "--pdb-infile",
 		  ( TEST_MULTI_SSAP_SUPERPOSE_DIR() / "1zjaA02" ).string(),
-		  "--sup-to-pymol-file",
+		  "--" + superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
 		  get_filename( temp_cath_superposer_output_file ).string() },
 		empty_stdin,
 		CORRECT_3_90_400_10_PYMOL_SUP_FILE,

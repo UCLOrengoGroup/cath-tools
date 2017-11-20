@@ -118,9 +118,9 @@ BOOST_FIXTURE_TEST_SUITE(cath_align_refiner_test_suite, cath::test::cath_align_r
 // 	check_cath_align_refiner_std_in_use_case(
 // 		{
 // 			"cath_align_refine",
-// 			"--pdbs-from-stdin",
-// 			"--sup-to-stdout",
-// 			"--res-name-align"
+// 			"--" + pdb_input_options_block::PO_PDBS_FROM_STDIN,
+// 			"--" + superposition_output_options_block::PO_SUP_TO_STDOUT,
+// 			"--" + alignment_input_options_block::PO_RES_NAME_ALIGN
 // 		},
 // 		B4DXN4_MULTIPLE_MODELS_FILE,
 // 		B4DXN4_CORRECT_STDOUT_SUP_FILE,
@@ -133,10 +133,10 @@ BOOST_FIXTURE_TEST_SUITE(cath_align_refiner_test_suite, cath::test::cath_align_r
 // 	check_cath_align_refiner_std_in_use_case(
 // 		{
 // 			"cath_align_refine",
-// 			"--pdbs-from-stdin",
-// 			"--sup-to-pymol-file",
+// 			"--" + pdb_input_options_block::PO_PDBS_FROM_STDIN,
+// 			"--" + superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
 // 			get_filename( temp_cath_align_refiner_output_file ).string(),
-// 			"--res-name-align",
+// 			"--" + alignment_input_options_block::PO_RES_NAME_ALIGN,
 // 			"--gradient-colour-alignment"
 // 		},
 // 		E9PB15_MULTIPLE_MODELS_FILE,
