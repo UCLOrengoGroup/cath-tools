@@ -31,6 +31,7 @@ using namespace cath::sup;
 using boost::filesystem::path;
 using boost::string_ref;
 using std::ostream;
+using std::string;
 using std::unique_ptr;
 
 /// \brief A standard do_clone method.
@@ -58,6 +59,11 @@ void pymol_file_superposition_outputter::do_output_superposition(const superposi
 /// \brief TODOCUMENT
 bool pymol_file_superposition_outputter::do_involves_display_spec() const {
 	return true;
+}
+
+/// \brief Getter for the name of this superposition_outputter
+string pymol_file_superposition_outputter::do_get_name() const {
+	return "pymol_file_superposition_outputter";
 }
 
 /// \brief Ctor for pymol_file_superposition_outputter

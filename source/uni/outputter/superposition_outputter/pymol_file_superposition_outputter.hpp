@@ -47,6 +47,7 @@ namespace cath {
 			                             std::ostream &,
 			                             const boost::string_ref &) const final;
 			bool do_involves_display_spec() const final;
+			std::string do_get_name() const final;
 
 		public:
 			pymol_file_superposition_outputter(const boost::filesystem::path &,

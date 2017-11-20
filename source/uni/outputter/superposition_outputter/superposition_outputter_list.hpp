@@ -48,6 +48,11 @@ namespace cath {
 			const_iterator end() const;
 		};
 
+		std::string to_string(const superposition_outputter_list &);
+
+		std::ostream & operator<<(std::ostream &,
+		                          const superposition_outputter_list &);
+
 		void use_all_superposition_outputters(const superposition_outputter_list &,
 		                                      const sup::superposition_context &,
 		                                      std::ostream &,

@@ -38,6 +38,7 @@ namespace cath {
 			                             std::ostream &,
 			                             const boost::string_ref &) const final;
 			bool do_involves_display_spec() const final;
+			std::string do_get_name() const final;
 
 		public:
 			ostream_superposition_outputter(sup::superposition_content_spec);

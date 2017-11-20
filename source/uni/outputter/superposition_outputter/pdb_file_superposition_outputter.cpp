@@ -35,6 +35,7 @@ using boost::string_ref;
 using std::flush;
 using std::ofstream;
 using std::ostream;
+using std::string;
 using std::unique_ptr;
 
 /// \brief A standard do_clone method.
@@ -60,6 +61,11 @@ void pdb_file_superposition_outputter::do_output_superposition(const superpositi
 /// \brief TODOCUMENT
 bool pdb_file_superposition_outputter::do_involves_display_spec() const {
 	return false;
+}
+
+/// \brief Getter for the name of this superposition_outputter
+string pdb_file_superposition_outputter::do_get_name() const {
+	return "pdb_file_superposition_outputter";
 }
 
 /// \brief Ctor for pdb_file_superposition_outputter

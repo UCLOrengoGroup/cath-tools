@@ -36,6 +36,7 @@ using namespace cath::sup;
 using boost::filesystem::path;
 using boost::string_ref;
 using std::ostream;
+using std::string;
 using std::unique_ptr;
 
 constexpr json_style json_file_superposition_outputter::DEFAULT_JSON_STYLE;
@@ -56,6 +57,11 @@ void json_file_superposition_outputter::do_output_superposition(const superposit
 /// \brief Specify that this outputter doesn't involve a display_spec
 bool json_file_superposition_outputter::do_involves_display_spec() const {
 	return false;
+}
+
+/// \brief Getter for the name of this superposition_outputter
+string json_file_superposition_outputter::do_get_name() const {
+	return "json_file_superposition_outputter";
 }
 
 /// \brief Ctor for json_file_superposition_outputter

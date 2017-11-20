@@ -36,14 +36,17 @@ namespace cath {
 		private:
 			/// \brief Pure virtual method with which each concrete superposition_outputter must define how to create a clone of itself
 			virtual std::unique_ptr<superposition_outputter> do_clone() const = 0;
-			
+
 			/// \brief TODOCUMENT
 			virtual void do_output_superposition(const sup::superposition_context &,
 			                                     std::ostream &,
 			                                     const boost::string_ref &) const = 0;
-			
+
 			/// \brief TODOCUMENT
 			virtual bool do_involves_display_spec() const = 0;
+
+			/// \brief Pure virtual method with which each concrete superposition_outputter must define its name
+			virtual std::string do_get_name() const = 0;
 
 		public:
 			superposition_outputter() = default;
@@ -59,7 +62,14 @@ namespace cath {
 			                          std::ostream &,
 			                          const boost::string_ref &) const;
 			bool involves_display_spec() const;
+
+			std::string get_name() const;
 		};
+
+		/// \brief NVI pass-through to get the concrete superposition_outputter's name
+		inline std::string superposition_outputter::get_name() const {
+			return do_get_name();
+		}
 
 		/// \brief Function to make superposition_outputter meet the Clonable concept (used in ptr_container)
 		///

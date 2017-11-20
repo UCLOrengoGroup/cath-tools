@@ -21,6 +21,8 @@
 #include "superposition_outputter_list.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
+#include <boost/algorithm/string/join.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
@@ -29,9 +31,12 @@
 using namespace cath::opts;
 using namespace cath::sup;
 
+using boost::adaptors::transformed;
 using boost::algorithm::any_of;
+using boost::algorithm::join;
 using boost::string_ref;
 using std::ostream;
+using std::string;
 
 /// \brief TODOCUMENT
 void superposition_outputter_list::push_back(const superposition_outputter &arg_outputter ///< TODOCUMENT
@@ -57,6 +62,32 @@ superposition_outputter_list::const_iterator superposition_outputter_list::begin
 /// \brief TODOCUMENT
 superposition_outputter_list::const_iterator superposition_outputter_list::end() const {
 	return common::cend( outputters );
+}
+
+/// \brief Generate a string describing the specified superposition_outputter_list
+///
+/// \relates superposition_outputter_list
+string cath::opts::to_string(const superposition_outputter_list &arg_superposition_outputters ///< Generate a string describing the specified superposition_outputter_list
+                             ) {
+	return "superposition_outputter_list[ "
+		+ join(
+			arg_superposition_outputters
+				| transformed( [] (const superposition_outputter &x) {
+					return x.get_name();
+				} ),
+			", "
+		)
+		+ " ]";
+}
+
+/// \brief Insert a description of the specified superposition_outputter_list into the specified ostream
+///
+/// \relates superposition_outputter_list
+ostream & cath::opts::operator<<(ostream                            &arg_os,                      ///< The ostream into which the description should be inserted
+                                 const superposition_outputter_list &arg_superposition_outputters ///< Generate a string describing the specified superposition_outputter_list
+                                 ) {
+	arg_os << to_string( arg_superposition_outputters );
+	return arg_os;
 }
 
 /// \brief TODOCUMENT

@@ -34,6 +34,7 @@ using namespace cath::sup;
 
 using boost::string_ref;
 using std::ostream;
+using std::string;
 using std::unique_ptr;
 
 /// \brief A standard do_clone method.
@@ -58,6 +59,11 @@ void ostream_superposition_outputter::do_output_superposition(const superpositio
 /// \brief TODOCUMENT
 bool ostream_superposition_outputter::do_involves_display_spec() const {
 	return false;
+}
+
+/// \brief Getter for the name of this superposition_outputter
+string ostream_superposition_outputter::do_get_name() const {
+	return "ostream_superposition_outputter";
 }
 
 /// \brief Ctor for ostream_superposition_outputter
