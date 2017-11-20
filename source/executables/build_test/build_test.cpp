@@ -28,9 +28,12 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_monitor.hpp>
 
+#include "common/test_or_exe_run_mode.hpp"
 #include "test/predicate/bootstrap_mode.hpp"
 
 #include <iostream>
+
+using namespace cath::common;
 
 using boost::log::trivial::info;
 using boost::log::trivial::severity;
@@ -69,6 +72,9 @@ namespace cath {
 
 			// Try to warn if in bootstrapping mode
 			warn_if_bootstrapping();
+
+			// Record that this is running in test mode
+			run_mode_flag::value = run_mode::TEST;
 		}
 
 		/// \brief In the dtor, try to warn if in bootstrapping mode

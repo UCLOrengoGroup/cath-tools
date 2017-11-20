@@ -448,6 +448,7 @@ set(
 		src_common/common/invert_permutation.cpp
 		src_common/common/logger.cpp
 		src_common/common/program_exception_wrapper.cpp
+		src_common/common/test_or_exe_run_mode.cpp
 )
 
 set(
