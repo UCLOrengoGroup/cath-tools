@@ -52,13 +52,14 @@ using std::istream;
 using std::ostream;
 
 /// \brief Perform map-clusters according to the specified arguments strings with the specified i/o streams
-void cath::clust::perform_map_clusters(const str_vec &args,        ///< The arguments strings specifying the map-clusters action to perform
-                                       istream       &arg_istream, ///< The input stream
-                                       ostream       &arg_stdout,  ///< The output stream
-                                       ostream       &arg_stderr   ///< The error stream
+void cath::clust::perform_map_clusters(const str_vec       &args,             ///< The arguments strings specifying the map-clusters action to perform
+                                       istream             &arg_istream,      ///< The input stream
+                                       ostream             &arg_stdout,       ///< The output stream
+                                       ostream             &arg_stderr,       ///< The error stream
+                                       const parse_sources &arg_parse_sources ///< The sources from which options should be parsed
                                        ) {
 	perform_map_clusters(
-		make_and_parse_options<clustmap_options>( args ),
+		make_and_parse_options<clustmap_options>( args, arg_parse_sources ),
 		arg_istream,
 		arg_stdout,
 		arg_stderr

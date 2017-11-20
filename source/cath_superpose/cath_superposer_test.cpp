@@ -84,7 +84,8 @@ void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_use_c
 
 	const auto my_cath_superpose_options = make_and_parse_options<cath_superpose_options>(
 		faked_argc_and_argv.get_argc(),
-		faked_argc_and_argv.get_argv()
+		faked_argc_and_argv.get_argv(),
+		parse_sources::CMND_LINE_ONLY
 	);
 
 	// Prepare an ostringstream to capture the output

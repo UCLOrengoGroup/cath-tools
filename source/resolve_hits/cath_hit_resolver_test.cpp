@@ -48,6 +48,7 @@ namespace cath { namespace test { } }
 
 using namespace cath;
 using namespace cath::common;
+using namespace cath::opts;
 using namespace cath::rslv;
 using namespace cath::test;
 using namespace std::literals::string_literals;
@@ -81,7 +82,7 @@ namespace cath {
 						progname_vec,
 						arg_arguments
 					) ),
-					input_ss, output_ss
+					input_ss, output_ss, parse_sources::CMND_LINE_ONLY
 				);
 			}
 

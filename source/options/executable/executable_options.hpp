@@ -29,6 +29,7 @@
 #include "common/boost_addenda/program_options/set_opt_str_from_prog_opts_try.hpp"
 #include "common/path_type_aliases.hpp"
 #include "common/type_aliases.hpp"
+#include "options/executable/parse_sources.hpp"
 #include "options/options_block/string_options_block.hpp"
 
 #include <string>
@@ -67,7 +68,7 @@ namespace cath {
 
 			static const     std::string             CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX;
 			static const     boost::filesystem::path CATH_TOOLS_CONF_FILE;
-			
+
 			static path_vec CATH_TOOLS_CONF_FILE_SEARCH_PATH();
 
 			/// \brief A list of string_options_block objects that just serve to put strings
@@ -153,7 +154,8 @@ namespace cath {
 			executable_options & operator=(executable_options &&) = default;
 
 			void parse_options(const int &,
-			                   const char * const []);
+			                   const char * const [],
+			                   const parse_sources & = parse_sources::CMND_ENV_AND_FILE);
 
 			str_opt get_error_or_help_string() const;
 		};
@@ -174,26 +176,29 @@ namespace cath {
 
 		/// \brief Return a new instance of the specified type of executable_options with the specified options parsed into it
 		template <typename T>
-		T make_and_parse_options(const int          &argc,  ///< The main()-style argc parameter
-		                         const char * const  argv[] ///< The main()-style argv parameter
+		T make_and_parse_options(const int           &argc,                                                ///< The main()-style argc parameter
+		                         const char * const   argv[],                                              ///< The main()-style argv parameter
+		                         const parse_sources &arg_parse_sources = parse_sources::CMND_ENV_AND_FILE ///< The sources from which options should be parsed
 		                         ) {
 			static_assert(
 				std::is_base_of<executable_options, T>::value,
 				"make_and_parse_options() can only be used to make types that inherit from executable_options."
 			);
 			T new_options;
-			new_options.parse_options( argc, argv );
+			new_options.parse_options( argc, argv, arg_parse_sources );
 			return new_options;
 		}
 
 		/// \brief Return a new instance of the specified type of executable_options with the specified options parsed into it
 		template <typename T>
-		T make_and_parse_options(const str_vec &args ///< The arguments
+		T make_and_parse_options(const str_vec       &args,                                                ///< The arguments
+		                         const parse_sources &arg_parse_sources = parse_sources::CMND_ENV_AND_FILE ///< The sources from which options should be parsed
 		                         ) {
 			argc_argv_faker my_argc_argv_faker( args );
 			return make_and_parse_options<T>(
 				my_argc_argv_faker.get_argc(),
-				my_argc_argv_faker.get_argv()
+				my_argc_argv_faker.get_argv(),
+				arg_parse_sources
 			);
 		}
 	} // namespace opts

@@ -47,12 +47,13 @@ using std::ostream;
 using std::ofstream;
 
 /// \brief Perform resolve-hits according to the specified arguments strings with the specified i/o streams
-void cath::rslv::perform_resolve_hits(const str_vec &args,        ///< The arguments strings specifying the resolve-hits action to perform
-                                      istream       &arg_istream, ///< The input stream
-                                      ostream       &arg_stdout   ///< The output stream
+void cath::rslv::perform_resolve_hits(const str_vec       &args,             ///< The arguments strings specifying the resolve-hits action to perform
+                                      istream             &arg_istream,      ///< The input stream
+                                      ostream             &arg_stdout,       ///< The output stream
+                                      const parse_sources &arg_parse_sources ///< The sources from which options should be parsed
                                       ) {
 	perform_resolve_hits(
-		make_and_parse_options<crh_options>( args ),
+		make_and_parse_options<crh_options>( args, arg_parse_sources ),
 		arg_istream,
 		arg_stdout
 	);

@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_CATH_HIT_RESOLVER_H
 
 #include "common/type_aliases.hpp"
+#include "options/executable/parse_sources.hpp"
 
 #include <iostream>
 
@@ -33,7 +34,8 @@ namespace cath {
 
 		void perform_resolve_hits(const str_vec &,
 		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout);
+		                          std::ostream & = std::cout,
+		                          const opts::parse_sources & = opts::parse_sources::CMND_ENV_AND_FILE);
 
 		void perform_resolve_hits(const crh_options &,
 		                          std::istream & = std::cin,

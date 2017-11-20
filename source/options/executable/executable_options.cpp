@@ -29,6 +29,7 @@
 #include "common/file/find_file.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/optional/make_optional_if.hpp"
+#include "common/test_or_exe_run_mode.hpp"
 #include "options/executable/env_var_option_name_handler.hpp"
 #include "options/options_block/misc_help_version_options_block.hpp"
 
@@ -182,8 +183,9 @@ void executable_options::add_visble_options_to_description(options_description &
 /// so they will remain untouched.
 ///
 /// \post The options will be parsed and ready for querying
-void executable_options::parse_options(const int          &argc,  ///< The argc from command line parameters
-                                       const char * const  argv[] ///< The argv from command line parameters
+void executable_options::parse_options(const int           &argc,             ///< The argc from command line parameters
+                                       const char * const   argv[],           ///< The argv from command line parameters
+                                       const parse_sources &arg_parse_sources ///< The sources from which options should be parsed
                                        ) {
 	// Check the options haven't already been processed
 	if ( processed_options ) {
@@ -298,44 +300,56 @@ void executable_options::parse_options(const int          &argc,  ///< The argc 
 		}
 	);
 
-	// Parse any environment variables prefixed with "CATH_TOOLS_"
-	// and just silently ignore any unknown options
-	//
-	// The remaining parses are performed in decreasing order of precedence
-	// (ie options specified via the command line should take precedence over those
-	//  specified via environment variables so it comes first)
-	prog_opts_try(
-		error_or_help_string,
-		[&] {
-			store(
-				parse_environment(
-					full_po_desc,
-					env_var_option_name_handler(
-						CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX,
-						true,
-						full_po_desc
-					)
-				),
-				vm
-			);
-		},
-		"[whilst parsing from global environment variables with prefix " + CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX + "]"
-	);
+	if ( arg_parse_sources == parse_sources::CMND_ENV_AND_FILE ) {
 
-	// Parse any configuration file called cath_tools.conf
-	const path located_cath_tools_conf_file = find_file( CATH_TOOLS_CONF_FILE_SEARCH_PATH(), CATH_TOOLS_CONF_FILE.string() );
-	if ( ! located_cath_tools_conf_file.empty() ) {
-//		cerr << "Parsing configuration from file " << CATH_TOOLS_CONF_FILE << endl;
-		ifstream config_file_stream;
+		// If running in test mode, complain that shouldn't be parsing env-vars or config files
+		//
+		// Note an alternative way to implement this is to get the global fixture to
+		// detect and remove any CATH_TOOLS environment variables (though that doesn't
+		// handle config files).
+		if ( run_mode_flag::value == run_mode::TEST ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception("Requested to parse command line options from environment variables and configuration file but this is a bad idea because currently running in test mode"));
+		}
+
+		// Parse any environment variables prefixed with "CATH_TOOLS_"
+		// and just silently ignore any unknown options
+		//
+		// The remaining parses are performed in decreasing order of precedence
+		// (ie options specified via the command line should take precedence over those
+		//  specified via environment variables so it comes first)
 		prog_opts_try(
 			error_or_help_string,
 			[&] {
-				open_ifstream(config_file_stream, CATH_TOOLS_CONF_FILE);
-				store( parse_config_file( config_file_stream, full_po_desc, true ), vm );
-				config_file_stream.close();
+				store(
+					parse_environment(
+						full_po_desc,
+						env_var_option_name_handler(
+							CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX,
+							true,
+							full_po_desc
+						)
+					),
+					vm
+				);
 			},
-			"[whilst parsing from the global configuration file " + located_cath_tools_conf_file.string() + "]"
+			"[whilst parsing from global environment variables with prefix " + CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX + "]"
 		);
+
+		// Parse any configuration file called cath_tools.conf
+		const path located_cath_tools_conf_file = find_file( CATH_TOOLS_CONF_FILE_SEARCH_PATH(), CATH_TOOLS_CONF_FILE.string() );
+		if ( ! located_cath_tools_conf_file.empty() ) {
+//			cerr << "Parsing configuration from file " << CATH_TOOLS_CONF_FILE << endl;
+			ifstream config_file_stream;
+			prog_opts_try(
+				error_or_help_string,
+				[&] {
+					open_ifstream(config_file_stream, CATH_TOOLS_CONF_FILE);
+					store( parse_config_file( config_file_stream, full_po_desc, true ), vm );
+					config_file_stream.close();
+				},
+				"[whilst parsing from the global configuration file " + located_cath_tools_conf_file.string() + "]"
+			);
+		}
 	}
 
 	// All parsing is complete so call notify, which will trigger any

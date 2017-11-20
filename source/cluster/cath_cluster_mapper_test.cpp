@@ -79,7 +79,7 @@ namespace cath {
 						progname_rng,
 						arg_arguments
 					) ),
-					input_ss, output_ss, err_ss
+					input_ss, output_ss, err_ss, parse_sources::CMND_LINE_ONLY
 				);
 			}
 
