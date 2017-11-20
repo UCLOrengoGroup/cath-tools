@@ -20,6 +20,8 @@
 
 #include "superposition_outputter_list.hpp"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
+
 #include "common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "outputter/superposition_outputter/superposition_outputter.hpp"
@@ -27,6 +29,7 @@
 using namespace cath::opts;
 using namespace cath::sup;
 
+using boost::algorithm::any_of;
 using boost::string_ref;
 using std::ostream;
 
@@ -76,13 +79,5 @@ void cath::opts::use_all_superposition_outputters(const superposition_outputter_
 /// \relates superposition_outputter_list
 bool cath::opts::any_superposition_outputters_involve_display_spec(const superposition_outputter_list &arg_superposition_outputters ///< TODOCUMENT
                                                                    ) {
-	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
-	for (const superposition_outputter &outputter : arg_superposition_outputters) {
-		if ( outputter.involves_display_spec() ) {
-			return true;
-		}
-	}
-	return false;
+	return any_of( arg_superposition_outputters, [] (const superposition_outputter &x) { return x.involves_display_spec(); } );
 }
-
-
