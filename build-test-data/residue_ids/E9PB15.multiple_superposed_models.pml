@@ -2712,6 +2712,8 @@ set cartoon_oval_length  = 1.16393
 set cartoon_oval_width   = 0.215543
 set cartoon_loop_radius  = 0.191116
 set cartoon_helix_radius = 1.72434
+set cartoon_cylindrical_helices, 0
+set cartoon_fancy_helices, 0
 bg_color white
 color    black
 color black

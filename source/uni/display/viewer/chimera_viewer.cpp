@@ -376,9 +376,12 @@ void chimera_viewer::do_write_load_pdbs(ostream             &arg_os,            
 	arg_os << "set cartoon_oval_length  = " << pymol_tools::pymol_size( 2, 1.35,  100, 0.081,  num_pdbs ) << "\n";
 	arg_os << "set cartoon_oval_width   = " << pymol_tools::pymol_size( 2, 0.25,  100, 0.015,  num_pdbs ) << "\n";
 	arg_os << "set cartoon_loop_radius  = " << pymol_tools::pymol_size( 2, 0.20,  100, 0.036,  num_pdbs ) << "\n";
-	arg_os << "set cartoon_helix_radius = " << pymol_tools::pymol_size( 2, 2.00,  100, 0.120,  num_pdbs ) << "\n";
-	arg_os << "bg_color white\n";
-	arg_os << "color    black\n";
+	arg_os << "set cartoon_helix_radius = " << pymol_tools::pymol_size( 2, 2.00,  100, 0.120,  num_pdbs ) << R"(
+set cartoon_cylindrical_helices, 0
+set cartoon_fancy_helices, 0
+bg_color white
+color    black
+)";
 }
 
 /// \brief TODOCUMENT
