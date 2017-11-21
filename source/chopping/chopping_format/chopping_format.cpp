@@ -36,4 +36,3 @@ domain cath::chop::parse_domain(const chopping_format &arg_chopping_format,     
 	new_domain.set_opt_domain_id( arg_domain_id );
 	return new_domain;
 }
-
