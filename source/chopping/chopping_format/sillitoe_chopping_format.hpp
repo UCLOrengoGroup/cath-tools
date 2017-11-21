@@ -39,6 +39,10 @@ namespace cath {
 
 			domain do_parse_domain(const std::string &) const final;
 
+			std::string do_write_region(const region &) const final;
+
+			std::string do_write_domain(const domain &) const final;
+
 		public:
 			region parse_segment(const boost::string_ref &) const;
 

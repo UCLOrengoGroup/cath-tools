@@ -43,6 +43,12 @@ namespace cath {
 			/// \brief TODOCUMENT
 			virtual domain do_parse_domain(const std::string &) const = 0;
 
+			/// \brief Pure virtual method with which each concrete format must define how to write a region to the specified string
+			virtual std::string do_write_region(const region &) const = 0;
+
+			/// \brief Pure virtual method with which each concrete format must define how to write a domain to the specified string
+			virtual std::string do_write_domain(const domain &) const = 0;
+
 		public:
 			chopping_format() = default;
 			virtual ~chopping_format() noexcept = default;
@@ -55,6 +61,9 @@ namespace cath {
 			bool represents_fragments() const;
 
 			domain parse_domain(const std::string &) const;
+
+			std::string write_region(const region &) const;
+			std::string write_domain(const domain &) const;
 
 			std::unique_ptr<chopping_format> clone() const;
 		};
@@ -70,6 +79,18 @@ namespace cath {
 			return do_parse_domain( arg_domain_chopping_string );
 		}
 
+		/// \brief Write the specified region to a string
+		inline std::string chopping_format::write_region(const region &arg_region ///< The region to write to a string
+		                                                 ) const {
+			return do_write_region( arg_region );
+		}
+
+		/// \brief Write the specified domain to a string
+		inline std::string chopping_format::write_domain(const domain &arg_domain ///< The domain to write to a string
+		                                                 ) const {
+			return do_write_domain( arg_domain );
+		}
+
 		/// \brief Standard approach to achieving a virtual copy-ctor
 		inline std::unique_ptr<chopping_format> chopping_format::clone() const {
 		 return common::check_uptr_clone_against_this( do_clone(), *this );
@@ -78,6 +99,7 @@ namespace cath {
 		domain parse_domain(const chopping_format &,
 		                    const std::string &,
 		                    const std::string &);
+
 	} // namespace chop
 } // namespace cath
 

@@ -137,6 +137,11 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const region &);
 
+		std::string to_string(const region_vec &);
+
+		std::ostream & operator<<(std::ostream &,
+		                          const region_vec &);
+
 		void validate(boost::any &,
 		              const str_vec &,
 		              domain *,

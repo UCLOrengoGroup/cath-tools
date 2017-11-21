@@ -60,6 +60,18 @@ domain simple_chopping_format::do_parse_domain(const string &arg_domain_chopping
 	return domain( region_vec() );
 }
 
+/// \brief Concrete definition of this chopping_format writes a region to a string
+string simple_chopping_format::do_write_region(const region &/*arg_region*/ ///< The region to write to a string
+                                               ) const {
+	BOOST_THROW_EXCEPTION(not_implemented_exception("simple_chopping_format cannot currently write regions"));
+}
+
+/// \brief Concrete definition of this chopping_format writes a domain to a string
+string simple_chopping_format::do_write_domain(const domain &/*arg_domain*/ ///< The domain to write to a string
+                                               ) const {
+	BOOST_THROW_EXCEPTION(not_implemented_exception("simple_chopping_format cannot currently write domains"));
+}
+
 /// \brief Parse a segment from the specified segment string
 region simple_chopping_format::parse_segment(const string_ref &arg_segment_string ///< The string from which to parse the segment
                                              ) const {

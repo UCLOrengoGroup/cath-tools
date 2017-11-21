@@ -34,6 +34,11 @@ namespace cath {
 			bool do_represents_fragments() const final;
 
 			domain do_parse_domain(const std::string &) const final;
+
+			std::string do_write_region(const region &) const final;
+
+			std::string do_write_domain(const domain &) const final;
+
 		};
 
 	} // namespace chop

@@ -51,3 +51,15 @@ domain jmol_selection_chopping_format::do_parse_domain(const string &arg_domain_
 
 	return domain( region_vec() );
 }
+
+/// \brief Concrete definition of this chopping_format writes a region to a string
+string jmol_selection_chopping_format::do_write_region(const region &/*arg_region*/ ///< The region to write to a string
+                                                       ) const {
+	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_selection_chopping_format cannot currently write regions"));
+}
+
+/// \brief Concrete definition of this chopping_format writes a domain to a string
+string jmol_selection_chopping_format::do_write_domain(const domain &/*arg_domain*/ ///< The domain to write to a string
+                                                       ) const {
+	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_selection_chopping_format cannot currently write domains"));
+}

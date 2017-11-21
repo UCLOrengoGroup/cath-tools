@@ -22,6 +22,7 @@
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/program_options.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "chopping/chopping_format/sillitoe_chopping_format.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
@@ -31,6 +32,7 @@ using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
 
+using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::any;
 using boost::program_options::invalid_option_value;
@@ -396,6 +398,28 @@ ostream & cath::chop::operator<<(ostream      &arg_os,    ///< The ostream into 
                                  const region &arg_region ///< The region to describe
                                  ) {
 	arg_os << to_string( arg_region );
+	return arg_os;
+}
+
+/// \brief Generate a string describing the specified region_vec
+///
+/// \relates region
+string cath::chop::to_string(const region_vec &arg_regions ///< The region_vec to describe
+                             ) {
+	return join(
+		arg_regions
+			| transformed( [] (const region &x) { return to_string( x ); } ),
+		","
+	);
+}
+
+/// \brief Insert a description of the specified region_vec into the specified ostream
+///
+/// \relates region_vec
+ostream & cath::chop::operator<<(ostream      &arg_os,    ///< The ostream into which the description should be inserted
+                                 const region_vec &arg_regions ///< The region_vec to describe
+                                 ) {
+	arg_os << to_string( arg_regions );
 	return arg_os;
 }
 

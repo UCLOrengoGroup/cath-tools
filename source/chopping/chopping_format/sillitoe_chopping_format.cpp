@@ -20,6 +20,9 @@
 
 #include "sillitoe_chopping_format.hpp"
 
+#include <boost/range/adaptor/transformed.hpp>
+#include <boost/algorithm/string/join.hpp>
+
 #include "chopping/domain/domain.hpp"
 #include "common/boost_addenda/make_string_ref.hpp"
 #include "common/clone/make_uptr_clone.hpp"
@@ -32,7 +35,10 @@
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
+using namespace std::literals::string_literals;
 
+using boost::adaptors::transformed;
+using boost::algorithm::join;
 using boost::string_ref;
 using std::find;
 using std::isdigit;
@@ -121,6 +127,45 @@ domain sillitoe_chopping_format::do_parse_domain(const string &arg_domain_choppi
 	return name_str_ref.empty()
 		? domain{ segments }
 		: domain{ segments, name_str_ref.to_string() };
+}
+
+/// \brief Concrete definition of this chopping_format writes a region to a string
+string sillitoe_chopping_format::do_write_region(const region &arg_region ///< The region to write to a string
+                                                 ) const {
+	const chain_label_opt &opt_chain_label = arg_region.get_opt_chain_label();
+
+	return
+		(
+			arg_region.has_starts_stops()
+			? (
+				  to_string( get_residue_name( arg_region.get_start_residue() ) )
+				+ "-"
+				+ to_string( get_residue_name( arg_region.get_stop_residue()  ) )
+			)
+			: ""s
+		)
+		+ (
+			opt_chain_label
+			? ( ":" + opt_chain_label->to_string() )
+			: ""s
+		);
+}
+
+/// \brief Concrete definition of this chopping_format writes a domain to a string
+string sillitoe_chopping_format::do_write_domain(const domain &arg_domain ///< The domain to write to a string
+                                                 ) const {
+	return
+		"D"
+		+ (
+			arg_domain.get_opt_domain_id()
+			? ( "[" + *arg_domain.get_opt_domain_id() + "]" )
+			: ""s
+		)
+		+ join(
+			arg_domain
+				| transformed( [&] (const region &x) { return write_region( x ); } ),
+			","
+		);
 }
 
 /// \brief Parse a segment from the specified segment string

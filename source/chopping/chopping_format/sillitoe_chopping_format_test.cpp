@@ -27,6 +27,9 @@ using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
 
+using std::string;
+using boost::string_ref;
+
 BOOST_AUTO_TEST_SUITE(sillitoe_chopping_format_test_suite)
 
 BOOST_AUTO_TEST_CASE(throws_on_attempt_to_parse_invalid_segment) {
@@ -89,5 +92,30 @@ BOOST_AUTO_TEST_CASE(parses_whole_chain_region) {
 // 1qdm D[1qdmC01]1-191:C  D[1qdmC02]192-247:C,103S-104S:C,248-318:C  F319-1318:C
 
 /// \todo Include functionality to specify an "all" domain
+
+template <typename Fmt>
+string parse_and_write_segment(const string_ref &arg_orig_str) {
+	const Fmt format{};
+	return format.write_region( format.parse_segment( arg_orig_str ) );
+}
+
+template <typename Fmt>
+string parse_and_write_domain(const string &arg_orig_str) {
+	const Fmt format{};
+	return format.write_domain( format.parse_domain( arg_orig_str ) );
+}
+
+BOOST_AUTO_TEST_CASE(parsed_and_writes_back_to_orig) {
+	BOOST_TEST( parse_and_write_segment<sillitoe_chopping_format>( ":R"                                        ) ==  ":R"                                       );
+	BOOST_TEST( parse_and_write_segment<sillitoe_chopping_format>( "7-232:K"                                   ) ==  "7-232:K"                                  );
+	BOOST_TEST( parse_and_write_segment<sillitoe_chopping_format>( "1B-99C:S"                                  ) ==  "1B-99C:S"                                 );
+
+	BOOST_TEST( parse_and_write_domain <sillitoe_chopping_format>( "D1-191:C"                                  ) == "D1-191:C"                                  );
+	BOOST_TEST( parse_and_write_domain <sillitoe_chopping_format>( "D192-247:C,103S-104S:C,248-318:C"          ) == "D192-247:C,103S-104S:C,248-318:C"          );
+	BOOST_TEST( parse_and_write_domain <sillitoe_chopping_format>( "D1-191:C"                                  ) == "D1-191:C"                                  );
+	BOOST_TEST( parse_and_write_domain <sillitoe_chopping_format>( "D192-247:C,103S-104S:C,248-318:C"          ) == "D192-247:C,103S-104S:C,248-318:C"          );
+	BOOST_TEST( parse_and_write_domain <sillitoe_chopping_format>( "D[1o7iB]:B"                                ) == "D[1o7iB]:B"                                );
+	BOOST_TEST( parse_and_write_domain <sillitoe_chopping_format>( "D[1qdmC02]192-247:C,103S-104S:C,248-318:C" ) == "D[1qdmC02]192-247:C,103S-104S:C,248-318:C" );
+}
 
 BOOST_AUTO_TEST_SUITE_END()
