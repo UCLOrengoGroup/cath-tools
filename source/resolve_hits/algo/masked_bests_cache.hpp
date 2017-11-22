@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_ALGO_MASKED_BESTS_CACHE_H
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_ALGO_MASKED_BESTS_CACHE_H
 
+#include "common/hash/hash_value_combine.hpp"
 #include "resolve_hits/algo/scored_arch_proxy.hpp"
 #include "resolve_hits/calc_hit.hpp"
 #include "seq/seq_seg.hpp"
@@ -43,7 +44,7 @@ namespace cath {
 						for (const auto &index : { the_hit.get_start_arrow().get_index(),
 						                           the_hit.get_stop_arrow ().get_index(), } ) {
 							using index_type = std::decay_t< decltype( index ) >;
-							seed ^= std::hash< index_type >{}( index  ) + 0x9e3779b9 + ( seed << 6 ) + ( seed >> 2 );
+							common::hash_value_combine( seed, std::hash< index_type >{}( index ) );
 						}
 					}
 					return seed;

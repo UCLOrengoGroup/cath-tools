@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_DETAIL_HASH_TUPLE_H
 #define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_DETAIL_HASH_TUPLE_H
 
+#include "common/hash/hash_value_combine.hpp"
 #include "scan/detail/res_pair_dirn/res_pair_dirn.hpp"
 
 #include <functional>
@@ -60,7 +61,7 @@ namespace cath {
 					inline void hash_combine(std::size_t &arg_seed, ///< The seed to update to reflect the addition of arg_value
 					                         const T     &arg_value ///< The new value
 					                         ) {
-						arg_seed ^= hash_tuple::hash<T>()( arg_value ) + 0x9e3779b9 + ( arg_seed << 6 ) + ( arg_seed >> 2 );
+						common::hash_value_combine( arg_seed, hash_tuple::hash<T>()( arg_value ) );
 					}
 
 					/// \brief Recursive template for hashing tuples

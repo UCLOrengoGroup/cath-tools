@@ -28,6 +28,7 @@
 #include "common/algorithm/variadic_and.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp17/invoke.hpp"
+#include "common/hash/hash_value_combine.hpp"
 #include "seq/seq_arrow.hpp"
 #include "seq/seq_seg.hpp"
 
@@ -112,7 +113,7 @@ namespace cath {
 			const std::hash<resarw_t> hasher{};
 			size_t result = hasher( arg_seq_seg_run.get_start_arrow().get_index() );
 			const auto combine_fn = [&] (const resarw_t &x) {
-				result ^= hasher( x ) + 0x9e3779b9 + ( result << 6 ) + ( result >> 2 );
+				common::hash_value_combine( result, hasher( x ) );
 			};
 			for (const size_t &seg_ctr : common::indices( arg_seq_seg_run.get_num_segments() ) ) {
 				combine_fn( arg_seq_seg_run.get_start_arrow_of_segment( seg_ctr ).get_index() );

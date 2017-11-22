@@ -31,6 +31,7 @@
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/constexpr_min_max.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
+#include "common/hash/hash_value_combine.hpp"
 #include "common/json_style.hpp"
 #include "common/rapidjson_addenda/rapidjson_writer.hpp"
 #include "common/size_t_literal.hpp"
@@ -422,7 +423,7 @@ namespace cath {
 			const std::hash<resarw_t> hasher{};
 			size_t result = hasher( arg_seq_segs.front().get_start_arrow().get_index() );
 			const auto combine_fn = [&] (const resarw_t &x) {
-				result ^= hasher( x ) + 0x9e3779b9 + ( result << 6 ) + ( result >> 2 );
+				common::hash_value_combine( result, hasher( x ) );
 			};
 			for (const size_t &seg_ctr : common::indices( arg_seq_segs.size() ) ) {
 				combine_fn( arg_seq_segs[ seg_ctr ].get_start_arrow().get_index() );
