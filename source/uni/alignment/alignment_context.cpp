@@ -86,7 +86,7 @@ const region_vec_opt_vec & cath::align::get_regions(const alignment_context &arg
 /// \relates alignment_context
 size_t cath::align::get_num_entries(const alignment_context &arg_alignment_context ///< The alignment_context to query
                                     ) {
-	return get_num_entries( arg_alignment_context.get_strucs_context() );
+	return size( arg_alignment_context.get_strucs_context() );
 }
 
 /// \brief Get a copy of the PDBs in the specified alignment_context, restricted to its regions

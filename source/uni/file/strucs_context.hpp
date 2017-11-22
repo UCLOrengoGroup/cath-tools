@@ -59,7 +59,7 @@ namespace cath {
 			strucs_context & set_pdbs(const file::pdb_list &);
 		};
 
-		size_t get_num_entries(const strucs_context &);
+		size_t size(const strucs_context &);
 
 		/// \brief Ctor for strucs_context
 		inline strucs_context::strucs_context(pdb_list arg_pdbs ///< The PDBs of the structures
@@ -110,7 +110,7 @@ namespace cath {
 		/// \brief Set the PDBs to the specified PDBs
 		inline strucs_context & strucs_context::set_pdbs(const file::pdb_list &arg_pdbs ///< The PDBs to set
 		                                                 ) {
-			if ( arg_pdbs.size() != get_num_entries( *this ) ) {
+			if ( arg_pdbs.size() != size( *this ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot set an inconsistent number of PDBs in a strucs_context"));
 			}
 			pdbs = arg_pdbs;
@@ -118,8 +118,8 @@ namespace cath {
 		}
 
 		/// \brief Get the number of entries in the specified strucs_context
-		inline size_t get_num_entries(const strucs_context &arg_strucs_context ///< The strucs_context to query
-		                              ) {
+		inline size_t size(const strucs_context &arg_strucs_context ///< The strucs_context to query
+		                   ) {
 			return arg_strucs_context.get_name_sets().size();
 		}
 

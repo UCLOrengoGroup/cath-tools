@@ -113,7 +113,7 @@ size_t cath::file::get_num_regions_set(const strucs_context &arg_strucs_context 
 string cath::file::to_string(const strucs_context &arg_strucs_context ///< The strucs_context to describe
                              ) {
 	return "strucs_context[" + join(
-		indices( get_num_entries( arg_strucs_context ) )
+		indices( size( arg_strucs_context ) )
 			| transformed( [&] (const size_t &struc_context_idx) {
 				using std::to_string;
 

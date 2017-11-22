@@ -73,7 +73,7 @@ pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanni
 	const size_t num_span_tree_entries = alignment_and_orderer.second.size();
 
 	// Check that both are of the correct size
-	const size_t num_pdbs = arg_strucs_context.get_pdbs().size();
+	const size_t num_pdbs = size( arg_strucs_context );
 	if ( num_alignment_entries != num_pdbs ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
 			"Number of entries in alignment ("
