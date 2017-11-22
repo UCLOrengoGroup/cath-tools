@@ -47,6 +47,11 @@ string cath::file::to_string(const name_set &arg_name_set ///< The name_set to d
 		+ arg_name_set.get_name_from_acq()
 		+ R"(")"
 		+ (
+			arg_name_set.get_primary_source_file()
+			? ( R"(, prim_src_file:")" + arg_name_set.get_primary_source_file()->string() + R"(")" )
+			: ""
+		)
+		+ (
 			arg_name_set.get_specified_id()
 			? ( R"(, spec_id:")" + *arg_name_set.get_specified_id() + R"(")" )
 			: ""
