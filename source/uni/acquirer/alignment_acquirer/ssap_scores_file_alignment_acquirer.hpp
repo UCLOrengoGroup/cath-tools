@@ -41,7 +41,7 @@ namespace cath {
 			boost::filesystem::path ssap_scores_filename;
 
 			/// \brief The approach that should be used for glueing alignments together
-			aln_glue_style glue_style = aln_glue_style::SIMPLY;
+			aln_glue_style glue_style = DEFAULT_ALN_GLUE_STYLE;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
 			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &) const final;
