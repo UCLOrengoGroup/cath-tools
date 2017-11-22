@@ -154,10 +154,14 @@ void cath_refine_align_options::check_ok_to_use() const {
 
 /// \brief TODOCUMENT
 cath_refine_align_options::cath_refine_align_options() {
+	super::add_string       ( "\033[1mInput\033[0m"       );
 	super::add_options_block( the_alignment_input_options_block      );
+
 	super::add_options_block( the_ids_ob                             );
 	super::add_options_block( the_pdb_input_options_block            );
 	super::add_options_block( the_align_regions_ob                   );
+
+	super::add_string       ( "\033[1mOutput\033[0m"      );
 	super::add_options_block( the_alignment_output_options_block     );
 	super::add_options_block( the_superposition_output_options_block );
 	super::add_options_block( the_display_options_block              );

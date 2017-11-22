@@ -146,11 +146,14 @@ string cath_superpose_options::do_get_overview_string() const {
 
 /// \brief Get a list of the options_blocks in this executable_options
 cath_superpose_options::cath_superpose_options() {
+	super::add_string       ( "\033[1mInput\033[0m"       );
 	super::add_options_block( the_alignment_input_ob      );
 	super::add_options_block( the_superposition_input_ob  );
 	super::add_options_block( the_ids_ob                  );
 	super::add_options_block( the_pdb_input_ob            );
 	super::add_options_block( the_align_regions_ob        );
+
+	super::add_string       ( "\033[1mOutput\033[0m"      );
 	super::add_options_block( the_alignment_output_ob     );
 	super::add_options_block( the_superposition_output_ob );
 	super::add_options_block( the_display_ob              );
