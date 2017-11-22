@@ -20,7 +20,11 @@
 
 #include "name_set.hpp"
 
+#include "common/hash/hash_value_combine.hpp"
+
 #include <iostream>
+
+using namespace cath::common;
 
 using std::string;
 using std::ostream;
@@ -73,3 +77,45 @@ ostream & cath::file::operator<<(ostream        &arg_os,      ///< The ostream i
 	arg_os << to_string( arg_name_set );
 	return arg_os;
 }
+
+
+/// \brief Hash the details of the specified name_set into the specified seed value
+///
+/// \relates name_set
+void cath::file::non_crypto_hash(size_t         &arg_init_hash_value, ///< The initial hash seed
+                                 const name_set &arg_name_set         ///< The name_set to include in the hash
+                                 ) {
+	// hash_value_combine( arg_init_hash_value, std::hash<size_t>()( index ) );
+
+	// hash_value_combine( arg_init_hash_value, std::hash<std::string>()( arg_name_set.get_name_from_acq() ) );
+	// hash_value_combine( arg_init_hash_value, std::hash<std::string>()( arg_name_set.get_primary_source_file()      ) );
+	// hash_value_combine( arg_init_hash_value, std::hash<std::string>()( arg_name_set.get_specified_id()             ) );
+	// hash_value_combine( arg_init_hash_value, std::hash<std::string>()( arg_name_set.get_domain_name_from_regions() ) );
+
+	const string   &name_from_acq                = arg_name_set.get_name_from_acq();
+	const path_opt &primary_source_file_opt      = arg_name_set.get_primary_source_file();
+	const str_opt  &specified_id_opt             = arg_name_set.get_specified_id();
+	const str_opt  &domain_name_from_regions_opt = arg_name_set.get_domain_name_from_regions();
+
+	// Follow libstdc++'s lead of attempting to make the value used for none/nullopt an "unusual" value
+	static constexpr size_t NULL_HASH_VAL = static_cast<size_t>( -3333 );
+
+	hash_value_combine( arg_init_hash_value,                                std::hash<std::string>()( name_from_acq                     )                 );
+	hash_value_combine( arg_init_hash_value, primary_source_file_opt      ? std::hash<std::string>()( primary_source_file_opt->string() ) : NULL_HASH_VAL );
+	hash_value_combine( arg_init_hash_value, specified_id_opt             ? std::hash<std::string>()( *specified_id_opt                 ) : NULL_HASH_VAL );
+	hash_value_combine( arg_init_hash_value, domain_name_from_regions_opt ? std::hash<std::string>()( *domain_name_from_regions_opt     ) : NULL_HASH_VAL );
+
+	// arg_init_hash_value;
+	// arg_name_set;
+}
+
+/// \brief Hash the details of the specified name_set into the specified seed value
+///
+/// \relates name_set
+size_t cath::file::non_crypto_hash_copy(size_t          arg_init_hash_value, ///< The initial hash seed
+                                        const name_set &arg_name_set         ///< The name_set to include in the hash
+                                        ) {
+	non_crypto_hash( arg_init_hash_value, arg_name_set );
+	return arg_init_hash_value;
+}
+

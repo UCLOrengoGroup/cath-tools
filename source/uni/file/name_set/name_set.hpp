@@ -155,6 +155,12 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const name_set &);
 
+		void non_crypto_hash(size_t &,
+		                     const name_set &);
+
+		size_t non_crypto_hash_copy(size_t,
+		                            const name_set &);
+
 	} // namespace file
 } // namespace cath
 

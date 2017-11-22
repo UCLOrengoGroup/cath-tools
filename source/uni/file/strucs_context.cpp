@@ -24,10 +24,12 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 
+#include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/debug_numeric_cast.hpp"
+#include "common/hash/hash_value_combine.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/strucs_context.hpp"
 #include "structure/protein/protein.hpp"
@@ -43,6 +45,7 @@ using namespace cath::file;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::range::count_if;
+using std::hash;
 using std::string;
 
 /// \brief Build a strucs_context from the specified one that contains the backbone-complete subsets of the PDBs
@@ -166,4 +169,57 @@ protein_list cath::file::build_protein_list(const strucs_context &arg_strucs_con
 		arg_strucs_context.get_pdbs(),
 		arg_strucs_context.get_name_sets()
 	);
+}
+
+/// \brief Get the domain corresponding to the specified index in the specified strucs_context
+///
+/// \pre `arg_index < size( arg_strucs_context )`
+///
+/// \relates strucs_context
+domain_opt cath::file::get_domain_opt_of_index(const strucs_context &arg_strucs_context, ///< The strucs_context to query
+                                               const size_t         &arg_index           ///< The index of the entry to query
+                                               ) {
+	const auto &name_set = arg_strucs_context.get_name_sets()[ arg_index ];
+	const auto &regions  = arg_strucs_context.get_regions  ()[ arg_index ];
+
+	return make_optional_if_fn(
+		static_cast<bool>( regions ),
+		[&] {
+			const auto domain_name_opt = name_set.get_domain_name_from_regions();
+			return
+				domain_name_opt
+					? domain{ *regions, *domain_name_opt }
+					: domain{ *regions                   };
+		}
+	);
+}
+
+/// \brief Hash the details of the specified strucs_context into the specified seed value
+///
+/// \relates strucs_context
+void cath::file::non_crypto_hash(size_t               &arg_init_hash_value, ///< The initial hash seed
+                                 const strucs_context &arg_strucs_context   /// The strucs_context to include in the hash
+                                 ) {
+	for (const size_t &index : indices( size( arg_strucs_context ) ) ) {
+		const pdb                &pdb      = arg_strucs_context.get_pdbs     ()[ index ];
+		const name_set           &name_set = arg_strucs_context.get_name_sets()[ index ];
+		const region_vec_opt     &regions  = arg_strucs_context.get_regions  ()[ index ];
+
+		// Follow libstdc++'s lead of attempting to make the value used for none/nullopt an "unusual" value
+		static constexpr size_t NULL_HASH_VAL = static_cast<size_t>( -3333 );
+
+		non_crypto_hash   ( arg_init_hash_value, name_set );
+		hash_value_combine( arg_init_hash_value, regions ? hash<string>{}( to_string( *regions )  ) : NULL_HASH_VAL );
+		hash_value_combine( arg_init_hash_value,           hash<size_t>{}( pdb.get_num_residues() )                 );
+	}
+}
+
+/// \brief Hash the details of the specified strucs_context into the specified seed value
+///
+/// \relates strucs_context
+size_t cath::file::non_crypto_hash_copy(size_t                arg_init_hash_value, ///< The initial hash seed
+                                        const strucs_context &arg_strucs_context   ///< The strucs_context to include in the hash
+                                        ) {
+	non_crypto_hash( arg_init_hash_value, arg_strucs_context );
+	return arg_init_hash_value;
 }

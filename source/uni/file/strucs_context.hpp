@@ -141,6 +141,15 @@ namespace cath {
 
 		protein_list build_protein_list(const strucs_context &);
 
+		chop::domain_opt get_domain_opt_of_index(const strucs_context &,
+		                                         const size_t &);
+
+		void non_crypto_hash(size_t &,
+		                     const strucs_context &);
+
+		size_t non_crypto_hash_copy(size_t,
+		                            const strucs_context &);
+
 	} // namespace file
 } // namespace cath
 
