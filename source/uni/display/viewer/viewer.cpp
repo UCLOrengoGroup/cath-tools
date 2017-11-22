@@ -49,7 +49,6 @@
 #include <fstream>
 #include <sstream>
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
@@ -60,6 +59,7 @@ using namespace cath::sup;
 using boost::algorithm::is_space;
 using boost::filesystem::path;
 using boost::format;
+using boost::is_alnum;
 using boost::lexical_cast;
 using boost::string_ref;
 using std::flush;

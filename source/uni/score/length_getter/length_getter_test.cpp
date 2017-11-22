@@ -34,15 +34,13 @@
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"
-//#include "common/algorithm/constexpr_for_n.hpp"
-
-#include <iostream> // ***** TEMPORARY *****
 
 using namespace cath;
 using namespace cath::common;
 using namespace cath::score;
 using namespace cath::score::detail;
-using namespace std; // ***** TEMPORARY *****
+
+using std::is_same;
 
 namespace cath {
 	namespace test {

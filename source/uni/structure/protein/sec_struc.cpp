@@ -28,7 +28,6 @@
 #include "structure/geometry/rotation.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace boost::math;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::geom;

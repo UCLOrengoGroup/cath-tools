@@ -29,12 +29,14 @@
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
 #include "structure/geometry/quat_rot.hpp"
 
-using namespace boost::algorithm;
 using namespace cath::common;
 using namespace cath::geom;
 using namespace cath::index::detail;
 using namespace std;
 
+using boost::algorithm::ends_with;
+using boost::algorithm::erase_all_copy;
+using boost::algorithm::erase_tail_copy;
 using boost::algorithm::is_any_of;
 using boost::numeric_cast;
 

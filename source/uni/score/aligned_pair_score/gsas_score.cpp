@@ -33,9 +33,8 @@
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/less_than_helper.hpp"
 
-#include <iostream> // ***** TEMPORARY *****
+// #include <iostream> // ***** TEMPORARY *****
 
-using namespace boost::logic;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::align::gap;
@@ -44,6 +43,7 @@ using namespace cath::score;
 using namespace std;
 
 using boost::numeric_cast;
+using boost::tribool;
 
 BOOST_CLASS_EXPORT(gsas_score)
 

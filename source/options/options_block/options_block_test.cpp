@@ -29,10 +29,13 @@
 #include "options/options_block/pdb_input_options_block.hpp"
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::opts;
 using namespace std;
+
+using boost::program_options::options_description;
+using boost::program_options::unknown_option;
+using boost::program_options::variables_map;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE(type_info)
 

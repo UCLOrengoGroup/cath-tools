@@ -27,11 +27,11 @@
 #include "common/exception/invalid_argument_exception.hpp"
 #include "display_colour/display_colour.hpp"
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::common;
 using namespace std;
 
+using boost::algorithm::clamp;
 using boost::lexical_cast;
 using boost::numeric_cast;
 

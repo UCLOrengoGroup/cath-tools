@@ -35,7 +35,6 @@
 //using boost::units::si::plane_angle;
 //using boost::units::si::radian;
 
-using namespace boost::math::constants;
 using namespace cath::common;
 using namespace cath::geom;
 using namespace std;

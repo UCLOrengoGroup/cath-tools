@@ -29,7 +29,6 @@
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/not_implemented_exception.hpp"
 
-using namespace boost::log;
 using namespace cath::align;
 using namespace cath::align::detail;
 using namespace cath::common;

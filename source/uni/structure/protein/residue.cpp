@@ -37,7 +37,6 @@
 #include <tuple>
 #include <utility>
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;

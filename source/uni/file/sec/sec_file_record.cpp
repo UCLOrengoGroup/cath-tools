@@ -30,7 +30,6 @@
 
 #include <iostream>
 
-using namespace boost::math;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;

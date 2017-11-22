@@ -45,10 +45,9 @@
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
 
-#include <iostream> // ***** TEMPORARY *****
+// #include <iostream> // ***** TEMPORARY *****
 #include <numeric>
 
-using namespace boost::logic;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
@@ -63,6 +62,7 @@ using boost::irange;
 using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::join;
+using boost::tribool;
 
 BOOST_CLASS_EXPORT(lddt_score)
 

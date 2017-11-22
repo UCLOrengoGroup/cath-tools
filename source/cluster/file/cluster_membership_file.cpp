@@ -38,7 +38,6 @@
 #include <sstream>
 #include <string>
 
-using namespace boost::log;
 using namespace cath;
 using namespace cath::clust;
 using namespace cath::common;

@@ -27,11 +27,17 @@
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-using namespace boost::log;
-using namespace boost::log::expressions;
-using namespace boost::log::trivial;
 using namespace cath::common;
 using namespace std;
+
+using boost::log::expressions::format_date_time;
+using boost::log::expressions::message;
+using boost::log::expressions::smessage;
+using boost::log::expressions::stream;
+using boost::log::keywords::filter;
+using boost::log::keywords::format;
+using boost::log::trivial::severity;
+using boost::log::trivial::warning;
 
 /// \brief A simple private function to provide a standard way of outputting the context of a catch to a stream.
 void program_exception_wrapper::output_catch_context(ostream            &arg_os,
@@ -80,14 +86,14 @@ int program_exception_wrapper::run_program(int      arg_c,   ///< The main()-sty
 		// If using Boost Log, then add a sink that writes to stderr, rather than using the default stdout sink
 		boost_log_sink_sptr = boost::log::add_console_log(
 			cerr,
-			keywords::format = (
+			format = (
 				stream          << format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S.%f")
 //	                   << "] [" << attr<boost::log::attributes::current_thread_id::value_type >("ThreadID")
 					   << " ["  << do_get_program_name()
-					   << "|\033[1m"  << left << setw( 7 ) << setfill(' ') << trivial::severity
+					   << "|\033[1m"  << left << setw( 7 ) << setfill(' ') << severity
 					   << "\033[0m] " << smessage
 			),
-			keywords::filter = ( severity >= warning )
+			filter = ( severity >= warning )
 		);
 		boost::log::add_common_attributes();
 

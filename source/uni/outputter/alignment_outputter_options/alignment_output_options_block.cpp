@@ -34,7 +34,6 @@
 
 #include <iostream>
 
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
@@ -42,6 +41,10 @@ using namespace std;
 
 using boost::filesystem::path;
 using boost::none;
+using boost::program_options::bool_switch;
+using boost::program_options::options_description;
+using boost::program_options::value;
+using boost::program_options::variables_map;
 
 const string alignment_output_options_block::PO_ALN_TO_CATH_ALN_FILE   ( "aln-to-cath-aln-file"   );
 const string alignment_output_options_block::PO_ALN_TO_CATH_ALN_STDOUT ( "aln-to-cath-aln-stdout" );

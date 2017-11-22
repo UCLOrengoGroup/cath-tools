@@ -27,10 +27,11 @@
 
 #include <vector>
 
-using namespace boost::test_tools;
 using namespace cath::align::detail;
 using namespace cath::common;
 using namespace std;
+
+using boost::test_tools::output_test_stream;
 
 namespace cath {
 	namespace test {

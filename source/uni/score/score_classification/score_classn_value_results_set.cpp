@@ -55,7 +55,6 @@
 #include "score/true_pos_false_neg/named_true_false_pos_neg_list_list.hpp"
 #include "score/true_pos_false_neg/true_false_pos_neg.hpp"
 
-using namespace boost::log::trivial;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::score;

@@ -45,7 +45,6 @@ using namespace cath::index;
 using namespace cath::index::detail;
 using namespace cath::geom;
 using namespace std;
-using namespace std::chrono;
 
 namespace cath {
 	namespace test {

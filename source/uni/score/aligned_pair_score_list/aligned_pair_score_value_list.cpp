@@ -37,8 +37,6 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace boost::logic;
-using namespace boost::property_tree;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
@@ -46,7 +44,9 @@ using namespace cath::score;
 using namespace std;
 
 using boost::lexical_cast;
+using boost::property_tree::ptree;
 using boost::range::adjacent_find;
+using boost::tribool;
 
 /// \brief TODOCUMENT
 void aligned_pair_score_value_list::add_score_and_value(const aligned_pair_score &arg_score, ///< TODOCUMENT

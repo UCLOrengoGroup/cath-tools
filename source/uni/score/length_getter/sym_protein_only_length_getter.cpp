@@ -28,7 +28,6 @@
 #include "score/length_getter/length_of_shorter_getter.hpp"
 #include "score/length_getter/mean_length_getter.hpp"
 
-using namespace boost::logic;
 using namespace cath::align;
 using namespace cath::score;
 using namespace std;

@@ -45,7 +45,6 @@ using namespace cath::common;
 using namespace cath::scan;
 using namespace cath::score;
 using namespace std;
-using namespace std::chrono;
 
 using boost::numeric_cast;
 

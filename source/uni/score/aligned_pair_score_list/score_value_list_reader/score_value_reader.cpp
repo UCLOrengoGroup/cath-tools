@@ -20,7 +20,6 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/log/trivial.hpp>
-//#include <boost/lexical_cast.hpp>
 #include <boost/logic/tribool_io.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -35,10 +34,10 @@ using namespace cath::score;
 using namespace std;
 
 using boost::filesystem::path;
-//using boost::lexical_cast;
 using boost::logic::tribool;
 using boost::property_tree::json_parser::read_json;
 using boost::property_tree::ptree;
+using boost::tribool;
 
 /// \brief TODOCUMENT
 aligned_pair_score_value_list score_value_reader::read_aligned_pair_score_list_from_property_tree(const ptree &arg_property_tree ///< TODOCUMENT

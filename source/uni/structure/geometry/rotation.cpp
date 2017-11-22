@@ -35,7 +35,6 @@
 
 #include <iostream> // **** TEMPORARY ****
 
-using namespace boost::math;
 using namespace cath::common;
 using namespace cath::geom;
 using namespace std;

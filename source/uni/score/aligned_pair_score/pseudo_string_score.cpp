@@ -20,44 +20,18 @@
 
 #include "pseudo_string_score.hpp"
 
-//#include <boost/lexical_cast.hpp>
-//#include <boost/logic/tribool.hpp>
-//#include <boost/range/numeric.hpp>
-//#include <boost/numeric/conversion/cast.hpp>
-//#include <boost/range/join.hpp>
-
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/not_implemented_exception.hpp"
 #include "common/less_than_helper.hpp"
-//#include "alignment/alignment.hpp"
-//#include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
-//#include "alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
-//#include "common/algorithm/copy_build.hpp"
-//#include "common/difference.hpp"
-//#include "common/exception/out_of_range_exception.hpp"
-//#include "structure/geometry/coord.hpp"
-//#include "structure/geometry/coord_list.hpp"
 
-//#include <iostream> // ***** TEMPORARY *****
-//#include <numeric>
-
-using namespace boost::logic;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
-//using namespace cath::geom;
 using namespace cath::score;
-//using namespace cath::score::detail;
 using namespace std;
 
-//using boost::accumulate;
-//using boost::lexical_cast;
-//using boost::none;
-//using boost::numeric_cast;
-//using boost::range::join;
-
-//BOOST_CLASS_EXPORT(pseudo_string_score)
+using boost::tribool;
 
 /// \brief A standard do_clone method.
 unique_ptr<aligned_pair_score> pseudo_string_score::do_clone() const {

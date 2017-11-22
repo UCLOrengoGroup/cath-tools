@@ -48,7 +48,6 @@
 #include "outputter/superposition_outputter/superposition_outputter_list.hpp"
 #include "superposition/superposition_context.hpp"
 
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::chop;
@@ -57,6 +56,7 @@ using namespace cath::file;
 using namespace cath::opts;
 
 using boost::none;
+using boost::program_options::variables_map;
 using std::istream;
 using std::string;
 using std::unique_ptr;

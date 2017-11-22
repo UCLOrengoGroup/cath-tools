@@ -37,12 +37,12 @@
 #include <fstream>
 #include <map>
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
 using namespace std;
 
+using boost::algorithm::trim_left;
 using boost::filesystem::path;
 
 /// \brief Parse a vector of ssap_scores_entry objects from the specified istream

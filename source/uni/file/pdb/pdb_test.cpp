@@ -40,7 +40,6 @@
 #include <regex>
 #include <vector>
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;

@@ -40,8 +40,6 @@
 
 namespace cath { namespace test { } }
 
-using namespace boost::archive;
-using namespace boost::test_tools;
 using namespace cath::common;
 using namespace cath::common::detail;
 using namespace cath::test;

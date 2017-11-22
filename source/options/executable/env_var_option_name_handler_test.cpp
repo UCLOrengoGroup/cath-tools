@@ -22,9 +22,10 @@
 
 #include "options/executable/env_var_option_name_handler.hpp"
 
-using namespace boost::program_options;
 using namespace cath::opts;
 using namespace std;
+
+using boost::program_options::options_description;
 
 namespace cath {
 	namespace test {

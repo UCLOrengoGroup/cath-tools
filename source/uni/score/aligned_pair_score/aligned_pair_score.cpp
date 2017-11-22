@@ -20,11 +20,7 @@
 
 #include "aligned_pair_score.hpp"
 
-//#include <boost/algorithm/string/join.hpp>
-//#include <boost/algorithm/string/classification.hpp>
-//#include <boost/algorithm/string/predicate.hpp>
 #include <boost/logic/tribool.hpp>
-//#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/find.hpp>
 
 #include "alignment/alignment.hpp"
@@ -49,9 +45,6 @@ using namespace cath::score;
 using namespace cath::score::detail;
 using namespace std;
 
-//using boost::adaptors::filtered;
-//using boost::algorithm::is_space;
-//using boost::algorithm::join;
 using boost::logic::tribool;
 
 /// \brief Return a map of the different concrete aligned_pair_score types by the human_friendly_short_name string they return

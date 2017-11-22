@@ -31,8 +31,8 @@
 #include "common/size_t_literal.hpp"
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
- using namespace cath::align;
- using namespace cath::common;
+using namespace cath::align;
+using namespace cath::common;
 
 /// \brief TODOCUMENT
 ///

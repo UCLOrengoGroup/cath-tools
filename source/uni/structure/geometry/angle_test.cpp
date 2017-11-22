@@ -29,11 +29,12 @@
 #include "test/global_test_constants.hpp"
 #include "test/test_tools.hpp"
 
-using namespace boost::math::constants;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::common::test;
 using namespace cath::geom;
+
+using boost::math::constants::pi;
 
 namespace cath {
 	namespace test {

@@ -32,8 +32,6 @@
 
 #include <iostream>
 
-using namespace boost::algorithm;
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
@@ -45,6 +43,10 @@ using boost::algorithm::join;
 using boost::filesystem::path;
 using boost::lexical_cast;
 using boost::none;
+using boost::program_options::bool_switch;
+using boost::program_options::options_description;
+using boost::program_options::value;
+using boost::program_options::variables_map;
 
 constexpr bool               old_ssap_options_block::DEF_BOOL;
 constexpr protein_file_combn old_ssap_options_block::DEF_PROT_SRCS;

@@ -37,7 +37,6 @@
 
 #include <cmath>
 
-using namespace boost::logic;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
@@ -48,6 +47,7 @@ using namespace std;
 
 using boost::irange;
 using boost::numeric_cast;
+using boost::tribool;
 
 BOOST_CLASS_EXPORT(drmsd_score)
 

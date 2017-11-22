@@ -22,7 +22,7 @@
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/log/trivial.hpp> // ***** TEMPORARY? *****
+#include <boost/log/trivial.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm/find.hpp>
 
@@ -35,12 +35,12 @@
 
 #include <set>
 
-using namespace boost::log; // ***** TEMPORARY? *****
 using namespace cath;
 using namespace cath::common;
 using namespace std;
 
 using boost::algorithm::join;
+using boost::log::trivial::trace;
 
 /// \brief Tally up the residue records parsed from a PDB file with those parsed from a corresponding DSSP/WOLF file
 ///

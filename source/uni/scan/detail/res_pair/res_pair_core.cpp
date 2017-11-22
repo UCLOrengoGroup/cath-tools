@@ -21,7 +21,8 @@
 #include "res_pair_core.hpp"
 
 using namespace cath::scan::detail;
- using namespace std;
+
+using std::ostream;
 
  /// \brief TODOCUMENT
 ostream & cath::scan::detail::operator<<(ostream             &arg_os,           ///< TODOCUMENT

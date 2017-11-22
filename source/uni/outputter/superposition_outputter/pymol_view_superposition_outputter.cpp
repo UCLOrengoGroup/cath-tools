@@ -29,7 +29,6 @@
 
 #include <iostream>
 
-using namespace boost::log;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;

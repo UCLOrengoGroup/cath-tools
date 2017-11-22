@@ -57,8 +57,6 @@
 #include <fstream>
 #include <iostream>
 
-using namespace boost::algorithm;
-using namespace boost::log;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::chop;
@@ -67,16 +65,22 @@ using namespace cath::file;
 using namespace std;
 
 using boost::adaptors::transformed;
+using boost::algorithm::icontains;
 using boost::algorithm::is_any_of;
 using boost::algorithm::is_space;
 using boost::algorithm::join;
 using boost::algorithm::starts_with;
 using boost::algorithm::trim_copy;
+using boost::empty_formatter;
 using boost::filesystem::path;
 using boost::format;
+using boost::is_alpha;
+using boost::is_print;
 using boost::lexical_cast;
 using boost::none;
 using boost::numeric_cast;
+using boost::to_upper;
+using boost::trim;
 
 const double MIN_FRAC_OF_PDB_RESIDUES_IN_SEQ( 0.7 );
 

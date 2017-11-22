@@ -30,13 +30,13 @@
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::align::gap;
 using namespace cath::common;
 using namespace std;
 
+using boost::algorithm::erase_all_copy;
 using boost::none;
 using boost::numeric_cast;
 

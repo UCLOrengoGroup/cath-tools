@@ -36,13 +36,13 @@
 #include <cmath>
 #include <fstream>
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
 using namespace std;
 
+using boost::algorithm::icontains;
 using boost::algorithm::is_lower;
 using boost::algorithm::is_space;
 using boost::algorithm::starts_with;

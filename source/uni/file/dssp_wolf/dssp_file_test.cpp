@@ -49,8 +49,6 @@
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
 
-using namespace boost::math::constants;
-using namespace boost::math;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;

@@ -31,7 +31,6 @@
 #include "display_colour/display_colour.hpp"
 #include "display_colour/display_colour_type_aliases.hpp"
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::common;
 using namespace std;

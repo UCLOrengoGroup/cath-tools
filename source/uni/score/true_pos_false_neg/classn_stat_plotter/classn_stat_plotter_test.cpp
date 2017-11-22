@@ -33,7 +33,6 @@
 
 using namespace cath::common;
 using namespace cath::score;
-using namespace std; // ***** TEMPORARY *****
 
 namespace cath {
 	namespace test {

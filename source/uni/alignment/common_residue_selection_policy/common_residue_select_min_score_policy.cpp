@@ -27,7 +27,6 @@
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 
-using namespace boost::math;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;

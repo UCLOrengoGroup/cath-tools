@@ -30,13 +30,15 @@
 
 #include <iostream>
 
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 
 using boost::none;
+using boost::program_options::options_description;
+using boost::program_options::value;
+using boost::program_options::variables_map;
 
 const string ids_options_block::PO_ID( "id" ); ///< The option name for the id option
 

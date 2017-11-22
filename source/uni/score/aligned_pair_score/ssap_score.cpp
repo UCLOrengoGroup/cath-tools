@@ -44,7 +44,6 @@
 #include <iostream> // ***** TEMPORARY *****
 
 #include "ssap/distance_score_formula.hpp"
-using namespace boost::logic;
 
 using namespace cath;
 using namespace cath::align;
@@ -57,6 +56,7 @@ using namespace std;
 using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::join;
+using boost::tribool;
 
 BOOST_CLASS_EXPORT(ssap_score)
 

@@ -27,7 +27,6 @@
 #include "common/clone/make_uptr_clone.hpp"
 #include "structure/geometry/coord.hpp"
 
-using namespace boost::logic;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
@@ -35,6 +34,8 @@ using namespace cath::geom;
 using namespace cath::score;
 using namespace cath::score::detail;
 using namespace std;
+
+using boost::tribool;
 
 /// \brief A standard do_clone method.
 unique_ptr<length_getter> num_aligned_length_getter::do_clone() const {

@@ -27,7 +27,6 @@
 #include "structure/geometry/coord.hpp"
 #include "test/global_test_constants.hpp"
 
-using namespace boost::math::constants;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::geom;

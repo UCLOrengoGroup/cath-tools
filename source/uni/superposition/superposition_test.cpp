@@ -32,7 +32,6 @@
 //#include <iostream> // *** TEMPORARY ***
 #include <vector>
 
-using namespace boost::test_tools;
 using namespace cath;
 using namespace cath::common::test;
 using namespace cath::geom;

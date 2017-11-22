@@ -38,7 +38,6 @@
 using namespace cath;
 using namespace cath::common;
 using namespace cath::geom;
-using namespace gnuplotio;
 using namespace std;
 
 using boost::geometry::cs::cartesian;

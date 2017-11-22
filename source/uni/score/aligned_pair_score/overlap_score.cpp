@@ -34,10 +34,7 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace boost::logic;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::score;
 using namespace std;
-
-

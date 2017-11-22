@@ -47,7 +47,6 @@
 using namespace cath::index::detail::detail::detail;
 // using namespace cath::geom;
 using namespace std;
-// using namespace std::chrono;
 
 // using boost::numeric_cast;
 

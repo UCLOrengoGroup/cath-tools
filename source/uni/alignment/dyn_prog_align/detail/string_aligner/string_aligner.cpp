@@ -45,7 +45,6 @@
 #include <algorithm>
 #include <string>
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::align::detail;
 using namespace cath::align::gap;
@@ -57,6 +56,7 @@ using boost::algorithm::is_space;
 using boost::algorithm::is_upper;
 using boost::algorithm::token_compress_on;
 using boost::algorithm::trim_copy;
+using boost::empty_formatter;
 using boost::lexical_cast;
 using boost::numeric_cast;
 using boost::range::count;

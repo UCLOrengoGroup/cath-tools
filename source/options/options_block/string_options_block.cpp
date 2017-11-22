@@ -24,13 +24,14 @@
 
 #include "common/clone/make_uptr_clone.hpp"
 
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
 
 using boost::none;
 using boost::optional;
+using boost::program_options::options_description;
+using boost::program_options::variables_map;
 using std::string;
 using std::unique_ptr;
 

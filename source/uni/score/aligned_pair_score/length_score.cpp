@@ -32,14 +32,15 @@
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_list.hpp"
 
-#include <iostream> // ***** TEMPORARY *****
+// #include <iostream> // ***** TEMPORARY *****
 
-using namespace boost::logic;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::score;
 using namespace std;
+
+using boost::tribool;
 
 BOOST_CLASS_EXPORT(length_score)
 

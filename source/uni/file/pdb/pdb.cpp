@@ -61,8 +61,6 @@
 #include <sstream>
 #include <tuple>
 
-using namespace boost::log;
-using namespace boost::math::constants;
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;

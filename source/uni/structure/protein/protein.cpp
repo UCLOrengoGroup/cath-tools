@@ -44,7 +44,6 @@
 #include <iterator>  // for end, begin, etc
 #include <sstream>   // for string, etc
 
-using namespace boost::log;
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;

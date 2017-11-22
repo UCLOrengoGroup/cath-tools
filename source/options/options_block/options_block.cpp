@@ -29,7 +29,6 @@
 #include "common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 
-using namespace boost::program_options;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
@@ -40,6 +39,8 @@ using boost::algorithm::any_of;
 using boost::filesystem::is_empty;
 using boost::filesystem::path;
 using boost::numeric_cast;
+using boost::program_options::options_description;
+using boost::program_options::variables_map;
 
 /// \brief A string to use to separate (valid values and their descriptions) from each other
 const string options_block::SUB_DESC_SEPARATOR = "\n   ";

@@ -37,7 +37,6 @@
 
 #include <utility>
 
-using namespace boost::test_tools;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
@@ -45,6 +44,7 @@ using namespace cath::common::test;
 using namespace std;
 
 using boost::none;
+using boost::test_tools::output_test_stream;
 
 namespace cath {
 	namespace test {

@@ -24,7 +24,6 @@
 #include "options/options_block/misc_help_version_options_block.hpp"
 #include "options/options_block/options_block_tester.hpp"
 
-using namespace boost::program_options;
 using namespace cath::opts;
 using namespace std;
 

@@ -40,7 +40,6 @@
 #include <algorithm>
 #include <numeric>
 
-using namespace boost::math;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;

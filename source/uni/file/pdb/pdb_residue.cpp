@@ -37,7 +37,6 @@
 
 #include <cmath>
 
-using namespace boost::math::constants;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::file;

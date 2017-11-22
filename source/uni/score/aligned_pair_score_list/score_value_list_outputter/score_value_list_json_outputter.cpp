@@ -25,11 +25,12 @@
 
 #include "score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
 
-using namespace boost::property_tree;
 using namespace cath;
 using namespace cath::common;
 using namespace cath::score;
 using namespace std;
+
+using boost::property_tree::ptree;
 
 constexpr json_style score_value_list_json_outputter::DEFAULT_JSON_STYLE;
 

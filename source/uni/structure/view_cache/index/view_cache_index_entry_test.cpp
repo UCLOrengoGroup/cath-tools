@@ -48,9 +48,9 @@ using namespace cath::common;
 using namespace cath::index;
 using namespace cath::index::detail;
 using namespace std;
-using namespace std::chrono;
 
 using boost::ignore_unused;
+using std::chrono::high_resolution_clock;
 
 namespace cath {
 	namespace test {

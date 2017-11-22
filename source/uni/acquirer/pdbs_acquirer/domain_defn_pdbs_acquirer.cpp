@@ -32,7 +32,6 @@
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
 
-using namespace boost::log;
 using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;

@@ -49,7 +49,6 @@
 #include <chrono>
 #include <iostream>
 
-using namespace boost::math::constants;
 using namespace cath::align;
 using namespace cath::align::detail;
 using namespace cath::common;
@@ -57,9 +56,9 @@ using namespace cath::geom;
 using namespace cath::index;
 using namespace cath::index::detail;
 using namespace std;
-using namespace std::chrono;
 
 using boost::numeric_cast;
+using std::chrono::high_resolution_clock;
 
 /// \brief Ctor for view_cache_index
 view_cache_index::view_cache_index(dim_tuple arg_dim_defaults ///< TODOCUMENT

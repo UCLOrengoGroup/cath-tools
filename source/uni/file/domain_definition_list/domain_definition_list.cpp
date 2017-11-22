@@ -36,7 +36,6 @@
 
 #include <fstream>
 
-using namespace boost::algorithm;
 using namespace cath;
 using namespace cath::chop;
 using namespace cath::common;
@@ -47,6 +46,7 @@ using boost::algorithm::is_any_of;
 using boost::algorithm::token_compress_on;
 using boost::filesystem::path;
 using boost::none;
+using boost::trim;
 using std::ifstream;
 using std::istream;
 using std::make_pair;

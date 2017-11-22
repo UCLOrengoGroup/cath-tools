@@ -20,21 +20,15 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
-#include <boost/log/trivial.hpp> /// ***** TEMPORARY *****
-
 #include "common/chrono/duration_to_seconds_string.hpp"
-//#include "scan/detail/res_pair_dirn/res_pair_dirn.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_from_phi_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_from_psi_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_index_dirn_keyer_part.hpp"
-//#include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_orient_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_to_phi_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_to_psi_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_x_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_y_keyer_part.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_z_keyer_part.hpp"
-#include "scan/scan_action/populate_matrix_scan_action.hpp" // ***** TEMPORARY? *****
-#include "scan/scan_action/record_scores_scan_action.hpp"   // ***** TEMPORARY? *****
 #include "scan/scan_index.hpp"
 #include "scan/scan_query_set.hpp"
 #include "structure/geometry/angle.hpp"
@@ -44,14 +38,11 @@
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/global_test_constants.hpp"
 
-#include <chrono> // ***** TEMPORARY? *****
-
 using namespace cath;
 using namespace cath::common;
 using namespace cath::geom;
 using namespace cath::scan;
 using namespace std;
-using namespace std::chrono; // ***** TEMPORARY? *****
 
 namespace cath {
 	namespace test {

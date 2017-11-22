@@ -28,15 +28,16 @@
 #include "score/length_getter/length_of_longer_getter.hpp"
 #include "score/length_getter/length_of_shorter_getter.hpp"
 
-using namespace boost::logic;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::score;
 using namespace std;
 
+using boost::indeterminate;
 using boost::numeric_cast;
 using boost::ptr_vector;
+using boost::tribool;
 
 /// \brief TODOCUMENT
 unique_ptr<length_getter> protein_only_length_getter::do_clone() const {

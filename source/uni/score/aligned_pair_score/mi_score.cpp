@@ -20,11 +20,8 @@
 
 #include "mi_score.hpp"
 
-//#include <boost/archive/xml_iarchive.hpp>
-//#include <boost/archive/xml_oarchive.hpp>
 #include <boost/logic/tribool.hpp>
 #include <boost/range/join.hpp>
-//#include <boost/serialization/export.hpp>
 
 #include "alignment/alignment.hpp"
 #include "alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
@@ -34,9 +31,8 @@
 #include "common/less_than_helper.hpp"
 #include "score/length_getter/length_of_shorter_getter.hpp"
 
-#include <iostream> // ***** TEMPORARY *****
+// #include <iostream> // ***** TEMPORARY *****
 
-using namespace boost::logic;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
@@ -44,6 +40,7 @@ using namespace cath::score;
 using namespace std;
 
 using boost::range::join;
+using boost::tribool;
 
 //BOOST_CLASS_EXPORT(mi_score)
 

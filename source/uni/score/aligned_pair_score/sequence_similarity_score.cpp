@@ -41,7 +41,6 @@
 #include "structure/structure_type_aliases.hpp"
 #include "superposition/superposition.hpp"
 
-using namespace boost::logic;
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
@@ -52,6 +51,7 @@ using namespace std;
 
 using boost::numeric_cast;
 using boost::range::join;
+using boost::tribool;
 
 //BOOST_CLASS_EXPORT(sequence_similarity_score)
 
