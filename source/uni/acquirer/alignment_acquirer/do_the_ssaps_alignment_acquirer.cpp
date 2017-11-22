@@ -1,0 +1,186 @@
+/// \file
+/// \brief The do_the_ssaps_alignment_acquirer class definitions
+
+/// \copyright
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
+/// Copyright (C) 2011, Orengo Group, University College London
+///
+/// This program is free software: you can redistribute it and/or modify
+/// it under the terms of the GNU General Public License as published by
+/// the Free Software Foundation, either version 3 of the License, or
+/// (at your option) any later version.
+///
+/// This program is distributed in the hope that it will be useful,
+/// but WITHOUT ANY WARRANTY; without even the implied warranty of
+/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+/// GNU General Public License for more details.
+///
+/// You should have received a copy of the GNU General Public License
+/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#include "do_the_ssaps_alignment_acquirer.hpp"
+
+#include <boost/algorithm/string/join.hpp>
+#include <boost/algorithm/string/trim.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/format.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/range/adaptor/transformed.hpp>
+#include <boost/range/irange.hpp>
+
+#include "acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.hpp"
+#include "alignment/alignment.hpp"
+#include "chopping/chopping_format/sillitoe_chopping_format.hpp"
+#include "chopping/domain/domain.hpp"
+#include "common/clone/make_uptr_clone.hpp"
+#include "common/exception/not_implemented_exception.hpp"
+#include "common/exception/runtime_error_exception.hpp"
+#include "common/file/open_fstream.hpp"
+#include "common/file/slurp.hpp"
+#include "common/file/spew.hpp"
+#include "file/strucs_context.hpp"
+#include "ssap/options/cath_ssap_options.hpp"
+#include "ssap/ssap.hpp"
+#include "superposition/options/align_regions_options_block.hpp"
+
+using namespace cath;
+using namespace cath::align;
+using namespace cath::chop;
+using namespace cath::common;
+using namespace cath::file;
+using namespace cath::opts;
+
+using boost::adaptors::transformed;
+using boost::algorithm::join;
+using boost::algorithm::trim_right_copy;
+using boost::filesystem::create_directory;
+using boost::filesystem::exists;
+using boost::filesystem::is_empty;
+using boost::filesystem::path;
+using boost::filesystem::temp_directory_path;
+using boost::format;
+using boost::irange;
+using std::ofstream;
+using std::pair;
+using std::string;
+using std::unique_ptr;
+
+constexpr aln_glue_style do_the_ssaps_alignment_acquirer::DEFAULT_ALN_GLUE_STYLE;
+
+/// \brief A standard do_clone method.
+unique_ptr<alignment_acquirer> do_the_ssaps_alignment_acquirer::do_clone() const {
+	return { make_uptr_clone( *this ) };
+}
+
+/// \brief Run the necessary cath-ssaps and then use them to get the alignment and spanning tree
+pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< The details of the structures for which the alignment and spanning tree is required
+                                                                                                        ) const {
+	// Get the directory in which the cath-ssaps should be done
+	const path ssaps_dir = get_directory_of_joy().value_or(
+		make_temp_dir_for_doing_ssaps( arg_strucs_context )
+	);
+
+	// Ensure the directory exists
+	if ( ! exists( ssaps_dir ) ) {
+		BOOST_LOG_TRIVIAL( info ) << "About to create directory " << ssaps_dir;
+		if ( ! create_directory( ssaps_dir ) ) {
+			BOOST_THROW_EXCEPTION(runtime_error_exception(
+				"Unable to create directory "
+				+ ssaps_dir.string()
+				+ " for temporary cath-ssaps"
+			));
+		}
+	}
+
+	// Perform any necessary cath-ssaps
+	path_vec scores_files;
+	BOOST_LOG_TRIVIAL( info ) << "About to check for and possibly run cath-ssaps in directory " << ssaps_dir;
+	for (const size_t &struc_1_index : indices( size( arg_strucs_context ) ) ) {
+		for (const size_t &struc_2_index : irange( struc_1_index + 1, size( arg_strucs_context ) ) ) {
+
+			// \TODO: Abstract out functions for making these standard file names
+			const string file_id_1   = get_domain_or_specified_or_name_from_acq( arg_strucs_context.get_name_sets()[ struc_1_index ] );
+			const string file_id_2   = get_domain_or_specified_or_name_from_acq( arg_strucs_context.get_name_sets()[ struc_2_index ] );
+			const path   scores_file = ssaps_dir / ( file_id_1 + file_id_2 + ".scores" );
+			const path   alnmnt_file = ssaps_dir / ( file_id_1 + file_id_2 + ".list"   );
+
+			scores_files.push_back( scores_file );
+
+			if (   ! exists( scores_file ) || ! exists( alnmnt_file )
+				|| is_empty( scores_file ) || is_empty( alnmnt_file ) ) {
+
+				// \TODO Tighten up the interface with the ssap/ssap.cpp code here
+				//
+				// In particular, the name_set will know the location of the file that each
+				// PDB was loaded from (if it was loaded from a PDB) so cath-ssap should have
+				// a --pdb-infile option and it should be explicitly used here.
+				str_vec cath_ssap_args{
+					cath_ssap_options::PROGRAM_NAME,
+					"--" + old_ssap_options_block::PO_ALIGN_DIR, ssaps_dir.string()
+				};
+				for (const size_t &index : { struc_1_index, struc_2_index } ) {
+					const auto       &name_set   = arg_strucs_context.get_name_sets()[ index ];
+					const domain_opt  opt_domain = get_domain_opt_of_index( arg_strucs_context, index );
+					cath_ssap_args.push_back( name_set.get_name_from_acq() );
+					if ( opt_domain ) {
+						cath_ssap_args.push_back( "--" + align_regions_options_block::PO_ALN_REGIONS );
+						cath_ssap_args.push_back( sillitoe_chopping_format{}.write_domain( *opt_domain ) );
+					}
+				}
+				BOOST_LOG_TRIVIAL( info ) << "Running: " << join( cath_ssap_args, " " ) << " and writing scores to " << scores_file;
+				ofstream out_scores_ofstream;
+				open_ofstream( out_scores_ofstream, scores_file );
+				run_ssap(
+					make_and_parse_options<cath_ssap_options>( cath_ssap_args ),
+					std::cout,
+					std::cerr,
+					ostream_ref( out_scores_ofstream )
+				);
+				out_scores_ofstream.close();
+			}
+		}
+	}
+
+	// Concatenate the scores files into one big file
+	const path scores_file = ssaps_dir / "ssap_scores";
+	spew(
+		scores_file,
+		join(
+			scores_files
+				| transformed( [] (const path &x) { return trim_right_copy( slurp( x ) ); } ),
+			"\n"
+		)
+	);
+
+	// Use the ssap_scores_file_alignment_acquirer on the directory of data
+	return ssap_scores_file_alignment_acquirer{ scores_file, glue_style }
+		.get_alignment_and_spanning_tree( arg_strucs_context );
+}
+
+/// \brief Ctor for do_the_ssaps_alignment_acquirer
+do_the_ssaps_alignment_acquirer::do_the_ssaps_alignment_acquirer(const path_opt       &arg_directory_of_joy, ///< The directory in which the cath-ssaps should be performed
+                                                                 const aln_glue_style &arg_aln_glue_style    ///< The approach that should be used for glueing alignments together
+                                                                 ) : directory_of_joy { arg_directory_of_joy },
+                                                                     glue_style       { arg_aln_glue_style   } {
+}
+
+/// \brief Getter for the directory in which the cath-ssaps should be performed
+const path_opt & do_the_ssaps_alignment_acquirer::get_directory_of_joy() const {
+	return directory_of_joy;
+}
+
+/// \brief Make a path with a temporary directory in which cath-ssaps for the specified strucs_context should be done
+///
+/// This aims to create a temporary directory that is likely to persist across multiple identical runs
+/// but very unlikely to clash amongst different inputs
+///
+/// This doesn't actually create the directory
+path do_the_ssaps_alignment_acquirer::make_temp_dir_for_doing_ssaps(const strucs_context &arg_strucs_context ///< The strucs_context for which the directory should make a cath-ssaps temporary directory
+                                                                    ) {
+	return temp_directory_path() / (
+		  "cath-tools.tmp."
+		+ ( boost::format( R"(%|08X|)" ) % non_crypto_hash_copy( 0, arg_strucs_context ) ).str()
+		+ "_"
+		+ ( boost::format( R"(%|08X|)" ) % non_crypto_hash_copy( 1, arg_strucs_context ) ).str()
+	);
+}
