@@ -67,7 +67,8 @@ namespace cath {
 
 	void run_ssap(const opts::cath_ssap_options &,
 	              std::ostream & = std::cout,
-	              std::ostream & = std::cerr);
+	              std::ostream & = std::cerr,
+	              const ostream_ref_opt & = boost::none);
 
 	void align_proteins(const protein &,
 	                    const protein &,

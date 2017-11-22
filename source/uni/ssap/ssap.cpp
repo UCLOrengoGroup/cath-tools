@@ -374,9 +374,13 @@ prot_prot_pair cath::read_protein_pair(const string                  &arg_protei
 }
 
 /// \brief SSAP a pair of structures as directed by a cath_ssap_options object
+///
+/// \TODO Aim to improve the interface for calls from other parts of the code
+///       (eg do_the_ssaps_alignment_acquirer)
 void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cath_ssap options
                     ostream                 &arg_stdout,            ///< The ostream to which any stdout-like output should be written
-                    ostream                 &arg_stderr             ///< The ostream to which any stdout-like output should be written
+                    ostream                 &arg_stderr,            ///< The ostream to which any stdout-like output should be written
+                    const ostream_ref_opt   &arg_scores_stream      ///< The ostream to which any stdout-like output should be written
                     ) {
 	// Start be resetting the SSAP global variables
 	reset_ssap_global_variables();
@@ -472,18 +476,21 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 	//     the ostream/ofstream must be returned by ostream reference (or pointer) to avoid slicing, which means the
 	//     old_ssap_options_block must own the ofstream but that makes old_ssap_options_block non-copyable, which prevents an option-parsing
 	//     function from returning a old_ssap_options_block object (although this would presumably be fine come C++11's move operators).
-	ofstream file_out_stream;
-	if (the_ssap_options.get_output_to_file()) {
-		open_ofstream(file_out_stream, the_ssap_options.get_output_filename());
+	ostream_ref_opt scores_stream = arg_scores_stream;
+	if ( ! scores_stream ) {
+		ofstream file_out_stream;
+		if (the_ssap_options.get_output_to_file()) {
+			open_ofstream(file_out_stream, the_ssap_options.get_output_filename());
+		}
+		*scores_stream = the_ssap_options.get_output_to_file() ? file_out_stream : arg_stdout;
 	}
-	ostream &output_stream = the_ssap_options.get_output_to_file() ? file_out_stream : arg_stdout;
 
 	if ( proteins.first.get_length() == 0 || proteins.second.get_length() == 0 ) {
 		save_zero_scores( proteins.first, proteins.second, 2 );
 		// output_stream << "global_ssa/*p_line1" << "\n";
 		// output_stream <<  global_ssap_line1  << "\n";
 		// output_stream << "global_ssa*/p_line2" << "\n";
-		output_stream <<  global_ssap_line2  << "\n";
+		scores_stream->get() <<  global_ssap_line2  << "\n";
 		exit( static_cast<int>( logger::return_code::SUCCESS ) );
 	}
 
@@ -492,7 +499,7 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 
 	// Print the results
 	print_ssap_scores(
-		output_stream,
+		scores_stream->get(),
 		global_ssap_score1,
 		global_ssap_score2,
 		global_ssap_line1,
