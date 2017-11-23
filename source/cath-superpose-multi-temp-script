@@ -18,7 +18,7 @@ my $SSAP_ALIGNMENT_SUFFIX = ".list";
 my $SSAP_SCORES_SUFFIX    = ".scores";
 
 # Check the script's arguments
-if ( scalar(@ARGV) < 4 ) {
+if ( scalar(@ARGV) < 3 ) {
 	die "Usage: $PROGRAM_NAME temp_dir struc_id1 struc_id2 struc_id3 ...\n\n"
 		. "Align regions may also be specified in the same list in the format: D[5inwB02]251-348:B,408-416A:B\n\n"
 		. "Those specifications must be in one-to-one correspondence with the struc_ids.\n"
