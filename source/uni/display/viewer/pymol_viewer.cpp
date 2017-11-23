@@ -497,6 +497,7 @@ set cartoon_smooth_loops,1
 show_as sticks, organic
 colour black, organic
 select organic, organic
+select nucleic, resn A+C+G+U+DA+DC+DG+DT
 deselect
 reset
 set field_of_view, 25
@@ -506,7 +507,7 @@ set dash_width,  0.7
 set dash_radius, 0.02
 set seq_view_label_mode, 1
 set ribbon_width, 1.5
-zoom ( polymer and not resn A+C+G+T+U )
+zoom ( polymer and not nucleic )
 cmd.wizard( "message", ")" << advert_msg << R"(" );
 feedback enable,all,output
 )"
