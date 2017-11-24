@@ -480,7 +480,7 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 		if (the_ssap_options.get_output_to_file()) {
 			open_ofstream(file_out_stream, the_ssap_options.get_output_filename());
 		}
-		*scores_stream = the_ssap_options.get_output_to_file() ? file_out_stream : arg_stdout;
+		scores_stream = the_ssap_options.get_output_to_file() ? file_out_stream : arg_stdout;
 	}
 
 	if ( proteins.first.get_length() == 0 || proteins.second.get_length() == 0 ) {
