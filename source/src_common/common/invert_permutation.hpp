@@ -21,12 +21,36 @@
 #ifndef _CATH_TOOLS_SOURCE_COMMON_INVERT_PERMUTATION_H
 #define _CATH_TOOLS_SOURCE_COMMON_INVERT_PERMUTATION_H
 
+#include <boost/range/combine.hpp>
+#include <boost/range/size.hpp>
+#include <boost/tuple/tuple.hpp>
+
+#include "common/boost_addenda/range/indices.hpp"
 #include "common/type_aliases.hpp"
 
 namespace cath {
+	namespace common {
 
-	size_vec invert_permutation(const size_vec &);
+		/// \brief Return an inverted copy of the specified permutation
+		///
+		/// A permutation is a reordered list of the integers from 0 to some number (inclusive)
+		///
+		/// Example: { 4, 1, 0, 3, 2 } inverts to { 2, 1, 4, 3, 0 } and vice versa
+		///
+		/// This is useful for converting (an ordering of indices) into
+		/// (a lookup from index to rank in the ordering)
+		template <typename Cont = std::vector<size_t>, typename Rng>
+		Cont invert_permutation(const Rng &arg_range ///< The range containing the permutation to invert
+		                        ) {
+			const size_t range_size = boost::size( arg_range );
+			Cont index_scores( range_size, range_size );
+			for (const auto &val : combine( common::indices( range_size ), arg_range ) ) {
+				index_scores[ static_cast<size_t>( boost::get<1>( val ) ) ] = boost::get<0>( val );
+			}
+			return index_scores;
+		}
 
+	} // namespace common
 } // namespace cath
 
 #endif

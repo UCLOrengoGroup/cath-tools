@@ -30,7 +30,6 @@
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/out_of_range_exception.hpp"
-#include "common/invert_permutation.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_list.hpp"
 #include "structure/protein/residue.hpp"
