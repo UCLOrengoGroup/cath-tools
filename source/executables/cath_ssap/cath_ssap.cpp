@@ -18,7 +18,6 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/log/expressions.hpp>
 #include <boost/log/trivial.hpp>
 
 #include "chopping/domain/domain.hpp"
@@ -30,6 +29,7 @@ using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 
+using boost::log::trivial::info;
 using boost::log::trivial::severity;
 using boost::log::trivial::trace;
 
@@ -51,6 +51,9 @@ namespace cath {
 			if ( the_cath_ssap_options.get_old_ssap_options().get_debug() ) {
 //				get_sink_ptr()->set_filter( severity >= debug );
 				get_sink_ptr()->set_filter( severity >= trace );
+			}
+			else {
+				get_sink_ptr()->set_filter( severity >= info );
 			}
 
 			run_ssap( the_cath_ssap_options );

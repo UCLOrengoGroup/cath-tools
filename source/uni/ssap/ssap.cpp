@@ -518,7 +518,7 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
                           const old_ssap_options_block  &arg_ssap_options, ///< The old_ssap_options_block to specify how things should be done
                           const data_dirs_spec          &arg_data_dirs     ///< The data directories from which data should be read
                           ) {
-	BOOST_LOG_TRIVIAL( info ) << "Function: alnseq";
+	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq";
 
 	// Set alignment options
 	global_res_score   = false;
@@ -526,8 +526,8 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 	global_gap_penalty =     5;
 	global_window      = max( arg_protein_a.get_num_sec_strucs(), arg_protein_b.get_num_sec_strucs() );
 
-	BOOST_LOG_TRIVIAL( info ) << "Function: alnseq:  seqa->nsec=" << arg_protein_a.get_num_sec_strucs();
-	BOOST_LOG_TRIVIAL( info ) << "Function: alnseq:  seqb->nsec=" << arg_protein_b.get_num_sec_strucs();
+	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  seqa->nsec=" << arg_protein_a.get_num_sec_strucs();
+	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  seqb->nsec=" << arg_protein_b.get_num_sec_strucs();
 
 	ssap_scores fast_ssap_scores;
 	if ( !arg_ssap_options.get_slow_ssap_only() ) {
@@ -544,7 +544,7 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 
 			// Re-run with increased window and torsional angle cutoffs, if not a great alignment
 			if ( first_score < arg_ssap_options.get_max_score_to_fast_ssap_rerun() && ! has_clique_file( arg_ssap_options ) ) {
-				BOOST_LOG_TRIVIAL( info ) << "Dist is: " << arg_ssap_options.get_max_score_to_fast_ssap_rerun() << " Removing cutoffs....";
+				BOOST_LOG_TRIVIAL( debug ) << "Dist is: " << arg_ssap_options.get_max_score_to_fast_ssap_rerun() << " Removing cutoffs....";
 
 				--global_run_counter;
 
@@ -561,9 +561,9 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 				const double second_score = fast_ssap_scores.get_ssap_score_over_larger();
 
 				// Re-run original alignment if it doesn't give a better score
-				BOOST_LOG_TRIVIAL( info ) << "Comparing score " << setprecision(30) << second_score << " with " << first_score;
+				BOOST_LOG_TRIVIAL( debug ) << "Comparing score " << setprecision(30) << second_score << " with " << first_score;
 				if (second_score <= first_score) {
-					BOOST_LOG_TRIVIAL( info ) << "Reverting back to original Fast SSAP....";
+					BOOST_LOG_TRIVIAL( debug ) << "Reverting back to original Fast SSAP....";
 
 					--global_run_counter;
 
@@ -589,13 +589,13 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 	// Don't run slow ssap if clique information is used
 	const bool run_slow_ssap = ( ! has_clique_file( arg_ssap_options ) && ! fast_ssap_result_is_close );
 	if ( fast_ssap_result_is_close ) {
-		BOOST_LOG_TRIVIAL( info ) << "Not running slow SSAP. Cutoff: " << arg_ssap_options.get_max_score_to_slow_ssap_rerun()
+		BOOST_LOG_TRIVIAL( debug ) << "Not running slow SSAP. Cutoff: " << arg_ssap_options.get_max_score_to_slow_ssap_rerun()
 		                          << " Score: " << fast_ssap_scores.get_ssap_score_over_smaller();
 	}
 
 	// RUN SLOW SSAP - START
 	if ( run_slow_ssap ) {
-		BOOST_LOG_TRIVIAL( info ) << "Function: alnseq:  slow_ssap";
+		BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  slow_ssap";
 
 		// v1.14 JEB
 		++global_run_counter;
@@ -615,7 +615,7 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 
 		// Perform two residue alignment passes
 		for (const size_t &pass_ctr : { 1_z, 2_z } ) {
-			BOOST_LOG_TRIVIAL( info ) << "Function: alnseq:  pass=" << pass_ctr;
+			BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  pass=" << pass_ctr;
 
 			global_align_pass = ( pass_ctr > 1 );
 			if (pass_ctr == 1 || (pass_ctr == 2 && global_res_score))  {
@@ -637,8 +637,8 @@ ssap_scores cath::fast_ssap(const protein                 &arg_protein_a,    ///
                             ) {
 	ssap_scores new_ssap_scores;
 
-	BOOST_LOG_TRIVIAL( info ) << "Fast SSAP: dtot=" << global_res_sim_cutoff << " window_add=" << global_window_add;
-	BOOST_LOG_TRIVIAL( info ) << "Function: fast_ssap:  fast_ssap";
+	BOOST_LOG_TRIVIAL( debug ) << "Fast SSAP: dtot=" << global_res_sim_cutoff << " window_add=" << global_window_add;
+	BOOST_LOG_TRIVIAL( debug ) << "Function: fast_ssap:  fast_ssap";
 
 	// Perform secondary structure alignment
 	++global_run_counter;
@@ -661,7 +661,7 @@ ssap_scores cath::fast_ssap(const protein                 &arg_protein_a,    ///
 
 	// Perform two residue alignment passes
 	for (const size_t &pass_ctr  : { 1_z, 2_z } ) {
-		BOOST_LOG_TRIVIAL( info ) << "Function: fast_ssap:  pass=" << pass_ctr;
+		BOOST_LOG_TRIVIAL( debug ) << "Function: fast_ssap:  pass=" << pass_ctr;
 		global_align_pass = ( pass_ctr > 1 );
 		if ( pass_ctr == 1 || ( pass_ctr == 2 && global_res_score ) ) {
 			const pair<ssap_scores, alignment> tmp_scores_and_aln = compare( arg_protein_a, arg_protein_b, pass_ctr, residue_querier(), arg_ssap_options, arg_data_dirs, sec_struc_alignment );
@@ -697,12 +697,12 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	global_upper_ss_mask_matrix.resize ( length_b + 1, length_a + global_window + 1, false );
 	global_lower_mask_matrix.resize    ( length_b + 1, length_a + global_window + 1, false );
 
-	BOOST_LOG_TRIVIAL( info ) << "Function: compare";
-	BOOST_LOG_TRIVIAL( info ) << "Function: compare: [aligning " << entry_plural_name << "]";
-	BOOST_LOG_TRIVIAL( info ) << "Function: compare: pass=" << arg_pass_ctr;
+	BOOST_LOG_TRIVIAL( debug ) << "Function: compare";
+	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "]";
+	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: pass=" << arg_pass_ctr;
 
 	if ( ! res_not_ss__hacky || arg_pass_ctr == 1 ) {
-		BOOST_LOG_TRIVIAL( info ) << "Function: compare: [aligning " << entry_plural_name << "] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix";
+		BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix";
 		// Each of these matrices is currently indexed with offset-1
 		//
 		// \todo Shift each of these matrices to not use offset-1 and remove the extra " + 1"
@@ -730,11 +730,11 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	//
 	// \todo Shift each of these matrices to not use offset-1 and remove the extra " + 1"
 	//       from these lines
-	BOOST_LOG_TRIVIAL( info ) << "Function: compare: [aligning " << entry_plural_name << "] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix";
+	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix";
 	global_upper_score_matrix.assign   ( length_b + 1, length_a + global_window + 1, 0     );
 	// global_upper_res_mask_matrix.assign( length_b + 1, length_a + global_window + 1, false );
 
-	BOOST_LOG_TRIVIAL( info ) << "Function: compare: [aligning " << entry_plural_name << "] score_matrix twice";
+	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "] score_matrix twice";
 
 	// Call score_matrix() to populate
 	populate_upper_score_matrix(arg_protein_a, arg_protein_b, arg_entry_querier, global_align_pass);
@@ -825,7 +825,7 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 	for (const data_file_path_pair &filename_and_data_file : filename_of_data_file) {
 		const string file_str              = to_lower_copy( lexical_cast<string>( filename_and_data_file.first ) );
 		const string right_padded_file_str = string( max_data_file_str_length() - file_str.length(), ' ' );
-		BOOST_LOG_TRIVIAL( info ) << "Loading " << file_str << right_padded_file_str << " from " << filename_and_data_file.second;
+		BOOST_LOG_TRIVIAL( debug ) << "Loading " << file_str << right_padded_file_str << " from " << filename_and_data_file.second;
 	}
 
 	// Create a protein object from the name, wolf file and sec file
@@ -1019,7 +1019,7 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 				*last_present_a_opt + 2, // ( + 1 to go from position to size and +1 because it will be indexed offset_1)
 				false
 			);
-			BOOST_LOG_TRIVIAL( debug ) << "Setting secondary structure alignment : " << *arg_opt_ss_alignment;;
+			BOOST_LOG_TRIVIAL( trace ) << "Setting secondary structure alignment : " << *arg_opt_ss_alignment;;
 			for (const size_t &alignment_ctr : indices( arg_opt_ss_alignment->length() ) ) {
 				if ( has_both_positions_of_index( *arg_opt_ss_alignment, alignment_ctr ) ) {
 					sec_struc_match_matrix.set(
@@ -1359,7 +1359,7 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 	                                + "; pass "
 	                                + booled_to_string( arg_align_pass )
 	                                + "), ";
-	BOOST_LOG_TRIVIAL( debug ) << msg_context_prfx
+	BOOST_LOG_TRIVIAL( trace ) << msg_context_prfx
 	                           << "compared "
 	                           << num_actual_upper_cell_comps
 	                           << " residue pairs out of a possible "
@@ -1798,7 +1798,7 @@ bool cath::save_ssap_scores(const alignment               &arg_alignment,    ///
                             const old_ssap_options_block  &arg_ssap_options, ///< The old_ssap_options_block to specify how things should be done
                             const data_dirs_spec          &arg_data_dirs     ///< The data directories from which data should be read
                             ) {
-	BOOST_LOG_TRIVIAL( info ) << "Function: save_ssap_scores";
+	BOOST_LOG_TRIVIAL( debug ) << "Function: save_ssap_scores";
 	
 	// Select get_ssap_score_over_smaller if a local score is needed, or get_ssap_score_over_larger otherwise
 	const double select_score = arg_ssap_options.get_use_local_ssap_score() ? arg_ssap_scores.get_ssap_score_over_smaller()
@@ -1879,7 +1879,7 @@ void cath::save_zero_scores(const protein   &arg_protein_a,  ///< The first prot
                             const protein   &arg_protein_b,  ///< The second protein
                             const ptrdiff_t &arg_run_counter ///< The run counter
                             ) {
-	BOOST_LOG_TRIVIAL( info ) << "Function: save_zero_scores()";
+	BOOST_LOG_TRIVIAL( debug ) << "Function: save_zero_scores()";
 
 	if ( arg_run_counter == 1 ) {
 		snprintf(
@@ -2076,9 +2076,9 @@ ssap_scores cath::plot_aln(const protein                 &arg_protein_a,     ///
 		global_score_run2 = select_score;
 	}
 
-	BOOST_LOG_TRIVIAL( info ) << "Function: plot_aln:  score_run1 = " << fixed << setprecision(3) << global_score_run1;
-	BOOST_LOG_TRIVIAL( info ) << "Function: plot_aln:  score_run2 = " << fixed << setprecision(3) << global_score_run2;
-	BOOST_LOG_TRIVIAL( info ) << "Function: plot_aln:  r_fast     = " << boolalpha << global_doing_fast_ssap;;
+	BOOST_LOG_TRIVIAL( debug ) << "Function: plot_aln:  score_run1 = " << fixed << setprecision(3) << global_score_run1;
+	BOOST_LOG_TRIVIAL( debug ) << "Function: plot_aln:  score_run2 = " << fixed << setprecision(3) << global_score_run2;
+	BOOST_LOG_TRIVIAL( debug ) << "Function: plot_aln:  r_fast     = " << boolalpha << global_doing_fast_ssap;;
 
 	// A decision is made here about whether to write an alignment file, based on
 	// the score of the alignment. However, this is inconsistent with save_ssap_scores
@@ -2096,7 +2096,7 @@ ssap_scores cath::plot_aln(const protein                 &arg_protein_a,     ///
 			out_score = global_score_run2;
 		}
 		if (out_score > -1.0) {
-			BOOST_LOG_TRIVIAL( info ) << "Function: plot_aln: printing alignment (r_fast == 1) || (!r_fast && score_run2 > score_run1)";
+			BOOST_LOG_TRIVIAL( debug ) << "Function: plot_aln: printing alignment (r_fast == 1) || (!r_fast && score_run2 > score_run1)";
 
 			// Prevent writing if score isn't high enough
 			if (score_is_high_enough != (out_score >= arg_ssap_options.get_min_score_for_writing_files())) {
@@ -2104,7 +2104,7 @@ ssap_scores cath::plot_aln(const protein                 &arg_protein_a,     ///
 			}
 
 			if (score_is_high_enough) {
-				BOOST_LOG_TRIVIAL( info ) << "Function: print_aln"
+				BOOST_LOG_TRIVIAL( debug ) << "Function: print_aln"
 					<< " "
 					<< to_string( arg_protein_a.get_name_set() )
 					<< " "

@@ -38,6 +38,7 @@
 #include "common/file/open_fstream.hpp"
 #include "common/file/slurp.hpp"
 #include "common/file/spew.hpp"
+#include "common/matrix/matrix_index.hpp"
 #include "file/strucs_context.hpp"
 #include "ssap/options/cath_ssap_options.hpp"
 #include "ssap/ssap.hpp"
@@ -61,6 +62,7 @@ using boost::filesystem::temp_directory_path;
 using boost::format;
 using boost::irange;
 using std::ofstream;
+using std::max;
 using std::pair;
 using std::string;
 using std::unique_ptr;
@@ -75,6 +77,8 @@ unique_ptr<alignment_acquirer> do_the_ssaps_alignment_acquirer::do_clone() const
 /// \brief Run the necessary cath-ssaps and then use them to get the alignment and spanning tree
 pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< The details of the structures for which the alignment and spanning tree is required
                                                                                                         ) const {
+	using std::to_string;
+
 	// Get the directory in which the cath-ssaps should be done
 	const path ssaps_dir = get_directory_of_joy().value_or(
 		make_temp_dir_for_doing_ssaps( arg_strucs_context )
@@ -94,15 +98,29 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 
 	// Perform any necessary cath-ssaps
 	path_vec scores_files;
-	BOOST_LOG_TRIVIAL( info ) << "About to check for and possibly run cath-ssaps in directory " << ssaps_dir;
-	for (const size_t &struc_1_index : indices( size( arg_strucs_context ) ) ) {
-		for (const size_t &struc_2_index : irange( struc_1_index + 1, size( arg_strucs_context ) ) ) {
+	const size_t num_strucs        = size( arg_strucs_context );
+	const size_t num_ssaps         = ( num_strucs * ( max( 1_z, num_strucs ) - 1_z ) ) / 2_z;
+	const string num_str           = to_string( num_ssaps );
+	const size_t num_str_width     = num_str.length();
+	const string num_str_width_str = "%" + to_string( num_str_width ) + "d";
+	BOOST_LOG_TRIVIAL( info ) << "About to check for and possibly run " << num_ssaps << " cath-ssaps in directory " << ssaps_dir;
+	for (const size_t &struc_1_index : indices( num_strucs ) ) {
+		for (const size_t &struc_2_index : irange( struc_1_index + 1, num_strucs ) ) {
+
+			const size_t comp_ctr_offset_1 = get_zero_index_of_strict_upper_half_matrix(
+				struc_1_index,
+				struc_2_index,
+				num_strucs
+			) + 1;
+			const string progress_str = ( format( num_str_width_str ) % comp_ctr_offset_1 ).str()
+				+ "/"
+				+ num_str;
 
 			// \TODO: Abstract out functions for making these standard file names
-			const string file_id_1   = get_domain_or_specified_or_name_from_acq( arg_strucs_context.get_name_sets()[ struc_1_index ] );
-			const string file_id_2   = get_domain_or_specified_or_name_from_acq( arg_strucs_context.get_name_sets()[ struc_2_index ] );
-			const path   scores_file = ssaps_dir / ( file_id_1 + file_id_2 + ".scores" );
-			const path   alnmnt_file = ssaps_dir / ( file_id_1 + file_id_2 + ".list"   );
+			const string id_1   = get_domain_or_specified_or_name_from_acq( arg_strucs_context.get_name_sets()[ struc_1_index ] );
+			const string id_2   = get_domain_or_specified_or_name_from_acq( arg_strucs_context.get_name_sets()[ struc_2_index ] );
+			const path   scores_file = ssaps_dir / ( id_1 + id_2 + ".scores" );
+			const path   alnmnt_file = ssaps_dir / ( id_1 + id_2 + ".list"   );
 
 			scores_files.push_back( scores_file );
 
@@ -127,7 +145,7 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 						cath_ssap_args.push_back( sillitoe_chopping_format{}.write_domain( *opt_domain ) );
 					}
 				}
-				BOOST_LOG_TRIVIAL( info ) << "Running: " << join( cath_ssap_args, " " ) << " and writing scores to " << scores_file;
+				BOOST_LOG_TRIVIAL( info ) << "[" << progress_str << "] Running : " << join( cath_ssap_args, " " ) << " and writing scores to " << scores_file;
 				ofstream out_scores_ofstream;
 				open_ofstream( out_scores_ofstream, scores_file );
 				run_ssap(
@@ -137,6 +155,9 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 					ostream_ref( out_scores_ofstream )
 				);
 				out_scores_ofstream.close();
+			}
+			else {
+				BOOST_LOG_TRIVIAL( info ) << "[" << progress_str << "] Skipping " << id_1 << " versus " << id_2 << " - non-empty data files already exist";
 			}
 		}
 	}

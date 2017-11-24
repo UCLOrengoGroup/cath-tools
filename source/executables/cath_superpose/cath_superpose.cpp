@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/log/trivial.hpp>
+
 #include "cath_superpose/cath_superposer.hpp"
 #include "cath_superpose/options/cath_superpose_options.hpp"
 #include "chopping/domain/domain.hpp"
@@ -26,6 +28,9 @@
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
+
+using boost::log::trivial::info;
+using boost::log::trivial::severity;
 
 namespace cath {
 
@@ -40,6 +45,7 @@ namespace cath {
 		/// \brief Parse the options and then pass them to cath_superposer::superpose()
 		void do_run_program(int argc, char * argv[]) final {
 			const auto the_cath_superpose_options = make_and_parse_options<cath_superpose_options>( argc, argv );
+			get_sink_ptr()->set_filter( severity >= info );
 			cath_superposer::superpose(the_cath_superpose_options);
 		}
 	};
