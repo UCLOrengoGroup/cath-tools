@@ -1589,6 +1589,11 @@ set(
 )
 
 set(
+	TESTSOURCES_SRC_COMMON_COMMON_MATRIX
+		src_common/common/matrix/matrix_index_test.cpp
+)
+
+set(
 	TESTSOURCES_SRC_COMMON_COMMON_METAPROGRAMMING
 		src_common/common/metaprogramming/append_template_params_into_first_wrapper_test.cpp
 		src_common/common/metaprogramming/change_template_subwrappers_test.cpp
@@ -1648,6 +1653,7 @@ set(
 		src_common/common/invert_permutation_test.cpp
 		src_common/common/less_than_helper_test.cpp
 		src_common/common/logger_test.cpp
+		${TESTSOURCES_SRC_COMMON_COMMON_MATRIX}
 		${TESTSOURCES_SRC_COMMON_COMMON_METAPROGRAMMING}
 		${TESTSOURCES_SRC_COMMON_COMMON_OPTIONAL}
 		src_common/common/program_exception_wrapper_test.cpp
