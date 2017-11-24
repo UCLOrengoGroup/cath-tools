@@ -54,12 +54,12 @@ string cath::clust::to_string(const cluster_domains   &arg_cluster_domains, ///<
                               const id_of_str_bidirnl &arg_ider             ///< The id_of_str_bidirnl that mapped from seq name to ID
                               ) {
 	return join(
-		arg_cluster_domains
-			| transformed( [&] (const seq_id_and_domain_cluster_ids_pair &x) {
+		arg_cluster_domains.sorted_seq_ids()
+			| transformed( [&] (const cluster_id_t &seq_id) {
 				return
-					  arg_ider.get_name_of_id( x.seq_id )
+					  arg_ider.get_name_of_id( seq_id )
 					+ "("
-					+ to_string( x.dom_cluster_ids, false )
+					+ to_string( arg_cluster_domains.domain_cluster_ids_of_seq_id( seq_id ), false )
 					+ ")";
 			} ),
 		", "

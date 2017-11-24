@@ -94,15 +94,11 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &arg_old_cluste
 				++( num_mapped_by_old_cluster[ old_cluster_idx ] );
 				++( num_mapped_by_new_cluster[ x               ] );
 				++( new_clust_equivs         [ x               ] );
-				
 			};
 
 			// Loop over the sequences in the old cluster
-			//
-			// \TODO Come C++17 and structured bindings, use here
-			for (const seq_id_and_domain_cluster_ids_pair &old_seq_data : old_cluster) {
-				const id_of_string::id_type &seq_id              = old_seq_data.seq_id;
-				const domain_cluster_ids    &old_dom_cluster_ids = old_seq_data.dom_cluster_ids;
+			for (const cluster_id_t &seq_id : old_cluster.sorted_seq_ids()) {
+				const domain_cluster_ids &old_dom_cluster_ids = old_cluster.domain_cluster_ids_of_seq_id( seq_id );
 
 				// If the new clusters have no entries on the sequence then record overlaps of 0 for all the old domains
 				if ( ! has_domain_cluster_ids_of_seq_id( arg_new_clusters, seq_id ) ) {

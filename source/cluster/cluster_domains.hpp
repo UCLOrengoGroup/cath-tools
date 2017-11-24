@@ -23,6 +23,8 @@
 
 #include "cluster/domain_cluster_ids.hpp"
 
+#include <iostream>
+
 namespace cath { namespace common { class id_of_str_bidirnl; } }
 
 namespace cath {
@@ -39,6 +41,15 @@ namespace cath {
 
 				/// \brief The domain_cluster_ids of the domains on the sequence
 				domain_cluster_ids dom_cluster_ids;
+
+				/// \brief Standard ctor so this can be used in emplace_back
+				seq_id_and_domain_cluster_ids_pair(const cluster_id_t &arg_seq_id,
+				                                   domain_cluster_ids  arg_dom_cluster_ids
+				                                   ) : seq_id         { arg_seq_id          },
+				                                       dom_cluster_ids{ arg_dom_cluster_ids } {
+				}
+
+
 			};
 
 		} // namespace detail
@@ -49,12 +60,12 @@ namespace cath {
 		/// \brief Store a (sparse, sorted) list of seq_id_and_domain_cluster_ids_pair entries, sorted
 		class cluster_domains final {
 		private:
-			/// \brief The sparse, sorted list of seq_id_and_domain_cluster_ids_pair entries
+			/// \brief Lookup from seq_id to the index in the seq_domains vector
+			std::unordered_map<cluster_id_t, size_t> index_of_seq_id;
+
+			/// \brief The seq_id_and_domain_cluster_ids_pair entries
 			///
-			/// \todo Does this really benefit from using domain_cluster_ids
-			///       over a vector of seq::seq_seg_run_opt?
-			///
-			/// \todo Is it OK that this is sparse and maintains order with lower_bound->insertion?
+			/// This is unsorted; the above unordered_map is used to find the elements
 			detail::seq_id_and_domain_cluster_ids_pair_vec seq_domains;
 
 		public:
@@ -64,6 +75,10 @@ namespace cath {
 			clust_entry_problem add_domain(const cluster_id_t &,
 			                               seq::seq_seg_run_opt,
 			                               const cluster_id_t &);
+
+			std::vector<cluster_id_t> sorted_seq_ids() const;
+
+			const domain_cluster_ids & domain_cluster_ids_of_seq_id(const cluster_id_t &) const;
 
 			bool empty() const;
 			size_t num_seqs() const;
@@ -78,24 +93,20 @@ namespace cath {
 		                                                       seq::seq_seg_run_opt  arg_segments,  ///< The (optional) segments of the domain to add
 		                                                       const cluster_id_t   &arg_cluster_id ///< The cluster ID of the domain to add
 		                                                       ) {
-			// Find an iterator to the part of seq_domains where this entry this entry's
-			// seq_id_and_domain_cluster_ids_pair is or would be
-			const auto find_itr = boost::range::lower_bound(
-				seq_domains,
-				arg_seq_id,
-				[] (const auto &x, const auto &y) {
-					return x.seq_id < y;
-				}
-			);
-
-			// Insert a seq_id_and_domain_cluster_ids_pair if necessary and, either way, grab an iterator to
-			// the one to which the domain should be added
-			const auto emplace_itr = ( find_itr == common::cend( seq_domains ) || find_itr->seq_id != arg_seq_id )
-				? seq_domains.insert( find_itr, detail::seq_id_and_domain_cluster_ids_pair{ arg_seq_id, domain_cluster_ids{} } )
-				: find_itr;
+			// Use the unordered map to find the correct seq_id_and_domain_cluster_ids_pair_vec for this seq_id
+			// std::cerr << "Looking for seq_id " << arg_seq_id << "\n";
+			const auto index_find_itr = index_of_seq_id.find( arg_seq_id );
+			auto &the_pair = ( index_find_itr != common::cend( index_of_seq_id ) )
+				? seq_domains[ index_find_itr->second ]
+				: [&] () -> decltype( auto ) {
+					const size_t new_index = seq_domains.size();
+					seq_domains.emplace_back( arg_seq_id, domain_cluster_ids{} );
+					index_of_seq_id.emplace( arg_seq_id, new_index );
+					return seq_domains.back();
+				} ();
 
 			// Add the domain
-			auto &the_domain_cluster_ids = emplace_itr->dom_cluster_ids;
+			auto &the_domain_cluster_ids = the_pair.dom_cluster_ids;
 
 			for (const auto &the_domain_cluster_id : the_domain_cluster_ids) {
 				const auto intrcn = interaction( arg_segments, the_domain_cluster_id.segments );
@@ -105,6 +116,22 @@ namespace cath {
 			}
 			the_domain_cluster_ids.emplace_back( arg_segments, arg_cluster_id );
 			return clust_entry_problem::NONE;
+		}
+
+		/// \brief Get the sorted list of seq_ids
+		inline std::vector<cluster_id_t> cluster_domains::sorted_seq_ids() const {
+			std::vector<cluster_id_t> seq_ids;
+			for (const auto &x : index_of_seq_id) {
+				seq_ids.push_back( x.first );
+			}
+			std::sort( seq_ids.begin(), seq_ids.end() );
+			return seq_ids;
+		}
+
+		/// \brief Get the domain_cluster_ids associated with the specified seq ID
+		inline const domain_cluster_ids & cluster_domains::domain_cluster_ids_of_seq_id(const cluster_id_t &arg_seq_id ///< The ID of the sequence to query
+		                                                                                ) const {
+			return seq_domains[ index_of_seq_id.find( arg_seq_id )->second ].dom_cluster_ids;
 		}
 
 		/// \brief Return whether this is empty
@@ -133,8 +160,6 @@ namespace cath {
 
 		std::string to_string(const cluster_domains &,
 		                      const common::id_of_str_bidirnl &);
-
-
 
 	} // namespace clust
 } // namespace cath
