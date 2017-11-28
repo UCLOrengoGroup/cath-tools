@@ -30,7 +30,7 @@ namespace cath {
 		template <typename OutputContainer,
 		          typename RangeT,
 		          typename PredicateT>
-		inline OutputContainer split_build(RangeT                                     &arg_input,                                          ///< TODOCUMENT
+		inline OutputContainer split_build(const RangeT                               &arg_input,                                          ///< TODOCUMENT
 		                                   PredicateT                                  arg_pred,                                           ///< TODOCUMENT
 		                                   boost::algorithm::token_compress_mode_type  arg_compress = boost::algorithm::token_compress_off ///< TODOCUMENT
 		                                   ) {
