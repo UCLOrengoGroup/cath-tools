@@ -66,9 +66,9 @@ namespace cath {
 						+ r_or_w_str
 						+ " ["
 						+ ex.what()
-						+ "] "
+						+ "] : "
+						+ std::strerror( errno )
 					);
-					perror(error_message.c_str());
 					BOOST_THROW_EXCEPTION(cath::common::runtime_error_exception(error_message));
 				};
 

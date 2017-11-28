@@ -73,6 +73,7 @@ using boost::algorithm::starts_with;
 using boost::algorithm::trim_copy;
 using boost::empty_formatter;
 using boost::filesystem::path;
+using boost::filesystem::temp_directory_path;
 using boost::format;
 using boost::is_alpha;
 using boost::is_print;
@@ -828,7 +829,26 @@ void cath::align::write_alignment_as_cath_ssap_legacy_format(const path         
                                                              const region_vec_opt &arg_regions_b    ///< TODOCUMENT
                                                              ) {
 	ofstream aln_out_stream;
-	open_ofstream( aln_out_stream, arg_output_file );
+	try {
+		open_ofstream( aln_out_stream, arg_output_file );
+	}
+	catch (const runtime_error_exception &ex) {
+		const path alt_output_path = temp_directory_path() / arg_output_file.filename();
+		if ( alt_output_path == arg_output_file ) {
+			throw;
+		}
+		BOOST_LOG_TRIVIAL( warning )
+			<< "Was unable to write alignment to arg_output_file ("
+			<< ex.what()
+			<< ") - will try writing to "
+			<< alt_output_path
+			<< " instead";
+		if ( aln_out_stream.is_open() ) {
+			aln_out_stream.close();
+		}
+		aln_out_stream.clear();
+		open_ofstream( aln_out_stream, alt_output_path );
+	}
 
 	// Try here to catch any I/O exceptions
 	try {

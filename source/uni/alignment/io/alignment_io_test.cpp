@@ -22,6 +22,7 @@
 
 #include "alignment/io/alignment_io.hpp"
 #include "chopping/region/region.hpp"
+#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/pair_insertion_operator.hpp"
 #include "file/pdb/pdb.hpp"
@@ -34,17 +35,23 @@
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 #include "test/boost_addenda/boost_check_equal_ranges.hpp"
+#include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "test/global_test_constants.hpp"
 #include "test/predicate/istreams_equal.hpp"
 
 #include <fstream>
 #include <iostream>
 
+namespace cath { namespace test { } }
+
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
 using namespace cath::file;
+using namespace cath::test;
 using namespace std;
+
+using boost::filesystem::path;
 
 //namespace std {
 //	/// \brief Naughty addition of an insertion operator into std:: to get Boost.Test to output str_str_pairs
@@ -87,7 +94,7 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-BOOST_FIXTURE_TEST_SUITE(alignment_io_test_suite, cath::test::alignment_io_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(alignment_io_test_suite, alignment_io_test_suite_fixture)
 
 /// \brief A sub test-suite for testing FASTA parsing
 BOOST_AUTO_TEST_SUITE(fasta_test_suite)
@@ -153,6 +160,21 @@ BOOST_AUTO_TEST_CASE(throws_if_sequence_line_contains_non_dash_or_letter_chars) 
 
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_CASE(writing_aln_ssap_legacy_file_to_slash_does_not_fail) {
+	alignment the_alignment{ 2 };
+	the_alignment.set_scores( make_alignment_residue_scores( the_alignment, { score_opt_vec{}, score_opt_vec{} } ) );
+
+	ostringstream test_ss;
+	const log_to_ostream_guard parse_log_guard{ test_ss };
+
+	BOOST_CHECK_NO_THROW_DIAG( write_alignment_as_cath_ssap_legacy_format(
+		"/cath-tools-ssap-legacy-file-in-slash-test",
+		the_alignment,
+		protein(),
+		protein()
+	) );
+}
+
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(alignment_legacy_input_output) {
 	ostringstream err_ss;
@@ -184,7 +206,6 @@ BOOST_AUTO_TEST_CASE(alignment_legacy_input_output) {
 	// Check that the data in the read+written alignment matches the original
 	BOOST_CHECK_EQUAL( expected_ss.str(), got_ss.str() );
 	BOOST_CHECK_EQUAL( err_ss.str(),      ""s          );
-	
 }
 
 BOOST_AUTO_TEST_SUITE_END()
