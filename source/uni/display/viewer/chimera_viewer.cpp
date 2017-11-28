@@ -458,7 +458,7 @@ set cartoon_smooth_loops,1
 show_as sticks, organic
 colour black, organic
 select organic, organic
-select nucleic, resn A+C+G+U+DA+DC+DG+DT
+select nucleic, resn A+C+G+U+DA+DC+DG+DT+DU+BRU+OMC+OMG+OMU
 reset
 set field_of_view, 25
 set label_size, -0.6
