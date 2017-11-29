@@ -133,6 +133,8 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 	use_all_alignment_outputters( aln_outputters, alignment_context{ scored_refined_alignment, context }, arg_stdout, arg_stderr );
 
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
-	const superposition_outputter_list sup_outputters = arg_cath_refine_align_options.get_superposition_outputters();
+	const superposition_outputter_list sup_outputters = arg_cath_refine_align_options.get_superposition_outputters(
+		aln_outputters.empty() ? default_supn_outputter::PYMOL : default_supn_outputter::NONE
+	);
 	use_all_superposition_outputters( sup_outputters, aln_based_sup_acq.get_superposition( arg_stderr ), arg_stdout, arg_stderr, overall_name );
 }

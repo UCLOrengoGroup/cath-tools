@@ -39,6 +39,12 @@ namespace superposition_output_options_block_test_suite { struct unparsed_has_no
 namespace cath {
 	namespace opts {
 
+		/// \brief What superposition outputter (if any) should be provided if none is explicitly specified
+		enum class default_supn_outputter : bool {
+			PYMOL, ///< The pymol_view_superposition_outputter
+			NONE   ///< No outputter
+		};
+
 		/// \brief TODOCUMENT
 		class superposition_output_options_block final : public options_block {
 		private:
@@ -83,7 +89,8 @@ namespace cath {
 			/// \todo Consider adding a sister get_superposition_outputters() for getting outputters
 			///       that don't require a display_spec / superposition_content_spec
 			superposition_outputter_list get_superposition_outputters(const display_spec &,
-			                                                          const sup::superposition_content_spec & = sup::superposition_content_spec{}) const;
+			                                                          const sup::superposition_content_spec & = sup::superposition_content_spec{},
+			                                                          const default_supn_outputter & = default_supn_outputter::NONE) const;
 			bool outputs_to_stdout() const;
 		};
 	} // namespace opts

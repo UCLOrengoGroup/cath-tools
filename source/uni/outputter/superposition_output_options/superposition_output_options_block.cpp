@@ -154,8 +154,9 @@ path superposition_output_options_block::get_json_file() const {
 }
 
 /// Get a list of superposition_outputter_list that will perform the outputs specified in this options_block
-superposition_outputter_list superposition_output_options_block::get_superposition_outputters(const display_spec               &arg_display_spec, ///< The specification of how to display (colour) the structures
-                                                                                              const superposition_content_spec &arg_content_spec  ///< The specification of what should be included in the superposition
+superposition_outputter_list superposition_output_options_block::get_superposition_outputters(const display_spec               &arg_display_spec,          ///< The specification of how to display (colour) the structures
+                                                                                              const superposition_content_spec &arg_content_spec,          ///< The specification of what should be included in the superposition
+                                                                                              const default_supn_outputter     &arg_default_supn_outputter ///< What superposition outputter (if any) should be provided if none is explicitly specified
                                                                                               ) const {
 	superposition_outputter_list superposition_outputters;
 	if ( ! get_sup_to_pdb_file().empty() ) {
@@ -175,6 +176,17 @@ superposition_outputter_list superposition_output_options_block::get_superpositi
 	}
 	if ( ! get_json_file().empty() ) {
 		superposition_outputters.push_back( json_file_superposition_outputter  { get_json_file()                                                } );
+	}
+
+	// If there no superposition outputters have been specified,
+	// add any defaults as requested
+	if ( superposition_outputters.empty() ) {
+		switch ( arg_default_supn_outputter ) {
+			case ( default_supn_outputter::PYMOL ) : {
+				superposition_outputters.push_back( pymol_view_superposition_outputter { get_pymol_program(), arg_display_spec, arg_content_spec } );
+			}
+			case ( default_supn_outputter::NONE  ) : {}
+		}
 	}
 
 	return superposition_outputters;

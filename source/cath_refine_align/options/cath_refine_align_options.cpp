@@ -86,7 +86,9 @@ str_opt cath_refine_align_options::do_get_error_or_help_string() const {
 	const size_t num_aln_acquirers = get_num_acquirers( the_alignment_input_options_block );
 	const size_t num_pdb_acquirers = get_num_acquirers( the_pdb_input_options_block );
 	const auto   aln_outputters    = get_alignment_outputters();
-	const auto   sup_outputters    = get_superposition_outputters();
+	const auto   sup_outputters    = get_superposition_outputters(
+		aln_outputters.empty() ? default_supn_outputter::PYMOL : default_supn_outputter::NONE
+	);
 
 	// If there are no objects then no options were specified so just output the standard usage error string
 	if ( ( num_aln_acquirers == 0 ) && ( num_pdb_acquirers == 0 ) && sup_outputters.empty()) {
@@ -125,7 +127,9 @@ string cath_refine_align_options::do_get_help_prefix_string() const {
 
 Please specify:
  * at most one alignment (default: --)" + alignment_input_options_block::PO_DO_THE_SSAPS + R"()
- * one method of reading proteins (number of proteins currently restricted to 2))";
+ * one method of reading proteins (number of proteins currently restricted to 2)
+
+PyMOL is started if no alignment or superposition output option is specified)";
 }
 
 /// \brief Get a string to append to the standard help (just empty here)
@@ -191,11 +195,13 @@ alignment_outputter_list cath_refine_align_options::get_alignment_outputters() c
 }
 
 /// \brief TODOCUMENT
-superposition_outputter_list cath_refine_align_options::get_superposition_outputters() const {
+superposition_outputter_list cath_refine_align_options::get_superposition_outputters(const default_supn_outputter &arg_default_supn_outputter ///< What superposition outputter (if any) should be provided if none is explicitly specified
+                                                                                     ) const {
 	check_ok_to_use();
 	return the_superposition_output_options_block.get_superposition_outputters(
 		the_display_options_block.get_display_spec(),
-		the_content_spec
+		the_content_spec,
+		arg_default_supn_outputter
 	);
 }
 

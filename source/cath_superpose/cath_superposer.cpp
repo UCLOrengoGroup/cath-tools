@@ -21,6 +21,7 @@
 #include "cath_superposer.hpp"
 
 #include <boost/filesystem/path.hpp>
+#include <boost/log/trivial.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
 #include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
@@ -74,17 +75,25 @@ void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose
 	const string overall_name{};
 
 	// If there is an alignment, then for each of the alignment_outputters specified by the cath_superpose_options, output it
+	const auto aln_outputters = arg_cath_superpose_options.get_alignment_outputters();
 	if ( the_sup_context.has_alignment() ) {
 		use_all_alignment_outputters(
-			arg_cath_superpose_options.get_alignment_outputters(),
+			aln_outputters,
 			make_restricted_alignment_context( the_sup_context ),
 			arg_stdout,
 			arg_stderr
 		);
 	}
+	else {
+		if ( ! aln_outputters.empty() ) {
+			BOOST_LOG_TRIVIAL( warning ) << "Ignoring alignment output options because there is no alignment (and the cake is a lie)";
+		}
+	}
 
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
-	const superposition_outputter_list outputters = arg_cath_superpose_options.get_superposition_outputters();
+	const superposition_outputter_list outputters = arg_cath_superpose_options.get_superposition_outputters(
+		aln_outputters.empty() ? default_supn_outputter::PYMOL : default_supn_outputter::NONE
+	);
 	use_all_superposition_outputters( outputters, the_sup_context, arg_stdout, arg_stderr, overall_name );
 }
 

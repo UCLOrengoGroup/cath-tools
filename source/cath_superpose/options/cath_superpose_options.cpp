@@ -79,7 +79,9 @@ str_opt cath_superpose_options::do_get_error_or_help_string() const {
 	const size_t num_aln_acquirers = get_num_acquirers( the_alignment_input_ob );
 	const size_t num_pdb_acquirers = get_num_acquirers( the_pdb_input_ob       );
 	const auto   aln_outputters    = get_alignment_outputters();
-	const auto   sup_outputters    = get_superposition_outputters();
+	const auto   sup_outputters    = get_superposition_outputters(
+		aln_outputters.empty() ? default_supn_outputter::PYMOL : default_supn_outputter::NONE
+	);
 
 	// If there are no objects then no options were specified so just output the standard usage error string
 	if ( ! sup_file_opt && (num_aln_acquirers == 0 ) && ( num_pdb_acquirers == 0 ) && sup_outputters.empty() ) {
@@ -123,7 +125,9 @@ string cath_superpose_options::do_get_help_prefix_string() const {
 
 Please specify:
  * at most one superposition JSON or alignment (default: --)" + alignment_input_options_block::PO_DO_THE_SSAPS + R"()
- * one method of reading PDB files (number to match the alignment))";
+ * one method of reading PDB files (number to match the alignment)
+
+PyMOL is started if no alignment or superposition output option is specified)";
 }
 
 /// \brief Get a string to append to the standard help
@@ -204,10 +208,12 @@ alignment_outputter_list cath_superpose_options::get_alignment_outputters() cons
 }
 
 /// \brief TODOCUMENT
-superposition_outputter_list cath_superpose_options::get_superposition_outputters() const {
+superposition_outputter_list cath_superpose_options::get_superposition_outputters(const default_supn_outputter &arg_default_supn_outputter ///< What superposition outputter (if any) should be provided if none is explicitly specified
+                                                                                  ) const {
 	return the_superposition_output_ob.get_superposition_outputters(
 		the_display_ob.get_display_spec(),
-		the_content_ob.get_superposition_content_spec()
+		the_content_ob.get_superposition_content_spec(),
+		arg_default_supn_outputter
 	);
 }
 

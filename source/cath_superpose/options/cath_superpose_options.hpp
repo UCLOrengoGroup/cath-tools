@@ -112,7 +112,7 @@ namespace cath {
 			const pdb_input_spec & get_pdb_input_spec() const;
 
 			alignment_outputter_list get_alignment_outputters() const;
-			superposition_outputter_list get_superposition_outputters() const;
+			superposition_outputter_list get_superposition_outputters(const default_supn_outputter &) const;
 
 			const chop::domain_vec & get_domains() const;
 
