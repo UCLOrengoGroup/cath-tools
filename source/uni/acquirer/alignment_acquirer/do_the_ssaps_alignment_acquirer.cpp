@@ -54,7 +54,7 @@ using namespace cath::opts;
 using boost::adaptors::transformed;
 using boost::algorithm::join;
 using boost::algorithm::trim_right_copy;
-using boost::filesystem::create_directory;
+using boost::filesystem::create_directories;
 using boost::filesystem::exists;
 using boost::filesystem::is_empty;
 using boost::filesystem::path;
@@ -87,7 +87,7 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 	// Ensure the directory exists
 	if ( ! exists( ssaps_dir ) ) {
 		BOOST_LOG_TRIVIAL( info ) << "About to create directory " << ssaps_dir;
-		if ( ! create_directory( ssaps_dir ) ) {
+		if ( ! create_directories( ssaps_dir ) ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception(
 				"Unable to create directory "
 				+ ssaps_dir.string()
