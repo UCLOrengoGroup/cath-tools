@@ -854,7 +854,9 @@ void cath::align::write_alignment_as_cath_ssap_legacy_format(const path         
 			throw;
 		}
 		BOOST_LOG_TRIVIAL( warning )
-			<< "Was unable to write alignment to arg_output_file ("
+			<< "Was unable to write alignment to file "
+			<< arg_output_file
+			<< " ("
 			<< ex.what()
 			<< ") - will try writing to "
 			<< alt_output_path
