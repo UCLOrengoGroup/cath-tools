@@ -1,5 +1,5 @@
 /// \file
-
+/// \brief The alignment_io test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -17,6 +17,7 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #include <boost/filesystem.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
