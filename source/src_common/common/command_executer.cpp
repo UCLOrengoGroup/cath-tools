@@ -62,7 +62,8 @@ bool command_executer::execute(const path    &arg_command,  ///< TODOCUMENT
 			cerr << "Error executing "
 				<< arg_command.string()
 				<< " : "
-				<< strerror( errno );
+				<< strerror( errno )
+				<< "\n";
 			_exit(127);
 		}
 	}
