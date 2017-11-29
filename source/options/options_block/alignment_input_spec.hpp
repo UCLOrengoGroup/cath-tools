@@ -22,9 +22,17 @@
 #define _CATH_TOOLS_SOURCE_OPTIONS_OPTIONS_BLOCK_ALIGNMENT_INPUT_SPEC_H
 
 #include <boost/filesystem/path.hpp>
+#include <boost/optional.hpp>
+
+#include "common/path_type_aliases.hpp"
 
 namespace cath {
 	namespace opts {
+
+		/// \brief Type alias for an optional path_opt
+		///
+		/// \TODO Move into common/path_type_aliases.hpp
+		using path_opt_opt = boost::optional<path_opt>;
 
 		/// \brief Represent a specification for how alignments should be read in
 		class alignment_input_spec final {
@@ -46,6 +54,14 @@ namespace cath {
 			/// \brief A file from which to read SSAP-scores format data to use to attempt to glue pairwise alignments together
 			boost::filesystem::path ssap_scores_file;
 
+			/// \brief A directory in which SSAPs should be performed and then their alignments glued together
+			///        or (inner) none for cath-tools to choose a directory to use
+			///
+			/// The outer optional<> is used to determine if the option has been specified
+			/// The inner optional<> is used to determine if a specific directory should be used
+			/// (rather than cath-tools choosing)
+			path_opt_opt do_the_ssaps_dir;
+
 		public:
 			/// \brief The default value for whether to align based on matching residue names
 			static constexpr bool DEFAULT_RESIDUE_NAME_ALIGN = false;
@@ -55,12 +71,14 @@ namespace cath {
 			const boost::filesystem::path & get_ssap_alignment_file() const;
 			const boost::filesystem::path & get_cora_alignment_file() const;
 			const boost::filesystem::path & get_ssap_scores_file() const;
+			const path_opt_opt & get_do_the_ssaps_dir() const;
 
 			alignment_input_spec & set_residue_name_align(const bool &);
 			alignment_input_spec & set_fasta_alignment_file(const boost::filesystem::path &);
 			alignment_input_spec & set_ssap_alignment_file(const boost::filesystem::path &);
 			alignment_input_spec & set_cora_alignment_file(const boost::filesystem::path &);
 			alignment_input_spec & set_ssap_scores_file(const boost::filesystem::path &);
+			alignment_input_spec & set_do_the_ssaps_dir(const path_opt &);
 		};
 
 		size_t get_num_acquirers(const alignment_input_spec &);

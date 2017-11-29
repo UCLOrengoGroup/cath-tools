@@ -47,6 +47,7 @@ namespace cath {
 			static const std::string PO_SSAP_ALIGN_INFILE;
 			static const std::string PO_CORA_ALIGN_INFILE;
 			static const std::string PO_SSAP_SCORE_INFILE;
+			static const std::string PO_DO_THE_SSAPS;
 
 			const alignment_input_spec & get_alignment_input_spec() const;
 		};

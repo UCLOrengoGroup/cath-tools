@@ -22,6 +22,7 @@
 
 #include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "acquirer/alignment_acquirer/cora_aln_file_alignment_acquirer.hpp"
+#include "acquirer/alignment_acquirer/do_the_ssaps_alignment_acquirer.hpp"
 #include "acquirer/alignment_acquirer/fasta_aln_file_alignment_acquirer.hpp"
 #include "acquirer/alignment_acquirer/residue_name_alignment_acquirer.hpp"
 #include "acquirer/alignment_acquirer/ssap_aln_file_alignment_acquirer.hpp"
@@ -128,6 +129,9 @@ uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignmen
 	}
 	if ( ! arg_alignment_input_spec.get_ssap_scores_file().empty()     ) {
 		alignment_acquirers.push_back( make_unique< ssap_scores_file_alignment_acquirer >( arg_alignment_input_spec.get_ssap_scores_file()     ) );
+	}
+	if ( arg_alignment_input_spec.get_do_the_ssaps_dir() ) {
+		alignment_acquirers.push_back( make_unique< do_the_ssaps_alignment_acquirer     >( *arg_alignment_input_spec.get_do_the_ssaps_dir()    ) );
 	}
 
 	if ( alignment_acquirers.size() != get_num_acquirers( arg_alignment_input_spec ) ) {

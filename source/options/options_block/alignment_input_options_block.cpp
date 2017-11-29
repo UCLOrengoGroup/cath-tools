@@ -23,6 +23,7 @@
 #include <boost/optional.hpp>
 
 #include "common/clone/make_uptr_clone.hpp"
+#include "common/optional/make_optional_if.hpp"
 
 using namespace cath;
 using namespace cath::common;
@@ -39,19 +40,22 @@ using std::string;
 using std::unique_ptr;
 
 /// \brief The option name for whether to align based on matching residue names
-const string alignment_input_options_block::PO_RES_NAME_ALIGN    ( "res-name-align"     );
+const string alignment_input_options_block::PO_RES_NAME_ALIGN    { "res-name-align"     };
 
 /// \brief The option name for a file from which to read a FASTA alignment
-const string alignment_input_options_block::PO_FASTA_ALIGN_INFILE( "fasta-aln-infile"    );
+const string alignment_input_options_block::PO_FASTA_ALIGN_INFILE{ "fasta-aln-infile"   };
 
 /// \brief The option name for a file from which to read a legacy-SSAP-format alignment
-const string alignment_input_options_block::PO_SSAP_ALIGN_INFILE ( "ssap-aln-infile"    );
+const string alignment_input_options_block::PO_SSAP_ALIGN_INFILE { "ssap-aln-infile"    };
 
 /// \brief The option name for a file from which to read a CORA alignment
-const string alignment_input_options_block::PO_CORA_ALIGN_INFILE ( "cora-aln-infile"    );
+const string alignment_input_options_block::PO_CORA_ALIGN_INFILE { "cora-aln-infile"    };
 
 /// \brief The option name for a file from which to read SSAP-scores format data to use to attempt to glue pairwise alignments together
-const string alignment_input_options_block::PO_SSAP_SCORE_INFILE ( "ssap-scores-infile" );
+const string alignment_input_options_block::PO_SSAP_SCORE_INFILE { "ssap-scores-infile" };
+
+/// \brief The option name for a directory in which to do the necessary SSAPs and then use the scores to glue the resulting alignments together
+const string alignment_input_options_block::PO_DO_THE_SSAPS      { "do-the-ssaps"       };
 
 /// \brief A standard do_clone method.
 unique_ptr<options_block> alignment_input_options_block::do_clone() const {
@@ -66,6 +70,7 @@ string alignment_input_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 void alignment_input_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
                                                                           ) {
+	const string dir_varname  { "<dir>"  };
 	const string file_varname { "<file>" };
 
 	const auto residue_name_align_notifier   = [&] (const bool &x) { the_alignment_input_spec.set_residue_name_align  ( x ); };
@@ -73,42 +78,54 @@ void alignment_input_options_block::do_add_visible_options_to_description(option
 	const auto ssap_alignment_file_notifier  = [&] (const path &x) { the_alignment_input_spec.set_ssap_alignment_file ( x ); };
 	const auto cora_alignment_file_notifier  = [&] (const path &x) { the_alignment_input_spec.set_cora_alignment_file ( x ); };
 	const auto ssap_scores_file_notifier     = [&] (const path &x) { the_alignment_input_spec.set_ssap_scores_file    ( x ); };
+	const auto do_the_ssaps_notifier         = [&] (const path &x) {
+		the_alignment_input_spec.set_do_the_ssaps_dir( make_optional_if( x != path{}, x ) );
+	};
 
 	arg_desc.add_options()
 		(
 			PO_RES_NAME_ALIGN.c_str(),
 			bool_switch()
-				->notifier     ( residue_name_align_notifier                      )
-				->default_value( alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN ),
+				->notifier      ( residue_name_align_notifier                      )
+				->default_value ( alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN ),
 			"Align residues by simply matching their names (numbers+insert)\n(for multiple models of the same structure)"
 		)
 		(
 			PO_FASTA_ALIGN_INFILE.c_str(),
 			value<path>()
-				->value_name( file_varname                  )
-				->notifier  ( fasta_alignment_file_notifier ),
+				->value_name    ( file_varname                  )
+				->notifier      ( fasta_alignment_file_notifier ),
 			( "Read FASTA alignment from file " + file_varname ).c_str()
 		)
 		(
 			PO_SSAP_ALIGN_INFILE.c_str(),
 			value<path>()
-				->value_name( file_varname                 )
-				->notifier  ( ssap_alignment_file_notifier ),
+				->value_name    ( file_varname                  )
+				->notifier      ( ssap_alignment_file_notifier  ),
 			( "Read SSAP alignment from file " + file_varname ).c_str()
 		)
 		(
 			PO_CORA_ALIGN_INFILE.c_str(),
 			value<path>()
-				->value_name( file_varname                 )
-				->notifier  ( cora_alignment_file_notifier ),
+				->value_name    ( file_varname                  )
+				->notifier      ( cora_alignment_file_notifier  ),
 			( "Read CORA alignment from file " + file_varname ).c_str()
 		)
 		(
 			PO_SSAP_SCORE_INFILE.c_str(),
 			value<path>()
-				->value_name( file_varname              )
-				->notifier  ( ssap_scores_file_notifier ),
-			( "Read SSAP scores from file " + file_varname + "\nAssumes all .list alignment files in same directory" ).c_str()
+				->value_name    ( file_varname                  )
+				->notifier      ( ssap_scores_file_notifier     ),
+			( "Glue pairwise alignments together using SSAP scores in file " + file_varname + "\nAssumes all .list alignment files in same directory" ).c_str()
+		)
+		(
+			PO_DO_THE_SSAPS.c_str(),
+			value<path>()
+				->value_name    ( dir_varname                   )
+				->notifier      ( do_the_ssaps_notifier         )
+				->implicit_value( path{}                        ),
+			( "Do the required SSAPs in directory " + dir_varname + "; use results as with --" + PO_SSAP_SCORE_INFILE + "\n"
+				"Use a suitable temp directory if none is specified" ).c_str()
 		);
 
 	static_assert( ! alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN,
