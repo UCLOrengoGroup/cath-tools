@@ -45,7 +45,16 @@ using namespace cath::common::detail;
 using namespace cath::test;
 using namespace std;
 
+// This is needed before 1.64.0, but after that it breaks
+// stuff because the library provides its own print_log_value
+// for nullptr_t (and the Mac Travis-CI build uses a more
+// recent Boost)
+//
+// See:   https://svn.boost.org/trac/boost/ticket/12778
+// and:   https://github.com/boostorg/test/commit/229e71199c558d46a6f714cd5c34e594b29e66b4
+#if BOOST_VERSION <= 106300
 BOOST_TEST_DONT_PRINT_LOG_VALUE( nullptr_t )
+#endif
 
 constexpr size_t CONCRETE1_METHOD_RESULT = 3984756;
 constexpr size_t CONCRETE2_METHOD_RESULT =     836;

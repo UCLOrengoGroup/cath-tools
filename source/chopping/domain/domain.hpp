@@ -53,6 +53,14 @@ namespace cath {
 //			using iterator = region_vec::iterator;
 			using const_iterator = region_vec::const_iterator;
 
+			/// \brief Type alias for the value_type
+			///
+			/// This is added because otherwise the Travis-CI Mac build fails to compile
+			/// due to a use of value_type in `boost/test/utils/is_forward_iterable.hpp`
+			/// that gets invoked by the `BOOST_TEST( [...] == [...] )` comparisons of
+			/// domain in sillitoe_chopping_format_test.cpp
+			using value_type     = region_vec::value_type;
+
 			explicit domain(region_vec);
 			explicit domain(region_vec,
 			                std::string);
