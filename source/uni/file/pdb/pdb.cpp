@@ -91,6 +91,7 @@ using std::pair;
 using std::right;
 using std::set;
 using std::setw;
+using std::strerror;
 using std::string;
 using std::stringstream;
 using std::tuple;
@@ -118,9 +119,14 @@ void pdb::read_file(const path &arg_filename ///< TODOCUMENT
 	}
 	// Catch any I/O exceptions
 	catch (const std::exception &ex) {
-		const string error_message("Cannot read PDB file \"" + arg_filename.string() + "\" [" + ex.what() + "] ");
-		perror(error_message.c_str());
-		BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
+		BOOST_THROW_EXCEPTION(runtime_error_exception(
+			  "Cannot read PDB file \""
+			+ arg_filename.string()
+			+ "\" ["
+			+ ex.what()
+			+ "] : "
+			+ strerror( errno )
+		));
 	};
 }
 
@@ -144,9 +150,14 @@ void pdb::append_to_file(const path &arg_filename ///< TODOCUMENT
 	}
 	// Catch any I/O exceptions
 	catch (const std::exception &ex) {
-		const string error_message("Cannot append to PDB file \"" + arg_filename.string() + "\" [" + ex.what() + "] ");
-		perror(error_message.c_str());
-		BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
+		BOOST_THROW_EXCEPTION(runtime_error_exception(
+			  "Cannot append to PDB file \""
+			+ arg_filename.string()
+			+ "\" ["
+			+ ex.what()
+			+ "] : "
+			+ strerror( errno )
+		));
 	};
 }
 

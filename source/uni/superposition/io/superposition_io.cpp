@@ -50,13 +50,18 @@ using namespace cath::file;
 using namespace cath::geom;
 using namespace cath::sup;
 using namespace cath::sup::detail;
-using namespace std;
 
 using boost::adaptors::map_values;
 using boost::algorithm::any_of;
 using boost::filesystem::path;
 using boost::irange;
 using boost::property_tree::ptree;
+using std::fixed;
+using std::ofstream;
+using std::ostream;
+using std::setprecision;
+using std::strerror;
+using std::string;
 
 const string superposition_io_consts::ENTRIES_KEY         = "entries";
 const string superposition_io_consts::NAME_KEY            = "name";
@@ -142,9 +147,14 @@ void cath::sup::write_xml_sup_filename(const superposition  &arg_superposition, 
 		throw;
 	}
 	catch (const std::exception & ex) {
-		const string error_message("Cannot write XML superposition file \"" + arg_filename.string() + "\" [" + ex.what() + "] ");
-		perror(error_message.c_str());
-		BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
+		BOOST_THROW_EXCEPTION(runtime_error_exception(
+			  "Cannot write XML superposition file \""
+			+ arg_filename.string()
+			+ "\" ["
+			+ ex.what()
+			+ "] : "
+			+ strerror( errno )
+		));
 	};
 }
 
@@ -284,9 +294,14 @@ exit
 //	}
 //	// Catch any I/O exceptions
 //	catch (const std::exception &ex) {
-//		const string error_message("Cannot write superposition to file \"" + arg_filename.string() + "\" [" + ex.what() + "] ");
-//		perror(error_message.c_str());
-//		BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
+//		BOOST_THROW_EXCEPTION(runtime_error_exception(
+//			  "Cannot write superposition to file \""
+//			+ arg_filename.string()
+//			+ "\" ["
+//			+ ex.what()
+//			+ "] : "
+//			+ strerror( errno )
+//		));
 //	};
 //}
 
@@ -326,9 +341,14 @@ void cath::sup::write_superposed_pdb_to_file(const superposition        &arg_sup
 	}
 	// Catch any I/O exceptions
 	catch (const std::exception &ex) {
-		const string error_message("Cannot write superposition to file \"" + arg_filename.string() + "\" [" + ex.what() + "] ");
-		perror(error_message.c_str());
-		BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
+		BOOST_THROW_EXCEPTION(runtime_error_exception(
+			  "Cannot write superposition to file \""
+			+ arg_filename.string()
+			+ "\" ["
+			+ ex.what()
+			+ "] : "
+			+ strerror( errno )
+		));
 	};
 }
 
@@ -368,9 +388,14 @@ void cath::sup::write_superposed_pdb_to_file(const superposition          &arg_s
 	}
 	// Catch any I/O exceptions
 	catch (const std::exception &ex) {
-		const string error_message("Cannot write superposition to file \"" + arg_filename.string() + "\" [" + ex.what() + "] ");
-		perror(error_message.c_str());
-		BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
+		BOOST_THROW_EXCEPTION(runtime_error_exception(
+			  "Cannot write superposition to file \""
+			+ arg_filename.string()
+			+ "\" ["
+			+ ex.what()
+			+ "] : "
+			+ strerror( errno )
+		));
 	};
 }
 

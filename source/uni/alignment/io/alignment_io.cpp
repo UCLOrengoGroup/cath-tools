@@ -62,7 +62,6 @@ using namespace cath::align;
 using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
-using namespace std;
 
 using boost::adaptors::transformed;
 using boost::algorithm::icontains;
@@ -82,6 +81,17 @@ using boost::none;
 using boost::numeric_cast;
 using boost::to_upper;
 using boost::trim;
+using std::cerr;
+using std::endl;
+using std::flush;
+using std::ifstream;
+using std::ios;
+using std::istream;
+using std::ofstream;
+using std::ostream;
+using std::ostringstream;
+using std::strerror;
+using std::string;
 
 const double MIN_FRAC_OF_PDB_RESIDUES_IN_SEQ( 0.7 );
 
@@ -429,9 +439,12 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 	}
 	// Catch any I/O exceptions
 	catch (const std::exception &ex) {
-		const string error_message(string("Cannot read CORA legacy alignment file [") + ex.what() + "] ");
-		perror(error_message.c_str());
-		BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
+		BOOST_THROW_EXCEPTION(runtime_error_exception(
+			  "Cannot read CORA legacy alignment file ["s
+			+ ex.what()
+			+ "] : "
+			+ strerror( errno )
+		));
 	};
 }
 
@@ -753,9 +766,12 @@ alignment cath::align::read_alignment_from_fasta(istream                  &arg_i
 	}
 	// Catch any I/O exceptions
 	catch (const std::exception &ex) {
-		const string error_message(string("Cannot read FASTA legacy alignment file [") + ex.what() + "] ");
-		perror(error_message.c_str());
-		BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
+		BOOST_THROW_EXCEPTION(runtime_error_exception(
+			  "Cannot read FASTA legacy alignment file ["s
+			+ ex.what()
+			+ "] : "
+			+ strerror( errno )
+		));
 	};
 }
 
@@ -871,9 +887,14 @@ void cath::align::write_alignment_as_cath_ssap_legacy_format(const path         
 	}
 	// Catch any I/O exceptions
 	catch (const std::exception &ex) {
-		const string error_message("Cannot output alignment to file \"" + arg_output_file.string() + "\" [" + ex.what() + "] ");
-		perror(error_message.c_str());
-		BOOST_THROW_EXCEPTION(runtime_error_exception(error_message));
+		BOOST_THROW_EXCEPTION(runtime_error_exception(
+			  "Cannot output alignment to file \""
+			+ arg_output_file.string()
+			+ "\" ["
+			+ ex.what()
+			+ "] : "
+			+ strerror( errno )
+		));
 	};
 }
 

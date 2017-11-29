@@ -26,14 +26,16 @@
 #include "common/argc_argv_faker.hpp"
 #include "common/exception/runtime_error_exception.hpp"
 
+#include <iostream>
 #include <sys/wait.h>
 
 using namespace cath;
 using namespace cath::common;
-using namespace std;
 
 using boost::filesystem::path;
 using boost::range::join;
+using std::cerr;
+using std::strerror;
 
 /// \brief Execute a system command, allowing searching within PATH but not using the shell to process the command
 ///
@@ -57,7 +59,10 @@ bool command_executer::execute(const path    &arg_command,  ///< TODOCUMENT
 	}
 	else if (pid == 0) {
 		if ( execvp( arg_command.string().c_str(), arguments_faker.get_argv() ) == -1) {
-			perror( ("Error executing " + arg_command.string()).c_str() );
+			cerr << "Error executing "
+				<< arg_command.string()
+				<< " : "
+				<< strerror( errno );
 			_exit(127);
 		}
 	}
