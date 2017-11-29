@@ -45,17 +45,6 @@ using namespace cath::common::detail;
 using namespace cath::test;
 using namespace std;
 
-// This is needed before 1.64.0, but after that it breaks
-// stuff because the library provides its own print_log_value
-// for nullptr_t (and the Mac Travis-CI build uses a more
-// recent Boost)
-//
-// See:   https://svn.boost.org/trac/boost/ticket/12778
-// and:   https://github.com/boostorg/test/commit/229e71199c558d46a6f714cd5c34e594b29e66b4
-#if BOOST_VERSION <= 106300
-BOOST_TEST_DONT_PRINT_LOG_VALUE( nullptr_t )
-#endif
-
 constexpr size_t CONCRETE1_METHOD_RESULT = 3984756;
 constexpr size_t CONCRETE2_METHOD_RESULT =     836;
 
@@ -158,7 +147,10 @@ BOOST_AUTO_TEST_CASE(concrete_methods_return_different_values) {
 BOOST_AUTO_TEST_CASE(default_constructs) {
 	const clone_ptr<const clone_ptr_test_abstract_base> const_ptr;
 	BOOST_CHECK( ! const_ptr );
-	BOOST_CHECK_EQUAL( const_ptr.get(), nullptr );
+	// Should `BOOST_CHECK_EQUAL( const_ptr.get(), nullptr );` but that causes
+	// problems with Boost Test / nullptr_t / Mac Travis-CI build
+	// see https://svn.boost.org/trac10/ticket/12969
+	BOOST_CHECK( ! const_ptr.get() );
 }
 
 BOOST_AUTO_TEST_CASE(constructs_from_raw_pointer) {
@@ -246,7 +238,10 @@ BOOST_AUTO_TEST_CASE(assignment_operator_works) {
 	clone_ptr<clone_ptr_test_abstract_base> previously_null_dest_ptr;
 	clone_ptr<clone_ptr_test_abstract_base> previously_concrete2_dest_ptr(new clone_ptr_test_concrete2);
 
-	BOOST_CHECK_EQUAL( previously_null_dest_ptr.get(), nullptr );
+	// Should `BOOST_CHECK_EQUAL( previously_null_dest_ptr.get(), nullptr );` but that causes
+	// problems with Boost Test / nullptr_t / Mac Travis-CI build
+	// see https://svn.boost.org/trac10/ticket/12969
+	BOOST_CHECK( ! previously_null_dest_ptr.get() );
 	BOOST_CHECK_EQUAL( previously_concrete2_dest_ptr->method(), CONCRETE2_METHOD_RESULT );
 
 	previously_null_dest_ptr = source_ptr;
@@ -289,7 +284,11 @@ BOOST_AUTO_TEST_CASE(pass_through_reset) {
 	BOOST_CHECK_NE(ptr.get(), raw_ptr);
 	BOOST_CHECK_EQUAL(ptr->method(), CONCRETE2_METHOD_RESULT);
 	ptr.reset( nullptr );
-	BOOST_CHECK_EQUAL(ptr.get(), nullptr );
+
+	// Should `BOOST_CHECK_EQUAL(ptr.get(), nullptr );` but that causes
+	// problems with Boost Test / nullptr_t / Mac Travis-CI build
+	// see https://svn.boost.org/trac10/ticket/12969
+	BOOST_CHECK( ! ptr.get() );
 }
 
 BOOST_AUTO_TEST_CASE(pass_through_dereference_operator) {
