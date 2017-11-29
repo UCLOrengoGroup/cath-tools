@@ -159,6 +159,12 @@ uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignmen
 unique_ptr<alignment_acquirer> cath::align::get_alignment_acquirer(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
                                                                    ) {
 	const auto alignment_acquirers = get_alignment_acquirers( arg_alignment_input_spec );
+
+	// If no alignment_acquirer has been specified then use a do_the_ssaps_alignment_acquirer
+	if ( alignment_acquirers.empty() ) {
+		return make_unique< do_the_ssaps_alignment_acquirer >();
+	}
+
 	if ( alignment_acquirers.size() != 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Attempt to get alignment_acquirer failed because the number of alignment_acquirers isn't one"));
 	}

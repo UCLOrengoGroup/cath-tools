@@ -89,8 +89,8 @@ str_opt cath_score_align_options::do_get_error_or_help_string() const {
 	}
 
 	// Check that there is exactly one source of alignment
-	if ( num_aln_acquirers != 1 ) {
-		return "Please specify one source of an alignment or superposition ("
+	if ( num_aln_acquirers > 1 ) {
+		return "Please specify at most one source of an alignment or superposition ("
 		       + ::std::to_string( num_aln_acquirers )
 		       + " specified)";
 	}
@@ -111,7 +111,7 @@ string cath_score_align_options::do_get_help_prefix_string() const {
 		+ get_overview_string() + R"(
 
 Please specify:
- * one alignment
+ * at most one alignment (default: --)" + alignment_input_options_block::PO_DO_THE_SSAPS + R"()
  * one method of reading proteins (number of proteins currently restricted to 2)";
 }
 
