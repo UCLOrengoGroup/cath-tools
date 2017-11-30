@@ -1,5 +1,5 @@
 /// \file
-/// \brief The ssap_aln_file_alignment_acquirer class header
+/// \brief The align_refining class header
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,30 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_SSAP_ALN_FILE_ALIGNMENT_ACQUIRER_H
-#define _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_SSAP_ALN_FILE_ALIGNMENT_ACQUIRER_H
-
-#include <boost/filesystem.hpp>
-
-#include "acquirer/alignment_acquirer/post_refine_alignment_acquirer.hpp"
+#ifndef _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_ALIGN_REFINING_H
+#define _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_ALIGN_REFINING_H
 
 namespace cath {
 	namespace align {
 
-		/// \brief TODOCUMENT
-		class ssap_aln_file_alignment_acquirer final : public post_refine_alignment_acquirer {
-		private:
-			using super = post_refine_alignment_acquirer;
-
-			boost::filesystem::path ssap_alignment_file;
-
-			std::unique_ptr<alignment_acquirer> do_clone() const final;
-			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &) const final;
-
-		public:
-			explicit ssap_aln_file_alignment_acquirer(const boost::filesystem::path &);
-
-			boost::filesystem::path get_ssap_alignment_file() const;
+		/// \brief Represent how much refining should be done to an alignment
+		///        (typically as part of the alignment being acquired or immediately afterwards)
+		enum class align_refining {
+			NO,    ///< No refining should be performed
+			LIGHT, ///< At most, light refining should be performed
+			HEAVY  ///< Heavy, slow, expensive refining should be performed
 		};
 
 	} // namespace align

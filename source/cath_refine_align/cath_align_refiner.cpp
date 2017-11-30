@@ -84,7 +84,10 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 	// An alignment is required but this should have been checked elsewhere
 	const protein_list  proteins           = build_protein_list( backbone_complete_strucs_context );
 	const auto          aln_acq_ptr        = get_alignment_acquirer( arg_cath_refine_align_options );
-	const auto          alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree( backbone_complete_strucs_context );
+	const auto          alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree(
+		backbone_complete_strucs_context,
+		align_refining::HEAVY
+	);
 	const alignment    &the_alignment      = alignment_and_tree.first;
 	const auto         &spanning_tree      = alignment_and_tree.second;
 

@@ -135,7 +135,12 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	);
 	const auto aln_and_spn_tree = [&] {
 		try {
-			return get_alignment_and_spanning_tree( arg_cath_sup_opts, backbone_complete_strucs_context );
+			return get_alignment_and_spanning_tree(
+				arg_cath_sup_opts,
+				backbone_complete_strucs_context,
+				align_refining::NO
+				// align_refining::LIGHT
+			);
 		}
 		catch (const std::exception &e) {
 			logger::log_and_exit(

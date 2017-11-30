@@ -23,15 +23,15 @@
 
 #include <boost/filesystem.hpp>
 
-#include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
+#include "acquirer/alignment_acquirer/post_refine_alignment_acquirer.hpp"
 
 namespace cath {
 	namespace align {
 
 		/// \brief TODOCUMENT
-		class cora_aln_file_alignment_acquirer final : public alignment_acquirer {
+		class cora_aln_file_alignment_acquirer final : public post_refine_alignment_acquirer {
 		private:
-			using super = alignment_acquirer;
+			using super = post_refine_alignment_acquirer;
 
 			boost::filesystem::path cora_alignment_file;
 

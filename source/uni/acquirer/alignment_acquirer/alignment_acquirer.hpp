@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_ALIGNMENT_ACQUIRER_H
 #define _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_ALIGNMENT_ACQUIRER_H
 
+#include "acquirer/alignment_acquirer/align_refining.hpp"
 #include "common/type_aliases.hpp"
 
 #include <memory>
@@ -41,7 +42,8 @@ namespace cath {
 			virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
 			
 			/// \brief TODOCUMENT
-			virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &) const = 0;
+			virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &,
+			                                                                                    const align_refining &) const = 0;
 
 		protected:
 			/// \brief The minimum number of residues that are required in "residue name" aligning
@@ -62,7 +64,8 @@ namespace cath {
 			alignment_acquirer & operator=(const alignment_acquirer &) = default;
 			alignment_acquirer & operator=(alignment_acquirer &&) noexcept = default;
 
-			std::pair<alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const file::strucs_context &) const;
+			std::pair<alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const file::strucs_context &,
+			                                                                         const align_refining & = align_refining::NO) const;
 		};
 
 		uptr_vec<alignment_acquirer> get_alignment_acquirers(const opts::alignment_input_spec &);

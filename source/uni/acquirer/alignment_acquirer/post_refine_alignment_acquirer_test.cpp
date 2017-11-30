@@ -1,5 +1,5 @@
 /// \file
-/// \brief The residue_name_alignment_acquirer class header
+/// \brief The post_refine_alignment_acquirer test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
@@ -18,27 +18,25 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_RESIDUE_NAME_ALIGNMENT_ACQUIRER_H
-#define _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_RESIDUE_NAME_ALIGNMENT_ACQUIRER_H
-
-#include "acquirer/alignment_acquirer/post_refine_alignment_acquirer.hpp"
+#include <boost/test/auto_unit_test.hpp>
 
 namespace cath {
-	namespace align {
+	namespace test {
 
-		/// \brief TODOCUMENT
-		class residue_name_alignment_acquirer final : public post_refine_alignment_acquirer {
-		private:
-			using super = post_refine_alignment_acquirer;
-
-			/// \brief TODOCUMENT
-			static constexpr double RES_ALIGN_SCORE_CONSTANT = 10.0;
-
-			std::unique_ptr<alignment_acquirer> do_clone() const final;
-			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &) const final;
+		/// \brief The post_refine_alignment_acquirer_test_suite_fixture to assist in testing post_refine_alignment_acquirer
+		struct post_refine_alignment_acquirer_test_suite_fixture {
+		protected:
+			~post_refine_alignment_acquirer_test_suite_fixture() noexcept = default;
 		};
 
-	} // namespace align
-} // namespace cath
+	}
+}  // namespace cath
 
-#endif
+BOOST_FIXTURE_TEST_SUITE(post_refine_alignment_acquirer_test_suite, cath::test::post_refine_alignment_acquirer_test_suite_fixture)
+
+/// \brief TODOCUMENT
+BOOST_AUTO_TEST_CASE(basic) {
+	BOOST_CHECK( true );
+}
+BOOST_AUTO_TEST_SUITE_END()
+

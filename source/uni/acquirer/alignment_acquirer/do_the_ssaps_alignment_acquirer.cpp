@@ -67,15 +67,14 @@ using std::pair;
 using std::string;
 using std::unique_ptr;
 
-constexpr aln_glue_style do_the_ssaps_alignment_acquirer::DEFAULT_ALN_GLUE_STYLE;
-
 /// \brief A standard do_clone method.
 unique_ptr<alignment_acquirer> do_the_ssaps_alignment_acquirer::do_clone() const {
 	return { make_uptr_clone( *this ) };
 }
 
 /// \brief Run the necessary cath-ssaps and then use them to get the alignment and spanning tree
-pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< The details of the structures for which the alignment and spanning tree is required
+pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context, ///< The details of the structures for which the alignment and spanning tree is required
+                                                                                                        const align_refining &arg_align_refining  ///< How much refining should be done to the alignment
                                                                                                         ) const {
 	using std::to_string;
 
@@ -174,15 +173,13 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 	);
 
 	// Use the ssap_scores_file_alignment_acquirer on the directory of data
-	return ssap_scores_file_alignment_acquirer{ scores_file, glue_style }
-		.get_alignment_and_spanning_tree( arg_strucs_context );
+	return ssap_scores_file_alignment_acquirer{ scores_file }
+		.get_alignment_and_spanning_tree( arg_strucs_context, arg_align_refining );
 }
 
 /// \brief Ctor for do_the_ssaps_alignment_acquirer
-do_the_ssaps_alignment_acquirer::do_the_ssaps_alignment_acquirer(const path_opt       &arg_directory_of_joy, ///< The directory in which the cath-ssaps should be performed
-                                                                 const aln_glue_style &arg_aln_glue_style    ///< The approach that should be used for glueing alignments together
-                                                                 ) : directory_of_joy { arg_directory_of_joy },
-                                                                     glue_style       { arg_aln_glue_style   } {
+do_the_ssaps_alignment_acquirer::do_the_ssaps_alignment_acquirer(const path_opt &arg_directory_of_joy ///< The directory in which the cath-ssaps should be performed
+                                                                 ) : directory_of_joy { arg_directory_of_joy } {
 }
 
 /// \brief Getter for the directory in which the cath-ssaps should be performed

@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CATH_SUPERPOSE_OPTIONS_CATH_SUPERPOSE_OPTIONS_H
 #define _CATH_TOOLS_SOURCE_CATH_SUPERPOSE_OPTIONS_CATH_SUPERPOSE_OPTIONS_H
 
+#include "acquirer/alignment_acquirer/align_refining.hpp"
 #include "chopping/chopping_type_aliases.hpp"
 #include "display/options/display_options_block.hpp"
 #include "file/file_type_aliases.hpp"
@@ -121,7 +122,8 @@ namespace cath {
 
 		std::unique_ptr<const align::alignment_acquirer> get_alignment_acquirer(const cath_superpose_options &);
 		std::pair<align::alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const cath_superpose_options &,
-		                                                                                const file::strucs_context &);
+		                                                                                const file::strucs_context &,
+		                                                                                const align::align_refining &);
 
 		std::unique_ptr<const pdbs_acquirer> get_pdbs_acquirer(const cath_superpose_options &);
 		file::strucs_context get_pdbs_and_names(const cath_superpose_options &,

@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_CONTEXT_H
 #define _CATH_TOOLS_SOURCE_ALIGNMENT_ALIGNMENT_CONTEXT_H
 
+#include "acquirer/alignment_acquirer/align_refining.hpp"
 #include "alignment/alignment.hpp" // for alignment
 #include "chopping/chopping_type_aliases.hpp"
 #include "file/strucs_context.hpp"
@@ -75,7 +76,8 @@ namespace cath {
 		                                        std::istream &,
 		                                        const bool &,
 		                                        const str_vec &,
-		                                        const chop::domain_vec &);
+		                                        const chop::domain_vec &,
+		                                        const align_refining & = align_refining::NO);
 
 	} // namespace align
 } // namespace cath

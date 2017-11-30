@@ -133,7 +133,8 @@ alignment_context cath::align::get_alignment_context(const alignment_acquirer &a
                                                      istream                  &arg_istream,                 ///< The istream, which may contain PDB data
                                                      const bool               &arg_remove_partial_residues, ///< Whether to remove partial residues from the PDB data
                                                      const str_vec            &arg_ids,                     ///< The IDs to set on the acquired strucs_context
-                                                     const domain_vec         &arg_domains                  ///< The domains to set on the acquired strucs_context
+                                                     const domain_vec         &arg_domains,                 ///< The domains to set on the acquired strucs_context
+                                                     const align_refining     &arg_align_refining           ///< How much refining should be done to the alignment
                                                      ) {
 	const auto the_strucs_context = get_strucs_context(
 		arg_pdbs_acquirer,
@@ -144,7 +145,7 @@ alignment_context cath::align::get_alignment_context(const alignment_acquirer &a
 	);
 	return {
 		arg_alignment_acquirer
-			.get_alignment_and_spanning_tree( restrict_pdbs_copy( the_strucs_context ) )
+			.get_alignment_and_spanning_tree( restrict_pdbs_copy( the_strucs_context ), arg_align_refining )
 			.first,
 		the_strucs_context
 	};

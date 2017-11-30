@@ -63,12 +63,13 @@ unique_ptr<alignment_acquirer> alignment_acquirer::clone() const {
 ///
 /// The order of the edges in the spanning tree doesn't matter and the scores are discarded
 /// because none of that matters for superposing
-pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< The structures to which the alignment should correspond
+pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context, ///< The structures to which the alignment should correspond
+                                                                                        const align_refining &arg_align_refining  ///< How much refining should be done to the alignment
                                                                                         ) const {
 	using std::to_string;
 
 	// Call the concrete class's implementation of do_get_alignment_and_orderer() and grab the resulting alignment and spanning_tree
-	const pair<alignment, size_size_pair_vec> alignment_and_orderer = do_get_alignment_and_spanning_tree( arg_strucs_context );
+	const pair<alignment, size_size_pair_vec> alignment_and_orderer = do_get_alignment_and_spanning_tree( arg_strucs_context, arg_align_refining );
 
 	const size_t num_alignment_entries = alignment_and_orderer.first.num_entries();
 	const size_t num_span_tree_entries = alignment_and_orderer.second.size();

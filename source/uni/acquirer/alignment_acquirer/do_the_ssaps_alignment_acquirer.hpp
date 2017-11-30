@@ -25,7 +25,6 @@
 #include <boost/optional.hpp>
 
 #include "acquirer/alignment_acquirer/alignment_acquirer.hpp"
-#include "acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.hpp"
 #include "common/path_type_aliases.hpp"
 
 namespace cath { namespace align { class alignment; } }
@@ -41,18 +40,12 @@ namespace cath { namespace align {
 		/// \brief Where the magic shall happen
 		path_opt directory_of_joy;
 
-		/// \brief The approach that should be used for glueing alignments together
-		aln_glue_style glue_style = DEFAULT_ALN_GLUE_STYLE;
-
 		std::unique_ptr<alignment_acquirer> do_clone() const final;
-		std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &) const final;
+		std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &,
+		                                                                            const align_refining &) const final;
 
 	public:
-		/// \brief The default for the approach that should be used for glueing alignments together
-		static constexpr aln_glue_style DEFAULT_ALN_GLUE_STYLE = ssap_scores_file_alignment_acquirer::DEFAULT_ALN_GLUE_STYLE;
-
-		explicit do_the_ssaps_alignment_acquirer(const path_opt & = boost::none,
-		                                         const aln_glue_style & = DEFAULT_ALN_GLUE_STYLE);
+		explicit do_the_ssaps_alignment_acquirer(const path_opt & = boost::none);
 
 		const path_opt & get_directory_of_joy() const;
 

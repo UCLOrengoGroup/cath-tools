@@ -60,15 +60,27 @@ using std::pair;
 using std::string;
 using std::unique_ptr;
 
-constexpr aln_glue_style ssap_scores_file_alignment_acquirer::DEFAULT_ALN_GLUE_STYLE;
-
 /// \brief A standard do_clone method.
 unique_ptr<alignment_acquirer> ssap_scores_file_alignment_acquirer::do_clone() const {
 	return { make_uptr_clone( *this ) };
 }
 
+/// \brief Get the aln_glue_style that should be used to implement the specified align_refining
+inline constexpr aln_glue_style aln_glue_style_of_align_refining(const align_refining &arg_align_refining ///< How much refining should be done to the alignment
+                                                                 ) {
+	return
+		( arg_align_refining == align_refining::NO    ) ? aln_glue_style::SIMPLY                           :
+		( arg_align_refining == align_refining::LIGHT ) ? aln_glue_style::INCREMENTALLY_WITH_PAIR_REFINING :
+		                                                  aln_glue_style::WITH_HEAVY_REFINING;
+}
+
+static_assert( aln_glue_style_of_align_refining( align_refining::NO    ) == aln_glue_style::SIMPLY,                           "" );
+static_assert( aln_glue_style_of_align_refining( align_refining::LIGHT ) == aln_glue_style::INCREMENTALLY_WITH_PAIR_REFINING, "" );
+static_assert( aln_glue_style_of_align_refining( align_refining::HEAVY ) == aln_glue_style::WITH_HEAVY_REFINING,              "" );
+
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context, ///< TODOCUMENT
+                                                                                                            const align_refining &arg_align_refining  ///< How much refining should be done to the alignment
                                                                                                             ) const {
 	// Parse the SSAP scores file
 	const pdb_list &the_pdbs         = arg_strucs_context.get_pdbs();
@@ -98,7 +110,7 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 		names,
 		scores,
 		ssaps_filename.parent_path(),
-		get_glue_style(),
+		aln_glue_style_of_align_refining( arg_align_refining ),
 		ostream_ref{ cerr }
 	);
 	const alignment          &new_alignment = aln_and_spantree.first;
@@ -128,20 +140,13 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 }
 
 /// \brief Ctor for ssap_scores_file_alignment_acquirer
-ssap_scores_file_alignment_acquirer::ssap_scores_file_alignment_acquirer(const path           &arg_ssap_scores_filename, ///< TODOCUMENT
-                                                                         const aln_glue_style &arg_aln_glue_style        ///< The approach that should be used for glueing alignments together
-                                                                         ) : ssap_scores_filename { arg_ssap_scores_filename },
-                                                                             glue_style           { arg_aln_glue_style       } {
+ssap_scores_file_alignment_acquirer::ssap_scores_file_alignment_acquirer(const path &arg_ssap_scores_filename ///< TODOCUMENT
+                                                                         ) : ssap_scores_filename { arg_ssap_scores_filename } {
 }
 
 /// \brief TODOCUMENT
 path ssap_scores_file_alignment_acquirer::get_ssap_scores_file() const {
 	return ssap_scores_filename;
-}
-
-/// \brief Get the approach that should be used for glueing alignments together
-const aln_glue_style & ssap_scores_file_alignment_acquirer::get_glue_style() const {
-	return glue_style;
 }
 
 /// \brief Build an alignment between the specified PDBs & names using the specified scores and directory of SSAP alignments

@@ -40,21 +40,14 @@ namespace cath {
 			using super = alignment_acquirer;
 			boost::filesystem::path ssap_scores_filename;
 
-			/// \brief The approach that should be used for glueing alignments together
-			aln_glue_style glue_style = DEFAULT_ALN_GLUE_STYLE;
-
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
-			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &) const final;
+			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &,
+			                                                                            const align_refining &) const final;
 
 		public:
-			/// \brief The default for the approach that should be used for glueing alignments together
-			static constexpr aln_glue_style DEFAULT_ALN_GLUE_STYLE = aln_glue_style::SIMPLY;
-
-			explicit ssap_scores_file_alignment_acquirer(const boost::filesystem::path &,
-			                                             const aln_glue_style & = DEFAULT_ALN_GLUE_STYLE);
+			explicit ssap_scores_file_alignment_acquirer(const boost::filesystem::path &);
 
 			boost::filesystem::path get_ssap_scores_file() const;
-			const aln_glue_style & get_glue_style() const;
 		};
 
 		std::pair<alignment, size_size_pair_vec> build_multi_alignment(const file::pdb_list &,
