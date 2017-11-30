@@ -86,13 +86,6 @@ namespace cath {
 
 		file::pdb_list get_restricted_pdbs(const align_based_superposition_acquirer &);
 
-		sup::superposition hacky_multi_ssap_fuction(const file::pdb_list &,
-		                                            const str_vec &,
-		                                            const size_size_pair_vec &,
-		                                            const boost::filesystem::path &,
-		                                            const selection_policy_acquirer &,
-		                                            std::ostream &);
-
 	} // namespace opts
 } // namespace cath
 

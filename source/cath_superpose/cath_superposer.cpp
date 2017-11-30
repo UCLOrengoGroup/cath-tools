@@ -153,23 +153,6 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	const alignment &the_alignment = aln_and_spn_tree.first;
 	const auto      &spanning_tree = aln_and_spn_tree.second;
 
-	// \todo Remove this hacky code and fix it
-	const path ssap_scores_file = arg_cath_sup_opts.get_alignment_input_spec().get_ssap_scores_file();
-	if ( ! ssap_scores_file.empty() ) {
-		return {
-			hacky_multi_ssap_fuction(
-				backbone_complete_strucs_context.get_pdbs(),
-				get_multi_ssap_alignment_file_names( context.get_name_sets() ),
-				spanning_tree,
-				ssap_scores_file.parent_path(),
-				arg_cath_sup_opts.get_selection_policy_acquirer(),
-				arg_stderr
-			),
-			context, ///< Importantly, this contains the raw structures, not backbone_complete_subset, so that superpositions include stripped residues (eg HETATM only residues). /// \todo Consider adding fast, simple test that ssap_scores_file superposition output includes HETATMs.
-			the_alignment
-		};
-	}
-
 	// Construct an align_based_superposition_acquirer from the data and return the superposition it generates
 	const align_based_superposition_acquirer aln_based_sup_acq(
 		the_alignment,
