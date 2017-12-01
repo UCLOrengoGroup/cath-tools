@@ -255,8 +255,6 @@ set(
 
 set(
 	NORMSOURCES_OPTIONS_OPTIONS_BLOCK
-		options/options_block/alignment_input_options_block.cpp
-		options/options_block/alignment_input_spec.cpp
 		options/options_block/check_pdb_options_block.cpp
 		options/options_block/detail_help_options_block.cpp
 		options/options_block/extract_pdb_options_block.cpp
@@ -636,6 +634,12 @@ set(
 )
 
 set(
+	NORMSOURCES_UNI_ALIGNMENT_OPTIONS_BLOCK
+		uni/alignment/options_block/alignment_input_options_block.cpp
+		uni/alignment/options_block/alignment_input_spec.cpp
+)
+
+set(
 	NORMSOURCES_UNI_ALIGNMENT_REFINER_DETAIL
 		uni/alignment/refiner/detail/alignment_split.cpp
 		uni/alignment/refiner/detail/alignment_split_list.cpp
@@ -684,6 +688,7 @@ set(
 		${NORMSOURCES_UNI_ALIGNMENT_DYN_PROG_ALIGN}
 		${NORMSOURCES_UNI_ALIGNMENT_GAP}
 		${NORMSOURCES_UNI_ALIGNMENT_IO}
+		${NORMSOURCES_UNI_ALIGNMENT_OPTIONS_BLOCK}
 		uni/alignment/pair_alignment.cpp
 		${NORMSOURCES_UNI_ALIGNMENT_REFINER}
 		${NORMSOURCES_UNI_ALIGNMENT_RESIDUE_NAME_ALIGN}
@@ -1415,7 +1420,6 @@ set(
 
 set(
 	TESTSOURCES_OPTIONS_OPTIONS_BLOCK
-		options/options_block/alignment_input_options_block_test.cpp
 		options/options_block/check_pdb_options_block_test.cpp
 		options/options_block/detail_help_options_block_test.cpp
 		options/options_block/extract_pdb_options_block_test.cpp
@@ -1859,6 +1863,11 @@ set(
 )
 
 set(
+	TESTSOURCES_UNI_ALIGNMENT_OPTIONS_BLOCK
+		uni/alignment/options_block/alignment_input_options_block_test.cpp
+)
+
+set(
 	TESTSOURCES_UNI_ALIGNMENT_REFINER_DETAIL
 		uni/alignment/refiner/detail/alignment_split_list_test.cpp
 		uni/alignment/refiner/detail/alignment_split_mapping_test.cpp
@@ -1910,6 +1919,7 @@ set(
 		${TESTSOURCES_UNI_ALIGNMENT_DYN_PROG_ALIGN}
 		${TESTSOURCES_UNI_ALIGNMENT_GAP}
 		${TESTSOURCES_UNI_ALIGNMENT_IO}
+		${TESTSOURCES_UNI_ALIGNMENT_OPTIONS_BLOCK}
 		${TESTSOURCES_UNI_ALIGNMENT_REFINER}
 		${TESTSOURCES_UNI_ALIGNMENT_RESIDUE_NAME_ALIGN}
 		${TESTSOURCES_UNI_ALIGNMENT_RESIDUE_SCORE}

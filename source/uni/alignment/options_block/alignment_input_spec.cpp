@@ -28,6 +28,7 @@
 #include <array>
 
 using namespace cath;
+using namespace cath::align;
 using namespace cath::common;
 using namespace cath::opts;
 
@@ -36,6 +37,11 @@ using boost::range::count;
 using std::array;
 
 constexpr bool alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN;
+
+/// \brief Ctor from how much refining should be done to the alignment
+alignment_input_spec::alignment_input_spec(const align_refining &arg_refining ///< How much refining should be done to the alignment
+                                           ) : refining{ arg_refining } {
+}
 
 /// \brief Getter for whether to align based on matching residue names
 const bool & alignment_input_spec::get_residue_name_align() const {
@@ -66,6 +72,11 @@ const path & alignment_input_spec::get_ssap_scores_file() const {
 ///        or (inner) none for cath-tools to choose a directory to use
 const path_opt_opt & alignment_input_spec::get_do_the_ssaps_dir() const {
 	return do_the_ssaps_dir;
+}
+
+/// \brief Getter for how much refining should be done to the alignment
+const align_refining & alignment_input_spec::get_refining() const {
+	return refining;
 }
 
 /// \brief Setter for whether to align based on matching residue names
@@ -108,6 +119,13 @@ alignment_input_spec & alignment_input_spec::set_ssap_scores_file(const path &ar
 alignment_input_spec & alignment_input_spec::set_do_the_ssaps_dir(const path_opt &arg_do_the_ssaps_dir ///< A directory in which SSAPs should be performed and then their alignments glued together or (inner) none for cath-tools to choose a directory to use
                                                                   ) {
 	do_the_ssaps_dir = arg_do_the_ssaps_dir;
+	return *this;
+}
+
+/// \brief Setter for how much refining should be done to the alignment
+alignment_input_spec & alignment_input_spec::set_refining(const align_refining &arg_refining
+                                                          ) {
+	refining = arg_refining;
 	return *this;
 }
 

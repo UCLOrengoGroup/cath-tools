@@ -62,8 +62,9 @@ string crh_html_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_html_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
-                                                                    ) {
+void crh_html_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                   const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+                                                                   ) {
 	const string num_varname { "<num>" };
 
 	const auto set_restrict_html_within_body_notifier = [&] (const bool   &x) { the_spec.set_restrict_html_within_body( x ); };

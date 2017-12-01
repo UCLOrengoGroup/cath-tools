@@ -138,8 +138,7 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 			return get_alignment_and_spanning_tree(
 				arg_cath_sup_opts,
 				backbone_complete_strucs_context,
-				align_refining::NO
-				// align_refining::LIGHT
+				get_align_refining( arg_cath_sup_opts )
 			);
 		}
 		catch (const std::exception &e) {

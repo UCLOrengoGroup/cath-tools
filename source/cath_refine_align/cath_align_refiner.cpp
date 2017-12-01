@@ -86,7 +86,7 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 	const auto          aln_acq_ptr        = get_alignment_acquirer( arg_cath_refine_align_options );
 	const auto          alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree(
 		backbone_complete_strucs_context,
-		align_refining::HEAVY
+		get_align_refining( arg_cath_refine_align_options )
 	);
 	const alignment    &the_alignment      = alignment_and_tree.first;
 	const auto         &spanning_tree      = alignment_and_tree.second;

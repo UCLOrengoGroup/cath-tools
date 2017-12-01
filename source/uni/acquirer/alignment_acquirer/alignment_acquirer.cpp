@@ -29,6 +29,8 @@
 #include "acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.hpp"
 #include "acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 #include "alignment/alignment.hpp"
+#include "alignment/options_block/alignment_input_options_block.hpp"
+#include "alignment/options_block/alignment_input_spec.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
@@ -36,8 +38,6 @@
 #include "common/exception/runtime_error_exception.hpp"
 #include "common/logger.hpp"
 #include "file/strucs_context.hpp"
-#include "options/options_block/alignment_input_options_block.hpp"
-#include "options/options_block/alignment_input_spec.hpp"
 
 using namespace cath;
 using namespace cath::align;

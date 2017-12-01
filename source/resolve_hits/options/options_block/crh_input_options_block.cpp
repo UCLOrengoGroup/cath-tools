@@ -67,7 +67,8 @@ string crh_input_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_input_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void crh_input_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                    const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	const auto &sep     = SUB_DESC_SEPARATOR;
 	const auto &sub_sep = SUB_DESC_PAIR_SEPARATOR;
@@ -119,7 +120,8 @@ void crh_input_options_block::do_add_visible_options_to_description(options_desc
 }
 
 /// \brief Add a hidden option to the options_description for the input file
-void crh_input_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void crh_input_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                   const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
 	const string input_file_varname{ "<file>" };
 

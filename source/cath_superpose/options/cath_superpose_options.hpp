@@ -22,11 +22,11 @@
 #define _CATH_TOOLS_SOURCE_CATH_SUPERPOSE_OPTIONS_CATH_SUPERPOSE_OPTIONS_H
 
 #include "acquirer/alignment_acquirer/align_refining.hpp"
+#include "alignment/options_block/alignment_input_options_block.hpp"
 #include "chopping/chopping_type_aliases.hpp"
 #include "display/options/display_options_block.hpp"
 #include "file/file_type_aliases.hpp"
 #include "options/executable/executable_options.hpp"
-#include "options/options_block/alignment_input_options_block.hpp"
 #include "options/options_block/ids_options_block.hpp"
 #include "options/options_block/pdb_input_options_block.hpp"
 #include "options/options_block/superposition_input_options_block.hpp"
@@ -66,7 +66,7 @@ namespace cath {
 			static const std::string STANDARD_USAGE_ERROR_STRING;
 
 			/// \brief The options_block for the alignment input options
-			alignment_input_options_block            the_alignment_input_ob;
+			alignment_input_options_block            the_alignment_input_ob{ align::align_refining::NO };
 
 			/// \brief The options_block for the superposition input options
 			superposition_input_options_block        the_superposition_input_ob;
@@ -121,6 +121,7 @@ namespace cath {
 		};
 
 		std::unique_ptr<const align::alignment_acquirer> get_alignment_acquirer(const cath_superpose_options &);
+		align::align_refining get_align_refining(const cath_superpose_options &);
 		std::pair<align::alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const cath_superpose_options &,
 		                                                                                const file::strucs_context &,
 		                                                                                const align::align_refining &);

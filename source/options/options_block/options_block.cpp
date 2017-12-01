@@ -49,7 +49,8 @@ const string options_block::SUB_DESC_SEPARATOR = "\n   ";
 const string options_block::SUB_DESC_PAIR_SEPARATOR = " - ";
 
 /// \brief TODOCUMENT
-void options_block::do_add_hidden_options_to_description(options_description &/*arg_desc*/ ///< TODOCUMENT
+void options_block::do_add_hidden_options_to_description(options_description &/*arg_desc*/,       ///< TODOCUMENT
+                                                         const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                          ) {
 }
 
@@ -59,15 +60,17 @@ unique_ptr<options_block> options_block::clone() const {
 }
 
 /// \brief Add all this block's visible options to the specified options_description
-void options_block::add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the block's hidden options should be added
+void options_block::add_visible_options_to_description(options_description &arg_desc, ///< The options_description to which the block's hidden options should be added
+                                                       const size_t &arg_line_length  ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                        ) {
-	do_add_visible_options_to_description( arg_desc );
+	do_add_visible_options_to_description( arg_desc, arg_line_length );
 }
 
 /// \brief Add all this block's hidden options to the specified options_description
-void options_block::add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the block's hidden options should be added
+void options_block::add_hidden_options_to_description(options_description &arg_desc, ///< The options_description to which the block's hidden options should be added
+                                                      const size_t &arg_line_length  ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                       ) {
-	do_add_hidden_options_to_description( arg_desc );
+	do_add_hidden_options_to_description( arg_desc, arg_line_length );
 }
 
 /// \brief A method that uses the concrete class's methods to construct an options description
@@ -75,8 +78,8 @@ void options_block::add_hidden_options_to_description(options_description &arg_d
 options_description options_block::get_all_options_description(const size_t &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                ) {
 	options_description desc{ do_get_block_name(), numeric_cast<unsigned int>( arg_line_length ) };
-	do_add_visible_options_to_description( desc );
-	add_hidden_options_to_description ( desc );
+	do_add_visible_options_to_description( desc, arg_line_length );
+	add_hidden_options_to_description ( desc, arg_line_length );
 	return desc;
 }
 
@@ -89,7 +92,7 @@ options_description options_block::get_visible_options_description(const size_t 
                                                                    ) {
 	const string block_name = do_get_block_name();
 	options_description desc( block_name, numeric_cast<unsigned int>( arg_line_length ) );
-	do_add_visible_options_to_description( desc );
+	do_add_visible_options_to_description( desc, arg_line_length );
 	return desc;
 }
 
@@ -102,7 +105,7 @@ options_description options_block::get_hidden_options_description(const size_t &
                                                                   ) {
 	const string block_name = do_get_block_name();
 	options_description desc( block_name + " [hidden options]", numeric_cast<unsigned int>( arg_line_length )  );
-	add_hidden_options_to_description( desc );
+	add_hidden_options_to_description( desc, arg_line_length );
 	return desc;
 }
 

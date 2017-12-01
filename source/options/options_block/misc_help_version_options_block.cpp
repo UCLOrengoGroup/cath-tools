@@ -74,7 +74,8 @@ string misc_help_version_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
-void misc_help_version_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void misc_help_version_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                            const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                             ) {
 	const string PO_HELP_W_CHAR    = PO_HELP    + ',' + PO_CHAR_HELP;
 	const string PO_VERSION_W_CHAR = PO_VERSION + ',' + PO_CHAR_VERSION;
@@ -84,7 +85,8 @@ void misc_help_version_options_block::do_add_visible_options_to_description(opti
 }
 
 /// \brief Add a hidden option to the options_description for the hidden help option
-void misc_help_version_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void misc_help_version_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                           const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                            ) {
 	arg_desc.add_options()
 		( ( PO_HIDDEN_HELP ).c_str(), bool_switch( &hidden_help )->default_value( false ), "Output help message including all hidden options" );

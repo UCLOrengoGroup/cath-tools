@@ -60,12 +60,14 @@ namespace cath {
 			/// \brief Add the block's visible options to the provided options_description
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			virtual void do_add_visible_options_to_description(boost::program_options::options_description &) = 0;
+			virtual void do_add_visible_options_to_description(boost::program_options::options_description &,
+			                                                   const size_t &) = 0;
 
 			/// \brief Add the block's hidden options to the provided options_description
 			///
 			/// This is a virtual function (which may or may not be overridden by concrete, derived classes).
-			virtual void do_add_hidden_options_to_description(boost::program_options::options_description &);
+			virtual void do_add_hidden_options_to_description(boost::program_options::options_description &,
+			                                                  const size_t &);
 
 			/// \brief Identify any conflicts that make the currently stored options invalid
 			///
@@ -93,8 +95,10 @@ namespace cath {
 			options_block & operator=(const options_block &) = default;
 			options_block & operator=(options_block &&) noexcept = default;
 
-			void add_visible_options_to_description(boost::program_options::options_description &);
-			void add_hidden_options_to_description(boost::program_options::options_description &);
+			void add_visible_options_to_description(boost::program_options::options_description &,
+			                                        const size_t &);
+			void add_hidden_options_to_description(boost::program_options::options_description &,
+			                                       const size_t &);
 
 			boost::program_options::options_description get_all_options_description(const size_t &);
 			boost::program_options::options_description get_visible_options_description(const size_t &);

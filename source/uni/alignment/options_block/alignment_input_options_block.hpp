@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_OPTIONS_OPTIONS_BLOCK_ALIGNMENT_INPUT_OPTIONS_BLOCK_H
 #define _CATH_TOOLS_SOURCE_OPTIONS_OPTIONS_BLOCK_ALIGNMENT_INPUT_OPTIONS_BLOCK_H
 
-#include "options/options_block/alignment_input_spec.hpp"
+#include "alignment/options_block/alignment_input_spec.hpp"
 #include "options/options_block/options_block.hpp"
 
 namespace cath {
@@ -37,7 +37,8 @@ namespace cath {
 
 			std::unique_ptr<options_block> do_clone() const final;
 			std::string do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &) final;
+			void do_add_visible_options_to_description(boost::program_options::options_description &,
+			                                           const size_t &) final;
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 			str_vec do_get_all_options_names() const final;
 
@@ -48,6 +49,10 @@ namespace cath {
 			static const std::string PO_CORA_ALIGN_INFILE;
 			static const std::string PO_SSAP_SCORE_INFILE;
 			static const std::string PO_DO_THE_SSAPS;
+			static const std::string PO_REFINING;
+
+			alignment_input_options_block() = default;
+			explicit alignment_input_options_block(const align::align_refining &);
 
 			const alignment_input_spec & get_alignment_input_spec() const;
 		};

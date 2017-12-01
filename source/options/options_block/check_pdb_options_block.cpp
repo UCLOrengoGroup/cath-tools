@@ -59,14 +59,16 @@ string check_pdb_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
-void check_pdb_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void check_pdb_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                    const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	arg_desc.add_options()
 		( PO_PERMIT.c_str(), bool_switch( &permit_no_atoms )->default_value( false ), "Permit success for a file that has no ATOM records" );
 }
 
 /// \brief Add this block's hidden options to the provided options_description
-void check_pdb_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void check_pdb_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                   const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
 	arg_desc.add_options()
 		( PO_PDB_FILE.c_str(), value<path>( &pdb_file ), "PDB file to check" );

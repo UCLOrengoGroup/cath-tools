@@ -126,19 +126,19 @@ void multi_align_builder::add_alignment_branch(const size_t         &arg_entry_a
 
 	if ( arg_strategy != aln_glue_style::SIMPLY ) {
 		// Refine the join between the two groups
-		std::cerr << "Doing the light refining\n" << std::flush;
-		std::cerr << "group_a is " << group_a << "\n";
-		std::cerr << "group_b is " << group_b << "\n";
+		// std::cerr << "Doing the light refining\n" << std::flush;
+		// std::cerr << "group_a is " << group_a << "\n";
+		// std::cerr << "group_b is " << group_b << "\n";
 		group_a.refine_join(
 			the_refiner,
 			make_subset_protein_list( arg_proteins, group_a.get_entries() ),
 			gap_penalty( 50, 0 ),
 			group_b.get_entries()
 		);
-		std::cerr << "Completed the light refining\n" << std::flush;
+		// std::cerr << "Completed the light refining\n" << std::flush;
 
 		if ( arg_strategy == aln_glue_style::WITH_HEAVY_REFINING ) {
-			std::cerr << "Doing the heavy refining\n" << std::flush;
+			// std::cerr << "Doing the heavy refining\n" << std::flush;
 			// Refine the whole alignment
 			group_a.refine_alignment(
 				the_refiner,
@@ -146,9 +146,9 @@ void multi_align_builder::add_alignment_branch(const size_t         &arg_entry_a
 				gap_penalty( 50, 0 )
 			);
 		}
-		else {
-			std::cerr << "Not doing the heavy refining\n" << std::flush;
-		}
+		// else {
+		// 	std::cerr << "Not doing the heavy refining\n" << std::flush;
+		// }
 	}
 
 	// Update all the group indices of the entries in group_a

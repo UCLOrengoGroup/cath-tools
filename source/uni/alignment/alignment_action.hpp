@@ -24,11 +24,13 @@
 #include <boost/filesystem/path.hpp>
 
 #include "alignment/align_type_aliases.hpp"
+#include "alignment/alignment.hpp"
 #include "alignment/aln_glue_style.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/graph/spanning_tree.hpp"
 #include "common/boost_addenda/range/front.hpp"
-#include "alignment/alignment.hpp"
+#include "common/boost_addenda/range/max_proj_element.hpp"
+#include "common/cpp17/as_const.hpp"
 #include "structure/protein/protein.hpp"
 #include "structure/protein/protein_list.hpp"
 
@@ -88,12 +90,19 @@ namespace cath {
 
 				// If aln_glue_style::INCREMENTALLY_WITH_PAIR_REFINING, order spanning tree
 				if ( arg_strategy == aln_glue_style::INCREMENTALLY_WITH_PAIR_REFINING ) {
-					// At present, just start incremental building from the first entry in the spanning tree
+					// At present, just start incremental building from the highest-scoring entry in the spanning tree
 					//
 					// It might be better if this was chosen by a process like: repeatedly
 					// find the worst score and then restrict to larger side of the remaining
 					// tree until there's only one link left
-					constexpr size_t START_INDEX = 0;
+					const size_t START_INDEX = boost::numeric_cast<size_t>( std::distance(
+						common::cbegin( lcl_span_tree ),
+						common::max_proj_element(
+							common::as_const( lcl_span_tree ),
+							std::less<>{},
+							[] (const size_size_doub_tpl &x) { return get<2>( x ); }
+						)
+					) );
 					lcl_span_tree = common::order_spanning_tree_from_start( lcl_span_tree, START_INDEX );
 				}
 				return lcl_span_tree;

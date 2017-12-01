@@ -80,7 +80,8 @@ string cath_assign_domains_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void cath_assign_domains_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void cath_assign_domains_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                              const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                               ) {
 	const string default_forbidden_nodes_str = join( DEFAULT_FORBIDDEN_NODES, ", " );
 	arg_desc.add_options()

@@ -237,6 +237,14 @@ unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const ca
 	return align::get_alignment_acquirer( arg_cath_superpose_options.get_alignment_input_spec() );
 }
 
+/// \brief Get align_refining as implied by the specified cath_superpose_options
+///
+/// \relates cath_superpose_options
+align_refining cath::opts::get_align_refining(const cath_superpose_options &arg_cath_superpose_options ///< The cath_superpose_options to query
+                                              ) {
+	return arg_cath_superpose_options.get_alignment_input_spec().get_refining();
+}
+
 /// \brief Get alignment and spanning tree as implied by the specified cath_superpose_options
 ///
 /// \relates cath_superpose_options

@@ -21,11 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CATH_REFINE_ALIGN_OPTIONS_CATH_REFINE_ALIGN_OPTIONS_H
 #define _CATH_TOOLS_SOURCE_CATH_REFINE_ALIGN_OPTIONS_CATH_REFINE_ALIGN_OPTIONS_H
 
+#include "alignment/options_block/alignment_input_options_block.hpp"
 #include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "display/options/display_options_block.hpp"
 #include "options/executable/executable_options.hpp"
-#include "options/options_block/alignment_input_options_block.hpp"
 #include "options/options_block/ids_options_block.hpp"
 #include "options/options_block/pdb_input_options_block.hpp"
 #include "outputter/alignment_outputter_options/alignment_output_options_block.hpp"
@@ -55,7 +55,7 @@ namespace cath {
 			static const std::string STANDARD_USAGE_ERROR_STRING;
 
 			/// \brief TODOCUMENT
-			alignment_input_options_block      the_alignment_input_options_block;
+			alignment_input_options_block      the_alignment_input_options_block{ align::align_refining::HEAVY };
 
 			/// \brief The options_block for the IDs options
 			ids_options_block                  the_ids_ob;
@@ -102,6 +102,7 @@ namespace cath {
 		};
 
 		std::unique_ptr<const align::alignment_acquirer> get_alignment_acquirer(const cath_refine_align_options &);
+		align::align_refining get_align_refining(const cath_refine_align_options &);
 		std::unique_ptr<const pdbs_acquirer> get_pdbs_acquirer(const cath_refine_align_options &);
 		selection_policy_acquirer get_selection_policy_acquirer(const cath_refine_align_options &);
 

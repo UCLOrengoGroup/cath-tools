@@ -75,7 +75,8 @@ string crh_output_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_output_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void crh_output_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                     const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                      ) {
 	const string file_varname   { "<file>" };
 
@@ -148,12 +149,13 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 }
 
 /// \brief Add any hidden options to the provided options_description
-void crh_output_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void crh_output_options_block::do_add_hidden_options_to_description(options_description &arg_desc,       ///< The options_description to which the options are added
+                                                                    const size_t        &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	const auto output_hmmer_aln_notifier = [&] (const bool &x) { the_spec.set_output_hmmer_aln( x ); };
 
-	deprecated_single_output_ob.add_hidden_options_to_description ( arg_desc );
-	deprecated_single_output_ob.add_visible_options_to_description( arg_desc );
+	deprecated_single_output_ob.add_hidden_options_to_description ( arg_desc, arg_line_length );
+	deprecated_single_output_ob.add_visible_options_to_description( arg_desc, arg_line_length );
 
 	arg_desc.add_options()
 		(

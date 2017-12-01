@@ -63,10 +63,10 @@ void multi_align_group::refine_join(alignment_refiner  &arg_alignment_refiner, /
 	if ( entries.empty() || arg_join_point.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot refine join with empty entries or empty join point"));
 	}
-	std::cerr << "Alignment has        : " << the_alignment.num_entries()                             << " entries\n" << std::flush;
-	const size_vec &entries_cr = entries;
-	std::cerr << "Entries are          : " << join( entries_cr        | lexical_casted<string>(), ", " ) <<         "\n" << std::flush;
-	std::cerr << "Join point is        : " << join( arg_join_point    | lexical_casted<string>(), ", " ) <<         "\n" << std::flush;
+	// std::cerr << "Alignment has        : " << the_alignment.num_entries()                             << " entries\n" << std::flush;
+	// const size_vec &entries_cr = entries;
+	// std::cerr << "Entries are          : " << join( entries_cr        | lexical_casted<string>(), ", " ) <<         "\n" << std::flush;
+	// std::cerr << "Join point is        : " << join( arg_join_point    | lexical_casted<string>(), ", " ) <<         "\n" << std::flush;
 	size_opt_vec index_of_entry( *max_element( entries ) + 1 );
 	for (const size_t &entry_index : indices( entries.size() ) ) {
 		index_of_entry[ entries[ entry_index ] ] = entry_index;
@@ -76,21 +76,21 @@ void multi_align_group::refine_join(alignment_refiner  &arg_alignment_refiner, /
 		[&] (const size_t &x) { return *index_of_entry[ x ]; }
 	);
 
-	std::cerr << "Mapped join point is : " << join( mapped_join_point | lexical_casted<string>(), ", " ) <<         "\n" << std::flush;
+	// std::cerr << "Mapped join point is : " << join( mapped_join_point | lexical_casted<string>(), ", " ) <<         "\n" << std::flush;
 
-	cerr << "Alignment to be refined (at join point between "
-		<< join( mapped_join_point | lexical_casted<string>(), ", " )
-		<< " and the rest) : \n";
-	write_alignment_as_fasta_alignment( cerr, the_alignment, arg_proteins );
-	cerr << "\n";
+	// cerr << "Alignment to be refined (at join point between "
+		// << join( mapped_join_point | lexical_casted<string>(), ", " )
+		// << " and the rest) : \n";
+	// write_alignment_as_fasta_alignment( cerr, the_alignment, arg_proteins );
+	// cerr << "\n";
 
 	the_alignment = arg_alignment_refiner.iterate_join( the_alignment, arg_proteins, arg_gap_penalty, mapped_join_point );
 
-	cerr << "Refined alignment (at join point between "
-		<< join( mapped_join_point | lexical_casted<string>(), ", " )
-		<< " and the rest) : \n";
-	write_alignment_as_fasta_alignment( cerr, the_alignment, arg_proteins );
-	cerr << "\n";
+	// cerr << "Refined alignment (at join point between "
+		// << join( mapped_join_point | lexical_casted<string>(), ", " )
+		// << " and the rest) : \n";
+	// write_alignment_as_fasta_alignment( cerr, the_alignment, arg_proteins );
+	// cerr << "\n";
 }
 
 /// \brief Ctor for multi_align_group that creates a single entry of the specified index
@@ -180,15 +180,15 @@ void multi_align_group::refine_alignment(alignment_refiner  &arg_alignment_refin
                                          const protein_list &arg_proteins,          ///< TODOCUMENT
                                          const gap_penalty  &arg_gap_penalty        ///< TODOCUMENT
                                          ) {
-	cerr << "Alignment to be refined: \n";
-	write_alignment_as_fasta_alignment( cerr, the_alignment, arg_proteins );
-	cerr << "\n" << flush;
+	// cerr << "Alignment to be refined: \n";
+	// write_alignment_as_fasta_alignment( cerr, the_alignment, arg_proteins );
+	// cerr << "\n" << flush;
 
 	the_alignment = arg_alignment_refiner.iterate( the_alignment, arg_proteins, arg_gap_penalty );
 
-	cerr << "Refined alignment: \n";
-	write_alignment_as_fasta_alignment( cerr, the_alignment, arg_proteins );
-	cerr << "\n" << flush;
+	// cerr << "Refined alignment: \n";
+	// write_alignment_as_fasta_alignment( cerr, the_alignment, arg_proteins );
+	// cerr << "\n" << flush;
 }
 
 /// \brief Simple insertion operator for multi_align_group

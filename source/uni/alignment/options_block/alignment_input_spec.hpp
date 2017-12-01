@@ -24,6 +24,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
 
+#include "acquirer/alignment_acquirer/align_refining.hpp"
 #include "common/path_type_aliases.hpp"
 
 namespace cath {
@@ -62,9 +63,18 @@ namespace cath {
 			/// (rather than cath-tools choosing)
 			path_opt_opt do_the_ssaps_dir;
 
+			/// \brief How much refining should be done to the alignment
+			align::align_refining refining = DEFAULT_REFINING;
+
 		public:
 			/// \brief The default value for whether to align based on matching residue names
 			static constexpr bool DEFAULT_RESIDUE_NAME_ALIGN = false;
+
+			/// \brief The default value for how much refining should be done to the alignment
+			static constexpr align::align_refining DEFAULT_REFINING = align::align_refining::NO;
+
+			alignment_input_spec() = default;
+			explicit alignment_input_spec(const align::align_refining &);
 
 			const bool & get_residue_name_align() const;
 			const boost::filesystem::path & get_fasta_alignment_file() const;
@@ -72,6 +82,7 @@ namespace cath {
 			const boost::filesystem::path & get_cora_alignment_file() const;
 			const boost::filesystem::path & get_ssap_scores_file() const;
 			const path_opt_opt & get_do_the_ssaps_dir() const;
+			const align::align_refining & get_refining() const;
 
 			alignment_input_spec & set_residue_name_align(const bool &);
 			alignment_input_spec & set_fasta_alignment_file(const boost::filesystem::path &);
@@ -79,6 +90,7 @@ namespace cath {
 			alignment_input_spec & set_cora_alignment_file(const boost::filesystem::path &);
 			alignment_input_spec & set_ssap_scores_file(const boost::filesystem::path &);
 			alignment_input_spec & set_do_the_ssaps_dir(const path_opt &);
+			alignment_input_spec & set_refining(const align::align_refining &);
 		};
 
 		size_t get_num_acquirers(const alignment_input_spec &);

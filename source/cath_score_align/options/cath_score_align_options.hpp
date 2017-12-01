@@ -21,9 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CATH_SCORE_ALIGN_OPTIONS_CATH_SCORE_ALIGN_OPTIONS_H
 #define _CATH_TOOLS_SOURCE_CATH_SCORE_ALIGN_OPTIONS_CATH_SCORE_ALIGN_OPTIONS_H
 
+#include "alignment/options_block/alignment_input_options_block.hpp"
 #include "common/type_aliases.hpp"
 #include "options/executable/executable_options.hpp"
-#include "options/options_block/alignment_input_options_block.hpp"
 #include "options/options_block/pdb_input_options_block.hpp"
 
 #include <iosfwd>
@@ -44,7 +44,7 @@ namespace cath {
 			static const std::string STANDARD_USAGE_ERROR_STRING;
 
 			/// \brief TODOCUMENT
-			alignment_input_options_block the_alignment_input_options_block;
+			alignment_input_options_block the_alignment_input_options_block{ align::align_refining::NO };
 
 			/// \brief TODOCUMENT
 			pdb_input_options_block       the_pdb_input_options_block;

@@ -21,6 +21,7 @@
 #include "alignment_refiner.hpp"
 
 #include <boost/filesystem/path.hpp> // ***** TEMPORARY *****
+#include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/type_traits/is_same.hpp>
 
@@ -62,7 +63,7 @@ bool_aln_pair alignment_refiner::iterate_step(const alignment       &arg_alignme
                                               const view_cache_list &arg_view_cache_list, ///< TODOCUMENT
                                               const gap_penalty     &arg_gap_penalty      ///< TODOCUMENT
                                               ) {
-	cerr << "Will try to find ways to split alignment with " << arg_alignment.num_entries() << " entries" << endl;
+	BOOST_LOG_TRIVIAL( info ) << "Will search for sensible ways to split alignment with " << arg_alignment.num_entries() << " entries";
 
 	const size_t num_entries = arg_alignment.num_entries();
 	if ( arg_proteins.size() != num_entries ) {
@@ -110,11 +111,12 @@ bool_aln_pair alignment_refiner::iterate_step_for_alignment_split(const alignmen
                                                                   ) {
 	const size_vec correct_lengths = get_protein_lengths( arg_proteins );
 
-	cerr << "Iterating alignment with " << arg_alignment.num_entries() << " entries using split :";
-	for (const size_t &split_member : arg_alignment_split) {
-		cerr << " " << split_member;
-	}
-	cerr << endl;
+	BOOST_LOG_TRIVIAL( info ) << "Iterating alignment with " << arg_alignment.num_entries() << " entries";
+	// cerr << "Iterating alignment with " << arg_alignment.num_entries() << " entries using split :";
+	// for (const size_t &split_member : arg_alignment_split) {
+	// 	cerr << " " << split_member;
+	// }
+	// cerr << endl;
 
 	if ( arg_alignment_split.get_num_entries() != arg_alignment.num_entries() ) {
 		BOOST_THROW_EXCEPTION(not_implemented_exception("Number of entries in alignment split doesn't match number in alignment"));
@@ -261,8 +263,8 @@ alignment alignment_refiner::iterate(const alignment       &arg_alignment,      
 		swap( prev_alignment, curr_alignment );
 		swap( curr_alignment, next_alignment );
 
-		if (iter_ctr > 0) {
-			cerr << "Refining alignment, step : " << iter_ctr << endl;
+		// if (iter_ctr > 0) {
+		// 	cerr << "Refining alignment, step : " << iter_ctr << endl;
 
 //			// For debugging why 1fyvA00 vs 2rirA01 never stops
 //			const protein &protein_a         = arg_proteins[0];
@@ -272,7 +274,7 @@ alignment alignment_refiner::iterate(const alignment       &arg_alignment,      
 //			open_ofstream( temp_align_ofstream, temp_align_out_file );
 //			output_alignment_to_cath_ssap_legacy_format( temp_align_ofstream, next_alignment, protein_a, protein_b );
 //			temp_align_ofstream.close();
-		}
+		// }
 
 		if ( next_matches_prev ) {
 			break;

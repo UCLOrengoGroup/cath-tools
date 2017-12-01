@@ -20,16 +20,22 @@
 
 #include "alignment_input_options_block.hpp"
 
+#include <boost/algorithm/string/join.hpp>
+#include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional.hpp>
 
+#include "common/boost_addenda/program_options/layout_values_with_descs.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/optional/make_optional_if.hpp"
 
 using namespace cath;
+using namespace cath::align;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std::literals::string_literals;
 
+using boost::numeric_cast;
+using boost::algorithm::join;
 using boost::filesystem::path;
 using boost::none;
 using boost::program_options::bool_switch;
@@ -57,6 +63,9 @@ const string alignment_input_options_block::PO_SSAP_SCORE_INFILE { "ssap-scores-
 /// \brief The option name for a directory in which to do the necessary SSAPs and then use the scores to glue the resulting alignments together
 const string alignment_input_options_block::PO_DO_THE_SSAPS      { "do-the-ssaps"       };
 
+/// \brief The option name for how much refining should be done to the alignment
+const string alignment_input_options_block::PO_REFINING          { "align-refining"     };
+
 /// \brief A standard do_clone method.
 unique_ptr<options_block> alignment_input_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -68,19 +77,25 @@ string alignment_input_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void alignment_input_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void alignment_input_options_block::do_add_visible_options_to_description(options_description &arg_desc,       ///< The options_description to which the options are added
+                                                                          const size_t        &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                           ) {
-	const string dir_varname  { "<dir>"  };
-	const string file_varname { "<file>" };
+	const auto &sep     = SUB_DESC_SEPARATOR;
+	const auto &sub_sep = SUB_DESC_PAIR_SEPARATOR;
 
-	const auto residue_name_align_notifier   = [&] (const bool &x) { the_alignment_input_spec.set_residue_name_align  ( x ); };
-	const auto fasta_alignment_file_notifier = [&] (const path &x) { the_alignment_input_spec.set_fasta_alignment_file( x ); };
-	const auto ssap_alignment_file_notifier  = [&] (const path &x) { the_alignment_input_spec.set_ssap_alignment_file ( x ); };
-	const auto cora_alignment_file_notifier  = [&] (const path &x) { the_alignment_input_spec.set_cora_alignment_file ( x ); };
-	const auto ssap_scores_file_notifier     = [&] (const path &x) { the_alignment_input_spec.set_ssap_scores_file    ( x ); };
-	const auto do_the_ssaps_notifier         = [&] (const path &x) {
+	const string dir_varname      { "<dir>"  };
+	const string file_varname     { "<file>" };
+	const string refining_varname { "<refn>" };
+
+	const auto residue_name_align_notifier   = [&] (const bool           &x) { the_alignment_input_spec.set_residue_name_align  ( x ); };
+	const auto fasta_alignment_file_notifier = [&] (const path           &x) { the_alignment_input_spec.set_fasta_alignment_file( x ); };
+	const auto ssap_alignment_file_notifier  = [&] (const path           &x) { the_alignment_input_spec.set_ssap_alignment_file ( x ); };
+	const auto cora_alignment_file_notifier  = [&] (const path           &x) { the_alignment_input_spec.set_cora_alignment_file ( x ); };
+	const auto ssap_scores_file_notifier     = [&] (const path           &x) { the_alignment_input_spec.set_ssap_scores_file    ( x ); };
+	const auto do_the_ssaps_notifier         = [&] (const path           &x) {
 		the_alignment_input_spec.set_do_the_ssaps_dir( make_optional_if( x != path{}, x ) );
 	};
+	const auto refining_notifier             = [&] (const align_refining &x) { the_alignment_input_spec.set_refining            ( x ); };
 
 	arg_desc.add_options()
 		(
@@ -128,6 +143,27 @@ void alignment_input_options_block::do_add_visible_options_to_description(option
 				"Use a suitable temp directory if none is specified" ).c_str()
 		);
 
+	// Create and add a sub-block for alignment refining
+	options_description sub_refine_desc( "Alignment refining", numeric_cast<unsigned int>( arg_line_length ) );
+	const str_vec refining_descs = layout_values_with_descs(
+		all_align_refinings,
+		[] (const align_refining &x) { return to_string( x ); },
+		&description_of_align_refining,
+		sub_sep
+	);
+	sub_refine_desc.add_options()
+		(
+			PO_REFINING.c_str(),
+			value<align_refining>()
+				->value_name    ( refining_varname                        )
+				->notifier      ( refining_notifier                       )
+				->default_value ( the_alignment_input_spec.get_refining() ),
+			( "Apply " + refining_varname + " refining to the alignment" + ", one of available values:" + sep
+				+ join( refining_descs, sep ) + "\n"
+				+ "This can change the method of gluing alignments under --" + PO_SSAP_SCORE_INFILE + " and --" + PO_DO_THE_SSAPS ).c_str()
+		);
+	arg_desc.add( sub_refine_desc );
+
 	static_assert( ! alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN,
 		"If alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN isn't false, it might mess up the bool switch in here" );
 }
@@ -161,7 +197,14 @@ str_vec alignment_input_options_block::do_get_all_options_names() const {
 		alignment_input_options_block::PO_SSAP_ALIGN_INFILE,
 		alignment_input_options_block::PO_CORA_ALIGN_INFILE,
 		alignment_input_options_block::PO_SSAP_SCORE_INFILE,
+		alignment_input_options_block::PO_DO_THE_SSAPS,
+		alignment_input_options_block::PO_REFINING
 	};
+}
+
+/// \brief Ctor from how much refining should be done to the alignment
+alignment_input_options_block::alignment_input_options_block(const align::align_refining &arg_align_refining ///< How much refining should be done to the alignment
+                                                             ) : the_alignment_input_spec{ arg_align_refining } {
 }
 
 /// \brief TODOCUMENT

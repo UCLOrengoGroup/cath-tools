@@ -24,9 +24,11 @@
 
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/out_of_range_exception.hpp"
+#include "common/program_options/validator.hpp"
 
 using namespace cath::common;
 
+using boost::any;
 using boost::to_upper;
 using std::istream;
 using std::ostream;
@@ -42,7 +44,7 @@ string cath::align::to_string(const align_refining &arg_align_refining ///< The 
 		case ( align_refining::LIGHT ) : { return "LIGHT" ; }
 		case ( align_refining::HEAVY ) : { return "HEAVY" ; }
 	}
-	BOOST_THROW_EXCEPTION(out_of_range_exception("supn_regions_context value not recognised"));
+	BOOST_THROW_EXCEPTION(out_of_range_exception("align_refining value not recognised in to_string()"));
 }
 
 /// \brief Insert a description of the specified align_refining into the specified ostream
@@ -77,4 +79,26 @@ istream & cath::align::operator>>(istream        &arg_is,            ///< The is
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse align_refining from string \""+ input_string + "\"" ));
 	}
 	return arg_is;
+}
+
+/// \brief Generate a string containing a description of the specified align_refining
+///
+/// \relates align_refining
+string cath::align::description_of_align_refining(const align_refining &arg_align_refining ///< The align_refining to describe
+                                                  ) {
+	switch ( arg_align_refining ) {
+		case ( align_refining::NO    ) : { return "Don't refine the alignment" ; }
+		case ( align_refining::LIGHT ) : { return "Refine any alignments with few entries; glue alignments one more entry at a time" ; }
+		case ( align_refining::HEAVY ) : { return "Perform heavy (slow) refining on the alignment, including when gluing alignments together" ; }
+	}
+	BOOST_THROW_EXCEPTION(out_of_range_exception("align_refining value not recognised in description_of_align_refining()"));
+}
+
+/// \brief Provide Boost program_options validation for align_refining
+///
+/// \relates align_refining
+void cath::align::validate(any           &arg_value,         ///< The value to populate
+                           const str_vec &arg_value_strings, ///< The string values to validate
+                           align_refining *, int) {
+	arg_value = lex_castable_validator<align_refining>::perform_validate( arg_value, arg_value_strings );
 }

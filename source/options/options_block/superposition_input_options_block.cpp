@@ -48,7 +48,8 @@ string superposition_input_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void superposition_input_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void superposition_input_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                              const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                               ) {
 	const string file_varname { "<file>" };
 

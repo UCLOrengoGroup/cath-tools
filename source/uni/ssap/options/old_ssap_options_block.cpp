@@ -98,7 +98,8 @@ string old_ssap_options_block::do_get_block_name() const {
 /// \brief Add the block's non-hidden options to the provided options_description
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
-void old_ssap_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void old_ssap_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                   const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
 	const string dir_varname  { "<dir>"   };
 	const string file_varname { "<file>"  };
@@ -134,7 +135,8 @@ void old_ssap_options_block::do_add_visible_options_to_description(options_descr
 }
 
 /// \brief Add any hidden options to the provided options_description
-void old_ssap_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void old_ssap_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                  const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                   ) {
 	arg_desc.add_options()
 		( PO_NAME.c_str(), value<str_vec>( &names ), "Structure names" );

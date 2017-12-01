@@ -93,7 +93,8 @@ string data_dirs_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 ///
 /// This adds one entry for each of the file types for each of the option types
-void data_dirs_options_block::do_add_visible_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void data_dirs_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                    const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	// Loop over each of the data option types (path, prefix, suffix) and grab the data_option and suffix string
 	for (const data_option_str_pair &data_option_suffix_pair : DATA_OPTION_SUFFIXES) {
@@ -134,7 +135,8 @@ void data_dirs_options_block::do_add_visible_options_to_description(options_desc
 }
 
 /// \brief Add any hidden options to the provided options_description
-void data_dirs_options_block::do_add_hidden_options_to_description(options_description &arg_desc ///< The options_description to which the options are added
+void data_dirs_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
+                                                                   const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
 	const string rootdir_valname = "<dir>";
 	const auto cath_root_dir_notifier = [&] (const path &x) { the_data_dirs_spec.set_cath_root_dir( x ); };
