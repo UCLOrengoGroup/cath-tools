@@ -515,6 +515,7 @@ set(
 
 set(
 	NORMSOURCES_UNI_ACQUIRER_ALIGNMENT_ACQUIRER
+		uni/acquirer/alignment_acquirer/align_refining.cpp
 		uni/acquirer/alignment_acquirer/alignment_acquirer.cpp
 		uni/acquirer/alignment_acquirer/cora_aln_file_alignment_acquirer.cpp
 		uni/acquirer/alignment_acquirer/do_the_ssaps_alignment_acquirer.cpp
@@ -1760,6 +1761,7 @@ set(
 
 set(
 	TESTSOURCES_UNI_ACQUIRER_ALIGNMENT_ACQUIRER
+		uni/acquirer/alignment_acquirer/align_refining_test.cpp
 		uni/acquirer/alignment_acquirer/alignment_acquirer_test.cpp
 		uni/acquirer/alignment_acquirer/cora_aln_file_alignment_acquirer_test.cpp
 		uni/acquirer/alignment_acquirer/do_the_ssaps_alignment_acquirer_test.cpp

@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_ALIGN_REFINING_H
 #define _CATH_TOOLS_SOURCE_ACQUIRER_ALIGNMENT_ACQUIRER_ALIGN_REFINING_H
 
+#include <string>
+
 namespace cath {
 	namespace align {
 
@@ -31,6 +33,14 @@ namespace cath {
 			LIGHT, ///< At most, light refining should be performed
 			HEAVY  ///< Heavy, slow, expensive refining should be performed
 		};
+
+		std::string to_string(const align_refining &);
+
+		std::ostream & operator<<(std::ostream &,
+		                          const align_refining &);
+
+		std::istream & operator>>(std::istream &,
+		                          align_refining &);
 
 	} // namespace align
 } // namespace cath
