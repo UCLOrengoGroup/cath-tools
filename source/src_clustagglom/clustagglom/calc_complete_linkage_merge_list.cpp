@@ -80,12 +80,26 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             arg_li
 				a = clust_ids.get_jumbled_nth_index( 0 );
 				b = clust_ids.get_jumbled_nth_index( 1 );
 				chain.assign( 1, a );
-
 			}
 			else {
 				a = chain[ chain.size() - 4_z ];
 				b = chain[ chain.size() - 3_z ];
-				chain.resize( chain.size() - 3 );
+
+				// The round-trip static_cast to uint32_t and then back to size_t
+				// for the call to resize() shouldn't be necessary but otherwise GCC 7.2
+				// gives a false-positive warning:
+				//
+				//     In function ‘cath::clust::merge_vec: cath::clust::calc_complete_linkage_merge_list(cath::clust::links, const size_vec&, const strength&)’:
+				//     cc1plus: error: ‘void* __builtin_memset(void*, int, long unsigned int)’: specified size 18446744073709551604 exceeds maximum object size 9223372036854775807 [-Werror=stringop-overflow=]
+				//
+				// The warning isn't very descriptive and doesn't give a location but
+				// appears to be about this resize() argument being too big. Presumably, it's deducing
+				// that the value might wrap below 0 to a huge value (because it's an unsigned integer type)
+				// but we know that, within this else clause, chain.size() is big enough to prevent that.
+				//
+				// I've reported this issue here:
+				//   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83239
+				chain.resize( static_cast<uint32_t>( chain.size() - 3_z ) );
 			}
 
 			strength dist;
