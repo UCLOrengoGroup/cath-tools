@@ -1,5 +1,5 @@
 /// \file
-/// \brief The hmmer_scores_file test suite
+/// \brief The pdb test suite
 
 /// \copyright
 /// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
