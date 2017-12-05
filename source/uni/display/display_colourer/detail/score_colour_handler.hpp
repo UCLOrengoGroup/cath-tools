@@ -70,7 +70,7 @@ namespace cath {
 		                                 const align::alignment &,
 		                                 const size_t &,
 		                                 const size_t &,
-		                                 const display_colour);
+		                                 display_colour);
 
 		void adjust_display_colour_spec(display_colour_spec &,
 		                                const score_colour_handler &,
