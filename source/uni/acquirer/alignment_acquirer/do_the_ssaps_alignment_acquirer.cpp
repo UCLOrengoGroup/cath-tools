@@ -148,7 +148,7 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 				ofstream out_scores_ofstream;
 				open_ofstream( out_scores_ofstream, scores_file );
 				run_ssap(
-					make_and_parse_options<cath_ssap_options>( cath_ssap_args ),
+					make_and_parse_options<cath_ssap_options>( cath_ssap_args, parse_sources::CMND_LINE_ONLY ),
 					std::cout,
 					std::cerr,
 					ostream_ref( out_scores_ofstream )
