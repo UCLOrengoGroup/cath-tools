@@ -46,6 +46,7 @@
 #include "common/exception/runtime_error_exception.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/size_t_literal.hpp"
+#include "file/pdb/backbone_complete_indices.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
@@ -245,6 +246,25 @@ const pdb_residue_vec & pdb::get_post_ter_residues() const {
 	return post_ter_residues;
 }
 
+/// \brief Get the backbone_complete_indices corresponding to the specified PDB
+///
+/// This can then be used for more efficient lookup of the backbone_complete residues
+///
+/// \relates pdb
+///
+/// \relatesalso backbone_complete_indices
+backbone_complete_indices cath::file::get_backbone_complete_indices(const pdb &arg_pdb ///< The pdb to query
+                                                                    ) {
+	return backbone_complete_indices{
+		copy_build<size_vec>(
+			indices( arg_pdb.get_num_residues() )
+				| filtered( [&] (const size_t &x) {
+					return is_backbone_complete( arg_pdb.get_residue_of_index__backbone_unchecked( x ) );
+				} )
+		)
+	};
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
@@ -298,6 +318,16 @@ const pdb_residue & cath::file::get_residue_of_backbone_complete_index(const pdb
 	);
 }
 
+/// \brief Get the residue that's the i-th backbone-complete residue in the specified PDB
+///
+/// \relates pdb
+const pdb_residue & cath::file::get_residue_of_backbone_complete_index(const pdb                       &arg_pdb,              ///< The pdb to query
+                                                                       const backbone_complete_indices &arg_bb_compl_indices, ///< The backbone_complete_indices corresponding to the PDB
+                                                                       const size_t                    &arg_index             ///< The backbone-complete index of the required residue
+                                                                       ) {
+	return arg_pdb.get_residue_of_index__backbone_unchecked( get_index_of_backbone_complete_index( arg_bb_compl_indices, arg_index ) );
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
@@ -311,6 +341,17 @@ coord cath::file::get_residue_ca_coord_of_backbone_complete_index(const pdb    &
 		)
 	);
 }
+
+/// \brief Get the CA-coord of the residue that's the i-th backbone-complete residue in the specified PDB
+///
+/// \relates pdb
+coord cath::file::get_residue_ca_coord_of_backbone_complete_index(const pdb                       &arg_pdb,              ///< The pdb to query
+                                                                  const backbone_complete_indices &arg_bb_compl_indices, ///< The backbone_complete_indices corresponding to the PDB
+                                                                  const size_t                    &arg_index             ///< The backbone-complete index of the required residue
+                                                                  ) {
+	return arg_pdb.get_residue_ca_coord_of_index__backbone_unchecked( get_index_of_backbone_complete_index( arg_bb_compl_indices, arg_index ) );
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates pdb

@@ -20,8 +20,11 @@
 
 #include "superpose_orient.hpp"
 
+#include <boost/log/trivial.hpp>
+
 #include "alignment/alignment.hpp"
 #include "common/boost_addenda/range/indices.hpp"
+#include "file/pdb/backbone_complete_indices.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "structure/geometry/coord.hpp"
@@ -44,6 +47,26 @@ inline coord_list cath::sup::detail::get_superposed_filtered_coords_in_aln_order
                                                                                  const pdb_list      &arg_pdbs,          ///< The PDBs from which the coordinates should be extracted
                                                                                  Fn                 &&arg_function       ///< The boolean predicate to specify whether a position from the alignment should be included (given the entry and index in the alignment)
                                                                                  ) {
+	// Check that the number of entries is the same in the PDBs and alignment
+	if ( arg_alignment.num_entries() != arg_pdbs.size() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get_superposed_filtered_coords_in_aln_order() for mismatching numbers of entries in the alignment and PDBs"));
+	}
+
+	// Get the indices of the backbone_complete residues to use throughout the main loop
+	const auto backbone_complete_indices = get_backbone_complete_indices( arg_pdbs );
+	for (const size_t &entry : indices( arg_alignment.num_entries() ) ) {
+		if ( backbone_complete_indices[ entry ].size() != 1_z + *get_last_present_position_of_entry( arg_alignment, entry ) ) {
+			BOOST_LOG_TRIVIAL( warning )
+				<< "Whilst getting alignment-ordered coords from alignment/PDBs,"
+				<< " found that the number of backbone complete indices in structure "
+				<< entry
+				<< " is "
+				<< backbone_complete_indices[ entry ].size()
+				<< " yet the last present position in the alignment in that entry is "
+				<< *get_last_present_position_of_entry( arg_alignment, entry );
+		}
+	}
+
 	coord_list results;
 	for (const size_t &index : indices( arg_alignment.length() ) ) {
 		for (const size_t &entry : indices( arg_alignment.num_entries() ) ) {
@@ -54,7 +77,9 @@ inline coord_list cath::sup::detail::get_superposed_filtered_coords_in_aln_order
 						transform_copy(
 							arg_superposition,
 							entry,
-							arg_pdbs[ entry ].get_residue_ca_coord_of_index__backbone_unchecked(
+							get_residue_ca_coord_of_backbone_complete_index(
+								arg_pdbs[ entry ],
+								backbone_complete_indices[ entry ],
 								*posn_opt
 							)
 						)

@@ -26,6 +26,7 @@
 #include "cath_superpose/options/cath_superpose_options.hpp"
 #include "chopping/domain/domain.hpp"
 #include "common/argc_argv_faker.hpp"
+#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/file/temp_file.hpp"
 #include "common/regex/regex_replace_file.hpp"
@@ -36,11 +37,18 @@
 #include <fstream>
 #include <sstream>
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
+using ::boost::filesystem::current_path;
+using ::boost::filesystem::path;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::istringstream;
+using ::std::ostringstream;
+using ::std::string;
+using ::std::stringstream;
 
 namespace cath {
 	namespace test {
@@ -59,7 +67,25 @@ namespace cath {
 			const path CORRECT_Q9HAU8_PYMOL_SUP_FILE        { TEST_RESIDUE_IDS_DATA_DIR()   / "Q9HAU8.multiple_superposed_models.pml"    };
 			const path CORRECT_3_90_400_10_PYMOL_SUP_FILE   { TEST_MULTI_SSAP_SUPERPOSE_DIR() / "3.90.400.10.pml"                          };
 
+			/// \brief The temporary output file
 			const temp_file temp_cath_superposer_output_file{ ".temp_cath_superposer_test_file.%%%%-%%%%-%%%%-%%%%" };
+
+			/// \brief The path of temporary output file
+			const path temp_output_filename = get_filename( temp_cath_superposer_output_file );
+
+			/// \brief The name of the cath_superpose executable
+			///
+			/// This doesn't really matter much and is just a dummy value in the tests
+			const string CATH_SUPERPOSE_EXE = "cath-superpose";
+
+			/// \brief An empty stdin stream
+			istringstream empty_stdin;
+
+			/// \brief An output stream to which log output can be redirected
+			ostringstream log_output_ss;
+
+			/// \brief One of the test directories
+			const path orient_backbone_test_dir = TEST_SOURCE_DATA_DIR() / "orient" / "backbone_complete";
 
 			void check_cath_superposer_use_case(const str_vec &,
 			                                    istream &,
@@ -96,7 +122,7 @@ void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_use_c
 	cath_superposer::superpose(my_cath_superpose_options, arg_istream, test_stdout, test_stderr);
 
 	if ( arg_outputs_to_temp_file ) {
-		const auto output_file = get_filename( temp_cath_superposer_output_file );
+		const auto output_file = temp_output_filename;
 		if ( ! exists( output_file ) )  {
 			BOOST_LOG_TRIVIAL( error ) << "cath-superpose command did not produce output file. Got stdout is: \""
 			                           << test_stdout.str()
@@ -143,7 +169,7 @@ BOOST_FIXTURE_TEST_SUITE(cath_superposer_test_suite, cath::test::cath_superposer
 /// \brief
 BOOST_AUTO_TEST_CASE(basic_genome3d_use_case) {
 	check_cath_superposer_std_in_use_case(
-		{ "cath-superpose",
+		{ CATH_SUPERPOSE_EXE,
 		  "--" + pdb_input_options_block::PO_PDBS_FROM_STDIN,
 		  "--" + superposition_output_options_block::PO_SUP_TO_STDOUT,
 		  "--" + alignment_input_options_block::PO_RES_NAME_ALIGN },
@@ -157,9 +183,8 @@ BOOST_AUTO_TEST_CASE(basic_genome3d_use_case) {
 ///       the test framework and then get the below test to check for exit with "No valid PDBs were loaded"
 ///// \brief
 //BOOST_AUTO_TEST_CASE(genome3d_empty_stdin) {
-//	istringstream empty_stdin;
 //	check_cath_superposer_use_case(
-//		{ "cath-superpose",
+//		{ CATH_SUPERPOSE_EXE,
 //		  "--" + pdb_input_options_block::PO_PDBS_FROM_STDIN,
 //		  "--" + superposition_output_options_block::PO_SUP_TO_STDOUT,
 //		  "--" + alignment_input_options_block::PO_RES_NAME_ALIGN,
@@ -172,10 +197,10 @@ BOOST_AUTO_TEST_CASE(basic_genome3d_use_case) {
 /// \brief
 BOOST_AUTO_TEST_CASE(genome3d_gradient_colour_alignment_use_case) {
 	check_cath_superposer_std_in_use_case(
-		{ "cath-superpose",
+		{ CATH_SUPERPOSE_EXE,
 		  "--" + pdb_input_options_block::PO_PDBS_FROM_STDIN,
 		  "--" + superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
-		  get_filename( temp_cath_superposer_output_file ).string(),
+		  temp_output_filename.string(),
 		  "--" + alignment_input_options_block::PO_RES_NAME_ALIGN,
 		  "--gradient-colour-alignment" },
 		MULTIPLE_E9PB15_MODELS_FILE,
@@ -187,10 +212,10 @@ BOOST_AUTO_TEST_CASE(genome3d_gradient_colour_alignment_use_case) {
 /// \brief
 BOOST_AUTO_TEST_CASE(genome3d_single_gradient_colour_alignment_use_case) {
 	check_cath_superposer_std_in_use_case(
-		{ "cath-superpose",
+		{ CATH_SUPERPOSE_EXE,
 		  "--" + pdb_input_options_block::PO_PDBS_FROM_STDIN,
 		  "--" + superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
-		  get_filename( temp_cath_superposer_output_file ).string(),
+		  temp_output_filename.string(),
 		  "--" + alignment_input_options_block::PO_RES_NAME_ALIGN,
 		  "--gradient-colour-alignment" },
 		TEST_RESIDUE_IDS_DATA_DIR() / "B4DXN4.DomSerf.1.pdb",
@@ -201,9 +226,8 @@ BOOST_AUTO_TEST_CASE(genome3d_single_gradient_colour_alignment_use_case) {
 
 /// \brief
 BOOST_AUTO_TEST_CASE(genome3d_big_tails_use_case) {
-	istringstream empty_stdin;
 	check_cath_superposer_use_case(
-		{ "cath-superpose",
+		{ CATH_SUPERPOSE_EXE,
 		  "--" + alignment_input_options_block::PO_RES_NAME_ALIGN,
 		  "--pdb-infile",
 		  ( TEST_RESIDUE_IDS_DATA_DIR() / "Q9HAU8.DomSerf.1.pdb"     ).string(),
@@ -214,7 +238,7 @@ BOOST_AUTO_TEST_CASE(genome3d_big_tails_use_case) {
 		  "--pdb-infile",
 		  ( TEST_RESIDUE_IDS_DATA_DIR() / "Q9HAU8.VIVACE.1.pdb"      ).string(),
 		  "--" + superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
-		  get_filename( temp_cath_superposer_output_file ).string(),
+		  temp_output_filename.string(),
 		  "--gradient-colour-alignment" },
 		empty_stdin,
 		CORRECT_Q9HAU8_PYMOL_SUP_FILE,
@@ -224,9 +248,8 @@ BOOST_AUTO_TEST_CASE(genome3d_big_tails_use_case) {
 
 /// \brief
 BOOST_AUTO_TEST_CASE(multi_ssap_3_90_400_10_use_case) {
-	istringstream empty_stdin;
 	check_cath_superposer_use_case(
-		{ "cath-superpose",
+		{ CATH_SUPERPOSE_EXE,
 		  "--ssap-scores-infile",
 		  ( TEST_MULTI_SSAP_SUPERPOSE_DIR() / "3.90.400.10.ssap_scores_file" ).string(),
 		  "--pdb-infile",
@@ -238,11 +261,52 @@ BOOST_AUTO_TEST_CASE(multi_ssap_3_90_400_10_use_case) {
 		  "--pdb-infile",
 		  ( TEST_MULTI_SSAP_SUPERPOSE_DIR() / "1zjaA02" ).string(),
 		  "--" + superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
-		  get_filename( temp_cath_superposer_output_file ).string() },
+		  temp_output_filename.string() },
 		empty_stdin,
 		CORRECT_3_90_400_10_PYMOL_SUP_FILE,
 		true
 	);
+}
+
+/// \brief Perform on testcase generated from subsets of PDBs 2a50, 3ako and 3cgl
+///        that previously caused orient code to fail due to an attempt to access
+///        the CA coord of a residue without a CA coord
+///
+/// \TODO Change cath-ssap's options to also use --pdb-infile (pdb_input_options_block::PO_PDB_INFILE)
+///       so that explicit PDB files can be specified...
+///       ...and then change the --do-the-ssaps code to use that to pass the explicit location of the file...
+///       ...and then remove the current_path() stuff from this code...
+///       ...and then remove the absolute() call in this test
+BOOST_AUTO_TEST_CASE(can_orient_superposition_with_residues_that_are_not_backbone_complete) {
+	// The expected data
+	const path expected = absolute( orient_backbone_test_dir / "expected_supn.sup_pdb" );
+
+	// Move to the directory containing the data (to make the SSAPs work correctly)
+	const path orig_path = current_path();
+	current_path( orient_backbone_test_dir );
+
+	// Catch the logging output
+	const log_to_ostream_guard the_guard{ log_output_ss };
+	try {
+		check_cath_superposer_use_case(
+			{
+				CATH_SUPERPOSE_EXE,
+				"--" + alignment_input_options_block::PO_DO_THE_SSAPS,
+				"--" + pdb_input_options_block::PO_PDB_INFILE, "2a50",
+				"--" + pdb_input_options_block::PO_PDB_INFILE, "3ako",
+				"--" + pdb_input_options_block::PO_PDB_INFILE, "3cgl",
+				"--" + superposition_output_options_block::PO_SUP_FILE, temp_output_filename.string()
+			},
+			empty_stdin,
+			expected,
+			true
+		);
+	}
+	catch (...) {
+		current_path( orig_path );
+		throw;
+	}
+	current_path( orig_path );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

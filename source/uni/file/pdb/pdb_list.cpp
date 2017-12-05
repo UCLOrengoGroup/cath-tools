@@ -27,6 +27,7 @@
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "file/name_set/name_set_list.hpp"
+#include "file/pdb/backbone_complete_indices.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_residue.hpp"
@@ -232,6 +233,17 @@ residue_id_vec_vec cath::file::get_residue_ids_of_first_chains__backbone_uncheck
 		residue_ids.push_back( arg_pdb_list[ pdb_ctr ].get_residue_ids_of_first_chain__backbone_unchecked() );
 	}
 	return residue_ids;
+}
+
+/// \brief Get a cache of the indices of the backbone-complete indices for the specified PDBs
+///
+/// \relates pdb_list
+backbone_complete_indices_vec cath::file::get_backbone_complete_indices(const pdb_list &arg_pdbs ///< The PDBs to query
+                                                                        ) {
+	return transform_build<backbone_complete_indices_vec>(
+		arg_pdbs,
+		[] (const pdb &x) { return get_backbone_complete_indices( x ); }
+	);
 }
 
 /// \brief Get the lists of residue IDs for all chains of each of the PDBs in the specified pdb_list

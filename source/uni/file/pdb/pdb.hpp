@@ -86,6 +86,8 @@ namespace cath {
 			static const std::string PDB_RECORD_STRING_TER;
 		};
 
+		backbone_complete_indices get_backbone_complete_indices(const pdb &);
+
 		size_t get_num_backbone_complete_residues(const pdb &);
 
 		size_t get_index_of_backbone_complete_index(const pdb &,
@@ -94,7 +96,15 @@ namespace cath {
 		const pdb_residue & get_residue_of_backbone_complete_index(const pdb &,
 		                                                           const size_t &);
 
+		const pdb_residue & get_residue_of_backbone_complete_index(const pdb &,
+		                                                           const backbone_complete_indices &,
+		                                                           const size_t &);
+
 		geom::coord get_residue_ca_coord_of_backbone_complete_index(const pdb &,
+		                                                            const size_t &);
+
+		geom::coord get_residue_ca_coord_of_backbone_complete_index(const pdb &,
+		                                                            const backbone_complete_indices &,
 		                                                            const size_t &);
 
 		size_t get_num_region_limited_backbone_complete_residues(const pdb &,
