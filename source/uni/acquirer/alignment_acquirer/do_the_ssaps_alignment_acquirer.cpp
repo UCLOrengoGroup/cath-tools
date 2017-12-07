@@ -39,6 +39,7 @@
 #include "common/file/slurp.hpp"
 #include "common/file/spew.hpp"
 #include "common/matrix/matrix_index.hpp"
+#include "common/test_or_exe_run_mode.hpp"
 #include "file/strucs_context.hpp"
 #include "ssap/options/cath_ssap_options.hpp"
 #include "ssap/ssap.hpp"
@@ -148,7 +149,12 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 				ofstream out_scores_ofstream;
 				open_ofstream( out_scores_ofstream, scores_file );
 				run_ssap(
-					make_and_parse_options<cath_ssap_options>( cath_ssap_args, parse_sources::CMND_LINE_ONLY ),
+					make_and_parse_options<cath_ssap_options>(
+						cath_ssap_args,
+						( run_mode_flag::value == run_mode::TEST )
+							? parse_sources::CMND_LINE_ONLY
+							: parse_sources::CMND_ENV_AND_FILE
+					),
 					std::cout,
 					std::cerr,
 					ostream_ref( out_scores_ofstream )
