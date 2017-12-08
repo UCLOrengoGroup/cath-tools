@@ -25,6 +25,7 @@
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/map.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
 #include "biocore/residue_id.hpp"
@@ -35,12 +36,14 @@ using namespace cath;
 using namespace cath::common;
 using namespace std::literals::string_literals;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::algorithm::replace_all_copy;
-using boost::numeric_cast;
-using std::string;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::map_values;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::algorithm::replace_all_copy;
+using ::boost::numeric_cast;
+using ::std::string;
+using ::std::vector;
 
 /// \brief Calculates a sensible size for some PyMOL size by calculating fitting some a formula to two other values and using that.
 ///
@@ -105,11 +108,20 @@ string pymol_tools::pymol_res_seln_str(const string         &arg_name,    ///< T
                                        const residue_id_vec &arg_res_ids, ///< The names of the residue(s) to select
                                        const str_opt        &arg_atom     ///< (optional) The name of the atom type to select (eg "CA")
                                        ) {
-	const chain_label_opt the_chain_label_opt = consistent_chain_label(arg_res_ids);
+	const chain_label_opt the_chain_label_opt = consistent_chain_label( arg_res_ids );
 	if ( ! the_chain_label_opt ) {
-		BOOST_THROW_EXCEPTION(not_implemented_exception("PyMOL selection generating code pymol_res_seln_str() is currently unable to handle not having a single consistent chain label across the residues to be selected"));
+		const auto res_ids_by_chain_label = get_residue_id_by_chain_label( arg_res_ids );
+		return "("
+			+ join(
+				res_ids_by_chain_label
+					| map_values
+					| transformed( [&] (const vector<residue_id> &res_ids_on_same_chain) {
+						return pymol_res_seln_str( arg_name, res_ids_on_same_chain, arg_atom );
+					} ),
+				" OR "
+			)
+			+ ")";
 	}
-	chain_label_opt consistent_chain_label(const residue_id_vec &);
 	return R"(/")"
 		+ arg_name
 		+ R"("//)"

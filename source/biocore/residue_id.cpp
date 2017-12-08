@@ -101,6 +101,18 @@ bool cath::has_strictly_negative_residue_number(const residue_id &arg_residue_id
 	return has_strictly_negative_residue_number( arg_residue_id.get_residue_name() );
 }
 
+/// \brief Return the specified residue_ids, grouped by chain_label
+///
+/// \relates residue_id
+chain_label_residue_id_vec_map cath::get_residue_id_by_chain_label(const residue_id_vec &arg_residue_ids ///< The vector of residue_ids to query
+                                                                   ) {
+	chain_label_residue_id_vec_map results;
+	for (const residue_id &res_id : arg_residue_ids) {
+		results[ res_id.get_chain_label() ].emplace_back( res_id );
+	}
+	return results;
+}
+
 /// \brief Return a chain label that is used consistently in all of the specified residue_ids
 ///        or none otherwise
 ///

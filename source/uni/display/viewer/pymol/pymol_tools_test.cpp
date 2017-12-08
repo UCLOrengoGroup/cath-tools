@@ -20,12 +20,19 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include "biocore/residue_id.hpp"
 #include "common/size_t_literal.hpp"
 #include "display/viewer/pymol/pymol_tools.hpp"
 #include "test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::common;
+namespace cath { namespace test { } }
+
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::test;
+using namespace ::std::literals::string_literals;
+
+using ::std::string;
 
 namespace cath {
 	namespace test {
@@ -50,7 +57,7 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-BOOST_FIXTURE_TEST_SUITE(pymol_tools_test_suite, cath::test::pymol_tools_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(pymol_tools_test_suite, pymol_tools_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(pymol_size) {
@@ -62,5 +69,31 @@ BOOST_AUTO_TEST_CASE(pymol_size) {
 	check_pymol_size_ends( 1, 2.00, 100, 0.120 );
 }
 
+BOOST_AUTO_TEST_SUITE(residue_selection_strings)
+
+BOOST_AUTO_TEST_CASE(single_chain_residue_selection_string) {
+	const residue_id_vec eg_residues = {
+		make_residue_id( 'A', 221 ),
+		make_residue_id( 'A', 222 ),
+		make_residue_id( 'A', 223 ),
+	};
+	BOOST_CHECK_EQUAL( pymol_tools::pymol_res_seln_str( "1cg2", eg_residues        ), R"(/"1cg2"//A/221+222+223/)"   );
+	BOOST_CHECK_EQUAL( pymol_tools::pymol_res_seln_str( "1cg2", eg_residues, "CA"s ), R"(/"1cg2"//A/221+222+223/CA)" );
+}
+
+BOOST_AUTO_TEST_CASE(multi_chain_residue_selection_string) {
+	const residue_id_vec eg_residues = {
+		make_residue_id( 'A', 221 ),
+		make_residue_id( 'B', 221 ),
+		make_residue_id( 'C', 221 ),
+		make_residue_id( 'A', 222 ),
+		make_residue_id( 'B', 222 ),
+		make_residue_id( 'C', 222 ),
+	};
+	BOOST_CHECK_EQUAL( pymol_tools::pymol_res_seln_str( "1cg2", eg_residues        ), R"((/"1cg2"//A/221+222/ OR /"1cg2"//B/221+222/ OR /"1cg2"//C/221+222/))"       );
+	BOOST_CHECK_EQUAL( pymol_tools::pymol_res_seln_str( "1cg2", eg_residues, "CA"s ), R"((/"1cg2"//A/221+222/CA OR /"1cg2"//B/221+222/CA OR /"1cg2"//C/221+222/CA))" );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_SUITE_END()

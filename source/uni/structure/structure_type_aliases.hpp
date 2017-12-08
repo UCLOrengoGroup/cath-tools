@@ -172,6 +172,10 @@ namespace cath {
 	using residue_vec_citr = residue_vec::const_iterator;
 
 
+	/// \brief Type alias for a map from chain_label keys to residue_id_vec values
+	using chain_label_residue_id_vec_map = std::map<chain_label, residue_id_vec>;
+
+
 	/// \brief TODOCUMENT
 	using protein_vec = std::vector<protein>;
 

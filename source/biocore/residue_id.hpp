@@ -122,6 +122,8 @@ namespace cath {
 
 	bool has_strictly_negative_residue_number(const residue_id &);
 
+	chain_label_residue_id_vec_map get_residue_id_by_chain_label(const residue_id_vec &);
+
 	chain_label_opt consistent_chain_label(const residue_id_vec &);
 	bool have_consistent_chain_labels(const residue_id_vec &);
 	bool has_any_strictly_negative_residue_numbers(const residue_id_vec &);
