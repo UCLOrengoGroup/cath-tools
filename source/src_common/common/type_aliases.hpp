@@ -62,6 +62,15 @@ namespace cath {
 	using str_bool_pair                 = std::pair<std::string, bool>;
 	using str_bool_pair_vec             = std::vector<str_bool_pair>;
 
+	/// \brief A type alias for a reference_wrapper of const string
+	using string_cref                   = std::reference_wrapper<const std::string>;
+
+	/// \brief Type alias for a tuple of string, size_t and double
+	using str_size_doub_tpl             = std::tuple<std::string, size_t, double>;
+
+	/// \brief Type alias for a vector of str_size_doub_tpl
+	using str_size_doub_tpl_vec         = std::vector<str_size_doub_tpl>;
+
 	using bool_deq                      = std::deque<bool>;
 	using bool_deq_itr                  = bool_deq::iterator;
 	using bool_deq_citr                 = bool_deq::const_iterator;
@@ -120,6 +129,9 @@ namespace cath {
 	using str_size_pair_vec             = std::vector<str_size_pair>;
 
 	using str_opt                       = boost::optional<std::string>;
+
+	/// \brief A type alias for a vector of name_set objects
+	using str_opt_vec                   = std::vector<str_opt>;
 
 	using doub_doub_pair                = std::pair<double, double>;
 	using doub_doub_pair_vec            = std::vector<doub_doub_pair>;

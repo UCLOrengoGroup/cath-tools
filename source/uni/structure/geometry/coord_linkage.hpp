@@ -21,11 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_COORD_LINKAGE_H
 #define _CATH_TOOLS_SOURCE_STRUCTURE_GEOMETRY_COORD_LINKAGE_H
 
-#include <utility>
-#include <vector>
-
-namespace cath { namespace geom { class coord; } }
-
 namespace cath {
 	namespace geom {
 
@@ -35,24 +30,6 @@ namespace cath {
 			ADD_AND_LINK, ///< The coord can be used to link to other coords
 			ADD_ONLY      ///< The coord can only be added, not used to link to other coords
 		};
-
-		/// \brief Type alias for a pair of coord and coord_linkage
-		///
-		/// \todo Consider moving into structure_type_aliases.hpp
-		/// (and then remove the #include statements from this header)
-		using coord_coord_linkage_pair = std::pair<coord, coord_linkage>;
-
-		/// \brief Type alias for a vector of coord_coord_linkage_pair values
-		///
-		/// \todo Consider moving into structure_type_aliases.hpp
-		/// (and then remove the #include statements from this header)
-		using coord_coord_linkage_pair_vec = std::vector<coord_coord_linkage_pair>;
-
-		/// \brief Type alias for coord_coord_linkage_pair_vec's iterator type
-		///
-		/// \todo Consider moving into structure_type_aliases.hpp
-		/// (and then remove the #include statements from this header)
-		using coord_coord_linkage_pair_vec_itr = coord_coord_linkage_pair_vec::iterator;
 
 	} // namespace geom
 } // namespace cath

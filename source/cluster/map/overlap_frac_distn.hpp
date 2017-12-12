@@ -33,22 +33,6 @@
 using namespace cath::common::literals;
 
 namespace cath {
-	namespace common {
-
-		/// \brief Type alias for a tuple of string, size_t and double
-		///
-		/// \TODO Move to common/type_aliases.hpp
-		using str_size_doub_tpl     = std::tuple<std::string, size_t, double>;
-
-		/// \brief Type alias for a vector of str_size_doub_tpl
-		///
-		/// \TODO Move to common/type_aliases.hpp
-		using str_size_doub_tpl_vec = std::vector<str_size_doub_tpl>;
-
-	} // namespace common
-} // namespace cath
-
-namespace cath {
 	namespace clust {
 
 		namespace detail {
@@ -147,8 +131,8 @@ namespace cath {
 		                                      const std::string &,
 		                                      const overlap_frac_distn::zeroes_policy & = overlap_frac_distn::zeroes_policy::INCLUDE);
 
-		common::str_size_doub_tpl_vec histogram_data(const overlap_frac_distn &,
-		                                             const size_t & = 0);
+		str_size_doub_tpl_vec histogram_data(const overlap_frac_distn &,
+		                                     const size_t & = 0);
 
 		std::string histogram_markdown_table(const overlap_frac_distn &,
 		                                     const std::string &,

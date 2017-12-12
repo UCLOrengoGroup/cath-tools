@@ -25,6 +25,7 @@
 #include <boost/optional/optional_fwd.hpp>
 
 #include "common/type_aliases.hpp"
+#include "structure/geometry/coord_linkage.hpp"
 
 #include <set>
 #include <vector>
@@ -74,6 +75,18 @@ namespace cath {
 	} // namespace index
 
 	namespace geom {
+
+		/// \brief Type alias for a pair of coord and coord_linkage
+		using coord_coord_linkage_pair         = std::pair<coord, coord_linkage>;
+
+		/// \brief Type alias for a vector of coord_coord_linkage_pair values
+		using coord_coord_linkage_pair_vec     = std::vector<coord_coord_linkage_pair>;
+
+		/// \brief Type alias for coord_coord_linkage_pair_vec's iterator type
+		using coord_coord_linkage_pair_vec_itr = coord_coord_linkage_pair_vec::iterator;
+
+		/// \brief Type alias for a pair of two coords
+		using coord_coord_pair                 = std::pair<coord, coord>;
 
 		/// \brief Type alias for a vector of coords
 		using coord_vec = std::vector<coord>;

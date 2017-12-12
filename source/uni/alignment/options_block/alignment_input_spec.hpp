@@ -30,11 +30,6 @@
 namespace cath {
 	namespace opts {
 
-		/// \brief Type alias for an optional path_opt
-		///
-		/// \TODO Move into common/path_type_aliases.hpp
-		using path_opt_opt = boost::optional<path_opt>;
-
 		/// \brief Represent a specification for how alignments should be read in
 		class alignment_input_spec final {
 		private:

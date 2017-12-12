@@ -24,17 +24,13 @@
 #include "common/container/detail/ref_wrap_hasher.hpp"
 #include "common/container/detail/ref_wrap_uom_wrap.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
+#include "common/type_aliases.hpp"
 
 #include <string>
 #include <unordered_map>
 
 namespace cath {
 	namespace common {
-
-		/// \brief A type alias for a reference_wrapper of const string
-		///
-		/// \todo If this continues to be used, move it to common/type_aliases.hpp
-		using string_cref = std::reference_wrapper<const std::string>;
 
 		/// \brief Map reference_wrapper<const string> to numeric IDs that count incrementally from 0
 		///

@@ -26,12 +26,6 @@
 #include "file/name_set/name_set.hpp"
 
 namespace cath {
-
-	/// A type alias for a vector of name_set objects
-	///
-	/// \TODO Move to common/type_aliases.hpp
-	using str_opt_vec = std::vector<str_opt>;
-
 	namespace file {
 
 		/// \brief A list of name_set objects

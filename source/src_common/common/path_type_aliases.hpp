@@ -33,6 +33,10 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	using path_opt = boost::optional<boost::filesystem::path>;
+
+	/// \brief Type alias for an optional path_opt
+	using path_opt_opt = boost::optional<path_opt>;
+
 } // namespace cath
 
 #endif
