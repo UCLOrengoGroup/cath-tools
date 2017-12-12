@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_FILE_PRC_SCORES_FILE_DETAIL_PRC_SCORES_LINE_PARSER_H
-#define _CATH_TOOLS_SOURCE_FILE_PRC_SCORES_FILE_DETAIL_PRC_SCORES_LINE_PARSER_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_FILE_PRC_SCORES_FILE_DETAIL_PRC_SCORES_LINE_PARSER_H
+#define _CATH_TOOLS_SOURCE_UNI_FILE_PRC_SCORES_FILE_DETAIL_PRC_SCORES_LINE_PARSER_H
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>

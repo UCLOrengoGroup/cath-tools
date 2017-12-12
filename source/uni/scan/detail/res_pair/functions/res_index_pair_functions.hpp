@@ -24,8 +24,8 @@
 /// This is helpful in implementing equivalent functionality with and without res_pair code
 /// so that the results can be compared etc.
 
-#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_RES_PAIR_FUNCTIONS_RES_INDEX_PAIR_FUNCTIONS_H
-#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_RES_PAIR_FUNCTIONS_RES_INDEX_PAIR_FUNCTIONS_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_RES_PAIR_FUNCTIONS_RES_INDEX_PAIR_FUNCTIONS_H
+#define _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_RES_PAIR_FUNCTIONS_RES_INDEX_PAIR_FUNCTIONS_H
 
 #include "scan/detail/scan_type_aliases.hpp"
 #include "ssap/context_res.hpp"

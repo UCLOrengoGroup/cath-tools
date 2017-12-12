@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_LIMITED_RANGE_H
-#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_LIMITED_RANGE_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_LIMITED_RANGE_H
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_LIMITED_RANGE_H
 
 #include "common/algorithm/copy_build.hpp" // ***** TEMPORARY *****
 #include "common/boost_addenda/range/adaptor/iterator/limit_itr.hpp"

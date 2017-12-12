@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_MULTI_STRUCTURE_DATA_H
-#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_MULTI_STRUCTURE_DATA_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_SCAN_MULTI_STRUCTURE_DATA_H
+#define _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_SCAN_MULTI_STRUCTURE_DATA_H
 
 #include "common/boost_addenda/range/front.hpp"
 #include "scan/detail/res_pair/multi_struc_res_rep_pair_list.hpp"

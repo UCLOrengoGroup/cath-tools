@@ -21,8 +21,8 @@
 /// \todo Extend all of the below to also provide checking of less-than functionality and consistency
 ///       (using common implementations as far as possible)
 
-#ifndef _CATH_TOOLS_SOURCE_COMMON_TEST_TOOLS_H
-#define _CATH_TOOLS_SOURCE_COMMON_TEST_TOOLS_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_TEST_TEST_TEST_TOOLS_H
+#define _CATH_TOOLS_SOURCE_SRC_TEST_TEST_TEST_TOOLS_H
 
 #include <boost/test/unit_test.hpp>
 

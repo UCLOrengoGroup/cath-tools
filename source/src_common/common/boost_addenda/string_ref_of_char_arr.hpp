@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_STRING_REF_OF_CHAR_ARR_H
-#define _CATH_TOOLS_SOURCE_COMMON_BOOST_ADDENDA_STRING_REF_OF_CHAR_ARR_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_STRING_REF_OF_CHAR_ARR_H
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_STRING_REF_OF_CHAR_ARR_H
 
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/utility/string_ref.hpp>

@@ -23,8 +23,8 @@
 ///
 /// \todo Split this file into scan's public type aliases and detail type aliases
 
-#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_TYPE_ALIASES_H
-#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_TYPE_ALIASES_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_SCAN_TYPE_ALIASES_H
+#define _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_SCAN_TYPE_ALIASES_H
 
 #include <boost/geometry/arithmetic/arithmetic.hpp>
 #include <boost/geometry/geometries/geometries.hpp>

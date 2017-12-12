@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_RES_PAIR_MULTI_STRUC_RES_REP_PAIR_H
-#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_RES_PAIR_MULTI_STRUC_RES_REP_PAIR_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_RES_PAIR_MULTI_STRUC_RES_REP_PAIR_H
+#define _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_RES_PAIR_MULTI_STRUC_RES_REP_PAIR_H
 
 #include "scan/detail/res_pair/res_pair_core.hpp"
 #include "scan/detail/res_pair_dirn/res_pair_dirn.hpp"

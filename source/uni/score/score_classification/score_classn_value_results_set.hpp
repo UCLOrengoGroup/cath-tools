@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_RESULTS_SET_H
-#define _CATH_TOOLS_SOURCE_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_RESULTS_SET_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_RESULTS_SET_H
+#define _CATH_TOOLS_SOURCE_UNI_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_RESULTS_SET_H
 
 #include <boost/filesystem.hpp>
 #include <boost/range/algorithm/lower_bound.hpp>

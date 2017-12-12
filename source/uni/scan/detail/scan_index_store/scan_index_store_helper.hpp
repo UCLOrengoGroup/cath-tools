@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_H
-#define _CATH_TOOLS_SOURCE_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_H
+#define _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_H
 
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "common/exception/invalid_argument_exception.hpp"

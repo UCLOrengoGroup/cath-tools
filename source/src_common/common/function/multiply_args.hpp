@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_COMMON_FUNCTION_MULTIPLY_ARGS_H
-#define _CATH_TOOLS_SOURCE_COMMON_FUNCTION_MULTIPLY_ARGS_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_FUNCTION_MULTIPLY_ARGS_H
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_FUNCTION_MULTIPLY_ARGS_H
 
 #include "common/detail/make_static_const.hpp"
 

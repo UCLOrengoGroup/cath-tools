@@ -29,8 +29,8 @@
 /// See the "Creating Concept Checking Classes" page for the Boost Concept Check Library pages
 /// (currently http://www.boost.org/libs/concept_check/creating_concepts.htm)
 
-#ifndef _CATH_TOOLS_SOURCE_COMMON_CLONE_DETAIL_IS_CLONEABLE_H
-#define _CATH_TOOLS_SOURCE_COMMON_CLONE_DETAIL_IS_CLONEABLE_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_CLONE_DETAIL_IS_CLONEABLE_H
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_CLONE_DETAIL_IS_CLONEABLE_H
 
 #include <boost/concept_check.hpp>
 

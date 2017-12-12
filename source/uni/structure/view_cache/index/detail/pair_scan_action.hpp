@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_PAIR_SCAN_ACTION_H
-#define _CATH_TOOLS_SOURCE_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_PAIR_SCAN_ACTION_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_PAIR_SCAN_ACTION_H
+#define _CATH_TOOLS_SOURCE_UNI_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_PAIR_SCAN_ACTION_H
 
 namespace cath { namespace index { namespace detail { class vcie_match_criteria; } } }
 namespace cath { namespace index { class quad_find_action; } }

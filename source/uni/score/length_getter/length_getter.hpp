@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SCORE_LENGTH_GETTER_LENGTH_GETTER_H
-#define _CATH_TOOLS_SOURCE_SCORE_LENGTH_GETTER_LENGTH_GETTER_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SCORE_LENGTH_GETTER_LENGTH_GETTER_H
+#define _CATH_TOOLS_SOURCE_UNI_SCORE_LENGTH_GETTER_LENGTH_GETTER_H
 
 #include <boost/logic/tribool_fwd.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>

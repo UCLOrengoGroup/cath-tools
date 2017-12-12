@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_COMMON_TEST_PREDICATE_FILES_EQUAL_H
-#define _CATH_TOOLS_SOURCE_COMMON_TEST_PREDICATE_FILES_EQUAL_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_TEST_TEST_PREDICATE_FILES_EQUAL_H
+#define _CATH_TOOLS_SOURCE_SRC_TEST_TEST_PREDICATE_FILES_EQUAL_H
 
 #include <boost/filesystem/path.hpp>
 #include <boost/test/test_tools.hpp>

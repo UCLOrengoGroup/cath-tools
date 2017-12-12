@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_FILE_PDB_PDB_ATOM_H
-#define _CATH_TOOLS_SOURCE_FILE_PDB_PDB_ATOM_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_FILE_PDB_PDB_ATOM_H
+#define _CATH_TOOLS_SOURCE_UNI_FILE_PDB_PDB_ATOM_H
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/lexical_cast/bad_lexical_cast.hpp>
