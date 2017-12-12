@@ -61,10 +61,10 @@ namespace cath {
 			class filter_vs_full_score;
 
 			/// \brief Type alias for vector of filter_vs_full_scores
-			using filter_vs_full_score_vec = std::vector<filter_vs_full_score>;
+			using filter_vs_full_score_vec      = std::vector<filter_vs_full_score>;
 
 			/// \brief Type alias for filter_vs_full_score_vec's iterator
-			using filter_vs_full_score_vec_itr = filter_vs_full_score_vec::iterator;
+			using filter_vs_full_score_vec_itr  = filter_vs_full_score_vec::iterator;
 
 			/// \brief Type alias for filter_vs_full_score_vec's const_iterator
 			using filter_vs_full_score_vec_citr = filter_vs_full_score_vec::const_iterator;
@@ -89,143 +89,143 @@ namespace cath {
 		using coord_coord_pair                 = std::pair<coord, coord>;
 
 		/// \brief Type alias for a vector of coords
-		using coord_vec = std::vector<coord>;
+		using coord_vec                        = std::vector<coord>;
 
 		/// \brief Type alias for coord_vec's iterator type
-		using coord_vec_itr = coord_vec::iterator;
+		using coord_vec_itr                    = coord_vec::iterator;
 
 		/// \brief TODOCUMENT
-		using coord_vec_vec = std::vector<coord_vec>;
+		using coord_vec_vec                    = std::vector<coord_vec>;
 
 		/// \brief TODOCUMENT
-		using coord_list_vec = std::vector<coord_list>;
+		using coord_list_vec                   = std::vector<coord_list>;
 
 		/// \brief TODOCUMENT
-		using rotation_vec = std::vector<rotation>;
+		using rotation_vec                     = std::vector<rotation>;
 
 		/// \brief TODOCUMENT
-		using coord_rot_pair = std::pair<coord, rotation>;
+		using coord_rot_pair                   = std::pair<coord, rotation>;
 
 		/// \brief TODOCUMENT
-		using coord_list_coord_list_pair = std::pair<coord_list, coord_list>;
+		using coord_list_coord_list_pair       = std::pair<coord_list, coord_list>;
 
 		/// \brief TODOCUMENT
-		using doub_angle = angle<double>;
+		using doub_angle                       = angle<double>;
 
 		/// \brief TODOCUMENT
-		using doub_angle_doub_angle_pair = std::pair<doub_angle, doub_angle>;
+		using doub_angle_doub_angle_pair       = std::pair<doub_angle, doub_angle>;
 
 		/// \brief TODOCUMENT
-		using doub_angle_vec = std::vector<doub_angle>;
+		using doub_angle_vec                   = std::vector<doub_angle>;
 
 		/// \brief TODOCUMENT
-		using doub_angle_doub_angle_pair_vec = std::vector<doub_angle_doub_angle_pair>;
-
-		/// \brief TODOCUMENT
-		template <typename T>
-		using angle_angle_pair = std::pair<angle<T>, angle<T>>;
+		using doub_angle_doub_angle_pair_vec   = std::vector<doub_angle_doub_angle_pair>;
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		using angle_vec = std::vector<angle<T>>;
+		using angle_angle_pair                 = std::pair<angle<T>, angle<T>>;
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		using angle_angle_pair_vec = std::vector<angle_angle_pair<T>>;
+		using angle_vec                        = std::vector<angle<T>>;
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		using quat_rot_vec = std::vector<quat_rot_impl<T>>;
+		using angle_angle_pair_vec             = std::vector<angle_angle_pair<T>>;
+
+		/// \brief TODOCUMENT
+		template <typename T>
+		using quat_rot_vec                     = std::vector<quat_rot_impl<T>>;
 	} // namespace geom
 
 
 
 
 	/// \brief Type alias for a vector of chain_label objects
-	using chain_label_vec = std::vector<chain_label>;
+	using chain_label_vec                 = std::vector<chain_label>;
 
 	/// \brief Type alias for a set of chain_label objects
-	using chain_label_set = std::set<chain_label>;
+	using chain_label_set                 = std::set<chain_label>;
 
 	/// \brief TODOCUMENT
-	using chain_label_opt = boost::optional<chain_label>;
+	using chain_label_opt                 = boost::optional<chain_label>;
 
 	/// \brief TODOCUMENT
-	using residue_name_opt = boost::optional<residue_name>;
+	using residue_name_opt                = boost::optional<residue_name>;
 
 	/// \brief TODOCUMENT
-	using residue_name_set = std::set<residue_name>;
+	using residue_name_set                = std::set<residue_name>;
 
 	/// \brief TODOCUMENT
-	using residue_name_vec = std::vector<residue_name>;
+	using residue_name_vec                = std::vector<residue_name>;
 
 	/// \brief TODOCUMENT
-	using residue_name_vec_itr  = residue_name_vec::iterator;
+	using residue_name_vec_itr            = residue_name_vec::iterator;
 
 	/// \brief TODOCUMENT
-	using residue_name_vec_citr = residue_name_vec::const_iterator;
+	using residue_name_vec_citr           = residue_name_vec::const_iterator;
 
 	/// \brief TODOCUMENT
-	using residue_name_vec_vec  = std::vector<residue_name_vec>;
+	using residue_name_vec_vec            = std::vector<residue_name_vec>;
 
 	/// \brief Type alias for a vector of residue_ids
-	using residue_id_vec        = std::vector<residue_id>;
+	using residue_id_vec                  = std::vector<residue_id>;
 
 	/// \brief Type alias for a vector of residue_id_vec
-	using residue_id_vec_vec    = std::vector<residue_id_vec>;
+	using residue_id_vec_vec              = std::vector<residue_id_vec>;
 
 
 	/// \brief TODOCUMENT
-	using residue_vec      = std::vector<residue>;
+	using residue_vec                     = std::vector<residue>;
 
 	/// \brief TODOCUMENT
-	using residue_vec_itr  = residue_vec::iterator;
+	using residue_vec_itr                 = residue_vec::iterator;
 
 	/// \brief TODOCUMENT
-	using residue_vec_citr = residue_vec::const_iterator;
+	using residue_vec_citr                = residue_vec::const_iterator;
 
 
 	/// \brief Type alias for a map from chain_label keys to residue_id_vec values
-	using chain_label_residue_id_vec_map = std::map<chain_label, residue_id_vec>;
+	using chain_label_residue_id_vec_map  = std::map<chain_label, residue_id_vec>;
 
 
 	/// \brief TODOCUMENT
-	using protein_vec = std::vector<protein>;
+	using protein_vec                     = std::vector<protein>;
 
 	/// \brief TODOCUMENT
-	using sec_struc_planar_angles_vec = std::vector<sec_struc_planar_angles>;
+	using sec_struc_planar_angles_vec     = std::vector<sec_struc_planar_angles>;
 
 	/// \brief TODOCUMENT
 	using sec_struc_planar_angles_vec_vec = std::vector<sec_struc_planar_angles_vec>;
 
 
 	/// \brief TODOCUMENT
-	using sec_struc_vec      = std::vector<sec_struc>;
+	using sec_struc_vec                   = std::vector<sec_struc>;
 
 	/// \brief TODOCUMENT
-	using sec_struc_vec_itr  = sec_struc_vec::iterator;
+	using sec_struc_vec_itr               = sec_struc_vec::iterator;
 
 	/// \brief TODOCUMENT
-	using sec_struc_vec_citr = sec_struc_vec::const_iterator;
+	using sec_struc_vec_citr              = sec_struc_vec::const_iterator;
 
 
 	/// \brief TODOCUMENT
-	using amino_acid_vec = std::vector<amino_acid>;
+	using amino_acid_vec                  = std::vector<amino_acid>;
 
 	/// \brief TODOCUMENT
-	using amino_acid_vec_vec = std::vector<amino_acid_vec>;
+	using amino_acid_vec_vec              = std::vector<amino_acid_vec>;
 
 	/// \brief TODOCUMENT
-	using amino_amino_pair = std::pair<amino_acid, amino_acid>;
+	using amino_amino_pair                = std::pair<amino_acid, amino_acid>;
 
 	/// \brief TODOCUMENT
-	using amino_amino_pair_diff_map = std::map<amino_amino_pair, ptrdiff_t>;
+	using amino_amino_pair_diff_map       = std::map<amino_amino_pair, ptrdiff_t>;
 
 	/// \brief TODOCUMENT
-	using amino_diff_vec_pair = std::pair<amino_acid, diff_vec>;
+	using amino_diff_vec_pair             = std::pair<amino_acid, diff_vec>;
 
 	/// \brief TODOCUMENT
-	using amino_diff_vec_pair_vec = std::vector<amino_diff_vec_pair>;
+	using amino_diff_vec_pair_vec         = std::vector<amino_diff_vec_pair>;
 } // namespace cath
 
 #endif
