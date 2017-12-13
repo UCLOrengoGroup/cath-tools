@@ -95,7 +95,7 @@ void cath::clust::write_ordered_links(ostream                 &arg_output,      
                                       const id_of_str_bidirnl &arg_ider,        ///< The name_ider containing the names for the links
                                       const size_vec          &arg_sort_indices ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
                                       ) {
-	using size_size_size_size_tpl = std::tuple<size_t, size_t, size_t, size_t>;
+	/// \TODO: Move this to common/type_aliases.hpp
 	using size_size_size_size_tpl_vec = std::vector<size_size_size_size_tpl>;
 
 	size_size_size_size_tpl_vec print_links;
