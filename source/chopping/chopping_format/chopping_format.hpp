@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_CHOPPING_FORMAT_H
-#define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_CHOPPING_FORMAT_H
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_CHOPPING_FORMAT_HPP
+#define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_CHOPPING_FORMAT_HPP
 
 #include "chopping/domain/domain.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"

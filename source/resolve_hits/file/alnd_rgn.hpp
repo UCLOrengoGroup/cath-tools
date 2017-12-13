@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_ALND_RGN_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_ALND_RGN_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_ALND_RGN_HPP
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_FILE_ALND_RGN_HPP
 
 #include "resolve_hits/resolve_hits_type_aliases.hpp"
 #include "seq/seq_arrow.hpp"

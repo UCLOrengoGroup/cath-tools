@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_SHOULD_SKIP_QUERY_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_SHOULD_SKIP_QUERY_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_SHOULD_SKIP_QUERY_HPP
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_SHOULD_SKIP_QUERY_HPP
 
 #include "resolve_hits/options/spec/crh_filter_spec.hpp"
 #include "resolve_hits/options/spec/query_id_recorder.hpp"

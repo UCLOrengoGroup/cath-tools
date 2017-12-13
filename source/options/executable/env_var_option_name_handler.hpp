@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_OPTIONS_EXECUTABLE_ENV_VAR_OPTION_NAME_HANDLER_H
-#define _CATH_TOOLS_SOURCE_OPTIONS_EXECUTABLE_ENV_VAR_OPTION_NAME_HANDLER_H
+#ifndef _CATH_TOOLS_SOURCE_OPTIONS_EXECUTABLE_ENV_VAR_OPTION_NAME_HANDLER_HPP
+#define _CATH_TOOLS_SOURCE_OPTIONS_EXECUTABLE_ENV_VAR_OPTION_NAME_HANDLER_HPP
 
 #include <boost/program_options.hpp>
 

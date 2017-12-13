@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_GSL_GET_DETERMINANT_H
-#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_GSL_GET_DETERMINANT_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_GSL_GET_DETERMINANT_HPP
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_GSL_GET_DETERMINANT_HPP
 
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/gsl/gsl_matrix_wrp.hpp"

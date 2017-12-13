@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_FILE_DATA_FILE_H
-#define _CATH_TOOLS_SOURCE_UNI_FILE_DATA_FILE_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_FILE_DATA_FILE_HPP
+#define _CATH_TOOLS_SOURCE_UNI_FILE_DATA_FILE_HPP
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
 

@@ -27,8 +27,8 @@
 ///  * the [...]uniq[...] functions perform not only the unique() operation to rearrange the elements
 ///    but also the erase to remove any duplicate leftover elements
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_SORT_UNIQ_COPY_H
-#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_SORT_UNIQ_COPY_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_SORT_UNIQ_COPY_HPP
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_SORT_UNIQ_COPY_HPP
 
 #include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/range/algorithm.hpp>

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_HTML_OUTPUT_HTML_SEGMENT_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_HTML_OUTPUT_HTML_SEGMENT_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_HTML_OUTPUT_HTML_SEGMENT_HPP
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_HTML_OUTPUT_HTML_SEGMENT_HPP
 
 #include <boost/optional.hpp>
 

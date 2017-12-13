@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_ACQUIRER_ALIGNMENT_ACQUIRER_RESIDUE_NAME_ALIGNMENT_ACQUIRER_H
-#define _CATH_TOOLS_SOURCE_UNI_ACQUIRER_ALIGNMENT_ACQUIRER_RESIDUE_NAME_ALIGNMENT_ACQUIRER_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_ACQUIRER_ALIGNMENT_ACQUIRER_RESIDUE_NAME_ALIGNMENT_ACQUIRER_HPP
+#define _CATH_TOOLS_SOURCE_UNI_ACQUIRER_ALIGNMENT_ACQUIRER_RESIDUE_NAME_ALIGNMENT_ACQUIRER_HPP
 
 #include "acquirer/alignment_acquirer/post_refine_alignment_acquirer.hpp"
 

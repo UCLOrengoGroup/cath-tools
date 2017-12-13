@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_SCAN_RES_PAIR_INDEX_DIRN_CRITERION_H
-#define _CATH_TOOLS_SOURCE_UNI_SCAN_RES_PAIR_INDEX_DIRN_CRITERION_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SCAN_RES_PAIR_INDEX_DIRN_CRITERION_HPP
+#define _CATH_TOOLS_SOURCE_UNI_SCAN_RES_PAIR_INDEX_DIRN_CRITERION_HPP
 
 #include <iosfwd>
 

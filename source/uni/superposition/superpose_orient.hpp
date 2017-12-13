@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_SUPERPOSITION_SUPERPOSE_ORIENT_H
-#define _CATH_TOOLS_SOURCE_UNI_SUPERPOSITION_SUPERPOSE_ORIENT_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SUPERPOSITION_SUPERPOSE_ORIENT_HPP
+#define _CATH_TOOLS_SOURCE_UNI_SUPERPOSITION_SUPERPOSE_ORIENT_HPP
 
 #include "structure/structure_type_aliases.hpp"
 

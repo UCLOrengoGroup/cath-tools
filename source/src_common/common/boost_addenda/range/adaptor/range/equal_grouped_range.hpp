@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_EQUAL_GROUPED_RANGE_H
-#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_EQUAL_GROUPED_RANGE_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_EQUAL_GROUPED_RANGE_HPP
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_EQUAL_GROUPED_RANGE_HPP
 
 #include "common/boost_addenda/range/adaptor/iterator/equal_group_itr.hpp"
 

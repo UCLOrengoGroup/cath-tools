@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_HELPER_H
-#define _CATH_TOOLS_SOURCE_UNI_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_HELPER_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_HELPER_HPP
+#define _CATH_TOOLS_SOURCE_UNI_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_HELPER_HPP
 
 #include "common/cpp17/apply.hpp"
 #include "common/tuple/make_tuple_with_skips.hpp"

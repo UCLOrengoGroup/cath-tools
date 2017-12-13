@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_DETAIL_MULTI_ALIGN_GROUP_H
-#define _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_DETAIL_MULTI_ALIGN_GROUP_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_DETAIL_MULTI_ALIGN_GROUP_HPP
+#define _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_DETAIL_MULTI_ALIGN_GROUP_HPP
 
 #include "alignment/alignment.hpp"
 #include "alignment/refiner/alignment_refiner.hpp"

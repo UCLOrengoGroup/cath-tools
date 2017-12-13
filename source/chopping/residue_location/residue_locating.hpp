@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CHOPPING_RESIDUE_LOCATION_RESIDUE_LOCATING_H
-#define _CATH_TOOLS_SOURCE_CHOPPING_RESIDUE_LOCATION_RESIDUE_LOCATING_H
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_RESIDUE_LOCATION_RESIDUE_LOCATING_HPP
+#define _CATH_TOOLS_SOURCE_CHOPPING_RESIDUE_LOCATION_RESIDUE_LOCATING_HPP
 
 #include <iosfwd>
 #include <string>

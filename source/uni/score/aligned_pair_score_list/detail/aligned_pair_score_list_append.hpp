@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_SCORE_ALIGNED_PAIR_SCORE_LIST_DETAIL_ALIGNED_PAIR_SCORE_LIST_APPEND_H
-#define _CATH_TOOLS_SOURCE_UNI_SCORE_ALIGNED_PAIR_SCORE_LIST_DETAIL_ALIGNED_PAIR_SCORE_LIST_APPEND_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SCORE_ALIGNED_PAIR_SCORE_LIST_DETAIL_ALIGNED_PAIR_SCORE_LIST_APPEND_HPP
+#define _CATH_TOOLS_SOURCE_UNI_SCORE_ALIGNED_PAIR_SCORE_LIST_DETAIL_ALIGNED_PAIR_SCORE_LIST_APPEND_HPP
 
 #include <boost/assign/ptr_list_inserter.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>

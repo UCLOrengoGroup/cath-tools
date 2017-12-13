@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CATH_SCORE_ALIGN_OPTIONS_CATH_SCORE_ALIGN_OPTIONS_H
-#define _CATH_TOOLS_SOURCE_CATH_SCORE_ALIGN_OPTIONS_CATH_SCORE_ALIGN_OPTIONS_H
+#ifndef _CATH_TOOLS_SOURCE_CATH_SCORE_ALIGN_OPTIONS_CATH_SCORE_ALIGN_OPTIONS_HPP
+#define _CATH_TOOLS_SOURCE_CATH_SCORE_ALIGN_OPTIONS_CATH_SCORE_ALIGN_OPTIONS_HPP
 
 #include "alignment/options_block/alignment_input_options_block.hpp"
 #include "common/type_aliases.hpp"

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_DISPLAY_OPTIONS_DISPLAY_OPTIONS_BLOCK_H
-#define _CATH_TOOLS_SOURCE_UNI_DISPLAY_OPTIONS_DISPLAY_OPTIONS_BLOCK_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_DISPLAY_OPTIONS_DISPLAY_OPTIONS_BLOCK_HPP
+#define _CATH_TOOLS_SOURCE_UNI_DISPLAY_OPTIONS_DISPLAY_OPTIONS_BLOCK_HPP
 
 #include "display/options/display_spec.hpp"
 #include "options/options_block/options_block.hpp"

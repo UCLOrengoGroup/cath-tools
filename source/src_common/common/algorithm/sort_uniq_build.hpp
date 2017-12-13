@@ -27,8 +27,8 @@
 ///  * the [...]uniq[...] functions perform not only the unique() operation to rearrange the elements
 ///    but also the erase to remove any duplicate leftover elements
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_SORT_UNIQ_BUILD_H
-#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_SORT_UNIQ_BUILD_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_SORT_UNIQ_BUILD_HPP
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_SORT_UNIQ_BUILD_HPP
 
 #include "common/algorithm/sort_uniq_copy.hpp"
 #include "common/cpp14/cbegin_cend.hpp"

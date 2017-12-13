@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_QUERY_ID_RECORDER_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_QUERY_ID_RECORDER_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_QUERY_ID_RECORDER_HPP
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_QUERY_ID_RECORDER_HPP
 
 #include <boost/utility/string_ref.hpp>
 

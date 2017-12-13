@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_SSAP_OPTIONS_CATH_SSAP_OPTIONS_H
-#define _CATH_TOOLS_SOURCE_UNI_SSAP_OPTIONS_CATH_SSAP_OPTIONS_H
+#ifndef _CATH_TOOLS_SOURCE_UNI_SSAP_OPTIONS_CATH_SSAP_OPTIONS_HPP
+#define _CATH_TOOLS_SOURCE_UNI_SSAP_OPTIONS_CATH_SSAP_OPTIONS_HPP
 
 #include "file/options/data_dirs_options_block.hpp"
 #include "options/executable/executable_options.hpp"

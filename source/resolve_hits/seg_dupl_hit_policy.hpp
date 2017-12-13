@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_SEG_DUPL_HIT_POLICY_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_SEG_DUPL_HIT_POLICY_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_SEG_DUPL_HIT_POLICY_HPP
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_SEG_DUPL_HIT_POLICY_HPP
 
 namespace cath {
 	namespace rslv {

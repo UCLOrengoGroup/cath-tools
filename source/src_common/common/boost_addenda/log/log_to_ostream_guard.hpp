@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_LOG_LOG_TO_OSTREAM_GUARD_H
-#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_LOG_LOG_TO_OSTREAM_GUARD_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_LOG_LOG_TO_OSTREAM_GUARD_HPP
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_BOOST_ADDENDA_LOG_LOG_TO_OSTREAM_GUARD_HPP
 
 #include <boost/log/utility/setup/console.hpp>
 using sink_t     = boost::log::sinks::synchronous_sink<boost::log::sinks::basic_text_ostream_backend<char>>;

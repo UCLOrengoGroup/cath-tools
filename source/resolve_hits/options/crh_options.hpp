@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_H
+#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_HPP
+#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_HPP
 
 #include "options/executable/executable_options.hpp"
 #include "options/options_block/detail_help_options_block.hpp"

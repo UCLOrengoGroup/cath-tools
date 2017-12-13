@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_ARE_SAME_H
-#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_ARE_SAME_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_ARE_SAME_HPP
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_ARE_SAME_HPP
 
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/cpp17/invoke.hpp"

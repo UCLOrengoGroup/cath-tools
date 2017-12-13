@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_DEBUG_NUMERIC_CAST_H
-#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_DEBUG_NUMERIC_CAST_H
+#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_DEBUG_NUMERIC_CAST_HPP
+#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_DEBUG_NUMERIC_CAST_HPP
 
 #include <boost/numeric/conversion/cast.hpp>
 

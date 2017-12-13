@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_IO_REGION_IO_STD_REGION_IO_SPEC_H
-#define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_IO_REGION_IO_STD_REGION_IO_SPEC_H
+#ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_IO_REGION_IO_STD_REGION_IO_SPEC_HPP
+#define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_IO_REGION_IO_STD_REGION_IO_SPEC_HPP
 
 #include "chopping/chopping_format/chopping_format.hpp"
 #include "common/clone/clone_ptr.hpp"
