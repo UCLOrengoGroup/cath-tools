@@ -43,7 +43,7 @@ namespace cath {
 		inline auto accumulate_proj(Rng  &&arg_range,          ///< The range to query
 		                            T    &&arg_init,           ///< The initial value from which to start the accumulation
 		                            Op   &&arg_op    = Op{},   ///< The operation to apply the value-so-far and new-value
-		                            Proj &&arg_proj  = Proj{}  ///< The projection fuction
+		                            Proj &&arg_proj  = Proj{}  ///< The projection function
 		                            ) {
 			/// \todo Come Clang (>= 3.7?) with fix, drop this type alias and use generic lambdas
 			using const_reference_type = common::range_const_reference_t<Rng>;
