@@ -39,12 +39,9 @@ namespace cath {
 		                             Pred &&arg_pred  = Pred{}, ///< The less-than predicate function
 		                             Proj &&arg_proj  = Proj{}  ///< The projection function
 		                             ) {
-			/// \todo Come Clang (>= 3.7?) with fix, drop this type alias and use generic lambdas
-			using const_reference_type = common::range_const_reference_t<Rng>;
-
 			return boost::range::max_element(
 				arg_range,
-				[&] (const_reference_type x, const_reference_type y) {
+				[&] (const auto &x, const auto &y) {
 					return std::forward<Pred>( arg_pred )( arg_proj( x ), arg_proj( y ) );
 				}
 			);

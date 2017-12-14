@@ -45,12 +45,9 @@ namespace cath {
 		                            Op   &&arg_op    = Op{},   ///< The operation to apply the value-so-far and new-value
 		                            Proj &&arg_proj  = Proj{}  ///< The projection function
 		                            ) {
-			/// \todo Come Clang (>= 3.7?) with fix, drop this type alias and use generic lambdas
-			using const_reference_type = common::range_const_reference_t<Rng>;
-
 			return boost::accumulate(
 				std::forward<Rng>( arg_range )
-					| boost::adaptors::transformed( [&] (const_reference_type x) {
+					| boost::adaptors::transformed( [&] (const auto &x) {
 						return invoke( std::forward<Proj>( arg_proj ), x );
 					} ),
 				std::forward< T  >( arg_init ),

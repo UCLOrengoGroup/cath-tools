@@ -40,29 +40,9 @@ namespace cath {
 		                             Pred &&arg_pred  = Pred{}, ///< The less-than predicate function
 		                             Proj &&arg_proj  = Proj{}  ///< The projection function
 		                             ) {
-			/// \todo Come Clang (>= 3.7?) with fix, drop this type alias and use generic lambdas
-			///
-			/// This is a bit of a mess. Unlike sort(), stable_sort() appears to be unhappy if the
-			/// predicate arguments are non-const lvalue references because it tries to pass const values.
-			///
-			/// (This seems to contradict the specification on cppreference - I hope to report that conflict.)
-			///
-			/// Unfortunately, range_const_reference_t<> doesn't return the correct type from Boost Range
-			/// adaptors (even after I improved it to specifically detect and use const_reference member types).
-			///
-			/// So here, the following adds const to lvalue references (which requires stripping the lvalue reference
-			/// off, adding the const and replacing the lvalue reference because you can't add const directly to the lvalue
-			/// reference)
-			using const_reference_type_naive = common::range_const_reference_t<Rng>;
-			using const_reference_type       = std::conditional_t<
-				std::is_lvalue_reference<const_reference_type_naive>::value,
-				std::add_lvalue_reference_t<std::add_const_t<std::decay_t<const_reference_type_naive>>>,
-				                            std::add_const_t<std::decay_t<const_reference_type_naive>>
-			>;
-
 			return boost::range::stable_sort(
 				arg_range,
-				[&] (const_reference_type x, const_reference_type y) {
+				[&] (const auto &x, const auto &y) {
 					return common::invoke(
 						std::forward<Pred>( arg_pred ),
 						common::invoke(

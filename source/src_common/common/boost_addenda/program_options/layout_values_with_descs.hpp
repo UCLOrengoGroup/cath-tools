@@ -41,15 +41,12 @@ namespace cath {
 		                                 FnRhs              arg_fn_rhs,  ///< The second, right-hand function which must return a string when given a value of the range
 		                                 const std::string &arg_pair_sep ///< The separator with which to join the two functions' strings for each value
 		                                 ) {
-			/// \todo Come Clang (>= 3.7?) with fix, drop this type alias and use generic lambdas
-			using value_type = common::range_value_t<Rng>;
-
-			const auto length_lhs_fn  = [&] (const value_type &x) { return arg_fn_lhs( x ).length(); };
+			const auto length_lhs_fn  = [&] (const auto &x) { return arg_fn_lhs( x ).length(); };
 			const auto max_length_lhs = common::max_proj( arg_range, std::less<>{}, length_lhs_fn );
 
 			return transform_build<str_vec>(
 				arg_range,
-				[&] (const value_type &x) {
+				[&] (const auto &x) {
 					return
 						  arg_fn_lhs( x )
 						+ std::string( max_length_lhs - length_lhs_fn( x ), ' ' ) + arg_pair_sep
