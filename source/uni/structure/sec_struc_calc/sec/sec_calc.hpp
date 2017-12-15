@@ -72,7 +72,7 @@ namespace cath {
 		/// \brief Get the prosec axis point of the middle of the three specified locations of consecutive carbon-alphas
 		///        that are part of the specified type of secondary structure
 		///
-		/// The result is somewhere between the cetral location and the midpoint of the two straddling locations.
+		/// The result is somewhere between the central location and the midpoint of the two straddling locations.
 		/// The fraction along hat line is determined by the ends_midpoint_weight_of_sec_type() for the secondary
 		/// structure type
 		inline constexpr geom::coord prosec_axis_point_of_residue_triple(const geom::coord     &arg_previous_ca, ///< The location of the carbon-alpha of the residue before the residue in question

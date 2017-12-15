@@ -82,7 +82,7 @@ sec_file_record cath::sec::round_like_sec_file_copy(const sec_file_record &arg_s
 	};
 }
 
-/// \brief Calculate the sec information for the secondary structure betwen the specified start and stop
+/// \brief Calculate the sec information for the secondary structure between the specified start and stop
 ///        indices on the specified protein
 sec_file_record cath::sec::calculate_sec_record(const protein &arg_protein,         ///< The protein to query
                                                 const size_t  &arg_start_res_index, ///< The index of the first  residue of the secondary structure
@@ -139,7 +139,7 @@ prosec_sec_type cath::sec::make_prosec_sec_type(const sec_struc_type &arg_sec_st
 
 /// \brief Get the prosec axis point of the middle of the three specified consecutive residues in the same secondary structure
 ///
-/// The result is somewhere between the cetral location and the midpoint of the two straddling locations.
+/// The result is somewhere between the central location and the midpoint of the two straddling locations.
 /// The fraction along hat line is determined by the ends_midpoint_weight_of_sec_type() for the secondary
 /// structure type
 coord cath::sec::prosec_axis_point_of_residue_triple(const residue &arg_residue_before, ///< The preceding residue
@@ -157,7 +157,7 @@ coord cath::sec::prosec_axis_point_of_residue_triple(const residue &arg_residue_
 /// \brief Get the prosec axis point of the middle of the three specified locations of consecutive carbon-alphas
 ///        that are part of the specified type of secondary structure
 ///
-/// The result is somewhere between the cetral location and the midpoint of the two straddling locations.
+/// The result is somewhere between the central location and the midpoint of the two straddling locations.
 /// The fraction along hat line is determined by the ends_midpoint_weight_of_sec_type() for the secondary
 /// structure type
 coord cath::sec::prosec_axis_point_of_residue_triple(const protein &arg_protein,          ///< The protein
@@ -204,7 +204,7 @@ size_size_pair_vec cath::sec::get_sec_starts_and_stops(const protein &arg_protei
 }
 
 /// \brief Generate a vector of sec_file_record objects for the specified protein
-sec_file_record_vec cath::sec::get_sec_records(const protein &arg_protein ///< The protein to analyze
+sec_file_record_vec cath::sec::get_sec_records(const protein &arg_protein ///< The protein to analyse
                                                ) {
 	return transform_build<sec_file_record_vec>(
 		get_sec_starts_and_stops( arg_protein ),
@@ -215,7 +215,7 @@ sec_file_record_vec cath::sec::get_sec_records(const protein &arg_protein ///< T
 }
 
 /// \brief Generate a vector of sec_file_record objects for the specified protein
-sec_file cath::sec::get_sec_file(const protein &arg_protein ///< The protein to analyze
+sec_file cath::sec::get_sec_file(const protein &arg_protein ///< The protein to analyse
                                  ) {
 	return make_sec_file_with_calced_planar_angles( get_sec_records( arg_protein ) );
 }
