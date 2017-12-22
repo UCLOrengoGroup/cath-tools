@@ -54,6 +54,7 @@
 #include "structure/protein/sec_struc.hpp"
 #include "structure/protein/sec_struc_planar_angles.hpp"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 
@@ -87,6 +88,8 @@ using std::flush;
 using std::ifstream;
 using std::ios;
 using std::istream;
+using std::max;
+using std::min;
 using std::ofstream;
 using std::ostream;
 using std::ostringstream;
@@ -511,62 +514,82 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
                                                             const string         &arg_name,            ///< The name of the entry to use in warnings / errors
                                                             ostream              &/*arg_stderr*/       ///< The ostream to which warnings should be output
                                                             ) {
-	const size_t sequence_length  = arg_sequence_string.length();
-	const size_t num_pdb_residues = arg_amino_acids.size();
+	using std::to_string;
+
+	constexpr size_t ERR_MSG_SEQ_RADIUS = 10;
+
+	const size_t sequence_length = arg_sequence_string.length();
+	const size_t num_amino_acids = arg_amino_acids.size();
 
 	// Prepare the variables to be populated when looping through the sequence
 	str_vec skipped_residues;
 	aln_posn_opt_vec new_posns;
 	new_posns.reserve( sequence_length );
-	size_t pdb_ctr         = 0;
+	size_t aa_ctr = 0;
 
 	// Loop along the sequence
-	for (const size_t &seq_ctr : indices( sequence_length ) ) {
-		const char &sequence_char = arg_sequence_string[ seq_ctr ];
+	for (const size_t &seq_str_ctr : indices( sequence_length ) ) {
+		const char &sequence_char = arg_sequence_string[ seq_str_ctr ];
 
 		// If this is a '-' character then add none to the back of new_posns
 		if ( sequence_char == '-' ) {
 			new_posns.push_back( none );
 		}
+
 		// Otherwise, it's an amino-acid letter
 		else {
-			// Continue searching pdb_ctr through the PDB until it matches this letter
-			while ( sequence_char != arg_amino_acids[ pdb_ctr ].get_letter_tolerantly() ) {
-				skipped_residues.push_back( lexical_cast<string>( pdb_ctr ) );
+			// Continue searching aa_ctr through the PDB until it matches this letter
+			while ( aa_ctr < num_amino_acids && sequence_char != arg_amino_acids[ aa_ctr ].get_letter_tolerantly() ) {
+				skipped_residues.push_back( lexical_cast<string>( aa_ctr ) );
 
-				// Increment pdb_ctr
-				++pdb_ctr;
+				// Increment aa_ctr
+				++aa_ctr;
+			}
 
-				// If pdb_ctr has overrun the end, then throw an exception
-				if ( pdb_ctr >= num_pdb_residues ) {
-					BOOST_THROW_EXCEPTION(runtime_error_exception(
-						"When aligning a sequence to a PDB for "
-						+ arg_name
-						+ ", could not find match in PDB for residue  '"
-						+ sequence_char
-						+ "' at position "
-						+ lexical_cast<string>( seq_ctr )
-					));
-				}
+			// If aa_ctr has overran during the search, that means the required residues wasn't found
+			// (which may or may not be because the sequence overruns the list of amino acids)
+			// so throw an exception
+			if ( aa_ctr >= num_amino_acids ) {
+				const size_t lhs_window_start = max( ERR_MSG_SEQ_RADIUS, seq_str_ctr ) - ERR_MSG_SEQ_RADIUS;
+				const size_t rhs_window_start = min( sequence_length, seq_str_ctr + 1 );
+				BOOST_THROW_EXCEPTION(runtime_error_exception(
+					  R"(Whilst aligning a sequence string to a list of amino acids)"
+					+ (
+						arg_name.empty()
+						? ""s
+						: (  R"( (for ")" + arg_name + R"("))" )
+					)
+					+ ", could not find match for '"
+					+ sequence_char
+					+ "' at character "
+					+ to_string( seq_str_ctr + 1 )
+					+ R"( in sequence (context in sequence: ")"
+					+ arg_sequence_string.substr( lhs_window_start, seq_str_ctr - lhs_window_start )
+					+ "*"
+					+ sequence_char
+					+ "*"
+					+ arg_sequence_string.substr( rhs_window_start, ERR_MSG_SEQ_RADIUS             )
+					+ R"("))"
+				));
 			}
 
 			// Add the found PDB position to the back of new_positions
-			new_posns.push_back( pdb_ctr );
+			new_posns.push_back( aa_ctr );
 
-			// Increment the pdb_ctr to the next residue
-			++pdb_ctr;
+			// Increment the aa_ctr to the next residue
+			++aa_ctr;
 		}
 	}
 
 	const size_t num_posns_skipped = skipped_residues.size();
-	const size_t num_posns_found   = num_pdb_residues - num_posns_skipped;
-	if ( num_posns_skipped > num_pdb_residues ) {
+	const size_t num_posns_found   = num_amino_acids - num_posns_skipped;
+	if ( num_posns_skipped > num_amino_acids ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("The number of residues skipped exceeds the total number of residues"));
 	}
 
 	// If the number of residues found is an unacceptably low fraction of residues in the PDB,
 	// then throw an exception
-	const double fraction_pdb_residues_found = numeric_cast<double>( num_posns_found ) / numeric_cast<double>( num_pdb_residues );
+	const double fraction_pdb_residues_found = numeric_cast<double>( num_posns_found ) / numeric_cast<double>( num_amino_acids );
 	if ( fraction_pdb_residues_found < MIN_FRAC_OF_PDB_RESIDUES_IN_SEQ ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
 			"When aligning a sequence to a PDB for "
@@ -574,18 +597,18 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 			+ ", only found matches for "
 			+ lexical_cast<string>( num_posns_found )
 			+ " of the "
-			+ lexical_cast<string>( pdb_ctr )
+			+ lexical_cast<string>( aa_ctr )
 			+ " residues in the PDB"
 		));
 	}
 	// If not all residues were found, then output a warning about
-	if ( num_posns_found < num_pdb_residues ) {
+	if ( num_posns_found < num_amino_acids ) {
 		BOOST_LOG_TRIVIAL( warning ) << "When aligning a sequence to a PDB for \""
 		                             << arg_name
 		                             << "\", "
-		                             << lexical_cast<string>( num_pdb_residues - num_posns_found )
+		                             << lexical_cast<string>( num_amino_acids - num_posns_found )
 		                             << " of the PDB's "
-		                             << lexical_cast<string>( num_pdb_residues )
+		                             << lexical_cast<string>( num_amino_acids )
 		                             << " residues were missing in the sequence and had to be inserted (residue indices, using offset of 0 : "
 		                             << join( skipped_residues, ", " )
 		                             << ")";
@@ -767,10 +790,9 @@ alignment cath::align::read_alignment_from_fasta(istream                  &arg_i
 	// Catch any I/O exceptions
 	catch (const std::exception &ex) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
-			  "Cannot read FASTA legacy alignment file ["s
+			  "Cannot read FASTA alignment ["s
 			+ ex.what()
-			+ "] : "
-			+ strerror( errno )
+			+ "]"
 		));
 	};
 }

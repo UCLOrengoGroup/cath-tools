@@ -159,6 +159,19 @@ BOOST_AUTO_TEST_CASE(throws_if_sequence_line_contains_non_dash_or_letter_chars) 
 	check_fasta_throws( ">1d66B02\nTRAHLTEVESRLERL\n>1mkmA02\nGYKLI.YGSFVLRR-" );
 }
 
+BOOST_AUTO_TEST_CASE(diagnoses_sequence_overrunning_amino_acids_list) {
+	BOOST_REQUIRE_THROW(
+		align_sequence_to_amino_acids( "I---------KH", amino_acid_vec{ amino_acid{ 'I' }, amino_acid{ 'K' } }, "MarlonJD" ),
+		runtime_error_exception
+	);
+	try {
+		align_sequence_to_amino_acids( "I---------KH", amino_acid_vec{ amino_acid{ 'I' }, amino_acid{ 'K' } }, "MarlonJD" );
+	}
+	catch (const runtime_error_exception &ex) {
+		BOOST_TEST( ex.what() == R"(Whilst aligning a sequence string to a list of amino acids (for "MarlonJD"), could not find match for 'H' at character 12 in sequence (context in sequence: "---------K*H*"))" );
+	}
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_CASE(writing_aln_ssap_legacy_file_to_slash_does_not_fail) {
