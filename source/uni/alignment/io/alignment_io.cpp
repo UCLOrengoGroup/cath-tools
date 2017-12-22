@@ -506,6 +506,9 @@ str_str_pair_vec cath::align::read_ids_and_sequences_from_fasta(istream &arg_ist
 /// \brief Align a sequence against a corresponding pdb
 ///        (broadly handling residues missing in the sequence but not extra residues)
 ///
+/// \TODO Consider making this more robust so that, eg, if the sequence matches perfectly but overruns
+///       by one residue, the result is a warning rather than an exception being thrown
+///
 /// \returns A vector of aln_posn_opts corresponding to the letters of the sequence. Each is:
 ///           * none if the entry is a '-' character
 ///           * the index of the corresponding residue in arg_pdb otherwise
