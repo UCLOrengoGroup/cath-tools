@@ -44,7 +44,6 @@ namespace cath {
 
 		/// \todo Organise these into three class hierarchies: alignment_format, alignment_reader and alignment_writer
 		///       a la the chopping hierarchies
-
 		alignment read_alignment_from_cath_ssap_legacy_format(const boost::filesystem::path &,
 		                                                      const protein &,
 		                                                      const protein &,
@@ -77,7 +76,6 @@ namespace cath {
 		                                               std::ostream & = std::cerr);
 
 		/// \todo Write code to make it easy to parse from proteins (and to optionally rescore whilst doing so)
-
 		alignment read_alignment_from_fasta_file(const boost::filesystem::path &,
 		                                         const file::pdb_list &,
 		                                         std::ostream & = std::cerr);

@@ -153,7 +153,7 @@ namespace cath {
 		                          const alignment &);
 
 		size_vec entries_present_at_index(const alignment &,
-		                                    const alignment::size_type &);
+		                                  const alignment::size_type &);
 
 		size_vec entries_present_in_index_range(const alignment &,
 		                                        const size_t &,
