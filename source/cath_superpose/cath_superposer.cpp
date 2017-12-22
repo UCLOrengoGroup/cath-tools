@@ -129,16 +129,13 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	}
 
 	// Get the alignment and corresponding spanning tree
-	const auto backbone_complete_strucs_context = strucs_context_of_backbone_complete_region_limited_subset_pdbs(
-		context,
-		ref( arg_stderr )
-	);
 	const auto aln_and_spn_tree = [&] {
 		try {
 			return get_alignment_and_spanning_tree(
 				arg_cath_sup_opts,
-				backbone_complete_strucs_context,
+				restrict_pdbs_copy( context ),
 				get_align_refining( arg_cath_sup_opts )
+				// ref( arg_stderr )
 			);
 		}
 		catch (const std::exception &e) {

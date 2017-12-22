@@ -65,6 +65,11 @@ unique_ptr<alignment_acquirer> ssap_scores_file_alignment_acquirer::do_clone() c
 	return { make_uptr_clone( *this ) };
 }
 
+/// \brief Specify that this does require backbone-complete input
+bool ssap_scores_file_alignment_acquirer::do_requires_backbone_complete_input() const {
+	return true;
+}
+
 /// \brief Get the aln_glue_style that should be used to implement the specified align_refining
 inline constexpr aln_glue_style aln_glue_style_of_align_refining(const align_refining &arg_align_refining ///< How much refining should be done to the alignment
                                                                  ) {

@@ -39,6 +39,7 @@
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/temp_check_offset_1.hpp"
+#include "file/pdb/backbone_complete_indices.hpp"
 
 #include <algorithm>
 #include <ostream>
@@ -49,6 +50,7 @@
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
+using namespace cath::file;
 using namespace std;
 
 using boost::accumulate;
@@ -223,6 +225,36 @@ void alignment::set_position_value(const size_type     &arg_entry, ///< TODOCUME
 
 	// Set the entry
 	positions[ arg_entry ][ arg_index ] = arg_value;
+}
+
+/// \brief Clear the specified value in the alignment
+void alignment::unset_position_value(const size_type &arg_entry, ///< The entry of the value to clear
+                                     const size_type &arg_index  ///< The index of the value to clear
+                                     ) {
+	// Check that this alignment hasn't already been scored (in which case it should be read-only)
+	check_not_scored();
+
+	const size_type aln_num_entries = num_entries();
+
+	if (arg_entry >= aln_num_entries) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Not currently able to add new entries to existing alignment"));
+	}
+	if (arg_index > length()) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Not currently able to add multiple rows to an existing alignment"));
+	}
+
+	if ( arg_index >= reserved_length() ) {
+		for (aln_posn_opt_vec &position_part : positions ) {
+			position_part.resize ( arg_index + 1, none );
+		}
+	}
+
+	if (arg_index >= length()) {
+		logical_length = arg_index+1;
+	}
+
+	// Set the entry
+	positions[ arg_entry ][ arg_index ] = none;
 }
 
 /// \brief TODOCUMENT
@@ -926,5 +958,44 @@ void cath::align::set_position_value(alignment                  &arg_alignment, 
 		arg_index,
 		arg_value
 	);
+}
+
+/// \brief Convert the alignment's indices from being over all residues to being
+///        over the backbone-complete indices
+///
+/// \relates alignment
+void cath::align::convert_to_backbone_complete_indices(alignment                           &arg_alignment,       ///< The alignment to be modified
+                                                       const backbone_complete_indices_vec &arg_bbc_indices_list ///< The backbone-complete indices
+                                                       ) {
+	if ( arg_alignment.num_entries() != arg_bbc_indices_list.size() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot convert to backbone-complete indices for a mismatching number of entries"));
+	}
+	for (const size_t &entry : indices( arg_alignment.num_entries() ) ) {
+		const auto &bbc_indices = arg_bbc_indices_list[ entry ];
+
+		for (const size_t &index : indices( arg_alignment.length() ) ) {
+			const aln_posn_opt posn = arg_alignment.position_of_entry_of_index( entry, index );
+			if ( posn ) {
+				const size_opt bbc_index = get_backbone_complete_index_of_index( bbc_indices, *posn );
+				if ( bbc_index ) {
+					arg_alignment.set_position_value( entry, index, *bbc_index );
+				}
+				else {
+					arg_alignment.unset_position_value( entry, index );
+				}
+			}
+		}
+	}
+}
+
+/// \brief Convert the alignment's indices from being over all residues to being
+///        over the backbone-complete indices
+///
+/// \relates alignment
+alignment cath::align::convert_to_backbone_complete_indices_copy(alignment                            arg_alignment,       ///< The alignment to be modified
+                                                                 const backbone_complete_indices_vec &arg_bbc_indices_list ///< The backbone-complete indices
+                                                                 ) {
+	convert_to_backbone_complete_indices( arg_alignment, arg_bbc_indices_list );
+	return arg_alignment;
 }
 

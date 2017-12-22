@@ -44,6 +44,7 @@
 #include "common/file/open_fstream.hpp"
 #include "common/type_aliases.hpp"
 #include "file/name_set/name_set_list.hpp"
+#include "file/pdb/backbone_complete_indices.hpp"
 #include "file/pdb/pdb.hpp"
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
@@ -623,6 +624,9 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 
 /// \brief Parse a FASTA format input into an alignment
 ///
+/// This returns an alignment with indices that correspond to the backbone-complete residues only
+/// (but could be extended to take a parameter to specify that)
+///
 /// This version of read_alignment_from_fasta() doesn't take names to find within the parsed IDS
 /// so it is less safe than the other version.
 ///
@@ -636,6 +640,9 @@ alignment cath::align::read_alignment_from_fasta_file(const path     &arg_fasta_
 
 /// \brief Parse a FASTA format input into an alignment
 ///
+/// This returns an alignment with indices that correspond to the backbone-complete residues only
+/// (but could be extended to take a parameter to specify that)
+///
 /// \relates alignment
 alignment cath::align::read_alignment_from_fasta_file(const path     &arg_fasta_file, ///< The file from which to read the FASTA input for parsing
                                                       const pdb_list &arg_pdbs,       ///< The PDBs that TODOCUMENT
@@ -645,9 +652,18 @@ alignment cath::align::read_alignment_from_fasta_file(const path     &arg_fasta_
 	// Construct an alignment from the FASTA alignment file
 	ifstream my_aln_stream;
 	open_ifstream( my_aln_stream, arg_fasta_file );
-	const alignment new_alignment = read_alignment_from_fasta( my_aln_stream, get_amino_acid_lists( arg_pdbs ), arg_names, arg_stderr );
+	const auto      backbone_complete_indices_list = get_backbone_complete_indices( arg_pdbs );
+	const alignment all_residue_alignment          = convert_to_backbone_complete_indices_copy(
+		read_alignment_from_fasta(
+			my_aln_stream,
+			get_amino_acid_lists( arg_pdbs ),
+			arg_names,
+			arg_stderr
+		),
+		backbone_complete_indices_list
+	);
 	my_aln_stream.close();
-	return new_alignment;
+	return all_residue_alignment;
 }
 
 /// \brief Parse a FASTA format input into an alignment
@@ -660,7 +676,12 @@ alignment cath::align::read_alignment_from_fasta(istream        &arg_istream, //
                                                  const pdb_list &arg_pdbs,    ///< The PDBs that TODOCUMENT
                                                  ostream        &arg_stderr   ///< An ostream to which any warnings should be output (currently unused)
                                                  ) {
-	return read_alignment_from_fasta( arg_istream, get_amino_acid_lists( arg_pdbs ), str_vec( arg_pdbs.size() ), arg_stderr );
+	return read_alignment_from_fasta(
+		arg_istream,
+		get_amino_acid_lists( arg_pdbs ),
+		str_vec( arg_pdbs.size() ),
+		arg_stderr
+	);
 }
 
 /// \brief Parse a FASTA format input into an alignment

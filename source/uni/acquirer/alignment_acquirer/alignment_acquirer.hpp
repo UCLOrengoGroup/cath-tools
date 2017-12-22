@@ -40,7 +40,11 @@ namespace cath {
 		private:
 			/// \brief Pure virtual method with which each concrete alignment_acquirer must define how to create a clone of itself
 			virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
-			
+
+			/// \brief Pure virtual method with which each concrete alignment_acquirer must define whether it requires its input to
+			///        be restricted to backbone-complete residues
+			virtual bool do_requires_backbone_complete_input() const = 0;
+
 			/// \brief TODOCUMENT
 			virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &,
 			                                                                                    const align_refining &) const = 0;

@@ -54,6 +54,11 @@ unique_ptr<alignment_acquirer> cora_aln_file_alignment_acquirer::do_clone() cons
 	return { make_uptr_clone( *this ) };
 }
 
+/// \brief Specify that this does require backbone-complete input
+bool cora_aln_file_alignment_acquirer::do_requires_backbone_complete_input() const {
+	return true;
+}
+
 /// \brief TODOCUMENT
 pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
                                                                                                          ) const {

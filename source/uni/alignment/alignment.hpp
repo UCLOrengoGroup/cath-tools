@@ -32,6 +32,8 @@
 #include <iosfwd>
 
 namespace cath { namespace align { class alignment_row; } }
+namespace cath { namespace file { class backbone_complete_indices; } }
+namespace cath { namespace file { using backbone_complete_indices_vec = std::vector<backbone_complete_indices>; } }
 
 namespace cath {
 	namespace align {
@@ -101,6 +103,9 @@ namespace cath {
 			void set_position_value(const size_type &,
 			                        const size_type &,
 			                        const aln_posn_type &);
+
+			void unset_position_value(const size_type &,
+			                          const size_type &);
 
 			void set_scores(const alignment_residue_scores &);
 	//		void set_non_raw_scores(const doub_vec &);
@@ -238,6 +243,12 @@ namespace cath {
 		                        const alignment::size_type &,
 		                        const alignment::size_type &,
 		                        const size_t &);
+
+		void convert_to_backbone_complete_indices(alignment &,
+		                                          const file::backbone_complete_indices_vec &);
+
+		alignment convert_to_backbone_complete_indices_copy(alignment,
+		                                                    const file::backbone_complete_indices_vec &);
 
 	} // namespace align
 } // namespace cath

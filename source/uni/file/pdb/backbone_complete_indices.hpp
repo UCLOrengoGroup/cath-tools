@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_FILE_PDB_BACKBONE_COMPLETE_INDICES_HPP
 #define _CATH_TOOLS_SOURCE_UNI_FILE_PDB_BACKBONE_COMPLETE_INDICES_HPP
 
+#include <boost/optional.hpp>
+#include <boost/range/algorithm/lower_bound.hpp>
 #include <boost/range/algorithm_ext/is_sorted.hpp>
 
 #include "common/type_aliases.hpp"
@@ -63,6 +65,9 @@ namespace cath {
 		size_t get_index_of_backbone_complete_index(const backbone_complete_indices &,
 		                                            const size_t &);
 
+		size_opt get_backbone_complete_index_of_index(const backbone_complete_indices &,
+		                                              const size_t &);
+
 		/// \brief Ctor from a vector of indices
 		inline backbone_complete_indices::backbone_complete_indices(size_vec arg_indices ///< The vector of indices
 		                                                            ) : indices{ arg_indices } {
@@ -104,6 +109,25 @@ namespace cath {
 		                                                   const size_t                    &arg_index             ///< The index of the required residue
 		                                                   ) {
 			return arg_bb_compl_indices[ arg_index ];
+		}
+
+		/// \brief Get the backbone-complete index of the i-th residue
+		///
+		/// \relates backbone_complete_indices
+		inline size_opt get_backbone_complete_index_of_index(const backbone_complete_indices &arg_bb_compl_indices, ///< The backbone_complete_indices
+		                                                     const size_t                    &arg_index             ///< The index of the required residue
+		                                                     ) {
+			const auto lower_bound_itr = boost::range::lower_bound(
+				arg_bb_compl_indices,
+				arg_index
+			);
+			return
+				( lower_bound_itr != common::cend( arg_bb_compl_indices ) && *lower_bound_itr == arg_index )
+				? boost::optional<size_t>( std::distance(
+					common::cbegin( arg_bb_compl_indices ),
+					lower_bound_itr
+				) )
+				: boost::none;
 		}
 
 	} // namespace file

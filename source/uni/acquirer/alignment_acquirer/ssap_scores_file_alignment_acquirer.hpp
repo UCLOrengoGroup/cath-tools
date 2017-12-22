@@ -41,6 +41,7 @@ namespace cath {
 			boost::filesystem::path ssap_scores_filename;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
+			bool do_requires_backbone_complete_input() const final;
 			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &,
 			                                                                            const align_refining &) const final;
 

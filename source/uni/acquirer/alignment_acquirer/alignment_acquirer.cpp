@@ -69,7 +69,12 @@ pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanni
 	using std::to_string;
 
 	// Call the concrete class's implementation of do_get_alignment_and_orderer() and grab the resulting alignment and spanning_tree
-	const pair<alignment, size_size_pair_vec> alignment_and_orderer = do_get_alignment_and_spanning_tree( arg_strucs_context, arg_align_refining );
+	const pair<alignment, size_size_pair_vec> alignment_and_orderer = do_get_alignment_and_spanning_tree(
+		do_requires_backbone_complete_input()
+			? strucs_context_of_backbone_complete_subset_pdbs( arg_strucs_context )
+			: arg_strucs_context,
+		arg_align_refining
+	);
 
 	const size_t num_alignment_entries = alignment_and_orderer.first.num_entries();
 	const size_t num_span_tree_entries = alignment_and_orderer.second.size();

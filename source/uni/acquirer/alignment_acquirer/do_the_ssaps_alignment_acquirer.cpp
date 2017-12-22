@@ -73,6 +73,11 @@ unique_ptr<alignment_acquirer> do_the_ssaps_alignment_acquirer::do_clone() const
 	return { make_uptr_clone( *this ) };
 }
 
+/// \brief Specify that this does require backbone-complete input
+bool do_the_ssaps_alignment_acquirer::do_requires_backbone_complete_input() const {
+	return true;
+}
+
 /// \brief Run the necessary cath-ssaps and then use them to get the alignment and spanning tree
 pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context, ///< The details of the structures for which the alignment and spanning tree is required
                                                                                                         const align_refining &arg_align_refining  ///< How much refining should be done to the alignment
