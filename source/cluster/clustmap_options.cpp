@@ -24,6 +24,8 @@
 
 using namespace cath;
 using namespace cath::clust;
+using namespace cath::opts;
+using namespace std::literals::string_literals;
 
 using boost::algorithm::join;
 using boost::none;
@@ -33,6 +35,13 @@ using std::string;
 
 /// The name of the program that uses this executable_options
 const string clustmap_options::PROGRAM_NAME("cath-map-clusters");
+
+/// \brief Get the options for the "Detailed Help" block
+str_str_str_pair_map clustmap_options::detail_help_spec() {
+	return {
+		{ "sorting-help", { "Show the criteria for sorting unmapped clusters", get_cmc_sorting_criteria_help_string() } },
+	};
+}
 
 /// \brief Get the name of the program that uses this executable_options
 string clustmap_options::do_get_program_name() const {
@@ -59,6 +68,17 @@ positional_options_description clustmap_options::get_positional_options() {
 /// \returns Any error/help string arising from the newly specified options
 ///          or an empty string if there aren't any
 str_opt clustmap_options::do_get_error_or_help_string() const {
+	// If detailed help was requested, then provide it
+	if ( the_detail_help_ob.has_help_string() ) {
+		return the_detail_help_ob.help_string();
+	}
+
+	const variables_map &local_vm = get_variables_map();
+
+	if ( ! specifies_option( local_vm, clustmap_input_options_block::PO_WORKING_CLUSTMEMB_FILE ) ) {
+		return "Must specify an input file"s;
+	}
+
 	const bool     read_batches_from_input = get_clustmap_input_spec().get_read_batches_from_input();
 	const path_opt map_from_clustmemb_file = get_clustmap_input_spec().get_map_from_clustmemb_file();
 
@@ -69,8 +89,6 @@ str_opt clustmap_options::do_get_error_or_help_string() const {
 			+ clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT
 			+ ")";
 	}
-
-	const variables_map &local_vm = get_variables_map();
 
 	if ( specified_clust_thresh_options( local_vm ) && ! map_from_clustmemb_file && ! read_batches_from_input ) {
 		return "Cannot specify mapping threshold options (--"
@@ -125,10 +143,11 @@ Renumber any clusters with no equivalents.)";
 }
 
 /// \brief Ctor, which initialises the detail_help_ob and adds the options_blocks to the parent executable_options
-clustmap_options::clustmap_options() {
-	super::add_options_block( the_input_ob   );
-	super::add_options_block( the_mapping_ob );
-	super::add_options_block( the_output_ob  );
+clustmap_options::clustmap_options() : the_detail_help_ob( detail_help_spec() ) {
+	super::add_options_block( the_input_ob       );
+	super::add_options_block( the_mapping_ob     );
+	super::add_options_block( the_output_ob      );
+	super::add_options_block( the_detail_help_ob );
 }
 
 /// \brief Getter for the spec of the cath-map-clusters input options_block
@@ -144,4 +163,15 @@ const clust_mapping_spec & clustmap_options::get_clust_mapping_spec() const {
 /// \brief Getter for the spec of the cath-map-clusters output options_block
 const clustmap_output_spec & clustmap_options::get_clustmap_output_spec() const {
 	return the_output_ob.get_clustmap_output_spec();
+}
+
+/// \brief Return the string containing help on CMC sorting criteria
+string cath::clust::get_cmc_sorting_criteria_help_string() {
+	return R"(The sorting criteria for new, unmapped clusters are:
+
+ * Descending on sum over domains of sqrt(total_dom_length) (ie clusters with more/longer sequences come earlier, with more emphasis on having more sequences)
+ * Descending on number of sequences (ie clusters with more sequences come first)
+ * Ascending on average mid-point index (ie clusters with domains earlier in their sequences come first)
+ * Ascending on first domain ID
+)";
 }

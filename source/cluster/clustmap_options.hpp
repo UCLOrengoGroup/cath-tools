@@ -25,6 +25,7 @@
 #include "cluster/options/options_block/clustmap_input_options_block.hpp"
 #include "cluster/options/options_block/clustmap_output_options_block.hpp"
 #include "options/executable/executable_options.hpp"
+#include "options/options_block/detail_help_options_block.hpp"
 
 #include <iosfwd>
 
@@ -38,6 +39,8 @@ namespace cath {
 		private:
 			using super = opts::executable_options;
 
+			static std::map<std::string, str_str_pair> detail_help_spec();
+
 			static const std::string STANDARD_USAGE_ERROR_STRING;
 
 			/// \brief The cath-resolve-hits input options_block
@@ -48,6 +51,9 @@ namespace cath {
 
 			/// \brief The cath-resolve-hits output options_block
 			clustmap_output_options_block        the_output_ob;
+
+			/// \brief The detailed help options_block
+			opts::detail_help_options_block      the_detail_help_ob;
 
 			std::string do_get_program_name() const final;
 			boost::program_options::positional_options_description get_positional_options() final;
@@ -68,6 +74,8 @@ namespace cath {
 
 			static const std::string PROGRAM_NAME;
 		};
+
+		std::string get_cmc_sorting_criteria_help_string();
 
 		// std::string get_clustmap_raw_format_help_string();
 		// std::string get_clustmap_cath_rules_help_string();

@@ -32,6 +32,9 @@ Output:
   --summarise-to-file <file>            Print a summary of the renumbering to file <file>
   --print-entry-results                 Output the entry (domain)-level mapping results
 
+Detailed help:
+  --sorting-help                        Show the criteria for sorting unmapped clusters
+
 The input cluster-membership data should contain lines like:
 
 cluster_name domain_id
