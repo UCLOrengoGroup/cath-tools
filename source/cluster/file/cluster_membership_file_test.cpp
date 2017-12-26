@@ -27,6 +27,8 @@
 #include "common/exception/runtime_error_exception.hpp"
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"
 
+#include <regex>
+
 namespace cath { namespace test { } }
 
 using namespace cath::clust;
@@ -34,6 +36,8 @@ using namespace cath::common;
 using namespace cath::test;
 
 using boost::none;
+using std::regex;
+using std::regex_search;
 using std::string;
 
 namespace cath {
@@ -73,16 +77,16 @@ namespace cath {
 			const new_cluster_data new_data = parse_new_membership( new_membership_str, seq_id_mapper );
 
 			/// \brief Example of input that's invalid due to only having one entry per line
-			const string single_column_input_str         = "a\nb\nc\n";
+			const string single_column_input_str         = "a 1\nb\nc\nd\n";
 
 			/// \brief Example of input that's invalid due to only having one entry per line (even though it's surrounded by space characters)
-			const string space_single_column_input_str   = " a \n b \n c \n";
+			const string space_single_column_input_str   = "a 1\n b \n c \n d \n";
 
 			/// \brief Example of input that's valid despite having trailing whitespace
 			const string trailing_space_input_str        = "a 1 \nb 2 \nc 3 \n";
 
 			/// \brief Example of input that's invalid due to having a spurious extra column
-			const string spurious_extra_column_input_str = "a 1 x\nb 2 y\nc 3 z\n";
+			const string spurious_extra_column_input_str = "a 1\nb 2 x\nc 3 y\nd 4 z\n";
 
 		};
 	}
@@ -184,16 +188,26 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(throws_on_space_single_column)
 
 BOOST_AUTO_TEST_CASE(throws_on_old_parse_of_space_single_column) {
-	BOOST_CHECK_THROW( parse_old_membership( space_single_column_input_str, seq_id_mapper ), runtime_error_exception );
+	BOOST_REQUIRE_THROW( parse_old_membership( space_single_column_input_str, seq_id_mapper ), runtime_error_exception );
+	try {
+		parse_old_membership( space_single_column_input_str, seq_id_mapper );
+	}
+	catch (const runtime_error_exception &ex) {
+		BOOST_CHECK( regex_search( ex.what(), regex{ R"(Cannot parse cluster membership from fewer than two fields at line number 2. Line is: " b ")" } ) );
+	}
 }
 
 BOOST_AUTO_TEST_CASE(throws_on_new_parse_of_space_single_column) {
-	BOOST_CHECK_THROW( parse_new_membership( space_single_column_input_str, seq_id_mapper ), runtime_error_exception );
+	BOOST_REQUIRE_THROW( parse_new_membership( space_single_column_input_str, seq_id_mapper ), runtime_error_exception );
+	try {
+		parse_new_membership( space_single_column_input_str, seq_id_mapper );
+	}
+	catch (const runtime_error_exception &ex) {
+		BOOST_CHECK( regex_search( ex.what(), regex{ R"(Cannot parse cluster membership from fewer than two fields at line number 2. Line is: " b ")" } ) );
+	}
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-
 
 BOOST_AUTO_TEST_SUITE(accepts_trailing_space)
 
@@ -212,11 +226,23 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(rejects_spurious_extra_column)
 
 BOOST_AUTO_TEST_CASE(throws_on_old_parse_of_spurious_extra_column) {
-	BOOST_CHECK_THROW( parse_old_membership( spurious_extra_column_input_str, seq_id_mapper ), runtime_error_exception );
+	BOOST_REQUIRE_THROW( parse_old_membership( spurious_extra_column_input_str, seq_id_mapper ), runtime_error_exception );
+	try {
+		parse_old_membership( spurious_extra_column_input_str, seq_id_mapper );
+	}
+	catch (const runtime_error_exception &ex) {
+		BOOST_CHECK( regex_search( ex.what(), regex{ R"(Cannot parse cluster membership from more than two fields at line number 2. Line is: "b 2 x")" } ) );
+	}
 }
 
 BOOST_AUTO_TEST_CASE(throws_on_new_parse_of_spurious_extra_column) {
-	BOOST_CHECK_THROW( parse_new_membership( spurious_extra_column_input_str, seq_id_mapper ), runtime_error_exception );
+	BOOST_REQUIRE_THROW( parse_new_membership( spurious_extra_column_input_str, seq_id_mapper ), runtime_error_exception );
+	try {
+		parse_new_membership( spurious_extra_column_input_str, seq_id_mapper );
+	}
+	catch (const runtime_error_exception &ex) {
+		BOOST_CHECK( regex_search( ex.what(), regex{ R"(Cannot parse cluster membership from more than two fields at line number 2. Line is: "b 2 x")" } ) );
+	}
 }
 
 BOOST_AUTO_TEST_SUITE_END()

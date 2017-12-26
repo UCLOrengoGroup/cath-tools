@@ -100,20 +100,35 @@ old_cluster_data cath::clust::parse_old_membership(istream               &arg_is
                                                    id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
                                                    const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
+	using std::to_string;
 	bool warned_duplicate = false;
 	old_cluster_data result{ arg_id_of_str_bidirnl };
 	seq_seg_run_parser segs_parser;
 	string line;
+	size_t line_ctr = 0;
 	while ( getline( arg_istream, line ) ) {
+		++line_ctr;
 		const auto cluster_id_itrs = find_field_itrs( line, CLUSTER_ID_OFFSET                                               );
 		const auto domain_id_itrs  = find_field_itrs( line, DOMAIN_ID_OFFSET, 1 + CLUSTER_ID_OFFSET, cluster_id_itrs.second );
 
 		// Check that the line doesn't have too few or too many fields
 		if ( domain_id_itrs.first == domain_id_itrs.second ) {
-			BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot parse cluster membership from line with fewer than two fields"));
+			BOOST_THROW_EXCEPTION(runtime_error_exception(
+				  "Cannot parse cluster membership from fewer than two fields at line number "
+				+ to_string( line_ctr )
+				+ ". Line is: \""
+				+ line
+				+ "\""
+			));
 		}
 		if ( find_itr_before_first_non_space( domain_id_itrs.second, common::cend( line ) ) != common::cend( line ) ) {
-			BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot parse cluster membership from line with more than two fields"));
+			BOOST_THROW_EXCEPTION(runtime_error_exception(
+				  "Cannot parse cluster membership from more than two fields at line number "
+				+ to_string( line_ctr )
+				+ ". Line is: \""
+				+ line
+				+ "\""
+			));
 		}
 
 		/// \TODO Check there are no more fields (but allow whitespace)
@@ -176,20 +191,35 @@ new_cluster_data cath::clust::parse_new_membership(istream               &arg_is
                                                    id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
                                                    const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
+	using std::to_string;
 	bool warned_duplicate = false;
 	new_cluster_data result{ arg_id_of_str_bidirnl };
 	seq_seg_run_parser segs_parser;
 	string line;
+	size_t line_ctr = 0;
 	while ( getline( arg_istream, line ) ) {
+		++line_ctr;
 		const auto cluster_id_itrs = find_field_itrs( line, CLUSTER_ID_OFFSET                                               );
 		const auto domain_id_itrs  = find_field_itrs( line, DOMAIN_ID_OFFSET, 1 + CLUSTER_ID_OFFSET, cluster_id_itrs.second );
 
 		// Check that the line doesn't have too few or too many fields
 		if ( domain_id_itrs.first == domain_id_itrs.second ) {
-			BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot parse cluster membership from line with fewer than two fields"));
+			BOOST_THROW_EXCEPTION(runtime_error_exception(
+				  "Cannot parse cluster membership from fewer than two fields at line number "
+				+ to_string( line_ctr )
+				+ ". Line is: \""
+				+ line
+				+ "\""
+			));
 		}
 		if ( find_itr_before_first_non_space( domain_id_itrs.second, common::cend( line ) ) != common::cend( line ) ) {
-			BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot parse cluster membership from line with more than two fields"));
+			BOOST_THROW_EXCEPTION(runtime_error_exception(
+				  "Cannot parse cluster membership from more than two fields at line number "
+				+ to_string( line_ctr )
+				+ ". Line is: \""
+				+ line
+				+ "\""
+			));
 		}
 
 		const auto         slash_index          = make_string_ref( domain_id_itrs ).find_last_of( '/' );
