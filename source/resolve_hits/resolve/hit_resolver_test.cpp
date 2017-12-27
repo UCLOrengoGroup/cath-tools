@@ -36,10 +36,9 @@ using namespace cath::rslv;
 using namespace cath::rslv::detail;
 using namespace cath::test;
 
-using std::istringstream;
-using std::ostringstream;
-using std::string;
-using std::stringstream;
+using ::std::istringstream;
+using ::std::ostringstream;
+using ::std::string;
 
 namespace cath {
 	namespace test {
@@ -57,7 +56,7 @@ BOOST_FIXTURE_TEST_SUITE(hit_resolver_test_suite, hit_resolver_test_suite_fixtur
 
 BOOST_AUTO_TEST_CASE(basic) {
 	istringstream test_iss{ example_input_raw };
-	stringstream test_oss;
+	ostringstream test_oss;
 	ofstream_list oftreams{ test_oss };
 	read_and_process_mgr the_read_and_process_mgr = make_read_and_process_mgr(
 		oftreams,
@@ -65,9 +64,8 @@ BOOST_AUTO_TEST_CASE(basic) {
 			.set_score_spec( make_neutral_score_spec() )
 	);
 	read_hit_list_from_istream( the_read_and_process_mgr, test_iss, hit_score_type::CRH_SCORE );
-	istringstream expected_iss{ example_output };
 
-	BOOST_CHECK_ISTREAMS_EQUAL( test_oss, "got_resolved_hits", expected_iss, "istream2" );
+	BOOST_CHECK_EQUAL( blank_vrsn( test_oss ), example_output );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

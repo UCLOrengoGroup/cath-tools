@@ -21,6 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_TEST_RESOLVE_HITS_FIXTURE_HPP
 #define _CATH_TOOLS_SOURCE_RESOLVE_HITS_TEST_RESOLVE_HITS_FIXTURE_HPP
 
+#include <boost/filesystem/path.hpp>
+
+#include <regex>
 #include <string>
 
 namespace cath {
@@ -31,6 +34,12 @@ namespace cath {
 		protected:
 			static const std::string example_input_raw;
 			static const std::string example_output;
+
+			static std::regex output_version_regex();
+			static std::string output_version_blankstr();
+			static std::string blank_vrsn(const std::string &);
+			static std::string blank_vrsn(const std::ostringstream &);
+			static boost::filesystem::path blank_vrsn(const boost::filesystem::path &);
 		};
 
 	} // namespace rslv
