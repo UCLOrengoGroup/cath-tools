@@ -473,7 +473,7 @@ residue_id_vec cath::file::get_backbone_complete_residue_ids(const pdb &arg_pdb 
 	for (const pdb_residue &the_res : arg_pdb) {
 		if ( is_backbone_complete( the_res ) ) {
 			const residue_id the_res_id = the_res.get_residue_id();
-			if ( ! contains( seen_res_ids, the_res_id ) ) {
+			if ( ! cath::common::contains( seen_res_ids, the_res_id ) ) {
 				seen_res_ids.push_back( the_res_id );
 				results.push_back( the_res_id );
 			}
