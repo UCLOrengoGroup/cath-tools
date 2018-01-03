@@ -1,6 +1,48 @@
 # Summary of changes in cath-tools releases
 
 
+### [v0.16.0](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.16.0) Add some new features; address some old issues
+
+2018-01-03 &nbsp; Improvements to `cath-superpose`:
+ * Add `--align-refining` option to refine the alignment being used
+ * Add `--do-the-ssaps` option to automatically perform the required SSAPs
+ * Orient structures in superpositions (rather than relying on PyMOL's `orient` command)
+ * Add default of firing up PyMOL when no other output is specified
+ * Add `protein` and `nucleic` selections to PyMOL scripts
+
+Improvements to `cath-resolve-hits`:
+ * Add JavaScript to HTML output to allow the hits to be collapsed/expanded
+ * Add a version to the standard output
+ 
+Improvements to `cath-map-clusters`:
+ * Substantially improve speed
+ * Improve usage and error messages ([b1bd3209ce295549fc675e5ce161b422235b69c9](https://github.com/UCLOrengoGroup/cath-tools/commit/b1bd3209ce295549fc675e5ce161b422235b69c9), cfe208bbff3edea26a688dbeba50f6e31b8544a)
+
+Fixes:
+ * Improve `cath-ssap`'s response to being run in a readonly directory
+ * Fix handling of regions when writing SSAP alignments ([3c2c54954f0ee99313fab00dcd42735e3ec06081](https://github.com/UCLOrengoGroup/cath-tools/commit/3c2c54954f0ee99313fab00dcd42735e3ec06081))
+ * Re-enable `cath-superpose`'s ability to read a SSAP scores file for a single PDB ([29a0bf8204fc5fd9257f47ffff208aa4babf23a2](https://github.com/UCLOrengoGroup/cath-tools/commit/29a0bf8204fc5fd9257f47ffff208aa4babf23a2))
+ * Improve identification of "nearby" ligands to include in superpositions by stopping extending via water ([81b125412407d7676402093b91db0813129bc913](https://github.com/UCLOrengoGroup/cath-tools/commit/81b125412407d7676402093b91db0813129bc913))
+ * Fix problem writing large temperature factor to PDB files ([ad7313bc31469bd970f592670a306ab3859f04b3](https://github.com/UCLOrengoGroup/cath-tools/commit/ad7313bc31469bd970f592670a306ab3859f04b3))
+ * Fix problem writing residues with the same ID ([a9ebe8782df48a1d1c4b59c88b1929190b3bcce1](https://github.com/UCLOrengoGroup/cath-tools/commit/a9ebe8782df48a1d1c4b59c88b1929190b3bcce1))
+ * Fix bug dereferencing possibly empty optional value ([ab0c204b35890333080a46d5c01d89e89a4d13df](https://github.com/UCLOrengoGroup/cath-tools/commit/ab0c204b35890333080a46d5c01d89e89a4d13df))
+
+Resolve GitHub issues:
+ * [2](https://github.com/UCLOrengoGroup/cath-tools/issues/2)  ("Run structural comparisons within cath-superpose") as mentioned above
+ * [39](https://github.com/UCLOrengoGroup/cath-tools/issues/39) ("cath-superpose gives confusing options error message")
+ * [42](https://github.com/UCLOrengoGroup/cath-tools/issues/42) ("[dependency: v14.2 onwards] {cath-superpose.ubuntu14.04} libstdc++.so.6: version `GLIBCXX_3.4.22` not found")
+ * [43](https://github.com/UCLOrengoGroup/cath-tools/issues/43) ("Problem parsing CORA alignment file")
+ * [44](https://github.com/UCLOrengoGroup/cath-tools/issues/44) ("Resolve conflict of CRH hidden options that are in Gene3D docs")
+ * [46](https://github.com/UCLOrengoGroup/cath-tools/issues/46) ("cath-ssap segfaults on chain 0 of 1br7")
+ * [47](https://github.com/UCLOrengoGroup/cath-tools/issues/47) ("cath-refine-align doesn't respect --align-regions when writing alignments")
+ * [52](https://github.com/UCLOrengoGroup/cath-tools/issues/52) ("Alignment as shown in supn for 4tsvA vs 4tswB is clearly wrong")
+ * [55](https://github.com/UCLOrengoGroup/cath-tools/issues/55) ("cath-superpose segfaults on mismatching residues in alignment")
+
+Also: add new executable `cath-extract-pdb` (currently intended for internal use)
+
+Also: make many improvements to code, build configuration etc
+
+
 ### [v0.15.3](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.15.3) Improve compatibility of Travis-CI Ubuntu executables with older Ubuntus
 
 2017-09-20 &nbsp; The changes to the Travis-CI build in [v0.14.2](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.14.2) meant that the resulting executables didn't work on Ubuntu &le; 16.04 (out-of-the-box).
