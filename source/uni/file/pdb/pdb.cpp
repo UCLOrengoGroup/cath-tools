@@ -34,7 +34,9 @@
 
 #include "biocore/residue_id.hpp"
 #include "chopping/region/region.hpp"
+#include "common/algorithm/contains.hpp"
 #include "common/algorithm/copy_build.hpp"
+#include "common/algorithm/sort_uniq_copy.hpp"
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "common/boost_addenda/range/adaptor/adjacented.hpp"
@@ -59,6 +61,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <set>
 #include <sstream>
 #include <tuple>
 
@@ -434,6 +437,8 @@ coord cath::file::get_residue_ca_coord_of_region_limited_backbone_complete_index
 
 /// \brief Get the list of residues IDs for the backbone-complete residues on first chain of the specified PDB
 ///
+/// \TODO This should probably also remove residues with duplicate residue IDs
+///
 /// \relates pdb
 residue_id_vec cath::file::get_backbone_complete_residue_ids_of_first_chain(const pdb  &arg_pdb,                   ///< The PDB to query
                                                                             const bool &arg_complete_backbone_only ///< Whether to restrict to the backbone-complete residues
@@ -458,15 +463,23 @@ residue_id_vec cath::file::get_backbone_complete_residue_ids_of_first_chain(cons
 
 /// \brief Get the list of residues IDs for the backbone-complete residues on all chains of the specified PDB
 ///
+/// This also remove residues with duplicate residue IDs
+///
 /// \relates pdb
 residue_id_vec cath::file::get_backbone_complete_residue_ids(const pdb &arg_pdb ///< The PDB to query
                                                              ) {
-	return arg_pdb.empty()
-		? residue_id_vec{}
-		: transform_build<residue_id_vec>(
-			arg_pdb | filtered( is_backbone_complete ),
-			[] (const pdb_residue &x) { return x.get_residue_id(); }
-		);
+	residue_id_vec results;
+	vector<residue_id> seen_res_ids;
+	for (const pdb_residue &the_res : arg_pdb) {
+		if ( is_backbone_complete( the_res ) ) {
+			const residue_id the_res_id = the_res.get_residue_id();
+			if ( ! contains( seen_res_ids, the_res_id ) ) {
+				seen_res_ids.push_back( the_res_id );
+				results.push_back( the_res_id );
+			}
+		}
+	}
+	return results;
 }
 
 /// \brief TODOCUMENT

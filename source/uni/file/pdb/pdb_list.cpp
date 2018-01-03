@@ -248,6 +248,8 @@ backbone_complete_indices_vec cath::file::get_backbone_complete_indices(const pd
 
 /// \brief Get the lists of residue IDs for all chains of each of the PDBs in the specified pdb_list
 ///
+/// This also remove residues with duplicate residue IDs
+///
 /// \relates pdb_list
 residue_id_vec_vec cath::file::get_backbone_complete_residue_ids(const pdb_list &arg_pdb_list ///< The PDBs to query
                                                                  ) {
@@ -260,6 +262,8 @@ residue_id_vec_vec cath::file::get_backbone_complete_residue_ids(const pdb_list 
 }
 
 /// \brief Get the lists of residue IDs for the first chains of each of the PDBs in the specified pdb_list
+///
+/// \TODO This should probably also remove residues with duplicate residue IDs
 ///
 /// \relates pdb_list
 residue_id_vec_vec cath::file::get_backbone_complete_residue_ids_of_first_chains(const pdb_list &arg_pdb_list ///< The PDBs to query

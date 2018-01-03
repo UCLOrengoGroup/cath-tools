@@ -347,6 +347,45 @@ END
 	BOOST_TEST( pdb_file_to_string( read_pdb( pdb_data ) ) == pdb_data );
 }
 
+BOOST_AUTO_TEST_CASE(get_backbone_complete_residue_ids__removes_dupl_res_ids) {
+	ostringstream test_ss;
+	const log_to_ostream_guard the_guard{ test_ss };
+
+	// From 4tsw (as of ~January 2018)
+	//
+	// Ensure that get_backbone_complete_residue_ids() removes duplicate residue_ids
+	// so that it matches the behaviour of making proteins from PDBs.
+	// If necessary, it'd be possible to make both try to handle them but
+	// that will likely require work to fix arising problems and the issue
+	// of duplicated residue is rare and is (mostly? completely?) restricted
+	// to superseded PDBs
+	const string pdb_data = R"(ATOM   2229  N   GLN B 102      31.966  19.126  31.868  1.00 57.91           N  
+ATOM   2230  CA  GLN B 102      32.135  19.286  30.428  1.00 63.27           C  
+ATOM   2231  C   GLN B 102      31.098  20.226  29.827  1.00 65.08           C  
+ATOM   2232  O   GLN B 102      31.295  20.773  28.738  1.00 66.67           O  
+ATOM   2241  N   ARG B 103      30.036  20.481  30.582  1.00 67.41           N  
+ATOM   2242  CA  ARG B 103      28.981  21.363  30.110  1.00 69.06           C  
+ATOM   2243  C   ARG B 103      28.668  22.406  31.174  1.00 68.80           C  
+ATOM   2244  O   ARG B 103      29.483  22.638  32.071  1.00 69.14           O  
+ATOM   2247  N   GLU B 103      27.492  23.017  31.036  1.00 69.00           N  
+ATOM   2248  CA  GLU B 103      26.946  24.055  31.918  1.00 69.65           C  
+ATOM   2249  C   GLU B 103      26.058  24.961  31.066  1.00 71.54           C  
+ATOM   2250  O   GLU B 103      26.334  25.177  29.877  1.00 72.21           O  
+ATOM   2253  N   THR B 105      24.903  25.407  31.312  1.00 71.90           N  
+ATOM   2254  CA  THR B 105      24.124  26.292  30.435  1.00 69.49           C  
+ATOM   2255  C   THR B 105      23.000  27.081  31.135  1.00 67.87           C  
+ATOM   2256  O   THR B 105      22.911  27.101  32.373  1.00 63.94           O  
+TER    2257      THR B 105                                                      
+END   
+)";
+	const residue_id_vec expected = { {
+		make_residue_id( 'B', 102 ),
+		make_residue_id( 'B', 103 ),
+		make_residue_id( 'B', 105 ),
+	} };
+	BOOST_TEST( get_backbone_complete_residue_ids( read_pdb( pdb_data ) ) == expected );
+}
+
 BOOST_AUTO_TEST_CASE(writes_partial_pdb_correctly) {
 	const auto parsed_pdb = read_pdb_file( global_test_constants::EXAMPLE_A_PDB_FILENAME() );
 
