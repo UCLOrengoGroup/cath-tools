@@ -102,13 +102,13 @@ string dumb_html_escape_copy(string arg_string ///< The source string to copy
 /// \brief Get the row CSS class of the specified hit_row_context
 ///
 /// \relates hit_row_context
-string cath::rslv::row_css_class_of_hit_row_context(const hit_row_context &arg_row_context ///< The hit_row_context for which to return the appropriate row CSS class
-                                                    ) {
+string cath::rslv::row_css_class_and_data_of_hit_row_context(const hit_row_context &arg_row_context ///< The hit_row_context for which to return the appropriate row CSS class
+                                                             ) {
 	switch ( arg_row_context ) {
-		case ( hit_row_context::HIGHLIGHT   ) : { return "crh-row-highlight"   ; }
-		case ( hit_row_context::NORMAL      ) : { return "crh-row-normal"      ; }
-		case ( hit_row_context::RESULT      ) : { return "crh-row-result"      ; }
-		case ( hit_row_context::RESULT_FULL ) : { return "crh-row-result_full" ; }
+		case ( hit_row_context::HIGHLIGHT   ) : { return R"(class="crh-row-input" data-crh-row-input-type="highlight")" ; }
+		case ( hit_row_context::NORMAL      ) : { return R"(class="crh-row-input" data-crh-row-input-type="normal")"    ; }
+		case ( hit_row_context::RESULT      ) : { return R"(class="crh-row-result")"                                    ; }
+		case ( hit_row_context::RESULT_FULL ) : { return R"(class="crh-row-result_full")"                               ; }
 	}
 	BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_row_context not recognised whilst getting row_css_class_of_hit_row_context()"));
 }
@@ -139,11 +139,14 @@ string resolve_hits_html_outputter::total_score_row(const resscr_t &arg_total_sc
 }
 
 /// \brief Generate the HTML string for the markers row (ie the residue numbers)
-string resolve_hits_html_outputter::markers_row(const size_t  &arg_sequence_length,   ///< The length of the full sequence on which this full_hit appears
-                                                const str_opt &arg_score_header_lbl   ///< The string for the score header or none if headers shouldn't be used
+string resolve_hits_html_outputter::markers_row(const size_t          &arg_sequence_length,  ///< The length of the full sequence on which this full_hit appears
+                                                const str_opt         &arg_score_header_lbl, ///< The string for the score header or none if headers shouldn't be used
+                                                const table_section   &arg_table_section     ///< TODOCUMENT
                                                 ) {
 	const double length_mult  = 100.0 / debug_numeric_cast<double>( arg_sequence_length );
-	return R"(<tr class="crh-row-colhead">
+	return R"(<tr class="crh-row-colhead" data-crh-row-colhead-type=")"
+	+ ( arg_table_section == table_section::INPUTS ? "inputs"s : "results"s )
+	+ R"(">
 	<td class="crh-cell crh-cell-first-norm">)" + ( arg_score_header_lbl ? "ID"s : ""s ) + R"(</td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -292,7 +295,7 @@ string resolve_hits_html_outputter::hits_row_html(const html_hit_vec     &arg_fu
 	}
 
 	// For strictly-worse rows, can set: background-color: #ddd; color: #999;
-	return R"(<tr class=")" + row_css_class_of_hit_row_context( arg_row_context ) + R"(">
+	return R"(<tr )" + row_css_class_and_data_of_hit_row_context( arg_row_context ) + R"(>
 	<td class="crh-cell crh-cell-data )" + first_cell_css_class_of_hit_row_context( arg_row_context ) + R"(">
 		)" + ( isnt_full_result ? dumb_html_escape_copy( first_hit.get_label() ) : "&nbsp;"s ) + R"(
 	</td>
@@ -367,6 +370,82 @@ string resolve_hits_html_outputter::html_prefix() {
 <head>
 	<meta charset="utf-8">
 	<title>cath-resolve-hits</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	        crossorigin="anonymous"></script>
+
+	<script>
+
+		// Set $ to a no-op function in case jQuery doesn't load (for whatever reason)
+		if( typeof $ !== 'function' ) {
+			$ = function() {};
+		}
+
+		// Specify a function to execute when the document has loaded
+		$(function(){
+			var collapse_block_html = '&#8863; collapse inputs';
+			var expand_block_html   = '&#8862; expand inputs';
+			var collapse_all_html   = '&#8863; collapse all inputs';
+			var expand_all_html     = '&#8862; expand all inputs';
+
+			// Step through the results blocks
+			$('.crh-results-wrapper').each( function(idx, n) {
+
+				// Grab the nodes to hide (within this result block's wrapper)
+				var toggle_elements = $(this).find('.crh-row-input, .crh-row-colhead[data-crh-row-colhead-type="inputs"], .crh-row-subheading, .crh-exclusion-note');
+
+				// Create a link that toggles collapse/expand
+				var collapse_link = $("<a />").addClass( 'crh-ctrl-block-collapse-link' )
+				                              .html    ( collapse_block_html            );
+
+				// Add click events to the link
+				collapse_link.on( 'click', function() {
+					if ( toggle_elements.first().is(':visible') ) {
+						toggle_elements.hide( 0 );
+						$(this).html( expand_block_html )
+					}
+					else {
+						toggle_elements.show( 0 );
+						$(this).html( collapse_block_html )
+					}
+				});
+
+				// Add the link to the title
+				$(this).find('.crh-query-header').after( collapse_link );
+			});
+
+			// // Grab the nodes to hide (currently selecting elements inside the wrapper)
+			var toggle_elements = $('body').find('.crh-row-input, .crh-row-colhead[data-crh-row-colhead-type="inputs"], .crh-row-subheading, .crh-exclusion-note');
+
+			// Create a link that toggles collapse/expand
+			var collapse_link = $('<a />').addClass( 'crh-ctrl-global-collapse-link' )
+			                              .html    ( collapse_all_html               );
+
+			// Grab useful elements
+			var dummy_toggle_elt         = $( '.dummy-toggle-element' ).first();
+			var block_collapse_link_elts = $( '.crh-ctrl-block-collapse-link' );
+
+			// Add click events to the link
+			collapse_link.on( 'click', function() {
+				if ( dummy_toggle_elt.is(':visible') ) {
+					dummy_toggle_elt.hide();
+					toggle_elements.hide( 0 );
+					block_collapse_link_elts.html( expand_block_html );
+					$(this).html( expand_all_html );
+				}
+				else {
+					dummy_toggle_elt.show();
+					toggle_elements.show( 0 );
+					block_collapse_link_elts.html( collapse_block_html );
+					$(this).html( collapse_all_html );
+				}
+			});
+
+			// Add the link to the title
+			$( '.crh-results-wrapper' ).first().prev().before( collapse_link );
+		});
+
+	</script>
 </head>
 
 <body class="crh-body">
@@ -412,6 +491,9 @@ string resolve_hits_html_outputter::html_key() {
 string resolve_hits_html_outputter::html_suffix() {
 	return R"(
 
+<!-- Used to store the current global visibility for collapse/expand all -->
+<a class="dummy-toggle-element" />
+
 </body>
 
 </html>
@@ -430,6 +512,12 @@ body.crh-body table {
 }
 /* --- End of simple reset --- */
 
+.crh-ctrl-block-collapse-link, .crh-ctrl-global-collapse-link {
+	font-size    : 80%;
+	opacity      : 0.6;
+	padding-left : 10px;
+	width        : 100%;
+}
 
 .crh-body {
 	background-color  : #e6e6e6;
@@ -452,6 +540,7 @@ body.crh-body table {
 
 .crh-table {
 	text-align        : center;
+	width             : 100%;
 }
 
 .crh-table-subheading-first, .crh-table-subheading-later {
@@ -491,17 +580,17 @@ body.crh-body table {
 	width             : 75px;
 }
 
-.crh-row-normal {}
+.crh-row-input[data-crh-row-input-type="highlight"] {
+	font-weight       : bold;
+}
 
 .crh-row-result {
 	font-size         : 75%;
 }
 
-.crh-row-highlight, .crh-row-colhead {
+.crh-row-colhead {
 	font-weight       : bold;
 }
-
-crh-row-colhead {}
 
 .crh-row-soln-break {}
 
@@ -790,6 +879,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 	size_set excluded_non_soln_hit_indices;
 
 	const string main_return_string = ( arg_output_head_tail ? html_prefix() : string{} ) + R"(
+<br /> <!-- This is required before the wrapper for providing a break after the expand/collapse link -->
 <div class="crh-results-wrapper">
 
 <div class="crh-advert-div">
@@ -802,7 +892,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 <h3 class="crh-query-header">)" + dumb_html_escape_copy( arg_query_id ) + R"(</h3>
 <table class="crh-table">
 
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-first">
 		<span class="crh-table-subheading-span">
 			<strong class="crh-table-subheading-span-symb">&hearts;&nbsp;</strong>
@@ -812,7 +902,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 </tr>
 
 )"
-	+ markers_row( seq_length, none )
+	+ markers_row( seq_length, none, table_section::RESULTS )
 	+ hits_row_html(
 		transform_build<html_hit_vec>(
 			best_result.get_arch(),
@@ -887,7 +977,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 	)
 	+ total_score_row( best_result.get_score() )
 	+ R"(
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-later">
 		<span class="crh-table-subheading-uparrow">&#11014;</span>
 		<span class="crh-table-subheading-padding">&nbsp;</span>
@@ -905,7 +995,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 </tr>
 
 )"
-	+ markers_row( seq_length, make_optional( orig_score_str ) )
+	+ markers_row( seq_length, make_optional( orig_score_str ), table_section::INPUTS )
 	+ "\n\n"
 	+ join(
 		sorted_indices

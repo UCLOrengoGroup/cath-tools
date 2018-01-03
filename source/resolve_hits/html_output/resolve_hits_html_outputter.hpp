@@ -39,6 +39,12 @@ namespace cath { namespace rslv { class trim_spec; } }
 namespace cath {
 	namespace rslv {
 
+		/// \brief The section of the HTML table in which an element appears
+		enum class table_section : bool {
+			RESULTS, ///< The results section of the table
+			INPUTS   ///< The inputs section of the table
+		};
+
 		/// \brief The context in which a hit is being rendered into an HTML row
 		enum class hit_row_context : char {
 			HIGHLIGHT,    ///< An input data row that is being highlighted as containing a hit that appears in the results
@@ -47,7 +53,7 @@ namespace cath {
 			RESULT_FULL   ///< A full-result row, combining all the result hits in one row
 		};
 
-		std::string row_css_class_of_hit_row_context(const hit_row_context &);
+		std::string row_css_class_and_data_of_hit_row_context(const hit_row_context &);
 		std::string first_cell_css_class_of_hit_row_context(const hit_row_context &);
 
 		/// \brief Contain functions for generating HTML to describe cath-resolve hits such as hits, architectures etc
@@ -62,7 +68,8 @@ namespace cath {
 		private:
 			static std::string total_score_row(const resscr_t &);
 			static std::string markers_row(const size_t &,
-			                               const str_opt &);
+			                               const str_opt &,
+			                               const table_section &);
 
 			static std::string hit_html(const html_hit &,
 			                            const crh_segment_spec &,

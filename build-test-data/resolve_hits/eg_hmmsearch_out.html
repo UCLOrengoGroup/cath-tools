@@ -4,6 +4,82 @@
 <head>
 	<meta charset="utf-8">
 	<title>cath-resolve-hits</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	        crossorigin="anonymous"></script>
+
+	<script>
+
+		// Set $ to a no-op function in case jQuery doesn't load (for whatever reason)
+		if( typeof $ !== 'function' ) {
+			$ = function() {};
+		}
+
+		// Specify a function to execute when the document has loaded
+		$(function(){
+			var collapse_block_html = '&#8863; collapse inputs';
+			var expand_block_html   = '&#8862; expand inputs';
+			var collapse_all_html   = '&#8863; collapse all inputs';
+			var expand_all_html     = '&#8862; expand all inputs';
+
+			// Step through the results blocks
+			$('.crh-results-wrapper').each( function(idx, n) {
+
+				// Grab the nodes to hide (within this result block's wrapper)
+				var toggle_elements = $(this).find('.crh-row-input, .crh-row-colhead[data-crh-row-colhead-type="inputs"], .crh-row-subheading, .crh-exclusion-note');
+
+				// Create a link that toggles collapse/expand
+				var collapse_link = $("<a />").addClass( 'crh-ctrl-block-collapse-link' )
+				                              .html    ( collapse_block_html            );
+
+				// Add click events to the link
+				collapse_link.on( 'click', function() {
+					if ( toggle_elements.first().is(':visible') ) {
+						toggle_elements.hide( 0 );
+						$(this).html( expand_block_html )
+					}
+					else {
+						toggle_elements.show( 0 );
+						$(this).html( collapse_block_html )
+					}
+				});
+
+				// Add the link to the title
+				$(this).find('.crh-query-header').after( collapse_link );
+			});
+
+			// // Grab the nodes to hide (currently selecting elements inside the wrapper)
+			var toggle_elements = $('body').find('.crh-row-input, .crh-row-colhead[data-crh-row-colhead-type="inputs"], .crh-row-subheading, .crh-exclusion-note');
+
+			// Create a link that toggles collapse/expand
+			var collapse_link = $('<a />').addClass( 'crh-ctrl-global-collapse-link' )
+			                              .html    ( collapse_all_html               );
+
+			// Grab useful elements
+			var dummy_toggle_elt         = $( '.dummy-toggle-element' ).first();
+			var block_collapse_link_elts = $( '.crh-ctrl-block-collapse-link' );
+
+			// Add click events to the link
+			collapse_link.on( 'click', function() {
+				if ( dummy_toggle_elt.is(':visible') ) {
+					dummy_toggle_elt.hide();
+					toggle_elements.hide( 0 );
+					block_collapse_link_elts.html( expand_block_html );
+					$(this).html( expand_all_html );
+				}
+				else {
+					dummy_toggle_elt.show();
+					toggle_elements.show( 0 );
+					block_collapse_link_elts.html( collapse_block_html );
+					$(this).html( collapse_all_html );
+				}
+			});
+
+			// Add the link to the title
+			$( '.crh-results-wrapper' ).first().prev().before( collapse_link );
+		});
+
+	</script>
 </head>
 
 <body class="crh-body">
@@ -20,6 +96,12 @@ body.crh-body table {
 }
 /* --- End of simple reset --- */
 
+.crh-ctrl-block-collapse-link, .crh-ctrl-global-collapse-link {
+	font-size    : 80%;
+	opacity      : 0.6;
+	padding-left : 10px;
+	width        : 100%;
+}
 
 .crh-body {
 	background-color  : #e6e6e6;
@@ -42,6 +124,7 @@ body.crh-body table {
 
 .crh-table {
 	text-align        : center;
+	width             : 100%;
 }
 
 .crh-table-subheading-first, .crh-table-subheading-later {
@@ -81,17 +164,17 @@ body.crh-body table {
 	width             : 75px;
 }
 
-.crh-row-normal {}
+.crh-row-input[data-crh-row-input-type="highlight"] {
+	font-weight       : bold;
+}
 
 .crh-row-result {
 	font-size         : 75%;
 }
 
-.crh-row-highlight, .crh-row-colhead {
+.crh-row-colhead {
 	font-weight       : bold;
 }
-
-crh-row-colhead {}
 
 .crh-row-soln-break {}
 
@@ -253,6 +336,7 @@ crh-row-colhead {}
 
 </style>
 
+<br /> <!-- This is required before the wrapper for providing a break after the expand/collapse link -->
 <div class="crh-results-wrapper">
 
 <div class="crh-advert-div">
@@ -265,7 +349,7 @@ crh-row-colhead {}
 <h3 class="crh-query-header">443cb81e8e280e529de69ef113974208</h3>
 <table class="crh-table">
 
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-first">
 		<span class="crh-table-subheading-span">
 			<strong class="crh-table-subheading-span-symb">&hearts;&nbsp;</strong>
@@ -274,7 +358,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="results">
 	<td class="crh-cell crh-cell-first-norm"></td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -412,7 +496,7 @@ crh-row-colhead {}
 	<td class="crh-cell crh-cell-data"></td>
 	<td class="crh-cell crh-cell-data"></td>
 </tr>
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-later">
 		<span class="crh-table-subheading-uparrow">&#11014;</span>
 		<span class="crh-table-subheading-padding">&nbsp;</span>
@@ -429,7 +513,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="inputs">
 	<td class="crh-cell crh-cell-first-norm">ID</td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -457,7 +541,7 @@ crh-row-colhead {}
 	<td class="crh-cell">Length</td>
 </tr>
 
-<tr class="crh-row-highlight">
+<tr class="crh-row-input" data-crh-row-input-type="highlight">
 	<td class="crh-cell crh-cell-data crh-cell-first-highlight">
 		3ifqB00_round_3
 	</td>
@@ -491,7 +575,7 @@ crh-row-colhead {}
 		307
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4ev8A00_round_3
 	</td>
@@ -521,7 +605,7 @@ crh-row-colhead {}
 		291
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		1wa5B00_round_3
 	</td>
@@ -555,7 +639,7 @@ crh-row-colhead {}
 		480
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		1jdhA00_round_3
 	</td>
@@ -585,7 +669,7 @@ crh-row-colhead {}
 		278
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		3feyC00_round_3
 	</td>
@@ -619,7 +703,7 @@ crh-row-colhead {}
 		191
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4tnmA00_round_3
 	</td>
@@ -653,7 +737,7 @@ crh-row-colhead {}
 		247
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4b8jA00_round_3
 	</td>
@@ -691,7 +775,7 @@ crh-row-colhead {}
 		212
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4mz6E00_round_3
 	</td>
@@ -729,7 +813,7 @@ crh-row-colhead {}
 		337
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		2jdqB00_round_3
 	</td>
@@ -759,7 +843,7 @@ crh-row-colhead {}
 		229
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4hxtA00_round_3
 	</td>
@@ -789,7 +873,7 @@ crh-row-colhead {}
 		559
 	</td>
 </tr>
-<tr class="crh-row-highlight">
+<tr class="crh-row-input" data-crh-row-input-type="highlight">
 	<td class="crh-cell crh-cell-data crh-cell-first-highlight">
 		4ev8A00_round_3
 	</td>
@@ -819,7 +903,7 @@ crh-row-colhead {}
 		199
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		3ifqB00_round_3
 	</td>
@@ -853,6 +937,7 @@ crh-row-colhead {}
 <div class="crh-exclusion-note">...hiding another 8 non-solution results (current limit is 10; use <code>--html-max-num-non-soln-hits</code> to change)</div>
 </div>
 
+<br /> <!-- This is required before the wrapper for providing a break after the expand/collapse link -->
 <div class="crh-results-wrapper">
 
 <div class="crh-advert-div">
@@ -865,7 +950,7 @@ crh-row-colhead {}
 <h3 class="crh-query-header">5e1ccef4ef9782ffd2979ae49ca232c8</h3>
 <table class="crh-table">
 
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-first">
 		<span class="crh-table-subheading-span">
 			<strong class="crh-table-subheading-span-symb">&hearts;&nbsp;</strong>
@@ -874,7 +959,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="results">
 	<td class="crh-cell crh-cell-first-norm"></td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -1006,7 +1091,7 @@ crh-row-colhead {}
 	<td class="crh-cell crh-cell-data"></td>
 	<td class="crh-cell crh-cell-data"></td>
 </tr>
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-later">
 		<span class="crh-table-subheading-uparrow">&#11014;</span>
 		<span class="crh-table-subheading-padding">&nbsp;</span>
@@ -1023,7 +1108,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="inputs">
 	<td class="crh-cell crh-cell-first-norm">ID</td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -1045,7 +1130,7 @@ crh-row-colhead {}
 	<td class="crh-cell">Length</td>
 </tr>
 
-<tr class="crh-row-highlight">
+<tr class="crh-row-input" data-crh-row-input-type="highlight">
 	<td class="crh-cell crh-cell-data crh-cell-first-highlight">
 		2pygA00_round_3
 	</td>
@@ -1080,7 +1165,7 @@ crh-row-colhead {}
 		302
 	</td>
 </tr>
-<tr class="crh-row-highlight">
+<tr class="crh-row-input" data-crh-row-input-type="highlight">
 	<td class="crh-cell crh-cell-data crh-cell-first-highlight">
 		1ru4A00_round_3
 	</td>
@@ -1107,7 +1192,7 @@ crh-row-colhead {}
 		158
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		3vsvA01_round_3
 	</td>
@@ -1138,7 +1223,7 @@ crh-row-colhead {}
 		474
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		1ru4A00_round_3
 	</td>
@@ -1177,6 +1262,7 @@ crh-row-colhead {}
 
 </div>
 
+<br /> <!-- This is required before the wrapper for providing a break after the expand/collapse link -->
 <div class="crh-results-wrapper">
 
 <div class="crh-advert-div">
@@ -1189,7 +1275,7 @@ crh-row-colhead {}
 <h3 class="crh-query-header">65d5daf26dc58455a709f4db2f429657</h3>
 <table class="crh-table">
 
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-first">
 		<span class="crh-table-subheading-span">
 			<strong class="crh-table-subheading-span-symb">&hearts;&nbsp;</strong>
@@ -1198,7 +1284,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="results">
 	<td class="crh-cell crh-cell-first-norm"></td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -1350,7 +1436,7 @@ crh-row-colhead {}
 	<td class="crh-cell crh-cell-data"></td>
 	<td class="crh-cell crh-cell-data"></td>
 </tr>
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-later">
 		<span class="crh-table-subheading-uparrow">&#11014;</span>
 		<span class="crh-table-subheading-padding">&nbsp;</span>
@@ -1367,7 +1453,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="inputs">
 	<td class="crh-cell crh-cell-first-norm">ID</td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -1399,7 +1485,7 @@ crh-row-colhead {}
 	<td class="crh-cell">Length</td>
 </tr>
 
-<tr class="crh-row-highlight">
+<tr class="crh-row-input" data-crh-row-input-type="highlight">
 	<td class="crh-cell crh-cell-data crh-cell-first-highlight">
 		2cokA00_round_3
 	</td>
@@ -1435,7 +1521,7 @@ crh-row-colhead {}
 		62
 	</td>
 </tr>
-<tr class="crh-row-highlight">
+<tr class="crh-row-input" data-crh-row-input-type="highlight">
 	<td class="crh-cell crh-cell-data crh-cell-first-highlight">
 		2e2wA01_round_3
 	</td>
@@ -1467,7 +1553,7 @@ crh-row-colhead {}
 		135
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		2le0A00_round_3
 	</td>
@@ -1499,7 +1585,7 @@ crh-row-colhead {}
 		123
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4bmdA02_round_3
 	</td>
@@ -1535,7 +1621,7 @@ crh-row-colhead {}
 		63
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		3ii6X01_round_3
 	</td>
@@ -1575,6 +1661,7 @@ crh-row-colhead {}
 
 </div>
 
+<br /> <!-- This is required before the wrapper for providing a break after the expand/collapse link -->
 <div class="crh-results-wrapper">
 
 <div class="crh-advert-div">
@@ -1587,7 +1674,7 @@ crh-row-colhead {}
 <h3 class="crh-query-header">98300abb63cbbe1df0ce443557c9e767</h3>
 <table class="crh-table">
 
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-first">
 		<span class="crh-table-subheading-span">
 			<strong class="crh-table-subheading-span-symb">&hearts;&nbsp;</strong>
@@ -1596,7 +1683,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="results">
 	<td class="crh-cell crh-cell-first-norm"></td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -1686,7 +1773,7 @@ crh-row-colhead {}
 	<td class="crh-cell crh-cell-data"></td>
 	<td class="crh-cell crh-cell-data"></td>
 </tr>
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-later">
 		<span class="crh-table-subheading-uparrow">&#11014;</span>
 		<span class="crh-table-subheading-padding">&nbsp;</span>
@@ -1703,7 +1790,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="inputs">
 	<td class="crh-cell crh-cell-first-norm">ID</td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -1725,7 +1812,7 @@ crh-row-colhead {}
 	<td class="crh-cell">Length</td>
 </tr>
 
-<tr class="crh-row-highlight">
+<tr class="crh-row-input" data-crh-row-input-type="highlight">
 	<td class="crh-cell crh-cell-data crh-cell-first-highlight">
 		2f31A00_round_1
 	</td>
@@ -1752,7 +1839,7 @@ crh-row-colhead {}
 		205
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		2f31A00_round_2
 	</td>
@@ -1779,7 +1866,7 @@ crh-row-colhead {}
 		199
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		2jdqB00_round_3
 	</td>
@@ -1806,7 +1893,7 @@ crh-row-colhead {}
 		201
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4b8jA00_round_3
 	</td>
@@ -1833,7 +1920,7 @@ crh-row-colhead {}
 		233
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4tnmA00_round_3
 	</td>
@@ -1860,7 +1947,7 @@ crh-row-colhead {}
 		217
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		3feyC00_round_3
 	</td>
@@ -1887,7 +1974,7 @@ crh-row-colhead {}
 		217
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4mz6E00_round_3
 	</td>
@@ -1914,7 +2001,7 @@ crh-row-colhead {}
 		216
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		1wa5B00_round_3
 	</td>
@@ -1941,7 +2028,7 @@ crh-row-colhead {}
 		231
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		3ifqB00_round_3
 	</td>
@@ -1968,7 +2055,7 @@ crh-row-colhead {}
 		225
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4p6zB00_round_3
 	</td>
@@ -1995,7 +2082,7 @@ crh-row-colhead {}
 		312
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4ev8A00_round_3
 	</td>
@@ -2026,6 +2113,7 @@ crh-row-colhead {}
 <div class="crh-exclusion-note">...hiding another 2 non-solution results (current limit is 10; use <code>--html-max-num-non-soln-hits</code> to change)</div>
 </div>
 
+<br /> <!-- This is required before the wrapper for providing a break after the expand/collapse link -->
 <div class="crh-results-wrapper">
 
 <div class="crh-advert-div">
@@ -2038,7 +2126,7 @@ crh-row-colhead {}
 <h3 class="crh-query-header">c6a53e4fda2270987ca6e8e89783a311</h3>
 <table class="crh-table">
 
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-first">
 		<span class="crh-table-subheading-span">
 			<strong class="crh-table-subheading-span-symb">&hearts;&nbsp;</strong>
@@ -2047,7 +2135,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="results">
 	<td class="crh-cell crh-cell-first-norm"></td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -2146,7 +2234,7 @@ crh-row-colhead {}
 	<td class="crh-cell crh-cell-data"></td>
 	<td class="crh-cell crh-cell-data"></td>
 </tr>
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-later">
 		<span class="crh-table-subheading-uparrow">&#11014;</span>
 		<span class="crh-table-subheading-padding">&nbsp;</span>
@@ -2163,7 +2251,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="inputs">
 	<td class="crh-cell crh-cell-first-norm">ID</td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -2187,7 +2275,7 @@ crh-row-colhead {}
 	<td class="crh-cell">Length</td>
 </tr>
 
-<tr class="crh-row-highlight">
+<tr class="crh-row-input" data-crh-row-input-type="highlight">
 	<td class="crh-cell crh-cell-data crh-cell-first-highlight">
 		4mf0B00_round_3
 	</td>
@@ -2223,6 +2311,7 @@ crh-row-colhead {}
 
 </div>
 
+<br /> <!-- This is required before the wrapper for providing a break after the expand/collapse link -->
 <div class="crh-results-wrapper">
 
 <div class="crh-advert-div">
@@ -2235,7 +2324,7 @@ crh-row-colhead {}
 <h3 class="crh-query-header">e309f37197edd3a5b6c85424e3d88fc1</h3>
 <table class="crh-table">
 
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-first">
 		<span class="crh-table-subheading-span">
 			<strong class="crh-table-subheading-span-symb">&hearts;&nbsp;</strong>
@@ -2244,7 +2333,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="results">
 	<td class="crh-cell crh-cell-first-norm"></td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -2339,7 +2428,7 @@ crh-row-colhead {}
 	<td class="crh-cell crh-cell-data"></td>
 	<td class="crh-cell crh-cell-data"></td>
 </tr>
-<tr>
+<tr class="crh-row-subheading">
 	<td colspan="6" class="crh-table-subheading-later">
 		<span class="crh-table-subheading-uparrow">&#11014;</span>
 		<span class="crh-table-subheading-padding">&nbsp;</span>
@@ -2356,7 +2445,7 @@ crh-row-colhead {}
 	</td>
 </tr>
 
-<tr class="crh-row-colhead">
+<tr class="crh-row-colhead" data-crh-row-colhead-type="inputs">
 	<td class="crh-cell crh-cell-first-norm">ID</td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
@@ -2378,7 +2467,7 @@ crh-row-colhead {}
 	<td class="crh-cell">Length</td>
 </tr>
 
-<tr class="crh-row-highlight">
+<tr class="crh-row-input" data-crh-row-input-type="highlight">
 	<td class="crh-cell crh-cell-data crh-cell-first-highlight">
 		1gcjA00_round_3
 	</td>
@@ -2409,7 +2498,7 @@ crh-row-colhead {}
 		260
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		4fddA00_round_3
 	</td>
@@ -2444,7 +2533,7 @@ crh-row-colhead {}
 		306
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		2vglB00_round_3
 	</td>
@@ -2471,7 +2560,7 @@ crh-row-colhead {}
 		413
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		1ibrB00_round_3
 	</td>
@@ -2502,7 +2591,7 @@ crh-row-colhead {}
 		356
 	</td>
 </tr>
-<tr class="crh-row-normal">
+<tr class="crh-row-input" data-crh-row-input-type="normal">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm">
 		1gw5B00_round_3
 	</td>
@@ -2544,6 +2633,9 @@ crh-row-colhead {}
 </ul>
 </div>
 
+
+<!-- Used to store the current global visibility for collapse/expand all -->
+<a class="dummy-toggle-element" />
 
 </body>
 
