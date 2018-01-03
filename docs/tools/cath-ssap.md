@@ -42,7 +42,7 @@ Usage
 The current usage information is:
 
 ~~~~~no-highlight
- Usage: cath-ssap [options] <protein1> <protein2>
+Usage: cath-ssap [options] <protein1> <protein2>
 
 Run a SSAP pairwise structural alignment
 [algorithm devised by C A Orengo and W R Taylor, see --citation-help]
@@ -50,15 +50,15 @@ Run a SSAP pairwise structural alignment
 cath-ssap uses two types of structural comparison:
   1. Fast SSAP: a quick secondary-structure based SSAP alignment
   2. Slow SSAP: residue alignment only
-                                                                                                                                                                               
-If both structures have more than one SS element, a fast SSAP is run first. If the fast SSAP score isn't good, another fast SSAP is run with looser cutoffs. If the (best) fast SSAP score isn't good, a slow SSAP is run. Only the best of these scores is output. These behaviours can be configured using the parameters below.)                           
-                                                                                                                                                                               
-Miscellaneous:                                                                                                                                                                 
-  -h [ --help ]                            Output help message                                                                                                                 
-  -v [ --version ]                         Output version information                                                                                                          
-                                                                                                                                                                               
-Standard SSAP options:                                                                                                                                                         
-  --debug                                  Output debugging information                                                                                                        
+
+If both structures have more than one SS element, a fast SSAP is run first. If the fast SSAP score isn't good, another fast SSAP is run with looser cutoffs. If the (best) fast SSAP score isn't good, a slow SSAP is run. Only the best of these scores is output. These behaviours can be configured using the parameters below.)
+
+Miscellaneous:
+  -h [ --help ]                            Output help message
+  -v [ --version ]                         Output version information
+
+Standard SSAP options:
+  --debug                                  Output debugging information
   -o [ --outfile ] <file>                  [DEPRECATED] Output scores to <file> rather than to stdout
   --clique-file <file>                     Read clique from <file>
   --domin-file <file>                      Read domin from <file>
@@ -67,8 +67,8 @@ Standard SSAP options:
   --slow-ssap-only                         Don't try any fast SSAPs; only use slow SSAP
   --local-ssap-score                       [DEPRECATED] Normalise the SSAP score over the length of the smallest domain rather than the largest
   --all-scores                             [DEPRECATED] Output all SSAP scores from fast and slow runs, not just the highest
-  --prot-src-files <set> (=PDB_DSSP_SEC)   Read the protein data from the set of files <set>, of available sets:
-                                           PDB_DSSP_SEC, WOLF_SEC
+  --prot-src-files <set> (=PDB)            Read the protein data from the set of files <set>, of available sets:
+                                           PDB, PDB_DSSP, PDB_DSSP_SEC, WOLF_SEC
   --supdir <dir>                           [DEPRECATED] Output a superposition to directory <dir>
   --aligndir <dir> (=".")                  Write alignment to directory <dir>
   --min-score-for-files <score> (=0)       Only output alignment/superposition files if the SSAP score exceeds <score>
@@ -89,6 +89,12 @@ Conversion between a protein's name and its data files:
   --dssp-suffix <suf> (=.dssp)             Append the suffix <suf> to a protein's name to form its DSSP filename
   --wolf-suffix <suf> (=.wolf)             Append the suffix <suf> to a protein's name to form its wolf filename
   --sec-suffix <suf> (=.sec)               Append the suffix <suf> to a protein's name to form its sec filename
+
+Regions:
+  --align-regions <regions>                Handle region(s) <regions> as the alignment part of the structure.
+                                           May be specified multiple times, in correspondence with the structures.
+                                           Format is: D[5inwB02]251-348:B,408-416A:B
+                                           (Put <regions> in quotes to prevent the square brackets confusing your shell ("No match"))
 
 Detailed help:
   --alignment-help                         Help on alignment format

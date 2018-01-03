@@ -78,61 +78,93 @@ Usage: cath-superpose alignment_source pdb_file_source [superposition_outputs]
 Superpose protein structures using an existing alignment
 
 Please specify:
- * one alignment
+ * at most one superposition JSON or alignment (default: --do-the-ssaps)
  * one method of reading PDB files (number to match the alignment)
 
+PyMOL is started if no alignment or superposition output option is specified
+
 Miscellaneous:
-  -h [ --help ]                   Output help message
-  -v [ --version ]                Output version information
+  -h [ --help ]                            Output help message
+  -v [ --version ]                         Output version information
+
+Input:
 
 Alignment source:
-  --res-name-align                Align residues by simply matching their names (numbers+insert)
-                                  (for multiple models of the same structure)
-  --fasta-aln-infile <file>       Read FASTA alignment from file <file>
-  --ssap-aln-infile <file>        Read SSAP alignment from file <file>
-  --cora-aln-infile <file>        Read CORA alignment from file <file>
-  --ssap-scores-infile <file>     Read SSAP scores from file <file>
-                                  Assumes all .list alignment files in same directory
+  --res-name-align                         Align residues by simply matching their names (numbers+insert)
+                                           (for multiple models of the same structure)
+  --fasta-aln-infile <file>                Read FASTA alignment from file <file>
+  --ssap-aln-infile <file>                 Read SSAP alignment from file <file>
+  --cora-aln-infile <file>                 Read CORA alignment from file <file>
+  --ssap-scores-infile <file>              Glue pairwise alignments together using SSAP scores in file <file>
+                                           Assumes all .list alignment files in same directory
+  --do-the-ssaps [=<dir>(="")]             Do the required SSAPs in directory <dir>; use results as with --ssap-scores-infile
+                                           Use a suitable temp directory if none is specified
+
+Alignment refining:
+  --align-refining <refn> (=NO)            Apply <refn> refining to the alignment, one of available values:
+                                              NO    - Don't refine the alignment
+                                              LIGHT - Refine any alignments with few entries; glue alignments one more entry at a time
+                                              HEAVY - Perform heavy (slow) refining on the alignment, including when gluing alignments together
+                                           This can change the method of gluing alignments under --ssap-scores-infile and --do-the-ssaps
+
+Superposition source:
+  --json-sup-infile <file>                 Read superposition from file <file>
 
 ID options:
-  --id arg                        Structure ids
+  --id arg                                 Structure ids
 
 PDB files source:
-  --pdb-infile <pdbfile>          Read PDB from file <pdbfile> (may be specified multiple times)
-  --pdbs-from-stdin               Read PDBs from stdin (separated by line: "END   ")
+  --pdb-infile <pdbfile>                   Read PDB from file <pdbfile> (may be specified multiple times)
+  --pdbs-from-stdin                        Read PDBs from stdin (separated by line: "END   ")
+
+Regions:
+  --align-regions <regions>                Handle region(s) <regions> as the alignment part of the structure.
+                                           May be specified multiple times, in correspondence with the structures.
+                                           Format is: D[5inwB02]251-348:B,408-416A:B
+                                           (Put <regions> in quotes to prevent the square brackets confusing your shell ("No match"))
+
+Output:
 
 Alignment output:
-  --aln-to-cath-aln-file arg      [EXPERIMENTAL] Write the alignment to a CATH alignment file
-  --aln-to-cath-aln-stdout        [EXPERIMENTAL] Print the alignment to stdout in CATH alignment format
-  --aln-to-fasta-file arg         Write the alignment to a FASTA file
-  --aln-to-fasta-stdout           Print the alignment to stdout in FASTA format
-  --aln-to-ssap-file arg          Write the alignment to a SSAP file
-  --aln-to-ssap-stdout            Print the alignment to stdout as SSAP
-  --aln-to-html-file arg          Write the alignment to a HTML file
-  --aln-to-html-stdout            Print the alignment to stdout as HTML
+  --aln-to-cath-aln-file arg               [EXPERIMENTAL] Write the alignment to a CATH alignment file
+  --aln-to-cath-aln-stdout                 [EXPERIMENTAL] Print the alignment to stdout in CATH alignment format
+  --aln-to-fasta-file arg                  Write the alignment to a FASTA file
+  --aln-to-fasta-stdout                    Print the alignment to stdout in FASTA format
+  --aln-to-ssap-file arg                   Write the alignment to a SSAP file
+  --aln-to-ssap-stdout                     Print the alignment to stdout as SSAP
+  --aln-to-html-file arg                   Write the alignment to a HTML file
+  --aln-to-html-stdout                     Print the alignment to stdout as HTML
 
 Superposition output:
-  --sup-to-pdb-file arg           Write the superposed structures to a single PDB file arg, separated using faked chain codes
-  --sup-to-pdb-files-dir arg      Write the superposed structures to separate PDB files in directory arg
-  --sup-to-stdout                 Print the superposed structures to stdout, separated using faked chain codes
-  --sup-to-pymol                  Start up PyMOL for viewing the superposition
-  --pymol-program arg (="pymol")  Use arg as the PyMOL executable for viewing; may optionally include the full path
-  --sup-to-pymol-file arg         Write the superposition to a PyMOL script arg
-                                  (Recommended filename extension: .pml)
-  --sup-to-json-file arg          Write the superposition to JSON superposition file
-                                  (Recommended filename extension: .sup_json)
+  --sup-to-pdb-file arg                    Write the superposed structures to a single PDB file arg, separated using faked chain codes
+  --sup-to-pdb-files-dir arg               Write the superposed structures to separate PDB files in directory arg
+  --sup-to-stdout                          Print the superposed structures to stdout, separated using faked chain codes
+  --sup-to-pymol                           Start up PyMOL for viewing the superposition
+  --pymol-program arg (="pymol")           Use arg as the PyMOL executable for viewing; may optionally include the full path
+  --sup-to-pymol-file arg                  Write the superposition to a PyMOL script arg
+                                           (Recommended filename extension: .pml)
+  --sup-to-json-file arg                   Write the superposition to JSON superposition file
+                                           (Recommended filename extension: .sup_json)
 
 Viewer (eg PyMOL, Jmol etc) options:
-  --viewer-colours <colrs>        Use <colrs> to colour successive entries in the viewer
-                                  (format: colon-separated list of comma-separated triples of RGB values between 0 and 1)
-                                  (will wrap-around when it runs out of colours)
-  --gradient-colour-alignment     Colour the length of the alignment with a rainbow gradient (blue -> red)
-  --show-scores-if-present        Show the alignment scores
-                                  (use with gradient-colour-alignment)
-  --scores-to-equivs              Show the alignment scores to equivalent positions, which increases relative scores where few entries are aligned
-                                  (use with --gradient-colour-alignment and --show-scores-if-present)
-  --normalise-scores              When showing scores, normalise them to the highest score in the alignment
-                                  (use with --gradient-colour-alignment and --show-scores-if-present)
+  --viewer-colours <colrs>                 Use <colrs> to colour successive entries in the viewer
+                                           (format: colon-separated list of comma-separated triples of RGB values between 0 and 1)
+                                           (will wrap-around when it runs out of colours)
+  --gradient-colour-alignment              Colour the length of the alignment with a rainbow gradient (blue -> red)
+  --show-scores-if-present                 Show the alignment scores
+                                           (use with gradient-colour-alignment)
+  --scores-to-equivs                       Show the alignment scores to equivalent positions, which increases relative scores where few entries are aligned
+                                           (use with --gradient-colour-alignment and --show-scores-if-present)
+  --normalise-scores                       When showing scores, normalise them to the highest score in the alignment
+                                           (use with --gradient-colour-alignment and --show-scores-if-present)
+
+Superposition content:
+  --regions-context <context> (=alone)     Show the alignment regions in the context <context>, one of available options:
+                                              alone    - alone
+                                              in_chain - within the chain(s) in which the regions appear
+                                              in_pdb   - within the PDB in which the regions appear
+  --show-dna-within-dist <dist> (=4)       Show DNA within <dist>Å of the alignment regions
+  --show-organic-within-dist <dist> (=10)  Show organic molecules within <dist>Å of the alignment regions
 
 Usage examples:
  * cath-superpose --ssap-aln-infile 1cukA1bvsA.list --pdb-infile $PDBDIR/1cukA --pdb-infile $PDBDIR/1bvsA --sup-to-pymol
