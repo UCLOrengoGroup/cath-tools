@@ -17,6 +17,14 @@ use Path::Class      qw/ dir file       /;
 my $SSAP_ALIGNMENT_SUFFIX = ".list";
 my $SSAP_SCORES_SUFFIX    = ".scores";
 
+warn "\n";
+warn "***************************************************************************\n";
+warn "* THIS SCRIPT IS DEPRECATED BECAUSE CATH-SUPERPOSE CAN NOW DO THIS ITSELF *\n";
+warn "*                  PLEASE STOP USING THIS SCRIPT                          *\n";
+warn "*               USE CATH-SUPERPOSE DIRECTLY INSTEAD                       *\n";
+warn "***************************************************************************\n";
+warn "\n";
+
 # Check the script's arguments
 if ( scalar(@ARGV) < 3 ) {
 	die "Usage: $PROGRAM_NAME temp_dir struc_id1 struc_id2 struc_id3 ...\n\n"
