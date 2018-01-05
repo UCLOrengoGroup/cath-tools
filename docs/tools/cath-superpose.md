@@ -36,33 +36,12 @@ Multiple Superpositions
 <br>
 <span class="figure-caption">*Four similar structures superposed by `cath-superpose` <sub style="color: grey;">[rendered by PyMOL]</sub>*</span>
 
-
-
-`cath-superpose` can superpose more than two structures (see `--ssap-scores-infile`), but that currently requires you to prepare data for it and that can be a bit fiddly (eg running all-vs-all `cath-ssap`s). Until we make `cath-superpose` a bit friendlier on this front, we provide a simple Perl script `cath-superpose-multi-temp-script` to help you out. To get going: download it ([GitHub page](https://github.com/UCLOrengoGroup/cath-tools/blob/master/cath-superpose-multi-temp-script), [raw](https://raw.githubusercontent.com/UCLOrengoGroup/cath-tools/master/cath-superpose-multi-temp-script)), make it executable (eg `chmod +x cath-superpose-multi-temp-script`) and put it in one of your `PATH` directories or prepend it with `./` whenever executing it.
-
-Also, ensure that `cath-ssap` is in one of your `PATH` directories and that you've set any environment variables to allow it to find the correct input files.
-
-To prepare a new multiple superposition, create a temporary directory for your data and then run `cath-superpose-multi-temp-script` with that directory and a list of structures to superpose as arguments, eg:
-
-~~~~~no-highlight
-mkdir /tmp/my_dir
-cath-superpose-multi-temp-script /tmp/my_dir 2vxnA00 2y7eB00 3b4uA00 1p1xB00
-~~~~~
-
-This performs the necessary `cath-ssap`s, writes out a file containing the pairwise scores and then prints out two commands: a `cath-superpose` command to use this data to superpose the structures and write out a [PyMOL](https://www.pymol.org/) script file, and a [PyMOL](https://www.pymol.org/) command to view it. Eg:
-
-~~~~~no-highlight
-cath-superpose --ssap-scores-infile /tmp/my_dir/ssap_scores.a861b298bf224759c5a6279581157f88 --pdb-infile $PDBDIR/1p1xB00 --pdb-infile $PDBDIR/2vxnA00 --pdb-infile $PDBDIR/2y7eB00 --pdb-infile $PDBDIR/3b4uA00 --sup-to-pymol-file a861b298bf224759c5a6279581157f88.pml
-pymol a861b298bf224759c5a6279581157f88.pml
-~~~~~
-
-Now, you can customise the `cath-superpose` command to suit your needs.
+`cath-superpose` can superpose more than two structures by combining results from pairwise `cath-ssap`s. This previously required you to use a separate script to prepare the data but `cath-superpose` will now default to the `--do-the-ssaps` option, which performs the necessary `cath-ssap`s for you. Just make sure you configure your environment variables so that `cath-ssap` can find the input files.
 
 You can also specify corresponding pairs of structures and the regions of the structures that you want to align and superpose:
 
 ~~~~~no-highlight
-mkdir /tmp/my_dir
-cath-superpose-multi-temp-script /tmp/my_dir 2vxn 'D[2vxnA00]2-250:A' 2y7e 'D[2y7eB00]-2-275:B' 3b4u 'D[3b4uA00]4-290:A' 1p1x 'D[1p1xB00]1000-1250:B'
+cath-superpose --pdb-infile 2vxn --align-regions 'D[2vxnA00]2-250:A' --pdb-infile 2y7e --align-regions 'D[2y7eB00]-2-275:B' --pdb-infile 3b4u --align-regions 'D[3b4uA00]4-290:A' --pdb-infile 1p1x --align-regions 'D[1p1xB00]1000-1250:B'
 ~~~~~
 
 The format is like: `D[5inwB02]251-348:B,408-416A:B`. Put <regions> in quotes to prevent the square brackets confusing your shell ("No match").
