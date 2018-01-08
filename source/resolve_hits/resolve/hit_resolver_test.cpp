@@ -57,9 +57,9 @@ BOOST_FIXTURE_TEST_SUITE(hit_resolver_test_suite, hit_resolver_test_suite_fixtur
 BOOST_AUTO_TEST_CASE(basic) {
 	istringstream test_iss{ example_input_raw };
 	ostringstream test_oss;
-	ofstream_list oftreams{ test_oss };
+	ofstream_list ofstreams{ test_oss };
 	read_and_process_mgr the_read_and_process_mgr = make_read_and_process_mgr(
-		oftreams,
+		ofstreams,
 		crh_spec{}
 			.set_score_spec( make_neutral_score_spec() )
 	);

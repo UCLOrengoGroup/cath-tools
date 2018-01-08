@@ -92,13 +92,13 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 
 	// If CSS requested, export it
 	if ( css_file_opt ) {
-		ofstream_list oftreams{ arg_stdout };
-		const auto ostream_refs = oftreams.open_ofstreams( { *css_file_opt } );
+		ofstream_list ofstreams{ arg_stdout };
+		const auto ostream_refs = ofstreams.open_ofstreams( { *css_file_opt } );
 		if ( ostream_refs.size() != 1 ) {
 			BOOST_THROW_EXCEPTION(out_of_range_exception("argh"));
 		}
 		ostream_refs.front().get() << resolve_hits_html_outputter::css_string();
-		oftreams.close_all();
+		ofstreams.close_all();
 	}
 
 	// If no input specified, stop here
@@ -120,9 +120,9 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 	istream &the_istream_ref = ( read_from_stdin ? arg_istream : input_file_stream );
 
 	// Prepare a read_and_process_mgr object
-	ofstream_list oftreams{ arg_stdout };
+	ofstream_list ofstreams{ arg_stdout };
 	read_and_process_mgr the_read_and_process_mgr = make_read_and_process_mgr(
-		oftreams,
+		ofstreams,
 		arg_crh_spec
 	);
 
@@ -192,7 +192,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 	}
 
 	// Close any open file streams
-	oftreams.close_all();
+	ofstreams.close_all();
 	if ( input_file_opt ) {
 		input_file_stream.close();
 	}
