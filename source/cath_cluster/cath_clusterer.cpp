@@ -87,31 +87,9 @@ void cath::clust::perform_cluster(const cath_cluster_options &arg_opts,    ///< 
 	const strength_vec  cutoffs        = get_sorted_dissims     ( clust_spec, the_link_dirn );
 	const strength      the_max_dissim = get_max_dissim         ( clust_spec, the_link_dirn );
 
-	// strength
-	// expect: (ascending)
-	// 35, 60, 95, 100
-	// results: (negate and *re*sort ascending; new last ie biggest)
-	// -100, -95, -60, -35
-	// -35
-
-	// distance
-	// expect: (descending)
-	// 4, 3, 2, 1
-	// results: (*re*sort ascending; new last ie biggest)
-	// 1, 2, 3, 4
-	// 4
-
 	if ( level_warning ) {
 		BOOST_LOG_TRIVIAL( warning ) << *level_warning;
 	}
-
-	// std::cerr << "Levels : ";
-	// for (const auto &x : cutoffs ) {
-	// 	std::cerr << " " << x;
-	// }
-	// std::cerr << "\n";
-	// std::cerr << "Size is : " << cutoffs.size() << "\n";
-	// // std::cerr << clust_spec;
 
 	// Organise the input stream
 	path_or_istream istream_wrapper{ arg_istream };
