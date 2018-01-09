@@ -22,10 +22,20 @@
 
 #include "clustagglom/hierarchy.hpp"
 
+using namespace ::cath::clust;
+using namespace ::cath::common;
+
+using ::boost::test_tools::per_element;
+
 BOOST_AUTO_TEST_SUITE(hierarchy_test_suite)
 
-BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_TEST( true );
+BOOST_AUTO_TEST_CASE(get_rep_indices_of_single_direct_entry_returns_that_entry) {
+	constexpr auto array_of_zero  = make_array( 0_z );
+	const hierarchy the_hierarchy = make_hierarchy_from_reversed_without_root_layer(
+		{ hierarchy_layer{} },
+		array_of_zero
+	);
+	BOOST_TEST( get_rep_indices( the_hierarchy ) == array_of_zero, per_element{} );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

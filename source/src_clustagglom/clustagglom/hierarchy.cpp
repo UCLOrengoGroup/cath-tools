@@ -203,7 +203,9 @@ size_vec cath::clust::get_rep_indices(const hierarchy &arg_hierarchy ///< The hi
 	return transform_build<size_vec>(
 		front( front( arg_hierarchy ) ),
 		[&] (const hierarchy_value &x) {
-			return front( back( arg_hierarchy )[ x.get_index() ] ).get_index();
+			return ( x.get_type() == hierarchy_ref::ENTRY )
+				? x.get_index()
+				: front( back( arg_hierarchy )[ x.get_index() ] ).get_index();
 		}
 	);
 }
