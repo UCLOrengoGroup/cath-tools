@@ -83,7 +83,7 @@ void cath::clust::perform_cluster(const cath_cluster_options &arg_opts,    ///< 
 	const link_dirn    &the_link_dirn  = in_spec.get_link_dirn();
 	const size_t       &column_idx     = in_spec.get_column_idx();
 	const path_opt     &links_infile   = in_spec.get_links_infile();
-	const str_opt       warning        = get_dissim_sort_warning( clust_spec, the_link_dirn );
+	const str_opt       level_warning  = get_dissim_sort_warning( clust_spec, the_link_dirn );
 	const strength_vec  cutoffs        = get_sorted_dissims     ( clust_spec, the_link_dirn );
 	const strength      the_max_dissim = get_max_dissim         ( clust_spec, the_link_dirn );
 
@@ -101,9 +101,8 @@ void cath::clust::perform_cluster(const cath_cluster_options &arg_opts,    ///< 
 	// 1, 2, 3, 4
 	// 4
 
-
-	if ( warning ) {
-		BOOST_LOG_TRIVIAL( warning ) << *warning;
+	if ( level_warning ) {
+		BOOST_LOG_TRIVIAL( warning ) << *level_warning;
 	}
 
 	// std::cerr << "Levels : ";
