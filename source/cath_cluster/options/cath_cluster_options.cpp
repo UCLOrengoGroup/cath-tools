@@ -67,8 +67,13 @@ str_opt cath_cluster_options::do_get_error_or_help_string() const {
 
 /// \brief Get a string to prepend to the standard help
 string cath_cluster_options::do_get_help_prefix_string() const {
-	return "Usage: " + PROGRAM_NAME
-		+ " --" + cath_cluster_input_options_block::PO_LINK_DIRN + R"( <dirn> [options] <input_file>
+	return "Usage: "
+		+ PROGRAM_NAME
+		+ " --"
+		+ cath_cluster_input_options_block::PO_LINK_DIRN
+		+ R"( <dirn> --)"
+		+ cath_cluster_clustering_options_block::PO_LEVELS
+		+ R"( <levels> [options] <input_file>
 
 )" + get_overview_string() + R"(
 
