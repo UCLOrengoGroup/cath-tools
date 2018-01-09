@@ -62,6 +62,9 @@ namespace cath {
 			void close_all();
 		};
 
+		ostream_ref open_ofstream(ofstream_list &,
+		                          const boost::filesystem::path &);
+
 	} // namespace common
 } // namespace cath
 

@@ -21,10 +21,12 @@
 #include "ofstream_list.hpp"
 
 #include "common/algorithm/transform_build.hpp"
+#include "common/exception/out_of_range_exception.hpp"
 #include "common/file/open_fstream.hpp"
 
 #include <fstream>
 
+using namespace cath;
 using namespace cath::common;
 
 using boost::filesystem::path;
@@ -66,4 +68,18 @@ void ofstream_list::close_all() {
 	for (ofstream &the_ofstream: ofstreams) {
 		the_ofstream.close();
 	}
+}
+
+/// \brief Open a single path and add it to the outputs in the specified ofstream_list
+///
+/// \relates ofstream_list
+ostream_ref cath::common::open_ofstream(ofstream_list &arg_ofstreams, ///< The ofstream_list in which to open the path
+                                        const path    &arg_path       ///< The path to open
+                                        ) {
+	ostream_ref_vec ostream_refs = arg_ofstreams.open_ofstreams( { arg_path } );
+	if ( ostream_refs.size() != 1 ) {
+		BOOST_THROW_EXCEPTION(out_of_range_exception("Did not get back one ostream from opening one file"));
+	}
+	ostream_ref result = std::move( ostream_refs.back() );
+	return result;
 }
