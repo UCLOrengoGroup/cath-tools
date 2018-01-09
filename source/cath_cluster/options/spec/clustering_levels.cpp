@@ -20,6 +20,7 @@
 
 #include "clustering_levels.hpp"
 
+#include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/classification.hpp>
 
 #include "common/algorithm/transform_build.hpp"
@@ -31,6 +32,7 @@ using namespace ::cath::common;
 
 using ::boost::algorithm::is_any_of;
 using ::boost::any;
+using ::boost::lexical_cast;
 using ::std::istream;
 using ::std::string;
 
@@ -45,7 +47,7 @@ std::istream & cath::clust::operator>>(istream           &arg_is,               
 
 	arg_clustering_levels.levels = transform_build<strength_vec>(
 		split_build<str_vec>( input_string, is_any_of( "," ) ),
-		[] (const string &x) { return stod( x ); }
+		[] (const string &x) { return lexical_cast<strength>( x ); }
 	);
 
 	return arg_is;
