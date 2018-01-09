@@ -23,6 +23,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/count.hpp>
 
+#include "cath_cluster/options/options_block/cath_cluster_output_options_block.hpp"
 #include "common/algorithm/is_uniq.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
 #include "common/cpp20/make_array.hpp"
@@ -33,6 +34,7 @@ using namespace ::cath::common;
 using namespace ::std::literals::string_literals;
 
 using ::boost::filesystem::path;
+using ::boost::make_optional;
 using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::count;
@@ -134,6 +136,17 @@ path_vec cath::clust::get_all_output_paths(const cath_cluster_output_spec &arg_o
 		the_paths.push_back( *arg_output_spec.get_sorted_links_to_file() );
 	}
 	return the_paths;
+}
+
+/// \brief If any of the specified output files require single-level clustering, return
+///        one of their corresponding option names, else return none
+///
+/// \relates cath_cluster_output_spec
+str_opt cath::clust::has_output_requiring_single_level_clustering(const cath_cluster_output_spec &arg_output_spec ///< The cath_cluster_output_spec to query
+                                                                  ) {
+	return arg_output_spec.get_clust_spans_to_file() ? make_optional( cath_cluster_output_options_block::PO_CLUST_SPANS_TO_FILE ) :
+	       arg_output_spec.get_reps_to_file()        ? make_optional( cath_cluster_output_options_block::PO_REPS_TO_FILE        ) :
+	                                                   none;
 }
 
 /// \brief Generate a description of any problem that makes the specified cath_cluster_output_spec invalid

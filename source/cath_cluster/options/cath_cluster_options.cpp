@@ -55,6 +55,13 @@ positional_options_description cath_cluster_options::get_positional_options() {
 /// \returns Any error/help string arising from the newly specified options
 ///          or an empty string if there aren't any
 str_opt cath_cluster_options::do_get_error_or_help_string() const {
+	const auto orslc = has_output_requiring_single_level_clustering( get_cath_cluster_output_spec() );
+	if ( orslc && get_cath_cluster_clustering_spec().get_levels().size() > 1 ) {
+		return "Cannot use --"
+			+ *orslc
+			+ " output when generating more than one level of clustering";
+	}
+
 	return none;
 }
 
