@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_SRC_CLUSTAGGLOM_CLUSTAGGLOM_LINK_LIST_HPP
 #define _CATH_TOOLS_SOURCE_SRC_CLUSTAGGLOM_CLUSTAGGLOM_LINK_LIST_HPP
 
-#include "clustagglom/clustagglom_type_aliases.hpp"
+#include "clustagglom/link_dirn.hpp"
 #include "clustagglom/link.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 

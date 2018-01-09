@@ -37,12 +37,6 @@ namespace cath { namespace clust { struct merge; } }
 namespace cath {
 	namespace clust {
 
-		/// \brief Whether the link between items/clusters is a measure of dissimilarity or strength (ie similarity)
-		enum class link_dirn : bool {
-			DISSIMILARITY, ///< The link is a measure of dissimilarity
-			STRENGTH,      ///< The link is a measure of strength (ie similarity)
-		};
-
 		/// \brief Type alias for a vector of hierarchy_group objects
 		using hierarchy_group_vec        = std::vector<hierarchy_group>;
 

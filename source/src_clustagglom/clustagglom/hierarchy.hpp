@@ -23,7 +23,7 @@
 
 #include <boost/filesystem/path.hpp>
 
-#include "clustagglom/clustagglom_type_aliases.hpp"
+#include "clustagglom/link_dirn.hpp"
 #include "clustagglom/hierarchy/hierarchy_layer.hpp"
 #include "common/boost_addenda/range/front.hpp"
 #include "common/boost_addenda/range/indices.hpp"
@@ -35,7 +35,17 @@
 
 using namespace cath::common::literals;
 
+namespace cath { namespace clust { class links; } }
 namespace cath { namespace common { class id_of_str_bidirnl; } }
+
+namespace cath {
+
+	/// \brief Type alias for a vector of size_size_pair_vec
+	///
+	/// \TODO Move to common/type_aliases.hpp
+	using size_size_pair_vec_vec = std::vector<size_size_pair_vec>;
+
+} // namespace cath
 
 namespace cath {
 	namespace clust {
@@ -159,6 +169,35 @@ namespace cath {
 		void write_cluster(const boost::filesystem::path &,
 		                   const hierarchy &,
 		                   const common::id_of_str_bidirnl &);
+
+		size_vec get_rep_indices(const hierarchy &);
+
+		size_vec_vec get_index_groups(const hierarchy &);
+
+		size_size_pair_vec_vec get_spanning_trees(const hierarchy &,
+		                                          const links &);
+
+		std::ostream & write_spanning_trees(std::ostream &,
+		                                    const size_size_pair_vec_vec &,
+		                                    const common::id_of_str_bidirnl &);
+
+		std::ostream & write_spanning_trees(std::ostream &,
+		                                    const hierarchy &,
+		                                    const common::id_of_str_bidirnl &,
+		                                    const links &);
+
+		void write_spanning_trees(const boost::filesystem::path &,
+		                          const hierarchy &,
+		                          const common::id_of_str_bidirnl &,
+		                          const links &);
+
+		std::ostream & write_reps(std::ostream &,
+		                          const hierarchy &,
+		                          const common::id_of_str_bidirnl &);
+
+		void write_reps(const boost::filesystem::path &,
+		                const hierarchy &,
+		                const common::id_of_str_bidirnl &);
 
 		hierarchy make_hierarchy_from_reversed_layers(hierarchy_layer_vec);
 

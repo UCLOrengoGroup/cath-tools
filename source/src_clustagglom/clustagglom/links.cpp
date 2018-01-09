@@ -29,6 +29,7 @@
 
 #include "clustagglom/link.hpp"
 #include "common/algorithm/copy_build.hpp"
+#include "common/boost_addenda/graph/spanning_tree.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/container/id_of_str_bidirnl.hpp"
 #include "common/file/open_fstream.hpp"
@@ -37,6 +38,7 @@
 #include <fstream>
 #include <tuple>
 
+using namespace cath;
 using namespace cath::common;
 using namespace cath::clust;
 
@@ -64,6 +66,31 @@ links cath::clust::make_links(const item_item_strength_tpl_vec &arg_raw_links //
 		[&] (const item_item_strength_tpl &x) { add_link_symmetrically( result, x ); }
 	);
 	return result;
+}
+
+/// \brief Get a spanning tree for the specified subset of items in the specified links
+///
+/// \pre The items in arg_index_group must be spanned by arg_links
+///
+/// \relates links
+size_size_pair_vec cath::clust::get_spanning_tree_of_subset(const links    &arg_links,      ///< The links from which the spanning tree should be formed
+                                                            const size_set &arg_index_group ///< The items over which the spanning tree should be formed
+                                                            ) {
+	size_size_doub_tpl_vec relevant_links;
+	relevant_links.reserve( arg_index_group.size() );
+	for (const size_t &index : arg_index_group) {
+		for (const link &x : arg_links[ index ] ) {
+			if ( x.node < index && contains( arg_index_group, x.node ) ) {
+				relevant_links.emplace_back(
+					x.node,
+					index,
+					x.dissim
+				);
+			}
+		}
+	}
+
+	return get_edges_of_spanning_tree( calc_min_spanning_tree( relevant_links, arg_index_group.size() ) );
 }
 
 /// \brief Generate a string describing the specified links

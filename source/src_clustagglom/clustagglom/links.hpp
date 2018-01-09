@@ -24,9 +24,10 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
 
-#include "clustagglom/clustagglom_type_aliases.hpp"
+#include "clustagglom/link_dirn.hpp"
 #include "clustagglom/link.hpp"
 #include "clustagglom/link_list.hpp"
+#include "common/algorithm/contains.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/cpp17/apply.hpp"
 #include "common/cpp17/invoke.hpp"
@@ -215,6 +216,9 @@ namespace cath {
 		}
 
 		links make_links(const item_item_strength_tpl_vec &);
+
+		size_size_pair_vec get_spanning_tree_of_subset(const links &,
+		                                               const size_set &);
 
 		std::string to_string(const links &);
 

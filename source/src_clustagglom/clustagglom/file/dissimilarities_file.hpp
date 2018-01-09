@@ -24,7 +24,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
 
-#include "clustagglom/clustagglom_type_aliases.hpp"
+#include "clustagglom/link_dirn.hpp"
 #include "common/type_aliases.hpp"
 
 namespace cath { namespace clust { class links; } }
@@ -35,15 +35,18 @@ namespace cath {
 
 		links parse_dissimilarities(std::istream &,
 		                            common::id_of_str_bidirnl &,
-		                            const link_dirn &);
+		                            const link_dirn &,
+		                            const size_t & = 2);
 
 		links parse_dissimilarities(const std::string &,
 		                            common::id_of_str_bidirnl &,
-		                            const link_dirn &);
+		                            const link_dirn &,
+		                            const size_t & = 2);
 
 		links parse_dissimilarities(const boost::filesystem::path &,
 		                            common::id_of_str_bidirnl &,
-		                            const link_dirn &);
+		                            const link_dirn &,
+		                            const size_t & = 2);
 
 	} // namespace clust
 } // namespace cath

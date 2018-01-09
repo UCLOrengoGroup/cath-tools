@@ -18,6 +18,34 @@ set(
 )
 
 set(
+	NORMSOURCES_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK
+		cath_cluster/options/options_block/cath_cluster_clustering_options_block.cpp
+		cath_cluster/options/options_block/cath_cluster_input_options_block.cpp
+		cath_cluster/options/options_block/cath_cluster_output_options_block.cpp
+)
+
+set(
+	NORMSOURCES_CATH_CLUSTER_OPTIONS_SPEC
+		cath_cluster/options/spec/cath_cluster_clustering_spec.cpp
+		cath_cluster/options/spec/cath_cluster_input_spec.cpp
+		cath_cluster/options/spec/cath_cluster_output_spec.cpp
+		cath_cluster/options/spec/clustering_levels.cpp
+)
+
+set(
+	NORMSOURCES_CATH_CLUSTER_OPTIONS
+		cath_cluster/options/cath_cluster_options.cpp
+		${NORMSOURCES_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK}
+		${NORMSOURCES_CATH_CLUSTER_OPTIONS_SPEC}
+)
+
+set(
+	NORMSOURCES_CATH_CLUSTER
+		cath_cluster/cath_clusterer.cpp
+		${NORMSOURCES_CATH_CLUSTER_OPTIONS}
+)
+
+set(
 	NORMSOURCES_CATH_REFINE_ALIGN_OPTIONS
 		cath_refine_align/options/cath_refine_align_options.cpp
 )
@@ -182,6 +210,11 @@ set(
 )
 
 set(
+	NORMSOURCES_EXECUTABLES_CATH_CLUSTER
+		executables/cath_cluster/cath_cluster.cpp
+)
+
+set(
 	NORMSOURCES_EXECUTABLES_CATH_EXTRACT_PDB
 		executables/cath_extract_pdb/cath_extract_pdb.cpp
 )
@@ -225,6 +258,7 @@ set(
 	NORMSOURCES_EXECUTABLES
 		${NORMSOURCES_EXECUTABLES_CATH_ASSIGN_DOMAINS}
 		${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}
+		${NORMSOURCES_EXECUTABLES_CATH_CLUSTER}
 		${NORMSOURCES_EXECUTABLES_CATH_EXTRACT_PDB}
 		${NORMSOURCES_EXECUTABLES_CATH_MAP_CLUSTERS}
 		${NORMSOURCES_EXECUTABLES_CATH_REFINE_ALIGN}
@@ -412,6 +446,7 @@ set(
 		src_clustagglom/clustagglom/get_sorting_scores.cpp
 		src_clustagglom/clustagglom/hierarchy.cpp
 		${NORMSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_HIERARCHY}
+		src_clustagglom/clustagglom/link_dirn.cpp
 		src_clustagglom/clustagglom/link_list.cpp
 		src_clustagglom/clustagglom/links.cpp
 		src_clustagglom/clustagglom/make_clusters_from_merges.cpp
@@ -1281,6 +1316,31 @@ set(
 set(
 	TESTSOURCES_CATH_ASSIGN_DOMAINS
 		${TESTSOURCES_CATH_ASSIGN_DOMAINS_OPTIONS}
+)
+
+set(
+	TESTSOURCES_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK
+		cath_cluster/options/options_block/cath_cluster_clustering_options_block_test.cpp
+		cath_cluster/options/options_block/cath_cluster_input_options_block_test.cpp
+		cath_cluster/options/options_block/cath_cluster_output_options_block_test.cpp
+)
+
+set(
+	TESTSOURCES_CATH_CLUSTER_OPTIONS_SPEC
+		cath_cluster/options/spec/cath_cluster_clustering_spec_test.cpp
+)
+
+set(
+	TESTSOURCES_CATH_CLUSTER_OPTIONS
+		cath_cluster/options/cath_cluster_options_test.cpp
+		${TESTSOURCES_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK}
+		${TESTSOURCES_CATH_CLUSTER_OPTIONS_SPEC}
+)
+
+set(
+	TESTSOURCES_CATH_CLUSTER
+		cath_cluster/cath_clusterer_test.cpp
+		${TESTSOURCES_CATH_CLUSTER_OPTIONS}
 )
 
 set(
