@@ -62,7 +62,10 @@ namespace cath {
 
 			// Attempt to lexical_cast value_string and if it fails, throw an invalid_option_value exception
 			try {
-				return U{ boost::lexical_cast<T>( value_string ) };
+				// Come all GCC versions > 4.9, just use `U{  }` rather than the `static_cast`
+				// which appears to confuse older GCCs to try aggregate initialization over copy
+				// construction in some cases
+				return static_cast<U>( boost::lexical_cast<T>( value_string ) );
 			}
 			catch (...) {
 				BOOST_THROW_EXCEPTION( boost::program_options::invalid_option_value( value_string ) );
