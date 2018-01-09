@@ -46,10 +46,10 @@ using ::std::unique_ptr;
 const string cath_cluster_input_options_block::PO_LINKS_INFILE { "links-infile" };
 
 /// \brief The option name for the direction of links in the input
-const string cath_cluster_input_options_block::PO_LINK_DIRN    { "link_dirn"    };
+const string cath_cluster_input_options_block::PO_LINK_DIRN    { "link-dirn"    };
 
 /// \brief The option name for the index of the column from which the link values are to be read
-const string cath_cluster_input_options_block::PO_COLUMN_IDX   { "column_idx"   };
+const string cath_cluster_input_options_block::PO_COLUMN_IDX   { "column-idx"   };
 
 /// \brief The option name for an optional file from which names should be read
 const string cath_cluster_input_options_block::PO_NAMES_INFILE { "names-infile" };
