@@ -36,7 +36,7 @@ namespace cath {
 		using istream_ref = std::reference_wrapper<std::istream>;
 
 		/// \brief Type alias for an optional reference_wrapper of istream
-		using ostream_ref_opt = boost::optional<istream_ref>;
+		using istream_ref_opt = boost::optional<istream_ref>;
 
 		/// \brief Handle opening a file and providing an istream, with support for
 		///        a special flag which indicates input from the istream optionally specified on construction
@@ -45,7 +45,7 @@ namespace cath {
 		class path_or_istream final {
 		private:
 			/// \brief An optional special istream from which input can be read (usually stdin)
-			ostream_ref_opt standard_instream;
+			istream_ref_opt standard_instream;
 
 			/// \brief A flag that can be used when passing a path to indicate input should be read from the standard_instream
 			boost::filesystem::path standard_instream_flag = "-";
@@ -64,6 +64,8 @@ namespace cath {
 			std::istream & get_istream();
 		};
 
+		bool file_is_missing(const path_or_istream &,
+		                     const boost::filesystem::path &);
 
 	} // namespace common
 } // namespace cath

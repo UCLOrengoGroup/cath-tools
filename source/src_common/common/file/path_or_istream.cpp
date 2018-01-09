@@ -39,17 +39,12 @@ path_or_istream & path_or_istream::set_path(const path &arg_file ///< The path t
 	if ( input_file_stream ) {
 		input_file_stream->close();
 	}
-	if ( arg_file.string() != "-" || ! standard_instream ) {
+	if ( arg_file != get_flag() || ! standard_instream ) {
 		input_file_stream.emplace();
 		open_ifstream( *input_file_stream, arg_file );
 	}
 	return *this;
 }
-
-
-
-
-
 
 /// \brief Get the flag, which is used to indicate when input should be read from the special istream
 const path & path_or_istream::get_flag() const {
@@ -69,4 +64,18 @@ path_or_istream & path_or_istream::close() {
 istream & path_or_istream::get_istream() {
 	return input_file_stream ? static_cast<istream &>( *input_file_stream )
 	                         : standard_instream->get();
+}
+
+/// \brief Return whether the specified file will actually be used by the specified
+///        path_or_istream (ie is not the special flag) but is missing
+///
+/// \relates path_or_istream
+bool cath::common::file_is_missing(const path_or_istream &arg_path_or_istream, ///< The path_or_istream containing the special flag to indicate whether the input should be read from an istream rather than a file
+                                   const path            &arg_file             ///< The file in question
+                                   ) {
+	return (
+		arg_file != arg_path_or_istream.get_flag()
+		&&
+		! exists( arg_file )
+	);
 }
