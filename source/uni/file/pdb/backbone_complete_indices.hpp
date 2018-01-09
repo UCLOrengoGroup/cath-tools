@@ -21,9 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_FILE_PDB_BACKBONE_COMPLETE_INDICES_HPP
 #define _CATH_TOOLS_SOURCE_UNI_FILE_PDB_BACKBONE_COMPLETE_INDICES_HPP
 
+#include <boost/algorithm/cxx11/is_sorted.hpp>
 #include <boost/optional.hpp>
 #include <boost/range/algorithm/lower_bound.hpp>
-#include <boost/range/algorithm_ext/is_sorted.hpp>
 
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/type_aliases.hpp"
@@ -71,9 +71,8 @@ namespace cath {
 		/// \brief Ctor from a vector of indices
 		inline backbone_complete_indices::backbone_complete_indices(size_vec arg_indices ///< The vector of indices
 		                                                            ) : indices{ arg_indices } {
-			// Test that the indices are ascending
-			// (using <= to ensure they're *strictly* ascending)
-			assert( boost::range::is_sorted( indices, std::less_equal<>{} ) );
+			// Test that the indices are *strictly* increasing
+			assert( boost::algorithm::is_strictly_increasing( indices ) );
 		}
 
 		/// \brief Whether this contains any backbone_complete indices
