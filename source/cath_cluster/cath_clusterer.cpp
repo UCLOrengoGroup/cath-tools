@@ -46,6 +46,7 @@ using namespace ::cath::opts;
 
 using ::boost::filesystem::path;
 using ::boost::log::trivial::warning;
+using ::boost::make_optional;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::move;
@@ -171,9 +172,12 @@ void cath::clust::perform_cluster(const cath_cluster_options &arg_opts,    ///< 
 	);
 
 	// If clusters output has been requested then write it
-	if ( out_spec.get_clusters_to_file() ) {
+	const path_opt clusters_to_file = ( get_num_output_paths( out_spec ) == 0 )
+	                                  ? make_optional( ofstreams.get_flag() )
+	                                  : out_spec.get_clusters_to_file();
+	if ( clusters_to_file ) {
 		write_cluster(
-			open_ofstream( ofstreams, *out_spec.get_clusters_to_file() ).get(),
+			open_ofstream( ofstreams, *clusters_to_file ).get(),
 			the_hierarchy,
 			the_name_ider
 		);

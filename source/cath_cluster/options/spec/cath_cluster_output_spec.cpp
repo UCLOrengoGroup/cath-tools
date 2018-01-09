@@ -25,6 +25,7 @@
 
 #include "common/algorithm/is_uniq.hpp"
 #include "common/algorithm/sort_uniq_copy.hpp"
+#include "common/cpp20/make_array.hpp"
 
 using namespace ::cath;
 using namespace ::cath::clust;
@@ -94,6 +95,21 @@ cath_cluster_output_spec & cath_cluster_output_spec::set_sorted_links_to_file(co
                                                                               ) {
 	sorted_links_to_file = arg_sorted_links_to_file;
 	return *this;
+}
+
+/// \brief Get the number of output paths implied by the specified cath_cluster_output_spec
+///
+/// \relates cath_cluster_output_spec
+size_t cath::clust::get_num_output_paths(const cath_cluster_output_spec &arg_output_spec ///< The cath_cluster_output_spec to query
+                                         ) {
+	const auto file_presences = make_array(
+		static_cast<bool>( arg_output_spec.get_clusters_to_file    () ),
+		static_cast<bool>( arg_output_spec.get_merges_to_file      () ),
+		static_cast<bool>( arg_output_spec.get_clust_spans_to_file () ),
+		static_cast<bool>( arg_output_spec.get_reps_to_file        () ),
+		static_cast<bool>( arg_output_spec.get_sorted_links_to_file() )
+	);
+	return static_cast<size_t>( count( file_presences, true ) );
 }
 
 /// \brief Get all output paths implied by the specified cath_cluster_output_spec

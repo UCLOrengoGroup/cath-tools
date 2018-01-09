@@ -61,6 +61,8 @@ namespace cath {
 			cath_cluster_output_spec & set_sorted_links_to_file(const path_opt &);
 		};
 
+		size_t get_num_output_paths(const cath_cluster_output_spec &);
+
 		path_vec get_all_output_paths(const cath_cluster_output_spec &);
 
 		str_opt get_invalid_description(const cath_cluster_output_spec &);
