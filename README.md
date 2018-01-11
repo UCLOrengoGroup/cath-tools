@@ -52,6 +52,9 @@ Acknowledgements
 
 `cath-ssap` typically uses [DSSP](https://github.com/cmbi/xssp), either by reading DSSP files or via its own implementation of the DSSP algorithms.
 
+`cath-cluster` uses Fionn Murtagh's reciprocal-nearest-neighbour algorithm (see [Multidimensional clustering algorithms, volume 4 of Compstat Lectures.
+Physica-Verlag, Würzburg/ Wien, 1985. ISBN 3-7051-0008-4](http://www.multiresolutions.com/strule/MClA/)) as described and refined in Daniel Müllner's [Modern hierarchical, agglomerative clustering algorithms](https://arxiv.org/abs/1109.2378) (2011, arXiv:1109.2378).
+
 Feedback
 --------
 
