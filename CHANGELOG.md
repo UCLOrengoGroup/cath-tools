@@ -1,6 +1,11 @@
 # Summary of changes in cath-tools releases
 
 
+### [v0.16.2](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.16.2) cath-cluster: fast, simple complete-linkage clustering
+
+2018-01-09 &nbsp; 
+
+
 ### [v0.16.0](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.16.0) Add some new features; address some old issues
 
 2018-01-03 &nbsp; Improvements to `cath-superpose`:
