@@ -1,1 +1,16 @@
 doxygen_documentation
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+source/CMakeFiles
+source/Makefile
+source/cath_tools_git_version/
+source/cmake_install.cmake
+source/libct_biocore.a
+source/libct_cath_score_align.a
+source/libct_chopping.a
+source/libct_common.a
+source/libct_display_colour.a
+source/libct_options.a
+source/libct_uni.a

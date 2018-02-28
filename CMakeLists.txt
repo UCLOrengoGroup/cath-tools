@@ -7,7 +7,11 @@ MESSAGE( STATUS "Running under CMake v" ${CMAKE_VERSION} )
 # If on Linux, get the release codename
 IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
 	find_program   ( LSB_RELEASE lsb_release )
-	execute_process( COMMAND ${LSB_RELEASE} -cs OUTPUT_VARIABLE LSB_RELEASE_CODE OUTPUT_STRIP_TRAILING_WHITESPACE)
+	IF( NOT LSB_RELEASE )
+		SET( LSB_RELEASE_CODE "Unspecified" )
+	ELSE()
+		execute_process( COMMAND ${LSB_RELEASE} -cs OUTPUT_VARIABLE LSB_RELEASE_CODE OUTPUT_STRIP_TRAILING_WHITESPACE)
+	ENDIF()
 ELSE()
 	# Else set LSB_RELEASE_CODE to something else so the upcoming STREQUAL makes sense
 	SET( LSB_RELEASE_CODE ${CMAKE_SYSTEM_NAME} )
