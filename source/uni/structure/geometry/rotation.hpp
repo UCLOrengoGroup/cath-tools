@@ -381,6 +381,8 @@ namespace cath {
 					}
 				}
 			}
+#else
+			boost::ignore_unused( tolerance );
 #endif
 		}
 
