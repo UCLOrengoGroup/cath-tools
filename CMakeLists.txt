@@ -66,9 +66,9 @@ else()
 	SET( GSL_LIB_SUFFIX "${GSL_STATIC_LIB}" "${GSLCBLAS_STATIC_LIB}" )
 endif()
 
-if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
+if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" OR ${LSB_RELEASE_CODE} STREQUAL "Unspecified")
 	SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
-	MESSAGE( STATUS "Since this is running on Ubuntu 16.10 (yakkety), overriding GSL libraries to be : " ${GSL_LIB_SUFFIX} )
+	MESSAGE( STATUS "Since this is likely running on a system which does not include the Gnu Scientific Library in a statically linking form, changing to use dynamically linking form: " ${GSL_LIB_SUFFIX} )
 endif()
 
 IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
