@@ -27,6 +27,25 @@
 
 namespace cath {
 
+	namespace detail {
+
+		/// \brief Implementation of make_char_arr() with the indices of the integers as template parameters
+		template <size_t Length, size_t... Indices>
+		constexpr auto make_char_arr_impl(const char ( &arg_cstring )[ Length ],    ///< The C-string from which the std::array should be built
+		                                  std::integer_sequence<size_t, Indices...> ///< integer_sequence encoding the indices of the individual characters
+		                                  ) {
+			return std::array<char, Length>{ arg_cstring[ Indices ]... };
+		}
+
+	} // namespace detail
+
+	/// \brief Make a std::array of the characters in the specified C-string
+	template <size_t Length>
+	constexpr auto make_char_arr(const char ( &arg_cstring )[ Length ] ///< The C-string from which the std::array should be built
+	                             ) {
+		return detail::make_char_arr_impl( arg_cstring, std::make_index_sequence<Length>{} );
+	}
+
 	/// \brief A type alias for a std::array of 2 chars
 	using char_2_arr = std::array<char, 2>;
 
