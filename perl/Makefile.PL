@@ -30,7 +30,7 @@ test_requires 'MooseX::Types::Path::Class';
 test_requires 'namespace::autoclean';
 test_requires 'Path::Class';
 test_requires 'Readonly';
-test_requires 'Test::Benchmark';
+#test_requires 'Test::Benchmark'; # not installing cleanly
 test_requires 'Test::Class::Load';
 test_requires 'Test::Files';
 test_requires 'Test::More';
