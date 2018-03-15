@@ -56,9 +56,15 @@ else()
 	SET( GSL_LIB_SUFFIX "${GSL_STATIC_LIB}" "${GSLCBLAS_STATIC_LIB}" )
 endif()
 
+<<<<<<< HEAD
 if ( NOT USE_STATIC_GSL )
 	SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 	MESSAGE( STATUS "Directed to use dynamic Gnu Scientific Library, overriding GSL libraries to be : " ${GSL_LIB_SUFFIX} )
+=======
+if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" OR ${LSB_RELEASE_CODE} STREQUAL "Unspecified")
+	SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
+	MESSAGE( STATUS "Since this is likely running on a system which does not include the Gnu Scientific Library in a statically linking form, changing to use dynamically linking form: " ${GSL_LIB_SUFFIX} )
+>>>>>>> 86a6eafbfcc0a7f5c89bb16e06ed959f9d767617
 endif()
 
 IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
