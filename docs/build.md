@@ -85,7 +85,14 @@ Once you've built the binaries, run the build tests to sanity check the build. F
 If your machine has Perl, you can also try running the Perl tests (which includes a run of `build-test` as one of the tests):
 
  * Set the environment variable `CATH_TOOLS_BIN_DIR` to the location of the built binaries
- * From the root directory of the project, run `prove -l -v t`
+ * Make sure your Perl has access to the required dependencies (if you have [cpanm](https://metacpan.org/pod/distribution/Menlo/script/cpanm-menlo) installed then try `cpanm --installdeps ./perl`)
+ * From the root directory of the project, run `prove -l -v perl/t`
+
+Assuming you have already built the binaries (in the project root):
+
+```no-highlight
+$ CATH_TOOLS_BIN_DIR=. prove -l -v ./perl/t
+```
 
 # Building on CentOS 6
 
@@ -149,7 +156,7 @@ index 3badace..06520a3 100644
 @@ -53,14 +53,18 @@ foreach (loop_var RANGE ${GSL_LIBRARIES})
   list(APPEND GSL_DYN_LINK_FLAGS "-l${loop_var}")
 endforeach(loop_var)
- 
+
 -if( BUILD_SHARED_LIBS )
 -       add_definitions( -DBOOST_ALL_DYN_LINK )
 -       add_definitions( -DBOOST_LOG_DYN_LINK )
@@ -168,7 +175,7 @@ endforeach(loop_var)
        SET( GSL_LIB_SUFFIX "${GSL_STATIC_LIB}" "${GSLCBLAS_STATIC_LIB}" )
 -endif()
 +#endif()
- 
+
 if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
        SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 ~~~
