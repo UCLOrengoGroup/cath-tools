@@ -66,7 +66,9 @@ $ cmake -DCMAKE_BUILD_TYPE=RELEASE .
 $ make
 ~~~
 
-NOTE: If you have multiple cores, you can make compiling faster by specifying that it may compile up to N sources simultaneously by appending `-j [N]` to the end of the make command.
+NOTE:
+ * If you have multiple cores, you can make compiling faster by specifying that it may compile up to N sources simultaneously by appending `-j [N]` to the end of the make command.
+ * If your system does not have the Gnu Scientific Library available as a static library on Linux, you should pass `-D USE_STATIC_GSL:BOOL=FALSE` to cmake.
 
 With default Ubuntu config, this will build with GCC against GCC's standard library (libstdc++). If you instead want to build with Clang against Clang's standard C++ library (libc++), you'll need a version of Boost built with Clang and libc++. If you have one, then you can build with Clang by adding `-DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++` to the CMake command and build against libc++ by adding `-DBOOST_ROOT=ROOT_DIR_OF_YOUR_CLANG_BUILD_OF_BOOST` and `-DCMAKE_CXX_FLAGS="-stdlib=libc++"`.
 
@@ -84,8 +86,13 @@ Once you've built the binaries, run the build tests to sanity check the build. F
 
 If your machine has Perl, you can also try running the Perl tests (which includes a run of `build-test` as one of the tests):
 
+ * Change directory to `perl/`
  * Set the environment variable `CATH_TOOLS_BIN_DIR` to the location of the built binaries
  * From the root directory of the project, run `prove -l -v t`
+
+Note: the following perl modules are required: `Moose File::Slurp Path::Class Test::Files MooseX::Types::Combine MooseX::Types::Path::Class`
+
+Note: the following perl modules are suggested: `Test::Output MooseX::MarkAsMethods Moo Test::LeakTrace Algorithm::C3 SUPER Module::Refresh DateTime::Format::MySQL Declare::Constraints::Simple Test::Memory::Cycle Data::Visitor List::SomeUtils Specio::Library::Builtins Types::Standard Test::Pod::Coverage MooseX::Role::WithOverloading Mouse Mouse::PurePerl Pod::Coverage Moo::Role MooseX::Getopt`
 
 # Building on CentOS 6
 
@@ -149,7 +156,7 @@ index 3badace..06520a3 100644
 @@ -53,14 +53,18 @@ foreach (loop_var RANGE ${GSL_LIBRARIES})
   list(APPEND GSL_DYN_LINK_FLAGS "-l${loop_var}")
 endforeach(loop_var)
- 
+
 -if( BUILD_SHARED_LIBS )
 -       add_definitions( -DBOOST_ALL_DYN_LINK )
 -       add_definitions( -DBOOST_LOG_DYN_LINK )
@@ -168,7 +175,7 @@ endforeach(loop_var)
        SET( GSL_LIB_SUFFIX "${GSL_STATIC_LIB}" "${GSLCBLAS_STATIC_LIB}" )
 -endif()
 +#endif()
- 
+
 if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
        SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 ~~~
