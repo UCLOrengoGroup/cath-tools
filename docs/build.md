@@ -66,7 +66,9 @@ $ cmake -DCMAKE_BUILD_TYPE=RELEASE .
 $ make
 ~~~
 
-NOTE: If you have multiple cores, you can make compiling faster by specifying that it may compile up to N sources simultaneously by appending `-j [N]` to the end of the make command.
+NOTE:
+ * If you have multiple cores, you can make compiling faster by specifying that it may compile up to N sources simultaneously by appending `-j [N]` to the end of the make command.
+ * If your system does not have the Gnu Scientific Library available as a static library on Linux, you should pass `-D USE_STATIC_GSL:BOOL=FALSE` to cmake.
 
 With default Ubuntu config, this will build with GCC against GCC's standard library (libstdc++). If you instead want to build with Clang against Clang's standard C++ library (libc++), you'll need a version of Boost built with Clang and libc++. If you have one, then you can build with Clang by adding `-DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++` to the CMake command and build against libc++ by adding `-DBOOST_ROOT=ROOT_DIR_OF_YOUR_CLANG_BUILD_OF_BOOST` and `-DCMAKE_CXX_FLAGS="-stdlib=libc++"`.
 

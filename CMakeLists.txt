@@ -4,18 +4,8 @@ cmake_minimum_required (VERSION 3.2)
 
 MESSAGE( STATUS "Running under CMake v" ${CMAKE_VERSION} )
 
-# If on Linux, get the release codename
-IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
-	find_program   ( LSB_RELEASE lsb_release )
-	IF( NOT LSB_RELEASE )
-		SET( LSB_RELEASE_CODE "Unspecified" )
-	ELSE()
-		execute_process( COMMAND ${LSB_RELEASE} -cs OUTPUT_VARIABLE LSB_RELEASE_CODE OUTPUT_STRIP_TRAILING_WHITESPACE)
-	ENDIF()
-ELSE()
-	# Else set LSB_RELEASE_CODE to something else so the upcoming STREQUAL makes sense
-	SET( LSB_RELEASE_CODE ${CMAKE_SYSTEM_NAME} )
-ENDIF()
+# Set the default GSL library to be static, If on Linux, get the release codename
+SET(USE_STATIC_GSL TRUE CACHE BOOL "Build with the static Gnu Scientific Library")
 
 execute_process(
 	COMMAND git describe --tags --long
@@ -66,9 +56,9 @@ else()
 	SET( GSL_LIB_SUFFIX "${GSL_STATIC_LIB}" "${GSLCBLAS_STATIC_LIB}" )
 endif()
 
-if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
+if ( NOT USE_STATIC_GSL )
 	SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
-	MESSAGE( STATUS "Since this is running on Ubuntu 16.10 (yakkety), overriding GSL libraries to be : " ${GSL_LIB_SUFFIX} )
+	MESSAGE( STATUS "Directed to use dynamic Gnu Scientific Library, overriding GSL libraries to be : " ${GSL_LIB_SUFFIX} )
 endif()
 
 IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
@@ -114,7 +104,7 @@ add_compile_options(
 #  Could consider ~150)
 add_compile_options( $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:DEBUG>>:-D_GLIBCXX_DEBUG> )
 
-# *** TEMPORARY *** Prevent clang v3.6.0 from failing on Boost Concept checks due to unused local typedefs 
+# *** TEMPORARY *** Prevent clang v3.6.0 from failing on Boost Concept checks due to unused local typedefs
 add_compile_options($<$<AND:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_VERSION:3.6.0>>:-Wno-unused-local-typedef>)
 
 # Add colour diagnostics when using Clang with Ninja
