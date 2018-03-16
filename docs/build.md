@@ -88,7 +88,14 @@ If your machine has Perl, you can also try running the Perl tests (which include
 
  * Change directory to `perl/`
  * Set the environment variable `CATH_TOOLS_BIN_DIR` to the location of the built binaries
- * From the root directory of the project, run `prove -l -v t`
+ * Make sure your Perl has access to the required dependencies (if you have [cpanm](https://metacpan.org/pod/distribution/Menlo/script/cpanm-menlo) installed then try `cpanm --installdeps ./perl`)
+ * From the root directory of the project, run `prove -l -v perl/t`
+
+Assuming you have already built the binaries (in the project root):
+
+```no-highlight
+$ CATH_TOOLS_BIN_DIR=. prove -l -v ./perl/t
+```
 
 Note: the following perl modules are required: `Moose File::Slurp Path::Class Test::Files MooseX::Types::Combine MooseX::Types::Path::Class`
 
