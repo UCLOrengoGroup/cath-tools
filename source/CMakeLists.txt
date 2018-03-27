@@ -150,6 +150,20 @@ add_executable( cath-score-align    ${NORMSOURCES_EXECUTABLES_CATH_SCORE_ALIGN} 
 add_executable( cath-ssap           ${NORMSOURCES_EXECUTABLES_CATH_SSAP}           )
 add_executable( cath-superpose      ${NORMSOURCES_EXECUTABLES_CATH_SUPERPOSE}      )
 
+install(
+	TARGETS
+		cath-assign-domains
+		cath-cluster
+		cath-map-clusters
+		cath-refine-align
+		cath-resolve-hits
+		cath-score-align
+		cath-ssap
+		cath-superpose
+	DESTINATION
+		bin
+)
+
 #####################################################################
 #####################################################################
 
@@ -198,6 +212,15 @@ IF ( BUILD_EXTRA_CATH_TOOLS )
 	add_executable( cath-extract-pdb ${NORMSOURCES_EXECUTABLES_CATH_EXTRACT_PDB} )
 	add_executable( check-pdb        ${NORMSOURCES_EXECUTABLES_CATH_CHECK_PDB}   )
 	add_executable( snap-judgement   ${NORMSOURCES_EXECUTABLES_SNAP_JUDGEMENT}   )
+
+	install(
+		TARGETS
+			cath-extract-pdb
+			check-pdb
+			snap-judgement
+		DESTINATION
+			bin
+	)
 
 	target_link_libraries( cath-extract-pdb PRIVATE                   ct_uni ct_biocore ct_chopping ct_display_colour ct_options                                    Boost::iostreams Boost::serialization ${GSL_LIB_SUFFIX} )
 	target_link_libraries( check-pdb        PRIVATE                   ct_uni ct_biocore ct_chopping ct_display_colour ct_options                  Boost::filesystem Boost::iostreams Boost::serialization ${GSL_LIB_SUFFIX} )
