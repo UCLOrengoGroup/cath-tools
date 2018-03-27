@@ -24,6 +24,7 @@
 #include <boost/operators.hpp>
 #include <boost/tuple/tuple.hpp>
 
+#include "common/cpp20/make_array.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/rotation.hpp"
 
@@ -74,14 +75,14 @@ namespace cath {
 			superposition & post_translate(const geom::coord &);
 			superposition & post_rotate(const geom::rotation &);
 
-			static constexpr size_t               NUM_ENTRIES_IN_PAIRWISE_SUPERPOSITION     = 2;
-			static constexpr size_t               INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION  = 0;
-			static constexpr size_t               INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION = 1;
-			static constexpr std::array<char, 52> SUPERPOSITION_CHAIN_CHARS = { {
+			static constexpr size_t          NUM_ENTRIES_IN_PAIRWISE_SUPERPOSITION     = 2;
+			static constexpr size_t          INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION  = 0;
+			static constexpr size_t          INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION = 1;
+			static constexpr auto            SUPERPOSITION_CHAIN_CHARS = common::make_array(
 				'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
 				'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-			} };
-			static const     chain_label_vec      SUPERPOSITION_CHAIN_LABELS;
+			);
+			static const     chain_label_vec SUPERPOSITION_CHAIN_LABELS;
 		};
 
 		void post_translate_and_rotate(superposition &,

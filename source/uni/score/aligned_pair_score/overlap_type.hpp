@@ -22,9 +22,10 @@
 #define _CATH_TOOLS_SOURCE_UNI_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_TYPE_HPP
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
+#include "common/cpp20/make_array.hpp"
 #include "score/length_getter/length_getter_enum.hpp"
 
-#include <tuple>	
+#include <tuple>
 
 namespace cath {
 	namespace score {
@@ -36,11 +37,12 @@ namespace cath {
 			NUM_ALIGNED_OVER_LONGER   ///< TODOCUMENT
 		};
 
-		static constexpr std::array<std::tuple<overlap_type, detail::length_getter_enum, detail::length_getter_enum>, 3> all_overlap_types = { {
+		/// \brief TODOCUMENT
+		static constexpr auto all_overlap_types = common::make_array(
 			std::make_tuple( overlap_type::SHORTER_OVER_LONGER,      detail::length_getter_enum::SHORTER,     detail::length_getter_enum::LONGER  ),
 			std::make_tuple( overlap_type::NUM_ALIGNED_OVER_SHORTER, detail::length_getter_enum::NUM_ALIGNED, detail::length_getter_enum::SHORTER ),
 			std::make_tuple( overlap_type::NUM_ALIGNED_OVER_LONGER,  detail::length_getter_enum::NUM_ALIGNED, detail::length_getter_enum::LONGER  )
-		} };
+		);
 
 		static_assert( cath::common::constexpr_is_uniq( all_overlap_types ), "all_overlap_types should not contain any repeated entries" );
 

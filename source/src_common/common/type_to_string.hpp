@@ -28,6 +28,7 @@
 #include <boost/range/algorithm/mismatch.hpp>
 
 #include "common/cpp14/cbegin_cend.hpp"
+#include "common/cpp20/make_array.hpp"
 
 #include <array>
 #include <string>
@@ -97,7 +98,7 @@ namespace cath {
 			struct type_to_string_impl<T<Ts...>> final {
 				std::string operator()() const {
 					const auto wrapper_name = template_wrapper_name<T, Ts...>();
-					const std::array<std::string, sizeof...( Ts ) > param_names = { { type_to_string<Ts>()... } };
+					const auto param_names = make_array( type_to_string<Ts>()... );
 					return wrapper_name
 						+ "<"
 						+ boost::algorithm::join(

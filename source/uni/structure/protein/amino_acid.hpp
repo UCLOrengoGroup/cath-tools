@@ -133,32 +133,32 @@ namespace cath {
 	///       and constexpr_for_n() to generate lookups with minimal runtime overhead.
 	inline const char_char_3_arr_str_tpl_vec & amino_acid::LETTER_CODE_AND_NAME_LIST() {
 		static const char_char_3_arr_str_tpl_vec letter_code_and_name_list = {
-			std::make_tuple( 'A', char_3_arr{{ 'A','L','A' }}, "Alanine"                            ),
-			std::make_tuple( 'B', char_3_arr{{ 'A','S','X' }}, "Ambiguous Asparagine/Aspartic Acid" ), // eg PDBs 156b, 1kp0, 1pgk, 2atc, 2fmd, 2rxn, 3atc, 3bcl and 3e2o
-			std::make_tuple( 'C', char_3_arr{{ 'C','Y','S' }}, "Cysteine"                           ),
-			std::make_tuple( 'D', char_3_arr{{ 'A','S','P' }}, "Aspartic Acid"                      ),
-			std::make_tuple( 'E', char_3_arr{{ 'G','L','U' }}, "Glutamic Acid"                      ),
-			std::make_tuple( 'F', char_3_arr{{ 'P','H','E' }}, "Phenylalanine"                      ),
-			std::make_tuple( 'G', char_3_arr{{ 'G','L','Y' }}, "Glycine"                            ),
-			std::make_tuple( 'H', char_3_arr{{ 'H','I','S' }}, "Histidine"                          ),
-			std::make_tuple( 'I', char_3_arr{{ 'I','L','E' }}, "Isoleucine"                         ),
-			std::make_tuple( 'J', char_3_arr{{ 'X','L','E' }}, "Leucine/Isoleucine"                 ), // eg PDBs?
-			std::make_tuple( 'K', char_3_arr{{ 'L','Y','S' }}, "Lysine"                             ),
-			std::make_tuple( 'L', char_3_arr{{ 'L','E','U' }}, "Leucine"                            ),
-			std::make_tuple( 'M', char_3_arr{{ 'M','E','T' }}, "Methionine"                         ),
-			std::make_tuple( 'N', char_3_arr{{ 'A','S','N' }}, "Asparagine"                         ),
-			std::make_tuple( 'O', char_3_arr{{ 'P','Y','L' }}, "Pyrrolysine"                        ),
-			std::make_tuple( 'P', char_3_arr{{ 'P','R','O' }}, "Proline"                            ),
-			std::make_tuple( 'Q', char_3_arr{{ 'G','L','N' }}, "Glutamine"                          ),
-			std::make_tuple( 'R', char_3_arr{{ 'A','R','G' }}, "Arginine"                           ),
-			std::make_tuple( 'S', char_3_arr{{ 'S','E','R' }}, "Serine"                             ),
-			std::make_tuple( 'T', char_3_arr{{ 'T','H','R' }}, "Threonine"                          ),
-			std::make_tuple( 'U', char_3_arr{{ 'S','E','C' }}, "Selenocysteine"                     ), // eg PDBs 1aa6, 1cc1, 1fdi, 1fdo, 1h0h, 1kqf, 1kqg, 1pae, 1pfp, 2bc7, 2bc8, 2iv2, 2wpn, 2xsk, 3ean, 3eao, 3fwf, 3fwi, 3fwj, 3u5s, 3ze7, 3ze8, 3ze9, 3zea, 4kl8, 4kn9, 4ko1, 4ko2, 4ko3, 4ko4
-			std::make_tuple( 'V', char_3_arr{{ 'V','A','L' }}, "Valine"                             ),
-			std::make_tuple( 'W', char_3_arr{{ 'T','R','P' }}, "Tryptophan"                         ),
-			std::make_tuple( 'X', char_3_arr{{ 'U','N','K' }}, "Unknown"                            ),
-			std::make_tuple( 'Y', char_3_arr{{ 'T','Y','R' }}, "Tyrosine"                           ),
-			std::make_tuple( 'Z', char_3_arr{{ 'G','L','X' }}, "Ambiguous Glutamine/Glutamic Acid"  )  // eg PDBs 156b, 1kp0, 1pgk, 2rxn, 2tnc, 3bcl and 4cpa
+			std::make_tuple( 'A', make_char_arr( "ALA" ), "Alanine"                            ),
+			std::make_tuple( 'B', make_char_arr( "ASX" ), "Ambiguous Asparagine/Aspartic Acid" ), // eg PDBs 156b, 1kp0, 1pgk, 2atc, 2fmd, 2rxn, 3atc, 3bcl and 3e2o
+			std::make_tuple( 'C', make_char_arr( "CYS" ), "Cysteine"                           ),
+			std::make_tuple( 'D', make_char_arr( "ASP" ), "Aspartic Acid"                      ),
+			std::make_tuple( 'E', make_char_arr( "GLU" ), "Glutamic Acid"                      ),
+			std::make_tuple( 'F', make_char_arr( "PHE" ), "Phenylalanine"                      ),
+			std::make_tuple( 'G', make_char_arr( "GLY" ), "Glycine"                            ),
+			std::make_tuple( 'H', make_char_arr( "HIS" ), "Histidine"                          ),
+			std::make_tuple( 'I', make_char_arr( "ILE" ), "Isoleucine"                         ),
+			std::make_tuple( 'J', make_char_arr( "XLE" ), "Leucine/Isoleucine"                 ), // eg PDBs?
+			std::make_tuple( 'K', make_char_arr( "LYS" ), "Lysine"                             ),
+			std::make_tuple( 'L', make_char_arr( "LEU" ), "Leucine"                            ),
+			std::make_tuple( 'M', make_char_arr( "MET" ), "Methionine"                         ),
+			std::make_tuple( 'N', make_char_arr( "ASN" ), "Asparagine"                         ),
+			std::make_tuple( 'O', make_char_arr( "PYL" ), "Pyrrolysine"                        ),
+			std::make_tuple( 'P', make_char_arr( "PRO" ), "Proline"                            ),
+			std::make_tuple( 'Q', make_char_arr( "GLN" ), "Glutamine"                          ),
+			std::make_tuple( 'R', make_char_arr( "ARG" ), "Arginine"                           ),
+			std::make_tuple( 'S', make_char_arr( "SER" ), "Serine"                             ),
+			std::make_tuple( 'T', make_char_arr( "THR" ), "Threonine"                          ),
+			std::make_tuple( 'U', make_char_arr( "SEC" ), "Selenocysteine"                     ), // eg PDBs 1aa6, 1cc1, 1fdi, 1fdo, 1h0h, 1kqf, 1kqg, 1pae, 1pfp, 2bc7, 2bc8, 2iv2, 2wpn, 2xsk, 3ean, 3eao, 3fwf, 3fwi, 3fwj, 3u5s, 3ze7, 3ze8, 3ze9, 3zea, 4kl8, 4kn9, 4ko1, 4ko2, 4ko3, 4ko4
+			std::make_tuple( 'V', make_char_arr( "VAL" ), "Valine"                             ),
+			std::make_tuple( 'W', make_char_arr( "TRP" ), "Tryptophan"                         ),
+			std::make_tuple( 'X', make_char_arr( "UNK" ), "Unknown"                            ),
+			std::make_tuple( 'Y', make_char_arr( "TYR" ), "Tyrosine"                           ),
+			std::make_tuple( 'Z', make_char_arr( "GLX" ), "Ambiguous Glutamine/Glutamic Acid"  )  // eg PDBs 156b, 1kp0, 1pgk, 2rxn, 2tnc, 3bcl and 4cpa
 		};
 		return letter_code_and_name_list;
 	}

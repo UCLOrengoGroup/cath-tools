@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_UNI_SCORE_ALIGNED_PAIR_SCORE_SSAP_SCORE_SSAP_SCORE_ACCURACY_HPP
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
+#include "common/cpp20/make_array.hpp"
 
 #include <array>
 #include <iosfwd>
@@ -39,10 +40,10 @@ namespace cath {
 		};
 
 		/// \brief TODOCUMENT
-		static constexpr std::array<ssap_score_accuracy, 2> all_ssap_score_accuracies = {{
+		static constexpr auto all_ssap_score_accuracies = common::make_array(
 			ssap_score_accuracy::LOW,
 			ssap_score_accuracy::HIGH
-		}};
+		);
 
 		static_assert( common::constexpr_is_uniq( all_ssap_score_accuracies ), "all_ssap_score_accuracies shouldn't contain repeated values" );
 

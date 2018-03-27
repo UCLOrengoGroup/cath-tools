@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_UNI_SSAP_DISTANCE_SCORE_FORMULA_HPP
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
+#include "common/cpp20/make_array.hpp"
 
 #include <array>
 #include <iosfwd>
@@ -37,11 +38,11 @@ namespace cath {
 	};
 
 	/// \brief TODOCUMENT
-	static constexpr std::array<distance_score_formula, 3> all_distance_score_formulae = {{
+	static constexpr auto all_distance_score_formulae = common::make_array(
 		distance_score_formula::FROM_SSAP_PAPER,
 		distance_score_formula::USED_IN_PREVIOUS_CODE,
 		distance_score_formula::SIMPLIFIED
-	}};
+	);
 
 	static_assert( common::constexpr_is_uniq( all_distance_score_formulae ), "all_distance_score_formulae shouldn't contain repeated values" );
 

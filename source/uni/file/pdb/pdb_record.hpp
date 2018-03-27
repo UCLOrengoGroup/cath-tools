@@ -23,6 +23,7 @@
 
 #include <boost/range/sub_range.hpp>
 
+#include "common/char_arr_type_aliases.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/debug_numeric_cast.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
@@ -47,9 +48,9 @@ namespace cath {
 		/// \todo Come C++17, convert this to use string_view rather than sub_range<const string>
 		inline pdb_record pdb_rec_of_substring(const boost::sub_range<const std::string> &arg_substring ///< The substring to examine
 		                                       ) {
-			constexpr std::array<char, 6> atom_6_str   = { { 'A','T','O','M',' ',' ', } };
-			constexpr std::array<char, 4> atom_4_str   = { { 'A','T','O','M',         } };
-			constexpr std::array<char, 6> hetatm_6_str = { { 'H','E','T','A','T','M', } };
+			constexpr auto atom_6_str   = make_char_arr( "ATOM  " );
+			constexpr auto atom_4_str   = make_char_arr( "ATOM"   );
+			constexpr auto hetatm_6_str = make_char_arr( "HETATM" );
 			if ( boost::range::equal( arg_substring, atom_6_str ) || boost::range::equal( arg_substring, atom_4_str ) ) {
 				return pdb_record::ATOM;
 			}

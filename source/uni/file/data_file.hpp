@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_UNI_FILE_DATA_FILE_HPP
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
+#include "common/cpp20/make_array.hpp"
 
 #include <array>
 
@@ -39,12 +40,12 @@ namespace cath {
 		namespace detail {
 
 			/// \brief All the data_file values
-			static constexpr std::array<data_file, 4> all_data_file_types = {{
+			static constexpr auto all_data_file_types = common::make_array(
 				data_file::PDB,
 				data_file::DSSP,
 				data_file::WOLF,
 				data_file::SEC
-			}};
+			);
 
 			static_assert( common::constexpr_is_uniq( all_data_file_types ), "all_data_file_types shouldn't contain repeated values" );
 
