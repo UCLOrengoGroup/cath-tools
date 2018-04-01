@@ -12,7 +12,7 @@ Miscellaneous:
 
 Input:
   --map-from-clustmemb-file <file>      Map numbers from previous clusters specified in <file> to their equivalents in the working clusters where possible and
-                                        if all the cluster names in <file>are positive integers, renumber leftover new clusters from one plus the largest
+                                        if all the cluster names in <file> are positive integers, renumber leftover new clusters from one plus the largest
                                         or if not, rename with new_cmc_cluster_1, new_cmc_cluster_2, ...
                                         (of, if unspecified, renumber all working clusters from 1 upwards)
   --read-batches-from-input             Read batches of work from the input file with lines of format: `batch_id working_clust_memb_file prev_clust_memb_file` where:
