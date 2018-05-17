@@ -9,25 +9,36 @@ cath-superpose
 
 -----
 
+## Introduction
+
 The cath-superpose tool makes superpositions that look better (even though they may have higher overall RMSDs).
 
-It does this by focusing the superposition on those parts of the alignment that align well so that other aligned regions with greater variance don't disrupt the superposition. To use cath-superpose, you need to give it a way to align the structures, which can be any of:
+It does this by focusing the superposition on those parts of the alignment that align well so that other aligned regions with greater variance don't disrupt the superposition.
 
- * a SSAP alignment (ie `.list` file) (see [`cath-ssap`](cath-ssap))
- * a FASTA alignment
- * a CORA alignment <!-- TODO: Add reference to CORA paper here -->
- * a file containing all the pairwise SSAP scores between a group of structures in a directory contains all the corresponding SSAP alignment files
- * the rule to just align residues by matching their names (number+insert) (useful for superposing models of the same protein)
+### Usage Overview
 
-**Example**: to generate a SSAP alignment and then pass it to cath-superpose, set up your environment for SSAP () and then  use commands like:
+`cath-superpose` needs an alignment of the structures to use to perform the superposition. You can provide an alignment that `cath-superpose` should use, which at present can be any of:
+
+* a SSAP alignment (ie `.list` file) (see [`cath-ssap`](cath-ssap))
+* a FASTA alignment
+* a CORA alignment <!-- TODO: Add reference to CORA paper here -->
+* a file containing all the pairwise SSAP scores between a group of structures in a directory contains all the corresponding SSAP alignment files
+* the rule to just align residues by matching their names (number+insert) (useful for superposing models of the same protein)
+
+...or by default, it'll use the `--do-the-ssaps` option, which means it gets its alignment by performing the all-vs-all pairwise `cath-ssap`s in a temporary directory (or one you specify) and then gluing those `cath-ssap` alignments together.
+
+**Example**: to superpose two structures, you might use commands like:
 
 ~~~~~no-highlight
-./cath-ssap 1cukA 1bvsA
-./cath-superpose --ssap-aln-infile 1cukA1bvsA.list --pdb-infile /global/data/directories/pdb/1cukA --pdb-infile /global/data/directories/pdb/1bvsA --sup-to-pymol
+export CATH_TOOLS_PDB_PATH=/global/data/directories/pdb
+cath-superpose --pdb-infile $CATH_TOOLS_PDB_PATH/1c0pA01 --pdb-infile $CATH_TOOLS_PDB_PATH/1hdoA00
 ~~~~~
 
-(This will attempt to fire up [PyMOL](https://www.pymol.org/) to view the superposition; see the usage for different options.)
+(With no output specified, this will use the default of firing up [PyMOL](https://www.pymol.org/) to view the superposition; see the usage for different options.)
 
+### Alignment refining
+
+When `cath-superpose` is gluing pairwise alignments together (under `--ssap-scores-infile` or `--do-the-ssaps`), it may refine the alignments according to the `--align-refining` option. However `cath-superpose` won't change a complete alignment that you give it under the other options. If you _want_ to refine your alignment, please try `cath-refine-align` instead.
 
 Multiple Superpositions
 -----------------------

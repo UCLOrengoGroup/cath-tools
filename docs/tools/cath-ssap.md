@@ -1,12 +1,10 @@
-cath-ssap
-=========
+# cath-ssap
 
 [**Downloads**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest)
 
 The binary for SSAP is called `cath-ssap`. For usage, run `cath-ssap --help` or see [below](#usage).
 
-Preparing to run SSAP
----------------------
+## Preparing to run SSAP
 
 `cath-ssap` needs to know where to find PDB files. You can tell it using the `--pdb-path` option, which allows you to specify multiple directories in the order they should be searched by separating them with colons (`:`), eg:
 
@@ -24,8 +22,7 @@ export CATH_TOOLS_PDB_SUFFIX=.ent
 
 The defaults values for these parameters are included in the usage information (run `cath-ssap --help` or see [below](#usage)).
 
-Running SSAP
-------------
+## Running SSAP
 
 Once you've set up these environment variables, you can use a command like:
 
@@ -36,8 +33,7 @@ This prints a short summary of the resulting scores (see `cath-ssap --scores-hel
 Once you've aligned structures with `cath-ssap`, you can make better-looking superpositions with [`cath-superpose`](cath-superpose).
 
 
-Usage
------
+## Usage
 
 The current usage information is:
 
@@ -104,26 +100,23 @@ Detailed help:
 Please tell us your cath-tools bugs/suggestions : https://github.com/UCLOrengoGroup/cath-tools/issues/new
 ~~~~~
 
+## DSSP, WOLF and sec
 
+We recommend you run `cath-ssap` from PDB files only. However it's also capable of reading its data from other combinations of input files:
 
-DSSP, WOLF and sec
-------------------
+* PDB and DSSP
+* PDB, DSSP and SEC
+* WOLF and SEC
 
-`cath-ssap` is also able to read its input from other combinations of input files:
-
- * PDB and DSSP
- * PDB, DSSP and SEC
- * WOLF and SEC
+The reason for this is that `cath-ssap` used to require a WOLF/DSSP file for per-residue secondary structure information and a SEC file for information on each secondary structure; it can now calculate all the information it needs itself. For this reason, the PDB-only mode typically runs slightly slower, however it is simpler to use and avoids various problems with those formats. Our benchmarking (comparing ROC curves to assess ability to discriminate whether pairs are homologous) shows that the different modes can give slightly different results in some cases but perform equally well overall.
 
 To generate DSSP and sec files from PDB files, you can use:
 
- * [`dssp`](http://swift.cmbi.ru.nl/gv/dssp), the CMBI tool for generating DSSP files from PDB files
- * [`secmake`](http://github.com/UCLOrengoGroup/secmake), a tool for generating sec files from PDB + DSSP files
+* [`dssp`](http://swift.cmbi.ru.nl/gv/dssp), the CMBI tool for generating DSSP files from PDB files
+* [`secmake`](http://github.com/UCLOrengoGroup/secmake), a tool for generating sec files from PDB + DSSP files
 
 Once you've prepared these files, you need to tell `cath-ssap` where to find them. This can be done in the same way as for PDBs (see [above](#preparing-to-run-ssap)) using the environment variables `CATH_TOOLS_DSSP_PATH` and `CATH_TOOLS_SEC_PATH` (and for non-standard prefixes/suffixes `CATH_TOOLS_DSSP_PREFIX`, `CATH_TOOLS_SEC_PREFIX`, `CATH_TOOLS_DSSP_SUFFIX` and `CATH_TOOLS_SEC_SUFFIX`).
 
-
-Feedback
---------
+## Feedback
 
 Please tell us about your cath-tools bugs/suggestions [here](https://github.com/UCLOrengoGroup/cath-tools/issues/new).
