@@ -621,3 +621,13 @@ void cath::sup::check_superposition_is_pairwise(const superposition &arg_superpo
 	}
 }
 
+/// \brief Make an identity superposition for the specified number of entries
+///
+/// \relates superposition
+superposition cath::sup::make_identity_superposition(const size_t &arg_num_entries ///< The number of entries to be superposed
+                                                     ) {
+	return {
+		coord_vec   ( arg_num_entries, coord::ORIGIN_COORD           ),
+		rotation_vec( arg_num_entries, rotation::IDENTITY_ROTATION() )
+	};
+}

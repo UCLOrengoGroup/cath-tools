@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_UNI_SUPERPOSITION_SUPERPOSITION_H
 
 #include <boost/operators.hpp>
+#include <boost/range/size.hpp>
 #include <boost/tuple/tuple.hpp>
 
 #include "common/cpp20/make_array.hpp"
@@ -166,6 +167,15 @@ namespace cath {
 
 		void check_superposition_is_pairwise(const superposition &);
 //		double get_rmsd_from_pairwise_superposition(const superposition &);
+
+		superposition make_identity_superposition(const size_t &);
+
+		/// Make an identity superpostion with a number of entries to match the size() of the specified argument
+		template <typename T>
+		superposition make_identity_superposition_of(T &&arg ///< The object whose size should be used for the number of entries
+		                                             ) {
+			return make_identity_superposition( ::boost::size( ::std::forward<T>( arg ) ) );
+		}
 
 	} // namespace sup
 } // namespace cath

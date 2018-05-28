@@ -61,8 +61,8 @@ namespace cath {
 			const pdb & operator[](const size_t &) const;
 
 			// Provide iterators to make this into a range
-//			using iterator = std::vector<pdb>::iterator;
 			using const_iterator = std::vector<pdb>::const_iterator;
+			using iterator       = const_iterator;
 //			iterator begin();
 //			iterator end();
 			const_iterator begin() const;

@@ -154,6 +154,8 @@ namespace cath {
 
 		size_vec indices_of_residues_following_chain_breaks(const pdb &);
 
+		bool has_multiple_chain_labels(const pdb &);
+
 		std::ostream & operator<<(std::ostream &,
 		                          const pdb &);
 

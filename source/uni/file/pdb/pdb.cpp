@@ -71,35 +71,36 @@ using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::all;
-using boost::algorithm::is_space;
-using boost::algorithm::join;
-using boost::algorithm::starts_with;
-using boost::filesystem::path;
-using boost::none;
-using boost::numeric_cast;
-using boost::optional;
-using boost::range::count_if;
-using std::get;
-using std::ifstream;
-using std::istream;
-using std::istringstream;
-using std::make_pair;
-using std::make_tuple;
-using std::ofstream;
-using std::ostream;
-using std::ostringstream;
-using std::pair;
-using std::right;
-using std::set;
-using std::setw;
-using std::strerror;
-using std::string;
-using std::stringstream;
-using std::tuple;
-using std::vector;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::all;
+using ::boost::algorithm::any_of;
+using ::boost::algorithm::is_space;
+using ::boost::algorithm::join;
+using ::boost::algorithm::starts_with;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::numeric_cast;
+using ::boost::optional;
+using ::boost::range::count_if;
+using ::std::get;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::istringstream;
+using ::std::make_pair;
+using ::std::make_tuple;
+using ::std::ofstream;
+using ::std::ostream;
+using ::std::ostringstream;
+using ::std::pair;
+using ::std::right;
+using ::std::set;
+using ::std::setw;
+using ::std::strerror;
+using ::std::string;
+using ::std::stringstream;
+using ::std::tuple;
+using ::std::vector;
 
 const string pdb::PDB_RECORD_STRING_TER ( "TER   " );
 
@@ -869,6 +870,24 @@ size_vec cath::file::indices_of_residues_following_chain_breaks(const pdb &arg_p
 					)
 				);
 			} )
+	);
+}
+
+/// \brief Return whether the specified PDB has multiple distinct chain_labels
+///
+/// \relates pdb
+bool cath::file::has_multiple_chain_labels(const pdb &arg_pdb ///< The PDB to query
+                                           ) {
+	// If the PDB's empty then return false
+	if ( arg_pdb.empty() ) {
+		return false;
+	}
+	
+	// Otherwise return whether there are any residues with a chain code differing from the first
+	const chain_label &first_chain_code = get_chain_label( front( arg_pdb ) );
+	return any_of(
+		arg_pdb,
+		[&] (const pdb_residue &x) { return get_chain_label( x ) != first_chain_code; }
 	);
 }
 

@@ -476,6 +476,7 @@ set(
 set(
 	NORMSOURCES_SRC_COMMON_COMMON_BOOST_ADDENDA_LOG
 		src_common/common/boost_addenda/log/log_to_ostream_guard.cpp
+		src_common/common/boost_addenda/log/stringstream_log_sink.cpp
 )
 
 set(

@@ -21,10 +21,11 @@
 
 #include "superposition_io.hpp"
 
-#include <boost/range/adaptor/map.hpp>
 #include <boost/algorithm/cxx11/any_of.hpp>
+#include <boost/log/trivial.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/range/adaptor/map.hpp>
 
 #include "chopping/region/region.hpp"
 #include "common/algorithm/transform_build.hpp"
@@ -39,6 +40,7 @@
 #include "file/pdb/pdb_atom.hpp"
 #include "file/pdb/pdb_list.hpp"
 #include "file/pdb/pdb_residue.hpp"
+#include "outputter/superposition_output_options/superposition_output_options_block.hpp"
 #include "structure/structure_type_aliases.hpp"
 #include "superposition/superposition.hpp"
 
@@ -48,20 +50,21 @@ using namespace cath::chop;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::geom;
+using namespace cath::opts;
 using namespace cath::sup;
 using namespace cath::sup::detail;
 
-using boost::adaptors::map_values;
-using boost::algorithm::any_of;
-using boost::filesystem::path;
-using boost::irange;
-using boost::property_tree::ptree;
-using std::fixed;
-using std::ofstream;
-using std::ostream;
-using std::setprecision;
-using std::strerror;
-using std::string;
+using ::boost::adaptors::map_values;
+using ::boost::algorithm::any_of;
+using ::boost::filesystem::path;
+using ::boost::irange;
+using ::boost::property_tree::ptree;
+using ::std::fixed;
+using ::std::ofstream;
+using ::std::ostream;
+using ::std::setprecision;
+using ::std::strerror;
+using ::std::string;
 
 const string superposition_io_consts::ENTRIES_KEY         = "entries";
 const string superposition_io_consts::NAME_KEY            = "name";
@@ -205,6 +208,18 @@ ostream & cath::sup::write_superposed_pdb_to_ostream(ostream                    
 		if ( arg_chain_index >= superposition::SUPERPOSITION_CHAIN_LABELS.size() ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Ran out of chain labels when relabelling chains"));
 		}
+
+		// If the PDB being written out has multiple chain_labels then setting the whole PDB's
+		// chain_label to one value is probably a pretty bad idea so warn
+		if ( has_multiple_chain_labels( arg_pdb ) ) {
+			BOOST_LOG_TRIVIAL( warning )
+				<< "Overwriting chain labels whilst writing a PDB but this PDB contains multiple"
+				<< " chain labels, so this is probably a bad idea. Please consider different options for"
+				<< " writing out the superposed PDBs, such as --"
+				<< superposition_output_options_block::PO_SUP_FILES_DIR
+				<< ".";
+		}
+
 		arg_pdb.set_chain_label( superposition::SUPERPOSITION_CHAIN_LABELS[ arg_chain_index ] );
 	}
 
