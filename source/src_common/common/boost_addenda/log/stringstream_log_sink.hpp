@@ -47,6 +47,7 @@ namespace cath {
 		/// \brief Keep things simple by having a single instance of the guard
 		stringstream_log_sink & operator=(const stringstream_log_sink &) = delete;
 
+		::std::ostringstream & stringstream();
 		const ::std::ostringstream & stringstream() const;
 		::std::string str() const;
 		bool str_is_empty() const;

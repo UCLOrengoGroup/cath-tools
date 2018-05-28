@@ -23,7 +23,7 @@
 #include "acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.hpp"
 #include "alignment/alignment.hpp"
 #include "alignment/io/alignment_io.hpp"
-#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "file/strucs_context.hpp"
 #include "test/global_test_constants.hpp"
 
@@ -59,10 +59,9 @@ BOOST_AUTO_TEST_CASE(basic) {
 		TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR() / "4gs3A00",
 	} );
 
-	// Use a lambda to enclose the log_to_ostream_guard whilst allowing the result to be passed back out
+	// Use a lambda to enclose the stringstream_log_sink whilst allowing the result to be passed back out
 	const auto aln_and_sptree = [&] {
-		ostringstream parse_ss;
-		const log_to_ostream_guard parse_log_guard{ parse_ss };
+		const stringstream_log_sink log_sink;
 		return the_acquirer.get_alignment_and_spanning_tree( strucs_context{ the_pdbs } );
 	} ();
 
@@ -120,10 +119,9 @@ BOOST_AUTO_TEST_CASE(accepts_empty_scores_and_single_structure) {
 		TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR() / "1o7iB00"
 	} );
 
-	// Use a lambda to enclose the log_to_ostream_guard whilst allowing the result to be passed back out
+	// Use a lambda to enclose the stringstream_log_sink whilst allowing the result to be passed back out
 	const auto aln_and_sptree = [&] {
-		ostringstream parse_ss;
-		const log_to_ostream_guard parse_log_guard{ parse_ss };
+		const stringstream_log_sink log_sink;
 		return the_acquirer.get_alignment_and_spanning_tree( strucs_context{ the_pdbs } );
 	} ();
 

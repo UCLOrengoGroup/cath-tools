@@ -23,7 +23,7 @@
 #include <boost/algorithm/cxx11/one_of.hpp>
 #include <boost/test/auto_unit_test.hpp>
 
-#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/type_aliases.hpp"
 #include "file/prc_scores_file/prc_scores_entry.hpp"
@@ -42,7 +42,7 @@ using boost::algorithm::all_of;
 using boost::algorithm::contains;
 using boost::algorithm::one_of;
 using cath::common::invalid_argument_exception;
-using cath::log_to_ostream_guard;
+using cath::stringstream_log_sink;
 
 namespace cath {
 	namespace test {
@@ -98,11 +98,8 @@ namespace cath {
 			/// \brief A prc_scores_entry_vec parsed from the above raw PRC scores text
 			const prc_scores_entry_vec  prc_scores  = prc_scores_file::parse_prc_scores_file_fancy   ( raw_prc_data  );
 
-			/// \brief An ostream to which the logging can be captured for testing purposes
-			ostringstream test_ss;
-
-			/// \brief A guard to activate redirecting the logging to test_ss
-			const log_to_ostream_guard the_guard{ test_ss };
+			/// \brief Grab any logging
+			const stringstream_log_sink log_sink{};
 		};
 
 	}  // namespace test
@@ -121,7 +118,7 @@ BOOST_AUTO_TEST_CASE(building_from_ssaps_and_prcs_works) {
 	for (const string &match_id : matching_match_ids) {
 		BOOST_CHECK( one_of( the_ssaps_and_prcs, [&] (const ssap_and_prc &x) { return ( x.get_match_id() == match_id ); } ) );
 	}
-	BOOST_CHECK( contains( test_ss.str(), "5 unmatched PRC results" ) );
+	BOOST_CHECK( contains( log_sink.str(), "5 unmatched PRC results" ) );
 }
 
 BOOST_AUTO_TEST_CASE(ctor_throws_on_conflicting_query_ids) {

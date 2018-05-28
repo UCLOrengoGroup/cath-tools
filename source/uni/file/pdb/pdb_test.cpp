@@ -23,7 +23,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "chopping/region/region.hpp"
-#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/file/temp_file.hpp"
@@ -152,14 +152,13 @@ ATOM   1872  CA  VAL B 140     -37.904  38.745 100.917  1.00101.80           C
 ATOM   1873  C   VAL B 140     -39.124  39.279 101.672  1.00100.30           C  
 ATOM   1874  O   VAL B 140     -39.041  40.306 102.330  1.00 97.38           O  
 ATOM   1875  CB  VAL B 140     -37.331  37.579 101.757  1.00 93.10           C)";
-	ostringstream test_ss;
 	istringstream input_ss{ input_string };
-	const log_to_ostream_guard the_guard{ test_ss };
+	const stringstream_log_sink log_sink;
 
 	const pdb the_pdb = read_pdb_file( input_ss );
 
 	BOOST_REQUIRE_EQUAL( the_pdb.get_num_residues(), 2 );
-	BOOST_CHECK( icontains( test_ss.str(), "skip" ) );
+	BOOST_CHECK( icontains( log_sink.str(), "skip" ) );
 }
 
 // Note: this test was originally written to check that such residues would be dropped
@@ -210,9 +209,8 @@ ATOM    458  HB3 GLU A  23       1.652 -13.179   9.840  1.00  2.72           H
 ATOM    459  HG2 GLU A  23       0.253 -11.081  10.015  1.00  3.48           H  
 ATOM    460  HG3 GLU A  23      -1.163 -12.114  10.272  1.00  3.48           H  
 ATOM    461  HE2 GLU A  23       1.108 -11.273  13.151  1.00  9.48           H)";
-	ostringstream test_ss;
 	istringstream input_ss{ input_string };
-	const log_to_ostream_guard the_guard{ test_ss };
+	const stringstream_log_sink log_sink;
 
 	const pdb the_pdb = read_pdb_file( input_ss );
 
@@ -251,14 +249,13 @@ ATOM   1262  N   ASP A 167      -6.797  14.889  89.619  1.00 14.05           N
 ATOM   1263  CA  ASP A 167      -5.513  14.245  89.363  1.00 14.38           C  
 ATOM   1264  C   ASP A 167      -5.469  12.788  89.749  1.00 14.39           C  
 ATOM   1265  O   ASP A 167      -5.724  12.440  90.910  1.00 15.07           O  )";
-	ostringstream test_ss;
 	istringstream input_ss{ input_string };
-	const log_to_ostream_guard the_guard{ test_ss };
+	const stringstream_log_sink log_sink;
 
 	const pdb the_pdb = read_pdb_file( input_ss );
 
 	BOOST_CHECK_EQUAL( the_pdb.get_num_residues(), 4  );
-	BOOST_CHECK_EQUAL( test_ss.str(),              "" );
+	BOOST_CHECK_EQUAL( log_sink.str(),             "" );
 }
 
 BOOST_AUTO_TEST_CASE(handle_chain_change_correctly) {
@@ -274,19 +271,17 @@ HETATM    9  O   GLU H   2      40.630  33.666  50.805  1.00 17.29           O
 HETATM   10  C   ACT A   3      18.687   4.315  47.169  1.00 39.67           C  
 END                                                                             
 )";
-	ostringstream test_ss;
 	istringstream input_ss{ input_string };
-	const log_to_ostream_guard the_guard{ test_ss };
+	const stringstream_log_sink log_sink;
 
 	const pdb the_pdb = read_pdb_file( input_ss );
 
 	BOOST_CHECK_EQUAL( the_pdb.get_num_residues(), 2  );
-	BOOST_CHECK_EQUAL( test_ss.str(),              "" );
+	BOOST_CHECK_EQUAL( log_sink.str(),             "" );
 }
 
 BOOST_AUTO_TEST_CASE(handles_clashing_residue_names) {
-	ostringstream test_ss;
-	const log_to_ostream_guard the_guard{ test_ss };
+	const stringstream_log_sink log_sink;
 
 	// From 4tsw (as of ~April 2017 I think)
 	// This has two different residues called 103 on chain B (and the same happens on C, D, E and F)
@@ -306,7 +301,7 @@ TER    2253      GLU B 103
 END   
 )";
 	BOOST_TEST( pdb_file_to_string( read_pdb( pdb_data ) ) == pdb_data );
-	BOOST_CHECK( regex_search( test_ss.str(), regex{ R"(found conflicting consecutive entries for residue "B:103")" } ) );
+	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(found conflicting consecutive entries for residue "B:103")" } ) );
 }
 
 BOOST_AUTO_TEST_CASE(handles_very_large_temperature_factor_number_a) {
@@ -348,8 +343,7 @@ END
 }
 
 BOOST_AUTO_TEST_CASE(get_backbone_complete_residue_ids__removes_dupl_res_ids) {
-	ostringstream test_ss;
-	const log_to_ostream_guard the_guard{ test_ss };
+	const stringstream_log_sink log_sink;
 
 	// From 4tsw (as of ~January 2018)
 	//

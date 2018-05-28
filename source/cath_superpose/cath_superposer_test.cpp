@@ -26,7 +26,7 @@
 #include "cath_superpose/options/cath_superpose_options.hpp"
 #include "chopping/domain/domain.hpp"
 #include "common/argc_argv_faker.hpp"
-#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/file/temp_file.hpp"
 #include "common/regex/regex_replace_file.hpp"
@@ -81,9 +81,6 @@ namespace cath {
 
 			/// \brief An empty stdin stream
 			istringstream empty_stdin;
-
-			/// \brief An output stream to which log output can be redirected
-			ostringstream log_output_ss;
 
 			/// \brief One of the test directories
 			const path orient_backbone_test_dir = TEST_SOURCE_DATA_DIR() / "orient" / "backbone_complete";
@@ -287,7 +284,7 @@ BOOST_AUTO_TEST_CASE(can_orient_superposition_with_residues_that_are_not_backbon
 	current_path( orient_backbone_test_dir );
 
 	// Catch the logging output
-	const log_to_ostream_guard the_guard{ log_output_ss };
+	const stringstream_log_sink log_sink;
 	try {
 		check_cath_superposer_use_case(
 			{

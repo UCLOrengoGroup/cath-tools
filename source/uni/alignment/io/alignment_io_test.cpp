@@ -23,7 +23,7 @@
 
 #include "alignment/io/alignment_io.hpp"
 #include "chopping/region/region.hpp"
-#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "common/file/open_fstream.hpp"
 #include "common/pair_insertion_operator.hpp"
 #include "file/pdb/pdb.hpp"
@@ -178,8 +178,7 @@ BOOST_AUTO_TEST_CASE(writing_aln_ssap_legacy_file_to_slash_does_not_fail) {
 	alignment the_alignment{ 2 };
 	the_alignment.set_scores( make_alignment_residue_scores( the_alignment, { score_opt_vec{}, score_opt_vec{} } ) );
 
-	ostringstream test_ss;
-	const log_to_ostream_guard parse_log_guard{ test_ss };
+	const stringstream_log_sink log_sink;
 
 	BOOST_CHECK_NO_THROW_DIAG( write_alignment_as_cath_ssap_legacy_format(
 		"/cath-tools-ssap-legacy-file-in-slash-test",

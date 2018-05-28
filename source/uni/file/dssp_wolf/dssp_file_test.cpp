@@ -27,7 +27,7 @@
 #include <boost/range/algorithm/sort.hpp>
 
 #include "biocore/residue_id.hpp"
-#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/size_t_literal.hpp"
@@ -200,8 +200,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 	const auto num_pdb_residues           = pdb_prot.get_length();
 	BOOST_CHECK_EQUAL( build_prot_warn_stream.str(), "" );
 
-	ostringstream test_ss;
-	const log_to_ostream_guard the_guard{ test_ss };
+	const stringstream_log_sink log_sink;
 
 	const protein      combi_prot_with_all_pdb_residues   = protein_from_dssp_and_pdb(the_dssp_file, the_pdb_file, dssp_skip_policy::DONT_SKIP__BREAK_ANGLES );
 	const protein      combi_prot_with_dssp_only_residues = protein_from_dssp_and_pdb(the_dssp_file, the_pdb_file, dssp_skip_policy::SKIP__BREAK_ANGLES      );
@@ -390,8 +389,7 @@ BOOST_AUTO_TEST_CASE(dssp_disregards_break_from_dropped_residue) {
 }
 
 BOOST_AUTO_TEST_CASE(handles_dssp_using_x_if_any_unknown_hetatm_records) {
-	ostringstream test_ss;
-	const log_to_ostream_guard the_guard{ test_ss };
+	const stringstream_log_sink log_sink;
 	BOOST_CHECK_NO_THROW_DIAG(
 		read_protein_from_dssp_and_pdb(
 			path{ TEST_SOURCE_DATA_DIR() / "dssp" / "dssp_uses_x_if_unknown_hetatms_1.dssp" },
@@ -400,7 +398,7 @@ BOOST_AUTO_TEST_CASE(handles_dssp_using_x_if_any_unknown_hetatm_records) {
 			""s
 		)
 	);
-	BOOST_CHECK_EQUAL( test_ss.str(), "" );
+	BOOST_CHECK_EQUAL( log_sink.str(), "" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

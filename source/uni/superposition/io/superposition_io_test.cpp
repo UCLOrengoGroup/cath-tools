@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_CASE(warns_if_overwriting_chain_label_in_pdb_with_multiple_chains) {
-	const stringstream_log_sink log_stream;
+	const stringstream_log_sink log_sink;
 	const temp_file temp_file("cath_tools_test_temp_file.superposition_chain_munge_warning.%%%%");
 	const auto pdbs = make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "supn_content" / "1bdh" ) } );
 
@@ -84,13 +84,13 @@ BOOST_AUTO_TEST_CASE(warns_if_overwriting_chain_label_in_pdb_with_multiple_chain
 	);
 
 	BOOST_CHECK( regex_search(
-		log_stream.str(),
+		log_sink.str(),
 		regex{ R"(Overwriting chain labels.*contains multiple chain labels)" }
 	) );
 }
 
 BOOST_AUTO_TEST_CASE(does_not_warn_if_overwriting_chain_label_in_pdb_with_single_chain) {
-	const stringstream_log_sink log_stream;
+	const stringstream_log_sink log_sink;
 	const temp_file temp_file("cath_tools_test_temp_file.superposition_chain_munge_non_warning.%%%%");
 	const auto pdbs = make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1c0pA01" ) } );
 
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(does_not_warn_if_overwriting_chain_label_in_pdb_with_single
 		chain_relabel_policy::RELABEL
 	);
 
-	BOOST_CHECK( log_stream.str_is_empty() );
+	BOOST_CHECK( log_sink.str_is_empty() );
 }
 
 

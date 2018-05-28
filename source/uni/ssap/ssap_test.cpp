@@ -24,7 +24,7 @@
 
 #include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
-#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/size_t_literal.hpp"
@@ -90,8 +90,7 @@ namespace cath {
 			~ssap_pair_fixture() noexcept = default;
 
 		public:
-			ostringstream log_output_ss;
-			log_to_ostream_guard log_output_guard{ log_output_ss };
+			stringstream_log_sink log_sink;
 			const string id1 = { *ID1 };
 			const string id2 = { *ID2 };
 			const data_dirs_spec data_dirs       = build_data_dirs_spec_of_dir( TEST_SSAP_REGRESSION_DATA_DIR() );

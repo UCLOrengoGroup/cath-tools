@@ -25,7 +25,12 @@ using namespace cath;
 using ::std::ostringstream;
 using ::std::string;
 
-/// \brief Get the stringstream of grabbed log output
+/// \brief Get (a non-const reference to) the stringstream of grabbed log output
+ostringstream & stringstream_log_sink::stringstream() {
+	return out_ss;
+}
+
+/// \brief Get (a const reference to) the stringstream of grabbed log output
 const ostringstream & stringstream_log_sink::stringstream() const {
 	return out_ss;
 }

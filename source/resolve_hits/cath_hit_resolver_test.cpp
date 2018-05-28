@@ -23,8 +23,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #include "common/algorithm/copy_build.hpp"
-#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
-#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "common/file/read_string_from_file.hpp"
 #include "common/file/simple_file_read_write.hpp"
 #include "common/file/temp_file.hpp"
@@ -92,9 +91,6 @@ namespace cath {
 			
 			/// \brief The output stream to use in the tests
 			ostringstream   output_ss;
-
-			/// \brief An output stream to which logging can be sent
-			ostringstream   log_ss;
 
 			/// \brief A temporary temp_file
 			const temp_file TEMP_TEST_FILE{ ".cath_hit_resolver__test_file.%%%%-%%%%-%%%%-%%%%" };
@@ -165,8 +161,8 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file) {
 }
 
 BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file__deprecated_opts) {
-	// Redirect any logging to log_ss
-	log_to_ostream_guard log_output_guard{ log_ss };
+	// Redirect any logging
+	stringstream_log_sink log_sink;
 
 	// Given an input stream containing the input
 	input_ss.str( example_input_raw );
@@ -182,7 +178,7 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file__deprecated_opts) {
 	BOOST_CHECK_EQUAL( output_ss.str(), "" );
 	BOOST_CHECK_STRING_MATCHES_FILE( example_output, blank_vrsn( TEMP_TEST_FILE_FILENAME ) );
 
-	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-quiet \-\-hits\-text\-to\-file )" } ) );
+	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(deprecated.* \-\-quiet \-\-hits\-text\-to\-file )" } ) );
 }
 
 BOOST_AUTO_TEST_CASE(does_not_require_right_intersperses_all_to_cache) {
@@ -300,7 +296,7 @@ BOOST_AUTO_TEST_CASE(rejects_output_hmmer_aln_for_non_hmmsearch_format) {
 }
 
 BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scores) {
-	const log_to_ostream_guard the_guard{ log_ss };
+	const stringstream_log_sink log_sink;
 
 	BOOST_CHECK_NO_THROW_DIAG( execute_perform_resolve_hits( {
 		(CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.negatives_scores.in" ).string(),
@@ -308,12 +304,12 @@ BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scor
 		"--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, "-"
 	} ) );
 
-	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(^Skipping .* weak hits\.)" } ) );
+	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(^Skipping .* weak hits\.)" } ) );
 }
 
 BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scores__deprecated_opts) {
-	// Redirect any logging to log_ss
-	log_to_ostream_guard log_output_guard{ log_ss };
+	// Redirect any logging
+	stringstream_log_sink log_sink;
 
 	BOOST_CHECK_NO_THROW_DIAG( execute_perform_resolve_hits( {
 		(CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.negatives_scores.in" ).string(),
@@ -321,7 +317,7 @@ BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scor
 		"--" + crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT
 	} ) );
 
-	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-html\-output\-to\-file \-)" } ) );
+	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(deprecated.* \-\-html\-output\-to\-file \-)" } ) );
 }
 
 BOOST_AUTO_TEST_CASE(handles_overlap_being_valid_only_once_short_seg_gone) {
@@ -405,8 +401,8 @@ BOOST_AUTO_TEST_CASE(summarise) {
 }
 
 BOOST_AUTO_TEST_CASE(summarise__deprecated_opts) {
-	// Redirect any logging to log_ss
-	log_to_ostream_guard log_output_guard{ log_ss };
+	// Redirect any logging
+	stringstream_log_sink log_sink;
 
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
@@ -415,7 +411,7 @@ BOOST_AUTO_TEST_CASE(summarise__deprecated_opts) {
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
 
-	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-summarise\-to\-file \-)" } ) );
+	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(deprecated.* \-\-summarise\-to\-file \-)" } ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -461,8 +457,8 @@ BOOST_AUTO_TEST_CASE(html) {
 }
 
 BOOST_AUTO_TEST_CASE(html__deprecated_opts) {
-	// Redirect any logging to log_ss
-	log_to_ostream_guard log_output_guard{ log_ss };
+	// Redirect any logging
+	stringstream_log_sink log_sink;
 
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
@@ -475,7 +471,7 @@ BOOST_AUTO_TEST_CASE(html__deprecated_opts) {
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
 
-	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-html\-output\-to\-file \-)" } ) );
+	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(deprecated.* \-\-html\-output\-to\-file \-)" } ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -502,8 +498,8 @@ BOOST_AUTO_TEST_CASE(json_from_domtblout) {
 }
 
 BOOST_AUTO_TEST_CASE(json_from_hmmsearch_out__deprecated_opts) {
-	// Redirect any logging to log_ss
-	log_to_ostream_guard log_output_guard{ log_ss };
+	// Redirect any logging
+	stringstream_log_sink log_sink;
 
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
@@ -512,12 +508,12 @@ BOOST_AUTO_TEST_CASE(json_from_hmmsearch_out__deprecated_opts) {
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
 
-	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-json\-output\-to\-file \-)" } ) );
+	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(deprecated.* \-\-json\-output\-to\-file \-)" } ) );
 }
 
 BOOST_AUTO_TEST_CASE(json_from_domtblout__deprecated_opts) {
-	// Redirect any logging to log_ss
-	log_to_ostream_guard log_output_guard{ log_ss };
+	// Redirect any logging
+	stringstream_log_sink log_sink;
 
 	execute_perform_resolve_hits( {
 		(CRH_TEST_DATA_DIR() / "eg_domtblout.in" ).string(),
@@ -526,7 +522,7 @@ BOOST_AUTO_TEST_CASE(json_from_domtblout__deprecated_opts) {
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
 
-	BOOST_CHECK( regex_search( log_ss.str(), regex{ R"(deprecated.* \-\-json\-output\-to\-file \-)" } ) );
+	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(deprecated.* \-\-json\-output\-to\-file \-)" } ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

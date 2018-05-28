@@ -27,7 +27,7 @@
 #include <boost/range/algorithm/sort.hpp>
 
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
-#include "common/boost_addenda/log/log_to_ostream_guard.hpp"
+#include "common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"
 #include "file/dssp_wolf/dssp_file_io.hpp"
 #include "file/pdb/pdb.hpp"
@@ -219,10 +219,9 @@ BOOST_AUTO_TEST_CASE(prob_hbond_to_residue_at_start_of_chain_1) {
 }
 
 BOOST_AUTO_TEST_CASE(accepts_residue_with_diff_aas_in_altlocs) {
-	ostringstream test_ss;
-	const log_to_ostream_guard the_guard{ test_ss };
+	const stringstream_log_sink log_sink;
 	use_dssp_file_to_check_hbonds_calcs( DSSP_HBOND_TEST_DATA_DIR() / "residue_with_diff_aas_in_altlocs.dssp"            );
-	BOOST_CHECK_EQUAL( test_ss.str(), "" );
+	BOOST_CHECK_EQUAL( log_sink.str(), "" );
 }
 
 BOOST_AUTO_TEST_CASE(residue_name_reused_later_on_1) {
