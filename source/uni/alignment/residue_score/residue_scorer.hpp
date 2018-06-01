@@ -60,8 +60,8 @@ namespace cath {
 
 		alignment read_and_rescore_fasta_alignment(const boost::filesystem::path &,
 		                                           const protein_list &,
-												   const residue_scorer &,
-												   std::ostream &);
+		                                           const residue_scorer &,
+		                                           std::ostream &);
 
 	} // namespace align
 } // namespace cath
