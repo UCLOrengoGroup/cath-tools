@@ -25,10 +25,11 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm_ext/for_each.hpp>
 
+#include <gnuplot-iostream.h>
+
 #include "common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "common/boost_addenda/range/adaptor/limited.hpp"
 #include "common/size_t_literal.hpp"
-#include "common/third_party_code/gnuplot-iostream.h"
 #include "scan/detail/scan_type_aliases.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/quat_rot.hpp"

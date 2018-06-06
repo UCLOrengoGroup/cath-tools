@@ -42,6 +42,8 @@ target_include_directories( ct_uni                 PUBLIC $<BUILD_INTERFACE:${CM
 target_include_directories( ct_resolve_hits        PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> )
 target_include_directories( ct_seq                 PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> )
 
+target_include_directories( ct_uni                 SYSTEM PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party_code> )
+
 target_link_libraries     ( ct_biocore             PUBLIC ct_common                                                        )
 target_link_libraries     ( ct_cath_assign_domains PUBLIC ct_common                                                        )
 target_link_libraries     ( ct_cath_cluster        PUBLIC ct_common ct_clustagglom                                         )
@@ -124,6 +126,8 @@ target_include_directories( testsrcs_common       PUBLIC $<BUILD_INTERFACE:${CMA
 target_include_directories( testsrcs_remain       PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> )
 target_include_directories( testsrcs_resolve_hits PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> )
 target_include_directories( testsrcs_seq          PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> )
+
+target_include_directories( testsrcs_remain       SYSTEM PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party_code> )
 
 #####################################################################
 #####################################################################

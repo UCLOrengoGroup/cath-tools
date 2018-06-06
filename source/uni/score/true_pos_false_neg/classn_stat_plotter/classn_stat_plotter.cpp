@@ -27,9 +27,10 @@
 #include <boost/range/combine.hpp>
 #include <boost/range/join.hpp>
 
+#include <gnuplot-iostream.h>
+
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
-#include "common/third_party_code/gnuplot-iostream.h"
 #include "score/score_classification/score_classn_value_results_set.hpp"
 #include "score/true_pos_false_neg/classn_rate_stat.hpp"
 #include "score/true_pos_false_neg/classn_stat_pair_series.hpp"

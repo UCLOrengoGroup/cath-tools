@@ -23,8 +23,9 @@
 
 #include <boost/filesystem/path.hpp>
 
+#include <gnuplot-iostream.h>
+
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
-#include "common/third_party_code/gnuplot-iostream.h"
 #include "common/type_aliases.hpp"
 
 namespace cath {

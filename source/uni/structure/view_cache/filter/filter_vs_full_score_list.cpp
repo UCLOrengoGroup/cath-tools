@@ -28,13 +28,14 @@
 #include <boost/range/numeric.hpp>
 #include <boost/range/sub_range.hpp>
 
+#include <gnuplot-iostream.h>
+
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "common/boost_addenda/sorted_insert.hpp"
 #include "common/cpp14/cbegin_cend.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/out_of_range_exception.hpp"
-#include "common/third_party_code/gnuplot-iostream.h"
 #include "score/true_pos_false_neg/classn_rate_stat.hpp"
 #include "score/true_pos_false_neg/true_false_pos_neg.hpp"
 #include "structure/view_cache/filter/detail/filter_vs_full_score_less.hpp"

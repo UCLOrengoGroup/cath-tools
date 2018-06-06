@@ -23,9 +23,10 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
+#include <gnuplot-iostream.h>
+
 #include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
-#include "common/third_party_code/gnuplot-iostream.h"
 
 using namespace cath::align::detail;
 using namespace cath::common;

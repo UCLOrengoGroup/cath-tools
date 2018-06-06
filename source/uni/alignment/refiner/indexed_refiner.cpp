@@ -26,13 +26,14 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
+#include <gnuplot-iostream.h>
+
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "common/boost_addenda/range/indices.hpp"
 #include "common/chrono/duration_to_seconds_string.hpp"
 #include "common/cpp17/invoke.hpp"
 #include "common/metaprogramming/combine_params_lists_with_template_list.hpp"
 #include "common/metaprogramming/template_list.hpp"
-#include "common/third_party_code/gnuplot-iostream.h"
 #include "common/type_to_string.hpp"
 
 using namespace cath;
