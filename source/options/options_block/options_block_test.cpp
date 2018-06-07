@@ -85,7 +85,7 @@ BOOST_FIXTURE_TEST_SUITE(options_block_test_suite, cath::test::options_block_tes
 
 /// \brief Check that each type of options_block can be default constructed without throwing
 BOOST_AUTO_TEST_CASE_TEMPLATE(ctor_does_not_throw, options_block_type, all_options_block_types) {
-	BOOST_CHECK_NO_THROW_DIAG(options_block_type(construct_options_block_for_testing(options_block_type)));
+	BOOST_CHECK_NO_THROW_DIAG(options_block_type a((construct_options_block_for_testing<options_block_type>())));
 }
 
 /// \brief Check that each type of options_block can be successfully cloned to the correct dynamic type
