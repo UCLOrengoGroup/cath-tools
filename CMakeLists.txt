@@ -95,6 +95,7 @@ add_compile_options(
 	# $<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,6.0.0>>:-Wnull-dereference> # Causes problems with superposition_context_from_ptree() - appears to be quite a hassle to resolve
 	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,7.0.0>>:-Wduplicated-branches>
 	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,7.0.0>>:-Wrestrict>
+	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,8.0.0>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,9.0.0>>:-Wno-maybe-uninitialized>
 )
 
 # Append _GLIBCXX_DEBUG to GCC debug build to enable the debug mode of libstdc++
