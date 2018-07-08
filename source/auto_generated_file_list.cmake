@@ -1,4 +1,5 @@
 ##### DON'T EDIT THIS FILE - IT'S AUTO-GENERATED #####
+
 set(
 	NORMSOURCES_BIOCORE
 		biocore/chain_label.cpp
@@ -444,8 +445,8 @@ set(
 		src_clustagglom/clustagglom/calc_complete_linkage_merge_list.cpp
 		${NORMSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_FILE}
 		src_clustagglom/clustagglom/get_sorting_scores.cpp
-		src_clustagglom/clustagglom/hierarchy.cpp
 		${NORMSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM_HIERARCHY}
+		src_clustagglom/clustagglom/hierarchy.cpp
 		src_clustagglom/clustagglom/link_dirn.cpp
 		src_clustagglom/clustagglom/link_list.cpp
 		src_clustagglom/clustagglom/links.cpp
@@ -1008,8 +1009,8 @@ set(
 		uni/score/aligned_pair_score/sas_score.cpp
 		uni/score/aligned_pair_score/sequence_similarity_score.cpp
 		uni/score/aligned_pair_score/si_score.cpp
-		uni/score/aligned_pair_score/ssap_score.cpp
 		${NORMSOURCES_UNI_SCORE_ALIGNED_PAIR_SCORE_SSAP_SCORE}
+		uni/score/aligned_pair_score/ssap_score.cpp
 		uni/score/aligned_pair_score/structal_score.cpp
 		${NORMSOURCES_UNI_SCORE_ALIGNED_PAIR_SCORE_SUBSTITUTION_MATRIX}
 		uni/score/aligned_pair_score/tm_score.cpp
@@ -1300,6 +1301,27 @@ set(
 		${NORMSOURCES_UNI_SSAP}
 		${NORMSOURCES_UNI_STRUCTURE}
 		${NORMSOURCES_UNI_SUPERPOSITION}
+)
+
+set(
+	NORMSOURCES
+		${NORMSOURCES_BIOCORE}
+		${NORMSOURCES_CATH_ASSIGN_DOMAINS}
+		${NORMSOURCES_CATH_CLUSTER}
+		${NORMSOURCES_CATH_REFINE_ALIGN}
+		${NORMSOURCES_CATH_SCORE_ALIGN}
+		${NORMSOURCES_CATH_SUPERPOSE}
+		${NORMSOURCES_CHOPPING}
+		${NORMSOURCES_CLUSTER}
+		${NORMSOURCES_DISPLAY_COLOUR}
+		${NORMSOURCES_EXECUTABLES}
+		${NORMSOURCES_OPTIONS}
+		${NORMSOURCES_RESOLVE_HITS}
+		${NORMSOURCES_SEQ}
+		${NORMSOURCES_SRC_CLUSTAGGLOM}
+		${NORMSOURCES_SRC_COMMON}
+		${NORMSOURCES_SRC_TEST}
+		${NORMSOURCES_UNI}
 )
 
 set(
@@ -2481,4 +2503,26 @@ set(
 		${TESTSOURCES_UNI_STRUCTURE}
 		${TESTSOURCES_UNI_SUPERPOSITION}
 )
+
+set(
+	TESTSOURCES
+		${TESTSOURCES_BIOCORE}
+		${TESTSOURCES_CATH_ASSIGN_DOMAINS}
+		${TESTSOURCES_CATH_CLUSTER}
+		${TESTSOURCES_CATH_REFINE_ALIGN}
+		${TESTSOURCES_CATH_SCORE_ALIGN}
+		${TESTSOURCES_CATH_SUPERPOSE}
+		${TESTSOURCES_CHOPPING}
+		${TESTSOURCES_CLUSTER}
+		${TESTSOURCES_DISPLAY_COLOUR}
+		${TESTSOURCES_EXECUTABLES}
+		${TESTSOURCES_OPTIONS}
+		${TESTSOURCES_RESOLVE_HITS}
+		${TESTSOURCES_SEQ}
+		${TESTSOURCES_SRC_CLUSTAGGLOM}
+		${TESTSOURCES_SRC_COMMON}
+		${TESTSOURCES_SRC_TEST}
+		${TESTSOURCES_UNI}
+)
+
 ##### DON'T EDIT THIS FILE - IT'S AUTO-GENERATED #####
