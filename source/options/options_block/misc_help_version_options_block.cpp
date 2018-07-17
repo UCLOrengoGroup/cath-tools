@@ -135,6 +135,14 @@ string misc_help_version_options_block::get_help_string(const options_descriptio
 		+ arg_help_message_suffix;
 }
 
+// Since Clang and GCC indicate the address sanitizer (ASAN) in different ways,
+// set the GCC flag if ASAN's detected under Clang
+#ifdef __clang__
+#if __has_feature(address_sanitizer)
+#define __SANITIZE_ADDRESS__
+#endif
+#endif
+
 /// \brief Generate the version string
 string misc_help_version_options_block::get_version_string(const string &arg_program_name,       ///< The name of the program
                                                            const string &arg_program_description ///< A description of the program
@@ -147,8 +155,12 @@ string misc_help_version_options_block::get_version_string(const string &arg_pro
 		+ "\n"
 		+ "Build\n"
 		+ "-----\n"
-		+ "   "       + __DATE__ + " " + __TIME__ + "\n"
-		+ "   "       + BOOST_COMPILER            + "\n"
-		+ "   "       + BOOST_STDLIB              + "\n"
-		+ "   Boost " + BOOST_LIB_VERSION         + "\n";
+		+ "   "       + __DATE__ + " " + __TIME__  + "\n"
+		+ "   "       + BOOST_COMPILER
+#if defined(__SANITIZE_ADDRESS__)
+		                               + " [ASAN]"
+#endif
+		                                           + "\n"
+		+ "   "       + BOOST_STDLIB               + "\n"
+		+ "   Boost " + BOOST_LIB_VERSION          + "\n";
 }
