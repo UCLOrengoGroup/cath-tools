@@ -1,6 +1,6 @@
 
 /* Attempt */
-.params + p, .params + p + p {
+.params + p, .params + p + p, .definition, .reference, p.definition, p.reference {
 	font-size  : xx-small;
 	margin     : -5px 0;
 	opacity    : 0.5;
