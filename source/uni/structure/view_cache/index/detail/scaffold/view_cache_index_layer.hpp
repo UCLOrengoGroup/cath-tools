@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_SCAFFOLD_VIEW_CACHE_INDEX_LAYER_H
 #define _CATH_TOOLS_SOURCE_UNI_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_SCAFFOLD_VIEW_CACHE_INDEX_LAYER_H
 
+#include <boost/core/demangle.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/range/begin.hpp>
@@ -170,7 +171,7 @@ namespace cath {
 			template <typename ACTN>
 			void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_leaves(ACTN &arg_action ///< TODOCUMENT
 			                                                                           ) const {
-				BOOST_LOG_TRIVIAL( trace ) << typeid( *this ).name() << " : " << cells.size();
+				BOOST_LOG_TRIVIAL( trace ) << ::boost::core::demangle( typeid( *this ).name() ) << " : " << cells.size();
 				for (const T &cell : cells) {
 					cell.perform_action_on_all_match_at_leaves( arg_action );
 				}

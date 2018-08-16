@@ -20,6 +20,7 @@
 
 #include "program_exception_wrapper.hpp"
 
+#include <boost/core/demangle.hpp>
 #include <boost/exception/all.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/support/date_time.hpp>
@@ -30,21 +31,22 @@
 using namespace cath::common;
 using namespace std;
 
-using boost::log::expressions::format_date_time;
-using boost::log::expressions::message;
-using boost::log::expressions::smessage;
-using boost::log::expressions::stream;
-using boost::log::keywords::filter;
-using boost::log::keywords::format;
-using boost::log::trivial::severity;
-using boost::log::trivial::warning;
+using ::boost::core::demangle;
+using ::boost::log::expressions::format_date_time;
+using ::boost::log::expressions::message;
+using ::boost::log::expressions::smessage;
+using ::boost::log::expressions::stream;
+using ::boost::log::keywords::filter;
+using ::boost::log::keywords::format;
+using ::boost::log::trivial::severity;
+using ::boost::log::trivial::warning;
 
 /// \brief A simple private function to provide a standard way of outputting the context of a catch to a stream.
 void program_exception_wrapper::output_catch_context(ostream            &arg_os,
                                                      const char * const  arg_program_name
                                                      ) const {
 	arg_os << "Whilst running program " << arg_program_name;
-	arg_os << " (via a program_exception_wrapper with typeid: \"" << typeid( *this ).name() << "\")";
+	arg_os << " (via a program_exception_wrapper with typeid: \"" << demangle( typeid( *this ).name() ) << "\")";
 }
 
 /// \brief Virtual destructor for program_exception_wrapper.

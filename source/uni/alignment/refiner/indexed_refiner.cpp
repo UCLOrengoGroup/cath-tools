@@ -23,6 +23,7 @@
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/algorithm/string/replace.hpp>
 // #include <boost/container/small_vector.hpp> // ***** small_vector was only added in Boost 1.58.0 *****
+#include <boost/core/demangle.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
@@ -126,7 +127,7 @@ private:
 	                                 const protein                            &arg_protein_b,    ///< TODOCUMENT
 	                                 const alignment                          &arg_alignment ///< TODOCUMENT
 	                                 ) {
-		// std::cerr << "Emplacing back " << typeid( T ).name() << " and " << typeid( U ).name() << "\n";
+		// std::cerr << "Emplacing back " << demangle( typeid( T ).name() ) << " and " << demangle( typeid( U ).name() ) << "\n";
 
 		// const auto keyer = make_res_pair_keyer(
 		// 	simple_locn_x_keyer_part{ arg_cell_size },

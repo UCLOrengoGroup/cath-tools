@@ -34,8 +34,8 @@ using std::string;
 BOOST_AUTO_TEST_SUITE(tuple_insertion_operator_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	BOOST_TEST( tuple_to_string     ( make_tuple( 3_z, 2.3 ) ) == "std::tuple<m, d>(3, 2.300000)" );
-	BOOST_TEST( lexical_cast<string>( make_tuple( 3_z, 2.3 ) ) == "std::tuple<m, d>(3, 2.300000)" );
+	BOOST_TEST( tuple_to_string     ( make_tuple( 3_z, 2.3 ) ) == "std::tuple<unsigned long, double>(3, 2.300000)" );
+	BOOST_TEST( lexical_cast<string>( make_tuple( 3_z, 2.3 ) ) == "std::tuple<unsigned long, double>(3, 2.300000)" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

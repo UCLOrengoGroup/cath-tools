@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_PAIR_INSERTION_OPERATOR_HPP
 #define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_PAIR_INSERTION_OPERATOR_HPP
 
+#include <boost/core/demangle.hpp>
+
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -45,9 +47,9 @@ namespace std {
 	                     ) {
 		ostringstream temp_ss;
 		temp_ss << "pair<";
-		temp_ss << typeid( T ).name();
+		temp_ss << ::boost::core::demangle( typeid( T ).name() );
 		temp_ss << ", ";
-		temp_ss << typeid( U ).name();
+		temp_ss << ::boost::core::demangle( typeid( U ).name() );
 		temp_ss << ">(";
 		temp_ss << std::right << std::setw( 7 ) << arg_pair.first;
 		temp_ss << ",";

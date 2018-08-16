@@ -20,6 +20,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 
+#include <boost/core/demangle.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/optional.hpp>
 
@@ -33,9 +34,10 @@ using namespace cath;
 using namespace cath::opts;
 using namespace std;
 
-using boost::program_options::options_description;
-using boost::program_options::unknown_option;
-using boost::program_options::variables_map;
+using ::boost::core::demangle;
+using ::boost::program_options::options_description;
+using ::boost::program_options::unknown_option;
+using ::boost::program_options::variables_map;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE(type_info)
 
@@ -93,8 +95,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(clone_works, options_block_type, all_options_block
 	const options_block_type the_options_block(construct_options_block_for_testing<options_block_type>());
 	const unique_ptr<options_block> options_block_new_clone_ptr = the_options_block.clone();
 	const auto &options_block_ref = *options_block_new_clone_ptr;
-	BOOST_CHECK_EQUAL( typeid( options_block_ref ),        typeid( the_options_block )        );
-	BOOST_CHECK_EQUAL( typeid( options_block_ref ).name(), typeid( the_options_block ).name() );
+	BOOST_CHECK_EQUAL(           typeid( options_block_ref ),                    typeid( the_options_block )          );
+	BOOST_CHECK_EQUAL( demangle( typeid( options_block_ref ).name() ), demangle( typeid( the_options_block ).name() ) );
 }
 
 /// \brief Check that each type of options_block will return an options_description from get_options_description()

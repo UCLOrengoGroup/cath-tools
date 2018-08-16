@@ -70,8 +70,8 @@ namespace cath {
 			template <template <typename...> class T,
 			          typename... Ts>
 			std::string template_wrapper_name() {
-				const std::string soc_template_fullname = boost::core::demangle( typeid( some_other_class<Ts...> ).name() );
-				const std::string new_template_fullname = boost::core::demangle( typeid( T               <Ts...> ).name() );
+				const std::string soc_template_fullname = ::boost::core::demangle( typeid( some_other_class<Ts...> ).name() );
+				const std::string new_template_fullname = ::boost::core::demangle( typeid( T               <Ts...> ).name() );
 
 				const auto mistmatch_rev_itr = boost::range::mismatch(
 					soc_template_fullname | boost::adaptors::reversed,
@@ -88,7 +88,7 @@ namespace cath {
 			template <typename T>
 			struct type_to_string_impl final {
 				std::string operator()() const {
-					return tidy_string_copy( boost::core::demangle( typeid( T ).name() ) );
+					return tidy_string_copy( ::boost::core::demangle( typeid( T ).name() ) );
 				}
 			};
 

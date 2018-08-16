@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_STRING_STRING_PARSE_TOOLS_HPP
 #define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_STRING_STRING_PARSE_TOOLS_HPP
 
+#include <boost/core/demangle.hpp>
 #include <boost/core/ignore_unused.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/find_if.hpp>
@@ -67,7 +68,7 @@ namespace cath {
 				if ( ! ok || arg_begin_itr != arg_end_itr ) {
 					BOOST_THROW_EXCEPTION(invalid_argument_exception(
 						"Failed to parse a number (of type "s
-						+ typeid( T ).name()
+						+ ::boost::core::demangle( typeid( T ).name() )
 						+ ") from "
 						+ std::string{ arg_begin_itr, arg_end_itr }
 					));

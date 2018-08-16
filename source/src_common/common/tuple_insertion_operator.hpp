@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_TUPLE_INSERTION_OPERATOR_HPP
 
 #include <boost/algorithm/string/join.hpp>
+#include <boost/core/demangle.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
 #include <iomanip>
@@ -55,7 +56,7 @@ namespace cath {
 		template <typename... Ts>
 		std::string tuple_to_string(const std::tuple<Ts...> &arg_tuple ///< The tuple to describe
 		                            ) {
-			const auto type_names = { std::string{ typeid( Ts ).name() }... };
+			const auto type_names = { ::boost::core::demangle( typeid( Ts ).name() )... };
 
 			return
 				  "std::tuple<"
